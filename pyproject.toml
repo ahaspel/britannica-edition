@@ -1,0 +1,26 @@
+[project]
+name = "britannica-edition"
+version = "0.1.0"
+description = "Pipeline for a faithful digital scholarly edition of the 11th Encyclopaedia Britannica"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "sqlalchemy>=2.0",
+  "pydantic>=2.7",
+  "pydantic-settings>=2.2",
+  "typer>=0.12",
+  "psycopg[binary]>=3.1",
+]
+
+[project.scripts]
+britannica = "britannica.cli.main:run"
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
