@@ -47,7 +47,8 @@ def test_export_articles_to_json_writes_article_files(
 
     assert count == 2
 
-    article_files = sorted(p for p in out_dir.glob("*.json") if p.name != "index.json")
+    meta_files = {"index.json", "contributors.json"}
+    article_files = sorted(p for p in out_dir.glob("*.json") if p.name not in meta_files)
     assert len(article_files) == 2
     assert (out_dir / "index.json").exists()
 

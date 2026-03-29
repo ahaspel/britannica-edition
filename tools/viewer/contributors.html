@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Britannica Contributors</title>
+  <style>
+    :root {
+      --bg: #f7f7f5;
+      --panel: #ffffff;
+      --text: #1f2328;
+      --muted: #6b7280;
+      --border: #d0d7de;
+      --link: #0969da;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    h1 { margin-top: 0; font-size: 1.8rem; }
+    h2 { margin-top: 0; font-size: 1.3rem; }
+
+    .stats {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font: inherit;
+      font-size: 1rem;
+      margin-bottom: 16px;
+    }
+
+    .search-box:focus {
+      outline: none;
+      border-color: var(--link);
+      box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.15);
+    }
+
+    .nav-links {
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    .nav-links a:hover { text-decoration: underline; }
+
+    .contributor {
+      margin-bottom: 24px;
+    }
+
+    .contributor-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .contributor-initials {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-left: 8px;
+    }
+
+    .article-count {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-left: 8px;
+    }
+
+    .article-list {
+      margin: 6px 0 0 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 16px;
+    }
+
+    .article-list li {
+      font-size: 0.92rem;
+    }
+
+    .article-list a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    .article-list a:hover { text-decoration: underline; }
+
+    .empty { color: var(--muted); padding: 40px; text-align: center; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="card">
+      <h1>Contributors</h1>
+      <div class="nav-links"><a href="index.html">&larr; Article Index</a></div>
+      <div id="stats" class="stats">Loading...</div>
+      <input id="search" class="search-box" type="text" placeholder="Search contributors..." />
+    </div>
+
+    <div class="card">
+      <div id="contributor-list"></div>
+      <div id="empty" class="empty" style="display:none">No matching contributors.</div>
+    </div>
+  </div>
+
+  <script>
+    const searchInput = document.getElementById("search");
+    const listEl = document.getElementById("contributor-list");
+    const emptyMsg = document.getElementById("empty");
+    const statsEl = document.getElementById("stats");
+
+    let contributorData = [];
+
+    function escapeHtml(s) {
+      return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+    }
+
+    function viewerUrl(filename) {
+      return `viewer.html?article=/data/derived/articles/${encodeURIComponent(filename)}`;
+    }
+
+    function buildContributorIndex(articles) {
+      const byContributor = {};
+
+      for (const article of articles) {
+        if (!article.contributors) continue;
+        for (const c of article.contributors) {
+          const key = c.full_name;
+          if (!byContributor[key]) {
+            byContributor[key] = {
+              full_name: c.full_name,
+              initials: c.initials,
+              articles: [],
+            };
+          }
+          byContributor[key].articles.push({
+            title: article.title,
+            filename: article.filename,
+          });
+        }
+      }
+
+      return Object.values(byContributor).sort((a, b) =>
+        a.full_name.localeCompare(b.full_name)
+      );
+    }
+
+    function render() {
+      const query = searchInput.value.trim().toLowerCase();
+      const filtered = contributorData.filter(c =>
+        !query ||
+        c.full_name.toLowerCase().includes(query) ||
+        (c.display_name || "").toLowerCase().includes(query) ||
+        c.initials.toLowerCase().includes(query)
+      );
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = "";
+        emptyMsg.style.display = "block";
+        return;
+      }
+
+      emptyMsg.style.display = "none";
+
+      listEl.innerHTML = filtered.map(c => {
+        const articleLinks = c.articles
+          .sort((a, b) => a.title.localeCompare(b.title))
+          .map(a => `<li><a href="${viewerUrl(a.filename)}">${escapeHtml(a.title)}</a></li>`)
+          .join("");
+
+        return `
+          <div class="contributor">
+            <span class="contributor-name">${escapeHtml(c.display_name || c.full_name)}</span>
+            <span class="contributor-initials">${escapeHtml(c.initials)}</span>
+            <span class="article-count">${c.articles.length} article${c.articles.length !== 1 ? "s" : ""}</span>
+            <ul class="article-list">${articleLinks}</ul>
+          </div>
+        `;
+      }).join("");
+    }
+
+    searchInput.addEventListener("input", render);
+
+    // Load index and build contributor data
+    fetch("/data/derived/articles/index.json")
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      })
+      .then(indexData => {
+        // index.json doesn't have contributors — load each article that has them
+        // Instead, we'll load a contributors index if it exists
+        return fetch("/data/derived/articles/contributors.json")
+          .then(r => {
+            if (!r.ok) throw new Error(`HTTP ${r.status}`);
+            return r.json();
+          });
+      })
+      .then(data => {
+        contributorData = data;
+        const totalArticles = contributorData.reduce((s, c) => s + c.articles.length, 0);
+        statsEl.textContent = `${contributorData.length} contributors · ${totalArticles} attributed articles`;
+        render();
+      })
+      .catch(err => {
+        statsEl.textContent = `Failed to load: ${err.message}`;
+      });
+  </script>
+</body>
+</html>
