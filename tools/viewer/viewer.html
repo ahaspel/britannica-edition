@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Britannica Viewer</title>
+  <style>
+    :root {
+      --bg: #f7f7f5;
+      --panel: #ffffff;
+      --text: #1f2328;
+      --muted: #6b7280;
+      --border: #d0d7de;
+      --link: #0969da;
+      --unresolved: #b42318;
+      --resolved-bg: #eff6ff;
+      --unresolved-bg: #fff1f1;
+      --code-bg: #f6f8fa;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    h1, h2, h3 {
+      margin-top: 0;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .meta {
+      color: var(--muted);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 16px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    input[type="text"] {
+      flex: 1 1 380px;
+      min-width: 240px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font: inherit;
+    }
+
+    button {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    button:hover { background: #f3f4f6; }
+
+    .body-text {
+      font-size: 1.08rem;
+      white-space: pre-wrap;
+    }
+
+    .xref-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .xref-item {
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .xref-item.resolved {
+      background: var(--resolved-bg);
+    }
+
+    .xref-item.unresolved {
+      background: var(--unresolved-bg);
+      border-color: #f0c4c4;
+    }
+
+    a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .xref-item.unresolved a,
+    .unresolved-text {
+      color: var(--unresolved);
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #eef2f7;
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    .segments {
+      display: grid;
+      gap: 12px;
+    }
+
+    .segment {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      background: #fafbfc;
+    }
+
+    .segment-meta {
+      color: var(--muted);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+
+    .message {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      padding: 14px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #fff;
+    }
+
+    .error {
+      color: var(--unresolved);
+      background: var(--unresolved-bg);
+      border-color: #f0c4c4;
+    }
+
+    code {
+      background: var(--code-bg);
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.95em;
+    }
+
+    details summary {
+      cursor: pointer;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="card">
+      <h1>Britannica Minimal Viewer</h1>
+      <div class="controls">
+        <input id="articlePath" type="text" placeholder="data/derived/articles/abandon.json" />
+        <button id="loadButton">Load Article</button>
+      </div>
+      <div class="message">
+        Enter a path to an exported article JSON file, or open this page with
+        <code>?article=data/derived/articles/abandon.json</code>.
+      </div>
+    </div>
+
+    <div id="app"></div>
+  </div>
+
+  <script>
+    const app = document.getElementById("app");
+    const articlePathInput = document.getElementById("articlePath");
+    const loadButton = document.getElementById("loadButton");
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function articleFileNameFromTarget(target) {
+      return `${String(target || "").trim().toLowerCase()}.json`;
+    }
+
+    function buildXrefHref(xref) {
+      if (!xref?.normalized_target) return "#";
+      const fileName = articleFileNameFromTarget(xref.normalized_target);
+      return `?article=data/derived/articles/${encodeURIComponent(fileName)}`;
+    }
+
+    function renderError(message) {
+      app.innerHTML = `<div class="card"><div class="message error">${escapeHtml(message)}</div></div>`;
+    }
+
+    function renderArticle(article) {
+      const segments = Array.isArray(article.segments) ? article.segments : [];
+      const xrefs = Array.isArray(article.xrefs) ? article.xrefs : [];
+
+      const xrefHtml = xrefs.length
+        ? `
+          <ul class="xref-list">
+            ${xrefs.map(xref => {
+              const status = xref.status || "unknown";
+              const type = xref.xref_type || "xref";
+              const surface = xref.surface_text || xref.normalized_target || "(unknown target)";
+              const normalized = xref.normalized_target || "";
+              const resolved = status === "resolved";
+
+              return `
+                <li class="xref-item ${resolved ? "resolved" : "unresolved"}">
+                  <strong>${escapeHtml(surface)}</strong>
+                  <span class="pill">${escapeHtml(type)}</span>
+                  <span class="pill">${escapeHtml(status)}</span>
+                  <div style="margin-top:8px;">
+                    ${resolved
+                      ? `<a href="${buildXrefHref(xref)}">Open target: ${escapeHtml(normalized)}</a>`
+                      : `<span class="unresolved-text">Unresolved target: ${escapeHtml(normalized || "(missing normalized target)")}</span>`}
+                  </div>
+                </li>`;
+            }).join("")}
+          </ul>`
+        : `<div class="message">No cross-references for this article.</div>`;
+
+      const segmentHtml = segments.length
+        ? `
+          <details>
+            <summary>Show segments (${segments.length})</summary>
+            <div class="segments">
+              ${segments.map(segment => `
+                <div class="segment">
+                  <div class="segment-meta">
+                    Sequence ${escapeHtml(segment.sequence_in_article)}
+                    · Source page ${escapeHtml(segment.source_page_id)}
+                  </div>
+                  <div>${escapeHtml(segment.segment_text || "")}</div>
+                </div>
+              `).join("")}
+            </div>
+          </details>`
+        : `<div class="message">No segments available.</div>`;
+
+      app.innerHTML = `
+        <div class="card">
+          <h1>${escapeHtml(article.title || "Untitled")}</h1>
+          <div class="meta">
+            Volume ${escapeHtml(article.volume ?? "?")}
+            · pages ${escapeHtml(article.page_start ?? "?")}–${escapeHtml(article.page_end ?? "?")}
+            · article id ${escapeHtml(article.id ?? "?")}
+          </div>
+          <div class="body-text">${escapeHtml(article.body || "")}</div>
+        </div>
+
+        <div class="card">
+          <h2>Cross-references</h2>
+          ${xrefHtml}
+        </div>
+
+        <div class="card">
+          <h2>Segments</h2>
+          ${segmentHtml}
+        </div>
+      `;
+    }
+
+    async function loadArticle(path) {
+      if (!path) {
+        renderError("No article path provided.");
+        return;
+      }
+
+      articlePathInput.value = path;
+
+      try {
+        const response = await fetch(path);
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status} loading ${path}`);
+        }
+
+        const article = await response.json();
+        renderArticle(article);
+
+        const url = new URL(window.location.href);
+        url.searchParams.set("article", path);
+        window.history.replaceState({}, "", url);
+      } catch (error) {
+        renderError(`Could not load article JSON from \"${path}\". ${error.message}`);
+      }
+    }
+
+    loadButton.addEventListener("click", () => {
+      loadArticle(articlePathInput.value.trim());
+    });
+
+    articlePathInput.addEventListener("keydown", event => {
+      if (event.key === "Enter") {
+        loadArticle(articlePathInput.value.trim());
+      }
+    });
+
+    const initialPath = new URLSearchParams(window.location.search).get("article");
+    if (initialPath) {
+      loadArticle(initialPath);
+    }
+  </script>
+</body>
+</html>
