@@ -5,6 +5,7 @@ import argparse
 import json
 import re
 import html
+import time
 from pathlib import Path
 import requests
 
@@ -28,10 +29,24 @@ def fetch_page_wikitext(volume: int, page_number: int) -> str:
         "formatversion": "2",
     }
 
-    print(f"Fetching {title} ...")
-    response = requests.get(API_URL, params=params, headers=HEADERS, timeout=30)
-    print(f"HTTP {response.status_code} for {title}")
-    response.raise_for_status()
+    max_retries = 3
+    for attempt in range(max_retries):
+        print(f"Fetching {title} ...")
+        response = requests.get(API_URL, params=params, headers=HEADERS, timeout=30)
+        print(f"HTTP {response.status_code} for {title}")
+
+        if response.status_code == 429:
+            wait = 60 * (attempt + 1)  # 60s, 120s, 180s
+            print(f"  Rate limited, waiting {wait}s for cooldown...")
+            time.sleep(wait)
+            continue
+
+        response.raise_for_status()
+        break
+    else:
+        raise requests.exceptions.HTTPError(
+            f"Still rate-limited after {max_retries} retries for {title}"
+        )
 
     data = response.json()
     pages = data.get("query", {}).get("pages", [])
@@ -83,8 +98,11 @@ def clean_wikisource_page_text(text: str) -> str:
     # Preserve content of a few useful one-argument templates
     # {{sc|e.m.f.}} -> e.m.f.
     # {{lang|fr|bonjour}} -> bonjour   (optional but handy)
+    # {{sub|3}} -> 3   (preserve subscript digits so formulas stay recognizable)
+    # {{sup|2}} -> 2
     text = re.sub(r"\{\{sc\|([^{}|]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{lang\|[^{}|]*\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{su[bp]\|([^{}|]*)\}\}", r"\1", text, flags=re.IGNORECASE)
 
     # Preserve link text from EB1911 cross-reference templates
     # {{EB1911 lkpl|Peleus}} -> Peleus
@@ -120,6 +138,9 @@ def clean_wikisource_page_text(text: str) -> str:
     text = re.sub(r"\[\[[^\]|]+\|([^\]]+)\]\]", r"\1", text)
     # [[target]] -> target
     text = re.sub(r"\[\[([^\]]+)\]\]", r"\1", text)
+
+    # Preserve sub/sup content before stripping all tags
+    text = re.sub(r"<su[bp][^>]*>(.*?)</su[bp]>", r"\1", text, flags=re.DOTALL | re.IGNORECASE)
 
     # Remove remaining HTML/XML-like tags
     text = re.sub(r"</?[a-zA-Z][^>]*>", "", text)
@@ -174,8 +195,14 @@ def main() -> None:
     print(f"Outdir exists: {outdir.exists()}")
 
     for page_number in range(args.start, args.end + 1):
+        outfile = outdir / f"vol{args.volume:02d}-page{page_number:04d}.json"
+        if outfile.exists():
+            print(f"Skipping {outfile.name} (already fetched)")
+            continue
+
         raw = fetch_page_wikitext(args.volume, page_number)
         cleaned = clean_wikisource_page_text(raw)
+        time.sleep(2)  # polite delay between requests
 
         payload = {
             "volume": args.volume,

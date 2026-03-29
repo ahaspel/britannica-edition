@@ -100,6 +100,19 @@ def test_is_heading_rejects_multi_letter_initials() -> None:
 # --- Wikitext artifact rejection ---
 
 
+def test_is_heading_rejects_chemical_formula_with_arrow() -> None:
+    assert _is_heading("CH3CHO \u2192 CH3\u00b7CH \u2192 CH3\u00b7CH") is False
+
+
+def test_is_heading_rejects_chemical_formula_with_middle_dot() -> None:
+    assert _is_heading("R\u00b7CH2OH\u2192 R\u00b7CH2I") is False
+
+
+def test_is_heading_rejects_formula_with_digits() -> None:
+    assert _is_heading("C6H5NHCOCH3") is False
+    assert _is_heading("CH3CO2H") is False
+
+
 def test_is_heading_rejects_closing_braces() -> None:
     assert _is_heading("}}") is False
 

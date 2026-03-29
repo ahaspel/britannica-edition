@@ -227,9 +227,12 @@
     }
 
     function buildXrefHref(xref) {
+      if (xref?.target_filename) {
+        return `?article=/data/derived/articles/${encodeURIComponent(xref.target_filename)}`;
+      }
       if (!xref?.normalized_target) return "#";
       const fileName = articleFileNameFromTarget(xref.normalized_target);
-      return `?article=data/derived/articles/${encodeURIComponent(fileName)}`;
+      return `?article=/data/derived/articles/${encodeURIComponent(fileName)}`;
     }
 
     function renderError(message) {

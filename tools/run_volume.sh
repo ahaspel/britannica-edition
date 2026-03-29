@@ -4,9 +4,10 @@ set -euo pipefail
 VOLUME="${1:-}"
 START_PAGE="${2:-}"
 END_PAGE="${3:-}"
+SKIP_FETCH="${4:-}"
 
 if [ -z "$VOLUME" ] || [ -z "$START_PAGE" ] || [ -z "$END_PAGE" ]; then
-  echo "Usage: ./tools/run_volume.sh <volume> <start_page> <end_page>"
+  echo "Usage: ./tools/run_volume.sh <volume> <start_page> <end_page> [--skip-fetch]"
   exit 1
 fi
 
@@ -24,18 +25,22 @@ echo "=== Clearing old exports ==="
 rm -rf "$EXPORT_DIR"
 mkdir -p "$EXPORT_DIR"
 
-echo
-echo "=== Preparing run dir: $RUN_DIR ==="
-rm -rf "$RUN_DIR"
-mkdir -p "$RUN_DIR"
+if [ "$SKIP_FETCH" = "--skip-fetch" ]; then
+  echo
+  echo "=== Skipping fetch (using cached pages in $RUN_DIR) ==="
+else
+  echo
+  echo "=== Preparing run dir: $RUN_DIR ==="
+  mkdir -p "$RUN_DIR"
 
-echo
-echo "=== Fetching Wikisource pages $START_PAGE-$END_PAGE for volume $VOLUME ==="
-uv run python tools/fetch/fetch_wikisource_pages.py \
-  --volume "$VOLUME" \
-  --start "$START_PAGE" \
-  --end "$END_PAGE" \
-  --outdir "$RUN_DIR"
+  echo
+  echo "=== Fetching Wikisource pages $START_PAGE-$END_PAGE for volume $VOLUME ==="
+  uv run python tools/fetch/fetch_wikisource_pages.py \
+    --volume "$VOLUME" \
+    --start "$START_PAGE" \
+    --end "$END_PAGE" \
+    --outdir "$RUN_DIR"
+fi
 
 echo
 echo "=== Importing fetched pages ==="
@@ -50,6 +55,14 @@ uv run britannica clean-pages "$VOLUME"
 echo
 echo "=== Detecting boundaries ==="
 uv run britannica detect-boundaries "$VOLUME"
+
+echo
+echo "=== Extracting cross-references ==="
+uv run britannica extract-xrefs "$VOLUME"
+
+echo
+echo "=== Resolving cross-references ==="
+uv run britannica resolve-xrefs "$VOLUME"
 
 echo
 echo "=== Exporting articles ==="
