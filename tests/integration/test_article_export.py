@@ -47,10 +47,11 @@ def test_export_articles_to_json_writes_article_files(
 
     assert count == 2
 
-    files = sorted(out_dir.glob("*.json"))
-    assert len(files) == 2
+    article_files = sorted(p for p in out_dir.glob("*.json") if p.name != "index.json")
+    assert len(article_files) == 2
+    assert (out_dir / "index.json").exists()
 
-    abacus_file = next(p for p in files if "ABACUS" in p.name)
+    abacus_file = next(p for p in article_files if "ABACUS" in p.name)
     payload = json.loads(abacus_file.read_text(encoding="utf-8"))
 
     assert payload["title"] == "ABACUS"

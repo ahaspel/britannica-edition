@@ -65,6 +65,10 @@ echo "=== Resolving cross-references ==="
 uv run britannica resolve-xrefs "$VOLUME"
 
 echo
+echo "=== Extracting images ==="
+uv run britannica extract-images "$VOLUME"
+
+echo
 echo "=== Exporting articles ==="
 uv run britannica export-articles "$VOLUME"
 

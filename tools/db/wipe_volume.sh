@@ -10,6 +10,14 @@ fi
 echo "Wiping volume $VOLUME..."
 
 docker exec -i britannica-edition-postgres-1 psql -U postgres -d britannica <<EOF
+DELETE FROM article_images
+WHERE article_id IN (
+  SELECT id FROM articles WHERE volume = $VOLUME
+)
+OR source_page_id IN (
+  SELECT id FROM source_pages WHERE volume = $VOLUME
+);
+
 DELETE FROM cross_references
 WHERE article_id IN (
   SELECT id FROM articles WHERE volume = $VOLUME

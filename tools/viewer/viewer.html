@@ -193,6 +193,39 @@
       color: var(--muted);
       margin-bottom: 12px;
     }
+
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .article-image {
+      margin: 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #fafbfc;
+    }
+
+    .article-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .article-image figcaption {
+      padding: 8px 10px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+
+    .article-image figcaption.filename {
+      color: var(--muted);
+      font-size: 0.8rem;
+      word-break: break-all;
+    }
   </style>
 </head>
 <body>
@@ -246,6 +279,7 @@
     function renderArticle(article) {
       const segments = Array.isArray(article.segments) ? article.segments : [];
       const xrefs = Array.isArray(article.xrefs) ? article.xrefs : [];
+      const images = Array.isArray(article.images) ? article.images : [];
 
       const xrefHtml = xrefs.length
         ? `
@@ -300,6 +334,21 @@
           </div>
           <div class="body-text">${(article.body || "").split("\n\n").map(p => `<p>${escapeHtml(p)}</p>`).join("")}</div>
         </div>
+
+        ${images.length ? `
+        <div class="card">
+          <h2>Images (${images.length})</h2>
+          <div class="image-grid">
+            ${images.map(img => `
+              <figure class="article-image">
+                <a href="${escapeHtml(img.commons_url)}" target="_blank">
+                  <img src="${escapeHtml(img.commons_url)}" alt="${escapeHtml(img.caption || img.filename)}" loading="lazy" />
+                </a>
+                ${img.caption ? `<figcaption>${escapeHtml(img.caption)}</figcaption>` : `<figcaption class="filename">${escapeHtml(img.filename)}</figcaption>`}
+              </figure>
+            `).join("")}
+          </div>
+        </div>` : ""}
 
         <div class="card">
           <h2>Cross-references</h2>

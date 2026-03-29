@@ -136,8 +136,15 @@ def clean_wikisource_page_text(text: str) -> str:
         previous = text
         text = re.sub(r"\{\{[^{}]*\}\}", "", text)
 
-    # Remove any orphaned closing braces left by nested template cleanup
+    # Remove orphaned closing braces left by nested template cleanup
     text = re.sub(r"^\s*\}\}+\s*$", "", text, flags=re.MULTILINE)
+    # Also strip trailing braces at end of lines (e.g. "...some text. }}")
+    text = re.sub(r"\s*\}\}+\s*$", "", text, flags=re.MULTILINE)
+
+    # Remove orphaned wiki table markers that survived table stripping
+    text = re.sub(r"^\s*\|\}+\s*$", "", text, flags=re.MULTILINE)
+    text = re.sub(r"^\s*\{\|\s*$", "", text, flags=re.MULTILINE)
+    text = re.sub(r"^\s*\|-\s*$", "", text, flags=re.MULTILINE)
 
     # Handle wikilinks after template cleanup
     # [[target|label]] -> label
@@ -198,15 +205,22 @@ def main() -> None:
     outdir.mkdir(parents=True, exist_ok=True)
     print(f"Outdir exists: {outdir.exists()}")
 
+    fetched_this_run = 0
     for page_number in range(args.start, args.end + 1):
         outfile = outdir / f"vol{args.volume:02d}-page{page_number:04d}.json"
         if outfile.exists():
             print(f"Skipping {outfile.name} (already fetched)")
             continue
 
+        # Preventive cooldown before hitting rate limit (~500 req window)
+        if fetched_this_run > 0 and fetched_this_run % 450 == 0:
+            print(f"  Cooldown pause after {fetched_this_run} requests (5 min)...")
+            time.sleep(300)
+
         raw = fetch_page_wikitext(args.volume, page_number)
         cleaned = clean_wikisource_page_text(raw)
-        time.sleep(2)  # polite delay between requests
+        fetched_this_run += 1
+        time.sleep(5)  # polite delay between requests
 
         payload = {
             "volume": args.volume,

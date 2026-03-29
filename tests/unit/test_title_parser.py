@@ -113,6 +113,26 @@ def test_is_heading_rejects_formula_with_digits() -> None:
     assert _is_heading("CH3CO2H") is False
 
 
+def test_is_heading_rejects_roman_numerals() -> None:
+    assert _is_heading("II") is False
+    assert _is_heading("III") is False
+    assert _is_heading("IV") is False
+    assert _is_heading("VI") is False
+    assert _is_heading("XXXVI") is False
+
+
+def test_is_heading_rejects_unknown_two_letter_title() -> None:
+    assert _is_heading("CH") is False
+    assert _is_heading("RO") is False
+    assert _is_heading("OF") is False
+
+
+def test_is_heading_accepts_known_two_letter_title() -> None:
+    assert _is_heading("AA") is True
+    assert _is_heading("AB") is True
+    assert _is_heading("AI") is True
+
+
 def test_is_heading_rejects_closing_braces() -> None:
     assert _is_heading("}}") is False
 
@@ -222,12 +242,28 @@ def test_extract_heading_simple_allcaps_returns_title_and_empty_remainder() -> N
     assert remainder == ""
 
 
-def test_extract_heading_biographical_without_parentheticals() -> None:
+def test_extract_heading_strips_trailing_descriptor() -> None:
     title, remainder = _extract_heading(
-        "SMITH, John, was an English explorer."
+        "AELIAN, Greek, military writer of the 2nd century."
     )
-    assert title == "SMITH, John"
-    assert remainder == "was an English explorer."
+    assert title == "AELIAN"
+    assert remainder == "military writer of the 2nd century."
+
+
+def test_extract_heading_keeps_allcaps_given_name() -> None:
+    title, remainder = _extract_heading(
+        "ACCURSIUS, FRANCISCUS, Italian jurist."
+    )
+    assert title == "ACCURSIUS, FRANCISCUS"
+    assert remainder == "Italian jurist."
+
+
+def test_extract_heading_strips_nationality_descriptor() -> None:
+    title, remainder = _extract_heading(
+        "ABRAHAM IBN DAUD, Jewish, historiographer."
+    )
+    assert title == "ABRAHAM IBN DAUD"
+    assert remainder == "historiographer."
 
 
 def test_parse_page_with_normalized_titles() -> None:
