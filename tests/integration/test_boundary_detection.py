@@ -94,3 +94,58 @@ def test_detect_boundaries_handles_multi_article_page_and_continuation(
         )
     finally:
         session.close()
+
+
+def test_detect_boundaries_filters_false_positive_initials(
+    monkeypatch,
+    test_session_local,
+):
+    """Author initials between real articles should not create articles."""
+    monkeypatch.setattr(detect_boundaries_stage, "SessionLocal", test_session_local)
+
+    session = test_session_local()
+    try:
+        session.add_all(
+            [
+                SourcePage(
+                    source_name="sample",
+                    volume=1,
+                    page_number=1,
+                    raw_text="unused",
+                    cleaned_text=(
+                        "ABACUS\n"
+                        "The encyclopaedia entry begins here.\n"
+                        "J.\n\n"
+                        "ABALONE\n"
+                        "A type of shellfish."
+                    ),
+                ),
+            ]
+        )
+        session.commit()
+    finally:
+        session.close()
+
+    created = detect_boundaries_stage.detect_boundaries(1)
+    assert created == 2
+
+    session = test_session_local()
+    try:
+        articles = (
+            session.query(Article)
+            .filter(Article.volume == 1)
+            .order_by(Article.page_start, Article.title)
+            .all()
+        )
+
+        assert len(articles) == 2
+        titles = [a.title for a in articles]
+        assert "J." not in titles
+        assert "J" not in titles
+        assert "ABACUS" in titles
+        assert "ABALONE" in titles
+
+        abacus = next(a for a in articles if a.title == "ABACUS")
+        assert "J." in abacus.body
+    finally:
+        session.close()

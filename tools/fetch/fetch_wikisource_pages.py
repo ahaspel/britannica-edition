@@ -86,6 +86,16 @@ def clean_wikisource_page_text(text: str) -> str:
     text = re.sub(r"\{\{sc\|([^{}|]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{lang\|[^{}|]*\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
 
+    # Preserve link text from EB1911 cross-reference templates
+    # {{EB1911 lkpl|Peleus}} -> Peleus
+    # {{EB1911 lkpl|Alcott, Louisa May|Louisa}} -> Louisa  (display form)
+    # {{DNB lkpl|Target|Display}} -> Display
+    text = re.sub(r"\{\{(?:EB1911|DNB)\s+lkpl\|[^{}|]*\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{(?:EB1911|DNB)\s+lkpl\|([^{}|]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+
+    # Preserve link text from {{1911link|Target}} templates
+    text = re.sub(r"\{\{1911link\|([^{}|]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+
     # Remove common presentation/layout templates wholesale
     # These are the ones currently leaking figure debris.
     for name in [

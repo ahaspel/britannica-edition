@@ -13,9 +13,16 @@ fi
 PADDED_VOLUME=$(printf "%02d" "$VOLUME")
 RUN_DIR="data/raw/wikisource/vol${PADDED_VOLUME}_${START_PAGE}_${END_PAGE}"
 
+EXPORT_DIR="data/derived/articles"
+
 echo
-echo "=== Wiping volume $VOLUME ==="
+echo "=== Wiping volume $VOLUME from database ==="
 ./tools/db/wipe_volume.sh "$VOLUME"
+
+echo
+echo "=== Clearing old exports ==="
+rm -rf "$EXPORT_DIR"
+mkdir -p "$EXPORT_DIR"
 
 echo
 echo "=== Preparing run dir: $RUN_DIR ==="
