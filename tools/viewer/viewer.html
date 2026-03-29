@@ -227,6 +227,58 @@
       word-break: break-all;
     }
 
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1em 0;
+      font-size: 0.95rem;
+    }
+
+    .data-table td {
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .data-table tr:first-child td {
+    }
+
+    .footnote-ref a {
+      color: var(--link);
+      text-decoration: none;
+      font-size: 0.8em;
+      padding: 0 2px;
+    }
+
+    .footnotes {
+      border-top: 1px solid var(--border);
+      margin-top: 24px;
+      padding-top: 16px;
+    }
+
+    .footnotes h3 {
+      font-size: 1rem;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .footnotes ol {
+      font-size: 0.9rem;
+      padding-left: 24px;
+      color: var(--text);
+    }
+
+    .footnotes li {
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .footnotes li a {
+      color: var(--link);
+      text-decoration: none;
+      margin-right: 4px;
+    }
+
     .inline-image {
       margin: 1em auto;
       text-align: center;
@@ -296,6 +348,9 @@
       return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(name)}?width=600`;
     }
 
+    let footnoteCounter = 0;
+    let collectedFootnotes = [];
+
     function renderParagraph(p) {
       const imgMatch = p.match(/^\{\{IMG:([^|}]+)(?:\|([^}]*))?\}\}$/);
       if (imgMatch) {
@@ -307,7 +362,25 @@
           ${caption ? `<figcaption>${escapeHtml(caption)}</figcaption>` : ""}
         </figure>`;
       }
-      return `<p>${escapeHtml(p)}</p>`;
+      // Render table markers
+      const tableMatch = p.match(/^\{\{TABLE:([\s\S]*)\}TABLE\}$/);
+      if (tableMatch) {
+        const rows = tableMatch[1].split("\n").filter(r => r.trim());
+        const tableRows = rows.map(r => {
+          const cells = r.split(" | ").map(c => `<td>${escapeHtml(c.trim())}</td>`).join("");
+          return `<tr>${cells}</tr>`;
+        }).join("");
+        return `<table class="data-table">${tableRows}</table>`;
+      }
+
+      // Replace footnote markers with superscript numbers
+      let html = escapeHtml(p);
+      html = html.replace(/\u00abFN:(.*?)\u00bb/gs, (match, content) => {
+        footnoteCounter++;
+        collectedFootnotes.push({ num: footnoteCounter, text: content });
+        return `<sup class="footnote-ref"><a href="#fn-${footnoteCounter}" id="fnref-${footnoteCounter}">${footnoteCounter}</a></sup>`;
+      });
+      return `<p>${html}</p>`;
     }
 
     function articleFileNameFromTarget(target) {
@@ -386,8 +459,9 @@
             · article id ${escapeHtml(article.id ?? "?")}
           </div>
           ${contributors.length ? `<div class="contributors">By ${contributors.map(c => `<span title="${escapeHtml(c.initials)}">${escapeHtml(c.full_name)}</span>`).join(", ")}</div>` : ""}
-          ${plates.length ? `<div class="contributors">Plates: ${plates.map(p => `<a href="${viewerUrl(p.filename)}">${escapeHtml(p.title)}</a>`).join(", ")}</div>` : ""}
-          <div class="body-text">${(article.body || "").split("\n\n").map(p => renderParagraph(p)).join("")}</div>
+          ${plates.length ? `<div class="contributors">Plates: ${plates.map(p => `<a href="?article=/data/derived/articles/${encodeURIComponent(p.filename)}">${escapeHtml(p.title)}</a>`).join(", ")}</div>` : ""}
+          <div class="body-text">${(() => { footnoteCounter = 0; collectedFootnotes = []; return (article.body || "").split("\n\n").map(p => renderParagraph(p)).join(""); })()}</div>
+          ${collectedFootnotes.length ? `<div class="footnotes"><h3>Notes</h3><ol>${collectedFootnotes.map(fn => `<li id="fn-${fn.num}"><a href="#fnref-${fn.num}">\u2191</a> ${fn.text}</li>`).join("")}</ol></div>` : ""}
         </div>
 
         ${images.length ? `

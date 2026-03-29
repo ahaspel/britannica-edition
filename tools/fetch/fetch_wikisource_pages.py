@@ -119,8 +119,16 @@ def clean_wikisource_page_text(text: str) -> str:
     text = re.sub(r"\n<!--.*?-->\n", "\n", text, flags=re.DOTALL)
     text = re.sub(r"<!--.*?-->", "", text, flags=re.DOTALL)
 
-    # Remove ref tags
-    text = re.sub(r"<ref[^>]*>.*?</ref>", "", text, flags=re.DOTALL | re.IGNORECASE)
+    # Convert ref tags to inline footnote markers (survive template stripping)
+    def _ref_to_marker(match: re.Match) -> str:
+        content = match.group(1).strip()
+        # Clean basic wiki markup from footnote content
+        content = re.sub(r"\[\[[^\]|]+\|([^\]]+)\]\]", r"\1", content)
+        content = re.sub(r"\[\[([^\]]+)\]\]", r"\1", content)
+        content = content.replace("'''", "").replace("''", "")
+        return f"\x01FN:{content}\x01"
+    text = re.sub(r"<ref[^>]*>(.*?)</ref>", _ref_to_marker, text, flags=re.DOTALL | re.IGNORECASE)
+    # Remove self-closing ref tags (back-references to named notes)
     text = re.sub(r"<ref[^/]*/\s*>", "", text, flags=re.IGNORECASE)
 
     # Replace file/image links with inline markers BEFORE table stripping
@@ -131,12 +139,39 @@ def clean_wikisource_page_text(text: str) -> str:
         flags=re.IGNORECASE,
     )
 
-    # Remove wikitable blocks but preserve any image markers inside them
-    def _strip_table_keep_images(match: re.Match) -> str:
+    # Convert wikitable blocks: preserve image markers and extract table content
+    def _convert_table(match: re.Match) -> str:
         content = match.group(0)
-        markers = re.findall(r"\x00IMG:[^\x00]+\x00", content)
-        return "\n\n".join(markers) if markers else ""
-    text = re.sub(r"\{\|.*?\|\}", _strip_table_keep_images, text, flags=re.DOTALL)
+
+        # Extract image markers first
+        img_markers = re.findall(r"\x00IMG:[^\x00]+\x00", content)
+
+        # Try to extract table rows as simple text
+        rows = re.split(r"\|-", content)
+        text_rows = []
+        for row in rows:
+            # Strip all remaining templates from row
+            cleaned_row = re.sub(r"\{\{[^{}]*\}\}", "", row)
+            # Extract cell values
+            cells = re.findall(r"\|([^|\n]+)", cleaned_row)
+            cells = [c.strip() for c in cells
+                     if c.strip()
+                     and not re.match(r"^(?:colspan|rowspan|width|style|align|class|cellpadding)[\s=]", c.strip())
+                     and c.strip() not in ("}",)]
+            if cells:
+                text_rows.append(" | ".join(cells))
+
+        parts = []
+        if img_markers:
+            parts.extend(img_markers)
+        if text_rows:
+            # Wrap table content in markers so viewer can render it
+            table_text = "\n".join(text_rows)
+            parts.append(f"\x02TABLE\n{table_text}\n\x02")
+
+        return "\n\n".join(parts) if parts else ""
+
+    text = re.sub(r"\{\|.*?\|\}", _convert_table, text, flags=re.DOTALL)
 
     # Preserve content of a few useful one-argument templates
     # {{sc|e.m.f.}} -> e.m.f.
@@ -144,6 +179,7 @@ def clean_wikisource_page_text(text: str) -> str:
     # {{sub|3}} -> 3   (preserve subscript digits so formulas stay recognizable)
     # {{sup|2}} -> 2
     text = re.sub(r"\{\{sc\|([^{}|]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{nowrap\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{lang\|[^{}|]*\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{su[bp]\|([^{}|]*)\}\}", r"\1", text, flags=re.IGNORECASE)
 
@@ -228,6 +264,17 @@ def clean_wikisource_page_text(text: str) -> str:
     # Convert image markers from null-byte delimiters to readable format
     text = text.replace("\x00IMG:", "{{IMG:").replace("\x00", "}}")
 
+    # Convert footnote markers to readable format
+    text = text.replace("\x01FN:", "\u00abFN:").replace("\x01", "\u00bb")
+
+    # Convert table markers to readable format.
+    # Use \x02 as line separators within tables to prevent reflow from joining rows.
+    text = text.replace("\x02TABLE\n", "{{TABLE:").replace("\n\x02", "}TABLE}")
+    # Convert internal newlines within table blocks to \x02 to protect from reflow
+    def _protect_table_newlines(m: re.Match) -> str:
+        return m.group(0).replace("\n", "\x02")
+    text = re.sub(r"\{\{TABLE:.*?\}TABLE\}", _protect_table_newlines, text, flags=re.DOTALL)
+
     return text
 
 
@@ -260,15 +307,16 @@ def main() -> None:
             print(f"Skipping {outfile.name} (already fetched)")
             continue
 
-        # Preventive cooldown before hitting rate limit (~500 req window)
-        if fetched_this_run > 0 and fetched_this_run % 450 == 0:
-            print(f"  Cooldown pause after {fetched_this_run} requests (6 min)...")
-            time.sleep(360)
+        # Preventive cooldown before hitting rate limit.
+        # Conservative: 350 pages then 15 min pause, for unattended overnight runs.
+        if fetched_this_run > 0 and fetched_this_run % 350 == 0:
+            print(f"  Cooldown pause after {fetched_this_run} requests (15 min)...")
+            time.sleep(900)
 
         raw = fetch_page_wikitext(args.volume, page_number)
         cleaned = clean_wikisource_page_text(raw)
         fetched_this_run += 1
-        time.sleep(2)  # polite delay between requests
+        time.sleep(3)  # polite delay between requests
 
         payload = {
             "volume": args.volume,
