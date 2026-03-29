@@ -56,7 +56,7 @@ def test_detect_boundaries_handles_continuation_then_new_heading_same_page(
         assert abalone.page_start == 1
         assert abalone.page_end == 2
         assert abalone.body == (
-            "A type of shellfish.\n"
+            "A type of shellfish. "
             "Continuation of the abalone article on the next page."
         )
 

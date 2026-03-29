@@ -16,14 +16,14 @@ def test_clean_pages_removes_header_and_merges_hyphenation(
                     source_name="sample",
                     volume=1,
                     page_number=1,
-                    raw_text="HEADER TEXT\n\nABACUS\nThe encyclo-\npaedia entry begins here.",
+                    raw_text="HEADER TEXT\n\nABACUS\n\nThe encyclo-\npaedia entry begins here.",
                     cleaned_text=None,
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
                     page_number=2,
-                    raw_text="HEADER TEXT\n\nABALONE\nA type of shellfish.",
+                    raw_text="HEADER TEXT\n\nABALONE\n\nA type of shellfish.",
                     cleaned_text=None,
                 ),
             ]
@@ -47,8 +47,8 @@ def test_clean_pages_removes_header_and_merges_hyphenation(
         assert len(pages) == 2
 
         assert pages[0].cleaned_text == (
-            "ABACUS\nThe encyclopaedia entry begins here."
+            "ABACUS\n\nThe encyclopaedia entry begins here."
         )
-        assert pages[1].cleaned_text == "ABALONE\nA type of shellfish."
+        assert pages[1].cleaned_text == "ABALONE\n\nA type of shellfish."
     finally:
         session.close()

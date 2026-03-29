@@ -1,5 +1,6 @@
 from britannica.cleaners.headers_footers import strip_headers
 from britannica.cleaners.hyphenation import fix_hyphenation
+from britannica.cleaners.reflow import reflow_paragraphs
 from britannica.cleaners.unicode import normalize_unicode
 from britannica.cleaners.whitespace import normalize_whitespace
 from britannica.db.models.source_page import SourcePage
@@ -16,6 +17,7 @@ def clean_pages(volume: int) -> int:
             text = normalize_unicode(text)
             text, _removed_headers = strip_headers(text)
             text, _hyphen_changes = fix_hyphenation(text)
+            text = reflow_paragraphs(text)
             text = normalize_whitespace(text)
             page.cleaned_text = text
 

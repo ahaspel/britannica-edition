@@ -85,6 +85,12 @@ def clean_wikisource_page_text(text: str) -> str:
     # Remove noinclude blocks completely
     text = re.sub(r"<noinclude>.*?</noinclude>", "", text, flags=re.DOTALL | re.IGNORECASE)
 
+    # Remove HTML comments (e.g. <!-- column 2 --> Wikisource transcription markers).
+    # When a comment sits between two newlines (\n<!--...-->\n), collapse to single
+    # newline so the surrounding text stays joined as a hard wrap, not a paragraph break.
+    text = re.sub(r"\n<!--.*?-->\n", "\n", text, flags=re.DOTALL)
+    text = re.sub(r"<!--.*?-->", "", text, flags=re.DOTALL)
+
     # Remove ref tags
     text = re.sub(r"<ref[^>]*>.*?</ref>", "", text, flags=re.DOTALL | re.IGNORECASE)
     text = re.sub(r"<ref[^/]*/\s*>", "", text, flags=re.IGNORECASE)
@@ -160,13 +166,11 @@ def clean_wikisource_page_text(text: str) -> str:
     text = re.sub(r"\( ", "(", text)
     text = re.sub(r" \)", ")", text)
 
-    # Trim each line and drop obviously empty lines
-    lines = [line.strip() for line in text.split("\n")]
-    lines = [line for line in lines if line]
+    # Trim trailing whitespace from each line, preserving newline structure.
+    # Single \n = hard wrap (column break); \n\n = paragraph break.
+    text = "\n".join(line.rstrip() for line in text.split("\n"))
 
-    text = "\n\n".join(lines)
-
-    # Collapse excessive blank lines again just in case
+    # Collapse 3+ consecutive newlines to paragraph break, drop leading/trailing
     text = re.sub(r"\n{3,}", "\n\n", text).strip()
 
     return text

@@ -69,7 +69,7 @@ def test_detect_boundaries_handles_multi_article_page_and_continuation(
         assert abalone.page_start == 1
         assert abalone.page_end == 2
         assert abalone.body == (
-            "A type of shellfish.\n"
+            "A type of shellfish. "
             "Continuation of the abalone article on the next page."
         )
 
