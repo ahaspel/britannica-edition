@@ -78,6 +78,34 @@ def fetch_page_wikitext(volume: int, page_number: int) -> str:
 
     return content
 
+def _image_to_marker(match: re.Match) -> str:
+    """Convert [[File:name|opts]] to an inline marker."""
+    parts = [p.strip() for p in match.group(1).split("|")]
+    filename = parts[0]
+
+    # Extract caption (last non-keyword, non-size part)
+    keywords = {"center", "left", "right", "thumb", "thumbnail", "frameless",
+                "frame", "border", "upright", "none"}
+    caption = ""
+    for part in reversed(parts[1:]):
+        lower = part.lower()
+        if lower in keywords or re.match(r"^\d+px$", lower) or lower.startswith("upright="):
+            continue
+        if part:
+            caption = part
+            break
+
+    # Skip tiny inline symbols (< 20px) — these are decorative
+    for part in parts[1:]:
+        m = re.match(r"^(\d+)px$", part.lower())
+        if m and int(m.group(1)) < 20:
+            return ""
+
+    if caption:
+        return f"\n\n\x00IMG:{filename}|{caption}\x00\n\n"
+    return f"\n\n\x00IMG:{filename}\x00\n\n"
+
+
 def clean_wikisource_page_text(text: str) -> str:
     # Normalize line endings early
     text = text.replace("\r\n", "\n").replace("\r", "\n")
@@ -95,11 +123,20 @@ def clean_wikisource_page_text(text: str) -> str:
     text = re.sub(r"<ref[^>]*>.*?</ref>", "", text, flags=re.DOTALL | re.IGNORECASE)
     text = re.sub(r"<ref[^/]*/\s*>", "", text, flags=re.IGNORECASE)
 
-    # Remove wikitable blocks entirely for now
-    text = re.sub(r"\{\|.*?\|\}", "", text, flags=re.DOTALL)
+    # Replace file/image links with inline markers BEFORE table stripping
+    text = re.sub(
+        r"\[\[(?:File|Image):([^\]]+)\]\]",
+        _image_to_marker,
+        text,
+        flags=re.IGNORECASE,
+    )
 
-    # Remove file/image links entirely
-    text = re.sub(r"\[\[(?:File|Image):[^\]]*\]\]", "", text, flags=re.IGNORECASE)
+    # Remove wikitable blocks but preserve any image markers inside them
+    def _strip_table_keep_images(match: re.Match) -> str:
+        content = match.group(0)
+        markers = re.findall(r"\x00IMG:[^\x00]+\x00", content)
+        return "\n\n".join(markers) if markers else ""
+    text = re.sub(r"\{\|.*?\|\}", _strip_table_keep_images, text, flags=re.DOTALL)
 
     # Preserve content of a few useful one-argument templates
     # {{sc|e.m.f.}} -> e.m.f.
@@ -120,11 +157,19 @@ def clean_wikisource_page_text(text: str) -> str:
     # Preserve link text from {{1911link|Target}} templates
     text = re.sub(r"\{\{1911link\|([^{}|]*)\}\}", r"\1", text, flags=re.IGNORECASE)
 
+    # Remove shoulder headings without leaving paragraph breaks —
+    # these are marginal annotations, not text content.
+    text = re.sub(
+        r"\n\{\{EB1911 Shoulder Heading\w*\|[^}]*\}\}\n",
+        "\n", text, flags=re.IGNORECASE,
+    )
+
     # Remove common presentation/layout templates wholesale
     # These are the ones currently leaking figure debris.
     for name in [
         "center", "csc", "fs", "ts", "ditto",
-        "eb1911 page heading", "eb1911 fine print/s", "eb1911 fine print/e"
+        "eb1911 page heading", "eb1911 fine print/s", "eb1911 fine print/e",
+        "eb1911 shoulder headingsmall", "eb1911 shoulder heading",
     ]:
         pattern = r"\{\{\s*" + re.escape(name) + r"\b.*?\}\}"
         text = re.sub(pattern, "", text, flags=re.DOTALL | re.IGNORECASE)
@@ -180,6 +225,9 @@ def clean_wikisource_page_text(text: str) -> str:
     # Collapse 3+ consecutive newlines to paragraph break, drop leading/trailing
     text = re.sub(r"\n{3,}", "\n\n", text).strip()
 
+    # Convert image markers from null-byte delimiters to readable format
+    text = text.replace("\x00IMG:", "{{IMG:").replace("\x00", "}}")
+
     return text
 
 
@@ -214,13 +262,13 @@ def main() -> None:
 
         # Preventive cooldown before hitting rate limit (~500 req window)
         if fetched_this_run > 0 and fetched_this_run % 450 == 0:
-            print(f"  Cooldown pause after {fetched_this_run} requests (5 min)...")
-            time.sleep(300)
+            print(f"  Cooldown pause after {fetched_this_run} requests (6 min)...")
+            time.sleep(360)
 
         raw = fetch_page_wikitext(args.volume, page_number)
         cleaned = clean_wikisource_page_text(raw)
         fetched_this_run += 1
-        time.sleep(5)  # polite delay between requests
+        time.sleep(2)  # polite delay between requests
 
         payload = {
             "volume": args.volume,

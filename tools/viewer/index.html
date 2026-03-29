@@ -149,6 +149,8 @@
         <button class="filter-btn" data-filter="short">Short body (&lt;20 words)</button>
         <button class="filter-btn" data-filter="has-xrefs">Has xrefs</button>
         <button class="filter-btn" data-filter="unresolved">Unresolved xrefs</button>
+        <button class="filter-btn" data-filter="front_matter">Front matter</button>
+        <button class="filter-btn" data-filter="plates">Plates</button>
       </div>
     </div>
 
@@ -187,9 +189,12 @@
     }
 
     function applyFilter(article) {
-      if (currentFilter === "short") return article.body_length < 20;
+      if (currentFilter === "all") return (article.article_type || "article") === "article";
+      if (currentFilter === "short") return article.body_length < 20 && (article.article_type || "article") === "article";
       if (currentFilter === "has-xrefs") return article.xref_count > 0;
       if (currentFilter === "unresolved") return article.xref_count > article.resolved_count;
+      if (currentFilter === "front_matter") return (article.article_type || "article") === "front_matter";
+      if (currentFilter === "plates") return (article.article_type || "article") === "plate";
       return true;
     }
 

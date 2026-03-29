@@ -227,6 +227,27 @@
       word-break: break-all;
     }
 
+    .inline-image {
+      margin: 1em auto;
+      text-align: center;
+      max-width: 600px;
+    }
+
+    .inline-image img {
+      max-width: 100%;
+      height: auto;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+    }
+
+    .inline-image figcaption {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 6px;
+      font-style: italic;
+    }
+
     .contributors {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       font-size: 0.95rem;
@@ -267,6 +288,28 @@
         .replaceAll("'", "&#39;");
     }
 
+    function commonsUrl(filename) {
+      const name = filename.replace(/ /g, "_");
+      // Simple MD5 — we'll use the SubtleCrypto API
+      // For now, use the pre-computed URL from the images array if available
+      // Fall back to the wiki thumbnail API which doesn't need MD5
+      return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(name)}?width=600`;
+    }
+
+    function renderParagraph(p) {
+      const imgMatch = p.match(/^\{\{IMG:([^|}]+)(?:\|([^}]*))?\}\}$/);
+      if (imgMatch) {
+        const filename = imgMatch[1];
+        const caption = imgMatch[2] || "";
+        const url = commonsUrl(filename);
+        return `<figure class="inline-image">
+          <a href="${url}" target="_blank"><img src="${url}" alt="${escapeHtml(caption || filename)}" loading="lazy" /></a>
+          ${caption ? `<figcaption>${escapeHtml(caption)}</figcaption>` : ""}
+        </figure>`;
+      }
+      return `<p>${escapeHtml(p)}</p>`;
+    }
+
     function articleFileNameFromTarget(target) {
       return `${String(target || "").trim().toLowerCase()}.json`;
     }
@@ -289,6 +332,7 @@
       const xrefs = Array.isArray(article.xrefs) ? article.xrefs : [];
       const images = Array.isArray(article.images) ? article.images : [];
       const contributors = Array.isArray(article.contributors) ? article.contributors : [];
+      const plates = Array.isArray(article.plates) ? article.plates : [];
 
       const xrefHtml = xrefs.length
         ? `
@@ -342,7 +386,8 @@
             · article id ${escapeHtml(article.id ?? "?")}
           </div>
           ${contributors.length ? `<div class="contributors">By ${contributors.map(c => `<span title="${escapeHtml(c.initials)}">${escapeHtml(c.full_name)}</span>`).join(", ")}</div>` : ""}
-          <div class="body-text">${(article.body || "").split("\n\n").map(p => `<p>${escapeHtml(p)}</p>`).join("")}</div>
+          ${plates.length ? `<div class="contributors">Plates: ${plates.map(p => `<a href="${viewerUrl(p.filename)}">${escapeHtml(p.title)}</a>`).join(", ")}</div>` : ""}
+          <div class="body-text">${(article.body || "").split("\n\n").map(p => renderParagraph(p)).join("")}</div>
         </div>
 
         ${images.length ? `

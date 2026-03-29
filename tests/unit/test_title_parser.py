@@ -242,6 +242,14 @@ def test_extract_heading_simple_allcaps_returns_title_and_empty_remainder() -> N
     assert remainder == ""
 
 
+def test_extract_heading_captures_trailing_date_after_of() -> None:
+    title, remainder = _extract_heading(
+        "AMERICAN WAR OF 1812. The war began."
+    )
+    assert title == "AMERICAN WAR OF 1812"
+    assert remainder == "The war began."
+
+
 def test_extract_heading_strips_trailing_descriptor() -> None:
     title, remainder = _extract_heading(
         "AELIAN, Greek, military writer of the 2nd century."

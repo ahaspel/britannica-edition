@@ -22,7 +22,6 @@ echo "=== Wiping volume $VOLUME from database ==="
 
 echo
 echo "=== Clearing old exports ==="
-rm -rf "$EXPORT_DIR"
 mkdir -p "$EXPORT_DIR"
 
 if [ "$SKIP_FETCH" = "--skip-fetch" ]; then
@@ -57,6 +56,10 @@ echo "=== Detecting boundaries ==="
 uv run britannica detect-boundaries "$VOLUME"
 
 echo
+echo "=== Classifying articles ==="
+uv run britannica classify-articles "$VOLUME"
+
+echo
 echo "=== Extracting cross-references ==="
 uv run britannica extract-xrefs "$VOLUME"
 
@@ -67,6 +70,10 @@ uv run britannica resolve-xrefs "$VOLUME"
 echo
 echo "=== Extracting images ==="
 uv run britannica extract-images "$VOLUME"
+
+echo
+echo "=== Extracting contributors ==="
+uv run britannica extract-contributors "$VOLUME"
 
 echo
 echo "=== Exporting articles ==="
