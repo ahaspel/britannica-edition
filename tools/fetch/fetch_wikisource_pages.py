@@ -78,6 +78,92 @@ def fetch_page_wikitext(volume: int, page_number: int) -> str:
 
     return content
 
+def _parse_plate_table(table_html: str) -> str:
+    """Parse an HTML plate table into sectioned image markers with captions.
+
+    Plate tables have a repeating 3-row pattern:
+      Row 1: images (3 across)
+      Row 2: section labels (ALLOYS, GUN-MAKING, etc.)
+      Row 3: captions (Fig. 1, Fig. 2, etc.)
+    """
+    rows = re.findall(r"<tr[^>]*>(.*?)</tr>", table_html, flags=re.DOTALL | re.IGNORECASE)
+    if not rows:
+        return ""
+
+    def _extract_images(row_html):
+        return [m.group(1) for m in re.finditer(r"\[\[(?:Image|File):([^\]|]+)", row_html, re.I)]
+
+    def _extract_cells(row_html):
+        return [re.sub(r"<[^>]+>", "", cell).strip()
+                for cell in re.findall(r"<td[^>]*>(.*?)</td>", row_html, flags=re.DOTALL | re.I)]
+
+    def _clean_caption(text):
+        text = re.sub(r"\{\{[^{}]*\}\}", "", text)
+        text = text.replace("''", "").replace("&amp;", "&").replace("&deg;", "\u00b0")
+        return " ".join(text.split()).strip()
+
+    # Collect figures: (image, section, caption)
+    figures = []
+    i = 0
+    while i < len(rows):
+        images = _extract_images(rows[i])
+        if not images:
+            i += 1
+            continue
+
+        labels = []
+        if i + 1 < len(rows):
+            cells = _extract_cells(rows[i + 1])
+            labels = [c.strip().rstrip(".") for c in cells if c.strip() and any(ch.isalpha() for ch in c)]
+
+        captions = []
+        if i + 2 < len(rows):
+            raw_cells = re.findall(r"<td[^>]*>(.*?)</td>", rows[i + 2], flags=re.DOTALL | re.I)
+            captions = [_clean_caption(c) for c in raw_cells if c.strip()]
+
+        for j, img in enumerate(images):
+            section = labels[j] if j < len(labels) else ""
+            caption = captions[j] if j < len(captions) else ""
+            figures.append((img, section, caption))
+
+        i += 3
+
+    if not figures:
+        return ""
+
+    # Group by section and produce output
+    from collections import OrderedDict
+    sections: dict[str, list[tuple[str, str]]] = OrderedDict()
+    for img, section, caption in figures:
+        if section not in sections:
+            sections[section] = []
+        sections[section].append((img, caption))
+
+    parts = []
+    for section, figs in sections.items():
+        if section:
+            parts.append(section)
+        for img, caption in figs:
+            marker = f"\x00IMG:{img}\x00"
+            if caption:
+                parts.append(f"{marker}\n{caption}")
+            else:
+                parts.append(marker)
+
+    # Get the overall plate title (usually last row)
+    last_cells = _extract_cells(rows[-1]) if rows else []
+    overall_title = ""
+    for c in last_cells:
+        c = c.strip()
+        if c and len(c) > 10 and c.upper() == c:
+            overall_title = c.rstrip(".")
+            break
+    if overall_title:
+        parts.append(overall_title)
+
+    return "\n\n".join(parts)
+
+
 def _image_to_marker(match: re.Match) -> str:
     """Convert [[File:name|opts]] to an inline marker."""
     parts = [p.strip() for p in match.group(1).split("|")]
@@ -119,6 +205,18 @@ def clean_wikisource_page_text(text: str) -> str:
     text = re.sub(r"\n<!--.*?-->\n", "\n", text, flags=re.DOTALL)
     text = re.sub(r"<!--.*?-->", "", text, flags=re.DOTALL)
 
+    # Parse HTML plate tables (these use <table> not {| wiki syntax)
+    # Detect by: contains <table> with multiple [[Image: links
+    def _maybe_plate_table(m: re.Match) -> str:
+        table_html = m.group(0)
+        image_count = len(re.findall(r"\[\[(?:Image|File):", table_html, re.I))
+        if image_count >= 3:
+            parsed = _parse_plate_table(table_html)
+            if parsed:
+                return "\n\n" + parsed + "\n\n"
+        return table_html  # not a plate table, leave for later processing
+    text = re.sub(r"<table[^>]*>.*?</table>", _maybe_plate_table, text, flags=re.DOTALL | re.IGNORECASE)
+
     # Convert ref tags to inline footnote markers (survive template stripping)
     def _ref_to_marker(match: re.Match) -> str:
         content = match.group(1).strip()
@@ -138,6 +236,26 @@ def clean_wikisource_page_text(text: str) -> str:
         text,
         flags=re.IGNORECASE,
     )
+
+    # Convert cross-reference templates to link markers BEFORE table stripping
+    def _lkpl_to_marker(m: re.Match) -> str:
+        parts = m.group(1).split("|")
+        target = parts[0].strip()
+        display = parts[1].strip() if len(parts) > 1 else target
+        return f"\x03{target}|{display}\x03"
+    text = re.sub(r"\{\{(?:EB1911|DNB)\s+lkpl\|([^{}]+)\}\}", _lkpl_to_marker, text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{1911link\|([^{}|]*)\}\}", lambda m: f"\x03{m.group(1)}|{m.group(1)}\x03", text, flags=re.IGNORECASE)
+
+    # Convert regular wikilinks to link markers (skip File/Image/Author)
+    def _wikilink_to_marker(m: re.Match) -> str:
+        content = m.group(1)
+        if re.match(r"(?i)^(File|Image|Author|Category):", content):
+            return ""
+        parts = content.split("|")
+        target = parts[0].strip()
+        display = parts[1].strip() if len(parts) > 1 else target
+        return f"\x03{target}|{display}\x03"
+    text = re.sub(r"\[\[([^\]]+)\]\]", _wikilink_to_marker, text)
 
     # Convert wikitable blocks: preserve image markers and extract table content
     def _convert_table(match: re.Match) -> str:
@@ -183,15 +301,7 @@ def clean_wikisource_page_text(text: str) -> str:
     text = re.sub(r"\{\{lang\|[^{}|]*\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{su[bp]\|([^{}|]*)\}\}", r"\1", text, flags=re.IGNORECASE)
 
-    # Preserve link text from EB1911 cross-reference templates
-    # {{EB1911 lkpl|Peleus}} -> Peleus
-    # {{EB1911 lkpl|Alcott, Louisa May|Louisa}} -> Louisa  (display form)
-    # {{DNB lkpl|Target|Display}} -> Display
-    text = re.sub(r"\{\{(?:EB1911|DNB)\s+lkpl\|[^{}|]*\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
-    text = re.sub(r"\{\{(?:EB1911|DNB)\s+lkpl\|([^{}|]*)\}\}", r"\1", text, flags=re.IGNORECASE)
-
-    # Preserve link text from {{1911link|Target}} templates
-    text = re.sub(r"\{\{1911link\|([^{}|]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    # (lkpl and 1911link already converted to markers above)
 
     # Remove shoulder headings without leaving paragraph breaks —
     # these are marginal annotations, not text content.
@@ -227,11 +337,7 @@ def clean_wikisource_page_text(text: str) -> str:
     text = re.sub(r"^\s*\{\|\s*$", "", text, flags=re.MULTILINE)
     text = re.sub(r"^\s*\|-\s*$", "", text, flags=re.MULTILINE)
 
-    # Handle wikilinks after template cleanup
-    # [[target|label]] -> label
-    text = re.sub(r"\[\[[^\]|]+\|([^\]]+)\]\]", r"\1", text)
-    # [[target]] -> target
-    text = re.sub(r"\[\[([^\]]+)\]\]", r"\1", text)
+    # (wikilinks already converted to markers above)
 
     # Preserve sub/sup content before stripping all tags
     text = re.sub(r"<su[bp][^>]*>(.*?)</su[bp]>", r"\1", text, flags=re.DOTALL | re.IGNORECASE)
@@ -274,6 +380,13 @@ def clean_wikisource_page_text(text: str) -> str:
     def _protect_table_newlines(m: re.Match) -> str:
         return m.group(0).replace("\n", "\x02")
     text = re.sub(r"\{\{TABLE:.*?\}TABLE\}", _protect_table_newlines, text, flags=re.DOTALL)
+
+    # Convert link markers to readable format: «LN:Target|Display»
+    text = re.sub(
+        r"\x03([^|\x03]+)\|([^\x03]+)\x03",
+        lambda m: f"\u00abLN:{m.group(1)}|{m.group(2)}\u00bb",
+        text,
+    )
 
     return text
 

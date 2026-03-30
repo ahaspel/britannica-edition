@@ -2,13 +2,15 @@
 
 ## Overview
 
-This project ingests, cleans, structures, and links content from the 1911 Encyclopedia Britannica into a normalized, queryable format.
+This project ingests, cleans, structures, and links content from the 1911 Encyclopedia Britannica into a normalized, queryable format — aiming for a proper scholarly edition publishable as an ebook and website.
 
 Current focus:
 - deterministic parsing
 - inspectable intermediate stages
 - incremental enrichment (source pages → articles → segments → xrefs → graph)
 - real-page ingestion from Wikisource-backed transcriptions
+- full-text search
+- scholarly apparatus (footnotes, contributor attribution, images)
 
 ## Architecture
 
@@ -18,6 +20,7 @@ Current focus:
 - SQLAlchemy (ORM)
 - Typer (CLI)
 - Postgres (Docker, local dev)
+- Meilisearch (Docker, full-text search)
 - pytest (unit + integration tests)
 
 ### Project Layout
@@ -44,6 +47,7 @@ tools/
 - logical encyclopedia entry
 - title, volume, page range
 - aggregated body text
+- `article_type`: `article`, `front_matter`, or `plate`
 
 ### ArticleSegment
 - provenance layer
@@ -59,6 +63,15 @@ tools/
   - `target_article_id` (nullable)
   - `status` (`resolved`, `unresolved`)
 
+### ArticleImage
+- image metadata extracted from raw wikitext
+- filename, caption, Commons URL
+- linked to article and source page
+
+### Contributor / ArticleContributor
+- contributor names and initials from `{{EB1911 footer initials}}` templates
+- maps contributors to articles
+
 ---
 
 ## Pipeline (Working)
@@ -68,12 +81,17 @@ uv run python tools/fetch/fetch_wikisource_pages.py --volume <n> --start <page> 
 
 - fetches Page:EB1911 - Volume XX.djvu/<page> from Wikisource
 - stores raw wikitext + cleaned preview JSON per page
-- strips most page-scaffolding/templates/tables/images
 - preserves link text from `{{EB1911 lkpl|Target}}` cross-reference templates
-- preserves subscript/superscript digits (so chemical formulas stay recognizable)
-- strips HTML comments (`<!-- column 2 -->` column markers)
+- preserves subscript/superscript digits (chemical formulas stay recognizable)
+- strips HTML comments (`<!-- column 2 -->` column markers) without false paragraph breaks
+- strips shoulder headings without false paragraph breaks
 - preserves `\n` vs `\n\n` distinction (hard wraps vs paragraph breaks)
-- 2s polite delay between requests; exponential backoff on 429; skips already-fetched pages
+- preserves `{{nowrap|...}}` content
+- converts footnotes to `«FN:...»` markers (survive pipeline, rendered in viewer)
+- converts images to `{{IMG:...}}` markers (survive pipeline, rendered inline)
+- converts tables to `{{TABLE:...}TABLE}` markers (protected from reflow)
+- 3s polite delay between requests; 350-page batches with 15-min cooldown
+- exponential backoff on 429; skips already-fetched pages
 
 ### 2. Import fetched pages into SourcePage
 uv run python tools/fetch/import_wikisource_pages.py --indir <dir> --volume <n>
@@ -88,7 +106,7 @@ uv run britannica clean-pages <volume>
 - unicode normalization (NFKC)
 - header stripping
 - hyphenation repair
-- paragraph reflow (joins hard-wrapped lines, preserves paragraph breaks)
+- paragraph reflow (joins hard-wrapped lines, preserves paragraph breaks, protects table blocks)
 - whitespace normalization
 
 ### 4. Boundary Detection
@@ -101,16 +119,34 @@ Currently supports:
 - prefix continuation before new heading on same page
 - heading/body split when article opener and first sentence share one line
 - paragraph-structure preservation through parsing
+- plate page detection (images go to plate entry, text flows through)
+- table-block awareness (no heading detection inside tables)
 
 Title extraction:
 - strips parenthetical content from titles (etymologies, dates, alternate names)
+- strips trailing mixed-case descriptors after comma (Greek, Grand Master, etc.)
+- strips 2-letter formula fragments after comma (CH, etc.)
 - rejects author initials (J., O., F., J. B., M. O. B. C.)
 - rejects wikitext artifacts (}}, +T,}})
 - rejects chemical formulas (middle-dot, arrow, or digit characters)
+- rejects lines starting with digits (figure captions)
+- rejects pure Roman numerals and numbered section headings (ORDER I, PART II, etc.)
+- rejects lines containing pipe characters (table content)
+- rejects titles where text runs directly into lowercase (glued table content)
 - strips trailing periods from titles
+- pulls trailing standalone dates into title (WAR OF 1812)
 - requires 2+ consecutive uppercase letters
+- max 40 chars for all-caps-only lines (rejects long figure captions)
+- 2-letter title allowlist (AA, AB, AI, etc.)
 
-### 5. Xref Extraction
+### 5. Article Classification
+uv run britannica classify-articles <volume>
+
+- `article`: regular encyclopedia entries
+- `front_matter`: pages before first real headword
+- `plate`: detected during boundary detection (pages starting with 3+ images)
+
+### 6. Xref Extraction
 uv run britannica extract-xrefs <volume>
 
 Detects:
@@ -120,52 +156,65 @@ Detects:
 - Deduplicates within each article
 - Filters noise: broken markup artifacts, bibliographic citations, common-word false positives
 
-### 6. Xref Resolution (v1)
+### 7. Xref Resolution
 uv run britannica resolve-xrefs <volume>
+uv run britannica resolve-xrefs-all
 
-- exact match only (normalized title)
-- sets `target_article_id`
-- marks `resolved` / `unresolved`
+- exact match on normalized title (per-volume)
+- cross-volume resolution against all loaded articles
+- fuzzy matching: plural/singular normalization, name inversion (FIRST LAST ↔ LAST, FIRST)
 
----
+### 8. Image Extraction
+uv run britannica extract-images <volume>
 
-### 7. Reporting
+- extracts image metadata from raw wikitext files on disk
+- parses filename, caption, generates Wikimedia Commons URL
+- links images to articles via source page mapping
+
+### 9. Contributor Extraction
+uv run britannica extract-contributors <volume>
+
+- parses `{{EB1911 footer initials|Full Name|Initials}}` templates from raw wikitext
+- handles multiple contributors per article (name2, initials2, etc.)
+- creates Contributor records and ArticleContributor links
+
+### 10. Reporting
 
 #### Unresolved xrefs
 uv run britannica report-unresolved-xrefs <volume>
 
-Used for:
-- editorial review
-- alias detection
-- identifying gaps
-
----
-
 #### Backlinks
 uv run britannica report-backlinks <volume>
 
-Shows:
-- incoming links to each article
-
----
-
-### 8. Export
+### 11. Export
 uv run britannica export-articles <volume>
 
-Outputs JSON per article for:
-- inspection
-- viewer rendering
-- downstream search/indexing
-- xref review
-- includes `target_filename` for resolved xrefs (enables viewer linking)
+Outputs per article:
+- JSON with body, segments, xrefs (with target_filename for resolved links), images, plates, contributors
+- index.json: article index with title, body_start, word count, xref counts, article_type
+- contributors.json: contributor index sorted by surname with article lists
 
-### 9. End-to-end batch script
-./tools/run_volume.sh <volume> <start_page> <end_page> [--skip-fetch]
+### 12. Full-Text Search
+uv run python tools/index_search.py
 
-- wipes volume from database and clears old exports
-- fetches from Wikisource (or skips with `--skip-fetch` to use cached pages)
-- imports, cleans, detects boundaries, extracts and resolves xrefs, exports
-- `--skip-fetch` is useful for re-running pipeline after code changes without re-fetching
+- indexes all exported articles into Meilisearch
+- searchable attributes: title, body, contributors
+- instant search with highlighted snippets
+
+### 13. End-to-end Batch Scripts
+
+./tools/run_volume.sh <volume> [--skip-fetch]
+
+- page counts for all 29 volumes built in
+- wipes volume from database
+- fetches from Wikisource (or skips with `--skip-fetch`)
+- imports, cleans, detects boundaries, classifies, extracts xrefs/images/contributors, resolves, exports
+
+./tools/fetch_all.sh
+
+- fetches all 29 volumes sequentially
+- skips complete volumes, resumes partial ones
+- continues to next volume if one fails (resilient to rate limiting)
 
 ## Testing
 
@@ -179,12 +228,13 @@ uv run pytest
 - whitespace cleanup
 - header stripping
 - hyphenation
-- paragraph reflow
-- heading detection (including initials, artifacts, formulas, parentheticals, trailing periods)
+- paragraph reflow (including table block protection)
+- heading detection (initials, artifacts, formulas, parentheticals, periods, descriptors, Roman numerals, section headings, captions, table content)
 - page parsing
 - roman utility
 - xref extraction (q.v., See, See also, deduplication, noise filtering)
-- xref resolution
+- xref resolution (exact match)
+- fuzzy matching (plural/singular, name inversion)
 
 #### Integration tests
 - page cleanup pipeline (including reflow)
@@ -194,9 +244,9 @@ uv run pytest
 - xref extraction + resolution
 - unresolved xref reporting
 - backlinks reporting
-- article export
+- article export (with index.json and contributors.json)
 
-All tests currently passing (72 tests).
+All tests currently passing (87 tests).
 
 ---
 
@@ -207,83 +257,89 @@ All tests currently passing (72 tests).
 ✔ multi-page article reconstruction
 ✔ provenance tracking via segments
 ✔ cross-reference extraction (q.v., See, See also)
-✔ exact-match resolution with viewer linking
+✔ exact-match and fuzzy resolution with viewer linking
+✔ cross-volume xref resolution
 ✔ unresolved reference reporting
 ✔ backlinks (reverse graph)
 ✔ JSON export for downstream use
-✔ HTML viewer with article display, xref links, and paragraph rendering
+✔ inline images from Wikimedia Commons
+✔ footnotes with superscript numbers and notes section
+✔ tables preserved and rendered
+✔ contributor extraction and contributor index
+✔ article classification (article, front_matter, plate)
+✔ plate page detection with correct text flow
+✔ HTML viewer with article index, search, xref links, paragraph rendering
+✔ full-text search via Meilisearch (instant, highlighted snippets)
+✔ in-article text search with highlighting
+✔ contributor index page (sorted by surname)
 ✔ repeatable batch workflow with --skip-fetch option
-✔ title normalization (parenthetical stripping, false-positive rejection)
+✔ title normalization (parentheticals, descriptors, formulas, section headings)
 ✔ paragraph reflow (hard-wrap joining, paragraph-break preservation)
 ✔ chemical formula filtering
-✔ rate-limited Wikisource fetching with resume support
+✔ rate-limited Wikisource fetching with resume support (fetch_all.sh for all 29 volumes)
 
 ## Known Limitations
 
-- xref resolution is exact-match only (8.8% resolution rate on partial volume 1)
-- no alias/variant title handling yet
-- no fuzzy matching
-- Article.body is stored (not yet derived from segments)
-- front matter pages (title page, dedication) produce false articles
+- some internal section headings may still create false articles in later volumes
+- plate pages with multiple sections (ALLOYS/GUN-MAKING/IRON AND STEEL) are jumbled
+- table header row detection not implemented (all rows rendered uniformly)
+- stale export files not cleaned automatically on re-export
 - chemical formula subscripts render as plain digits (not subscript characters)
-- only ~591 of ~1029 pages fetched for volume 1 (Wikisource rate limiting)
+- some names in FIRST LAST order rather than LAST, FIRST (Wikisource source issue)
+- Article.body is stored (not yet derived from segments)
 
 ## Next Steps (Planned)
 
 ### Short-term
 
-1. Viewer article index
-   - browse all exported articles without typing filenames
-   - navigate between articles (next/prev)
-   - surface suspicious entries (very short body, unresolved xrefs)
-
-2. Scale to full volume 1
-   - fetch remaining pages (592-1029)
-   - validate pipeline at scale
-   - measure xref resolution improvement with complete data
-
-3. Alias system
-   - map variant names → canonical titles
-   - improve xref resolution
-   - populate from stripped parentheticals (alternate names)
+1. Complete the fetch of all 29 volumes (overnight job running)
+2. Process all fetched volumes through the pipeline
+3. Alias system for improved xref resolution
 
 ### Medium-term
 
-- fuzzy xref resolution
-- front matter detection/exclusion
-- editorial tooling (review issues)
-- diffing pipeline outputs
+- section/subsection structure within long articles
+- multi-section plate handling
+- editorial review workflow
+- ebook export (EPUB with hyperlinked xrefs)
 - derive `Article.body` from `ArticleSegment`
-- search index (Meilisearch / Typesense)
-- image metadata preservation
-- multi-volume processing
+- image download from Commons for self-contained edition
+
+### Long-term
+
+- web hosting with stable URLs
+- API access
+- introductory essay and editorial notes
+- mobile-responsive design
+- citation support
 
 ## Development Notes
 
 - Uses `src/` layout (important for imports)
 - `.gitattributes` enforces LF line endings
-- Docker required for local Postgres
+- Docker required for local Postgres and Meilisearch
 - tests use SQLite for speed/isolation
-- `tools/` now contains utility scripts for:
-  - DB reset / wipe by volume
-  - Wikisource fetch/import
-  - end-to-end batch reruns
-- repeatable end-to-end reruns are now part of normal parser development workflow
-- viewer: `python -m http.server 8080` from project root, open at localhost:8080/tools/viewer/viewer.html
+- `tools/` contains utility scripts for DB management, fetching, search indexing, and batch processing
+- repeatable end-to-end reruns are part of normal parser development workflow
+- viewer: `python -m http.server 8000` from project root
+- viewer pages: index.html, viewer.html, search.html, contributors.html
 
 ## Status
 
-System is stable, test-covered, and operating on real Wikisource page data at scale (591 pages, 982 articles).
+System is stable, test-covered, and operating on real Wikisource page data at scale.
 
 Current state:
-- full pipeline working: fetch → import → clean → detect → xref extract → resolve → export
-- title extraction is clean across tested ranges (pages 1-591)
-- paragraph reflow produces readable flowing text with proper paragraph breaks
-- cross-references extracted and resolved with viewer navigation
-- 72 tests passing
+- 5 complete volumes processed (7,454 articles)
+- volumes 6-29 fetching overnight
+- full pipeline: fetch → import → clean → detect → classify → xrefs → resolve → images → contributors → export → search index
+- full-text search operational via Meilisearch
+- footnotes, tables, inline images all preserved and rendered
+- 87 tests passing
+- 349 cross-references resolved (23% with 5 volumes)
 
 Immediate focus:
 
-👉 viewer article index for browsing
-👉 complete volume 1 fetch
+👉 complete overnight fetch of remaining volumes
+👉 process all volumes through pipeline
 👉 alias system for improved xref resolution
+👉 section heading refinement

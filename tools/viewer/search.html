@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Britannica Search</title>
+  <style>
+    :root {
+      --bg: #f7f7f5;
+      --panel: #ffffff;
+      --text: #1f2328;
+      --muted: #6b7280;
+      --border: #d0d7de;
+      --link: #0969da;
+      --highlight: #fff3cd;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    h1 { margin-top: 0; font-size: 1.8rem; }
+
+    .nav-links {
+      margin-bottom: 12px;
+      font-size: 0.9rem;
+    }
+
+    .nav-links a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    .nav-links a:hover { text-decoration: underline; }
+
+    .search-box {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font: inherit;
+      font-size: 1.1rem;
+    }
+
+    .search-box:focus {
+      outline: none;
+      border-color: var(--link);
+      box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.15);
+    }
+
+    .stats {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 10px;
+    }
+
+    .result {
+      border-bottom: 1px solid #eee;
+      padding: 12px 0;
+    }
+
+    .result:last-child { border-bottom: none; }
+
+    .result-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .result-title a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    .result-title a:hover { text-decoration: underline; }
+
+    .result-meta {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 2px;
+    }
+
+    .result-snippet {
+      margin-top: 6px;
+      font-size: 0.95rem;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .result-snippet em {
+      background: var(--highlight);
+      font-style: normal;
+      padding: 1px 2px;
+      border-radius: 2px;
+    }
+
+    .empty {
+      color: var(--muted);
+      padding: 40px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="card">
+      <h1>Search</h1>
+      <div class="nav-links"><a href="index.html">&larr; Article Index</a></div>
+      <input id="search" class="search-box" type="text" placeholder="Search articles..." autofocus />
+      <div id="stats" class="stats"></div>
+    </div>
+
+    <div class="card">
+      <div id="results"></div>
+      <div id="empty" class="empty">Type to search across all articles.</div>
+    </div>
+  </div>
+
+  <script>
+    const MEILI_URL = "http://localhost:7700";
+    const MEILI_KEY = "britannica-dev-key";
+    const INDEX = "articles";
+
+    const searchInput = document.getElementById("search");
+    const resultsEl = document.getElementById("results");
+    const emptyEl = document.getElementById("empty");
+    const statsEl = document.getElementById("stats");
+
+    let debounceTimer = null;
+
+    function viewerUrl(filename) {
+      return `viewer.html?article=/data/derived/articles/${encodeURIComponent(filename)}`;
+    }
+
+    async function doSearch(query) {
+      if (!query.trim()) {
+        resultsEl.innerHTML = "";
+        emptyEl.style.display = "block";
+        statsEl.textContent = "";
+        return;
+      }
+
+      try {
+        const resp = await fetch(`${MEILI_URL}/indexes/${INDEX}/search`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${MEILI_KEY}`,
+          },
+          body: JSON.stringify({
+            q: query,
+            limit: 50,
+            attributesToRetrieve: ["id", "title", "article_type", "volume", "page_start", "page_end", "body_start", "filename", "contributors"],
+            attributesToHighlight: ["body", "title"],
+            attributesToCrop: ["body:30"],
+            cropLength: 30,
+            highlightPreTag: "<em>",
+            highlightPostTag: "</em>",
+          }),
+        });
+
+        const data = await resp.json();
+        const hits = data.hits || [];
+
+        statsEl.textContent = `${data.estimatedTotalHits || hits.length} results in ${data.processingTimeMs}ms`;
+
+        if (hits.length === 0) {
+          resultsEl.innerHTML = "";
+          emptyEl.style.display = "block";
+          emptyEl.textContent = "No results found.";
+          return;
+        }
+
+        emptyEl.style.display = "none";
+
+        resultsEl.innerHTML = hits.map(hit => {
+          const formatted = hit._formatted || {};
+          const snippet = formatted.body || hit.body_start || "";
+          const highlightedTitle = formatted.title || hit.title;
+          const pageRange = hit.page_start === hit.page_end
+            ? `p.${hit.page_start}`
+            : `pp.${hit.page_start}\u2013${hit.page_end}`;
+          const contribs = hit.contributors ? ` \u00b7 ${hit.contributors}` : "";
+
+          return `
+            <div class="result">
+              <div class="result-title">
+                <a href="${viewerUrl(hit.filename)}">${highlightedTitle}</a>
+              </div>
+              <div class="result-meta">
+                Volume ${hit.volume} \u00b7 ${pageRange}${contribs}
+              </div>
+              <div class="result-snippet">${snippet}</div>
+            </div>
+          `;
+        }).join("");
+
+      } catch (err) {
+        statsEl.textContent = `Search error: ${err.message}`;
+      }
+    }
+
+    searchInput.addEventListener("input", () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        doSearch(searchInput.value);
+      }, 200);
+    });
+
+    // Check if query param exists
+    const urlQuery = new URLSearchParams(window.location.search).get("q");
+    if (urlQuery) {
+      searchInput.value = urlQuery;
+      doSearch(urlQuery);
+    }
+  </script>
+</body>
+</html>

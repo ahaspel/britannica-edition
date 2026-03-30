@@ -243,6 +243,22 @@
     .data-table tr:first-child td {
     }
 
+    .article-link {
+      color: var(--link);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--link);
+    }
+
+    .article-link:hover {
+      border-bottom-style: solid;
+    }
+
+    .search-highlight {
+      background: #fff3cd;
+      padding: 1px 2px;
+      border-radius: 2px;
+    }
+
     .footnote-ref a {
       color: var(--link);
       text-decoration: none;
@@ -313,9 +329,20 @@
   <div class="page">
     <div class="card">
       <h1>Britannica Minimal Viewer</h1>
+      <div style="margin-bottom: 12px; font-size: 0.9rem;">
+        <a href="index.html" style="color: var(--link); text-decoration: none;">&larr; Index</a>
+        &nbsp;&nbsp;
+        <a href="search.html" style="color: var(--link); text-decoration: none;">Search</a>
+        &nbsp;&nbsp;
+        <a href="contributors.html" style="color: var(--link); text-decoration: none;">Contributors</a>
+      </div>
       <div class="controls">
         <input id="articlePath" type="text" placeholder="data/derived/articles/abandon.json" />
         <button id="loadButton">Load Article</button>
+      </div>
+      <div class="controls">
+        <input id="articleSearch" type="text" placeholder="Search within article..." style="flex: 0 1 260px; min-width: 160px;" />
+        <span id="matchCount" style="color: var(--muted); font-size: 0.85rem;"></span>
       </div>
       <div class="message">
         Enter a path to an exported article JSON file, or open this page with
@@ -350,6 +377,7 @@
 
     let footnoteCounter = 0;
     let collectedFootnotes = [];
+    let linkedTargets = new Set();
 
     function renderParagraph(p) {
       const imgMatch = p.match(/^\{\{IMG:([^|}]+)(?:\|([^}]*))?\}\}$/);
@@ -379,6 +407,16 @@
         footnoteCounter++;
         collectedFootnotes.push({ num: footnoteCounter, text: content });
         return `<sup class="footnote-ref"><a href="#fn-${footnoteCounter}" id="fnref-${footnoteCounter}">${footnoteCounter}</a></sup>`;
+      });
+      // Replace link markers — only first mention becomes a hyperlink
+      html = html.replace(/\u00abLN:([^|]*)\|([^\u00bb]*)\u00bb/g, (match, target, display) => {
+        const key = target.toLowerCase();
+        if (linkedTargets.has(key)) {
+          return display; // subsequent mentions: plain text
+        }
+        linkedTargets.add(key);
+        // Search for the target article
+        return `<a href="search.html?q=${encodeURIComponent(target)}" class="article-link" title="${target}">${display}</a>`;
       });
       return `<p>${html}</p>`;
     }
@@ -413,7 +451,8 @@
             ${xrefs.map(xref => {
               const status = xref.status || "unknown";
               const type = xref.xref_type || "xref";
-              const surface = xref.surface_text || xref.normalized_target || "(unknown target)";
+              const rawSurface = xref.surface_text || xref.normalized_target || "(unknown target)";
+              const surface = rawSurface.replace(/\u00abLN:[^|]*\|([^\u00bb]*)\u00bb/g, "$1");
               const normalized = xref.normalized_target || "";
               const resolved = status === "resolved";
 
@@ -460,7 +499,7 @@
           </div>
           ${contributors.length ? `<div class="contributors">By ${contributors.map(c => `<span title="${escapeHtml(c.initials)}">${escapeHtml(c.full_name)}</span>`).join(", ")}</div>` : ""}
           ${plates.length ? `<div class="contributors">Plates: ${plates.map(p => `<a href="?article=/data/derived/articles/${encodeURIComponent(p.filename)}">${escapeHtml(p.title)}</a>`).join(", ")}</div>` : ""}
-          <div class="body-text">${(() => { footnoteCounter = 0; collectedFootnotes = []; return (article.body || "").split("\n\n").map(p => renderParagraph(p)).join(""); })()}</div>
+          <div class="body-text">${(() => { footnoteCounter = 0; collectedFootnotes = []; linkedTargets = new Set(); return (article.body || "").split("\n\n").map(p => renderParagraph(p)).join(""); })()}</div>
           ${collectedFootnotes.length ? `<div class="footnotes"><h3>Notes</h3><ol>${collectedFootnotes.map(fn => `<li id="fn-${fn.num}"><a href="#fnref-${fn.num}">\u2191</a> ${fn.text}</li>`).join("")}</ol></div>` : ""}
         </div>
 
@@ -484,10 +523,6 @@
           ${xrefHtml}
         </div>
 
-        <div class="card">
-          <h2>Segments</h2>
-          ${segmentHtml}
-        </div>
       `;
     }
 
@@ -530,6 +565,55 @@
     if (initialPath) {
       loadArticle(initialPath);
     }
+
+    // In-article search
+    const articleSearchInput = document.getElementById("articleSearch");
+    const matchCountEl = document.getElementById("matchCount");
+
+    articleSearchInput.addEventListener("input", () => {
+      const query = articleSearchInput.value.trim();
+      const bodyEl = document.querySelector(".body-text");
+      if (!bodyEl) return;
+
+      // Remove existing highlights
+      bodyEl.querySelectorAll(".search-highlight").forEach(el => {
+        el.replaceWith(el.textContent);
+      });
+      bodyEl.normalize();
+
+      if (!query) {
+        matchCountEl.textContent = "";
+        return;
+      }
+
+      // Walk text nodes and highlight matches
+      const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi");
+      let count = 0;
+
+      function highlightNode(node) {
+        if (node.nodeType === 3) {
+          const text = node.textContent;
+          if (regex.test(text)) {
+            regex.lastIndex = 0;
+            const span = document.createElement("span");
+            span.innerHTML = text.replace(regex, (match) => {
+              count++;
+              return `<span class="search-highlight">${match}</span>`;
+            });
+            node.parentNode.replaceChild(span, node);
+          }
+        } else if (node.nodeType === 1 && !node.classList?.contains("search-highlight")) {
+          Array.from(node.childNodes).forEach(highlightNode);
+        }
+      }
+
+      highlightNode(bodyEl);
+      matchCountEl.textContent = count ? `${count} match${count !== 1 ? "es" : ""}` : "No matches";
+
+      // Scroll to first match
+      const first = bodyEl.querySelector(".search-highlight");
+      if (first) first.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
   </script>
 </body>
 </html>

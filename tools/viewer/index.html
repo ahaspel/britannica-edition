@@ -135,6 +135,28 @@
 
     .page-range { color: var(--muted); font-size: 0.85rem; }
     .body-start { color: var(--muted); font-size: 0.85rem; font-style: italic; margin-left: 8px; }
+
+    .volume-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 16px;
+    }
+
+    .vol-btn {
+      padding: 4px 8px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      background: #fff;
+      cursor: pointer;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .vol-btn:hover { background: #f3f4f6; }
+    .vol-btn.active { background: var(--link); color: #fff; border-color: var(--link); }
+    .vol-btn.disabled { opacity: 0.3; cursor: default; }
   </style>
 </head>
 <body>
@@ -142,7 +164,12 @@
     <div class="card">
       <h1>Britannica 11th Edition</h1>
       <div id="stats" class="stats">Loading...</div>
-      <div style="margin-bottom: 12px; font-size: 0.9rem;"><a href="contributors.html" style="color: var(--link); text-decoration: none;">View Contributors &rarr;</a></div>
+      <div style="margin-bottom: 12px; font-size: 0.9rem;">
+        <a href="search.html" style="color: var(--link); text-decoration: none;">Full-Text Search &rarr;</a>
+        &nbsp;&nbsp;
+        <a href="contributors.html" style="color: var(--link); text-decoration: none;">Contributors &rarr;</a>
+      </div>
+      <div id="volume-bar" class="volume-bar"></div>
       <input id="search" class="search-box" type="text" placeholder="Search articles..." />
       <div class="filter-bar">
         <button class="filter-btn active" data-filter="all">All</button>
@@ -175,6 +202,7 @@
     let currentFilter = "all";
     let currentSort = "title";
     let sortAsc = true;
+    let currentVolume = null; // null = all volumes
     const searchInput = document.getElementById("search");
     const tbody = document.getElementById("article-list");
     const emptyMsg = document.getElementById("empty");
@@ -208,8 +236,14 @@
     function render() {
       const query = searchInput.value.trim();
       const filtered = articles
-        .filter(a => applyFilter(a) && applySearch(a, query))
+        .filter(a => (currentVolume === null || a.volume === currentVolume) && applyFilter(a) && applySearch(a, query))
         .sort((a, b) => {
+          // Default sort: volume then page (original encyclopedia order)
+          if (currentSort === "page_start" || currentSort === "title") {
+            if (a.volume !== b.volume) return (a.volume - b.volume) * (sortAsc ? 1 : -1);
+            if (a.page_start !== b.page_start) return (a.page_start - b.page_start) * (sortAsc ? 1 : -1);
+            return a.title.localeCompare(b.title) * (sortAsc ? 1 : -1);
+          }
           let va = a[currentSort], vb = b[currentSort];
           if (typeof va === "string") { va = va.toLowerCase(); vb = vb.toLowerCase(); }
           if (va < vb) return sortAsc ? -1 : 1;
@@ -283,6 +317,51 @@
         const totalXrefs = articles.reduce((s, a) => s + a.xref_count, 0);
         const resolvedXrefs = articles.reduce((s, a) => s + a.resolved_count, 0);
         statsEl.textContent = `${articles.length} articles \u00b7 ${totalXrefs} cross-references (${resolvedXrefs} resolved)`;
+
+        // Build volume bar
+        const volumes = [...new Set(articles.map(a => a.volume))].sort((a, b) => a - b);
+        const volBar = document.getElementById("volume-bar");
+        const allBtn = document.createElement("button");
+        allBtn.className = "vol-btn active";
+        allBtn.textContent = "All";
+        allBtn.addEventListener("click", () => {
+          currentVolume = null;
+          volBar.querySelectorAll(".vol-btn").forEach(b => b.classList.remove("active"));
+          allBtn.classList.add("active");
+          render();
+        });
+        volBar.appendChild(allBtn);
+
+        // Volume labels from the actual 11th edition spine labels
+        const volumeLabels = [
+          "",
+          "A\u2013And",       "And\u2013Aus",     "Aus\u2013Bis",     "Bis\u2013Cal",
+          "Cal\u2013Cha",     "Cha\u2013Con",     "Con\u2013Dem",     "Dem\u2013Edw",
+          "Edw\u2013Eva",     "Eva\u2013Fra",     "Fra\u2013Gib",     "Gib\u2013Har",
+          "Har\u2013Hus",     "Hus\u2013Ita",     "Ita\u2013Kys",     "L\u2013Lor",
+          "Lor\u2013Mec",     "Med\u2013Mum",     "Mun\u2013Odb",     "Ode\u2013Pay",
+          "Pay\u2013Pol",     "Pol\u2013Pro",     "Pro\u2013Saa",     "Saa\u2013Shu",
+          "Shu\u2013Sub",     "Sub\u2013Tom",     "Tom\u2013Ves",     "Ves\u2013Zym",
+          "Index",
+        ];
+
+        for (let v = 1; v <= 29; v++) {
+          const btn = document.createElement("button");
+          btn.className = "vol-btn" + (volumes.includes(v) ? "" : " disabled");
+          btn.textContent = volumeLabels[v];
+          btn.title = `Volume ${v}`;
+          if (volumes.includes(v)) {
+            const vol = v;
+            btn.addEventListener("click", () => {
+              currentVolume = vol;
+              volBar.querySelectorAll(".vol-btn").forEach(b => b.classList.remove("active"));
+              btn.classList.add("active");
+              render();
+            });
+          }
+          volBar.appendChild(btn);
+        }
+
         render();
       })
       .catch(err => {
