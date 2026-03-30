@@ -1,5 +1,6 @@
 from britannica.db.models import Article, CrossReference
 from britannica.db.session import SessionLocal
+from britannica.xrefs.alias_table import build_alias_map
 from britannica.xrefs.resolver import resolve_xref_exact, resolve_xref_fuzzy
 
 
@@ -41,13 +42,20 @@ def resolve_xrefs_for_volume(volume: int) -> int:
 def resolve_xrefs_all() -> int:
     """Resolve all unresolved xrefs against articles from any volume.
 
-    Tries exact match first, then fuzzy matching (plural/singular, name inversion).
+    Uses a unified lookup: canonical titles + aliases + fuzzy matching.
     """
     session = SessionLocal()
 
     try:
         all_articles = session.query(Article).all()
+        # Build unified lookup: title -> article_id
         title_map = {a.title.strip().upper(): a.id for a in all_articles}
+
+        # Add aliases to the lookup (don't overwrite canonical titles)
+        alias_map = build_alias_map()
+        for alias, canonical in alias_map.items():
+            if alias not in title_map and canonical in title_map:
+                title_map[alias] = title_map[canonical]
 
         unresolved = (
             session.query(CrossReference)
@@ -58,8 +66,10 @@ def resolve_xrefs_all() -> int:
         resolved = 0
 
         for xref in unresolved:
-            # Try exact match first
-            target_article_id = resolve_xref_exact(xref, all_articles)
+            target = xref.normalized_target.strip().upper()
+
+            # Unified lookup: exact title, alias, all in one map
+            target_article_id = title_map.get(target)
 
             # Fall back to fuzzy matching
             if target_article_id is None:

@@ -78,6 +78,58 @@ def fetch_page_wikitext(volume: int, page_number: int) -> str:
 
     return content
 
+_UNICODE_FRACTIONS = {
+    ("1", "2"): "\u00bd",       # ½
+    ("1", "3"): "\u2153",       # ⅓
+    ("2", "3"): "\u2154",       # ⅔
+    ("1", "4"): "\u00bc",       # ¼
+    ("3", "4"): "\u00be",       # ¾
+    ("1", "5"): "\u2155",       # ⅕
+    ("2", "5"): "\u2156",       # ⅖
+    ("3", "5"): "\u2157",       # ⅗
+    ("4", "5"): "\u2158",       # ⅘
+    ("1", "6"): "\u2159",       # ⅙
+    ("5", "6"): "\u215a",       # ⅚
+    ("1", "7"): "\u2150",       # ⅐
+    ("1", "8"): "\u215b",       # ⅛
+    ("3", "8"): "\u215c",       # ⅜
+    ("5", "8"): "\u215d",       # ⅝
+    ("7", "8"): "\u215e",       # ⅞
+    ("1", "9"): "\u2151",       # ⅑
+    ("1", "10"): "\u2152",      # ⅒
+}
+
+
+def _to_fraction(num: str, denom: str) -> str:
+    """Convert numerator/denominator to Unicode fraction or text."""
+    if not denom:
+        # Single argument like {{EB1911 tfrac|2}} — probably a superscript 2
+        return _to_unicode_sup(num)
+    # Try Unicode fraction
+    frac = _UNICODE_FRACTIONS.get((num, denom))
+    if frac:
+        return frac
+    # Fall back to text fraction with Unicode fraction slash
+    return f"{num}\u2044{denom}"
+
+
+_SUB_MAP = str.maketrans("0123456789aeioruvxhklmnpst()+=-",
+                          "₀₁₂₃₄₅₆₇₈₉ₐₑᵢₒᵣᵤᵥₓₕₖₗₘₙₚₛₜ₍₎₊₌₋")
+
+_SUP_MAP = str.maketrans("0123456789abcdefghijklmnoprstuvwxyz()+=-",
+                          "⁰¹²³⁴⁵⁶⁷⁸⁹ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖʳˢᵗᵘᵛʷˣʸᶻ⁽⁾⁺⁼⁻")
+
+
+def _to_unicode_sub(text: str) -> str:
+    """Convert text to Unicode subscript characters where possible."""
+    return text.translate(_SUB_MAP)
+
+
+def _to_unicode_sup(text: str) -> str:
+    """Convert text to Unicode superscript characters where possible."""
+    return text.translate(_SUP_MAP)
+
+
 def _parse_plate_table(table_html: str) -> str:
     """Parse an HTML plate table into sectioned image markers with captions.
 
@@ -217,6 +269,13 @@ def clean_wikisource_page_text(text: str) -> str:
         return table_html  # not a plate table, leave for later processing
     text = re.sub(r"<table[^>]*>.*?</table>", _maybe_plate_table, text, flags=re.DOTALL | re.IGNORECASE)
 
+    # Preserve <math> LaTeX content as markers
+    text = re.sub(
+        r"<math>(.*?)</math>",
+        lambda m: f"\x04MATH:{m.group(1)}\x04",
+        text, flags=re.DOTALL | re.IGNORECASE,
+    )
+
     # Convert ref tags to inline footnote markers (survive template stripping)
     def _ref_to_marker(match: re.Match) -> str:
         content = match.group(1).strip()
@@ -292,14 +351,35 @@ def clean_wikisource_page_text(text: str) -> str:
     text = re.sub(r"\{\|.*?\|\}", _convert_table, text, flags=re.DOTALL)
 
     # Preserve content of a few useful one-argument templates
+    # {{Greek|ἄλφα}} -> ἄλφα   (Greek text)
+    # {{polytonic|ἄλφα}} -> ἄλφα   (Greek with diacritics)
     # {{sc|e.m.f.}} -> e.m.f.
     # {{lang|fr|bonjour}} -> bonjour   (optional but handy)
-    # {{sub|3}} -> 3   (preserve subscript digits so formulas stay recognizable)
-    # {{sup|2}} -> 2
+    text = re.sub(r"\{\{Greek\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{polytonic\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{Hebrew\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+
+    # Convert fraction templates to Unicode or text fractions
+    text = re.sub(
+        r"\{\{(?:EB1911 tfrac|sfrac)\|([^{}|]+?)(?:\|([^{}|]+?))?\}\}",
+        lambda m: _to_fraction(m.group(1).strip(), (m.group(2) or "").strip()),
+        text, flags=re.IGNORECASE,
+    )
+    # {{sub|3}} -> ₃   (Unicode subscript)
+    # {{sup|2}} -> ²   (Unicode superscript)
     text = re.sub(r"\{\{sc\|([^{}|]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{nowrap\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{lang\|[^{}|]*\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
-    text = re.sub(r"\{\{su[bp]\|([^{}|]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    text = re.sub(
+        r"\{\{sub\|([^{}|]*)\}\}",
+        lambda m: _to_unicode_sub(m.group(1)),
+        text, flags=re.IGNORECASE,
+    )
+    text = re.sub(
+        r"\{\{sup\|([^{}|]*)\}\}",
+        lambda m: _to_unicode_sup(m.group(1)),
+        text, flags=re.IGNORECASE,
+    )
 
     # (lkpl and 1911link already converted to markers above)
 
@@ -339,8 +419,17 @@ def clean_wikisource_page_text(text: str) -> str:
 
     # (wikilinks already converted to markers above)
 
-    # Preserve sub/sup content before stripping all tags
-    text = re.sub(r"<su[bp][^>]*>(.*?)</su[bp]>", r"\1", text, flags=re.DOTALL | re.IGNORECASE)
+    # Convert HTML sub/sup to Unicode subscript/superscript before stripping tags
+    text = re.sub(
+        r"<sub[^>]*>(.*?)</sub>",
+        lambda m: _to_unicode_sub(m.group(1)),
+        text, flags=re.DOTALL | re.IGNORECASE,
+    )
+    text = re.sub(
+        r"<sup[^>]*>(.*?)</sup>",
+        lambda m: _to_unicode_sup(m.group(1)),
+        text, flags=re.DOTALL | re.IGNORECASE,
+    )
 
     # Remove remaining HTML/XML-like tags
     text = re.sub(r"</?[a-zA-Z][^>]*>", "", text)
@@ -380,6 +469,13 @@ def clean_wikisource_page_text(text: str) -> str:
     def _protect_table_newlines(m: re.Match) -> str:
         return m.group(0).replace("\n", "\x02")
     text = re.sub(r"\{\{TABLE:.*?\}TABLE\}", _protect_table_newlines, text, flags=re.DOTALL)
+
+    # Convert math markers to readable format
+    text = re.sub(
+        r"\x04MATH:(.*?)\x04",
+        lambda m: f"\u00abMATH:{m.group(1)}\u00bb",
+        text, flags=re.DOTALL,
+    )
 
     # Convert link markers to readable format: «LN:Target|Display»
     text = re.sub(

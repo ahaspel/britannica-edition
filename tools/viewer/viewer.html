@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Britannica Viewer</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <style>
     :root {
       --bg: #f7f7f5;
@@ -243,6 +245,50 @@
     .data-table tr:first-child td {
     }
 
+    .section-heading {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.15rem;
+      margin-top: 1.5em;
+      margin-bottom: 0.3em;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 4px;
+    }
+
+    .toc {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .toc h3 {
+      margin: 0 0 8px 0;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .toc ol {
+      margin: 0;
+      padding-left: 20px;
+      columns: 2;
+      column-gap: 24px;
+    }
+
+    .toc li {
+      margin-bottom: 3px;
+    }
+
+    .toc a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    .toc a:hover { text-decoration: underline; }
+
     .article-link {
       color: var(--link);
       text-decoration: none;
@@ -378,6 +424,8 @@
     let footnoteCounter = 0;
     let collectedFootnotes = [];
     let linkedTargets = new Set();
+    let sectionCounter = 0;
+    let collectedSections = [];
 
     function renderParagraph(p) {
       const imgMatch = p.match(/^\{\{IMG:([^|}]+)(?:\|([^}]*))?\}\}$/);
@@ -401,12 +449,47 @@
         return `<table class="data-table">${tableRows}</table>`;
       }
 
+      // Detect section headings: "Section Name.—rest of paragraph"
+      const sectionMatch = p.match(/^([A-Z][A-Za-z\s,\-&]+)\.\u2014(.*)$/s);
+      if (sectionMatch && sectionMatch[1].length < 60) {
+        sectionCounter++;
+        const sectionTitle = sectionMatch[1].trim();
+        const sectionBody = sectionMatch[2].trim();
+        const sectionId = `section-${sectionCounter}`;
+        collectedSections.push({ id: sectionId, title: sectionTitle });
+
+        // Render the rest of the paragraph normally
+        let bodyHtml = escapeHtml(sectionBody);
+        bodyHtml = bodyHtml.replace(/\u00abFN:(.*?)\u00bb/gs, (match, content) => {
+          footnoteCounter++;
+          collectedFootnotes.push({ num: footnoteCounter, text: content });
+          return `<sup class="footnote-ref"><a href="#fn-${footnoteCounter}" id="fnref-${footnoteCounter}">${footnoteCounter}</a></sup>`;
+        });
+        bodyHtml = bodyHtml.replace(/\u00abLN:([^|]*)\|([^\u00bb]*)\u00bb/g, (match, target, display) => {
+          const key = target.toLowerCase();
+          if (linkedTargets.has(key)) return display;
+          linkedTargets.add(key);
+          return `<a href="search.html?q=${encodeURIComponent(target)}" class="article-link" title="${target}">${display}</a>`;
+        });
+
+        return `<h3 class="section-heading" id="${sectionId}">${escapeHtml(sectionTitle)}</h3><p>${bodyHtml}</p>`;
+      }
+
       // Replace footnote markers with superscript numbers
       let html = escapeHtml(p);
       html = html.replace(/\u00abFN:(.*?)\u00bb/gs, (match, content) => {
         footnoteCounter++;
         collectedFootnotes.push({ num: footnoteCounter, text: content });
         return `<sup class="footnote-ref"><a href="#fn-${footnoteCounter}" id="fnref-${footnoteCounter}">${footnoteCounter}</a></sup>`;
+      });
+      // Render math markers with KaTeX
+      html = html.replace(/\u00abMATH:(.*?)\u00bb/gs, (match, latex) => {
+        try {
+          if (typeof katex !== "undefined") {
+            return katex.renderToString(latex, { throwOnError: false, displayMode: false });
+          }
+        } catch(e) {}
+        return `<code class="math-fallback">${latex}</code>`;
       });
       // Replace link markers — only first mention becomes a hyperlink
       html = html.replace(/\u00abLN:([^|]*)\|([^\u00bb]*)\u00bb/g, (match, target, display) => {
@@ -499,7 +582,14 @@
           </div>
           ${contributors.length ? `<div class="contributors">By ${contributors.map(c => `<span title="${escapeHtml(c.initials)}">${escapeHtml(c.full_name)}</span>`).join(", ")}</div>` : ""}
           ${plates.length ? `<div class="contributors">Plates: ${plates.map(p => `<a href="?article=/data/derived/articles/${encodeURIComponent(p.filename)}">${escapeHtml(p.title)}</a>`).join(", ")}</div>` : ""}
-          <div class="body-text">${(() => { footnoteCounter = 0; collectedFootnotes = []; linkedTargets = new Set(); return (article.body || "").split("\n\n").map(p => renderParagraph(p)).join(""); })()}</div>
+          ${(() => {
+            footnoteCounter = 0; collectedFootnotes = []; linkedTargets = new Set(); sectionCounter = 0; collectedSections = [];
+            const bodyHtml = (article.body || "").split("\n\n").map(p => renderParagraph(p)).join("");
+            const tocHtml = collectedSections.length >= 3
+              ? `<div class="toc"><h3>Contents</h3><ol>${collectedSections.map(s => `<li><a href="#${s.id}">${escapeHtml(s.title)}</a></li>`).join("")}</ol></div>`
+              : "";
+            return tocHtml + `<div class="body-text">${bodyHtml}</div>`;
+          })()}
           ${collectedFootnotes.length ? `<div class="footnotes"><h3>Notes</h3><ol>${collectedFootnotes.map(fn => `<li id="fn-${fn.num}"><a href="#fnref-${fn.num}">\u2191</a> ${fn.text}</li>`).join("")}</ol></div>` : ""}
         </div>
 
