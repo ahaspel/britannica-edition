@@ -9,6 +9,18 @@ import time
 from pathlib import Path
 import requests
 
+from britannica.markers import (
+    _INTERNAL_IMG as _IMG,
+    _INTERNAL_FN as _FN,
+    _INTERNAL_TABLE as _TBL,
+    _INTERNAL_LINK as _LNK,
+    _INTERNAL_MATH as _MATH,
+    _INTERNAL_VERSE as _VERSE,
+    _INTERNAL_FORMAT as _FMT,
+    _INTERNAL_SEC as _SEC,
+    _INTERNAL_PRE as _PRE,
+)
+
 API_URL = "https://en.wikisource.org/w/api.php"
 
 HEADERS = {
@@ -196,7 +208,7 @@ def _parse_plate_table(table_html: str) -> str:
         if section:
             parts.append(section)
         for img, caption in figs:
-            marker = f"\x00IMG:{img}\x00"
+            marker = f"{_IMG}IMG:{img}{_IMG}"
             if caption:
                 parts.append(f"{marker}\n{caption}")
             else:
@@ -221,6 +233,15 @@ def _image_to_marker(match: re.Match) -> str:
     parts = [p.strip() for p in match.group(1).split("|")]
     filename = parts[0]
 
+    # Bracket SVGs → Unicode characters (before size check)
+    fname_lower = filename.lower()
+    if "langle.svg" in fname_lower:
+        return "\u27e8"
+    if "rangle.svg" in fname_lower:
+        return "\u27e9"
+    if "double bond over single bond" in fname_lower:
+        return "="
+
     # Extract caption (last non-keyword, non-size part)
     keywords = {"center", "left", "right", "thumb", "thumbnail", "frameless",
                 "frame", "border", "upright", "none"}
@@ -240,8 +261,8 @@ def _image_to_marker(match: re.Match) -> str:
             return ""
 
     if caption:
-        return f"\n\n\x00IMG:{filename}|{caption}\x00\n\n"
-    return f"\n\n\x00IMG:{filename}\x00\n\n"
+        return f"\n\n{_IMG}IMG:{filename}|{caption}{_IMG}\n\n"
+    return f"\n\n{_IMG}IMG:{filename}{_IMG}\n\n"
 
 
 def clean_wikisource_page_text(text: str) -> str:
@@ -257,7 +278,7 @@ def clean_wikisource_page_text(text: str) -> str:
     # Named sections (not s1, s2) use the name as the article title.
     text = re.sub(
         r'<section\s+begin="([^"]+)"\s*/?>',
-        lambda m: f"\n\x07SEC:{m.group(1)}\x07\n",
+        lambda m: f"\n{_SEC}SEC:{m.group(1)}{_SEC}\n",
         text, flags=re.IGNORECASE,
     )
     text = re.sub(r'<section\s+end="[^"]*"\s*/?>', "", text, flags=re.IGNORECASE)
@@ -292,7 +313,7 @@ def clean_wikisource_page_text(text: str) -> str:
         content = m.group(1).strip()
         # If it starts with a quote mark, treat as verse
         if content.startswith('"') or content.startswith('\u201c'):
-            return f"\n\n\x05VERSE\n{content}\n\x05\n\n"
+            return f"\n\n{_VERSE}VERSE\n{content}\n{_VERSE}\n\n"
         # Otherwise just preserve the text
         return content
     text = re.sub(
@@ -306,13 +327,13 @@ def clean_wikisource_page_text(text: str) -> str:
         content = re.sub(r"\{\{[^{}]*\}\}", "", content)
         content = content.replace("'''", "").replace("''", "")
         content = "\n".join(line.strip() for line in content.split("\n") if line.strip())
-        return f"\n\n\x05VERSE\n{content}\n\x05\n\n"
+        return f"\n\n{_VERSE}VERSE\n{content}\n{_VERSE}\n\n"
     text = re.sub(r"<poem>(.*?)</poem>", _poem_to_marker, text, flags=re.DOTALL | re.IGNORECASE)
 
     # Preserve <math> LaTeX content as markers
     text = re.sub(
         r"<math>(.*?)</math>",
-        lambda m: f"\x04MATH:{m.group(1)}\x04",
+        lambda m: f"{_MATH}MATH:{m.group(1)}{_MATH}",
         text, flags=re.DOTALL | re.IGNORECASE,
     )
 
@@ -337,7 +358,7 @@ def clean_wikisource_page_text(text: str) -> str:
         content = re.sub(r"\[\[[^\]|]+\|([^\]]+)\]\]", r"\1", content)
         content = re.sub(r"\[\[([^\]]+)\]\]", r"\1", content)
         content = content.replace("'''", "").replace("''", "")
-        return f"\x01FN:{content}\x01"
+        return f"{_FN}FN:{content}{_FN}"
     text = re.sub(r"<ref[^>]*>(.*?)</ref>", _ref_to_marker, text, flags=re.DOTALL | re.IGNORECASE)
     # Remove self-closing ref tags (back-references to named notes)
     text = re.sub(r"<ref[^/]*/\s*>", "", text, flags=re.IGNORECASE)
@@ -355,13 +376,13 @@ def clean_wikisource_page_text(text: str) -> str:
         parts = m.group(1).split("|")
         target = parts[0].strip()
         display = parts[1].strip() if len(parts) > 1 else target
-        return f"\x03{target}|{display}\x03"
+        return f"{_LNK}{target}|{display}{_LNK}"
     text = re.sub(r"\{\{(?:EB1911|DNB)\s+lkpl\|([^{}]+)\}\}", _lkpl_to_marker, text, flags=re.IGNORECASE)
-    text = re.sub(r"\{\{1911link\|([^{}|]*)\}\}", lambda m: f"\x03{m.group(1)}|{m.group(1)}\x03", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{1911link\|([^{}|]*)\}\}", lambda m: f"{_LNK}{m.group(1)}|{m.group(1)}{_LNK}", text, flags=re.IGNORECASE)
     # {{EB1911 article link|Target}} — explicit cross-references
-    text = re.sub(r"\{\{EB1911 article link\|([^{}|]*)\}\}", lambda m: f"\x03{m.group(1)}|{m.group(1)}\x03", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{EB1911 article link\|([^{}|]*)\}\}", lambda m: f"{_LNK}{m.group(1)}|{m.group(1)}{_LNK}", text, flags=re.IGNORECASE)
     # {{11link|Target}} — another article link form
-    text = re.sub(r"\{\{11link\|([^{}|]*)\}\}", lambda m: f"\x03{m.group(1)}|{m.group(1)}\x03", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{11link\|([^{}|]*)\}\}", lambda m: f"{_LNK}{m.group(1)}|{m.group(1)}{_LNK}", text, flags=re.IGNORECASE)
 
     # Convert regular wikilinks to link markers (skip File/Image/Author)
     def _wikilink_to_marker(m: re.Match) -> str:
@@ -375,15 +396,58 @@ def clean_wikisource_page_text(text: str) -> str:
         # Author links: keep display text but don't link
         if re.match(r"(?i)^Author:", target):
             return display
-        return f"\x03{target}|{display}\x03"
+        return f"{_LNK}{target}|{display}{_LNK}"
     text = re.sub(r"\[\[([^\]]+)\]\]", _wikilink_to_marker, text)
+
+    # ── Structural formula detection (small tables used for chemical diagrams) ──
+    def _is_structural_formula(content: str) -> bool:
+        """Detect tables that represent structural chemical formulas."""
+        if "\u27e8" in content or "\u27e9" in content:
+            return True
+        if "\u2a95" in content or "\u2a2a" in content:  # bond chars ⪕ ⪪
+            return True
+        rows = re.split(r"\|-", content)
+        if len(rows) <= 5 and "rowspan" in content.lower():
+            # Small table with rowspan + chemical subscripts
+            if re.search(r"[A-Z][a-z]?[₀-₉]", content):
+                return True
+        return False
+
+    def _structural_to_pre(content: str) -> str:
+        """Extract cell text from a structural formula table, preserving rows."""
+        rows = re.split(r"\|-", content)
+        lines = []
+        for row in rows:
+            # Convert HTML sub/sup to Unicode before extraction
+            row = re.sub(r"<sub[^>]*>(.*?)</sub>", lambda m: _to_unicode_sub(m.group(1)),
+                         row, flags=re.DOTALL | re.IGNORECASE)
+            row = re.sub(r"<sup[^>]*>(.*?)</sup>", lambda m: _to_unicode_sup(m.group(1)),
+                         row, flags=re.DOTALL | re.IGNORECASE)
+            # Strip templates and HTML tags
+            row = re.sub(r"\{\{[^{}]*\}\}", "", row)
+            row = re.sub(r"<[^>]+>", "", row)
+            cells = re.findall(r"\|([^|\n]+)", row)
+            cells = [c.strip() for c in cells
+                     if c.strip()
+                     and not re.match(r"^(?:colspan|rowspan|width|style|align|class|cellpadding)[\s=]", c.strip())
+                     and c.strip() not in ("}",)]
+            if cells:
+                lines.append("  ".join(cells))
+        return "\n".join(lines)
 
     # Convert wikitable blocks: preserve image markers and extract table content
     def _convert_table(match: re.Match) -> str:
         content = match.group(0)
 
+        # Structural formula tables → PRE blocks
+        if _is_structural_formula(content):
+            pre_text = _structural_to_pre(content)
+            if pre_text.strip():
+                return f"{_PRE}PRE\n{pre_text}\n{_PRE}"
+
         # Extract image markers first
-        img_markers = re.findall(r"\x00IMG:[^\x00]+\x00", content)
+        img_pat = re.compile(re.escape(_IMG) + r"IMG:[^" + re.escape(_IMG) + r"]+" + re.escape(_IMG))
+        img_markers = img_pat.findall(content)
 
         # Check for table caption (|+ ...) — indicates headers follow
         caption_match = re.search(r"\|\+\s*(.*?)(?:\n|$)", content)
@@ -420,7 +484,7 @@ def clean_wikisource_page_text(text: str) -> str:
             # Mark first row as header if table had a caption
             header_marker = "H" if has_caption else ""
             table_text = "\n".join(text_rows)
-            parts.append(f"\x02TABLE{header_marker}\n{table_text}\n\x02")
+            parts.append(f"{_TBL}TABLE{header_marker}\n{table_text}\n{_TBL}")
 
         return "\n\n".join(parts) if parts else ""
 
@@ -444,8 +508,8 @@ def clean_wikisource_page_text(text: str) -> str:
     # {{sub|3}} -> ₃   (Unicode subscript)
     # {{sup|2}} -> ²   (Unicode superscript)
     # Small caps → marker (used for author names, cross-references)
-    text = re.sub(r"\{\{sc\|([^{}|]*)\}\}", lambda m: f"\x06SC{m.group(1)}\x06/SC", text, flags=re.IGNORECASE)
-    text = re.sub(r"\{\{asc\|([^{}|]*)\}\}", lambda m: f"\x06SC{m.group(1)}\x06/SC", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{sc\|([^{}|]*)\}\}", lambda m: f"{_FMT}SC{m.group(1)}{_FMT}/SC", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{asc\|([^{}|]*)\}\}", lambda m: f"{_FMT}SC{m.group(1)}{_FMT}/SC", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{uc\|([^{}|]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{nowrap\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{lang\|[^{}|]*\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
@@ -486,11 +550,11 @@ def clean_wikisource_page_text(text: str) -> str:
 
     # General iterative template stripping.
     # This removes innermost templates first, which helps with nesting.
-    # Exclude control characters (\x00-\x05) so preserved markers aren't consumed.
+    # Exclude control characters (\x00-\x08) so preserved markers aren't consumed.
     previous = None
     while text != previous:
         previous = text
-        text = re.sub(r"\{\{[^{}\x00-\x07]*\}\}", "", text)
+        text = re.sub(r"\{\{[^{}\x00-\x08]*\}\}", "", text)
 
     # Remove orphaned closing braces left by nested template cleanup
     text = re.sub(r"^\s*\}\}+\s*$", "", text, flags=re.MULTILINE)
@@ -522,8 +586,8 @@ def clean_wikisource_page_text(text: str) -> str:
 
     # Convert wiki bold and italic to markers
     # Bold is safe now — section tags handle boundaries, not bold headings
-    text = re.sub(r"'''(.*?)'''", lambda m: f"\x06B{m.group(1)}\x06/B", text, flags=re.DOTALL)
-    text = re.sub(r"''(.*?)''", lambda m: f"\x06I{m.group(1)}\x06/I", text, flags=re.DOTALL)
+    text = re.sub(r"'''(.*?)'''", lambda m: f"{_FMT}B{m.group(1)}{_FMT}/B", text, flags=re.DOTALL)
+    text = re.sub(r"''(.*?)''", lambda m: f"{_FMT}I{m.group(1)}{_FMT}/I", text, flags=re.DOTALL)
 
     # Remove remaining HTML/XML-like tags
     text = re.sub(r"</?[a-zA-Z][^>]*>", "", text)
@@ -547,49 +611,55 @@ def clean_wikisource_page_text(text: str) -> str:
     # Collapse 3+ consecutive newlines to paragraph break, drop leading/trailing
     text = re.sub(r"\n{3,}", "\n\n", text).strip()
 
-    # Convert image markers from null-byte delimiters to readable format
-    text = text.replace("\x00IMG:", "{{IMG:").replace("\x00", "}}")
+    # Convert image markers from internal delimiters to readable format
+    text = text.replace(f"{_IMG}IMG:", "{{IMG:").replace(_IMG, "}}")
 
     # Convert footnote markers to readable format: «FN:text«/FN»
-    text = text.replace("\x01FN:", "\u00abFN:").replace("\x01", "\u00ab/FN\u00bb")
+    text = text.replace(f"{_FN}FN:", "\u00abFN:").replace(_FN, "\u00ab/FN\u00bb")
+
+    # Convert PRE markers to readable format (must come BEFORE table conversion)
+    text = text.replace(f"{_PRE}PRE\n", "\u00abPRE:").replace(f"\n{_PRE}", "\u00ab/PRE\u00bb")
+    def _protect_pre_newlines(m):
+        return m.group(0).replace("\n", _TBL)
+    text = re.sub(r"\u00abPRE:.*?\u00ab/PRE\u00bb", _protect_pre_newlines, text, flags=re.DOTALL)
 
     # Convert table markers to readable format.
-    # Use \x02 as line separators within tables to prevent reflow from joining rows.
+    # Use _TBL as line separators within tables to prevent reflow from joining rows.
     # Tables with headers use {{TABLEH: instead of {{TABLE:
-    text = text.replace("\x02TABLEH\n", "{{TABLEH:").replace("\x02TABLE\n", "{{TABLE:").replace("\n\x02", "}TABLE}")
-    # Convert internal newlines within table blocks to \x02 to protect from reflow
+    text = text.replace(f"{_TBL}TABLEH\n", "{{TABLEH:").replace(f"{_TBL}TABLE\n", "{{TABLE:").replace(f"\n{_TBL}", "}TABLE}")
+    # Convert internal newlines within table blocks to _TBL to protect from reflow
     def _protect_table_newlines(m: re.Match) -> str:
-        return m.group(0).replace("\n", "\x02")
+        return m.group(0).replace("\n", _TBL)
     text = re.sub(r"\{\{TABLE:.*?\}TABLE\}", _protect_table_newlines, text, flags=re.DOTALL)
 
     # Convert verse markers to readable format (protect newlines like tables)
     def _protect_verse_newlines(m: re.Match) -> str:
-        return m.group(0).replace("\n", "\x02")
-    text = text.replace("\x05VERSE\n", "{{VERSE:").replace("\n\x05", "}VERSE}")
+        return m.group(0).replace("\n", _TBL)
+    text = text.replace(f"{_VERSE}VERSE\n", "{{VERSE:").replace(f"\n{_VERSE}", "}VERSE}")
     text = re.sub(r"\{\{VERSE:.*?\}VERSE\}", _protect_verse_newlines, text, flags=re.DOTALL)
 
     # Convert math markers to readable format
     text = re.sub(
-        r"\x04MATH:(.*?)\x04",
+        re.escape(_MATH) + r"MATH:(.*?)" + re.escape(_MATH),
         lambda m: f"\u00abMATH:{m.group(1)}\u00ab/MATH\u00bb",
         text, flags=re.DOTALL,
     )
 
     # Convert section markers to readable format
     text = re.sub(
-        r"\x07SEC:([^\x07]+)\x07",
+        re.escape(_SEC) + r"SEC:([^" + re.escape(_SEC) + r"]+)" + re.escape(_SEC),
         lambda m: f"\u00abSEC:{m.group(1)}\u00bb",
         text,
     )
 
     # Convert bold/italic/small-caps markers to readable format
-    text = text.replace("\x06B", "\u00abB\u00bb").replace("\x06/B", "\u00ab/B\u00bb")
-    text = text.replace("\x06I", "\u00abI\u00bb").replace("\x06/I", "\u00ab/I\u00bb")
-    text = text.replace("\x06SC", "\u00abSC\u00bb").replace("\x06/SC", "\u00ab/SC\u00bb")
+    text = text.replace(f"{_FMT}B", "\u00abB\u00bb").replace(f"{_FMT}/B", "\u00ab/B\u00bb")
+    text = text.replace(f"{_FMT}I", "\u00abI\u00bb").replace(f"{_FMT}/I", "\u00ab/I\u00bb")
+    text = text.replace(f"{_FMT}SC", "\u00abSC\u00bb").replace(f"{_FMT}/SC", "\u00ab/SC\u00bb")
 
     # Convert link markers to readable format: «LN:Target|Display«/LN»
     text = re.sub(
-        r"\x03([^|\x03]+)\|([^\x03]+)\x03",
+        re.escape(_LNK) + r"([^|" + re.escape(_LNK) + r"]+)\|([^" + re.escape(_LNK) + r"]+)" + re.escape(_LNK),
         lambda m: f"\u00abLN:{m.group(1)}|{m.group(2)}\u00ab/LN\u00bb",
         text,
     )
@@ -603,6 +673,8 @@ def main() -> None:
     parser.add_argument("--start", type=int, required=True)
     parser.add_argument("--end", type=int, required=True)
     parser.add_argument("--outdir", type=Path, required=True)
+    parser.add_argument("--limit", type=int, default=0,
+                        help="Max pages to fetch this invocation (0 = no limit)")
     args = parser.parse_args()
 
     print("Starting fetch...")
@@ -623,14 +695,11 @@ def main() -> None:
     for page_number in range(args.start, args.end + 1):
         outfile = outdir / f"vol{args.volume:02d}-page{page_number:04d}.json"
         if outfile.exists():
-            print(f"Skipping {outfile.name} (already fetched)")
             continue
 
-        # Preventive cooldown before hitting rate limit.
-        # Conservative: 350 pages then 15 min pause, for unattended overnight runs.
-        if fetched_this_run > 0 and fetched_this_run % 350 == 0:
-            print(f"  Cooldown pause after {fetched_this_run} requests (15 min)...")
-            time.sleep(900)
+        if args.limit and fetched_this_run >= args.limit:
+            print(f"Reached limit of {args.limit} pages, stopping.")
+            break
 
         raw = fetch_page_wikitext(args.volume, page_number)
         cleaned = clean_wikisource_page_text(raw)

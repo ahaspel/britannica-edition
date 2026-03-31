@@ -74,7 +74,7 @@ All formatting is preserved independently of boundary detection:
 ## Known Limitations
 
 - Some pages have `pagequality level="3"` (not fully proofread) on Wikisource
-- Chemical equations in layout tables render as garbled text
+- ~44 structural chemical formulas now render as preformatted `«PRE:...«/PRE»` blocks; a few complex rowspan layouts remain imperfect
 - Image-legend pairing not yet implemented in viewer
 - Contributor death dates sometimes lost in template stripping
 - Front matter rendered as text, not as original page scans
