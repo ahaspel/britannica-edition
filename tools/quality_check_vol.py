@@ -39,9 +39,10 @@ for f in files:
     if "}}" in check_body:
         idx = check_body.find("}}")
         flag("stray_braces", title, check_body[max(0,idx-20):idx+10])
-    if "{{" in body and "{{IMG:" not in body and "{{TABLE" not in body:
-        idx = body.find("{{")
-        flag("stray_open_braces", title, body[idx:idx+30])
+    check_braces = re.sub(r"\{\{(?:IMG:|TABLE|VERSE:)", "", body)
+    if "{{" in check_braces:
+        idx = check_braces.find("{{")
+        flag("stray_open_braces", title, check_braces[idx:idx+30])
     if "[[" in body:
         idx = body.find("[[")
         flag("stray_wikilink", title, body[idx:idx+40])

@@ -251,6 +251,17 @@ def clean_wikisource_page_text(text: str) -> str:
     # Remove noinclude blocks completely
     text = re.sub(r"<noinclude>.*?</noinclude>", "", text, flags=re.DOTALL | re.IGNORECASE)
 
+    # Convert section tags to markers BEFORE any other processing.
+    # <section begin="ArticleName" /> marks the start of an article.
+    # <section end="..." /> marks the end.
+    # Named sections (not s1, s2) use the name as the article title.
+    text = re.sub(
+        r'<section\s+begin="([^"]+)"\s*/?>',
+        lambda m: f"\n\x07SEC:{m.group(1)}\x07\n",
+        text, flags=re.IGNORECASE,
+    )
+    text = re.sub(r'<section\s+end="[^"]*"\s*/?>', "", text, flags=re.IGNORECASE)
+
     # Remove HTML comments (e.g. <!-- column 2 --> Wikisource transcription markers).
     # When a comment sits between two newlines (\n<!--...-->\n), collapse to single
     # newline so the surrounding text stays joined as a hard wrap, not a paragraph break.
@@ -276,10 +287,17 @@ def clean_wikisource_page_text(text: str) -> str:
         r"\1",
         text, flags=re.DOTALL | re.IGNORECASE,
     )
-    # Also handle {{EB1911 Fine Print|"text"}} inline verse
+    # Handle {{EB1911 Fine Print|"text"}} — verse if quoted, otherwise plain text
+    def _fine_print_handler(m: re.Match) -> str:
+        content = m.group(1).strip()
+        # If it starts with a quote mark, treat as verse
+        if content.startswith('"') or content.startswith('\u201c'):
+            return f"\n\n\x05VERSE\n{content}\n\x05\n\n"
+        # Otherwise just preserve the text
+        return content
     text = re.sub(
         r"\{\{EB1911 Fine Print\|([^{}]+)\}\}",
-        lambda m: f"\n\n\x05VERSE\n{m.group(1).strip()}\n\x05\n\n",
+        _fine_print_handler,
         text, flags=re.IGNORECASE,
     )
     # Now extract <poem> tags
@@ -425,8 +443,9 @@ def clean_wikisource_page_text(text: str) -> str:
     )
     # {{sub|3}} -> ₃   (Unicode subscript)
     # {{sup|2}} -> ²   (Unicode superscript)
-    text = re.sub(r"\{\{sc\|([^{}|]*)\}\}", r"\1", text, flags=re.IGNORECASE)
-    text = re.sub(r"\{\{asc\|([^{}|]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    # Small caps → marker (used for author names, cross-references)
+    text = re.sub(r"\{\{sc\|([^{}|]*)\}\}", lambda m: f"\x06SC{m.group(1)}\x06/SC", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{asc\|([^{}|]*)\}\}", lambda m: f"\x06SC{m.group(1)}\x06/SC", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{uc\|([^{}|]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{nowrap\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{lang\|[^{}|]*\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
@@ -471,7 +490,7 @@ def clean_wikisource_page_text(text: str) -> str:
     previous = None
     while text != previous:
         previous = text
-        text = re.sub(r"\{\{[^{}\x00-\x06]*\}\}", "", text)
+        text = re.sub(r"\{\{[^{}\x00-\x07]*\}\}", "", text)
 
     # Remove orphaned closing braces left by nested template cleanup
     text = re.sub(r"^\s*\}\}+\s*$", "", text, flags=re.MULTILINE)
@@ -501,9 +520,9 @@ def clean_wikisource_page_text(text: str) -> str:
         text, flags=re.DOTALL | re.IGNORECASE,
     )
 
-    # Convert wiki bold to plain text (headings use bold — must not add markers)
-    # Convert wiki italic to markers (book titles, foreign words, emphasis)
-    text = text.replace("'''", "")  # strip bold entirely
+    # Convert wiki bold and italic to markers
+    # Bold is safe now — section tags handle boundaries, not bold headings
+    text = re.sub(r"'''(.*?)'''", lambda m: f"\x06B{m.group(1)}\x06/B", text, flags=re.DOTALL)
     text = re.sub(r"''(.*?)''", lambda m: f"\x06I{m.group(1)}\x06/I", text, flags=re.DOTALL)
 
     # Remove remaining HTML/XML-like tags
@@ -556,8 +575,17 @@ def clean_wikisource_page_text(text: str) -> str:
         text, flags=re.DOTALL,
     )
 
-    # Convert italic markers to readable format
+    # Convert section markers to readable format
+    text = re.sub(
+        r"\x07SEC:([^\x07]+)\x07",
+        lambda m: f"\u00abSEC:{m.group(1)}\u00bb",
+        text,
+    )
+
+    # Convert bold/italic/small-caps markers to readable format
+    text = text.replace("\x06B", "\u00abB\u00bb").replace("\x06/B", "\u00ab/B\u00bb")
     text = text.replace("\x06I", "\u00abI\u00bb").replace("\x06/I", "\u00ab/I\u00bb")
+    text = text.replace("\x06SC", "\u00abSC\u00bb").replace("\x06/SC", "\u00ab/SC\u00bb")
 
     # Convert link markers to readable format: «LN:Target|Display«/LN»
     text = re.sub(

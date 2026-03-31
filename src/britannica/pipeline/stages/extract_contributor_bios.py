@@ -31,7 +31,19 @@ def _parse_entry(content: str) -> dict[str, str]:
         value = re.sub(r"\[\[[^\]|]+\|([^\]]+)\]\]", r"\1", value)
         value = re.sub(r"\[\[([^\]]+)\]\]", r"\1", value)
         value = value.replace("'''", "").replace("''", "")
-        value = re.sub(r"\{\{[^{}]*\}\}", "", value)
+        # Iteratively strip templates (handles nesting)
+        prev = None
+        while value != prev:
+            prev = value
+            value = re.sub(r"\{\{[^{}]*\}\}", "", value)
+        # Strip unclosed templates
+        value = re.sub(r"\{\{[^{}]*$", "", value)
+        # Decode HTML entities
+        import html as html_mod
+        value = html_mod.unescape(value)
+        # Strip any remaining HTML tags
+        value = re.sub(r"<[^>]+>", "", value)
+        value = value.replace("\xa0", " ")  # non-breaking space
         value = " ".join(value.split()).strip().rstrip(".")
         if value:
             fields[key] = value
@@ -59,7 +71,7 @@ def extract_contributor_bios() -> int:
                     for m in _ENTRY_PATTERN.finditer(raw):
                         fields = _parse_entry(m.group(1))
                         initials = fields.get("initials", "").strip()
-                        if not initials:
+                        if not initials or len(initials) > 20 or "<" in initials or "{" in initials:
                             continue
 
                         # Find or skip this contributor
@@ -91,12 +103,13 @@ def extract_contributor_bios() -> int:
                                 creds = parts[1].strip()
                                 if not contributor.credentials:
                                     contributor.credentials = creds
-                                if len(base_name) > len(contributor.full_name):
-                                    contributor.full_name = base_name
+                                # Always use the base name without credentials
+                                contributor.full_name = base_name
 
-                        if description and not contributor.description:
-                            contributor.description = description
-                            updated += 1
+                        if description:
+                            if not contributor.description or len(description) > len(contributor.description):
+                                contributor.description = description
+                                updated += 1
 
         session.commit()
         return updated

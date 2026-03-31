@@ -23,14 +23,14 @@ def test_backlinks_report_groups_by_target_article(
                     volume=1,
                     page_number=1,
                     raw_text="unused",
-                    cleaned_text="ABACUS\nSee also CALCULATION.",
+                    cleaned_text="«SEC:Abacus»ABACUS\nSee also CALCULATION.",
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
                     page_number=2,
                     raw_text="unused",
-                    cleaned_text="CALCULATION\nThe process of computing.",
+                    cleaned_text="«SEC:Calculation»CALCULATION\nThe process of computing.",
                 ),
             ]
         )

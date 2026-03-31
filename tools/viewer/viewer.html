@@ -250,6 +250,10 @@
       text-align: left;
     }
 
+    .small-caps {
+      font-variant: small-caps;
+    }
+
     .verse {
       font-family: Georgia, "Times New Roman", serif;
       font-style: italic;
@@ -496,8 +500,15 @@
         collectedFootnotes.push({ num: footnoteCounter, text: content });
         return `<sup class="footnote-ref"><a onclick="document.getElementById('fn-${footnoteCounter}').scrollIntoView({behavior:'smooth',block:'center'});return false;" id="fnref-${footnoteCounter}" href="#">${footnoteCounter}</a></sup>`;
       });
-      // Render italic markers
+      // Render inline images
+      html = html.replace(/\{\{IMG:([^|}]+)(?:\|([^}]*))?\}\}/g, (match, filename, caption) => {
+        const url = commonsUrl(filename);
+        return `<figure class="inline-image"><a href="${url}" target="_blank"><img src="${url}" alt="${caption || filename}" loading="lazy" /></a>${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure>`;
+      });
+      // Render bold/italic/small-caps markers
+      html = html.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
       html = html.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
+      html = html.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
       // Render math markers with KaTeX
       html = html.replace(/\u00abMATH:(.*?)\u00ab\/MATH\u00bb/gs, (match, latex) => {
         try {

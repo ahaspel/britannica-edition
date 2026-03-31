@@ -7,7 +7,8 @@ def strip_headers(text: str) -> tuple[str, list[str]]:
         # Strip first line if it's a short all-caps page header,
         # but not if the page looks like a plate (has image markers nearby)
         if (first and len(first) < 60 and first.upper() == first
-                and "{{IMG:" not in text[:500]):
+                and "{{IMG:" not in text[:500]
+                and "\u00abSEC:" not in first):
             removed.append(first)
             lines = lines[1:]
 
