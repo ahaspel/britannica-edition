@@ -1,6 +1,7 @@
 #!/bin/bash
 # Fetch all 29 volumes from Wikisource.
 # Designed for unattended overnight runs.
+# Retries each volume until complete before moving to the next.
 # Skips already-fetched pages, so safe to re-run.
 
 set -uo pipefail
@@ -14,22 +15,30 @@ for VOL in $(seq 1 29); do
 
   mkdir -p "$OUTDIR"
 
-  EXISTING=$(ls "$OUTDIR"/*.json 2>/dev/null | wc -l)
+  while true; do
+    EXISTING=$(ls "$OUTDIR"/*.json 2>/dev/null | wc -l)
 
-  if [ "$EXISTING" -ge "$END" ]; then
-    echo "Volume $VOL: already complete ($EXISTING/$END pages)"
-    continue
-  fi
+    if [ "$EXISTING" -ge "$END" ]; then
+      echo "Volume $VOL: complete ($EXISTING/$END pages)"
+      break
+    fi
 
-  echo "Volume $VOL: fetching pages 1-$END ($EXISTING already cached)"
+    echo "Volume $VOL: fetching pages 1-$END ($EXISTING already cached)"
 
-  uv run python tools/fetch/fetch_wikisource_pages.py \
-    --volume "$VOL" \
-    --start 1 \
-    --end "$END" \
-    --outdir "$OUTDIR"
+    uv run python tools/fetch/fetch_wikisource_pages.py \
+      --volume "$VOL" \
+      --start 1 \
+      --end "$END" \
+      --outdir "$OUTDIR"
 
-  echo "Volume $VOL: fetch complete"
+    # Check if we made progress
+    NEW_EXISTING=$(ls "$OUTDIR"/*.json 2>/dev/null | wc -l)
+    if [ "$NEW_EXISTING" -le "$EXISTING" ]; then
+      echo "Volume $VOL: no progress, waiting 10 minutes..."
+      sleep 600
+    fi
+  done
+
   echo
 done
 

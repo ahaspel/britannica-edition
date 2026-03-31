@@ -257,6 +257,47 @@ def clean_wikisource_page_text(text: str) -> str:
     text = re.sub(r"\n<!--.*?-->\n", "\n", text, flags=re.DOTALL)
     text = re.sub(r"<!--.*?-->", "", text, flags=re.DOTALL)
 
+    # Preserve <hiero> hieroglyphic notation as markers
+    text = re.sub(
+        r"<hiero>(.*?)</hiero>",
+        lambda m: f"[hieroglyph: {m.group(1).strip()}]",
+        text, flags=re.DOTALL | re.IGNORECASE,
+    )
+
+    # Preserve <poem> content BEFORE any template stripping.
+    # First unwrap {{block center|...}} and similar wrappers around poems.
+    text = re.sub(
+        r"\{\{block center\|(<poem>.*?</poem>)\}\}",
+        r"\1",
+        text, flags=re.DOTALL | re.IGNORECASE,
+    )
+    text = re.sub(
+        r"\{\{center\|(<poem>.*?</poem>)\}\}",
+        r"\1",
+        text, flags=re.DOTALL | re.IGNORECASE,
+    )
+    # Also handle {{EB1911 Fine Print|"text"}} inline verse
+    text = re.sub(
+        r"\{\{EB1911 Fine Print\|([^{}]+)\}\}",
+        lambda m: f"\n\n\x05VERSE\n{m.group(1).strip()}\n\x05\n\n",
+        text, flags=re.IGNORECASE,
+    )
+    # Now extract <poem> tags
+    def _poem_to_marker(m: re.Match) -> str:
+        content = m.group(1).strip()
+        content = re.sub(r"\{\{[^{}]*\}\}", "", content)
+        content = content.replace("'''", "").replace("''", "")
+        content = "\n".join(line.strip() for line in content.split("\n") if line.strip())
+        return f"\n\n\x05VERSE\n{content}\n\x05\n\n"
+    text = re.sub(r"<poem>(.*?)</poem>", _poem_to_marker, text, flags=re.DOTALL | re.IGNORECASE)
+
+    # Preserve <math> LaTeX content as markers
+    text = re.sub(
+        r"<math>(.*?)</math>",
+        lambda m: f"\x04MATH:{m.group(1)}\x04",
+        text, flags=re.DOTALL | re.IGNORECASE,
+    )
+
     # Parse HTML plate tables (these use <table> not {| wiki syntax)
     # Detect by: contains <table> with multiple [[Image: links
     def _maybe_plate_table(m: re.Match) -> str:
@@ -269,12 +310,7 @@ def clean_wikisource_page_text(text: str) -> str:
         return table_html  # not a plate table, leave for later processing
     text = re.sub(r"<table[^>]*>.*?</table>", _maybe_plate_table, text, flags=re.DOTALL | re.IGNORECASE)
 
-    # Preserve <math> LaTeX content as markers
-    text = re.sub(
-        r"<math>(.*?)</math>",
-        lambda m: f"\x04MATH:{m.group(1)}\x04",
-        text, flags=re.DOTALL | re.IGNORECASE,
-    )
+    # (poem extraction already done above)
 
     # Convert ref tags to inline footnote markers (survive template stripping)
     def _ref_to_marker(match: re.Match) -> str:
@@ -304,15 +340,23 @@ def clean_wikisource_page_text(text: str) -> str:
         return f"\x03{target}|{display}\x03"
     text = re.sub(r"\{\{(?:EB1911|DNB)\s+lkpl\|([^{}]+)\}\}", _lkpl_to_marker, text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{1911link\|([^{}|]*)\}\}", lambda m: f"\x03{m.group(1)}|{m.group(1)}\x03", text, flags=re.IGNORECASE)
+    # {{EB1911 article link|Target}} — explicit cross-references
+    text = re.sub(r"\{\{EB1911 article link\|([^{}|]*)\}\}", lambda m: f"\x03{m.group(1)}|{m.group(1)}\x03", text, flags=re.IGNORECASE)
+    # {{11link|Target}} — another article link form
+    text = re.sub(r"\{\{11link\|([^{}|]*)\}\}", lambda m: f"\x03{m.group(1)}|{m.group(1)}\x03", text, flags=re.IGNORECASE)
 
     # Convert regular wikilinks to link markers (skip File/Image/Author)
     def _wikilink_to_marker(m: re.Match) -> str:
         content = m.group(1)
-        if re.match(r"(?i)^(File|Image|Author|Category):", content):
+        # Skip File/Image/Category entirely
+        if re.match(r"(?i)^(File|Image|Category):", content):
             return ""
         parts = content.split("|")
         target = parts[0].strip()
         display = parts[1].strip() if len(parts) > 1 else target
+        # Author links: keep display text but don't link
+        if re.match(r"(?i)^Author:", target):
+            return display
         return f"\x03{target}|{display}\x03"
     text = re.sub(r"\[\[([^\]]+)\]\]", _wikilink_to_marker, text)
 
@@ -323,10 +367,23 @@ def clean_wikisource_page_text(text: str) -> str:
         # Extract image markers first
         img_markers = re.findall(r"\x00IMG:[^\x00]+\x00", content)
 
+        # Check for table caption (|+ ...) — indicates headers follow
+        caption_match = re.search(r"\|\+\s*(.*?)(?:\n|$)", content)
+        caption = ""
+        has_caption = False
+        if caption_match:
+            has_caption = True
+            cap_text = re.sub(r"\{\{[^{}]*\}\}", "", caption_match.group(1)).strip()
+            if cap_text:
+                caption = cap_text
+
         # Try to extract table rows as simple text
         rows = re.split(r"\|-", content)
         text_rows = []
         for row in rows:
+            # Skip caption rows
+            if "|+" in row:
+                continue
             # Strip all remaining templates from row
             cleaned_row = re.sub(r"\{\{[^{}]*\}\}", "", row)
             # Extract cell values
@@ -342,9 +399,10 @@ def clean_wikisource_page_text(text: str) -> str:
         if img_markers:
             parts.extend(img_markers)
         if text_rows:
-            # Wrap table content in markers so viewer can render it
+            # Mark first row as header if table had a caption
+            header_marker = "H" if has_caption else ""
             table_text = "\n".join(text_rows)
-            parts.append(f"\x02TABLE\n{table_text}\n\x02")
+            parts.append(f"\x02TABLE{header_marker}\n{table_text}\n\x02")
 
         return "\n\n".join(parts) if parts else ""
 
@@ -368,8 +426,15 @@ def clean_wikisource_page_text(text: str) -> str:
     # {{sub|3}} -> ₃   (Unicode subscript)
     # {{sup|2}} -> ²   (Unicode superscript)
     text = re.sub(r"\{\{sc\|([^{}|]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{asc\|([^{}|]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{uc\|([^{}|]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{nowrap\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{lang\|[^{}|]*\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{abbr\|([^{}|]*)\|[^{}]*\}\}", r"\1", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{tooltip\|([^{}|]*)\|[^{}]*\}\}", r"\1", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{sic\}\}", "[sic]", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{smaller\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{larger\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(
         r"\{\{sub\|([^{}|]*)\}\}",
         lambda m: _to_unicode_sub(m.group(1)),
@@ -402,10 +467,11 @@ def clean_wikisource_page_text(text: str) -> str:
 
     # General iterative template stripping.
     # This removes innermost templates first, which helps with nesting.
+    # Exclude control characters (\x00-\x05) so preserved markers aren't consumed.
     previous = None
     while text != previous:
         previous = text
-        text = re.sub(r"\{\{[^{}]*\}\}", "", text)
+        text = re.sub(r"\{\{[^{}\x00-\x06]*\}\}", "", text)
 
     # Remove orphaned closing braces left by nested template cleanup
     text = re.sub(r"^\s*\}\}+\s*$", "", text, flags=re.MULTILINE)
@@ -416,6 +482,10 @@ def clean_wikisource_page_text(text: str) -> str:
     text = re.sub(r"^\s*\|\}+\s*$", "", text, flags=re.MULTILINE)
     text = re.sub(r"^\s*\{\|\s*$", "", text, flags=re.MULTILINE)
     text = re.sub(r"^\s*\|-\s*$", "", text, flags=re.MULTILINE)
+
+    # Remove any remaining orphaned {{ and }}
+    # At this point all valid markers use control char delimiters, not braces
+    text = text.replace("{{", "").replace("}}", "")
 
     # (wikilinks already converted to markers above)
 
@@ -431,11 +501,13 @@ def clean_wikisource_page_text(text: str) -> str:
         text, flags=re.DOTALL | re.IGNORECASE,
     )
 
+    # Convert wiki bold to plain text (headings use bold — must not add markers)
+    # Convert wiki italic to markers (book titles, foreign words, emphasis)
+    text = text.replace("'''", "")  # strip bold entirely
+    text = re.sub(r"''(.*?)''", lambda m: f"\x06I{m.group(1)}\x06/I", text, flags=re.DOTALL)
+
     # Remove remaining HTML/XML-like tags
     text = re.sub(r"</?[a-zA-Z][^>]*>", "", text)
-
-    # Remove wiki bold/italic markup
-    text = text.replace("'''", "").replace("''", "")
 
     # Decode HTML entities like &nbsp; and &emsp;
     text = html.unescape(text)
@@ -459,28 +531,38 @@ def clean_wikisource_page_text(text: str) -> str:
     # Convert image markers from null-byte delimiters to readable format
     text = text.replace("\x00IMG:", "{{IMG:").replace("\x00", "}}")
 
-    # Convert footnote markers to readable format
-    text = text.replace("\x01FN:", "\u00abFN:").replace("\x01", "\u00bb")
+    # Convert footnote markers to readable format: «FN:text«/FN»
+    text = text.replace("\x01FN:", "\u00abFN:").replace("\x01", "\u00ab/FN\u00bb")
 
     # Convert table markers to readable format.
     # Use \x02 as line separators within tables to prevent reflow from joining rows.
-    text = text.replace("\x02TABLE\n", "{{TABLE:").replace("\n\x02", "}TABLE}")
+    # Tables with headers use {{TABLEH: instead of {{TABLE:
+    text = text.replace("\x02TABLEH\n", "{{TABLEH:").replace("\x02TABLE\n", "{{TABLE:").replace("\n\x02", "}TABLE}")
     # Convert internal newlines within table blocks to \x02 to protect from reflow
     def _protect_table_newlines(m: re.Match) -> str:
         return m.group(0).replace("\n", "\x02")
     text = re.sub(r"\{\{TABLE:.*?\}TABLE\}", _protect_table_newlines, text, flags=re.DOTALL)
 
+    # Convert verse markers to readable format (protect newlines like tables)
+    def _protect_verse_newlines(m: re.Match) -> str:
+        return m.group(0).replace("\n", "\x02")
+    text = text.replace("\x05VERSE\n", "{{VERSE:").replace("\n\x05", "}VERSE}")
+    text = re.sub(r"\{\{VERSE:.*?\}VERSE\}", _protect_verse_newlines, text, flags=re.DOTALL)
+
     # Convert math markers to readable format
     text = re.sub(
         r"\x04MATH:(.*?)\x04",
-        lambda m: f"\u00abMATH:{m.group(1)}\u00bb",
+        lambda m: f"\u00abMATH:{m.group(1)}\u00ab/MATH\u00bb",
         text, flags=re.DOTALL,
     )
 
-    # Convert link markers to readable format: «LN:Target|Display»
+    # Convert italic markers to readable format
+    text = text.replace("\x06I", "\u00abI\u00bb").replace("\x06/I", "\u00ab/I\u00bb")
+
+    # Convert link markers to readable format: «LN:Target|Display«/LN»
     text = re.sub(
         r"\x03([^|\x03]+)\|([^\x03]+)\x03",
-        lambda m: f"\u00abLN:{m.group(1)}|{m.group(2)}\u00bb",
+        lambda m: f"\u00abLN:{m.group(1)}|{m.group(2)}\u00ab/LN\u00bb",
         text,
     )
 

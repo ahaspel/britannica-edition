@@ -242,7 +242,21 @@
       vertical-align: top;
     }
 
-    .data-table tr:first-child td {
+    .data-table th {
+      padding: 4px 10px;
+      border: 1px solid var(--border);
+      background: var(--code-bg);
+      font-weight: 600;
+      text-align: left;
+    }
+
+    .verse {
+      font-family: Georgia, "Times New Roman", serif;
+      font-style: italic;
+      margin: 1em 2em;
+      padding-left: 1em;
+      border-left: 2px solid var(--border);
+      line-height: 1.6;
     }
 
     .section-heading {
@@ -374,25 +388,19 @@
 <body>
   <div class="page">
     <div class="card">
-      <h1>Britannica Minimal Viewer</h1>
-      <div style="margin-bottom: 12px; font-size: 0.9rem;">
-        <a href="index.html" style="color: var(--link); text-decoration: none;">&larr; Index</a>
-        &nbsp;&nbsp;
-        <a href="search.html" style="color: var(--link); text-decoration: none;">Search</a>
-        &nbsp;&nbsp;
-        <a href="contributors.html" style="color: var(--link); text-decoration: none;">Contributors</a>
-      </div>
-      <div class="controls">
-        <input id="articlePath" type="text" placeholder="data/derived/articles/abandon.json" />
-        <button id="loadButton">Load Article</button>
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+        <h1 style="margin: 0;">Britannica</h1>
+        <div style="font-size: 0.9rem;">
+          <a href="index.html" style="color: var(--link); text-decoration: none;">Index</a>
+          &nbsp;&middot;&nbsp;
+          <a href="search.html" style="color: var(--link); text-decoration: none;">Search</a>
+          &nbsp;&middot;&nbsp;
+          <a href="contributors.html" style="color: var(--link); text-decoration: none;">Contributors</a>
+        </div>
       </div>
       <div class="controls">
         <input id="articleSearch" type="text" placeholder="Search within article..." style="flex: 0 1 260px; min-width: 160px;" />
         <span id="matchCount" style="color: var(--muted); font-size: 0.85rem;"></span>
-      </div>
-      <div class="message">
-        Enter a path to an exported article JSON file, or open this page with
-        <code>?article=data/derived/articles/abandon.json</code>.
       </div>
     </div>
 
@@ -401,8 +409,6 @@
 
   <script>
     const app = document.getElementById("app");
-    const articlePathInput = document.getElementById("articlePath");
-    const loadButton = document.getElementById("loadButton");
 
     function escapeHtml(value) {
       return String(value ?? "")
@@ -438,12 +444,20 @@
           ${caption ? `<figcaption>${escapeHtml(caption)}</figcaption>` : ""}
         </figure>`;
       }
-      // Render table markers
-      const tableMatch = p.match(/^\{\{TABLE:([\s\S]*)\}TABLE\}$/);
+      // Render verse markers
+      const verseMatch = p.match(/^\{\{VERSE:([\s\S]*)\}VERSE\}$/);
+      if (verseMatch) {
+        const lines = verseMatch[1].split("\n").filter(l => l.trim());
+        return `<blockquote class="verse">${lines.map(l => escapeHtml(l)).join("<br>")}</blockquote>`;
+      }
+      // Render table markers (with or without headers)
+      const tableMatch = p.match(/^\{\{TABLE(H?):([\s\S]*)\}TABLE\}$/);
       if (tableMatch) {
-        const rows = tableMatch[1].split("\n").filter(r => r.trim());
-        const tableRows = rows.map(r => {
-          const cells = r.split(" | ").map(c => `<td>${escapeHtml(c.trim())}</td>`).join("");
+        const hasHeader = tableMatch[1] === "H";
+        const rows = tableMatch[2].split("\n").filter(r => r.trim());
+        const tableRows = rows.map((r, i) => {
+          const tag = (hasHeader && i === 0) ? "th" : "td";
+          const cells = r.split(" | ").map(c => `<${tag}>${escapeHtml(c.trim())}</${tag}>`).join("");
           return `<tr>${cells}</tr>`;
         }).join("");
         return `<table class="data-table">${tableRows}</table>`;
@@ -460,12 +474,12 @@
 
         // Render the rest of the paragraph normally
         let bodyHtml = escapeHtml(sectionBody);
-        bodyHtml = bodyHtml.replace(/\u00abFN:(.*?)\u00bb/gs, (match, content) => {
+        bodyHtml = bodyHtml.replace(/\u00abFN:(.*?)\u00ab\/FN\u00bb/gs, (match, content) => {
           footnoteCounter++;
           collectedFootnotes.push({ num: footnoteCounter, text: content });
-          return `<sup class="footnote-ref"><a href="#fn-${footnoteCounter}" id="fnref-${footnoteCounter}">${footnoteCounter}</a></sup>`;
+          return `<sup class="footnote-ref"><a onclick="document.getElementById('fn-${footnoteCounter}').scrollIntoView({behavior:'smooth',block:'center'});return false;" id="fnref-${footnoteCounter}" href="#">${footnoteCounter}</a></sup>`;
         });
-        bodyHtml = bodyHtml.replace(/\u00abLN:([^|]*)\|([^\u00bb]*)\u00bb/g, (match, target, display) => {
+        bodyHtml = bodyHtml.replace(/\u00abLN:([^|]*)\|([^«]*)\u00ab\/LN\u00bb/g, (match, target, display) => {
           const key = target.toLowerCase();
           if (linkedTargets.has(key)) return display;
           linkedTargets.add(key);
@@ -477,13 +491,15 @@
 
       // Replace footnote markers with superscript numbers
       let html = escapeHtml(p);
-      html = html.replace(/\u00abFN:(.*?)\u00bb/gs, (match, content) => {
+      html = html.replace(/\u00abFN:(.*?)\u00ab\/FN\u00bb/gs, (match, content) => {
         footnoteCounter++;
         collectedFootnotes.push({ num: footnoteCounter, text: content });
-        return `<sup class="footnote-ref"><a href="#fn-${footnoteCounter}" id="fnref-${footnoteCounter}">${footnoteCounter}</a></sup>`;
+        return `<sup class="footnote-ref"><a onclick="document.getElementById('fn-${footnoteCounter}').scrollIntoView({behavior:'smooth',block:'center'});return false;" id="fnref-${footnoteCounter}" href="#">${footnoteCounter}</a></sup>`;
       });
+      // Render italic markers
+      html = html.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
       // Render math markers with KaTeX
-      html = html.replace(/\u00abMATH:(.*?)\u00bb/gs, (match, latex) => {
+      html = html.replace(/\u00abMATH:(.*?)\u00ab\/MATH\u00bb/gs, (match, latex) => {
         try {
           if (typeof katex !== "undefined") {
             return katex.renderToString(latex, { throwOnError: false, displayMode: false });
@@ -492,7 +508,7 @@
         return `<code class="math-fallback">${latex}</code>`;
       });
       // Replace link markers — only first mention becomes a hyperlink
-      html = html.replace(/\u00abLN:([^|]*)\|([^\u00bb]*)\u00bb/g, (match, target, display) => {
+      html = html.replace(/\u00abLN:([^|]*)\|([^«]*)\u00ab\/LN\u00bb/g, (match, target, display) => {
         const key = target.toLowerCase();
         if (linkedTargets.has(key)) {
           return display; // subsequent mentions: plain text
@@ -535,7 +551,7 @@
               const status = xref.status || "unknown";
               const type = xref.xref_type || "xref";
               const rawSurface = xref.surface_text || xref.normalized_target || "(unknown target)";
-              const surface = rawSurface.replace(/\u00abLN:[^|]*\|([^\u00bb]*)\u00bb/g, "$1");
+              const surface = rawSurface.replace(/\u00abLN:[^|]*\|([^«]*)\u00ab\/LN\u00bb/g, "$1");
               const normalized = xref.normalized_target || "";
               const resolved = status === "resolved";
 
@@ -590,7 +606,7 @@
               : "";
             return tocHtml + `<div class="body-text">${bodyHtml}</div>`;
           })()}
-          ${collectedFootnotes.length ? `<div class="footnotes"><h3>Notes</h3><ol>${collectedFootnotes.map(fn => `<li id="fn-${fn.num}"><a href="#fnref-${fn.num}">\u2191</a> ${fn.text}</li>`).join("")}</ol></div>` : ""}
+          ${collectedFootnotes.length ? `<div class="footnotes"><h3>Notes</h3><ol>${collectedFootnotes.map(fn => `<li id="fn-${fn.num}"><a onclick="document.getElementById('fnref-${fn.num}').scrollIntoView({behavior:'smooth',block:'center'});return false;" href="#">\u2191</a> ${fn.text}</li>`).join("")}</ol></div>` : ""}
         </div>
 
         ${images.length ? `
@@ -622,8 +638,6 @@
         return;
       }
 
-      articlePathInput.value = path;
-
       try {
         const response = await fetch(path);
         if (!response.ok) {
@@ -640,16 +654,6 @@
         renderError(`Could not load article JSON from \"${path}\". ${error.message}`);
       }
     }
-
-    loadButton.addEventListener("click", () => {
-      loadArticle(articlePathInput.value.trim());
-    });
-
-    articlePathInput.addEventListener("keydown", event => {
-      if (event.key === "Enter") {
-        loadArticle(articlePathInput.value.trim());
-      }
-    });
 
     const initialPath = new URLSearchParams(window.location.search).get("article");
     if (initialPath) {

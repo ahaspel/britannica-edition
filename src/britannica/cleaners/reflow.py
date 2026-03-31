@@ -13,7 +13,7 @@ def reflow_paragraphs(text: str) -> str:
     result = []
     for para in paragraphs:
         # Don't reflow table blocks or image markers
-        if para.strip().startswith("{{TABLE:") or para.strip().startswith("{{IMG:"):
+        if para.strip().startswith(("{{TABLE", "{{IMG:", "{{VERSE:")):
             result.append(para.strip())
             continue
 
@@ -24,9 +24,15 @@ def reflow_paragraphs(text: str) -> str:
 
     text = "\n\n".join(result)
 
-    # Restore protected newlines within table blocks
+    # Restore protected newlines within table and verse blocks
     text = re.sub(
-        r"\{\{TABLE:.*?\}TABLE\}",
+        r"\{\{TABLE.*?\}TABLE\}",
+        lambda m: m.group(0).replace("\x02", "\n"),
+        text,
+        flags=re.DOTALL,
+    )
+    text = re.sub(
+        r"\{\{VERSE:.*?\}VERSE\}",
         lambda m: m.group(0).replace("\x02", "\n"),
         text,
         flags=re.DOTALL,
