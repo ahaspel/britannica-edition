@@ -3,6 +3,8 @@ from britannica.pipeline.stages import detect_boundaries as detect_boundaries_st
 
 SEC = "\u00abSEC:"
 END = "\u00bb"
+B = "\u00abB\u00bb"
+EB = "\u00ab/B\u00bb"
 
 
 def test_detect_boundaries_handles_continuation_then_new_heading_same_page(
@@ -20,7 +22,7 @@ def test_detect_boundaries_handles_continuation_then_new_heading_same_page(
                     volume=1,
                     page_number=1,
                     raw_text="unused",
-                    cleaned_text=f"{SEC}Abalone{END}ABALONE\nA type of shellfish.",
+                    cleaned_text=f"{SEC}Abalone{END}{B}ABALONE{EB}\nA type of shellfish.",
                 ),
                 SourcePage(
                     source_name="sample",
@@ -29,7 +31,7 @@ def test_detect_boundaries_handles_continuation_then_new_heading_same_page(
                     raw_text="unused",
                     cleaned_text=(
                         "Continuation of the abalone article on the next page.\n\n"
-                        f"{SEC}Abandon{END}ABANDON\n"
+                        f"{SEC}Abandon{END}{B}ABANDON{EB}\n"
                         "To relinquish, desert, or give up."
                     ),
                 ),

@@ -3,6 +3,8 @@ from britannica.pipeline.stages import detect_boundaries as detect_boundaries_st
 
 SEC = "\u00abSEC:"
 END = "\u00bb"
+B = "\u00abB\u00bb"
+EB = "\u00ab/B\u00bb"
 
 
 def test_detect_boundaries_with_section_markers(
@@ -21,9 +23,9 @@ def test_detect_boundaries_with_section_markers(
                     page_number=1,
                     raw_text="unused",
                     cleaned_text=(
-                        f"{SEC}Abacus{END}ABACUS\n"
+                        f"{SEC}Abacus{END}{B}ABACUS{EB}\n"
                         "The encyclopaedia entry begins here.\n\n"
-                        f"{SEC}Abalone{END}ABALONE\n"
+                        f"{SEC}Abalone{END}{B}ABALONE{EB}\n"
                         "A type of shellfish."
                     ),
                 ),
@@ -39,7 +41,7 @@ def test_detect_boundaries_with_section_markers(
                     volume=1,
                     page_number=3,
                     raw_text="unused",
-                    cleaned_text=f"{SEC}Abandon{END}ABANDON\nTo relinquish, desert, or give up.",
+                    cleaned_text=f"{SEC}Abandon{END}{B}ABANDON{EB}\nTo relinquish, desert, or give up.",
                 ),
             ]
         )
@@ -98,7 +100,7 @@ def test_detect_boundaries_continuation_without_sections(
                     volume=1,
                     page_number=1,
                     raw_text="unused",
-                    cleaned_text=f"{SEC}Abalone{END}ABALONE\nA type of shellfish.",
+                    cleaned_text=f"{SEC}Abalone{END}{B}ABALONE{EB}\nA type of shellfish.",
                 ),
                 SourcePage(
                     source_name="sample",
@@ -112,7 +114,7 @@ def test_detect_boundaries_continuation_without_sections(
                     volume=1,
                     page_number=3,
                     raw_text="unused",
-                    cleaned_text=f"{SEC}Abandon{END}ABANDON\nTo relinquish.",
+                    cleaned_text=f"{SEC}Abandon{END}{B}ABANDON{EB}\nTo relinquish.",
                 ),
             ]
         )
@@ -132,5 +134,58 @@ def test_detect_boundaries_continuation_without_sections(
         )
         assert abalone.page_end == 2
         assert "Continuation" in abalone.body
+    finally:
+        session.close()
+
+
+def test_named_section_without_bold_is_continuation(
+    monkeypatch,
+    test_session_local,
+):
+    """A named section without a bold heading is continuation, not a new article."""
+    monkeypatch.setattr(detect_boundaries_stage, "SessionLocal", test_session_local)
+
+    session = test_session_local()
+    try:
+        session.add_all(
+            [
+                SourcePage(
+                    source_name="sample",
+                    volume=1,
+                    page_number=1,
+                    raw_text="unused",
+                    cleaned_text=f"{SEC}Huss{END}{B}HUSS{EB}, John (c. 1373-1415), Bohemian reformer.",
+                ),
+                SourcePage(
+                    source_name="sample",
+                    volume=1,
+                    page_number=2,
+                    raw_text="unused",
+                    cleaned_text=f"{SEC}Huss, John{END}spiritual teaching that influenced later movements.",
+                ),
+                SourcePage(
+                    source_name="sample",
+                    volume=1,
+                    page_number=3,
+                    raw_text="unused",
+                    cleaned_text=f"{SEC}Hussar{END}{B}HUSSAR{EB}, a light cavalry soldier.",
+                ),
+            ]
+        )
+        session.commit()
+    finally:
+        session.close()
+
+    created = detect_boundaries_stage.detect_boundaries(1)
+    assert created == 2
+
+    session = test_session_local()
+    try:
+        huss = session.query(Article).filter(Article.title.like("HUSS%")).first()
+        assert huss.page_end == 2
+        assert "spiritual teaching" in huss.body
+
+        hussar = session.query(Article).filter(Article.title == "HUSSAR").first()
+        assert hussar.page_start == 3
     finally:
         session.close()

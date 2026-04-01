@@ -34,16 +34,16 @@ for VOL in $(seq 1 29); do
       --start 1 \
       --end "$END" \
       --outdir "$OUTDIR" \
-      --limit "$BUDGET"
+      --limit "$BUDGET" || true
 
     AFTER=$(ls "$OUTDIR"/*.json 2>/dev/null | wc -l)
     FETCHED=$((AFTER - BEFORE))
     BUDGET=$((BUDGET - FETCHED))
 
-    # No progress — back off
+    # No progress — likely rate-limited; exhaust budget to trigger cooldown
     if [ "$FETCHED" -eq 0 ]; then
-      echo "  No progress on volume $VOL, waiting 10 min..."
-      sleep 600
+      echo "  No progress on volume $VOL — forcing cooldown..."
+      BUDGET=0
     fi
   done
 done

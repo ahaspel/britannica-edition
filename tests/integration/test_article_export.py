@@ -24,14 +24,14 @@ def test_export_articles_to_json_writes_article_files(
                     volume=1,
                     page_number=1,
                     raw_text="unused",
-                    cleaned_text="«SEC:Abacus»ABACUS\nA calculating device. See also CALCULATION.",
+                    cleaned_text="«SEC:Abacus»«B»ABACUS«/B»\nA calculating device. See also CALCULATION.",
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
                     page_number=2,
                     raw_text="unused",
-                    cleaned_text="«SEC:Calculation»CALCULATION\nThe process of computing.",
+                    cleaned_text="«SEC:Calculation»«B»CALCULATION«/B»\nThe process of computing.",
                 ),
             ]
         )

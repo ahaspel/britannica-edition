@@ -3,16 +3,19 @@ set -euo pipefail
 
 VOLUME="${1:-}"
 SKIP_FETCH=""
+CLEAN_EXPORTS=""
 
-# Check for --skip-fetch anywhere in args
+# Check for flags anywhere in args
 for arg in "$@"; do
   if [ "$arg" = "--skip-fetch" ]; then
     SKIP_FETCH="yes"
+  elif [ "$arg" = "--clean-exports" ]; then
+    CLEAN_EXPORTS="yes"
   fi
 done
 
 if [ -z "$VOLUME" ]; then
-  echo "Usage: ./tools/run_volume.sh <volume> [--skip-fetch]"
+  echo "Usage: ./tools/run_volume.sh <volume> [--skip-fetch] [--clean-exports]"
   exit 1
 fi
 
@@ -31,6 +34,10 @@ echo "=== Wiping volume $VOLUME from database ==="
 
 echo
 echo "=== Clearing old exports ==="
+if [ -n "$CLEAN_EXPORTS" ]; then
+  echo "  Wiping entire export directory..."
+  rm -rf "$EXPORT_DIR"
+fi
 mkdir -p "$EXPORT_DIR"
 
 if [ -n "$SKIP_FETCH" ]; then

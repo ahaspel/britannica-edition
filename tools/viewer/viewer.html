@@ -11,7 +11,7 @@
       --bg: #f7f7f5;
       --panel: #ffffff;
       --text: #1f2328;
-      --muted: #6b7280;
+      --muted: #4b5563;
       --border: #d0d7de;
       --link: #0969da;
       --unresolved: #b42318;
@@ -92,6 +92,14 @@
 
     .body-text {
       font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+
+    @media (max-width: 900px) {
+      .body-text {
+        margin-right: 0;
+      }
     }
 
     .body-text p {
@@ -103,24 +111,17 @@
       list-style: none;
       padding: 0;
       margin: 0;
-      display: grid;
-      gap: 10px;
+      columns: 2;
+      column-gap: 2em;
     }
 
     .xref-item {
-      padding: 12px 14px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
+      padding: 2px 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    .xref-item.resolved {
-      background: var(--resolved-bg);
-    }
-
     .xref-item.unresolved {
-      background: var(--unresolved-bg);
-      border-color: #f0c4c4;
+      color: var(--muted);
     }
 
     a {
@@ -130,11 +131,6 @@
 
     a:hover {
       text-decoration: underline;
-    }
-
-    .xref-item.unresolved a,
-    .unresolved-text {
-      color: var(--unresolved);
     }
 
     .pill {
@@ -284,6 +280,34 @@
       color: var(--text);
       border-bottom: 1px solid var(--border);
       padding-bottom: 4px;
+    }
+
+    .body-text p {
+      position: relative;
+    }
+
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+    }
+
+    /* On narrow screens, inline the shoulder headings */
+    @media (max-width: 900px) {
+      .shoulder-heading {
+        position: static;
+        display: block;
+        width: auto;
+        margin: 0.5em 0 0.2em;
+        font-weight: 600;
+        color: var(--text);
+      }
     }
 
     .toc {
@@ -529,6 +553,12 @@
       html = html.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
       html = html.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
       html = html.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
+      html = html.replace(/\u00abSH\u00bb(.*?)\u00ab\/SH\u00bb/gs, (match, text) => {
+        sectionCounter++;
+        const sectionId = `section-${sectionCounter}`;
+        collectedSections.push({ id: sectionId, title: text.trim() });
+        return `<span class="shoulder-heading" id="${sectionId}">${escapeHtml(text)}</span>`;
+      });
       // Render math markers with KaTeX
       html = html.replace(/\u00abMATH:(.*?)\u00ab\/MATH\u00bb/gs, (match, latex) => {
         try {
@@ -579,27 +609,18 @@
         ? `
           <ul class="xref-list">
             ${xrefs.map(xref => {
-              const status = xref.status || "unknown";
-              const type = xref.xref_type || "xref";
-              const rawSurface = xref.surface_text || xref.normalized_target || "(unknown target)";
-              const surface = rawSurface.replace(/\u00abLN:[^|]*\|([^«]*)\u00ab\/LN\u00bb/g, "$1");
               const normalized = xref.normalized_target || "";
-              const resolved = status === "resolved";
+              const resolved = (xref.status || "") === "resolved";
 
               return `
                 <li class="xref-item ${resolved ? "resolved" : "unresolved"}">
-                  <strong>${escapeHtml(surface)}</strong>
-                  <span class="pill">${escapeHtml(type)}</span>
-                  <span class="pill">${escapeHtml(status)}</span>
-                  <div style="margin-top:8px;">
-                    ${resolved
-                      ? `<a href="${buildXrefHref(xref)}">Open target: ${escapeHtml(normalized)}</a>`
-                      : `<span class="unresolved-text">Unresolved target: ${escapeHtml(normalized || "(missing normalized target)")}</span>`}
-                  </div>
+                  ${resolved
+                    ? `<a href="${buildXrefHref(xref)}">${escapeHtml(normalized)}</a>`
+                    : escapeHtml(normalized)}
                 </li>`;
             }).join("")}
           </ul>`
-        : `<div class="message">No cross-references for this article.</div>`;
+        : "";
 
       const segmentHtml = segments.length
         ? `
@@ -627,11 +648,44 @@
             · pages ${escapeHtml(article.page_start ?? "?")}–${escapeHtml(article.page_end ?? "?")}
             · article id ${escapeHtml(article.id ?? "?")}
           </div>
-          ${contributors.length ? `<div class="contributors">By ${contributors.map(c => `<span title="${escapeHtml(c.initials)}">${escapeHtml(c.full_name)}</span>`).join(", ")}</div>` : ""}
+          ${article.parent_article ? `<div style="margin-bottom: 8px; font-size: 0.95rem;">Plate for <a href="?article=/data/derived/articles/${encodeURIComponent(article.parent_article.filename)}">${escapeHtml(article.parent_article.title)}</a></div>` : ""}
+          ${contributors.length ? `<div class="contributors">By ${contributors.map(c => `<a href="index.html?mode=contributors&q=${encodeURIComponent(c.full_name)}" title="${escapeHtml(c.initials)}" style="color: var(--muted);">${escapeHtml(c.full_name)}</a>`).join(", ")}</div>` : ""}
           ${plates.length ? `<div class="contributors">Plates: ${plates.map(p => `<a href="?article=/data/derived/articles/${encodeURIComponent(p.filename)}">${escapeHtml(p.title)}</a>`).join(", ")}</div>` : ""}
+          ${article.source_quality && article.source_quality.lowest_level <= 1
+            ? `<div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 8px 12px; margin: 8px 0; font-size: 0.9rem;">
+                 <strong>Source quality notice:</strong> ${escapeHtml(article.source_quality.note || "Some pages may contain unverified text.")}
+                 This article spans pages with unproofread transcriptions. Text should be verified against the original scans.
+               </div>`
+            : ""}
           ${(() => {
             footnoteCounter = 0; collectedFootnotes = []; linkedTargets = new Set(); sectionCounter = 0; collectedSections = [];
-            const bodyHtml = (article.body || "").split("\n\n").map(p => renderParagraph(p)).join("");
+            // Merge shoulder heading paragraphs with surrounding text.
+            // A shoulder heading sits in the margin mid-sentence, so it
+            // should not create paragraph breaks. Merge: prev + SH + next
+            // into one paragraph.
+            const rawParas = (article.body || "").split("\n\n");
+            const mergedParas = [];
+            let i = 0;
+            while (i < rawParas.length) {
+              if (rawParas[i].startsWith("\u00abSH\u00bb")) {
+                // Shoulder heading: attach to previous, then absorb next
+                const sh = rawParas[i];
+                if (mergedParas.length > 0) {
+                  mergedParas[mergedParas.length - 1] += " " + sh;
+                } else {
+                  mergedParas.push(sh);
+                }
+                // Also absorb the next paragraph (continuation of sentence)
+                if (i + 1 < rawParas.length && !rawParas[i + 1].startsWith("\u00abSH\u00bb")) {
+                  mergedParas[mergedParas.length - 1] += " " + rawParas[i + 1];
+                  i++;
+                }
+              } else {
+                mergedParas.push(rawParas[i]);
+              }
+              i++;
+            }
+            const bodyHtml = mergedParas.map(p => renderParagraph(p)).join("");
             const tocHtml = collectedSections.length >= 3
               ? `<div class="toc"><h3>Contents</h3><ol>${collectedSections.map(s => `<li><a href="#${s.id}">${escapeHtml(s.title)}</a></li>`).join("")}</ol></div>`
               : "";
@@ -655,10 +709,10 @@
           </div>
         </div>` : ""}
 
-        <div class="card">
+        ${xrefHtml ? `<div class="card">
           <h2>Cross-references</h2>
           ${xrefHtml}
-        </div>
+        </div>` : ""}
 
       `;
     }

@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Britannica Index</title>
+  <title>Encyclopaedia Britannica, 11th Edition</title>
   <style>
     :root {
       --bg: #f7f7f5;
       --panel: #ffffff;
       --text: #1f2328;
-      --muted: #6b7280;
+      --muted: #4b5563;
       --border: #d0d7de;
       --link: #0969da;
+      --highlight: #fff3cd;
       --warn: #b42318;
       --warn-bg: #fff1f1;
-      --code-bg: #f6f8fa;
     }
 
     * { box-sizing: border-box; }
@@ -45,18 +45,24 @@
 
     .stats {
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       margin-bottom: 16px;
     }
 
+    /* Search form */
+    .search-form {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
     .search-box {
-      width: 100%;
+      flex: 1;
       padding: 10px 14px;
       border: 1px solid var(--border);
       border-radius: 8px;
       font: inherit;
       font-size: 1rem;
-      margin-bottom: 16px;
     }
 
     .search-box:focus {
@@ -65,82 +71,124 @@
       box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.15);
     }
 
-    .filter-bar {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
+    .search-btn {
+      padding: 10px 20px;
+      border: 1px solid var(--link);
+      border-radius: 8px;
+      background: var(--link);
+      color: #fff;
+      font: inherit;
+      font-size: 1rem;
+      cursor: pointer;
     }
 
-    .filter-btn {
-      padding: 6px 12px;
+    .search-btn:hover { opacity: 0.9; }
+
+    .search-modes {
+      display: flex;
+      gap: 16px;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .search-modes label {
+      cursor: pointer;
+      color: var(--muted);
+    }
+
+    .search-modes input:checked + span {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* Results area */
+    .result {
+      border-bottom: 1px solid #eee;
+      padding: 10px 0;
+    }
+
+    .result:last-child { border-bottom: none; }
+
+    .result-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .result-title a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    .result-title a:hover { text-decoration: underline; }
+
+    .result-meta {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 2px;
+    }
+
+    .result-snippet {
+      margin-top: 4px;
+      font-size: 0.93rem;
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--text);
+    }
+
+    .result-snippet em {
+      background: var(--highlight);
+      font-style: normal;
+      padding: 1px 2px;
+      border-radius: 2px;
+    }
+
+    .body-start {
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-style: italic;
+      margin-left: 8px;
+    }
+
+    .page-range { color: var(--muted); font-size: 0.85rem; }
+
+    .empty { color: var(--muted); padding: 40px; text-align: center; }
+
+    .pagination {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .pagination button {
+      padding: 6px 14px;
       border: 1px solid var(--border);
       border-radius: 6px;
       background: #fff;
       cursor: pointer;
       font-size: 0.85rem;
-      color: var(--muted);
+      color: var(--text);
     }
 
-    .filter-btn:hover { background: #f3f4f6; }
-    .filter-btn.active { background: var(--link); color: #fff; border-color: var(--link); }
+    .pagination button:hover { background: #f3f4f6; }
+    .pagination button:disabled { opacity: 0.3; cursor: default; }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
+    /* Volume browse */
+    .volume-section { margin-top: 8px; }
 
-    th {
-      text-align: left;
-      padding: 8px 10px;
-      border-bottom: 2px solid var(--border);
-      font-size: 0.85rem;
-      color: var(--muted);
+    .volume-section summary {
       cursor: pointer;
-      user-select: none;
-    }
-
-    th:hover { color: var(--text); }
-    th .sort-arrow { font-size: 0.7rem; margin-left: 4px; }
-
-    td {
-      padding: 6px 10px;
-      border-bottom: 1px solid #eee;
       font-size: 0.95rem;
-    }
-
-    td a {
-      color: var(--link);
-      text-decoration: none;
-    }
-
-    td a:hover { text-decoration: underline; }
-
-    .short-body { color: var(--warn); }
-    .xref-badge {
-      display: inline-block;
-      padding: 1px 6px;
-      border-radius: 4px;
-      font-size: 0.8rem;
-      background: var(--code-bg);
       color: var(--muted);
+      padding: 8px 0;
     }
-
-    .xref-badge.has-unresolved {
-      background: var(--warn-bg);
-      color: var(--warn);
-    }
-
-    .empty { color: var(--muted); padding: 40px; text-align: center; }
-
-    .page-range { color: var(--muted); font-size: 0.85rem; }
-    .body-start { color: var(--muted); font-size: 0.85rem; font-style: italic; margin-left: 8px; }
 
     .volume-bar {
       display: flex;
       flex-wrap: wrap;
       gap: 4px;
-      margin-bottom: 16px;
+      padding: 8px 0;
     }
 
     .vol-btn {
@@ -151,219 +199,526 @@
       cursor: pointer;
       font-size: 0.78rem;
       color: var(--muted);
-      text-align: center;
     }
 
     .vol-btn:hover { background: #f3f4f6; }
     .vol-btn.active { background: var(--link); color: #fff; border-color: var(--link); }
     .vol-btn.disabled { opacity: 0.3; cursor: default; }
+
+    table { width: 100%; border-collapse: collapse; }
+
+    th {
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 2px solid var(--border);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    td {
+      padding: 6px 10px;
+      border-bottom: 1px solid #eee;
+      font-size: 0.95rem;
+    }
+
+    td a { color: var(--link); text-decoration: none; }
+    td a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
   <div class="page">
     <div class="card">
-      <h1>Britannica 11th Edition</h1>
+      <h1>Encyclopaedia Britannica, 11th Edition</h1>
       <div id="stats" class="stats">Loading...</div>
-      <div style="margin-bottom: 12px; font-size: 0.9rem;">
-        <a href="search.html" style="color: var(--link); text-decoration: none;">Full-Text Search &rarr;</a>
-        &nbsp;&nbsp;
-        <a href="contributors.html" style="color: var(--link); text-decoration: none;">Contributors &rarr;</a>
+
+      <div class="search-modes">
+        <label><input type="radio" name="mode" value="title" checked /> <span>Title</span></label>
+        <label><input type="radio" name="mode" value="fulltext" /> <span>Full text</span></label>
+        <label><input type="radio" name="mode" value="contributors" /> <span>Contributors</span></label>
       </div>
-      <div id="volume-bar" class="volume-bar"></div>
-      <input id="search" class="search-box" type="text" placeholder="Search articles..." />
-      <div class="filter-bar">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="short">Short body (&lt;20 words)</button>
-        <button class="filter-btn" data-filter="has-xrefs">Has xrefs</button>
-        <button class="filter-btn" data-filter="unresolved">Unresolved xrefs</button>
-        <button class="filter-btn" data-filter="front_matter">Front matter</button>
-        <button class="filter-btn" data-filter="plates">Plates</button>
+      <div class="search-form">
+        <input id="search" class="search-box" type="text" placeholder="Search articles..." autofocus />
+        <button id="search-btn" class="search-btn">Search</button>
       </div>
+      <div id="search-hint" style="font-size: 0.82rem; color: var(--muted); margin-top: -8px;"></div>
+
+      <details class="volume-section">
+        <summary>Browse by volume</summary>
+        <div id="volume-bar" class="volume-bar"></div>
+      </details>
     </div>
 
-    <div class="card">
+    <div id="results-card" class="card" style="display:none">
+      <!-- Title search results (table) -->
+      <div id="title-results" style="display:none">
+        <div id="title-pagination-top" class="pagination" style="display:none">
+          <button id="title-prev-top">&larr; Previous</button>
+          <span id="title-page-info-top"></span>
+          <button id="title-next-top">Next &rarr;</button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Pages</th>
+              <th>Length</th>
+            </tr>
+          </thead>
+          <tbody id="title-tbody"></tbody>
+        </table>
+        <div id="title-pagination" class="pagination" style="display:none">
+          <button id="title-prev">&larr; Previous</button>
+          <span id="title-page-info"></span>
+          <button id="title-next">Next &rarr;</button>
+        </div>
+      </div>
+
+      <!-- Full-text search results -->
+      <div id="fulltext-results" style="display:none"></div>
+
+      <!-- Contributor results -->
+      <div id="contrib-results" style="display:none"></div>
+
+      <div id="empty" class="empty" style="display:none">No results found.</div>
+    </div>
+
+    <!-- Volume front matter -->
+    <div id="frontmatter-card" class="card" style="display:none">
+      <div id="frontmatter-content"></div>
+    </div>
+
+    <!-- Volume browse results -->
+    <div id="browse-card" class="card" style="display:none">
+      <div id="browse-pagination-top" class="pagination" style="display:none">
+        <button id="browse-prev-top">&larr; Previous</button>
+        <span id="browse-page-info-top"></span>
+        <button id="browse-next-top">Next &rarr;</button>
+      </div>
       <table>
         <thead>
           <tr>
-            <th data-sort="title">Title <span class="sort-arrow"></span></th>
-            <th data-sort="page_start">Pages <span class="sort-arrow"></span></th>
-            <th data-sort="body_length">Length <span class="sort-arrow"></span></th>
-            <th data-sort="xref_count">Xrefs <span class="sort-arrow"></span></th>
+            <th>Title</th>
+            <th>Pages</th>
+            <th>Length</th>
           </tr>
         </thead>
-        <tbody id="article-list"></tbody>
+        <tbody id="browse-tbody"></tbody>
       </table>
-      <div id="empty" class="empty" style="display:none">No matching articles.</div>
+      <div id="browse-pagination" class="pagination" style="display:none">
+        <button id="browse-prev">&larr; Previous</button>
+        <span id="browse-page-info"></span>
+        <button id="browse-next">Next &rarr;</button>
+      </div>
     </div>
   </div>
 
   <script>
+    const MEILI_URL = "http://localhost:7700";
+    const MEILI_KEY = "britannica-dev-key";
+    const PAGE_SIZE = 100;
+
     let articles = [];
-    let currentFilter = "all";
-    let currentSort = "title";
-    let sortAsc = true;
-    let currentVolume = null; // null = all volumes
+    let contributors = [];
+    let volumesMeta = [];
+    let currentPage = 0;
+    let lastFiltered = [];
+    let browsingVolume = null;
+
     const searchInput = document.getElementById("search");
-    const tbody = document.getElementById("article-list");
-    const emptyMsg = document.getElementById("empty");
+    const searchBtn = document.getElementById("search-btn");
     const statsEl = document.getElementById("stats");
+    const resultsCard = document.getElementById("results-card");
+    const browseCard = document.getElementById("browse-card");
+    const emptyEl = document.getElementById("empty");
 
     function escapeHtml(s) {
-      return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
     function viewerUrl(filename) {
       return `viewer.html?article=/data/derived/articles/${encodeURIComponent(filename)}`;
     }
 
-    function applyFilter(article) {
-      if (currentFilter === "all") return (article.article_type || "article") === "article";
-      if (currentFilter === "short") return article.body_length < 20 && (article.article_type || "article") === "article";
-      if (currentFilter === "has-xrefs") return article.xref_count > 0;
-      if (currentFilter === "unresolved") return article.xref_count > article.resolved_count;
-      if (currentFilter === "front_matter") return (article.article_type || "article") === "front_matter";
-      if (currentFilter === "plates") return (article.article_type || "article") === "plate";
-      return true;
+    function getMode() {
+      return document.querySelector('input[name="mode"]:checked').value;
     }
 
-    function applySearch(article, query) {
-      if (!query) return true;
+    function pageRange(a) {
+      return a.page_start === a.page_end
+        ? `p.${a.page_start}`
+        : `pp.${a.page_start}\u2013${a.page_end}`;
+    }
+
+    function articleRow(a) {
+      return `<tr>
+        <td><a href="${viewerUrl(a.filename)}">${escapeHtml(a.title)}</a>
+          ${a.body_start ? `<span class="body-start">${escapeHtml(a.body_start)}</span>` : ""}</td>
+        <td class="page-range">Vol.${a.volume} ${pageRange(a)}</td>
+        <td>${a.body_length.toLocaleString()}</td>
+      </tr>`;
+    }
+
+    // ── Title search ──
+    function searchTitle(query) {
       const q = query.toLowerCase();
-      return article.title.toLowerCase().includes(q)
-        || (article.body_start || "").toLowerCase().includes(q);
-    }
-
-    function render() {
-      const query = searchInput.value.trim();
-      const filtered = articles
-        .filter(a => (currentVolume === null || a.volume === currentVolume) && applyFilter(a) && applySearch(a, query))
+      lastFiltered = articles
+        .filter(a => {
+          if ((a.article_type || "article") !== "article") return false;
+          return a.title.toLowerCase().includes(q)
+            || (a.body_start || "").toLowerCase().includes(q);
+        })
         .sort((a, b) => {
-          // Default sort: volume then page (original encyclopedia order)
-          if (currentSort === "page_start" || currentSort === "title") {
-            if (a.volume !== b.volume) return (a.volume - b.volume) * (sortAsc ? 1 : -1);
-            if (a.page_start !== b.page_start) return (a.page_start - b.page_start) * (sortAsc ? 1 : -1);
-            return a.title.localeCompare(b.title) * (sortAsc ? 1 : -1);
-          }
-          let va = a[currentSort], vb = b[currentSort];
-          if (typeof va === "string") { va = va.toLowerCase(); vb = vb.toLowerCase(); }
-          if (va < vb) return sortAsc ? -1 : 1;
-          if (va > vb) return sortAsc ? 1 : -1;
-          return 0;
+          // Relevance ranking
+          const ra = rankTitle(a, q);
+          const rb = rankTitle(b, q);
+          if (ra !== rb) return ra - rb;
+          return a.title.localeCompare(b.title);
         });
 
-      if (filtered.length === 0) {
-        tbody.innerHTML = "";
-        emptyMsg.style.display = "block";
+      currentPage = 0;
+      showTitleResults();
+    }
+
+    function rankTitle(a, q) {
+      if (a.title.toLowerCase() === q) return 0;
+      if (a.title.toLowerCase().includes(q)) return 1;
+      return 2;
+    }
+
+    function updatePagination(prefix, totalPages) {
+      const info = `Page ${currentPage + 1} of ${totalPages} (${lastFiltered.length.toLocaleString()} results)`;
+      for (const suffix of ["", "-top"]) {
+        const pag = document.getElementById(`${prefix}-pagination${suffix}`);
+        if (totalPages > 1) {
+          pag.style.display = "flex";
+          document.getElementById(`${prefix}-prev${suffix}`).disabled = currentPage === 0;
+          document.getElementById(`${prefix}-next${suffix}`).disabled = currentPage >= totalPages - 1;
+          document.getElementById(`${prefix}-page-info${suffix}`).textContent = info;
+        } else {
+          pag.style.display = "none";
+        }
+      }
+    }
+
+    function showTitleResults() {
+      hideAllResults();
+      resultsCard.style.display = "block";
+
+      if (lastFiltered.length === 0) {
+        emptyEl.style.display = "block";
         return;
       }
 
-      emptyMsg.style.display = "none";
+      const el = document.getElementById("title-results");
+      el.style.display = "block";
+      const tbody = document.getElementById("title-tbody");
+      const totalPages = Math.ceil(lastFiltered.length / PAGE_SIZE);
+      const start = currentPage * PAGE_SIZE;
 
-      tbody.innerHTML = filtered.map(a => {
-        const shortClass = a.body_length < 100 ? " short-body" : "";
-        const xrefBadge = a.xref_count > 0
-          ? `<span class="xref-badge${a.xref_count > a.resolved_count ? " has-unresolved" : ""}">${a.resolved_count}/${a.xref_count}</span>`
-          : "";
-        const pageRange = a.page_start === a.page_end
-          ? `p.${a.page_start}`
-          : `pp.${a.page_start}\u2013${a.page_end}`;
+      tbody.innerHTML = lastFiltered.slice(start, start + PAGE_SIZE).map(articleRow).join("");
+      updatePagination("title", totalPages);
+    }
 
-        return `<tr>
-          <td><a href="${viewerUrl(a.filename)}">${escapeHtml(a.title)}</a>${a.body_start ? `<span class="body-start">${escapeHtml(a.body_start)}</span>` : ""}</td>
-          <td class="page-range">${pageRange}</td>
-          <td class="${shortClass}">${a.body_length.toLocaleString()}</td>
-          <td>${xrefBadge}</td>
-        </tr>`;
+    // ── Full-text search ──
+    async function searchFulltext(query) {
+      hideAllResults();
+      resultsCard.style.display = "block";
+
+      if (!query.trim()) {
+        emptyEl.style.display = "block";
+        emptyEl.textContent = "Enter a search term.";
+        return;
+      }
+
+      try {
+        const resp = await fetch(`${MEILI_URL}/indexes/articles/search`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${MEILI_KEY}`,
+          },
+          body: JSON.stringify({
+            q: query,
+            limit: 50,
+            attributesToRetrieve: ["title", "volume", "page_start", "page_end", "body_start", "filename", "contributors"],
+            attributesToHighlight: ["body", "title"],
+            attributesToCrop: ["body:30"],
+            cropLength: 30,
+            highlightPreTag: "<em>",
+            highlightPostTag: "</em>",
+          }),
+        });
+
+        const data = await resp.json();
+        const hits = data.hits || [];
+
+        if (hits.length === 0) {
+          emptyEl.style.display = "block";
+          emptyEl.textContent = "No results found.";
+          return;
+        }
+
+        const el = document.getElementById("fulltext-results");
+        el.style.display = "block";
+        el.innerHTML = hits.map(hit => {
+          const fmt = hit._formatted || {};
+          const snippet = fmt.body || hit.body_start || "";
+          const title = fmt.title || hit.title;
+          const pr = hit.page_start === hit.page_end
+            ? `p.${hit.page_start}` : `pp.${hit.page_start}\u2013${hit.page_end}`;
+
+          return `<div class="result">
+            <div class="result-title"><a href="${viewerUrl(hit.filename)}">${title}</a></div>
+            <div class="result-meta">Volume ${hit.volume} \u00b7 ${pr}</div>
+            <div class="result-snippet">${snippet}</div>
+          </div>`;
+        }).join("");
+      } catch (err) {
+        emptyEl.style.display = "block";
+        emptyEl.textContent = `Search error: ${err.message}`;
+      }
+    }
+
+    // ── Contributor search ──
+    function searchContributors(query) {
+      hideAllResults();
+      resultsCard.style.display = "block";
+
+      const q = query.toLowerCase();
+      // Empty query = browse all contributors
+      const matches = q
+        ? contributors.filter(c =>
+            c.full_name.toLowerCase().includes(q)
+            || (c.initials || "").toLowerCase().includes(q)
+            || (c.description || "").toLowerCase().includes(q)
+          )
+        : contributors;
+
+      if (matches.length === 0) {
+        emptyEl.style.display = "block";
+        emptyEl.textContent = "No contributors found.";
+        return;
+      }
+
+      const el = document.getElementById("contrib-results");
+      el.style.display = "block";
+      el.innerHTML = matches.map(c => {
+        const artLinks = (c.articles || []).slice(0, 10).map(a =>
+          `<a href="${viewerUrl(a.filename)}">${escapeHtml(a.title)}</a>`
+        ).join(", ");
+        const more = (c.articles || []).length > 10
+          ? ` and ${c.articles.length - 10} more` : "";
+
+        // Find biographical article if description says so
+        let bioLink = "";
+        if ((c.description || "").toLowerCase().includes("biographical article")) {
+          const nameParts = c.full_name.split(/\s+/);
+          const lastName = nameParts[nameParts.length - 1].toUpperCase();
+          const bioArticle = articles.find(a =>
+            a.title.startsWith(lastName + ",") || a.title === lastName
+          );
+          if (bioArticle) {
+            bioLink = ` \u00b7 <a href="${viewerUrl(bioArticle.filename)}">Biographical entry</a>`;
+          }
+        }
+
+        return `<div class="result">
+          <div class="result-title">${escapeHtml(c.display_name || c.full_name)}</div>
+          <div class="result-meta">${escapeHtml(c.initials || "")}${c.credentials ? " \u00b7 " + escapeHtml(c.credentials) : ""}${bioLink}</div>
+          <div class="result-snippet">${artLinks}${more}</div>
+        </div>`;
       }).join("");
     }
 
-    // Event: search
-    searchInput.addEventListener("input", render);
+    // ── Volume browse ──
+    function iaUrl(vol) {
+      const padded = String(vol).padStart(2, "0");
+      return `https://archive.org/details/encyclopaediabri${padded}chisrich`;
+    }
 
-    // Event: filter buttons
-    document.querySelectorAll(".filter-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        currentFilter = btn.dataset.filter;
-        render();
-      });
+    function iaPageUrl(vol, page) {
+      return `${iaUrl(vol)}/page/n${page}`;
+    }
+
+    function browseVolume(vol) {
+      browsingVolume = vol;
+      resultsCard.style.display = "none";
+
+      const meta = volumesMeta.find(v => v.volume === vol) || {};
+      const volArts = articles
+        .filter(a => a.volume === vol && (a.article_type || "article") === "article")
+        .sort((a, b) => a.page_start - b.page_start);
+
+      const firstTitle = meta.first_title || (volArts[0] || {}).title || "";
+      const lastTitle = meta.last_title || (volArts[volArts.length - 1] || {}).title || "";
+      const fmPages = (meta.front_matter_pages || []);
+      const iaLink = meta.ia_url || iaUrl(vol);
+
+      // Show front matter card
+      const fmCard = document.getElementById("frontmatter-card");
+      const fmContent = document.getElementById("frontmatter-content");
+      fmCard.style.display = "block";
+      fmContent.innerHTML = `
+        <h2 style="margin-top:0; font-size:1.2rem;">Volume ${vol}: ${escapeHtml(firstTitle)}\u2013${escapeHtml(lastTitle)}</h2>
+        ${fmPages.length
+          ? `<div style="color: var(--muted); font-size: 0.9rem;">
+               Front matter: pages 1\u2013${fmPages[fmPages.length - 1]}
+               (title page, editorial preface, contributor list)
+             </div>`
+          : ""}
+        <div style="margin-top: 8px; font-size: 0.9rem;">
+          <a href="${iaLink}" target="_blank" style="color: var(--link);">View original volume on Internet Archive \u2192</a>
+          ${fmPages.length
+            ? ` &nbsp;\u00b7&nbsp; <a href="${iaPageUrl(vol, 1)}" target="_blank" style="color: var(--link);">View front matter \u2192</a>`
+            : ""}
+        </div>
+        <div style="color: var(--muted); font-size: 0.85rem; margin-top: 4px;">
+          ${meta.article_count || volArts.length} articles \u00b7 ${meta.total_pages || "?"} pages
+        </div>
+      `;
+
+      lastFiltered = volArts;
+      currentPage = 0;
+      showBrowseResults();
+    }
+
+    function showBrowseResults() {
+      browseCard.style.display = "block";
+
+      const tbody = document.getElementById("browse-tbody");
+      const totalPages = Math.ceil(lastFiltered.length / PAGE_SIZE);
+      const start = currentPage * PAGE_SIZE;
+
+      tbody.innerHTML = lastFiltered.slice(start, start + PAGE_SIZE).map(articleRow).join("");
+      updatePagination("browse", totalPages);
+    }
+
+    // ── Helpers ──
+    function hideAllResults() {
+      emptyEl.style.display = "none";
+      emptyEl.textContent = "No results found.";
+      document.getElementById("title-results").style.display = "none";
+      document.getElementById("fulltext-results").style.display = "none";
+      document.getElementById("contrib-results").style.display = "none";
+      document.getElementById("frontmatter-card").style.display = "none";
+      browseCard.style.display = "none";
+    }
+
+    function doSearch() {
+      const query = searchInput.value.trim();
+      const mode = getMode();
+      if (!query && mode !== "contributors") return;
+      browseCard.style.display = "none";
+      // Deselect volume buttons
+      document.querySelectorAll(".vol-btn").forEach(b => b.classList.remove("active"));
+
+      if (mode === "title") searchTitle(query);
+      else if (mode === "fulltext") searchFulltext(query);
+      else if (mode === "contributors") searchContributors(query);
+    }
+
+    // ── Events ──
+    const hints = {
+      title: "Search by article title",
+      fulltext: "Search article text (requires Meilisearch)",
+      contributors: "Search contributors, or leave blank to browse all",
+    };
+    const hintEl = document.getElementById("search-hint");
+
+    const placeholders = {
+      title: "Search articles...",
+      fulltext: "Search article text...",
+      contributors: "Search contributors...",
+    };
+
+    function updateHint() {
+      hintEl.textContent = hints[getMode()] || "";
+      searchInput.placeholder = placeholders[getMode()] || "Search...";
+    }
+
+    updateHint();
+    document.querySelectorAll('input[name="mode"]').forEach(r =>
+      r.addEventListener("change", updateHint)
+    );
+
+    searchBtn.addEventListener("click", doSearch);
+    searchInput.addEventListener("keydown", e => {
+      if (e.key === "Enter") doSearch();
     });
 
-    // Event: column sort
-    document.querySelectorAll("th[data-sort]").forEach(th => {
-      th.addEventListener("click", () => {
-        const col = th.dataset.sort;
-        if (currentSort === col) {
-          sortAsc = !sortAsc;
-        } else {
-          currentSort = col;
-          sortAsc = true;
+    for (const suffix of ["", "-top"]) {
+      document.getElementById(`title-prev${suffix}`).addEventListener("click", () => {
+        if (currentPage > 0) { currentPage--; showTitleResults(); window.scrollTo(0, 0); }
+      });
+      document.getElementById(`title-next${suffix}`).addEventListener("click", () => {
+        const total = Math.ceil(lastFiltered.length / PAGE_SIZE);
+        if (currentPage < total - 1) { currentPage++; showTitleResults(); window.scrollTo(0, 0); }
+      });
+      document.getElementById(`browse-prev${suffix}`).addEventListener("click", () => {
+        if (currentPage > 0) { currentPage--; showBrowseResults(); window.scrollTo(0, 0); }
+      });
+      document.getElementById(`browse-next${suffix}`).addEventListener("click", () => {
+        const total = Math.ceil(lastFiltered.length / PAGE_SIZE);
+        if (currentPage < total - 1) { currentPage++; showBrowseResults(); window.scrollTo(0, 0); }
+      });
+    }
+
+    // ── Load data ──
+    Promise.all([
+      fetch("/data/derived/articles/index.json").then(r => r.json()),
+      fetch("/data/derived/articles/contributors.json").then(r => r.json()).catch(() => []),
+      fetch("/data/derived/volumes.json").then(r => r.json()).catch(() => []),
+    ]).then(([articleData, contribData, volumesData]) => {
+      articles = articleData;
+      contributors = contribData;
+      volumesMeta = volumesData;
+
+      const artCount = articles.filter(a => (a.article_type || "article") === "article").length;
+      statsEl.textContent = `${artCount.toLocaleString()} articles \u00b7 ${contributors.length.toLocaleString()} contributors`;
+
+      // Build volume bar
+      const volumes = [...new Set(articles.map(a => a.volume))].sort((a, b) => a - b);
+      const volBar = document.getElementById("volume-bar");
+
+      for (const v of volumes) {
+        const volArts = articles
+          .filter(a => a.volume === v && (a.article_type || "article") === "article")
+          .sort((a, b) => a.page_start - b.page_start);
+
+        let label = `Vol ${v}`;
+        if (volArts.length > 0) {
+          const first = volArts[0].title.split(",")[0].split(" ")[0];
+          const last = volArts[volArts.length - 1].title.split(",")[0].split(" ")[0];
+          label = `${v}. ${first}\u2013${last}`;
         }
-        document.querySelectorAll("th .sort-arrow").forEach(s => s.textContent = "");
-        th.querySelector(".sort-arrow").textContent = sortAsc ? "\u25b2" : "\u25bc";
-        render();
-      });
-    });
 
-    // Load index
-    fetch("/data/derived/articles/index.json")
-      .then(r => {
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        return r.json();
-      })
-      .then(data => {
-        articles = data;
-        const totalXrefs = articles.reduce((s, a) => s + a.xref_count, 0);
-        const resolvedXrefs = articles.reduce((s, a) => s + a.resolved_count, 0);
-        statsEl.textContent = `${articles.length} articles \u00b7 ${totalXrefs} cross-references (${resolvedXrefs} resolved)`;
-
-        // Build volume bar
-        const volumes = [...new Set(articles.map(a => a.volume))].sort((a, b) => a - b);
-        const volBar = document.getElementById("volume-bar");
-        const allBtn = document.createElement("button");
-        allBtn.className = "vol-btn active";
-        allBtn.textContent = "All";
-        allBtn.addEventListener("click", () => {
-          currentVolume = null;
-          volBar.querySelectorAll(".vol-btn").forEach(b => b.classList.remove("active"));
-          allBtn.classList.add("active");
-          render();
+        const btn = document.createElement("button");
+        btn.className = "vol-btn";
+        btn.textContent = label;
+        btn.title = `Volume ${v} (${volArts.length} articles)`;
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".vol-btn").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          hideAllResults();
+          browseVolume(v);
         });
-        volBar.appendChild(allBtn);
-
-        // Generate volume labels from actual article data
-        for (let v = 1; v <= 29; v++) {
-          const volArts = articles
-            .filter(a => a.volume === v && (a.article_type || "article") === "article")
-            .sort((a, b) => a.page_start - b.page_start);
-          let label = `Vol ${v}`;
-          if (volArts.length > 0) {
-            const first = volArts[0].title.split(",")[0].split(" ")[0];
-            const last = volArts[volArts.length - 1].title.split(",")[0].split(" ")[0];
-            label = `${first}\u2013${last}`;
-          }
-          const btn = document.createElement("button");
-          btn.className = "vol-btn" + (volumes.includes(v) ? "" : " disabled");
-          btn.textContent = label;
-          btn.title = `Volume ${v}`;
-          if (volumes.includes(v)) {
-            const vol = v;
-            btn.addEventListener("click", () => {
-              currentVolume = vol;
-              volBar.querySelectorAll(".vol-btn").forEach(b => b.classList.remove("active"));
-              btn.classList.add("active");
-              render();
-            });
-          }
-          volBar.appendChild(btn);
-        }
-
-        render();
-      })
-      .catch(err => {
-        statsEl.textContent = `Failed to load index: ${err.message}`;
-      });
+        volBar.appendChild(btn);
+      }
+      // Handle URL parameters (e.g., ?mode=contributors&q=John+Bury)
+      const params = new URLSearchParams(window.location.search);
+      const urlMode = params.get("mode");
+      const urlQuery = params.get("q");
+      if (urlMode) {
+        const radio = document.querySelector(`input[name="mode"][value="${urlMode}"]`);
+        if (radio) { radio.checked = true; updateHint(); }
+      }
+      if (urlQuery || urlMode === "contributors") {
+        searchInput.value = urlQuery || "";
+        doSearch();
+      }
+    }).catch(err => {
+      statsEl.textContent = `Failed to load: ${err.message}`;
+    });
   </script>
 </body>
 </html>
