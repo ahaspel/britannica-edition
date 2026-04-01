@@ -24,10 +24,15 @@ def reflow_paragraphs(text: str) -> str:
 
     text = "\n\n".join(result)
 
-    # Restore protected newlines within table and verse blocks
+    # Restore protected newlines within table and verse blocks.
+    # Collapse runs of \x02 to a single \n (multiple \x02 would create \n\n
+    # which splits the table into separate paragraphs in the viewer).
+    def _restore_protected_newlines(m: re.Match) -> str:
+        return re.sub(r"\x02+", "\n", m.group(0))
+
     text = re.sub(
         r"\{\{TABLE.*?\}TABLE\}",
-        lambda m: m.group(0).replace("\x02", "\n"),
+        _restore_protected_newlines,
         text,
         flags=re.DOTALL,
     )

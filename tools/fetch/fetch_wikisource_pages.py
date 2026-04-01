@@ -324,8 +324,22 @@ def clean_wikisource_page_text(text: str) -> str:
     # Now extract <poem> tags
     def _poem_to_marker(m: re.Match) -> str:
         content = m.group(1).strip()
+        # {{gap}} between two key entries (followed by a letter key) → newline
+        content = re.sub(
+            r"\{\{gap(?:\|[^{}]*)?\}\}(?=''?[A-Za-z])", "\n",
+            content, flags=re.IGNORECASE,
+        )
+        # <br> followed by {{gap}} indentation → space (continuation line)
+        content = re.sub(r"<br\s*/?>\s*\{\{gap(?:\|[^{}]*)?\}\}", " ", content, flags=re.IGNORECASE)
+        # Remaining <br> within poem lines → space
+        content = re.sub(r"<br\s*/?>", " ", content, flags=re.IGNORECASE)
+        # Spacing templates ({{em|...}}, {{gap|...}}, {{gap}}) → space
+        content = re.sub(r"\{\{(?:em|gap)(?:\|[^{}]*)?\}\}", " ", content, flags=re.IGNORECASE)
+        # Strip remaining templates
         content = re.sub(r"\{\{[^{}]*\}\}", "", content)
         content = content.replace("'''", "").replace("''", "")
+        # HTML entities
+        content = re.sub(r"&[a-z]+;", " ", content)
         content = "\n".join(line.strip() for line in content.split("\n") if line.strip())
         return f"\n\n{_VERSE}VERSE\n{content}\n{_VERSE}\n\n"
     text = re.sub(r"<poem>(.*?)</poem>", _poem_to_marker, text, flags=re.DOTALL | re.IGNORECASE)
@@ -435,6 +449,84 @@ def clean_wikisource_page_text(text: str) -> str:
                 lines.append("  ".join(cells))
         return "\n".join(lines)
 
+    # ── Extract caption and legend text from wiki table content ──────────
+    def _extract_caption(content: str) -> str:
+        """Extract figure caption from {{center|{{sc|Fig.}}—...}} or similar."""
+        # Match {{center|...}} — may contain nested templates
+        m = re.search(r"\{\{center\|((?:[^{}]|\{\{[^{}]*\}\})*)\}\}", content)
+        if m:
+            cap = m.group(1)
+        else:
+            # Match a row containing {{sc|Fig.}}—Caption
+            m = re.search(
+                r"\{\{[Ss][Cc]\|([Ff]ig\.?\s*\d*\.?)\}\}(.*?)(?:\n|$)",
+                content,
+            )
+            if m:
+                cap = m.group(1) + m.group(2)
+            else:
+                # Match plain text caption after an image row (e.g., "—Bird's-eye view")
+                m = re.search(r"\|(\u2014[^\n|]{5,80})(?:\n|$)", content)
+                if m:
+                    return m.group(1).strip()
+                return ""
+        # Unwrap nested templates but keep text
+        cap = re.sub(r"\{\{sc\|([^{}]*)\}\}", r"\1", cap, flags=re.IGNORECASE)
+        cap = re.sub(r"\{\{[^{}]*\}\}", "", cap)
+        cap = re.sub(r"\[\[[^|\]]*\|([^\]]*)\]\]", r"\1", cap)  # [[target|display]]
+        cap = re.sub(r"\[\[([^\]]*)\]\]", r"\1", cap)  # [[target]]
+        # Strip link markers already converted
+        cap = re.sub(re.escape(_LNK) + r"[^" + re.escape(_LNK) + r"]*\|([^" + re.escape(_LNK) + r"]*)" + re.escape(_LNK), r"\1", cap)
+        cap = re.sub(r"<br\s*/?>", " ", cap, flags=re.IGNORECASE)
+        cap = re.sub(r"''([^']*?)''", r"\1", cap)  # strip wiki italic
+        cap = re.sub(r"<[^>]+>", "", cap)
+        cap = re.sub(r"&[a-z]+;", " ", cap)
+        cap = re.sub(r"\s+", " ", cap)
+        return cap.strip()
+
+    def _extract_legend(content: str) -> str:
+        """Extract legend key text from VERSE markers (originally <poem> blocks).
+
+        Returns legend as pipe-separated table rows (letter | description)
+        for consistent rendering.
+        """
+        rows = []
+        # By this point, <poem> blocks have been converted to VERSE markers
+        verse_pat = re.compile(
+            re.escape(_VERSE) + r"VERSE\n(.*?)\n" + re.escape(_VERSE),
+            re.DOTALL,
+        )
+        for m in verse_pat.finditer(content):
+            text = m.group(1)
+            for line in text.split("\n"):
+                line = line.strip()
+                if not line:
+                    continue
+                # Convert HTML sub/sup to Unicode before key matching
+                line = re.sub(r"<sub>(\d+)</sub>", lambda m: "".join(
+                    chr(0x2080 + int(c)) for c in m.group(1)), line)
+                line = re.sub(r"<sup>(\d+)</sup>", lambda m: "".join(
+                    chr(0x2070 + int(c)) if c != "1" else "\u00b9"
+                    for c in m.group(1)), line)
+                # Strip remaining HTML tags and entities
+                line = re.sub(r"<[^>]+>", "", line)
+                line = re.sub(r"&[a-z]+;", " ", line)
+                line = re.sub(r"\s+", " ", line).strip()
+                if not line:
+                    continue
+                # Parse "A. Church." or "c,c.Mills" or "P₁.Scriptorium"
+                # Handles subscript digits, comma-separated compound keys
+                key_match = re.match(
+                    r"^([A-Za-z0-9₀-₉]+(?:[,\-–][A-Za-z0-9₀-₉]+)*\.)\s*(.+)$", line,
+                )
+                if key_match:
+                    rows.append(f"{key_match.group(1)} | {key_match.group(2)}")
+                else:
+                    rows.append(line)
+        if not rows:
+            return ""
+        return f"{_TBL}TABLE\n" + "\n".join(rows) + f"\n{_TBL}"
+
     # Convert wikitable blocks: preserve image markers and extract table content
     def _convert_table(match: re.Match) -> str:
         content = match.group(0)
@@ -448,6 +540,53 @@ def clean_wikisource_page_text(text: str) -> str:
         # Extract image markers first
         img_pat = re.compile(re.escape(_IMG) + r"IMG:[^" + re.escape(_IMG) + r"]+" + re.escape(_IMG))
         img_markers = img_pat.findall(content)
+
+        # Image-legend tables: image + caption + key/legend
+        # Detect by: has image markers AND (has VERSE markers from <poem> OR figure caption)
+        has_verse_legend = bool(re.search(re.escape(_VERSE) + r"VERSE", content))
+        has_fig_caption = bool(re.search(r"\{\{sc\|[Ff]ig", content))
+        if img_markers and (has_verse_legend or has_fig_caption):
+            caption = _extract_caption(content)
+            legend = _extract_legend(content)
+
+            parts = []
+            for img in img_markers:
+                if caption:
+                    # Append caption to the image marker
+                    # Strip the trailing delimiter, add caption, re-add delimiter
+                    img_base = img.rstrip(_IMG)
+                    if "|" in img_base:
+                        parts.append(img)  # already has caption
+                    else:
+                        parts.append(f"{img_base}|{caption}{_IMG}")
+                else:
+                    parts.append(img)
+            if legend:
+                parts.append(legend)
+
+            # Also extract any non-poem table rows (letter keys in normal rows)
+            key_rows = []
+            rows = re.split(r"\|-", content)
+            for row in rows:
+                if _VERSE in row or img_pat.search(row):
+                    continue
+                if re.search(r"\{\{(?:center|sc)\|", row):
+                    continue  # caption row, already extracted
+                cleaned_row = re.sub(r"\{\{[^{}]*\}\}", "", row)
+                cells = re.findall(r"\|([^|\n]+)", cleaned_row)
+                cells = [c.strip() for c in cells
+                         if c.strip()
+                         and not re.match(r"^(?:colspan|rowspan|width|style|align|class|cellpadding)[\s=]", c.strip())
+                         and c.strip() not in ("}",)]
+                if cells:
+                    key_rows.append(" | ".join(cells))
+            if key_rows:
+                parts.append(
+                    f"{_TBL}TABLE\n" + "\n".join(key_rows) + f"\n{_TBL}"
+                )
+
+            result = "\n\n".join(parts)
+            return f"\n\n{result}\n\n" if result else ""
 
         # Check for table caption (|+ ...) — indicates headers follow
         caption_match = re.search(r"\|\+\s*(.*?)(?:\n|$)", content)
@@ -486,7 +625,8 @@ def clean_wikisource_page_text(text: str) -> str:
             table_text = "\n".join(text_rows)
             parts.append(f"{_TBL}TABLE{header_marker}\n{table_text}\n{_TBL}")
 
-        return "\n\n".join(parts) if parts else ""
+        result = "\n\n".join(parts)
+        return f"\n\n{result}\n\n" if result else ""
 
     text = re.sub(r"\{\|.*?\|\}", _convert_table, text, flags=re.DOTALL)
 
