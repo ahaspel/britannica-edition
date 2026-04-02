@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f7f7f5;
+      --panel: #ffffff;
+      --text: #1f2328;
+      --muted: #4b5563;
+      --border: #d0d7de;
+      --link: #0969da;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    nav {
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 0.95rem;
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+    }
+
+    nav a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    nav a:hover { text-decoration: underline; }
+
+    .hero {
+      display: flex;
+      justify-content: center;
+      padding: 40px 24px;
+    }
+
+    .hero img {
+      max-height: calc(100vh - 120px);
+      max-width: 90vw;
+      border: 1px solid var(--border);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Articles</a>
+    <a href="contributors.html">Contributors</a>
+    <a href="preface.html">Editorial Preface</a>
+    <a href="about.html">About</a>
+  </nav>
+
+  <div class="hero">
+    <img src="title_page.jpg" alt="Title page of the Encyclop&aelig;dia Britannica, 11th Edition, Volume I (1910)" />
+  </div>
+</body>
+</html>

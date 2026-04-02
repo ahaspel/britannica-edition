@@ -61,7 +61,12 @@ if [ -z "$SKIP_UPLOAD" ]; then
 
   echo
   echo "=== Uploading viewer files ==="
-  for f in index.html viewer.html search.html contributors.html; do
+  # Upload title page image
+  aws s3 cp "tools/viewer/title_page.jpg" "s3://$BUCKET/title_page.jpg" \
+    --content-type "image/jpeg" \
+    --cache-control "public, max-age=86400"
+
+  for f in home.html index.html viewer.html search.html contributors.html preface.html about.html; do
     aws s3 cp "tools/viewer/$f" "s3://$BUCKET/$f" \
       --content-type "text/html" \
       --cache-control "public, max-age=300"

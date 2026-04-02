@@ -123,7 +123,7 @@
   <div class="page">
     <div class="card">
       <h1>Search</h1>
-      <div class="nav-links"><a href="index.html">&larr; Article Index</a></div>
+      <div class="nav-links"><a href="home.html">Home</a> &middot; <a href="index.html">Articles</a></div>
       <input id="search" class="search-box" type="text" placeholder="Search articles..." autofocus />
       <div id="stats" class="stats"></div>
     </div>
@@ -137,7 +137,7 @@
   <script>
     const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
     const MEILI_URL = IS_LOCAL ? "http://localhost:7700" : "/search-api";
-    const MEILI_KEY = IS_LOCAL ? "britannica-dev-key" : "britannica-search-key";
+    const MEILI_KEY = IS_LOCAL ? "britannica-dev-key" : "24e84cf3ca3b70fe166637d797cbbdd0593ba3a27a47a9ed76b552c821199579";
     const INDEX = "articles";
 
     const searchInput = document.getElementById("search");

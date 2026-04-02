@@ -55,6 +55,10 @@ def main():
         with open(f, encoding="utf-8") as fh:
             article = json.load(fh)
 
+        # Skip non-article files (front_matter.json, etc.)
+        if "id" not in article or "volume" not in article:
+            continue
+
         # Build search document
         body = article.get("body", "")
         words = body.split()

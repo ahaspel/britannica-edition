@@ -93,7 +93,7 @@
 
     .body-text {
       font-size: 1.08rem;
-      margin-left: 3.5em;
+      margin-left: 6.5em;
       margin-right: 160px;
       position: relative;
     }
@@ -107,6 +107,7 @@
     .body-text p {
       text-indent: 1.5em;
       margin: 0 0 0.4em 0;
+      position: relative;
     }
 
     .xref-list {
@@ -262,15 +263,21 @@
     }
 
     .page-marker {
-      float: left;
-      margin-left: -3.5em;
-      width: 3em;
+      position: absolute;
+      left: -7em;
+      top: 0;
+      width: 5em;
       text-align: right;
       font-size: 0.7rem;
       color: var(--muted);
       opacity: 0.6;
       font-variant-numeric: tabular-nums;
       user-select: none;
+    }
+
+    @media (max-width: 700px) {
+      .body-text { margin-left: 0; }
+      .page-marker { display: none; }
     }
 
     .hieroglyph {
@@ -463,11 +470,13 @@
       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
         <h1 style="margin: 0;">Britannica</h1>
         <div style="font-size: 0.9rem;">
-          <a href="index.html" style="color: var(--link); text-decoration: none;">Index</a>
+          <a href="/home.html" style="color: var(--link); text-decoration: none;">Home</a>
           &nbsp;&middot;&nbsp;
-          <a href="search.html" style="color: var(--link); text-decoration: none;">Search</a>
+          <a href="/index.html" style="color: var(--link); text-decoration: none;">Articles</a>
           &nbsp;&middot;&nbsp;
-          <a href="contributors.html" style="color: var(--link); text-decoration: none;">Contributors</a>
+          <a href="/search.html" style="color: var(--link); text-decoration: none;">Search</a>
+          &nbsp;&middot;&nbsp;
+          <a href="/contributors.html" style="color: var(--link); text-decoration: none;">Contributors</a>
         </div>
       </div>
       <div class="controls">
@@ -709,13 +718,23 @@
       return `${String(target || "").trim().toLowerCase()}.json`;
     }
 
+    function articleUrl(filename) {
+      if (IS_LOCAL) {
+        return `?article=/data/derived/articles/${encodeURIComponent(filename)}`;
+      }
+      const base = filename.replace(/\.json$/, "");
+      const page = base.replace(/^0+/, "").split("-")[0];
+      const slug = base.substring(base.indexOf("-") + 1).toLowerCase();
+      return `/article/${page}/${slug}`;
+    }
+
     function buildXrefHref(xref) {
       if (xref?.target_filename) {
-        return `?article=/data/derived/articles/${encodeURIComponent(xref.target_filename)}`;
+        return articleUrl(xref.target_filename);
       }
       if (!xref?.normalized_target) return "#";
       const fileName = articleFileNameFromTarget(xref.normalized_target);
-      return `?article=/data/derived/articles/${encodeURIComponent(fileName)}`;
+      return articleUrl(fileName);
     }
 
     function renderError(message) {
@@ -773,9 +792,9 @@
             · pages ${escapeHtml(article.page_start ?? "?")}–${escapeHtml(article.page_end ?? "?")}
             · article id ${escapeHtml(article.id ?? "?")}
           </div>
-          ${article.parent_article ? `<div style="margin-bottom: 8px; font-size: 0.95rem;">Plate for <a href="?article=/data/derived/articles/${encodeURIComponent(article.parent_article.filename)}">${escapeHtml(article.parent_article.title)}</a></div>` : ""}
+          ${article.parent_article ? `<div style="margin-bottom: 8px; font-size: 0.95rem;">Plate for <a href="${articleUrl(article.parent_article.filename)}">${escapeHtml(article.parent_article.title)}</a></div>` : ""}
           ${contributors.length ? `<div class="contributors">By ${contributors.map(c => `<a href="index.html?mode=contributors&q=${encodeURIComponent(c.full_name)}" title="${escapeHtml(c.initials)}" style="color: var(--muted);">${escapeHtml(c.full_name)}</a>`).join(", ")}</div>` : ""}
-          ${plates.length ? `<div class="contributors">Plates: ${plates.map(p => `<a href="?article=/data/derived/articles/${encodeURIComponent(p.filename)}">${escapeHtml(p.title)}</a>`).join(", ")}</div>` : ""}
+          ${plates.length ? `<div class="contributors">Plates: ${plates.map(p => `<a href="${articleUrl(p.filename)}">${escapeHtml(p.title)}</a>`).join(", ")}</div>` : ""}
           ${article.source_quality && article.source_quality.lowest_level <= 1
             ? `<div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 8px 12px; margin: 8px 0; font-size: 0.9rem;">
                  <strong>Source quality notice:</strong> ${escapeHtml(article.source_quality.note || "Some pages may contain unverified text.")}

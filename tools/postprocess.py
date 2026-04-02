@@ -25,6 +25,9 @@ def clean_body(body: str) -> str:
     body = re.sub(r"nowrap\|", "", body)
     body = re.sub(r"nowrap\n", "\n", body)
 
+    # Garbled table attributes embedded in text
+    body = re.sub(r"(?:wisth|wdith|width)\s*=\s*\d+\|", "", body)
+
     # Strip width directives masquerading as image captions (x125px, x310px)
     body = re.sub(r"(\{\{IMG:[^|}]+)\|x\d+px\}\}", r"\1}}", body)
 

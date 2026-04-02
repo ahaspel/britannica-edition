@@ -248,7 +248,8 @@
 <body>
   <div class="page">
     <div class="card">
-      <h1>Encyclopaedia Britannica, 11th Edition</h1>
+      <div style="font-size:0.9rem; margin-bottom:8px;"><a href="home.html" style="color:var(--link); text-decoration:none;">Home</a></div>
+      <h1>Encyclop&aelig;dia Britannica, 11th Edition</h1>
       <div id="stats" class="stats">Loading...</div>
 
       <div class="search-modes">
@@ -328,7 +329,7 @@
     const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
     const DATA_BASE = IS_LOCAL ? "/data/derived/articles" : "/data";
     const MEILI_URL = IS_LOCAL ? "http://localhost:7700" : "/search-api";
-    const MEILI_KEY = IS_LOCAL ? "britannica-dev-key" : "britannica-search-key";
+    const MEILI_KEY = IS_LOCAL ? "britannica-dev-key" : "24e84cf3ca3b70fe166637d797cbbdd0593ba3a27a47a9ed76b552c821199579";
     const PAGE_SIZE = 100;
 
     let articles = [];
@@ -723,6 +724,7 @@
 
       const artCount = articles.filter(a => (a.article_type || "article") === "article").length;
       statsEl.textContent = `${artCount.toLocaleString()} articles \u00b7 ${contributors.length.toLocaleString()} contributors`;
+
 
       // Build volume bar
       const volumes = [...new Set(articles.map(a => a.volume))].sort((a, b) => a - b);
