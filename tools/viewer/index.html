@@ -174,6 +174,26 @@
     .pagination button:hover { background: #f3f4f6; }
     .pagination button:disabled { opacity: 0.3; cursor: default; }
 
+    .page-index {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      padding: 8px 0;
+    }
+
+    .page-index a {
+      padding: 3px 7px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .page-index a:hover { background: #f3f4f6; }
+    .page-index a.active { background: var(--link); color: #fff; border-color: var(--link); }
+
     /* Volume browse */
     .volume-section { margin-top: 8px; }
 
@@ -289,11 +309,7 @@
 
     <!-- Volume browse results -->
     <div id="browse-card" class="card" style="display:none">
-      <div id="browse-pagination-top" class="pagination" style="display:none">
-        <button id="browse-prev-top">&larr; Previous</button>
-        <span id="browse-page-info-top"></span>
-        <button id="browse-next-top">Next &rarr;</button>
-      </div>
+      <div id="browse-page-index-top" class="page-index"></div>
       <table>
         <thead>
           <tr>
@@ -304,11 +320,7 @@
         </thead>
         <tbody id="browse-tbody"></tbody>
       </table>
-      <div id="browse-pagination" class="pagination" style="display:none">
-        <button id="browse-prev">&larr; Previous</button>
-        <span id="browse-page-info"></span>
-        <button id="browse-next">Next &rarr;</button>
-      </div>
+      <div id="browse-page-index-bottom" class="page-index"></div>
     </div>
   </div>
 
@@ -335,6 +347,16 @@
       return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
+    function formatPreview(s) {
+      let h = escapeHtml(s);
+      h = h.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
+      h = h.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
+      h = h.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span style="font-variant:small-caps">$1</span>');
+      h = h.replace(/\u00abFN:.*?\u00ab\/FN\u00bb/gs, "");
+      h = h.replace(/\u00ab\/?[A-Z]+\u00bb/g, "");
+      return h;
+    }
+
     function viewerUrl(filename) {
       return `viewer.html?article=/data/derived/articles/${encodeURIComponent(filename)}`;
     }
@@ -352,7 +374,7 @@
     function articleRow(a) {
       return `<tr>
         <td><a href="${viewerUrl(a.filename)}">${escapeHtml(a.title)}</a>
-          ${a.body_start ? `<span class="body-start">${escapeHtml(a.body_start)}</span>` : ""}</td>
+          ${a.body_start ? `<span class="body-start">${formatPreview(a.body_start)}</span>` : ""}</td>
         <td class="page-range">Vol.${a.volume} ${pageRange(a)}</td>
         <td>${a.body_length.toLocaleString()}</td>
       </tr>`;
@@ -503,11 +525,10 @@
       const el = document.getElementById("contrib-results");
       el.style.display = "block";
       el.innerHTML = matches.map(c => {
-        const artLinks = (c.articles || []).slice(0, 10).map(a =>
-          `<a href="${viewerUrl(a.filename)}">${escapeHtml(a.title)}</a>`
-        ).join(", ");
-        const more = (c.articles || []).length > 10
-          ? ` and ${c.articles.length - 10} more` : "";
+        const artLinks = (c.articles || [])
+          .sort((a, b) => a.title.localeCompare(b.title))
+          .map(a => `<a href="${viewerUrl(a.filename)}">${escapeHtml(a.title)}</a>`)
+          .join(", ");
 
         // Find biographical article if description says so
         let bioLink = "";
@@ -525,7 +546,7 @@
         return `<div class="result">
           <div class="result-title">${escapeHtml(c.display_name || c.full_name)}</div>
           <div class="result-meta">${escapeHtml(c.initials || "")}${c.credentials ? " \u00b7 " + escapeHtml(c.credentials) : ""}${bioLink}</div>
-          <div class="result-snippet">${artLinks}${more}</div>
+          <div class="result-snippet">${artLinks}</div>
         </div>`;
       }).join("");
     }
@@ -590,7 +611,29 @@
       const start = currentPage * PAGE_SIZE;
 
       tbody.innerHTML = lastFiltered.slice(start, start + PAGE_SIZE).map(articleRow).join("");
-      updatePagination("browse", totalPages);
+
+      // Build alphabetic page index
+      const indexHtml = [];
+      for (let p = 0; p < totalPages; p++) {
+        const first = lastFiltered[p * PAGE_SIZE].title.slice(0, 3);
+        const lastIdx = Math.min((p + 1) * PAGE_SIZE, lastFiltered.length) - 1;
+        const last = lastFiltered[lastIdx].title.slice(0, 3);
+        const label = first === last ? first : `${first}\u2013${last}`;
+        const cls = p === currentPage ? ' class="active"' : "";
+        indexHtml.push(`<a${cls} data-page="${p}">${label}</a>`);
+      }
+      const html = indexHtml.join("");
+      for (const id of ["browse-page-index-top", "browse-page-index-bottom"]) {
+        const el = document.getElementById(id);
+        el.innerHTML = html;
+        el.querySelectorAll("a").forEach(a => {
+          a.addEventListener("click", () => {
+            currentPage = parseInt(a.dataset.page);
+            showBrowseResults();
+            window.scrollTo(0, 0);
+          });
+        });
+      }
     }
 
     // ── Helpers ──
@@ -620,7 +663,7 @@
     // ── Events ──
     const hints = {
       title: "Search by article title",
-      fulltext: "Search article text (requires Meilisearch)",
+      fulltext: "Search article text",
       contributors: "Search contributors, or leave blank to browse all",
     };
     const hintEl = document.getElementById("search-hint");
@@ -653,13 +696,6 @@
       document.getElementById(`title-next${suffix}`).addEventListener("click", () => {
         const total = Math.ceil(lastFiltered.length / PAGE_SIZE);
         if (currentPage < total - 1) { currentPage++; showTitleResults(); window.scrollTo(0, 0); }
-      });
-      document.getElementById(`browse-prev${suffix}`).addEventListener("click", () => {
-        if (currentPage > 0) { currentPage--; showBrowseResults(); window.scrollTo(0, 0); }
-      });
-      document.getElementById(`browse-next${suffix}`).addEventListener("click", () => {
-        const total = Math.ceil(lastFiltered.length / PAGE_SIZE);
-        if (currentPage < total - 1) { currentPage++; showBrowseResults(); window.scrollTo(0, 0); }
       });
     }
 
@@ -704,6 +740,7 @@
         });
         volBar.appendChild(btn);
       }
+
       // Handle URL parameters (e.g., ?mode=contributors&q=John+Bury)
       const params = new URLSearchParams(window.location.search);
       const urlMode = params.get("mode");

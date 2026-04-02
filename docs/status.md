@@ -10,6 +10,12 @@ A scholarly digital edition of the 1911 Encyclopedia Britannica — the first hy
 
 Article boundaries are determined by `<section>` tags in the Wikisource wikitext — NOT by heuristic heading detection. Every article boundary is explicitly marked. Pages without section markers are pure continuation of the previous article. This cleanly separates structural parsing from text formatting.
 
+Special cases handled:
+- **Numbered continuations** (Egypt2, Egypt3, part1) — merged with parent article
+- **Single-letter articles** (A, B, C...) — detected only when the content is about the letter itself
+- **Link-wrapped headings** — bold headings inside `«LN:...|«B»TITLE«/B»«/LN»` wrappers
+- **Mixed-case bold headings** (e.g. `«B»Transvaal,«/B»`) — falls back to section ID for title
+
 ### Formatting
 
 All formatting is preserved independently of boundary detection:
@@ -27,10 +33,21 @@ All formatting is preserved independently of boundary detection:
 - **Cross-reference links** — `«LN:target|display«/LN»` first-mention hyperlinks
 - **Hieroglyphics** — preserved as `[hieroglyph: notation]`
 
+### Cross-Reference Resolution
+
+Multi-strategy resolver:
+- Exact title match
+- Alias table (canonical + alternative titles)
+- Plural/singular normalization
+- Name inversion (FIRST LAST ↔ LAST, FIRST)
+- Trailing article (UNITED STATES → UNITED STATES, THE)
+- Trailing period (EDWARD VII. → EDWARD VII)
+- Qualified prefix match (CLIMATE → CLIMATE AND CLIMATOLOGY)
+
 ### Stack
 
 - Python (3.12), SQLAlchemy, Typer, Postgres, Meilisearch, KaTeX
-- pytest (83 tests passing)
+- pytest (119 tests passing)
 
 ## Pipeline Stages
 
@@ -46,6 +63,13 @@ All formatting is preserved independently of boundary detection:
 10. **Export** — article JSON, index.json, contributors.json
 11. **Index search** — Meilisearch full-text
 
+## Scripts
+
+- `tools/rebuild_all.sh` — Full rebuild of all 28 volumes from cached wikitext (wipe, import, clean, detect, classify, extract, resolve, export, reindex, quality report)
+- `tools/start_services.sh` — Start/stop Postgres, Meilisearch, and web server
+- `tools/run_volume.sh <vol> [--skip-fetch]` — Single volume pipeline
+- `tools/quality_report.py` — Quality analytics with before/after comparison
+
 ## Data Model
 
 - **Article** — title, volume, page range, body, article_type
@@ -57,35 +81,36 @@ All formatting is preserved independently of boundary detection:
 
 ## Viewer
 
-- **index.html** — volume tabs (data-driven labels), search, filters
+- **index.html** — volume tabs (data-driven labels), title/full-text/contributor search, alphabetic page navigation per volume
 - **viewer.html** — articles with inline images, footnotes, tables, sections/TOC, in-article search, bold/italic/small-caps rendering
 - **search.html** — Meilisearch full-text with highlighted snippets
 - **contributors.html** — sorted by surname, credentials, descriptions, article lists
 
-## Current State
+## Current State (2026-04-02)
 
-- **18 volumes processed** (~23,000 articles)
-- **Volume 21 fetching**, remaining volumes queued
-- **7,255 cross-references resolved** (43% with aliases)
-- **1,497 unique contributors**, 1,704 with biographical data
-- **83 tests passing** — section boundaries, formatting, integration
-- **Quality check: ~5 issues per volume** (99.7% clean)
+- **28 volumes processed** (vol 29 is end matter, excluded)
+- **~35,175 articles** in database
+- **~21,600 cross-references resolved** (83%+)
+- **~1,500 unique contributors** with biographical data
+- **119 tests passing** — section boundaries, formatting, integration
+- **Quality check: ~600 file-level issues** across all volumes (stray markup, unclosed markers)
+- **All data fetched** — raw wikitext is static, never changes
 
 ## Known Limitations
 
 - Some pages have `pagequality level="3"` (not fully proofread) on Wikisource
-- ~44 structural chemical formulas now render as preformatted `«PRE:...«/PRE»` blocks; a few complex rowspan layouts remain imperfect
+- ~44 structural chemical formulas render as preformatted `«PRE:...«/PRE»` blocks
 - Image-legend pairing not yet implemented in viewer
 - Contributor death dates sometimes lost in template stripping
 - Front matter rendered as text, not as original page scans
+- Portal links and literary work references (CANDIDE, PARADISE LOST) are legitimately unresolvable xrefs
 - `_parse_page` heuristic still exists in code but is not called in production
 
 ## Next Steps
 
 ### Immediate
-- Complete fetch of all 29 volumes
-- Full reprocess with section-based architecture
-- Real-data regression tests
+- Analyze rebuild results and investigate remaining quality issues
+- Handle remaining unresolved xref categories (marker bugs in normalized targets)
 
 ### Short-term
 - EPUB export

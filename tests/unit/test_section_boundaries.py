@@ -81,13 +81,27 @@ def test_named_section_uses_heading_over_id():
     assert "AAGESEN" in parsed.candidates[0].title
 
 
-def test_named_section_without_bold_is_continuation():
-    """A named section that lacks a bold heading is a continuation."""
+def test_named_section_without_bold_first_on_page_creates_article():
+    """A named section without bold, if first on the page, creates an article."""
     text = "\u00abSEC:Aagesen, Andrew\u00bba Danish jurist born in 1826."
     parsed = _parse_page_by_sections(text)
     assert parsed is not None
-    assert len(parsed.candidates) == 0
-    assert "Danish jurist" in parsed.prefix_text
+    assert len(parsed.candidates) == 1
+    assert parsed.candidates[0].title == "AAGESEN, ANDREW"
+
+
+def test_named_section_without_bold_after_content_is_continuation():
+    """A named section without bold, after other content, is continuation."""
+    text = (
+        f"\u00abSEC:Abacus\u00bb{B}ABACUS{EB}\nA calculating device.\n\n"
+        "\u00abSEC:Abacus\u00bbcontinuation of previous article."
+    )
+    parsed = _parse_page_by_sections(text)
+    assert parsed is not None
+    assert len(parsed.candidates) == 1
+    assert parsed.candidates[0].title == "ABACUS"
+    # The second Abacus section (no bold) should be in prefix or continuation
+    assert "continuation" in (parsed.prefix_text + " ".join(c.body for c in parsed.candidates))
 
 
 def test_body_extracted_after_heading():
@@ -118,3 +132,63 @@ def test_section_with_accented_title():
     parsed = _parse_page_by_sections(text)
     assert parsed is not None
     assert "F\u00c9" in parsed.candidates[0].title
+
+
+def test_single_letter_article_about_letter():
+    """SEC:T with text about the letter T creates an article."""
+    text = f"\u00abSEC:T\u00bb{B}\u00abI\u00bb the last letter in the Semitic alphabet."
+    parsed = _parse_page_by_sections(text)
+    assert parsed is not None
+    assert len(parsed.candidates) == 1
+    assert parsed.candidates[0].title == "T"
+
+
+def test_single_letter_section_not_about_letter_is_continuation():
+    """SEC:T with bibliography text (not about the letter) is continuation."""
+    text = "\u00abSEC:T\u00bbamil.\u00ab/B\u00bb\u2014Provenza (Portug.), 1679, 8vo."
+    parsed = _parse_page_by_sections(text)
+    assert parsed is not None
+    assert len(parsed.candidates) == 0
+    assert "amil" in parsed.prefix_text
+
+
+def test_mixed_case_bold_heading_uses_section_id():
+    """SEC:Transvaal with «B»Transvaal,«/B» uses the section ID as title."""
+    text = f"\u00abSEC:Transvaal\u00bb{B}Transvaal,{EB} an inland colony."
+    parsed = _parse_page_by_sections(text)
+    assert parsed is not None
+    assert len(parsed.candidates) == 1
+    assert parsed.candidates[0].title == "TRANSVAAL"
+
+
+def test_numbered_continuation_section_merges():
+    """SEC:Egypt2 without bold heading is continuation, not a new article."""
+    text = (
+        f"\u00abSEC:Egypt\u00bb{B}EGYPT{EB}\nA country in Africa.\n\n"
+        "\u00abSEC:Egypt2\u00bbcontinuation of the Egypt article."
+    )
+    parsed = _parse_page_by_sections(text)
+    assert parsed is not None
+    assert len(parsed.candidates) == 1
+    assert parsed.candidates[0].title == "EGYPT"
+    assert "continuation" in parsed.prefix_text or "continuation" in parsed.candidates[0].body
+
+
+def test_part_section_is_continuation():
+    """SEC:part1 without bold heading is continuation, not a new article."""
+    text = "\u00abSEC:part1\u00bbcontinuation of previous article text."
+    parsed = _parse_page_by_sections(text)
+    assert parsed is not None
+    assert len(parsed.candidates) == 0
+    assert "continuation" in parsed.prefix_text
+
+
+def test_link_wrapped_bold_heading():
+    """Bold heading wrapped in «LN:...|«B»TITLE«/B»«/LN» is detected."""
+    LN = "\u00abLN:Portal:Architecture|"
+    ELN = "\u00ab/LN\u00bb"
+    text = f"\u00abSEC:s5\u00bb {LN}{B}ARCHITECTURE{EB}{ELN} (Lat. architectura), the art of building."
+    parsed = _parse_page_by_sections(text)
+    assert parsed is not None
+    assert len(parsed.candidates) == 1
+    assert parsed.candidates[0].title == "ARCHITECTURE"
