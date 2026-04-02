@@ -325,8 +325,10 @@
   </div>
 
   <script>
-    const MEILI_URL = "http://localhost:7700";
-    const MEILI_KEY = "britannica-dev-key";
+    const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+    const DATA_BASE = IS_LOCAL ? "/data/derived/articles" : "/data";
+    const MEILI_URL = IS_LOCAL ? "http://localhost:7700" : "/search-api";
+    const MEILI_KEY = IS_LOCAL ? "britannica-dev-key" : "britannica-search-key";
     const PAGE_SIZE = 100;
 
     let articles = [];
@@ -358,7 +360,14 @@
     }
 
     function viewerUrl(filename) {
-      return `viewer.html?article=/data/derived/articles/${encodeURIComponent(filename)}`;
+      if (IS_LOCAL) {
+        return `viewer.html?article=/data/derived/articles/${encodeURIComponent(filename)}`;
+      }
+      // 0367-PHARAOH.json -> /article/367/pharaoh
+      const base = filename.replace(/\.json$/, "");
+      const page = base.replace(/^0+/, "").split("-")[0];
+      const slug = base.substring(base.indexOf("-") + 1).toLowerCase();
+      return `/article/${page}/${slug}`;
     }
 
     function getMode() {
@@ -527,7 +536,10 @@
       el.innerHTML = matches.map(c => {
         const artLinks = (c.articles || [])
           .sort((a, b) => a.title.localeCompare(b.title))
-          .map(a => `<a href="${viewerUrl(a.filename)}">${escapeHtml(a.title)}</a>`)
+          .map(a => {
+            const full = articles.find(x => x.filename === a.filename);
+            return `<a href="${viewerUrl(a.filename)}">${escapeHtml(a.title)}</a>`;
+          })
           .join(", ");
 
         // Find biographical article if description says so
@@ -701,9 +713,9 @@
 
     // ── Load data ──
     Promise.all([
-      fetch("/data/derived/articles/index.json").then(r => r.json()),
-      fetch("/data/derived/articles/contributors.json").then(r => r.json()).catch(() => []),
-      fetch("/data/derived/volumes.json").then(r => r.json()).catch(() => []),
+      fetch(`${DATA_BASE}/index.json`).then(r => r.json()),
+      fetch(`${DATA_BASE}/contributors.json`).then(r => r.json()).catch(() => []),
+      fetch(IS_LOCAL ? "/data/derived/volumes.json" : `${DATA_BASE}/volumes.json`).then(r => r.json()).catch(() => []),
     ]).then(([articleData, contribData, volumesData]) => {
       articles = articleData;
       contributors = contribData;

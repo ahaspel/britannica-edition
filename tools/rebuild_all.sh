@@ -86,14 +86,19 @@ for vol in $VOLUMES; do
   uv run britannica export-articles "$vol"
 done
 
-# --- Phase 5: Reindex search ---
+# --- Phase 5: Post-processing cleanup ---
 echo
-echo "=== Phase 5: Reindexing Meilisearch ==="
+echo "=== Phase 5: Post-processing exported articles ==="
+uv run python tools/postprocess.py
+
+# --- Phase 6: Reindex search ---
+echo
+echo "=== Phase 6: Reindexing Meilisearch ==="
 uv run python tools/index_search.py
 
-# --- Phase 6: Quality analytics ---
+# --- Phase 7: Quality analytics ---
 echo
-echo "=== Phase 6: Running quality report ==="
+echo "=== Phase 7: Running quality report ==="
 uv run python tools/quality_report.py
 
 echo

@@ -106,11 +106,57 @@ Multi-strategy resolver:
 - Portal links and literary work references (CANDIDE, PARADISE LOST) are legitimately unresolvable xrefs
 - `_parse_page` heuristic still exists in code but is not called in production
 
+## Production Deployment
+
+### Domain
+- **britannica11.org** — owned, DNS via Route 53
+
+### Architecture
+- **`britannica11.org`** — single S3 bucket + CloudFront, serving everything
+  - `/` — HTML viewer files (index, viewer, search, contributors)
+  - `/data/` — article JSONs, index.json, contributors.json, volumes.json
+  - `/search-api/` — proxied to Meilisearch (EC2 or Fargate) via CloudFront origin
+
+### URL Scheme
+- `/` — article index (browse, title search, full-text search, contributor search)
+- `/article/{page}/{slug}` — article viewer (e.g. `/article/367/pharaoh`)
+- `/search` — dedicated search page
+- `/contributors` — contributor index
+
+Article URLs are stable across rebuilds: derived from Wikisource page number + title, both of which are immutable. Verified unique across all 35K+ articles.
+
+### S3 Bucket Contents
+- `/index.html`, `/viewer.html`, `/search.html`, `/contributors.html`
+- `/data/*.json` — article files, index.json, contributors.json, volumes.json
+
+Same files the local export produces, uploaded with `aws s3 sync`.
+
+### CloudFront Configuration
+- ACM certificate for `britannica11.org`
+- Default origin: S3 bucket
+- Second origin: Meilisearch EC2 for `/search-api/*` path pattern
+- CloudFront function to rewrite `/article/*` requests to `/viewer.html`
+- No CORS needed — everything served from same domain
+
+### Meilisearch
+- Single instance on EC2, ~1GB RAM sufficient for 35K articles
+- Production master key (any strong password, set at startup)
+- Search-only API key generated from master key, embedded in viewer HTML
+
+### Deploy Process
+1. Run `tools/rebuild_all.sh` locally (produces all derived data)
+2. Run deploy script to upload `data/derived/` to S3
+3. Invalidate CloudFront cache
+4. Re-index Meilisearch (point `tools/index_search.py` at production URL)
+
+### Viewer Auto-Detection
+All viewer pages detect local vs production via hostname. On localhost they use local file paths and the dev Meilisearch; in production they use `data.britannica11.org` and `search.britannica11.org`.
+
 ## Next Steps
 
 ### Immediate
-- Analyze rebuild results and investigate remaining quality issues
-- Handle remaining unresolved xref categories (marker bugs in normalized targets)
+- Complete rebuild with all pending fixes (plate layout, page citations, clean stage improvements)
+- Deploy to britannica11.org
 
 ### Short-term
 - EPUB export
@@ -119,7 +165,5 @@ Multi-strategy resolver:
 - Editorial introduction
 
 ### Medium-term
-- Web hosting with stable URLs
 - Subscription-based access
-- Citation support
 - Typography polish

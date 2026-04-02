@@ -3,11 +3,12 @@
 
 import json
 import glob
+import os
 import sys
 import requests
 
-MEILI_URL = "http://localhost:7700"
-MEILI_KEY = "britannica-dev-key"
+MEILI_URL = os.environ.get("MEILI_URL", "http://localhost:7700")
+MEILI_KEY = os.environ.get("MEILI_MASTER_KEY", "britannica-dev-key")
 INDEX_NAME = "articles"
 
 HEADERS = {

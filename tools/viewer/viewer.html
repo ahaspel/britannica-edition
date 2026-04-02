@@ -6,6 +6,7 @@
   <title>Britannica Viewer</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Egyptian+Hieroglyphs&display=swap">
   <style>
     :root {
       --bg: #f7f7f5;
@@ -92,6 +93,7 @@
 
     .body-text {
       font-size: 1.08rem;
+      margin-left: 3.5em;
       margin-right: 160px;
       position: relative;
     }
@@ -257,6 +259,35 @@
       padding-left: 1em;
       border-left: 2px solid var(--border);
       line-height: 1.6;
+    }
+
+    .page-marker {
+      float: left;
+      margin-left: -3.5em;
+      width: 3em;
+      text-align: right;
+      font-size: 0.7rem;
+      color: var(--muted);
+      opacity: 0.6;
+      font-variant-numeric: tabular-nums;
+      user-select: none;
+    }
+
+    .hieroglyph {
+      font-family: "Noto Sans Egyptian Hieroglyphs", serif;
+      font-size: 1.4em;
+      vertical-align: middle;
+      line-height: 1;
+    }
+
+    .hieroglyph-fallback {
+      font-family: monospace;
+      font-size: 0.85em;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 1px 4px;
+      color: var(--muted);
     }
 
     .structural-formula {
@@ -460,6 +491,50 @@
         .replaceAll("'", "&#39;");
     }
 
+    // Gardiner Sign List -> Unicode Egyptian Hieroglyphs (U+13000 block)
+    // Each category starts at a known base offset; sign number maps to base + (n-1).
+    const GARDINER_BASES = {
+      A:0x13000,B:0x13032,C:0x13037,D:0x13044,E:0x130A4,F:0x130C6,
+      G:0x130F9,H:0x13131,I:0x1313B,K:0x1314D,L:0x13153,M:0x1315C,
+      N:0x13189,O:0x131B3,P:0x131E7,Q:0x131F0,R:0x131F7,S:0x13210,
+      T:0x1323D,U:0x13260,V:0x13286,W:0x132A9,X:0x132C2,Y:0x132CA,
+      Z:0x132CF,Aa:0x132DB,
+    };
+
+    // Manuel de Codage phonetic abbreviations -> Gardiner codes
+    const MDC_TO_GARDINER = {
+      A:"G53",  // Abbreviation for the A-vulture (G53)
+      H:"O4",   // reed shelter
+      S:"S29",  // folded cloth
+      s:"S29",
+      t:"X1",   // bread loaf
+      q:"Q3",   // stool
+      sw:"M23", // sedge
+      pr:"O1",  // house
+      anx:"S34",// ankh
+      nH:"S3",  // Red Crown
+      zA:"V17", // sa (protection)
+      aA:"G25", // jabiru
+      xpr:"L1", // scarab
+      nDs:"N33",// grain
+      Hm:"U36", // pestle
+      Xrd:"A17",// child
+      DA:"I10", // cobra
+      "N35A":"N35","N35B":"N35","V10A":"V10", // variants
+    };
+
+    function gardinerToUnicode(code) {
+      if (code.includes("*")) code = code.split("*")[0];
+      // Try MdC abbreviation first
+      if (MDC_TO_GARDINER[code]) code = MDC_TO_GARDINER[code];
+      const m = code.match(/^([A-Z]a?)(\d+)$/);
+      if (!m) return null;
+      const base = GARDINER_BASES[m[1]];
+      if (base == null) return null;
+      const cp = base + parseInt(m[2]) - 1;
+      return (cp >= 0x13000 && cp <= 0x1342F) ? cp : null;
+    }
+
     function commonsUrl(filename) {
       const name = filename.replace(/ /g, "_");
       // Simple MD5 — we'll use the SubtleCrypto API
@@ -469,10 +544,29 @@
     }
 
     let footnoteCounter = 0;
+    let currentVolume = "?";
     let collectedFootnotes = [];
     let linkedTargets = new Set();
     let sectionCounter = 0;
     let collectedSections = [];
+
+    function formatCell(text) {
+      let h = escapeHtml(text);
+      h = h.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
+      h = h.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
+      h = h.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
+      h = h.replace(/\[hieroglyph:\s*([^\]]+)\]/g, (match, codes) => {
+        const rendered = codes.trim().split(/[:\s\-]+/).map(code => {
+          code = code.replace(/\\/g, "");
+          if (!code || code === "<" || code === ">" || code === "!" || code === "-") return "";
+          const cp = gardinerToUnicode(code);
+          if (cp) return `<span class="hieroglyph">&#x${cp.toString(16)};</span>`;
+          return `<span class="hieroglyph-fallback" title="Gardiner ${code}">${code}</span>`;
+        }).join("");
+        return rendered || match;
+      });
+      return h;
+    }
 
     function renderParagraph(p) {
       const imgMatch = p.match(/^\{\{IMG:([^|}]+)(?:\|([^}]*))?\}\}$/);
@@ -501,9 +595,13 @@
       if (tableMatch) {
         const hasHeader = tableMatch[1] === "H";
         const rows = tableMatch[2].split("\n").filter(r => r.trim());
+        // Single-row tables render inline (common for hieroglyph glosses)
+        if (rows.length === 1 && !hasHeader) {
+          return `<span class="inline-table">${formatCell(rows[0])}</span>`;
+        }
         const tableRows = rows.map((r, i) => {
           const tag = (hasHeader && i === 0) ? "th" : "td";
-          const cells = r.split(" | ").map(c => `<${tag}>${escapeHtml(c.trim())}</${tag}>`).join("");
+          const cells = r.split(" | ").map(c => `<${tag}>${formatCell(c.trim())}</${tag}>`).join("");
           return `<tr>${cells}</tr>`;
         }).join("");
         return `<table class="data-table">${tableRows}</table>`;
@@ -535,8 +633,23 @@
         return `<h3 class="section-heading" id="${sectionId}">${escapeHtml(sectionTitle)}</h3><p>${bodyHtml}</p>`;
       }
 
-      // Replace footnote markers with superscript numbers
+      // Replace inline table markers (single-row tables embedded in text)
       let html = escapeHtml(p);
+      // Render page markers as left-margin citations (vol:page)
+      html = html.replace(/\x01PAGE:(\d+)\x01/g, (match, page) => {
+        return `<span class="page-marker" title="Volume ${currentVolume}, page ${page}">${currentVolume}:${page}</span>`;
+      });
+      html = html.replace(/\{\{TABLE[H]?:([\s\S]*?)\}TABLE\}/g, (match, content) => {
+        const rows = content.split("\n").filter(r => r.trim());
+        if (rows.length === 1) {
+          return `<span class="inline-table">${formatCell(rows[0])}</span>`;
+        }
+        const tableRows = rows.map(r => {
+          const cells = r.split(" | ").map(c => `<td>${formatCell(c.trim())}</td>`).join("");
+          return `<tr>${cells}</tr>`;
+        }).join("");
+        return `<table class="data-table">${tableRows}</table>`;
+      });
       html = html.replace(/\u00abFN:(.*?)\u00ab\/FN\u00bb/gs, (match, content) => {
         footnoteCounter++;
         collectedFootnotes.push({ num: footnoteCounter, text: content });
@@ -567,6 +680,17 @@
           }
         } catch(e) {}
         return `<code class="math-fallback">${latex}</code>`;
+      });
+      // Render hieroglyphs
+      html = html.replace(/\[hieroglyph:\s*([^\]]+)\]/g, (match, codes) => {
+        const rendered = codes.trim().split(/[:\s\-]+/).map(code => {
+          code = code.replace(/\\/g, ""); // strip line break markers
+          if (!code || code === "<" || code === ">" || code === "!" || code === "-") return "";
+          const cp = gardinerToUnicode(code);
+          if (cp) return `<span class="hieroglyph">&#x${cp.toString(16)};</span>`;
+          return `<span class="hieroglyph-fallback" title="Gardiner ${code}">${code}</span>`;
+        }).join("");
+        return rendered || match;
       });
       // Replace link markers — only first mention becomes a hyperlink
       html = html.replace(/\u00abLN:([^|]*)\|([^«]*)\u00ab\/LN\u00bb/g, (match, target, display) => {
@@ -599,6 +723,7 @@
     }
 
     function renderArticle(article) {
+      currentVolume = article.volume || "?";
       const segments = Array.isArray(article.segments) ? article.segments : [];
       const xrefs = Array.isArray(article.xrefs) ? article.xrefs : [];
       const images = Array.isArray(article.images) ? article.images : [];
@@ -659,11 +784,45 @@
             : ""}
           ${(() => {
             footnoteCounter = 0; collectedFootnotes = []; linkedTargets = new Set(); sectionCounter = 0; collectedSections = [];
+
+            // Build page break map from segments.
+            // Each segment's text appears in the body; we find its offset
+            // and record the page number for a left-margin citation marker.
+            const pageBreaks = []; // [{offset, page}]
+            if (article.segments && article.segments.length) {
+              const body = article.body || "";
+              let searchFrom = 0;
+              for (const seg of article.segments) {
+                if (!seg.segment_text || !seg.page_number) continue;
+                // Find where this segment's text starts in the body.
+                // Use first 40 chars as a fingerprint (enough to be unique).
+                const needle = seg.segment_text.substring(0, 40);
+                const idx = body.indexOf(needle, searchFrom);
+                if (idx !== -1) {
+                  pageBreaks.push({ offset: idx, page: seg.page_number });
+                  searchFrom = idx + 1;
+                }
+              }
+            }
+            // Ensure at least the article's starting page is shown
+            if (pageBreaks.length === 0 && article.page_start) {
+              pageBreaks.push({ offset: 0, page: article.page_start });
+            }
+
+            // Inject page markers into the body text before splitting
+            let markedBody = article.body || "";
+            // Insert backwards to keep offsets stable
+            for (let k = pageBreaks.length - 1; k >= 0; k--) {
+              const pb = pageBreaks[k];
+              const marker = `\x01PAGE:${pb.page}\x01`;
+              markedBody = markedBody.substring(0, pb.offset) + marker + markedBody.substring(pb.offset);
+            }
+
             // Merge shoulder heading paragraphs with surrounding text.
             // A shoulder heading sits in the margin mid-sentence, so it
             // should not create paragraph breaks. Merge: prev + SH + next
             // into one paragraph.
-            const rawParas = (article.body || "").split("\n\n");
+            const rawParas = markedBody.split("\n\n");
             const mergedParas = [];
             let i = 0;
             while (i < rawParas.length) {
@@ -740,7 +899,19 @@
       }
     }
 
-    const initialPath = new URLSearchParams(window.location.search).get("article");
+    // Determine article path: local uses ?article= param, production uses /article/{id}/{slug}
+    const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+    const DATA_BASE = IS_LOCAL ? "/data/derived/articles" : "/data";
+    let initialPath = new URLSearchParams(window.location.search).get("article");
+    if (!initialPath && !IS_LOCAL) {
+      // Production: /article/367/pharaoh -> 0367-PHARAOH.json
+      const match = window.location.pathname.match(/^\/article\/(\d+)\/(.+)/);
+      if (match) {
+        const page = match[1].padStart(4, "0");
+        const slug = decodeURIComponent(match[2]).toUpperCase();
+        initialPath = `${DATA_BASE}/${page}-${slug}.json`;
+      }
+    }
     if (initialPath) {
       loadArticle(initialPath);
     }

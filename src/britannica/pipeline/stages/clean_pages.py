@@ -1,3 +1,5 @@
+import re
+
 from britannica.cleaners.headers_footers import strip_headers
 from britannica.cleaners.hyphenation import fix_hyphenation
 from britannica.cleaners.reflow import reflow_paragraphs
@@ -5,6 +7,257 @@ from britannica.cleaners.unicode import normalize_unicode
 from britannica.cleaners.whitespace import normalize_whitespace
 from britannica.db.models.source_page import SourcePage
 from britannica.db.session import SessionLocal
+
+# Control characters \x00-\x08 are internal fetch delimiters that should
+# have been converted to «»-style markers.  Strip any that leaked through.
+_STRAY_CONTROL = re.compile(r"[\x00-\x08]")
+
+# Wiki table markup that leaked through the fetch table converter.
+# Matches {|...  |-...  |}  and cell attribute prefixes like colspan="3"|
+_WIKI_TABLE_OPEN = re.compile(r"\{\|[^\n]*(?:\n|$)")
+_WIKI_TABLE_ROW = re.compile(r"\|-[a-z]+=\"[^\"]*\"[^\n]*", re.IGNORECASE)
+_WIKI_TABLE_CLOSE = re.compile(r"^\|\}\s*$", re.MULTILINE)
+_CELL_ATTR = re.compile(
+    r"\|\s*(?:colspan|rowspan|style|align|valign|width|class|bgcolor|"
+    r"cellpadding|cellspacing|border|height|nowrap)[^|]*\|",
+    re.IGNORECASE,
+)
+
+
+_FN_OPEN = "\u00abFN:"
+_FN_CLOSE = "\u00ab/FN\u00bb"
+
+
+def _fix_unclosed_footnotes(text: str) -> str:
+    """Close any «FN: markers that lack a matching «/FN».
+
+    These typically occur when a footnote in the original wiki markup
+    spans across a table boundary created during fetch processing.
+    We close the footnote at the next table boundary, paragraph break,
+    or end of text.
+    """
+    result = []
+    pos = 0
+    depth = 0
+    while pos < len(text):
+        fn_open = text.find(_FN_OPEN, pos)
+        fn_close = text.find(_FN_CLOSE, pos)
+
+        if depth == 0:
+            # Not inside a footnote — look for next open
+            if fn_open == -1:
+                result.append(text[pos:])
+                break
+            result.append(text[pos:fn_open])
+            result.append(_FN_OPEN)
+            pos = fn_open + len(_FN_OPEN)
+            depth = 1
+        else:
+            # Inside a footnote — find close or a boundary that forces close
+            if fn_close != -1 and (fn_open == -1 or fn_close < fn_open):
+                # Normal close
+                result.append(text[pos:fn_close + len(_FN_CLOSE)])
+                pos = fn_close + len(_FN_CLOSE)
+                depth = 0
+            else:
+                # No close before next open (or end of text) — force close
+                # at next table boundary or paragraph break
+                boundary = None
+                for marker in ["}TABLE}", "\n\n", "}}",]:
+                    idx = text.find(marker, pos)
+                    if idx != -1 and (boundary is None or idx < boundary):
+                        boundary = idx
+                if boundary is not None and (fn_open == -1 or boundary < fn_open):
+                    result.append(text[pos:boundary])
+                    result.append(_FN_CLOSE)
+                    pos = boundary
+                    depth = 0
+                elif fn_open != -1:
+                    # Nested open — close current before opening new
+                    result.append(text[pos:fn_open])
+                    result.append(_FN_CLOSE)
+                    result.append(_FN_OPEN)
+                    pos = fn_open + len(_FN_OPEN)
+                else:
+                    # End of text — force close
+                    result.append(text[pos:])
+                    result.append(_FN_CLOSE)
+                    break
+    return "".join(result)
+
+
+def _fix_unclosed_tables(text: str) -> str:
+    """Close any {{TABLE markers that lack a matching }TABLE}.
+
+    Also remove orphaned }TABLE} without a matching open.
+    """
+    opens = [m.start() for m in re.finditer(r"\{\{TABLE", text)]
+    closes = [m.start() for m in re.finditer(r"\}TABLE\}", text)]
+
+    if len(opens) == len(closes):
+        return text
+
+    if len(opens) > len(closes):
+        # Find unclosed opens by walking matched pairs
+        close_set = set()
+        for o in opens:
+            # Find next close after this open that isn't already matched
+            for c in closes:
+                if c > o and c not in close_set:
+                    close_set.add(c)
+                    break
+            else:
+                # No close found — insert one at next paragraph break
+                para = text.find("\n\n", o)
+                if para == -1:
+                    text = text + "}TABLE}"
+                else:
+                    text = text[:para] + "}TABLE}" + text[para:]
+                return _fix_unclosed_tables(text)  # re-check after insertion
+
+    if len(closes) > len(opens):
+        # Remove orphaned closes (work backwards to keep positions stable)
+        open_set = set()
+        for c in reversed(closes):
+            matched = False
+            for o in reversed(opens):
+                if o < c and o not in open_set:
+                    open_set.add(o)
+                    matched = True
+                    break
+            if not matched:
+                text = text[:c] + text[c + 7:]  # remove "}TABLE}"
+                return _fix_unclosed_tables(text)
+
+    return text
+
+
+def _clean_plate_layout(text: str) -> str:
+    """Pair images with their numbered captions on plate pages.
+
+    Plate pages have images in grid rows with numbered captions that
+    may appear in ||lines, {{TABLE:...}TABLE} blocks, or bare |lines.
+    This function extracts all numbered captions from everywhere,
+    pairs each with its corresponding image by number, and outputs
+    clean {{IMG:filename|N. CAPTION}} markers.
+    """
+    # Only process pages that look like plates (many images)
+    img_count = text.count("{{IMG:")
+    if img_count < 3:
+        return text
+
+    # Collect all images in order
+    images = [m.group(1) for m in re.finditer(r"\{\{IMG:([^|}]+)", text)]
+
+    # Extract ALL numbered captions from the entire text
+    # They appear as "N. CAPTION TEXT" in various contexts
+    captions = {}
+    # Search the whole text for numbered captions (inside tables, pipes, etc.)
+    for m in re.finditer(r"(\d+)\.\s+([A-Z][A-Z\s,.:;()\-']+)", text):
+        num = int(m.group(1))
+        cap = m.group(2).strip().rstrip(".,;|")
+        # Skip if it looks like a date or page reference
+        if len(cap) < 3:
+            continue
+        if num not in captions or len(cap) > len(captions[num]):
+            captions[num] = cap
+
+    if not captions:
+        return text
+
+    # Match captions to images by keyword similarity.
+    # Image filenames contain descriptive words (e.g. "Limestone Lion")
+    # that match caption text (e.g. "LIMESTONE LION").
+    def _img_words(filename):
+        # Strip prefix like "EB1911 Egypt - Earliest Art - "
+        name = filename.rsplit("/", 1)[-1]
+        name = re.sub(r"\.jpg$|\.png$", "", name, flags=re.IGNORECASE)
+        # Take words after the last " - "
+        if " - " in name:
+            name = name.rsplit(" - ", 1)[-1]
+        return set(re.findall(r"[A-Za-z]{3,}", name.upper()))
+
+    sorted_caps = sorted(captions.items())
+    used_images = set()
+    paired = []
+
+    for num, cap in sorted_caps:
+        cap_words = set(re.findall(r"[A-Z]{3,}", cap))
+        best_img = None
+        best_score = 0
+        for i, img in enumerate(images):
+            if i in used_images:
+                continue
+            img_words = _img_words(img)
+            score = len(cap_words & img_words)
+            if score > best_score:
+                best_score = score
+                best_img = i
+        if best_img is not None and best_score > 0:
+            used_images.add(best_img)
+            paired.append((best_img, f"{{{{IMG:{images[best_img]}|{num}. {cap}}}}}"))
+        else:
+            paired.append((999, f"{num}. {cap}"))
+
+    # Add unmatched images
+    for i, img in enumerate(images):
+        if i not in used_images:
+            paired.append((i, f"{{{{IMG:{img}}}}}"))
+
+    # Sort by original image order
+    paired.sort(key=lambda x: x[0])
+    paired = [p[1] for p in paired]
+
+    # Extract the plate title (first non-empty lines before images/tables)
+    title_lines = []
+    for line in text.split("\n"):
+        line = line.strip()
+        if not line:
+            continue
+        if line.startswith("{{IMG:") or line.startswith("{{TABLE"):
+            break
+        if line.startswith("||") or line.startswith("|"):
+            break
+        title_lines.append(line)
+
+    result = "\n".join(title_lines)
+    if result:
+        result += "\n\n"
+    result += "\n\n".join(paired)
+    return result
+
+
+def _convert_img_float(text: str) -> str:
+    """Convert leaked 'img float|file=...|cap=...' to {{IMG:...}} markers."""
+    def _replace(m):
+        s = m.group(0)
+        file_m = re.search(r"\|file=([^|]+)", s)
+        cap_m = re.search(r"\|cap=([^|]+)", s)
+        if not file_m:
+            return ""  # can't salvage without a filename
+        filename = file_m.group(1).strip()
+        caption = cap_m.group(1).strip() if cap_m else ""
+        if caption:
+            return f"{{{{IMG:{filename}|{caption}}}}}"
+        return f"{{{{IMG:{filename}}}}}"
+    return re.sub(
+        r"[Ii]mg float\s*\|[^\n]*",
+        _replace, text,
+    )
+
+
+def _clean_leaked_table_markup(text: str) -> str:
+    """Remove wiki table markup that wasn't converted during fetch."""
+    # Don't touch anything inside {{TABLE:...}TABLE} blocks
+    parts = re.split(r"(\{\{TABLE.*?\}TABLE\})", text, flags=re.DOTALL)
+    for i in range(0, len(parts), 2):  # only non-table parts
+        p = parts[i]
+        p = _WIKI_TABLE_OPEN.sub("", p)
+        p = _WIKI_TABLE_ROW.sub("", p)
+        p = _WIKI_TABLE_CLOSE.sub("", p)
+        p = _CELL_ATTR.sub("| ", p)
+        parts[i] = p
+    return "".join(parts)
 
 
 def clean_pages(volume: int) -> int:
@@ -19,6 +272,19 @@ def clean_pages(volume: int) -> int:
             text, _hyphen_changes = fix_hyphenation(text)
             text = reflow_paragraphs(text)
             text = normalize_whitespace(text)
+            text = _STRAY_CONTROL.sub("", text)
+            # Strip residual wiki italic markers ('') that survived fetch
+            text = text.replace("''", "")
+            # Pair images with captions on plate pages
+            text = _clean_plate_layout(text)
+            # Convert leaked image float markup to IMG markers
+            text = _convert_img_float(text)
+            # Strip leaked wiki table markup that wasn't converted during fetch
+            text = _clean_leaked_table_markup(text)
+            # Close any unclosed footnote markers
+            text = _fix_unclosed_footnotes(text)
+            # Close any unclosed table markers
+            text = _fix_unclosed_tables(text)
             page.cleaned_text = text
 
         session.commit()

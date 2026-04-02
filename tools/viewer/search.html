@@ -135,8 +135,9 @@
   </div>
 
   <script>
-    const MEILI_URL = "http://localhost:7700";
-    const MEILI_KEY = "britannica-dev-key";
+    const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+    const MEILI_URL = IS_LOCAL ? "http://localhost:7700" : "/search-api";
+    const MEILI_KEY = IS_LOCAL ? "britannica-dev-key" : "britannica-search-key";
     const INDEX = "articles";
 
     const searchInput = document.getElementById("search");
@@ -147,7 +148,13 @@
     let debounceTimer = null;
 
     function viewerUrl(filename) {
-      return `viewer.html?article=/data/derived/articles/${encodeURIComponent(filename)}`;
+      if (IS_LOCAL) {
+        return `viewer.html?article=/data/derived/articles/${encodeURIComponent(filename)}`;
+      }
+      const base = filename.replace(/\.json$/, "");
+      const page = base.replace(/^0+/, "").split("-")[0];
+      const slug = base.substring(base.indexOf("-") + 1).toLowerCase();
+      return `/article/${page}/${slug}`;
     }
 
     function formatSnippet(s) {
