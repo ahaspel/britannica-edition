@@ -263,9 +263,8 @@
     }
 
     .page-marker {
-      position: absolute;
-      left: -7em;
-      top: 0;
+      float: left;
+      margin-left: -6.5em;
       width: 5em;
       text-align: right;
       font-size: 0.7rem;
@@ -474,8 +473,6 @@
           &nbsp;&middot;&nbsp;
           <a href="/index.html" style="color: var(--link); text-decoration: none;">Articles</a>
           &nbsp;&middot;&nbsp;
-          <a href="/search.html" style="color: var(--link); text-decoration: none;">Search</a>
-          &nbsp;&middot;&nbsp;
           <a href="/contributors.html" style="color: var(--link); text-decoration: none;">Contributors</a>
         </div>
       </div>
@@ -627,16 +624,25 @@
 
         // Render the rest of the paragraph normally
         let bodyHtml = escapeHtml(sectionBody);
+        bodyHtml = bodyHtml.replace(/\x01PAGE:(\d+)\x01/g, (match, page) => {
+          return `<span class="page-marker" title="Volume ${currentVolume}, page ${page}">${currentVolume}:${page}</span>`;
+        });
         bodyHtml = bodyHtml.replace(/\u00abFN:(.*?)\u00ab\/FN\u00bb/gs, (match, content) => {
           footnoteCounter++;
           collectedFootnotes.push({ num: footnoteCounter, text: content });
           return `<sup class="footnote-ref"><a onclick="document.getElementById('fn-${footnoteCounter}').scrollIntoView({behavior:'smooth',block:'center'});return false;" id="fnref-${footnoteCounter}" href="#">${footnoteCounter}</a></sup>`;
         });
-        bodyHtml = bodyHtml.replace(/\u00abLN:([^|]*)\|([^«]*)\u00ab\/LN\u00bb/g, (match, target, display) => {
+        bodyHtml = bodyHtml.replace(/\u00abLN:([^|]*)\|([^|«]*?)(?:\|([^«]*))?\u00ab\/LN\u00bb/g, (match, g1, g2, g3) => {
+          // 3-part: «LN:filename|target|display«/LN»  2-part: «LN:target|display«/LN»
+          const hasFile = g3 !== undefined;
+          const target = hasFile ? g2 : g1;
+          const display = hasFile ? g3 : g2;
+          const filename = hasFile ? g1 : null;
           const key = target.toLowerCase();
           if (linkedTargets.has(key)) return display;
           linkedTargets.add(key);
-          return `<a href="search.html?q=${encodeURIComponent(target)}" class="article-link" title="${target}">${display}</a>`;
+          const href = filename ? articleUrl(filename) : `/search.html?q=${encodeURIComponent(target)}`;
+          return `<a href="${href}" class="article-link" title="${target}">${display}</a>`;
         });
 
         return `<h3 class="section-heading" id="${sectionId}">${escapeHtml(sectionTitle)}</h3><p>${bodyHtml}</p>`;
@@ -644,6 +650,10 @@
 
       // Replace inline table markers (single-row tables embedded in text)
       let html = escapeHtml(p);
+      // Render page markers as left-margin citations (vol:page).
+      // Each marker is wrapped in a zero-width inline anchor so that
+      // absolute positioning places it in the left margin at the correct
+      // vertical position, even when multiple markers appear in one <p>.
       // Render page markers as left-margin citations (vol:page)
       html = html.replace(/\x01PAGE:(\d+)\x01/g, (match, page) => {
         return `<span class="page-marker" title="Volume ${currentVolume}, page ${page}">${currentVolume}:${page}</span>`;
@@ -702,14 +712,17 @@
         return rendered || match;
       });
       // Replace link markers — only first mention becomes a hyperlink
-      html = html.replace(/\u00abLN:([^|]*)\|([^«]*)\u00ab\/LN\u00bb/g, (match, target, display) => {
+      // 3-part resolved: «LN:filename|target|display«/LN»  2-part unresolved: «LN:target|display«/LN»
+      html = html.replace(/\u00abLN:([^|]*)\|([^|«]*?)(?:\|([^«]*))?\u00ab\/LN\u00bb/g, (match, g1, g2, g3) => {
+        const hasFile = g3 !== undefined;
+        const target = hasFile ? g2 : g1;
+        const display = hasFile ? g3 : g2;
+        const filename = hasFile ? g1 : null;
         const key = target.toLowerCase();
-        if (linkedTargets.has(key)) {
-          return display; // subsequent mentions: plain text
-        }
+        if (linkedTargets.has(key)) return display;
         linkedTargets.add(key);
-        // Search for the target article
-        return `<a href="search.html?q=${encodeURIComponent(target)}" class="article-link" title="${target}">${display}</a>`;
+        const href = filename ? articleUrl(filename) : `/search.html?q=${encodeURIComponent(target)}`;
+        return `<a href="${href}" class="article-link" title="${target}">${display}</a>`;
       });
       return `<p>${html}</p>`;
     }
@@ -790,10 +803,9 @@
           <div class="meta">
             Volume ${escapeHtml(article.volume ?? "?")}
             · pages ${escapeHtml(article.page_start ?? "?")}–${escapeHtml(article.page_end ?? "?")}
-            · article id ${escapeHtml(article.id ?? "?")}
           </div>
           ${article.parent_article ? `<div style="margin-bottom: 8px; font-size: 0.95rem;">Plate for <a href="${articleUrl(article.parent_article.filename)}">${escapeHtml(article.parent_article.title)}</a></div>` : ""}
-          ${contributors.length ? `<div class="contributors">By ${contributors.map(c => `<a href="index.html?mode=contributors&q=${encodeURIComponent(c.full_name)}" title="${escapeHtml(c.initials)}" style="color: var(--muted);">${escapeHtml(c.full_name)}</a>`).join(", ")}</div>` : ""}
+          ${contributors.length ? `<div class="contributors">By ${contributors.map(c => `<a href="/index.html?mode=contributors&q=${encodeURIComponent(c.full_name)}" style="color: var(--muted);">${escapeHtml(c.full_name)}</a> <span style="color: var(--muted); font-size: 0.85em;">(${escapeHtml(c.initials)})</span>`).join(", ")}</div>` : ""}
           ${plates.length ? `<div class="contributors">Plates: ${plates.map(p => `<a href="${articleUrl(p.filename)}">${escapeHtml(p.title)}</a>`).join(", ")}</div>` : ""}
           ${article.source_quality && article.source_quality.lowest_level <= 1
             ? `<div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 8px 12px; margin: 8px 0; font-size: 0.9rem;">

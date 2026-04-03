@@ -17,6 +17,32 @@ echo "  Full rebuild: volumes 1-28"
 echo "============================================"
 echo
 
+# --- Phase 0: Re-convert raw wikitext ---
+echo "=== Phase 0: Re-converting raw wikitext (fetch stage) ==="
+for vol in $VOLUMES; do
+  PADDED=$(printf "%02d" "$vol")
+  echo "  Re-converting volume $vol..."
+  uv run python -c "
+import json, sys, os
+sys.path.insert(0, 'tools/fetch')
+from fetch_wikisource_pages import clean_wikisource_page_text
+d = 'data/raw/wikisource/vol_${PADDED}'
+count = 0
+for fn in sorted(os.listdir(d)):
+    if not fn.endswith('.json'): continue
+    p = os.path.join(d, fn)
+    with open(p, encoding='utf-8') as f:
+        data = json.load(f)
+    data['cleaned_preview'] = clean_wikisource_page_text(data['raw_text'])
+    with open(p, 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False)
+    count += 1
+print(f'  Re-converted {count} pages.')
+"
+done
+echo "  Done."
+echo
+
 # --- Phase 1: Wipe everything ---
 echo "=== Phase 1: Wiping all volumes from database ==="
 for vol in $VOLUMES; do

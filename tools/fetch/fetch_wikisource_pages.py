@@ -369,8 +369,10 @@ def _wikilink_to_marker(m: re.Match) -> str:
     parts = content.split("|")
     target = parts[0].strip()
     display = parts[1].strip() if len(parts) > 1 else target
-    # Author links: keep display text but don't link
-    if re.match(r"(?i)^Author:", target):
+    # Interwiki/interlanguage links, Author:, Portal:, Page:, File: — keep display text only
+    if re.match(r"(?i)^(Author|wikt|wiktionary|s|w|d|wikipedia|Portal|Page|File):", target):
+        return display
+    if re.match(r"^:", target):
         return display
     return f"{_LNK}{target}|{display}{_LNK}"
 
@@ -543,7 +545,18 @@ def _convert_table(match: re.Match) -> str:
                      and not re.match(r"^(?:colspan|rowspan|width|style|align|class|cellpadding|nowrap|valign|border|bgcolor|height)[\s=\|]", c.strip())
                      and c.strip() not in ("}",)]
             if cells:
-                key_rows.append(" | ".join(cells))
+                if any(re.search(r"<br\s*/?>", c, re.IGNORECASE) for c in cells):
+                    split_cells = [re.split(r"<br\s*/?>", c, flags=re.IGNORECASE) for c in cells]
+                    max_sub = max(len(sc) for sc in split_cells)
+                    for sc in split_cells:
+                        while len(sc) < max_sub:
+                            sc.append("")
+                    for sub_i in range(max_sub):
+                        sub_row = [sc[sub_i].strip() for sc in split_cells]
+                        if any(sub_row):
+                            key_rows.append(" | ".join(sub_row))
+                else:
+                    key_rows.append(" | ".join(cells))
         if key_rows:
             parts.append(
                 f"{_TBL}TABLE\n" + "\n".join(key_rows) + f"\n{_TBL}"
@@ -578,7 +591,21 @@ def _convert_table(match: re.Match) -> str:
                  and not re.match(r"^(?:colspan|rowspan|width|style|align|class|cellpadding|nowrap|valign|border|bgcolor|height)[\s=\|]", c.strip())
                  and c.strip() not in ("}",)]
         if cells:
-            text_rows.append(" | ".join(cells))
+            # Expand <br>-stacked cells into multiple rows.
+            # If any cell contains <br>, split all cells on <br>, zip them
+            # row-by-row, and emit one output row per sub-row.
+            if any(re.search(r"<br\s*/?>", c, re.IGNORECASE) for c in cells):
+                split_cells = [re.split(r"<br\s*/?>", c, flags=re.IGNORECASE) for c in cells]
+                max_sub = max(len(sc) for sc in split_cells)
+                for sc in split_cells:
+                    while len(sc) < max_sub:
+                        sc.append("")
+                for sub_i in range(max_sub):
+                    sub_row = [sc[sub_i].strip() for sc in split_cells]
+                    if any(sub_row):
+                        text_rows.append(" | ".join(sub_row))
+            else:
+                text_rows.append(" | ".join(cells))
 
     parts = []
     if img_markers:
@@ -701,9 +728,10 @@ def _stage_10_convert_plate_tables(text: str) -> str:
 
 
 def _stage_11_convert_refs(text: str) -> str:
-    text = re.sub(r"<ref[^>]*>(.*?)</ref>", _ref_to_marker, text, flags=re.DOTALL | re.IGNORECASE)
-    # Remove self-closing ref tags (back-references to named notes)
+    # Remove self-closing ref tags FIRST (back-references to named notes)
+    # so they don't steal </ref> closings from content refs
     text = re.sub(r"<ref[^/]*/\s*>", "", text, flags=re.IGNORECASE)
+    text = re.sub(r"<ref[^>]*>(.*?)</ref>", _ref_to_marker, text, flags=re.DOTALL | re.IGNORECASE)
     return text
 
 

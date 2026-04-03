@@ -32,7 +32,7 @@ All formatting is preserved independently of boundary detection:
 - **LaTeX math** — `«MATH:...«/MATH»` rendered via KaTeX
 - **Verse** — `{{VERSE:...}VERSE}` rendered as blockquote
 - **Footnotes** — `«FN:...«/FN»` with superscript numbers and Notes section
-- **Cross-reference links** — `«LN:target|display«/LN»` first-mention hyperlinks
+- **Cross-reference links** — `«LN:filename|target|display«/LN»` (resolved, direct link) or `«LN:target|display«/LN»` (unresolved, search fallback); first-mention only
 - **Hieroglyphics** — `[hieroglyph: code]` rendered as Unicode Egyptian Hieroglyphs via Gardiner Sign List mapping, with Manuel de Codage shorthand support
 
 ### Cross-Reference Resolution
@@ -46,6 +46,8 @@ Multi-strategy resolver:
 - Trailing period (EDWARD VII. → EDWARD VII)
 - Qualified prefix match (CLIMATE → CLIMATE AND CLIMATOLOGY)
 
+Resolved xrefs are embedded as direct links at export time: the export stage rewrites inline `«LN:target|display«/LN»` markers to `«LN:filename|target|display«/LN»` for resolved targets, so the viewer links directly to `/article/{page}/{slug}` instead of falling back to search. Unresolved xrefs keep the 2-part format and fall back to search.
+
 ### Stack
 
 - Python (3.12), SQLAlchemy, Typer, Postgres, Meilisearch, KaTeX
@@ -53,22 +55,23 @@ Multi-strategy resolver:
 
 ## Pipeline Stages
 
-1. **Fetch** — Wikisource pages (3s delay, 350-page batches, 15-min cooldown)
+1. **Fetch** — Wikisource pages (3s delay, 350-page batches, 15-min cooldown); self-closing refs stripped before content refs; interwiki links (wikt:, w:, Portal:, etc.) reduced to display text
 2. **Import** — cleaned preview into SourcePage
 3. **Clean** — NFC unicode, headers, hyphenation, reflow, whitespace, plate layout, leaked markup cleanup, unclosed marker repair
-4. **Detect boundaries** — section-marker based (no heuristic fallback)
+4. **Detect boundaries** — section-marker based (no heuristic fallback); prefers section ID when heading regex truncates title (e.g. parenthetical alternate names)
 5. **Classify** — article, front_matter, plate (with grid parser for multi-section plates)
-6. **Extract xrefs** — q.v., See, See also, inline link markers, `{{EB1911 article link}}`
+6. **Extract xrefs** — q.v., See, See also, inline link markers, `{{EB1911 article link}}`; targets >200 chars rejected
 7. **Resolve xrefs** — unified lookup (canonical + aliases + fuzzy)
 8. **Extract images** — from raw wikitext, Wikimedia Commons URLs
 9. **Extract contributors** — footer initials + front matter biographical tables
-10. **Export** — article JSON (with page numbers in segments), index.json, contributors.json, front_matter.json
+10. **Export** — article JSON (with page numbers in segments), index.json, contributors.json (with bio_article_filename), front_matter.json; inline link markers resolved to direct article URLs
 11. **Post-process** — safety-net cleanup on exported JSON (leaked attrs, pipe tables, width directives)
 12. **Index search** — Meilisearch full-text
 
 ## Scripts
 
-- `tools/rebuild_all.sh` — Full rebuild of all 28 volumes (8 phases: wipe, pipeline, xref resolve, re-export, front matter, post-process, reindex, quality report)
+- `tools/rebuild_all.sh` — Full rebuild of all 28 volumes (9 phases: reconvert raw wikitext, wipe, pipeline, xref resolve, re-export, front matter, post-process, reindex, quality report)
+- `tools/rebuild_article.py` — Piecemeal rebuild: re-converts raw wikitext for an article's pages, then re-runs the full volume pipeline. Usage: `python tools/rebuild_article.py <vol> <TITLE> [--deploy]`
 - `tools/start_services.sh` — Start/stop local Postgres, Meilisearch, and web server
 - `tools/deploy.sh` — Upload to S3, invalidate CloudFront, index production Meilisearch
 - `tools/run_volume.sh <vol> [--skip-fetch]` — Single volume pipeline
@@ -86,14 +89,14 @@ Multi-strategy resolver:
 
 ## Viewer
 
-- **home.html** — landing page with title page scan and navigation links
+- **home.html** — landing page with photograph-style title page and navigation links
 - **index.html** — volume tabs (data-driven labels), title/full-text/contributor search, alphabetic page navigation per volume
-- **viewer.html** — articles with volume:page citations in left margin, shoulder headings in right margin, inline images, footnotes, tables (including inline single-row tables), sections/TOC, in-article search, bold/italic/small-caps/hieroglyph rendering
+- **viewer.html** — articles with volume:page citations in left margin, shoulder headings in right margin, inline images, footnotes, tables (including inline single-row tables), sections/TOC, in-article search, bold/italic/small-caps/hieroglyph rendering, direct cross-reference links to target articles, contributor initials shown in original citation format
 - **search.html** — Meilisearch full-text with highlighted snippets, formatting marker cleanup
 - **contributors.html** — sorted by surname, credentials, descriptions, full article lists
 - **preface.html** — Hugh Chisholm's 1910 editorial preface with drop caps and shoulder headings
 
-## Current State (2026-04-02)
+## Current State (2026-04-03)
 
 - **Site live at britannica11.org**
 - **28 volumes processed** (vol 29 is end matter, excluded)
@@ -144,7 +147,7 @@ Multi-strategy resolver:
 ### File-Level (132 total across 35K articles)
 - **pipe_leak (80)** — orphaned pipe-separated data not inside TABLE markers; mostly tabular data (governor lists, statistics) that the fetch stage didn't wrap. Some are legitimate (poetry scansion, math)
 - **leaked_html_attr (15)** — residual `nowrap`, `colspan` etc. in edge cases the postprocessor doesn't catch
-- **unclosed_footnote (12)** — footnotes spanning table boundaries in complex tabular articles
+- **unclosed_footnote (12)** — footnotes spanning table boundaries in complex tabular articles (partially fixed: self-closing ref ordering corrected in fetch stage)
 - **html_tag (12)** — garbled OCR artifacts that look like HTML tags
 - **stray_wikilink (11)** — `[[Author:...]]` links and math notation containing `[[`
 - **unclosed_table (2)** — tables spanning page boundaries
@@ -156,16 +159,24 @@ Multi-strategy resolver:
 - Portal links and literary work references (CANDIDE, PARADISE LOST) are legitimately unresolvable xrefs
 - `_parse_page` heuristic still exists in code but is not called in production
 - Garbled text `wisth=7|` in EGYPT shoulder heading (postprocessor fix queued, needs rebuild)
-- Title page scan still has faint artifacts from the IA source copy
+- ~~Title page scan still has faint artifacts from the IA source copy~~ — replaced with photograph-style image
+- Images on shared pages can be assigned to the wrong article (e.g. gibbon ape image on GIBBON, EDWARD instead of GIBBON) — image extractor uses page-level ownership, not position relative to section markers
 - Meilisearch EC2 port 7700 currently open to all traffic — should be restricted to CloudFront IPs
 
 ## Next Steps
 
-### Needs one more rebuild
+### Included in current rebuild
+- Direct cross-reference links (resolved xrefs link to `/article/{page}/{slug}` instead of search)
+- Interwiki/portal link markers stripped (wikt:, w:, Portal:, etc.)
+- Self-closing ref tag ordering fix (footnotes no longer lose opening markers)
+- Table `<br>` expansion (multi-value cells split into separate rows)
+- Biographical article links resolved at export time (172/196 contributors matched)
+- Xref target length guard (>200 chars rejected)
+- Boundary detector prefers section ID for truncated heading matches
+
+### Needs future rebuild
 - Plate layout cleanup with keyword-matched captions
-- Page number in segment export (for margin citations)
 - Postprocessor fixes (garbled attrs, orphan table wrapping, width directive stripping)
-- Front matter export integrated into rebuild script
 
 ### Short-term
 - "About This Edition" page (editor's introduction)

@@ -87,7 +87,8 @@
     .contributor-initials {
       color: var(--muted);
       font-size: 0.9rem;
-      margin-left: 8px;
+      margin-left: 2px;
+      margin-right: 4px;
     }
 
     .article-count {
@@ -218,9 +219,9 @@
 
         return `
           <div class="contributor">
-            <span class="contributor-name">${escapeHtml(c.display_name || c.full_name)}</span>${escapeHtml(creds)}
-            <span class="contributor-initials">${escapeHtml(c.initials)}</span>
-            <span class="article-count">${c.articles.length} article${c.articles.length !== 1 ? "s" : ""}</span>
+            <span class="contributor-name">${escapeHtml(c.display_name || c.full_name)}</span>
+            <span class="contributor-initials">(${escapeHtml(c.initials)})</span>
+            <div style="color: var(--muted); font-size: 0.9rem;">${creds ? escapeHtml(creds.substring(2)) : ""}${creds ? " \u00b7 " : ""}${c.articles.length} article${c.articles.length !== 1 ? "s" : ""}</div>
             ${desc}
             <ul class="article-list">${articleLinks}</ul>
           </div>

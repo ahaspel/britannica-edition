@@ -248,7 +248,7 @@
 <body>
   <div class="page">
     <div class="card">
-      <div style="font-size:0.9rem; margin-bottom:8px;"><a href="home.html" style="color:var(--link); text-decoration:none;">Home</a></div>
+      <div style="font-size:0.9rem; margin-bottom:8px;"><a href="home.html" style="color:var(--link); text-decoration:none;">Home</a> &middot; <a href="/contributors.html" style="color:var(--link); text-decoration:none;">Contributors</a></div>
       <h1>Encyclop&aelig;dia Britannica, 11th Edition</h1>
       <div id="stats" class="stats">Loading...</div>
 
@@ -519,7 +519,6 @@
         ? contributors.filter(c =>
             c.full_name.toLowerCase().includes(q)
             || (c.initials || "").toLowerCase().includes(q)
-            || (c.description || "").toLowerCase().includes(q)
           )
         : contributors;
 
@@ -540,22 +539,14 @@
           })
           .join(", ");
 
-        // Find biographical article if description says so
         let bioLink = "";
-        if ((c.description || "").toLowerCase().includes("biographical article")) {
-          const nameParts = c.full_name.split(/\s+/);
-          const lastName = nameParts[nameParts.length - 1].toUpperCase();
-          const bioArticle = articles.find(a =>
-            a.title.startsWith(lastName + ",") || a.title === lastName
-          );
-          if (bioArticle) {
-            bioLink = ` \u00b7 <a href="${viewerUrl(bioArticle.filename)}">Biographical entry</a>`;
-          }
+        if (c.bio_article_filename) {
+          bioLink = ` \u00b7 <a href="${viewerUrl(c.bio_article_filename)}">Biographical entry</a>`;
         }
 
         return `<div class="result">
-          <div class="result-title">${escapeHtml(c.display_name || c.full_name)}</div>
-          <div class="result-meta">${escapeHtml(c.initials || "")}${c.credentials ? " \u00b7 " + escapeHtml(c.credentials) : ""}${bioLink}</div>
+          <div class="result-title">${escapeHtml(c.display_name || c.full_name)} <span style="color:var(--muted);font-size:0.85em;">(${escapeHtml(c.initials || "")})</span></div>
+          <div class="result-meta">${c.credentials ? escapeHtml(c.credentials) : ""}${bioLink}</div>
           <div class="result-snippet">${artLinks}</div>
         </div>`;
       }).join("");
@@ -674,7 +665,7 @@
     const hints = {
       title: "Search by article title",
       fulltext: "Search article text",
-      contributors: "Search contributors, or leave blank to browse all",
+      contributors: "Search contributors",
     };
     const hintEl = document.getElementById("search-hint");
 

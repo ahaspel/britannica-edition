@@ -41,15 +41,22 @@
 
     nav a:hover { text-decoration: underline; }
 
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
     .hero {
       display: flex;
       justify-content: center;
-      padding: 40px 24px;
+      padding: 20px 24px;
+      height: calc(100vh - 50px);
     }
 
     .hero img {
-      max-height: calc(100vh - 100px);
+      max-height: 100%;
       max-width: 95vw;
+      object-fit: contain;
     }
   </style>
 </head>
