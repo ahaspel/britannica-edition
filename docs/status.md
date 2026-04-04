@@ -101,11 +101,11 @@ Resolved xrefs are embedded as direct links at export time: the export stage rew
 - **Site live at britannica11.org**
 - **28 volumes processed** (vol 29 is end matter, excluded)
 - **35,933 articles** in database
-- **22,367 cross-references resolved** (91%)
-- **2,167 unresolved xrefs** (mostly portal links and literary work references — legitimately unresolvable)
+- **25,812 cross-references resolved (90%)** — up from 22,367 after EB1911 article link fix
+- **3,012 unresolved xrefs** (mostly portal links and literary work references — legitimately unresolvable)
 - **~1,500 unique contributors** with biographical data
 - **119 tests passing** — section boundaries, formatting, integration
-- **93 file-level issues** across 36K+ articles (down from 132)
+- **72 file-level issues** across 36K+ articles (down from 93; pipe_leak 42, leaked_html_attr 15, html_tag 12, unclosed_footnote 3)
 - **All data fetched** — raw wikitext is static, never changes
 
 ## Production Deployment
@@ -144,13 +144,12 @@ Resolved xrefs are embedded as direct links at export time: the export stage rew
 
 ## Known Issues (remaining)
 
-### File-Level (132 total across 35K articles)
-- **pipe_leak (80)** — orphaned pipe-separated data not inside TABLE markers; mostly tabular data (governor lists, statistics) that the fetch stage didn't wrap. Some are legitimate (poetry scansion, math)
+### File-Level (72 total across 36K articles)
+- **pipe_leak (42)** — orphaned pipe-separated data not inside TABLE markers; real unwrapped tables (quality report now excludes poetry/math false alarms)
 - **leaked_html_attr (15)** — residual `nowrap`, `colspan` etc. in edge cases the postprocessor doesn't catch
-- **unclosed_footnote (12)** — footnotes spanning table boundaries in complex tabular articles (partially fixed: self-closing ref ordering corrected in fetch stage)
 - **html_tag (12)** — garbled OCR artifacts that look like HTML tags
-- **stray_wikilink (11)** — `[[Author:...]]` links and math notation containing `[[`
-- **unclosed_table (2)** — tables spanning page boundaries
+- **unclosed_footnote (3)** — footnotes spanning table boundaries in complex tabular articles
+- **stray_wikilink (0)** — fixed: wikilink regex now handles nested brackets
 
 ### Other
 - Some pages have `pagequality level="3"` (not fully proofread) on Wikisource
@@ -165,18 +164,20 @@ Resolved xrefs are embedded as direct links at export time: the export stage rew
 
 ## Next Steps
 
-### Included in current rebuild
-- Direct cross-reference links (resolved xrefs link to `/article/{page}/{slug}` instead of search)
-- Interwiki/portal link markers stripped (wikt:, w:, Portal:, etc.)
-- Self-closing ref tag ordering fix (footnotes no longer lose opening markers)
-- Table `<br>` expansion (multi-value cells split into separate rows)
-- Biographical article links resolved at export time (172/196 contributors matched)
-- Xref target length guard (>200 chars rejected)
-- Boundary detector prefers section ID for truncated heading matches
+### Completed in latest rebuild (2026-04-04)
+- `{{EB1911 article link}}` templates fully handled (multi-param, nested `{{sc|...}}`, `nosc=x`)
+- Wikilink regex handles nested brackets (`[of Blackburn]`, `[an imaginary]`)
+- `<score>` tags replaced with static Wikimedia PNG URLs (11 tags, 3 articles)
+- `{{csc|...}}` templates unwrap to small caps instead of being stripped (729 pages)
+- `{{fine block|...}}` templates unwrap to content (1,837 pages)
+- Postprocessor merges blank-line-separated table rows into single TABLE blocks
+- Postprocessor strips leaked table title attributes (`title="..."`)
+- Quality report: pipe_leak excludes VERSE/MATH and only flags table-pattern lines
+- Quality report: stray_wikilink requires matched `[[...]]` pairs
 
 ### Needs future rebuild
+- Page-join paragraph break before `«SC»` section headings (transform stage fix ready)
 - Plate layout cleanup with keyword-matched captions
-- Postprocessor fixes (garbled attrs, orphan table wrapping, width directive stripping)
 
 ### Short-term
 - "About This Edition" page (editor's introduction)

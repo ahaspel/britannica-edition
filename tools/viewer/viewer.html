@@ -9,16 +9,16 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Egyptian+Hieroglyphs&display=swap">
   <style>
     :root {
-      --bg: #f7f7f5;
-      --panel: #ffffff;
-      --text: #1f2328;
-      --muted: #4b5563;
-      --border: #d0d7de;
-      --link: #0969da;
+      --bg: #f5f1eb;
+      --panel: #fdfcf9;
+      --text: #2c2416;
+      --muted: #6b5e4f;
+      --border: #d4cab8;
+      --link: #7b3f00;
       --unresolved: #b42318;
-      --resolved-bg: #eff6ff;
+      --resolved-bg: #f5f0e8;
       --unresolved-bg: #fff1f1;
-      --code-bg: #f6f8fa;
+      --code-bg: #f0ebe3;
     }
 
     * { box-sizing: border-box; }
@@ -28,7 +28,7 @@
       font-family: Georgia, "Times New Roman", serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.5;
+      line-height: 1.7;
     }
 
     .page {
@@ -40,8 +40,8 @@
     .card {
       background: var(--panel);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 20px;
+      border-radius: 2px;
+      padding: 20px 24px;
       margin-bottom: 20px;
     }
 
@@ -51,8 +51,11 @@
     }
 
     h1 {
-      font-size: 2rem;
+      font-size: 1.8rem;
       margin-bottom: 10px;
+      font-variant: small-caps;
+      letter-spacing: 0.06em;
+      color: #2c2416;
     }
 
     .meta {
@@ -76,20 +79,21 @@
       min-width: 240px;
       padding: 10px 12px;
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 4px;
       font: inherit;
+      background: var(--panel);
     }
 
     button {
       padding: 10px 14px;
       border: 1px solid var(--border);
-      border-radius: 8px;
-      background: #fff;
+      border-radius: 4px;
+      background: var(--panel);
       cursor: pointer;
       font: inherit;
     }
 
-    button:hover { background: #f3f4f6; }
+    button:hover { background: var(--code-bg); }
 
     .body-text {
       font-size: 1.08rem;
@@ -106,8 +110,12 @@
 
     .body-text p {
       text-indent: 1.5em;
-      margin: 0 0 0.4em 0;
+      margin: 0 0 0.5em 0;
       position: relative;
+    }
+
+    .body-text p:first-of-type {
+      text-indent: 0;
     }
 
     .xref-list {
@@ -258,7 +266,7 @@
       font-style: italic;
       margin: 1em 2em;
       padding-left: 1em;
-      border-left: 2px solid var(--border);
+      border-left: 2px solid #8b7355;
       line-height: 1.6;
     }
 
@@ -311,12 +319,22 @@
 
     .section-heading {
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 1.15rem;
-      margin-top: 1.5em;
-      margin-bottom: 0.3em;
-      color: var(--text);
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 4px;
+      font-size: 1.1rem;
+      font-variant: small-caps;
+      letter-spacing: 0.04em;
+      margin-top: 1.8em;
+      margin-bottom: 0.4em;
+      color: #5c4a32;
+      text-align: center;
+      text-indent: 0;
+    }
+
+    .section-heading::before {
+      content: "\2014\2002";
+    }
+
+    .section-heading::after {
+      content: "\2002\2014";
     }
 
     .body-text p {
@@ -384,7 +402,7 @@
     .article-link {
       color: var(--link);
       text-decoration: none;
-      border-bottom: 1px dotted var(--link);
+      border-bottom: 1px dotted #b89a6b;
     }
 
     .article-link:hover {
@@ -420,6 +438,7 @@
       font-size: 0.9rem;
       padding-left: 24px;
       color: var(--text);
+      list-style: none;
     }
 
     .footnotes li {
@@ -467,7 +486,7 @@
   <div class="page">
     <div class="card">
       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-        <h1 style="margin: 0;">Encyclop&aelig;dia Britannica, 11th Edition</h1>
+        <h1 style="margin: 0; font-variant: normal; letter-spacing: 0.02em; font-size: 1.3rem; font-style: italic; color: #5c4a32;">Encyclop&aelig;dia Britannica, 11th Edition</h1>
         <div style="font-size: 0.9rem;">
           <a href="/home.html" style="color: var(--link); text-decoration: none;">Home</a>
           &nbsp;&middot;&nbsp;
@@ -477,6 +496,10 @@
         </div>
       </div>
       <div class="controls">
+        <div style="position: relative; flex: 0 1 280px; min-width: 180px;">
+          <input id="jumpTo" type="text" placeholder="Go to article..." style="width: 100%;" autocomplete="off" />
+          <ul id="jumpResults" style="display:none; position:absolute; top:100%; left:0; right:0; margin:0; padding:0; list-style:none; background:var(--panel); border:1px solid var(--border); border-top:none; border-radius:0 0 6px 6px; max-height:240px; overflow-y:auto; z-index:100; font-size:0.9rem;"></ul>
+        </div>
         <input id="articleSearch" type="text" placeholder="Search within article..." style="flex: 0 1 260px; min-width: 160px;" />
         <span id="matchCount" style="color: var(--muted); font-size: 0.85rem;"></span>
       </div>
@@ -542,6 +565,8 @@
     }
 
     function commonsUrl(filename) {
+      // Full URLs (e.g. score images from upload.wikimedia.org) pass through
+      if (filename.startsWith("http://") || filename.startsWith("https://")) return filename;
       const name = filename.replace(/ /g, "_");
       // Simple MD5 — we'll use the SubtleCrypto API
       // For now, use the pre-computed URL from the images array if available
@@ -757,7 +782,8 @@
     function renderArticle(article) {
       currentVolume = article.volume || "?";
       const segments = Array.isArray(article.segments) ? article.segments : [];
-      const xrefs = Array.isArray(article.xrefs) ? article.xrefs : [];
+      const xrefs = (Array.isArray(article.xrefs) ? article.xrefs : [])
+        .slice().sort((a, b) => (a.normalized_target || "").localeCompare(b.normalized_target || ""));
       const images = Array.isArray(article.images) ? article.images : [];
       const contributors = Array.isArray(article.contributors) ? article.contributors : [];
       const plates = Array.isArray(article.plates) ? article.plates : [];
@@ -783,13 +809,16 @@
 
       app.innerHTML = `
         <div class="card">
-          <h1>${escapeHtml(article.title || "Untitled")}</h1>
+          <h1>${(() => {
+            const t = escapeHtml(article.title || "Untitled");
+            return `<span style="font-size:1.6em; line-height:1; vertical-align:baseline;">${t[0]}</span>${t.slice(1)}`;
+          })()}</h1>
           <div class="meta">
             Volume ${escapeHtml(article.volume ?? "?")}
             · pages ${escapeHtml(article.page_start ?? "?")}–${escapeHtml(article.page_end ?? "?")}
           </div>
           ${article.parent_article ? `<div style="margin-bottom: 8px; font-size: 0.95rem;">Plate for <a href="${articleUrl(article.parent_article.filename)}">${escapeHtml(article.parent_article.title)}</a></div>` : ""}
-          ${contributors.length ? `<div class="contributors">By ${contributors.map(c => `<a href="/index.html?mode=contributors&q=${encodeURIComponent(c.full_name)}" style="color: var(--muted);">${escapeHtml(c.full_name)}</a> <span style="color: var(--muted); font-size: 0.85em;">(${escapeHtml(c.initials)})</span>`).join(", ")}</div>` : ""}
+          ${contributors.length ? `<div class="contributors">By ${contributors.map(c => `<a href="/contributors.html?q=${encodeURIComponent(c.full_name)}" style="color: var(--muted);">${escapeHtml(c.full_name)}</a> <span style="color: var(--muted); font-size: 0.85em;">(${escapeHtml(c.initials)})</span>`).join(", ")}</div>` : ""}
           ${plates.length ? `<div class="contributors">Plates: ${plates.map(p => `<a href="${articleUrl(p.filename)}">${escapeHtml(p.title)}</a>`).join(", ")}</div>` : ""}
           ${article.source_quality && article.source_quality.lowest_level <= 1
             ? `<div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 8px 12px; margin: 8px 0; font-size: 0.9rem;">
@@ -840,7 +869,7 @@
               : "";
             return tocHtml + `<div class="body-text">${bodyHtml}</div>`;
           })()}
-          ${collectedFootnotes.length ? `<div class="footnotes"><h3>Notes</h3><ol>${collectedFootnotes.map(fn => `<li id="fn-${fn.num}"><a onclick="document.getElementById('fnref-${fn.num}').scrollIntoView({behavior:'smooth',block:'center'});return false;" href="#">\u2191</a> ${fn.text}</li>`).join("")}</ol></div>` : ""}
+          ${collectedFootnotes.length ? `<div class="footnotes"><h3>Notes</h3><ol>${collectedFootnotes.map(fn => `<li id="fn-${fn.num}" value="${fn.num}"><a onclick="document.getElementById('fnref-${fn.num}').scrollIntoView({behavior:'smooth',block:'center'});return false;" href="#">${fn.num}.</a> ${fn.text}</li>`).join("")}</ol></div>` : ""}
         </div>
 
         ${xrefHtml ? `<div class="card">
@@ -939,6 +968,75 @@
       const first = bodyEl.querySelector(".search-highlight");
       if (first) first.scrollIntoView({ behavior: "smooth", block: "center" });
     });
+    // --- Jump-to-article autocomplete ---
+    (function() {
+      const input = document.getElementById("jumpTo");
+      const results = document.getElementById("jumpResults");
+      let articles = null;
+      let selected = -1;
+
+      async function ensureIndex() {
+        if (articles) return;
+        const base = IS_LOCAL ? "/data/derived/articles" : "/data";
+        const resp = await fetch(`${base}/index.json`);
+        const data = await resp.json();
+        articles = data
+          .filter(a => a.article_type === "article")
+          .map(a => ({ title: a.title, filename: a.filename }));
+      }
+
+      function show(items) {
+        selected = -1;
+        if (!items.length) { results.style.display = "none"; return; }
+        results.innerHTML = items.slice(0, 12).map((a, i) =>
+          `<li data-idx="${i}" style="padding:6px 10px;cursor:pointer;border-bottom:1px solid var(--border);">${a.title}</li>`
+        ).join("");
+        results.style.display = "block";
+        results.querySelectorAll("li").forEach(li => {
+          li.addEventListener("mousedown", e => {
+            e.preventDefault();
+            go(items[+li.dataset.idx]);
+          });
+        });
+      }
+
+      function highlight(idx) {
+        results.querySelectorAll("li").forEach((li, i) => {
+          li.style.background = i === idx ? "var(--resolved-bg)" : "";
+        });
+      }
+
+      function go(item) {
+        results.style.display = "none";
+        input.value = "";
+        location.href = articleUrl(item.filename);
+      }
+
+      input.addEventListener("input", async () => {
+        await ensureIndex();
+        const q = input.value.trim().toLowerCase();
+        if (!q) { results.style.display = "none"; return; }
+        const matches = articles.filter(a => a.title.toLowerCase().includes(q));
+        // Sort: starts-with first, then alphabetical
+        matches.sort((a, b) => {
+          const aStarts = a.title.toLowerCase().startsWith(q) ? 0 : 1;
+          const bStarts = b.title.toLowerCase().startsWith(q) ? 0 : 1;
+          return aStarts - bStarts || a.title.localeCompare(b.title);
+        });
+        show(matches);
+      });
+
+      input.addEventListener("keydown", e => {
+        const items = results.querySelectorAll("li");
+        if (!items.length) return;
+        if (e.key === "ArrowDown") { e.preventDefault(); selected = Math.min(selected + 1, items.length - 1); highlight(selected); }
+        else if (e.key === "ArrowUp") { e.preventDefault(); selected = Math.max(selected - 1, 0); highlight(selected); }
+        else if (e.key === "Enter" && selected >= 0) { e.preventDefault(); items[selected].dispatchEvent(new MouseEvent("mousedown")); }
+        else if (e.key === "Escape") { results.style.display = "none"; }
+      });
+
+      input.addEventListener("blur", () => { setTimeout(() => results.style.display = "none", 150); });
+    })();
   </script>
 </body>
 </html>

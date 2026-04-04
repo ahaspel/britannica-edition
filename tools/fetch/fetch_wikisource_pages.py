@@ -746,18 +746,49 @@ def _stage_12_convert_images(text: str) -> str:
     return text
 
 
+def _eb1911_link_to_marker(m: re.Match) -> str:
+    """Convert {{EB1911 article link|...}} to a link marker.
+
+    Handles: |Target, |Display|Target, |nosc=x|Display|Target,
+    |Display|Target|nosc=x, and nested {{sc|...}} in display text.
+    """
+    inner = m.group(1)
+    # Unwrap nested {{sc|...}} templates
+    inner = re.sub(r"\{\{sc\|([^{}]*)\}\}", r"\1", inner, flags=re.IGNORECASE)
+    # Split on | and filter out named params (contain =)
+    parts = [p.strip() for p in inner.split("|")]
+    positional = [p for p in parts if "=" not in p and p]
+    if len(positional) >= 2:
+        display = positional[0]
+        target = positional[1]
+    elif len(positional) == 1:
+        display = target = positional[0]
+    else:
+        return ""
+    return f"{_LNK}{target}|{display}{_LNK}"
+
+
 def _stage_13_convert_link_templates(text: str) -> str:
     text = re.sub(r"\{\{(?:EB1911|DNB)\s+lkpl\|([^{}]+)\}\}", _lkpl_to_marker, text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{1911link\|([^{}|]*)\}\}", lambda m: f"{_LNK}{m.group(1)}|{m.group(1)}{_LNK}", text, flags=re.IGNORECASE)
-    # {{EB1911 article link|Target}} — explicit cross-references
-    text = re.sub(r"\{\{EB1911 article link\|([^{}|]*)\}\}", lambda m: f"{_LNK}{m.group(1)}|{m.group(1)}{_LNK}", text, flags=re.IGNORECASE)
+    # {{EB1911 article link|...}} — explicit cross-references
+    # Variants: |Target, |Display|Target, |nosc=x|Display|Target,
+    #           |Display|Target|nosc=x, with optional nested {{sc|...}}
+    # Unwrap nested {{sc|...}} first so the outer regex can match cleanly
+    text = re.sub(
+        r"(\{\{EB1911 article link\|[^}]*)(\{\{sc\|)([^}]*)(\}\})",
+        lambda m: m.group(1) + m.group(3),
+        text, flags=re.IGNORECASE,
+    )
+    text = re.sub(r"\{\{EB1911 article link\|([^{}]*)\}\}", _eb1911_link_to_marker, text, flags=re.IGNORECASE)
     # {{11link|Target}} — another article link form
     text = re.sub(r"\{\{11link\|([^{}|]*)\}\}", lambda m: f"{_LNK}{m.group(1)}|{m.group(1)}{_LNK}", text, flags=re.IGNORECASE)
     return text
 
 
 def _stage_14_convert_wikilinks(text: str) -> str:
-    text = re.sub(r"\[\[([^\]]+)\]\]", _wikilink_to_marker, text)
+    # Use .*? instead of [^\]]+ so nested brackets like [of Blackburn] don't break the match
+    text = re.sub(r"\[\[(.*?)\]\]", _wikilink_to_marker, text, flags=re.DOTALL)
     return text
 
 
@@ -812,17 +843,22 @@ def _stage_17_convert_shoulder_headings(text: str) -> str:
 
 
 def _stage_18_unwrap_layout_templates(text: str) -> str:
-    for unwrap_name in ["center", "c", "EB1911 Fine Print"]:
+    for unwrap_name in ["center", "c", "fine block", "EB1911 Fine Print"]:
         text = re.sub(
             r"\{\{" + re.escape(unwrap_name) + r"\|((?:[^{}]|\{\{[^{}]*\}\})*)\}\}",
             r"\1", text, flags=re.IGNORECASE,
         )
+    # {{csc|...}} = centered small caps — unwrap to «SC»...«/SC» (not stripped)
+    text = re.sub(
+        r"\{\{csc\|((?:[^{}]|\{\{[^{}]*\}\})*)\}\}",
+        "\u00abSC\u00bb\\1\u00ab/SC\u00bb", text, flags=re.IGNORECASE,
+    )
     return text
 
 
 def _stage_19_strip_presentation_templates(text: str) -> str:
     for name in [
-        "csc", "fs", "ts", "ditto",
+        "fs", "ts", "ditto",
         "eb1911 page heading", "eb1911 fine print/s", "eb1911 fine print/e",
         "eb1911 shoulder headingsmall", "eb1911 shoulder heading",
     ]:

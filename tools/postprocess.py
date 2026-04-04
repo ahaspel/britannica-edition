@@ -44,6 +44,12 @@ def clean_body(body: str) -> str:
     )
     # Clean {ts|... and similar leaked table style prefixes inside TABLE
     body = re.sub(r"\{\{TABLE:\{[^}]*\}\}TABLE\}", "", body)
+    # Strip leading attribute lines (title="...", class="...", etc.) from TABLE content
+    body = re.sub(
+        r"(\{\{TABLE:)\s*(?:title|class|style|align|rules|cellspacing|cellpadding|border|width)="
+        r"[^\n]*\n",
+        r"\1", body, flags=re.IGNORECASE,
+    )
 
     # Bare wiki table markup
     body = re.sub(r"\{\|[^\n]*\n?", "", body)
@@ -116,6 +122,7 @@ def _wrap_orphan_tables(text: str) -> str:
         else:
             result.extend(table_lines)
 
+    pending_blanks = []
     for line in lines:
         stripped = line.strip()
         # A table line: starts with | and has multiple pipe separators
@@ -126,15 +133,26 @@ def _wrap_orphan_tables(text: str) -> str:
             and not stripped.startswith("|+")
         )
         if is_table_line:
+            # Absorb any pending blank lines into the table run
+            if table_lines and pending_blanks:
+                table_lines.extend(pending_blanks)
+            pending_blanks = []
             table_lines.append(line)
+        elif stripped == "" and table_lines:
+            # Blank line while in a table run — hold it pending
+            pending_blanks.append(line)
         else:
             if table_lines:
                 flush_table()
                 table_lines = []
+            # Pending blanks weren't followed by a table line — emit them
+            result.extend(pending_blanks)
+            pending_blanks = []
             result.append(line)
 
     if table_lines:
         flush_table()
+    result.extend(pending_blanks)
 
     return "\n".join(result)
 

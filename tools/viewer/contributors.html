@@ -252,6 +252,8 @@
         contributorData = data;
         const totalArticles = contributorData.reduce((s, c) => s + c.articles.length, 0);
         statsEl.textContent = `${contributorData.length} contributors · ${totalArticles} attributed articles`;
+        const urlQ = new URLSearchParams(location.search).get("q");
+        if (urlQ) searchInput.value = urlQ;
         render();
       })
       .catch(err => {

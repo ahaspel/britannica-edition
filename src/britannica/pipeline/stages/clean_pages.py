@@ -227,6 +227,41 @@ def _clean_plate_layout(text: str) -> str:
     return result
 
 
+# Static mapping of <score> tags to pre-rendered Wikimedia images.
+# Key: (volume, page_number, occurrence_index)
+# Value: URL of the rendered PNG on upload.wikimedia.org
+_SCORE_IMAGES = {
+    (3, 221, 0): "https://upload.wikimedia.org/score/h/z/hzcdxxolvqb8f88rf1kv99xpbkz4fhl/hzcdxxol.png",
+    (3, 221, 1): "https://upload.wikimedia.org/score/8/m/8muj660hon0gdc23klev5oueja71g2e/8muj660h.png",
+    (3, 221, 2): "https://upload.wikimedia.org/score/l/e/le30qszwd023fbi5l5p72zzgp0qif4z/le30qszw.png",
+    (3, 221, 3): "https://upload.wikimedia.org/score/t/a/ta4vp64mow2a4xgtut6yrr587tjqvwq/ta4vp64m.png",
+    (3, 971, 0): "https://upload.wikimedia.org/score/l/e/lexak41zsl71g5wdztqfen2titdlq9w/lexak41z.png",
+    (3, 972, 0): "https://upload.wikimedia.org/score/c/6/c6ls5kqiltjw1nu8qc0qh3r85v60gdx/c6ls5kqi.png",
+    (6, 415, 0): "https://upload.wikimedia.org/score/9/i/9iavthct92fgw9tjxwi3s57m4yb9fw0/9iavthct.png",
+    (6, 416, 0): "https://upload.wikimedia.org/score/i/y/iy808fgeauppb3nth1mdmfhjgi6rpy3/iy808fge.png",
+    (6, 416, 1): "https://upload.wikimedia.org/score/5/y/5ytbiminte2jgttcfyl2swwg254v2i0/5ytbimin.png",
+    (6, 416, 2): "https://upload.wikimedia.org/score/a/o/ao59rovwbfgbmxdrbumkluxcgxg7qoj/ao59rovw.png",
+    (6, 416, 3): "https://upload.wikimedia.org/score/7/y/7yn0x3i1tb37t4fg4v68yj3n4pnh1vi/7yn0x3i1.png",
+}
+
+_SCORE_TAG = re.compile(r"<score[^>]*>.*?</score>", re.DOTALL)
+
+
+def _replace_score_tags(text: str, volume: int, page_number: int) -> str:
+    """Replace <score> tags with {{IMG:url|Musical notation}} markers."""
+    matches = list(_SCORE_TAG.finditer(text))
+    if not matches:
+        return text
+    for i, m in reversed(list(enumerate(matches))):
+        url = _SCORE_IMAGES.get((volume, page_number, i))
+        if url:
+            replacement = f"{{{{IMG:{url}|Musical notation}}}}"
+        else:
+            replacement = "[Musical notation]"
+        text = text[:m.start()] + replacement + text[m.end():]
+    return text
+
+
 def _convert_img_float(text: str) -> str:
     """Convert leaked 'img float|file=...|cap=...' to {{IMG:...}} markers."""
     def _replace(m):
@@ -267,6 +302,8 @@ def clean_pages(volume: int) -> int:
 
         for page in pages:
             text = page.raw_text
+            # Replace <score> tags before any other processing
+            text = _replace_score_tags(text, volume, page.page_number)
             text = normalize_unicode(text)
             text, _removed_headers = strip_headers(text)
             text, _hyphen_changes = fix_hyphenation(text)

@@ -172,7 +172,7 @@ def transform_articles(volume: int) -> int:
                     continue
                 marker = f"\x01PAGE:{page_number}\x01"
                 if parts:
-                    joiner = "\n\n" if re.match(r"\u00abIMG:", text) else " "
+                    joiner = "\n\n" if re.match(r"\u00abIMG:|\u00abSC\u00bb", text) else " "
                     parts.append(joiner)
                 else:
                     # First segment — marker goes at the very start
