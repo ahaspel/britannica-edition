@@ -6,12 +6,12 @@
   <title>Encyclopaedia Britannica, 11th Edition</title>
   <style>
     :root {
-      --bg: #f7f7f5;
-      --panel: #ffffff;
-      --text: #1f2328;
-      --muted: #4b5563;
-      --border: #d0d7de;
-      --link: #0969da;
+      --bg: #f5f1eb;
+      --panel: #fdfcf9;
+      --text: #2c2416;
+      --muted: #6b5e4f;
+      --border: #d4cab8;
+      --link: #7b3f00;
       --highlight: #fff3cd;
       --warn: #b42318;
       --warn-bg: #fff1f1;
@@ -21,10 +21,10 @@
 
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: Georgia, "Times New Roman", serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.5;
+      line-height: 1.7;
     }
 
     .page {
@@ -36,8 +36,8 @@
     .card {
       background: var(--panel);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 20px;
+      border-radius: 2px;
+      padding: 20px 24px;
       margin-bottom: 20px;
     }
 
@@ -60,21 +60,22 @@
       flex: 1;
       padding: 10px 14px;
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 4px;
       font: inherit;
       font-size: 1rem;
+      background: var(--panel);
     }
 
     .search-box:focus {
       outline: none;
-      border-color: var(--link);
-      box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.15);
+      border-color: #8b7355;
+      box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.12);
     }
 
     .search-btn {
       padding: 10px 20px;
       border: 1px solid var(--link);
-      border-radius: 8px;
+      border-radius: 4px;
       background: var(--link);
       color: #fff;
       font: inherit;
@@ -103,7 +104,7 @@
 
     /* Results area */
     .result {
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid var(--border);
       padding: 10px 0;
     }
 
@@ -164,14 +165,14 @@
     .pagination button {
       padding: 6px 14px;
       border: 1px solid var(--border);
-      border-radius: 6px;
-      background: #fff;
+      border-radius: 4px;
+      background: var(--panel);
       cursor: pointer;
       font-size: 0.85rem;
       color: var(--text);
     }
 
-    .pagination button:hover { background: #f3f4f6; }
+    .pagination button:hover { background: #ebe4d6; }
     .pagination button:disabled { opacity: 0.3; cursor: default; }
 
     .page-index {
@@ -191,7 +192,7 @@
       cursor: pointer;
     }
 
-    .page-index a:hover { background: #f3f4f6; }
+    .page-index a:hover { background: #ebe4d6; }
     .page-index a.active { background: var(--link); color: #fff; border-color: var(--link); }
 
     /* Volume browse */
@@ -205,8 +206,10 @@
     }
 
     .volume-bar {
-      display: flex;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(14, auto);
+      grid-auto-flow: column;
       gap: 4px;
       padding: 8px 0;
     }
@@ -215,13 +218,13 @@
       padding: 4px 8px;
       border: 1px solid var(--border);
       border-radius: 4px;
-      background: #fff;
+      background: var(--panel);
       cursor: pointer;
       font-size: 0.78rem;
       color: var(--muted);
     }
 
-    .vol-btn:hover { background: #f3f4f6; }
+    .vol-btn:hover { background: #ebe4d6; }
     .vol-btn.active { background: var(--link); color: #fff; border-color: var(--link); }
     .vol-btn.disabled { opacity: 0.3; cursor: default; }
 
@@ -237,7 +240,7 @@
 
     td {
       padding: 6px 10px;
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid var(--border);
       font-size: 0.95rem;
     }
 
@@ -248,8 +251,14 @@
 <body>
   <div class="page">
     <div class="card">
-      <div style="font-size:0.9rem; margin-bottom:8px;"><a href="home.html" style="color:var(--link); text-decoration:none;">Home</a> &middot; <a href="/contributors.html" style="color:var(--link); text-decoration:none;">Contributors</a></div>
-      <h1>Encyclop&aelig;dia Britannica, 11th Edition</h1>
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+        <h1 style="margin: 0; font-size: 1.3rem; color: #5c4a32;"><span style="font-variant: small-caps; letter-spacing: 0.06em;">Articles</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.02em;">&mdash; Encyclop&aelig;dia Britannica, 11th Edition</span></h1>
+        <div style="font-size: 0.9rem;">
+          <a href="/home.html" style="color: var(--link); text-decoration: none;">Home</a>
+          &nbsp;&middot;&nbsp;
+          <a href="/contributors.html" style="color: var(--link); text-decoration: none;">Contributors</a>
+        </div>
+      </div>
       <div id="stats" class="stats">Loading...</div>
 
       <div class="search-modes">
@@ -263,9 +272,11 @@
       </div>
       <div id="search-hint" style="font-size: 0.82rem; color: var(--muted); margin-top: -8px;"></div>
 
+      <div style="border-top: 1px solid var(--border); margin: 12px 0 4px;"></div>
+      <div style="font-size: 0.85rem; font-variant: small-caps; letter-spacing: 0.05em; color: #8b7355; margin-bottom: 2px;">Browse by Volume</div>
       <div id="volume-bar" class="volume-bar"></div>
     </div>
-
+    <div id="results-divider" style="text-align:center; color:#8b7355; font-size:1.6rem; margin:-6px 0 14px; letter-spacing:0.3em; user-select:none; display:none;">&#x223C;&#x25C6;&#x223C;</div>
     <div id="results-card" class="card" style="display:none">
       <!-- Title search results (table) -->
       <div id="title-results" style="display:none">
@@ -340,6 +351,7 @@
     const searchBtn = document.getElementById("search-btn");
     const statsEl = document.getElementById("stats");
     const resultsCard = document.getElementById("results-card");
+    const resultsDivider = document.getElementById("results-divider");
     const browseCard = document.getElementById("browse-card");
     const emptyEl = document.getElementById("empty");
 
@@ -348,7 +360,7 @@
     }
 
     function formatPreview(s) {
-      let h = escapeHtml(s);
+      let h = escapeHtml(s).replace(/\x01PAGE:\d+\x01/g, "");
       h = h.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
       h = h.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
       h = h.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span style="font-variant:small-caps">$1</span>');
@@ -431,7 +443,7 @@
 
     function showTitleResults() {
       hideAllResults();
-      resultsCard.style.display = "block";
+      resultsCard.style.display = "block"; resultsDivider.style.display = "block";
 
       if (lastFiltered.length === 0) {
         emptyEl.style.display = "block";
@@ -451,7 +463,7 @@
     // ── Full-text search ──
     async function searchFulltext(query) {
       hideAllResults();
-      resultsCard.style.display = "block";
+      resultsCard.style.display = "block"; resultsDivider.style.display = "block";
 
       if (!query.trim()) {
         emptyEl.style.display = "block";
@@ -491,7 +503,7 @@
         el.style.display = "block";
         el.innerHTML = hits.map(hit => {
           const fmt = hit._formatted || {};
-          const snippet = fmt.body || hit.body_start || "";
+          const snippet = (fmt.body || hit.body_start || "").replace(/\x01PAGE:\d+\x01/g, "").replace(/\u00abFN:.*?\u00ab\/FN\u00bb/gs, "").replace(/\u00abLN:[^|]*\|(?:[^|«]*\|)?([^«]*)\u00ab\/LN\u00bb/g, "$1").replace(/\u00ab\/?[A-Z]+\u00bb/g, "");
           const title = fmt.title || hit.title;
           const pr = hit.page_start === hit.page_end
             ? `p.${hit.page_start}` : `pp.${hit.page_start}\u2013${hit.page_end}`;
@@ -511,7 +523,7 @@
     // ── Contributor search ──
     function searchContributors(query) {
       hideAllResults();
-      resultsCard.style.display = "block";
+      resultsCard.style.display = "block"; resultsDivider.style.display = "block";
 
       const q = query.toLowerCase();
       // Empty query = browse all contributors
@@ -606,6 +618,7 @@
 
     function showBrowseResults() {
       browseCard.style.display = "block";
+      resultsDivider.style.display = "block";
 
       const tbody = document.getElementById("browse-tbody");
       const totalPages = Math.ceil(lastFiltered.length / PAGE_SIZE);
@@ -646,6 +659,7 @@
       document.getElementById("contrib-results").style.display = "none";
       document.getElementById("frontmatter-card").style.display = "none";
       browseCard.style.display = "none";
+      resultsDivider.style.display = "none";
     }
 
     function doSearch() {

@@ -6,28 +6,35 @@
   <title>Encyclop&aelig;dia Britannica, 11th Edition</title>
   <style>
     :root {
-      --bg: #f7f7f5;
-      --panel: #ffffff;
-      --text: #1f2328;
-      --muted: #4b5563;
-      --border: #d0d7de;
-      --link: #0969da;
+      --bg: #f5f1eb;
+      --panel: #fdfcf9;
+      --text: #2c2416;
+      --muted: #6b5e4f;
+      --border: #d4cab8;
+      --link: #7b3f00;
     }
 
     * { box-sizing: border-box; }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
 
     body {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
       background: var(--bg);
       color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     nav {
-      background: var(--panel);
-      border-bottom: 1px solid var(--border);
+      width: 100%;
+      background: transparent;
       padding: 14px 24px;
-      font-family: system-ui, -apple-system, sans-serif;
       font-size: 0.95rem;
       display: flex;
       justify-content: center;
@@ -39,24 +46,63 @@
       text-decoration: none;
     }
 
-    nav a:hover { text-decoration: underline; }
-
-    html, body {
-      height: 100%;
-      overflow: hidden;
+    nav a:hover {
+      text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08);
+      border-radius: 2px;
     }
 
     .hero {
       display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px 24px 20px;
+      max-width: 720px;
+      flex: 1;
       justify-content: center;
-      padding: 20px 24px;
-      height: calc(100vh - 50px);
+    }
+
+    .hero-title {
+      font-style: italic;
+      font-size: 1.5rem;
+      color: #5c4a32;
+      letter-spacing: 0.02em;
+      margin-bottom: 4px;
+      text-align: center;
+    }
+
+    .hero-subtitle {
+      font-variant: small-caps;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .hero-divider {
+      color: #8b7355;
+      font-size: 1.4rem;
+      letter-spacing: 0.3em;
+      margin-bottom: 10px;
+      user-select: none;
     }
 
     .hero img {
-      max-height: 100%;
-      max-width: 95vw;
+      max-height: 75vh;
+      max-width: 100%;
       object-fit: contain;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    }
+
+    .hero-caption {
+      font-size: 0.82rem;
+      font-style: italic;
+      color: var(--muted);
+      margin-top: 8px;
+      text-align: center;
     }
   </style>
 </head>
@@ -69,7 +115,20 @@
   </nav>
 
   <div class="hero">
+    <div class="hero-title">Encyclop&aelig;dia Britannica</div>
+    <div class="hero-subtitle">Eleventh Edition &middot; 1910&ndash;1911</div>
+    <div class="hero-divider">&#x223C;&#x25C6;&#x223C;</div>
     <img src="title_page.jpg" alt="Title page of the Encyclop&aelig;dia Britannica, 11th Edition, Volume I (1910)" />
+    <div class="hero-caption" id="caption">Fully searchable, cross-referenced, and annotated</div>
   </div>
+  <script>
+    const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+    const base = IS_LOCAL ? "/data/derived/articles" : "/data";
+    fetch(`${base}/index.json`).then(r => r.json()).then(data => {
+      const count = data.filter(a => (a.article_type || "article") === "article").length;
+      document.getElementById("caption").textContent =
+        `${count.toLocaleString()} articles across 28 volumes \u2014 fully searchable, cross-referenced, and annotated`;
+    });
+  </script>
 </body>
 </html>

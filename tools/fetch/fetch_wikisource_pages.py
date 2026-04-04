@@ -592,10 +592,12 @@ def _convert_table(match: re.Match) -> str:
                  and not re.match(r"^(?:colspan|rowspan|width|style|align|class|cellpadding|nowrap|valign|border|bgcolor|height)[\s=\|]", c.strip())
                  and c.strip() not in ("}",)]
         if cells:
-            # Expand <br>-stacked cells into multiple rows.
-            # If any cell contains <br>, split all cells on <br>, zip them
-            # row-by-row, and emit one output row per sub-row.
-            if any(re.search(r"<br\s*/?>", c, re.IGNORECASE) for c in cells):
+            # Handle <br> in cells.
+            # If multiple cells have <br>, it's multi-row data — expand into
+            # separate rows.  If only one cell has <br>, it's a line break
+            # within that cell — collapse to a space.
+            br_cells = [i for i, c in enumerate(cells) if re.search(r"<br\s*/?>", c, re.IGNORECASE)]
+            if len(br_cells) >= 2:
                 split_cells = [re.split(r"<br\s*/?>", c, flags=re.IGNORECASE) for c in cells]
                 max_sub = max(len(sc) for sc in split_cells)
                 for sc in split_cells:
@@ -605,6 +607,9 @@ def _convert_table(match: re.Match) -> str:
                     sub_row = [sc[sub_i].strip() for sc in split_cells]
                     if any(sub_row):
                         text_rows.append(" | ".join(sub_row))
+            elif br_cells:
+                cells = [re.sub(r"<br\s*/?>", " ", c, flags=re.IGNORECASE).strip() for c in cells]
+                text_rows.append(" | ".join(cells))
             else:
                 text_rows.append(" | ".join(cells))
 
@@ -765,6 +770,14 @@ def _eb1911_link_to_marker(m: re.Match) -> str:
         display = target = positional[0]
     else:
         return ""
+    # Subpage targets (e.g. Japan/01 Geography, Rome/History) are
+    # Wikisource paths, not article titles.  If the display text
+    # looks like a real article name, link to that instead.
+    # If it's a section label (e.g. "I. Geography"), emit plain text.
+    if "/" in target:
+        if re.match(r"^[IVXLC]+\.", display):
+            return display  # section label, not an article
+        return f"{_LNK}{display}|{display}{_LNK}"
     return f"{_LNK}{target}|{display}{_LNK}"
 
 
@@ -793,6 +806,9 @@ def _stage_14_convert_wikilinks(text: str) -> str:
 
 
 def _stage_15_convert_wiki_tables(text: str) -> str:
+    # Unwrap {{nowrap|...}} before table conversion so the inner |
+    # doesn't get mistaken for a cell separator
+    text = re.sub(r"\{\{nowrap\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\|.*?\|\}", _convert_table, text, flags=re.DOTALL)
     return text
 

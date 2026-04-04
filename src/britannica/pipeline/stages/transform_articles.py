@@ -32,6 +32,7 @@ from britannica.pipeline.stages.clean_pages import (
     _clean_leaked_table_markup,
     _fix_unclosed_footnotes,
     _fix_unclosed_tables,
+    _replace_score_tags,
 )
 
 # Fetch stages are loaded lazily — tools/fetch/ is not on sys.path at import
@@ -50,6 +51,78 @@ def _get_fetch_stages():
         from fetch_wikisource_pages import STAGES
         _FETCH_STAGES = STAGES
     return _FETCH_STAGES
+
+
+def _preprocess_text(text: str) -> str:
+    """Run preprocessing stages on raw wikitext.
+
+    Safe stages that don't destroy element delimiters.
+    """
+    stages = _get_fetch_stages()
+    # 1: line endings, 4: HTML comments, 6: poem wrappers, 7: fine print
+    # 19: strip presentation templates ({{fs}}, {{ts}})
+    # 24: decode HTML entities, 25: normalize whitespace
+    for i in [0, 3, 5, 6, 18, 23, 24]:
+        text = stages[i](text)
+    return text
+
+
+def _transform_body_text(text: str) -> str:
+    """Transform plain wikitext body text to internal marker format.
+
+    Handles bold, italic, links, small caps, hieroglyphs, shoulder
+    headings, etc.  Also strips remaining templates and HTML from
+    body text (safe here because elements have been extracted).
+    """
+    stages = _get_fetch_stages()
+    # Text markup: 5, 13, 14, 16, 17, 18, 21, 22
+    # Cleanup (safe on body text): 20 (strip templates), 23 (strip HTML)
+    # Finalize: 26 (control chars → readable markers)
+    for i in [4, 12, 13, 15, 16, 17, 19, 20, 21, 22, 25]:
+        text = stages[i](text)
+    return text
+
+
+def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
+    """New architecture: extract-process-reassemble.
+
+    1. Preprocess (normalize, strip comments, unwrap wrappers)
+    2. Extract embedded elements (tables, images, footnotes, etc.)
+    3. Transform body text (bold, italic, links, etc.)
+    4. Process each element recursively (same pipeline)
+    5. Reassemble
+    6. Postprocess (strip remaining templates, HTML, entities)
+    7. Clean (clean_pages transformations)
+    """
+    from britannica.pipeline.stages.elements import process_elements
+
+    # Strip section tags — boundaries already determined
+    text = re.sub(r'<section\s+(?:begin|end)="[^"]*"\s*/?>', "",
+                  raw_wikitext, flags=re.IGNORECASE)
+
+    # Replace <score> tags before anything else (static lookup)
+    text = _replace_score_tags(text, volume, page_number)
+
+    # Preprocess: safe cleanup that doesn't destroy element delimiters
+    text = _preprocess_text(text)
+
+    # Wrap orphaned table rows so the element extractor can find them
+    text = _wrap_orphaned_table_rows(text)
+
+    # Extract, process, reassemble all embedded elements.
+    # _transform_body_text handles text markup AND strips remaining
+    # templates/HTML (safe because elements have been extracted).
+    context = {"volume": volume, "page_number": page_number}
+    text = process_elements(text, _transform_body_text, context)
+
+    # Light cleanup — heavy cleaning (headers, plate layout, table markup)
+    # is not needed here because elements are already processed.
+    text = normalize_unicode(text)
+    text, _ = fix_hyphenation(text)
+    text = normalize_whitespace(text)
+    text = _STRAY_CONTROL.sub("", text)
+
+    return text
 
 
 def _run_fetch_stages(text: str) -> str:
@@ -125,6 +198,35 @@ def _wrap_orphaned_table_rows(text: str) -> str:
     return "\n".join(parts)
 
 
+def _clean_img_captions(text: str) -> str:
+    """Clean image captions to plain text.
+
+    After all marker conversions, image captions may contain formatting
+    markers («I», «SC», etc.) and residual HTML.  Strip these so captions
+    are clean text — the viewer should not have to process them.
+    """
+    def _clean(m):
+        filename = m.group(1)
+        caption = m.group(2) or ""
+        if caption:
+            # Strip formatting markers, keeping the text inside
+            caption = re.sub(r"\u00abB\u00bb(.*?)\u00ab/B\u00bb", r"\1", caption)
+            caption = re.sub(r"\u00abI\u00bb(.*?)\u00ab/I\u00bb", r"\1", caption)
+            caption = re.sub(r"\u00abSC\u00bb(.*?)\u00ab/SC\u00bb", r"\1", caption)
+            caption = re.sub(r"\u00ab/?[A-Z]+\u00bb", "", caption)
+            # Strip HTML tags (<br />, etc.)
+            caption = re.sub(r"<[^>]+>", " ", caption)
+            # Decode common HTML entities
+            caption = caption.replace("\u2001", "").replace("&nbsp;", " ")
+            caption = caption.replace("&#39;", "'").replace("&amp;", "&")
+            caption = caption.replace("&#8193;", "")
+            # Collapse whitespace
+            caption = re.sub(r"\s+", " ", caption).strip()
+            return "{{IMG:" + filename + "|" + caption + "}}"
+        return "{{IMG:" + filename + "}}"
+    return re.sub(r"\{\{IMG:([^|}]+)(?:\|([^}]*))?\}\}", _clean, text)
+
+
 def _transform_text(raw_wikitext: str) -> str:
     """Convert raw wikitext to the final internal marker format."""
     # Strip any remaining section tags (begin and end) — boundaries are done
@@ -132,6 +234,7 @@ def _transform_text(raw_wikitext: str) -> str:
     text = _wrap_orphaned_table_rows(text)
     text = _run_fetch_stages(text)
     text = _run_clean_pages(text)
+    text = _clean_img_captions(text)
     return text
 
 
@@ -154,7 +257,7 @@ def transform_articles(volume: int) -> int:
         ]
 
         for aid in article_ids:
-            article = session.query(Article).get(aid)
+            article = session.get(Article, aid)
             segments = (
                 session.query(ArticleSegment)
                 .join(SourcePage, ArticleSegment.source_page_id == SourcePage.id)
@@ -166,7 +269,9 @@ def transform_articles(volume: int) -> int:
 
             parts: list[str] = []
             for seg, page_number in segments:
-                text = _transform_text(seg.segment_text) if seg.segment_text else ""
+                raw = seg.segment_text or ""
+                raw = _replace_score_tags(raw, volume, page_number)
+                text = _transform_text(raw) if raw else ""
                 text = text.strip()
                 if not text:
                     continue

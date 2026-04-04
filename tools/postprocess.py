@@ -36,6 +36,8 @@ def clean_body(body: str) -> str:
         r"(?:img float|figure|FI)\s*\|[^\n]*(?:\|file\s*=[^\n]+)?",
         "", body, flags=re.IGNORECASE,
     )
+    # Leaked image alignment prefixes (right|, left|, center|) at line starts
+    body = re.sub(r"^(?:right|left|center)\|", "", body, flags=re.MULTILINE | re.IGNORECASE)
 
     # Table attributes leaked inside {{TABLE:...}TABLE} markers
     body = re.sub(
@@ -86,6 +88,24 @@ def clean_body(body: str) -> str:
     for i in range(0, len(parts), 2):
         parts[i] = parts[i].replace("}}", "")
     body = "".join(parts)
+
+    # Normalize pipe separators inside TABLE blocks: ensure space around |
+    def _normalize_table_pipes(m):
+        content = m.group(1)
+        # Ensure space before and after each | separator
+        content = re.sub(r"(?<! )\|", " |", content)
+        content = re.sub(r"\|(?! )", "| ", content)
+        # Clean up any triple+ spaces
+        content = re.sub(r"  +", " ", content)
+        return "{{TABLE:" + content + "}TABLE}"
+    body = re.sub(r"\{\{TABLE:(.*?)\}TABLE\}", _normalize_table_pipes, body, flags=re.DOTALL)
+
+    # Collapse blank lines inside TABLE blocks (rows separated by blanks are still one table)
+    def _collapse_table_blanks(m):
+        content = m.group(1)
+        content = re.sub(r"\n\s*\n", "\n", content)
+        return "{{TABLE:" + content + "}TABLE}"
+    body = re.sub(r"\{\{TABLE:(.*?)\}TABLE\}", _collapse_table_blanks, body, flags=re.DOTALL)
 
     # Wrap orphaned pipe-delimited data runs in TABLE markers.
     # These are tabular lines (3+ pipes) not already inside a TABLE block.

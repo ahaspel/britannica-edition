@@ -45,6 +45,15 @@
       margin-bottom: 20px;
     }
 
+    .header-divider {
+      text-align: center;
+      color: #8b7355;
+      font-size: 1.6rem;
+      margin: -6px 0 14px;
+      letter-spacing: 0.3em;
+      user-select: none;
+    }
+
     h1, h2, h3 {
       margin-top: 0;
       line-height: 1.2;
@@ -82,6 +91,12 @@
       border-radius: 4px;
       font: inherit;
       background: var(--panel);
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #8b7355;
+      box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.12);
     }
 
     button {
@@ -142,6 +157,8 @@
 
     a:hover {
       text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08);
+      border-radius: 2px;
     }
 
     .pill {
@@ -212,9 +229,9 @@
     .article-image {
       margin: 0;
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 2px;
       overflow: hidden;
-      background: #fafbfc;
+      background: var(--panel);
     }
 
     .article-image img {
@@ -225,14 +242,17 @@
 
     .article-image figcaption {
       padding: 8px 10px;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      font-size: 0.85rem;
-      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 0.82rem;
+      font-style: italic;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
     }
 
     .article-image figcaption.filename {
       color: var(--muted);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
+      font-style: normal;
       word-break: break-all;
     }
 
@@ -240,21 +260,33 @@
       width: 100%;
       border-collapse: collapse;
       margin: 1em 0;
-      font-size: 0.95rem;
+      font-size: 0.93rem;
+      border: 1px solid #c4b49a;
     }
 
     .data-table td {
-      padding: 4px 10px;
-      border: 1px solid var(--border);
+      padding: 5px 10px;
+      border: 1px solid #ddd4c4;
       vertical-align: top;
     }
 
+    .data-table tr:nth-child(even) td {
+      background: #f7f3ec;
+    }
+
+    .data-table tr:nth-child(odd) td {
+      background: var(--panel);
+    }
+
     .data-table th {
-      padding: 4px 10px;
-      border: 1px solid var(--border);
-      background: var(--code-bg);
+      padding: 6px 10px;
+      border: 1px solid #c4b49a;
+      background: #ebe4d6;
       font-weight: 600;
       text-align: left;
+      font-variant: small-caps;
+      letter-spacing: 0.03em;
+      color: #5c4a32;
     }
 
     .small-caps {
@@ -275,9 +307,11 @@
       margin-left: -6.5em;
       width: 5em;
       text-align: right;
-      font-size: 0.7rem;
-      color: var(--muted);
-      opacity: 0.6;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 0.65rem;
+      font-style: italic;
+      color: #8b7355;
+      padding-right: 0.6em;
       font-variant-numeric: tabular-nums;
       user-select: none;
     }
@@ -415,45 +449,91 @@
       border-radius: 2px;
     }
 
+    .footnote-ref {
+      position: relative;
+      display: inline;
+    }
+
     .footnote-ref a {
-      color: var(--link);
+      color: #7b3f00;
       text-decoration: none;
-      font-size: 0.8em;
+      font-size: 1em;
+      font-weight: 700;
       padding: 0 2px;
+      cursor: pointer;
+    }
+
+    .fn-popup {
+      display: none;
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 360px;
+      max-width: 80vw;
+      max-height: 200px;
+      overflow-y: auto;
+      background: var(--panel);
+      border: 1px solid #8b7355;
+      border-radius: 4px;
+      padding: 10px 12px;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: var(--text);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      z-index: 200;
+      font-style: normal;
+      font-variant: normal;
+      text-indent: 0;
+    }
+
+    .fn-popup.visible {
+      display: block;
+    }
+
+    .fn-popup-num {
+      font-weight: 600;
+      color: #8b7355;
+      margin-right: 4px;
     }
 
     .footnotes {
-      border-top: 1px solid var(--border);
-      margin-top: 24px;
+      border-top: 1px solid #8b7355;
+      margin-top: 32px;
       padding-top: 16px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.5;
     }
 
     .footnotes h3 {
-      font-size: 1rem;
-      color: var(--muted);
-      margin-bottom: 8px;
+      font-size: 0.85rem;
+      font-variant: small-caps;
+      letter-spacing: 0.05em;
+      color: #8b7355;
+      margin-bottom: 10px;
     }
 
     .footnotes ol {
-      font-size: 0.9rem;
       padding-left: 24px;
-      color: var(--text);
       list-style: none;
     }
 
     .footnotes li {
-      margin-bottom: 8px;
-      line-height: 1.4;
+      margin-bottom: 6px;
+      text-indent: -1.5em;
+      padding-left: 1.5em;
     }
 
     .footnotes li a {
-      color: var(--link);
+      color: #8b7355;
       text-decoration: none;
-      margin-right: 4px;
+      font-weight: 600;
+      margin-right: 2px;
     }
 
     .inline-image {
-      margin: 1em auto;
+      margin: 1.2em auto;
       text-align: center;
       max-width: 600px;
     }
@@ -462,15 +542,16 @@
       max-width: 100%;
       height: auto;
       border: 1px solid var(--border);
-      border-radius: 4px;
+      border-radius: 2px;
     }
 
     .inline-image figcaption {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      font-size: 0.85rem;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 0.82rem;
       color: var(--muted);
-      margin-top: 6px;
+      margin-top: 8px;
       font-style: italic;
+      line-height: 1.4;
     }
 
     .contributors {
@@ -504,12 +585,27 @@
         <span id="matchCount" style="color: var(--muted); font-size: 0.85rem;"></span>
       </div>
     </div>
-
+    <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
     <div id="app"></div>
   </div>
 
   <script>
     const app = document.getElementById("app");
+
+    function toggleFnPopup(event, num) {
+      event.stopPropagation();
+      const popup = document.getElementById('fnpop-' + num);
+      if (!popup) return;
+      const wasVisible = popup.classList.contains('visible');
+      // Close all open popups
+      document.querySelectorAll('.fn-popup.visible').forEach(p => p.classList.remove('visible'));
+      if (!wasVisible) popup.classList.add('visible');
+    }
+
+    // Close popups when clicking elsewhere
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.fn-popup.visible').forEach(p => p.classList.remove('visible'));
+    });
 
     function escapeHtml(value) {
       return String(value ?? "")
@@ -581,8 +677,31 @@
     let sectionCounter = 0;
     let collectedSections = [];
 
+    function formatFootnoteText(text) {
+      // Input may already be HTML-escaped (from formatCell or renderParagraph),
+      // so don't escape again.
+      let h = text;
+      h = h.replace(/\u00abLN:([^|]*)\|([^|«]*?)(?:\|([^«]*))?\u00ab\/LN\u00bb/g, (match, g1, g2, g3) => {
+        const hasFile = g3 !== undefined;
+        const target = hasFile ? g2 : g1;
+        const display = hasFile ? g3 : g2;
+        const filename = hasFile ? g1 : null;
+        const href = filename ? articleUrl(filename) : `/search.html?q=${encodeURIComponent(target)}`;
+        return `<a href="${href}" class="article-link" title="${target}">${display}</a>`;
+      });
+      h = h.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
+      h = h.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
+      h = h.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
+      return h;
+    }
+
     function formatCell(text) {
       let h = escapeHtml(text);
+      h = h.replace(/\u00abFN:(.*?)\u00ab\/FN\u00bb/gs, (match, content) => {
+        footnoteCounter++;
+        collectedFootnotes.push({ num: footnoteCounter, text: content });
+        return `<sup class="footnote-ref" id="fnref-${footnoteCounter}"><a onclick="toggleFnPopup(event,${footnoteCounter});return false;" href="#">${footnoteCounter}</a><span class="fn-popup" id="fnpop-${footnoteCounter}"><span class="fn-popup-num">${footnoteCounter}.</span>${formatFootnoteText(content)}</span></sup>`;
+      });
       h = h.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
       h = h.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
       h = h.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
@@ -609,6 +728,17 @@
           <a href="${url}" target="_blank"><img src="${url}" alt="${escapeHtml(caption || filename)}" loading="lazy" /></a>
           ${caption ? `<figcaption>${escapeHtml(caption)}</figcaption>` : ""}
         </figure>`;
+      }
+      // Render standalone small-caps paragraphs as section headings
+      // (e.g. «SC»II.—The People«/SC» in multi-section articles like JAPAN)
+      const scSectionMatch = p.match(/^\u00abSC\u00bb([^\u00ab]+)\u00ab\/SC\u00bb$/);
+      if (scSectionMatch) {
+        sectionCounter++;
+        const text = scSectionMatch[1].trim();
+        const sectionId = `section-${sectionCounter}`;
+        const slug = text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+        collectedSections.push({ id: sectionId, title: text, slug });
+        return `<h3 class="section-heading" id="${sectionId}" data-slug="${slug}">${escapeHtml(text)}</h3>`;
       }
       // Render preformatted blocks (structural chemical formulas)
       const preMatch = p.match(/^\u00abPRE:([\s\S]*)\u00ab\/PRE\u00bb$/);
@@ -639,38 +769,21 @@
       }
 
       // Detect section headings: "Section Name.—rest of paragraph"
-      const sectionMatch = p.match(/^([A-Z][A-Za-z\s,\-&]+)\.\u2014(.*)$/s);
+      // Strip «SC»/«/SC» markers so small-caps headings like «SC»Bibliography.«/SC»— are detected
+      const pStripped = p.replace(/\u00abSC\u00bb/g, "").replace(/\u00ab\/SC\u00bb/g, "");
+      const sectionMatch = pStripped.match(/^([A-Z][A-Za-z\s,\-&]+)\.\u2014(.*)$/s);
       if (sectionMatch && sectionMatch[1].length < 60) {
         sectionCounter++;
         const sectionTitle = sectionMatch[1].trim();
-        const sectionBody = sectionMatch[2].trim();
         const sectionId = `section-${sectionCounter}`;
         collectedSections.push({ id: sectionId, title: sectionTitle });
 
-        // Render the rest of the paragraph normally
-        let bodyHtml = escapeHtml(sectionBody);
-        bodyHtml = bodyHtml.replace(/\x01PAGE:(\d+)\x01/g, (match, page) => {
-          return `<span class="page-marker" title="Volume ${currentVolume}, page ${page}">${currentVolume}:${page}</span>`;
-        });
-        bodyHtml = bodyHtml.replace(/\u00abFN:(.*?)\u00ab\/FN\u00bb/gs, (match, content) => {
-          footnoteCounter++;
-          collectedFootnotes.push({ num: footnoteCounter, text: content });
-          return `<sup class="footnote-ref"><a onclick="document.getElementById('fn-${footnoteCounter}').scrollIntoView({behavior:'smooth',block:'center'});return false;" id="fnref-${footnoteCounter}" href="#">${footnoteCounter}</a></sup>`;
-        });
-        bodyHtml = bodyHtml.replace(/\u00abLN:([^|]*)\|([^|«]*?)(?:\|([^«]*))?\u00ab\/LN\u00bb/g, (match, g1, g2, g3) => {
-          // 3-part: «LN:filename|target|display«/LN»  2-part: «LN:target|display«/LN»
-          const hasFile = g3 !== undefined;
-          const target = hasFile ? g2 : g1;
-          const display = hasFile ? g3 : g2;
-          const filename = hasFile ? g1 : null;
-          const key = target.toLowerCase();
-          if (linkedTargets.has(key)) return display;
-          linkedTargets.add(key);
-          const href = filename ? articleUrl(filename) : `/search.html?q=${encodeURIComponent(target)}`;
-          return `<a href="${href}" class="article-link" title="${target}">${display}</a>`;
-        });
+        // Extract the body from the ORIGINAL paragraph (preserving all markers)
+        const emDashIdx = p.indexOf("\u2014");
+        const sectionBody = emDashIdx >= 0 ? p.substring(emDashIdx + 1).trim() : "";
+        const bodyHtml = renderParagraph(sectionBody);
 
-        return `<h3 class="section-heading" id="${sectionId}">${escapeHtml(sectionTitle)}</h3><p>${bodyHtml}</p>`;
+        return `<h3 class="section-heading" id="${sectionId}">${escapeHtml(sectionTitle)}</h3>${bodyHtml}`;
       }
 
       // Replace inline table markers (single-row tables embedded in text)
@@ -697,12 +810,12 @@
       html = html.replace(/\u00abFN:(.*?)\u00ab\/FN\u00bb/gs, (match, content) => {
         footnoteCounter++;
         collectedFootnotes.push({ num: footnoteCounter, text: content });
-        return `<sup class="footnote-ref"><a onclick="document.getElementById('fn-${footnoteCounter}').scrollIntoView({behavior:'smooth',block:'center'});return false;" id="fnref-${footnoteCounter}" href="#">${footnoteCounter}</a></sup>`;
+        return `<sup class="footnote-ref" id="fnref-${footnoteCounter}"><a onclick="toggleFnPopup(event,${footnoteCounter});return false;" href="#">${footnoteCounter}</a><span class="fn-popup" id="fnpop-${footnoteCounter}"><span class="fn-popup-num">${footnoteCounter}.</span>${formatFootnoteText(content)}</span></sup>`;
       });
-      // Render inline images
+      // Render inline images — captions are pre-cleaned by the pipeline
       html = html.replace(/\{\{IMG:([^|}]+)(?:\|([^}]*))?\}\}/g, (match, filename, caption) => {
         const url = commonsUrl(filename);
-        return `<figure class="inline-image"><a href="${url}" target="_blank"><img src="${url}" alt="${caption || filename}" loading="lazy" /></a>${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure>`;
+        return `<figure class="inline-image"><a href="${url}" target="_blank"><img src="${url}" alt="${escapeHtml(caption || filename)}" loading="lazy" /></a>${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure>`;
       });
       // Render inline preformatted blocks (structural formulas)
       html = html.replace(/\u00abPRE:(.*?)\u00ab\/PRE\u00bb/gs, '<pre class="structural-formula">$1</pre>');
@@ -819,7 +932,10 @@
           </div>
           ${article.parent_article ? `<div style="margin-bottom: 8px; font-size: 0.95rem;">Plate for <a href="${articleUrl(article.parent_article.filename)}">${escapeHtml(article.parent_article.title)}</a></div>` : ""}
           ${contributors.length ? `<div class="contributors">By ${contributors.map(c => `<a href="/contributors.html?q=${encodeURIComponent(c.full_name)}" style="color: var(--muted);">${escapeHtml(c.full_name)}</a> <span style="color: var(--muted); font-size: 0.85em;">(${escapeHtml(c.initials)})</span>`).join(", ")}</div>` : ""}
-          ${plates.length ? `<div class="contributors">Plates: ${plates.map(p => `<a href="${articleUrl(p.filename)}">${escapeHtml(p.title)}</a>`).join(", ")}</div>` : ""}
+          ${(() => {
+            const otherPlates = plates.filter(p => p.title !== article.title);
+            return otherPlates.length ? `<div class="contributors">Plates: ${otherPlates.map(p => `<a href="${articleUrl(p.filename)}">${escapeHtml(p.title)}</a>`).join(", ")}</div>` : "";
+          })()}
           ${article.source_quality && article.source_quality.lowest_level <= 1
             ? `<div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 8px 12px; margin: 8px 0; font-size: 0.9rem;">
                  <strong>Source quality notice:</strong> ${escapeHtml(article.source_quality.note || "Some pages may contain unverified text.")}
@@ -869,7 +985,7 @@
               : "";
             return tocHtml + `<div class="body-text">${bodyHtml}</div>`;
           })()}
-          ${collectedFootnotes.length ? `<div class="footnotes"><h3>Notes</h3><ol>${collectedFootnotes.map(fn => `<li id="fn-${fn.num}" value="${fn.num}"><a onclick="document.getElementById('fnref-${fn.num}').scrollIntoView({behavior:'smooth',block:'center'});return false;" href="#">${fn.num}.</a> ${fn.text}</li>`).join("")}</ol></div>` : ""}
+          ${collectedFootnotes.length ? `<div class="footnotes"><h3>Notes</h3><ol>${collectedFootnotes.map(fn => `<li id="fn-${fn.num}" value="${fn.num}"><a onclick="var el=document.getElementById('fnref-${fn.num}');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});return false;" href="#">${fn.num}.</a> ${formatFootnoteText(fn.text)}</li>`).join("")}</ol></div>` : ""}
         </div>
 
         ${xrefHtml ? `<div class="card">
