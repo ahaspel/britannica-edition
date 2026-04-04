@@ -56,15 +56,15 @@ Resolved xrefs are embedded as direct links at export time: the export stage rew
 ## Pipeline Stages
 
 1. **Fetch** — Wikisource pages (3s delay, 350-page batches, 15-min cooldown); self-closing refs stripped before content refs; interwiki links (wikt:, w:, Portal:, etc.) reduced to display text
-2. **Import** — cleaned preview into SourcePage
-3. **Clean** — NFC unicode, headers, hyphenation, reflow, whitespace, plate layout, leaked markup cleanup, unclosed marker repair
-4. **Detect boundaries** — section-marker based (no heuristic fallback); prefers section ID when heading regex truncates title (e.g. parenthetical alternate names)
+2. **Import** — raw wikitext into SourcePage (wikitext field)
+3. **Detect boundaries** — section-marker based on raw wikitext; skips leading tables/images/comments when detecting bold headings; prefers section ID when heading regex truncates title
+4. **Transform** — per-segment conversion (26 fetch stages + clean_pages), then join into article body with `\x01PAGE:N\x01` markers at page boundaries; one article at a time with per-article commits
 5. **Classify** — article, front_matter, plate (with grid parser for multi-section plates)
-6. **Extract xrefs** — q.v., See, See also, inline link markers, `{{EB1911 article link}}`; targets >200 chars rejected
+6. **Extract xrefs** — q.v., See, See also, inline link markers, `{{EB1911 article link}}`; targets >200 chars rejected; internal markers stripped from See/See also targets
 7. **Resolve xrefs** — unified lookup (canonical + aliases + fuzzy)
-8. **Extract images** — from raw wikitext, Wikimedia Commons URLs
-9. **Extract contributors** — footer initials + front matter biographical tables
-10. **Export** — article JSON (with page numbers in segments), index.json, contributors.json (with bio_article_filename), front_matter.json; inline link markers resolved to direct article URLs
+8. **Extract images** — from raw wikitext, Wikimedia Commons URLs; page→article mapping from article page ranges
+9. **Extract contributors** — footer initials + front matter biographical tables; page→article mapping from article page ranges
+10. **Export** — article JSON (page markers embedded in body), index.json, contributors.json (with bio_article_filename), front_matter.json; inline link markers resolved to direct article URLs
 11. **Post-process** — safety-net cleanup on exported JSON (leaked attrs, pipe tables, width directives)
 12. **Index search** — Meilisearch full-text
 
@@ -96,16 +96,16 @@ Resolved xrefs are embedded as direct links at export time: the export stage rew
 - **contributors.html** — sorted by surname, credentials, descriptions, full article lists
 - **preface.html** — Hugh Chisholm's 1910 editorial preface with drop caps and shoulder headings
 
-## Current State (2026-04-03)
+## Current State (2026-04-04)
 
 - **Site live at britannica11.org**
 - **28 volumes processed** (vol 29 is end matter, excluded)
-- **35,075 articles** in database
-- **20,977 cross-references resolved** (84%)
-- **3,925 unresolved xrefs** (mostly portal links and literary work references — legitimately unresolvable)
+- **35,933 articles** in database
+- **22,367 cross-references resolved** (91%)
+- **2,167 unresolved xrefs** (mostly portal links and literary work references — legitimately unresolvable)
 - **~1,500 unique contributors** with biographical data
 - **119 tests passing** — section boundaries, formatting, integration
-- **132 file-level issues** across 35K+ articles (down from 607)
+- **93 file-level issues** across 36K+ articles (down from 132)
 - **All data fetched** — raw wikitext is static, never changes
 
 ## Production Deployment

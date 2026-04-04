@@ -370,10 +370,11 @@ def _wikilink_to_marker(m: re.Match) -> str:
     target = parts[0].strip()
     display = parts[1].strip() if len(parts) > 1 else target
     # Interwiki/interlanguage links, Author:, Portal:, Page:, File: — keep display text only
+    # Strip wiki bold/italic markup so exposed text doesn't create false article boundaries
     if re.match(r"(?i)^(Author|wikt|wiktionary|s|w|d|wikipedia|Portal|Page|File):", target):
-        return display
+        return display.replace("'''", "").replace("''", "")
     if re.match(r"^:", target):
-        return display
+        return display.replace("'''", "").replace("''", "")
     return f"{_LNK}{target}|{display}{_LNK}"
 
 
@@ -622,8 +623,8 @@ def _convert_table(match: re.Match) -> str:
 
 def _shoulder_to_heading(m: re.Match) -> str:
     content = m.group(1)
-    # Strip formatting params (width=, align=)
-    content = re.sub(r"(?:width|align)=[^|]*\|?", "", content)
+    # Strip formatting params (width=, align=, section=)
+    content = re.sub(r"(?:width|align|section)=[^|]*\|?", "", content)
     # Unwrap nested font-size templates: {{Fs|108%|text}} -> text
     content = re.sub(r"\{\{Fs\|[^|]*\|([^{}]*)\}\}", r"\1", content, flags=re.IGNORECASE)
     content = re.sub(r"\{\{[^{}]*\}\}", "", content)

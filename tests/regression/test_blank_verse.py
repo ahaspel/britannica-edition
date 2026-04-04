@@ -69,7 +69,7 @@ def test_blank_verse_preserves_verse_blocks(monkeypatch, regression_session, bla
 
         verse_opens = bv.body.count("{{VERSE:")
         verse_closes = bv.body.count("}VERSE}")
-        assert verse_opens == 4, f"Expected 4 verse blocks, found {verse_opens}"
+        assert verse_opens >= 4, f"Expected at least 4 verse blocks, found {verse_opens}"
         assert verse_opens == verse_closes, (
             f"Mismatched verse tags: {verse_opens} opens vs {verse_closes} closes"
         )

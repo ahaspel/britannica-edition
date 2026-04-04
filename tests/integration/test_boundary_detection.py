@@ -1,11 +1,6 @@
 from britannica.db.models import Article, ArticleSegment, SourcePage
 from britannica.pipeline.stages import detect_boundaries as detect_boundaries_stage
 
-SEC = "\u00abSEC:"
-END = "\u00bb"
-B = "\u00abB\u00bb"
-EB = "\u00ab/B\u00bb"
-
 
 def test_detect_boundaries_with_section_markers(
     monkeypatch,
@@ -22,10 +17,10 @@ def test_detect_boundaries_with_section_markers(
                     volume=1,
                     page_number=1,
                     raw_text="unused",
-                    cleaned_text=(
-                        f"{SEC}Abacus{END}{B}ABACUS{EB}\n"
+                    wikitext=(
+                        '<section begin="Abacus" />\'\'\'ABACUS,\'\'\'\n'
                         "The encyclopaedia entry begins here.\n\n"
-                        f"{SEC}Abalone{END}{B}ABALONE{EB}\n"
+                        '<section begin="Abalone" />\'\'\'ABALONE,\'\'\'\n'
                         "A type of shellfish."
                     ),
                 ),
@@ -34,14 +29,14 @@ def test_detect_boundaries_with_section_markers(
                     volume=1,
                     page_number=2,
                     raw_text="unused",
-                    cleaned_text="Continuation of the abalone article on the next page.",
+                    wikitext="Continuation of the abalone article on the next page.",
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
                     page_number=3,
                     raw_text="unused",
-                    cleaned_text=f"{SEC}Abandon{END}{B}ABANDON{EB}\nTo relinquish, desert, or give up.",
+                    wikitext='<section begin="Abandon" />\'\'\'ABANDON,\'\'\' To relinquish, desert, or give up.',
                 ),
             ]
         )
@@ -49,7 +44,7 @@ def test_detect_boundaries_with_section_markers(
     finally:
         session.close()
 
-    created = detect_boundaries_stage.detect_boundaries(1)
+    created = detect_boundaries_stage.persist_articles(detect_boundaries_stage.detect_boundaries(1))
     assert created == 3
 
     session = test_session_local()
@@ -100,21 +95,21 @@ def test_detect_boundaries_continuation_without_sections(
                     volume=1,
                     page_number=1,
                     raw_text="unused",
-                    cleaned_text=f"{SEC}Abalone{END}{B}ABALONE{EB}\nA type of shellfish.",
+                    wikitext='<section begin="Abalone" />\'\'\'ABALONE,\'\'\' A type of shellfish.',
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
                     page_number=2,
                     raw_text="unused",
-                    cleaned_text="Continuation text with no section markers.",
+                    wikitext="Continuation text with no section markers.",
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
                     page_number=3,
                     raw_text="unused",
-                    cleaned_text=f"{SEC}Abandon{END}{B}ABANDON{EB}\nTo relinquish.",
+                    wikitext='<section begin="Abandon" />\'\'\'ABANDON,\'\'\' To relinquish.',
                 ),
             ]
         )
@@ -122,7 +117,7 @@ def test_detect_boundaries_continuation_without_sections(
     finally:
         session.close()
 
-    created = detect_boundaries_stage.detect_boundaries(1)
+    created = detect_boundaries_stage.persist_articles(detect_boundaries_stage.detect_boundaries(1))
     assert created == 2
 
     session = test_session_local()
@@ -154,21 +149,21 @@ def test_named_section_without_bold_is_continuation(
                     volume=1,
                     page_number=1,
                     raw_text="unused",
-                    cleaned_text=f"{SEC}Huss{END}{B}HUSS{EB}, John (c. 1373-1415), Bohemian reformer.",
+                    wikitext='<section begin="Huss" />\'\'\'HUSS,\'\'\' John (c. 1373-1415), Bohemian reformer.',
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
                     page_number=2,
                     raw_text="unused",
-                    cleaned_text=f"{SEC}Huss, John{END}spiritual teaching that influenced later movements.",
+                    wikitext='<section begin="Huss, John" />spiritual teaching that influenced later movements.',
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
                     page_number=3,
                     raw_text="unused",
-                    cleaned_text=f"{SEC}Hussar{END}{B}HUSSAR{EB}, a light cavalry soldier.",
+                    wikitext='<section begin="Hussar" />\'\'\'HUSSAR,\'\'\' a light cavalry soldier.',
                 ),
             ]
         )
@@ -176,7 +171,7 @@ def test_named_section_without_bold_is_continuation(
     finally:
         session.close()
 
-    created = detect_boundaries_stage.detect_boundaries(1)
+    created = detect_boundaries_stage.persist_articles(detect_boundaries_stage.detect_boundaries(1))
     assert created == 2
 
     session = test_session_local()

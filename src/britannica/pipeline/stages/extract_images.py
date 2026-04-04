@@ -4,7 +4,7 @@ import hashlib
 from pathlib import Path
 from urllib.parse import quote
 
-from britannica.db.models import Article, ArticleImage, ArticleSegment, SourcePage
+from britannica.db.models import Article, ArticleImage, SourcePage
 from britannica.db.session import SessionLocal
 
 
@@ -83,16 +83,19 @@ def extract_images_for_volume(volume: int) -> int:
         )
 
         # Build a map: source_page_id -> article_id
-        page_articles: dict[int, int] = {}
-        segments = (
-            session.query(ArticleSegment)
-            .join(Article, ArticleSegment.article_id == Article.id)
+        # For each page, assign it to the last article whose range covers it.
+        articles = (
+            session.query(Article)
             .filter(Article.volume == volume)
-            .order_by(ArticleSegment.source_page_id, ArticleSegment.sequence_in_article)
+            .order_by(Article.page_start)
             .all()
         )
-        for seg in segments:
-            page_articles[seg.source_page_id] = seg.article_id
+        page_articles: dict[int, int] = {}
+        for page in pages:
+            for art in reversed(articles):
+                if art.page_start <= page.page_number <= art.page_end:
+                    page_articles[page.id] = art.id
+                    break
 
         created = 0
 

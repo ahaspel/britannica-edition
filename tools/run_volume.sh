@@ -64,12 +64,12 @@ uv run python tools/fetch/import_wikisource_pages.py \
   --volume "$VOLUME"
 
 echo
-echo "=== Cleaning pages ==="
-uv run britannica clean-pages "$VOLUME"
-
-echo
 echo "=== Detecting boundaries ==="
 uv run britannica detect-boundaries "$VOLUME"
+
+echo
+echo "=== Transforming articles ==="
+uv run britannica transform-articles "$VOLUME"
 
 echo
 echo "=== Classifying articles ==="

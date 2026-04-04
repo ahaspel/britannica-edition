@@ -23,14 +23,14 @@ def test_unresolved_xref_report_groups_by_article(
                     volume=1,
                     page_number=1,
                     raw_text="unused",
-                    cleaned_text="«SEC:Abacus»«B»ABACUS«/B»\nA calculating device. See also CALCULATION.",
+                    wikitext='<section begin="Abacus" />\'\'\'ABACUS,\'\'\' A calculating device. See also CALCULATION.',
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
                     page_number=2,
                     raw_text="unused",
-                    cleaned_text="\u00abSEC:Abandon\u00bb\u00abB\u00bbABANDON\u00ab/B\u00bb\nTo relinquish. See ABANDONMENT.",
+                    wikitext='<section begin="Abandon" />\'\'\'ABANDON,\'\'\' To relinquish. See ABANDONMENT.',
                 ),
                 # Only CALCULATION exists, so ABANDONMENT should remain unresolved
                 SourcePage(
@@ -38,7 +38,7 @@ def test_unresolved_xref_report_groups_by_article(
                     volume=1,
                     page_number=3,
                     raw_text="unused",
-                    cleaned_text="«SEC:Calculation»«B»CALCULATION«/B»\nThe process of computing.",
+                    wikitext='<section begin="Calculation" />\'\'\'CALCULATION,\'\'\' The process of computing.',
                 ),
             ]
         )
@@ -46,7 +46,7 @@ def test_unresolved_xref_report_groups_by_article(
     finally:
         session.close()
 
-    created_articles = detect_boundaries_stage.detect_boundaries(1)
+    created_articles = detect_boundaries_stage.persist_articles(detect_boundaries_stage.detect_boundaries(1))
     assert created_articles == 3
 
     created_xrefs = extract_xrefs_stage.extract_xrefs_for_volume(1)

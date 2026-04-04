@@ -33,7 +33,7 @@ def test_extract_heading_empty():
 
 def test_extract_heading_strips_bold_markers():
     title, remainder = _extract_heading(
-        "\u00abB\u00bbABACUS\u00ab/B\u00bb, a device."
+        "'''ABACUS''', a device."
     )
     assert title == "ABACUS"
 

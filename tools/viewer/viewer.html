@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Britannica Viewer</title>
+  <title>Encyclop&aelig;dia Britannica, 11th Edition</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Egyptian+Hieroglyphs&display=swap">
@@ -467,7 +467,7 @@
   <div class="page">
     <div class="card">
       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-        <h1 style="margin: 0;">Britannica</h1>
+        <h1 style="margin: 0;">Encyclop&aelig;dia Britannica, 11th Edition</h1>
         <div style="font-size: 0.9rem;">
           <a href="/home.html" style="color: var(--link); text-decoration: none;">Home</a>
           &nbsp;&middot;&nbsp;
@@ -779,23 +779,7 @@
           </ul>`
         : "";
 
-      const segmentHtml = segments.length
-        ? `
-          <details>
-            <summary>Show segments (${segments.length})</summary>
-            <div class="segments">
-              ${segments.map(segment => `
-                <div class="segment">
-                  <div class="segment-meta">
-                    Sequence ${escapeHtml(segment.sequence_in_article)}
-                    · Source page ${escapeHtml(segment.source_page_id)}
-                  </div>
-                  <div>${escapeHtml(segment.segment_text || "")}</div>
-                </div>
-              `).join("")}
-            </div>
-          </details>`
-        : `<div class="message">No segments available.</div>`;
+      const segmentHtml = "";
 
       app.innerHTML = `
         <div class="card">
@@ -816,37 +800,12 @@
           ${(() => {
             footnoteCounter = 0; collectedFootnotes = []; linkedTargets = new Set(); sectionCounter = 0; collectedSections = [];
 
-            // Build page break map from segments.
-            // Each segment's text appears in the body; we find its offset
-            // and record the page number for a left-margin citation marker.
-            const pageBreaks = []; // [{offset, page}]
-            if (article.segments && article.segments.length) {
-              const body = article.body || "";
-              let searchFrom = 0;
-              for (const seg of article.segments) {
-                if (!seg.segment_text || !seg.page_number) continue;
-                // Find where this segment's text starts in the body.
-                // Use first 40 chars as a fingerprint (enough to be unique).
-                const needle = seg.segment_text.substring(0, 40);
-                const idx = body.indexOf(needle, searchFrom);
-                if (idx !== -1) {
-                  pageBreaks.push({ offset: idx, page: seg.page_number });
-                  searchFrom = idx + 1;
-                }
-              }
-            }
-            // Ensure at least the article's starting page is shown
-            if (pageBreaks.length === 0 && article.page_start) {
-              pageBreaks.push({ offset: 0, page: article.page_start });
-            }
-
-            // Inject page markers into the body text before splitting
+            // Page markers (\x01PAGE:N\x01) are embedded directly in the
+            // body text by the transform stage.  If none are present
+            // (e.g. single-page articles), inject one for page_start.
             let markedBody = article.body || "";
-            // Insert backwards to keep offsets stable
-            for (let k = pageBreaks.length - 1; k >= 0; k--) {
-              const pb = pageBreaks[k];
-              const marker = `\x01PAGE:${pb.page}\x01`;
-              markedBody = markedBody.substring(0, pb.offset) + marker + markedBody.substring(pb.offset);
+            if (markedBody.indexOf("\x01PAGE:") === -1 && article.page_start) {
+              markedBody = `\x01PAGE:${article.page_start}\x01` + markedBody;
             }
 
             // Merge shoulder heading paragraphs with surrounding text.
@@ -883,21 +842,6 @@
           })()}
           ${collectedFootnotes.length ? `<div class="footnotes"><h3>Notes</h3><ol>${collectedFootnotes.map(fn => `<li id="fn-${fn.num}"><a onclick="document.getElementById('fnref-${fn.num}').scrollIntoView({behavior:'smooth',block:'center'});return false;" href="#">\u2191</a> ${fn.text}</li>`).join("")}</ol></div>` : ""}
         </div>
-
-        ${images.length ? `
-        <div class="card">
-          <h2>Images (${images.length})</h2>
-          <div class="image-grid">
-            ${images.map(img => `
-              <figure class="article-image">
-                <a href="${escapeHtml(img.commons_url)}" target="_blank">
-                  <img src="${escapeHtml(img.commons_url)}" alt="${escapeHtml(img.caption || img.filename)}" loading="lazy" />
-                </a>
-                ${img.caption ? `<figcaption>${escapeHtml(img.caption)}</figcaption>` : `<figcaption class="filename">${escapeHtml(img.filename)}</figcaption>`}
-              </figure>
-            `).join("")}
-          </div>
-        </div>` : ""}
 
         ${xrefHtml ? `<div class="card">
           <h2>Cross-references</h2>

@@ -17,32 +17,6 @@ echo "  Full rebuild: volumes 1-28"
 echo "============================================"
 echo
 
-# --- Phase 0: Re-convert raw wikitext ---
-echo "=== Phase 0: Re-converting raw wikitext (fetch stage) ==="
-for vol in $VOLUMES; do
-  PADDED=$(printf "%02d" "$vol")
-  echo "  Re-converting volume $vol..."
-  uv run python -c "
-import json, sys, os
-sys.path.insert(0, 'tools/fetch')
-from fetch_wikisource_pages import clean_wikisource_page_text
-d = 'data/raw/wikisource/vol_${PADDED}'
-count = 0
-for fn in sorted(os.listdir(d)):
-    if not fn.endswith('.json'): continue
-    p = os.path.join(d, fn)
-    with open(p, encoding='utf-8') as f:
-        data = json.load(f)
-    data['cleaned_preview'] = clean_wikisource_page_text(data['raw_text'])
-    with open(p, 'w', encoding='utf-8') as f:
-        json.dump(data, f, ensure_ascii=False)
-    count += 1
-print(f'  Re-converted {count} pages.')
-"
-done
-echo "  Done."
-echo
-
 # --- Phase 1: Wipe everything ---
 echo "=== Phase 1: Wiping all volumes from database ==="
 for vol in $VOLUMES; do
@@ -72,11 +46,11 @@ for vol in $VOLUMES; do
     --indir "$RUN_DIR" \
     --volume "$vol"
 
-  echo "  Cleaning pages..."
-  uv run britannica clean-pages "$vol"
-
   echo "  Detecting boundaries..."
   uv run britannica detect-boundaries "$vol"
+
+  echo "  Transforming articles..."
+  uv run britannica transform-articles "$vol"
 
   echo "  Classifying articles..."
   uv run britannica classify-articles "$vol"
@@ -123,12 +97,12 @@ from britannica.db.models import SourcePage
 s = SessionLocal()
 fm = {'dedication': {'title': 'Dedication', 'pages': [5], 'body': ''}, 'preface': {'title': 'Editorial Preface', 'author': 'Hugh Chisholm', 'date': 'December 10, 1910', 'pages': list(range(6, 24)), 'body': ''}}
 p = s.query(SourcePage).filter(SourcePage.volume == 1, SourcePage.page_number == 5).first()
-if p: fm['dedication']['body'] = (p.cleaned_text or '').strip()
+if p: fm['dedication']['body'] = (p.cleaned_text or p.raw_text or '').strip()
 body = ''
 for pg in range(6, 24):
     p = s.query(SourcePage).filter(SourcePage.volume == 1, SourcePage.page_number == pg).first()
     if not p: continue
-    text = (p.cleaned_text or '').strip()
+    text = (p.cleaned_text or p.raw_text or '').strip()
     if not text: continue
     if not body:
         body = text

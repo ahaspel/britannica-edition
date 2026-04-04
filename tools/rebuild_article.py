@@ -6,23 +6,20 @@ Usage:
     python tools/rebuild_article.py <volume> <start_page> <end_page> [--deploy]
 
 Steps:
-    1. Find the article in the DB to get its page range
-    2. Re-convert raw wikitext -> cleaned_preview for those pages
-    3. Re-run the volume pipeline (import, clean, detect, classify, xrefs, export)
-    4. Deploy just the changed article JSON to S3
+    1. Wipe the volume from the DB
+    2. Re-run the volume pipeline (import, detect, transform, classify, xrefs, export)
+    3. Deploy just the changed article JSON to S3
 
 The volume pipeline is fast (no fetch) and ensures correct boundary detection.
 """
 from __future__ import annotations
 
 import argparse
-import json
 import subprocess
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
-sys.path.insert(0, str(Path(__file__).resolve().parent / "fetch"))
 
 from britannica.db.session import SessionLocal
 from britannica.db.models import Article
@@ -68,25 +65,6 @@ def find_article(session, volume: int, title: str | None,
         return article
 
 
-def reconvert_pages(volume: int, start_page: int, end_page: int):
-    """Re-run fetch conversion on raw wikitext for the given page range."""
-    from fetch_wikisource_pages import clean_wikisource_page_text
-
-    raw_dir = Path(f"data/raw/wikisource/vol_{volume:02d}")
-    count = 0
-    for pn in range(start_page, end_page + 1):
-        fn = raw_dir / f"vol{volume:02d}-page{pn:04d}.json"
-        if not fn.exists():
-            continue
-        with open(fn, encoding="utf-8") as f:
-            d = json.load(f)
-        d["cleaned_preview"] = clean_wikisource_page_text(d["raw_text"])
-        with open(fn, "w", encoding="utf-8") as f:
-            json.dump(d, f, ensure_ascii=False)
-        count += 1
-    print(f"  Re-converted {count} pages ({start_page}-{end_page})")
-
-
 def wipe_volume_db(volume: int):
     """Delete all data for a volume, respecting FK constraints."""
     session = SessionLocal()
@@ -121,10 +99,10 @@ def run_volume_pipeline(volume: int):
         ("Importing pages...",
          ["uv", "run", "python", "tools/fetch/import_wikisource_pages.py",
           "--indir", raw_dir, "--volume", str(volume), "--overwrite"]),
-        ("Cleaning pages...",
-         ["uv", "run", "britannica", "clean-pages", str(volume)]),
         ("Detecting boundaries...",
          ["uv", "run", "britannica", "detect-boundaries", str(volume)]),
+        ("Transforming articles...",
+         ["uv", "run", "britannica", "transform-articles", str(volume)]),
         ("Classifying articles...",
          ["uv", "run", "britannica", "classify-articles", str(volume)]),
         ("Extracting xrefs...",
@@ -200,12 +178,9 @@ def main():
         session.close()
 
     print(f"Rebuilding: {article_title} (vol {volume}, pages {article_page_start}-{article_page_end})")
-    print(f"Re-running full volume {volume} pipeline (only re-converted pages will differ)\n")
+    print(f"Re-running full volume {volume} pipeline\n")
 
-    print("Step 1: Re-converting raw wikitext for article pages...")
-    reconvert_pages(volume, article_page_start, article_page_end)
-
-    print("\nStep 2: Running volume pipeline...")
+    print("Step 1: Running volume pipeline...")
     run_volume_pipeline(volume)
 
     # Find the article's filename after rebuild (should be the same)
@@ -219,7 +194,7 @@ def main():
     print(f"\nRebuilt: data/derived/articles/{filename}")
 
     if args.deploy:
-        print("\nStep 3: Deploying...")
+        print("\nStep 2: Deploying...")
         deploy_article(filename)
 
     print("\nDone.")

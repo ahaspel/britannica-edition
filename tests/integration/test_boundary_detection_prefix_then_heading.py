@@ -1,11 +1,6 @@
 from britannica.db.models import Article, ArticleSegment, SourcePage
 from britannica.pipeline.stages import detect_boundaries as detect_boundaries_stage
 
-SEC = "\u00abSEC:"
-END = "\u00bb"
-B = "\u00abB\u00bb"
-EB = "\u00ab/B\u00bb"
-
 
 def test_detect_boundaries_handles_continuation_then_new_heading_same_page(
     monkeypatch,
@@ -22,16 +17,16 @@ def test_detect_boundaries_handles_continuation_then_new_heading_same_page(
                     volume=1,
                     page_number=1,
                     raw_text="unused",
-                    cleaned_text=f"{SEC}Abalone{END}{B}ABALONE{EB}\nA type of shellfish.",
+                    wikitext='<section begin="Abalone" />\'\'\'ABALONE,\'\'\' A type of shellfish.',
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
                     page_number=2,
                     raw_text="unused",
-                    cleaned_text=(
+                    wikitext=(
                         "Continuation of the abalone article on the next page.\n\n"
-                        f"{SEC}Abandon{END}{B}ABANDON{EB}\n"
+                        '<section begin="Abandon" />\'\'\'ABANDON,\'\'\'\n'
                         "To relinquish, desert, or give up."
                     ),
                 ),
@@ -41,7 +36,7 @@ def test_detect_boundaries_handles_continuation_then_new_heading_same_page(
     finally:
         session.close()
 
-    created = detect_boundaries_stage.detect_boundaries(1)
+    created = detect_boundaries_stage.persist_articles(detect_boundaries_stage.detect_boundaries(1))
     assert created == 2
 
     session = test_session_local()

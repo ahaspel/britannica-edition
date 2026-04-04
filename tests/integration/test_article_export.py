@@ -24,14 +24,14 @@ def test_export_articles_to_json_writes_article_files(
                     volume=1,
                     page_number=1,
                     raw_text="unused",
-                    cleaned_text="«SEC:Abacus»«B»ABACUS«/B»\nA calculating device. See also CALCULATION.",
+                    wikitext='<section begin="Abacus" />\'\'\'ABACUS,\'\'\' A calculating device. See also CALCULATION.',
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
                     page_number=2,
                     raw_text="unused",
-                    cleaned_text="«SEC:Calculation»«B»CALCULATION«/B»\nThe process of computing.",
+                    wikitext='<section begin="Calculation" />\'\'\'CALCULATION,\'\'\' The process of computing.',
                 ),
             ]
         )
@@ -39,7 +39,7 @@ def test_export_articles_to_json_writes_article_files(
     finally:
         session.close()
 
-    detect_boundaries_stage.detect_boundaries(1)
+    detect_boundaries_stage.persist_articles(detect_boundaries_stage.detect_boundaries(1))
     extract_xrefs_stage.extract_xrefs_for_volume(1)
 
     out_dir = tmp_path / "exports"
@@ -60,8 +60,7 @@ def test_export_articles_to_json_writes_article_files(
     assert payload["page_start"] == 1
     assert payload["page_end"] == 1
     assert payload["body"] == "A calculating device. See also CALCULATION."
-    assert len(payload["segments"]) == 1
-    assert payload["segments"][0]["segment_text"] == "A calculating device. See also CALCULATION."
+    assert "segments" not in payload
     assert len(payload["xrefs"]) == 1
     assert payload["xrefs"][0]["surface_text"] == "See also CALCULATION"
     assert payload["xrefs"][0]["normalized_target"] == "CALCULATION"
