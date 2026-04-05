@@ -6,12 +6,12 @@
   <title>Editorial Preface — Encyclop&aelig;dia Britannica, 11th Edition</title>
   <style>
     :root {
-      --bg: #f7f7f5;
-      --panel: #ffffff;
-      --text: #1f2328;
-      --muted: #4b5563;
-      --border: #d0d7de;
-      --link: #0969da;
+      --bg: #f5f1eb;
+      --panel: #fdfcf9;
+      --text: #2c2416;
+      --muted: #6b5e4f;
+      --border: #d4cab8;
+      --link: #7b3f00;
     }
 
     * { box-sizing: border-box; }
@@ -33,35 +33,38 @@
     .card {
       background: var(--panel);
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 28px 36px;
+      border-radius: 2px;
+      padding: 20px 24px;
       margin-bottom: 20px;
     }
 
-    h1 { margin-top: 0; font-size: 1.6rem; }
+    h1 {
+      margin-top: 0;
+      font-size: 1.8rem;
+      font-variant: small-caps;
+      letter-spacing: 0.06em;
+      color: #2c2416;
+    }
+
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
 
     .meta {
       color: var(--muted);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
+      font-style: italic;
       margin-bottom: 16px;
     }
 
-    .nav-links {
-      margin-bottom: 12px;
-      font-size: 0.9rem;
-      font-family: system-ui, -apple-system, sans-serif;
+    .preface-body {
+      margin-right: 160px;
+      position: relative;
+      font-size: 1.08rem;
     }
-
-    .nav-links a {
-      color: var(--link);
-      text-decoration: none;
-    }
-
-    .nav-links a:hover { text-decoration: underline; }
 
     .preface-body p {
       text-indent: 1.5em;
-      margin: 0 0 0.6em 0;
+      margin: 0 0 0.5em 0;
       position: relative;
     }
 
@@ -69,19 +72,15 @@
       text-indent: 0;
     }
 
-    .preface-body {
-      margin-right: 160px;
-      position: relative;
-    }
-
     .shoulder-heading {
       position: absolute;
       right: -170px;
       width: 150px;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      font-size: 0.8rem;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 0.65rem;
       font-style: italic;
-      color: var(--muted);
+      color: #8b7355;
+      padding-right: 0.6em;
       text-align: left;
       text-indent: 0;
     }
@@ -92,33 +91,100 @@
         position: static;
         display: block;
         width: auto;
+        margin: 0.5em 0 0.2em;
+        font-weight: 600;
+        color: var(--text);
       }
     }
 
     .drop-cap {
-      font-size: 3em;
+      font-size: 3.2em;
       float: left;
       line-height: 0.8;
-      margin: 0.05em 6px 0 0;
-      font-weight: bold;
-      color: var(--text);
+      margin: 0.05em 2px 0 0;
+      color: #5c4a32;
+      font-weight: normal;
     }
 
     .small-caps { font-variant: small-caps; }
+
+    .footnote-ref a {
+      color: #7b3f00;
+      text-decoration: none;
+      font-size: 1em;
+      font-weight: 700;
+      padding: 0 2px;
+      cursor: pointer;
+    }
+
+    .footnotes {
+      border-top: 1px solid #8b7355;
+      margin-top: 32px;
+      padding-top: 16px;
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .footnotes h3 {
+      font-size: 0.85rem;
+      font-variant: small-caps;
+      letter-spacing: 0.05em;
+      color: #8b7355;
+      margin-bottom: 10px;
+    }
+
+    .footnotes ol {
+      padding-left: 24px;
+      list-style: none;
+    }
+
+    .footnotes li {
+      margin-bottom: 6px;
+      text-indent: -1.5em;
+      padding-left: 1.5em;
+    }
+
+    .footnotes li a {
+      color: #8b7355;
+      text-decoration: none;
+      font-weight: 600;
+      margin-right: 2px;
+    }
 
     .loading {
       color: var(--muted);
       text-align: center;
       padding: 40px;
     }
+
+    .header-divider {
+      text-align: center;
+      color: #8b7355;
+      font-size: 1.6rem;
+      margin: -6px 0 14px;
+      letter-spacing: 0.3em;
+      user-select: none;
+    }
   </style>
 </head>
 <body>
   <div class="page">
     <div class="card">
-      <div class="nav-links"><a href="home.html">Home</a> &middot; <a href="index.html">Articles</a></div>
-      <h1>Editorial Preface</h1>
-      <div class="meta">By Hugh Chisholm &middot; London, December 10, 1910</div>
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+        <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><span style="font-variant: small-caps; letter-spacing: 0.04em;">Editorial Preface</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; Encyclop&aelig;dia Britannica</span></h1>
+        <div style="font-size: 0.9rem;">
+          <a href="/home.html">Home</a>
+          &nbsp;&middot;&nbsp;
+          <a href="/index.html">Articles</a>
+          &nbsp;&middot;&nbsp;
+          <a href="/contributors.html">Contributors</a>
+        </div>
+      </div>
+      <div class="meta">By <a href="/contributors.html?q=Hugh+Chisholm" style="color: var(--muted);">Hugh Chisholm</a> &middot; London, December 10, 1910</div>
+    </div>
+    <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+    <div class="card">
       <div id="preface-body" class="preface-body">
         <div class="loading">Loading...</div>
       </div>
@@ -133,6 +199,9 @@
       return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
+    let footnoteCounter = 0;
+    let collectedFootnotes = [];
+
     fetch(`${DATA_BASE}/front_matter.json`)
       .then(r => r.json())
       .then(fm => {
@@ -142,8 +211,7 @@
           return;
         }
 
-        // Merge shoulder heading paragraphs with surrounding text,
-        // same as the article viewer does.
+        // Merge shoulder heading paragraphs with surrounding text
         const rawParas = preface.body.split("\n\n");
         const merged = [];
         let i = 0;
@@ -167,15 +235,28 @@
         const html = merged.map(p => {
           let h = escapeHtml(p);
 
-          // Drop cap: the fetch stage stripped {{dropinitial|X}} leaving
-          // nodent|HE (was T+HE) and nodent|LSEWHERE (was E+LSEWHERE)
-          h = h.replace(/^nodent\|HE /, '<span class="drop-cap">T</span>HE ');
-          h = h.replace(/^nodent\|LSEWHERE/, '<span class="drop-cap">E</span>LSEWHERE');
-          h = h.replace(/^nodent\|/, "");
+          // Split off any preceding date line from nodent| paragraph
+          if (h.includes("nodent|")) {
+            h = h.replace(/(.+?)\s*nodent\|/, (m, before) => {
+              return before ? before + '</p><p>' : '';
+            });
+          }
+          // Restore the initial letters that {{dropinitial}} stripped
+          h = h.replace(/<\/p><p>HE /, '</p><p>THE ');
+          h = h.replace(/<\/p><p>LSEWHERE/, '</p><p>ELSEWHERE');
+          h = h.replace(/^HE /, 'THE ');
+          h = h.replace(/^LSEWHERE/, 'ELSEWHERE');
 
           // Shoulder headings
           h = h.replace(/\u00abSH\u00bb(.*?)\u00ab\/SH\u00bb/gs,
             '<span class="shoulder-heading">$1</span>');
+
+          // Footnotes
+          h = h.replace(/\u00abFN:(.*?)\u00ab\/FN\u00bb/gs, (match, content) => {
+            footnoteCounter++;
+            collectedFootnotes.push({ num: footnoteCounter, text: content });
+            return `<sup class="footnote-ref"><a href="#fn-${footnoteCounter}">${footnoteCounter}</a></sup>`;
+          });
 
           // Bold, italic, small caps
           h = h.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
@@ -183,18 +264,39 @@
           h = h.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs,
             '<span class="small-caps">$1</span>');
 
-          // Strip footnotes, links (show display text only), remaining markers
-          h = h.replace(/\u00abFN:.*?\u00ab\/FN\u00bb/gs, "");
-          h = h.replace(/\u00abLN:[^|]*\|([^«]*)\u00ab\/LN\u00bb/g, "$1");
+          // Links — resolve to article or contributor URLs
+          h = h.replace(/\u00abLN:([^|]*)\|([^|«]*?)(?:\|([^«]*))?\u00ab\/LN\u00bb/g, (match, g1, g2, g3) => {
+            const hasFile = g3 !== undefined;
+            const target = hasFile ? g2 : g1;
+            const display = hasFile ? g3 : g2;
+            const filename = hasFile ? g1 : null;
+            if (filename) {
+              const base = filename.replace(/\.json$/, "");
+              const page = base.replace(/^0+/, "").split("-")[0];
+              const slug = base.substring(base.indexOf("-") + 1).toLowerCase();
+              return `<a href="/article/${page}/${slug}">${display}</a>`;
+            }
+            return `<a href="/contributors.html?q=${encodeURIComponent(target)}">${display}</a>`;
+          });
+
+          // Strip remaining markers
           h = h.replace(/\u00ab\/?[A-Z]+\u00bb/g, "");
 
-          // Clean up whitespace from shoulder heading markers
+          // Clean whitespace
           h = h.replace(/\u2003/g, " ").replace(/\s{2,}/g, " ");
 
           return `<p>${h}</p>`;
         }).join("");
 
-        document.getElementById("preface-body").innerHTML = html;
+        // Build footnotes section
+        let footnotesHtml = "";
+        if (collectedFootnotes.length) {
+          footnotesHtml = `<div class="footnotes"><h3>Notes</h3><ol>${collectedFootnotes.map(fn =>
+            `<li id="fn-${fn.num}" value="${fn.num}"><a href="#">${fn.num}.</a> ${fn.text}</li>`
+          ).join("")}</ol></div>`;
+        }
+
+        document.getElementById("preface-body").innerHTML = html + footnotesHtml;
       })
       .catch(err => {
         document.getElementById("preface-body").innerHTML =

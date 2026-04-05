@@ -121,12 +121,19 @@ class TestRealTables:
 class TestRealPoems:
     """<poem> blocks from real pages."""
 
-    def test_poem_produces_verse_marker(self):
-        """Vol 1 p44 has <poem> blocks."""
+    def test_poem_standalone(self):
+        """A standalone <poem> block produces VERSE markers."""
+        result = _transform("text\n<poem>line one\nline two</poem>\nmore")
+        assert "<poem>" not in result, "Raw <poem> survived"
+        assert "{{VERSE:" in result, "No VERSE marker produced"
+        assert "line one" in result
+
+    def test_poem_in_table_produces_verse(self):
+        """Vol 1 p44 has <poem> inside a table — should produce VERSE marker."""
         raw = _load_page(1, 44)
         result = _transform(raw)
         assert "<poem>" not in result, "Raw <poem> survived"
-        assert "{{VERSE:" in result or "VERSE}" in result, "No VERSE marker produced"
+        assert "{{VERSE:" in result or "VERSE}" in result, "No VERSE marker from poem in table"
 
 
 class TestRealMath:
@@ -171,23 +178,30 @@ class TestRealScores:
 class TestRealHieroglyphs:
     """Hieroglyph conversion from real pages."""
 
-    def test_hieroglyphs(self):
-        """Vol 1 p37 has {{hieroglyph}} templates."""
-        raw = _load_page(1, 37)
-        result = _transform(raw)
-        assert "hieroglyph" not in result.lower() or "[hieroglyph:" in result, \
-            "Raw hieroglyph template survived"
+    def test_hieroglyph_template(self):
+        """A {{hieroglyph}} template should be converted."""
+        # Vol 1 p37 mentions hieroglyphs but doesn't have the template.
+        # Test with synthetic input.
+        result = _transform("sign {{hieroglyph|A1}} here")
+        assert "{{hieroglyph|" not in result, "Raw hieroglyph template survived"
 
 
 class TestRealShoulderHeadings:
     """Shoulder headings from real pages."""
 
     def test_shoulder_heading(self):
-        """Vol 1 p10 has {{EB1911 Shoulder Heading}}."""
+        """Shoulder headings are converted to SH markers."""
+        raw = 'text {{EB1911 Shoulder Heading|Topic Name}} more'
+        result = _transform(raw)
+        assert "\u00abSH\u00bb" in result, "No SH marker produced"
+        assert "Topic Name" in result
+
+    def test_shoulder_heading_real_page(self):
+        """Vol 1 p10 has shoulder headings outside noinclude."""
         raw = _load_page(1, 10)
         result = _transform(raw)
-        assert "\u00abSH\u00bb" in result or "Shoulder" not in raw, \
-            "Shoulder heading not converted"
+        assert "{{EB1911 Shoulder Heading" not in result, \
+            "Raw shoulder heading template survived"
 
 
 class TestRealLinks:
@@ -215,6 +229,36 @@ class TestRealSmallCaps:
         raw = _load_page(3, 16)
         result = _transform(raw, volume=3, page_number=16)
         assert "{{sc|" not in result, "Raw sc template survived"
+
+
+class TestNestedWrapperTemplates:
+    """Wrapper templates (fine block, center, etc.) with nested content
+    must not lose their inner text or links."""
+
+    def test_fine_block_preserves_links(self):
+        """Vol 1 p35 has {{fine block|...}} with nested {{EB1911 article link}}."""
+        raw = _load_page(1, 35)
+        result = _transform(raw)
+        assert "Jethro" in result, "Jethro lost (inside {{fine block}})"
+        assert "\u00abLN:" in result and "Jethro" in result, "Jethro link lost"
+
+    def test_fine_block_preserves_text(self):
+        """Content inside {{fine block}} must not be stripped."""
+        raw = _load_page(1, 35)
+        result = _transform(raw)
+        assert "Eleazar" in result, "Eleazar lost (inside {{fine block}})"
+        assert "Kenites" in result, "Kenites lost (inside {{fine block}})"
+
+    def test_nested_center_preserves_content(self):
+        """{{center|...}} with nested templates must preserve content."""
+        result = _transform("text {{center|{{sc|Important}} heading}} more")
+        assert "Important" in result, "Content lost inside nested {{center}}"
+
+    def test_deeply_nested_unwrap(self):
+        """Templates with multiple nesting levels must unwrap cleanly."""
+        result = _transform("{{fine block|See {{EB1911 article link|Foo}} and {{sc|Bar}}.}}")
+        assert "Foo" in result, "Link target lost in nested template"
+        assert "Bar" in result, "Small caps text lost in nested template"
 
 
 class TestRealMultiElement:

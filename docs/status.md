@@ -58,7 +58,7 @@ Resolved xrefs are embedded as direct links at export time: the export stage rew
 1. **Fetch** — Wikisource pages (3s delay, 350-page batches, 15-min cooldown); self-closing refs stripped before content refs; interwiki links (wikt:, w:, Portal:, etc.) reduced to display text
 2. **Import** — raw wikitext into SourcePage (wikitext field)
 3. **Detect boundaries** — section-marker based on raw wikitext; skips leading tables/images/comments when detecting bold headings; prefers section ID when heading regex truncates title
-4. **Transform** — per-segment conversion (26 fetch stages + clean_pages), then join into article body with `\x01PAGE:N\x01` markers at page boundaries; one article at a time with per-article commits
+4. **Transform** — per-segment extract-process-reassemble (`elements.py` + `_transform_text_v2`): extracts embedded elements (tables, images, footnotes, poems, math, scores), transforms body text (11 explicit functions), processes each element recursively, reassembles. Plates have dedicated processor. Joined into article body with `\x01PAGE:N\x01` markers; per-article commits
 5. **Classify** — article, front_matter, plate (with grid parser for multi-section plates)
 6. **Extract xrefs** — q.v., See, See also, inline link markers, `{{EB1911 article link}}`; targets >200 chars rejected; internal markers stripped from See/See also targets
 7. **Resolve xrefs** — unified lookup (canonical + aliases + fuzzy)
@@ -96,16 +96,17 @@ Resolved xrefs are embedded as direct links at export time: the export stage rew
 - **contributors.html** — sorted by surname, credentials, descriptions, full article lists
 - **preface.html** — Hugh Chisholm's 1910 editorial preface with drop caps and shoulder headings
 
-## Current State (2026-04-04)
+## Current State (2026-04-05)
 
 - **Site live at britannica11.org**
 - **28 volumes processed** (vol 29 is end matter, excluded)
-- **35,933 articles** in database
-- **25,812 cross-references resolved (90%)** — up from 22,367 after EB1911 article link fix
-- **3,012 unresolved xrefs** (mostly portal links and literary work references — legitimately unresolvable)
+- **36,061 articles** in database
+- **~25,000 cross-references resolved (90%)**
+- **~3,000 unresolved xrefs** (mostly portal links and literary work references)
 - **~1,500 unique contributors** with biographical data
-- **119 tests passing** — section boundaries, formatting, integration
-- **72 file-level issues** across 36K+ articles (down from 93; pipe_leak 42, leaked_html_attr 15, html_tag 12, unclosed_footnote 3)
+- **193 tests passing** — boundaries, elements, transforms, real data
+- **New architecture: extract-process-reassemble** — `elements.py` + `_transform_text_v2`
+- **Raw wikitext backed up** to `s3://britannica11.org/raw/` (28 zips, 139 MB)
 - **All data fetched** — raw wikitext is static, never changes
 
 ## Production Deployment
@@ -144,48 +145,65 @@ Resolved xrefs are embedded as direct links at export time: the export stage rew
 
 ## Known Issues (remaining)
 
-### File-Level (72 total across 36K articles)
-- **pipe_leak (42)** — orphaned pipe-separated data not inside TABLE markers; real unwrapped tables (quality report now excludes poetry/math false alarms)
-- **leaked_html_attr (15)** — residual `nowrap`, `colspan` etc. in edge cases the postprocessor doesn't catch
-- **html_tag (12)** — garbled OCR artifacts that look like HTML tags
-- **unclosed_footnote (3)** — footnotes spanning table boundaries in complex tabular articles
-- **stray_wikilink (0)** — fixed: wikilink regex now handles nested brackets
+### File-Level (improving — rebuild in progress)
+- Previous build (v2 first pass): html_tag 25, leaked_html_attr 112, pipe_leak 98, stray_wiki_italic 20
+- Pre-flight on 840 pages with latest code: 0 html_tag, 0 stray_braces, 0 control leaks, 3 leaked_attr (multi-page table edge cases)
+- Postprocessor handles multi-page table residue
 
 ### Other
 - Some pages have `pagequality level="3"` (not fully proofread) on Wikisource
-- ~44 structural chemical formulas render as preformatted `«PRE:...«/PRE»` blocks
-- Contributor death dates sometimes lost in template stripping
-- Portal links and literary work references (CANDIDE, PARADISE LOST) are legitimately unresolvable xrefs
-- `_parse_page` heuristic still exists in code but is not called in production
-- Garbled text `wisth=7|` in EGYPT shoulder heading (postprocessor fix queued, needs rebuild)
-- ~~Title page scan still has faint artifacts from the IA source copy~~ — replaced with photograph-style image
-- Images on shared pages can be assigned to the wrong article (e.g. gibbon ape image on GIBBON, EDWARD instead of GIBBON) — image extractor uses page-level ownership, not position relative to section markers
+- Portal links and literary work references are legitimately unresolvable xrefs
+- Images on shared pages can be assigned to the wrong article — image extractor uses page-level ownership
 - Meilisearch EC2 port 7700 currently open to all traffic — should be restricted to CloudFront IPs
+- 41 titles with lowercase (Mc/Mac names — correct casing, flagged by quality report)
+
+## Architecture
+
+### Element Extraction Pipeline (`elements.py`)
+- **Extract-process-reassemble**: one recursive function handles all element types
+- **Key law**: once extracted, an element is never tampered with again
+- **Extraction order**: wiki tables (balanced matching) → HTML elements (ref, html_table, poem, math, score) → wiki markup (image_float, image)
+- **Element types**: TABLE, HTML_TABLE, IMAGE, IMAGE_FLOAT, REF, REF_SELF, POEM, MATH, SCORE
+- **Cross-element substitution**: multi-pass to handle table placeholders inside processed refs
+- **Plate pages**: dedicated processor — image grid with keyword-matched captions
+- **Brace tables**: detected and converted to verse + translation layout
+
+### Body Text Transform (`_transform_body_text`)
+11 explicit functions replacing 26 interleaved fetch stages:
+1. `_convert_hieroglyphs` — `{{hieroglyph|code}}` → `[hieroglyph: code]`
+2. `_convert_links` — `{{EB1911 article link}}`, `[[wikilinks]]` → `«LN:»` markers
+3. `_unwrap_content_templates` — Greek, Hebrew, nowrap, lang, abbr, tooltip, sic
+4. `_convert_small_caps` — `{{sc|}}`, `{{asc|}}` → `«SC»`
+5. `_convert_shoulder_headings` — `{{EB1911 Shoulder Heading}}` → `«SH»`
+6. `_unwrap_layout_templates` — center, c, csc, fine block
+7. `_convert_sub_sup` — `<sub>`/`<sup>` → Unicode
+8. `_convert_bold_italic` — `'''`/`''` → `«B»`/`«I»` (handles 5-quote bold-italic)
+9. `_strip_templates` — remaining `{{...}}` and orphaned markup
+10. `_strip_html` — remaining HTML tags
+11. `_decode_entities` — `html.unescape()`
+
+### Preprocessing (`_transform_text_v2`)
+- Strip section tags, noinclude, HTML comments
+- Balanced unwrap of deeply nested wrapper templates (fine block, center, etc.)
+- Strip `{{nowrap}}` and `{{ts}}` before table extraction
+- Wrap orphaned table rows (including single-pipe rows)
+- Paragraph reflow after element reassembly
 
 ## Next Steps
 
-### Completed in latest rebuild (2026-04-04)
-- `{{EB1911 article link}}` templates fully handled (multi-param, nested `{{sc|...}}`, `nosc=x`)
-- Wikilink regex handles nested brackets (`[of Blackburn]`, `[an imaginary]`)
-- `<score>` tags replaced with static Wikimedia PNG URLs (11 tags, 3 articles)
-- `{{csc|...}}` templates unwrap to small caps instead of being stripped (729 pages)
-- `{{fine block|...}}` templates unwrap to content (1,837 pages)
-- Postprocessor merges blank-line-separated table rows into single TABLE blocks
-- Postprocessor strips leaked table title attributes (`title="..."`)
-- Quality report: pipe_leak excludes VERSE/MATH and only flags table-pattern lines
-- Quality report: stray_wikilink requires matched `[[...]]` pairs
-
-### Needs future rebuild
-- Page-join paragraph break before `«SC»` section headings (transform stage fix ready)
-- Plate layout cleanup with keyword-matched captions
+### Queued for next rebuild
+- Balanced wrapper template unwrapping (617 pages of recovered content)
+- Cross-element placeholder substitution (tables inside refs)
+- Improved orphan table detection (single-pipe rows)
+- Export body_start: keep marker content, strip only tags
+- Search index: keep marker content, strip only tags
 
 ### Short-term
-- "About This Edition" page (editor's introduction)
-- EPUB export
-- Image download from Commons (self-contained edition)
-- Lock down Meilisearch security group to CloudFront IPs only
+- About This Edition page (user writing)
+- Lock down Meilisearch security group to CloudFront IPs
+- Investigate remaining xref resolution gap (~1,100 vs old pipeline)
 
 ### Medium-term
-- Typography polish
+- EPUB export
+- Image download from Commons (self-contained edition)
 - Citation export (BibTeX, Chicago style)
-- Front matter page scans from IA

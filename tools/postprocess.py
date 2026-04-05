@@ -145,12 +145,13 @@ def _wrap_orphan_tables(text: str) -> str:
     pending_blanks = []
     for line in lines:
         stripped = line.strip()
-        # A table line: starts with | and has multiple pipe separators
+        # A table line: starts with | and has pipe separators
         is_table_line = (
             stripped.startswith("|")
-            and stripped.count("|") >= 2
+            and stripped.count("|") >= 1
             and not stripped.startswith("|}")
             and not stripped.startswith("|+")
+            and len(stripped) > 3  # avoid bare | lines
         )
         if is_table_line:
             # Absorb any pending blank lines into the table run

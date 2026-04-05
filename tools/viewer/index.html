@@ -285,16 +285,7 @@
           <span id="title-page-info-top"></span>
           <button id="title-next-top">Next &rarr;</button>
         </div>
-        <table>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Pages</th>
-              <th>Length</th>
-            </tr>
-          </thead>
-          <tbody id="title-tbody"></tbody>
-        </table>
+        <div id="title-tbody"></div>
         <div id="title-pagination" class="pagination" style="display:none">
           <button id="title-prev">&larr; Previous</button>
           <span id="title-page-info"></span>
@@ -319,16 +310,7 @@
     <!-- Volume browse results -->
     <div id="browse-card" class="card" style="display:none">
       <div id="browse-page-index-top" class="page-index"></div>
-      <table>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Pages</th>
-            <th>Length</th>
-          </tr>
-        </thead>
-        <tbody id="browse-tbody"></tbody>
-      </table>
+      <div id="browse-tbody"></div>
       <div id="browse-page-index-bottom" class="page-index"></div>
     </div>
   </div>
@@ -391,12 +373,12 @@
     }
 
     function articleRow(a) {
-      return `<tr>
-        <td><a href="${viewerUrl(a.filename)}">${escapeHtml(a.title)}</a>
-          ${a.body_start ? `<span class="body-start">${formatPreview(a.body_start)}</span>` : ""}</td>
-        <td class="page-range">Vol.${a.volume} ${pageRange(a)}</td>
-        <td>${a.body_length.toLocaleString()}</td>
-      </tr>`;
+      const len = a.body_length;
+      const lenLabel = len > 1000 ? `${(len/1000).toFixed(1)}k words` : `${len} words`;
+      return `<div class="result">
+        <div class="result-title"><a href="${viewerUrl(a.filename)}">${escapeHtml(a.title)}</a> <span style="color:var(--muted);font-size:0.78rem;font-weight:normal;">${lenLabel}</span></div>
+        ${a.body_start ? `<div class="result-snippet">${formatPreview(a.body_start)}</div>` : ""}
+      </div>`;
     }
 
     // ── Title search ──
@@ -510,7 +492,6 @@
 
           return `<div class="result">
             <div class="result-title"><a href="${viewerUrl(hit.filename)}">${title}</a></div>
-            <div class="result-meta">Volume ${hit.volume} \u00b7 ${pr}</div>
             <div class="result-snippet">${snippet}</div>
           </div>`;
         }).join("");
@@ -644,7 +625,7 @@
           a.addEventListener("click", () => {
             currentPage = parseInt(a.dataset.page);
             showBrowseResults();
-            window.scrollTo(0, 0);
+            document.getElementById("browse-page-index-top").scrollIntoView({behavior:'smooth',block:'start'});
           });
         });
       }

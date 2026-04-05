@@ -466,7 +466,7 @@
     .fn-popup {
       display: none;
       position: absolute;
-      bottom: 100%;
+      top: 100%;
       left: 50%;
       transform: translateX(-50%);
       width: 360px;
@@ -926,9 +926,8 @@
             const t = escapeHtml(article.title || "Untitled");
             return `<span style="font-size:1.6em; line-height:1; vertical-align:baseline;">${t[0]}</span>${t.slice(1)}`;
           })()}</h1>
-          <div class="meta">
-            Volume ${escapeHtml(article.volume ?? "?")}
-            · pages ${escapeHtml(article.page_start ?? "?")}–${escapeHtml(article.page_end ?? "?")}
+          <div style="font-size: 0.85rem; color: #6b5e4f; font-style: italic; margin-bottom: 6px;">
+            vol. ${escapeHtml(article.volume ?? "?")}${article.page_start !== article.page_end ? `, pp. ${escapeHtml(article.page_start ?? "")}–${escapeHtml(article.page_end ?? "")}` : `, p. ${escapeHtml(article.page_start ?? "")}`}
           </div>
           ${article.parent_article ? `<div style="margin-bottom: 8px; font-size: 0.95rem;">Plate for <a href="${articleUrl(article.parent_article.filename)}">${escapeHtml(article.parent_article.title)}</a></div>` : ""}
           ${contributors.length ? `<div class="contributors">By ${contributors.map(c => `<a href="/contributors.html?q=${encodeURIComponent(c.full_name)}" style="color: var(--muted);">${escapeHtml(c.full_name)}</a> <span style="color: var(--muted); font-size: 0.85em;">(${escapeHtml(c.initials)})</span>`).join(", ")}</div>` : ""}

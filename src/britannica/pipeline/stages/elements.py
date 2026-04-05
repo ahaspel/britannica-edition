@@ -44,18 +44,62 @@ class ElementRegistry:
 # Footnotes, math, and scores are leaf-level or near-leaf.
 
 _EXTRACTORS = [
-    # (element_type, pattern, flags)
-    ("TABLE", re.compile(r"\{\|.*?\|\}", re.DOTALL), 0),
+    # Extraction order: outermost first.
+    # HTML elements first (they can contain wiki markup elements).
+    # Wiki tables handled separately with balanced matching.
+    ("REF_SELF", re.compile(r"<ref\s[^>]*/\s*>", re.IGNORECASE), 0),
+    ("REF", re.compile(r"<ref(?:\s[^>]*)?>.*?</ref>", re.DOTALL | re.IGNORECASE), 0),
+    ("HTML_TABLE", re.compile(r"<table\b[^>]*>.*?</table>", re.DOTALL | re.IGNORECASE), 0),
     ("POEM", re.compile(r"<poem>.*?</poem>", re.DOTALL | re.IGNORECASE), 0),
+    ("MATH", re.compile(r"<math[^>]*>.*?</math>", re.DOTALL | re.IGNORECASE), 0),
+    ("SCORE", re.compile(r"<score[^>]*>.*?</score>", re.DOTALL), 0),
+    # Wiki markup elements
     ("IMAGE_FLOAT", re.compile(
         r"\{\{(?:img float|figure|FI)\s*\|(?:[^{}]|\{\{[^{}]*\}\})*\}\}",
         re.DOTALL | re.IGNORECASE), 0),
     ("IMAGE", re.compile(
-        r"\[\[(?:File|Image):([^\]]+)\]\]", re.IGNORECASE), 0),
-    ("SCORE", re.compile(r"<score[^>]*>.*?</score>", re.DOTALL), 0),
-    ("REF", re.compile(r"<ref(?:\s[^>]*)?>.*?</ref>", re.DOTALL | re.IGNORECASE), 0),
-    ("MATH", re.compile(r"<math[^>]*>.*?</math>", re.DOTALL | re.IGNORECASE), 0),
+        r"\[\[(?:File|Image):([^\]]+)\]\]"
+        r"(?:\s*\n\n?(\{\{sc\|Fig\.[^}]*\}\}[^\n]+|\d+\.\s*[A-Z][^\n]+))?",
+        re.IGNORECASE), 0),
 ]
+
+
+def _extract_balanced_tables(text: str, registry: ElementRegistry) -> str:
+    """Extract wiki tables using balanced {| |} matching.
+
+    Handles nested tables correctly by finding outermost {| first.
+    """
+    while True:
+        # Find the first {| that isn't already inside a placeholder
+        idx = text.find("{|")
+        if idx < 0:
+            break
+
+        # Find the balanced |} by tracking depth
+        depth = 0
+        i = idx
+        found = False
+        while i < len(text) - 1:
+            if text[i:i+2] == "{|":
+                depth += 1
+                i += 2
+            elif text[i:i+2] == "|}":
+                depth -= 1
+                if depth == 0:
+                    # Found the balanced close
+                    table_text = text[idx:i+2]
+                    placeholder = registry.add("TABLE", table_text)
+                    text = text[:idx] + placeholder + text[i+2:]
+                    found = True
+                    break
+                i += 2
+            else:
+                i += 1
+
+        if not found:
+            break  # Unbalanced — stop
+
+    return text
 
 
 def extract(text: str) -> tuple[str, ElementRegistry]:
@@ -65,6 +109,10 @@ def extract(text: str) -> tuple[str, ElementRegistry]:
     """
     registry = ElementRegistry()
 
+    # Wiki tables first (outermost) — balanced matching handles nesting
+    text = _extract_balanced_tables(text, registry)
+
+    # Then all other elements (refs, images, poems, math, etc.)
     for element_type, pattern, _flags in _EXTRACTORS:
         text = pattern.sub(
             lambda m, et=element_type: registry.add(et, m.group(0)),
@@ -83,6 +131,8 @@ def _strip_delimiters(element_type: str, raw: str) -> str:
         s = re.sub(r"^\{\|[^\n]*\n?", "", raw)
         s = re.sub(r"\n?\|\}\s*$", "", s)
         return s
+    elif element_type == "REF_SELF":
+        return ""
     elif element_type == "REF":
         return re.sub(r"<ref(?:\s[^>]*)?>|</ref>", "", raw, flags=re.IGNORECASE).strip()
     elif element_type == "POEM":
@@ -92,8 +142,19 @@ def _strip_delimiters(element_type: str, raw: str) -> str:
     elif element_type == "SCORE":
         return re.sub(r"<score[^>]*>|</score>", "", raw, flags=re.IGNORECASE).strip()
     elif element_type == "IMAGE":
-        m = re.match(r"\[\[(?:File|Image):(.+)\]\]$", raw, re.IGNORECASE | re.DOTALL)
-        return m.group(1) if m else raw
+        m = re.match(r"\[\[(?:File|Image):(.+)\]\](?:\s*\n\n?(.+))?$", raw,
+                      re.IGNORECASE | re.DOTALL)
+        if m:
+            inner = m.group(1)
+            ext_caption = m.group(2)
+            if ext_caption:
+                inner = inner + "|EXTCAP:" + ext_caption
+            return inner
+        return raw
+    elif element_type == "HTML_TABLE":
+        s = re.sub(r"^<table\b[^>]*>", "", raw, flags=re.IGNORECASE)
+        s = re.sub(r"</table>\s*$", "", s, flags=re.IGNORECASE)
+        return s
     elif element_type == "IMAGE_FLOAT":
         # Strip outer {{ and }}
         s = re.sub(r"^\{\{", "", raw)
@@ -116,28 +177,41 @@ def _process_element(element_type: str, raw: str,
     # then recursively extract and process any child elements.
     inner = _strip_delimiters(element_type, raw)
     inner, inner_registry = extract(inner)
-    for key, (child_type, child_raw) in inner_registry.elements.items():
-        processed_child = _process_element(
-            child_type, child_raw, text_transform, context)
-        inner = inner.replace(key, processed_child)
 
-    # Now process this element itself (children already resolved)
+    # Process children but DON'T reinsert yet — keep placeholders
+    # so the parent processor sees opaque markers, not expanded content.
+    processed_children = {}
+    for key, (child_type, child_raw) in inner_registry.elements.items():
+        processed_children[key] = _process_element(
+            child_type, child_raw, text_transform, context)
+
+    # Process this element with placeholders still in place
     if element_type == "SCORE":
-        return _process_score(raw, context)
+        result = _process_score(raw, context)
     elif element_type == "MATH":
-        return _process_math(inner)
+        result = _process_math(inner)
+    elif element_type == "REF_SELF":
+        result = ""  # Self-closing ref (back-reference) — strip it
     elif element_type == "REF":
-        return _process_ref(inner, text_transform)
+        result = _process_ref(inner, text_transform)
     elif element_type == "IMAGE":
-        return _process_image(inner, text_transform)
+        result = _process_image(inner, text_transform)
     elif element_type == "IMAGE_FLOAT":
-        return _process_image_float(inner, text_transform)
+        result = _process_image_float(inner, text_transform)
     elif element_type == "POEM":
-        return _process_poem(inner, text_transform)
+        result = _process_poem(inner, text_transform)
     elif element_type == "TABLE":
-        return _process_table(inner, text_transform)
+        result = _process_table(inner, text_transform)
+    elif element_type == "HTML_TABLE":
+        result = _process_html_table(inner, text_transform)
     else:
-        return inner
+        result = inner
+
+    # NOW reinsert processed children into the result
+    for key, processed_child in processed_children.items():
+        result = result.replace(key, processed_child)
+
+    return result
 
 
 def _clean_text(text: str) -> str:
@@ -195,6 +269,11 @@ def _process_ref(inner: str, text_transform) -> str:
 
 def _process_image(inner: str, text_transform) -> str:
     """Convert image content (already stripped of [[File:...]]) to {{IMG:filename|clean caption}}."""
+    # Check for external caption (from plate pages: image + caption on next line)
+    ext_caption = ""
+    if "|EXTCAP:" in inner:
+        inner, ext_caption = inner.rsplit("|EXTCAP:", 1)
+
     parts = [p.strip() for p in inner.split("|")]
     filename = parts[0]
 
@@ -212,6 +291,10 @@ def _process_image(inner: str, text_transform) -> str:
             continue
         caption = part
         break
+
+    # Use external caption if no inline caption
+    if not caption and ext_caption:
+        caption = ext_caption
 
     if caption:
         caption = text_transform(caption)
@@ -243,7 +326,8 @@ def _process_image_float(inner: str, text_transform) -> str:
 
 def _process_poem(inner: str, text_transform) -> str:
     """Convert poem content to {{VERSE:...}VERSE}."""
-    return f"{{{{VERSE:{inner}}}}}VERSE}}"
+    content = text_transform(inner)
+    return "{{VERSE:" + content + "}VERSE}"
 
 
 def _process_table(inner: str, text_transform) -> str:
@@ -254,6 +338,29 @@ def _process_table(inner: str, text_transform) -> str:
     The table processor only deals with table structure: rows, cells,
     and cell attributes.
     """
+    # Check for image-layout table (plate pages: grid of images + captions)
+    if _PH in inner:
+        # Count child placeholders that are images vs text content
+        placeholders = re.findall(re.escape(_PH) + r"[^" + re.escape(_PH) + r"]+" + re.escape(_PH), inner)
+        non_placeholder = re.sub(re.escape(_PH) + r"[^" + re.escape(_PH) + r"]+" + re.escape(_PH), "", inner)
+        non_placeholder = re.sub(r"\|[^|\n]*", "", non_placeholder)  # strip cell separators
+        non_placeholder = re.sub(r"[-|{}\s]", "", non_placeholder)
+        if len(placeholders) >= 2 and len(non_placeholder) < len(placeholders) * 20:
+            # Mostly images — extract placeholders and any caption text
+            parts = []
+            for ph in placeholders:
+                parts.append(ph)
+            # Find numbered captions in the remaining text
+            for m in re.finditer(r"(\d+)\.\s*([A-Z][A-Z\s,.:;()\-']+)", inner):
+                parts.append(f"{m.group(1)}. {m.group(2).strip()}")
+            return "\n\n".join(parts)
+
+    # Check for brace layout (poem + translation side by side)
+    if "brace" in inner.lower() and "rowspan" in inner.lower():
+        result = _process_brace_table(inner, text_transform)
+        if result:
+            return result
+
     # Check for structural formula (monospaced, spatial layout)
     if _is_structural_formula(inner):
         return _format_structural_formula(inner)
@@ -282,20 +389,38 @@ def _process_table(inner: str, text_transform) -> str:
         if "|+" in raw_row:
             continue
 
-        # Strip remaining wiki templates, but preserve our markers
-        # ({{IMG:, {{TABLE, {{VERSE:, «FN:, «MATH:)
-        cleaned = re.sub(
-            r"\{\{(?!IMG:|TABLE|VERSE:)[^{}]*\}\}", "", raw_row)
+        # Cell content is already processed — child elements have been
+        # extracted and reinserted as final markers.  Don't strip anything.
+        cleaned = raw_row
+
+        # Preserve any child element placeholders that appear outside
+        # cells (e.g. poems between table rows).
+        for line in cleaned.split("\n"):
+            stripped_line = line.strip()
+            if _PH in stripped_line and not stripped_line.startswith("|"):
+                # This is a placeholder on its own line — preserve it
+                image_parts.append(stripped_line)
 
         # Extract cell values: each | starts a cell.
-        # Protect {{...}} markers from pipe-splitting.
+        # Protect {{...}} and placeholders from pipe-splitting.
         protected = re.sub(r"\{\{[^}]*\}\}", lambda m: m.group(0).replace("|", "\x04"), cleaned)
-        cells = re.findall(r"\|([^|\n]+)", protected)
-        cells = [c.replace("\x04", "|") for c in cells]
-        cells = [c.strip() for c in cells
-                 if c.strip()
-                 and not _ATTR.match(c.strip())
-                 and c.strip() not in ("}", "{|")]
+        protected = re.sub(re.escape(_PH) + r"[^" + re.escape(_PH) + r"]+" + re.escape(_PH),
+                           lambda m: m.group(0).replace("|", "\x04"), protected)
+        raw_cells = re.findall(r"\|([^|\n]+)", protected)
+        raw_cells = [c.replace("\x04", "|") for c in raw_cells]
+        # Filter attributes but preserve empty cells as placeholders
+        cells = []
+        for c in raw_cells:
+            s = c.strip()
+            if not s or s in ("}", "{|"):
+                continue
+            if _ATTR.match(s):
+                # Attribute cell — skip it but if it implies a spanning
+                # empty cell, add a placeholder
+                if "rowspan" in s.lower() or "colspan" in s.lower():
+                    cells.append("")
+                continue
+            cells.append(s)
 
         # Collect any image markers that were reinserted as children
         for cell in cells:
@@ -303,13 +428,13 @@ def _process_table(inner: str, text_transform) -> str:
                 # Cell contains a processed child marker — keep it
                 pass
 
-        # Separate image-only cells from data cells
+        # Separate image-only cells from data cells, transform cell text
         data_cells = []
         for c in cells:
             if re.match(r"^\s*\{\{IMG:[^}]+\}\}\s*$", c):
                 image_parts.append(c.strip())
             else:
-                data_cells.append(c)
+                data_cells.append(text_transform(c))
 
         if not data_cells:
             continue
@@ -349,6 +474,80 @@ def _process_table(inner: str, text_transform) -> str:
     if parts:
         return "\n\n".join(parts)
     return ""
+
+
+def _process_html_table(inner: str, text_transform) -> str:
+    """Convert HTML table content (<tr>, <td>, <th>) to {{TABLE:...}TABLE}."""
+    rows = re.findall(r"<tr[^>]*>(.*?)</tr>", inner, re.DOTALL | re.IGNORECASE)
+    if not rows:
+        # No rows found — just strip all HTML and return content
+        text = re.sub(r"<[^>]+>", " ", inner)
+        text = re.sub(r"\s+", " ", text).strip()
+        return text
+
+    text_rows = []
+    has_header = False
+    for row in rows:
+        if "<th" in row.lower():
+            has_header = True
+        cells = re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", row, re.DOTALL | re.IGNORECASE)
+        if cells:
+            cleaned = []
+            for cell in cells:
+                c = re.sub(r"<[^>]+>", " ", cell)
+                c = re.sub(r"\s+", " ", c).strip()
+                if c:
+                    cleaned.append(text_transform(c))
+            if cleaned:
+                text_rows.append(" | ".join(cleaned))
+
+    if text_rows:
+        header = "H" if has_header else ""
+        return "{{TABLE" + header + ":" + "\n".join(text_rows) + "}TABLE}"
+    return ""
+
+
+def _process_brace_table(inner: str, text_transform) -> str | None:
+    """Handle tables with {{brace}} + rowspan used for poem/translation layout.
+
+    Pattern: left column has verse lines (one per row), middle has a brace,
+    right column has a merged translation cell.  Output as verse + translation.
+    """
+    rows = re.split(r"\|-[^\n]*", inner)
+
+    left_lines = []
+    right_text = ""
+
+    for row in rows:
+        # Strip templates and attributes
+        cleaned = re.sub(r"\{\{[^{}]*\}\}", "", row)
+        cells = re.findall(r"\|([^|\n]+)", cleaned)
+        cells = [c.strip() for c in cells
+                 if c.strip()
+                 and not re.match(
+                     r"^(?:colspan|rowspan|width|style|align|valign|class|"
+                     r"cellpadding|nowrap|border|bgcolor|height)[\s=|]",
+                     c.strip(), re.IGNORECASE)
+                 and c.strip() not in ("}", "{|")]
+
+        for cell in cells:
+            # Skip brace artifacts and empty cells
+            if not cell or len(cell) < 2:
+                continue
+            # The right-side translation tends to be the longest cell
+            if len(cell) > 40 and not right_text:
+                right_text = text_transform(cell)
+            elif len(cell) > 2:
+                left_lines.append(text_transform(cell))
+
+    if not left_lines:
+        return None
+
+    # Build verse block with translation
+    verse = "{{VERSE:" + "\n".join(left_lines) + "}VERSE}"
+    if right_text:
+        return verse + "\n\n" + right_text
+    return verse
 
 
 def _is_structural_formula(text: str) -> bool:
@@ -396,9 +595,30 @@ def process_elements(text: str, text_transform, context: dict) -> str:
     """
     extracted, registry = extract(text)
 
-    # Process each element (recursion handles nesting)
-    for key, (element_type, raw) in registry.elements.items():
-        processed = _process_element(element_type, raw, text_transform, context)
-        extracted = extracted.replace(key, processed)
+    # Transform the body text (everything between elements)
+    extracted = text_transform(extracted)
 
-    return extracted
+    # Process each element (recursion handles nesting)
+    processed_map = {}
+    for key, (element_type, raw) in registry.elements.items():
+        processed_map[key] = _process_element(
+            element_type, raw, text_transform, context)
+
+    # Substitute all processed elements — repeat until stable
+    # (handles cross-element references: table placeholder inside a ref)
+    result = extracted
+    for _pass in range(3):  # max 3 passes for deeply nested cross-refs
+        changed = False
+        for key, processed in processed_map.items():
+            if key in result:
+                result = result.replace(key, processed)
+                changed = True
+            # Also check if the placeholder appears inside other processed elements
+            for other_key in processed_map:
+                if key in processed_map[other_key]:
+                    processed_map[other_key] = processed_map[other_key].replace(
+                        key, processed)
+        if not changed:
+            break
+
+    return result
