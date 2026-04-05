@@ -61,6 +61,8 @@ _EXTRACTORS = [
         r"\[\[(?:File|Image):([^\]]+)\]\]"
         r"(?:\s*\n\n?(\{\{sc\|Fig\.[^}]*\}\}[^\n]+|\d+\.\s*[A-Z][^\n]+))?",
         re.IGNORECASE), 0),
+    ("HIEROGLYPH", re.compile(
+        r"\{\{hieroglyph\|([^{}]*)\}\}", re.IGNORECASE), 0),
 ]
 
 
@@ -155,6 +157,8 @@ def _strip_delimiters(element_type: str, raw: str) -> str:
         s = re.sub(r"^<table\b[^>]*>", "", raw, flags=re.IGNORECASE)
         s = re.sub(r"</table>\s*$", "", s, flags=re.IGNORECASE)
         return s
+    elif element_type == "HIEROGLYPH":
+        return re.sub(r"^\{\{hieroglyph\||\}\}$", "", raw, flags=re.IGNORECASE)
     elif element_type == "IMAGE_FLOAT":
         # Strip outer {{ and }}
         s = re.sub(r"^\{\{", "", raw)
@@ -200,6 +204,8 @@ def _process_element(element_type: str, raw: str,
         result = _process_image_float(inner, text_transform)
     elif element_type == "POEM":
         result = _process_poem(inner, text_transform)
+    elif element_type == "HIEROGLYPH":
+        result = f"[hieroglyph: {inner}]"
     elif element_type == "TABLE":
         result = _process_table(inner, text_transform)
     elif element_type == "HTML_TABLE":
@@ -338,6 +344,22 @@ def _process_table(inner: str, text_transform) -> str:
     The table processor only deals with table structure: rows, cells,
     and cell attributes.
     """
+    # Convert <br> to space before cell parsing
+    inner = re.sub(r"<br\s*/?>", " ", inner, flags=re.IGNORECASE)
+
+    # Tiny inline tables (1-2 cells) → unwrap to inline text
+    stripped = re.sub(r"\|-[^\n]*", "", inner)
+    stripped = re.sub(r"<[^>]+>", "", stripped)
+    cells_check = [c.strip() for c in re.findall(r"\|([^|\n]+)", stripped) if c.strip()]
+    _ATTR_CHECK = re.compile(
+        r"^(?:colspan|rowspan|width|style|align|valign|class|cellpadding|"
+        r"nowrap|border|bgcolor|height)[\s=|]", re.IGNORECASE)
+    data_check = [c for c in cells_check if not _ATTR_CHECK.match(c)]
+    # Only unwrap truly tiny tables — no placeholders (which indicate children)
+    if (len(data_check) <= 2 and sum(len(c) for c in data_check) < 80
+            and _PH not in inner):
+        return " ".join(data_check)
+
     # Check for image-layout table (plate pages: grid of images + captions)
     if _PH in inner:
         # Count child placeholders that are images vs text content
@@ -390,8 +412,10 @@ def _process_table(inner: str, text_transform) -> str:
             continue
 
         # Cell content is already processed — child elements have been
-        # extracted and reinserted as final markers.  Don't strip anything.
-        cleaned = raw_row
+        # extracted and reinserted as final markers.
+        # Convert <br> to space before cell extraction so multi-line
+        # headers like "1898.<br>Acres." become "1898. Acres."
+        cleaned = re.sub(r"<br\s*/?>", " ", raw_row, flags=re.IGNORECASE)
 
         # Preserve any child element placeholders that appear outside
         # cells (e.g. poems between table rows).
@@ -415,9 +439,9 @@ def _process_table(inner: str, text_transform) -> str:
             if not s or s in ("}", "{|"):
                 continue
             if _ATTR.match(s):
-                # Attribute cell — skip it but if it implies a spanning
-                # empty cell, add a placeholder
-                if "rowspan" in s.lower() or "colspan" in s.lower():
+                # Attribute cell — skip it but if rowspan implies a
+                # missing cell in a later row, add an empty placeholder
+                if "rowspan" in s.lower():
                     cells.append("")
                 continue
             cells.append(s)
@@ -428,13 +452,13 @@ def _process_table(inner: str, text_transform) -> str:
                 # Cell contains a processed child marker — keep it
                 pass
 
-        # Separate image-only cells from data cells, transform cell text
+        # Separate image-only cells from data cells (already transformed)
         data_cells = []
         for c in cells:
             if re.match(r"^\s*\{\{IMG:[^}]+\}\}\s*$", c):
                 image_parts.append(c.strip())
             else:
-                data_cells.append(text_transform(c))
+                data_cells.append(c)
 
         if not data_cells:
             continue

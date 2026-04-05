@@ -166,6 +166,19 @@
       return h;
     }
 
+    function parseQuery(raw) {
+      let q = raw;
+      const filters = [];
+      const excludes = [];
+      q = q.replace(/\bvol:(\d+)\b/gi, (m, n) => { filters.push(`volume = ${n}`); return ""; });
+      q = q.replace(/\bmin:(\d+)\b/gi, (m, n) => { filters.push(`body_length >= ${n}`); return ""; });
+      q = q.replace(/\bmax:(\d+)\b/gi, (m, n) => { filters.push(`body_length <= ${n}`); return ""; });
+      q = q.replace(/\btype:(\w+)\b/gi, (m, t) => { filters.push(`article_type = "${t}"`); return ""; });
+      q = q.replace(/\bby:(\S+)\b/gi, (m, name) => { filters.push(`contributors CONTAINS "${name}"`); return ""; });
+      q = q.replace(/(?:^|\s)-(\S+)/g, (m, word) => { excludes.push(word.toLowerCase()); return ""; });
+      return { query: q.trim(), filter: filters.length ? filters.join(" AND ") : undefined, excludes };
+    }
+
     async function doSearch(query) {
       if (!query.trim()) {
         resultsEl.innerHTML = "";
@@ -176,26 +189,37 @@
       }
 
       try {
+        const parsed = parseQuery(query);
+        const searchBody = {
+          q: parsed.query,
+          limit: 50,
+          attributesToRetrieve: ["id", "title", "article_type", "volume", "page_start", "page_end", "body_start", "body_length", "filename", "contributors"],
+          attributesToHighlight: ["body", "title"],
+          attributesToCrop: ["body:30"],
+          cropLength: 30,
+          highlightPreTag: "<em>",
+          highlightPostTag: "</em>",
+        };
+        if (parsed.filter) searchBody.filter = parsed.filter;
+
         const resp = await fetch(`${MEILI_URL}/indexes/${INDEX}/search`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${MEILI_KEY}`,
           },
-          body: JSON.stringify({
-            q: query,
-            limit: 50,
-            attributesToRetrieve: ["id", "title", "article_type", "volume", "page_start", "page_end", "body_start", "filename", "contributors"],
-            attributesToHighlight: ["body", "title"],
-            attributesToCrop: ["body:30"],
-            cropLength: 30,
-            highlightPreTag: "<em>",
-            highlightPostTag: "</em>",
-          }),
+          body: JSON.stringify(searchBody),
         });
 
         const data = await resp.json();
-        const hits = data.hits || [];
+        let hits = data.hits || [];
+
+        if (parsed.excludes.length) {
+          hits = hits.filter(hit => {
+            const text = ((hit.body_start || "") + " " + (hit.title || "")).toLowerCase();
+            return !parsed.excludes.some(ex => text.includes(ex));
+          });
+        }
 
         resultsCard.style.display = "block";
         resultsDivider.style.display = "block";

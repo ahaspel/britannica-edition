@@ -11,14 +11,22 @@ set -euo pipefail
 
 VOLUMES=$(seq 1 28)
 EXPORT_DIR="data/derived/articles"
+BUILD_START=$(date +%s)
+
+elapsed() {
+  local now=$(date +%s)
+  local secs=$((now - BUILD_START))
+  printf "%d:%02d" $((secs / 60)) $((secs % 60))
+}
 
 echo "============================================"
 echo "  Full rebuild: volumes 1-28"
+echo "  Started: $(date '+%Y-%m-%d %H:%M:%S')"
 echo "============================================"
 echo
 
 # --- Phase 1: Wipe everything ---
-echo "=== Phase 1: Wiping all volumes from database ==="
+echo "=== Phase 1: Wiping all volumes from database [$(elapsed)] ==="
 for vol in $VOLUMES; do
   echo "  Wiping volume $vol..."
   ./tools/db/wipe_volume.sh "$vol" > /dev/null 2>&1
@@ -39,7 +47,7 @@ for vol in $VOLUMES; do
   RUN_DIR="data/raw/wikisource/vol_${PADDED}"
 
   echo
-  echo "--- Volume $vol ---"
+  echo "--- Volume $vol [$(elapsed)] ---"
 
   echo "  Importing pages..."
   uv run python tools/fetch/import_wikisource_pages.py \
@@ -70,17 +78,17 @@ for vol in $VOLUMES; do
   echo "  Exporting articles..."
   uv run britannica export-articles "$vol"
 
-  echo "  Volume $vol complete."
+  echo "  Volume $vol complete. [$(elapsed)]"
 done
 
 # --- Phase 3: Cross-volume xref resolution ---
 echo
-echo "=== Phase 3: Resolving cross-references across all volumes ==="
+echo "=== Phase 3: Resolving cross-references across all volumes [$(elapsed)] ==="
 uv run britannica resolve-xrefs-all
 
 # --- Phase 4: Re-export (xref targets now resolved cross-volume) ---
 echo
-echo "=== Phase 4: Re-exporting all volumes (with resolved xrefs) ==="
+echo "=== Phase 4: Re-exporting all volumes (with resolved xrefs) [$(elapsed)] ==="
 for vol in $VOLUMES; do
   echo "  Re-exporting volume $vol..."
   uv run britannica export-articles "$vol"
@@ -119,20 +127,21 @@ s.close()
 
 # --- Phase 5: Post-processing cleanup ---
 echo
-echo "=== Phase 5: Post-processing exported articles ==="
+echo "=== Phase 5: Post-processing exported articles [$(elapsed)] ==="
 uv run python tools/postprocess.py
 
 # --- Phase 6: Reindex search ---
 echo
-echo "=== Phase 6: Reindexing Meilisearch ==="
+echo "=== Phase 6: Reindexing Meilisearch [$(elapsed)] ==="
 uv run python tools/index_search.py
 
 # --- Phase 7: Quality analytics ---
 echo
-echo "=== Phase 7: Running quality report ==="
+echo "=== Phase 7: Running quality report [$(elapsed)] ==="
 uv run python tools/quality_report.py
 
 echo
 echo "============================================"
-echo "  Rebuild complete."
+echo "  Rebuild complete. Total time: $(elapsed)"
+echo "  Finished: $(date '+%Y-%m-%d %H:%M:%S')"
 echo "============================================"

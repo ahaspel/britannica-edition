@@ -37,7 +37,11 @@ def main():
             "searchableAttributes": ["title", "body", "contributors"],
             "displayedAttributes": [
                 "id", "title", "article_type", "volume", "page_start",
-                "page_end", "body_start", "filename", "contributors",
+                "page_end", "body_start", "body_length", "filename", "contributors",
+            ],
+            "filterableAttributes": [
+                "volume", "article_type", "body_length", "page_start", "page_end",
+                "contributors",
             ],
             "sortableAttributes": ["title", "volume", "page_start"],
         },
@@ -85,6 +89,7 @@ def main():
             "page_end": article["page_end"],
             "body": body,
             "body_start": body_start,
+            "body_length": len(words),
             "filename": f.split("/")[-1].split("\\")[-1],
             "contributors": ", ".join(
                 c["full_name"] for c in article.get("contributors", [])

@@ -316,6 +316,17 @@
       user-select: none;
     }
 
+    .page-marker.unproofed {
+      color: #b85c00;
+      font-weight: 600;
+    }
+
+    .page-marker.unproofed::after {
+      content: " \25C6";
+      font-size: 0.5em;
+      vertical-align: super;
+    }
+
     @media (max-width: 700px) {
       .body-text { margin-left: 0; }
       .page-marker { display: none; }
@@ -672,6 +683,7 @@
 
     let footnoteCounter = 0;
     let currentVolume = "?";
+    let unproofedPages = {};
     let collectedFootnotes = [];
     let linkedTargets = new Set();
     let sectionCounter = 0;
@@ -794,7 +806,12 @@
       // vertical position, even when multiple markers appear in one <p>.
       // Render page markers as left-margin citations (vol:page)
       html = html.replace(/\x01PAGE:(\d+)\x01/g, (match, page) => {
-        return `<span class="page-marker" title="Volume ${currentVolume}, page ${page}">${currentVolume}:${page}</span>`;
+        const isUnproofed = page in unproofedPages;
+        const cls = isUnproofed ? "page-marker unproofed" : "page-marker";
+        const title = isUnproofed
+          ? `Volume ${currentVolume}, page ${page} (unproofed source)`
+          : `Volume ${currentVolume}, page ${page}`;
+        return `<span class="${cls}" title="${title}">${currentVolume}:${page}</span>`;
       });
       html = html.replace(/\{\{TABLE[H]?:([\s\S]*?)\}TABLE\}/g, (match, content) => {
         const rows = content.split("\n").filter(r => r.trim());
@@ -894,6 +911,7 @@
 
     function renderArticle(article) {
       currentVolume = article.volume || "?";
+      unproofedPages = (article.source_quality && article.source_quality.unproofed_pages) ? article.source_quality.unproofed_pages : {};
       const segments = Array.isArray(article.segments) ? article.segments : [];
       const xrefs = (Array.isArray(article.xrefs) ? article.xrefs : [])
         .slice().sort((a, b) => (a.normalized_target || "").localeCompare(b.normalized_target || ""));
@@ -1026,9 +1044,9 @@
       // Production: /article/367/pharaoh -> 0367-PHARAOH.json
       const match = window.location.pathname.match(/^\/article\/(\d+)\/(.+)/);
       if (match) {
-        const page = match[1].padStart(4, "0");
+        const id = match[1];
         const slug = decodeURIComponent(match[2]).toUpperCase();
-        initialPath = `${DATA_BASE}/${page}-${slug}.json`;
+        initialPath = `${DATA_BASE}/${id}-${slug}.json`;
       }
     }
     if (initialPath) {

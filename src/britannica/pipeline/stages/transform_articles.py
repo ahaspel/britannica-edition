@@ -13,59 +13,13 @@ only one article body is in memory at any point.
 from __future__ import annotations
 
 import re
-import sys
-from pathlib import Path
 
 from britannica.db.models import Article, ArticleSegment, SourcePage
 from britannica.db.session import SessionLocal
 
-# --- Import clean_pages helpers (always available via src/) ----------------
-from britannica.cleaners.headers_footers import strip_headers
-from britannica.cleaners.hyphenation import fix_hyphenation
 from britannica.cleaners.reflow import reflow_paragraphs
 from britannica.cleaners.unicode import normalize_unicode
-from britannica.cleaners.whitespace import normalize_whitespace
-from britannica.pipeline.stages.clean_pages import (
-    _STRAY_CONTROL,
-    _clean_plate_layout,
-    _convert_img_float,
-    _clean_leaked_table_markup,
-    _fix_unclosed_footnotes,
-    _fix_unclosed_tables,
-    _replace_score_tags,
-)
-
-# Fetch stages are loaded lazily — tools/fetch/ is not on sys.path at import
-# time in all contexts (e.g. pytest collection).
-_FETCH_STAGES = None
-
-
-def _get_fetch_stages():
-    global _FETCH_STAGES
-    if _FETCH_STAGES is None:
-        # Walk up from src/britannica/pipeline/stages/ to project root
-        project_root = Path(__file__).resolve().parents[4]
-        tools_fetch = str(project_root / "tools" / "fetch")
-        if tools_fetch not in sys.path:
-            sys.path.insert(0, tools_fetch)
-        from fetch_wikisource_pages import STAGES
-        _FETCH_STAGES = STAGES
-    return _FETCH_STAGES
-
-
-def _preprocess_text(text: str) -> str:
-    """Run preprocessing stages on raw wikitext.
-
-    Safe stages that don't destroy element delimiters.
-    """
-    # Strip <noinclude> blocks (page headers, quality tags, contributor tables)
-    text = re.sub(r"<noinclude>.*?</noinclude>", "", text, flags=re.DOTALL | re.IGNORECASE)
-    stages = _get_fetch_stages()
-    # 1: line endings, 4: HTML comments, 6: poem wrappers, 7: fine print
-    # 24: decode HTML entities, 25: normalize whitespace
-    for i in [0, 3, 5, 6, 23, 24]:
-        text = stages[i](text)
-    return text
+from britannica.pipeline.stages.clean_pages import _replace_score_tags
 
 
 # ── Body text processing stages ──────────────────────────────────────
@@ -190,8 +144,14 @@ def _unwrap_content_templates(text: str) -> str:
     # Abbreviation/tooltip → first arg (display text)
     text = re.sub(r"\{\{abbr\|([^{}|]*)\|[^{}]*\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{tooltip\|([^{}|]*)\|[^{}]*\}\}", r"\1", text, flags=re.IGNORECASE)
+    # Size/alignment wrappers → content
+    text = re.sub(r"\{\{sm\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{right\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{left\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     # Special markers
     text = re.sub(r"\{\{sic\}\}", "[sic]", text, flags=re.IGNORECASE)
+    # Strip anchor templates (no visible output)
+    text = re.sub(r"\{\{anchor\|[^{}]*\}\}", "", text, flags=re.IGNORECASE)
     return text
 
 
@@ -256,11 +216,11 @@ def _convert_bold_italic(text: str) -> str:
 
 def _strip_templates(text: str) -> str:
     """Strip all remaining {{...}} wiki templates and orphaned markup."""
-    # Iterative stripping handles nesting
+    # Iterative stripping handles nesting — preserve our own markers
     prev = None
     while prev != text:
         prev = text
-        text = re.sub(r"\{\{[^{}]*\}\}", "", text)
+        text = re.sub(r"\{\{(?!IMG:|TABLE|VERSE:)[^{}]*\}\}", "", text)
     # Orphaned closing braces
     text = re.sub(r"^\s*\}\}+\s*$", "", text, flags=re.MULTILINE)
     # Orphaned wiki table markup
@@ -344,36 +304,64 @@ def _transform_plate(raw_wikitext: str) -> str:
     for m in re.finditer(r"\[\[(?:File|Image):([^|\]]+)", text, re.IGNORECASE):
         images.append(m.group(1).strip())
 
-    # Extract all numbered captions: "N. CAPTION TEXT"
+    # Extract all numbered captions.
+    # Formats: "N. ALL CAPS CAPTION" or "Fig. N.—Mixed case description"
     captions = {}
-    for m in re.finditer(r"(\d+)\.\s+([A-Z][A-Z\s,.:;()\-']+)", text):
+    # Format 1: N. ALL CAPS
+    for m in re.finditer(r"(?<!\w)(\d+)\.\s+([A-Z][A-Z\s,.:;()\-']+)", text):
         num = int(m.group(1))
         cap = m.group(2).strip().rstrip(",.|;")
         if len(cap) >= 3 and num not in captions:
             captions[num] = cap
+    # Format 2: {{small-caps|Fig.}} N.—description  or  Fig. N.—description
+    for m in re.finditer(
+        r"(?:\{\{small-caps\|Fig\.\}\}|Fig\.)\s*(\d+)\.?\s*[—\-]\s*(.+?)(?:\n|$)",
+        text,
+    ):
+        num = int(m.group(1))
+        cap = m.group(2).strip().rstrip(",.|;")
+        # Clean wiki markup from caption
+        cap = re.sub(r"\{\{[^{}]*\}\}", "", cap)
+        cap = re.sub(r"'''|''", "", cap)
+        cap = re.sub(r"&amp;", "&", cap)
+        cap = re.sub(r"\s+", " ", cap).strip()
+        if len(cap) >= 3 and num not in captions:
+            captions[num] = f"Fig. {num}. {cap}"
 
     # Extract title lines (plate title, e.g. "EARLY EGYPTIAN ART")
+    # Skip lines inside table cells (<td>, |) and avoid duplicates
+    title_seen = set()
     title_lines = []
+    in_table = False
     for line in text.split("\n"):
-        line = line.strip()
-        if not line:
+        stripped = line.strip()
+        if not stripped:
             continue
-        if line.startswith("[[") or line.startswith("{|") or line.startswith("|}"):
+        if stripped.startswith("<table") or stripped.startswith("{|"):
+            in_table = True
             continue
-        if line.startswith("|") or line.startswith("{{"):
+        if stripped.startswith("</table") or stripped.startswith("|}"):
+            in_table = False
             continue
-        # Clean wiki markup
-        clean = re.sub(r"\{\{[^{}]*\}\}", "", line)
+        if in_table:
+            continue
+        if stripped.startswith("[[") or stripped.startswith("{{"):
+            continue
+        if stripped.startswith("|") or stripped.startswith("<tr") or stripped.startswith("<td"):
+            continue
+        clean = re.sub(r"\{\{[^{}]*\}\}", "", stripped)
         clean = re.sub(r"'''|''", "", clean)
         clean = re.sub(r"<[^>]+>", "", clean)
         clean = clean.strip()
         if clean and len(clean) > 2 and not re.match(r"^\d+\.", clean):
-            if clean.isupper() or clean.startswith("Plate"):
+            if (clean.isupper() or clean.startswith("Plate")) and clean not in title_seen:
+                title_seen.add(clean)
                 title_lines.append(clean)
 
     # Pair images with captions by keyword matching
     sorted_caps = sorted(captions.items())
     used_images = set()
+    unmatched_caps = []
     paired = []
 
     def _img_words(filename):
@@ -399,9 +387,19 @@ def _transform_plate(raw_wikitext: str) -> str:
             used_images.add(best_img)
             paired.append(f"{{{{IMG:{images[best_img]}|{num}. {cap}}}}}")
         else:
+            unmatched_caps.append((num, cap))
+
+    # Positional fallback: pair unmatched captions with unmatched images in order
+    unmatched_imgs = [i for i in range(len(images)) if i not in used_images]
+    for j, (num, cap) in enumerate(unmatched_caps):
+        if j < len(unmatched_imgs):
+            img_idx = unmatched_imgs[j]
+            used_images.add(img_idx)
+            paired.append(f"{{{{IMG:{images[img_idx]}|{num}. {cap}}}}}")
+        else:
             paired.append(f"{num}. {cap}")
 
-    # Add unmatched images
+    # Add remaining unmatched images
     for i, img in enumerate(images):
         if i not in used_images:
             paired.append(f"{{{{IMG:{img}}}}}")
@@ -502,8 +500,8 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
     # with cell parsing
     text = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}", "", text)
 
-    # Wrap orphaned table rows so the extractor can find them
-    text = _wrap_orphaned_table_rows(text)
+    # No need for orphan table wrapping — articles are joined before
+    # transform, so all tables have their {| and |} in the same text.
 
     # Extract, process, reassemble — this does all the work
     context = {"volume": volume, "page_number": page_number}
@@ -512,39 +510,13 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
     # Reflow paragraphs — join lines that were hard-wrapped in the source
     text = reflow_paragraphs(text)
 
+    # Strip leading comma/space left after title+descriptor stripping
+    # (e.g. "'''BISMARCK,''' {{sc|Prince}}, duke..." → ", duke..." after transform)
+    text = re.sub(r"^[\s,]+", "", text)
+
     return text
 
 
-def _run_fetch_stages(text: str) -> str:
-    """Run the 26 fetch conversion stages, skipping stage 3 (section tags).
-
-    Stage 3 converts ``<section begin=...>`` to ``«SEC:...»`` markers.
-    We skip it because boundaries are already locked in — the section tags
-    have served their purpose and should simply be stripped.
-    """
-    stages = _get_fetch_stages()
-    for i, stage_fn in enumerate(stages):
-        if i == 2:  # stage 3 is index 2 (0-based)
-            continue
-        text = stage_fn(text)
-    return text
-
-
-def _run_clean_pages(text: str) -> str:
-    """Run the clean_pages transformations on marker-format text."""
-    text = normalize_unicode(text)
-    text, _ = strip_headers(text)
-    text, _ = fix_hyphenation(text)
-    text = reflow_paragraphs(text)
-    text = normalize_whitespace(text)
-    text = _STRAY_CONTROL.sub("", text)
-    text = text.replace("''", "")
-    text = _clean_plate_layout(text)
-    text = _convert_img_float(text)
-    text = _clean_leaked_table_markup(text)
-    text = _fix_unclosed_footnotes(text)
-    text = _fix_unclosed_tables(text)
-    return text
 
 
 def _wrap_orphaned_table_rows(text: str) -> str:
@@ -565,14 +537,25 @@ def _wrap_orphaned_table_rows(text: str) -> str:
     if not has_pipe_rows:
         return text
 
-    # If text already has a table opener, only wrap BEFORE it
-    # (orphaned rows preceding the table) or leave alone
+    # Count opens and closes
+    opens = len(re.findall(r"\{\|", text))
+    closes = len(re.findall(r"\|\}", text))
+
     if "{|" in text:
-        # Only handle |- rows before the first {|
+        if opens > closes:
+            # Unclosed table — add |} at end so balanced extractor can find it
+            text = text + "\n|}"
+        elif opens < closes:
+            # Orphaned |} — wrap preceding rows in {|
+            first_close = text.find("|}")
+            prefix = text[:first_close]
+            rest = text[first_close + 2:]
+            text = "{|\n" + prefix + "\n|}" + rest
+        # Also handle orphaned rows before the first {|
         first_table = text.find("{|")
         prefix = text[:first_table]
         rest = text[first_table:]
-        if "\n|-" in prefix or prefix.strip().startswith("|-"):
+        if prefix.strip() and ("\n|-" in prefix or prefix.strip().startswith("|-")):
             wrapped_prefix = _wrap_orphaned_table_rows(prefix)
             return wrapped_prefix + rest
         return text
@@ -609,44 +592,6 @@ def _wrap_orphaned_table_rows(text: str) -> str:
     return "\n".join(parts)
 
 
-def _clean_img_captions(text: str) -> str:
-    """Clean image captions to plain text.
-
-    After all marker conversions, image captions may contain formatting
-    markers («I», «SC», etc.) and residual HTML.  Strip these so captions
-    are clean text — the viewer should not have to process them.
-    """
-    def _clean(m):
-        filename = m.group(1)
-        caption = m.group(2) or ""
-        if caption:
-            # Strip formatting markers, keeping the text inside
-            caption = re.sub(r"\u00abB\u00bb(.*?)\u00ab/B\u00bb", r"\1", caption)
-            caption = re.sub(r"\u00abI\u00bb(.*?)\u00ab/I\u00bb", r"\1", caption)
-            caption = re.sub(r"\u00abSC\u00bb(.*?)\u00ab/SC\u00bb", r"\1", caption)
-            caption = re.sub(r"\u00ab/?[A-Z]+\u00bb", "", caption)
-            # Strip HTML tags (<br />, etc.)
-            caption = re.sub(r"<[^>]+>", " ", caption)
-            # Decode common HTML entities
-            caption = caption.replace("\u2001", "").replace("&nbsp;", " ")
-            caption = caption.replace("&#39;", "'").replace("&amp;", "&")
-            caption = caption.replace("&#8193;", "")
-            # Collapse whitespace
-            caption = re.sub(r"\s+", " ", caption).strip()
-            return "{{IMG:" + filename + "|" + caption + "}}"
-        return "{{IMG:" + filename + "}}"
-    return re.sub(r"\{\{IMG:([^|}]+)(?:\|([^}]*))?\}\}", _clean, text)
-
-
-def _transform_text(raw_wikitext: str) -> str:
-    """Convert raw wikitext to the final internal marker format."""
-    # Strip any remaining section tags (begin and end) — boundaries are done
-    text = re.sub(r'<section\s+(?:begin|end)="[^"]*"\s*/?>', "", raw_wikitext, flags=re.IGNORECASE)
-    text = _wrap_orphaned_table_rows(text)
-    text = _run_fetch_stages(text)
-    text = _run_clean_pages(text)
-    text = _clean_img_captions(text)
-    return text
 
 
 def transform_articles(volume: int) -> int:
@@ -679,28 +624,30 @@ def transform_articles(volume: int) -> int:
             )
 
             is_plate = article.article_type == "plate"
-            parts: list[str] = []
-            for seg, page_number in segments:
-                raw = seg.segment_text or ""
-                if is_plate:
-                    text = _transform_plate(raw) if raw else ""
-                else:
-                    text = _transform_text_v2(raw, volume, page_number) if raw else ""
-                text = text.strip()
-                if not text:
-                    continue
-                marker = f"\x01PAGE:{page_number}\x01"
-                if parts:
-                    joiner = "\n\n" if re.match(r"\u00abIMG:|\u00abSC\u00bb", text) else " "
-                    parts.append(joiner)
-                else:
-                    # First segment — marker goes at the very start
-                    text = marker + text
-                    parts.append(text)
-                    continue
-                parts.append(marker + text)
 
-            article.body = "".join(parts).strip()
+            if is_plate:
+                # Plates are single pages — process directly
+                raw = segments[0][0].segment_text if segments else ""
+                article.body = _transform_plate(raw) if raw else ""
+            else:
+                # Join raw segments with page markers, then transform once.
+                raw_parts = []
+                for seg, page_number in segments:
+                    raw = seg.segment_text or ""
+                    if not raw.strip():
+                        continue
+                    raw_parts.append(f"\x01PAGE:{page_number}\x01{raw}")
+                joined_raw = "\n".join(raw_parts)
+
+                # Fix cross-page hyphenation: con-\n\x01PAGE:N\x01tinuation
+                joined_raw = re.sub(
+                    r"(\w)-\n(\x01PAGE:\d+\x01)(\w)",
+                    r"\1\2\3", joined_raw,
+                )
+                article.body = _transform_text_v2(
+                    joined_raw, volume,
+                    segments[0][1] if segments else 0,
+                ) if joined_raw else ""
             session.commit()
             session.expire_all()
 

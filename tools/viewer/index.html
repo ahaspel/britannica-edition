@@ -269,8 +269,18 @@
       <div class="search-form">
         <input id="search" class="search-box" type="text" placeholder="Search articles..." autofocus />
         <button id="search-btn" class="search-btn">Search</button>
+        <span id="search-help-btn" style="cursor:pointer; font-size:1rem; color:var(--muted); padding:0 6px; user-select:none;" title="Search tips">&#x2139;</span>
       </div>
-      <div id="search-hint" style="font-size: 0.82rem; color: var(--muted); margin-top: -8px;"></div>
+      <div id="search-help-popup" style="display:none; font-size:0.82rem; color:var(--text); background:var(--panel); border:1px solid var(--border); border-radius:4px; padding:10px 14px; margin-top:4px; line-height:1.6;">
+        <b>Search operators:</b><br>
+        <code>min:1000</code> — articles longer than N words<br>
+        <code>max:500</code> — articles shorter than N words<br>
+        <code>vol:15</code> — filter to a specific volume<br>
+        <code>by:Chisholm</code> — filter by contributor<br>
+        <code>type:plate</code> — only plate pages<br>
+        <code>-word</code> — exclude results containing word<br>
+        <code>"battle of hastings"</code> — match words in exact order
+      </div>
 
       <div style="border-top: 1px solid var(--border); margin: 12px 0 4px;"></div>
       <div style="font-size: 0.85rem; font-variant: small-caps; letter-spacing: 0.05em; color: #8b7355; margin-bottom: 2px;">Browse by Volume</div>
@@ -383,15 +393,30 @@
 
     // ── Title search ──
     function searchTitle(query) {
-      const q = query.toLowerCase();
+      const parsed = parseQuery(query);
+      const q = parsed.query.toLowerCase();
       lastFiltered = articles
         .filter(a => {
           if ((a.article_type || "article") !== "article") return false;
+          if (!q) return true;  // operators only, no text query
           return a.title.toLowerCase().includes(q)
             || (a.body_start || "").toLowerCase().includes(q);
         })
+        .filter(a => {
+          // Apply parsed filters client-side
+          if (parsed.filter) {
+            const f = parsed.filter;
+            if (/volume = (\d+)/.test(f) && a.volume !== parseInt(f.match(/volume = (\d+)/)[1])) return false;
+            if (/body_length >= (\d+)/.test(f) && (a.body_length || 0) < parseInt(f.match(/body_length >= (\d+)/)[1])) return false;
+            if (/body_length <= (\d+)/.test(f) && (a.body_length || 0) > parseInt(f.match(/body_length <= (\d+)/)[1])) return false;
+          }
+          if (parsed.excludes.length) {
+            const text = (a.title + " " + (a.body_start || "")).toLowerCase();
+            if (parsed.excludes.some(ex => text.includes(ex))) return false;
+          }
+          return true;
+        })
         .sort((a, b) => {
-          // Relevance ranking
           const ra = rankTitle(a, q);
           const rb = rankTitle(b, q);
           if (ra !== rb) return ra - rb;
@@ -442,6 +467,47 @@
       updatePagination("title", totalPages);
     }
 
+    // ── Query parser for search operators ──
+    function parseQuery(raw) {
+      let q = raw;
+      const filters = [];
+      const excludes = [];
+
+      // vol:N — filter by volume
+      q = q.replace(/\bvol:(\d+)\b/gi, (m, n) => { filters.push(`volume = ${n}`); return ""; });
+
+      // min:N — minimum word count
+      q = q.replace(/\bmin:(\d+)\b/gi, (m, n) => { filters.push(`body_length >= ${n}`); return ""; });
+
+      // max:N — maximum word count
+      q = q.replace(/\bmax:(\d+)\b/gi, (m, n) => { filters.push(`body_length <= ${n}`); return ""; });
+
+      // type:article or type:plate
+      q = q.replace(/\btype:(\w+)\b/gi, (m, t) => { filters.push(`article_type = "${t}"`); return ""; });
+
+      // page:N — articles containing that page
+      q = q.replace(/\bpage:(\d+)\b/gi, (m, n) => {
+        filters.push(`page_start <= ${n}`);
+        filters.push(`page_end >= ${n}`);
+        return "";
+      });
+
+      // by:Name — filter by contributor
+      q = q.replace(/\bby:(\S+)\b/gi, (m, name) => {
+        filters.push(`contributors CONTAINS "${name}"`);
+        return "";
+      });
+
+      // -word — exclude (post-filter, Meilisearch doesn't support NOT)
+      q = q.replace(/(?:^|\s)-(\S+)/g, (m, word) => { excludes.push(word.toLowerCase()); return ""; });
+
+      return {
+        query: q.trim(),
+        filter: filters.length ? filters.join(" AND ") : undefined,
+        excludes,
+      };
+    }
+
     // ── Full-text search ──
     async function searchFulltext(query) {
       hideAllResults();
@@ -454,26 +520,38 @@
       }
 
       try {
+        const parsed = parseQuery(query);
+        const searchBody = {
+          q: parsed.query,
+          limit: 50,
+          attributesToRetrieve: ["title", "volume", "page_start", "page_end", "body_start", "body_length", "filename", "contributors"],
+          attributesToHighlight: ["body", "title"],
+          attributesToCrop: ["body:30"],
+          cropLength: 30,
+          highlightPreTag: "<em>",
+          highlightPostTag: "</em>",
+        };
+        if (parsed.filter) searchBody.filter = parsed.filter;
+
         const resp = await fetch(`${MEILI_URL}/indexes/articles/search`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${MEILI_KEY}`,
           },
-          body: JSON.stringify({
-            q: query,
-            limit: 50,
-            attributesToRetrieve: ["title", "volume", "page_start", "page_end", "body_start", "filename", "contributors"],
-            attributesToHighlight: ["body", "title"],
-            attributesToCrop: ["body:30"],
-            cropLength: 30,
-            highlightPreTag: "<em>",
-            highlightPostTag: "</em>",
-          }),
+          body: JSON.stringify(searchBody),
         });
 
         const data = await resp.json();
-        const hits = data.hits || [];
+        let hits = data.hits || [];
+
+        // Apply exclude post-filter
+        if (parsed.excludes.length) {
+          hits = hits.filter(hit => {
+            const text = ((hit.body_start || "") + " " + (hit.title || "")).toLowerCase();
+            return !parsed.excludes.some(ex => text.includes(ex));
+          });
+        }
 
         if (hits.length === 0) {
           emptyEl.style.display = "block";
@@ -658,11 +736,17 @@
 
     // ── Events ──
     const hints = {
-      title: "Search by article title",
-      fulltext: "Search article text",
-      contributors: "Search contributors",
+      title: "",
+      fulltext: "",
+      contributors: "",
     };
-    const hintEl = document.getElementById("search-hint");
+
+    // Toggle search help popup
+    document.getElementById("search-help-btn").addEventListener("click", () => {
+      const popup = document.getElementById("search-help-popup");
+      popup.style.display = popup.style.display === "none" ? "block" : "none";
+    });
+    const hintEl = document.getElementById("search-hint") || document.createElement("div");
 
     const placeholders = {
       title: "Search articles...",
