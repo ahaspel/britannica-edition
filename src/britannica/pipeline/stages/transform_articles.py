@@ -231,11 +231,15 @@ def _convert_sub_sup(text: str) -> str:
     _SUB = str.maketrans("0123456789+-=()", "₀₁₂₃₄₅₆₇₈₉₊₋₌₍₎")
     _SUP = str.maketrans("0123456789+-=()", "⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾")
 
+    def _strip_wiki_format(s):
+        """Strip '''/'' wiki formatting from sub/sup content."""
+        return s.replace("'''", "").replace("''", "")
+
     def _sub_repl(m):
-        return m.group(1).translate(_SUB)
+        return _strip_wiki_format(m.group(1)).translate(_SUB)
 
     def _sup_repl(m):
-        return m.group(1).translate(_SUP)
+        return _strip_wiki_format(m.group(1)).translate(_SUP)
 
     text = re.sub(r"<sub>([^<]*)</sub>", _sub_repl, text, flags=re.IGNORECASE)
     text = re.sub(r"<sup>([^<]*)</sup>", _sup_repl, text, flags=re.IGNORECASE)
