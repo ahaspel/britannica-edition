@@ -487,6 +487,75 @@ def _process_table(inner: str, text_transform,
         else:
             text_rows.append(" | ".join(data_cells))
 
+    # Strip spacer columns from colspan tables only.  These tables have
+    # group headers spanning multiple data columns, with empty separator
+    # columns between groups.  The colspan attribute in the raw markup
+    # is the reliable signal — no single-header table uses colspan.
+    if "colspan" in inner and len(text_rows) >= 4:
+        split_rows = [r.split(" | ") for r in text_rows]
+        ncols = max(len(r) for r in split_rows)
+        # Identify data rows vs section-divider rows.  Data rows repeat
+        # 3+ times (e.g. 1897, 1901, 1906) at a consistent column count.
+        # Section dividers (group labels) repeat fewer times.
+        from collections import Counter
+        col_counts = Counter(len(r) for r in split_rows)
+        # Column counts with 3+ occurrences are data row groups.
+        # Counts with exactly 2 are sub-header + section-divider pairs.
+        # Use 3+ as the threshold to separate data from labels.
+        data_col_groups = {n for n, cnt in col_counts.items() if cnt >= 3}
+        if not data_col_groups:
+            # Fallback: use the most common count with 2+
+            data_col_groups = {col_counts.most_common(1)[0][0]}
+            if col_counts.most_common(1)[0][1] < 2:
+                data_col_groups = set()
+
+        # For each group, find columns empty in ALL rows of that group
+        empty_by_group: dict[int, set[int]] = {}
+        for ncols_g in data_col_groups:
+            group_rows = [r for r in split_rows if len(r) == ncols_g]
+            empty = set()
+            for j in range(ncols_g):
+                if all(not r[j].strip() for r in group_rows):
+                    empty.add(j)
+            if empty:
+                empty_by_group[ncols_g] = empty
+
+        if empty_by_group:
+            new_rows = []
+            for cells in split_rows:
+                nc = len(cells)
+                if nc in empty_by_group:
+                    new_rows.append(" | ".join(
+                        cells[j] for j in range(nc)
+                        if j not in empty_by_group[nc]
+                    ))
+                else:
+                    # Section-divider row (group labels from colspan).
+                    # Strip empty cells, then pad to match the stripped
+                    # data column count so labels align over their groups.
+                    content_cells = [c for c in cells if c.strip()]
+                    if content_cells and empty_by_group:
+                        # Find the stripped data column count
+                        target = max(empty_by_group)
+                        stripped_ncols = target - len(empty_by_group[target])
+                        # Each label spans (data cols) / (num labels) columns.
+                        # The sub-header row typically has an empty first cell
+                        # (for the year/name column), so labels start at pos 1.
+                        n_labels = len(content_cells)
+                        data_cols = stripped_ncols - 1  # exclude year column
+                        span = data_cols // n_labels if n_labels else 1
+                        padded = [""] * stripped_ncols
+                        for k, lbl in enumerate(content_cells):
+                            pos = 1 + k * span
+                            if pos < stripped_ncols:
+                                padded[pos] = lbl
+                        new_rows.append(" | ".join(padded))
+                    else:
+                        new_rows.append(" | ".join(
+                            c for c in cells if c.strip()
+                        ))
+            text_rows = new_rows
+
     # Assemble output
     parts = []
     if image_parts:
