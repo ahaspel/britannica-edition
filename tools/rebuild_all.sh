@@ -1,9 +1,9 @@
 #!/bin/bash
 # Full rebuild of all 28 article volumes from cached wikitext.
-# Wipes DB and exports, runs every pipeline stage, resolves
-# cross-volume xrefs, re-exports, and runs quality analytics.
+# Wipes everything (DB, exports, S3), rebuilds from scratch,
+# deploys, and runs quality analytics.
 #
-# Usage: ./tools/rebuild_all.sh
+# Usage: ./tools/rebuild_all.sh [--no-deploy]
 #
 # Preserves: data/raw/wikisource/*, data/derived/quality_reports/*
 
@@ -12,6 +12,13 @@ set -euo pipefail
 VOLUMES=$(seq 1 28)
 EXPORT_DIR="data/derived/articles"
 BUILD_START=$(date +%s)
+NO_DEPLOY=""
+
+for arg in "$@"; do
+  if [ "$arg" = "--no-deploy" ]; then
+    NO_DEPLOY="yes"
+  fi
+done
 
 elapsed() {
   local now=$(date +%s)
@@ -25,19 +32,32 @@ echo "  Started: $(date '+%Y-%m-%d %H:%M:%S')"
 echo "============================================"
 echo
 
-# --- Phase 1: Wipe everything ---
-echo "=== Phase 1: Wiping all volumes from database [$(elapsed)] ==="
-for vol in $VOLUMES; do
-  echo "  Wiping volume $vol..."
-  ./tools/db/wipe_volume.sh "$vol" > /dev/null 2>&1
-done
-echo "  Done."
+# --- Phase 1: Clean everything ---
+echo "=== Phase 1: Cleaning everything [$(elapsed)] ==="
 
-echo
-echo "=== Clearing exported articles ==="
+echo "  Truncating database..."
+uv run python -c "
+import sys; sys.path.insert(0, 'src')
+from britannica.db.session import SessionLocal
+from sqlalchemy import text
+s = SessionLocal()
+for table in ['article_contributors', 'article_images', 'cross_references', 'article_segments', 'articles', 'contributors', 'source_pages']:
+    s.execute(text(f'TRUNCATE TABLE {table} CASCADE'))
+s.commit()
+s.close()
+print('  Done.')
+"
+
+echo "  Clearing exports..."
 rm -rf "$EXPORT_DIR"
 mkdir -p "$EXPORT_DIR"
 echo "  Done."
+
+if [ -z "$NO_DEPLOY" ]; then
+  echo "  Clearing S3 bucket..."
+  aws s3 rm s3://britannica11.org/data/ --recursive --quiet
+  echo "  Done."
+fi
 
 # --- Phase 2: Per-volume pipeline ---
 echo
@@ -94,9 +114,9 @@ for vol in $VOLUMES; do
   uv run britannica export-articles "$vol"
 done
 
-# --- Phase 4b: Export front matter ---
+# --- Phase 5: Export front matter ---
 echo
-echo "=== Exporting front matter ==="
+echo "=== Phase 5: Exporting front matter [$(elapsed)] ==="
 uv run python -c "
 import json, sys
 sys.stdout.reconfigure(encoding='utf-8')
@@ -125,19 +145,44 @@ print('Exported front matter.')
 s.close()
 "
 
-# --- Phase 5: Post-processing cleanup ---
+# --- Phase 6: Post-processing cleanup ---
 echo
-echo "=== Phase 5: Post-processing exported articles [$(elapsed)] ==="
+echo "=== Phase 6: Post-processing exported articles [$(elapsed)] ==="
 uv run python tools/postprocess.py
 
-# --- Phase 6: Reindex search ---
-echo
-echo "=== Phase 6: Reindexing Meilisearch [$(elapsed)] ==="
-uv run python tools/index_search.py
+# --- Phase 7: Deploy ---
+if [ -z "$NO_DEPLOY" ]; then
+  echo
+  echo "=== Phase 7: Deploying [$(elapsed)] ==="
 
-# --- Phase 7: Quality analytics ---
+  echo "  Uploading articles to S3..."
+  aws s3 sync "$EXPORT_DIR" s3://britannica11.org/data/
+
+  echo "  Uploading viewer..."
+  aws s3 cp tools/viewer/viewer.html s3://britannica11.org/viewer.html
+  aws s3 cp tools/viewer/index.html s3://britannica11.org/index.html
+  aws s3 cp tools/viewer/search.html s3://britannica11.org/search.html
+  aws s3 cp tools/viewer/contributors.html s3://britannica11.org/contributors.html
+  aws s3 cp tools/viewer/home.html s3://britannica11.org/home.html
+  aws s3 cp tools/viewer/preface.html s3://britannica11.org/preface.html
+
+  echo "  Invalidating CloudFront..."
+  aws cloudfront create-invalidation --distribution-id E24BJKH0IB4I6 --paths "/*" > /dev/null
+
+  echo "  Indexing search..."
+  MEILI_URL="${MEILI_URL:-https://britannica11.org/search-api}" \
+  MEILI_MASTER_KEY="${MEILI_MASTER_KEY:-}" \
+    uv run python tools/index_search.py
+
+  echo "  Deploy complete."
+else
+  echo
+  echo "=== Skipping deploy (--no-deploy) ==="
+fi
+
+# --- Phase 8: Quality analytics ---
 echo
-echo "=== Phase 7: Running quality report [$(elapsed)] ==="
+echo "=== Phase 8: Running quality report [$(elapsed)] ==="
 uv run python tools/quality_report.py
 
 echo

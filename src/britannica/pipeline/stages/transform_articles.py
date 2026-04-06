@@ -494,8 +494,8 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
     text = normalize_unicode(text)
     text = text.replace("\r\n", "\n").replace("\r", "\n")
 
-    # Strip HTML comments
-    text = re.sub(r"<!--.*?-->", "", text, flags=re.DOTALL)
+    # Strip HTML comments (replace with space to avoid creating false paragraph breaks)
+    text = re.sub(r"\n?<!--.*?-->\n?", " ", text, flags=re.DOTALL)
 
     # Unwrap poem wrappers: {{block center|<poem>...</poem>}} → <poem>...</poem>
     text = re.sub(
@@ -564,6 +564,12 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
             else:
                 break  # unbalanced — give up
         return text
+
+    # Normalize {{center|{{sc|...}}}} to {{csc|...}} so it gets paragraph breaks
+    text = re.sub(
+        r"\{\{center\|\{\{sc\|([^{}]*)\}\}\}\}",
+        r"{{csc|\1}}", text, flags=re.IGNORECASE,
+    )
 
     for tmpl in ["fine block", "center", "c", "larger", "smaller",
                   "EB1911 Fine Print", "nowrap"]:
