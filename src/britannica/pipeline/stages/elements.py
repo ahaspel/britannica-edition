@@ -265,7 +265,11 @@ def _process_score(raw: str, context: dict) -> str:
 
 def _process_math(inner: str) -> str:
     """Convert math content to «MATH:...«/MATH» marker, preserving LaTeX."""
-    return f"\u00abMATH:{inner.strip()}\u00ab/MATH\u00bb"
+    import html as html_mod
+    inner = html_mod.unescape(inner.strip())
+    # Collapse blank lines — they break LaTeX math environments
+    inner = re.sub(r"\n{2,}", "\n", inner)
+    return f"\u00abMATH:{inner}\u00ab/MATH\u00bb"
 
 
 def _process_ref(inner: str, text_transform) -> str:
@@ -393,6 +397,47 @@ def _process_table(inner: str, text_transform,
         content_cells = [c for c in all_cells if c.strip()]
         if len(content_cells) <= 4 and sum(len(c) for c in all_cells) < 120:
             return " ".join(content_cells)
+
+    # Check for math/equation-layout table (alignment using table columns).
+    # Two signatures:
+    #   1. Mostly MATH placeholders (from <math> tags in cells)
+    #   2. Mostly empty spacer cells (alignment without <math>)
+    # Each row should be joined into a single line, not pipe-separated.
+    # Must run before image-layout check, which would scatter them.
+    def _is_equation_layout():
+        # Check 1: majority MATH placeholders
+        if _PH in inner and inner_registry:
+            math_ct = sum(1 for _, (t, _) in inner_registry.elements.items() if t == "MATH")
+            if math_ct >= 2 and math_ct >= len(inner_registry.elements) * 0.5:
+                return True
+        # Check 2: spacer-heavy alignment (>50% empty cells — typical of
+        # equation layout without <math>).  Data tables use cell-level
+        # align/valign attributes; equation layout tables never do.
+        if re.search(r'\balign\s*=', inner, re.IGNORECASE):
+            return False
+        raw_rows = re.split(r"\|-[^\n]*", inner)
+        total_cells = 0
+        empty_cells = 0
+        for raw_row in raw_rows:
+            cells = _extract_cells(raw_row)
+            for c in cells:
+                total_cells += 1
+                if not c.strip():
+                    empty_cells += 1
+        if total_cells >= 4 and empty_cells > total_cells * 0.5:
+            return True
+        return False
+
+    if _is_equation_layout():
+        raw_rows = re.split(r"\|-[^\n]*", inner)
+        lines = []
+        for raw_row in raw_rows:
+            cells = _extract_cells(raw_row)
+            content = [c for c in cells if c.strip()]
+            if content:
+                lines.append(" ".join(content))
+        if lines:
+            return "\n\n".join(lines)
 
     # Check for image-layout table (plate pages: grid of images + captions)
     if _PH in inner:

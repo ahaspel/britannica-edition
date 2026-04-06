@@ -510,8 +510,23 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
 
     # Unwrap {{fine block|...}} with balanced brace matching
     def _unwrap_balanced(text, template_name):
-        """Unwrap a template by finding the balanced closing }}."""
+        """Unwrap a template by finding the balanced closing }}.
+
+        Skips over <math>...</math> regions so that LaTeX braces
+        (e.g. \\Delta_{b}}) don't confuse the brace counter.
+        """
         prefix = "{{" + template_name + "|"
+        # Pre-compute math regions to skip
+        math_spans = [(m.start(), m.end()) for m in
+                      re.finditer(r"<math\b[^>]*>.*?</math>", text,
+                                  re.DOTALL | re.IGNORECASE)]
+
+        def _in_math(pos):
+            for s, e in math_spans:
+                if s <= pos < e:
+                    return e  # return end position to skip to
+            return 0
+
         while True:
             idx = text.lower().find(prefix.lower())
             if idx < 0:
@@ -520,6 +535,10 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
             depth = 0
             i = idx
             while i < len(text) - 1:
+                skip_to = _in_math(i)
+                if skip_to:
+                    i = skip_to
+                    continue
                 if text[i:i+2] == "{{":
                     depth += 1
                     i += 2
@@ -529,6 +548,10 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
                         # Replace: strip outer {{ and }}
                         content = text[idx + len(prefix):i]
                         text = text[:idx] + content + text[i+2:]
+                        # Recompute math spans since offsets shifted
+                        math_spans = [(m.start(), m.end()) for m in
+                                      re.finditer(r"<math\b[^>]*>.*?</math>",
+                                                  text, re.DOTALL | re.IGNORECASE)]
                         break
                     i += 2
                 else:
@@ -682,8 +705,7 @@ def transform_articles(volume: int) -> int:
                 raw_parts = []
                 for seg, page_number in segments:
                     raw = seg.segment_text or ""
-                    if not raw.strip():
-                        continue
+                    # Always emit the page marker, even for empty/untranscribed pages
                     raw_parts.append(f"\x01PAGE:{page_number}\x01{raw}")
                 joined_raw = "\n".join(raw_parts)
 

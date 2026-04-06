@@ -129,6 +129,7 @@
       position: relative;
     }
 
+
     .body-text p:first-of-type {
       text-indent: 0;
     }
@@ -883,14 +884,28 @@
         collectedSections.push({ id: sectionId, title: text.trim() });
         return `<span class="shoulder-heading" id="${sectionId}">${escapeHtml(text)}</span>`;
       });
+      // Detect if this paragraph is a single standalone equation (one math block, no other text)
+      const mathCount = (html.match(/\u00abMATH:/g) || []).length;
+      const mathOnly = mathCount === 1 && /^\s*(<span class="page-marker[^"]*"[^>]*>[^<]*<\/span>)?\s*\u00abMATH:.*?\u00ab\/MATH\u00bb[,.\s;:]*$/s.test(html);
       // Render math markers with KaTeX
       html = html.replace(/\u00abMATH:(.*?)\u00ab\/MATH\u00bb/gs, (match, latex) => {
+        // Undo HTML escaping so KaTeX sees real LaTeX (& not &amp;, etc.)
+        // Also convert \mbox to \text (KaTeX doesn't support \mbox)
+        const tmp = document.createElement("textarea");
+        tmp.innerHTML = latex;
+        const raw = tmp.value.replace(/\\mbox\b/g, "\\text")
+          .replace(/[\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u00A0\u200B]/g, " ")
+          .replace(/\\overset\{([^}]*)\}\s*\\underset\{([^}]*)\}\s*\{\\Sigma\s*/g, "\\sum_{$2}^{$1}{");
+        const isDisplay = /\\begin\{/.test(raw) || mathOnly;
         try {
           if (typeof katex !== "undefined") {
-            return katex.renderToString(latex, { throwOnError: false, displayMode: false });
+            const result = katex.renderToString(raw, { throwOnError: false, displayMode: isDisplay });
+            return result;
           }
-        } catch(e) {}
-        return `<code class="math-fallback">${latex}</code>`;
+        } catch(e) {
+          console.warn("KaTeX error:", e.message, "LaTeX:", raw.substring(0, 80));
+        }
+        return `<code class="math-fallback">${escapeHtml(raw)}</code>`;
       });
       // Render hieroglyphs
       html = html.replace(/\[hieroglyph:\s*([^\]]+)\]/g, (match, codes) => {
