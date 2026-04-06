@@ -156,12 +156,57 @@ def _unwrap_content_templates(text: str) -> str:
 
 
 def _convert_shoulder_headings(text: str) -> str:
-    """{{EB1911 Shoulder Heading|text}} → «SH»text«/SH»"""
-    text = re.sub(
-        r"\{\{EB1911 Shoulder Heading(?:Small\d?)?\|([^{}]*)\}\}",
-        lambda m: f"{_SH}SH{m.group(1).replace(chr(39)*3, '').replace(chr(39)*2, '').strip()}{_SH}/SH",
-        text, flags=re.IGNORECASE,
-    )
+    """{{EB1911 Shoulder Heading|text}} → «SH»text«/SH»
+
+    Handles nested templates (e.g. {{Fs|108%|...}}) inside the heading.
+    Consumes surrounding newlines to prevent false paragraph breaks.
+    """
+    prefix = "{{EB1911 Shoulder Heading"
+    while True:
+        idx = text.lower().find(prefix.lower())
+        if idx < 0:
+            break
+        # Find balanced closing }}
+        depth = 0
+        i = idx
+        while i < len(text) - 1:
+            if text[i:i+2] == "{{":
+                depth += 1
+                i += 2
+            elif text[i:i+2] == "}}":
+                depth -= 1
+                if depth == 0:
+                    # Extract content: everything after the last | at depth 1
+                    inner = text[idx+len(prefix):i]
+                    # Find the last top-level | to get the actual heading text
+                    d = 0
+                    last_pipe = -1
+                    for k, ch in enumerate(inner):
+                        if ch == "{":
+                            d += 1
+                        elif ch == "}":
+                            d -= 1
+                        elif ch == "|" and d == 0:
+                            last_pipe = k
+                    heading_text = inner[last_pipe+1:] if last_pipe >= 0 else inner
+                    # Strip inner templates and bold/italic
+                    heading_text = re.sub(r"\{\{[^{}]*\|([^{}]*)\}\}", r"\1", heading_text)
+                    heading_text = heading_text.replace("'''", "").replace("''", "").strip()
+                    marker = f"{_SH}SH{heading_text}{_SH}/SH"
+                    # Consume surrounding newlines to keep text flowing
+                    start = idx
+                    end = i + 2
+                    if start > 0 and text[start-1] == "\n":
+                        start -= 1
+                    if end < len(text) and text[end] == "\n":
+                        end += 1
+                    text = text[:start] + " " + marker + " " + text[end:]
+                    break
+                i += 2
+            else:
+                i += 1
+        else:
+            break  # unbalanced
     return text
 
 

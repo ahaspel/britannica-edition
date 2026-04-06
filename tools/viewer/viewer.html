@@ -455,10 +455,38 @@
     }
 
     .search-highlight {
-      background: #fff3cd;
+      background: #ffe033;
       padding: 1px 2px;
       border-radius: 2px;
     }
+    .search-highlight-current {
+      background: #ff9800;
+      color: #fff;
+    }
+    .nav-arrow {
+      position: fixed;
+      right: 8px;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      z-index: 50;
+      color: #8b7355;
+      padding: 4px;
+      line-height: 1;
+    }
+    .nav-arrow:hover { color: #5c4a32; }
+    .nav-arrow { top: 50%; }
+    #matchList .match-item {
+      padding: 4px 10px;
+      cursor: pointer;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.4;
+    }
+    #matchList .match-item:last-child { border-bottom: none; }
+    #matchList .match-item:hover { background: #f0ebe0; }
+    #matchList .match-item.active { background: #ffe0b2; }
+    #matchList .match-item mark { background: #ff9800; color: #fff; padding: 0 1px; border-radius: 2px; }
 
     .footnote-ref {
       position: relative;
@@ -594,11 +622,16 @@
         </div>
         <input id="articleSearch" type="text" placeholder="Search within article..." style="flex: 0 1 260px; min-width: 160px;" />
         <span id="matchCount" style="color: var(--muted); font-size: 0.85rem;"></span>
+        <button id="prevMatch" style="display:none; padding: 2px 8px; font-size: 0.85rem;" title="Previous match (Shift+Enter)">&#x25B2;</button>
+        <button id="nextMatch" style="display:none; padding: 2px 8px; font-size: 0.85rem;" title="Next match (Enter)">&#x25BC;</button>
       </div>
+      <div id="matchList" style="display:none; max-height: 200px; overflow-y: auto; font-size: 0.85rem; border: 1px solid var(--border); border-radius: 6px; padding: 4px 0; background: var(--bg);"></div>
     </div>
     <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
     <div id="app"></div>
   </div>
+  <button class="nav-arrow" style="transform:translateY(-20px)" onclick="window.scrollTo({top:0,behavior:'instant'})" title="Top">&#x25B2;</button>
+  <button class="nav-arrow" style="transform:translateY(12px)" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'instant'})" title="Bottom">&#x25BC;</button>
 
   <script>
     const app = document.getElementById("app");
@@ -1070,9 +1103,101 @@
     // In-article search
     const articleSearchInput = document.getElementById("articleSearch");
     const matchCountEl = document.getElementById("matchCount");
+    const prevBtn = document.getElementById("prevMatch");
+    const nextBtn = document.getElementById("nextMatch");
+    const matchListEl = document.getElementById("matchList");
+    let currentMatchIdx = -1;
 
-    articleSearchInput.addEventListener("input", () => {
+    function buildMatchList() {
+      const matches = document.querySelectorAll(".body-text .search-highlight");
+      matchListEl.innerHTML = "";
+      if (matches.length === 0) {
+        matchListEl.style.display = "none";
+        return;
+      }
+      matchListEl.style.display = "block";
+      // Group matches by parent paragraph to avoid duplicate snippets
+      const seen = new Map();  // parent element → first match index
+      matches.forEach((el, i) => {
+        const parent = el.closest("p, td, blockquote, h3, li") || el.parentNode;
+        if (seen.has(parent)) return;
+        seen.set(parent, i);
+
+        const fullText = parent.textContent || "";
+        const matchText = el.textContent;
+        const pos = fullText.indexOf(matchText);
+        const ctxStart = Math.max(0, pos - 50);
+        const ctxEnd = Math.min(fullText.length, pos + matchText.length + 50);
+        // Highlight ALL occurrences of the query in the snippet
+        const query = articleSearchInput.value.trim();
+        const snippetRaw = (ctxStart > 0 ? "\u2026" : "") +
+          fullText.slice(ctxStart, ctxEnd) +
+          (ctxEnd < fullText.length ? "\u2026" : "");
+        const snippetHtml = snippetRaw.replace(
+          new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi"),
+          "<mark>$1</mark>"
+        );
+
+        const item = document.createElement("div");
+        item.className = "match-item";
+        item.innerHTML = snippetHtml;
+        item.addEventListener("click", () => {
+          currentMatchIdx = i;
+          updateMatchNav();
+        });
+        matchListEl.appendChild(item);
+      });
+    }
+
+    function updateMatchNav() {
+      const matches = document.querySelectorAll(".body-text .search-highlight");
+      const total = matches.length;
+      if (total === 0) {
+        matchCountEl.textContent = "No matches";
+        prevBtn.style.display = "none";
+        nextBtn.style.display = "none";
+        matchListEl.style.display = "none";
+        currentMatchIdx = -1;
+        return;
+      }
+      prevBtn.style.display = "";
+      nextBtn.style.display = "";
+      matchCountEl.textContent = `${currentMatchIdx + 1} of ${total}`;
+      matches.forEach((m, i) => {
+        m.classList.toggle("search-highlight-current", i === currentMatchIdx);
+      });
+      // Update active state in match list
+      matchListEl.querySelectorAll(".match-item").forEach((item, i) => {
+        item.classList.toggle("active", i === currentMatchIdx);
+      });
+      if (currentMatchIdx >= 0 && currentMatchIdx < total) {
+        matches[currentMatchIdx].scrollIntoView({ behavior: "instant", block: "center" });
+        // Scroll match list panel (not the page) to keep active item visible
+        const activeItem = matchListEl.querySelector(".match-item.active");
+        if (activeItem) {
+          const listTop = matchListEl.scrollTop;
+          const listHeight = matchListEl.clientHeight;
+          const itemTop = activeItem.offsetTop - matchListEl.offsetTop;
+          if (itemTop < listTop || itemTop + activeItem.offsetHeight > listTop + listHeight) {
+            matchListEl.scrollTop = itemTop - listHeight / 2;
+          }
+        }
+      }
+    }
+
+    function goToMatch(delta) {
+      const matches = document.querySelectorAll(".body-text .search-highlight");
+      if (!matches.length) return;
+      currentMatchIdx = (currentMatchIdx + delta + matches.length) % matches.length;
+      updateMatchNav();
+    }
+
+    prevBtn.addEventListener("click", () => goToMatch(-1));
+    nextBtn.addEventListener("click", () => goToMatch(1));
+
+    function runArticleSearch() {
       const query = articleSearchInput.value.trim();
+      lastSearchedQuery = query;
       const bodyEl = document.querySelector(".body-text");
       if (!bodyEl) return;
 
@@ -1084,12 +1209,16 @@
 
       if (!query) {
         matchCountEl.textContent = "";
+        prevBtn.style.display = "none";
+        nextBtn.style.display = "none";
+        matchListEl.style.display = "none";
+        matchListEl.innerHTML = "";
+        currentMatchIdx = -1;
         return;
       }
 
       // Walk text nodes and highlight matches
       const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`, "gi");
-      let count = 0;
 
       function highlightNode(node) {
         if (node.nodeType === 3) {
@@ -1098,7 +1227,6 @@
             regex.lastIndex = 0;
             const span = document.createElement("span");
             span.innerHTML = text.replace(regex, (match) => {
-              count++;
               return `<span class="search-highlight">${match}</span>`;
             });
             node.parentNode.replaceChild(span, node);
@@ -1109,8 +1237,58 @@
       }
 
       highlightNode(bodyEl);
-      matchCountEl.textContent = count ? `${count} match${count !== 1 ? "es" : ""}` : "No matches";
+      buildMatchList();
+      currentMatchIdx = -1;
+      // Show count and list but don't scroll — let the user pick a match
+      const total = document.querySelectorAll(".body-text .search-highlight").length;
+      matchCountEl.textContent = total ? `${total} match${total !== 1 ? "es" : ""}` : "No matches";
+      prevBtn.style.display = total ? "" : "none";
+      nextBtn.style.display = total ? "" : "none";
+    }
+
+    articleSearchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        const query = articleSearchInput.value.trim();
+        if (!query) {
+          // Empty query: clear everything
+          runArticleSearch();
+          return;
+        }
+        const matches = document.querySelectorAll(".body-text .search-highlight");
+        if (matches.length === 0) {
+          // First Enter: run the search (no scroll)
+          runArticleSearch();
+        } else {
+          // Subsequent Enter: navigate/scroll
+          goToMatch(e.shiftKey ? -1 : 1);
+        }
+      } else if (e.key === "Escape") {
+        articleSearchInput.value = "";
+        runArticleSearch();
+        articleSearchInput.blur();
+      }
     });
+
+    // If query text changes from what was last searched, clear old results
+    let lastSearchedQuery = "";
+    articleSearchInput.addEventListener("input", () => {
+      const current = articleSearchInput.value.trim();
+      if (current === lastSearchedQuery) return;
+      const bodyEl = document.querySelector(".body-text");
+      if (!bodyEl) return;
+      bodyEl.querySelectorAll(".search-highlight").forEach(el => {
+        el.replaceWith(el.textContent);
+      });
+      bodyEl.normalize();
+      matchCountEl.textContent = "";
+      prevBtn.style.display = "none";
+      nextBtn.style.display = "none";
+      matchListEl.style.display = "none";
+      matchListEl.innerHTML = "";
+      currentMatchIdx = -1;
+    });
+    // --- Top/bottom navigation arrows ---
     // --- Jump-to-article autocomplete ---
     (function() {
       const input = document.getElementById("jumpTo");
