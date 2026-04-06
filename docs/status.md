@@ -91,21 +91,21 @@ Resolved xrefs are embedded as direct links at export time: the export stage rew
 
 - **home.html** — landing page with photograph-style title page and navigation links
 - **index.html** — volume tabs (data-driven labels), title/full-text/contributor search, alphabetic page navigation per volume
-- **viewer.html** — articles with volume:page citations in left margin, shoulder headings in right margin, inline images, footnotes, tables (including inline single-row tables), sections/TOC, in-article search, bold/italic/small-caps/hieroglyph rendering, direct cross-reference links to target articles, contributor initials shown in original citation format
+- **viewer.html** — articles with volume:page citations in left margin, shoulder headings in right margin, inline images, footnotes, tables (including inline single-row tables), two-level TOC (unnumbered "Contents" for major `«SC»` divisions, numbered "Sections" for shoulder headings), in-article search with match navigation, KaTeX math rendering (display mode detection, `\mbox`→`\text`, entity decoding, Unicode whitespace normalization), bold/italic/small-caps/hieroglyph rendering, direct cross-reference links to target articles, contributor initials shown in original citation format
 - **search.html** — Meilisearch full-text with highlighted snippets, formatting marker cleanup
 - **contributors.html** — sorted by surname, credentials, descriptions, full article lists
 - **preface.html** — Hugh Chisholm's 1910 editorial preface with drop caps and shoulder headings
 
-## Current State (2026-04-05)
+## Current State (2026-04-06)
 
 - **Site live at britannica11.org**
 - **28 volumes processed** (vol 29 is end matter, excluded)
-- **36,061 articles** in database
-- **~25,000 cross-references resolved (90%)**
-- **~3,000 unresolved xrefs** (mostly portal links and literary work references)
+- **36,702 articles** in database (down from 36,729 — 27 false splits from template-contaminated titles removed)
+- **25,195 cross-references resolved (89%)**
+- **3,150 unresolved xrefs** (mostly portal links and literary work references)
 - **~1,500 unique contributors** with biographical data
 - **193 tests passing** — boundaries, elements, transforms, real data
-- **New architecture: extract-process-reassemble** — `elements.py` + `_transform_text_v2`
+- **Architecture: extract-process-reassemble** — `elements.py` + `_transform_text_v2`
 - **Raw wikitext backed up** to `s3://britannica11.org/raw/` (28 zips, 139 MB)
 - **All data fetched** — raw wikitext is static, never changes
 
@@ -145,17 +145,18 @@ Resolved xrefs are embedded as direct links at export time: the export stage rew
 
 ## Known Issues (remaining)
 
-### File-Level (improving — rebuild in progress)
-- Previous build (v2 first pass): html_tag 25, leaked_html_attr 112, pipe_leak 98, stray_wiki_italic 20
-- Pre-flight on 840 pages with latest code: 0 html_tag, 0 stray_braces, 0 control leaks, 3 leaked_attr (multi-page table edge cases)
-- Postprocessor handles multi-page table residue
+### File-Level (2026-04-06 build)
+- stray_close_braces: 58, stray_braces: 13, html_tag: 11, leaked_html_attr: 9
+- pipe_leak: 5, stray_wiki_italic: 5, stray_control_x06: 4
+- stray_wikilink: 1, stray_control_x03: 1
 
 ### Other
-- Some pages have `pagequality level="3"` (not fully proofread) on Wikisource
+- Some pages have `pagequality level < 3` (not fully proofread) on Wikisource — 3,633 pages at level 1 (unproofread OCR), 15 at level 0 (untranscribed), 13 at level 2 (problematic)
 - Portal links and literary work references are legitimately unresolvable xrefs
 - Images on shared pages can be assigned to the wrong article — image extractor uses page-level ownership
 - Meilisearch EC2 port 7700 currently open to all traffic — should be restricted to CloudFront IPs
 - 41 titles with lowercase (Mc/Mac names — correct casing, flagged by quality report)
+- Section heading problem: internal all-caps section headings can be falsely detected as article boundaries (design needed)
 
 ## Architecture
 
@@ -163,7 +164,8 @@ Resolved xrefs are embedded as direct links at export time: the export stage rew
 - **Extract-process-reassemble**: one recursive function handles all element types
 - **Key law**: once extracted, an element is never tampered with again
 - **Extraction order**: wiki tables (balanced matching) → HTML elements (ref, html_table, poem, math, score) → wiki markup (image_float, image)
-- **Element types**: TABLE, HTML_TABLE, IMAGE, IMAGE_FLOAT, REF, REF_SELF, POEM, MATH, SCORE
+- **Element types**: TABLE, HTML_TABLE, IMAGE, IMAGE_FLOAT, REF, REF_SELF, POEM, MATH, SCORE, HIEROGLYPH
+- **Equation-layout tables**: detected (majority MATH placeholders or >50% empty spacer cells) and processed as own element type — cells joined per row, not pipe-separated
 - **Cross-element substitution**: multi-pass to handle table placeholders inside processed refs
 - **Plate pages**: dedicated processor — image grid with keyword-matched captions
 - **Brace tables**: detected and converted to verse + translation layout
@@ -191,19 +193,13 @@ Resolved xrefs are embedded as direct links at export time: the export stage rew
 
 ## Next Steps
 
-### Queued for next rebuild
-- Balanced wrapper template unwrapping (617 pages of recovered content)
-- Cross-element placeholder substitution (tables inside refs)
-- Improved orphan table detection (single-pipe rows)
-- Export body_start: keep marker content, strip only tags
-- Search index: keep marker content, strip only tags
-
 ### Short-term
 - About This Edition page (user writing)
 - Lock down Meilisearch security group to CloudFront IPs
-- Investigate remaining xref resolution gap (~1,100 vs old pipeline)
+- Investigate remaining file-level issues (58 stray close braces, etc.)
 
 ### Medium-term
+- Address section heading false-split problem (~850 false splits)
 - EPUB export
 - Image download from Commons (self-contained edition)
 - Citation export (BibTeX, Chicago style)

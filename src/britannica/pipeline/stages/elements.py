@@ -622,19 +622,20 @@ def _process_table(inner: str, text_transform,
                         # Find the stripped data column count
                         target = max(empty_by_group)
                         stripped_ncols = target - len(empty_by_group[target])
-                        # Each label spans (data cols) / (num labels) columns.
-                        # The sub-header row typically has an empty first cell
-                        # (for the year/name column), so labels start at pos 1.
-                        n_labels = len(content_cells)
-                        data_cols = stripped_ncols - 1  # exclude year column
-                        span = data_cols // n_labels if n_labels else 1
+                        # First content cell is the row label (e.g. "Year.");
+                        # remaining cells are group headers spanning data columns.
+                        n_groups = len(content_cells) - 1
+                        data_cols = stripped_ncols - 1  # exclude label column
+                        span = data_cols // n_groups if n_groups > 0 else 1
                         if stripped_ncols < 2:
                             # Not enough columns after stripping — just join content
                             new_rows.append(" | ".join(
                                 c for c in cells if c.strip()))
                             continue
                         padded = [""] * stripped_ncols
-                        for k, lbl in enumerate(content_cells):
+                        # First cell is row label at pos 0; rest are group headers
+                        padded[0] = content_cells[0]
+                        for k, lbl in enumerate(content_cells[1:]):
                             pos = 1 + k * span
                             if pos < stripped_ncols:
                                 padded[pos] = lbl

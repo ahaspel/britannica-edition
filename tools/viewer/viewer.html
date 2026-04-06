@@ -318,14 +318,8 @@
     }
 
     .page-marker.unproofed {
-      color: #b85c00;
-      font-weight: 600;
-    }
-
-    .page-marker.unproofed::after {
-      content: " \25C6";
-      font-size: 0.5em;
-      vertical-align: super;
+      color: #d04000;
+      font-weight: 700;
     }
 
     @media (max-width: 700px) {
@@ -1028,8 +1022,8 @@
           ${article.parent_article ? `<div style="margin-bottom: 8px; font-size: 0.95rem;">Plate for <a href="${articleUrl(article.parent_article.filename)}">${escapeHtml(article.parent_article.title)}</a></div>` : ""}
           ${contributors.length ? `<div class="contributors">By ${contributors.map(c => `<a href="/contributors.html?q=${encodeURIComponent(c.full_name)}" style="color: var(--muted);">${escapeHtml(c.full_name)}</a> <span style="color: var(--muted); font-size: 0.85em;">(${escapeHtml(c.initials)})</span>`).join(", ")}</div>` : ""}
           ${(() => {
-            const otherPlates = plates.filter(p => p.title !== article.title);
-            return otherPlates.length ? `<div class="contributors">Plates: ${otherPlates.map(p => `<a href="${articleUrl(p.filename)}">${escapeHtml(p.title)}</a>`).join(", ")}</div>` : "";
+            const roman = ["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV"];
+            return (plates.length && article.article_type !== "plate") ? `<div class="contributors">Plates: ${plates.map((p, i) => `<a href="${articleUrl(p.filename)}">Plate ${roman[i] || i+1}</a>`).join(", ")}</div>` : "";
           })()}
           ${article.source_quality && article.source_quality.lowest_level <= 1
             ? `<div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 8px 12px; margin: 8px 0; font-size: 0.9rem;">
