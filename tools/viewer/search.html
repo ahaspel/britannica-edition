@@ -242,6 +242,7 @@
             ? `p.${hit.page_start}`
             : `pp.${hit.page_start}\u2013${hit.page_end}`;
           const contribs = hit.contributors ? ` \u00b7 ${hit.contributors}` : "";
+          const len = hit.body_length ? ` \u00b7 ${hit.body_length.toLocaleString()} words` : "";
 
           return `
             <div class="result">
@@ -249,7 +250,7 @@
                 <a href="${viewerUrl(hit.filename)}">${formatSnippet(highlightedTitle)}</a>
               </div>
               <div class="result-meta">
-                Volume ${hit.volume} \u00b7 ${pageRange}${contribs}
+                Volume ${hit.volume} \u00b7 ${pageRange}${len}${contribs}
               </div>
               <div class="result-snippet">${snippet}</div>
             </div>

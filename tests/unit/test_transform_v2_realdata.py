@@ -231,6 +231,28 @@ class TestRealSmallCaps:
         assert "{{sc|" not in result, "Raw sc template survived"
 
 
+class TestTableCellProcessing:
+    """Table cell content is processed through text_transform."""
+
+    def test_italic_in_table_cell(self):
+        """Wiki italic in table cells must be converted."""
+        result = _transform("{|\n|''italic'' text\n|normal\n|}")
+        assert "''" not in result, f"Raw italic survived: {result[:60]}"
+
+    def test_sub_sup_in_table_cell(self):
+        """<sub>/<sup> in table cells must be converted to Unicode."""
+        result = _transform("{|\n|H<sub>2</sub>O\n|100\n|}")
+        assert "<sub>" not in result, f"Raw sub survived: {result[:60]}"
+        assert "\u2082" in result, f"No Unicode subscript: {result[:60]}"
+
+    def test_abbreviation_italic_real_data(self):
+        """ABBREVIATION (vol 1 p58) has ''e.g.'' in table cells."""
+        raw = _load_page(1, 58)
+        result = _transform(raw)
+        if "e.g." in result:
+            assert "''e.g.''" not in result, "Raw wiki italic in ABBREVIATION table"
+
+
 class TestNestedWrapperTemplates:
     """Wrapper templates (fine block, center, etc.) with nested content
     must not lose their inner text or links."""

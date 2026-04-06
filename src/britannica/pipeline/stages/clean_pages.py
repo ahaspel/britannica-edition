@@ -248,14 +248,42 @@ _SCORE_TAG = re.compile(r"<score[^>]*>.*?</score>", re.DOTALL)
 
 
 def _replace_score_tags(text: str, volume: int, page_number: int) -> str:
-    """Replace <score> tags with {{IMG:url|Musical notation}} markers."""
+    """Replace <score> tags with {{IMG:url|Musical notation}} markers.
+
+    In article-as-unit processing, text contains \x01PAGE:N\x01 markers.
+    Each score tag is looked up by its page number and index within that page.
+    """
     matches = list(_SCORE_TAG.finditer(text))
     if not matches:
         return text
+
+    # Build page-number map from PAGE markers
+    page_markers = list(re.finditer(r"\x01PAGE:(\d+)\x01", text))
+
+    def _page_for_pos(pos):
+        """Find which page a position belongs to."""
+        current_page = page_number  # default if no markers
+        for pm in page_markers:
+            if pm.start() <= pos:
+                current_page = int(pm.group(1))
+            else:
+                break
+        return current_page
+
+    # Group scores by page for correct indexing
+    scores_by_page: dict[int, int] = {}  # page -> count so far
     for i, m in reversed(list(enumerate(matches))):
-        url = _SCORE_IMAGES.get((volume, page_number, i))
+        pg = _page_for_pos(m.start())
+        # Count how many scores on this page come before this one
+        idx = sum(1 for j, m2 in enumerate(matches)
+                  if j < i and _page_for_pos(m2.start()) == pg)
+        url = _SCORE_IMAGES.get((volume, pg, idx))
         if url:
-            replacement = f"{{{{IMG:{url}|Musical notation}}}}"
+            # Use a pre-rendered marker that won't be re-extracted as an image.
+            # The viewer handles {{IMG:...}} at render time; using the full URL
+            # prevents the wiki-image extractor from matching it (it expects
+            # [[File:...]] or bare filenames, not URLs).
+            replacement = f'{{{{IMG:{url}|Musical notation}}}}'
         else:
             replacement = "[Musical notation]"
         text = text[:m.start()] + replacement + text[m.end():]

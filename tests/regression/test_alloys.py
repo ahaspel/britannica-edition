@@ -1,7 +1,7 @@
 """Regression tests for ALLOYS (Vol 1, pp. 746–751).
 
 ALLOYS is a multi-page article with:
-- 3 plates on page 747, each with a different title (ALLOYS, GUN-MAKING, IRON AND STEEL)
+- 1 plate page (747) with 15 microscopy images in an HTML table grid
 - Footnotes
 - 2 inline images
 - 2 contributors (Roberts-Austen, Neville)
@@ -34,8 +34,8 @@ def test_alloys_boundary_detection(monkeypatch, regression_session, alloys_pages
         session.close()
 
 
-def test_alloys_plate_page_creates_plate_entries(monkeypatch, regression_session, alloys_pages):
-    """Page 747 should produce plate entries, not regular articles."""
+def test_alloys_plate_page_creates_single_plate(monkeypatch, regression_session, alloys_pages):
+    """Page 747 should produce one plate entry (not split by internal headings)."""
     _run_pipeline(monkeypatch, regression_session, alloys_pages, volume=1)
 
     session = regression_session()
@@ -45,34 +45,11 @@ def test_alloys_plate_page_creates_plate_entries(monkeypatch, regression_session
             .filter(Article.article_type == "plate", Article.volume == 1)
             .all()
         )
-        plate_titles = sorted(p.title for p in plates)
-
-        # Should have separate plate entries for each section
-        assert len(plates) >= 2, (
-            f"Expected multiple plate entries for multi-section plate page, got {len(plates)}: {plate_titles}"
+        assert len(plates) == 1, (
+            f"Plate page should produce exactly one plate article, got {len(plates)}: "
+            f"{[p.title for p in plates]}"
         )
-    finally:
-        session.close()
-
-
-def test_alloys_plate_has_distinct_titles(monkeypatch, regression_session, alloys_pages):
-    """Multi-section plate page should produce plates with different titles."""
-    _run_pipeline(monkeypatch, regression_session, alloys_pages, volume=1)
-
-    session = regression_session()
-    try:
-        plates = (
-            session.query(Article)
-            .filter(Article.article_type == "plate", Article.volume == 1)
-            .all()
-        )
-        plate_titles = [p.title for p in plates]
-
-        # The plate page has sections titled ALLOYS, GUN-MAKING, IRON AND STEEL
-        unique_titles = set(plate_titles)
-        assert len(unique_titles) >= 2, (
-            f"Multi-section plate should have distinct titles, got: {plate_titles}"
-        )
+        assert plates[0].title == "ALLOYS"
     finally:
         session.close()
 

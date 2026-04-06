@@ -314,9 +314,12 @@ def _transform_plate(raw_wikitext: str) -> str:
         if len(cap) >= 3 and num not in captions:
             captions[num] = cap
     # Format 2: {{small-caps|Fig.}} N.—description  or  Fig. N.—description
+    # Captions may wrap across lines (inside <td> blocks), so capture until
+    # </td>, next Fig heading, or double newline.
     for m in re.finditer(
-        r"(?:\{\{small-caps\|Fig\.\}\}|Fig\.)\s*(\d+)\.?\s*[—\-]\s*(.+?)(?:\n|$)",
-        text,
+        r"(?:\{\{small-caps\|Fig\.\}\}|Fig\.)\s*(\d+)\.?\s*[—\-]\s*"
+        r"(.+?)(?=</td>|\{\{small-caps\|Fig\.\}\}|Fig\.\s*\d+\.|\n\n|$)",
+        text, re.DOTALL,
     ):
         num = int(m.group(1))
         cap = m.group(2).strip().rstrip(",.|;")
@@ -385,7 +388,7 @@ def _transform_plate(raw_wikitext: str) -> str:
                 best_img = i
         if best_img is not None and best_score > 0:
             used_images.add(best_img)
-            paired.append(f"{{{{IMG:{images[best_img]}|{num}. {cap}}}}}")
+            paired.append(f"{{{{IMG:{images[best_img]}|{cap}}}}}")
         else:
             unmatched_caps.append((num, cap))
 
@@ -395,9 +398,9 @@ def _transform_plate(raw_wikitext: str) -> str:
         if j < len(unmatched_imgs):
             img_idx = unmatched_imgs[j]
             used_images.add(img_idx)
-            paired.append(f"{{{{IMG:{images[img_idx]}|{num}. {cap}}}}}")
+            paired.append(f"{{{{IMG:{images[img_idx]}|{cap}}}}}")
         else:
-            paired.append(f"{num}. {cap}")
+            paired.append(cap)
 
     # Add remaining unmatched images
     for i, img in enumerate(images):
@@ -490,15 +493,15 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
         return text
 
     for tmpl in ["fine block", "center", "c", "larger", "smaller",
-                  "EB1911 Fine Print"]:
+                  "EB1911 Fine Print", "nowrap"]:
         text = _unwrap_balanced(text, tmpl)
-
-    # Unwrap {{nowrap|...}} before table extraction so inner | isn't
-    # mistaken for cell separators
-    text = re.sub(r"\{\{nowrap\s*\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     # Strip table style templates ({{ts|...}}, {{Ts|...}}) that interfere
     # with cell parsing
     text = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}", "", text)
+    # Convert spacing templates to a space ({{gap}}, {{em|N}}, {{rule}})
+    text = re.sub(r"\{\{gap(?:\|[^{}]*)?\}\}", " ", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{em\s*\|[^{}]*\}\}", " ", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{rule\}\}", "———", text, flags=re.IGNORECASE)
 
     # No need for orphan table wrapping — articles are joined before
     # transform, so all tables have their {| and |} in the same text.

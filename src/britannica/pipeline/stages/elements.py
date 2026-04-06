@@ -63,6 +63,8 @@ _EXTRACTORS = [
         re.IGNORECASE), 0),
     ("HIEROGLYPH", re.compile(
         r"\{\{hieroglyph\|([^{}]*)\}\}", re.IGNORECASE), 0),
+    ("HIEROGLYPH", re.compile(
+        r"<hiero>([^<]*)</hiero>", re.IGNORECASE), 0),
 ]
 
 
@@ -158,7 +160,9 @@ def _strip_delimiters(element_type: str, raw: str) -> str:
         s = re.sub(r"</table>\s*$", "", s, flags=re.IGNORECASE)
         return s
     elif element_type == "HIEROGLYPH":
-        return re.sub(r"^\{\{hieroglyph\||\}\}$", "", raw, flags=re.IGNORECASE)
+        s = re.sub(r"^\{\{hieroglyph\||\}\}$", "", raw, flags=re.IGNORECASE)
+        s = re.sub(r"^<hiero>|</hiero>$", "", s, flags=re.IGNORECASE)
+        return s
     elif element_type == "IMAGE_FLOAT":
         # Strip outer {{ and }}
         s = re.sub(r"^\{\{", "", raw)
@@ -207,7 +211,7 @@ def _process_element(element_type: str, raw: str,
     elif element_type == "HIEROGLYPH":
         result = f"[hieroglyph: {inner}]"
     elif element_type == "TABLE":
-        result = _process_table(inner, text_transform)
+        result = _process_table(inner, text_transform, inner_registry)
     elif element_type == "HTML_TABLE":
         result = _process_html_table(inner, text_transform)
     else:
@@ -336,37 +340,70 @@ def _process_poem(inner: str, text_transform) -> str:
     return "{{VERSE:" + content + "}VERSE}"
 
 
-def _process_table(inner: str, text_transform) -> str:
+def _process_table(inner: str, text_transform,
+                   inner_registry: ElementRegistry | None = None) -> str:
     """Convert table rows to {{TABLE:...}TABLE} with clean cells.
 
-    By this point, child elements (footnotes, images, scores) have
-    already been extracted, processed, and reinserted as final markers.
-    The table processor only deals with table structure: rows, cells,
-    and cell attributes.
+    The table processor handles STRUCTURE: rows, cell boundaries, attributes.
+    Each cell's content is processed through text_transform — cells are
+    elements in their own right.
     """
     # Convert <br> to space before cell parsing
     inner = re.sub(r"<br\s*/?>", " ", inner, flags=re.IGNORECASE)
 
-    # Tiny inline tables (1-2 cells) → unwrap to inline text
-    stripped = re.sub(r"\|-[^\n]*", "", inner)
-    stripped = re.sub(r"<[^>]+>", "", stripped)
-    cells_check = [c.strip() for c in re.findall(r"\|([^|\n]+)", stripped) if c.strip()]
-    _ATTR_CHECK = re.compile(
-        r"^(?:colspan|rowspan|width|style|align|valign|class|cellpadding|"
-        r"nowrap|border|bgcolor|height)[\s=|]", re.IGNORECASE)
-    data_check = [c for c in cells_check if not _ATTR_CHECK.match(c)]
-    # Only unwrap truly tiny tables — no placeholders (which indicate children)
-    if (len(data_check) <= 2 and sum(len(c) for c in data_check) < 80
-            and _PH not in inner):
-        return " ".join(data_check)
+    # Cell attribute pattern
+    _ATTR = re.compile(
+        r"^(?:colspan|rowspan|width|style|align|valign|class|"
+        r"cellpadding|nowrap|border|bgcolor|height)[\s=|]",
+        re.IGNORECASE,
+    )
+
+    def _extract_cells(row_text):
+        """Extract data cells from a row, stripping attributes, processing each."""
+        # Protect {{...}} and placeholders from pipe-splitting
+        protected = re.sub(r"\{\{[^}]*\}\}", lambda m: m.group(0).replace("|", "\x04"), row_text)
+        protected = re.sub(re.escape(_PH) + r"[^" + re.escape(_PH) + r"]+" + re.escape(_PH),
+                           lambda m: m.group(0).replace("|", "\x04"), protected)
+
+        # Split cells: each | starts a cell. Handle both same-line (||)
+        # and separate-line (|\n|) formats.  An empty cell (| followed
+        # immediately by \n or |) produces an empty string.
+        raw_cells = re.findall(r"\|([^|\n]*)", protected)
+        raw_cells = [c.replace("\x04", "|") for c in raw_cells]
+
+        cells = []
+        for c in raw_cells:
+            s = c.strip()
+            if s in ("}", "{|"):
+                continue
+            if s and _ATTR.match(s):
+                continue
+            # Process cell content through text_transform (empty → " ")
+            cells.append(text_transform(s) if s else " ")
+        return cells
+
+    # Tiny inline tables (few cells, short content) → unwrap to inline text.
+    # Only for single-row tables with no row separators and no block-level
+    # child elements (poems produce VERSE blocks that need table wrapping).
+    _BLOCK_TYPES = {"POEM", "TABLE", "HTML_TABLE"}
+    has_block_child = inner_registry and any(
+        ctype in _BLOCK_TYPES for ctype, _ in inner_registry.elements.values())
+    if "|-" not in inner and not has_block_child:
+        all_cells = _extract_cells(inner)
+        content_cells = [c for c in all_cells if c.strip()]
+        if len(content_cells) <= 4 and sum(len(c) for c in all_cells) < 120:
+            return " ".join(content_cells)
 
     # Check for image-layout table (plate pages: grid of images + captions)
     if _PH in inner:
         # Count child placeholders that are images vs text content
         placeholders = re.findall(re.escape(_PH) + r"[^" + re.escape(_PH) + r"]+" + re.escape(_PH), inner)
         non_placeholder = re.sub(re.escape(_PH) + r"[^" + re.escape(_PH) + r"]+" + re.escape(_PH), "", inner)
-        non_placeholder = re.sub(r"\|[^|\n]*", "", non_placeholder)  # strip cell separators
-        non_placeholder = re.sub(r"[-|{}\s]", "", non_placeholder)
+        # Strip wiki table markup and whitespace, but keep actual cell text
+        non_placeholder = re.sub(r"[-|{}\n]", " ", non_placeholder)
+        non_placeholder = re.sub(r"\b(?:align|valign|colspan|rowspan|style|width|cellpadding|cellspacing|center|right|left|top|bottom)\b", "", non_placeholder, flags=re.IGNORECASE)
+        non_placeholder = re.sub(r'[="]+', "", non_placeholder)
+        non_placeholder = re.sub(r"\s+", " ", non_placeholder).strip()
         if len(placeholders) >= 2 and len(non_placeholder) < len(placeholders) * 20:
             # Mostly images — extract placeholders and any caption text
             parts = []
@@ -396,13 +433,6 @@ def _process_table(inner: str, text_transform) -> str:
     # Split into rows on |- separators
     raw_rows = re.split(r"\|-[^\n]*", inner)
 
-    # Cell attribute patterns to strip
-    _ATTR = re.compile(
-        r"^(?:colspan|rowspan|width|style|align|valign|class|"
-        r"cellpadding|nowrap|border|bgcolor|height)[\s=|]",
-        re.IGNORECASE,
-    )
-
     text_rows = []
     image_parts = []
 
@@ -411,57 +441,27 @@ def _process_table(inner: str, text_transform) -> str:
         if "|+" in raw_row:
             continue
 
-        # Cell content is already processed — child elements have been
-        # extracted and reinserted as final markers.
-        # Convert <br> to space before cell extraction so multi-line
-        # headers like "1898.<br>Acres." become "1898. Acres."
-        cleaned = re.sub(r"<br\s*/?>", " ", raw_row, flags=re.IGNORECASE)
-
-        # Preserve any child element placeholders that appear outside
-        # cells (e.g. poems between table rows).
-        for line in cleaned.split("\n"):
+        # Preserve any child element placeholders outside cells
+        for line in raw_row.split("\n"):
             stripped_line = line.strip()
             if _PH in stripped_line and not stripped_line.startswith("|"):
-                # This is a placeholder on its own line — preserve it
                 image_parts.append(stripped_line)
 
-        # Extract cell values: each | starts a cell.
-        # Protect {{...}} and placeholders from pipe-splitting.
-        protected = re.sub(r"\{\{[^}]*\}\}", lambda m: m.group(0).replace("|", "\x04"), cleaned)
-        protected = re.sub(re.escape(_PH) + r"[^" + re.escape(_PH) + r"]+" + re.escape(_PH),
-                           lambda m: m.group(0).replace("|", "\x04"), protected)
-        raw_cells = re.findall(r"\|([^|\n]+)", protected)
-        raw_cells = [c.replace("\x04", "|") for c in raw_cells]
-        # Filter attributes but preserve empty cells as placeholders
-        cells = []
-        for c in raw_cells:
-            s = c.strip()
-            if not s or s in ("}", "{|"):
-                continue
-            if _ATTR.match(s):
-                # Attribute cell — skip it but if rowspan implies a
-                # missing cell in a later row, add an empty placeholder
-                if "rowspan" in s.lower():
-                    cells.append("")
-                continue
-            cells.append(s)
+        # Extract and process cells
+        cells = _extract_cells(raw_row)
 
-        # Collect any image markers that were reinserted as children
-        for cell in cells:
-            if "{{IMG:" in cell or "\u00abFN:" in cell:
-                # Cell contains a processed child marker — keep it
-                pass
+        # Separate image-only cells from data cells — but only when
+        # the entire row is images (plate layout).  If a row mixes
+        # images and text (e.g. score + description), keep them together.
+        img_cells = [c for c in cells if re.match(r"^\s*\{\{IMG:[^}]+\}\}\s*$", c)]
+        non_img_cells = [c for c in cells if not re.match(r"^\s*\{\{IMG:[^}]+\}\}\s*$", c)]
 
-        # Separate image-only cells from data cells (already transformed)
-        data_cells = []
-        for c in cells:
-            if re.match(r"^\s*\{\{IMG:[^}]+\}\}\s*$", c):
-                image_parts.append(c.strip())
-            else:
-                data_cells.append(c)
-
-        if not data_cells:
+        if img_cells and not non_img_cells:
+            # All-image row — separate for plate layout
+            image_parts.extend(c.strip() for c in img_cells)
             continue
+
+        data_cells = cells  # keep images and text together
 
         # Handle <br> in cells
         br_cells = [i for i, c in enumerate(data_cells)

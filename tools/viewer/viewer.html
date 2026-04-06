@@ -717,6 +717,10 @@
       h = h.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
       h = h.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
       h = h.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
+      h = h.replace(/\{\{IMG:([^|}]+)(?:\|([^}]*))?\}\}/g, (match, filename, caption) => {
+        const url = filename.startsWith("http") ? filename : commonsUrl(filename);
+        return `<img src="${url}" alt="${escapeHtml(caption || filename)}" class="cell-image" loading="lazy" style="max-height:60px;" />`;
+      });
       h = h.replace(/\[hieroglyph:\s*([^\]]+)\]/g, (match, codes) => {
         const rendered = codes.trim().split(/[:\s\-]+/).map(code => {
           code = code.replace(/\\/g, "");
@@ -946,6 +950,7 @@
           })()}</h1>
           <div style="font-size: 0.85rem; color: #6b5e4f; font-style: italic; margin-bottom: 6px;">
             vol. ${escapeHtml(article.volume ?? "?")}${article.page_start !== article.page_end ? `, pp. ${escapeHtml(article.page_start ?? "")}–${escapeHtml(article.page_end ?? "")}` : `, p. ${escapeHtml(article.page_start ?? "")}`}
+            ${article.word_count ? `&middot; ${article.word_count.toLocaleString()} words` : ""}
           </div>
           ${article.parent_article ? `<div style="margin-bottom: 8px; font-size: 0.95rem;">Plate for <a href="${articleUrl(article.parent_article.filename)}">${escapeHtml(article.parent_article.title)}</a></div>` : ""}
           ${contributors.length ? `<div class="contributors">By ${contributors.map(c => `<a href="/contributors.html?q=${encodeURIComponent(c.full_name)}" style="color: var(--muted);">${escapeHtml(c.full_name)}</a> <span style="color: var(--muted); font-size: 0.85em;">(${escapeHtml(c.initials)})</span>`).join(", ")}</div>` : ""}
@@ -1028,9 +1033,18 @@
         const article = await response.json();
         renderArticle(article);
 
-        const url = new URL(window.location.href);
-        url.searchParams.set("article", path);
-        window.history.replaceState({}, "", url);
+        // Update URL: production uses clean /article/{id}/{slug}, local uses ?article=
+        if (!IS_LOCAL) {
+          const fnMatch = path.match(/(\d+)-([^/]+)\.json$/);
+          if (fnMatch) {
+            const cleanUrl = `/article/${fnMatch[1]}/${fnMatch[2].toLowerCase()}`;
+            window.history.replaceState({}, "", cleanUrl);
+          }
+        } else {
+          const url = new URL(window.location.href);
+          url.searchParams.set("article", path);
+          window.history.replaceState({}, "", url);
+        }
       } catch (error) {
         renderError(`Could not load article JSON from \"${path}\". ${error.message}`);
       }
@@ -1096,10 +1110,6 @@
 
       highlightNode(bodyEl);
       matchCountEl.textContent = count ? `${count} match${count !== 1 ? "es" : ""}` : "No matches";
-
-      // Scroll to first match
-      const first = bodyEl.querySelector(".search-highlight");
-      if (first) first.scrollIntoView({ behavior: "smooth", block: "center" });
     });
     // --- Jump-to-article autocomplete ---
     (function() {

@@ -43,3 +43,17 @@ def test_drops_blank_lines_within_paragraph() -> None:
 def test_multiple_wraps_in_one_paragraph() -> None:
     text = "first\nsecond\nthird\nfourth"
     assert reflow_paragraphs(text) == "first second third fourth"
+
+
+def test_table_rows_preserved_inline() -> None:
+    """TABLE markers embedded mid-paragraph must keep their row newlines."""
+    text = "viz.:— {{TABLE:row1\nrow2\nrow3}TABLE}\n\nNext paragraph."
+    result = reflow_paragraphs(text)
+    assert "row1\nrow2\nrow3" in result, f"Table rows collapsed: {result}"
+
+
+def test_table_rows_preserved_standalone() -> None:
+    """Standalone TABLE markers also preserve row newlines."""
+    text = "Intro.\n\n{{TABLE:A | B\nC | D\nE | F}TABLE}\n\nMore."
+    result = reflow_paragraphs(text)
+    assert "A | B\nC | D\nE | F" in result

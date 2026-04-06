@@ -8,6 +8,16 @@ def reflow_paragraphs(text: str) -> str:
     Double newlines (paragraph breaks) are preserved.
     Table and image markers are passed through unchanged.
     """
+    # Protect newlines inside block markers BEFORE paragraph splitting.
+    # Without this, a TABLE embedded mid-paragraph has its row-separating
+    # newlines joined into one line by the reflow logic below.
+    def _protect_newlines(m: re.Match) -> str:
+        return m.group(0).replace("\n", "\x02")
+
+    text = re.sub(r"\{\{TABLE.*?\}TABLE\}", _protect_newlines, text, flags=re.DOTALL)
+    text = re.sub(r"\{\{VERSE:.*?\}VERSE\}", _protect_newlines, text, flags=re.DOTALL)
+    text = re.sub(r"\u00abPRE:.*?\u00ab/PRE\u00bb", _protect_newlines, text, flags=re.DOTALL)
+
     paragraphs = re.split(r"\n\n+", text)
 
     result = []
