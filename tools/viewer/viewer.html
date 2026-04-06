@@ -427,11 +427,21 @@
       color: var(--muted);
     }
 
-    .toc ol {
+    .toc ol, .toc ul.toc-contents {
       margin: 0;
       padding-left: 20px;
       columns: 2;
       column-gap: 24px;
+    }
+
+    .toc ul.toc-contents {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .toc ul.toc-contents > li > ol {
+      padding-left: 20px;
+      columns: 1;
     }
 
     .toc li {
@@ -524,7 +534,10 @@
       z-index: 200;
       font-style: normal;
       font-variant: normal;
+      font-weight: normal;
+      font-size: 0.85rem;
       text-indent: 0;
+      text-transform: none;
     }
 
     .fn-popup.visible {
@@ -781,14 +794,22 @@
       }
       // Render standalone small-caps paragraphs as section headings
       // (e.g. «SC»II.—The People«/SC» in multi-section articles like JAPAN)
-      const scSectionMatch = p.match(/^\u00abSC\u00bb([^\u00ab]+)\u00ab\/SC\u00bb$/);
+      const scSectionMatch = p.match(/^(?:([IVXLC]+\.)\s*)?\u00abSC\u00bb(([IVXLC]+[.—]\s*)?.*?)\u00ab\/SC\u00bb$/s);
       if (scSectionMatch) {
         sectionCounter++;
-        const text = scSectionMatch[1].trim();
+        const prefix = scSectionMatch[1] ? scSectionMatch[1] + " " : "";
+        const rawText = (prefix + scSectionMatch[2]).trim();
+        // Strip footnote markers from title for TOC display
+        const text = rawText.replace(/\u00abFN:.*?\u00ab\/FN\u00bb/gs, "").trim();
         const sectionId = `section-${sectionCounter}`;
         const slug = text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-        collectedSections.push({ id: sectionId, title: text, slug });
-        return `<h3 class="section-heading" id="${sectionId}" data-slug="${slug}">${escapeHtml(text)}</h3>`;
+        const hasNumeral = scSectionMatch[1] || (scSectionMatch[3] && scSectionMatch[3].length > 0);
+        const isBiblio = /^(?:References|Authorities|Bibliography|See also)\b/i.test(text);
+        if (hasNumeral && !isBiblio) {
+          collectedSections.push({ id: sectionId, title: text, level: 1 });
+        }
+        const headingHtml = renderParagraph(rawText);
+        return `<h3 class="section-heading" id="${sectionId}" data-slug="${slug}">${headingHtml}</h3>`;
       }
       // Render preformatted blocks (structural chemical formulas)
       const preMatch = p.match(/^\u00abPRE:([\s\S]*)\u00ab\/PRE\u00bb$/);
@@ -818,15 +839,19 @@
         return `<table class="data-table">${tableRows}</table>`;
       }
 
-      // Detect section headings: "Section Name.—rest of paragraph"
-      // Strip «SC»/«/SC» markers so small-caps headings like «SC»Bibliography.«/SC»— are detected
-      const pStripped = p.replace(/\u00abSC\u00bb/g, "").replace(/\u00ab\/SC\u00bb/g, "");
-      const sectionMatch = pStripped.match(/^([A-Z][A-Za-z\s,\-&]+)\.\u2014(.*)$/s);
-      if (sectionMatch && sectionMatch[1].length < 60) {
+      // Detect major section headings: «SC»I.—Geography«/SC» or «SC»IV. Art«/SC»
+      // Must have a Roman numeral prefix to distinguish from inline «SC» labels
+      const sectionMatch = p.match(/^(?:([IVXLC]+\.)\s*)?\u00abSC\u00bb(([IVXLC]+[.—]\s*)?.*?)\u00ab\/SC\u00bb[.:]?\u2014?(.*)$/s);
+      const hasNumeral = sectionMatch && (sectionMatch[1] || (sectionMatch[3] && sectionMatch[3].length > 0));
+      if (sectionMatch && hasNumeral && sectionMatch[2].length < 60) {
         sectionCounter++;
-        const sectionTitle = sectionMatch[1].trim();
+        const prefix = sectionMatch[1] ? sectionMatch[1] + " " : "";
+        const sectionTitle = (prefix + sectionMatch[2]).trim();
         const sectionId = `section-${sectionCounter}`;
-        collectedSections.push({ id: sectionId, title: sectionTitle });
+        const isBiblio = /^(?:References|Authorities|Bibliography|See also)\b/i.test(sectionTitle);
+        if (!isBiblio) {
+          collectedSections.push({ id: sectionId, title: sectionTitle, level: 1 });
+        }
 
         // Extract the body from the ORIGINAL paragraph (preserving all markers)
         const emDashIdx = p.indexOf("\u2014");
@@ -881,7 +906,7 @@
       html = html.replace(/\u00abSH\u00bb(.*?)\u00ab\/SH\u00bb/gs, (match, text) => {
         sectionCounter++;
         const sectionId = `section-${sectionCounter}`;
-        collectedSections.push({ id: sectionId, title: text.trim() });
+        collectedSections.push({ id: sectionId, title: text.trim(), level: 2 });
         return `<span class="shoulder-heading" id="${sectionId}">${escapeHtml(text)}</span>`;
       });
       // Detect if this paragraph is a single standalone equation (one math block, no other text)
@@ -1050,9 +1075,15 @@
               i++;
             }
             const bodyHtml = mergedParas.map(p => renderParagraph(p)).join("");
-            const tocHtml = collectedSections.length >= 3
-              ? `<div class="toc"><h3>Contents</h3><ol>${collectedSections.map(s => `<li><a href="#${s.id}">${escapeHtml(s.title)}</a></li>`).join("")}</ol></div>`
-              : "";
+            const level1 = collectedSections.filter(s => s.level === 1);
+            const level2 = collectedSections.filter(s => s.level === 2);
+            let tocHtml = "";
+            if (level1.length >= 2) {
+              tocHtml += `<div class="toc"><h3>Contents</h3><ul class="toc-contents">${level1.map(s => `<li><a href="#${s.id}">${escapeHtml(s.title)}</a></li>`).join("")}</ul></div>`;
+            }
+            if (level2.length >= 3) {
+              tocHtml += `<div class="toc"><h3>Sections</h3><ol>${level2.map(s => `<li><a href="#${s.id}">${escapeHtml(s.title)}</a></li>`).join("")}</ol></div>`;
+            }
             return tocHtml + `<div class="body-text">${bodyHtml}</div>`;
           })()}
           ${collectedFootnotes.length ? `<div class="footnotes"><h3>Notes</h3><ol>${collectedFootnotes.map(fn => `<li id="fn-${fn.num}" value="${fn.num}"><a onclick="var el=document.getElementById('fnref-${fn.num}');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});return false;" href="#">${fn.num}.</a> ${formatFootnoteText(fn.text)}</li>`).join("")}</ol></div>` : ""}

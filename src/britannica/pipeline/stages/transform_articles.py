@@ -218,10 +218,11 @@ def _unwrap_layout_templates(text: str) -> str:
             r"\{\{" + re.escape(name) + r"\|((?:[^{}]|\{\{[^{}]*\}\})*)\}\}",
             r"\1", text, flags=re.IGNORECASE,
         )
-    # {{csc|...}} = centered small caps
+    # {{csc|...}} = centered small caps — always a section heading,
+    # so ensure paragraph breaks around it
     text = re.sub(
         r"\{\{csc\|((?:[^{}]|\{\{[^{}]*\}\})*)\}\}",
-        f"{_FMT}SC\\1{_FMT}/SC", text, flags=re.IGNORECASE,
+        f"\n\n{_FMT}SC\\1{_FMT}/SC\n\n", text, flags=re.IGNORECASE,
     )
     return text
 
@@ -584,6 +585,7 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
 
     # Reflow paragraphs — join lines that were hard-wrapped in the source
     text = reflow_paragraphs(text)
+
 
     # Strip leading comma/space left after title+descriptor stripping
     # (e.g. "'''BISMARCK,''' {{sc|Prince}}, duke..." → ", duke..." after transform)

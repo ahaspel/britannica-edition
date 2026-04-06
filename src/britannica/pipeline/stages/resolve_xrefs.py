@@ -48,8 +48,10 @@ def resolve_xrefs_all() -> int:
 
     try:
         all_articles = session.query(Article).all()
-        # Build unified lookup: title -> article_id
-        title_map = {a.title.strip().upper(): a.id for a in all_articles}
+        # Build unified lookup: title -> article_id (exclude plates —
+        # xrefs should always target the article, not a plate page)
+        title_map = {a.title.strip().upper(): a.id
+                     for a in all_articles if a.article_type != "plate"}
 
         # Add aliases to the lookup (don't overwrite canonical titles)
         alias_map = build_alias_map()

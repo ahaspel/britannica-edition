@@ -210,6 +210,8 @@ def _process_element(element_type: str, raw: str,
         result = _process_poem(inner, text_transform)
     elif element_type == "HIEROGLYPH":
         result = f"[hieroglyph: {inner}]"
+    elif element_type == "TABLE" and _is_equation_layout(inner, inner_registry):
+        result = _process_equation_layout(inner, text_transform)
     elif element_type == "TABLE":
         result = _process_table(inner, text_transform, inner_registry)
     elif element_type == "HTML_TABLE":
@@ -270,6 +272,84 @@ def _process_math(inner: str) -> str:
     # Collapse blank lines — they break LaTeX math environments
     inner = re.sub(r"\n{2,}", "\n", inner)
     return f"\u00abMATH:{inner}\u00ab/MATH\u00bb"
+
+
+def _is_equation_layout(inner: str, inner_registry: ElementRegistry | None) -> bool:
+    """Detect wiki tables used for equation alignment, not data display.
+
+    Two signatures:
+      1. Mostly MATH placeholders (from <math> tags in cells)
+      2. Mostly empty spacer cells without cell-level align attributes
+    """
+    # Check 1: majority MATH placeholders
+    if _PH in inner and inner_registry:
+        math_ct = sum(1 for _, (t, _) in inner_registry.elements.items() if t == "MATH")
+        if math_ct >= 2 and math_ct >= len(inner_registry.elements) * 0.5:
+            return True
+    # Check 2: spacer-heavy alignment (>50% empty cells).
+    # Data tables use cell-level align/valign attributes; equation layout never does.
+    if re.search(r'\balign\s*=', inner, re.IGNORECASE):
+        return False
+    # Need _extract_cells logic inline — lightweight version for detection only
+    raw_rows = re.split(r"\|-[^\n]*", inner)
+    total_cells = 0
+    empty_cells = 0
+    for raw_row in raw_rows:
+        # Simple cell split (no text_transform needed for counting)
+        protected = re.sub(r"\{\{[^}]*\}\}", lambda m: m.group(0).replace("|", "\x04"), raw_row)
+        protected = re.sub(re.escape(_PH) + r"[^" + re.escape(_PH) + r"]+" + re.escape(_PH),
+                           lambda m: m.group(0).replace("|", "\x04"), protected)
+        raw_cells = re.findall(r"\|([^|\n]*)", protected)
+        _ATTR = re.compile(
+            r"^(?:colspan|rowspan|width|style|align|valign|class|"
+            r"cellpadding|nowrap|border|bgcolor|height)[\s=|]", re.IGNORECASE)
+        for c in raw_cells:
+            s = c.replace("\x04", "|").strip()
+            if s in ("}", "{|") or (s and _ATTR.match(s)):
+                continue
+            total_cells += 1
+            if not s:
+                empty_cells += 1
+    if total_cells >= 4 and empty_cells > total_cells * 0.5:
+        return True
+    return False
+
+
+def _process_equation_layout(inner: str, text_transform) -> str:
+    """Process an equation-layout table: join each row's content cells into one line.
+
+    These are wiki tables used for visual alignment of equations,
+    not for tabular data.  Each row becomes a single text line.
+    """
+    inner = re.sub(r"<br\s*/?>", " ", inner, flags=re.IGNORECASE)
+    _ATTR = re.compile(
+        r"^(?:colspan|rowspan|width|style|align|valign|class|"
+        r"cellpadding|nowrap|border|bgcolor|height)[\s=|]", re.IGNORECASE)
+
+    def _extract_cells(row_text):
+        protected = re.sub(r"\{\{[^}]*\}\}", lambda m: m.group(0).replace("|", "\x04"), row_text)
+        protected = re.sub(re.escape(_PH) + r"[^" + re.escape(_PH) + r"]+" + re.escape(_PH),
+                           lambda m: m.group(0).replace("|", "\x04"), protected)
+        raw_cells = re.findall(r"\|([^|\n]*)", protected)
+        raw_cells = [c.replace("\x04", "|") for c in raw_cells]
+        cells = []
+        for c in raw_cells:
+            s = c.strip()
+            if s in ("}", "{|"):
+                continue
+            if s and _ATTR.match(s):
+                continue
+            cells.append(text_transform(s) if s else " ")
+        return cells
+
+    raw_rows = re.split(r"\|-[^\n]*", inner)
+    lines = []
+    for raw_row in raw_rows:
+        cells = _extract_cells(raw_row)
+        content = [c for c in cells if c.strip()]
+        if content:
+            lines.append(" ".join(content))
+    return "\n\n".join(lines) if lines else ""
 
 
 def _process_ref(inner: str, text_transform) -> str:
@@ -397,47 +477,6 @@ def _process_table(inner: str, text_transform,
         content_cells = [c for c in all_cells if c.strip()]
         if len(content_cells) <= 4 and sum(len(c) for c in all_cells) < 120:
             return " ".join(content_cells)
-
-    # Check for math/equation-layout table (alignment using table columns).
-    # Two signatures:
-    #   1. Mostly MATH placeholders (from <math> tags in cells)
-    #   2. Mostly empty spacer cells (alignment without <math>)
-    # Each row should be joined into a single line, not pipe-separated.
-    # Must run before image-layout check, which would scatter them.
-    def _is_equation_layout():
-        # Check 1: majority MATH placeholders
-        if _PH in inner and inner_registry:
-            math_ct = sum(1 for _, (t, _) in inner_registry.elements.items() if t == "MATH")
-            if math_ct >= 2 and math_ct >= len(inner_registry.elements) * 0.5:
-                return True
-        # Check 2: spacer-heavy alignment (>50% empty cells — typical of
-        # equation layout without <math>).  Data tables use cell-level
-        # align/valign attributes; equation layout tables never do.
-        if re.search(r'\balign\s*=', inner, re.IGNORECASE):
-            return False
-        raw_rows = re.split(r"\|-[^\n]*", inner)
-        total_cells = 0
-        empty_cells = 0
-        for raw_row in raw_rows:
-            cells = _extract_cells(raw_row)
-            for c in cells:
-                total_cells += 1
-                if not c.strip():
-                    empty_cells += 1
-        if total_cells >= 4 and empty_cells > total_cells * 0.5:
-            return True
-        return False
-
-    if _is_equation_layout():
-        raw_rows = re.split(r"\|-[^\n]*", inner)
-        lines = []
-        for raw_row in raw_rows:
-            cells = _extract_cells(raw_row)
-            content = [c for c in cells if c.strip()]
-            if content:
-                lines.append(" ".join(content))
-        if lines:
-            return "\n\n".join(lines)
 
     # Check for image-layout table (plate pages: grid of images + captions)
     if _PH in inner:
@@ -589,6 +628,11 @@ def _process_table(inner: str, text_transform,
                         n_labels = len(content_cells)
                         data_cols = stripped_ncols - 1  # exclude year column
                         span = data_cols // n_labels if n_labels else 1
+                        if stripped_ncols < 2:
+                            # Not enough columns after stripping — just join content
+                            new_rows.append(" | ".join(
+                                c for c in cells if c.strip()))
+                            continue
                         padded = [""] * stripped_ncols
                         for k, lbl in enumerate(content_cells):
                             pos = 1 + k * span
