@@ -36,17 +36,10 @@ echo
 echo "=== Phase 1: Cleaning everything [$(elapsed)] ==="
 
 echo "  Truncating database..."
-uv run python -c "
-import sys; sys.path.insert(0, 'src')
-from britannica.db.session import SessionLocal
-from sqlalchemy import text
-s = SessionLocal()
-for table in ['article_contributors', 'article_images', 'cross_references', 'article_segments', 'articles', 'contributors', 'source_pages']:
-    s.execute(text(f'TRUNCATE TABLE {table} CASCADE'))
-s.commit()
-s.close()
-print('  Done.')
-"
+uv run python tools/db/truncate_all.py
+
+echo "  Verifying..."
+uv run python tools/db/verify_empty.py
 
 echo "  Clearing exports..."
 rm -rf "$EXPORT_DIR"
@@ -117,33 +110,7 @@ done
 # --- Phase 5: Export front matter ---
 echo
 echo "=== Phase 5: Exporting front matter [$(elapsed)] ==="
-uv run python -c "
-import json, sys
-sys.stdout.reconfigure(encoding='utf-8')
-from britannica.db.session import SessionLocal
-from britannica.db.models import SourcePage
-s = SessionLocal()
-fm = {'dedication': {'title': 'Dedication', 'pages': [5], 'body': ''}, 'preface': {'title': 'Editorial Preface', 'author': 'Hugh Chisholm', 'date': 'December 10, 1910', 'pages': list(range(6, 24)), 'body': ''}}
-p = s.query(SourcePage).filter(SourcePage.volume == 1, SourcePage.page_number == 5).first()
-if p: fm['dedication']['body'] = (p.cleaned_text or p.raw_text or '').strip()
-body = ''
-for pg in range(6, 24):
-    p = s.query(SourcePage).filter(SourcePage.volume == 1, SourcePage.page_number == pg).first()
-    if not p: continue
-    text = (p.cleaned_text or p.raw_text or '').strip()
-    if not text: continue
-    if not body:
-        body = text
-    elif body.endswith(('\n', '.', '!', '?', ':')):
-        body = body + '\n\n' + text
-    else:
-        body = body + ' ' + text
-fm['preface']['body'] = body
-with open('data/derived/articles/front_matter.json', 'w', encoding='utf-8') as f:
-    json.dump(fm, f, indent=2, ensure_ascii=False)
-print('Exported front matter.')
-s.close()
-"
+uv run python tools/export_front_matter.py
 
 # --- Phase 6: Post-processing cleanup ---
 echo
