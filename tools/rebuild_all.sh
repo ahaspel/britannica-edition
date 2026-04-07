@@ -9,9 +9,14 @@
 
 set -euo pipefail
 
-# Log to rebuild.log while preserving stdout
-exec > >(while IFS= read -r line; do echo "$line"; echo "$line" >> rebuild.log; done) 2>&1
-: > rebuild.log
+# Kill any other running builds
+OTHER_PIDS=$(pgrep -f "rebuild_all.sh" | grep -v $$ || true)
+if [ -n "$OTHER_PIDS" ]; then
+  echo "Killing previous build(s): $OTHER_PIDS"
+  echo "$OTHER_PIDS" | xargs kill 2>/dev/null || true
+  sleep 2
+fi
+
 
 VOLUMES=$(seq 1 28)
 EXPORT_DIR="data/derived/articles"
@@ -56,6 +61,11 @@ if [ -z "$NO_DEPLOY" ]; then
   echo "  Done."
 fi
 
+# --- Phase 1b: Build contributor table from front matter ---
+echo
+echo "=== Phase 1b: Building contributor table [$(elapsed)] ==="
+uv run python tools/build_contributor_table.py
+
 # --- Phase 2: Per-volume pipeline ---
 echo
 echo "=== Phase 2: Running pipeline for each volume ==="
@@ -98,10 +108,11 @@ for vol in $VOLUMES; do
   echo "  Volume $vol complete. [$(elapsed)]"
 done
 
-# --- Phase 3: Cross-volume xref resolution ---
+# --- Phase 3: Cross-volume resolution ---
 echo
-echo "=== Phase 3: Resolving cross-references across all volumes [$(elapsed)] ==="
+echo "=== Phase 3a: Resolving cross-references across all volumes [$(elapsed)] ==="
 uv run britannica resolve-xrefs-all
+
 
 # --- Phase 4: Re-export (xref targets now resolved cross-volume) ---
 echo

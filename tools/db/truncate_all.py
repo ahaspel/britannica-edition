@@ -11,6 +11,7 @@ for table in [
     "cross_references",
     "article_segments",
     "articles",
+    "contributor_initials",
     "contributors",
     "source_pages",
 ]:

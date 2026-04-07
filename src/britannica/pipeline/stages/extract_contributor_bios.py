@@ -74,21 +74,15 @@ def extract_contributor_bios() -> int:
                         if not initials or len(initials) > 20 or "<" in initials or "{" in initials:
                             continue
 
-                        # Find or skip this contributor
+                        # Find existing contributor — never create new ones
+                        # (only contributors linked to articles matter)
                         contributor = (
                             session.query(Contributor)
                             .filter(Contributor.initials == initials)
                             .first()
                         )
                         if not contributor:
-                            # Create if not exists
-                            name = fields.get("name", initials)
-                            contributor = Contributor(
-                                initials=initials,
-                                full_name=name,
-                            )
-                            session.add(contributor)
-                            session.flush()
+                            continue
 
                         # Update with biographical data
                         name = fields.get("name")
