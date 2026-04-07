@@ -9,6 +9,10 @@
 
 set -euo pipefail
 
+# Log to rebuild.log while preserving stdout
+exec > >(while IFS= read -r line; do echo "$line"; echo "$line" >> rebuild.log; done) 2>&1
+: > rebuild.log
+
 VOLUMES=$(seq 1 28)
 EXPORT_DIR="data/derived/articles"
 BUILD_START=$(date +%s)

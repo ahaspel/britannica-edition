@@ -438,7 +438,8 @@
       padding-left: 0;
     }
 
-    .toc ul.toc-contents > li > ol {
+    .toc ul.toc-contents ul {
+      list-style: none;
       padding-left: 20px;
       columns: 1;
     }
@@ -793,7 +794,7 @@
       }
       // Render standalone small-caps paragraphs as section headings
       // (e.g. «SC»II.—The People«/SC» in multi-section articles like JAPAN)
-      const scSectionMatch = p.match(/^(?:([IVXLC]+\.)\s*)?\u00abSC\u00bb(([IVXLC]+[.—]\s*)?.*?)\u00ab\/SC\u00bb$/s);
+      const scSectionMatch = p.match(/^(?:([IVXLCA-Z]+\.)\s*)?\u00abSC\u00bb(([IVXLCA-Z]+[.—]\s*)?.*?)\u00ab\/SC\u00bb$/s);
       if (scSectionMatch) {
         sectionCounter++;
         const prefix = scSectionMatch[1] ? scSectionMatch[1] + " " : "";
@@ -803,8 +804,10 @@
         const sectionId = `section-${sectionCounter}`;
         const slug = text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
         const hasNumeral = scSectionMatch[1] || (scSectionMatch[3] && scSectionMatch[3].length > 0);
+        // Exclude short abbreviations (A.D., B.C.) and bibliography headings
         const isBiblio = /^(?:References|Authorities|Bibliography|See also)\b/i.test(text);
-        if (hasNumeral && !isBiblio) {
+        const isAbbrev = text.length < 6;
+        if (hasNumeral && !isBiblio && !isAbbrev) {
           collectedSections.push({ id: sectionId, title: text, level: 1 });
         }
         const headingHtml = renderParagraph(rawText);
@@ -838,9 +841,9 @@
         return `<table class="data-table">${tableRows}</table>`;
       }
 
-      // Detect major section headings: «SC»I.—Geography«/SC» or «SC»IV. Art«/SC»
-      // Must have a Roman numeral prefix to distinguish from inline «SC» labels
-      const sectionMatch = p.match(/^(?:([IVXLC]+\.)\s*)?\u00abSC\u00bb(([IVXLC]+[.—]\s*)?.*?)\u00ab\/SC\u00bb[.:]?\u2014?(.*)$/s);
+      // Detect major section headings: «SC»I.—Geography«/SC» or «SC»A. Principles«/SC»
+      // Must have a numeral/letter prefix to distinguish from inline «SC» labels
+      const sectionMatch = p.match(/^(?:([IVXLCA-Z]+\.)\s*)?\u00abSC\u00bb(([IVXLCA-Z]+[.—]\s*)?.*?)\u00ab\/SC\u00bb[.:]?\u2014?(.*)$/s);
       const hasNumeral = sectionMatch && (sectionMatch[1] || (sectionMatch[3] && sectionMatch[3].length > 0));
       if (sectionMatch && hasNumeral && sectionMatch[2].length < 60) {
         sectionCounter++;
@@ -1077,11 +1080,28 @@
             const level1 = collectedSections.filter(s => s.level === 1);
             const level2 = collectedSections.filter(s => s.level === 2);
             let tocHtml = "";
-            if (level1.length >= 2) {
-              tocHtml += `<div class="toc"><h3>Contents</h3><ul class="toc-contents">${level1.map(s => `<li><a href="#${s.id}">${escapeHtml(s.title)}</a></li>`).join("")}</ul></div>`;
-            }
-            if (level2.length >= 3) {
-              tocHtml += `<div class="toc"><h3>Sections</h3><ol>${level2.map(s => `<li><a href="#${s.id}">${escapeHtml(s.title)}</a></li>`).join("")}</ol></div>`;
+            if (level1.length >= 2 && level2.length >= 1) {
+              // Interleaved: major sections with shoulder headings nested below
+              let tocInner = "";
+              let inSub = false;
+              for (const s of collectedSections) {
+                if (s.level === 1) {
+                  if (inSub) { tocInner += "</ul></li>"; inSub = false; }
+                  tocInner += `<li><a href="#${s.id}">${escapeHtml(s.title)}</a>`;
+                } else {
+                  if (!inSub) { tocInner += "<ul>"; inSub = true; }
+                  tocInner += `<li><a href="#${s.id}">${escapeHtml(s.title)}</a></li>`;
+                }
+              }
+              if (inSub) tocInner += "</ul></li>";
+              else if (tocInner) tocInner += "</li>";
+              tocHtml = `<div class="toc"><h3>Contents</h3><ul class="toc-contents">${tocInner}</ul></div>`;
+            } else if (level1.length >= 2) {
+              // Major sections only — unnumbered
+              tocHtml = `<div class="toc"><h3>Contents</h3><ul class="toc-contents">${level1.map(s => `<li><a href="#${s.id}">${escapeHtml(s.title)}</a></li>`).join("")}</ul></div>`;
+            } else if (level2.length >= 3) {
+              // Shoulder headings only — numbered
+              tocHtml = `<div class="toc"><h3>Sections</h3><ol>${level2.map(s => `<li><a href="#${s.id}">${escapeHtml(s.title)}</a></li>`).join("")}</ol></div>`;
             }
             return tocHtml + `<div class="body-text">${bodyHtml}</div>`;
           })()}
