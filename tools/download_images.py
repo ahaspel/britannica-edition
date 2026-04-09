@@ -21,7 +21,7 @@ import io
 import sys
 import time
 from pathlib import Path
-from urllib.parse import quote
+from urllib.parse import quote, unquote
 
 import requests
 
@@ -49,8 +49,11 @@ SESSION.headers["User-Agent"] = (
 def _local_filename(commons_url: str) -> str:
     """Derive a local filename from a Commons URL, preserving the original name."""
     name = commons_url.rsplit("/", 1)[-1]
-    from urllib.parse import unquote
-    return unquote(name)
+    name = unquote(name)
+    # Sanitize characters illegal in Windows filenames
+    for ch in '"<>|?*':
+        name = name.replace(ch, "_")
+    return name
 
 
 def _cooldown_if_needed(request_count: int) -> int:
@@ -106,6 +109,8 @@ def download_commons_images(delay: float, request_count: int = 0) -> tuple[int, 
     skipped = 0
 
     for commons_url, orig_filename in images:
+        # Original Commons name (for URL) vs sanitized name (for local file)
+        commons_name = unquote(commons_url.rsplit("/", 1)[-1])
         local_name = _local_filename(commons_url)
         local_path = IMAGE_DIR / local_name
         if local_path.exists() and local_path.stat().st_size > 0:
@@ -120,10 +125,10 @@ def download_commons_images(delay: float, request_count: int = 0) -> tuple[int, 
                 skipped += 1
                 continue
 
-        # Use Special:FilePath — case-insensitive, handles redirects
+        # Use Special:FilePath with original Commons name
         url = (
             f"https://commons.wikimedia.org/wiki/Special:FilePath/"
-            f"{quote(local_name)}?width=1200"
+            f"{quote(commons_name)}?width=1200"
         )
 
         request_count += 1

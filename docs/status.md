@@ -73,7 +73,6 @@ Resolved xrefs are embedded as direct links at export time: the export stage rew
 - `tools/rebuild_all.sh` — Full rebuild of all 28 volumes (9 phases: reconvert raw wikitext, wipe, pipeline, xref resolve, re-export, front matter, post-process, reindex, quality report)
 - `tools/rebuild_article.py` — Piecemeal rebuild: re-converts raw wikitext for an article's pages, then re-runs the full volume pipeline. Usage: `python tools/rebuild_article.py <vol> <TITLE> [--deploy]`
 - `tools/start_services.sh` — Start/stop local Postgres, Meilisearch, and web server
-- `tools/deploy.sh` — Upload to S3, invalidate CloudFront, index production Meilisearch
 - `tools/run_volume.sh <vol> [--skip-fetch]` — Single volume pipeline
 - `tools/postprocess.py` — Post-export cleanup for residual markup issues
 - `tools/quality_report.py` — Quality analytics with before/after comparison
@@ -150,6 +149,13 @@ Single command: `./tools/rebuild_all.sh` — cleans everything (DB, exports, S3)
 - stray_braces: 14, leaked_html_attr: 8, stray_control_x06: 4, stray_control_x03: 1
 
 ### Queued for next rebuild
+- Table classification overhaul (verse, compound, complex routing, math fix)
+- Printed page numbers (pending OCR ground truth)
+
+### New in 2026-04-09 build
+- **Table classification overhaul**: `_is_layout_wrapper` respects border/rules/class; `{{Ts}}` + data signal → COMPLEX_HTML; verse-layout detection (~21 tables); `COMPOUND_TABLE` element type for nested sub-tables (40 tables); `_process_complex_table` uses inner with placeholders (fixes math in complex tables)
+- **Commons images complete**: 9,986/9,987 downloaded; `download_images.py` filename sanitization + URL fix; `rebuild_all.sh` syncs images to S3
+- **Removed stale `deploy.sh`** — `rebuild_all.sh` is the sole deploy path
 
 ### New in 2026-04-08 build
 - **DjVu crop images**: `DJVU_CROP` element type in `elements.py` — 208 cropped regions from 108 DjVu pages, pre-cropped by `tools/download_djvu_crops.py`, served locally
@@ -167,7 +173,7 @@ Single command: `./tools/rebuild_all.sh` — cleans everything (DB, exports, S3)
 - Images on shared pages can be assigned to the wrong article — image extractor uses page-level ownership
 - Meilisearch EC2 port 7700 currently open to all traffic — should be restricted to CloudFront IPs
 - 41 titles with lowercase (Mc/Mac names — correct casing, flagged by quality report)
-- Section heading problem: internal all-caps section headings can be falsely detected as article boundaries (~850 false splits, design needed)
+- ~~Section heading problem~~: resolved by `<section>` tag-based boundary detection
 
 ## Architecture
 

@@ -11,7 +11,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 
 from britannica.db.models import Article, ArticleSegment, SourcePage
 from britannica.db.session import SessionLocal
-from britannica.export.article_json import _safe_filename
+from britannica.export.article_json import _safe_filename, _printed_page
 from britannica.pipeline.stages.transform_articles import _transform_text_v2
 
 
@@ -50,12 +50,19 @@ def reprocess(article_id=None, title=None, volume=None):
 
         body = _transform_text_v2(joined, article.volume, segments[0][1] if segments else 0)
 
+        # Convert PAGE markers to printed page numbers
+        body = re.sub(
+            r"\x01PAGE:(\d+)\x01",
+            lambda m: f"\x01PAGE:{_printed_page(article.volume, int(m.group(1)))}\x01",
+            body,
+        )
+
         out = {
             "id": article.id,
             "title": article.title,
             "volume": article.volume,
-            "page_start": article.page_start,
-            "page_end": article.page_end,
+            "page_start": _printed_page(article.volume, article.page_start),
+            "page_end": _printed_page(article.volume, article.page_end),
             "article_type": article.article_type or "article",
             "word_count": len(body.split()),
             "body": body,

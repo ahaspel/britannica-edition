@@ -68,6 +68,33 @@ _EXTRACTORS = [
 ]
 
 
+def _is_compound_table(table_text: str) -> bool:
+    """Detect data tables with nested sub-tables in cells.
+
+    These are outermost tables with data signals (border/rules/class) that
+    contain nested {|...|} blocks.  They need dedicated processing to zip
+    parallel sub-table rows together.
+    """
+    header = table_text.split("\n", 1)[0]
+    has_data = bool(
+        re.search(r'border\s*=\s*"?[1-9]', header, re.IGNORECASE) or
+        re.search(r'rules\s*=', header, re.IGNORECASE) or
+        re.search(r'class\s*=\s*"[^"]*(?:wikitable|tablecolhd|border)',
+                   header, re.IGNORECASE))
+    if not has_data:
+        return False
+    # Check for nested table (depth > 1)
+    depth = 0
+    for m in re.finditer(r"\{\||\|\}", table_text):
+        if m.group() == "{|":
+            depth += 1
+            if depth > 1:
+                return True
+        else:
+            depth -= 1
+    return False
+
+
 def _extract_balanced_tables(text: str, registry: ElementRegistry) -> str:
     """Extract wiki tables using balanced {| |} matching.
 
@@ -94,9 +121,11 @@ def _extract_balanced_tables(text: str, registry: ElementRegistry) -> str:
                 if depth == 0:
                     # Found the balanced close
                     table_text = text[idx:i+2]
-                    # Detect DjVu crop tables
+                    # Classify at extraction time
                     if re.search(r"\{\{Css image crop", table_text, re.IGNORECASE):
                         etype = "DJVU_CROP"
+                    elif _is_compound_table(table_text):
+                        etype = "COMPOUND_TABLE"
                     else:
                         etype = "TABLE"
                     placeholder = registry.add(etype, table_text)
@@ -203,13 +232,16 @@ def _process_element(element_type: str, raw: str,
         text_transform: function to transform plain wikitext (bold, italic, etc.)
         context: dict with 'volume' and 'page_number' for score lookups
     """
-    # DJVU_CROP, CHART2, and SCORE are self-contained — process from raw, no recursion.
+    # DJVU_CROP, CHART2, SCORE, and COMPOUND_TABLE are self-contained —
+    # process from raw, no recursive child extraction.
     if element_type == "DJVU_CROP":
         return _process_djvu_crop(raw, text_transform, context)
     if element_type == "CHART2":
         return _process_chart2(raw, context)
     if element_type == "SCORE":
         return _process_score(raw, context)
+    if element_type == "COMPOUND_TABLE":
+        return _process_compound_table(raw, text_transform)
 
     # Strip outer delimiters to get the element's inner content,
     # then recursively extract and process any child elements.
@@ -245,7 +277,7 @@ def _process_element(element_type: str, raw: str,
         elif table_kind == "LAYOUT_WRAPPER":
             result = _unwrap_layout_table(inner, text_transform)
         elif table_kind == "COMPLEX_HTML":
-            result = _process_complex_table(raw, text_transform)
+            result = _process_complex_table(inner, text_transform)
         else:
             result = _process_table(inner, text_transform, inner_registry)
     elif element_type == "HTML_TABLE":
@@ -324,7 +356,7 @@ def _classify_table(raw: str, inner: str, inner_registry: ElementRegistry | None
     has_rowspan = bool(re.search(r"rowspan\s*=", raw, re.IGNORECASE))
     has_colspan = bool(re.search(r"colspan\s*=", raw, re.IGNORECASE))
     # Layout wrappers first — image+caption tables often use colspan for centering
-    if _is_layout_wrapper(inner, inner_registry):
+    if _is_layout_wrapper(raw, inner, inner_registry):
         return "LAYOUT_WRAPPER"
     # Complex HTML: tables with rowspan or colspan need full HTML rendering.
     # Check BEFORE equation layout — rowspan is a strong signal of a
@@ -334,6 +366,18 @@ def _classify_table(raw: str, inner: str, inner_registry: ElementRegistry | None
         # Exception: brace tables (poem + translation) handle rowspan themselves
         if "brace" in raw.lower():
             return "DATA_TABLE"
+        return "COMPLEX_HTML"
+    # Tables with data signals (border/rules/class) AND {{Ts}} templates
+    # need COMPLEX_HTML processing — the template markup creates extra
+    # pipes and empty cells that break _process_table's simple cell parsing.
+    # {{Ts}} alone is not enough (it's also used for layout table styling).
+    header = raw.split("\n", 1)[0]
+    has_data_signal = (
+        re.search(r'border\s*=\s*"?[1-9]', header, re.IGNORECASE) or
+        re.search(r'rules\s*=', header, re.IGNORECASE) or
+        re.search(r'class\s*=\s*"[^"]*(?:wikitable|tablecolhd|border)',
+                   header, re.IGNORECASE))
+    if has_data_signal and re.search(r'\{\{[Tt]s\|', raw):
         return "COMPLEX_HTML"
     if _is_equation_layout(inner, inner_registry):
         return "EQUATION_LAYOUT"
@@ -418,7 +462,7 @@ def _process_equation_layout(inner: str, text_transform) -> str:
     return "\n\n".join(lines) if lines else ""
 
 
-def _is_layout_wrapper(inner: str, inner_registry: ElementRegistry | None) -> bool:
+def _is_layout_wrapper(raw: str, inner: str, inner_registry: ElementRegistry | None) -> bool:
     """Detect tables that wrap other tables/images for layout purposes.
 
     These are outer tables used to arrange images, captions, and nested
@@ -428,8 +472,19 @@ def _is_layout_wrapper(inner: str, inner_registry: ElementRegistry | None) -> bo
     Detected when a table contains:
       - A nested TABLE child, or
       - An IMAGE child with mostly non-data content (captions, short text)
+
+    Tables with explicit border or rules attributes in the {| header are
+    never layout wrappers — they are definitively data tables.
     """
     if not inner_registry:
+        return False
+    # Data table signals in the header override layout wrapper detection.
+    header = raw.split("\n", 1)[0]
+    if re.search(r'border\s*=\s*"?[1-9]', header, re.IGNORECASE):
+        return False
+    if re.search(r'rules\s*=', header, re.IGNORECASE):
+        return False
+    if re.search(r'class\s*=\s*"[^"]*(?:wikitable|tablecolhd|border)', header, re.IGNORECASE):
         return False
     child_types = {t for t, _ in inner_registry.elements.values()}
     if "TABLE" in child_types:
@@ -517,7 +572,134 @@ def _unwrap_layout_table(inner: str, text_transform) -> str:
     return "\n\n".join(parts)
 
 
-def _process_complex_table(raw: str, text_transform) -> str:
+def _extract_subtable_values(table_text: str) -> list[str]:
+    """Extract cell values from a nested sub-table (single-column layout)."""
+    values = []
+    for line in table_text.split("\n"):
+        line = line.strip()
+        if line.startswith("|-") or line.startswith("{|") or line == "|}":
+            continue
+        if line.startswith("|"):
+            cell = line[1:].strip()
+            # Strip attributes: everything before last |
+            if "|" in cell:
+                cell = cell.rpartition("|")[2].strip()
+            # Strip {{Ts}} and other templates
+            cell = re.sub(r"\{\{[^{}]*\}\}\s*", "", cell).strip()
+            values.append(cell)
+    return values
+
+
+def _process_compound_table(raw: str, text_transform) -> str:
+    """Process a data table with nested sub-tables in cells.
+
+    These tables have parallel sub-tables (one per column) where each
+    sub-table lists values vertically.  We zip the sub-table rows together
+    to reconstruct the intended grid layout.
+
+    Self-contained: works from raw wikitext, does not use the recursive
+    extract/process pipeline, so it cannot affect other table types.
+    """
+    # Strip outer delimiters
+    inner = re.sub(r"^\{\|[^\n]*\n?", "", raw)
+    inner = re.sub(r"\n?\|\}\s*$", "", inner)
+
+    # Split into outer rows on top-level |- only (not inside nested tables)
+    outer_rows = []
+    current = []
+    depth = 0
+    for line in inner.split("\n"):
+        stripped = line.strip()
+        if stripped.startswith("{|"):
+            depth += 1
+        elif stripped == "|}":
+            depth -= 1
+        if stripped.startswith("|-") and depth == 0:
+            outer_rows.append("\n".join(current))
+            current = []
+        else:
+            current.append(line)
+    if current:
+        outer_rows.append("\n".join(current))
+
+    html_rows = []
+
+    for row_text in outer_rows:
+        # Check if this row contains nested sub-tables
+        subtables = list(re.finditer(
+            r"\{\|.*?\|\}", row_text, re.DOTALL))
+
+        if subtables:
+            # Extract values from each sub-table
+            all_values = [_extract_subtable_values(m.group(0))
+                          for m in subtables]
+            n_rows_list = [len(v) for v in all_values]
+
+            if n_rows_list and len(set(n_rows_list)) == 1 and n_rows_list[0] > 0:
+                # Parallel sub-tables — zip into rows
+                for i in range(n_rows_list[0]):
+                    cells = []
+                    for vs in all_values:
+                        content = vs[i]
+                        content = re.sub(r"&nbsp;", " ", content)
+                        content = re.sub(r"<br\s*/?>", " ", content,
+                                         flags=re.IGNORECASE)
+                        content = content.strip()
+                        if content and text_transform:
+                            content = text_transform(content)
+                        cells.append(f"<td>{content}</td>")
+                    html_rows.append("<tr>" + "".join(cells) + "</tr>")
+            else:
+                # Unequal sub-tables — flatten each to <br>-joined content
+                for m in subtables:
+                    values = _extract_subtable_values(m.group(0))
+                    content = "<br>".join(
+                        text_transform(v) if text_transform and v.strip()
+                        else v for v in values)
+                    html_rows.append(f"<tr><td>{content}</td></tr>")
+        else:
+            # Regular row (no nested tables) — process normally
+            cells_html = []
+            for line in row_text.split("\n"):
+                line = line.strip()
+                if not line or line.startswith("|+"):
+                    continue
+                if not (line.startswith("|") or line.startswith("!")):
+                    continue
+                tag = "th" if line.startswith("!") else "td"
+
+                # Strip {{Ts}} from cell lines
+                cell_text = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*", "",
+                                   line[1:])
+                # Split on || for multi-cell lines
+                sep = "!!" if tag == "th" else "||"
+                for cell in cell_text.split(sep):
+                    # Strip attributes
+                    if "|" in cell:
+                        _, _, content = cell.rpartition("|")
+                    else:
+                        content = cell
+                    content = re.sub(r"\{\{[^{}]*\}\}", "", content)
+                    content = re.sub(r"&nbsp;", " ", content)
+                    content = re.sub(r"<br\s*/?>", " ", content,
+                                     flags=re.IGNORECASE)
+                    content = re.sub(r"<td[^>]*>", "", content,
+                                     flags=re.IGNORECASE)
+                    content = content.strip()
+                    if content and text_transform:
+                        content = text_transform(content)
+                    cells_html.append(f"<{tag}>{content}</{tag}>")
+
+            if cells_html:
+                html_rows.append("<tr>" + "".join(cells_html) + "</tr>")
+
+    if not html_rows:
+        return ""
+
+    return "\u00abHTMLTABLE:<table>" + "".join(html_rows) + "</table>\u00ab/HTMLTABLE\u00bb"
+
+
+def _process_complex_table(inner: str, text_transform) -> str:
     """Convert a wiki table with rowspan/colspan to HTML.
 
     Strategy: each cell in wiki markup has the form
@@ -525,9 +707,10 @@ def _process_complex_table(raw: str, text_transform) -> str:
     Everything before the last | is attributes; everything after is content.
     We keep only rowspan/colspan from the attributes and transform the content.
     Pipes inside {{...}} are protected so they don't confuse the split.
+
+    Receives `inner` (delimiters already stripped, child elements replaced
+    with placeholders) so that nested elements like <math> are preserved.
     """
-    inner = re.sub(r"^\{\|[^\n]*\n?", "", raw)
-    inner = re.sub(r"\n?\|\}\s*$", "", inner)
 
     rows = re.split(r"\|-[^\n]*", inner)
     html_rows = []
@@ -878,6 +1061,39 @@ def _process_table(inner: str, text_transform,
         result = _process_brace_table(inner, text_transform)
         if result:
             return result
+
+    # Check for verse-layout table: 2 columns where col 1 is just punctuation
+    # (quote marks) and col 2 has the actual verse text.
+    raw_rows_v = re.split(r"\|-[^\n]*", inner)
+    verse_rows_v = []
+    is_verse_layout = len(raw_rows_v) >= 1
+    for rv in raw_rows_v:
+        cells_v = _extract_cells(rv)
+        if not cells_v:
+            continue
+        if len(cells_v) == 2:
+            col1 = cells_v[0].strip()
+            col2 = cells_v[1].strip()
+            # Col 1 must be only punctuation/quotes (or empty)
+            if col1 and not re.match(r'^[\s"\'\u201c\u201d\u2018\u2019,.\-;:—]+$', col1):
+                is_verse_layout = False
+                break
+            if col2:
+                verse_rows_v.append((col1, col2))
+        elif len(cells_v) == 1 and not cells_v[0].strip():
+            continue  # empty row
+        else:
+            is_verse_layout = False
+            break
+    if is_verse_layout and verse_rows_v:
+        # Combine leading/trailing punctuation with verse lines
+        lines = []
+        for col1, col2 in verse_rows_v:
+            line = f"{col1}{col2}" if col1 else col2
+            if text_transform:
+                line = text_transform(line)
+            lines.append(line)
+        return "\n\n{{VERSE:" + "\n".join(lines) + "}VERSE}\n\n"
 
     # Check for structural formula (monospaced, spatial layout)
     if _is_structural_formula(inner):
