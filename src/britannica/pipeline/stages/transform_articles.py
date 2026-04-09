@@ -245,9 +245,11 @@ def _convert_shoulder_headings(text: str) -> str:
                         elif ch == "|" and d == 0:
                             last_pipe = k
                     heading_text = inner[last_pipe+1:] if last_pipe >= 0 else inner
-                    # If we got an attribute instead of heading text, use the part before it
-                    if re.match(r"\s*(?:align|width|style)\s*=", heading_text, re.IGNORECASE):
-                        # Find the second-to-last top-level pipe
+                    # If we got an attribute instead of heading text, walk back
+                    # through pipes until we find actual text
+                    _ATTR_RE = re.compile(r"\s*(?:align|width|style)\s*=", re.IGNORECASE)
+                    while _ATTR_RE.match(heading_text) and last_pipe >= 0:
+                        # Find the previous top-level pipe
                         d2 = 0
                         prev_pipe = -1
                         for k2, ch2 in enumerate(inner[:last_pipe]):
@@ -255,6 +257,7 @@ def _convert_shoulder_headings(text: str) -> str:
                             elif ch2 == "}": d2 -= 1
                             elif ch2 == "|" and d2 == 0: prev_pipe = k2
                         heading_text = inner[prev_pipe+1:last_pipe] if prev_pipe >= 0 else inner[:last_pipe]
+                        last_pipe = prev_pipe
                     # Strip inner templates, bold/italic, and line breaks
                     heading_text = re.sub(r"<br\s*/?>", " ", heading_text, flags=re.IGNORECASE)
                     heading_text = re.sub(r"\{\{[^{}]*\|([^{}]*)\}\}", r"\1", heading_text)
@@ -559,6 +562,13 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
     # Replace <score> tags (static lookup, must happen before extraction)
     text = _replace_score_tags(text, volume, page_number)
 
+    # Strip {{missing table}} markers that precede chart2 blocks (the chart
+    # image replaces the table; the marker is redundant)
+    text = re.sub(
+        r"\{\{missing table\}\}\s*(?:\x01PAGE:\d+\x01)?\s*(?=\{\{center\|.*?GENEALOGICAL|\{\{chart2/start)",
+        "", text, flags=re.IGNORECASE | re.DOTALL,
+    )
+
     # Normalize
     text = normalize_unicode(text)
     text = text.replace("\r\n", "\n").replace("\r", "\n")
@@ -656,6 +666,14 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
     # Extract, process, reassemble — this does all the work
     context = {"volume": volume, "page_number": page_number}
     text = process_elements(text, _transform_body_text, context)
+
+    # Inject chart images for pages where chart2 markup was lost during import
+    from britannica.pipeline.stages.elements import _CHART2_IMAGES
+    for (v, p), filename in _CHART2_IMAGES.items():
+        if v == volume and f"IMG:{filename}" not in text:
+            marker = f"\x01PAGE:{p}\x01"
+            if marker in text:
+                text = text.replace(marker, f"{marker}\n\n{{{{IMG:{filename}|Genealogical table}}}}\n\n", 1)
 
     # Reflow paragraphs — join lines that were hard-wrapped in the source
     text = reflow_paragraphs(text)
@@ -798,6 +816,22 @@ def transform_articles(volume: int) -> int:
                     joined_raw, volume,
                     segments[0][1] if segments else 0,
                 ) if joined_raw else ""
+                # Strip redundant title qualifier from body start.
+                # e.g. title "YORK, HOUSE OF" → body starts "(House of),"
+                if article.body and ", " in article.title:
+                    qualifier = article.title.split(", ", 1)[1]
+                    # Strip formatting markers for matching
+                    body_clean = re.sub(
+                        r"[\u00ab\u00bb](?:SC|/SC|I|/I|B|/B)[\u00ab\u00bb]",
+                        "", article.body[:200],
+                    )
+                    paren_q = f"({qualifier})"
+                    if body_clean.lstrip("\x01PAGE:0123456789").lstrip().lower().startswith(paren_q.lower()):
+                        # Strip the parenthetical qualifier from actual body
+                        article.body = re.sub(
+                            r"^(\x01PAGE:\d+\x01)?\s*\([^)]*\)[,;\s]*",
+                            r"\1", article.body,
+                        )
             session.commit()
             session.expire_all()
 

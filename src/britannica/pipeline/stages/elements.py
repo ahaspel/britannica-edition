@@ -114,7 +114,12 @@ def _extract_balanced_tables(text: str, registry: ElementRegistry) -> str:
 
 
 _CHART2_RE = re.compile(
-    r"\{\{chart2/start[^}]*\}\}.*?\{\{chart2/end\}\}",
+    r"(?:\{\{missing table\}\}\s*(?:\x01PAGE:\d+\x01)?\s*)?"  # consume missing-table + page marker
+    r"(?:\{\{center\|[^}]*\}\}\s*)?"  # consume preceding centered title
+    r"(?:\{\{EB1911 fine print/s\}\}\s*)?"  # consume fine-print wrapper start
+    r"\{\{chart2/start[^}]*\}\}.*?\{\{chart2/end\}\}"
+    r"(?:\s*<poem>.*?</poem>)?"  # consume garbled OCR text after chart
+    r"(?:\s*\{\{EB1911 fine print/e\}\})?",  # consume fine-print wrapper end
     re.DOTALL | re.IGNORECASE,
 )
 

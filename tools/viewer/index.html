@@ -623,6 +623,15 @@
       }).join("");
     }
 
+    // ── Front matter leaf counts (from IA page_numbers.json) ──
+    const FM_LEAVES = {
+      1:37, 2:15, 3:17, 4:20, 5:16, 6:16, 7:16, 8:17,
+      9:17, 10:19, 11:17, 12:16, 13:16, 14:15, 15:16, 16:17,
+      17:17, 18:15, 19:17, 21:17, 22:17, 23:16, 24:15,
+      25:19, 26:19, 27:19, 28:18
+    };
+    function fmLeafCount(vol) { return FM_LEAVES[vol] || 0; }
+
     // ── Volume browse ──
     function iaUrl(vol) {
       const padded = String(vol).padStart(2, "0");
@@ -660,9 +669,8 @@
              </div>`
           : ""}
         <div style="margin-top: 8px; font-size: 0.9rem;">
-          <a href="${iaLink}" target="_blank" style="color: var(--link);">View original volume on Internet Archive \u2192</a>
-          ${fmPages.length
-            ? ` &nbsp;\u00b7&nbsp; <a href="${iaPageUrl(vol, 1)}" target="_blank" style="color: var(--link);">View front matter \u2192</a>`
+          ${fmLeafCount(vol) > 0
+            ? `<a href="scans.html?vol=${vol}&start=1&end=${fmLeafCount(vol)}&prefix=fm&label=Front+Matter" style="color: var(--link);">View front matter \u2192</a>`
             : ""}
         </div>
         <div style="color: var(--muted); font-size: 0.85rem; margin-top: 4px;">

@@ -143,10 +143,14 @@ if [ -z "$NO_DEPLOY" ]; then
   echo "  Uploading images to S3..."
   aws s3 sync data/derived/images/ s3://britannica11.org/data/images/ --exclude ".djvu_cache/*"
 
+  echo "  Uploading scans to S3..."
+  aws s3 sync data/derived/scans/ s3://britannica11.org/data/scans/
+
   echo "  Uploading viewer..."
   aws s3 cp tools/viewer/viewer.html s3://britannica11.org/viewer.html
   aws s3 cp tools/viewer/index.html s3://britannica11.org/index.html
   aws s3 cp tools/viewer/search.html s3://britannica11.org/search.html
+  aws s3 cp tools/viewer/scans.html s3://britannica11.org/scans.html
   aws s3 cp tools/viewer/contributors.html s3://britannica11.org/contributors.html
   aws s3 cp tools/viewer/home.html s3://britannica11.org/home.html
   aws s3 cp tools/viewer/preface.html s3://britannica11.org/preface.html

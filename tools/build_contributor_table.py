@@ -53,6 +53,12 @@ def _clean_name(raw_name):
     name = re.sub(r"<[^>]+>", "", name)
     # Decode entities
     name = name.replace("&thinsp;", "").replace("&nbsp;", " ")
+    # Strip death date and status annotations: (d. 1907), (d.), (late), (late R.A.)
+    name = re.sub(r"\s*\(d\.?\s*\d*\)\.?", "", name)
+    name = re.sub(r"\s*\(late[^)]*\)\.?", "", name, flags=re.IGNORECASE)
+    # Also handle unclosed variants: trailing "(d." or "(late" without closing paren
+    name = re.sub(r"\s*\(d\.?\s*$", "", name)
+    name = re.sub(r",?\s*\(late\s*$", "", name, flags=re.IGNORECASE)
     # Split name from credentials at first comma
     parts = name.split(",", 1)
     base_name = parts[0].strip().rstrip(".")

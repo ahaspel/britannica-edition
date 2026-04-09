@@ -734,14 +734,9 @@
       if (filename.startsWith("http://") || filename.startsWith("https://")) return filename;
       const name = filename.replace(/ /g, "_");
       const local = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-      // DjVu crops are always local (not on Commons)
-      if (name.startsWith("djvu_")) {
-        return local ? `/data/derived/images/${name}` : `/data/images/${name}`;
-      }
-      // Commons images: serve locally if available, fall back to Wikimedia
-      // TODO: flip to fully local once all Commons images are downloaded and deployed
+      // All images served locally (Commons, DjVu crops, chart scans)
       if (local) return `/data/derived/images/${encodeURIComponent(name)}`;
-      return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(name)}?width=600`;
+      return `/data/images/${encodeURIComponent(name)}`;
     }
 
     let footnoteCounter = 0;
@@ -1104,7 +1099,8 @@
           ${article.source_quality && article.source_quality.lowest_level <= 1
             ? `<div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 8px 12px; margin: 8px 0; font-size: 0.9rem;">
                  <strong>Source quality notice:</strong> ${escapeHtml(article.source_quality.note || "Some pages may contain unverified text.")}
-                 This article spans pages with unproofread transcriptions. Text should be verified against the original scans.
+                 This article spans pages with unproofread transcriptions.
+                 <a href="${IS_LOCAL ? 'scans.html' : '/scans.html'}?vol=${article.volume}&start=${article.page_start}&end=${article.page_end}&label=${encodeURIComponent(article.title)}" style="color: #8b4513;">View original scans \u2192</a>
                </div>`
             : ""}
           ${(() => {

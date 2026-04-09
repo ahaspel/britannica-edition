@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Scans - Encyclopaedia Britannica, 11th Edition</title>
+<style>
+  :root { --bg: #f5f0e8; --text: #2c2416; --muted: #6b5d4d; --link: #8b4513; }
+  body { font-family: Georgia, serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+  .header { text-align: center; margin-bottom: 20px; }
+  .header h1 { font-size: 1.3rem; margin: 0; }
+  .header .subtitle { color: var(--muted); font-size: 0.9rem; }
+  .nav { text-align: center; margin: 16px 0; }
+  .nav button { font-family: Georgia, serif; font-size: 1.5rem; padding: 6px 18px; margin: 0 4px;
+    background: transparent; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; color: var(--text); }
+  .nav button:hover { background: rgba(0,0,0,0.05); }
+  .nav button:disabled { opacity: 0.3; cursor: default; }
+  .nav .page-info { display: inline-block; min-width: 120px; text-align: center; }
+  .scan-container { text-align: center; }
+  .scan-container img { max-width: 100%; max-height: 85vh; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+  .scan-container .error { color: var(--muted); font-style: italic; padding: 40px; }
+  a { color: var(--link); }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1 id="title">Page Scans</h1>
+  <div class="subtitle" id="subtitle"></div>
+</div>
+<div class="nav">
+  <button id="firstBtn" onclick="goTo(startPage)">&laquo;</button>
+  <button id="prevBtn" onclick="go(-1)">&lsaquo;</button>
+  <span class="page-info" id="pageInfo"></span>
+  <button id="nextBtn" onclick="go(1)">&rsaquo;</button>
+  <button id="lastBtn" onclick="goTo(endPage)">&raquo;</button>
+</div>
+<div class="scan-container" id="scanContainer"></div>
+<div style="text-align: center; margin-top: 16px;">
+  <a id="backLink" href="index.html">&larr; Back to index</a>
+</div>
+<script>
+  const params = new URLSearchParams(location.search);
+  const vol = parseInt(params.get("vol")) || 1;
+  const startPage = parseInt(params.get("start")) || 1;
+  const endPage = parseInt(params.get("end")) || startPage;
+  const label = params.get("label") || "Pages";
+  const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+
+  let currentPage = startPage;
+
+  document.getElementById("title").textContent = `Volume ${vol}: ${label}`;
+  document.getElementById("subtitle").textContent = `Pages ${startPage}\u2013${endPage}`;
+  document.getElementById("backLink").href = IS_LOCAL ? "index.html" : "/";
+
+  const prefix = params.get("prefix") || "page";  // "page" or "fm"
+
+  // Leaf offset fallback (for pages not in scan_map)
+  const LEAF_OFFSET = {
+    1:7, 2:7, 3:9, 4:9, 5:12, 6:12, 7:7, 8:7,
+    9:9, 10:10, 11:8, 12:7, 13:7, 14:6, 15:17, 16:6,
+    17:9, 18:6, 19:7, 20:-14, 21:6, 22:6, 23:7, 24:4,
+    25:8, 26:4, 27:6, 28:5, 29:6
+  };
+
+  let scanMap = null;
+
+  async function loadScanMap() {
+    try {
+      const url = IS_LOCAL ? "/data/derived/scan_map.json" : "/data/scan_map.json";
+      const resp = await fetch(url);
+      if (resp.ok) scanMap = await resp.json();
+    } catch (e) { /* fall back to offset */ }
+  }
+
+  function leafForPage(vol, wsPage) {
+    if (scanMap && scanMap[String(vol)] && scanMap[String(vol)][String(wsPage)]) {
+      return scanMap[String(vol)][String(wsPage)];
+    }
+    // Fallback: offset
+    return wsPage + (LEAF_OFFSET[vol] || 0);
+  }
+
+  function scanUrl(vol, num) {
+    const padVol = String(vol).padStart(2, "0");
+    if (prefix === "fm") {
+      const padNum = String(num).padStart(2, "0");
+      const name = `vol${padVol}_fm${padNum}.jpg`;
+      return IS_LOCAL ? `/data/derived/scans/${name}` : `/data/scans/${name}`;
+    }
+    // Article pages: use leaf number
+    const leaf = leafForPage(vol, num);
+    const padLeaf = String(leaf).padStart(4, "0");
+    const name = `vol${padVol}_leaf${padLeaf}.jpg`;
+    return IS_LOCAL ? `/data/derived/scans/${name}` : `/data/scans/${name}`;
+  }
+
+  function render() {
+    const container = document.getElementById("scanContainer");
+    const img = new Image();
+    img.alt = `Volume ${vol}, page ${currentPage}`;
+    img.loading = "eager";
+    img.onload = () => { container.innerHTML = ""; container.appendChild(img); };
+    img.onerror = () => { container.innerHTML = `<div class="error">Scan not available for page ${currentPage}</div>`; };
+    img.src = scanUrl(vol, currentPage);
+    container.innerHTML = `<div class="error">Loading...</div>`;
+
+    document.getElementById("pageInfo").textContent = `Page ${currentPage} of ${startPage}\u2013${endPage}`;
+    document.getElementById("firstBtn").disabled = currentPage <= startPage;
+    document.getElementById("prevBtn").disabled = currentPage <= startPage;
+    document.getElementById("nextBtn").disabled = currentPage >= endPage;
+    document.getElementById("lastBtn").disabled = currentPage >= endPage;
+  }
+
+  function go(delta) {
+    currentPage = Math.max(startPage, Math.min(endPage, currentPage + delta));
+    render();
+  }
+
+  function goTo(page) {
+    currentPage = Math.max(startPage, Math.min(endPage, page));
+    render();
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") go(-1);
+    if (e.key === "ArrowRight") go(1);
+    if (e.key === "Home") goTo(startPage);
+    if (e.key === "End") goTo(endPage);
+  });
+
+  if (prefix === "page") {
+    loadScanMap().then(() => render());
+  } else {
+    render();
+  }
+</script>
+</body>
+</html>

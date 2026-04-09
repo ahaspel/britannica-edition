@@ -108,8 +108,9 @@ Resolved xrefs are embedded as direct links at export time: the export stage rew
 - **Architecture: extract-process-reassemble** — `elements.py` + `_transform_text_v2`
 - **Raw wikitext backed up** to `s3://britannica11.org/raw/` (28 zips, 139 MB)
 - **All data fetched** — raw wikitext is static, never changes
-- **IA page scans** — all 29 volumes downloaded as JP2 zips (30 GB in `data/raw/ia_scans/`); vol 20 is Edinburgh copy (580 MB, lower resolution — `univ` copy locked behind lending)
-- **Commons images** — ~4,900 of ~10,000 downloaded to `data/derived/images/`, download in progress; DjVu crops (208) and chart images (5) complete
+- **IA page scans** — all 29 volumes downloaded as JP2 zips (30 GB in `data/raw/ia_scans/`); vol 20 is Edinburgh copy (580 MB, low quality — `univ` copy locked behind IA lending); page_numbers.json + scan_map.json for all volumes
+- **Scan viewer** — `scans.html` page-by-page viewer with `«` `‹` `›` `»` navigation; front matter scans extracted for all volumes (except vol 20); `extract_scan.py` for on-demand page extraction using leaf offset mapping
+- **Commons images** — download in progress; DjVu crops (208) and chart images (5) complete
 
 ## Production Deployment
 
