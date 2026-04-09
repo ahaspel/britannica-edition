@@ -217,7 +217,17 @@
           .join("");
 
         const creds = c.credentials ? `, ${c.credentials}` : "";
-        const desc = c.description ? `<div class="contributor-desc">${escapeHtml(c.description)}</div>` : "";
+        let desc = "";
+        if (c.description) {
+          let descText = c.description.replace(/See the biographical article[,:.]?\s*.*/i, "").trim();
+          if (c.bio_article_filename) {
+            const bioUrl = IS_LOCAL ? `/data/derived/articles/${c.bio_article_filename}` : `/article/${c.bio_article_filename.split("-")[0]}/${c.bio_article_filename.replace(/^\d+-/, "").replace(/\.json$/, "").toLowerCase()}`;
+            const bioLink = `<a href="${IS_LOCAL ? '/tools/viewer/viewer.html?article=' + encodeURIComponent('/data/derived/articles/' + c.bio_article_filename) : bioUrl}" style="color: var(--link);">(See biographical article.)</a>`;
+            desc = `<div class="contributor-desc">${descText ? escapeHtml(descText) + " " : ""}${bioLink}</div>`;
+          } else if (c.description) {
+            desc = `<div class="contributor-desc">${escapeHtml(c.description)}</div>`;
+          }
+        }
 
         return `
           <div class="contributor">

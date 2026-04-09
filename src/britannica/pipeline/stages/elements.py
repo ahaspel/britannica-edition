@@ -72,6 +72,8 @@ def _extract_balanced_tables(text: str, registry: ElementRegistry) -> str:
     """Extract wiki tables using balanced {| |} matching.
 
     Handles nested tables correctly by finding outermost {| first.
+    Tables containing {{Css image crop}} are registered as DJVU_CROP
+    so they get image processing instead of table processing.
     """
     while True:
         # Find the first {| that isn't already inside a placeholder
@@ -92,7 +94,12 @@ def _extract_balanced_tables(text: str, registry: ElementRegistry) -> str:
                 if depth == 0:
                     # Found the balanced close
                     table_text = text[idx:i+2]
-                    placeholder = registry.add("TABLE", table_text)
+                    # Detect DjVu crop tables
+                    if re.search(r"\{\{Css image crop", table_text, re.IGNORECASE):
+                        etype = "DJVU_CROP"
+                    else:
+                        etype = "TABLE"
+                    placeholder = registry.add(etype, table_text)
                     text = text[:idx] + placeholder + text[i+2:]
                     found = True
                     break
@@ -106,12 +113,22 @@ def _extract_balanced_tables(text: str, registry: ElementRegistry) -> str:
     return text
 
 
+_CHART2_RE = re.compile(
+    r"\{\{chart2/start[^}]*\}\}.*?\{\{chart2/end\}\}",
+    re.DOTALL | re.IGNORECASE,
+)
+
+
 def extract(text: str) -> tuple[str, ElementRegistry]:
     """Extract all embedded elements from text, outermost first.
 
     Returns the text with placeholders and a registry of extracted elements.
     """
     registry = ElementRegistry()
+
+    # Chart2 genealogical trees — extract before tables
+    text = _CHART2_RE.sub(
+        lambda m: registry.add("CHART2", m.group(0)), text)
 
     # Wiki tables first (outermost) — balanced matching handles nesting
     text = _extract_balanced_tables(text, registry)
@@ -181,6 +198,14 @@ def _process_element(element_type: str, raw: str,
         text_transform: function to transform plain wikitext (bold, italic, etc.)
         context: dict with 'volume' and 'page_number' for score lookups
     """
+    # DJVU_CROP, CHART2, and SCORE are self-contained — process from raw, no recursion.
+    if element_type == "DJVU_CROP":
+        return _process_djvu_crop(raw, text_transform, context)
+    if element_type == "CHART2":
+        return _process_chart2(raw, context)
+    if element_type == "SCORE":
+        return _process_score(raw, context)
+
     # Strip outer delimiters to get the element's inner content,
     # then recursively extract and process any child elements.
     inner = _strip_delimiters(element_type, raw)
@@ -194,9 +219,7 @@ def _process_element(element_type: str, raw: str,
             child_type, child_raw, text_transform, context)
 
     # Process this element with placeholders still in place
-    if element_type == "SCORE":
-        result = _process_score(raw, context)
-    elif element_type == "MATH":
+    if element_type == "MATH":
         result = _process_math(inner)
     elif element_type == "REF_SELF":
         result = ""  # Self-closing ref (back-reference) — strip it
@@ -210,10 +233,16 @@ def _process_element(element_type: str, raw: str,
         result = _process_poem(inner, text_transform)
     elif element_type == "HIEROGLYPH":
         result = f"[hieroglyph: {inner}]"
-    elif element_type == "TABLE" and _is_equation_layout(inner, inner_registry):
-        result = _process_equation_layout(inner, text_transform)
     elif element_type == "TABLE":
-        result = _process_table(inner, text_transform, inner_registry)
+        table_kind = _classify_table(raw, inner, inner_registry)
+        if table_kind == "EQUATION_LAYOUT":
+            result = _process_equation_layout(inner, text_transform)
+        elif table_kind == "LAYOUT_WRAPPER":
+            result = _unwrap_layout_table(inner, text_transform)
+        elif table_kind == "COMPLEX_HTML":
+            result = _process_complex_table(raw, text_transform)
+        else:
+            result = _process_table(inner, text_transform, inner_registry)
     elif element_type == "HTML_TABLE":
         result = _process_html_table(inner, text_transform)
     else:
@@ -272,6 +301,38 @@ def _process_math(inner: str) -> str:
     # Collapse blank lines — they break LaTeX math environments
     inner = re.sub(r"\n{2,}", "\n", inner)
     return f"\u00abMATH:{inner}\u00ab/MATH\u00bb"
+
+
+def _classify_table(raw: str, inner: str, inner_registry: ElementRegistry | None) -> str:
+    """Classify a wiki table into its processing type.
+
+    Returns one of:
+        EQUATION_LAYOUT — math alignment (mostly MATH placeholders or spacer-heavy)
+        LAYOUT_WRAPPER  — image+caption wrapper or nested table wrapper
+        COMPLEX_HTML    — tables with rowspan that need HTML passthrough
+        DATA_TABLE      — regular data tables (default)
+    """
+    # Complex HTML: tables with rowspan/colspan need full HTML rendering.
+    # Check this BEFORE equation layout — rowspan is a strong signal of a
+    # real data table, and {{ts}} stripping can create phantom empty cells
+    # that fool the equation layout heuristic.
+    has_rowspan = bool(re.search(r"rowspan\s*=", raw, re.IGNORECASE))
+    has_colspan = bool(re.search(r"colspan\s*=", raw, re.IGNORECASE))
+    # Layout wrappers first — image+caption tables often use colspan for centering
+    if _is_layout_wrapper(inner, inner_registry):
+        return "LAYOUT_WRAPPER"
+    # Complex HTML: tables with rowspan or colspan need full HTML rendering.
+    # Check BEFORE equation layout — rowspan is a strong signal of a
+    # real data table, and {{ts}} stripping can create phantom empty cells
+    # that fool the equation layout heuristic.
+    if has_rowspan or has_colspan:
+        # Exception: brace tables (poem + translation) handle rowspan themselves
+        if "brace" in raw.lower():
+            return "DATA_TABLE"
+        return "COMPLEX_HTML"
+    if _is_equation_layout(inner, inner_registry):
+        return "EQUATION_LAYOUT"
+    return "DATA_TABLE"
 
 
 def _is_equation_layout(inner: str, inner_registry: ElementRegistry | None) -> bool:
@@ -352,6 +413,206 @@ def _process_equation_layout(inner: str, text_transform) -> str:
     return "\n\n".join(lines) if lines else ""
 
 
+def _is_layout_wrapper(inner: str, inner_registry: ElementRegistry | None) -> bool:
+    """Detect tables that wrap other tables/images for layout purposes.
+
+    These are outer tables used to arrange images, captions, and nested
+    tables (e.g. Greek transliterations) visually.  They should be
+    unwrapped to sequential content, not rendered as data tables.
+
+    Detected when a table contains:
+      - A nested TABLE child, or
+      - An IMAGE child with mostly non-data content (captions, short text)
+    """
+    if not inner_registry:
+        return False
+    child_types = {t for t, _ in inner_registry.elements.values()}
+    if "TABLE" in child_types:
+        return True
+    if "IMAGE" in child_types:
+        # Check if non-image content is just captions (short text, no data)
+        non_ph = re.sub(re.escape(_PH) + r"[^" + re.escape(_PH) + r"]+" + re.escape(_PH), "", inner)
+        non_ph = re.sub(r"[-|{}\n]", " ", non_ph)
+        non_ph = re.sub(r"\b(?:align|valign|colspan|rowspan|style|width|cellpadding|cellspacing|center|right|left|top|bottom)\b", "", non_ph, flags=re.IGNORECASE)
+        non_ph = re.sub(r'[="]+', "", non_ph)
+        non_ph = re.sub(r"\s+", " ", non_ph).strip()
+        # If remaining text is short relative to number of images, it's a layout table
+        n_images = sum(1 for _, (t, _) in inner_registry.elements.items() if t == "IMAGE")
+        if len(non_ph) < n_images * 300:
+            return True
+    return False
+
+
+def _unwrap_layout_table(inner: str, text_transform) -> str:
+    """Unwrap a layout table to sequential content.
+
+    Extracts cell content row by row, joining each cell's content
+    as a separate block.  Child placeholders (images, nested tables)
+    pass through and get substituted by the caller.
+    """
+    inner = re.sub(r"<br\s*/?>", " ", inner, flags=re.IGNORECASE)
+    _ATTR = re.compile(
+        r"^(?:colspan|rowspan|width|style|align|valign|class|"
+        r"cellpadding|nowrap|border|bgcolor|height)[\s=|]",
+        re.IGNORECASE,
+    )
+
+    raw_rows = re.split(r"\|-[^\n]*", inner)
+    parts = []
+    for raw_row in raw_rows:
+        # Collect all content: cell text, standalone placeholders,
+        # and any text not inside cell markup
+        row_content = []
+
+        # Protect placeholders and templates from pipe splitting
+        protected = re.sub(r"\{\{[^}]*\}\}", lambda m: m.group(0).replace("|", "\x04"), raw_row)
+        protected = re.sub(re.escape(_PH) + r"[^" + re.escape(_PH) + r"]+" + re.escape(_PH),
+                           lambda m: m.group(0).replace("|", "\x04"), protected)
+
+        for line in protected.split("\n"):
+            line = line.strip()
+            if not line:
+                continue
+            # Standalone placeholder (child element on its own line)
+            if _PH in line and line.replace("\x04", "|").strip().startswith(_PH):
+                row_content.append(line.replace("\x04", "|").strip())
+                continue
+            # Cell content after |
+            if line.startswith("|"):
+                cell = line[1:].replace("\x04", "|").strip()
+                if not cell or cell in ("}", "{|"):
+                    continue
+                # Strip {{Ts|...}} styling and split attr|content
+                cell = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*", "", cell)
+                if _ATTR.match(cell):
+                    parts_after = cell.split("|", 1)
+                    if len(parts_after) > 1:
+                        cell = parts_after[1].strip()
+                    else:
+                        continue
+                # Also split on remaining attr|content boundary
+                elif "|" in cell:
+                    before, _, after = cell.partition("|")
+                    # If before is empty or only whitespace/templates, take after
+                    stripped_before = re.sub(r"\{\{[^{}]*\}\}", "", before).strip()
+                    if not stripped_before:
+                        cell = after.strip()
+                if cell:
+                    row_content.append(cell)
+
+        for c in row_content:
+            # Don't transform placeholders — they'll be substituted later
+            if _PH in c:
+                parts.append(c)
+            else:
+                content = text_transform(c)
+                if content.strip():
+                    parts.append(content.strip())
+
+    return "\n\n".join(parts)
+
+
+def _process_complex_table(raw: str, text_transform) -> str:
+    """Convert a wiki table with rowspan/colspan to HTML.
+
+    Strategy: each cell in wiki markup has the form
+        {{ts|style}} rowspan=N colspan=M {{ts|style}}| content
+    Everything before the last | is attributes; everything after is content.
+    We keep only rowspan/colspan from the attributes and transform the content.
+    Pipes inside {{...}} are protected so they don't confuse the split.
+    """
+    inner = re.sub(r"^\{\|[^\n]*\n?", "", raw)
+    inner = re.sub(r"\n?\|\}\s*$", "", inner)
+
+    rows = re.split(r"\|-[^\n]*", inner)
+    html_rows = []
+
+    for row in rows:
+        cells_html = []
+        for line in row.split("\n"):
+            line = line.strip()
+            if not line or line.startswith("|+"):
+                continue
+            if not (line.startswith("|") or line.startswith("!")):
+                continue
+            tag = "th" if line.startswith("!") else "td"
+            sep = "!!" if tag == "th" else "||"
+
+            # Protect pipes inside {{...}} and [[...]] before any splitting
+            prot = re.sub(r"\{\{[^}]*\}\}",
+                          lambda m: m.group(0).replace("|", "\x04"), line[1:])
+            prot = re.sub(r"\[\[[^\]]*\]\]",
+                          lambda m: m.group(0).replace("|", "\x04"), prot)
+
+            for cell in prot.split(sep):
+                # Split attributes from content on the last real |
+                if "|" in cell:
+                    attr_part, _, content = cell.rpartition("|")
+                    attr_part = attr_part.replace("\x04", "|")
+                else:
+                    attr_part = ""
+                    content = cell
+                content = content.replace("\x04", "|")
+
+                # Extract structural attributes
+                attrs = ""
+                rs = re.search(r'rowspan\s*=\s*"?(\d+)"?', attr_part, re.IGNORECASE)
+                cs = re.search(r'colspan\s*=\s*"?(\d+)"?', attr_part, re.IGNORECASE)
+                if rs:
+                    attrs += f' rowspan="{rs.group(1)}"'
+                if cs:
+                    attrs += f' colspan="{cs.group(1)}"'
+
+                # Clean content
+                # Convert [[Image:...|params]] to {{IMG:filename}}
+                img_m = re.match(r"\s*\[\[(?:Image|File):([^|\]]+)[^\]]*\]\]\s*$",
+                                 content, re.IGNORECASE)
+                if img_m:
+                    content = f"{{{{IMG:{img_m.group(1).strip()}}}}}"
+                else:
+                    content = re.sub(r"\[\[(?:Image|File):[^\]]*\]\]", "", content, flags=re.IGNORECASE)
+                    content = re.sub(r"\{\{ditto(?:\|[^{}]*)?\}\}", "\u2033",
+                                     content, flags=re.IGNORECASE)
+                    content = re.sub(r"\{\{\.\.\.\}\}", "...", content)
+                    content = re.sub(r"\{\{sc\|([^{}]*)\}\}", r"\1", content, flags=re.IGNORECASE)
+                    content = re.sub(r"\{\{[^{}]*\}\}", "", content)
+                    content = re.sub(r"<br\s*/?>", " ", content, flags=re.IGNORECASE)
+                    content = content.strip()
+                    if content:
+                        content = text_transform(content)
+                cells_html.append(f"<{tag}{attrs}>{content}</{tag}>")
+
+        if cells_html:
+            html_rows.append("<tr>" + "".join(cells_html) + "</tr>")
+
+    if not html_rows:
+        return ""
+
+    # Pull out leading colspan rows that contain images or captions —
+    # these are header material that belongs above the table, not in it.
+    preamble = []
+    while html_rows:
+        row = html_rows[0]
+        # Check if every cell in this row has colspan (full-width row)
+        cells = re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", row, re.DOTALL)
+        has_colspan = 'colspan=' in row
+        if has_colspan and len(cells) == 1:
+            content = cells[0].strip()
+            if content:
+                preamble.append(content)
+            html_rows.pop(0)
+        else:
+            break
+
+    parts = []
+    for p in preamble:
+        parts.append("\n\n" + p + "\n\n")
+    if html_rows:
+        parts.append("\n\n\u00abHTMLTABLE:<table>" +
+                     "".join(html_rows) + "</table>\u00ab/HTMLTABLE\u00bb\n\n")
+    return "".join(parts)
+
+
 def _process_ref(inner: str, text_transform) -> str:
     """Convert ref content to «FN:...«/FN» with clean text."""
     # Transform internal wiki markup (bold, italic, links)
@@ -418,6 +679,96 @@ def _process_image_float(inner: str, text_transform) -> str:
     return f"{{{{IMG:{filename}}}}}"
 
 
+_CSS_CROP_RE = re.compile(
+    r"\{\{Css image crop\s*\n(.*?)\}\}", re.DOTALL | re.IGNORECASE
+)
+
+
+def _parse_crop_param(body: str, name: str) -> str:
+    m = re.search(rf"\|{name}\s*=\s*([^\n|]*)", body, re.IGNORECASE)
+    return m.group(1).strip() if m else ""
+
+
+def _process_djvu_crop(raw: str, text_transform, context: dict) -> str:
+    """Process a table containing a {{Css image crop}} template.
+
+    Extracts the crop filename and caption from the table, producing
+    {{IMG:djvu_volNN_pageNNNN_cropN.jpg|caption}}.
+
+    Crop indices are tracked in context['_djvu_crop_counters'] to match
+    the order used by tools/download_djvu_crops.py.
+    """
+    crop_m = _CSS_CROP_RE.search(raw)
+    if not crop_m:
+        return ""
+
+    body = crop_m.group(1)
+    image = _parse_crop_param(body, "Image")
+    if not image:
+        return ""
+
+    # Build the local filename
+    if image.endswith(".djvu"):
+        page_str = _parse_crop_param(body, "Page")
+        if not page_str:
+            return ""
+        page = int(page_str)
+        vol_m = re.search(r"Volume (\d+)", image)
+        vol = int(vol_m.group(1)) if vol_m else context.get("volume", 0)
+        counters = context.setdefault("_djvu_crop_counters", {})
+        key = (vol, page)
+        idx = counters.get(key, 0)
+        counters[key] = idx + 1
+        filename = f"djvu_vol{vol:02d}_page{page:04d}_crop{idx}.jpg"
+    else:
+        filename = image.replace(" ", "_")
+
+    # Extract caption from the table (everything that isn't the crop template
+    # or wiki table markup)
+    caption_text = raw[:crop_m.start()] + raw[crop_m.end():]
+    # Strip table delimiters and markup
+    caption_text = re.sub(r"^\{\|[^\n]*\n?", "", caption_text)
+    caption_text = re.sub(r"\n?\|\}\s*$", "", caption_text)
+    caption_text = re.sub(r"^\|[\-\+].*$", "", caption_text, flags=re.MULTILINE)
+    caption_text = re.sub(r"^\|(?:colspan[^|]*\|)?", "", caption_text, flags=re.MULTILINE)
+    caption_text = re.sub(r"^\!", "", caption_text, flags=re.MULTILINE)
+    # Collapse to single line
+    caption_text = re.sub(r"\s*<br\s*/?>", " ", caption_text, flags=re.IGNORECASE)
+    caption_text = re.sub(r"\s*\n\s*", " ", caption_text)
+    caption_text = re.sub(r"  +", " ", caption_text).strip()
+
+    if caption_text:
+        caption_text = text_transform(caption_text)
+        caption_text = _clean_text(caption_text)
+        return f"\n\n{{{{IMG:{filename}|{caption_text}}}}}\n\n"
+    return f"\n\n{{{{IMG:{filename}}}}}\n\n"
+
+
+# Static lookup: (volume, page) → chart image filename
+_CHART2_IMAGES = {
+    (1, 124): "chart2_vol01_page0124.jpg",
+    (21, 573): "chart2_vol21_page0573.jpg",
+    (23, 945): "chart2_vol23_page0945.jpg",
+    (24, 271): "chart2_vol24_page0271.jpg",
+    (28, 952): "chart2_vol28_page0952.jpg",
+}
+
+
+def _process_chart2(raw: str, context: dict) -> str:
+    """Replace a chart2 genealogical tree with a pre-cropped page scan image.
+
+    The 5 chart2 blocks in the encyclopedia have been manually cropped
+    from DjVu page scans and saved as chart2_volNN_pageNNNN.jpg.
+    """
+    vol = context.get("volume", 0)
+    # Try all known charts for this volume
+    for (v, p), filename in _CHART2_IMAGES.items():
+        if v == vol:
+            return f"\n\n{{{{IMG:{filename}|Genealogical table}}}}\n\n"
+    # Unknown chart — strip rather than crash
+    return ""
+
+
 def _process_poem(inner: str, text_transform) -> str:
     """Convert poem content to {{VERSE:...}VERSE}."""
     content = text_transform(inner)
@@ -477,6 +828,25 @@ def _process_table(inner: str, text_transform,
         content_cells = [c for c in all_cells if c.strip()]
         if len(content_cells) <= 4 and sum(len(c) for c in all_cells) < 120:
             return " ".join(content_cells)
+
+    # Single-column tables (1 cell per row) are text blocks, not data tables.
+    # Render as preformatted text with line breaks preserved.
+    if "|-" in inner:
+        raw_rows = re.split(r"\|-[^\n]*", inner)
+        all_single = True
+        text_lines = []
+        for raw_row in raw_rows:
+            cells = _extract_cells(raw_row)
+            content = [c for c in cells if c.strip()]
+            if len(content) == 0:
+                continue
+            if len(content) > 1:
+                all_single = False
+                break
+            text_lines.append(content[0])
+        if all_single and text_lines:
+            joined = "\n".join(text_lines)
+            return f"\u00abPRE:{joined}\u00ab/PRE\u00bb"
 
     # Check for image-layout table (plate pages: grid of images + captions)
     if _PH in inner:
@@ -622,23 +992,45 @@ def _process_table(inner: str, text_transform,
                         # Find the stripped data column count
                         target = max(empty_by_group)
                         stripped_ncols = target - len(empty_by_group[target])
-                        # First content cell is the row label (e.g. "Year.");
-                        # remaining cells are group headers spanning data columns.
-                        n_groups = len(content_cells) - 1
-                        data_cols = stripped_ncols - 1  # exclude label column
-                        span = data_cols // n_groups if n_groups > 0 else 1
                         if stripped_ncols < 2:
-                            # Not enough columns after stripping — just join content
                             new_rows.append(" | ".join(
                                 c for c in cells if c.strip()))
                             continue
-                        padded = [""] * stripped_ncols
-                        # First cell is row label at pos 0; rest are group headers
-                        padded[0] = content_cells[0]
-                        for k, lbl in enumerate(content_cells[1:]):
-                            pos = 1 + k * span
-                            if pos < stripped_ncols:
-                                padded[pos] = lbl
+                        # Check if first raw cell is empty (no row label)
+                        has_label = bool(cells[0].strip()) if cells else True
+                        if has_label:
+                            # First content cell is the row label;
+                            # remaining cells are group headers
+                            n_groups = len(content_cells) - 1
+                            data_cols = stripped_ncols - 1
+                            span = data_cols // n_groups if n_groups > 0 else 1
+                            padded = [""] * stripped_ncols
+                            padded[0] = content_cells[0]
+                            for k, lbl in enumerate(content_cells[1:]):
+                                pos = 1 + k * span
+                                if pos < stripped_ncols:
+                                    padded[pos] = lbl
+                        else:
+                            # No row label on this row — all content cells are
+                            # group headers.  But a label column may still exist
+                            # (populated in the sub-header row, e.g. "Year.").
+                            n_groups = len(content_cells)
+                            data_cols = stripped_ncols - 1  # assume label column
+                            if n_groups > 0 and data_cols >= n_groups:
+                                span = data_cols // n_groups
+                                padded = [""] * stripped_ncols
+                                for k, lbl in enumerate(content_cells):
+                                    pos = 1 + k * span
+                                    if pos < stripped_ncols:
+                                        padded[pos] = lbl
+                            else:
+                                # No label column — groups fill all columns
+                                span = stripped_ncols // n_groups if n_groups > 0 else 1
+                                padded = [""] * stripped_ncols
+                                for k, lbl in enumerate(content_cells):
+                                    pos = k * span
+                                    if pos < stripped_ncols:
+                                        padded[pos] = lbl
                         new_rows.append(" | ".join(padded))
                     else:
                         new_rows.append(" | ".join(

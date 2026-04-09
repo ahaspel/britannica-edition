@@ -6,14 +6,24 @@
 set -uo pipefail
 
 OUTDIR="data/raw/ia_scans"
-DELAY=120  # 2 minutes between volume downloads
-RETRY_DELAY=1800  # 30 minutes on 503/failure
+DELAY=3600  # 1 hour between volume downloads
+RETRY_DELAY=3600  # 1 hour on 503/failure
 
 mkdir -p "$OUTDIR"
 
+# IA identifiers vary per volume — some use "brit", vol 20 uses a different suffix
+ia_identifier() {
+  local vol=$1
+  case $vol in
+    3|5|6|7|8|9|11|12|13) echo "encyclopaediabrit$(printf '%02d' $vol)chisrich" ;;
+    20) echo "encyclopaediabri20univ" ;;
+    *) echo "encyclopaediabri$(printf '%02d' $vol)chisrich" ;;
+  esac
+}
+
 for VOL in $(seq 1 29); do
   PADDED=$(printf "%02d" "$VOL")
-  IDENTIFIER="encyclopaediabri${PADDED}chisrich"
+  IDENTIFIER=$(ia_identifier "$VOL")
   FILENAME="${IDENTIFIER}_jp2.zip"
   URL="https://archive.org/download/${IDENTIFIER}/${FILENAME}"
   OUTFILE="${OUTDIR}/${FILENAME}"

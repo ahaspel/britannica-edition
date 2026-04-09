@@ -349,6 +349,17 @@
       color: var(--muted);
     }
 
+    .text-block {
+      font-family: inherit;
+      font-size: inherit;
+      margin: 0.8em 2em;
+      padding: 0;
+      background: none;
+      border: none;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
     .structural-formula {
       font-family: "Courier New", Courier, monospace;
       font-size: 0.95em;
@@ -374,12 +385,12 @@
       text-indent: 0;
     }
 
-    .section-heading::before {
-      content: "\2014\2002";
-    }
-
+    .section-heading::before,
     .section-heading::after {
-      content: "\2002\2014";
+      content: "\2014\2014\2014";
+      display: block;
+      text-align: center;
+      color: #b89a6b;
     }
 
     .body-text p {
@@ -722,9 +733,14 @@
       // Full URLs (e.g. score images from upload.wikimedia.org) pass through
       if (filename.startsWith("http://") || filename.startsWith("https://")) return filename;
       const name = filename.replace(/ /g, "_");
-      // Simple MD5 — we'll use the SubtleCrypto API
-      // For now, use the pre-computed URL from the images array if available
-      // Fall back to the wiki thumbnail API which doesn't need MD5
+      const local = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      // DjVu crops are always local (not on Commons)
+      if (name.startsWith("djvu_")) {
+        return local ? `/data/derived/images/${name}` : `/data/images/${name}`;
+      }
+      // Commons images: serve locally if available, fall back to Wikimedia
+      // TODO: flip to fully local once all Commons images are downloaded and deployed
+      if (local) return `/data/derived/images/${encodeURIComponent(name)}`;
       return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(name)}?width=600`;
     }
 
@@ -795,34 +811,48 @@
       // Render standalone small-caps paragraphs as section headings
       // (e.g. «SC»II.—The People«/SC» in multi-section articles like JAPAN)
       const scSectionMatch = p.match(/^(?:([IVXLCA-Z]+\.)\s*)?\u00abSC\u00bb(([IVXLCA-Z]+[.—]\s*)?.*?)\u00ab\/SC\u00bb$/s);
-      if (scSectionMatch) {
-        sectionCounter++;
+      if (scSectionMatch && !p.includes("{{IMG:") && !p.includes("{{TABLE:")) {
         const prefix = scSectionMatch[1] ? scSectionMatch[1] + " " : "";
         const rawText = (prefix + scSectionMatch[2]).trim();
-        // Strip footnote markers from title for TOC display
         const text = rawText.replace(/\u00abFN:.*?\u00ab\/FN\u00bb/gs, "").trim();
-        const sectionId = `section-${sectionCounter}`;
-        const slug = text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-        const hasNumeral = scSectionMatch[1] || (scSectionMatch[3] && scSectionMatch[3].length > 0);
-        // Exclude short abbreviations (A.D., B.C.) and bibliography headings
-        const isBiblio = /^(?:References|Authorities|Bibliography|See also)\b/i.test(text);
-        const isAbbrev = text.length < 6;
-        if (hasNumeral && !isBiblio && !isAbbrev) {
+        const isExcluded = /^(?:(?:References|Authorities|Bibliography|See also)\b|Fig\.)/i.test(text);
+        if (!isExcluded) {
+          sectionCounter++;
+          const sectionId = `section-${sectionCounter}`;
+          const slug = text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
           collectedSections.push({ id: sectionId, title: text, level: 1 });
+          const headingHtml = renderParagraph(rawText);
+          return `<h3 class="section-heading" id="${sectionId}" data-slug="${slug}">${headingHtml}</h3>`;
         }
-        const headingHtml = renderParagraph(rawText);
-        return `<h3 class="section-heading" id="${sectionId}" data-slug="${slug}">${headingHtml}</h3>`;
+        // Excluded (Fig., Bibliography, etc.) — fall through to normal paragraph rendering
       }
       // Render preformatted blocks (structural chemical formulas)
       const preMatch = p.match(/^\u00abPRE:([\s\S]*)\u00ab\/PRE\u00bb$/);
       if (preMatch) {
-        return `<pre class="structural-formula">${escapeHtml(preMatch[1])}</pre>`;
+        let preContent = escapeHtml(preMatch[1]);
+        // Process formatting markers inside preformatted blocks
+        preContent = preContent.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
+        preContent = preContent.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
+        preContent = preContent.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
+        // Use text-block style (wrapping) unless it looks like a structural formula
+        const isFormula = /[─│┌┐└┘|\\\/]{3,}/.test(preMatch[1]);
+        const cls = isFormula ? "structural-formula" : "text-block";
+        return `<pre class="${cls}">${preContent}</pre>`;
       }
       // Render verse markers
       const verseMatch = p.match(/^\{\{VERSE:([\s\S]*)\}VERSE\}$/);
       if (verseMatch) {
         const lines = verseMatch[1].split("\n").filter(l => l.trim());
         return `<blockquote class="verse">${lines.map(l => escapeHtml(l)).join("<br>")}</blockquote>`;
+      }
+      // Render complex HTML tables (rowspan/colspan preserved)
+      const htmlTableMatch = p.match(/^\u00abHTMLTABLE:([\s\S]*)\u00ab\/HTMLTABLE\u00bb$/);
+      if (htmlTableMatch) {
+        let t = htmlTableMatch[1].replace("<table>", '<table class="data-table">');
+        t = t.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
+        t = t.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
+        t = t.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
+        return t;
       }
       // Render table markers (with or without headers)
       const tableMatch = p.match(/^\{\{TABLE(H?):([\s\S]*)\}TABLE\}$/);
@@ -833,10 +863,36 @@
         if (rows.length === 1 && !hasHeader) {
           return `<span class="inline-table">${formatCell(rows[0])}</span>`;
         }
-        const tableRows = rows.map((r, i) => {
+        // Detect max columns for colspan calculation
+        const splitRows = rows.map(r => r.split(" | "));
+        const maxCols = Math.max(...splitRows.map(r => r.length));
+
+        const tableRows = splitRows.map((cells, i) => {
           const tag = (hasHeader && i === 0) ? "th" : "td";
-          const cells = r.split(" | ").map(c => `<${tag}>${formatCell(c.trim())}</${tag}>`).join("");
-          return `<tr>${cells}</tr>`;
+          // Group header row: fewer content cells than data rows,
+          // with empty cells between content — use colspan
+          const contentCount = cells.filter(c => c.trim()).length;
+          if (contentCount < cells.length / 2 && contentCount >= 1 && cells.length === maxCols) {
+            // Build cells with colspan for content spanning empty neighbors
+            let result = "";
+            let j = 0;
+            while (j < cells.length) {
+              if (cells[j].trim()) {
+                // Count following empty cells
+                let span = 1;
+                while (j + span < cells.length && !cells[j + span].trim()) span++;
+                result += `<${tag} colspan="${span}">${formatCell(cells[j].trim())}</${tag}>`;
+                j += span;
+              } else {
+                // Leading empty cell
+                result += `<${tag}></${tag}>`;
+                j++;
+              }
+            }
+            return `<tr>${result}</tr>`;
+          }
+          const cellsHtml = cells.map(c => `<${tag}>${formatCell(c.trim())}</${tag}>`).join("");
+          return `<tr>${cellsHtml}</tr>`;
         }).join("");
         return `<table class="data-table">${tableRows}</table>`;
       }
@@ -845,22 +901,22 @@
       // Must have a numeral/letter prefix to distinguish from inline «SC» labels
       const sectionMatch = p.match(/^(?:([IVXLCA-Z]+\.)\s*)?\u00abSC\u00bb(([IVXLCA-Z]+[.—]\s*)?.*?)\u00ab\/SC\u00bb[.:]?\u2014?(.*)$/s);
       const hasNumeral = sectionMatch && (sectionMatch[1] || (sectionMatch[3] && sectionMatch[3].length > 0));
-      if (sectionMatch && hasNumeral && sectionMatch[2].length < 60) {
-        sectionCounter++;
+      if (sectionMatch && hasNumeral && sectionMatch[2].length < 60 && !p.includes("{{IMG:") && !p.includes("{{TABLE:")) {
         const prefix = sectionMatch[1] ? sectionMatch[1] + " " : "";
         const sectionTitle = (prefix + sectionMatch[2]).trim();
-        const sectionId = `section-${sectionCounter}`;
-        const isBiblio = /^(?:References|Authorities|Bibliography|See also)\b/i.test(sectionTitle);
-        if (!isBiblio) {
+        const isExcluded2 = /^(?:(?:References|Authorities|Bibliography|See also)\b|Fig\.)/i.test(sectionTitle);
+        if (!isExcluded2) {
+          sectionCounter++;
+          const sectionId = `section-${sectionCounter}`;
           collectedSections.push({ id: sectionId, title: sectionTitle, level: 1 });
+
+          const emDashIdx = p.indexOf("\u2014");
+          const sectionBody = emDashIdx >= 0 ? p.substring(emDashIdx + 1).trim() : "";
+          const bodyHtml = renderParagraph(sectionBody);
+
+          return `<h3 class="section-heading" id="${sectionId}">${escapeHtml(sectionTitle)}</h3>${bodyHtml}`;
         }
-
-        // Extract the body from the ORIGINAL paragraph (preserving all markers)
-        const emDashIdx = p.indexOf("\u2014");
-        const sectionBody = emDashIdx >= 0 ? p.substring(emDashIdx + 1).trim() : "";
-        const bodyHtml = renderParagraph(sectionBody);
-
-        return `<h3 class="section-heading" id="${sectionId}">${escapeHtml(sectionTitle)}</h3>${bodyHtml}`;
+        // Excluded — fall through to normal paragraph rendering
       }
 
       // Replace inline table markers (single-row tables embedded in text)
@@ -877,6 +933,14 @@
           ? `Volume ${currentVolume}, page ${page} (unproofed source)`
           : `Volume ${currentVolume}, page ${page}`;
         return `<span class="${cls}" title="${title}">${currentVolume}:${page}</span>`;
+      });
+      // Render inline complex HTML tables
+      html = html.replace(/\u00abHTMLTABLE:([\s\S]*?)\u00ab\/HTMLTABLE\u00bb/g, (match, content) => {
+        let t = content.replace("<table>", '<table class="data-table">');
+        t = t.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
+        t = t.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
+        t = t.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
+        return t;
       });
       html = html.replace(/\{\{TABLE[H]?:([\s\S]*?)\}TABLE\}/g, (match, content) => {
         const rows = content.split("\n").filter(r => r.trim());
@@ -900,7 +964,11 @@
         return `<figure class="inline-image"><a href="${url}" target="_blank"><img src="${url}" alt="${escapeHtml(caption || filename)}" loading="lazy" /></a>${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure>`;
       });
       // Render inline preformatted blocks (structural formulas)
-      html = html.replace(/\u00abPRE:(.*?)\u00ab\/PRE\u00bb/gs, '<pre class="structural-formula">$1</pre>');
+      html = html.replace(/\u00abPRE:(.*?)\u00ab\/PRE\u00bb/gs, (match, content) => {
+        const isFormula = /[─│┌┐└┘|\\\/]{3,}/.test(content);
+        const cls = isFormula ? "structural-formula" : "text-block";
+        return `<pre class="${cls}">${content}</pre>`;
+      });
       // Render bold/italic/small-caps markers
       html = html.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
       html = html.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
@@ -1076,7 +1144,7 @@
               }
               i++;
             }
-            const bodyHtml = mergedParas.map(p => renderParagraph(p)).join("");
+            const bodyHtml = mergedParas.map((p, idx) => renderParagraph(p, mergedParas[idx + 1])).join("");
             const level1 = collectedSections.filter(s => s.level === 1);
             const level2 = collectedSections.filter(s => s.level === 2);
             let tocHtml = "";
@@ -1105,7 +1173,7 @@
             }
             return tocHtml + `<div class="body-text">${bodyHtml}</div>`;
           })()}
-          ${collectedFootnotes.length ? `<div class="footnotes"><h3>Notes</h3><ol>${collectedFootnotes.map(fn => `<li id="fn-${fn.num}" value="${fn.num}"><a onclick="var el=document.getElementById('fnref-${fn.num}');if(el)el.scrollIntoView({behavior:'smooth',block:'start'});return false;" href="#">${fn.num}.</a> ${formatFootnoteText(fn.text)}</li>`).join("")}</ol></div>` : ""}
+          ${collectedFootnotes.length ? `<div class="footnotes"><h3>Notes</h3><ol>${collectedFootnotes.map(fn => `<li id="fn-${fn.num}" value="${fn.num}"><a onclick="var el=document.getElementById('fnref-${fn.num}');if(el)el.scrollIntoView({behavior:'instant',block:'start'});return false;" href="#">${fn.num}.</a> ${formatFootnoteText(fn.text)}</li>`).join("")}</ol></div>` : ""}
         </div>
 
         ${xrefHtml ? `<div class="card">

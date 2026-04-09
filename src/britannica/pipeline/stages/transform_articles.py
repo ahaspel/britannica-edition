@@ -129,6 +129,21 @@ def _convert_small_caps(text: str) -> str:
     return text
 
 
+_FRAKTUR_MAP = {}
+for _i, _c in enumerate("ABCDEFGHIJKLMNOPQRSTUVWXYZ"):
+    _FRAKTUR_MAP[_c] = chr(0x1D504 + _i)
+for _i, _c in enumerate("abcdefghijklmnopqrstuvwxyz"):
+    _FRAKTUR_MAP[_c] = chr(0x1D51E + _i)
+# Unicode assigns different codepoints for some Fraktur capitals
+_FRAKTUR_MAP.update({"C": "\u212D", "H": "\u210C", "I": "\u2111",
+                      "R": "\u211C", "Z": "\u2128"})
+
+
+def _to_fraktur(text: str) -> str:
+    """Convert plain text to Unicode Mathematical Fraktur characters."""
+    return "".join(_FRAKTUR_MAP.get(c, c) for c in text)
+
+
 def _unwrap_content_templates(text: str) -> str:
     """Unwrap content templates to their text content."""
     # Language/script templates → plain text
@@ -141,6 +156,8 @@ def _unwrap_content_templates(text: str) -> str:
     text = re.sub(r"\{\{nowrap\s*\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{smaller\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{larger\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    # Drop initial (decorative large first letter) → just the letter
+    text = re.sub(r"\{\{[Dd]rop ?initial\|([^{}|]*)[^{}]*\}\}", r"\1", text)
     # Abbreviation/tooltip → first arg (display text)
     text = re.sub(r"\{\{abbr\|([^{}|]*)\|[^{}]*\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{tooltip\|([^{}|]*)\|[^{}]*\}\}", r"\1", text, flags=re.IGNORECASE)
@@ -148,6 +165,45 @@ def _unwrap_content_templates(text: str) -> str:
     text = re.sub(r"\{\{sm\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{right\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{left\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    # Fractions: {{sfrac|a|b}} → a/b, {{sfrac|a}} → 1/a
+    text = re.sub(r"\{\{sfrac\|[^{}|]*\|([^{}|]*)\|([^{}|]*)\}\}", r"\1/\2", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{sfrac\|([^{}|]*)\|([^{}|]*)\}\}", r"\1/\2", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{sfrac\|([^{}|]*)\}\}", r"1/\1", text, flags=re.IGNORECASE)
+    # Standalone image crop templates (not inside a table — those are handled
+    # as DJVU_CROP elements in elements.py)
+    text = re.sub(r"\{\{Css image crop[^}]*\}\}", "", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{Css image crop[^}]*$", "", text, flags=re.IGNORECASE | re.MULTILINE)
+    # Ellipsis (three dots, not Unicode ellipsis, so it's searchable)
+    text = re.sub(r"\{\{\.\.\.\}\}", "...", text)
+    # Ditto marks
+    text = re.sub(r"\{\{ditto\|([^{}]*)\}\}", "″", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{ditto\}\}", "″", text, flags=re.IGNORECASE)
+    # Blackletter → Unicode Mathematical Fraktur
+    text = re.sub(r"\{\{[Bb]lackletter\|([^{}]*)\}\}",
+                  lambda m: _to_fraktur(m.group(1)), text)
+    # Numbered equations: {{ne||equation|(N)}} → equation  (N)
+    text = re.sub(r"\{\{ne\|\|([^{}|]*(?:\{\{[^{}]*\}\}[^{}|]*)*)\|([^{}]*)\}\}",
+                  r"\1\t\2", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{ne\|\|([^{}]*(?:\{\{[^{}]*\}\}[^{}]*)*)\}\}",
+                  r"\1", text, flags=re.IGNORECASE)
+    # Hanging indent → unwrap to content
+    text = re.sub(r"\{\{hanging indent\|([^{}]*(?:\{\{[^{}]*\}\}[^{}]*)*)\}\}",
+                  r"\1", text, flags=re.IGNORECASE)
+    # Binomial coefficient: {{binom|n|r}} → KaTeX-rendered binom
+    def _binom_to_math(m: re.Match) -> str:
+        top = m.group(1).replace("''", "")
+        bot = m.group(2).replace("''", "")
+        return f"\u00abMATH:\\binom{{{top}}}{{{bot}}}\u00ab/MATH\u00bb"
+    text = re.sub(r"\{\{binom\|([^{}|]*)\|([^{}|]*)\}\}",
+                  _binom_to_math, text, flags=re.IGNORECASE)
+    # Missing content markers → visible editorial notes
+    text = re.sub(r"\{\{missing table\}\}", "[Table missing from source]", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{missing image\}\}", "[Image missing from source]", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{formula missing\}\}", "[Formula missing from source]", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{missing math\}\}", "[Formula missing from source]", text, flags=re.IGNORECASE)
+    # Structural spacers (no visible output)
+    text = re.sub(r"\{\{nop\}\}", "", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{clear\}\}", "", text, flags=re.IGNORECASE)
     # Special markers
     text = re.sub(r"\{\{sic\}\}", "[sic]", text, flags=re.IGNORECASE)
     # Strip anchor templates (no visible output)
@@ -189,7 +245,18 @@ def _convert_shoulder_headings(text: str) -> str:
                         elif ch == "|" and d == 0:
                             last_pipe = k
                     heading_text = inner[last_pipe+1:] if last_pipe >= 0 else inner
-                    # Strip inner templates and bold/italic
+                    # If we got an attribute instead of heading text, use the part before it
+                    if re.match(r"\s*(?:align|width|style)\s*=", heading_text, re.IGNORECASE):
+                        # Find the second-to-last top-level pipe
+                        d2 = 0
+                        prev_pipe = -1
+                        for k2, ch2 in enumerate(inner[:last_pipe]):
+                            if ch2 == "{": d2 += 1
+                            elif ch2 == "}": d2 -= 1
+                            elif ch2 == "|" and d2 == 0: prev_pipe = k2
+                        heading_text = inner[prev_pipe+1:last_pipe] if prev_pipe >= 0 else inner[:last_pipe]
+                    # Strip inner templates, bold/italic, and line breaks
+                    heading_text = re.sub(r"<br\s*/?>", " ", heading_text, flags=re.IGNORECASE)
                     heading_text = re.sub(r"\{\{[^{}]*\|([^{}]*)\}\}", r"\1", heading_text)
                     heading_text = heading_text.replace("'''", "").replace("''", "").strip()
                     marker = f"{_SH}SH{heading_text}{_SH}/SH"
@@ -271,8 +338,10 @@ def _strip_templates(text: str) -> str:
     while prev != text:
         prev = text
         text = re.sub(r"\{\{(?!IMG:|TABLE|VERSE:)[^{}]*\}\}", "", text)
-    # Orphaned closing braces
+    # Orphaned closing braces (standalone lines)
     text = re.sub(r"^\s*\}\}+\s*$", "", text, flags=re.MULTILINE)
+    # Trailing orphaned }} at end of lines (from unclosed fine block/print templates)
+    text = re.sub(r"\}\}+\s*$", "", text, flags=re.MULTILINE)
     # Orphaned wiki table markup
     text = re.sub(r"^\s*\|\}+\s*$", "", text, flags=re.MULTILINE)
     text = re.sub(r"^\s*\{\|\s*$", "", text, flags=re.MULTILINE)
@@ -571,12 +640,11 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
         r"{{csc|\1}}", text, flags=re.IGNORECASE,
     )
 
-    for tmpl in ["fine block", "center", "c", "larger", "smaller",
+    for tmpl in ["block center", "fine block", "center", "c", "larger", "smaller",
                   "EB1911 Fine Print", "nowrap"]:
         text = _unwrap_balanced(text, tmpl)
-    # Strip table style templates ({{ts|...}}, {{Ts|...}}) that interfere
-    # with cell parsing
-    text = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}", "", text)
+    # Note: {{ts|...}} templates are stripped inside table processors,
+    # not globally — global stripping corrupts cell boundaries in complex tables.
     # Convert spacing templates to a space ({{gap}}, {{em|N}}, {{rule}})
     text = re.sub(r"\{\{gap(?:\|[^{}]*)?\}\}", " ", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{em\s*\|[^{}]*\}\}", " ", text, flags=re.IGNORECASE)

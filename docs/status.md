@@ -96,18 +96,20 @@ Resolved xrefs are embedded as direct links at export time: the export stage rew
 - **contributors.html** — sorted by surname, credentials, descriptions, full article lists
 - **preface.html** — Hugh Chisholm's 1910 editorial preface with drop caps and shoulder headings
 
-## Current State (2026-04-06)
+## Current State (2026-04-08)
 
 - **Site live at britannica11.org**
 - **28 volumes processed** (vol 29 is end matter, excluded)
-- **36,702 articles** in database (down from 36,729 — 27 false splits from template-contaminated titles removed)
-- **25,195 cross-references resolved (89%)**
-- **3,150 unresolved xrefs** (mostly portal links and literary work references)
-- **~1,500 unique contributors** with biographical data
-- **193 tests passing** — boundaries, elements, transforms, real data
+- **36,701 articles** in database
+- **25,211 cross-references resolved (89%)**
+- **3,133 unresolved xrefs** (mostly portal links and literary work references)
+- **1,505 unique contributors** from front matter (1,412 linked to articles, 1,030 with credentials, 167 with bio article links)
+- **Contributor system**: master table from front matter, `contributor_initials` alias table, footer matching + front matter subject fallback
 - **Architecture: extract-process-reassemble** — `elements.py` + `_transform_text_v2`
 - **Raw wikitext backed up** to `s3://britannica11.org/raw/` (28 zips, 139 MB)
 - **All data fetched** — raw wikitext is static, never changes
+- **IA page scans** — all 29 volumes downloaded as JP2 zips (30 GB in `data/raw/ia_scans/`); vol 20 is Edinburgh copy (580 MB, lower resolution — `univ` copy locked behind lending)
+- **Commons images** — ~4,900 of ~10,000 downloaded to `data/derived/images/`, download in progress; DjVu crops (208) and chart images (5) complete
 
 ## Production Deployment
 
@@ -137,26 +139,34 @@ Resolved xrefs are embedded as direct links at export time: the export stage rew
 - Search-only key: `24e84cf3ca3b70fe166637d797cbbdd0593ba3a27a47a9ed76b552c821199579`
 
 ### Deploy Process
-1. Run `tools/rebuild_all.sh` locally
-2. `aws s3 sync data/derived/articles/ s3://britannica11.org/data/`
-3. Upload HTML files and title_page.jpg to bucket root
-4. `aws cloudfront create-invalidation --distribution-id E24BJKH0IB4I6 --paths "/*"`
-5. `MEILI_URL=http://44.222.119.72:7700 MEILI_MASTER_KEY=gibbon-winters-lewis uv run python tools/index_search.py`
+Single command: `./tools/rebuild_all.sh` — cleans everything (DB, exports, S3), builds, deploys, indexes search, runs quality report. Use `--no-deploy` for local-only builds. Script auto-starts services if not running.
 
 ## Known Issues (remaining)
 
-### File-Level (2026-04-06 build)
-- stray_close_braces: 58, stray_braces: 13, html_tag: 11, leaked_html_attr: 9
-- pipe_leak: 5, stray_wiki_italic: 5, stray_control_x06: 4
-- stray_wikilink: 1, stray_control_x03: 1
+### File-Level (2026-04-07 build)
+- stray_close_braces: 58 (mostly false positives from LaTeX braces in MATH blocks)
+- pipe_leak: 30, html_tag: 28, stray_wiki_italic: 15 (increased from layout table unwrapping exposing previously hidden markup)
+- stray_braces: 14, leaked_html_attr: 8, stray_control_x06: 4, stray_control_x03: 1
+
+### Queued for next rebuild
+
+### New in 2026-04-08 build
+- **DjVu crop images**: `DJVU_CROP` element type in `elements.py` — 208 cropped regions from 108 DjVu pages, pre-cropped by `tools/download_djvu_crops.py`, served locally
+- **Chart2 genealogical trees**: `CHART2` element type — 5 family trees rendered as page scan crops
+- **Complex HTML tables**: tables with rowspan/colspan now render as proper HTML tables; classification reordered (layout wrapper → complex HTML → equation layout) to prevent false equation detection
+- **New template handlers**: `{{...}}` → `...`, `{{ditto}}` → `″`, `{{blackletter}}` → Unicode Fraktur, `{{ne}}` numbered equations, `{{binom}}` → KaTeX, `{{dropinitial}}`, `{{nop}}`, `{{clear}}`, `{{hanging indent}}`, `{{missing table/image/math}}` → editorial notes
+- **Image download scripts**: `tools/download_images.py` (Commons via Special:FilePath), `tools/download_djvu_crops.py` (DjVu crops) — rate-limited, skip existing
+- **IA page scans**: `tools/fetch/fetch_ia_scans.sh` with correct per-volume identifiers for all 29 volumes
+- **Pipe leak reduction**: 30 → 5 (from `{{ts}}` stripping fix and complex table improvements)
 
 ### Other
-- Some pages have `pagequality level < 3` (not fully proofread) on Wikisource — 3,633 pages at level 1 (unproofread OCR), 15 at level 0 (untranscribed), 13 at level 2 (problematic)
+- ~93 contributors in front matter with no article links (no footer initials, no subject fields)
+- Some pages have `pagequality level < 3` on Wikisource — 3,633 pages at level 1 (unproofread OCR)
 - Portal links and literary work references are legitimately unresolvable xrefs
 - Images on shared pages can be assigned to the wrong article — image extractor uses page-level ownership
 - Meilisearch EC2 port 7700 currently open to all traffic — should be restricted to CloudFront IPs
 - 41 titles with lowercase (Mc/Mac names — correct casing, flagged by quality report)
-- Section heading problem: internal all-caps section headings can be falsely detected as article boundaries (design needed)
+- Section heading problem: internal all-caps section headings can be falsely detected as article boundaries (~850 false splits, design needed)
 
 ## Architecture
 
@@ -164,8 +174,10 @@ Resolved xrefs are embedded as direct links at export time: the export stage rew
 - **Extract-process-reassemble**: one recursive function handles all element types
 - **Key law**: once extracted, an element is never tampered with again
 - **Extraction order**: wiki tables (balanced matching) → HTML elements (ref, html_table, poem, math, score) → wiki markup (image_float, image)
-- **Element types**: TABLE, HTML_TABLE, IMAGE, IMAGE_FLOAT, REF, REF_SELF, POEM, MATH, SCORE, HIEROGLYPH
+- **Element types**: TABLE, HTML_TABLE, IMAGE, IMAGE_FLOAT, DJVU_CROP, REF, REF_SELF, POEM, MATH, SCORE, HIEROGLYPH
 - **Equation-layout tables**: detected (majority MATH placeholders or >50% empty spacer cells) and processed as own element type — cells joined per row, not pipe-separated
+- **Layout wrapper tables**: detected (child TABLE or IMAGE with <200 chars/image non-image text) — unwrapped to sequential content (1,965 tables across encyclopedia)
+- **Single-column text blocks**: tables with 1 cell per row rendered as `«PRE:»` preformatted blocks with body font and wrapping
 - **Cross-element substitution**: multi-pass to handle table placeholders inside processed refs
 - **Plate pages**: dedicated processor — image grid with keyword-matched captions
 - **Brace tables**: detected and converted to verse + translation layout
@@ -196,10 +208,12 @@ Resolved xrefs are embedded as direct links at export time: the export stage rew
 ### Short-term
 - About This Edition page (user writing)
 - Lock down Meilisearch security group to CloudFront IPs
-- Investigate remaining file-level issues (58 stray close braces, etc.)
+- Investigate increased file-level issues from layout unwrapping (30 pipe leaks, 28 html tags — markup exposed from inside former table blocks)
 
 ### Medium-term
 - Address section heading false-split problem (~850 false splits)
+- Improve footer initials matching (48 unmatched patterns, 93 unlinked contributors)
 - EPUB export
-- Image download from Commons (self-contained edition)
+- Complete Commons image download (~5,000 remaining)
+- Serve all images locally once download complete (flip `commonsUrl` in viewer)
 - Citation export (BibTeX, Chicago style)

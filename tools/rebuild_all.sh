@@ -9,14 +9,13 @@
 
 set -euo pipefail
 
-# Kill any other running builds
-OTHER_PIDS=$(pgrep -f "rebuild_all.sh" | grep -v $$ || true)
-if [ -n "$OTHER_PIDS" ]; then
-  echo "Killing previous build(s): $OTHER_PIDS"
-  echo "$OTHER_PIDS" | xargs kill 2>/dev/null || true
-  sleep 2
+# Ensure required services are running
+echo "Checking services..."
+if ! docker ps --format '{{.Names}}' 2>/dev/null | grep -qi postgres; then
+  echo "  PostgreSQL not running. Starting services..."
+  ./tools/start_services.sh
 fi
-
+uv run python tools/db/check_connection.py
 
 VOLUMES=$(seq 1 28)
 EXPORT_DIR="data/derived/articles"
@@ -55,11 +54,8 @@ rm -rf "$EXPORT_DIR"
 mkdir -p "$EXPORT_DIR"
 echo "  Done."
 
-if [ -z "$NO_DEPLOY" ]; then
-  echo "  Clearing S3 bucket..."
-  aws s3 rm s3://britannica11.org/data/ --recursive --quiet
-  echo "  Done."
-fi
+  # Note: S3 bucket is NOT cleared here — s3 sync --delete in Phase 7
+  # handles cleanup. This keeps the site live during the rebuild.
 
 # --- Phase 1b: Build contributor table from front matter ---
 echo
@@ -113,6 +109,10 @@ echo
 echo "=== Phase 3a: Resolving cross-references across all volumes [$(elapsed)] ==="
 uv run britannica resolve-xrefs-all
 
+echo
+echo "=== Phase 3b: Linking contributors from front matter [$(elapsed)] ==="
+uv run python tools/link_contributors_from_frontmatter.py
+
 
 # --- Phase 4: Re-export (xref targets now resolved cross-volume) ---
 echo
@@ -138,7 +138,10 @@ if [ -z "$NO_DEPLOY" ]; then
   echo "=== Phase 7: Deploying [$(elapsed)] ==="
 
   echo "  Uploading articles to S3..."
-  aws s3 sync "$EXPORT_DIR" s3://britannica11.org/data/
+  aws s3 sync "$EXPORT_DIR" s3://britannica11.org/data/ --delete
+
+  echo "  Uploading images to S3..."
+  aws s3 sync data/derived/images/ s3://britannica11.org/data/images/ --exclude ".djvu_cache/*"
 
   echo "  Uploading viewer..."
   aws s3 cp tools/viewer/viewer.html s3://britannica11.org/viewer.html

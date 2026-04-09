@@ -38,11 +38,17 @@ def _clean_name(raw_name):
     name = re.sub(r"\[\[([^\]]+)\]\]", r"\1", name)
     # Strip bold/italic
     name = name.replace("'''", "").replace("''", "")
-    # Strip templates
+    # Unwrap templates (keep content), then strip remaining
+    prev = None
+    while name != prev:
+        prev = name
+        name = re.sub(r"\{\{[^{}|]*\|([^{}]*)\}\}", r"\1", name)
     prev = None
     while name != prev:
         prev = name
         name = re.sub(r"\{\{[^{}]*\}\}", "", name)
+    # Strip unclosed templates (keep their content after the last |)
+    name = re.sub(r"\{\{[^{}|]*\|", "", name)
     # Strip HTML
     name = re.sub(r"<[^>]+>", "", name)
     # Decode entities
@@ -62,13 +68,26 @@ def _clean_description(raw_desc):
     """Clean description text."""
     import html as html_mod
     desc = raw_desc
-    desc = re.sub(r"\{\{EB1911 article link\|([^}|]+)(?:\|[^}]*)?\}\}", r"\1", desc)
+    # Handle article link templates (closed and unclosed, all variants)
+    desc = re.sub(r"\{\{EB1911 (?:article link|lkpl)\|([^}|]+)(?:\|[^}]*)?\}\}", r"\1", desc, flags=re.IGNORECASE)
+    desc = re.sub(r"\{\{EB1911 (?:article link|lkpl)\|([^}|]+)(?:\|[^}|]*)*$", r"\1", desc, flags=re.IGNORECASE)
+    # Strip wiki links (including long 1911 Encyclopædia paths, closed and unclosed)
+    desc = re.sub(r"\[\[[^\]|]+\|([^\]]+)\]\]", r"\1", desc)
+    desc = re.sub(r"\[\[([^\]]+)\]\]", r"\1", desc)
+    desc = re.sub(r"\[\[[^\]]*$", "", desc)
+    # Unwrap formatting templates (sc, asc, font-variant, etc.)
+    prev = None
+    while desc != prev:
+        prev = desc
+        desc = re.sub(r"\{\{[^{}|]*\|([^{}]*)\}\}", r"\1", desc)
+    # Strip remaining closed templates
     prev = None
     while desc != prev:
         prev = desc
         desc = re.sub(r"\{\{[^{}]*\}\}", "", desc)
-    desc = re.sub(r"\[\[[^\]|]+\|([^\]]+)\]\]", r"\1", desc)
-    desc = re.sub(r"\[\[([^\]]+)\]\]", r"\1", desc)
+    # Strip unclosed templates and fragments
+    desc = re.sub(r"\{\{[^{}]*$", "", desc)
+    desc = re.sub(r"^\s*\|[^|]*$", "", desc, flags=re.MULTILINE)
     desc = desc.replace("'''", "").replace("''", "")
     desc = re.sub(r"<[^>]+>", "", desc)
     desc = html_mod.unescape(desc)
