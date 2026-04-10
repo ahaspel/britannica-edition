@@ -25,12 +25,12 @@ def ocr_page_number(scan_path: Path) -> int | None:
     """Extract printed page number from scan top corners."""
     img = Image.open(scan_path)
     w, h = img.size
-    crop_h = int(h * 0.055)
+    crop_h = int(h * 0.06)
 
-    # Try top-right (odd pages), top-left (even pages), then full strip
+    # Try top-right (odd pages), top-left (even pages)
     for crop in [
-        img.crop((int(w * 0.82), 0, w, crop_h)),
-        img.crop((0, 0, int(w * 0.18), crop_h)),
+        img.crop((int(w * 0.8), 0, w, crop_h)),
+        img.crop((0, 0, int(w * 0.2), crop_h)),
     ]:
         text = pytesseract.image_to_string(crop).strip()
         m = re.search(r"\b(\d{1,4})\b", text)
