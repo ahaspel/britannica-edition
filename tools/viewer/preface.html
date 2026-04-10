@@ -152,6 +152,37 @@
       margin-right: 2px;
     }
 
+    .toc {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+
+    .toc h3 {
+      margin: 0 0 8px 0;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .toc ol {
+      margin: 0;
+      padding-left: 20px;
+      columns: 2;
+      column-gap: 24px;
+    }
+
+    .toc li {
+      margin-bottom: 3px;
+    }
+
+    .toc a {
+      color: var(--text);
+      font-size: 0.88rem;
+    }
+
     .loading {
       color: var(--muted);
       text-align: center;
@@ -193,14 +224,16 @@
 
   <script>
     const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-    const DATA_BASE = IS_LOCAL ? "/data/derived/articles" : "/data";
+    const DATA_BASE = IS_LOCAL ? "/data/derived/articles" : "/data/articles";
 
     function escapeHtml(s) {
       return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
     let footnoteCounter = 0;
+    let sectionCounter = 0;
     let collectedFootnotes = [];
+    let tocEntries = [];
 
     fetch(`${DATA_BASE}/front_matter.json`)
       .then(r => r.json())
@@ -247,9 +280,17 @@
           h = h.replace(/^HE /, 'THE ');
           h = h.replace(/^LSEWHERE/, 'ELSEWHERE');
 
-          // Shoulder headings
-          h = h.replace(/\u00abSH\u00bb(.*?)\u00ab\/SH\u00bb/gs,
-            '<span class="shoulder-heading">$1</span>');
+          // Shoulder headings — collect for TOC and add anchors
+          h = h.replace(/\u00abSH\u00bb(.*?)\u00ab\/SH\u00bb/gs, (match, text) => {
+            sectionCounter++;
+            const id = `sh-${sectionCounter}`;
+            // Clean em-spaces used for line-breaking in the shoulder margin
+            const tocText = text.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
+              .replace(/\u2003/g, " ").replace(/- /g, "").replace(/\s{2,}/g, " ").trim();
+            tocEntries.push({ id, text: tocText });
+            const cleanText = text.replace(/\u2003/g, " ").replace(/- /g, "").replace(/\s{2,}/g, " ").trim();
+            return `<span class="shoulder-heading" id="${id}">${cleanText}</span>`;
+          });
 
           // Footnotes
           h = h.replace(/\u00abFN:(.*?)\u00ab\/FN\u00bb/gs, (match, content) => {
@@ -296,7 +337,15 @@
           ).join("")}</ol></div>`;
         }
 
-        document.getElementById("preface-body").innerHTML = html + footnotesHtml;
+        // Build TOC from collected shoulder headings
+        let tocHtml = "";
+        if (tocEntries.length) {
+          tocHtml = `<div class="toc"><h3>Contents</h3><ol>${tocEntries.map(e =>
+            `<li><a href="#${e.id}">${e.text}</a></li>`
+          ).join("")}</ol></div>`;
+        }
+
+        document.getElementById("preface-body").innerHTML = tocHtml + html + footnotesHtml;
       })
       .catch(err => {
         document.getElementById("preface-body").innerHTML =

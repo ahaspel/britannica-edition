@@ -261,7 +261,12 @@ def _convert_shoulder_headings(text: str) -> str:
                     # Strip inner templates, bold/italic, and line breaks
                     heading_text = re.sub(r"<br\s*/?>", " ", heading_text, flags=re.IGNORECASE)
                     heading_text = re.sub(r"\{\{[^{}]*\|([^{}]*)\}\}", r"\1", heading_text)
-                    heading_text = heading_text.replace("'''", "").replace("''", "").strip()
+                    heading_text = heading_text.replace("'''", "").replace("''", "")
+                    # Rejoin hyphenated words split across lines
+                    heading_text = re.sub(r"(\w)- (\w)", r"\1\2", heading_text)
+                    # Collapse em-spaces and extra whitespace
+                    heading_text = heading_text.replace("\u2003", " ")
+                    heading_text = re.sub(r"\s{2,}", " ", heading_text).strip()
                     marker = f"{_SH}SH{heading_text}{_SH}/SH"
                     # Consume surrounding newlines to keep text flowing
                     start = idx

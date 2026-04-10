@@ -245,7 +245,7 @@
 
     // Load index and build contributor data
     const IS_LOCAL_C = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-    const DATA_BASE_C = IS_LOCAL_C ? "/data/derived/articles" : "/data";
+    const DATA_BASE_C = IS_LOCAL_C ? "/data/derived/articles" : "/data/articles";
     fetch(`${DATA_BASE_C}/index.json`)
       .then(r => {
         if (!r.ok) throw new Error(`HTTP ${r.status}`);

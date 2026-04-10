@@ -327,7 +327,7 @@
 
   <script>
     const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-    const DATA_BASE = IS_LOCAL ? "/data/derived/articles" : "/data";
+    const DATA_BASE = IS_LOCAL ? "/data/derived/articles" : "/data/articles";
     const MEILI_URL = IS_LOCAL ? "http://localhost:7700" : "/search-api";
     const MEILI_KEY = IS_LOCAL ? "britannica-dev-key" : "24e84cf3ca3b70fe166637d797cbbdd0593ba3a27a47a9ed76b552c821199579";
     const PAGE_SIZE = 100;
@@ -649,7 +649,7 @@
       const meta = volumesMeta.find(v => v.volume === vol) || {};
       const volArts = articles
         .filter(a => a.volume === vol && (a.article_type || "article") === "article")
-        .sort((a, b) => a.page_start - b.page_start);
+        .sort((a, b) => (a.ws_page_start || a.page_start) - (b.ws_page_start || b.page_start));
 
       const firstTitle = meta.first_title || (volArts[0] || {}).title || "";
       const lastTitle = meta.last_title || (volArts[volArts.length - 1] || {}).title || "";
@@ -808,7 +808,7 @@
       for (const v of volumes) {
         const volArts = articles
           .filter(a => a.volume === v && (a.article_type || "article") === "article")
-          .sort((a, b) => a.page_start - b.page_start);
+          .sort((a, b) => (a.ws_page_start || a.page_start) - (b.ws_page_start || b.page_start));
 
         let label = `Vol ${v}`;
         if (volArts.length > 0) {

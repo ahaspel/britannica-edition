@@ -18,6 +18,27 @@ HEADERS = {
 }
 
 
+def _send_batch(batch, total_so_far):
+    """Send a batch with retries."""
+    import time
+    for attempt in range(5):
+        try:
+            resp = requests.post(
+                f"{MEILI_URL}/indexes/{INDEX_NAME}/documents",
+                headers=HEADERS,
+                json=batch,
+                timeout=60,
+            )
+            resp.raise_for_status()
+            print(f"Indexed {total_so_far + len(batch)} articles...")
+            return
+        except (requests.RequestException, ConnectionError) as e:
+            wait = 5 * (attempt + 1)
+            print(f"  Retry {attempt + 1}/5 after error: {e} (waiting {wait}s)")
+            time.sleep(wait)
+    print(f"  FAILED batch at {total_so_far}, continuing...")
+
+
 def main():
     # Delete existing index
     requests.delete(f"{MEILI_URL}/indexes/{INDEX_NAME}", headers=HEADERS)
@@ -98,22 +119,13 @@ def main():
 
         batch.append(doc)
 
-        if len(batch) >= 500:
-            resp = requests.post(
-                f"{MEILI_URL}/indexes/{INDEX_NAME}/documents",
-                headers=HEADERS,
-                json=batch,
-            )
+        if len(batch) >= 100:
+            _send_batch(batch, total)
             total += len(batch)
-            print(f"Indexed {total} articles...")
             batch = []
 
     if batch:
-        requests.post(
-            f"{MEILI_URL}/indexes/{INDEX_NAME}/documents",
-            headers=HEADERS,
-            json=batch,
-        )
+        _send_batch(batch, total)
         total += len(batch)
 
     print(f"Done. Indexed {total} articles.")

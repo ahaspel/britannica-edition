@@ -1051,6 +1051,14 @@
       app.innerHTML = `<div class="card"><div class="message error">${escapeHtml(message)}</div></div>`;
     }
 
+    function scanUrl(article) {
+      const back = encodeURIComponent(location.href);
+      const base = IS_LOCAL ? 'scans.html' : '/scans.html';
+      const start = article.ws_page_start || article.page_start;
+      const end = article.ws_page_end || article.page_end;
+      return `${base}?vol=${article.volume}&start=${start}&end=${end}&pstart=${article.page_start}&pend=${article.page_end}&label=${encodeURIComponent(article.title)}&back=${back}`;
+    }
+
     function renderArticle(article) {
       currentVolume = article.volume || "?";
       unproofedPages = (article.source_quality && article.source_quality.unproofed_pages) ? article.source_quality.unproofed_pages : {};
@@ -1087,7 +1095,7 @@
             return `<span style="font-size:1.6em; line-height:1; vertical-align:baseline;">${t[0]}</span>${t.slice(1)}`;
           })()}</h1>
           <div style="font-size: 0.85rem; color: #6b5e4f; font-style: italic; margin-bottom: 6px;">
-            vol. ${escapeHtml(article.volume ?? "?")}${article.page_start !== article.page_end ? `, <a href="${IS_LOCAL ? 'scans.html' : '/scans.html'}?vol=${article.volume}&start=${article.page_start}&end=${article.page_end}&label=${encodeURIComponent(article.title)}" style="color: #6b5e4f;">pp. ${escapeHtml(article.page_start ?? "")}–${escapeHtml(article.page_end ?? "")}</a>` : `, <a href="${IS_LOCAL ? 'scans.html' : '/scans.html'}?vol=${article.volume}&start=${article.page_start}&end=${article.page_end}&label=${encodeURIComponent(article.title)}" style="color: #6b5e4f;">p. ${escapeHtml(article.page_start ?? "")}</a>`}
+            vol. ${escapeHtml(article.volume ?? "?")}${article.page_start !== article.page_end ? `, <a href="${scanUrl(article)}" style="color: #6b5e4f;">pp. ${escapeHtml(article.page_start ?? "")}–${escapeHtml(article.page_end ?? "")}</a>` : `, <a href="${scanUrl(article)}" style="color: #6b5e4f;">p. ${escapeHtml(article.page_start ?? "")}</a>`}
             ${article.word_count ? `&middot; ${article.word_count.toLocaleString()} words` : ""}
           </div>
           ${article.parent_article ? `<div style="margin-bottom: 8px; font-size: 0.95rem;">Plate for <a href="${articleUrl(article.parent_article.filename)}">${escapeHtml(article.parent_article.title)}</a></div>` : ""}
@@ -1100,7 +1108,7 @@
             ? `<div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 8px 12px; margin: 8px 0; font-size: 0.9rem;">
                  <strong>Source quality notice:</strong> ${escapeHtml(article.source_quality.note || "Some pages may contain unverified text.")}
                  This article spans pages with unproofread transcriptions.
-                 <a href="${IS_LOCAL ? 'scans.html' : '/scans.html'}?vol=${article.volume}&start=${article.page_start}&end=${article.page_end}&label=${encodeURIComponent(article.title)}" style="color: #8b4513;">View original scans \u2192</a>
+                 <a href="${scanUrl(article)}" style="color: #8b4513;">View original scans \u2192</a>
                </div>`
             : ""}
           ${(() => {
@@ -1214,7 +1222,7 @@
 
     // Determine article path: local uses ?article= param, production uses /article/{id}/{slug}
     const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-    const DATA_BASE = IS_LOCAL ? "/data/derived/articles" : "/data";
+    const DATA_BASE = IS_LOCAL ? "/data/derived/articles" : "/data/articles";
     let initialPath = new URLSearchParams(window.location.search).get("article");
     if (!initialPath && !IS_LOCAL) {
       // Production: /article/367/pharaoh -> 0367-PHARAOH.json
@@ -1427,7 +1435,7 @@
 
       async function ensureIndex() {
         if (articles) return;
-        const base = IS_LOCAL ? "/data/derived/articles" : "/data";
+        const base = IS_LOCAL ? "/data/derived/articles" : "/data/articles";
         const resp = await fetch(`${base}/index.json`);
         const data = await resp.json();
         articles = data

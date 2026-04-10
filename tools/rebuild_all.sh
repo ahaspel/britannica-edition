@@ -138,13 +138,11 @@ if [ -z "$NO_DEPLOY" ]; then
   echo "=== Phase 7: Deploying [$(elapsed)] ==="
 
   echo "  Uploading articles to S3..."
-  aws s3 sync "$EXPORT_DIR" s3://britannica11.org/data/ --delete
+  aws s3 sync "$EXPORT_DIR" s3://britannica11.org/data/articles/ --delete
 
-  echo "  Uploading images to S3..."
-  aws s3 sync data/derived/images/ s3://britannica11.org/data/images/ --exclude ".djvu_cache/*"
-
-  echo "  Uploading scans to S3..."
-  aws s3 sync data/derived/scans/ s3://britannica11.org/data/scans/
+  # Images and scans are static assets — upload separately with:
+  #   aws s3 sync data/derived/images/ s3://britannica11.org/data/images/ --size-only
+  #   aws s3 sync data/derived/scans/ s3://britannica11.org/data/scans/ --size-only
 
   echo "  Uploading viewer..."
   aws s3 cp tools/viewer/viewer.html s3://britannica11.org/viewer.html
@@ -158,10 +156,11 @@ if [ -z "$NO_DEPLOY" ]; then
   echo "  Invalidating CloudFront..."
   aws cloudfront create-invalidation --distribution-id E24BJKH0IB4I6 --paths "/*" > /dev/null
 
-  echo "  Indexing search..."
-  MEILI_URL="${MEILI_URL:-https://britannica11.org/search-api}" \
-  MEILI_MASTER_KEY="${MEILI_MASTER_KEY:-}" \
-    uv run python tools/index_search.py
+  echo "  Indexing search (via EC2)..."
+  EC2_HOST="ec2-44-222-119-72.compute-1.amazonaws.com"
+  EC2_KEY="${EC2_KEY:-D:/work/web/cloudinstall/britannica11.pem}"
+  ssh -i "$EC2_KEY" ec2-user@"$EC2_HOST" \
+    "aws s3 sync s3://britannica11.org/data/articles/ ~/articles/ --size-only --quiet && python3 ~/index_search_ec2.py"
 
   echo "  Deploy complete."
 else

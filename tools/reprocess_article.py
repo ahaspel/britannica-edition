@@ -63,6 +63,8 @@ def reprocess(article_id=None, title=None, volume=None):
             "volume": article.volume,
             "page_start": _printed_page(article.volume, article.page_start),
             "page_end": _printed_page(article.volume, article.page_end),
+            "ws_page_start": article.page_start,
+            "ws_page_end": article.page_end,
             "article_type": article.article_type or "article",
             "word_count": len(body.split()),
             "body": body,

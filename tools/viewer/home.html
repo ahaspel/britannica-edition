@@ -127,7 +127,7 @@
   </div>
   <script>
     const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-    const base = IS_LOCAL ? "/data/derived/articles" : "/data";
+    const base = IS_LOCAL ? "/data/derived/articles" : "/data/articles";
     fetch(`${base}/index.json`).then(r => r.json()).then(data => {
       const count = data.filter(a => (a.article_type || "article") === "article").length;
       document.getElementById("caption").textContent =

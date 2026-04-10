@@ -43,14 +43,23 @@
   const vol = parseInt(params.get("vol")) || 1;
   const startPage = parseInt(params.get("start")) || 1;
   const endPage = parseInt(params.get("end")) || startPage;
+  // Printed page numbers for display (fall back to ws numbers)
+  const printedStart = parseInt(params.get("pstart")) || startPage;
+  const printedEnd = parseInt(params.get("pend")) || endPage;
   const label = params.get("label") || "Pages";
   const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
 
   let currentPage = startPage;
 
   document.getElementById("title").textContent = `Volume ${vol}: ${label}`;
-  document.getElementById("subtitle").textContent = `Pages ${startPage}\u2013${endPage}`;
-  document.getElementById("backLink").href = IS_LOCAL ? "index.html" : "/index.html";
+  document.getElementById("subtitle").textContent = `pp. ${printedStart}\u2013${printedEnd}`;
+  const backUrl = params.get("back");
+  if (backUrl) {
+    document.getElementById("backLink").href = backUrl;
+    document.getElementById("backLink").innerHTML = "&larr; Back to article";
+  } else {
+    document.getElementById("backLink").href = IS_LOCAL ? "index.html" : "/index.html";
+  }
 
   const prefix = params.get("prefix") || "page";  // "page" or "fm"
 
@@ -104,7 +113,8 @@
     img.src = scanUrl(vol, currentPage);
     container.innerHTML = `<div class="error">Loading...</div>`;
 
-    document.getElementById("pageInfo").textContent = `Page ${currentPage} of ${startPage}\u2013${endPage}`;
+    const displayPage = printedStart + (currentPage - startPage);
+    document.getElementById("pageInfo").textContent = `p. ${displayPage}`;
     document.getElementById("firstBtn").disabled = currentPage <= startPage;
     document.getElementById("prevBtn").disabled = currentPage <= startPage;
     document.getElementById("nextBtn").disabled = currentPage >= endPage;
