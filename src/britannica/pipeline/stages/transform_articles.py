@@ -206,6 +206,10 @@ def _unwrap_content_templates(text: str) -> str:
     text = re.sub(r"\{\{clear\}\}", "", text, flags=re.IGNORECASE)
     # Special markers
     text = re.sub(r"\{\{sic\}\}", "[sic]", text, flags=re.IGNORECASE)
+    # {{sic|word}} — preserve the marked word (SIC tag means the
+    # original spelling is intentional, not a typo).
+    text = re.sub(
+        r"\{\{sic\|([^{}|]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     # Strip anchor templates (no visible output)
     text = re.sub(r"\{\{anchor\|[^{}]*\}\}", "", text, flags=re.IGNORECASE)
     return text
@@ -444,16 +448,19 @@ def _transform_plate(raw_wikitext: str) -> str:
     # Captions may wrap across lines (inside <td> blocks), so capture until
     # </td>, next Fig heading, or double newline.
     for m in re.finditer(
-        r"(?:\{\{small-caps\|Fig\.\}\}|Fig\.)\s*(\d+)\.?\s*[—\-]\s*"
-        r"(.+?)(?=</td>|\{\{small-caps\|Fig\.\}\}|Fig\.\s*\d+\.|\n\n|$)",
+        r"(?:\{\{(?:small-caps|sc)\|Fig\.\}\}|Fig\.)\s*(\d+)\.?\s*[—\-]\s*"
+        r"(.+?)(?=</td>|\|-|\n|\{\{(?:small-caps|sc)\|Fig\.\}\}|Fig\.\s*\d+\.|$)",
         text, re.DOTALL,
     ):
         num = int(m.group(1))
         cap = m.group(2).strip().rstrip(",.|;")
-        # Clean wiki markup from caption
+        # Clean wiki markup from caption — unwrap templates that wrap text
+        cap = re.sub(r"\{\{(?:uc|sc|nowrap|lang\|[^{}]*)\|([^{}]*)\}\}", r"\1", cap, flags=re.IGNORECASE)
         cap = re.sub(r"\{\{[^{}]*\}\}", "", cap)
         cap = re.sub(r"'''|''", "", cap)
         cap = re.sub(r"&amp;", "&", cap)
+        cap = re.sub(r"\|\}", "", cap)  # stray table close
+        cap = re.sub(r"\}\}+", "", cap)  # stray closing braces
         cap = re.sub(r"\s+", " ", cap).strip()
         if len(cap) >= 3 and num not in captions:
             captions[num] = f"Fig. {num}. {cap}"

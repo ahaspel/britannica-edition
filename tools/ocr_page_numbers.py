@@ -20,19 +20,33 @@ pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tessera
 SCAN_DIR = Path("data/derived/scans")
 OUT = Path("data/derived/ocr_page_numbers.json")
 
+# Per-volume page-number location (top_frac, bottom_frac) of the page.
+# Default (IA chisrich scans): number sits in the top 6% of the page.
+# Vol 20 (DLI Bengal): huge top margin, number sits 7-14% down.
+DEFAULT_BAND = (0.0, 0.06)
+VOL_BAND = {
+    20: (0.07, 0.14),
+}
 
-def ocr_page_number(scan_path: Path) -> int | None:
-    """Extract printed page number from scan top corners."""
+
+def ocr_page_number(scan_path: Path, vol: int) -> int | None:
+    """Extract printed page number from the page-number band."""
     img = Image.open(scan_path)
     w, h = img.size
-    crop_h = int(h * 0.06)
+    top_frac, bot_frac = VOL_BAND.get(vol, DEFAULT_BAND)
+    y0 = int(h * top_frac)
+    y1 = int(h * bot_frac)
 
     # Try top-right (odd pages), top-left (even pages)
     for crop in [
-        img.crop((int(w * 0.8), 0, w, crop_h)),
-        img.crop((0, 0, int(w * 0.2), crop_h)),
+        img.crop((int(w * 0.75), y0, w, y1)),
+        img.crop((0, y0, int(w * 0.25), y1)),
     ]:
-        text = pytesseract.image_to_string(crop).strip()
+        # Digits-only whitelist — page numbers are pure digits, and
+        # restricting the character set dramatically reduces noise.
+        text = pytesseract.image_to_string(
+            crop, config="--psm 7 -c tessedit_char_whitelist=0123456789"
+        ).strip()
         m = re.search(r"\b(\d{1,4})\b", text)
         if m:
             n = int(m.group(1))
@@ -77,7 +91,7 @@ def main():
                 skipped += 1
                 continue
 
-            num = ocr_page_number(scan)
+            num = ocr_page_number(scan, vol)
             if num is not None:
                 vol_map[leaf_key] = num
                 found += 1

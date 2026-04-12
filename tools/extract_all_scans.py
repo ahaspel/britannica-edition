@@ -22,7 +22,7 @@ def _ia_identifier(vol):
     if vol in (3, 5, 6, 7, 8, 9, 11, 12, 13):
         return f"encyclopaediabrit{vol:02d}chisrich"
     elif vol == 20:
-        return "encyclopaediabri20edin"
+        return "10689.10192"
     else:
         return f"encyclopaediabri{vol:02d}chisrich"
 

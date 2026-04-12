@@ -16,35 +16,19 @@ def classify_articles_for_volume(volume: int) -> dict[str, int]:
 
         counts: dict[str, int] = {}
 
-        # Find the first real encyclopedia article.
-        # The first headword is always a single short word (AA, AB, ABACUS).
-        first_real_page = None
-        for article in articles:
-            body = (article.body or "").strip()
-            title = article.title
-            if (
-                len(body.split()) >= 10
-                and title.upper() == title
-                and " " not in title
-                and len(title) <= 15
-            ):
-                first_real_page = article.page_start
-                break
-
         for article in articles:
             body = (article.body or "").strip()
 
             # Preserve plate classification from boundary detection
             if article.article_type == "plate":
                 article_type = "plate"
-            elif first_real_page and article.page_start < first_real_page:
-                article_type = "front_matter"
-            elif not body and first_real_page and article.page_start > first_real_page:
-                article_type = "plate"
-            elif not body:
-                article_type = "front_matter"
-            else:
+            elif body:
                 article_type = "article"
+            else:
+                # No body — either a plate or front matter.
+                # Boundary detection already classifies plates; anything
+                # else without body is front matter.
+                article_type = "front_matter"
 
             if article.article_type != article_type:
                 article.article_type = article_type

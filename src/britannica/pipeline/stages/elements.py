@@ -281,7 +281,7 @@ def _process_element(element_type: str, raw: str,
         else:
             result = _process_table(inner, text_transform, inner_registry)
     elif element_type == "HTML_TABLE":
-        result = _process_html_table(inner, text_transform)
+        result = _process_html_table(raw, inner, text_transform, inner_registry)
     else:
         result = inner
 
@@ -363,19 +363,22 @@ def _classify_table(raw: str, inner: str, inner_registry: ElementRegistry | None
     # real data table, and {{ts}} stripping can create phantom empty cells
     # that fool the equation layout heuristic.
     if has_rowspan or has_colspan:
-        # Exception: brace tables (poem + translation) handle rowspan themselves
-        if "brace" in raw.lower():
+        # Exception: brace tables (poem + translation) handle rowspan
+        # themselves. Match `{{brace}}` or `{{brace|...}}` specifically —
+        # NOT `{{brace2|...}}` (decorative bracket, not a poem layout).
+        if re.search(r"\{\{brace(?:\s*\||\s*\})", raw, re.IGNORECASE):
             return "DATA_TABLE"
         return "COMPLEX_HTML"
     # Tables with data signals (border/rules/class) AND {{Ts}} templates
     # need COMPLEX_HTML processing — the template markup creates extra
     # pipes and empty cells that break _process_table's simple cell parsing.
     # {{Ts}} alone is not enough (it's also used for layout table styling).
+    # Class value may be quoted or unquoted: class="wikitable" or class=_foo.
     header = raw.split("\n", 1)[0]
     has_data_signal = (
         re.search(r'border\s*=\s*"?[1-9]', header, re.IGNORECASE) or
         re.search(r'rules\s*=', header, re.IGNORECASE) or
-        re.search(r'class\s*=\s*"[^"]*(?:wikitable|tablecolhd|border)',
+        re.search(r'class\s*=\s*"?[^"\s]*(?:wikitable|tablecolhd|border)',
                    header, re.IGNORECASE))
     if has_data_signal and re.search(r'\{\{[Tt]s\|', raw):
         return "COMPLEX_HTML"
@@ -716,8 +719,26 @@ def _process_complex_table(inner: str, text_transform) -> str:
     html_rows = []
 
     for row in rows:
+        # Merge continuation lines into the preceding cell: a wiki cell
+        # can have content that spills onto subsequent lines (e.g.
+        # `|attr|\n content\n more content`). Any non-empty line that
+        # doesn't start with `|`, `!`, or `{|` belongs to the previous
+        # cell.
+        merged: list[str] = []
+        for ln in row.split("\n"):
+            stripped = ln.strip()
+            if not stripped:
+                continue
+            if stripped.startswith(("|", "!")) or stripped == "{|":
+                merged.append(ln)
+            elif merged:
+                merged[-1] = merged[-1].rstrip() + " " + stripped
+            else:
+                # orphan text before any cell — keep as-is
+                merged.append(ln)
+
         cells_html = []
-        for line in row.split("\n"):
+        for line in merged:
             line = line.strip()
             if not line or line.startswith("|+"):
                 continue
@@ -1272,8 +1293,123 @@ def _process_table(inner: str, text_transform,
     return ""
 
 
-def _process_html_table(inner: str, text_transform) -> str:
-    """Convert HTML table content (<tr>, <td>, <th>) to {{TABLE:...}TABLE}."""
+def _is_html_illustration_wrapper(
+    raw: str, inner_registry: ElementRegistry | None
+) -> bool:
+    """Detect HTML tables that wrap an image+caption for layout.
+
+    EB1911 Wikisource uses HTML tables like:
+
+        <table ... summary="Illustration">
+          <tr><td>[[File:...]]</td></tr>
+          <tr><td>Fig. 1. caption text.</td></tr>
+        </table>
+
+    Signals:
+      - summary="Illustration" attribute on the opening <table> tag, OR
+      - contains exactly one IMAGE child and the non-image cells are short
+        caption text.
+    """
+    if re.search(r'summary\s*=\s*"?Illustration', raw, re.IGNORECASE):
+        return True
+    if inner_registry is None:
+        return False
+    child_types = [t for t, _ in inner_registry.elements.values()]
+    n_images = sum(1 for t in child_types if t == "IMAGE")
+    if n_images < 1:
+        return False
+    # No other block-level children (nested tables etc.)
+    if any(t not in ("IMAGE", "REF", "MATH") for t in child_types):
+        return False
+    return True
+
+
+def _unwrap_html_illustration(
+    inner: str, text_transform, inner_registry: ElementRegistry | None
+) -> str:
+    """Unwrap an HTML illustration table to a bundled IMG+caption.
+
+    Collects every image child and every caption cell, then emits
+    `{{IMG:filename|caption}}` where the caption is the concatenated
+    non-image cell text. This lets the viewer render the caption under
+    the image instead of as a detached paragraph.
+
+    For single-image illustrations we bypass the placeholder mechanism
+    entirely and emit the final IMG tag directly — the placeholder
+    substitution step in _process_element won't find the placeholder in
+    the output, so it simply does nothing for this child.
+
+    Falls back to emitting placeholders + caption paragraph if there's
+    no single image or no inner_registry.
+    """
+    rows = re.findall(r"<tr[^>]*>(.*?)</tr>", inner, re.DOTALL | re.IGNORECASE)
+
+    image_cells: list[str] = []    # cell text containing an IMAGE placeholder
+    caption_parts: list[str] = []  # plain-text caption cells
+    for row in rows:
+        cells = re.findall(
+            r"<t[dh][^>]*>(.*?)</t[dh]>", row, re.DOTALL | re.IGNORECASE)
+        for cell in cells:
+            c = re.sub(r"<[^>]+>", " ", cell)
+            c = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}", "", c)
+            c = re.sub(r"\s+", " ", c).strip()
+            if not c:
+                continue
+            if _PH in c:
+                image_cells.append(c)
+            else:
+                caption_parts.append(text_transform(c))
+
+    caption_text = " ".join(p for p in caption_parts if p).strip()
+
+    # Single-image case: emit the IMG tag directly with caption bundled.
+    if len(image_cells) == 1 and inner_registry is not None:
+        cell = image_cells[0]
+        m = re.search(re.escape(_PH) + r"ELEM:\d+" + re.escape(_PH), cell)
+        if m:
+            key = m.group(0)
+            if key in inner_registry.elements:
+                img_type, img_raw = inner_registry.elements[key]
+                if img_type == "IMAGE":
+                    # Inject the caption via EXTCAP so _process_image bundles it.
+                    if caption_text:
+                        new_raw = img_raw + "\n\n" + caption_text
+                    else:
+                        new_raw = img_raw
+                    return _process_image_from_raw(new_raw, text_transform)
+
+    # Fallback: paragraph-style (images as placeholders, captions below)
+    parts: list[str] = list(image_cells)
+    if caption_text:
+        parts.append(caption_text)
+    return "\n\n".join(parts) if parts else ""
+
+
+def _process_image_from_raw(raw: str, text_transform) -> str:
+    """Convenience: strip `[[File:...]]` and call _process_image."""
+    m = re.match(r"\[\[(?:File|Image):(.+)\]\](?:\s*\n\n?(.+))?$",
+                 raw, re.IGNORECASE | re.DOTALL)
+    if not m:
+        return raw
+    inner = m.group(1)
+    ext_caption = m.group(2)
+    if ext_caption:
+        inner = inner + "|EXTCAP:" + ext_caption
+    return _process_image(inner, text_transform)
+
+
+def _process_html_table(
+    raw: str,
+    inner: str,
+    text_transform,
+    inner_registry: ElementRegistry | None,
+) -> str:
+    """Convert HTML table content to either an unwrapped illustration
+    or a {{TABLE:...}TABLE} data table."""
+    # Illustration wrapper — unwrap to IMG + caption
+    if _is_html_illustration_wrapper(raw, inner_registry):
+        return _unwrap_html_illustration(inner, text_transform, inner_registry)
+
     rows = re.findall(r"<tr[^>]*>(.*?)</tr>", inner, re.DOTALL | re.IGNORECASE)
     if not rows:
         # No rows found — just strip all HTML and return content

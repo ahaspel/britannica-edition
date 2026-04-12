@@ -9,6 +9,9 @@
 
 set -euo pipefail
 
+# Truncate the log file so old output doesn't cause confusion
+: > rebuild.log 2>/dev/null || true
+
 # Ensure required services are running
 echo "Checking services..."
 if ! docker ps --format '{{.Names}}' 2>/dev/null | grep -qi postgres; then
@@ -160,7 +163,7 @@ if [ -z "$NO_DEPLOY" ]; then
   EC2_HOST="ec2-44-222-119-72.compute-1.amazonaws.com"
   EC2_KEY="${EC2_KEY:-D:/work/web/cloudinstall/britannica11.pem}"
   ssh -i "$EC2_KEY" ec2-user@"$EC2_HOST" \
-    "aws s3 sync s3://britannica11.org/data/articles/ ~/articles/ --size-only --quiet && python3 ~/index_search_ec2.py"
+    "aws s3 sync s3://britannica11.org/data/articles/ ~/articles/ --delete --quiet && python3 ~/index_search_ec2.py"
 
   echo "  Deploy complete."
 else
