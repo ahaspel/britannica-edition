@@ -91,6 +91,13 @@ def main():
         body = re.sub(r"\u00abFN:.*?\u00ab/FN\u00bb", " ", body, flags=re.DOTALL)
         body = re.sub(r"\u00abLN:[^«]*\u00ab/LN\u00bb", " ", body)
         body = re.sub(r"\u00abMATH:.*?\u00ab/MATH\u00bb", " ", body, flags=re.DOTALL)
+        # Strip image/table/verse markers — these aren't searchable text
+        # and they leak into body_start previews as raw markup.
+        body = re.sub(r"\{\{IMG:[^}]*\}\}", " ", body)
+        body = re.sub(r"\{\{TABLE[A-Z]?:[\s\S]*?\}TABLE\}", " ", body)
+        body = re.sub(r"\{\{VERSE:[\s\S]*?\}VERSE\}", " ", body)
+        body = re.sub(
+            r"\u00abHTMLTABLE:[\s\S]*?\u00ab/HTMLTABLE\u00bb", " ", body)
         body = re.sub(r"\u00abB\u00bb(.*?)\u00ab/B\u00bb", r"\1", body)
         body = re.sub(r"\u00abI\u00bb(.*?)\u00ab/I\u00bb", r"\1", body)
         body = re.sub(r"\u00abSC\u00bb(.*?)\u00ab/SC\u00bb", r"\1", body)

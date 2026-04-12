@@ -7,6 +7,9 @@
 <style>
   :root { --bg: #f5f0e8; --text: #2c2416; --muted: #6b5d4d; --link: #8b4513; }
   body { font-family: Georgia, serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+  .back-bar { margin-bottom: 12px; }
+  .back-bar a { color: var(--link); text-decoration: none; }
+  .back-bar a:hover { text-decoration: underline; }
   .header { text-align: center; margin-bottom: 20px; }
   .header h1 { font-size: 1.3rem; margin: 0; }
   .header .subtitle { color: var(--muted); font-size: 0.9rem; }
@@ -23,6 +26,9 @@
 </style>
 </head>
 <body>
+<div class="back-bar">
+  <a id="backLink" href="index.html">&larr; Back to index</a>
+</div>
 <div class="header">
   <h1 id="title">Page Scans</h1>
   <div class="subtitle" id="subtitle"></div>
@@ -35,9 +41,6 @@
   <button id="lastBtn" onclick="goTo(endPage)">&raquo;</button>
 </div>
 <div class="scan-container" id="scanContainer"></div>
-<div style="text-align: center; margin-top: 16px;">
-  <a id="backLink" href="index.html">&larr; Back to index</a>
-</div>
 <script>
   const params = new URLSearchParams(location.search);
   const vol = parseInt(params.get("vol")) || 1;
@@ -72,6 +75,7 @@
   };
 
   let scanMap = null;
+  let printedPages = null;
 
   async function loadScanMap() {
     try {
@@ -79,6 +83,24 @@
       const resp = await fetch(url);
       if (resp.ok) scanMap = await resp.json();
     } catch (e) { /* fall back to offset */ }
+  }
+
+  async function loadPrintedPages() {
+    try {
+      // Scan viewer needs leaf-keyed printed pages (it navigates by leaf).
+      // The ws-keyed printed_pages.json is for article exports.
+      const url = IS_LOCAL ? "/data/derived/printed_pages_leaf.json" : "/data/printed_pages_leaf.json";
+      const resp = await fetch(url);
+      if (resp.ok) printedPages = await resp.json();
+    } catch (e) { /* fall back to linear interpolation */ }
+  }
+
+  function printedForLeaf(vol, leaf) {
+    if (printedPages && printedPages[String(vol)]) {
+      const p = printedPages[String(vol)][String(leaf)];
+      if (p !== undefined) return p;
+    }
+    return null; // no printed number (plate / blank / unknown)
   }
 
   function leafForPage(vol, wsPage) {
@@ -113,8 +135,24 @@
     img.src = scanUrl(vol, currentPage);
     container.innerHTML = `<div class="error">Loading...</div>`;
 
-    const displayPage = printedStart + (currentPage - startPage);
-    document.getElementById("pageInfo").textContent = `p. ${displayPage}`;
+    // Look up the printed page by LEAF, not by ws. The ws → leaf
+    // translation is done via scan_map (identity fallback). Keeping
+    // the printed_pages lookup in leaf space avoids corruption from
+    // stale scan_map entries (vol 20 had several bogus ws → leaf
+    // translations that mangled the display).
+    let pageInfoText;
+    if (prefix === "fm") {
+      pageInfoText = `fm ${currentPage}`;
+    } else {
+      const leaf = leafForPage(vol, currentPage);
+      const printed = printedForLeaf(vol, leaf);
+      if (printed !== null) {
+        pageInfoText = `p. ${printed}`;
+      } else {
+        pageInfoText = `(unnumbered leaf ${leaf})`;
+      }
+    }
+    document.getElementById("pageInfo").textContent = pageInfoText;
     document.getElementById("firstBtn").disabled = currentPage <= startPage;
     document.getElementById("prevBtn").disabled = currentPage <= startPage;
     document.getElementById("nextBtn").disabled = currentPage >= endPage;
@@ -139,7 +177,7 @@
   });
 
   if (prefix === "page") {
-    loadScanMap().then(() => render());
+    Promise.all([loadScanMap(), loadPrintedPages()]).then(() => render());
   } else {
     render();
   }

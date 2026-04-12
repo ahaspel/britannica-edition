@@ -574,6 +574,30 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
     # Replace <score> tags (static lookup, must happen before extraction)
     text = _replace_score_tags(text, volume, page_number)
 
+    # {{raw image|filename}} is an alternate EB1911 image syntax used
+    # for figures without an inline caption (the caption sits on a
+    # following line as `{{c|{{sc|Fig. 10.}}}}`). Convert to the
+    # standard `[[File:...]]` form so the image gets extracted and
+    # caption-paired normally.
+    text = re.sub(
+        r"\{\{\s*raw\s+image\s*\|([^{}|]+)\}\}",
+        lambda m: f"[[File:{m.group(1).strip()}]]",
+        text, flags=re.IGNORECASE,
+    )
+
+    # Unwrap center `{{c|…}}` templates — they only control alignment.
+    # Done before element extraction so an image caption like
+    # `{{c|{{sc|Fig. 10.}}}}` simplifies to `{{sc|Fig. 10.}}` and the
+    # IMAGE extractor's caption-pairing regex can recognize it.
+    for _ in range(3):
+        new = re.sub(
+            r"\{\{\s*c\s*\|((?:[^{}]|\{\{[^{}]*\}\})*)\}\}",
+            r"\1", text, flags=re.IGNORECASE,
+        )
+        if new == text:
+            break
+        text = new
+
     # Strip {{missing table}} markers that precede chart2 blocks (the chart
     # image replaces the table; the marker is redundant)
     text = re.sub(

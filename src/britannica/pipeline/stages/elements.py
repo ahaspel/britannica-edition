@@ -59,7 +59,7 @@ _EXTRACTORS = [
         re.DOTALL | re.IGNORECASE), 0),
     ("IMAGE", re.compile(
         r"\[\[(?:File|Image):([^\]]+)\]\]"
-        r"(?:\s*\n\n?(\{\{sc\|Fig\.[^}]*\}\}[^\n]+|\d+\.\s*[A-Z][^\n]+))?",
+        r"(?:\s*\n\n?(\{\{sc\|Fig\.[^}]*\}\}[^\n]*|\d+\.\s*[A-Z][^\n]+))?",
         re.IGNORECASE), 0),
     ("HIEROGLYPH", re.compile(
         r"\{\{hieroglyph\|([^{}]*)\}\}", re.IGNORECASE), 0),

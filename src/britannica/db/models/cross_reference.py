@@ -19,4 +19,11 @@ class CrossReference(Base):
         nullable=True,
     )
 
+    # When the xref points to a section *within* the target article
+    # (e.g. "Clement I" inside CLEMENT (POPES)), this holds the section
+    # name. The viewer appends #section-<slug> to the link so the user
+    # lands at the correct anchor.
+    target_section: Mapped[str | None] = mapped_column(
+        String(255), nullable=True)
+
     status: Mapped[str] = mapped_column(String(50), nullable=False, default="unresolved")

@@ -792,7 +792,26 @@
       return h;
     }
 
+    function sectionSlug(name) {
+      return name.trim().toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
+    }
+
     function renderParagraph(p) {
+      // Absorbed-subsection heading: «SEC:Cyanophyceae«/SEC»
+      // Emitted by boundary detection when a <section begin="X"/> is
+      // folded into the open article. Render as a navigable h3 so
+      // the section is visible AND targetable by xrefs.
+      const secMatch = p.match(/^\u00abSEC:([^\u00ab]+)\u00ab\/SEC\u00bb$/);
+      if (secMatch) {
+        const name = secMatch[1].trim();
+        const slug = sectionSlug(name);
+        const id = `section-${slug}`;
+        sectionCounter++;
+        collectedSections.push({ id, title: name, level: 1 });
+        return `<h3 class="section-heading" id="${id}" data-slug="${slug}">${escapeHtml(name)}</h3>`;
+      }
       const imgMatch = p.match(/^\{\{IMG:([^|}]+)(?:\|([^}]*))?\}\}$/);
       if (imgMatch) {
         const filename = imgMatch[1];
@@ -1039,12 +1058,26 @@
     }
 
     function buildXrefHref(xref) {
+      let base;
       if (xref?.target_filename) {
-        return articleUrl(xref.target_filename);
+        base = articleUrl(xref.target_filename);
+      } else if (xref?.normalized_target) {
+        const fileName = articleFileNameFromTarget(xref.normalized_target);
+        base = articleUrl(fileName);
+      } else {
+        return "#";
       }
-      if (!xref?.normalized_target) return "#";
-      const fileName = articleFileNameFromTarget(xref.normalized_target);
-      return articleUrl(fileName);
+      // If the xref targets a specific section within the article,
+      // append the anchor. The viewer emits <h3 id="section-<slug>">
+      // for absorbed subsections; match that slug here.
+      if (xref?.target_section) {
+        const slug = xref.target_section
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-|-$/g, "");
+        if (slug) base = base + "#section-" + slug;
+      }
+      return base;
     }
 
     function renderError(message) {
@@ -1095,7 +1128,7 @@
             return `<span style="font-size:1.6em; line-height:1; vertical-align:baseline;">${t[0]}</span>${t.slice(1)}`;
           })()}</h1>
           <div style="font-size: 0.85rem; color: #6b5e4f; font-style: italic; margin-bottom: 6px;">
-            vol. ${escapeHtml(article.volume ?? "?")}${article.page_start !== article.page_end ? `, <a href="${scanUrl(article)}" style="color: #6b5e4f;">pp. ${escapeHtml(article.page_start ?? "")}–${escapeHtml(article.page_end ?? "")}</a>` : `, <a href="${scanUrl(article)}" style="color: #6b5e4f;">p. ${escapeHtml(article.page_start ?? "")}</a>`}
+            <a href="${scanUrl(article)}" style="color: #6b5e4f;">vol. ${escapeHtml(article.volume ?? "?")}, ${article.page_start !== article.page_end ? `pp. ${escapeHtml(article.page_start ?? "")}–${escapeHtml(article.page_end ?? "")}` : `p. ${escapeHtml(article.page_start ?? "")}`}</a>
             ${article.word_count ? `&middot; ${article.word_count.toLocaleString()} words` : ""}
           </div>
           ${article.parent_article ? `<div style="margin-bottom: 8px; font-size: 0.95rem;">Plate for <a href="${articleUrl(article.parent_article.filename)}">${escapeHtml(article.parent_article.title)}</a></div>` : ""}
@@ -1470,16 +1503,32 @@
         location.href = articleUrl(item.filename);
       }
 
+      // 5-tier ranking for title autocomplete.
+      //   0  exact title match           "PAUL"
+      //   1  first word match            "PAUL, SAINT"
+      //   2  any full-word match         "ST PAUL"
+      //   3  title starts with query     "PAULINIUS"
+      //   4  substring match anywhere    "SAO PAULO"
+      function titleRank(title, q) {
+        const t = title.toLowerCase();
+        if (t === q) return 0;
+        const words = t.split(/[\s,.'\u2019()\-]+/).filter(Boolean);
+        if (words[0] === q) return 1;
+        if (words.includes(q)) return 2;
+        if (t.startsWith(q)) return 3;
+        return 4;
+      }
+
       input.addEventListener("input", async () => {
         await ensureIndex();
         const q = input.value.trim().toLowerCase();
         if (!q) { results.style.display = "none"; return; }
         const matches = articles.filter(a => a.title.toLowerCase().includes(q));
-        // Sort: starts-with first, then alphabetical
+        // Sort by rank tier, then alphabetical within tier
         matches.sort((a, b) => {
-          const aStarts = a.title.toLowerCase().startsWith(q) ? 0 : 1;
-          const bStarts = b.title.toLowerCase().startsWith(q) ? 0 : 1;
-          return aStarts - bStarts || a.title.localeCompare(b.title);
+          const ra = titleRank(a.title, q);
+          const rb = titleRank(b.title, q);
+          return ra - rb || a.title.localeCompare(b.title);
         });
         show(matches);
       });

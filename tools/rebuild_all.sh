@@ -147,6 +147,11 @@ if [ -z "$NO_DEPLOY" ]; then
   #   aws s3 sync data/derived/images/ s3://britannica11.org/data/images/ --size-only
   #   aws s3 sync data/derived/scans/ s3://britannica11.org/data/scans/ --size-only
 
+  echo "  Uploading derived JSON (printed pages, scan map)..."
+  aws s3 cp data/derived/printed_pages.json s3://britannica11.org/data/printed_pages.json
+  aws s3 cp data/derived/printed_pages_leaf.json s3://britannica11.org/data/printed_pages_leaf.json
+  aws s3 cp data/derived/scan_map.json s3://britannica11.org/data/scan_map.json
+
   echo "  Uploading viewer..."
   aws s3 cp tools/viewer/viewer.html s3://britannica11.org/viewer.html
   aws s3 cp tools/viewer/index.html s3://britannica11.org/index.html

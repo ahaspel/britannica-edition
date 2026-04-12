@@ -9,7 +9,11 @@ from britannica.db.session import SessionLocal
 
 
 _IMAGE_PATTERN = re.compile(
-    r"\[\[(?:File|Image):([^\]]+)\]\]",
+    # Standard [[File:name|opts]] form
+    r"\[\[(?:File|Image):([^\]]+)\]\]"
+    # OR {{raw image|filename}} — alternate EB1911 image syntax; the
+    # filename is captured bare (no caption/options).
+    r"|\{\{\s*raw\s+image\s*\|([^{}|]+)\s*\}\}",
     re.IGNORECASE,
 )
 
@@ -111,7 +115,9 @@ def extract_images_for_volume(volume: int) -> int:
             matches = list(_IMAGE_PATTERN.finditer(raw))
 
             for i, match in enumerate(matches):
-                parsed = _parse_image_ref(match.group(1))
+                # Group 1 = [[File:…]] content; group 2 = {{raw image|…}} filename
+                ref = match.group(1) if match.group(1) is not None else match.group(2)
+                parsed = _parse_image_ref(ref)
 
                 existing = (
                     session.query(ArticleImage)
