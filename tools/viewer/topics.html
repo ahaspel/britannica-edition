@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Encyclop&aelig;dia Britannica, 11th Edition &mdash; Topic Index</title>
+  <style>
+    :root {
+      --bg: #f5f1eb;
+      --panel: #fdfcf9;
+      --text: #2c2416;
+      --muted: #6b5e4f;
+      --border: #d4cab8;
+      --link: #7b3f00;
+      --resolved-bg: #f0e8d8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card { background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px; }
+    h1 { margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; }
+    .nav-link { color: var(--link); text-decoration: none; font-size: 0.95rem; }
+    .nav-link:hover { text-decoration: underline; }
+    .source-note { color: var(--muted); font-size: 0.9rem; margin: 8px 0 18px; }
+    .controls { margin-bottom: 14px; }
+    .controls button { background: transparent; border: 1px solid var(--border);
+      color: var(--text); padding: 5px 12px; cursor: pointer; font-family: inherit;
+      font-size: 0.9rem; border-radius: 2px; }
+    .controls button:hover { background: var(--resolved-bg); }
+    details.category { border: 1px solid var(--border); margin-bottom: 8px;
+      background: var(--panel); border-radius: 2px; }
+    details.category > summary {
+      cursor: pointer; padding: 10px 16px; font-size: 1.1rem;
+      font-weight: bold; user-select: none; outline: none;
+    }
+    details.category > summary:hover { background: var(--resolved-bg); }
+    details.category[open] > summary { border-bottom: 1px solid var(--border); }
+    .cat-meta { color: var(--muted); font-size: 0.85rem; font-weight: normal;
+      margin-left: 8px; }
+    .empty-cat { color: var(--muted); font-style: italic; padding: 12px 16px; }
+    .subsection { padding: 10px 18px 16px; }
+    .subsection h3 { margin: 12px 0 6px; font-size: 1rem;
+      font-variant: small-caps; letter-spacing: 0.04em; color: var(--muted); }
+    .article-list { display: flex; flex-wrap: wrap; gap: 4px 14px;
+      list-style: none; padding: 0; margin: 0; }
+    .article-list li { line-height: 1.5; }
+    .article-list a { color: var(--link); text-decoration: none; }
+    .article-list a:hover { text-decoration: underline; }
+    .article-list .unresolved { color: var(--muted); cursor: default; }
+    .article-list .emphasized a { font-weight: bold; }
+    .footer { color: var(--muted); font-size: 0.85rem; margin-top: 20px;
+      text-align: center; }
+  </style>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <a class="nav-link" href="index.html">&larr; Home</a>
+    <h1>Topic Index</h1>
+    <div class="source-note">
+      Categories from the original 1911 edition's "Classified Table of Contents" (vol.&nbsp;29).
+      Categories without entries below are awaiting transcription on Wikisource.
+    </div>
+    <div class="controls">
+      <button id="expandAll">Expand all</button>
+      <button id="collapseAll">Collapse all</button>
+    </div>
+    <div id="categories"></div>
+  </div>
+  <div class="footer" id="footer"></div>
+</div>
+
+<script>
+  const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+  const TOC_URL = IS_LOCAL ? "/data/derived/classified_toc.json" : "/data/classified_toc.json";
+
+  function escapeHtml(s) {
+    return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  function articleUrl(filename) {
+    return `viewer.html?article=${encodeURIComponent(filename)}`;
+  }
+
+  function renderArticle(art) {
+    const display = escapeHtml(art.display || art.target);
+    const cls = art.emphasized ? ' class="emphasized"' : '';
+    if (art.filename) {
+      return `<li${cls}><a href="${articleUrl(art.filename)}">${display}</a></li>`;
+    }
+    return `<li${cls}><span class="unresolved" title="not yet linked: ${escapeHtml(art.target)}">${display}</span></li>`;
+  }
+
+  function renderSubsection(sub) {
+    const arts = sub.articles.map(renderArticle).join("");
+    const head = sub.name ? `<h3>${escapeHtml(sub.name)}</h3>` : "";
+    return `<div class="subsection">${head}<ul class="article-list">${arts}</ul></div>`;
+  }
+
+  function renderCategory(cat) {
+    const totalArts = cat.subsections.reduce((n, s) => n + s.articles.length, 0);
+    const resolvedArts = cat.subsections.reduce(
+      (n, s) => n + s.articles.filter(a => a.filename).length, 0
+    );
+    const meta = totalArts > 0
+      ? `<span class="cat-meta">${resolvedArts}/${totalArts} articles</span>`
+      : `<span class="cat-meta">(awaiting transcription)</span>`;
+    const body = totalArts > 0
+      ? cat.subsections.map(renderSubsection).join("")
+      : `<div class="empty-cat">No article entries yet — Wikisource transcription pending.</div>`;
+    return `<details class="category">
+      <summary>${escapeHtml(cat.name)} ${meta}</summary>
+      ${body}
+    </details>`;
+  }
+
+  async function load() {
+    try {
+      const resp = await fetch(TOC_URL);
+      const data = await resp.json();
+      const html = data.categories.map(renderCategory).join("");
+      document.getElementById("categories").innerHTML = html;
+      const totalCats = data.categories.length;
+      const transcribed = data.categories.filter(c =>
+        c.subsections.some(s => s.articles.length > 0)).length;
+      const allResolved = data.categories.reduce(
+        (n, c) => n + c.subsections.reduce(
+          (m, s) => m + s.articles.filter(a => a.filename).length, 0), 0
+      );
+      const allArticles = data.categories.reduce(
+        (n, c) => n + c.subsections.reduce(
+          (m, s) => m + s.articles.length, 0), 0
+      );
+      document.getElementById("footer").textContent =
+        `${totalCats} categories \u00b7 ${transcribed} transcribed \u00b7 ${allResolved}/${allArticles} article links resolved`;
+    } catch (e) {
+      document.getElementById("categories").innerHTML =
+        `<div class="empty-cat">Could not load classified TOC: ${escapeHtml(e.message)}</div>`;
+    }
+  }
+
+  document.getElementById("expandAll").addEventListener("click", () => {
+    document.querySelectorAll("details.category").forEach(d => d.open = true);
+  });
+  document.getElementById("collapseAll").addEventListener("click", () => {
+    document.querySelectorAll("details.category").forEach(d => d.open = false);
+  });
+
+  load();
+</script>
+</body>
+</html>

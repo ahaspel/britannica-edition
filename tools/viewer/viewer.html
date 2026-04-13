@@ -746,6 +746,41 @@
     let linkedTargets = new Set();
     let sectionCounter = 0;
     let collectedSections = [];
+    // Track section keys emitted via top-level heading rules (SEC
+    // marker, «SC»I.—Foo«/SC» major-section pattern). Used to
+    // suppress duplicate top-level emissions for the same name.
+    let emittedSectionKeys = new Set();
+    // Tracks only the MOST RECENT top-level section key so a shoulder
+    // heading sitting in that section's margin (e.g. ALGAE's
+    // «SH»Polymorphism.«/SH» inside the Polymorphism section) can be
+    // suppressed — it's a margin pointer to the containing section,
+    // not a real subsection. Unrelated SHs (e.g. "Fuji." inside
+    // JAPAN's "Geography" section) have different keys and stay.
+    let currentSectionKey = "";
+
+    // Normalize a section name for dup-detection: lowercase,
+    // alphanumerics only (so "Poly-morphism." matches "Polymorphism").
+    function sectionKey(name) {
+      return name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "");
+    }
+
+    // Pretty-print a raw SEC name for display. Inserts a space at
+    // lowercase→uppercase transitions so source artifacts like
+    // "BrewingTrade" render as "Brewing Trade". Leaves names without
+    // case transitions (Cyanophyceae, CLEMENT VII) untouched.
+    function displaySectionName(name) {
+      return name.replace(/([a-z])([A-Z])/g, "$1 $2");
+    }
+
+    // Strip line-wrap hyphens inside a shoulder-heading label:
+    // "Poly-morphism." → "Polymorphism.". Only removes hyphens sitting
+    // between two lowercase letters — a heuristic tuned for the
+    // single-word or short-phrase shoulder headings EB1911 uses. Real
+    // compound words ("self-help") would be incorrectly collapsed, but
+    // those don't appear as shoulder-heading labels in the corpus.
+    function dehyphenateShoulder(text) {
+      return text.replace(/([a-z])-([a-z])/g, "$1$2");
+    }
 
     function formatFootnoteText(text) {
       // Input may already be HTML-escaped (from formatCell or renderParagraph),
@@ -805,11 +840,15 @@
       // the section is visible AND targetable by xrefs.
       const secMatch = p.match(/^\u00abSEC:([^\u00ab]+)\u00ab\/SEC\u00bb$/);
       if (secMatch) {
-        const name = secMatch[1].trim();
+        const rawName = secMatch[1].trim();
+        const name = displaySectionName(rawName);
         const slug = sectionSlug(name);
         const id = `section-${slug}`;
         sectionCounter++;
         collectedSections.push({ id, title: name, level: 1 });
+        const key = sectionKey(name);
+        emittedSectionKeys.add(key);
+        currentSectionKey = key;
         return `<h3 class="section-heading" id="${id}" data-slug="${slug}">${escapeHtml(name)}</h3>`;
       }
       const imgMatch = p.match(/^\{\{IMG:([^|}]+)(?:\|([^}]*))?\}\}$/);
@@ -830,15 +869,22 @@
         const rawText = (prefix + scSectionMatch[2]).trim();
         const text = rawText.replace(/\u00abFN:.*?\u00ab\/FN\u00bb/gs, "").trim();
         const isExcluded = /^(?:(?:References|Authorities|Bibliography|See also)\b|Fig\.)/i.test(text);
-        if (!isExcluded) {
+        // Skip if a SEC marker already emitted a heading for the same
+        // section name (stripped of leading Roman numeral prefix).
+        const nameOnly = scSectionMatch[2].replace(/\u00abFN:.*?\u00ab\/FN\u00bb/gs, "").trim();
+        const nameKey = sectionKey(nameOnly);
+        const isDup = emittedSectionKeys.has(nameKey);
+        if (!isExcluded && !isDup) {
           sectionCounter++;
           const sectionId = `section-${sectionCounter}`;
           const slug = text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
           collectedSections.push({ id: sectionId, title: text, level: 1 });
+          emittedSectionKeys.add(nameKey);
+          currentSectionKey = nameKey;
           const headingHtml = renderParagraph(rawText);
           return `<h3 class="section-heading" id="${sectionId}" data-slug="${slug}">${headingHtml}</h3>`;
         }
-        // Excluded (Fig., Bibliography, etc.) — fall through to normal paragraph rendering
+        // Excluded (Fig., Bibliography, etc.) or duplicate — fall through.
       }
       // Render preformatted blocks (structural chemical formulas)
       const preMatch = p.match(/^\u00abPRE:([\s\S]*)\u00ab\/PRE\u00bb$/);
@@ -916,13 +962,21 @@
       const sectionMatch = p.match(/^(?:([IVXLCA-Z]+\.)\s*)?\u00abSC\u00bb(([IVXLCA-Z]+[.—]\s*)?.*?)\u00ab\/SC\u00bb[.:]?\u2014?(.*)$/s);
       const hasNumeral = sectionMatch && (sectionMatch[1] || (sectionMatch[3] && sectionMatch[3].length > 0));
       if (sectionMatch && hasNumeral && sectionMatch[2].length < 60 && !p.includes("{{IMG:") && !p.includes("{{TABLE:")) {
-        const prefix = sectionMatch[1] ? sectionMatch[1] + " " : "";
-        const sectionTitle = (prefix + sectionMatch[2]).trim();
+        // Drop leading numeral prefix ("III.") for TOC consistency —
+        // sibling sections emitted via SEC markers don't carry one.
+        const sectionTitle = sectionMatch[2].trim();
         const isExcluded2 = /^(?:(?:References|Authorities|Bibliography|See also)\b|Fig\.)/i.test(sectionTitle);
-        if (!isExcluded2) {
+        // Dup against an earlier SEC marker on the same section name
+        // (ALGAE "I. «SC»Cyanophyceae«/SC».—…" after SEC:Cyanophyceae).
+        const nameOnly2 = sectionMatch[2].trim();
+        const isDup2 = emittedSectionKeys.has(sectionKey(nameOnly2));
+        if (!isExcluded2 && !isDup2) {
           sectionCounter++;
           const sectionId = `section-${sectionCounter}`;
           collectedSections.push({ id: sectionId, title: sectionTitle, level: 1 });
+          const k = sectionKey(sectionTitle);
+          emittedSectionKeys.add(k);
+          currentSectionKey = k;
 
           const emDashIdx = p.indexOf("\u2014");
           const sectionBody = emDashIdx >= 0 ? p.substring(emDashIdx + 1).trim() : "";
@@ -990,8 +1044,19 @@
       html = html.replace(/\u00abSH\u00bb(.*?)\u00ab\/SH\u00bb/gs, (match, text) => {
         sectionCounter++;
         const sectionId = `section-${sectionCounter}`;
-        collectedSections.push({ id: sectionId, title: text.trim(), level: 2 });
-        return `<span class="shoulder-heading" id="${sectionId}">${escapeHtml(text)}</span>`;
+        // De-hyphenate source line-wrap artifacts: "Poly-morphism." →
+        // "Polymorphism." Displayed in margin AND used for comparison.
+        const display = dehyphenateShoulder(text.trim());
+        // Suppress only when this SH is the margin pointer for its
+        // CONTAINING section (same name as the most recent top-level
+        // heading, e.g. «SH»Polymorphism.«/SH» inside the Polymorphism
+        // SEC section). SHs with different names are real subsections
+        // and stay — e.g. "Fuji." inside JAPAN's "Geography" section.
+        const isMarginPointer = currentSectionKey && sectionKey(display) === currentSectionKey;
+        if (!isMarginPointer) {
+          collectedSections.push({ id: sectionId, title: display, level: 2 });
+        }
+        return `<span class="shoulder-heading" id="${sectionId}">${escapeHtml(display)}</span>`;
       });
       // Detect if this paragraph is a single standalone equation (one math block, no other text)
       const mathCount = (html.match(/\u00abMATH:/g) || []).length;
@@ -1071,7 +1136,9 @@
       // append the anchor. The viewer emits <h3 id="section-<slug>">
       // for absorbed subsections; match that slug here.
       if (xref?.target_section) {
-        const slug = xref.target_section
+        // Apply the same display normalization as the renderer so
+        // "BrewingTrade" → "brewing-trade" on both sides.
+        const slug = displaySectionName(xref.target_section)
           .toLowerCase()
           .replace(/[^a-z0-9]+/g, "-")
           .replace(/^-|-$/g, "");
@@ -1134,6 +1201,17 @@
           ${article.parent_article ? `<div style="margin-bottom: 8px; font-size: 0.95rem;">Plate for <a href="${articleUrl(article.parent_article.filename)}">${escapeHtml(article.parent_article.title)}</a></div>` : ""}
           ${contributors.length ? `<div class="contributors">By ${contributors.map(c => `<a href="/contributors.html?q=${encodeURIComponent(c.full_name)}" style="color: var(--muted);">${escapeHtml(c.full_name)}</a> <span style="color: var(--muted); font-size: 0.85em;">(${escapeHtml(c.initials)})</span>`).join(", ")}</div>` : ""}
           ${(() => {
+            const topics = topicMap && article.filename
+              ? (topicMap[article.filename] || []) : [];
+            if (!topics.length) return "";
+            const list = topics.map(t => {
+              const cat = escapeHtml(t.category);
+              const sub = t.subsection ? ` <span style="color:var(--muted);">›</span> ${escapeHtml(t.subsection)}` : "";
+              return `<a href="/topics.html#${encodeURIComponent(t.category)}" style="color:var(--link);">${cat}</a>${sub}`;
+            }).join("; ");
+            return `<div class="contributors">In: ${list}</div>`;
+          })()}
+          ${(() => {
             const roman = ["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV"];
             return (plates.length && article.article_type !== "plate") ? `<div class="contributors">Plates: ${plates.map((p, i) => `<a href="${articleUrl(p.filename)}">Plate ${roman[i] || i+1}</a>`).join(", ")}</div>` : "";
           })()}
@@ -1145,7 +1223,7 @@
                </div>`
             : ""}
           ${(() => {
-            footnoteCounter = 0; collectedFootnotes = []; linkedTargets = new Set(); sectionCounter = 0; collectedSections = [];
+            footnoteCounter = 0; collectedFootnotes = []; linkedTargets = new Set(); sectionCounter = 0; collectedSections = []; emittedSectionKeys = new Set(); currentSectionKey = "";
 
             // Page markers (\x01PAGE:N\x01) are embedded directly in the
             // body text by the transform stage.  If none are present
@@ -1186,20 +1264,29 @@
             const level2 = collectedSections.filter(s => s.level === 2);
             let tocHtml = "";
             if (level1.length >= 2 && level2.length >= 1) {
-              // Interleaved: major sections with shoulder headings nested below
+              // Interleaved: major sections with shoulder headings
+              // nested below. Level-2 items appearing before any
+              // level-1 (orphans) render as standalone top-level items
+              // so the HTML structure stays valid.
               let tocInner = "";
               let inSub = false;
+              let seenLevel1 = false;
               for (const s of collectedSections) {
                 if (s.level === 1) {
                   if (inSub) { tocInner += "</ul></li>"; inSub = false; }
+                  else if (seenLevel1) { tocInner += "</li>"; }
                   tocInner += `<li><a href="#${s.id}">${escapeHtml(s.title)}</a>`;
+                  seenLevel1 = true;
+                } else if (!seenLevel1) {
+                  // Orphan level-2: render as standalone top-level item
+                  tocInner += `<li><a href="#${s.id}">${escapeHtml(s.title)}</a></li>`;
                 } else {
                   if (!inSub) { tocInner += "<ul>"; inSub = true; }
                   tocInner += `<li><a href="#${s.id}">${escapeHtml(s.title)}</a></li>`;
                 }
               }
               if (inSub) tocInner += "</ul></li>";
-              else if (tocInner) tocInner += "</li>";
+              else if (seenLevel1) tocInner += "</li>";
               tocHtml = `<div class="toc"><h3>Contents</h3><ul class="toc-contents">${tocInner}</ul></div>`;
             } else if (level1.length >= 2) {
               // Major sections only — unnumbered
@@ -1228,12 +1315,15 @@
       }
 
       try {
-        const response = await fetch(path);
+        const [response] = await Promise.all([fetch(path), loadTopicMap()]);
         if (!response.ok) {
           throw new Error(`HTTP ${response.status} loading ${path}`);
         }
 
         const article = await response.json();
+        // Derive filename from path so topicMap lookup works
+        const fnMatch = path.match(/([^/]+\.json)$/);
+        if (fnMatch) article.filename = fnMatch[1];
         renderArticle(article);
 
         // Update URL: production uses clean /article/{id}/{slug}, local uses ?article=
@@ -1256,6 +1346,32 @@
     // Determine article path: local uses ?article= param, production uses /article/{id}/{slug}
     const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
     const DATA_BASE = IS_LOCAL ? "/data/derived/articles" : "/data/articles";
+    const TOC_URL = IS_LOCAL ? "/data/derived/classified_toc.json" : "/data/classified_toc.json";
+
+    // Reverse-index of classified_toc.json: filename → [{category, subsection}].
+    // Loaded once at viewer init; used to display "Topic: …" on each article.
+    let topicMap = null;
+    async function loadTopicMap() {
+      if (topicMap !== null) return topicMap;
+      try {
+        const resp = await fetch(TOC_URL);
+        if (!resp.ok) { topicMap = {}; return topicMap; }
+        const data = await resp.json();
+        topicMap = {};
+        for (const cat of data.categories || []) {
+          for (const sub of cat.subsections || []) {
+            for (const art of sub.articles || []) {
+              if (!art.filename) continue;
+              (topicMap[art.filename] = topicMap[art.filename] || [])
+                .push({ category: cat.name, subsection: sub.name });
+            }
+          }
+        }
+      } catch (e) {
+        topicMap = {};
+      }
+      return topicMap;
+    }
     let initialPath = new URLSearchParams(window.location.search).get("article");
     if (!initialPath && !IS_LOCAL) {
       // Production: /article/367/pharaoh -> 0367-PHARAOH.json
@@ -1473,15 +1589,25 @@
         const data = await resp.json();
         articles = data
           .filter(a => a.article_type === "article")
-          .map(a => ({ title: a.title, filename: a.filename }));
+          .map(a => ({
+            title: a.title,
+            filename: a.filename,
+            body_start: a.body_start || "",
+          }));
       }
 
       function show(items) {
         selected = -1;
         if (!items.length) { results.style.display = "none"; return; }
-        results.innerHTML = items.slice(0, 12).map((a, i) =>
-          `<li data-idx="${i}" style="padding:6px 10px;cursor:pointer;border-bottom:1px solid var(--border);">${a.title}</li>`
-        ).join("");
+        results.innerHTML = items.slice(0, 12).map((a, i) => {
+          const sub = a.body_start
+            ? `<div style="font-size:0.78rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(a.body_start)}</div>`
+            : "";
+          return `<li data-idx="${i}" style="padding:6px 10px;cursor:pointer;border-bottom:1px solid var(--border);">
+            <div>${escapeHtml(a.title)}</div>
+            ${sub}
+          </li>`;
+        }).join("");
         results.style.display = "block";
         results.querySelectorAll("li").forEach(li => {
           li.addEventListener("mousedown", e => {

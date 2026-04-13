@@ -19,6 +19,10 @@
   .nav button:hover { background: rgba(0,0,0,0.05); }
   .nav button:disabled { opacity: 0.3; cursor: default; }
   .nav .page-info { display: inline-block; min-width: 120px; text-align: center; }
+  .nav .jump { display: inline-flex; align-items: center; gap: 6px; margin-left: 16px; font-size: 0.95rem; color: var(--muted); }
+  .nav .jump input { font-family: Georgia, serif; font-size: 1rem; width: 70px; padding: 4px 6px;
+    border: 1px solid #ccc; border-radius: 4px; text-align: center; }
+  .nav .jump button { font-size: 0.95rem; padding: 4px 10px; }
   .scan-container { text-align: center; }
   .scan-container img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
   .scan-container .error { color: var(--muted); font-style: italic; padding: 40px; }
@@ -39,6 +43,11 @@
   <span class="page-info" id="pageInfo"></span>
   <button id="nextBtn" onclick="go(1)">&rsaquo;</button>
   <button id="lastBtn" onclick="goTo(endPage)">&raquo;</button>
+  <span class="jump">
+    <label for="jumpInput">Go to p.</label>
+    <input id="jumpInput" type="text" inputmode="numeric" autocomplete="off" />
+    <button id="jumpBtn" onclick="jumpToPrinted()">Go</button>
+  </span>
 </div>
 <div class="scan-container" id="scanContainer"></div>
 <script>
@@ -53,6 +62,10 @@
   const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
 
   let currentPage = startPage;
+  // Optional: jump to a printed page on initial load. Set by the
+  // volume-scans link so vol 3 opens on printed p.1 rather than the
+  // first article's start page.
+  const initPrinted = parseInt(params.get("pinit")) || 0;
 
   document.getElementById("title").textContent = `Volume ${vol}: ${label}`;
   document.getElementById("subtitle").textContent = `pp. ${printedStart}\u2013${printedEnd}`;
@@ -118,8 +131,9 @@
       const name = `vol${padVol}_fm${padNum}.jpg`;
       return IS_LOCAL ? `/data/derived/scans/${name}` : `/data/scans/${name}`;
     }
-    // Article pages: use leaf number
-    const leaf = leafForPage(vol, num);
+    // prefix === "leaf": currentPage IS the physical leaf number.
+    // prefix === "page": currentPage is a Wikisource page; translate.
+    const leaf = prefix === "leaf" ? num : leafForPage(vol, num);
     const padLeaf = String(leaf).padStart(4, "0");
     const name = `vol${padVol}_leaf${padLeaf}.jpg`;
     return IS_LOCAL ? `/data/derived/scans/${name}` : `/data/scans/${name}`;
@@ -144,12 +158,12 @@
     if (prefix === "fm") {
       pageInfoText = `fm ${currentPage}`;
     } else {
-      const leaf = leafForPage(vol, currentPage);
+      const leaf = prefix === "leaf" ? currentPage : leafForPage(vol, currentPage);
       const printed = printedForLeaf(vol, leaf);
       if (printed !== null) {
         pageInfoText = `p. ${printed}`;
       } else {
-        pageInfoText = `(unnumbered leaf ${leaf})`;
+        pageInfoText = `(unnumbered)`;
       }
     }
     document.getElementById("pageInfo").textContent = pageInfoText;
@@ -169,6 +183,75 @@
     render();
   }
 
+  // Resolve a user-entered number to a ws page within this viewer's
+  // range. Tries printed-page match first (reader-friendly), then leaf
+  // (useful for debugging), then treats the entry as a ws page directly.
+  function jumpToPrinted() {
+    const input = document.getElementById("jumpInput");
+    const raw = input.value.trim();
+    if (!raw) return;
+    const n = parseInt(raw, 10);
+    if (Number.isNaN(n)) return;
+
+    if (prefix === "fm") {
+      // Front-matter mode uses leaves directly (no printed-page mapping).
+      goTo(n);
+      return;
+    }
+
+    if (prefix === "leaf") {
+      // Leaf mode: try printed-page match first, else go to leaf n.
+      if (printedPages && printedPages[String(vol)]) {
+        const volMap = printedPages[String(vol)];
+        for (let leaf = startPage; leaf <= endPage; leaf++) {
+          if (volMap[String(leaf)] === n) {
+            goTo(leaf);
+            return;
+          }
+        }
+      }
+      goTo(n);
+      return;
+    }
+
+    // prefix === "page": currentPage is a ws page.
+    // 1. Printed page: scan this volume's leaves for printed == n.
+    if (printedPages && printedPages[String(vol)]) {
+      const volMap = printedPages[String(vol)];
+      for (let p = startPage; p <= endPage; p++) {
+        const leaf = leafForPage(vol, p);
+        if (volMap[String(leaf)] === n) {
+          goTo(p);
+          return;
+        }
+      }
+    }
+
+    // 2. Leaf: find the ws page that maps to leaf == n.
+    if (scanMap && scanMap[String(vol)]) {
+      const volScan = scanMap[String(vol)];
+      for (const [wsStr, leafVal] of Object.entries(volScan)) {
+        if (leafVal === n) {
+          const ws = parseInt(wsStr, 10);
+          if (ws >= startPage && ws <= endPage) {
+            goTo(ws);
+            return;
+          }
+        }
+      }
+    }
+    // Offset-based fallback: ws + offset == leaf  =>  ws = n - offset
+    const off = LEAF_OFFSET[vol] || 0;
+    const wsFromLeaf = n - off;
+    if (wsFromLeaf >= startPage && wsFromLeaf <= endPage) {
+      goTo(wsFromLeaf);
+      return;
+    }
+
+    // 3. Treat as ws page directly.
+    goTo(n);
+  }
+
   document.addEventListener("keydown", (e) => {
     if (e.key === "ArrowLeft") go(-1);
     if (e.key === "ArrowRight") go(1);
@@ -176,8 +259,16 @@
     if (e.key === "End") goTo(endPage);
   });
 
-  if (prefix === "page") {
-    Promise.all([loadScanMap(), loadPrintedPages()]).then(() => render());
+  if (prefix === "page" || prefix === "leaf") {
+    Promise.all([loadScanMap(), loadPrintedPages()]).then(() => {
+      if (initPrinted > 0) {
+        document.getElementById("jumpInput").value = String(initPrinted);
+        jumpToPrinted();
+        document.getElementById("jumpInput").value = "";
+      } else {
+        render();
+      }
+    });
   } else {
     render();
   }

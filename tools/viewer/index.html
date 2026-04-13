@@ -258,7 +258,7 @@
           &nbsp;&middot;&nbsp;
           <a href="/contributors.html" style="color: var(--link); text-decoration: none;">Contributors</a>
           &nbsp;&middot;&nbsp;
-          <a href="/scans.html?vol=29&start=5&end=1000&pstart=0&pend=0&prefix=page&label=Index+Volume" style="color: var(--link); text-decoration: none;">Index (vol. 29)</a>
+          <a href="/topics.html" style="color: var(--link); text-decoration: none;">Topics</a>
         </div>
       </div>
       <div id="stats" class="stats">Loading...</div>
@@ -430,9 +430,18 @@
     }
 
     function rankTitle(a, q) {
-      if (a.title.toLowerCase() === q) return 0;
-      if (a.title.toLowerCase().includes(q)) return 1;
-      return 2;
+      const t = a.title.toLowerCase();
+      if (t === q) return 0;
+      // First-word exact match, whitespace-separated (non-bio form):
+      // "ALEXANDER I", "ALEXANDER SEVERUS" for query "ALEXANDER".
+      const wsFirst = t.split(/\s/)[0];
+      if (wsFirst === q) return 1;
+      // First-word exact match, comma-separated (bio-form "LAST, FIRST"):
+      // "ALEXANDER, JOHN" ranks after the whitespace form.
+      const commaFirst = t.split(/,/)[0].trim();
+      if (commaFirst === q) return 2;
+      if (t.includes(q)) return 3;
+      return 4;
     }
 
     function updatePagination(prefix, totalPages) {
@@ -673,6 +682,9 @@
         <div style="margin-top: 8px; font-size: 0.9rem;">
           ${fmLeafCount(vol) > 0
             ? `<a href="scans.html?vol=${vol}&start=1&end=${fmLeafCount(vol)}&prefix=fm&label=Front+Matter" style="color: var(--link);">View front matter \u2192</a>`
+            : ""}
+          ${volArts.length > 0
+            ? ` &nbsp;\u00b7&nbsp; <a href="scans.html?vol=${vol}&start=${volArts[0].ws_page_start}&end=${volArts[volArts.length - 1].ws_page_end}&prefix=page&label=Volume+Scans&pinit=1" style="color: var(--link);">View volume scans \u2192</a>`
             : ""}
         </div>
         <div style="color: var(--muted); font-size: 0.85rem; margin-top: 4px;">

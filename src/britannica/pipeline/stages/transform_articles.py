@@ -76,10 +76,10 @@ def _convert_links(text: str) -> str:
         _eb1911_link, text, flags=re.IGNORECASE,
     )
 
-    # {{1911link|Target}}, {{11link|Target}}
+    # {{1911link|Target}} or {{1911link|Target|Display}} (and 11link)
     text = re.sub(
-        r"\{\{(?:1911link|11link)\|([^{}|]*)\}\}",
-        lambda m: f"{_LNK}{m.group(1)}|{m.group(1)}{_LNK}",
+        r"\{\{(?:1911link|11link)\|([^{}|]+)(?:\|([^{}]*))?\}\}",
+        lambda m: f"{_LNK}{m.group(1)}|{m.group(2) or m.group(1)}{_LNK}",
         text, flags=re.IGNORECASE,
     )
 
@@ -550,6 +550,163 @@ def _transform_plate(raw_wikitext: str) -> str:
     return "\n\n".join(result_parts)
 
 
+def _clean_loose_caption(text: str) -> str:
+    """Strip wiki/HTML markup from a loose caption block extracted
+    from `{{c|…}}` or a wikitable row."""
+    # Unwrap pipe-separated templates iteratively (innermost first).
+    for _ in range(5):
+        new = re.sub(
+            r"\{\{\s*(?:sc|smaller|small|c|center|big|bold|italic|nowrap|fs)"
+            r"\s*\|(?:[^{}|]*\|)?([^{}]*)\}\}",
+            r"\1", text, flags=re.IGNORECASE,
+        )
+        if new == text:
+            break
+        text = new
+    # Strip <br/>
+    text = re.sub(r"<br\s*/?>", " ", text, flags=re.IGNORECASE)
+    # Strip stray HTML tags
+    text = re.sub(r"<[^>]+>", "", text)
+    # Collapse whitespace and trim trailing punctuation
+    text = re.sub(r"\s+", " ", text).strip()
+    # Drop attribution-prefixed captions: when the text before "Fig. N."
+    # ends in a sentence-ending punctuation, treat that as a separate
+    # source-attribution line and trim it. Catches "From the Notice
+    # issued by the Board. Fig. 13.—..." → "Fig. 13.—...".
+    m = re.search(r"((?:Fig|Plate)\.?\s*\d+)", text, re.IGNORECASE)
+    if m and m.start() > 0:
+        prefix = text[:m.start()].rstrip()
+        if prefix.endswith((".", ":")):
+            text = text[m.start():]
+    return text.strip(" .|")
+
+
+def _bundle_raw_image_with_caption(text: str) -> str:
+    """Bundle a bare image reference and its following caption block
+    into a single `[[File:X|caption]]` so the caption renders inside
+    the figure rather than as a separate paragraph beneath it.
+
+    Handles three image source forms:
+      • `{{raw image|X}}` — EB1911 alternate syntax
+      • `[[File:X|size|align]]` — caption-less wikilink with only
+        size/position params
+      • `[[Image:X|size|align]]` — same, alternate prefix
+
+    Followed by a caption block in either form:
+      • `{{c|…}}` (potentially nested) — single-line caption
+      • `{| … |}` wikitable — multi-row attribution + caption
+    """
+    out: list[str] = []
+    pos = 0
+    img_pat = re.compile(
+        # raw image: {{raw image|filename}}
+        r"\{\{\s*raw\s+image\s*\|([^{}|]+)\}\}"
+        # OR caption-less wikilink: [[File:filename|size|align]]
+        r"|\[\[(?:File|Image):([^\]|]+)((?:\|[^\]|]+)*)\]\]",
+        re.IGNORECASE,
+    )
+
+    _IMG_KEYWORDS = {"center", "left", "right", "thumb", "thumbnail",
+                     "frameless", "frame", "border", "upright", "none"}
+
+    def _has_caption(params: str) -> bool:
+        """Return True if any | param is a real caption (not size/align)."""
+        for p in params.split("|"):
+            p = p.strip()
+            if not p:
+                continue
+            lp = p.lower()
+            if lp in _IMG_KEYWORDS:
+                continue
+            if re.match(r"^\d+px$|^x\d+px$|^\d+x\d+px$", lp):
+                continue
+            if "=" in p:
+                continue
+            return True
+        return False
+
+    for m in img_pat.finditer(text):
+        out.append(text[pos:m.start()])
+
+        if m.group(1) is not None:
+            # {{raw image|X}} form — never has inline caption
+            filename = m.group(1).strip()
+            already_captioned = False
+        else:
+            # [[File:X|...]] form — skip if it already has a real caption
+            filename = (m.group(2) or "").strip()
+            params = m.group(3) or ""
+            already_captioned = _has_caption(params)
+
+        if already_captioned:
+            # Don't touch — let normal extraction handle it
+            out.append(m.group(0))
+            pos = m.end()
+            continue
+
+        # Skip whitespace/newlines after the image
+        cur = m.end()
+        ws = re.match(r"\s*", text[cur:])
+        cur += ws.end() if ws else 0
+        caption = ""
+        consumed_to = m.end()
+
+        # Try {{c|…}} (or {{C|…}}) — count braces to find the close
+        if text[cur:cur + 4].lower().startswith("{{c|"):
+            end = _find_matching_double_braces(text, cur)
+            if end > 0:
+                inner = text[cur + 2:end - 2]
+                inner = inner.split("|", 1)[1] if "|" in inner else inner
+                caption = _clean_loose_caption(inner)
+                consumed_to = end
+        # Try wikitable {| … |}
+        elif text[cur:cur + 2] == "{|":
+            end = text.find("|}", cur)
+            if end > 0:
+                table = text[cur + 2:end]
+                rows = re.split(r"\n\s*\|-[^\n]*\n", table)
+                last_row = rows[-1].strip() if rows else ""
+                if last_row.startswith("|"):
+                    last_row = last_row[1:].strip()
+                last_row = re.sub(
+                    r'^(?:(?:align|style|width|valign|class|colspan|rowspan)'
+                    r'\s*=\s*"[^"]*"\s*)+\|\s*', "", last_row,
+                )
+                caption = _clean_loose_caption(last_row)
+                consumed_to = end + 2
+
+        if caption:
+            out.append(f"[[File:{filename}|{caption}]]")
+        else:
+            out.append(m.group(0))  # leave as-is
+        pos = consumed_to
+    out.append(text[pos:])
+    return "".join(out)
+
+
+def _find_matching_double_braces(text: str, start: int) -> int:
+    """Given text[start:start+2] == '{{', return index just past the
+    matching '}}'. Returns -1 if not balanced within 5000 chars."""
+    if text[start:start + 2] != "{{":
+        return -1
+    depth = 0
+    i = start
+    end_search = min(len(text), start + 5000)
+    while i < end_search - 1:
+        ch2 = text[i:i + 2]
+        if ch2 == "{{":
+            depth += 1
+            i += 2
+        elif ch2 == "}}":
+            depth -= 1
+            i += 2
+            if depth == 0:
+                return i
+        else:
+            i += 1
+    return -1
+
+
 def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
     """New architecture: extract-process-reassemble.
 
@@ -575,15 +732,13 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
     text = _replace_score_tags(text, volume, page_number)
 
     # {{raw image|filename}} is an alternate EB1911 image syntax used
-    # for figures without an inline caption (the caption sits on a
-    # following line as `{{c|{{sc|Fig. 10.}}}}`). Convert to the
-    # standard `[[File:...]]` form so the image gets extracted and
-    # caption-paired normally.
-    text = re.sub(
-        r"\{\{\s*raw\s+image\s*\|([^{}|]+)\}\}",
-        lambda m: f"[[File:{m.group(1).strip()}]]",
-        text, flags=re.IGNORECASE,
-    )
+    # for figures whose caption sits on a following line as
+    # `{{c|{{sc|Fig. 10.}}}}` or in a separate wikitable. Bundle the
+    # image and its caption block into one `[[File:filename|caption]]`
+    # so downstream extraction renders them as a single figure (avoids
+    # the figure showing both a figcaption and a duplicate caption
+    # paragraph below — see WEIGHING MACHINES / SEWING MACHINES).
+    text = _bundle_raw_image_with_caption(text)
 
     # Unwrap center `{{c|…}}` templates — they only control alignment.
     # Done before element extraction so an image caption like
@@ -718,6 +873,15 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
     # Strip leading comma/space left after title+descriptor stripping
     # (e.g. "'''BISMARCK,''' {{sc|Prince}}, duke..." → ", duke..." after transform)
     text = re.sub(r"^[\s,]+", "", text)
+
+    # Defensive cleanup for orphan punctuation left when a template
+    # gets stripped without its display text (e.g. a malformed
+    # `{{1911link|X|Y}}` previously dropped, leaving `…, , Y…`):
+    #   ", , , "  → ", "
+    #   ", ;"     → ";"
+    #   ", ."     → "."
+    text = re.sub(r",(\s*,)+", ",", text)
+    text = re.sub(r",\s*([;.])", r"\1", text)
 
     return text
 
