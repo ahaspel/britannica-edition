@@ -1,41 +1,50 @@
-# Rebuild verification checklist (run started 2026-04-13 09:49)
+# Pending fixes for next rebuild
 
-## Fixes new this rebuild
+## Source-code changes that need a pipeline rerun
 
-### Data corrections
-- [ ] **scan_map gap-fill** (`tools/fill_scan_map_gaps.py`): 7,489 ws→leaf entries filled by interpolating between consecutive same-offset anchors. Vol 24 had the worst symptoms (e.g. SEWING MACHINES "next" jumped to printed 739 SEWERAGE instead of 745). Vol 9 (497 gaps), vol 16 (506), vol 14 (447) had the biggest gap counts.
-- [ ] **vol 3 scan_map**: explicit entries added for ws 15-18 → leaves 21-24 (vol 3 front matter + body offset differs from LEAF_OFFSET=9). Eliminates the duplicate printed-2/3/4 sequence at leaves 25-27.
-- [ ] **printed_pages.json rebuilt** with corrected scan_map. Articles now have proper printed page ranges (e.g. WEIGHING MACHINES vol 28: 486-477 → 468-477).
+### `detect_boundaries.py` — `{{nop}}` prefix blocking bold-heading check
+- **Two-step fix** (the initial single-step version shipped in the 2026-04-15 rebuild but didn't work — the first-line pre-filter rejected `{{`-prefixed lines before the strip at `first_line_unwrapped` ever ran):
+  1. Peel leading `{{nop}}` / `{{clear}}` / `{{-}}` templates off `stripped` *before* the first-line pre-filter.
+  2. After peel, re-check the `{|` table-opener so `{{nop}}{|` doesn't bypass `_in_table` tracking (defensive — no such pattern found in corpus, but cheap to guard).
+- **Why contributor linking needs this too:** John Morley is a contributor in vol 29's front matter. Phase 3b links contributor names to articles — if the MORLEY [of Blackburn] article doesn't exist in the DB, his contributor record has no article to attach to. The fix has to ride a **full** rebuild so Phase 2 → 3b → export all see the correct article boundary.
+- **Example this fixes:** MORLEY [of Blackburn], JOHN MORLEY, Viscount (vol 18 p.840) — swallowed into MORLEY, HENRY. Source line:
+  `{{nop}}[[Author:John Morley|'''MORLEY''' [{{sc|of Blackburn}}], '''JOHN MORLEY,''' {{sc|Viscount}}]]`
+- **Corpus-wide scan:** 1 article matches the `{{nop}}[[Author|'''TITLE''']]` pattern (MORLEY). 18 other `{{nop}}`-prefixed lines are empty (`{{nop}}` alone) or decorative (`{{clear}}{{anchor|…}}`) — all continue to be skipped correctly by the post-peel filter.
 
-### Pipeline fixes
-- [ ] **`{{1911link|Target|Display}}` two-arg form** (`transform_articles.py`): regex extended from `[^{}|]*` to `[^{}|]+(?:\|([^{}]*))?`. Recovers ~2,031 instances across 897 pages that were silently dropped, leaving orphan commas (visible in AGRICULTURE's "See also" paragraph). Per article verify: `Horticulture, ,;` → `Horticulture, Fruit and Flower Farming, ...`.
-- [ ] **Image+caption bundling** (`_bundle_raw_image_with_caption`): `{{raw image|X}}` (34 instances, vols 20/24/25/26/28) AND `[[File/Image:X|size|align]]` (119 instances corpus-wide) followed by `{{c|…}}` or `{|…|}` get bundled into a single `[[File:X|caption]]`. Eliminates the duplicate-caption paragraph beneath figures (was visible in WEIGHING MACHINES Fig 13, SEWING MACHINES Fig 2, etc.).
-- [ ] **Defensive orphan-comma cleanup**: collapses `, , , ` → `, ` and `, ;` → `;` and `, .` → `.` at end of transform. Catches any future template-strip regressions.
-- [ ] **Segment-based image extraction** (`extract_images.py`): uses `ArticleSegment.segment_text` instead of full-page wikitext. Fixes images on shared pages (e.g. vol 28 p.495 split between WEIGHING MACHINES + WEIGHTS AND MEASURES — Automatic Coal/Luggage now correctly under WEIGHING MACHINES).
-- [ ] **Caption extraction from wrapper patterns** (`extract_images.py`): handles 4 wrapper forms — `<span>/<div>` with `<br>`, wikitable with caption row, loose `{{c|…}}` after image, separate wikitable with last-row caption. Fills `ArticleImage.caption` from previously-uncaptioned wrapper figures.
-- [ ] **Caption sanitizer** (`_clean_caption_markup`): strips templates including `{{Fs|…|…}}` and any unhandled bare `{{template}}`, multi-attribute wikitable cell prefixes (`align="..." width="..." |`), wikilinks, stray braces.
-- [ ] **Body-start title strip** (`article_json.py`): both article-file body AND index.json `body_start` strip the redundant bold article title from beginning. Fixes PIETAS / SEMMELWEISS preview text duplication.
-- [ ] **Body IMG caption patching** (`article_json.py`): if an IMG marker in body lacks a caption but the `ArticleImage` table has one, patch the marker. Sanitizes `|` and `}}` to prevent template syntax corruption.
+## Full-text search overhaul (deploy-only)
 
-### Viewer fixes already deployed (should remain working)
-- Title search 5-tier ranking (whitespace-first-word > comma-first-word).
-- Autocomplete dropdown shows body_start subtitle.
-- ALGAE / BREWING / CLEMENT (POPES) section TOC dedup + de-hyphenation; SEC/SH separation.
-- Volume browse: "View volume scans →" link with `pinit=1` (opens at printed p.1).
-- Scan viewer: leaf mode + page-jump input; printed page label only (leaf number removed).
+Substantial UX rework of `index.html` full-text search:
+- Per-article result card shows **every line containing the query** (paragraph-level snippets ±50 chars) with `<mark>`-highlighted matches. Mirrors viewer.html's in-article match list.
+- **Exact substring only** — Meili fuzzy/prefix matches filtered out client-side (fixes `adamas` → `ADAMS` contamination).
+- Title matching disabled in the UI — body text only.
+- Results deduped by (title, volume, page) to collapse duplicate index entries.
+- Sorted by **match count descending** (most-hit articles first); match count shown next to title.
+- Each occurrence snippet is a link → `viewer.html?article=…&q=<term>&match=<N>`.
 
-## Spot-check targets
+`viewer.html` consumes the new URL params: pre-populates the in-article search box, highlights all matches, scrolls to the Nth match. Preserves `q`/`match` across its URL rewrite (both local `?article=` and production `/article/{id}/{slug}`).
 
-- **WEIGHING MACHINES**: page header "vol. 28, pp. 468-477"; 20 figures each with single Fig.N caption (no duplicates beneath).
-- **SEWING MACHINES**: 7 figures, single captions.
-- **AGRICULTURE**: "See also" paragraph reads cleanly: "...Horticulture, Fruit and Flower Farming, Poultry and Poultry-farming; Soil, Grass and Grassland, Manures and Manuring, Drainage of Land, Irrigation, Sowing, Reaping, Hay (fodder), Plough and Ploughing, Harrow, Thrashing." — no orphan commas.
-- **Vol 24 navigation**: SEWING MACHINES p.744 → next → p.745 (not 739).
-- **Vol 3 volume scans**: open at printed p.1.
-- **Vol 28 navigation**: WEIGHING MACHINES → next pages stay in proper order.
-- **Articles regaining lost continuation pages** (carried from prior rebuild): MECHANICS 64p, RUSSIA 46p, RAILWAYS 43p, AGRICULTURE 34p, CONDUCTION ELECTRIC 36p.
-- **0 titles with `[[…]]`** in any article (was 8 before bracket-fallback fix).
+`search.html` is now a redirect shim to `index.html?q=…&mode=fulltext` (single source of truth for search).
 
-## Pending after this rebuild
+### Indexer fixes (`index_search.py` + `index_search_ec2.py`)
+- `body` added to `displayedAttributes` so the UI can retrieve match context. Without this, search.html cannot do client-side exact-match filtering.
+- Batch size bumped 100 → 5000 so Meili ingests in far fewer tasks (local reindex was previously queuing ~370 sequential tasks).
+- **EC2 note:** the updated `index_search_ec2.py` has been `scp`-pushed to the EC2 box directly; the next rebuild's `python3 ~/index_search_ec2.py` call will use it without any change to `rebuild_all.sh`.
 
-- Full vol 29 classified-TOC parser → "Browse by subject" UI.
-- Vol 20 trailing black pages (data, Bengal scan artifact — low priority).
+## Topics / classified TOC (deploy-only, no rebuild needed)
+
+Current state: category-bounded OCR + per-cat walker (see `project_vol29_parser.md`). 23,050 articles across 24 cats, 60 empty leaves. Further refinement is per-cat — edit individual `cat_ocr/<slug>.txt` or rerun `ocr_vol29_classified.py --only='Cat'`.
+
+To deploy the current Topics state:
+- `uv run python tools/parse_classified_toc.py` — regenerates `classified_toc.json` and per-cat files.
+- Upload: `classified_toc.json`, `topics.html` to S3 + CloudFront invalidation.
+
+## Pre-deploy checks (per `feedback_regression_scope.md`)
+
+- Run `uv run python tools/quality_report.py` and compare its "Changes from Previous Build" section.
+- 5×+ swings in `stray_wiki_italic`, `stray_braces`, `pipe_leak`, `html_tag` are likely regressions — investigate before deploy.
+- Topics spot-check after deploy: Math (Pure/Applied/Biographies populated), Astronomy, Engineering, Law subs all have articles; verify the editors' introduction (collapsed) and source-scan link on `/topics.html`.
+
+## Known issues (not rebuild-blocking)
+
+- OCR quality is the ceiling for several flat cats' article recall. Math at 198/250, Astronomy 210, Physics 164. Further improvement requires multi-pass OCR (different upscales / engines) or manual correction. Per-cat iteration workflow in place (`tools/ocr_vol29_classified.py --only='X'`).
+- Vol 20 trailing black pages — IA Bengal scan artifact, low priority.

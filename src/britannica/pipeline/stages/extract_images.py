@@ -13,8 +13,15 @@ _IMAGE_PATTERN = re.compile(
     r"\[\[(?:File|Image):([^\]]+)\]\]"
     # OR {{raw image|filename}} — alternate EB1911 image syntax; the
     # filename is captured bare (no caption/options).
-    r"|\{\{\s*raw\s+image\s*\|([^{}|]+)\s*\}\}",
-    re.IGNORECASE,
+    r"|\{\{\s*raw\s+image\s*\|([^{}|]+)\s*\}\}"
+    # OR {{img float|file=...|cap=...}} / {{figure|...}} / {{FI|...}}
+    # — inline float templates. Captured as group 3 (full template
+    # body after the opening keyword); file= and cap= are extracted
+    # downstream by _parse_img_float().
+    # Supports up to 2 levels of nested {{…}} (e.g. {{EB1911|{{sc|Fig.}} 15.}}).
+    r"|\{\{\s*(?:img\s+float|figure|FI)\s*\|"
+    r"((?:[^{}]|\{\{(?:[^{}]|\{\{[^{}]*\}\})*\}\})*)\}\}",
+    re.IGNORECASE | re.DOTALL,
 )
 
 _RAW_DIRS = [
@@ -54,6 +61,26 @@ def _parse_image_ref(ref: str) -> dict:
             caption = part
             break
 
+    return {
+        "filename": filename,
+        "caption": caption,
+        "commons_url": _commons_url(filename),
+    }
+
+
+def _parse_img_float(body: str) -> dict | None:
+    """Parse an {{img float|...}} template body into filename + caption."""
+    file_m = re.search(r"\|file=([^|}\n]+)", "|" + body, re.IGNORECASE)
+    if not file_m:
+        return None
+    filename = file_m.group(1).strip()
+    # cap= value may contain nested templates up to 2 levels deep:
+    # cap={{EB1911 Fine Print|{{sc|Fig.}} 15.—Flanged Girder.}}
+    cap_m = re.search(
+        r"\|cap=((?:[^|{}]|\{\{(?:[^{}]|\{\{[^{}]*\}\})*\}\})+)",
+        "|" + body, re.IGNORECASE,
+    )
+    caption = cap_m.group(1).strip() if cap_m else None
     return {
         "filename": filename,
         "caption": caption,
@@ -145,25 +172,32 @@ def _find_following_caption(after_text: str) -> str | None:
     """Look forward from an image's position to find a caption.
 
     Handles several layouts common in EB1911:
+      • <br> followed by caption text/templates
+      • {{EB1911 Fine Print|…}} wrapper
       • Loose {{c|…}} (or {{c|{{sc|Fig. N.}}}}) on the next line
       • Standalone {{sc|Fig. N.}}—caption line
-      • Separate wikitable after the image where the LAST row cell is
-        the caption (other rows are source attribution).
+      • Plain "Fig. N.—caption" text
+      • Separate wikitable after the image
     """
-    # Advance past whitespace/newlines
     tail = after_text
-    # Skip blank lines
-    tail = re.sub(r"^[\s\n]+", "", tail)
+    # Skip whitespace, <br/>, closing tags, and EB1911 fine print close.
+    tail = re.sub(
+        r"^(?:\s|<br\s*/?>|</(?:span|div)\s*>|\{\{EB1911 fine print/e\}\})+",
+        "", tail, flags=re.IGNORECASE,
+    )
     if not tail:
         return None
 
-    # Skip a leading piece of markup often paired with image:
-    # </div>, </span>, </br>, {{EB1911 fine print/e}}, etc.
-    tail = re.sub(r"^(?:</(?:span|div|br)\s*>|\{\{EB1911 fine print/e\}\})\s*",
-                  "", tail, flags=re.IGNORECASE)
-    tail = re.sub(r"^[\s\n]+", "", tail)
+    # 1. {{EB1911 Fine Print|…}} wrapper (may contain {{sc|…}}).
+    m = re.match(
+        r"\{\{\s*EB1911\s+Fine\s+Print\s*\|"
+        r"((?:[^{}]|\{\{[^{}]*\}\})*)\}\}",
+        tail, re.IGNORECASE,
+    )
+    if m:
+        return _clean_caption_markup(m.group(1))
 
-    # 1. {{c|…}} template (may contain nested templates).
+    # 2. {{c|…}} template (may contain nested templates).
     m = re.match(
         r"\{\{\s*c\s*\|((?:\{\{[^{}]*(?:\{\{[^{}]*\}\}[^{}]*)*\}\}|[^{}])+)\}\}",
         tail, re.IGNORECASE,
@@ -171,24 +205,31 @@ def _find_following_caption(after_text: str) -> str | None:
     if m:
         return _clean_caption_markup(m.group(1))
 
-    # 2. {{sc|Fig. N.}}… (with optional em-dash + caption)
+    # 3. {{sc|Fig. N.}}… (with optional text after: num + em-dash + caption)
     m = re.match(
-        r"(\{\{\s*sc\s*\|[^{}]*\}\}(?:\s*[\u2014\u2013\-][^{}\n]*)?)",
+        r"(\{\{\s*sc\s*\|[^{}]*\}\}\s*"
+        r"(?:\d+\.?\s*)?(?:[\u2014\u2013\-][^}\n]*)?)",
         tail, re.IGNORECASE,
     )
     if m:
         return _clean_caption_markup(m.group(1))
 
-    # 3. Wikitable: {|…|}. Extract last row-cell as caption.
+    # 4. Plain "Fig. N." or "Fig. N.—caption" (no template wrapper).
+    m = re.match(
+        r"((?:Fig|Plate)\.?\s*\d+\.(?:\s*[\u2014\u2013\-][^\n}]*)?)",
+        tail, re.IGNORECASE,
+    )
+    if m:
+        return _clean_caption_markup(m.group(1))
+
+    # 5. Wikitable: {|…|}. Extract last row-cell as caption.
     if tail.startswith("{|"):
         end = tail.find("|}")
         if end > 0:
             table = tail[:end]
-            # Split on row separators `|-`
             rows = re.split(r"\n\s*\|-[^\n]*\n", table)
             if len(rows) > 1:
                 last_row = rows[-1].strip()
-                # First cell starts with `|`
                 if last_row.startswith("|"):
                     last_row = last_row[1:].strip()
                 return _clean_caption_markup(last_row)
@@ -286,10 +327,18 @@ def extract_images_for_volume(volume: int) -> int:
             wrapper_captions = _collect_wrapper_captions(text)
 
             for match in matches:
-                # Group 1 = [[File:…]] content; group 2 = {{raw image|…}} filename
-                ref = match.group(1) if match.group(1) is not None else match.group(2)
-                parsed = _parse_image_ref(ref)
-                if not parsed["caption"]:
+                # Group 1 = [[File:…]] content
+                # Group 2 = {{raw image|…}} filename
+                # Group 3 = {{img float|…}} body
+                if match.group(3) is not None:
+                    parsed = _parse_img_float(match.group(3))
+                    if not parsed:
+                        continue
+                elif match.group(1) is not None:
+                    parsed = _parse_image_ref(match.group(1))
+                else:
+                    parsed = _parse_image_ref(match.group(2))
+                if not parsed.get("caption"):
                     parsed["caption"] = wrapper_captions.get(parsed["filename"])
 
                 existing = (

@@ -47,28 +47,87 @@
       margin-left: 8px; }
     .empty-cat { color: var(--muted); font-style: italic; padding: 12px 16px; }
     .subsection { padding: 10px 18px 16px; }
-    .subsection h3 { margin: 12px 0 6px; font-size: 1rem;
-      font-variant: small-caps; letter-spacing: 0.04em; color: var(--muted); }
-    .article-list { display: flex; flex-wrap: wrap; gap: 4px 14px;
-      list-style: none; padding: 0; margin: 0; }
-    .article-list li { line-height: 1.5; }
+    .subsection-l2 > h3 { margin: 12px 0 6px; font-size: 1.05rem;
+      font-variant: small-caps; letter-spacing: 0.05em; color: var(--text);
+      border-bottom: 1px solid var(--border); padding-bottom: 3px; }
+    .subsection-l3 > h3 { margin: 10px 0 4px; font-size: 0.95rem;
+      font-variant: small-caps; letter-spacing: 0.04em; color: var(--muted);
+      font-weight: bold; }
+    .subsection-l4 > h4 { margin: 8px 0 3px; font-size: 0.85rem;
+      font-variant: small-caps; letter-spacing: 0.03em; color: var(--muted);
+      font-weight: normal; font-style: italic; }
+    .subsection-l3 { margin-left: 16px; padding: 4px 12px 10px;
+      border-left: 3px solid var(--border); background: rgba(123, 63, 0, 0.02); }
+    .subsection-l4 { margin-left: 12px; padding: 2px 10px 8px;
+      border-left: 2px dashed var(--border); background: rgba(123, 63, 0, 0.04); }
+    /* Multi-column layout so long alphabetical lists (like the
+       original printed TOC) read naturally. CSS columns keep items
+       in alphabetical order column-by-column automatically. */
+    .article-list {
+      columns: 3 18em;
+      column-gap: 24px;
+      column-rule: 1px solid var(--border);
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .article-list li {
+      line-height: 1.55;
+      /* Don't split an item across columns. */
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
     .article-list a { color: var(--link); text-decoration: none; }
     .article-list a:hover { text-decoration: underline; }
     .article-list .unresolved { color: var(--muted); cursor: default; }
     .article-list .emphasized a { font-weight: bold; }
     .footer { color: var(--muted); font-size: 0.85rem; margin-top: 20px;
       text-align: center; }
+    .intro-wrap { margin: 12px 0 16px; }
+    .intro-wrap > summary { cursor: pointer; color: var(--link);
+      font-size: 0.9rem; padding: 4px 0; user-select: none;
+      list-style: revert; }
+    .intro-wrap > summary:hover { text-decoration: underline; }
+    .intro { background: #fbf7ef; border: 1px solid var(--border);
+      padding: 14px 22px; margin: 8px 0 0; font-size: 0.95rem; }
+    .intro p { margin: 0 0 10px; }
+    .intro p:first-child::first-letter { font-size: 2.2em; float: left;
+      line-height: 0.95; padding: 3px 6px 0 0; font-weight: bold;
+      font-family: Georgia, serif; }
+    .intro em { font-style: italic; }
   </style>
 </head>
 <body>
 <div class="page">
   <div class="card">
-    <a class="nav-link" href="index.html">&larr; Home</a>
-    <h1>Topic Index</h1>
-    <div class="source-note">
-      Categories from the original 1911 edition's "Classified Table of Contents" (vol.&nbsp;29).
-      Categories without entries below are awaiting transcription on Wikisource.
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.3rem; color: #5c4a32;"><span style="font-variant: small-caps; letter-spacing: 0.06em;">Topics</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.02em;">&mdash; 11th Edition</span></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/home.html" style="color: var(--link); text-decoration: none;">Home</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html" style="color: var(--link); text-decoration: none;">Articles</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/contributors.html" style="color: var(--link); text-decoration: none;">Contributors</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/ancillary.html" style="color: var(--link); text-decoration: none;">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/about.html" style="color: var(--link); text-decoration: none;">About</a>
+      </div>
     </div>
+    <div class="source-note">
+      Categories are defined by the original 1911 edition's "Classified Table of Contents"
+      (vol.&nbsp;29, leaves&nbsp;893&ndash;961). The editors' introduction begins on
+      leaves&nbsp;893&ndash;894, the meta-TOC summary on leaves&nbsp;895&ndash;896, and
+      the body pages run from leaf&nbsp;897 onward.
+      &nbsp;&middot;&nbsp;
+      <a class="nav-link"
+         href="scans.html?vol=29&amp;start=893&amp;end=961&amp;prefix=leaf&amp;label=Classified+Table+of+Contents&amp;back=topics.html">View
+        source scans &rarr;</a>
+    </div>
+    <details id="introWrap" class="intro-wrap" hidden>
+      <summary>Editors' Introduction</summary>
+      <div id="intro" class="intro"></div>
+    </details>
     <div class="controls">
       <button id="expandAll">Expand all</button>
       <button id="collapseAll">Collapse all</button>
@@ -86,8 +145,19 @@
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
 
+  const IS_LOCAL_TOPICS = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+
   function articleUrl(filename) {
-    return `viewer.html?article=${encodeURIComponent(filename)}`;
+    // Match the URL scheme used by search.html + viewer.html.
+    // Local: ?article=<absolute-path-to-JSON>.
+    // Prod:  /article/{numeric-id}/{slug-lowercase}.
+    if (IS_LOCAL_TOPICS) {
+      return `viewer.html?article=/data/derived/articles/${encodeURIComponent(filename)}`;
+    }
+    const base = filename.replace(/\.json$/, "");
+    const page = base.replace(/^0+/, "").split("-")[0];
+    const slug = base.substring(base.indexOf("-") + 1).toLowerCase();
+    return `/article/${page}/${slug}`;
   }
 
   function renderArticle(art) {
@@ -99,23 +169,65 @@
     return `<li${cls}><span class="unresolved" title="not yet linked: ${escapeHtml(art.target)}">${display}</span></li>`;
   }
 
-  function renderSubsection(sub) {
-    const arts = sub.articles.map(renderArticle).join("");
-    const head = sub.name ? `<h3>${escapeHtml(sub.name)}</h3>` : "";
-    return `<div class="subsection">${head}<ul class="article-list">${arts}</ul></div>`;
+  function hasContent(node) {
+    if (node.articles && node.articles.length > 0) return true;
+    if (node.children) {
+      for (const c of node.children) if (hasContent(c)) return true;
+    }
+    return false;
+  }
+
+  function renderSubsection(sub, depth) {
+    if (!hasContent(sub)) return "";
+    const level = depth + 2;  // level 2 for top subs
+    const arts = sub.articles && sub.articles.length
+      ? `<ul class="article-list">${sub.articles.map(renderArticle).join("")}</ul>`
+      : "";
+    const kids = (sub.children || [])
+      .map(c => renderSubsection(c, depth + 1))
+      .filter(Boolean)
+      .join("");
+    const headTag = level <= 3 ? `h3` : `h4`;
+    return `<div class="subsection subsection-l${level}">` +
+           `<${headTag}>${escapeHtml(sub.name)}</${headTag}>` +
+           arts + kids + `</div>`;
+  }
+
+  function countAll(node) {
+    let arts = node.articles ? node.articles.length : 0;
+    let resolved = node.articles ? node.articles.filter(a => a.filename).length : 0;
+    for (const c of (node.children || [])) {
+      const sub = countAll(c);
+      arts += sub.arts;
+      resolved += sub.resolved;
+    }
+    return { arts, resolved };
   }
 
   function renderCategory(cat) {
-    const totalArts = cat.subsections.reduce((n, s) => n + s.articles.length, 0);
-    const resolvedArts = cat.subsections.reduce(
-      (n, s) => n + s.articles.filter(a => a.filename).length, 0
-    );
-    const meta = totalArts > 0
-      ? `<span class="cat-meta">${resolvedArts}/${totalArts} articles</span>`
-      : `<span class="cat-meta">(awaiting transcription)</span>`;
-    const body = totalArts > 0
-      ? cat.subsections.map(renderSubsection).join("")
-      : `<div class="empty-cat">No article entries yet — Wikisource transcription pending.</div>`;
+    let totalArts = 0, resolvedArts = 0;
+    for (const s of cat.subsections) {
+      const c = countAll(s);
+      totalArts += c.arts;
+      resolvedArts += c.resolved;
+    }
+    let meta;
+    if (totalArts === 0) {
+      meta = `<span class="cat-meta">(awaiting transcription)</span>`;
+    } else if (resolvedArts === totalArts) {
+      meta = `<span class="cat-meta">${totalArts} articles</span>`;
+    } else {
+      meta = `<span class="cat-meta">${resolvedArts}/${totalArts} articles</span>`;
+    }
+    let body;
+    if (totalArts > 0) {
+      body = cat.subsections
+        .map(s => renderSubsection(s, 0))
+        .filter(Boolean)
+        .join("");
+    } else {
+      body = `<div class="empty-cat">No article entries yet — Wikisource transcription pending.</div>`;
+    }
     return `<details class="category">
       <summary>${escapeHtml(cat.name)} ${meta}</summary>
       ${body}
@@ -126,6 +238,10 @@
     try {
       const resp = await fetch(TOC_URL);
       const data = await resp.json();
+      if (data.intro_html) {
+        document.getElementById("intro").innerHTML = data.intro_html;
+        document.getElementById("introWrap").hidden = false;
+      }
       const html = data.categories.map(renderCategory).join("");
       document.getElementById("categories").innerHTML = html;
       const totalCats = data.categories.length;

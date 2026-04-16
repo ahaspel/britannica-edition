@@ -61,7 +61,7 @@ def main():
         "searchableAttributes": ["title", "body", "contributors"],
         "displayedAttributes": [
             "id", "title", "article_type", "volume", "page_start",
-            "page_end", "body_start", "body_length", "filename",
+            "page_end", "body", "body_start", "body_length", "filename",
             "contributors",
         ],
         "filterableAttributes": [

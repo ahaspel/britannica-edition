@@ -142,6 +142,32 @@
       border-radius: 2px;
     }
 
+    /* Full-text search result occurrences — mirrors the in-article
+       match-list style in viewer.html. */
+    .ft-occurrences { margin: 6px 0 0 0; padding: 0; list-style: none; }
+    .ft-occurrences li {
+      padding: 4px 10px; line-height: 1.4;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.92rem; color: var(--text);
+    }
+    .ft-occurrences li:last-child { border-bottom: none; }
+    .ft-occurrences li mark {
+      background: #ff9800; color: #fff;
+      padding: 0 1px; border-radius: 2px;
+    }
+    .ft-occ-link {
+      color: inherit; text-decoration: none; display: block;
+    }
+    .ft-occ-link:hover { background: #f0ebe0; }
+    .ft-more {
+      font-size: 0.85rem; color: var(--muted);
+      margin-top: 4px; padding: 4px 10px;
+    }
+    .ft-count {
+      color: var(--muted); font-size: 0.82rem;
+      margin-left: 8px; font-weight: normal;
+    }
+
     .body-start {
       color: var(--muted);
       font-size: 0.85rem;
@@ -252,13 +278,17 @@
   <div class="page">
     <div class="card">
       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-        <h1 style="margin: 0; font-size: 1.3rem; color: #5c4a32;"><span style="font-variant: small-caps; letter-spacing: 0.06em;">Articles</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.02em;">&mdash; Encyclop&aelig;dia Britannica, 11th Edition</span></h1>
+        <h1 style="margin: 0; font-size: 1.3rem; color: #5c4a32;"><span style="font-variant: small-caps; letter-spacing: 0.06em;">Articles</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.02em;">&mdash; 11th Edition</span></h1>
         <div style="font-size: 0.9rem;">
           <a href="/home.html" style="color: var(--link); text-decoration: none;">Home</a>
           &nbsp;&middot;&nbsp;
           <a href="/contributors.html" style="color: var(--link); text-decoration: none;">Contributors</a>
           &nbsp;&middot;&nbsp;
           <a href="/topics.html" style="color: var(--link); text-decoration: none;">Topics</a>
+          &nbsp;&middot;&nbsp;
+          <a href="/ancillary.html" style="color: var(--link); text-decoration: none;">Ancillary</a>
+          &nbsp;&middot;&nbsp;
+          <a href="/about.html" style="color: var(--link); text-decoration: none;">About</a>
         </div>
       </div>
       <div id="stats" class="stats">Loading...</div>
@@ -520,6 +550,72 @@
     }
 
     // ── Full-text search ──
+    function ftCleanMarkup(s) {
+      let h = s.replace(/\x01PAGE:\d+\x01/g, "");
+      h = h.replace(/\u00abFN:.*?\u00ab\/FN\u00bb/gs, "");
+      h = h.replace(/\u00abLN:[^|]*\|(?:[^|«]*\|)?([^«]*)\u00ab\/LN\u00bb/g, "$1");
+      h = h.replace(/\u00ab\/?[A-Z]+\u00bb/g, "");
+      return h;
+    }
+
+    function ftEscapeHtml(s) {
+      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    // Exact-substring matching, case-insensitive. Same behavior as
+    // viewer.html's in-article search: count occurrences, extract
+    // every paragraph containing a match, highlight all matches.
+    // Each emitted snippet also reports `matchIdx` = the 1-based
+    // index (across the whole body, in reading order) of the FIRST
+    // match inside that paragraph. Clicking the snippet in the UI
+    // forwards to viewer.html?q=…&match=<matchIdx> so the reader
+    // lands on the exact highlight.
+    function ftExtractOccurrences(body, query, max) {
+      if (!body || !query) return { items: [], total: 0 };
+      const cleaned = ftCleanMarkup(body);
+      const qLow = query.toLowerCase();
+      const paras = cleaned.split(/\n+/).map(s => s.trim()).filter(Boolean);
+      const CTX = 50;
+      const items = [];
+      const qEscRe = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      let runningIdx = 0;  // matches seen before current paragraph
+      let totalHitParas = 0;
+      for (const para of paras) {
+        const pLow = para.toLowerCase();
+        // Count matches in this paragraph.
+        let pCount = 0;
+        let i = 0;
+        while ((i = pLow.indexOf(qLow, i)) !== -1) { pCount++; i += qLow.length; }
+        if (pCount === 0) continue;
+        totalHitParas++;
+        if (items.length < max) {
+          const firstMatchIdx = runningIdx + 1;  // 1-based global
+          const idx = pLow.indexOf(qLow);
+          const s = Math.max(0, idx - CTX);
+          const e = Math.min(para.length, idx + query.length + CTX);
+          const snippet = (s > 0 ? "\u2026" : "") + para.slice(s, e) +
+                          (e < para.length ? "\u2026" : "");
+          const esc = ftEscapeHtml(snippet).replace(
+            new RegExp(`(${qEscRe})`, "gi"),
+            "<mark>$1</mark>"
+          );
+          items.push({ html: esc, matchIdx: firstMatchIdx });
+        }
+        runningIdx += pCount;
+      }
+      return { items, total: totalHitParas };
+    }
+
+    // Count exact-substring occurrences of query in body (case-insens).
+    function ftCountMatches(body, query) {
+      if (!body || !query) return 0;
+      const bLow = body.toLowerCase();
+      const qLow = query.toLowerCase();
+      let n = 0, i = 0;
+      while ((i = bLow.indexOf(qLow, i)) !== -1) { n++; i += qLow.length; }
+      return n;
+    }
+
     async function searchFulltext(query) {
       hideAllResults();
       resultsCard.style.display = "block"; resultsDivider.style.display = "block";
@@ -535,12 +631,11 @@
         const searchBody = {
           q: parsed.query,
           limit: 50,
-          attributesToRetrieve: ["title", "volume", "page_start", "page_end", "body_start", "body_length", "filename", "contributors"],
-          attributesToHighlight: ["body", "title"],
-          attributesToCrop: ["body:30"],
-          cropLength: 30,
-          highlightPreTag: "<em>",
-          highlightPostTag: "</em>",
+          // Retrieve the full body so we can do exact-substring
+          // matching client-side. Meili's highlighter does fuzzy/
+          // prefix matching which the user explicitly doesn't want.
+          attributesToRetrieve: ["title", "volume", "page_start", "page_end", "body_start", "body_length", "filename", "contributors", "body"],
+          matchingStrategy: "all",
         };
         if (parsed.filter) searchBody.filter = parsed.filter;
 
@@ -556,7 +651,6 @@
         const data = await resp.json();
         let hits = data.hits || [];
 
-        // Apply exclude post-filter
         if (parsed.excludes.length) {
           hits = hits.filter(hit => {
             const text = ((hit.body_start || "") + " " + (hit.title || "")).toLowerCase();
@@ -564,24 +658,65 @@
           });
         }
 
+        // Dedupe by (title, volume, page_start). The Meili index has
+        // some articles present under multiple filenames — we want
+        // one result per logical article.
+        const seen = new Set();
+        hits = hits.filter(hit => {
+          const key = `${hit.title}|${hit.volume}|${hit.page_start}`;
+          if (seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        });
+
+        // Drop hits whose body doesn't actually contain the query
+        // (Meili's fuzzy/prefix matching can return things like
+        // ADAMS for "adamas" — we only want exact substring matches).
+        // Then sort by total match count (most-frequent first).
+        for (const hit of hits) {
+          hit._matchCount = ftCountMatches(hit.body || "", parsed.query);
+        }
+        hits = hits.filter(h => h._matchCount > 0);
+        hits.sort((a, b) => (b._matchCount || 0) - (a._matchCount || 0));
+
         if (hits.length === 0) {
           emptyEl.style.display = "block";
           emptyEl.textContent = "No results found.";
           return;
         }
 
+        const MAX_OCC = 6;
         const el = document.getElementById("fulltext-results");
         el.style.display = "block";
         el.innerHTML = hits.map(hit => {
           const fmt = hit._formatted || {};
-          const snippet = (fmt.body || hit.body_start || "").replace(/\x01PAGE:\d+\x01/g, "").replace(/\u00abFN:.*?\u00ab\/FN\u00bb/gs, "").replace(/\u00abLN:[^|]*\|(?:[^|«]*\|)?([^«]*)\u00ab\/LN\u00bb/g, "$1").replace(/\u00ab\/?[A-Z]+\u00bb/g, "");
-          const title = fmt.title || hit.title;
+          // No title highlighting — only article body text matches.
+          const titleRaw = hit.title || "";
+          const titleEsc = ftEscapeHtml(ftCleanMarkup(titleRaw));
           const pr = hit.page_start === hit.page_end
             ? `p.${hit.page_start}` : `pp.${hit.page_start}\u2013${hit.page_end}`;
-
+          const occ = ftExtractOccurrences(hit.body || "", parsed.query, MAX_OCC);
+          const count = hit._matchCount;
+          const countBadge = count > 0
+            ? ` <span class="ft-count">${count} match${count === 1 ? "" : "es"}</span>`
+            : "";
+          let occHtml = "";
+          if (occ.items.length) {
+            const url = viewerUrl(hit.filename);
+            const q = encodeURIComponent(parsed.query);
+            const liHtml = occ.items.map(item => {
+              const href = `${url}${url.includes("?") ? "&" : "?"}q=${q}&match=${item.matchIdx}`;
+              return `<li><a href="${href}" class="ft-occ-link">${item.html}</a></li>`;
+            }).join("");
+            occHtml = `<ul class="ft-occurrences">${liHtml}</ul>`;
+            if (occ.total > MAX_OCC) {
+              occHtml += `<div class="ft-more">\u2026 and ${occ.total - MAX_OCC} more in this article</div>`;
+            }
+          }
           return `<div class="result">
-            <div class="result-title"><a href="${viewerUrl(hit.filename)}">${title}</a></div>
-            <div class="result-snippet">${snippet}</div>
+            <div class="result-title"><a href="${viewerUrl(hit.filename)}">${titleEsc}</a>${countBadge}</div>
+            <div class="result-meta">Volume ${hit.volume} \u00b7 ${pr}</div>
+            ${occHtml}
           </div>`;
         }).join("");
       } catch (err) {

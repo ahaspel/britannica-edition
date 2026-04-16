@@ -58,7 +58,8 @@ def main():
             "searchableAttributes": ["title", "body", "contributors"],
             "displayedAttributes": [
                 "id", "title", "article_type", "volume", "page_start",
-                "page_end", "body_start", "body_length", "filename", "contributors",
+                "page_end", "body", "body_start", "body_length", "filename",
+                "contributors",
             ],
             "filterableAttributes": [
                 "volume", "article_type", "body_length", "page_start", "page_end",
@@ -126,7 +127,7 @@ def main():
 
         batch.append(doc)
 
-        if len(batch) >= 100:
+        if len(batch) >= 5000:
             _send_batch(batch, total)
             total += len(batch)
             batch = []

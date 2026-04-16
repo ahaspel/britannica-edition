@@ -117,6 +117,12 @@
       position: relative;
     }
 
+    .body-text abbr {
+      text-decoration: none;
+      border-bottom: 1px dotted #8b7355;
+      cursor: help;
+    }
+
     @media (max-width: 900px) {
       .body-text {
         margin-right: 0;
@@ -1204,10 +1210,17 @@
             const topics = topicMap && article.filename
               ? (topicMap[article.filename] || []) : [];
             if (!topics.length) return "";
+            const sep = ` <span style="color:var(--muted);">›</span> `;
             const list = topics.map(t => {
-              const cat = escapeHtml(t.category);
-              const sub = t.subsection ? ` <span style="color:var(--muted);">›</span> ${escapeHtml(t.subsection)}` : "";
-              return `<a href="/topics.html#${encodeURIComponent(t.category)}" style="color:var(--link);">${cat}</a>${sub}`;
+              const cat = `<a href="/topics.html#${encodeURIComponent(t.category)}" style="color:var(--link);">${escapeHtml(t.category)}</a>`;
+              // Drop a sole 'General' path (the catch-all for cats
+              // without a real subdivision) — showing 'History › General'
+              // adds noise. Keep General when nested deeper.
+              const path = (t.path || []);
+              const trail = (path.length === 1 && path[0] === "General")
+                ? ""
+                : path.map(n => escapeHtml(n)).join(sep);
+              return trail ? `${cat}${sep}${trail}` : cat;
             }).join("; ");
             return `<div class="contributors">In: ${list}</div>`;
           })()}
@@ -1325,17 +1338,33 @@
         const fnMatch = path.match(/([^/]+\.json)$/);
         if (fnMatch) article.filename = fnMatch[1];
         renderArticle(article);
+        // applyAbbreviations();  // Disabled: index abbreviations (Fr.=France)
+        // differ from article abbreviations (Fr.=French). Needs a
+        // context-aware or article-specific abbreviation list.
 
         // Update URL: production uses clean /article/{id}/{slug}, local uses ?article=
+        // In both cases, preserve q / match params so search-result
+        // links (viewer.html?article=…&q=term&match=3) survive the
+        // rewrite and can drive the in-article search below.
+        const existingParams = new URLSearchParams(window.location.search);
+        const preserved = new URLSearchParams();
+        for (const k of ["q", "match"]) {
+          const v = existingParams.get(k);
+          if (v !== null) preserved.set(k, v);
+        }
+        const suffix = preserved.toString() ? "?" + preserved.toString() : "";
         if (!IS_LOCAL) {
           const fnMatch = path.match(/(\d+)-([^/]+)\.json$/);
           if (fnMatch) {
-            const cleanUrl = `/article/${fnMatch[1]}/${fnMatch[2].toLowerCase()}`;
+            const cleanUrl = `/article/${fnMatch[1]}/${fnMatch[2].toLowerCase()}${suffix}`;
             window.history.replaceState({}, "", cleanUrl);
           }
         } else {
           const url = new URL(window.location.href);
           url.searchParams.set("article", path);
+          // Delete + re-set preserved params so order is stable.
+          for (const k of ["q", "match"]) url.searchParams.delete(k);
+          for (const [k, v] of preserved) url.searchParams.set(k, v);
           window.history.replaceState({}, "", url);
         }
       } catch (error) {
@@ -1348,8 +1377,66 @@
     const DATA_BASE = IS_LOCAL ? "/data/derived/articles" : "/data/articles";
     const TOC_URL = IS_LOCAL ? "/data/derived/classified_toc.json" : "/data/classified_toc.json";
 
-    // Reverse-index of classified_toc.json: filename → [{category, subsection}].
-    // Loaded once at viewer init; used to display "Topic: …" on each article.
+    // ── Abbreviation tooltips ──────────────────────────────────
+    const ABBREV_URL = IS_LOCAL ? "/data/derived/abbreviations.json" : "/data/abbreviations.json";
+    let abbrevsLoaded = null;  // Promise<Map<string,string>>
+    function loadAbbreviations() {
+      if (abbrevsLoaded) return abbrevsLoaded;
+      abbrevsLoaded = fetch(ABBREV_URL)
+        .then(r => r.ok ? r.json() : {})
+        .then(obj => {
+          // Build regex: sort keys longest-first, escape for regex.
+          const keys = Object.keys(obj).sort((a, b) => b.length - a.length);
+          const escaped = keys.map(k => k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+          // Match at word boundary or start of token, followed by
+          // non-alphanumeric (punctuation/space/end).
+          const pattern = new RegExp("(?<=\\s|^|>)(" + escaped.join("|") + ")(?=\\s|[,;:)\"<]|$)", "g");
+          return { map: obj, pattern };
+        })
+        .catch(() => null);
+      return abbrevsLoaded;
+    }
+
+    function applyAbbreviations() {
+      loadAbbreviations().then(abbr => {
+        if (!abbr) return;
+        const bodyEl = document.querySelector(".body-text");
+        if (!bodyEl) return;
+        // Walk text nodes only — don't touch tags or existing <abbr>.
+        const walker = document.createTreeWalker(bodyEl, NodeFilter.SHOW_TEXT);
+        const nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        for (const node of nodes) {
+          // Skip nodes inside <abbr>, <a>, <code>, <pre>
+          const parent = node.parentElement;
+          if (parent && /^(ABBR|A|CODE|PRE|SCRIPT)$/i.test(parent.tagName)) continue;
+          const text = node.textContent;
+          if (!abbr.pattern.test(text)) continue;
+          abbr.pattern.lastIndex = 0;
+          const frag = document.createDocumentFragment();
+          let lastIdx = 0;
+          let m;
+          while ((m = abbr.pattern.exec(text)) !== null) {
+            if (m.index > lastIdx) {
+              frag.appendChild(document.createTextNode(text.slice(lastIdx, m.index)));
+            }
+            const abbrEl = document.createElement("abbr");
+            abbrEl.title = abbr.map[m[1]];
+            abbrEl.textContent = m[1];
+            frag.appendChild(abbrEl);
+            lastIdx = m.index + m[0].length;
+          }
+          if (lastIdx < text.length) {
+            frag.appendChild(document.createTextNode(text.slice(lastIdx)));
+          }
+          node.parentNode.replaceChild(frag, node);
+        }
+      });
+    }
+
+    // Reverse-index of classified_toc.json: filename → [{category, path}].
+    // `path` is the full sub-tree trail (["Zoology","Systematic","Invertebrata"])
+    // so deeper-nested leaves are addressable, not just level-2.
     let topicMap = null;
     async function loadTopicMap() {
       if (topicMap !== null) return topicMap;
@@ -1358,13 +1445,20 @@
         if (!resp.ok) { topicMap = {}; return topicMap; }
         const data = await resp.json();
         topicMap = {};
+        function walk(cat, node, path) {
+          const newPath = path.concat([node.name]);
+          for (const art of node.articles || []) {
+            if (!art.filename) continue;
+            (topicMap[art.filename] = topicMap[art.filename] || [])
+              .push({ category: cat, path: newPath });
+          }
+          for (const child of node.children || []) {
+            walk(cat, child, newPath);
+          }
+        }
         for (const cat of data.categories || []) {
           for (const sub of cat.subsections || []) {
-            for (const art of sub.articles || []) {
-              if (!art.filename) continue;
-              (topicMap[art.filename] = topicMap[art.filename] || [])
-                .push({ category: cat.name, subsection: sub.name });
-            }
+            walk(cat.name, sub, []);
           }
         }
       } catch (e) {
@@ -1383,7 +1477,25 @@
       }
     }
     if (initialPath) {
-      loadArticle(initialPath);
+      loadArticle(initialPath).then(() => {
+        // If the URL carries ?q=…[&match=N], pre-populate the
+        // in-article search box and jump to the Nth match. This is
+        // how search.html / index.html's occurrence-click handoff
+        // lands the reader right on the hit.
+        const p = new URLSearchParams(window.location.search);
+        const q = p.get("q");
+        const matchParam = parseInt(p.get("match") || "1", 10);
+        if (q) {
+          articleSearchInput.value = q;
+          runArticleSearch();
+          const matches = document.querySelectorAll(".body-text .search-highlight");
+          if (matches.length) {
+            const n = Math.min(Math.max(1, matchParam || 1), matches.length);
+            currentMatchIdx = n - 1;
+            updateMatchNav();
+          }
+        }
+      });
     }
 
     // In-article search

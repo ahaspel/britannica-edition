@@ -16,7 +16,7 @@ set -euo pipefail
 echo "Checking services..."
 if ! docker ps --format '{{.Names}}' 2>/dev/null | grep -qi postgres; then
   echo "  PostgreSQL not running. Starting services..."
-  ./tools/start_services.sh
+  ./tools/pipeline/start_services.sh
 fi
 uv run python tools/db/check_connection.py
 
@@ -63,7 +63,7 @@ echo "  Done."
 # --- Phase 1b: Build contributor table from front matter ---
 echo
 echo "=== Phase 1b: Building contributor table [$(elapsed)] ==="
-uv run python tools/build_contributor_table.py
+uv run python tools/pipeline/build_contributor_table.py
 
 # --- Phase 2: Per-volume pipeline ---
 echo
@@ -114,7 +114,7 @@ uv run britannica resolve-xrefs-all
 
 echo
 echo "=== Phase 3b: Linking contributors from front matter [$(elapsed)] ==="
-uv run python tools/link_contributors_from_frontmatter.py
+uv run python tools/pipeline/link_contributors_from_frontmatter.py
 
 
 # --- Phase 4: Re-export (xref targets now resolved cross-volume) ---
@@ -128,12 +128,17 @@ done
 # --- Phase 5: Export front matter ---
 echo
 echo "=== Phase 5: Exporting front matter [$(elapsed)] ==="
-uv run python tools/export_front_matter.py
+uv run python tools/pipeline/export_front_matter.py
 
 # --- Phase 6: Post-processing cleanup ---
 echo
 echo "=== Phase 6: Post-processing exported articles [$(elapsed)] ==="
-uv run python tools/postprocess.py
+uv run python tools/pipeline/postprocess.py
+
+# --- Phase 6b: Build classified TOC (topics page data) ---
+echo
+echo "=== Phase 6b: Parsing classified TOC (vol 29 topics) [$(elapsed)] ==="
+uv run python tools/vol29/parse_classified_toc.py
 
 # --- Phase 7: Deploy ---
 if [ -z "$NO_DEPLOY" ]; then
@@ -147,10 +152,11 @@ if [ -z "$NO_DEPLOY" ]; then
   #   aws s3 sync data/derived/images/ s3://britannica11.org/data/images/ --size-only
   #   aws s3 sync data/derived/scans/ s3://britannica11.org/data/scans/ --size-only
 
-  echo "  Uploading derived JSON (printed pages, scan map)..."
+  echo "  Uploading derived JSON (printed pages, scan map, classified TOC)..."
   aws s3 cp data/derived/printed_pages.json s3://britannica11.org/data/printed_pages.json
   aws s3 cp data/derived/printed_pages_leaf.json s3://britannica11.org/data/printed_pages_leaf.json
   aws s3 cp data/derived/scan_map.json s3://britannica11.org/data/scan_map.json
+  aws s3 cp data/derived/classified_toc.json s3://britannica11.org/data/classified_toc.json
 
   echo "  Uploading viewer..."
   aws s3 cp tools/viewer/viewer.html s3://britannica11.org/viewer.html
@@ -160,6 +166,12 @@ if [ -z "$NO_DEPLOY" ]; then
   aws s3 cp tools/viewer/contributors.html s3://britannica11.org/contributors.html
   aws s3 cp tools/viewer/home.html s3://britannica11.org/home.html
   aws s3 cp tools/viewer/preface.html s3://britannica11.org/preface.html
+  aws s3 cp tools/viewer/topics.html s3://britannica11.org/topics.html
+  aws s3 cp tools/viewer/ancillary.html s3://britannica11.org/ancillary.html
+  aws s3 cp tools/viewer/ancillary-prefatory-note.html s3://britannica11.org/ancillary-prefatory-note.html
+  aws s3 cp tools/viewer/ancillary-index-preface.html s3://britannica11.org/ancillary-index-preface.html
+  aws s3 cp tools/viewer/ancillary-abbreviations.html s3://britannica11.org/ancillary-abbreviations.html
+  aws s3 cp tools/viewer/about.html s3://britannica11.org/about.html
 
   echo "  Invalidating CloudFront..."
   aws cloudfront create-invalidation --distribution-id E24BJKH0IB4I6 --paths "/*" > /dev/null
@@ -179,7 +191,7 @@ fi
 # --- Phase 8: Quality analytics ---
 echo
 echo "=== Phase 8: Running quality report [$(elapsed)] ==="
-uv run python tools/quality_report.py
+uv run python tools/diagnostics/quality_report.py
 
 echo
 echo "============================================"

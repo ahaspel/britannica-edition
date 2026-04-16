@@ -44,7 +44,7 @@
   <button id="nextBtn" onclick="go(1)">&rsaquo;</button>
   <button id="lastBtn" onclick="goTo(endPage)">&raquo;</button>
   <span class="jump">
-    <label for="jumpInput">Go to p.</label>
+    <label for="jumpInput" id="jumpLabel">Go to p.</label>
     <input id="jumpInput" type="text" inputmode="numeric" autocomplete="off" />
     <button id="jumpBtn" onclick="jumpToPrinted()">Go</button>
   </span>
@@ -67,8 +67,19 @@
   // first article's start page.
   const initPrinted = parseInt(params.get("pinit")) || 0;
 
+  const prefix = params.get("prefix") || "page";  // "page" or "fm" or "leaf"
+
   document.getElementById("title").textContent = `Volume ${vol}: ${label}`;
-  document.getElementById("subtitle").textContent = `pp. ${printedStart}\u2013${printedEnd}`;
+  // In leaf mode for unnumbered ranges, use leaf labels instead of
+  // misleading 'pp.' printed-page labels.
+  if (prefix === "leaf") {
+    document.getElementById("subtitle").textContent =
+      `leaves ${startPage}\u2013${endPage}`;
+    document.getElementById("jumpLabel").textContent = "Go to leaf";
+  } else {
+    document.getElementById("subtitle").textContent =
+      `pp. ${printedStart}\u2013${printedEnd}`;
+  }
   const backUrl = params.get("back");
   if (backUrl) {
     document.getElementById("backLink").href = backUrl;
@@ -76,8 +87,6 @@
   } else {
     document.getElementById("backLink").href = IS_LOCAL ? "index.html" : "/index.html";
   }
-
-  const prefix = params.get("prefix") || "page";  // "page" or "fm"
 
   // Leaf offset fallback (for pages not in scan_map)
   const LEAF_OFFSET = {
@@ -162,6 +171,10 @@
       const printed = printedForLeaf(vol, leaf);
       if (printed !== null) {
         pageInfoText = `p. ${printed}`;
+      } else if (prefix === "leaf") {
+        // Leaf-mode viewer for unnumbered ranges (e.g. vol 29
+        // classified TOC). Leaf number is the useful identifier.
+        pageInfoText = `leaf ${leaf}`;
       } else {
         pageInfoText = `(unnumbered)`;
       }

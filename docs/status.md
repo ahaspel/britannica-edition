@@ -1,5 +1,14 @@
 # Britannica Edition – Project Status
 
+## Current focus (2026-04-14): Vol 29 Classified TOC refinement
+
+The Topics page (`/topics.html`) was overhauled to use a **category-bounded OCR architecture**. Per-page OCR was abandoned because multi-category pages (e.g. ws 902 holds both Education and Engineering, ws 945 holds Literature + Math + Medical) interleave content unrecoverably when read column-by-column. The new approach:
+
+1. `tools/ocr_vol29_classified.py` — finds every Blackletter cat-header across all body pages (wikitext `{{bl|X}}` markers + low-res OCR + meta-TOC fallback), bounds each category by (start_page, y) → (next_cat_start_page, y), crops each bounded region, 3x-upscales + sharpens + PSM 6 OCRs each crop. Output: one text file per cat in `data/derived/cat_ocr/<slug>.txt` and aggregated `vol29_ocr_by_cat.json`. Per-cat caching — re-run one cat with `--only='Mathematics'`, force all with `--force`.
+2. `tools/parse_classified_toc.py` — two-phase walker: Phase A processes wikitext ws-by-ws (cat transitions via `{{bl|X}}`), Phase B processes each cat's per-cat OCR text with `cur_cat` fixed. No cross-cat contamination in Phase B. Match passes: start-anchored → long-title substring → rapidfuzz partial-ratio fuzzy (cutoff 92, limit 2). Output: one file per cat in `data/derived/cat_toc/<slug>.json` and aggregated `classified_toc.json`.
+
+Current attribution: 23,050 articles across 24 categories, 60 empty leaves. Mathematics 198 (target 250), Astronomy 210, Engineering 458, Law 1034, Geography 6150, History 3939. Further gains gated on OCR quality — refinement will happen per-cat.
+
 ## Overview
 
 A scholarly digital edition of the 1911 Encyclopedia Britannica — the first hyperlinked, searchable, fully annotated edition with proper rendering of Greek, Hebrew, hieroglyphics, mathematical notation, chemical formulas, footnotes, images, verse quotations, and contributor attribution.

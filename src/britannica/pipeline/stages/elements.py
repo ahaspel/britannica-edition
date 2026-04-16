@@ -275,7 +275,7 @@ def _process_element(element_type: str, raw: str,
         if table_kind == "EQUATION_LAYOUT":
             result = _process_equation_layout(inner, text_transform)
         elif table_kind == "LAYOUT_WRAPPER":
-            result = _unwrap_layout_table(inner, text_transform)
+            result = _unwrap_layout_table(inner, text_transform, inner_registry)
         elif table_kind == "COMPLEX_HTML":
             result = _process_complex_table(inner, text_transform)
         else:
@@ -294,6 +294,8 @@ def _process_element(element_type: str, raw: str,
 
 def _clean_text(text: str) -> str:
     """Strip all internal markers and wiki templates from text, producing plain text."""
+    # Strip link markers: «LN:target|display«/LN» → display
+    text = re.sub(r"\u00abLN:[^|]*\|([^\u00ab]*)\u00ab/LN\u00bb", r"\1", text)
     # Strip converted markers (post-fetch-stage)
     text = re.sub(r"\u00abB\u00bb(.*?)\u00ab/B\u00bb", r"\1", text)
     text = re.sub(r"\u00abI\u00bb(.*?)\u00ab/I\u00bb", r"\1", text)
@@ -506,12 +508,19 @@ def _is_layout_wrapper(raw: str, inner: str, inner_registry: ElementRegistry | N
     return False
 
 
-def _unwrap_layout_table(inner: str, text_transform) -> str:
+def _unwrap_layout_table(inner: str, text_transform,
+                         inner_registry: ElementRegistry | None = None) -> str:
     """Unwrap a layout table to sequential content.
 
     Extracts cell content row by row, joining each cell's content
     as a separate block.  Child placeholders (images, nested tables)
     pass through and get substituted by the caller.
+
+    Special case: if the table contains exactly one image placeholder
+    + one or more caption rows, bundle them into a single
+    {{IMG:filename|caption}} so the figure renders with its caption
+    inside (avoids the duplicate-caption-paragraph regression seen in
+    SEWING MACHINES Fig. 2 / ACACIA Senegal).
     """
     inner = re.sub(r"<br\s*/?>", " ", inner, flags=re.IGNORECASE)
     _ATTR = re.compile(
@@ -571,6 +580,43 @@ def _unwrap_layout_table(inner: str, text_transform) -> str:
                 content = text_transform(c)
                 if content.strip():
                     parts.append(content.strip())
+
+    # Image + caption bundling: when the unwrap produced a single
+    # IMAGE placeholder plus one or more text parts, fold the first
+    # text part into the IMG marker as its caption. Reuses the same
+    # caption-cleaning step _process_image applies, so the caption
+    # comes out as plain text (no «I»/«SC» leak) like any other IMG.
+    if inner_registry is not None and len(parts) >= 2:
+        ph_re = re.compile(re.escape(_PH) + r"ELEM:\d+" + re.escape(_PH))
+        image_indices = [
+            i for i, p in enumerate(parts)
+            if ph_re.fullmatch(p.strip())
+            and inner_registry.elements.get(p.strip(), ("",))[0] == "IMAGE"
+        ]
+        text_indices = [
+            i for i, p in enumerate(parts)
+            if not ph_re.fullmatch(p.strip())
+            and p.strip()
+        ]
+        if len(image_indices) == 1 and text_indices:
+            img_idx = image_indices[0]
+            ph_id = parts[img_idx].strip()
+            etype, eraw = inner_registry.elements[ph_id]
+            fname_m = re.match(r"\[\[(?:File|Image):([^\]|]+)", eraw)
+            if fname_m:
+                filename = fname_m.group(1).strip()
+                caption_idx = next(
+                    (i for i in text_indices if i > img_idx), None)
+                if caption_idx is not None:
+                    # Caption is already through text_transform (cells
+                    # were processed in _extract_cells). Apply the
+                    # same _clean_text used by _process_image to
+                    # strip any «I»/«SC»/etc. markers and produce
+                    # plain figcaption text.
+                    caption = _clean_text(parts[caption_idx].strip())
+                    if caption:
+                        return f"{{{{IMG:{filename}|{caption}}}}}"
+                    return f"{{{{IMG:{filename}}}}}"
 
     return "\n\n".join(parts)
 
@@ -1037,6 +1083,34 @@ def _process_table(inner: str, text_transform,
         content_cells = [c for c in all_cells if c.strip()]
         if len(content_cells) <= 4 and sum(len(c) for c in all_cells) < 120:
             return " ".join(content_cells)
+
+    # Image + caption wikitable: row 1 contains a single image placeholder
+    # and row 2+ contains caption / attribution text. Bundle into a single
+    # {{IMG:filename|caption}} so the image renders with its caption inside
+    # the figure rather than leaving the caption row as a duplicate paragraph
+    # below the figure (e.g. SEWING MACHINES Fig. 2). Skips trailing
+    # attribution rows (typically beginning "From …" / "After …").
+    if "|-" in inner and inner_registry is not None:
+        ph_re = re.compile(re.escape(_PH) + r"ELEM:\d+" + re.escape(_PH))
+        rows_filtered = [r for r in re.split(r"\|-[^\n]*", inner) if r.strip()]
+        if len(rows_filtered) >= 2:
+            row1_cells = _extract_cells(rows_filtered[0])
+            if (len(row1_cells) == 1
+                    and ph_re.fullmatch(row1_cells[0].strip())):
+                ph_id = row1_cells[0].strip()
+                etype, eraw = inner_registry.elements.get(ph_id, ("", ""))
+                if etype == "IMAGE":
+                    fname_m = re.match(
+                        r"\[\[(?:File|Image):([^\]|]+)", eraw)
+                    if fname_m:
+                        filename = fname_m.group(1).strip()
+                        # Take row 2 as the primary caption.
+                        row2_cells = _extract_cells(rows_filtered[1])
+                        caption = " ".join(c.strip() for c in row2_cells
+                                           if c.strip())
+                        if caption:
+                            return f"{{{{IMG:{filename}|{caption}}}}}"
+                        return f"{{{{IMG:{filename}}}}}"
 
     # Single-column tables (1 cell per row) are text blocks, not data tables.
     # Render as preformatted text with line breaks preserved.
