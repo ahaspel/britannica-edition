@@ -292,6 +292,19 @@ def _process_element(element_type: str, raw: str,
     return result
 
 
+def _strip_br(text: str, replacement: str = " ") -> str:
+    """Convert `<br>` to `replacement`, handling soft-hyphen line breaks.
+
+    A `-<br>` pair indicates a word broken across lines by the
+    typesetter — we strip both the hyphen and the `<br>` so
+    "Circum-<br>ference" renders as "Circumference", not
+    "Circum- ference". Plain `<br>` becomes the replacement (space).
+    """
+    text = re.sub(r"-<br\s*/?>", "", text, flags=re.IGNORECASE)
+    text = re.sub(r"<br\s*/?>", replacement, text, flags=re.IGNORECASE)
+    return text
+
+
 def _clean_text(text: str) -> str:
     """Strip all internal markers and wiki templates from text, producing plain text."""
     # Strip link markers: «LN:target|display«/LN» → display
@@ -691,8 +704,7 @@ def _process_compound_table(raw: str, text_transform) -> str:
                     for vs in all_values:
                         content = vs[i]
                         content = re.sub(r"&nbsp;", " ", content)
-                        content = re.sub(r"<br\s*/?>", " ", content,
-                                         flags=re.IGNORECASE)
+                        content = _strip_br(content)
                         content = content.strip()
                         if content and text_transform:
                             content = text_transform(content)
@@ -730,8 +742,7 @@ def _process_compound_table(raw: str, text_transform) -> str:
                         content = cell
                     content = re.sub(r"\{\{[^{}]*\}\}", "", content)
                     content = re.sub(r"&nbsp;", " ", content)
-                    content = re.sub(r"<br\s*/?>", " ", content,
-                                     flags=re.IGNORECASE)
+                    content = _strip_br(content)
                     content = re.sub(r"<td[^>]*>", "", content,
                                      flags=re.IGNORECASE)
                     content = content.strip()
@@ -831,7 +842,7 @@ def _process_complex_table(inner: str, text_transform) -> str:
                     content = re.sub(r"\{\{\.\.\.\}\}", "...", content)
                     content = re.sub(r"\{\{sc\|([^{}]*)\}\}", r"\1", content, flags=re.IGNORECASE)
                     content = re.sub(r"\{\{[^{}]*\}\}", "", content)
-                    content = re.sub(r"<br\s*/?>", " ", content, flags=re.IGNORECASE)
+                    content = _strip_br(content)
                     content = content.strip()
                     if content:
                         content = text_transform(content)
@@ -1038,8 +1049,9 @@ def _process_table(inner: str, text_transform,
     Each cell's content is processed through text_transform — cells are
     elements in their own right.
     """
-    # Convert <br> to space before cell parsing
-    inner = re.sub(r"<br\s*/?>", " ", inner, flags=re.IGNORECASE)
+    # Convert <br> to space before cell parsing (and strip soft-hyphen
+    # line breaks, e.g. "Circum-<br>ference" → "Circumference").
+    inner = _strip_br(inner)
 
     # Cell attribute pattern
     _ATTR = re.compile(
@@ -1050,14 +1062,20 @@ def _process_table(inner: str, text_transform,
 
     def _extract_cells(row_text):
         """Extract data cells from a row, stripping attributes, processing each."""
+        # Strip cell-styling templates ({{Ts|...}} / {{ts|...}}) — these are
+        # cell attributes, not content.  Leaving them in would produce
+        # phantom cells once their internal `|` is re-protected.
+        row_text = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*", "", row_text)
         # Protect {{...}} and placeholders from pipe-splitting
         protected = re.sub(r"\{\{[^}]*\}\}", lambda m: m.group(0).replace("|", "\x04"), row_text)
         protected = re.sub(re.escape(_PH) + r"[^" + re.escape(_PH) + r"]+" + re.escape(_PH),
                            lambda m: m.group(0).replace("|", "\x04"), protected)
 
-        # Split cells: each | starts a cell. Handle both same-line (||)
-        # and separate-line (|\n|) formats.  An empty cell (| followed
-        # immediately by \n or |) produces an empty string.
+        # Normalize `||` (MediaWiki same-line cell shorthand) to `\n|`
+        # so it's treated as a single cell separator, not two.
+        protected = protected.replace("||", "\n|")
+
+        # Split cells on `|` at line starts.
         raw_cells = re.findall(r"\|([^|\n]*)", protected)
         raw_cells = [c.replace("\x04", "|") for c in raw_cells]
 
@@ -1249,10 +1267,8 @@ def _process_table(inner: str, text_transform,
                 if any(sub):
                     text_rows.append(" | ".join(sub))
         elif br_cells:
-            # Single-cell br: collapse to space
-            data_cells = [re.sub(r"<br\s*/?>", " ", c,
-                                 flags=re.IGNORECASE).strip()
-                          for c in data_cells]
+            # Single-cell br: collapse to space (strip soft-hyphen breaks)
+            data_cells = [_strip_br(c).strip() for c in data_cells]
             text_rows.append(" | ".join(data_cells))
         else:
             text_rows.append(" | ".join(data_cells))
@@ -1478,8 +1494,9 @@ def _process_html_table(
     text_transform,
     inner_registry: ElementRegistry | None,
 ) -> str:
-    """Convert HTML table content to either an unwrapped illustration
-    or a {{TABLE:...}TABLE} data table."""
+    """Convert HTML table content to either an unwrapped illustration,
+    a {{TABLE:...}TABLE} data table, or an HTMLTABLE marker when
+    rowspan/colspan need to be preserved."""
     # Illustration wrapper — unwrap to IMG + caption
     if _is_html_illustration_wrapper(raw, inner_registry):
         return _unwrap_html_illustration(inner, text_transform, inner_registry)
@@ -1491,22 +1508,58 @@ def _process_html_table(
         text = re.sub(r"\s+", " ", text).strip()
         return text
 
-    text_rows = []
+    parsed_rows = []
     has_header = False
+    has_span = False
     for row in rows:
         if "<th" in row.lower():
             has_header = True
-        cells = re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", row, re.DOTALL | re.IGNORECASE)
-        if cells:
-            cleaned = []
-            for cell in cells:
-                c = re.sub(r"<[^>]+>", " ", cell)
-                c = re.sub(r"\s+", " ", c).strip()
-                if c:
-                    cleaned.append(text_transform(c))
-            if cleaned:
-                text_rows.append(" | ".join(cleaned))
+        matches = re.findall(
+            r"<(t[dh])([^>]*)>(.*?)</\1>",
+            row, re.DOTALL | re.IGNORECASE)
+        if not matches:
+            continue
+        parsed = []
+        for tag, attrs, cell in matches:
+            rs = re.search(r'rowspan\s*=\s*"?(\d+)"?', attrs, re.IGNORECASE)
+            cs = re.search(r'colspan\s*=\s*"?(\d+)"?', attrs, re.IGNORECASE)
+            rowspan = int(rs.group(1)) if rs else 1
+            colspan = int(cs.group(1)) if cs else 1
+            if rowspan > 1 or colspan > 1:
+                has_span = True
+            c = _strip_br(cell)
+            c = re.sub(r"<[^>]+>", " ", c)
+            c = re.sub(r"\s+", " ", c).strip()
+            if c:
+                c = text_transform(c)
+            parsed.append((tag.lower(), rowspan, colspan, c))
+        if parsed:
+            parsed_rows.append(parsed)
 
+    if not parsed_rows:
+        return ""
+
+    if has_span:
+        html_rows = []
+        for parsed in parsed_rows:
+            cells_html = []
+            for tag, rowspan, colspan, content in parsed:
+                attrs = ""
+                if rowspan > 1:
+                    attrs += f' rowspan="{rowspan}"'
+                if colspan > 1:
+                    attrs += f' colspan="{colspan}"'
+                cells_html.append(f"<{tag}{attrs}>{content}</{tag}>")
+            html_rows.append("<tr>" + "".join(cells_html) + "</tr>")
+        return ("\u00abHTMLTABLE:<table>" +
+                "".join(html_rows) +
+                "</table>\u00ab/HTMLTABLE\u00bb")
+
+    text_rows = []
+    for parsed in parsed_rows:
+        cells = [content for _, _, _, content in parsed if content]
+        if cells:
+            text_rows.append(" | ".join(cells))
     if text_rows:
         header = "H" if has_header else ""
         return "{{TABLE" + header + ":" + "\n".join(text_rows) + "}TABLE}"

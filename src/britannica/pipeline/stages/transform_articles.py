@@ -165,10 +165,39 @@ def _unwrap_content_templates(text: str) -> str:
     text = re.sub(r"\{\{sm\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{right\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{left\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
-    # Fractions: {{sfrac|a|b}} → a/b, {{sfrac|a}} → 1/a
-    text = re.sub(r"\{\{sfrac\|[^{}|]*\|([^{}|]*)\|([^{}|]*)\}\}", r"\1/\2", text, flags=re.IGNORECASE)
-    text = re.sub(r"\{\{sfrac\|([^{}|]*)\|([^{}|]*)\}\}", r"\1/\2", text, flags=re.IGNORECASE)
-    text = re.sub(r"\{\{sfrac\|([^{}|]*)\}\}", r"1/\1", text, flags=re.IGNORECASE)
+    # Fractions. {{sfrac|a|b}} = {{EB1911 tfrac|a|b}} = a/b.
+    # Single-arg form {{sfrac|a}} = {{EB1911 tfrac|a}} = 1/a.
+    # Render common ones as Unicode vulgar fractions; rest as "a/b".
+    _VULGAR = {
+        ("1", "2"): "\u00bd", ("1", "4"): "\u00bc", ("3", "4"): "\u00be",
+        ("1", "3"): "\u2153", ("2", "3"): "\u2154",
+        ("1", "5"): "\u2155", ("2", "5"): "\u2156",
+        ("3", "5"): "\u2157", ("4", "5"): "\u2158",
+        ("1", "6"): "\u2159", ("5", "6"): "\u215a",
+        ("1", "8"): "\u215b", ("3", "8"): "\u215c",
+        ("5", "8"): "\u215d", ("7", "8"): "\u215e",
+    }
+    def _frac(num, den):
+        return _VULGAR.get((num.strip(), den.strip()),
+                           f"{num.strip()}/{den.strip()}")
+    # Three-arg sfrac: {{sfrac|integer|num|den}} → "integer num/den"
+    text = re.sub(
+        r"\{\{(?:sfrac|EB1911 tfrac)\|([^{}|]*)\|([^{}|]*)\|([^{}|]*)\}\}",
+        lambda m: f"{m.group(1).strip()}{_frac(m.group(2), m.group(3))}",
+        text, flags=re.IGNORECASE,
+    )
+    # Two-arg: {{sfrac|num|den}} → num/den
+    text = re.sub(
+        r"\{\{(?:sfrac|EB1911 tfrac)\|([^{}|]*)\|([^{}|]*)\}\}",
+        lambda m: _frac(m.group(1), m.group(2)),
+        text, flags=re.IGNORECASE,
+    )
+    # One-arg: {{sfrac|N}} → 1/N
+    text = re.sub(
+        r"\{\{(?:sfrac|EB1911 tfrac)\|([^{}|]*)\}\}",
+        lambda m: _frac("1", m.group(1)),
+        text, flags=re.IGNORECASE,
+    )
     # Standalone image crop templates (not inside a table — those are handled
     # as DJVU_CROP elements in elements.py)
     text = re.sub(r"\{\{Css image crop[^}]*\}\}", "", text, flags=re.IGNORECASE)
@@ -352,8 +381,19 @@ def _strip_templates(text: str) -> str:
         text = re.sub(r"\{\{(?!IMG:|TABLE|VERSE:)[^{}]*\}\}", "", text)
     # Orphaned closing braces (standalone lines)
     text = re.sub(r"^\s*\}\}+\s*$", "", text, flags=re.MULTILINE)
-    # Trailing orphaned }} at end of lines (from unclosed fine block/print templates)
-    text = re.sub(r"\}\}+\s*$", "", text, flags=re.MULTILINE)
+    # Trailing orphaned }} at end of lines (from unclosed fine block/print
+    # templates). Only strip when the line has more `}}` than `{{` — valid
+    # markers like {{IMG:...}} balance out and must not have their `}}` eaten.
+    def _strip_excess_closers(m):
+        line = m.group(0)
+        opens = len(re.findall(r"\{\{", line))
+        closes = len(re.findall(r"\}\}", line))
+        if closes > opens:
+            # Strip excess closers from the end
+            excess = closes - opens
+            return re.sub(r"(\}\})" * excess + r"\s*$", "", line)
+        return line
+    text = re.sub(r"^.*$", _strip_excess_closers, text, flags=re.MULTILINE)
     # Orphaned wiki table markup
     text = re.sub(r"^\s*\|\}+\s*$", "", text, flags=re.MULTILINE)
     text = re.sub(r"^\s*\{\|\s*$", "", text, flags=re.MULTILINE)
@@ -438,22 +478,32 @@ def _transform_plate(raw_wikitext: str) -> str:
     # Extract all numbered captions.
     # Formats: "N. ALL CAPS CAPTION" or "Fig. N.—Mixed case description"
     captions = {}
+    # Strip [[File:...]] content before caption search — filenames often
+    # contain "Fig. N.—..." embedded in them (EB1911 - Globe - Fig. 18.—
+    # The Indian Ocean...jpg), which would otherwise match the caption
+    # regex and produce garbage.
+    caption_text = re.sub(r"\[\[(?:File|Image):[^\]]*\]\]", "",
+                          text, flags=re.IGNORECASE)
     # Format 1: N. ALL CAPS
-    for m in re.finditer(r"(?<!\w)(\d+)\.\s+([A-Z][A-Z\s,.:;()\-']+)", text):
+    for m in re.finditer(r"(?<!\w)(\d+)\.\s+([A-Z][A-Z\s,.:;()\-']+)", caption_text):
         num = int(m.group(1))
         cap = m.group(2).strip().rstrip(",.|;")
         if len(cap) >= 3 and num not in captions:
             captions[num] = cap
-    # Format 2: {{small-caps|Fig.}} N.—description  or  Fig. N.—description
-    # Captions may wrap across lines (inside <td> blocks), so capture until
-    # </td>, next Fig heading, or double newline.
+    # Format 2: {{sc|Fig.}} N.—description, {{sc|Fig. N.}}—description,
+    # or plain Fig. N.—description. Captions may wrap across lines
+    # (inside <td> blocks), so capture until </td>, next Fig heading,
+    # or newline.
     for m in re.finditer(
-        r"(?:\{\{(?:small-caps|sc)\|Fig\.\}\}|Fig\.)\s*(\d+)\.?\s*[—\-]\s*"
-        r"(.+?)(?=</td>|\|-|\n|\{\{(?:small-caps|sc)\|Fig\.\}\}|Fig\.\s*\d+\.|$)",
-        text, re.DOTALL,
+        r"(?:\{\{(?:small-caps|sc)\|Fig\.\s*(\d+)\.?\s*\}\}"
+        r"|(?:\{\{(?:small-caps|sc)\|Fig\.\}\}|Fig\.)\s*(\d+)\.?)"
+        r"\s*[\u2014\u2013\-]\s*"
+        r"(.+?)(?=</td>|\|-|\n|\{\{(?:small-caps|sc)\|Fig\.|Fig\.\s*\d+\.|$)",
+        caption_text, re.DOTALL,
     ):
-        num = int(m.group(1))
-        cap = m.group(2).strip().rstrip(",.|;")
+        # Number is in group 1 ({{sc|Fig. N.}}) or group 2 ({{sc|Fig.}} N).
+        num = int(m.group(1) or m.group(2))
+        cap = m.group(3).strip().rstrip(",.|;")
         # Clean wiki markup from caption — unwrap templates that wrap text
         cap = re.sub(r"\{\{(?:uc|sc|nowrap|lang\|[^{}]*)\|([^{}]*)\}\}", r"\1", cap, flags=re.IGNORECASE)
         cap = re.sub(r"\{\{[^{}]*\}\}", "", cap)
@@ -880,7 +930,8 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
     #   ", , , "  → ", "
     #   ", ;"     → ";"
     #   ", ."     → "."
-    text = re.sub(r",(\s*,)+", ",", text)
+    # Preserve `,,` adjacent (ditto marks in tables).
+    text = re.sub(r",(\s+,)+", ",", text)
     text = re.sub(r",\s*([;.])", r"\1", text)
 
     return text

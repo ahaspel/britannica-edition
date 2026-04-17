@@ -140,6 +140,17 @@ echo
 echo "=== Phase 6b: Parsing classified TOC (vol 29 topics) [$(elapsed)] ==="
 uv run python tools/vol29/parse_classified_toc.py
 
+# --- Phase 6c: Detect first-content fm scan per volume ---
+echo
+echo "=== Phase 6c: Detecting fm first-content pages [$(elapsed)] ==="
+uv run python tools/diagnostics/detect_fm_blank_pages.py
+
+# --- Phase 6d: Rebuild generated site pages (article IDs change) ---
+echo
+echo "=== Phase 6d: Rebuilding generated site pages [$(elapsed)] ==="
+uv run python tools/viewer/build_about_page.py
+uv run python tools/viewer/build_ancillary_pages.py
+
 # --- Phase 7: Deploy ---
 if [ -z "$NO_DEPLOY" ]; then
   echo
@@ -157,6 +168,7 @@ if [ -z "$NO_DEPLOY" ]; then
   aws s3 cp data/derived/printed_pages_leaf.json s3://britannica11.org/data/printed_pages_leaf.json
   aws s3 cp data/derived/scan_map.json s3://britannica11.org/data/scan_map.json
   aws s3 cp data/derived/classified_toc.json s3://britannica11.org/data/classified_toc.json
+  aws s3 cp data/derived/fm_first_content.json s3://britannica11.org/data/fm_first_content.json
 
   echo "  Uploading viewer..."
   aws s3 cp tools/viewer/viewer.html s3://britannica11.org/viewer.html

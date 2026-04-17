@@ -53,7 +53,7 @@
 <script>
   const params = new URLSearchParams(location.search);
   const vol = parseInt(params.get("vol")) || 1;
-  const startPage = parseInt(params.get("start")) || 1;
+  let startPage = parseInt(params.get("start")) || 1;
   const endPage = parseInt(params.get("end")) || startPage;
   // Printed page numbers for display (fall back to ws numbers)
   const printedStart = parseInt(params.get("pstart")) || startPage;
@@ -72,14 +72,23 @@
   document.getElementById("title").textContent = `Volume ${vol}: ${label}`;
   // In leaf mode for unnumbered ranges, use leaf labels instead of
   // misleading 'pp.' printed-page labels.
-  if (prefix === "leaf") {
-    document.getElementById("subtitle").textContent =
-      `leaves ${startPage}\u2013${endPage}`;
-    document.getElementById("jumpLabel").textContent = "Go to leaf";
-  } else {
-    document.getElementById("subtitle").textContent =
-      `pp. ${printedStart}\u2013${printedEnd}`;
+  function updateSubtitle() {
+    if (prefix === "leaf") {
+      document.getElementById("subtitle").textContent =
+        `leaves ${startPage}\u2013${endPage}`;
+      document.getElementById("jumpLabel").textContent = "Go to leaf";
+    } else if (prefix === "fm") {
+      // Renumbered range: first content page is 1.
+      const count = endPage - startPage + 1;
+      document.getElementById("subtitle").textContent =
+        `fm 1\u2013${count}`;
+      document.getElementById("jumpLabel").textContent = "Go to fm";
+    } else {
+      document.getElementById("subtitle").textContent =
+        `pp. ${printedStart}\u2013${printedEnd}`;
+    }
   }
+  updateSubtitle();
   const backUrl = params.get("back");
   if (backUrl) {
     document.getElementById("backLink").href = backUrl;
@@ -98,6 +107,15 @@
 
   let scanMap = null;
   let printedPages = null;
+  let fmFirstContent = null;
+
+  async function loadFmFirstContent() {
+    try {
+      const url = IS_LOCAL ? "/data/derived/fm_first_content.json" : "/data/fm_first_content.json";
+      const resp = await fetch(url);
+      if (resp.ok) fmFirstContent = await resp.json();
+    } catch (e) { /* fall back to 1 */ }
+  }
 
   async function loadScanMap() {
     try {
@@ -165,7 +183,9 @@
     // translations that mangled the display).
     let pageInfoText;
     if (prefix === "fm") {
-      pageInfoText = `fm ${currentPage}`;
+      // Renumber fm pages so the first content page is "1". The raw
+      // scan index starts from wherever the leading blanks end.
+      pageInfoText = `fm ${currentPage - startPage + 1}`;
     } else {
       const leaf = prefix === "leaf" ? currentPage : leafForPage(vol, currentPage);
       const printed = printedForLeaf(vol, leaf);
@@ -207,8 +227,9 @@
     if (Number.isNaN(n)) return;
 
     if (prefix === "fm") {
-      // Front-matter mode uses leaves directly (no printed-page mapping).
-      goTo(n);
+      // User entered a renumbered fm page (1-based, first content = 1).
+      // Convert back to raw scan index.
+      goTo(startPage + n - 1);
       return;
     }
 
@@ -281,6 +302,19 @@
       } else {
         render();
       }
+    });
+  } else if (prefix === "fm") {
+    // Skip leading blank scans (cover paper / end paper).
+    loadFmFirstContent().then(() => {
+      if (fmFirstContent && fmFirstContent[String(vol)]) {
+        const firstContent = fmFirstContent[String(vol)];
+        if (currentPage < firstContent) {
+          currentPage = firstContent;
+          startPage = firstContent;
+          updateSubtitle();
+        }
+      }
+      render();
     });
   } else {
     render();

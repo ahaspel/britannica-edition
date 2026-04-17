@@ -19,7 +19,7 @@
 #   7. Optionally uploads to S3 with --deploy flag
 
 set -euo pipefail
-cd "$(dirname "$0")/.."
+cd "$(dirname "$0")/../.."
 
 DEPLOY=false
 for arg in "$@"; do
@@ -44,10 +44,10 @@ fi
 VOL=$1
 shift
 
-uv run python tools/rebuild_article.py "$VOL" "$@"
+uv run python tools/pipeline/rebuild_article.py "$VOL" "$@"
 
 if $DEPLOY; then
-    OUTFILE=$(uv run python tools/rebuild_article.py "$VOL" "$@" --output-filename-only)
+    OUTFILE=$(uv run python tools/pipeline/rebuild_article.py "$VOL" "$@" --output-filename-only)
     if [[ -n "$OUTFILE" && -f "data/derived/articles/$OUTFILE" ]]; then
         echo ""
         echo "Deploying $OUTFILE to S3..."

@@ -365,10 +365,13 @@ def walk_and_attribute(toc: list[dict],
         cat_by_norm[_normalize(cat["name"])] = cat
 
     # ── Sub lookup per cat (all depths) ───────────────────────────
-    # Maps cat_name → {normalized_sub_name → node}.
-    # Registers the node's own name plus parent-prefixed compounds
-    # so "EUROPE: COUNTRIES" → "europecountries" matches.
-    sub_lookup: dict[str, dict[str, dict]] = {}
+    # Maps cat_name → {normalized_sub_name → [candidate nodes]}.
+    # A single name (e.g. "Biographies") can occur under many parents
+    # in one cat (Religion has Biographies under Catholic, Eastern,
+    # Reformation, Modern Continental, ...). Store all candidates so
+    # the walker can prefer the one that's a sibling of cur_sub.
+    sub_lookup: dict[str, dict[str, list[dict]]] = {}
+    parent_map: dict[int, dict | None] = {}  # id(node) → parent node
 
     def _strip_parens(s: str) -> str:
         """Strip parenthetical qualifiers from sub names:
@@ -377,29 +380,52 @@ def walk_and_attribute(toc: list[dict],
         return re.sub(r"\s*\(.*?\)", "", s).strip()
 
     def _register_subs(cat_name: str, nodes: list[dict],
-                       parents: list[str] | None = None):
+                       parents: list[dict] | None = None):
         if parents is None:
             parents = []
         lk = sub_lookup.setdefault(cat_name, {})
+        parent_node = parents[-1] if parents else None
         for n in nodes:
+            parent_map[id(n)] = parent_node
             name = n["name"]
             # Register both full name and stripped-parens form.
             for form in {name, _strip_parens(name)}:
                 norm = _normalize(form)
                 if norm:
-                    lk.setdefault(norm, n)
+                    lk.setdefault(norm, []).append(n)
             # Parent-prefixed compounds for X:Y matching.
             norm = _normalize(_strip_parens(name))
             if parents:
-                parent_norm = _normalize(_strip_parens(parents[-1]))
+                parent_norm = _normalize(_strip_parens(parents[-1]["name"]))
                 compound = parent_norm + norm
                 if compound:
-                    lk.setdefault(compound, n)
+                    lk.setdefault(compound, []).append(n)
             _register_subs(cat_name, n.get("children", []),
-                           parents + [name])
+                           parents + [n])
 
     for cat in toc:
         _register_subs(cat["name"], cat["subsections"])
+
+    def _prefer_relative(candidates: list[dict],
+                          cur: dict | None) -> dict:
+        """When multiple sub nodes share a name, prefer the one whose
+        parent is on cur's ancestor chain (or cur itself). This keeps
+        'Biographies' under Modern Continental from matching Catholic
+        Biographies when cur_sub is inside Modern Continental."""
+        if not cur or len(candidates) == 1:
+            return candidates[0]
+        # Build cur's ancestor chain.
+        ancestors: set[int] = set()
+        node = cur
+        while node is not None:
+            ancestors.add(id(node))
+            node = parent_map.get(id(node))
+        # Prefer candidate whose parent is in the ancestor chain.
+        for cand in candidates:
+            p = parent_map.get(id(cand))
+            if p is not None and id(p) in ancestors:
+                return cand
+        return candidates[0]
 
     # ── Page carryover from meta-TOC anchors ──────────────────────
     sub_anchors: list[tuple[int, str, dict]] = []
@@ -438,8 +464,11 @@ def walk_and_attribute(toc: list[dict],
 
     # ── Sub matching ──────────────────────────────────────────────
 
-    def _try_sub(cat_name: str, text: str) -> dict | None:
-        """Exact sub-header match with (cont.) stripping and aliases."""
+    def _try_sub(cat_name: str, text: str,
+                  cur: dict | None = None) -> dict | None:
+        """Exact sub-header match with (cont.) stripping and aliases.
+        When multiple candidates share a name, prefers the one related
+        to `cur` (same ancestor chain)."""
         if cat_name not in sub_lookup:
             return None
         lk = sub_lookup[cat_name]
@@ -450,29 +479,40 @@ def walk_and_attribute(toc: list[dict],
             return None
         # Exact.
         if norm in lk:
-            return lk[norm]
+            return _prefer_relative(lk[norm], cur)
         # Alias.
         alias = _SUB_ALIASES.get(norm)
         if alias and alias in lk:
-            return lk[alias]
+            return _prefer_relative(lk[alias], cur)
         # Singular ↔ plural.
         if norm + "s" in lk:
-            return lk[norm + "s"]
+            return _prefer_relative(lk[norm + "s"], cur)
         if norm.endswith("s") and len(norm) > 3 and norm[:-1] in lk:
-            return lk[norm[:-1]]
+            return _prefer_relative(lk[norm[:-1]], cur)
         return None
 
-    def _match_sub(cat_name: str, line: str) -> dict | None:
+    # Sub-sub header names that the classified TOC uses inline under
+    # level-2 subs (e.g. "Architecture: Subjects", "Music: Instruments").
+    # When an X:Y pattern has Y in this set and X matches a level-2 sub
+    # with no existing child Y, we create a new child dynamically.
+    _DYNAMIC_SUBSUB_NAMES = {
+        "subjects", "biographies", "instruments", "divisions",
+        "towns", "townsetc", "general", "names", "legendaryfigures",
+        "scholars", "critics",
+    }
+
+    def _match_sub(cat_name: str, line: str,
+                    cur: dict | None = None) -> dict | None:
         """Try full line, then X:Y split.
         For X:Y, if X matches a parent sub, try Y as a child of X.
-        Falls back to X itself if Y doesn't match a child."""
-        hit = _try_sub(cat_name, line)
+        Creates dynamic child if Y is a known sub-sub name."""
+        hit = _try_sub(cat_name, line, cur)
         if hit:
             return hit
         if ":" in line:
             x, y = line.split(":", 1)
             x, y = x.strip(), y.strip()
-            parent = _try_sub(cat_name, x)
+            parent = _try_sub(cat_name, x, cur)
             if parent:
                 # Try Y as a child of parent (strip cont. and parens).
                 y_clean = re.sub(r"\s*\(cont\.?\)\s*$", "", y,
@@ -491,6 +531,25 @@ def walk_and_attribute(toc: list[dict],
                             y_norm.endswith("s") and y_norm[:-1] == cn
                         ):
                             return child
+                    # Dynamic child creation: Y is a known sub-sub name
+                    # and parent has no matching child yet.
+                    if y_norm in _DYNAMIC_SUBSUB_NAMES:
+                        new_child = {
+                            "name": y_clean,
+                            "printed_page": parent.get("printed_page"),
+                            "articles": [],
+                            "children": [],
+                        }
+                        parent.setdefault("children", []).append(new_child)
+                        parent_map[id(new_child)] = parent
+                        lk = sub_lookup.setdefault(cat_name, {})
+                        lk.setdefault(y_norm, []).append(new_child)
+                        # Parent-prefixed compound for future matching.
+                        parent_prefix = _normalize(
+                            _strip_parens(parent["name"]))
+                        lk.setdefault(parent_prefix + y_norm,
+                                      []).append(new_child)
+                        return new_child
                 return parent  # Y didn't match a child; use X
         return None
 
@@ -567,19 +626,48 @@ def walk_and_attribute(toc: list[dict],
                     continue
                 # ## line didn't match a cat — try as sub.
                 if cur_cat:
-                    new_sub = _match_sub(cur_cat, line)
+                    new_sub = _match_sub(cur_cat, line, cur_sub)
                     if new_sub:
                         cur_sub = _first_leaf(new_sub)
                 continue
 
             # ── Plain line: sub transition? ───────────────────────
+            # Special handling for "General list" sections: these are
+            # flat lists of country articles where some names coincide
+            # with sub names. The country name appears twice — first
+            # as an article in the General list, then as a sub-header
+            # introducing the detailed section. Treat the FIRST
+            # occurrence as an article; the SECOND as a sub transition.
+            in_general_list = (
+                cur_sub is not None
+                and "general list" in cur_sub.get("name", "").lower()
+            )
             if cur_cat and len(line) <= 80:
-                new_sub = _match_sub(cur_cat, line)
-                if new_sub:
-                    leaf = _first_leaf(new_sub)
-                    if leaf is not cur_sub:
-                        cur_sub = leaf
-                    continue
+                if in_general_list and ":" not in line:
+                    # Check if this line already appeared as an article
+                    # in the current General list bucket. If so, it's a
+                    # sub transition. If not, it's another article.
+                    existing = raw_entries.get(id(cur_sub), [])
+                    seen_here = any(
+                        raw_name.strip().lower() == line.strip().lower()
+                        for raw_name, _ in existing
+                    )
+                    if not seen_here:
+                        pass  # first occurrence — treat as article
+                    else:
+                        new_sub = _match_sub(cur_cat, line, cur_sub)
+                        if new_sub:
+                            leaf = _first_leaf(new_sub)
+                            if leaf is not cur_sub:
+                                cur_sub = leaf
+                            continue
+                else:
+                    new_sub = _match_sub(cur_cat, line, cur_sub)
+                    if new_sub:
+                        leaf = _first_leaf(new_sub)
+                        if leaf is not cur_sub:
+                            cur_sub = leaf
+                        continue
 
             # ── Article accumulation ──────────────────────────────
             if cur_sub is not None:

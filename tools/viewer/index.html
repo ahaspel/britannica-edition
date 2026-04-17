@@ -287,8 +287,6 @@
           <a href="/topics.html" style="color: var(--link); text-decoration: none;">Topics</a>
           &nbsp;&middot;&nbsp;
           <a href="/ancillary.html" style="color: var(--link); text-decoration: none;">Ancillary</a>
-          &nbsp;&middot;&nbsp;
-          <a href="/about.html" style="color: var(--link); text-decoration: none;">About</a>
         </div>
       </div>
       <div id="stats" class="stats">Loading...</div>
@@ -302,6 +300,7 @@
         <input id="search" class="search-box" type="text" placeholder="Search articles..." autofocus />
         <button id="search-btn" class="search-btn">Search</button>
         <span id="search-help-btn" style="cursor:pointer; font-size:1rem; color:var(--muted); padding:0 6px; user-select:none;" title="Search tips">&#x2139;</span>
+        <span id="result-count" style="font-size:0.85rem; color:var(--muted); margin-left:8px; white-space:nowrap;"></span>
       </div>
       <div id="search-help-popup" style="display:none; font-size:0.82rem; color:var(--text); background:var(--panel); border:1px solid var(--border); border-radius:4px; padding:10px 14px; margin-top:4px; line-height:1.6;">
         <b>Search operators:</b><br>
@@ -493,6 +492,7 @@
       hideAllResults();
       resultsCard.style.display = "block"; resultsDivider.style.display = "block";
 
+      setResultCount(lastFiltered.length);
       if (lastFiltered.length === 0) {
         emptyEl.style.display = "block";
         return;
@@ -678,6 +678,7 @@
         }
         hits = hits.filter(h => h._matchCount > 0);
         hits.sort((a, b) => (b._matchCount || 0) - (a._matchCount || 0));
+        setResultCount(hits.length);
 
         if (hits.length === 0) {
           emptyEl.style.display = "block";
@@ -739,6 +740,7 @@
           )
         : contributors;
 
+      setResultCount(matches.length);
       if (matches.length === 0) {
         emptyEl.style.display = "block";
         emptyEl.textContent = "No contributors found.";
@@ -773,7 +775,7 @@
     const FM_LEAVES = {
       1:37, 2:15, 3:17, 4:20, 5:16, 6:16, 7:16, 8:17,
       9:17, 10:19, 11:17, 12:16, 13:16, 14:15, 15:16, 16:17,
-      17:17, 18:15, 19:17, 21:17, 22:17, 23:16, 24:15,
+      17:17, 18:15, 19:17, 20:18, 21:17, 22:17, 23:16, 24:15,
       25:19, 26:19, 27:19, 28:18
     };
     function fmLeafCount(vol) { return FM_LEAVES[vol] || 0; }
@@ -867,9 +869,16 @@
     }
 
     // ── Helpers ──
+    const resultCountEl = document.getElementById("result-count");
+    function setResultCount(n) {
+      resultCountEl.textContent = n === 0 ? "No results" :
+        n === 1 ? "1 result" : `${n.toLocaleString()} results`;
+    }
+
     function hideAllResults() {
       emptyEl.style.display = "none";
       emptyEl.textContent = "No results found.";
+      resultCountEl.textContent = "";
       document.getElementById("title-results").style.display = "none";
       document.getElementById("fulltext-results").style.display = "none";
       document.getElementById("contrib-results").style.display = "none";

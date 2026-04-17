@@ -276,6 +276,120 @@
       border: 1px solid #c4b49a;
     }
 
+    /* Wide data tables: shown inline but horizontally scrollable, with an
+       Expand button that pops them into a full-viewport modal. */
+    .wide-table-wrap {
+      margin: 1em 0;
+      position: relative;
+    }
+    .wide-table-inline {
+      overflow-x: auto;
+      border: 1px solid #c4b49a;
+      background: var(--panel);
+    }
+    .wide-table-inline .data-table {
+      margin: 0;
+      border: none;
+      min-width: max-content;
+    }
+    .expand-table-btn {
+      display: inline-block;
+      font: inherit;
+      font-size: 0.75rem;
+      color: #8b7355;
+      background: #ebe4d6;
+      border: 1px solid #c4b49a;
+      padding: 2px 10px;
+      margin-bottom: 4px;
+      border-radius: 3px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .expand-table-btn:hover { background: #ddd4c4; }
+
+    .wide-table-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 16, 10, 0.6);
+      z-index: 9000;
+      padding: 2em;
+      box-sizing: border-box;
+    }
+    .wide-table-modal.fullscreen {
+      padding: 0;
+    }
+    .wide-table-modal-panel {
+      position: absolute;
+      inset: 2em;
+      display: flex;
+      flex-direction: column;
+      background: var(--panel);
+      border: 1px solid #c4b49a;
+      border-radius: 4px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+      overflow: hidden;
+      resize: both;
+      min-width: 320px;
+      min-height: 240px;
+      max-width: calc(100vw - 2em);
+      max-height: calc(100vh - 2em);
+    }
+    .wide-table-modal.fullscreen .wide-table-modal-panel {
+      inset: 0;
+      border: none;
+      border-radius: 0;
+      resize: none;
+      max-width: 100vw;
+      max-height: 100vh;
+    }
+    .wide-table-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: #ebe4d6;
+      border-bottom: 1px solid #c4b49a;
+      font-weight: 600;
+      color: #5a4a35;
+    }
+    .wide-table-modal-title {
+      font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .wide-table-modal-btn {
+      font: inherit;
+      font-size: 1.1rem;
+      line-height: 1;
+      color: #8b7355;
+      background: transparent;
+      border: none;
+      padding: 4px 8px;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    .wide-table-modal-btn:hover {
+      background: #ddd4c4;
+      color: #3a2f20;
+    }
+    .wide-table-modal-actions {
+      display: flex;
+      gap: 2px;
+    }
+    .wide-table-modal-body {
+      flex: 1;
+      overflow: auto;
+      padding: 1em;
+    }
+    .wide-table-modal-body .data-table {
+      margin: 0;
+      min-width: max-content;
+    }
+    .wide-table-trailing {
+      margin-top: 1em;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
     .data-table td {
       padding: 5px 10px;
       border: 1px solid #ddd4c4;
@@ -610,6 +724,7 @@
 
     .inline-image img {
       max-width: 100%;
+      max-height: 600px;
       height: auto;
       border: 1px solid var(--border);
       border-radius: 2px;
@@ -678,9 +793,52 @@
     }
 
     // Close popups when clicking elsewhere
-    document.addEventListener('click', () => {
+    document.addEventListener('click', (ev) => {
+      const expandBtn = ev.target.closest('.expand-table-btn');
+      if (expandBtn) {
+        ev.stopPropagation();
+        openWideTableModal(expandBtn.dataset.wt);
+        return;
+      }
       document.querySelectorAll('.fn-popup.visible').forEach(p => p.classList.remove('visible'));
     });
+
+    function openWideTableModal(id) {
+      const src = wideTableSources[id];
+      if (!src) return;
+      const modal = document.createElement('div');
+      modal.className = 'wide-table-modal';
+      const trailingPart = src.trailing ? `<div class="wide-table-trailing">${src.trailing}</div>` : "";
+      modal.innerHTML = `
+        <div class="wide-table-modal-panel">
+          <div class="wide-table-modal-header">
+            <span class="wide-table-modal-title">Table (expanded view)</span>
+            <span class="wide-table-modal-actions">
+              <button class="wide-table-modal-btn js-fullscreen" title="Toggle full screen">⛶</button>
+              <button class="wide-table-modal-btn js-close" title="Close">✕</button>
+            </span>
+          </div>
+          <div class="wide-table-modal-body">${src.table}${trailingPart}</div>
+        </div>`;
+      const close = () => modal.remove();
+      modal.querySelector('.js-close').onclick = close;
+      const fsBtn = modal.querySelector('.js-fullscreen');
+      fsBtn.onclick = () => {
+        const full = modal.classList.toggle('fullscreen');
+        fsBtn.textContent = full ? '⛶' : '⛶';
+        fsBtn.title = full ? 'Exit full screen' : 'Full screen';
+      };
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) close();
+      });
+      document.addEventListener('keydown', function escOnce(e) {
+        if (e.key === 'Escape') {
+          close();
+          document.removeEventListener('keydown', escOnce);
+        }
+      });
+      document.body.appendChild(modal);
+    }
 
     function escapeHtml(value) {
       return String(value ?? "")
@@ -738,7 +896,9 @@
     function commonsUrl(filename) {
       // Full URLs (e.g. score images from upload.wikimedia.org) pass through
       if (filename.startsWith("http://") || filename.startsWith("https://")) return filename;
-      const name = filename.replace(/ /g, "_");
+      let name = filename.replace(/ /g, "_");
+      // SVGs are rasterized to .svg.png by the download script
+      if (name.toLowerCase().endsWith(".svg")) name += ".png";
       const local = location.hostname === "localhost" || location.hostname === "127.0.0.1";
       // All images served locally (Commons, DjVu crops, chart scans)
       if (local) return `/data/derived/images/${encodeURIComponent(name)}`;
@@ -752,6 +912,8 @@
     let linkedTargets = new Set();
     let sectionCounter = 0;
     let collectedSections = [];
+    let wideTableCounter = 0;
+    const wideTableSources = {};
     // Track section keys emitted via top-level heading rules (SEC
     // marker, «SC»I.—Foo«/SC» major-section pattern). Used to
     // suppress duplicate top-level emissions for the same name.
@@ -829,6 +991,25 @@
           return `<span class="hieroglyph-fallback" title="Gardiner ${code}">${code}</span>`;
         }).join("");
         return rendered || match;
+      });
+      // LaTeX math in cells — render inline with KaTeX.
+      h = h.replace(/\u00abMATH:(.*?)\u00ab\/MATH\u00bb/gs, (_m, latex) => {
+        const tmp = document.createElement("textarea");
+        tmp.innerHTML = latex;
+        const raw = tmp.value.replace(/\\mbox\b/g, "\\text");
+        try {
+          if (typeof katex !== "undefined") {
+            return katex.renderToString(raw, { throwOnError: false, displayMode: false });
+          }
+        } catch(e) {
+          console.warn("KaTeX cell error:", e.message);
+        }
+        return `<code class="math-fallback">${escapeHtml(raw)}</code>`;
+      });
+      // Multi-line VERSE inside a cell — newline-separated lines joined with <br>.
+      h = h.replace(/\{\{VERSE:([\s\S]*?)\}VERSE\}/g, (_m, content) => {
+        const lines = content.split("\n").filter(l => l.trim());
+        return `<span class="cell-verse">${lines.join("<br>")}</span>`;
       });
       return h;
     }
@@ -912,25 +1093,92 @@
         return `<blockquote class="verse">${lines.map(l => escapeHtml(l)).join("<br>")}</blockquote>`;
       }
       // Render complex HTML tables (rowspan/colspan preserved)
-      const htmlTableMatch = p.match(/^\u00abHTMLTABLE:([\s\S]*)\u00ab\/HTMLTABLE\u00bb$/);
+      const htmlTableMatch = p.match(/^(\u00abHTMLTABLE:[\s\S]*?\u00ab\/HTMLTABLE\u00bb)([\s\S]*)$/);
       if (htmlTableMatch) {
-        let t = htmlTableMatch[1].replace("<table>", '<table class="data-table">');
-        t = t.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
-        t = t.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
-        t = t.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
-        return t;
+        const tableBlock = htmlTableMatch[1];
+        const trailing = htmlTableMatch[2].trim();
+        const inner = tableBlock.match(/^\u00abHTMLTABLE:([\s\S]*)\u00ab\/HTMLTABLE\u00bb$/)[1];
+        let t = inner.replace("<table>", '<table class="data-table">');
+        // Hoist any page markers inside cells to the row level — render
+        // them as a floated span at the start of the row's first cell so
+        // they land in the left margin alongside body-paragraph markers,
+        // instead of disrupting cell-content alignment.
+        const makePageSpan = (pg) => {
+          const unproofed = pg in unproofedPages;
+          const cls = unproofed ? "page-marker unproofed" : "page-marker";
+          const title = unproofed
+            ? `Volume ${currentVolume}, page ${pg} (unproofed source)`
+            : `Volume ${currentVolume}, page ${pg}`;
+          return `<span class="${cls}" title="${title}">${currentVolume}:${pg}</span>`;
+        };
+        let maxCols = 0;
+        t = t.replace(/<tr([^>]*)>([\s\S]*?)<\/tr>/g, (_m, trAttrs, inner) => {
+          const pageMarkers = [];
+          inner = inner.replace(/\x01PAGE:(\d+)\x01/g, (_x, pg) => {
+            pageMarkers.push(pg);
+            return "";
+          });
+          let rowCols = 0;
+          inner = inner.replace(/<(t[dh])([^>]*)>([\s\S]*?)<\/\1>/g,
+            (_x, tag, attrs, content) => {
+              const cs = /colspan=["']?(\d+)/i.exec(attrs);
+              rowCols += cs ? parseInt(cs[1], 10) : 1;
+              return `<${tag}${attrs}>${formatCell(content)}</${tag}>`;
+            });
+          if (rowCols > maxCols) maxCols = rowCols;
+          if (pageMarkers.length > 0) {
+            const spans = pageMarkers.map(makePageSpan).join("");
+            inner = inner.replace(/<(t[dh])([^>]*)>/,
+              (_x, tag, attrs) => `<${tag}${attrs}>${spans}`);
+          }
+          return `<tr${trAttrs}>${inner}</tr>`;
+        });
+        // Any text that follows the closing marker in the same paragraph
+        // (e.g. Lighthouse Table VII's footnote-asterisk explanation) —
+        // render it as a sibling paragraph, and also include it in the
+        // modal's expanded view (the original print laid it out with the
+        // table, so it belongs in the expanded view too).
+        const trailingHtml = trailing ? renderParagraph(trailing) : "";
+
+        // Wrap wide tables (≥10 effective columns) so they can be opened in
+        // a full-viewport modal.  The table still renders inline, but an
+        // "Expand" button lets the reader see it uncramped.
+        let rendered;
+        if (maxCols >= 10) {
+          const tableId = `wt-${++wideTableCounter}`;
+          wideTableSources[tableId] = { table: t, trailing: trailingHtml };
+          rendered = `<figure class="wide-table-wrap"><button class="expand-table-btn" data-wt="${tableId}" title="Open full-width view">⤢ Expand (${maxCols} columns)</button><div class="wide-table-inline">${t}</div></figure>`;
+        } else {
+          rendered = t;
+        }
+        if (trailingHtml) rendered += trailingHtml;
+        return rendered;
       }
       // Render table markers (with or without headers)
       const tableMatch = p.match(/^\{\{TABLE(H?):([\s\S]*)\}TABLE\}$/);
       if (tableMatch) {
         const hasHeader = tableMatch[1] === "H";
-        const rows = tableMatch[2].split("\n").filter(r => r.trim());
+        // Protect \n inside {{VERSE:…}VERSE} blocks before row-splitting —
+        // VERSE contents are multi-line but belong to a single cell.
+        const protectedBody = tableMatch[2].replace(
+          /\{\{VERSE:[\s\S]*?\}VERSE\}/g,
+          m => m.replace(/\n/g, "\x05"));
+        const rows = protectedBody.split("\n")
+          .filter(r => r.trim())
+          .map(r => r.replace(/\x05/g, "\n"));
         // Single-row tables render inline (common for hieroglyph glosses)
         if (rows.length === 1 && !hasHeader) {
           return `<span class="inline-table">${formatCell(rows[0])}</span>`;
         }
-        // Detect max columns for colspan calculation
-        const splitRows = rows.map(r => r.split(" | "));
+        // Detect max columns for colspan calculation.
+        // Protect {{IMG:...}} markers before splitting on " | " — their
+        // internal pipe would otherwise be mistaken for a cell separator.
+        const splitRows = rows.map(r => {
+          const protectedRow = r.replace(/\{\{IMG:[^}]*\}\}/g,
+            m => m.replace(/ \| /g, "\x04"));
+          return protectedRow.split(" | ").map(
+            c => c.replace(/\x04/g, " | "));
+        });
         const maxCols = Math.max(...splitRows.map(r => r.length));
 
         const tableRows = splitRows.map((cells, i) => {
@@ -1236,7 +1484,7 @@
                </div>`
             : ""}
           ${(() => {
-            footnoteCounter = 0; collectedFootnotes = []; linkedTargets = new Set(); sectionCounter = 0; collectedSections = []; emittedSectionKeys = new Set(); currentSectionKey = "";
+            footnoteCounter = 0; collectedFootnotes = []; linkedTargets = new Set(); sectionCounter = 0; collectedSections = []; emittedSectionKeys = new Set(); currentSectionKey = ""; wideTableCounter = 0; for (const k in wideTableSources) delete wideTableSources[k];
 
             // Page markers (\x01PAGE:N\x01) are embedded directly in the
             // body text by the transform stage.  If none are present

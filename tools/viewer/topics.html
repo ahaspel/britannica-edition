@@ -47,19 +47,54 @@
       margin-left: 8px; }
     .empty-cat { color: var(--muted); font-style: italic; padding: 12px 16px; }
     .subsection { padding: 10px 18px 16px; }
-    .subsection-l2 > h3 { margin: 12px 0 6px; font-size: 1.05rem;
-      font-variant: small-caps; letter-spacing: 0.05em; color: var(--text);
+    details.sub { margin: 6px 0; }
+    details.sub > summary {
+      cursor: pointer; user-select: none; outline: none;
+      padding: 3px 6px; border-radius: 2px;
+    }
+    details.sub > summary:hover { background: var(--resolved-bg); }
+    details.sub > summary::marker { color: var(--muted); }
+    .sub-meta { color: var(--muted); font-size: 0.82rem; font-weight: normal;
+      margin-left: 6px; }
+    .subsection-l2 > h3, details.sub-l2 > summary > .sub-name {
+      font-size: 1.05rem; font-variant: small-caps; letter-spacing: 0.05em;
+      color: var(--text); font-weight: bold;
+    }
+    .subsection-l2 > h3 { margin: 12px 0 6px;
       border-bottom: 1px solid var(--border); padding-bottom: 3px; }
-    .subsection-l3 > h3 { margin: 10px 0 4px; font-size: 0.95rem;
-      font-variant: small-caps; letter-spacing: 0.04em; color: var(--muted);
-      font-weight: bold; }
-    .subsection-l4 > h4 { margin: 8px 0 3px; font-size: 0.85rem;
-      font-variant: small-caps; letter-spacing: 0.03em; color: var(--muted);
-      font-weight: normal; font-style: italic; }
-    .subsection-l3 { margin-left: 16px; padding: 4px 12px 10px;
+    .subsection-l3 > h3, details.sub-l3 > summary > .sub-name {
+      font-size: 0.95rem; font-variant: small-caps; letter-spacing: 0.04em;
+      color: var(--muted); font-weight: bold;
+    }
+    .subsection-l3 > h3 { margin: 10px 0 4px; }
+    .subsection-l4 > h4, details.sub-l4 > summary > .sub-name {
+      font-size: 0.9rem; font-variant: small-caps; letter-spacing: 0.03em;
+      color: var(--muted); font-weight: normal; font-style: italic;
+    }
+    .subsection-l4 > h4 { margin: 8px 0 3px; }
+    .subsection-l5 > h4, details.sub-l5 > summary > .sub-name {
+      font-size: 0.85rem; font-variant: small-caps; color: var(--muted);
+      font-style: italic;
+    }
+    .subsection-l3, details.sub-l3 > .sub-body { margin-left: 16px;
+      padding: 4px 12px 10px;
       border-left: 3px solid var(--border); background: rgba(123, 63, 0, 0.02); }
-    .subsection-l4 { margin-left: 12px; padding: 2px 10px 8px;
+    .subsection-l4, details.sub-l4 > .sub-body { margin-left: 12px;
+      padding: 2px 10px 8px;
       border-left: 2px dashed var(--border); background: rgba(123, 63, 0, 0.04); }
+    .subsection-l5, details.sub-l5 > .sub-body { margin-left: 10px;
+      padding: 2px 8px 6px;
+      border-left: 1px dotted var(--border); background: rgba(123, 63, 0, 0.06); }
+    .nav-arrow {
+      position: fixed; right: 8px; width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--panel); border: 1px solid var(--border);
+      color: var(--muted); cursor: pointer; font-size: 0.9rem;
+      border-radius: 50%; user-select: none; line-height: 1;
+      z-index: 100;
+    }
+    .nav-arrow:hover { color: #5c4a32; background: var(--resolved-bg); }
+    .nav-arrow { top: 50%; }
     /* Multi-column layout so long alphabetical lists (like the
        original printed TOC) read naturally. CSS columns keep items
        in alphabetical order column-by-column automatically. */
@@ -110,8 +145,6 @@
         <a href="/contributors.html" style="color: var(--link); text-decoration: none;">Contributors</a>
         &nbsp;&middot;&nbsp;
         <a href="/ancillary.html" style="color: var(--link); text-decoration: none;">Ancillary</a>
-        &nbsp;&middot;&nbsp;
-        <a href="/about.html" style="color: var(--link); text-decoration: none;">About</a>
       </div>
     </div>
     <div class="source-note">
@@ -136,6 +169,9 @@
   </div>
   <div class="footer" id="footer"></div>
 </div>
+
+<button class="nav-arrow" style="transform:translateY(-20px)" onclick="window.scrollTo({top:0,behavior:'instant'})" title="Top">&#x25B2;</button>
+<button class="nav-arrow" style="transform:translateY(12px)" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'instant'})" title="Bottom">&#x25BC;</button>
 
 <script>
   const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
@@ -187,10 +223,29 @@
       .map(c => renderSubsection(c, depth + 1))
       .filter(Boolean)
       .join("");
-    const headTag = level <= 3 ? `h3` : `h4`;
-    return `<div class="subsection subsection-l${level}">` +
-           `<${headTag}>${escapeHtml(sub.name)}</${headTag}>` +
-           arts + kids + `</div>`;
+    const name = escapeHtml(sub.name);
+    // Level 2 stays as a plain heading — it's the primary structure
+    // inside a category. Level 3+ become collapsible so deep trees
+    // (Geography > Europe > Countries > Norway) stay navigable.
+    if (level <= 2) {
+      const headTag = `h3`;
+      return `<div class="subsection subsection-l${level}">` +
+             `<${headTag}>${name}</${headTag}>` +
+             arts + kids + `</div>`;
+    }
+    // Collapsible deeper node: show article count in summary.
+    const counts = countAll(sub);
+    const metaText = counts.arts === 0 ? "" :
+      counts.arts === counts.resolved ? `${counts.arts}` :
+      `${counts.resolved}/${counts.arts}`;
+    const meta = metaText ? `<span class="sub-meta">${metaText}</span>` : "";
+    // Open by default for level 3 (e.g. Europe inside Geography), closed
+    // for level 4+ (e.g. Countries, then Norway within Countries).
+    const openAttr = level <= 3 ? " open" : "";
+    return `<details class="sub sub-l${level}"${openAttr}>` +
+           `<summary><span class="sub-name">${name}</span>${meta}</summary>` +
+           `<div class="sub-body">${arts}${kids}</div>` +
+           `</details>`;
   }
 
   function countAll(node) {
@@ -264,10 +319,10 @@
   }
 
   document.getElementById("expandAll").addEventListener("click", () => {
-    document.querySelectorAll("details.category").forEach(d => d.open = true);
+    document.querySelectorAll("details.category, details.sub").forEach(d => d.open = true);
   });
   document.getElementById("collapseAll").addEventListener("click", () => {
-    document.querySelectorAll("details.category").forEach(d => d.open = false);
+    document.querySelectorAll("details.category, details.sub").forEach(d => d.open = false);
   });
 
   load();

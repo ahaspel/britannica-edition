@@ -157,9 +157,63 @@ Single command: `./tools/rebuild_all.sh` — cleans everything (DB, exports, S3)
 - pipe_leak: 30, html_tag: 28, stray_wiki_italic: 15 (increased from layout table unwrapping exposing previously hidden markup)
 - stray_braces: 14, leaked_html_attr: 8, stray_control_x06: 4, stray_control_x03: 1
 
-### Queued for next rebuild
-- Table classification overhaul (verse, compound, complex routing, math fix)
-- Printed page numbers (pending OCR ground truth)
+### Queued for next rebuild (staged 2026-04-17)
+
+**Boundary detection (`detect_boundaries.py`)**
+- Uppercase char class extended for Œ, Ś, Ḍ, Ḥ, Ṃ, Ṇ, Ṛ, Ṣ, Ṭ, Ẓ (fixes MANŒUVRES truncation to MAN).
+- `_QUALIFIER` pattern keeps parenthetical/bracketed qualifiers in titles — "MAP (or Mapes), WALTER", "MORLEY [of Blackburn]".
+- Regnal-numeral second words allowed (ALEXANDER I/II/III, GEORGE V, ABBAS I).
+- `{{nop}}` / `{{clear}}` / `{{-}}` spacing templates stripped before bold-heading check.
+- `<big>`, `<small>`, `<sub>`, `<sup>`, `<span>`, `<font>` stripped in `_strip_templates` (fixes SUCCINIC ACID drop-cap).
+- `_is_plate_page` tightened to ≤80 prose words for ≥3 images, ≤30 for 2 (fixes MAP misclassification).
+
+**Transform (`transform_articles.py`)**
+- `{{EB1911 tfrac}}` → Unicode vulgar fractions.
+- `,,` ditto marks preserved (ROPE table).
+- `{{sic|word}}` preserves inner word (fixes BRITAIN Pre-Roman "Geologists").
+- `_strip_templates` uses count-aware `_strip_excess_closers` for orphan `}}` (fixes BAG-PIPE score).
+
+**Elements (`elements.py`)**
+- `_strip_br` helper handles soft-hyphen `<br>` (`-<br>` → empty, `<br>` → space).
+- `«LN:…|…«/LN»` marker strip in `_clean_text`.
+- `||` → `\n|` normalization in `_extract_cells` (MediaWiki same-line cell fix).
+- `{{Ts|…}}` / `{{ts|…}}` templates stripped before cell parsing (fixes Medieval Abbreviations phantom column).
+- `_process_html_table` routes tables with colspan/rowspan to HTMLTABLE, preserving structure (fixes ROPE "Breaking Strain in Tons" double-row header).
+- Image patterns extended: `{{img float}}`, `{{figure}}`, `{{FI}}`.
+
+**Export (`article_json.py`)**
+- `_find_parent` uses page-range containment for plate parent lookup (fixes title-collision cases like the three MAP articles).
+
+**Contributors (`extract_contributors.py`)**
+- Footer-to-article matching now operates on `ArticleSegment` scope, not page scope (fixes MALONIC ACID / J.L.W. misattribution from MALORY).
+
+**Xrefs (`xrefs/extractor.py`)**
+- `_is_bibliographic` filter excludes citations with italic journal names, quoted paper titles, "p./pp./vol.", roman-numeral volumes, "by Author" patterns.
+
+**Diagnostics (`quality_report.py`)**
+- New `unhandled_marker_in_htmltable` check — flags markers inside HTMLTABLE cells that `formatCell` can't render (MATH/VERSE exempt as known issues).
+
+**Rebuild script (`rebuild_all.sh`)**
+- Phase 6c: `tools/diagnostics/detect_fm_blank_pages.py` writes `fm_first_content.json` to skip blank front-matter scans.
+- Phase 6d: `tools/viewer/build_about_page.py` + ancillary page generation.
+- Paths updated for tools/ subdirectory reorg (pipeline/, vol29/, diagnostics/, viewer/).
+- Additional deploy targets: ancillary.html, about.html, transcription pages.
+
+**Viewer (already deployed, no rebuild needed)**
+- HTMLTABLE renderer passes each cell through `formatCell` so IMG/FN/hieroglyph markers render (fixes ABBREVIATION images).
+- Page markers inside HTMLTABLE cells hoisted to row level, prepended to first cell with existing `.page-marker` float/margin (keeps alignment intact).
+- Nav standardized site-wide: Home · Articles · Contributors · Topics · Ancillary.
+- Scans page reads `fm_first_content.json` to skip blanks; vol 20 shown with DLI Bengal leaf scans copied as fm01-18.
+- Index page: Enter-to-search + result count; FM_LEAVES updated for vol 20.
+- Topics page: hierarchical collapsibility, top/bottom nav arrows, subsection level 5 styling.
+
+**Known deferred (not in this rebuild)**
+- Wiki-table illustration unwrapping: `_process_table` in `elements.py` has an image+caption unwrapper only for 2-row tables with single-cell rows. Needs extension for 3+ row illustration tables where later rows carry multi-cell legends (e.g. CHAETOPODA vol 5 Fig. 2: row 1 = image, row 2 = "Fig. 2. (from Goodrich).", row 3 = figure description | solenocyte legend). Should emit `{{IMG:filename|caption}}` + the remaining rows as paragraphs/verse rather than a TABLE block.
+
+**Completed during build (viewer-only, already live)**
+- `formatCell` extended for MATH (KaTeX inline) and VERSE (newline → `<br>`). Fixed ABBREVIATION `\Bigg}` brace and CHAETOPODA verse legend rendering.
+- `{{TABLE:}}` renderer protects `\n` inside `{{VERSE:…}VERSE}` blocks from row-splitting.
+- Quality report: MATH/VERSE removed from HTMLTABLE exemptions (they're rendered now; future leaks will be flagged).
 
 ### New in 2026-04-09 build
 - **Table classification overhaul**: `_is_layout_wrapper` respects border/rules/class; `{{Ts}}` + data signal → COMPLEX_HTML; verse-layout detection (~21 tables); `COMPOUND_TABLE` element type for nested sub-tables (40 tables); `_process_complex_table` uses inner with placeholders (fixes math in complex tables)
