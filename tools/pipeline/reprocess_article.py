@@ -11,7 +11,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 
 from britannica.db.models import Article, ArticleSegment, SourcePage
 from britannica.db.session import SessionLocal
-from britannica.export.article_json import _safe_filename, _printed_page
+from britannica.export.article_json import _safe_filename, _printed_page, stable_id
 from britannica.pipeline.stages.transform_articles import _transform_text_v2
 
 
@@ -59,6 +59,7 @@ def reprocess(article_id=None, title=None, volume=None):
 
         out = {
             "id": article.id,
+            "stable_id": stable_id(article),
             "title": article.title,
             "volume": article.volume,
             "page_start": _printed_page(article.volume, article.page_start),
@@ -73,7 +74,7 @@ def reprocess(article_id=None, title=None, volume=None):
             "plates": [],
         }
 
-        outpath = f"data/derived/articles/{_safe_filename(article.id, article.title)}"
+        outpath = f"data/derived/articles/{_safe_filename(article, article.title)}"
         with open(outpath, "w", encoding="utf-8") as f:
             json.dump(out, f, indent=2, ensure_ascii=False)
 

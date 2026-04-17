@@ -76,18 +76,35 @@ def _convert_links(text: str) -> str:
         _eb1911_link, text, flags=re.IGNORECASE,
     )
 
-    # {{1911link|Target}} or {{1911link|Target|Display}} (and 11link)
+    # {{1911link|Target}} or {{1911link|Target|Display}} (and 11link).
+    # Positional args named like `nosc=yes` are template options, not
+    # display text — drop them.
+    def _link11(m):
+        parts = m.group(1).split("|")
+        target = parts[0].strip()
+        positional = [
+            p.strip() for p in parts[1:]
+            if p.strip() and "=" not in p
+        ]
+        display = positional[0] if positional else target
+        return f"{_LNK}{target}|{display}{_LNK}"
     text = re.sub(
-        r"\{\{(?:1911link|11link)\|([^{}|]+)(?:\|([^{}]*))?\}\}",
-        lambda m: f"{_LNK}{m.group(1)}|{m.group(2) or m.group(1)}{_LNK}",
-        text, flags=re.IGNORECASE,
+        r"\{\{(?:1911link|11link)\|([^{}]+)\}\}",
+        _link11, text, flags=re.IGNORECASE,
     )
 
     # {{EB1911 lkpl|...}} and {{DNB lkpl|...}}
+    def _lkpl(m):
+        parts = m.group(1).split("|")
+        target = parts[0].strip()
+        # Display is the first non-empty parameter after the target;
+        # fall back to the target when all others are empty
+        # (e.g. `{{EB1911 lkpl|Grebe|grebes|}}` with trailing empty arg).
+        display = next((p.strip() for p in parts[1:] if p.strip()), target)
+        return f"{_LNK}{target}|{display}{_LNK}"
     text = re.sub(
         r"\{\{(?:EB1911|DNB)\s+lkpl\|([^{}]+)\}\}",
-        lambda m: f"{_LNK}{m.group(1).split('|')[0]}|{m.group(1).split('|')[-1]}{_LNK}",
-        text, flags=re.IGNORECASE,
+        _lkpl, text, flags=re.IGNORECASE,
     )
 
     # [[wikilinks]] — handle nested brackets
@@ -158,9 +175,16 @@ def _unwrap_content_templates(text: str) -> str:
     text = re.sub(r"\{\{larger\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     # Drop initial (decorative large first letter) → just the letter
     text = re.sub(r"\{\{[Dd]rop ?initial\|([^{}|]*)[^{}]*\}\}", r"\1", text)
-    # Abbreviation/tooltip → first arg (display text)
-    text = re.sub(r"\{\{abbr\|([^{}|]*)\|[^{}]*\}\}", r"\1", text, flags=re.IGNORECASE)
-    text = re.sub(r"\{\{tooltip\|([^{}|]*)\|[^{}]*\}\}", r"\1", text, flags=re.IGNORECASE)
+    # Abbreviation/tooltip → first arg (display text). The first arg
+    # can contain a link marker \x06…\x06 which itself holds a pipe;
+    # treat the marker as atomic so the pipe split doesn't bisect it.
+    _ABBR_ARG1 = r"(?:" + re.escape(_LNK) + r"[^" + re.escape(_LNK) + r"]*" + re.escape(_LNK) + r"|[^{}|])*"
+    text = re.sub(
+        r"\{\{abbr\|(" + _ABBR_ARG1 + r")\|[^{}]*\}\}",
+        r"\1", text, flags=re.IGNORECASE)
+    text = re.sub(
+        r"\{\{tooltip\|(" + _ABBR_ARG1 + r")\|[^{}]*\}\}",
+        r"\1", text, flags=re.IGNORECASE)
     # Size/alignment wrappers → content
     text = re.sub(r"\{\{sm\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{right\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
@@ -267,29 +291,47 @@ def _convert_shoulder_headings(text: str) -> str:
                 if depth == 0:
                     # Extract content: everything after the last | at depth 1
                     inner = text[idx+len(prefix):i]
-                    # Find the last top-level | to get the actual heading text
-                    d = 0
-                    last_pipe = -1
-                    for k, ch in enumerate(inner):
-                        if ch == "{":
-                            d += 1
-                        elif ch == "}":
-                            d -= 1
-                        elif ch == "|" and d == 0:
-                            last_pipe = k
+                    # Find the last top-level | to get the actual heading
+                    # text. Treat \x06…\x06 link markers and [[…]] as
+                    # atomic — their internal pipes are not delimiters.
+                    def _top_level_pipes(s):
+                        d = 0
+                        in_link = False
+                        in_bracket = 0
+                        pipes = []
+                        k = 0
+                        while k < len(s):
+                            ch = s[k]
+                            if ch == _LNK:
+                                in_link = not in_link
+                            elif not in_link:
+                                if s[k:k+2] == "[[":
+                                    in_bracket += 1
+                                    k += 2
+                                    continue
+                                if s[k:k+2] == "]]":
+                                    in_bracket -= 1
+                                    k += 2
+                                    continue
+                                if ch == "{":
+                                    d += 1
+                                elif ch == "}":
+                                    d -= 1
+                                elif ch == "|" and d == 0 and in_bracket == 0:
+                                    pipes.append(k)
+                            k += 1
+                        return pipes
+                    pipes = _top_level_pipes(inner)
+                    last_pipe = pipes[-1] if pipes else -1
                     heading_text = inner[last_pipe+1:] if last_pipe >= 0 else inner
                     # If we got an attribute instead of heading text, walk back
                     # through pipes until we find actual text
                     _ATTR_RE = re.compile(r"\s*(?:align|width|style)\s*=", re.IGNORECASE)
-                    while _ATTR_RE.match(heading_text) and last_pipe >= 0:
-                        # Find the previous top-level pipe
-                        d2 = 0
-                        prev_pipe = -1
-                        for k2, ch2 in enumerate(inner[:last_pipe]):
-                            if ch2 == "{": d2 += 1
-                            elif ch2 == "}": d2 -= 1
-                            elif ch2 == "|" and d2 == 0: prev_pipe = k2
-                        heading_text = inner[prev_pipe+1:last_pipe] if prev_pipe >= 0 else inner[:last_pipe]
+                    pipe_idx = len(pipes) - 1
+                    while _ATTR_RE.match(heading_text) and pipe_idx > 0:
+                        pipe_idx -= 1
+                        prev_pipe = pipes[pipe_idx]
+                        heading_text = inner[prev_pipe+1:last_pipe]
                         last_pipe = prev_pipe
                     # Strip inner templates, bold/italic, and line breaks
                     heading_text = re.sub(r"<br\s*/?>", " ", heading_text, flags=re.IGNORECASE)
@@ -379,6 +421,12 @@ def _strip_templates(text: str) -> str:
     while prev != text:
         prev = text
         text = re.sub(r"\{\{(?!IMG:|TABLE|VERSE:)[^{}]*\}\}", "", text)
+    # Unclosed template openers (e.g. "{{nowrap|...") from malformed
+    # wikitext where the editor left the `}}` off. Strip just the
+    # `{{name|` prefix and preserve the content. Skip our own markers.
+    text = re.sub(
+        r"\{\{(?!IMG:|TABLE|VERSE:|FN:|MATH:|SEC:|LN:)[A-Za-z][\w\s-]*[|,]",
+        "", text)
     # Orphaned closing braces (standalone lines)
     text = re.sub(r"^\s*\}\}+\s*$", "", text, flags=re.MULTILINE)
     # Trailing orphaned }} at end of lines (from unclosed fine block/print
@@ -777,6 +825,13 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
     # Strip <noinclude> blocks (page headers, quality tags)
     text = re.sub(r"<noinclude>.*?</noinclude>", "", text,
                   flags=re.DOTALL | re.IGNORECASE)
+
+    # Unclosed `{{nowrap|…` (malformed wikitext in sources like EGYPT
+    # vol 9 p76) confuses cell parsing because its inner `|` leaks as
+    # a cell separator. Strip the opener so the content passes through
+    # as plain cell text. `{{nowrap|…}}` (balanced) is handled later
+    # by _unwrap_content_templates / _unwrap_balanced.
+    text = re.sub(r"\{\{nowrap\s*\|", "", text, flags=re.IGNORECASE)
 
     # Replace <score> tags (static lookup, must happen before extraction)
     text = _replace_score_tags(text, volume, page_number)

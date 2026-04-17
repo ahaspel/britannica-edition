@@ -1371,6 +1371,15 @@
         return `?article=/data/derived/articles/${encodeURIComponent(filename)}`;
       }
       const base = filename.replace(/\.json$/, "");
+      // Stable IDs: "16-0670-lighthouse-LIGHTHOUSE". The ID is three
+      // hyphen-separated tokens (vol, page, section-slug); everything
+      // after is the title slug.
+      const m = base.match(/^(\d{2}-\d{4}-[a-z0-9][a-z0-9-]*?)-(\p{Lu}[\p{Lu}0-9_-]*)$/u);
+      if (m) {
+        return `/article/${m[1]}/${m[2].toLowerCase()}`;
+      }
+      // Legacy numeric-ID filenames (shouldn't occur post-rebuild, but
+      // keep the old split as a fallback).
       const page = base.replace(/^0+/, "").split("-")[0];
       const slug = base.substring(base.indexOf("-") + 1).toLowerCase();
       return `/article/${page}/${slug}`;
@@ -1602,10 +1611,19 @@
         }
         const suffix = preserved.toString() ? "?" + preserved.toString() : "";
         if (!IS_LOCAL) {
-          const fnMatch = path.match(/(\d+)-([^/]+)\.json$/);
+          // Stable ID form: "16-0670-lighthouse-TITLE.json" →
+          // /article/16-0670-lighthouse/title
+          let fnMatch = path.match(/(\d{2}-\d{4}-[a-z0-9][a-z0-9-]*?)-(\p{Lu}[\p{Lu}0-9_-]*)\.json$/u);
           if (fnMatch) {
             const cleanUrl = `/article/${fnMatch[1]}/${fnMatch[2].toLowerCase()}${suffix}`;
             window.history.replaceState({}, "", cleanUrl);
+          } else {
+            // Legacy numeric fallback
+            fnMatch = path.match(/(\d+)-([^/]+)\.json$/);
+            if (fnMatch) {
+              const cleanUrl = `/article/${fnMatch[1]}/${fnMatch[2].toLowerCase()}${suffix}`;
+              window.history.replaceState({}, "", cleanUrl);
+            }
           }
         } else {
           const url = new URL(window.location.href);
@@ -1716,12 +1734,22 @@
     }
     let initialPath = new URLSearchParams(window.location.search).get("article");
     if (!initialPath && !IS_LOCAL) {
-      // Production: /article/367/pharaoh -> 0367-PHARAOH.json
-      const match = window.location.pathname.match(/^\/article\/(\d+)\/(.+)/);
-      if (match) {
-        const id = match[1];
-        const slug = decodeURIComponent(match[2]).toUpperCase();
+      // Production: /article/16-0670-lighthouse/LIGHTHOUSE -> 16-0670-lighthouse-LIGHTHOUSE.json
+      // (stable IDs: {vol:02d}-{page:04d}-{section-slug}, durable across rebuilds)
+      const stableMatch = window.location.pathname.match(/^\/article\/(\d{2}-\d{4}-[a-z0-9-]+)\/(.+)/);
+      if (stableMatch) {
+        const id = stableMatch[1];
+        const slug = decodeURIComponent(stableMatch[2]).toUpperCase();
         initialPath = `${DATA_BASE}/${id}-${slug}.json`;
+      } else {
+        // Legacy numeric-ID URL (pre-stable-ids rebuild). Try the old
+        // format so bookmarks placed before the switch still load.
+        const legacyMatch = window.location.pathname.match(/^\/article\/(\d+)\/(.+)/);
+        if (legacyMatch) {
+          const id = legacyMatch[1];
+          const slug = decodeURIComponent(legacyMatch[2]).toUpperCase();
+          initialPath = `${DATA_BASE}/${id}-${slug}.json`;
+        }
       }
     }
     if (initialPath) {

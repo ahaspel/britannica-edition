@@ -586,9 +586,35 @@ def _unwrap_layout_table(inner: str, text_transform,
                     row_content.append(cell)
 
         for c in row_content:
-            # Don't transform placeholders — they'll be substituted later
+            # Placeholders (child elements) must pass through untouched,
+            # but any surrounding text in the cell still needs
+            # text_transform (entities, italic/bold, etc). Split on
+            # placeholder boundaries, transform the text chunks only,
+            # then rejoin.
             if _PH in c:
-                parts.append(c)
+                ph_re = re.compile(
+                    re.escape(_PH) + r"[^" + re.escape(_PH) + r"]+"
+                    + re.escape(_PH))
+                out = []
+                last = 0
+                for m in ph_re.finditer(c):
+                    if m.start() > last:
+                        chunk = c[last:m.start()]
+                        if chunk.strip():
+                            out.append(text_transform(chunk))
+                        else:
+                            out.append(chunk)
+                    out.append(m.group(0))
+                    last = m.end()
+                if last < len(c):
+                    tail = c[last:]
+                    if tail.strip():
+                        out.append(text_transform(tail))
+                    else:
+                        out.append(tail)
+                joined = "".join(out).strip()
+                if joined:
+                    parts.append(joined)
             else:
                 content = text_transform(c)
                 if content.strip():
@@ -1446,7 +1472,30 @@ def _unwrap_html_illustration(
             if not c:
                 continue
             if _PH in c:
-                image_cells.append(c)
+                # Cell contains a placeholder (image). Transform any
+                # surrounding text (entity decoding, bold/italic) but
+                # preserve the placeholder verbatim for substitution.
+                ph_re = re.compile(
+                    re.escape(_PH) + r"[^" + re.escape(_PH) + r"]+"
+                    + re.escape(_PH))
+                out = []
+                last = 0
+                for m in ph_re.finditer(c):
+                    if m.start() > last:
+                        chunk = c[last:m.start()]
+                        if chunk.strip():
+                            out.append(text_transform(chunk))
+                        else:
+                            out.append(chunk)
+                    out.append(m.group(0))
+                    last = m.end()
+                if last < len(c):
+                    tail = c[last:]
+                    if tail.strip():
+                        out.append(text_transform(tail))
+                    else:
+                        out.append(tail)
+                image_cells.append("".join(out))
             else:
                 caption_parts.append(text_transform(c))
 
@@ -1503,9 +1552,26 @@ def _process_html_table(
 
     rows = re.findall(r"<tr[^>]*>(.*?)</tr>", inner, re.DOTALL | re.IGNORECASE)
     if not rows:
-        # No rows found — just strip all HTML and return content
+        # No <tr> wrappers (e.g. HYDRAULICS: `<table><td>...</td></table>`
+        # with td directly under table). Try to pull out <td> cells; if
+        # none, strip and run the plain content through text_transform so
+        # italic/bold/entities get converted.
+        cells = re.findall(
+            r"<t[dh][^>]*>(.*?)</t[dh]>",
+            inner, re.DOTALL | re.IGNORECASE)
+        if cells:
+            parts = []
+            for c in cells:
+                c = _strip_br(c)
+                c = re.sub(r"<[^>]+>", " ", c)
+                c = re.sub(r"\s+", " ", c).strip()
+                if c:
+                    parts.append(text_transform(c))
+            return " | ".join(parts)
         text = re.sub(r"<[^>]+>", " ", inner)
         text = re.sub(r"\s+", " ", text).strip()
+        if text:
+            text = text_transform(text)
         return text
 
     parsed_rows = []

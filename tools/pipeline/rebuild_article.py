@@ -173,7 +173,7 @@ def main():
         article_title = article.title
         article_page_start = article.page_start
         article_page_end = article.page_end
-        old_filename = _safe_filename(article.page_start, article.title)
+        old_filename = _safe_filename(article, article.title)
     finally:
         session.close()
 
@@ -187,7 +187,7 @@ def main():
     session = SessionLocal()
     try:
         article = find_article(session, volume, article_title, None, None)
-        filename = _safe_filename(article.page_start, article.title)
+        filename = _safe_filename(article, article.title)
     finally:
         session.close()
 

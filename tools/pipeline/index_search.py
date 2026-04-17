@@ -110,7 +110,12 @@ def main():
         body_start = " ".join(words[:10]) + "\u2026" if len(words) > 10 else " ".join(words)
 
         doc = {
-            "id": article["id"],
+            # Meilisearch doc ID uses the stable_id so search-result URLs
+            # don't rot on rebuild. Falls back to numeric id for articles
+            # exported before stable_ids landed.
+            "id": article.get("stable_id") or str(article["id"]),
+            "numeric_id": article["id"],
+            "stable_id": article.get("stable_id"),
             "title": article["title"],
             "article_type": article.get("article_type", "article"),
             "volume": article["volume"],

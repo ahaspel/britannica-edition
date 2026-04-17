@@ -157,63 +157,57 @@ Single command: `./tools/rebuild_all.sh` — cleans everything (DB, exports, S3)
 - pipe_leak: 30, html_tag: 28, stray_wiki_italic: 15 (increased from layout table unwrapping exposing previously hidden markup)
 - stray_braces: 14, leaked_html_attr: 8, stray_control_x06: 4, stray_control_x03: 1
 
-### Queued for next rebuild (staged 2026-04-17)
+### Landed in 2026-04-17 rebuild
+- **Boundary & title fixes**: Œ/Ś/Ḍ/Ḥ etc in uppercase class; parenthetical/bracketed qualifiers preserved; regnal numerals allowed; `{{nop}}`/`{{clear}}`/`{{-}}` stripped; `<big>`/`<small>` dropcap tags stripped; plate-detection threshold tightened. +1,162 articles surfaced.
+- **Transform**: `{{EB1911 tfrac}}` vulgar fractions; `,,` ditto preservation; `{{sic|word}}` preserves word; count-aware `_strip_excess_closers` for orphan `}}`.
+- **Elements**: `_strip_br` soft-hyphen helper; `«LN:»` marker cleanup; `||`→`\n|` cell normalization; `{{Ts|…}}` styling templates stripped; `_process_html_table` colspan/rowspan → HTMLTABLE with structure preserved; extended `{{img float}}`/`{{figure}}`/`{{FI}}` patterns.
+- **Export**: `_find_parent` page-range containment for plate lookup.
+- **Contributors**: ArticleSegment-scoped footer matching (fixes MALONIC ACID).
+- **Xrefs**: `_is_bibliographic` filter drops junk citations. Resolution: 89% → 92%.
+- **Stable article IDs** (scholarly link durability): `{vol:02d}-{page:04d}-{section-slug}` format (e.g. `16-0670-lighthouse`). Article model has `section_name` column. Viewer URL routing updated site-wide (`viewer.html`, `index.html`, `contributors.html`, `preface.html`, `topics.html`, `build_about_page.py`). Unicode-aware regex (`\p{Lu}`) for non-ASCII titles like MANŒUVRES.
+- **Rebuild script**: Phase 6c/6d added; paths updated for tools/ subdirectory reorg.
+- **Quality report**: `unhandled_marker_in_htmltable` check; lowercase-title filter handles parenthetical/bracketed forms + Mc/Mac name prefixes.
 
-**Boundary detection (`detect_boundaries.py`)**
-- Uppercase char class extended for Œ, Ś, Ḍ, Ḥ, Ṃ, Ṇ, Ṛ, Ṣ, Ṭ, Ẓ (fixes MANŒUVRES truncation to MAN).
-- `_QUALIFIER` pattern keeps parenthetical/bracketed qualifiers in titles — "MAP (or Mapes), WALTER", "MORLEY [of Blackburn]".
-- Regnal-numeral second words allowed (ALEXANDER I/II/III, GEORGE V, ABBAS I).
-- `{{nop}}` / `{{clear}}` / `{{-}}` spacing templates stripped before bold-heading check.
-- `<big>`, `<small>`, `<sub>`, `<sup>`, `<span>`, `<font>` stripped in `_strip_templates` (fixes SUCCINIC ACID drop-cap).
-- `_is_plate_page` tightened to ≤80 prose words for ≥3 images, ≤30 for 2 (fixes MAP misclassification).
+### Queued for next rebuild (staged post-2026-04-17 from live debugging)
 
-**Transform (`transform_articles.py`)**
-- `{{EB1911 tfrac}}` → Unicode vulgar fractions.
-- `,,` ditto marks preserved (ROPE table).
-- `{{sic|word}}` preserves inner word (fixes BRITAIN Pre-Roman "Geologists").
-- `_strip_templates` uses count-aware `_strip_excess_closers` for orphan `}}` (fixes BAG-PIPE score).
+**Element extraction leaks found during live inspection**
+- `_unwrap_layout_table` (elements.py) — placeholder-containing cells now split on `\x06…\x06` / placeholder boundaries so surrounding text (entities, italic) goes through `text_transform`. Fixes EGYPT hieroglyph table `''ỉb''` italic leak and similar.
+- `_unwrap_html_illustration` (elements.py) — same placeholder-split fix. Clears HYDRAULICS `&emsp;` leaks in multi-image table captions.
+- `_process_html_table` (elements.py) — no-`<tr>` branch now runs `text_transform` on extracted `<td>` cell content. Fixes HYDRAULICS math-equation cells with `<table><td>…</td></table>` syntax (no tr wrappers).
 
-**Elements (`elements.py`)**
-- `_strip_br` helper handles soft-hyphen `<br>` (`-<br>` → empty, `<br>` → space).
-- `«LN:…|…«/LN»` marker strip in `_clean_text`.
-- `||` → `\n|` normalization in `_extract_cells` (MediaWiki same-line cell fix).
-- `{{Ts|…}}` / `{{ts|…}}` templates stripped before cell parsing (fixes Medieval Abbreviations phantom column).
-- `_process_html_table` routes tables with colspan/rowspan to HTMLTABLE, preserving structure (fixes ROPE "Breaking Strain in Tons" double-row header).
-- Image patterns extended: `{{img float}}`, `{{figure}}`, `{{FI}}`.
+**Transform fixes**
+- `{{nowrap|` unclosed-opener strip (transform_articles.py `_transform_text_v2`) — strips `{{nowrap|` prefix before cell parsing so its inner `|` doesn't leak as a cell separator. Clears attr leaks in CUNEIFORM, EGYPT, NIHILISM, PERSIA, SIAM, ZEUXIS.
+- `_strip_templates` unclosed-opener fallback — strips any `{{name|` / `{{name,` prefix surviving the balanced-template pass. Catches other malformed-source templates (watch for regressions).
+- `{{EB1911 lkpl|target|display|}}` with empty trailing param — display now falls back to target instead of producing `\x06target|\x06` (empty-display link that `_finalize_markers` can't convert).
+- `{{1911link|target|nosc=yes}}` named-arg handling — `nosc=yes`-style positional args dropped; display falls back to target. Fixes `«SH»Aden|nosc=yes«/SH»` leaks.
+- `{{abbr}}` / `{{tooltip}}` first-param regex allows embedded `\x06…\x06` link markers as atomic (not bisected on their internal pipe).
+- Shoulder-heading extractor (`_convert_shoulder_headings`) treats `\x06…\x06` and `[[…]]` as atomic blocks when finding the last top-level pipe. Fixes SOMALILAND, UNITED KINGDOM `«SH»Iron\x06.«/SH»` / `«SH»Protectorate\x06.«/SH»` leaks.
 
-**Export (`article_json.py`)**
-- `_find_parent` uses page-range containment for plate parent lookup (fixes title-collision cases like the three MAP articles).
-
-**Contributors (`extract_contributors.py`)**
-- Footer-to-article matching now operates on `ArticleSegment` scope, not page scope (fixes MALONIC ACID / J.L.W. misattribution from MALORY).
-
-**Xrefs (`xrefs/extractor.py`)**
-- `_is_bibliographic` filter excludes citations with italic journal names, quoted paper titles, "p./pp./vol.", roman-numeral volumes, "by Author" patterns.
-
-**Diagnostics (`quality_report.py`)**
-- New `unhandled_marker_in_htmltable` check — flags markers inside HTMLTABLE cells that `formatCell` can't render (MATH/VERSE exempt as known issues).
-
-**Rebuild script (`rebuild_all.sh`)**
-- Phase 6c: `tools/diagnostics/detect_fm_blank_pages.py` writes `fm_first_content.json` to skip blank front-matter scans.
-- Phase 6d: `tools/viewer/build_about_page.py` + ancillary page generation.
-- Paths updated for tools/ subdirectory reorg (pipeline/, vol29/, diagnostics/, viewer/).
-- Additional deploy targets: ancillary.html, about.html, transcription pages.
+**Metric wins expected on next rebuild**
+- `stray_wiki_italic`: 21 → 12 (HYDRAULICS 62 occ + EGYPT 32 occ cleared; 12 remaining are smaller edge cases in paths the fix didn't touch).
+- `leaked_html_attr`: 12 → 8 (the `{{nowrap|` prefix strip cleared ~5 articles).
+- `stray_control_x06`: 6 → 1 (LOOM, MAP, ROME, SOMALILAND, UNITED KINGDOM cleared; MENSURATION has deeper math-template issues remaining).
 
 **Viewer (already deployed, no rebuild needed)**
-- HTMLTABLE renderer passes each cell through `formatCell` so IMG/FN/hieroglyph markers render (fixes ABBREVIATION images).
-- Page markers inside HTMLTABLE cells hoisted to row level, prepended to first cell with existing `.page-marker` float/margin (keeps alignment intact).
+- `formatCell` extended for MATH (KaTeX inline) and VERSE (newline → `<br>`). ABBREVIATION `\Bigg}` brace and CHAETOPODA verse legend now render.
+- HTMLTABLE cells pass through `formatCell` — IMG/FN/hieroglyph markers render.
+- Page markers inside HTMLTABLE cells hoisted to row level.
+- Wide-table modal: HTMLTABLE blocks ≥10 columns get an Expand button opening a resizable/fullscreen modal (LIGHTHOUSE Tables VI, VII).
+- Wiki `{{TABLE:}}` renderer protects `\n` inside `{{VERSE:…}VERSE}` blocks from row-splitting.
+- Quality report: MATH/VERSE removed from HTMLTABLE exemptions.
 - Nav standardized site-wide: Home · Articles · Contributors · Topics · Ancillary.
-- Scans page reads `fm_first_content.json` to skip blanks; vol 20 shown with DLI Bengal leaf scans copied as fm01-18.
-- Index page: Enter-to-search + result count; FM_LEAVES updated for vol 20.
-- Topics page: hierarchical collapsibility, top/bottom nav arrows, subsection level 5 styling.
+- Scans page `fm_first_content.json` blank-skip; vol 20 shows DLI Bengal leaf scans.
+- Index page Enter-to-search + result count.
+- Topics page hierarchical collapsibility, nav arrows.
 
 **Known deferred (not in this rebuild)**
-- Wiki-table illustration unwrapping: `_process_table` in `elements.py` has an image+caption unwrapper only for 2-row tables with single-cell rows. Needs extension for 3+ row illustration tables where later rows carry multi-cell legends (e.g. CHAETOPODA vol 5 Fig. 2: row 1 = image, row 2 = "Fig. 2. (from Goodrich).", row 3 = figure description | solenocyte legend). Should emit `{{IMG:filename|caption}}` + the remaining rows as paragraphs/verse rather than a TABLE block.
-
-**Completed during build (viewer-only, already live)**
-- `formatCell` extended for MATH (KaTeX inline) and VERSE (newline → `<br>`). Fixed ABBREVIATION `\Bigg}` brace and CHAETOPODA verse legend rendering.
-- `{{TABLE:}}` renderer protects `\n` inside `{{VERSE:…}VERSE}` blocks from row-splitting.
-- Quality report: MATH/VERSE removed from HTMLTABLE exemptions (they're rendered now; future leaks will be flagged).
+- **Wiki-table illustration unwrapping**: `_process_table` in `elements.py` needs extension for 3+ row illustration tables with multi-cell legends (CHAETOPODA vol 5 Fig. 2; IRON AND STEEL vol 14 Fig. 13 pig-casting). Emit `{{IMG:filename|caption}}` + remaining rows as paragraphs/verse.
+- **Wide MATH blocks** (ALGEBRAIC FORMS) — reuse the HTMLTABLE wide-table modal pattern for `.katex-display` blocks that exceed article-column width.
+- **html_tag leaks** (76 files, 360 tags total): (a) 218 `<br>` inside image captions from multi-column wiki tables where side-by-side cells zip without re-running `text_transform`; (b) 117 `<sub>`/`<sup>` inside chemistry formula fragments around `{{IMG:Langle.svg}}` brackets; (c) 15 `<td>` + 6 `<tr>` from tables partially escaping extraction. Trace the `|caption ||}}` pattern in `elements.py`.
+- **Malformed source: HTML table with wiki-cell-pipes** (HYDRAULICS math equations): `<td>content |rowspan=3|<math>...</math></td>` mixes wiki-table syntax inside HTML. Needs mixed-syntax detector.
+- **Remaining stray-italic edge cases** (12 files): scientific names adjacent to IMG markers (BROMELIACEAE, BRYOPHYTA, POLYGONACEAE etc.), single-char variables in math (IRIS figure labels), book-title italics (BEE, MITRE).
+- **Remaining `\x06` in MENSURATION**: math-template interleaving produces `\x06V`, `\x06Differences` orphan markers. Deep-math-template issue.
+- **stray_close_braces / stray_braces** (9 close + 8 open, 14 articles): math braces colliding with templates (QUATERNIONS, WAVE, VALUE); templates with open parens (TANCRED, THEODORE); editor typos (ST LOUIS).
 
 ### New in 2026-04-09 build
 - **Table classification overhaul**: `_is_layout_wrapper` respects border/rules/class; `{{Ts}}` + data signal → COMPLEX_HTML; verse-layout detection (~21 tables); `COMPOUND_TABLE` element type for nested sub-tables (40 tables); `_process_complex_table` uses inner with placeholders (fixes math in complex tables)

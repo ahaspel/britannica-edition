@@ -68,6 +68,18 @@ def _build_article_lookup():
 
 def _article_url(filename):
     base = filename.replace(".json", "")
+    # Stable-ID filename: "NN-NNNN-section-TITLE". Section slug is
+    # lowercase+digits+hyphens; title starts at the first Unicode
+    # uppercase character after the prefix.
+    prefix_m = re.match(r"^(\d{2}-\d{4}-)", base)
+    if prefix_m:
+        for i in range(prefix_m.end(), len(base)):
+            c = base[i]
+            if c.isupper() and i > 0 and base[i - 1] == "-":
+                stable = base[:i - 1]
+                title = base[i:]
+                return f"/article/{stable}/{title.lower()}"
+    # Legacy fallback for numeric-only IDs.
     idx = base.index("-")
     page = base[:idx].lstrip("0") or "0"
     slug = base[idx + 1:].lower()

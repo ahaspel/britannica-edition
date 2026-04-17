@@ -186,11 +186,13 @@
   function articleUrl(filename) {
     // Match the URL scheme used by search.html + viewer.html.
     // Local: ?article=<absolute-path-to-JSON>.
-    // Prod:  /article/{numeric-id}/{slug-lowercase}.
+    // Prod:  /article/{stable-id}/{slug-lowercase} where stable-id = "NN-NNNN".
     if (IS_LOCAL_TOPICS) {
       return `viewer.html?article=/data/derived/articles/${encodeURIComponent(filename)}`;
     }
     const base = filename.replace(/\.json$/, "");
+    const m = base.match(/^(\d{2}-\d{4}-[a-z0-9][a-z0-9-]*?)-(\p{Lu}[\p{Lu}0-9_-]*)$/u);
+    if (m) return `/article/${m[1]}/${m[2].toLowerCase()}`;
     const page = base.replace(/^0+/, "").split("-")[0];
     const slug = base.substring(base.indexOf("-") + 1).toLowerCase();
     return `/article/${page}/${slug}`;
