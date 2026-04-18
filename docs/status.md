@@ -170,6 +170,19 @@ Single command: `./tools/rebuild_all.sh` — cleans everything (DB, exports, S3)
 
 ### Queued for next rebuild (staged post-2026-04-17 from live debugging)
 
+**Critical: biographical articles missing (pre-existing, not a session regression)**
+- `detect_boundaries.py`: the "Title-Case section name = subsection continuation" rule was incorrectly firing on biographical `Surname, Firstname` section names. Added a `_is_bio_section` filter that exempts `^[A-Z][a-z…]+, [A-Z]` patterns. Also extended first-line detection to span multi-line `[[Author:…]]` wrappers (fixes COMTE specifically where the Author wikilink broke across lines).
+- Confirmed missing articles include: **COMTE (Auguste), MARRYAT (Captain Frederick), CLEMENTI (Muzio), CANTU (Cesare), BARERE (de Vieuzac, Bertrand), BAANFFY (Dezsö)**, plus ~dozens more — estimated 20–40 biographical articles total across the corpus (diagnostic at `tools/diagnostics/find_missing_sections.py` flags ~43 but includes false positives from middle-name variants). Rerun after rebuild and compare against the "Surname, Firstname" section-name list.
+
+**Critical: stray_close_braces regression (9 → 613) from `{{nowrap|` preprocessing**
+- My earlier `{{nowrap|` prefix-strip was too aggressive: it stripped openers of balanced nested nowraps (e.g. AARD-VARK's `{{nowrap|17{{EB1911 tfrac|2}} in.;}}`), leaving orphan `}}`. Replaced with `_strip_unclosed_nowrap` that only strips openers lacking a matching `}}`.
+- Also removed speculative `_strip_templates` catch-all `{{name|` opener-strip, which was a safety-net causing similar balanced-template regressions.
+
+**Title-duplication at body start (POPILIA pattern, this-session artifact)**
+- `_strip_redundant_title` helper in `article_json.py` now handles multi-bold titles like `«B»POPILIA«/B» (or Popillia), «B»VIA,«/B» the name …` by accumulating consecutive bold+interstitial chunks and matching against the full article title. Old single-bold strip left `(or Popillia), VIA,` duplicated.
+
+
+
 **Element extraction leaks found during live inspection**
 - `_unwrap_layout_table` (elements.py) — placeholder-containing cells now split on `\x06…\x06` / placeholder boundaries so surrounding text (entities, italic) goes through `text_transform`. Fixes EGYPT hieroglyph table `''ỉb''` italic leak and similar.
 - `_unwrap_html_illustration` (elements.py) — same placeholder-split fix. Clears HYDRAULICS `&emsp;` leaks in multi-image table captions.

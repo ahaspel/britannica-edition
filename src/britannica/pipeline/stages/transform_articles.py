@@ -421,12 +421,11 @@ def _strip_templates(text: str) -> str:
     while prev != text:
         prev = text
         text = re.sub(r"\{\{(?!IMG:|TABLE|VERSE:)[^{}]*\}\}", "", text)
-    # Unclosed template openers (e.g. "{{nowrap|...") from malformed
-    # wikitext where the editor left the `}}` off. Strip just the
-    # `{{name|` prefix and preserve the content. Skip our own markers.
-    text = re.sub(
-        r"\{\{(?!IMG:|TABLE|VERSE:|FN:|MATH:|SEC:|LN:)[A-Za-z][\w\s-]*[|,]",
-        "", text)
+    # Note: unclosed-opener stripping is handled targeted per-template
+    # (see `_strip_unclosed_nowrap` in _transform_text_v2). A blanket
+    # `{{name|` strip here is unsafe — it drops openers of balanced
+    # templates whose content confuses the `[^{}]*` pattern (e.g.
+    # templates with literal `{`/`}` in text), leaving orphan `}}`.
     # Orphaned closing braces (standalone lines)
     text = re.sub(r"^\s*\}\}+\s*$", "", text, flags=re.MULTILINE)
     # Trailing orphaned }} at end of lines (from unclosed fine block/print
@@ -828,10 +827,49 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
 
     # Unclosed `{{nowrap|…` (malformed wikitext in sources like EGYPT
     # vol 9 p76) confuses cell parsing because its inner `|` leaks as
-    # a cell separator. Strip the opener so the content passes through
-    # as plain cell text. `{{nowrap|…}}` (balanced) is handled later
-    # by _unwrap_content_templates / _unwrap_balanced.
-    text = re.sub(r"\{\{nowrap\s*\|", "", text, flags=re.IGNORECASE)
+    # a cell separator. Scan for each `{{nowrap|` opener; if it has no
+    # matching `}}`, strip just the opener. Balanced cases (including
+    # nested templates) are left alone for _unwrap_balanced to handle.
+    def _strip_unclosed_nowrap(text):
+        out = []
+        i = 0
+        low = text.lower()
+        while i < len(text):
+            if low[i:i+9] == "{{nowrap|" or (
+                    low[i:i+8] == "{{nowrap" and i+8 < len(text)
+                    and low[i+8] in " \t" and "|" in text[i+8:i+30]):
+                # Find matching }} by depth counting from this opener.
+                depth = 1
+                j = i + 2
+                matched = False
+                while j < len(text) - 1:
+                    if text[j:j+2] == "{{":
+                        depth += 1
+                        j += 2
+                    elif text[j:j+2] == "}}":
+                        depth -= 1
+                        j += 2
+                        if depth == 0:
+                            matched = True
+                            break
+                    else:
+                        j += 1
+                if matched:
+                    # Balanced — leave untouched.
+                    out.append(text[i:j])
+                    i = j
+                else:
+                    # Unclosed — strip opener up through first `|`.
+                    pipe_idx = text.find("|", i)
+                    if pipe_idx >= 0:
+                        i = pipe_idx + 1  # skip `{{nowrap|`
+                    else:
+                        i += 2  # just drop the `{{`
+            else:
+                out.append(text[i])
+                i += 1
+        return "".join(out)
+    text = _strip_unclosed_nowrap(text)
 
     # Replace <score> tags (static lookup, must happen before extraction)
     text = _replace_score_tags(text, volume, page_number)
