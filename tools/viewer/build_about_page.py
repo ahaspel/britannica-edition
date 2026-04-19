@@ -32,6 +32,7 @@ ARTICLE_OVERRIDES = {
     "FIELDING": "FIELDING, HENRY",
     "RICHARDSON": "RICHARDSON, SAMUEL",
     "CHESTERFIELD": "CHESTERFIELD, PHILIP DORMER STANHOPE",
+    "JOHNSON": "JOHNSON, SAMUEL",
     "ORCHID": "ORCHIDS",
 }
 
@@ -183,6 +184,12 @@ def _render(text, lookup, reverse):
         raw = raw.replace(
             "prefatory remarks [link, transcribe]",
             '<a href="ancillary-prefatory-note.html">prefatory remarks</a>'
+        )
+        # "prefatory note" -> direct link to the Prefatory Note ancillary page
+        raw = re.sub(
+            r"\bprefatory note\b",
+            '<a href="ancillary-prefatory-note.html">prefatory note</a>',
+            raw,
         )
         # Fallback in case wording changes
         raw = raw.replace(

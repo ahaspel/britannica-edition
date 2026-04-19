@@ -157,6 +157,17 @@ Single command: `./tools/rebuild_all.sh` — cleans everything (DB, exports, S3)
 - pipe_leak: 30, html_tag: 28, stray_wiki_italic: 15 (increased from layout table unwrapping exposing previously hidden markup)
 - stray_braces: 14, leaked_html_attr: 8, stray_control_x06: 4, stray_control_x03: 1
 
+### 2026-04-18: Topic-index cleanup (LLM-assisted)
+New infrastructure for improving `classified_toc.json` (Topics page) post-build, without rebuilding the corpus:
+
+- **`tools/vol29/disambiguate_toc.py`** — ambiguous TOC entries (e.g. "ABEL" matches multiple articles) get resolved per category via Haiku 4.5 batch calls with structured output. Candidates include parenthetical-qualifier variants (PAMPHILUS → matches PAMPHILUS (PAINTER), PAMPHILUS (TEACHER)) and Surname,Firstname forms. Cached in `data/derived/toc_disambiguation_cache.json` by (target, path, candidate filenames) — cache survives rebuilds because stable IDs are stable. Two passes delivered **931 corrections**: ABEL (chemist vs. biblical vs. composer vs. mathematician), SWIFT (Jonathan vs. the bird), CAUCHY, MARRYAT, BARERE, CLEMENTI etc., plus PAMPHILUS-family cases after the qualifier-aware fix.
+- **`tools/vol29/cleanup_toc.py`** — removes known OCR artifact targets (SEE, GENERAL) and within-node duplicates. Ran once: 15 artifacts + 53 dupes cleared.
+- **`tools/vol29/detect_toc_artifacts.py`** — second-pass LLM classifier for short generic-looking targets (1-2 word entries appearing ≥3 times and linked to plain-title articles). Asks Haiku whether the entry is a legitimate cross-reference in its category or OCR bleed. Three-stage workflow: dry-run (free scan) → unbated run (submit batch, print proposed removals, don't modify) → `--apply` (actually remove). Decisions cached in `data/derived/toc_artifact_cache.json`; user can flip any `false` → `true` to override. Removed 41 artifact entries.
+- **`data/corrections.json`** — general source-text correction layer applied in `_transform_text_v2` before any other processing. Keys are `"vol:page"`, values are `[{from, to}]` replacement lists. First use: Swift article's `secretary y` typo on vol 26 p244.
+
+**Known deferred for TOC improvement:**
+- Expand candidate matching to strip space-word qualifiers ("OTTAWA TRIBE" → also register under OTTAWA; "CONON OF SAMOS" → CONON; "AETIUS OF AMIDA" → AETIUS). Same pattern as the PAMPHILUS (PAINTER) fix but for space-separated suffixes like TRIBE / RIVER / ISLAND / OF X. Currently the LLM removes these bare entries as artifacts; with the fix, they'd route to the more specific articles instead.
+
 ### Landed in 2026-04-17 rebuild
 - **Boundary & title fixes**: Œ/Ś/Ḍ/Ḥ etc in uppercase class; parenthetical/bracketed qualifiers preserved; regnal numerals allowed; `{{nop}}`/`{{clear}}`/`{{-}}` stripped; `<big>`/`<small>` dropcap tags stripped; plate-detection threshold tightened. +1,162 articles surfaced.
 - **Transform**: `{{EB1911 tfrac}}` vulgar fractions; `,,` ditto preservation; `{{sic|word}}` preserves word; count-aware `_strip_excess_closers` for orphan `}}`.

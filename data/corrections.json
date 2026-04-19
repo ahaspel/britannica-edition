@@ -1,0 +1,9 @@
+{
+  "_doc": "Targeted text corrections applied to raw wikisource text during transform. Keys are 'vol:page' (zero-padded vol, ws page number). Each entry is a list of {from, to} replacements applied literally to raw_text before any other processing. Use sparingly — for transcription typos only, not for rendering issues.",
+  "26:244": [
+    {
+      "from": "The secretary y had already accepted a bribe",
+      "to": "The secretary had already accepted a bribe"
+    }
+  ]
+}

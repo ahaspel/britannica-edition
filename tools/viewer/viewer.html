@@ -602,9 +602,10 @@
       border-radius: 2px;
     }
     .search-highlight-current {
-      background: #ff9800;
-      color: #fff;
+      background: #ffe033;
+      outline: 2px solid #b38600;
     }
+    #jumpResults mark { background: #ffe033; padding: 0 2px; border-radius: 2px; color: inherit; }
     .nav-arrow {
       position: fixed;
       right: 8px;
@@ -628,7 +629,7 @@
     #matchList .match-item:last-child { border-bottom: none; }
     #matchList .match-item:hover { background: #f0ebe0; }
     #matchList .match-item.active { background: #ffe0b2; }
-    #matchList .match-item mark { background: #ff9800; color: #fff; padding: 0 1px; border-radius: 2px; }
+    #matchList .match-item mark { background: #ffe033; padding: 0 1px; border-radius: 2px; }
 
     .footnote-ref {
       position: relative;
@@ -739,6 +740,39 @@
       line-height: 1.4;
     }
 
+    .figure-legend {
+      margin: -0.6em auto 1.4em;
+      max-width: 640px;
+      padding: 10px 18px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.45;
+      border-left: 2px solid var(--border);
+      background: rgba(245, 241, 235, 0.35);
+      column-count: 2;
+      column-gap: 24px;
+    }
+    @media (max-width: 640px) {
+      .figure-legend { column-count: 1; }
+    }
+    .figure-legend .legend-subhead {
+      font-size: 0.85rem;
+      font-variant: small-caps;
+      letter-spacing: 0.04em;
+      color: var(--text);
+      margin: 0 0 4px;
+      break-after: avoid-column;
+    }
+    .figure-legend .legend-entry {
+      break-inside: avoid-column;
+      text-indent: -1.2em;
+      padding-left: 1.2em;
+    }
+    .figure-legend .legend-entry + .legend-subhead {
+      margin-top: 10px;
+    }
+
     .contributors {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       font-size: 0.95rem;
@@ -763,7 +797,7 @@
       </div>
       <div class="controls">
         <div style="position: relative; flex: 0 1 280px; min-width: 180px;">
-          <input id="jumpTo" type="text" placeholder="Go to article..." style="width: 100%;" autocomplete="off" />
+          <input id="jumpTo" type="text" placeholder="Search titles &amp; full text..." style="width: 100%;" autocomplete="off" />
           <ul id="jumpResults" style="display:none; position:absolute; top:100%; left:0; right:0; margin:0; padding:0; list-style:none; background:var(--panel); border:1px solid var(--border); border-top:none; border-radius:0 0 6px 6px; max-height:240px; overflow-y:auto; z-index:100; font-size:0.9rem;"></ul>
         </div>
         <input id="articleSearch" type="text" placeholder="Search within article..." style="flex: 0 1 260px; min-width: 160px;" />
@@ -847,6 +881,18 @@
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#39;");
+    }
+
+    // Reverse of escapeHtml. Used when we need to pass captured text
+    // (e.g. an image filename pulled from already-escaped paragraph
+    // HTML) back into a URL or attribute context.
+    function unescapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&#39;", "'")
+        .replaceAll("&quot;", '"')
+        .replaceAll("&lt;", "<")
+        .replaceAll("&gt;", ">")
+        .replaceAll("&amp;", "&");
     }
 
     // Gardiner Sign List -> Unicode Egyptian Hieroglyphs (U+13000 block)
@@ -1092,6 +1138,27 @@
         const lines = verseMatch[1].split("\n").filter(l => l.trim());
         return `<blockquote class="verse">${lines.map(l => escapeHtml(l)).join("<br>")}</blockquote>`;
       }
+      // Render figure-legend markers (structured image legends emitted
+      // by the image-layout subclass handlers). Format:
+      //   {{LEGEND:### Subheading.
+      //   A. First entry.
+      //   B. Second entry.
+      //   ### Another subheading.
+      //   C. …}LEGEND}
+      // Lines starting with "### " are subheadings; everything else
+      // is an entry (letter-dot-text).
+      const legendMatch = p.match(/^\{\{LEGEND:([\s\S]*)\}LEGEND\}$/);
+      if (legendMatch) {
+        const rawLines = legendMatch[1].split("\n").filter(l => l.trim());
+        const parts = rawLines.map(line => {
+          const s = line.trim();
+          if (s.startsWith("### ")) {
+            return `<h5 class="legend-subhead">${escapeHtml(s.slice(4))}</h5>`;
+          }
+          return `<div class="legend-entry">${escapeHtml(s)}</div>`;
+        });
+        return `<aside class="figure-legend">${parts.join("")}</aside>`;
+      }
       // Render complex HTML tables (rowspan/colspan preserved)
       const htmlTableMatch = p.match(/^(\u00abHTMLTABLE:[\s\S]*?\u00ab\/HTMLTABLE\u00bb)([\s\S]*)$/);
       if (htmlTableMatch) {
@@ -1280,10 +1347,14 @@
         collectedFootnotes.push({ num: footnoteCounter, text: content });
         return `<sup class="footnote-ref" id="fnref-${footnoteCounter}"><a onclick="toggleFnPopup(event,${footnoteCounter});return false;" href="#">${footnoteCounter}</a><span class="fn-popup" id="fnpop-${footnoteCounter}"><span class="fn-popup-num">${footnoteCounter}.</span>${formatFootnoteText(content)}</span></sup>`;
       });
-      // Render inline images — captions are pre-cleaned by the pipeline
+      // Render inline images — captions are pre-cleaned by the pipeline.
+      // Filename must be unescaped before URL construction because the
+      // surrounding paragraph was run through escapeHtml(), which would
+      // otherwise double-encode entities like `'` → `&#39;` → `%26%2339%3B`
+      // and produce a 403 on S3.
       html = html.replace(/\{\{IMG:([^|}]+)(?:\|([^}]*))?\}\}/g, (match, filename, caption) => {
-        const url = commonsUrl(filename);
-        return `<figure class="inline-image"><a href="${url}" target="_blank"><img src="${url}" alt="${escapeHtml(caption || filename)}" loading="lazy" /></a>${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure>`;
+        const url = commonsUrl(unescapeHtml(filename));
+        return `<figure class="inline-image"><a href="${url}" target="_blank"><img src="${url}" alt="${caption || filename}" loading="lazy" /></a>${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure>`;
       });
       // Render inline preformatted blocks (structural formulas)
       html = html.replace(/\u00abPRE:(.*?)\u00ab\/PRE\u00bb/gs, (match, content) => {
@@ -1486,10 +1557,10 @@
             return (plates.length && article.article_type !== "plate") ? `<div class="contributors">Plates: ${plates.map((p, i) => `<a href="${articleUrl(p.filename)}">Plate ${roman[i] || i+1}</a>`).join(", ")}</div>` : "";
           })()}
           ${article.source_quality && article.source_quality.lowest_level <= 1
-            ? `<div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 8px 12px; margin: 8px 0; font-size: 0.9rem;">
-                 <strong>Source quality notice:</strong> ${escapeHtml(article.source_quality.note || "Some pages may contain unverified text.")}
-                 This article spans pages with unproofread transcriptions.
-                 <a href="${scanUrl(article)}" style="color: #8b4513;">View original scans \u2192</a>
+            ? `<div style="text-align: center; margin: 10px 0;">
+                 <div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 6px 14px; font-size: 0.9rem; display: inline-block;">
+                   <strong>Source quality notice:</strong> This article spans pages with unproofread transcriptions.
+                 </div>
                </div>`
             : ""}
           ${(() => {
@@ -1987,12 +2058,20 @@
       function show(items) {
         selected = -1;
         if (!items.length) { results.style.display = "none"; return; }
-        results.innerHTML = items.slice(0, 12).map((a, i) => {
-          const sub = a.body_start
-            ? `<div style="font-size:0.78rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(a.body_start)}</div>`
+        // Items may carry `_kind: "title" | "fulltext"` and `_snippet`
+        // (for full-text hits). Title hits show body_start; full-text
+        // hits show a snippet with the match.
+        results.innerHTML = items.slice(0, 16).map((a, i) => {
+          const kindBadge = a._kind === "fulltext"
+            ? `<span style="font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-right:6px;">text</span>`
             : "";
+          const sub = a._snippet
+            ? `<div style="font-size:0.78rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${a._snippet}</div>`
+            : (a.body_start
+               ? `<div style="font-size:0.78rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(a.body_start)}</div>`
+               : "");
           return `<li data-idx="${i}" style="padding:6px 10px;cursor:pointer;border-bottom:1px solid var(--border);">
-            <div>${escapeHtml(a.title)}</div>
+            <div>${kindBadge}${escapeHtml(a.title)}</div>
             ${sub}
           </li>`;
         }).join("");
@@ -2005,6 +2084,68 @@
         });
       }
 
+      // Full-text search state (async, debounced)
+      const MEILI_URL = IS_LOCAL ? "http://localhost:7700" : "/search-api";
+      const MEILI_KEY = IS_LOCAL
+        ? "britannica-dev-key"
+        : "24e84cf3ca3b70fe166637d797cbbdd0593ba3a27a47a9ed76b552c821199579";
+      let ftToken = 0;
+      let ftDebounce = null;
+      let lastQuery = "";
+      let lastTitleHits = [];
+
+      function makeSnippet(body, q) {
+        if (!body) return "";
+        const lower = body.toLowerCase();
+        const ql = q.toLowerCase();
+        const idx = lower.indexOf(ql);
+        if (idx < 0) return "";
+        const start = Math.max(0, idx - 30);
+        const end = Math.min(body.length, idx + ql.length + 50);
+        const before = escapeHtml(body.slice(start, idx));
+        const match = escapeHtml(body.slice(idx, idx + ql.length));
+        const after = escapeHtml(body.slice(idx + ql.length, end));
+        return (start > 0 ? "…" : "") + before + `<mark>${match}</mark>` + after + (end < body.length ? "…" : "");
+      }
+
+      async function runFulltext(q, myToken) {
+        if (q.length < 3) return;
+        try {
+          const resp = await fetch(`${MEILI_URL}/indexes/articles/search`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${MEILI_KEY}`,
+            },
+            body: JSON.stringify({
+              q,
+              limit: 8,
+              attributesToRetrieve: ["title", "filename", "body"],
+              matchingStrategy: "all",
+            }),
+          });
+          if (myToken !== ftToken) return;  // newer query in flight
+          const data = await resp.json();
+          const ql = q.toLowerCase();
+          const titleFns = new Set(lastTitleHits.map(a => a.filename));
+          const ftHits = (data.hits || [])
+            .filter(h => (h.body || "").toLowerCase().includes(ql)
+                         || (h.title || "").toLowerCase().includes(ql))
+            .filter(h => !titleFns.has(h.filename))
+            .map(h => ({
+              title: h.title,
+              filename: h.filename,
+              _kind: "fulltext",
+              _snippet: makeSnippet(h.body || "", q),
+              _query: q,
+            }))
+            .slice(0, 8);
+          show([...lastTitleHits, ...ftHits]);
+        } catch (e) {
+          // keep the title-only list
+        }
+      }
+
       function highlight(idx) {
         results.querySelectorAll("li").forEach((li, i) => {
           li.style.background = i === idx ? "var(--resolved-bg)" : "";
@@ -2014,7 +2155,12 @@
       function go(item) {
         results.style.display = "none";
         input.value = "";
-        location.href = articleUrl(item.filename);
+        let url = articleUrl(item.filename);
+        if (item._kind === "fulltext") {
+          const q = encodeURIComponent(item._query || "");
+          url += (url.includes("?") ? "&" : "?") + `q=${q}&match=1`;
+        }
+        location.href = url;
       }
 
       // 5-tier ranking for title autocomplete.
@@ -2035,16 +2181,29 @@
 
       input.addEventListener("input", async () => {
         await ensureIndex();
-        const q = input.value.trim().toLowerCase();
+        const q = input.value.trim();
+        const qLower = q.toLowerCase();
         if (!q) { results.style.display = "none"; return; }
-        const matches = articles.filter(a => a.title.toLowerCase().includes(q));
-        // Sort by rank tier, then alphabetical within tier
-        matches.sort((a, b) => {
-          const ra = titleRank(a.title, q);
-          const rb = titleRank(b.title, q);
+        // Title matches (local, instant)
+        const titleMatches = articles.filter(a => a.title.toLowerCase().includes(qLower));
+        titleMatches.sort((a, b) => {
+          const ra = titleRank(a.title, qLower);
+          const rb = titleRank(b.title, qLower);
           return ra - rb || a.title.localeCompare(b.title);
         });
-        show(matches);
+        lastTitleHits = titleMatches.slice(0, 8).map(a => ({
+          title: a.title,
+          filename: a.filename,
+          body_start: a.body_start,
+          _kind: "title",
+        }));
+        lastQuery = q;
+        // Show title matches immediately; fulltext results stream in below.
+        show(lastTitleHits);
+        // Debounced full-text search
+        if (ftDebounce) clearTimeout(ftDebounce);
+        const myToken = ++ftToken;
+        ftDebounce = setTimeout(() => runFulltext(q, myToken), 250);
       });
 
       input.addEventListener("keydown", e => {
@@ -2057,6 +2216,14 @@
       });
 
       input.addEventListener("blur", () => { setTimeout(() => results.style.display = "none", 150); });
+
+      // iPad/touch fallback: blur isn't always fired when tapping
+      // outside a focused input. Close on any outside pointer down.
+      document.addEventListener("pointerdown", e => {
+        if (e.target !== input && !results.contains(e.target)) {
+          results.style.display = "none";
+        }
+      });
     })();
   </script>
 </body>

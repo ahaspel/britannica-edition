@@ -292,12 +292,15 @@
       <div id="stats" class="stats">Loading...</div>
 
       <div class="search-modes">
-        <label><input type="radio" name="mode" value="title" checked /> <span>Title</span></label>
-        <label><input type="radio" name="mode" value="fulltext" /> <span>Full text</span></label>
+        <label><input type="radio" name="mode" value="fulltext" checked /> <span>Articles</span></label>
         <label><input type="radio" name="mode" value="contributors" /> <span>Contributors</span></label>
       </div>
-      <div class="search-form">
-        <input id="search" class="search-box" type="text" placeholder="Search articles..." autofocus />
+      <div class="search-form" style="align-items: center; flex-wrap: wrap;">
+        <div style="position: relative; flex: 1 1 200px; min-width: 0; max-width: 480px;">
+          <input id="search" class="search-box" type="text" placeholder="Search articles..." autofocus autocomplete="off" style="width: 100%; box-sizing: border-box;" />
+          <ul id="search-typeahead" style="display:none; position:absolute; top:100%; left:0; right:0; margin:0; padding:0; list-style:none; background:var(--panel); border:1px solid var(--border); border-top:none; border-radius:0 0 6px 6px; max-height:320px; overflow-y:auto; z-index:100; font-size:0.9rem;"></ul>
+          <style>#search-typeahead mark { background: #ffe033; padding: 0 2px; border-radius: 2px; color: inherit; }</style>
+        </div>
         <button id="search-btn" class="search-btn">Search</button>
         <span id="search-help-btn" style="cursor:pointer; font-size:1rem; color:var(--muted); padding:0 6px; user-select:none;" title="Search tips">&#x2139;</span>
         <span id="result-count" style="font-size:0.85rem; color:var(--muted); margin-left:8px; white-space:nowrap;"></span>
@@ -314,8 +317,17 @@
       </div>
 
       <div style="border-top: 1px solid var(--border); margin: 12px 0 4px;"></div>
-      <div style="font-size: 0.85rem; font-variant: small-caps; letter-spacing: 0.05em; color: #8b7355; margin-bottom: 2px;">Browse by Volume</div>
-      <div id="volume-bar" class="volume-bar"></div>
+      <details id="volume-browse">
+        <summary style="font-size: 0.85rem; font-variant: small-caps; letter-spacing: 0.05em; color: #8b7355; cursor: pointer; padding: 2px 0; list-style: revert;">Browse by Volume</summary>
+        <div id="volume-bar" class="volume-bar" style="margin-top: 4px;"></div>
+      </details>
+      <script>
+        (function() {
+          const vb = document.getElementById("volume-browse");
+          // Open by default on wider viewports (desktop / tablet), collapsed on phones.
+          if (window.matchMedia("(min-width: 700px)").matches) vb.open = true;
+        })();
+      </script>
     </div>
     <div id="results-divider" style="text-align:center; color:#8b7355; font-size:1.6rem; margin:-6px 0 14px; letter-spacing:0.3em; user-select:none; display:none;">&#x223C;&#x25C6;&#x223C;</div>
     <div id="results-card" class="card" style="display:none">
@@ -661,26 +673,41 @@
           });
         }
 
-        // Dedupe by (title, volume, page_start). The Meili index has
-        // some articles present under multiple filenames — we want
-        // one result per logical article.
+        // Dedupe by filename — stable IDs make filenames unique per
+        // article. Previously this keyed on (title, volume, page_start)
+        // which collapsed distinct same-page articles (e.g. three
+        // AETIUS articles on vol 1 p335, sections s5/s6/s7).
         const seen = new Set();
         hits = hits.filter(hit => {
-          const key = `${hit.title}|${hit.volume}|${hit.page_start}`;
-          if (seen.has(key)) return false;
-          seen.add(key);
+          if (seen.has(hit.filename)) return false;
+          seen.add(hit.filename);
           return true;
         });
 
-        // Drop hits whose body doesn't actually contain the query
-        // (Meili's fuzzy/prefix matching can return things like
-        // ADAMS for "adamas" — we only want exact substring matches).
-        // Then sort by total match count (most-frequent first).
+        // Drop hits where the query doesn't actually appear as a
+        // substring (Meili's fuzzy/prefix matching can return things
+        // like ADAMS for "adamas" — we only want exact substring
+        // matches). Title matches count alongside body matches so a
+        // query that appears only in the title (e.g. "aetius" on the
+        // AETIUS articles) is still returned.
         for (const hit of hits) {
-          hit._matchCount = ftCountMatches(hit.body || "", parsed.query);
+          hit._bodyMatches = ftCountMatches(hit.body || "", parsed.query);
+          hit._titleMatches = ftCountMatches(hit.title || "", parsed.query);
+          hit._matchCount = hit._bodyMatches + hit._titleMatches;
         }
         hits = hits.filter(h => h._matchCount > 0);
-        hits.sort((a, b) => (b._matchCount || 0) - (a._matchCount || 0));
+        // Ordering:
+        //   1. Title matches first (regardless of count)
+        //   2. Then by body match count, descending
+        //   3. Tie-break alphabetically by title
+        hits.sort((a, b) => {
+          const at = a._titleMatches > 0 ? 1 : 0;
+          const bt = b._titleMatches > 0 ? 1 : 0;
+          if (at !== bt) return bt - at;
+          const bc = (b._bodyMatches || 0) - (a._bodyMatches || 0);
+          if (bc !== 0) return bc;
+          return (a.title || "").localeCompare(b.title || "");
+        });
         setResultCount(hits.length);
 
         if (hits.length === 0) {
@@ -898,14 +925,12 @@
       // Deselect volume buttons
       document.querySelectorAll(".vol-btn").forEach(b => b.classList.remove("active"));
 
-      if (mode === "title") searchTitle(query);
-      else if (mode === "fulltext") searchFulltext(query);
+      if (mode === "fulltext") searchFulltext(query);
       else if (mode === "contributors") searchContributors(query);
     }
 
     // ── Events ──
     const hints = {
-      title: "",
       fulltext: "",
       contributors: "",
     };
@@ -918,8 +943,7 @@
     const hintEl = document.getElementById("search-hint") || document.createElement("div");
 
     const placeholders = {
-      title: "Search articles...",
-      fulltext: "Search article text...",
+      fulltext: "Search articles...",
       contributors: "Search contributors...",
     };
 
@@ -930,13 +954,215 @@
 
     updateHint();
     document.querySelectorAll('input[name="mode"]').forEach(r =>
-      r.addEventListener("change", updateHint)
+      r.addEventListener("change", () => {
+        updateHint();
+        // Clear prior results when switching modes — user searches
+        // fresh in the new mode.
+        hideAllResults();
+        document.getElementById("search-typeahead").style.display = "none";
+        searchInput.value = "";
+        setResultCount(0);
+        searchInput.focus();
+      })
     );
 
     searchBtn.addEventListener("click", doSearch);
-    searchInput.addEventListener("keydown", e => {
-      if (e.key === "Enter") doSearch();
-    });
+    // ── Live typeahead on the main search box ──
+    // Shows matching titles immediately + full-text hits debounced via
+    // Meili. Click / Enter on a highlighted item jumps straight to the
+    // article; pressing Enter without a selection runs a normal search.
+    (function() {
+      const ta = document.getElementById("search-typeahead");
+      let selected = -1;
+      let ftToken = 0;
+      let ftDebounce = null;
+      let lastTitleHits = [];
+
+      function titleRank(title, q) {
+        const t = title.toLowerCase();
+        if (t === q) return 0;
+        const words = t.split(/[\s,.'\u2019()\-]+/).filter(Boolean);
+        if (words[0] === q) return 1;
+        if (words.includes(q)) return 2;
+        if (t.startsWith(q)) return 3;
+        return 4;
+      }
+
+      function makeSnippet(body, q) {
+        if (!body) return "";
+        const lower = body.toLowerCase();
+        const ql = q.toLowerCase();
+        const idx = lower.indexOf(ql);
+        if (idx < 0) return "";
+        const start = Math.max(0, idx - 30);
+        const end = Math.min(body.length, idx + ql.length + 50);
+        const before = escapeHtml(body.slice(start, idx));
+        const match = escapeHtml(body.slice(idx, idx + ql.length));
+        const after = escapeHtml(body.slice(idx + ql.length, end));
+        return (start > 0 ? "\u2026" : "") + before + `<mark>${match}</mark>` + after + (end < body.length ? "\u2026" : "");
+      }
+
+      function renderTypeahead(items) {
+        selected = -1;
+        if (!items.length) { ta.style.display = "none"; return; }
+        ta.innerHTML = items.slice(0, 16).map((a, i) => {
+          const kindBadge = a._kind === "fulltext"
+            ? `<span style="font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-right:6px;">text</span>`
+            : "";
+          const sub = a._snippet
+            ? `<div style="font-size:0.78rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${a._snippet}</div>`
+            : (a.body_start
+               ? `<div style="font-size:0.78rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(a.body_start)}</div>`
+               : "");
+          return `<li data-idx="${i}" style="padding:6px 10px;cursor:pointer;border-bottom:1px solid var(--border);">
+            <div>${kindBadge}${escapeHtml(a.title)}</div>
+            ${sub}
+          </li>`;
+        }).join("");
+        ta.style.display = "block";
+        ta.querySelectorAll("li").forEach(li => {
+          li.addEventListener("mousedown", e => {
+            e.preventDefault();
+            const item = items[+li.dataset.idx];
+            ta.style.display = "none";
+            searchInput.value = "";
+            let url = viewerUrl(item.filename);
+            // Full-text hit: pass the query so the viewer highlights
+            // matches and jumps to the first one, same behavior as
+            // clicking a result from the bottom results block.
+            if (item._kind === "fulltext") {
+              const q = encodeURIComponent(item._query || "");
+              url += (url.includes("?") ? "&" : "?") + `q=${q}&match=1`;
+            }
+            location.href = url;
+          });
+        });
+      }
+
+      function highlight(idx) {
+        ta.querySelectorAll("li").forEach((li, i) => {
+          li.style.background = i === idx ? "var(--resolved-bg, #eee)" : "";
+        });
+      }
+
+      async function runFulltext(q, myToken) {
+        if (q.length < 3) return;
+        try {
+          const resp = await fetch(`${MEILI_URL}/indexes/articles/search`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${MEILI_KEY}`,
+            },
+            body: JSON.stringify({
+              q,
+              limit: 8,
+              attributesToRetrieve: ["title", "filename", "body"],
+              matchingStrategy: "all",
+            }),
+          });
+          if (myToken !== ftToken) return;
+          const data = await resp.json();
+          const ql = q.toLowerCase();
+          const titleFns = new Set(lastTitleHits.map(a => a.filename));
+          const ftHits = (data.hits || [])
+            .filter(h => (h.body || "").toLowerCase().includes(ql)
+                         || (h.title || "").toLowerCase().includes(ql))
+            .filter(h => !titleFns.has(h.filename))
+            .map(h => ({
+              title: h.title,
+              filename: h.filename,
+              _kind: "fulltext",
+              _snippet: makeSnippet(h.body || "", q),
+              _query: q,
+            }))
+            .slice(0, 8);
+          renderTypeahead([...lastTitleHits, ...ftHits]);
+        } catch (e) { /* keep title-only list */ }
+      }
+
+      let fullResultsDebounce = null;
+
+      searchInput.addEventListener("input", () => {
+        const q = searchInput.value.trim();
+        const qLower = q.toLowerCase();
+        if (!q || getMode() === "contributors") {
+          ta.style.display = "none";
+          // Don't auto-run full search for contributor mode or empty
+          return;
+        }
+        const titleMatches = articles
+          .filter(a => (a.article_type || "article") === "article")
+          .filter(a => a.title.toLowerCase().includes(qLower));
+        titleMatches.sort((a, b) => {
+          const ra = titleRank(a.title, qLower);
+          const rb = titleRank(b.title, qLower);
+          return ra - rb || a.title.localeCompare(b.title);
+        });
+        lastTitleHits = titleMatches.slice(0, 8).map(a => ({
+          title: a.title,
+          filename: a.filename,
+          body_start: a.body_start,
+          _kind: "title",
+        }));
+        renderTypeahead(lastTitleHits);
+        if (ftDebounce) clearTimeout(ftDebounce);
+        const myToken = ++ftToken;
+        ftDebounce = setTimeout(() => runFulltext(q, myToken), 250);
+        // Also keep the full results block in sync — debounced slightly
+        // longer so we don't thrash the UI on every keystroke.
+        if (fullResultsDebounce) clearTimeout(fullResultsDebounce);
+        fullResultsDebounce = setTimeout(() => {
+          if (searchInput.value.trim() === q) doSearch();
+        }, 400);
+      });
+
+      searchInput.addEventListener("keydown", e => {
+        const items = ta.querySelectorAll("li");
+        if (e.key === "ArrowDown" && items.length) {
+          e.preventDefault();
+          selected = Math.min(selected + 1, items.length - 1);
+          highlight(selected);
+        } else if (e.key === "ArrowUp" && items.length) {
+          e.preventDefault();
+          selected = Math.max(selected - 1, 0);
+          highlight(selected);
+        } else if (e.key === "Enter") {
+          if (selected >= 0) {
+            e.preventDefault();
+            items[selected].dispatchEvent(new MouseEvent("mousedown"));
+          } else {
+            // No item highlighted — close dropdown and run the full
+            // search, same as clicking Search. Blur the input so the
+            // iPad/soft keyboard dismisses.
+            ta.style.display = "none";
+            e.preventDefault();
+            searchInput.blur();
+            doSearch();
+          }
+        } else if (e.key === "Escape") {
+          ta.style.display = "none";
+        }
+      });
+
+      searchInput.addEventListener("blur", () => {
+        setTimeout(() => ta.style.display = "none", 150);
+      });
+
+      // iPad/touch fallback: blur isn't always fired when tapping
+      // outside a focused input. Close the dropdown on any pointer
+      // event that lands outside the search form.
+      const searchForm = searchInput.closest(".search-form");
+      document.addEventListener("pointerdown", e => {
+        if (!searchForm.contains(e.target)) {
+          ta.style.display = "none";
+        }
+      });
+    })();
+
+    // Enter handling now lives inside the typeahead IIFE above — it
+    // closes the dropdown and runs doSearch() whether or not an item
+    // was selected.
 
     for (const suffix of ["", "-top"]) {
       document.getElementById(`title-prev${suffix}`).addEventListener("click", () => {

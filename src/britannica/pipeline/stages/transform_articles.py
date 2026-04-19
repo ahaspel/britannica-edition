@@ -449,7 +449,13 @@ def _strip_templates(text: str) -> str:
 
 
 def _strip_html(text: str) -> str:
-    """Strip remaining HTML tags (safe on body text — elements already extracted)."""
+    """Strip remaining HTML tags (safe on body text — elements already extracted).
+
+    `<br>` is replaced with a space FIRST so line breaks separating
+    words (e.g. `{{sc|Fig. 4.}}<br />St Mary's Abbey`) survive as word
+    boundaries instead of collapsing to `Fig. 4.St Mary's Abbey`.
+    """
+    text = re.sub(r"<br\s*/?>", " ", text, flags=re.IGNORECASE)
     text = re.sub(r"</?[a-zA-Z][^>]*>", "", text)
     return text
 
@@ -804,6 +810,25 @@ def _find_matching_double_braces(text: str, start: int) -> int:
     return -1
 
 
+_CORRECTIONS = None
+
+
+def _load_corrections():
+    """Load data/corrections.json once (literal source-text fixes)."""
+    global _CORRECTIONS
+    if _CORRECTIONS is not None:
+        return _CORRECTIONS
+    from pathlib import Path
+    p = Path("data/corrections.json")
+    if not p.exists():
+        _CORRECTIONS = {}
+        return _CORRECTIONS
+    import json
+    data = json.loads(p.read_text(encoding="utf-8"))
+    _CORRECTIONS = {k: v for k, v in data.items() if not k.startswith("_")}
+    return _CORRECTIONS
+
+
 def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
     """New architecture: extract-process-reassemble.
 
@@ -816,6 +841,12 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
     3. Done.
     """
     from britannica.pipeline.stages.elements import process_elements
+
+    # Apply per-page source-text corrections (transcription typos in
+    # wikisource we don't want to edit upstream). Keys: "{vol}:{page}".
+    corrections = _load_corrections().get(f"{volume}:{page_number}", [])
+    for c in corrections:
+        raw_wikitext = raw_wikitext.replace(c["from"], c["to"])
 
     # Strip section tags — boundaries already determined
     text = re.sub(r'<section\s+(?:begin|end)="[^"]*"\s*/?>', "",

@@ -114,17 +114,34 @@ def collect_ambiguities(toc: dict, title_candidates: dict) -> list[dict]:
 
 
 def build_title_index() -> dict:
-    """Map normalized title → list of {filename, title} candidates."""
+    """Map normalized title → list of {filename, title} candidates.
+
+    Registers each article under multiple keys so a TOC entry matches
+    all plausible variants:
+      - full title as-is
+      - title with (…) / […] qualifier stripped (PAMPHILUS (PAINTER)
+        also registers under PAMPHILUS)
+      - surname only for "SURNAME, FIRSTNAME" forms
+    """
     article_idx = json.loads(INDEX_FILE.read_text(encoding="utf-8"))
     title_candidates = defaultdict(list)
     for e in article_idx:
         if e.get("article_type") != "article":
             continue
-        entry = {"filename": e["filename"], "title": e["title"]}
-        title_candidates[_norm(e["title"])].append(entry)
-        if "," in e["title"]:
-            surname = e["title"].split(",", 1)[0].strip()
-            title_candidates[_norm(surname)].append(entry)
+        title = e["title"]
+        entry = {"filename": e["filename"], "title": title}
+        keys = {_norm(title)}
+        stripped = re.sub(r"\s*[\(\[][^\)\]]*[\)\]]", "", title).strip()
+        if stripped and stripped != title:
+            keys.add(_norm(stripped))
+        if "," in stripped or "," in title:
+            base = stripped if "," in stripped else title
+            surname = base.split(",", 1)[0].strip()
+            keys.add(_norm(surname))
+        for k in keys:
+            if k and not any(c["filename"] == entry["filename"]
+                             for c in title_candidates[k]):
+                title_candidates[k].append(entry)
     return title_candidates
 
 

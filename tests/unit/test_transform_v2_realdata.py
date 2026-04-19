@@ -128,12 +128,18 @@ class TestRealPoems:
         assert "{{VERSE:" in result, "No VERSE marker produced"
         assert "line one" in result
 
-    def test_poem_in_table_produces_verse(self):
-        """Vol 1 p44 has <poem> inside a table — should produce VERSE marker."""
+    def test_poem_in_table_produces_legend(self):
+        """Vol 1 p44 has <poem>s inside a nested image-legend table.
+        The POEM_LEGEND subclass handler absorbs them into a single
+        `{{LEGEND:…}LEGEND}` block alongside the figure, so no raw
+        <poem> tag survives and the legend content is preserved."""
         raw = _load_page(1, 44)
         result = _transform(raw)
         assert "<poem>" not in result, "Raw <poem> survived"
-        assert "{{VERSE:" in result or "VERSE}" in result, "No VERSE marker from poem in table"
+        assert "{{LEGEND:" in result, "No LEGEND marker from poem in table"
+        # Entries from the St Gall legend must be present in the LEGEND block
+        assert "High altar" in result
+        assert "Cloister" in result
 
 
 class TestRealMath:
