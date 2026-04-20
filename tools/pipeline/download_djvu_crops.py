@@ -60,11 +60,158 @@ def _parse_param(body: str, name: str) -> str:
     return m.group(1).strip() if m else ""
 
 
+_RAW_IMAGE_DJVU_RE = re.compile(
+    # Matches any reference to a DjVu page in wikisource that should
+    # become a full-page figure:
+    #   {{raw image|EB1911 - Volume 24.djvu/1037}}
+    #   [[File:EB1911 - Volume 20.djvu-694.png|…]]  (typo variant)
+    # Handles spaces-or-underscores + canonical `/` or typo `-`.
+    r"(?:\{\{\s*raw\s+image\s*\||\[\[(?:File|Image):\s*)"
+    r"(EB1911\s+-\s+Volume\s+\d+\.djvu)"
+    r"(?:/|-)"
+    r"(\d+)"
+    r"(?:\.png)?",
+    re.IGNORECASE,
+)
+
+# {{Css image crop|Image = EB1911 - Volume 24.djvu|Page = 988|...}}
+# SHIPBUILDING Figs 6/9/10 and others use this for DjVu crops. The
+# transform converts these to ``{{raw image|...djvu/N}}`` but the
+# downloader also needs to see them to provision full-page renders.
+_CSS_CROP_DJVU_RE = re.compile(
+    r"\{\{\s*Css\s+image\s+crop\b[^}]*?"
+    r"Image\s*=\s*(EB1911\s+-\s+Volume\s+\d+\.djvu)[^}]*?"
+    r"Page\s*=\s*(\d+)[^}]*\}\}",
+    re.IGNORECASE | re.DOTALL,
+)
+
+
+def scan_full_page_refs() -> list[dict]:
+    """Scan all raw wikitext for bare DjVu page references that
+    should be rendered as full-page figures (no cropping).
+
+    Returns list of dicts with keys: djvu_file, page, volume.
+    Unlike crop refs, these produce a plain
+    `djvu_vol{NN}_page{NNNN}.jpg` filename that serves as the
+    figure's own image.
+    """
+    found = {}
+    # Scan corrections.json `to` text first — these add DjVu refs that
+    # don't appear in raw wikitext (e.g. TOOL p30's corrections replace
+    # unproofed OCR garbage with {{raw image|…djvu/P}} or [[File:…
+    # djvu/P|…]]).
+    corrections_path = Path("data/corrections.json")
+    if corrections_path.exists():
+        try:
+            corrections = json.loads(corrections_path.read_text(encoding="utf-8"))
+            for key, entries in corrections.items():
+                if key.startswith("_") or not isinstance(entries, list):
+                    continue
+                for c in entries:
+                    to_text = c.get("to", "") or ""
+                    for m in list(_RAW_IMAGE_DJVU_RE.finditer(to_text)) + list(
+                            _CSS_CROP_DJVU_RE.finditer(to_text)):
+                        djvu_file = m.group(1).strip()
+                        if not djvu_file.lower().endswith(".djvu"):
+                            djvu_file += ".djvu"
+                        page = int(m.group(2))
+                        vol_match = re.search(r"Volume (\d+)", djvu_file)
+                        if not vol_match:
+                            continue
+                        k = (djvu_file, page)
+                        if k not in found:
+                            found[k] = {
+                                "djvu_file": djvu_file,
+                                "page": page,
+                                "volume": int(vol_match.group(1)),
+                            }
+        except Exception:
+            pass
+    for vol_dir in sorted(RAW_DIR.iterdir()):
+        if not vol_dir.is_dir():
+            continue
+        for page_file in sorted(vol_dir.glob("*.json")):
+            try:
+                data = json.loads(page_file.read_text(encoding="utf-8"))
+            except Exception:
+                continue
+            raw = data.get("raw_text", "")
+            for m in list(_RAW_IMAGE_DJVU_RE.finditer(raw)) + list(
+                    _CSS_CROP_DJVU_RE.finditer(raw)):
+                djvu_file = re.sub(r"\s+", " ", m.group(1)).strip() + ".djvu"
+                # The regex captured `.djvu` with no leading space; the
+                # group ends at `.djvu`, then we add it back.
+                djvu_file = m.group(1).strip()
+                if not djvu_file.lower().endswith(".djvu"):
+                    djvu_file += ".djvu"
+                page = int(m.group(2))
+                vol_match = re.search(r"Volume (\d+)", djvu_file)
+                if not vol_match:
+                    continue
+                key = (djvu_file, page)
+                if key not in found:
+                    found[key] = {
+                        "djvu_file": djvu_file,
+                        "page": page,
+                        "volume": int(vol_match.group(1)),
+                    }
+    return list(found.values())
+
+
+def _full_page_output_path(volume: int, page: int) -> Path:
+    """Local filename used by the viewer for a full-page DjVu render."""
+    return IMAGE_DIR / f"djvu_vol{volume:02d}_page{page:04d}.jpg"
+
+
+def _commons_source_url(filename: str) -> str:
+    """Build the direct Commons URL for a non-DjVu source image."""
+    name = filename.replace(" ", "_")
+    md5 = hashlib.md5(name.encode()).hexdigest()
+    return (
+        f"https://upload.wikimedia.org/wikipedia/commons/"
+        f"{md5[0]}/{md5[:2]}/{quote(name)}"
+    )
+
+
+def download_commons_source(filename: str, delay: float) -> Path | None:
+    """Download a Commons PNG/JPG source referenced by a
+    `{{Css image crop}}` template.  Saves under the original filename
+    (spaces → underscores) so the existing commonsUrl() path in the
+    viewer resolves to this local file."""
+    local_name = filename.replace(" ", "_")
+    out = IMAGE_DIR / local_name
+    if out.exists() and out.stat().st_size > 0:
+        return out
+    url = _commons_source_url(filename)
+    try:
+        resp = SESSION.get(url, timeout=60)
+        if resp.status_code == 429:
+            print("  Rate limited, sleeping 1 hour...")
+            time.sleep(RATE_LIMIT_WAIT)
+            resp = SESSION.get(url, timeout=60)
+        if resp.status_code == 404:
+            # Special:FilePath fallback (case-insensitive lookup).
+            fp = ("https://commons.wikimedia.org/wiki/Special:"
+                  f"FilePath/{quote(filename.replace(' ', '_'))}")
+            resp = SESSION.get(fp, timeout=60, allow_redirects=True)
+        resp.raise_for_status()
+        out.write_bytes(resp.content)
+        return out
+    except requests.RequestException as e:
+        print(f"  FAILED: {filename} — {e}", file=sys.stderr)
+        return None
+
+
 def scan_wikitext() -> list[dict]:
-    """Scan all raw wikitext for DjVu crop references.
+    """Scan all raw wikitext for `{{Css image crop}}` references.
 
     Returns list of dicts with keys:
         djvu_file, page, bSize, cWidth, cHeight, oTop, oLeft, volume
+
+    Non-DjVu sources (e.g. `Image=EB1911 Alphabet - Plate.png`) are
+    skipped here — `scan_non_djvu_crop_sources()` handles those, as
+    they only need the source image downloaded, not a page-rendered
+    crop.
     """
     found = []
     for vol_dir in sorted(RAW_DIR.iterdir()):
@@ -92,6 +239,32 @@ def scan_wikitext() -> list[dict]:
                     "volume": data["volume"],
                 })
     return found
+
+
+def scan_non_djvu_crop_sources() -> list[str]:
+    """Scan for `{{Css image crop}}` templates whose `Image` is a
+    regular Commons PNG/JPG (not a `.djvu` file).  The source image
+    itself needs to be downloaded so any consumer (the viewer's
+    full-plate fallback) can resolve it.
+
+    Returns deduped list of Commons filenames.
+    """
+    seen: set[str] = set()
+    for vol_dir in sorted(RAW_DIR.iterdir()):
+        if not vol_dir.is_dir():
+            continue
+        for page_file in sorted(vol_dir.glob("*.json")):
+            try:
+                data = json.loads(
+                    page_file.read_text(encoding="utf-8"))
+            except Exception:
+                continue
+            raw = data.get("raw_text", "")
+            for m in _CSS_CROP_PATTERN.finditer(raw):
+                image = _parse_param(m.group(1), "Image")
+                if image and not image.endswith(".djvu"):
+                    seen.add(image)
+    return sorted(seen)
 
 
 # ---------------------------------------------------------------------------
@@ -207,6 +380,14 @@ def main():
     crops = scan_wikitext()
     print(f"  Found {len(crops)} crop regions")
 
+    print("=== Scanning wikitext for full-page DjVu refs ===")
+    full_refs = scan_full_page_refs()
+    print(f"  Found {len(full_refs)} full-page references")
+
+    print("=== Scanning wikitext for non-DjVu crop sources ===")
+    non_djvu_sources = scan_non_djvu_crop_sources()
+    print(f"  Found {len(non_djvu_sources)} non-DjVu crop sources")
+
     # Group by (djvu_file, page) to download each page only once
     from collections import defaultdict
     pages = defaultdict(list)
@@ -247,12 +428,67 @@ def main():
                 # Check if it was already there
                 cropped += 1
 
+    # Full-page refs — download each as djvu_volNN_pageNNNN.jpg
+    # directly under IMAGE_DIR.  These don't need cropping.
+    full_downloaded = 0
+    full_skipped = 0
+    full_failed = 0
+    print()
+    print("=== Downloading full-page DjVu refs ===")
+    for ref in sorted(full_refs, key=lambda r: (r["volume"], r["page"])):
+        out_path = _full_page_output_path(ref["volume"], ref["page"])
+        if out_path.exists() and out_path.stat().st_size > 0:
+            full_skipped += 1
+            continue
+        cached = _cache_path(ref["djvu_file"], ref["page"])
+        if not cached.exists() or cached.stat().st_size == 0:
+            result = download_page(
+                ref["djvu_file"], ref["page"], args.delay)
+            if result is None:
+                full_failed += 1
+                continue
+            time.sleep(args.delay)
+        # Copy the cached full-page render to the output path.
+        out_path.write_bytes(cached.read_bytes())
+        full_downloaded += 1
+        print(f"  [{full_downloaded}] {out_path.name} "
+              f"({out_path.stat().st_size:,} bytes)")
+
+    # Non-DjVu crop sources (ALPHABET Plate.png etc.) — download the
+    # source image itself.  The viewer's commonsUrl() resolves local
+    # files by filename; crops aren't generated (crop regions of PNG
+    # sources are currently rendered by CSS in the viewer or shown
+    # as the whole source).
+    source_downloaded = 0
+    source_skipped = 0
+    source_failed = 0
+    print()
+    print("=== Downloading non-DjVu crop sources ===")
+    for src in non_djvu_sources:
+        local_name = src.replace(" ", "_")
+        out = IMAGE_DIR / local_name
+        if out.exists() and out.stat().st_size > 0:
+            source_skipped += 1
+            continue
+        result = download_commons_source(src, args.delay)
+        if result is None:
+            source_failed += 1
+            continue
+        source_downloaded += 1
+        print(f"  [{source_downloaded}] {out.name} "
+              f"({out.stat().st_size:,} bytes)")
+        time.sleep(args.delay)
+
     print()
     print(f"Pages downloaded: {downloaded} (skipped: {skipped_pages})")
     print(f"Crops produced: {cropped}")
+    print(f"Full-page refs: {full_downloaded} downloaded, "
+          f"{full_skipped} skipped, {full_failed} failed")
+    print(f"Non-DjVu sources: {source_downloaded} downloaded, "
+          f"{source_skipped} skipped, {source_failed} failed")
     print(f"Failed: {failed}")
     total_djvu = len(list(IMAGE_DIR.glob("djvu_*.jpg")))
-    print(f"Total DjVu crop images in {IMAGE_DIR}: {total_djvu}")
+    print(f"Total DjVu images in {IMAGE_DIR}: {total_djvu}")
 
 
 if __name__ == "__main__":

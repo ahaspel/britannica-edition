@@ -140,6 +140,31 @@
       text-indent: 0;
     }
 
+    /* Mid-paragraph figures: body prose wraps around the figure so
+       the surrounding text stays in one <p>. All floated figures sit
+       on the right edge and stack vertically when there are multiple;
+       body text fills the left side uninterrupted. */
+    .body-text figure.inline-float {
+      float: right;
+      clear: right;
+      margin: 0.3em 0 0.4em 1.2em;
+      max-width: 45%;
+    }
+    .body-text figure.inline-float img {
+      max-width: 100%;
+      height: auto;
+    }
+    .body-text figure.inline-float .float-legend {
+      font-size: 0.85em;
+      line-height: 1.4;
+      margin-top: 0.3em;
+      color: var(--muted);
+    }
+    .body-text figure.inline-float .float-legend div {
+      padding-left: 1em;
+      text-indent: -1em;
+    }
+
     .body-text .katex-display {
       text-indent: 0;
     }
@@ -430,21 +455,30 @@
 
     .page-marker {
       float: left;
-      margin-left: -6.5em;
-      width: 5em;
+      margin-left: -7em;
+      width: 5.5em;
       text-align: right;
       font-family: Georgia, "Times New Roman", serif;
       font-size: 0.65rem;
       font-style: italic;
       color: #8b7355;
-      padding-right: 0.6em;
+      padding-right: 1em;
       font-variant-numeric: tabular-nums;
       user-select: none;
+      text-decoration: none;
+    }
+    a.page-marker:hover {
+      color: var(--link);
+      text-decoration: underline;
     }
 
     .page-marker.unproofed {
       color: #d04000;
       font-weight: 700;
+    }
+    a.page-marker.unproofed:hover {
+      color: #b42318;
+      text-decoration: underline;
     }
 
     @media (max-width: 700px) {
@@ -943,16 +977,25 @@
       // Full URLs (e.g. score images from upload.wikimedia.org) pass through
       if (filename.startsWith("http://") || filename.startsWith("https://")) return filename;
       let name = filename.replace(/ /g, "_");
+      // Match the sanitization done by download_images.py when saving
+      // to disk: characters illegal in Windows filenames are replaced
+      // with `_`.  Keeps the viewer URL aligned with what's on S3.
+      name = name.replace(/["<>|?*]/g, "_");
       // SVGs are rasterized to .svg.png by the download script
       if (name.toLowerCase().endsWith(".svg")) name += ".png";
       const local = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-      // All images served locally (Commons, DjVu crops, chart scans)
       if (local) return `/data/derived/images/${encodeURIComponent(name)}`;
       return `/data/images/${encodeURIComponent(name)}`;
     }
 
     let footnoteCounter = 0;
     let currentVolume = "?";
+    // Base scan URL for the current article — populated by
+    // renderArticle(). Page-marker <a> tags append ``&pinit=<page>``
+    // to land the scan viewer on their specific page instead of the
+    // article's first page. Same URL as the top "View scan" link
+    // with one extra param — no separate code path.
+    let currentScanUrl = "";
     let unproofedPages = {};
     let collectedFootnotes = [];
     let linkedTargets = new Set();
@@ -1174,9 +1217,10 @@
           const unproofed = pg in unproofedPages;
           const cls = unproofed ? "page-marker unproofed" : "page-marker";
           const title = unproofed
-            ? `Volume ${currentVolume}, page ${pg} (unproofed source)`
-            : `Volume ${currentVolume}, page ${pg}`;
-          return `<span class="${cls}" title="${title}">${currentVolume}:${pg}</span>`;
+            ? `Volume ${currentVolume}, page ${pg} (unproofed source) — click to view scan`
+            : `Volume ${currentVolume}, page ${pg} — click to view scan`;
+          const href = `${currentScanUrl}&pinit=${pg}`;
+          return `<a class="${cls}" title="${title}" href="${href}">${currentVolume}:${pg}</a>`;
         };
         let maxCols = 0;
         t = t.replace(/<tr([^>]*)>([\s\S]*?)<\/tr>/g, (_m, trAttrs, inner) => {
@@ -1319,9 +1363,10 @@
         const isUnproofed = page in unproofedPages;
         const cls = isUnproofed ? "page-marker unproofed" : "page-marker";
         const title = isUnproofed
-          ? `Volume ${currentVolume}, page ${page} (unproofed source)`
-          : `Volume ${currentVolume}, page ${page}`;
-        return `<span class="${cls}" title="${title}">${currentVolume}:${page}</span>`;
+          ? `Volume ${currentVolume}, page ${page} (unproofed source) — click to view scan`
+          : `Volume ${currentVolume}, page ${page} — click to view scan`;
+        const href = `${currentScanUrl}&pinit=${page}`;
+        return `<a class="${cls}" title="${title}" href="${href}">${currentVolume}:${page}</a>`;
       });
       // Render inline complex HTML tables
       html = html.replace(/\u00abHTMLTABLE:([\s\S]*?)\u00ab\/HTMLTABLE\u00bb/g, (match, content) => {
@@ -1347,6 +1392,34 @@
         collectedFootnotes.push({ num: footnoteCounter, text: content });
         return `<sup class="footnote-ref" id="fnref-${footnoteCounter}"><a onclick="toggleFnPopup(event,${footnoteCounter});return false;" href="#">${footnoteCounter}</a><span class="fn-popup" id="fnpop-${footnoteCounter}"><span class="fn-popup-num">${footnoteCounter}.</span>${formatFootnoteText(content)}</span></sup>`;
       });
+      // Mid-paragraph figures (sentinelled by the merge pass above).
+      // Render with ``float:right`` so surrounding prose wraps around
+      // the figure instead of being split into a truncated pre-<p>
+      // and indented post-<p>. The sentinelled region may contain one
+      // or more ``{{IMG:…}}{{LEGEND:…}LEGEND}`` pairs (TOOL stacks
+      // Fig 4+5 figures between the same pair of body-text paragraphs)
+      // — each becomes a separate floated <figure>.
+      html = html.replace(
+        /\u2060FIG\u2060([\s\S]*?)\u2060FIG\u2060/g,
+        (_match, content) => {
+          const figs = [];
+          const figRe = /\{\{IMG:([^|}]+)(?:\|([^}]*))?\}\}(?:\s*\{\{LEGEND:([\s\S]*?)\}LEGEND\})?/g;
+          let m;
+          while ((m = figRe.exec(content)) !== null) {
+            const url = commonsUrl(unescapeHtml(m[1]));
+            const caption = m[2] || "";
+            const legend = m[3] || "";
+            let legendHtml = "";
+            if (legend) {
+              const lines = legend.split("\n").map(l => l.trim()).filter(Boolean);
+              legendHtml = `<div class="float-legend">${lines.map(l => `<div>${l}</div>`).join("")}</div>`;
+            }
+            figs.push(`<figure class="inline-image inline-float"><a href="${url}" target="_blank"><img src="${url}" alt="${caption || m[1]}" loading="lazy" /></a>${caption ? `<figcaption>${caption}</figcaption>` : ""}${legendHtml}</figure>`);
+          }
+          return figs.join("");
+        });
+      // Strip any stray sentinels (shouldn't happen but guard).
+      html = html.replace(/\u2060FIG\u2060/g, "");
       // Render inline images — captions are pre-cleaned by the pipeline.
       // Filename must be unescaped before URL construction because the
       // surrounding paragraph was run through escapeHtml(), which would
@@ -1385,7 +1458,7 @@
       });
       // Detect if this paragraph is a single standalone equation (one math block, no other text)
       const mathCount = (html.match(/\u00abMATH:/g) || []).length;
-      const mathOnly = mathCount === 1 && /^\s*(<span class="page-marker[^"]*"[^>]*>[^<]*<\/span>)?\s*\u00abMATH:.*?\u00ab\/MATH\u00bb[,.\s;:]*$/s.test(html);
+      const mathOnly = mathCount === 1 && /^\s*(<a class="page-marker[^"]*"[^>]*>[^<]*<\/a>)?\s*\u00abMATH:.*?\u00ab\/MATH\u00bb[,.\s;:]*$/s.test(html);
       // Render math markers with KaTeX
       html = html.replace(/\u00abMATH:(.*?)\u00ab\/MATH\u00bb/gs, (match, latex) => {
         // Undo HTML escaping so KaTeX sees real LaTeX (& not &amp;, etc.)
@@ -1495,6 +1568,7 @@
 
     function renderArticle(article) {
       currentVolume = article.volume || "?";
+      currentScanUrl = scanUrl(article);
       unproofedPages = (article.source_quality && article.source_quality.unproofed_pages) ? article.source_quality.unproofed_pages : {};
       const segments = Array.isArray(article.segments) ? article.segments : [];
       const xrefs = (Array.isArray(article.xrefs) ? article.xrefs : [])
@@ -1574,17 +1648,103 @@
               markedBody = `\x01PAGE:${article.page_start}\x01` + markedBody;
             }
 
+            // Normalize so every {{IMG:…}} marker sits on its own
+            // paragraph, separated from the surrounding body text by
+            // \n\n. The pipeline sometimes leaves an IMG glued to the
+            // previous paragraph with a single \n (common in TOOL after
+            // corrections.json replacements), which would defeat the
+            // per-paragraph float-merge below.
+            markedBody = markedBody.replace(
+              /(?<!\n\n)(\{\{IMG:[^}]*\}\})/g, "\n\n$1");
+            markedBody = markedBody.replace(
+              /(\{\{IMG:[^}]*\}\})(?!\n\n)/g, "$1\n\n");
+
             // Merge shoulder heading paragraphs with surrounding text.
             // A shoulder heading sits in the margin mid-sentence, so it
             // should not create paragraph breaks. Merge: prev + SH + next
             // into one paragraph.
+            //
+            // Also merge mid-paragraph figures (lone ``{{IMG:…}}``
+            // paragraphs) with their surrounding body prose. The EB1911
+            // transform splits a single logical paragraph into
+            // before/IMG/after on ``\n\n`` boundaries; when the prose
+            // clearly continues across the figure, we recombine so the
+            // figure renders as an inline float inside one <p> and the
+            // text wraps around it. The heuristic: if the paragraph
+            // BEFORE the IMG doesn't end in a strong terminator
+            // (``.``, ``!``, ``?``) followed by a capitalized
+            // continuation, treat as mid-paragraph.
+            const NON_TEXT_PREFIX = /^(?:\{\{(?:TABLE|LEGEND|IMG|VERSE)|\u00abHTMLTABLE|\u00abSEC:|\u00abSH\u00bb|\u00abPRE:)/;
+            const IMG_ONLY = /^\s*(?:\x01PAGE:\d+\x01\s*)*\{\{IMG:[^|}]+(?:\|[^}]*)?\}\}\s*$/;
+            const stripMarginMarkers = s => s
+              .replace(/\x01PAGE:\d+\x01/g, "")
+              .replace(/\u00abSH\u00bb.*?\u00ab\/SH\u00bb/gs, "")
+              .trim();
+            const isContinuation = (prev, next) => {
+              const p = stripMarginMarkers(prev);
+              const n = stripMarginMarkers(next);
+              if (!p || !n) return false;
+              // Paragraph-end terminator + capital-start of next = new para.
+              const prevEndsTerminator = /[.!?](?:[")\]»]*)$/.test(p);
+              const nextStartsUpper = /^["«(\[]*[A-Z]/.test(n);
+              return !(prevEndsTerminator && nextStartsUpper);
+            };
+
+            const LEGEND_ONLY = /^\s*\{\{LEGEND:[\s\S]*?\}LEGEND\}\s*$/;
             const rawParas = markedBody.split("\n\n");
             const mergedParas = [];
             let i = 0;
             while (i < rawParas.length) {
-              if (rawParas[i].startsWith("\u00abSH\u00bb")) {
+              const cur = rawParas[i];
+              // Mid-paragraph figure merge.  Also handles the common
+              // ``prev + IMG + LEGEND + next`` pattern (legend is part
+              // of the figure, not a paragraph boundary).
+              if (IMG_ONLY.test(cur) && mergedParas.length > 0) {
+                const prev = mergedParas[mergedParas.length - 1];
+                // Look ahead over consecutive IMG and LEGEND paragraphs
+                // — figures often stack (IMG4, LEGEND4, IMG5, LEGEND5)
+                // between the prev body text and the next body text.
+                // All stacked figures get pulled into one float block.
+                const figParas = [cur];
+                let scan = i + 1;
+                while (scan < rawParas.length &&
+                       (IMG_ONLY.test(rawParas[scan]) ||
+                        LEGEND_ONLY.test(rawParas[scan]))) {
+                  figParas.push(rawParas[scan]);
+                  scan++;
+                }
+                const next = scan < rawParas.length ? rawParas[scan] : "";
+                if (next && !NON_TEXT_PREFIX.test(prev) &&
+                    !NON_TEXT_PREFIX.test(next) &&
+                    isContinuation(prev, next)) {
+                  const fig = figParas.join(" ");
+                  mergedParas[mergedParas.length - 1] =
+                    prev + " \u2060FIG\u2060 " + fig + " \u2060FIG\u2060 " + next;
+                  i = scan + 1;
+                  continue;
+                }
+              }
+              // Plain-text continuation merge: prev ends mid-sentence
+              // (no terminator) + next starts lowercase. Handles
+              // OCR-induced paragraph breaks that aren't really
+              // paragraph breaks.
+              if (mergedParas.length > 0 && !NON_TEXT_PREFIX.test(cur)) {
+                const prev = mergedParas[mergedParas.length - 1];
+                if (!NON_TEXT_PREFIX.test(prev)) {
+                  const pt = stripMarginMarkers(prev);
+                  const ct = stripMarginMarkers(cur);
+                  if (pt && ct &&
+                      /[,;]$/.test(pt) &&
+                      /^[a-z]/.test(ct)) {
+                    mergedParas[mergedParas.length - 1] = prev + " " + cur;
+                    i++;
+                    continue;
+                  }
+                }
+              }
+              if (cur.startsWith("\u00abSH\u00bb")) {
                 // Shoulder heading: attach to previous, then absorb next
-                const sh = rawParas[i];
+                const sh = cur;
                 if (mergedParas.length > 0) {
                   mergedParas[mergedParas.length - 1] += " " + sh;
                 } else {
@@ -1596,7 +1756,7 @@
                   i++;
                 }
               } else {
-                mergedParas.push(rawParas[i]);
+                mergedParas.push(cur);
               }
               i++;
             }

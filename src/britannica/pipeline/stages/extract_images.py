@@ -15,12 +15,11 @@ _IMAGE_PATTERN = re.compile(
     # filename is captured bare (no caption/options).
     r"|\{\{\s*raw\s+image\s*\|([^{}|]+)\s*\}\}"
     # OR {{img float|file=...|cap=...}} / {{figure|...}} / {{FI|...}}
-    # — inline float templates. Captured as group 3 (full template
-    # body after the opening keyword); file= and cap= are extracted
-    # downstream by _parse_img_float().
-    # Supports up to 2 levels of nested {{…}} (e.g. {{EB1911|{{sc|Fig.}} 15.}}).
+    # — inline float templates.  Supports up to 4 levels of nested
+    # `{{…}}` (CASTLE Fig. 9 `cap={{Fs85|…}}{{center|{{EB1911 Fine
+    # Print|{{sc|Fig.}}…}}}}` is 4 levels deep).
     r"|\{\{\s*(?:img\s+float|figure|FI)\s*\|"
-    r"((?:[^{}]|\{\{(?:[^{}]|\{\{[^{}]*\}\})*\}\})*)\}\}",
+    r"((?:[^{}]|\{\{(?:[^{}]|\{\{(?:[^{}]|\{\{[^{}]*\}\})*\}\})*\}\})*)\}\}",
     re.IGNORECASE | re.DOTALL,
 )
 

@@ -1,0 +1,47 @@
+# Standing regression fixture set — seeded 2026-04-20.
+#
+# These articles collectively exercise the major EB1911 content
+# patterns. Anything that alters pipeline/viewer rendering should
+# be verified against this set before shipping (Tier 2 validation).
+#
+# Add a new fixture whenever you touch a code path this set doesn't
+# already cover. Remove only with explicit reason (e.g. superseded).
+#
+# Format: one article filename per line (without .json extension).
+# Blank lines and #-prefixed comments are ignored.
+
+# --- Image-layout tables (Css image crop inside wikitables) ---
+20-0196-s4-ORCHIDS
+
+# --- Folded multi-row data tables ---
+02-0908-s3-ATMOSPHERIC_ELECTRICITY
+
+# --- Standalone Css crops, sfrac math, complex cross-refs ---
+24-0984-s2-SHIPBUILDING
+
+# --- corrections.json, stacked figures, figure groups ---
+27-0028-s3-TOOL
+
+# --- Cross-references (heavy xref article) ---
+03-0016-s3-AUSTRIA-HUNGARY
+
+# --- Complex math (ALGEBRAIC FORMS has dense formulas, sfracs, <math> blocks) ---
+01-0660-algebraic-forms-ALGEBRAIC_FORMS
+
+# --- Complicated caption with legends, nested layout tables ---
+01-0042-s5-ABBEY
+
+# --- Table unwrapping with complex figure legends ---
+13-0434-hexapoda-HEXAPODA
+
+# --- Nested layout tables, complex legends ---
+# (ABBEY — add when confirmed filename)
+
+# --- Unicode math labels, Fig.-legend patterns ---
+# (HEXAPODA — add when confirmed filename)
+
+# --- Plate-type article ---
+# (find a plate article — add when confirmed)
+
+# --- Cross-reference heavy ---
+# (find one — add when confirmed)

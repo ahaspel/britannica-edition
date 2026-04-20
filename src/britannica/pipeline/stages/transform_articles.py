@@ -204,26 +204,57 @@ def _unwrap_content_templates(text: str) -> str:
     def _frac(num, den):
         return _VULGAR.get((num.strip(), den.strip()),
                            f"{num.strip()}/{den.strip()}")
-    # Three-arg sfrac: {{sfrac|integer|num|den}} → "integer num/den"
-    text = re.sub(
-        r"\{\{(?:sfrac|EB1911 tfrac)\|([^{}|]*)\|([^{}|]*)\|([^{}|]*)\}\}",
-        lambda m: f"{m.group(1).strip()}{_frac(m.group(2), m.group(3))}",
-        text, flags=re.IGNORECASE,
-    )
-    # Two-arg: {{sfrac|num|den}} → num/den
-    text = re.sub(
-        r"\{\{(?:sfrac|EB1911 tfrac)\|([^{}|]*)\|([^{}|]*)\}\}",
-        lambda m: _frac(m.group(1), m.group(2)),
-        text, flags=re.IGNORECASE,
-    )
-    # One-arg: {{sfrac|N}} → 1/N
-    text = re.sub(
-        r"\{\{(?:sfrac|EB1911 tfrac)\|([^{}|]*)\}\}",
-        lambda m: _frac("1", m.group(1)),
-        text, flags=re.IGNORECASE,
-    )
-    # Standalone image crop templates (not inside a table — those are handled
-    # as DJVU_CROP elements in elements.py)
+    # Strip named-param args (``|font-size=100%``, ``|color=red``, …)
+    # from sfrac before positional-arg extraction. MediaWiki sfrac
+    # accepts styling overrides as named args; without this they fall
+    # into the integer/numerator slot and leak as literal text.
+    def _strip_sfrac_named_args(m: re.Match) -> str:
+        template = m.group(0)
+        inner = template[2:-2]
+        parts = inner.split("|")
+        cleaned = [parts[0]] + [p for p in parts[1:]
+                                 if not re.match(r"^[a-zA-Z_-]+=", p)]
+        return "{{" + "|".join(cleaned) + "}}"
+
+    # Loop sfrac resolution to fixed point — nested forms like
+    # ``{{sfrac|font-size=100%|X {{EB1911 tfrac|2|3}}|Y}}`` need the
+    # inner tfrac to resolve first, then the outer sfrac to re-match
+    # once its braces are no longer nested. Without iteration the outer
+    # survives my regexes and gets wiped by the catch-all template
+    # stripper at line ~440, dropping the entire formula's LHS.
+    _SFRAC_TOKEN_RE = re.compile(r"\{\{(?:sfrac|EB1911 tfrac)\b",
+                                  re.IGNORECASE)
+    for _ in range(8):
+        if not _SFRAC_TOKEN_RE.search(text):
+            break
+        before = text
+        text = re.sub(
+            r"\{\{(?:sfrac|EB1911 tfrac)\|[^{}]*\}\}",
+            _strip_sfrac_named_args,
+            text, flags=re.IGNORECASE,
+        )
+        # Three-arg sfrac: {{sfrac|integer|num|den}} → "integer num/den"
+        text = re.sub(
+            r"\{\{(?:sfrac|EB1911 tfrac)\|([^{}|]*)\|([^{}|]*)\|([^{}|]*)\}\}",
+            lambda m: f"{m.group(1).strip()}{_frac(m.group(2), m.group(3))}",
+            text, flags=re.IGNORECASE,
+        )
+        # Two-arg: {{sfrac|num|den}} → num/den
+        text = re.sub(
+            r"\{\{(?:sfrac|EB1911 tfrac)\|([^{}|]*)\|([^{}|]*)\}\}",
+            lambda m: _frac(m.group(1), m.group(2)),
+            text, flags=re.IGNORECASE,
+        )
+        # One-arg: {{sfrac|N}} → 1/N
+        text = re.sub(
+            r"\{\{(?:sfrac|EB1911 tfrac)\|([^{}|]*)\}\}",
+            lambda m: _frac("1", m.group(1)),
+            text, flags=re.IGNORECASE,
+        )
+        if text == before:
+            break
+    # Any remaining Css image crop templates (non-DjVu sources, or
+    # those that survived the pre-pass in _transform_text_v2).
     text = re.sub(r"\{\{Css image crop[^}]*\}\}", "", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{Css image crop[^}]*$", "", text, flags=re.IGNORECASE | re.MULTILINE)
     # Ellipsis (three dots, not Unicode ellipsis, so it's searchable)
@@ -242,6 +273,23 @@ def _unwrap_content_templates(text: str) -> str:
     # Hanging indent → unwrap to content
     text = re.sub(r"\{\{hanging indent\|([^{}]*(?:\{\{[^{}]*\}\}[^{}]*)*)\}\}",
                   r"\1", text, flags=re.IGNORECASE)
+    # ``{{hi|…}}`` — hanging-indent shorthand. Two argument forms:
+    #   ``{{hi|content}}``           — indented content, no size spec
+    #   ``{{hi|N(em|px)|content}}``  — explicit indent amount + content
+    # The indent arg is presentation-only (we don't render it in
+    # plain HTML), so drop any size prefix and keep the content.
+    # ORCHIDS Fig. 2 legend uses ``{{hi|3em|…}}`` per entry; the
+    # generic ``_unwrap_balanced`` at the end of ``_transform_text_v2``
+    # would strip only the ``{{hi|`` and ``}}`` delimiters, leaving
+    # ``3em|`` visible in the caption — hence these dedicated handlers.
+    text = re.sub(
+        r"\{\{hi\|[^{}|]*\|([^{}]*(?:\{\{[^{}]*\}\}[^{}]*)*)\}\}",
+        r"\1", text, flags=re.IGNORECASE,
+    )
+    text = re.sub(
+        r"\{\{hi\|([^{}]*(?:\{\{[^{}]*\}\}[^{}]*)*)\}\}",
+        r"\1", text, flags=re.IGNORECASE,
+    )
     # Binomial coefficient: {{binom|n|r}} → KaTeX-rendered binom
     def _binom_to_math(m: re.Match) -> str:
         top = m.group(1).replace("''", "")
@@ -399,6 +447,28 @@ def _convert_sub_sup(text: str) -> str:
 
 def _convert_bold_italic(text: str) -> str:
     """'''bold''' → «B»bold«/B», ''italic'' → «I»italic«/I»."""
+    # Normalize malformed quote runs in math/notation contexts:
+    # `'''x''` (3 open, 2 close) and `''x'''` (2 open, 3 close) are
+    # typos common in EB1911 math sections (SHIPBUILDING p993's
+    # `moderate amount '''w'' tons`) — the author meant italic on a
+    # single-letter variable but the run count got unbalanced. Without
+    # normalization the extra `'` cascades into the next italic pair,
+    # inverting open/close markers through the rest of the article.
+    #
+    # The pattern: a 3-quote run bordering a short (≤5 char) token and
+    # matched on the other side by a 2-quote run — almost certainly
+    # italic intent. We normalize both sides to `''`.
+    text = re.sub(
+        r"(?<!')'{3}([^'\s]{1,5})'{2}(?!')",
+        r"''\1''",
+        text,
+    )
+    text = re.sub(
+        r"(?<!')'{2}([^'\s]{1,5})'{3}(?!')",
+        r"''\1''",
+        text,
+    )
+
     # Bold-italic (5 quotes) first
     text = re.sub(r"'''''(.*?)'''''",
                   lambda m: f"{_FMT}B{_FMT}I{m.group(1)}{_FMT}/I{_FMT}/B",
@@ -829,6 +899,631 @@ def _load_corrections():
     return _CORRECTIONS
 
 
+_LEGEND_CELL_RE = re.compile(
+    r"^\s*([A-Za-z0-9](?:[A-Za-z0-9.,\- ]{0,20}?))"
+    r"[,.]\s+(.+\S)\s*$")
+
+# Plain-ASCII label shape after italic markers have been stripped.
+# Caps label at 4 chars so the regex doesn't greedily eat real words
+# (HEXAPODA Fig. 58 `H, Air compressing cylinder` → label `H`, not
+# `H, Air`).  Multi-label chains (`K, L. Round-nose tools.`) require
+# a period terminator to distinguish them from single-label + comma
+# + prose.
+#
+# Two variants: PERMISSIVE allows a single-label with NO separator
+# (used inside VERSE/TABLE/POEM container content where `A text.` is
+# legitimate — TOOL Fig. 65).  STRICT requires `,` or `.` after
+# single-label (used for body paragraphs where `a drilling…` is an
+# English article, not a label — TOOL Fig. 47).
+_PARA_LEGEND_LABEL_ONE = r"[A-Za-z0-9][A-Za-z0-9.\-]{0,3}"
+
+def _build_legend_line_re(strict: bool) -> re.Pattern:
+    # Single-label separator: `[,.]` required in strict, `[,.]?` in
+    # permissive mode.
+    single_sep = r"[,.]" if strict else r"[,.]?"
+    # Text group uses `[\s\S]+?` so legend entries with internal
+    # newlines (source `<br>` → space/newline) still match.
+    return re.compile(
+        r"^\s*(?:"
+        r"(" + _PARA_LEGEND_LABEL_ONE +
+        r"(?:\s*,\s*" + _PARA_LEGEND_LABEL_ONE + r")+)\."
+        r"|"
+        r"(" + _PARA_LEGEND_LABEL_ONE + r")" + single_sep +
+        r")\s+([\s\S]+?)\s*$",
+        re.DOTALL,
+    )
+
+
+_PARA_LEGEND_PLAIN_RE = _build_legend_line_re(strict=False)
+_PARA_LEGEND_STRICT_RE = _build_legend_line_re(strict=True)
+
+
+def _strip_inline_italic(text: str) -> str:
+    """Remove `«I»…«/I»` open/close markers so a line can be matched
+    against a plain-ASCII legend-label regex.  The markers are just
+    formatting hints — their presence and position vary (some sources
+    close before the comma, some after), and the pattern match
+    doesn't need them."""
+    return re.sub(r"\u00ab/?[A-Z]+\u00bb", "", text)
+
+
+def _match_legend_line(line: str, *, strict: bool = False) -> tuple[str, str] | None:
+    """Try to parse `line` as a legend entry.  Returns (label, text)
+    or None.  Handles all the variants we've seen:
+
+    * `A, text.`                       (comma separator)
+    * `A. text.`                       (period separator)
+    * `A text`                         (no separator — TOOL Fig. 65;
+                                        only accepted in permissive mode)
+    * `«I»A«/I», text.`                (italic label, outside punct)
+    * `«I»A,«/I» text.`                (italic label, inside punct;
+                                        TOOL Fig. 58 `A,` inside)
+    * `A, B, text.`                    (multiple labels)
+    * `«I»A«/I», «I»B«/I», text.`      (multiple italic labels)
+
+    `strict=True` rejects single-label entries without a `,` or `.`
+    separator, used for body-paragraph context where `a drilling…`
+    (English article "a") should NOT be mistaken for a label.
+    """
+    plain = _strip_inline_italic(line).strip()
+    pat = _PARA_LEGEND_STRICT_RE if strict else _PARA_LEGEND_PLAIN_RE
+    m = pat.match(plain)
+    if not m:
+        return None
+    label = (m.group(1) or m.group(2) or "").strip().rstrip(".,")
+    text = m.group(3).strip().rstrip(".")
+    if not label or not text:
+        return None
+    return label, text
+
+
+def _promote_paragraph_legends(text: str) -> str:
+    """Convert `{{IMG:…}}` followed by legend-shaped prose into
+    `{{IMG:…}}\\n\\n{{LEGEND:…}LEGEND}`.
+
+    The legend content can appear in several layouts:
+      * Multiple paragraphs, each one entry (TOOL Figs 2-3)
+      * A single paragraph with multiple entries glued together
+        separated by sentence boundaries (TOOL Figs 9-10)
+      * Multiple lines in one paragraph, each one entry (TOOL Fig. 13)
+
+    Everything from the IMG's closing `}}` up to the next blank-line
+    paragraph break (or page-break marker) is handed to
+    `_parse_legend_lines`, which already knows how to handle all
+    three layouts.  Separator between IMG and the first legend line
+    may be a single newline OR a blank line.
+    """
+    img_re = re.compile(r"\{\{IMG:[^}]+\}\}")
+    block_end_re = re.compile(r"\n\n+|\x01PAGE:\d+\x01")
+    out_parts: list[str] = []
+    pos = 0
+    for m in img_re.finditer(text):
+        out_parts.append(text[pos:m.end()])
+        pos = m.end()
+        tail = text[pos:]
+        # Skip past any whitespace (single `\n`, `\n\n`, spaces).
+        ws_m = re.match(r"[ \t]*\n+", tail)
+        if not ws_m:
+            continue
+        after_ws = pos + ws_m.end()
+        # Find the end of the legend block: next blank-line break
+        # or page marker.  Everything up to there is candidate
+        # legend content.
+        end_m = block_end_re.search(text, after_ws)
+        block_end = end_m.start() if end_m else len(text)
+        candidate = text[after_ws:block_end]
+        # Don't try to absorb overly long chunks as a single legend —
+        # real legends per figure are bounded (≤ 2000 chars is a
+        # generous cap).
+        if not candidate.strip() or len(candidate) > 2000:
+            continue
+        # Handle the "multi-entry on one line" shape by pre-splitting
+        # the candidate on sentence-boundary-before-label.
+        lines_to_parse: list[str] = []
+        for line in candidate.split("\n"):
+            line = line.strip()
+            if not line:
+                continue
+            chunks = _split_multi_entry_line(line)
+            if len(chunks) >= 2:
+                lines_to_parse.extend(chunks)
+            else:
+                lines_to_parse.append(line)
+        entries = _parse_legend_lines(lines_to_parse)
+        if entries is None:
+            continue
+        legend = "\n".join(f"{lbl}. {t}." for lbl, t in entries)
+        out_parts.append(f"\n\n{{{{LEGEND:{legend}}}LEGEND}}\n\n")
+        pos = block_end
+    out_parts.append(text[pos:])
+    return "".join(out_parts)
+
+
+def _split_multi_entry_line(line: str) -> list[str]:
+    """Split a line like `A, first text. B, second text. C, third.`
+    into per-entry chunks using the sentence boundary immediately
+    preceding the next label shape.  Labels may be wrapped in
+    italic markers (`«I»A«/I», text`) — TOOL Figs 9-10.  Single-entry
+    lines return the line unchanged."""
+    split_re = re.compile(
+        r"(?<=\.)\s+(?=(?:\u00abI\u00bb)?"
+        + _PARA_LEGEND_LABEL_ONE +
+        r"(?:\u00ab/I\u00bb)?[,.]\s+)")
+    parts = split_re.split(line)
+    return [p.strip() for p in parts if p.strip()]
+
+
+def _parse_legend_lines(
+    lines: list[str], *, strict: bool = False,
+) -> list[tuple[str, str]] | None:
+    """Parse a list of lines as legend entries.  A line may contain
+    multiple legend entries separated by sentence boundaries (TOOL
+    Figs 4-5, HEXAPODA Fig. 3 Saw-Fly); those are split on `. LABEL,`
+    boundaries and each chunk parsed independently.  A line that
+    doesn't match gets appended as continuation to the PREVIOUS
+    entry (multi-line anatomy descriptions in TOOL Figs 35/43/44).
+    Returns None if no entry parses at all.
+
+    `strict=True` enforces strict label matching (`,` or `.`
+    separator required) — used when parsing body paragraphs where
+    `a drilling…` shouldn't be mistaken for a label.
+    """
+    entries: list[tuple[str, str]] = []
+    for line in lines:
+        line = line.strip()
+        if not line:
+            continue
+        parsed = _match_legend_line(line, strict=strict)
+        if parsed:
+            entries.append(parsed)
+            continue
+        chunks = _split_multi_entry_line(line)
+        if len(chunks) >= 2:
+            chunk_parsed = [_match_legend_line(c, strict=strict)
+                            for c in chunks]
+            if all(chunk_parsed):
+                entries.extend(cp for cp in chunk_parsed if cp)
+                continue
+        if entries:
+            label, text = entries[-1]
+            entries[-1] = (label, f"{text} {line.rstrip('.')}".strip())
+            continue
+        return None
+    return entries if len(entries) >= 2 else None
+
+
+def _promote_legend_verses(text: str) -> str:
+    """Convert `{{IMG:…}} {{VERSE:…}VERSE}` sequences into
+    `{{IMG:…}} {{LEGEND:…}LEGEND}` when the VERSE content parses as
+    legend entries.  Biological-taxonomy articles (HYDROMEDUSAE,
+    HEXAPODA) and engineering articles (TOOL) both use `<poem>`
+    blocks for figure legends, which earlier stages convert to
+    VERSE; this retroactively relabels them so the viewer renders
+    them in figure-legend style."""
+    def _try_convert(m: re.Match) -> str:
+        img_block = m.group(1)
+        verse_content = m.group(2)
+        entries = _parse_legend_lines(verse_content.split("\n"))
+        if not entries:
+            return m.group(0)
+        legend = "\n".join(f"{lbl}. {t}." for lbl, t in entries)
+        return f"{img_block}\n\n{{{{LEGEND:{legend}}}LEGEND}}"
+
+    return re.sub(
+        r"(\{\{IMG:[^}]+\}\})\s*\{\{VERSE:([\s\S]*?)\}VERSE\}",
+        _try_convert_verse_simple, text)
+
+
+def _try_convert_verse_simple(m: re.Match) -> str:
+    img_block = m.group(1)
+    verse_content = m.group(2)
+    entries = _parse_legend_lines(verse_content.split("\n"))
+    if not entries:
+        return m.group(0)
+    legend = "\n".join(f"{lbl}. {t}." for lbl, t in entries)
+    return f"{img_block}\n\n{{{{LEGEND:{legend}}}LEGEND}}"
+
+
+def _fold_image_attribution(text: str) -> str:
+    """Fold an attribution line immediately following an `{{IMG:…}}`
+    marker into the IMG's caption in parens.  An attribution is a
+    short line that starts with `(`, `From `, `After `, `Modified `,
+    `Photo`, or `Copyright` — so regular body prose doesn't get
+    eaten.  Covers the TOOL Fig. 58 `{{IMG:…}}\\n(W. & J. Player,
+    Birmingham.)\\n\\n{{VERSE:…` layout."""
+    attr_re = re.compile(
+        r"(\{\{IMG:[^}]+\}\})\n"
+        r"(\([^\n{}]{3,200}\)"
+        r"|(?:From|After|Modified|Photo|Copyright)[^\n{}]{1,200})"
+        r"[ \t]*"           # tolerate trailing whitespace on attr line
+        r"(?=\n)",
+        re.IGNORECASE,
+    )
+    def _apply(m: re.Match) -> str:
+        img_block = m.group(1)
+        attribution = m.group(2).strip()
+        return _append_attr_to_img(img_block, attribution)
+    return attr_re.sub(_apply, text)
+
+
+# ── Figure walker (unified IMG+attribution+legend handler) ────────────
+#
+# For each `{{IMG:…}}` marker, walk forward paragraph-by-paragraph
+# collecting "figure material" (attribution, legend-shaped content in
+# any wrapper) until we hit a figure boundary, then emit a cleanly
+# formatted IMG + optional LEGEND.  This replaces the earlier zoo of
+# container-specific promoters (`_promote_legend_tables/verses/
+# paragraphs`) with one pipeline: (1) classify pattern, (2) locate
+# boundary, (3) format content.
+
+_ATTRIBUTION_START_RE = re.compile(
+    # Parenthetical attribution OR attribution-word immediately
+    # followed by a capital-letter proper noun (or an initial).
+    # Real source credits always have a name (After Haeckel, From
+    # A. M. Paterson, Modified after Linko).  "After body." or
+    # "After the war" would fail this check and stay as body prose.
+    r"^(?:\("
+    r"|(?:From|After|Modified|Photo|Copyright)"
+    r"(?:\s+after)?\s+[A-Z])",
+)
+_FIGURE_BOUNDARY_MARKERS = (
+    "{{IMG:", "\u00abSEC:", "\u00abSH", "\u00abHTMLTABLE:",
+    "\x01PAGE:",
+)
+
+
+_BLOCK_MARKER_RE = re.compile(
+    # A block-level marker that begins a fresh paragraph even when
+    # preceded by just a single newline.  VERSE / TABLE / HTMLTABLE
+    # are complete self-terminating units; \x01PAGE:N\x01 is a
+    # page-break sentinel.  `«SEC:` / `«SH»` are heading markers.
+    r"\{\{(?:VERSE|TABLE[A-Z]?|IMG|LEGEND):"
+    r"|\u00abHTMLTABLE:"
+    r"|\u00abSEC:"
+    r"|\u00abSH\u00bb"
+    r"|\x01PAGE:\d+\x01"
+)
+
+_BLOCK_END_RE = re.compile(
+    r"\}VERSE\}"
+    r"|\}TABLE\}"
+    r"|\}LEGEND\}"
+    r"|\u00ab/HTMLTABLE\u00bb"
+)
+
+
+def _paragraphs_starting_at(text: str, start: int):
+    """Yield `(para_start, para_end, para_text)` for each paragraph
+    from `start` onward.  Paragraphs are separated by blank lines OR
+    by block-level markers (VERSE, TABLE, IMG, LEGEND, HTMLTABLE,
+    PAGE sentinel, section headings), so a `{{VERSE:…}VERSE}\\n<body
+    prose>` sequence yields the VERSE and the body prose as two
+    paragraphs instead of one glued chunk.  `para_text` is the
+    paragraph content with leading/trailing whitespace stripped."""
+    pos = start
+    ws = re.match(r"\s+", text[pos:])
+    if ws:
+        pos += ws.end()
+    while pos < len(text):
+        # Does the current position start with a self-terminating
+        # block marker? If so, the paragraph is just that block.
+        if text[pos:].startswith(("{{VERSE:", "{{TABLE:", "{{TABLEH:",
+                                   "{{LEGEND:")):
+            # Find the matching close.
+            end_m = _BLOCK_END_RE.search(text, pos)
+            if end_m:
+                end = end_m.end()
+            else:
+                end = len(text)
+        elif text[pos:].startswith("\u00abHTMLTABLE:"):
+            end_i = text.find("\u00ab/HTMLTABLE\u00bb", pos)
+            end = end_i + len("\u00ab/HTMLTABLE\u00bb") if end_i > 0 else len(text)
+        elif text[pos:].startswith("{{IMG:"):
+            close = text.find("}}", pos)
+            end = close + 2 if close > 0 else len(text)
+        elif text[pos:].startswith("\x01PAGE:"):
+            close = text.find("\x01", pos + 1)
+            end = close + 1 if close > 0 else len(text)
+        elif text[pos:].startswith("\u00abSEC:"):
+            close = text.find("\u00bb", pos)
+            end = close + 1 if close > 0 else len(text)
+        else:
+            # Plain-text paragraph — up to next blank line OR the
+            # next block-marker opening.
+            blank = text.find("\n\n", pos)
+            if blank < 0:
+                blank = len(text)
+            block = _BLOCK_MARKER_RE.search(text, pos)
+            block_pos = block.start() if block and block.start() > pos else blank
+            end = min(blank, block_pos)
+        para = text[pos:end].strip()
+        if para:
+            yield pos, end, para
+        pos = end
+        ws = re.match(r"\s+", text[pos:])
+        if ws:
+            pos += ws.end()
+
+
+def _is_attribution_paragraph(para: str) -> bool:
+    """An attribution is a short paragraph that opens with a known
+    attribution marker — `(…)`, `From …`, `After …`, `Modified …`,
+    `Photo…`, `Copyright…`."""
+    if len(para) > 200:
+        return False
+    return bool(_ATTRIBUTION_START_RE.match(para))
+
+
+def _legend_entries_from_paragraph(
+    para: str,
+) -> list[tuple[str, str]] | None:
+    """Parse a body paragraph as a legend — either a single-entry
+    paragraph, a multi-line paragraph with one entry per line, or a
+    single line packing multiple entries separated by sentence
+    boundaries.  Uses STRICT label-matching so body prose that
+    starts with an English article (`a drilling machine…`) doesn't
+    get mistaken for a label + text.  Returns None if the paragraph
+    doesn't parse as a legend."""
+    # First try: a single entry (strict mode).
+    if len(para) <= 400:
+        single = _match_legend_line(para, strict=True)
+        if single:
+            return [single]
+    # Multi-line: split into lines, optionally re-split each for
+    # packed multi-entry lines.  Still strict.
+    lines_to_parse: list[str] = []
+    for line in para.split("\n"):
+        line = line.strip()
+        if not line:
+            continue
+        chunks = _split_multi_entry_line(line)
+        if len(chunks) >= 2:
+            lines_to_parse.extend(chunks)
+        else:
+            lines_to_parse.append(line)
+    return _parse_legend_lines(lines_to_parse, strict=True)
+
+
+def _parse_table_as_legend(
+    table_content: str,
+) -> list[tuple[str, str]] | None:
+    """Try to parse a `{{TABLE:…}TABLE}` body as a 2+-column legend
+    grid.  Returns entries or None."""
+    rows = [r for r in table_content.strip().split("\n") if r.strip()]
+    if not rows:
+        return None
+    entries: list[tuple[str, str]] = []
+    for row in rows:
+        cells = [c.strip() for c in row.split(" | ")]
+        if len(cells) < 2:
+            return None
+        for cell in cells:
+            clean = re.sub(
+                r"\u00ab/?[A-Z]+\u00bb", "", cell).strip()
+            cm = _LEGEND_CELL_RE.match(clean)
+            if not cm:
+                return None
+            label = cm.group(1).strip().rstrip(".,")
+            txt = cm.group(2).strip().rstrip(".")
+            if label and txt:
+                entries.append((label, txt))
+    return entries if len(entries) >= 2 else None
+
+
+def _parse_verse_as_legend(
+    verse_content: str,
+) -> list[tuple[str, str]] | None:
+    """Try to parse a `{{VERSE:…}VERSE}` body as legend lines."""
+    return _parse_legend_lines(verse_content.split("\n"))
+
+
+def _classify_figure_paragraph(
+    para: str,
+) -> tuple[str, object]:
+    """Classify one paragraph of post-IMG content.  Returns a tuple:
+
+        ("boundary",   None)             — stop here, don't consume
+        ("attribution", attribution_text) — append to caption
+        ("legend",     [(label, text)…])  — emit as LEGEND entries
+        ("skip",       None)             — empty / continuation
+
+    Also returns `"boundary"` for block markers that don't belong to
+    the figure (next IMG, section heading, HTMLTABLE, …).
+    """
+    if not para:
+        return "skip", None
+
+    # Boundary markers
+    for marker in _FIGURE_BOUNDARY_MARKERS:
+        if para.startswith(marker):
+            return "boundary", None
+
+    # VERSE block: legend-shaped?
+    verse_m = re.match(r"\{\{VERSE:([\s\S]*)\}VERSE\}\s*$", para)
+    if verse_m:
+        entries = _parse_verse_as_legend(verse_m.group(1))
+        if entries:
+            return "legend", entries
+        return "boundary", None  # unrelated verse → stop
+
+    # TABLE block: legend-shaped?
+    table_m = re.match(r"\{\{TABLE[A-Z]?:([\s\S]*)\}TABLE\}\s*$", para)
+    if table_m:
+        entries = _parse_table_as_legend(table_m.group(1))
+        if entries:
+            return "legend", entries
+        return "boundary", None
+
+    # Attribution line
+    if _is_attribution_paragraph(para):
+        return "attribution", para.strip(" .")
+
+    # Legend-shape paragraph
+    entries = _legend_entries_from_paragraph(para)
+    if entries:
+        # Reject caption-repeat paragraphs. A lone ``Fig. 21.`` after
+        # an IMG parses as legend entry ("Fig", "21") — but real legend
+        # labels are short symbols (A, B, i, ii, α), never the word
+        # "Fig". This pattern appears in source wikitext that writes
+        # the caption both in the File link and as a separate
+        # ``{{csc|Fig. N.}}`` line (SHIPBUILDING Figs 21–22).
+        if len(entries) == 1:
+            lbl, txt = entries[0]
+            if lbl.lower() == "fig" and re.fullmatch(r"\d+", txt.strip()):
+                return "skip", None
+        return "legend", entries
+
+    # Anything else is body prose — figure boundary.
+    return "boundary", None
+
+
+def _process_figures(text: str) -> str:
+    """Walk each `{{IMG:…}}` marker and absorb the figure material
+    that follows it (attribution, legend) up to the figure boundary.
+    Emits a clean `{{IMG:…|caption}}` optionally followed by a single
+    `{{LEGEND:…}LEGEND}`."""
+    img_re = re.compile(r"\{\{IMG:[^}]+\}\}")
+    out_parts: list[str] = []
+    pos = 0
+    for m in img_re.finditer(text):
+        if m.start() < pos:
+            # Overlap: we already consumed this IMG as part of a
+            # prior figure (shouldn't happen since IMG markers are
+            # atomic, but guard anyway).
+            continue
+        out_parts.append(text[pos:m.start()])
+        img_marker = m.group()
+        scan = m.end()
+        attributions: list[str] = []
+        entries: list[tuple[str, str]] = []
+        boundary = scan
+        for p_start, p_end, para in _paragraphs_starting_at(text, scan):
+            cls, payload = _classify_figure_paragraph(para)
+            if cls == "boundary":
+                boundary = p_start
+                break
+            if cls == "attribution":
+                attributions.append(payload)  # type: ignore[arg-type]
+            elif cls == "legend":
+                entries.extend(payload)  # type: ignore[arg-type]
+            boundary = p_end
+        # Build the updated IMG marker with any attribution folded in
+        updated_img = img_marker
+        for attr in attributions:
+            updated_img = _append_attr_to_img(updated_img, attr)
+        out_parts.append(updated_img)
+        if entries:
+            legend = "\n".join(f"{lbl}. {t}." for lbl, t in entries)
+            out_parts.append(f"\n\n{{{{LEGEND:{legend}}}LEGEND}}")
+        # Preserve the blank-line separator after our figure so the
+        # paragraph break between figure and body text survives.
+        out_parts.append("\n\n")
+        pos = boundary
+    out_parts.append(text[pos:])
+    return "".join(out_parts)
+
+
+def _try_convert_with_attr(m: re.Match) -> str:
+    """Convert IMG + optional attribution line + VERSE into IMG +
+    LEGEND, folding the attribution into the IMG caption.  Shared
+    helper so the same logic applies to TABLE and paragraph
+    promoters."""
+    img_block = m.group(1)
+    attribution = (m.group(2) or "").strip(" .")
+    verse_content = m.group(3)
+    entries = _parse_legend_lines(verse_content.split("\n"))
+    if not entries:
+        return m.group(0)
+    # Append attribution to caption if present.
+    if attribution:
+        img_block = _append_attr_to_img(img_block, attribution)
+    legend = "\n".join(f"{lbl}. {t}." for lbl, t in entries)
+    return f"{img_block}\n\n{{{{LEGEND:{legend}}}LEGEND}}"
+
+
+def _append_attr_to_img(img_block: str, attribution: str) -> str:
+    """Append attribution text to an IMG marker's caption in parens."""
+    m = re.match(r"\{\{IMG:([^|}]+)(?:\|([^}]*))?\}\}", img_block)
+    if not m:
+        return img_block
+    filename = m.group(1)
+    caption = m.group(2) or ""
+    if attribution in caption:
+        return img_block
+    if attribution.startswith("(") and attribution.endswith(")"):
+        new_caption = (f"{caption.rstrip()} {attribution}"
+                       if caption else attribution)
+    else:
+        new_caption = (f"{caption.rstrip()} ({attribution}.)"
+                       if caption else f"({attribution}.)")
+    return f"{{{{IMG:{filename}|{new_caption}}}}}"
+
+
+def _promote_legend_tables(text: str) -> str:
+    """Convert `{{IMG:…}} {{TABLE:…}TABLE}` sequences into
+    `{{IMG:…}} {{LEGEND:…}LEGEND}` when the table is a 2+-column
+    grid of `label, text` pairs (WEAVING Fig. 26)."""
+    def _try_convert(m: re.Match) -> str:
+        img_block = m.group(1)
+        table_content = m.group(2)
+        rows_text = [r for r in table_content.strip().split("\n")
+                     if r.strip()]
+        if not rows_text:
+            return m.group(0)
+        entries: list[tuple[str, str]] = []
+        for row in rows_text:
+            cells = [c.strip() for c in row.split(" | ")]
+            if len(cells) < 2:
+                return m.group(0)
+            for cell in cells:
+                # Strip italic markers before parsing so `«I»a«/I», x`
+                # matches the label regex.
+                clean = re.sub(
+                    r"\u00ab/?[A-Z]+\u00bb", "", cell).strip()
+                cm = _LEGEND_CELL_RE.match(clean)
+                if not cm:
+                    return m.group(0)
+                label = cm.group(1).strip().rstrip(".,")
+                txt = cm.group(2).strip().rstrip(".")
+                if label and txt:
+                    entries.append((label, txt))
+        if len(entries) < 2:
+            return m.group(0)
+        legend = "\n".join(f"{lbl}. {t}." for lbl, t in entries)
+        return f"{img_block}\n\n{{{{LEGEND:{legend}}}LEGEND}}"
+
+    return re.sub(
+        r"(\{\{IMG:[^}]+\}\})\s*\{\{TABLE:([\s\S]*?)\}TABLE\}",
+        _try_convert, text)
+
+
+_DJVU_PAGE_REF_RE = re.compile(
+    # "EB1911 - Volume 24.djvu/1037"  (canonical wikisource page ref)
+    # "EB1911 - Volume 20.djvu-694.png"  (typo variant)
+    r"EB1911\s+-\s+Volume\s+(\d+)\.djvu[/\-](\d+)(?:\.png)?",
+    re.IGNORECASE,
+)
+
+
+def _normalize_djvu_page_refs(text: str) -> str:
+    """Rewrite wikisource-style DjVu page references to a canonical
+    local filename `djvu_volNN_pagePPPP.jpg`.
+
+    These references appear as `{{raw image|EB1911 - Volume 24.djvu/
+    1037}}` (full-page plate, SHIPBUILDING) or `[[File:EB1911 -
+    Volume 20.djvu-694.png]]` (typo variant — the `/` was replaced
+    with `-` and `.png` appended so it parsed as a File link).
+    Neither form is a valid Commons filename; the real content lives
+    as a specific page of the volume's `.djvu` file.  The renamed
+    filename matches the convention used by `download_djvu_crops.py`
+    so a full-page render can be downloaded and served locally."""
+    def _rewrite(m: re.Match) -> str:
+        vol = int(m.group(1))
+        page = int(m.group(2))
+        return f"djvu_vol{vol:02d}_page{page:04d}.jpg"
+    return _DJVU_PAGE_REF_RE.sub(_rewrite, text)
+
+
 def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
     """New architecture: extract-process-reassemble.
 
@@ -841,12 +1536,103 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
     3. Done.
     """
     from britannica.pipeline.stages.elements import process_elements
+    from britannica.pipeline.stages.fold_unfold import unfold_folded_rows
 
     # Apply per-page source-text corrections (transcription typos in
     # wikisource we don't want to edit upstream). Keys: "{vol}:{page}".
-    corrections = _load_corrections().get(f"{volume}:{page_number}", [])
-    for c in corrections:
-        raw_wikitext = raw_wikitext.replace(c["from"], c["to"])
+    # Since raw_wikitext may span multiple pages (joined segments), apply
+    # corrections for ALL pages of the volume — str.replace is a no-op
+    # when the `from` text isn't present. The page_number arg is only a
+    # hint for the starting page; earlier code that relied on it missed
+    # corrections for any later page (TOOL p30 garbage in an article
+    # starting on p28).
+    _all_corrections = _load_corrections()
+    vol_prefix = f"{volume}:"
+    for key, entries in _all_corrections.items():
+        if not key.startswith(vol_prefix):
+            continue
+        for c in entries:
+            raw_wikitext = raw_wikitext.replace(c["from"], c["to"])
+
+    # Rewrite folded wikitable rows — single physical rows holding N
+    # logical rows via <br>-stacking — as N real rows, so downstream
+    # table processing sees a well-formed N-row table instead of one
+    # giant row with concatenated values.
+    raw_wikitext = unfold_folded_rows(raw_wikitext)
+
+    # Convert STANDALONE {{Css image crop|Image=EB1911 - Volume N.djvu|
+    # Page=P|…}} templates (not inside a wikitable) to File links.
+    # Css image crops INSIDE wikitables are part of image-layout
+    # tables and must be left for the table extractor to classify as
+    # DJVU_CROP — converting them here would break ORCHIDS et al.
+    #
+    # Detection: scan {|…|} table bodies, mark their byte ranges, and
+    # only apply the replacement to matches whose start is OUTSIDE any
+    # such range. Nested-template-aware table boundary tracking (walk
+    # {|/|} depth, skipping {{…}} content) mirrors the extractor in
+    # elements.py so ``{{Ts|vmi|}}``-style pipes don't mistrigger.
+    def _table_ranges(text: str) -> list[tuple[int, int]]:
+        ranges: list[tuple[int, int]] = []
+        i = 0
+        n = len(text)
+        while i < n - 1:
+            if text[i:i+2] == "{|":
+                start = i
+                depth = 1
+                j = i + 2
+                while j < n - 1 and depth > 0:
+                    if text[j:j+2] == "{{":
+                        # skip balanced {{…}} block
+                        td = 1; j += 2
+                        while j < n - 1 and td > 0:
+                            if text[j:j+2] == "{{": td += 1; j += 2
+                            elif text[j:j+2] == "}}": td -= 1; j += 2
+                            else: j += 1
+                    elif text[j:j+2] == "{|": depth += 1; j += 2
+                    elif text[j:j+2] == "|}": depth -= 1; j += 2
+                    else: j += 1
+                ranges.append((start, j))
+                i = j
+            else:
+                i += 1
+        return ranges
+
+    def _css_crop_replace(m: re.Match) -> str:
+        body = m.group(1)
+        caption = ((m.group(2) if len(m.groups()) >= 2 else None) or
+                   (m.group(3) if len(m.groups()) >= 3 else None) or "").strip()
+        if caption:
+            for _ in range(3):
+                new = re.sub(r"\{\{[A-Za-z][A-Za-z0-9_]*\s*\|([^{}|]*)\}\}",
+                             r"\1", caption)
+                if new == caption:
+                    break
+                caption = new
+            caption = caption.strip()
+        img_m = re.search(
+            r"Image\s*=\s*(EB1911\s+-\s+Volume\s+\d+\.djvu)",
+            body, re.IGNORECASE)
+        page_m = re.search(r"Page\s*=\s*(\d+)", body, re.IGNORECASE)
+        if img_m and page_m:
+            ref = f"{img_m.group(1)}/{page_m.group(1)}"
+            if caption:
+                return f"[[File:{ref}|{caption}]]"
+            return f"{{{{raw image|{ref}}}}}"
+        return m.group(0)
+
+    _table_spans = _table_ranges(raw_wikitext)
+    _crop_pat = re.compile(
+        r"(\{\{\s*Css\s+image\s+crop\s*\|[^}]*\}\})"
+        r"(?:\s*(?:\{\{\s*center\s*\|([^{}]*(?:\{\{[^{}]*\}\}[^{}]*)*)\}\}"
+        r"|\{\{\s*csc\s*\|([^{}]*)\}\}))?",
+        re.IGNORECASE,
+    )
+    def _maybe_replace(m: re.Match) -> str:
+        for s, e in _table_spans:
+            if s <= m.start() < e:
+                return m.group(0)  # inside a table — leave alone
+        return _css_crop_replace(m)
+    raw_wikitext = _crop_pat.sub(_maybe_replace, raw_wikitext)
 
     # Strip section tags — boundaries already determined
     text = re.sub(r'<section\s+(?:begin|end)="[^"]*"\s*/?>', "",
@@ -905,6 +1691,13 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
     # Replace <score> tags (static lookup, must happen before extraction)
     text = _replace_score_tags(text, volume, page_number)
 
+    # Normalize `EB1911 - Volume N.djvu/PPP` (and the typo variant
+    # `…djvu-PPP.png`) to local filenames `djvu_volNN_pagePPPP.jpg`
+    # BEFORE image extraction.  `download_djvu_crops.py` provisions
+    # these files from the volume's DjVu renders — otherwise the
+    # viewer would try (and fail) to resolve them on Commons.
+    text = _normalize_djvu_page_refs(text)
+
     # {{raw image|filename}} is an alternate EB1911 image syntax used
     # for figures whose caption sits on a following line as
     # `{{c|{{sc|Fig. 10.}}}}` or in a separate wikitable. Bundle the
@@ -949,6 +1742,17 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
     text = re.sub(
         r"\{\{center\|(<poem>.*?</poem>)\}\}",
         r"\1", text, flags=re.DOTALL | re.IGNORECASE,
+    )
+
+    # Unwrap `{{center|[[File:…]]<br>caption}}` so the image and its
+    # caption become a normal image+caption sequence the IMAGE
+    # extractor already knows how to parse (WEAVING Fig. 1 & 2).
+    # Caption may contain one level of nested `{{…}}` templates.
+    text = re.sub(
+        r"\{\{center\|(\[\[(?:File|Image):[^\]]+\]\])\s*<br\s*/?>\s*"
+        r"((?:[^{}]|\{\{[^{}]*\}\})*)\}\}",
+        r"\1\n\2",
+        text, flags=re.IGNORECASE,
     )
 
     # Unwrap fine print markers
@@ -1015,8 +1819,14 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
         r"{{csc|\1}}", text, flags=re.IGNORECASE,
     )
 
+    # Note: ``hi`` intentionally NOT in this list. ``{{hi|Nem|content}}``
+    # has a two-arg form with a size prefix that the generic balanced
+    # unwrap would leak into visible text (``3em|content``). The
+    # dedicated handlers in ``_unwrap_content_templates`` (called per
+    # text-transform pass) handle both ``{{hi|content}}`` and
+    # ``{{hi|Nem|content}}`` correctly.
     for tmpl in ["block center", "fine block", "center", "c", "larger", "smaller",
-                  "EB1911 Fine Print", "nowrap"]:
+                  "EB1911 Fine Print", "nowrap", "Fine", "sm"]:
         text = _unwrap_balanced(text, tmpl)
     # Note: {{ts|...}} templates are stripped inside table processors,
     # not globally — global stripping corrupts cell boundaries in complex tables.
@@ -1039,6 +1849,13 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
             marker = f"\x01PAGE:{p}\x01"
             if marker in text:
                 text = text.replace(marker, f"{marker}\n\n{{{{IMG:{filename}|Genealogical table}}}}\n\n", 1)
+
+    # Single-pass figure walker: for each `{{IMG:…}}`, collect
+    # attribution lines + legend-shaped content (in any wrapper —
+    # VERSE, TABLE, paragraphs) up to the figure boundary, then emit
+    # one clean `{{IMG:…|caption}}` + optional `{{LEGEND:…}LEGEND}`.
+    # Replaces the previous zoo of container-specific promoters.
+    text = _process_figures(text)
 
     # Reflow paragraphs — join lines that were hard-wrapped in the source
     text = reflow_paragraphs(text)

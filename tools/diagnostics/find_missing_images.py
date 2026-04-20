@@ -42,8 +42,12 @@ IMG_MARKER_RE = re.compile(r"\{\{IMG:([^|}]+)(?:\|[^}]*)?\}\}")
 
 
 def disk_name(filename: str) -> str:
-    """Translate a Commons-style filename to its local on-disk filename."""
+    """Translate a Commons-style filename to its local on-disk filename.
+    Mirrors the sanitization done by download_images.py and the viewer's
+    commonsUrl() so the audit sees the same files the runtime does."""
     name = filename.replace(" ", "_")
+    for ch in '"<>|?*':
+        name = name.replace(ch, "_")
     if name.lower().endswith(".svg"):
         name = name + ".png"
     return name
