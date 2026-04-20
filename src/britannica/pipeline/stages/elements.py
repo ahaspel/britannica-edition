@@ -23,16 +23,34 @@ _PH = "\x03"
 
 @dataclass
 class ElementRegistry:
-    """Stores extracted elements keyed by placeholder strings."""
+    """Stores extracted elements keyed by placeholder strings.
+
+    Uses a module-level counter so keys are unique across every
+    registry instance in a processing run.  Per-instance counters
+    caused silent collisions: an inner registry's ``ELEM:1``
+    matched the outer registry's ``ELEM:1``, so if a stale inner
+    placeholder escaped unreplaced (e.g. ``<ref>`` inside ``<poem>``
+    inside a table), the outer substitution pass would substitute
+    the outer ``ELEM:1``'s processed content into the inner's
+    location — duplicating content across the article.
+    """
     elements: dict[str, tuple[str, str]] = field(default_factory=dict)
-    _counter: int = 0
 
     def add(self, element_type: str, raw: str) -> str:
         """Add an element to the registry, return its placeholder."""
-        self._counter += 1
-        key = f"{_PH}ELEM:{self._counter}{_PH}"
+        counter = _next_placeholder_id()
+        key = f"{_PH}ELEM:{counter}{_PH}"
         self.elements[key] = (element_type, raw)
         return key
+
+
+_placeholder_counter = 0
+
+
+def _next_placeholder_id() -> int:
+    global _placeholder_counter
+    _placeholder_counter += 1
+    return _placeholder_counter
 
 
 # ── Extraction ─────────────────────────────────────��──────────────────
@@ -325,9 +343,22 @@ def _process_element(element_type: str, raw: str,
     else:
         result = inner
 
-    # NOW reinsert processed children into the result
-    for key, processed_child in processed_children.items():
-        result = result.replace(key, processed_child)
+    # Reinsert processed children.  A single pass isn't enough: a
+    # processed child may itself contain placeholders for siblings
+    # (e.g. ``<poem>`` with a ``<ref>`` inside — the poem processor
+    # carries the REF placeholder through opaque, because its inner
+    # ``extract()`` can't see past the ``\x03`` wrapper).  If we only
+    # substitute in registry order, such a re-introduced placeholder
+    # rides out into the parent's result and leaks.  Iterate until
+    # the result stops changing.
+    for _pass in range(5):
+        changed = False
+        for key, processed_child in processed_children.items():
+            if key in result:
+                result = result.replace(key, processed_child)
+                changed = True
+        if not changed:
+            break
 
     return result
 

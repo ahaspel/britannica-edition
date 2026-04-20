@@ -1109,6 +1109,36 @@
         .replace(/^-|-$/g, "");
     }
 
+    // Walk forward from ``start`` (which must point at ``«HTMLTABLE:``)
+    // and return the index just past the matching ``«/HTMLTABLE»``,
+    // respecting nesting.  Returns -1 if unbalanced (caller falls back
+    // to leaving the markers visible).
+    const HTMLTABLE_OPEN = "\u00abHTMLTABLE:";
+    const HTMLTABLE_CLOSE = "\u00ab/HTMLTABLE\u00bb";
+    function findHtmlTableEnd(str, start) {
+      let depth = 1;
+      let i = start + HTMLTABLE_OPEN.length;
+      while (i < str.length) {
+        if (str.startsWith(HTMLTABLE_OPEN, i)) {
+          depth++;
+          i += HTMLTABLE_OPEN.length;
+        } else if (str.startsWith(HTMLTABLE_CLOSE, i)) {
+          depth--;
+          i += HTMLTABLE_CLOSE.length;
+          if (depth === 0) return i;
+        } else {
+          i++;
+        }
+      }
+      return -1;
+    }
+    // Strip every ``«HTMLTABLE:``/``«/HTMLTABLE»`` marker in ``s`` —
+    // used on the inside of a balanced block so nested tables render
+    // as plain nested ``<table>`` elements.
+    function stripHtmlTableMarkers(s) {
+      return s.split(HTMLTABLE_OPEN).join("").split(HTMLTABLE_CLOSE).join("");
+    }
+
     function renderParagraph(p) {
       // Absorbed-subsection heading: «SEC:Cyanophyceae«/SEC»
       // Emitted by boundary detection when a <section begin="X"/> is
@@ -1202,12 +1232,27 @@
         });
         return `<aside class="figure-legend">${parts.join("")}</aside>`;
       }
-      // Render complex HTML tables (rowspan/colspan preserved)
-      const htmlTableMatch = p.match(/^(\u00abHTMLTABLE:[\s\S]*?\u00ab\/HTMLTABLE\u00bb)([\s\S]*)$/);
-      if (htmlTableMatch) {
-        const tableBlock = htmlTableMatch[1];
-        const trailing = htmlTableMatch[2].trim();
-        const inner = tableBlock.match(/^\u00abHTMLTABLE:([\s\S]*)\u00ab\/HTMLTABLE\u00bb$/)[1];
+      // Render complex HTML tables (rowspan/colspan preserved).
+      // Use balanced-match so an HTMLTABLE whose cell contains another
+      // HTMLTABLE (e.g. INTERPOLATION's Everett-formula layout table)
+      // doesn't stop at the inner ``«/HTMLTABLE»``.
+      let htmlTableHit = null;
+      if (p.startsWith(HTMLTABLE_OPEN)) {
+        const end = findHtmlTableEnd(p, 0);
+        if (end !== -1) {
+          htmlTableHit = {
+            block: p.substring(0, end),
+            trailing: p.substring(end).trim(),
+            inner: p.substring(HTMLTABLE_OPEN.length, end - HTMLTABLE_CLOSE.length),
+          };
+        }
+      }
+      if (htmlTableHit) {
+        const tableBlock = htmlTableHit.block;
+        const trailing = htmlTableHit.trailing;
+        // Strip any nested HTMLTABLE markers so nested tables render
+        // as native nested ``<table>`` elements.
+        const inner = stripHtmlTableMarkers(htmlTableHit.inner);
         let t = inner.replace("<table>", '<table class="data-table">');
         // Hoist any page markers inside cells to the row level — render
         // them as a floated span at the start of the row's first cell so
@@ -1368,14 +1413,40 @@
         const href = `${currentScanUrl}&pinit=${page}`;
         return `<a class="${cls}" title="${title}" href="${href}">${currentVolume}:${page}</a>`;
       });
-      // Render inline complex HTML tables
-      html = html.replace(/\u00abHTMLTABLE:([\s\S]*?)\u00ab\/HTMLTABLE\u00bb/g, (match, content) => {
-        let t = content.replace("<table>", '<table class="data-table">');
-        t = t.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
-        t = t.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
-        t = t.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
-        return t;
-      });
+      // Render inline complex HTML tables.  Uses balanced-match so
+      // nested ``«HTMLTABLE:`` (layout table with a sub-table in one
+      // cell) doesn't truncate at the inner close.
+      {
+        let out = "";
+        let i = 0;
+        while (i < html.length) {
+          const openIdx = html.indexOf(HTMLTABLE_OPEN, i);
+          if (openIdx === -1) {
+            out += html.substring(i);
+            break;
+          }
+          out += html.substring(i, openIdx);
+          const endIdx = findHtmlTableEnd(html, openIdx);
+          if (endIdx === -1) {
+            // Unbalanced — emit the rest as-is and let escaping visibly
+            // mark the problem.
+            out += html.substring(openIdx);
+            break;
+          }
+          let content = html.substring(
+            openIdx + HTMLTABLE_OPEN.length,
+            endIdx - HTMLTABLE_CLOSE.length
+          );
+          content = stripHtmlTableMarkers(content);
+          let t = content.replace("<table>", '<table class="data-table">');
+          t = t.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
+          t = t.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
+          t = t.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
+          out += t;
+          i = endIdx;
+        }
+        html = out;
+      }
       html = html.replace(/\{\{TABLE[H]?:([\s\S]*?)\}TABLE\}/g, (match, content) => {
         const rows = content.split("\n").filter(r => r.trim());
         if (rows.length === 1) {
@@ -1691,6 +1762,33 @@
             };
 
             const LEGEND_ONLY = /^\s*\{\{LEGEND:[\s\S]*?\}LEGEND\}\s*$/;
+            // Collapse ``\n\n`` inside balanced ``«HTMLTABLE:`` blocks to
+            // ``\n`` so paragraph-splitting doesn't slice a nested
+            // HTMLTABLE (e.g. SHIP's per-nationality subtables, whose
+            // cells contain VERSE blocks with embedded blank lines)
+            // into fragments that each fail the balanced-close check.
+            {
+              let collapsed = "";
+              let i = 0;
+              while (i < markedBody.length) {
+                const openIdx = markedBody.indexOf(HTMLTABLE_OPEN, i);
+                if (openIdx === -1) {
+                  collapsed += markedBody.substring(i);
+                  break;
+                }
+                collapsed += markedBody.substring(i, openIdx);
+                const endIdx = findHtmlTableEnd(markedBody, openIdx);
+                if (endIdx === -1) {
+                  collapsed += markedBody.substring(openIdx);
+                  break;
+                }
+                collapsed += markedBody
+                  .substring(openIdx, endIdx)
+                  .replace(/\n\n+/g, "\n");
+                i = endIdx;
+              }
+              markedBody = collapsed;
+            }
             const rawParas = markedBody.split("\n\n");
             const mergedParas = [];
             let i = 0;

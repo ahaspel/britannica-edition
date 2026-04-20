@@ -189,6 +189,13 @@ def _unwrap_content_templates(text: str) -> str:
     text = re.sub(r"\{\{sm\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{right\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{left\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    # {{fqm|X}} (floating quotation mark — hanging typographical quote
+    # at the start of a verse/quotation block) → just X.  Without this
+    # the opener quote gets eaten by the ``_strip_templates`` whitelist
+    # pass, leaving verse quotations with only a closing quote.
+    # Bare ``{{fqm}}`` defaults to a curly opening double-quote.
+    text = re.sub(r"\{\{fqm\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{fqm\}\}", "\u201c", text, flags=re.IGNORECASE)
     # Fractions. {{sfrac|a|b}} = {{EB1911 tfrac|a|b}} = a/b.
     # Single-arg form {{sfrac|a}} = {{EB1911 tfrac|a}} = 1/a.
     # Render common ones as Unicode vulgar fractions; rest as "a/b".
