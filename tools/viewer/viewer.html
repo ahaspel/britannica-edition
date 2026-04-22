@@ -167,6 +167,13 @@
 
     .body-text .katex-display {
       text-indent: 0;
+      /* Wide determinants and aligned-equation blocks in ALGEBRAIC
+         FORMS and similar heavy-math articles exceed the reading
+         column.  Let them scroll horizontally rather than clip or
+         spill into adjacent columns. */
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding-bottom: 0.25em;  /* room for the scrollbar */
     }
 
 
@@ -815,6 +822,19 @@
       margin-bottom: 16px;
     }
   </style>
+  <!-- NOT deferred: the inline script below calls createSearchClient() at
+       module load time, so search-api.js must finish loading first. -->
+  <script>
+    // viewer.html is served from both "/viewer.html" and "/article/<id>/<slug>"
+    // in production, so a relative src resolves differently depending on
+    // URL depth. Pick the right absolute path synchronously (document.write
+    // blocks parsing — the inline script below depends on createSearchClient).
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var src = isLocal ? "/tools/viewer/search-api.js" : "/search-api.js";
+      document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
+    })();
+  </script>
 </head>
 <body>
   <div class="page">
@@ -1100,6 +1120,13 @@
         const lines = content.split("\n").filter(l => l.trim());
         return `<span class="cell-verse">${lines.join("<br>")}</span>`;
       });
+      // Multi-line PRE inside a cell — single-column sub-tables are
+      // emitted as «PRE:line\nline\nline«/PRE». Render as <br>-joined
+      // inline content so they fit inside their containing cell.
+      h = h.replace(/«PRE:([\s\S]*?)«\/PRE»/g, (_m, content) => {
+        const lines = content.split("\n").filter(l => l.trim());
+        return `<span class="cell-pre">${lines.join("<br>")}</span>`;
+      });
       return h;
     }
 
@@ -1254,6 +1281,11 @@
         // as native nested ``<table>`` elements.
         const inner = stripHtmlTableMarkers(htmlTableHit.inner);
         let t = inner.replace("<table>", '<table class="data-table">');
+        // Process <caption> contents through formatCell so internal
+        // markers (italic, small-caps, links) render as HTML rather
+        // than leaking their «…» form.
+        t = t.replace(/<caption>([\s\S]*?)<\/caption>/g,
+          (_m, content) => `<caption>${formatCell(content)}</caption>`);
         // Hoist any page markers inside cells to the row level — render
         // them as a floated span at the start of the row's first cell so
         // they land in the left margin alongside body-paragraph markers,
@@ -1267,28 +1299,63 @@
           const href = `${currentScanUrl}&pinit=${pg}`;
           return `<a class="${cls}" title="${title}" href="${href}">${currentVolume}:${pg}</a>`;
         };
+        // Parse as DOM so nested <table>s don't confuse the row/cell
+        // walk — regex can't bracket-match. Walk only the OUTER
+        // table's direct cell descendants and format their text-node
+        // content (leaving nested table DOM untouched).
         let maxCols = 0;
-        t = t.replace(/<tr([^>]*)>([\s\S]*?)<\/tr>/g, (_m, trAttrs, inner) => {
-          const pageMarkers = [];
-          inner = inner.replace(/\x01PAGE:(\d+)\x01/g, (_x, pg) => {
-            pageMarkers.push(pg);
-            return "";
-          });
-          let rowCols = 0;
-          inner = inner.replace(/<(t[dh])([^>]*)>([\s\S]*?)<\/\1>/g,
-            (_x, tag, attrs, content) => {
-              const cs = /colspan=["']?(\d+)/i.exec(attrs);
-              rowCols += cs ? parseInt(cs[1], 10) : 1;
-              return `<${tag}${attrs}>${formatCell(content)}</${tag}>`;
-            });
-          if (rowCols > maxCols) maxCols = rowCols;
-          if (pageMarkers.length > 0) {
-            const spans = pageMarkers.map(makePageSpan).join("");
-            inner = inner.replace(/<(t[dh])([^>]*)>/,
-              (_x, tag, attrs) => `<${tag}${attrs}>${spans}`);
+        {
+          const doc = new DOMParser().parseFromString(t, "text/html");
+          const outer = doc.querySelector("table.data-table") || doc.querySelector("table");
+          if (outer) {
+            // Walk all descendants of a cell and format its text
+            // nodes through formatCell. Nested tables get the same
+            // treatment — their cells' markers (MATH/FN/IMG/etc.)
+            // need rendering too. The HTMLTABLE placeholder stripping
+            // earlier in render() collapsed nested «HTMLTABLE»
+            // markers to bare <table> elements, so their content is
+            // still unformatted raw marker text.
+            function formatCellNode(node, pageMarkers) {
+              for (const child of Array.from(node.childNodes)) {
+                if (child.nodeType === 3) {
+                  const txt = child.nodeValue.replace(
+                    /\x01PAGE:(\d+)\x01/g, (_x, pg) => {
+                      pageMarkers.push(pg); return "";
+                    });
+                  if (!txt) { child.remove(); continue; }
+                  const html = formatCell(txt);
+                  const tmp = document.createElement("span");
+                  tmp.innerHTML = html;
+                  const frag = document.createDocumentFragment();
+                  while (tmp.firstChild) frag.appendChild(tmp.firstChild);
+                  child.replaceWith(frag);
+                } else if (child.nodeType === 1) {
+                  formatCellNode(child, pageMarkers);
+                }
+              }
+            }
+            for (const tr of Array.from(outer.rows)) {
+              const pageMarkers = [];
+              const cells = Array.from(tr.children).filter(
+                c => c.tagName === "TD" || c.tagName === "TH");
+              let rowCols = 0;
+              for (const cell of cells) {
+                const cs = cell.getAttribute("colspan");
+                rowCols += cs ? parseInt(cs, 10) : 1;
+                formatCellNode(cell, pageMarkers);
+              }
+              if (rowCols > maxCols) maxCols = rowCols;
+              if (pageMarkers.length > 0 && cells.length > 0) {
+                const spans = pageMarkers.map(makePageSpan).join("");
+                const tmp = document.createElement("span");
+                tmp.innerHTML = spans;
+                while (tmp.firstChild) cells[0].insertBefore(
+                  tmp.firstChild, cells[0].firstChild);
+              }
+            }
+            t = outer.outerHTML;
           }
-          return `<tr${trAttrs}>${inner}</tr>`;
-        });
+        }
         // Any text that follows the closing marker in the same paragraph
         // (e.g. Lighthouse Table VII's footnote-asterisk explanation) —
         // render it as a sibling paragraph, and also include it in the
@@ -1458,6 +1525,15 @@
         }).join("");
         return `<table class="data-table">${tableRows}</table>`;
       });
+      // Inline VERSE — appears when the pipeline converts a mid-paragraph
+      // ``<poem>`` (e.g. an enumerated list inside running prose) into
+      // ``{{VERSE:…}VERSE}``.  The paragraph-level VERSE handler only
+      // fires for whole-paragraph blocks, so inline occurrences would
+      // leak raw markers without this replacement.
+      html = html.replace(/\{\{VERSE:([\s\S]*?)\}VERSE\}/g, (_m, content) => {
+        const lines = content.split("\n").filter(l => l.trim());
+        return `<span class="inline-verse">${lines.join("<br>")}</span>`;
+      });
       html = html.replace(/\u00abFN:(.*?)\u00ab\/FN\u00bb/gs, (match, content) => {
         footnoteCounter++;
         collectedFootnotes.push({ num: footnoteCounter, text: content });
@@ -1589,7 +1665,7 @@
       // Stable IDs: "16-0670-lighthouse-LIGHTHOUSE". The ID is three
       // hyphen-separated tokens (vol, page, section-slug); everything
       // after is the title slug.
-      const m = base.match(/^(\d{2}-\d{4}-[a-z0-9][a-z0-9-]*?)-(\p{Lu}[\p{Lu}0-9_-]*)$/u);
+      const m = base.match(/^(\d{2}-\d{4}-[a-z0-9][a-z0-9-]*?)-([_\p{Lu}][\p{Lu}0-9_-]*)$/u);
       if (m) {
         return `/article/${m[1]}/${m[2].toLowerCase()}`;
       }
@@ -1632,9 +1708,9 @@
     function scanUrl(article) {
       const back = encodeURIComponent(location.href);
       const base = IS_LOCAL ? 'scans.html' : '/scans.html';
-      const start = article.ws_page_start || article.page_start;
-      const end = article.ws_page_end || article.page_end;
-      return `${base}?vol=${article.volume}&start=${start}&end=${end}&pstart=${article.page_start}&pend=${article.page_end}&label=${encodeURIComponent(article.title)}&back=${back}`;
+      const start = article.leaf_start;
+      const end = article.leaf_end;
+      return `${base}?vol=${article.volume}&start=${start}&end=${end}&label=${encodeURIComponent(article.title)}&back=${back}`;
     }
 
     function renderArticle(article) {
@@ -2347,6 +2423,8 @@
       const MEILI_KEY = IS_LOCAL
         ? "britannica-dev-key"
         : "24e84cf3ca3b70fe166637d797cbbdd0593ba3a27a47a9ed76b552c821199579";
+      // Shared Meilisearch client — see /search-api.js.
+      const searchClient = createSearchClient(MEILI_URL, MEILI_KEY);
       let ftToken = 0;
       let ftDebounce = null;
       let lastQuery = "";
@@ -2369,27 +2447,12 @@
       async function runFulltext(q, myToken) {
         if (q.length < 3) return;
         try {
-          const resp = await fetch(`${MEILI_URL}/indexes/articles/search`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${MEILI_KEY}`,
-            },
-            body: JSON.stringify({
-              q,
-              limit: 8,
-              attributesToRetrieve: ["title", "filename", "body"],
-              matchingStrategy: "all",
-            }),
+          const hits = await searchClient.searchFulltext(q, {
+            limit: 8,
+            excludeFilenames: new Set(lastTitleHits.map(a => a.filename)),
           });
           if (myToken !== ftToken) return;  // newer query in flight
-          const data = await resp.json();
-          const ql = q.toLowerCase();
-          const titleFns = new Set(lastTitleHits.map(a => a.filename));
-          const ftHits = (data.hits || [])
-            .filter(h => (h.body || "").toLowerCase().includes(ql)
-                         || (h.title || "").toLowerCase().includes(ql))
-            .filter(h => !titleFns.has(h.filename))
+          const ftHits = hits
             .map(h => ({
               title: h.title,
               filename: h.filename,
@@ -2466,10 +2529,28 @@
 
       input.addEventListener("keydown", e => {
         const items = results.querySelectorAll("li");
-        if (!items.length) return;
-        if (e.key === "ArrowDown") { e.preventDefault(); selected = Math.min(selected + 1, items.length - 1); highlight(selected); }
-        else if (e.key === "ArrowUp") { e.preventDefault(); selected = Math.max(selected - 1, 0); highlight(selected); }
-        else if (e.key === "Enter" && selected >= 0) { e.preventDefault(); items[selected].dispatchEvent(new MouseEvent("mousedown")); }
+        if (e.key === "ArrowDown" && items.length) { e.preventDefault(); selected = Math.min(selected + 1, items.length - 1); highlight(selected); }
+        else if (e.key === "ArrowUp" && items.length) { e.preventDefault(); selected = Math.max(selected - 1, 0); highlight(selected); }
+        else if (e.key === "Enter") {
+          e.preventDefault();
+          if (items.length) {
+            // Activate whichever row is highlighted, or the first one
+            // if the user hasn't arrowed down. Matches the natural
+            // "type, see results, press Enter" flow — no one expects
+            // to have to arrow-select the top hit.
+            const idx = selected >= 0 ? selected : 0;
+            items[idx].dispatchEvent(new MouseEvent("mousedown"));
+          } else {
+            // Typeahead empty — send the user to the index page with
+            // the query prefilled so they can run a full search.
+            const q = input.value.trim();
+            if (q) {
+              input.blur();
+              const base = IS_LOCAL ? "index.html" : "/index.html";
+              location.href = `${base}?q=${encodeURIComponent(q)}`;
+            }
+          }
+        }
         else if (e.key === "Escape") { results.style.display = "none"; }
       });
 

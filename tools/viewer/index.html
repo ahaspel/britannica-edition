@@ -273,6 +273,15 @@
     td a { color: var(--link); text-decoration: none; }
     td a:hover { text-decoration: underline; }
   </style>
+  <!-- NOT deferred: the inline script below calls createSearchClient() at
+       module load time, so search-api.js must finish loading first. -->
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var src = isLocal ? "/tools/viewer/search-api.js" : "/search-api.js";
+      document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
+    })();
+  </script>
 </head>
 <body>
   <div class="page">
@@ -373,6 +382,10 @@
     const DATA_BASE = IS_LOCAL ? "/data/derived/articles" : "/data/articles";
     const MEILI_URL = IS_LOCAL ? "http://localhost:7700" : "/search-api";
     const MEILI_KEY = IS_LOCAL ? "britannica-dev-key" : "24e84cf3ca3b70fe166637d797cbbdd0593ba3a27a47a9ed76b552c821199579";
+    // Shared Meilisearch client — see /search-api.js.  Both
+    // index.html's main-search typeahead and viewer.html's in-article
+    // typeahead call the same code path.
+    const searchClient = createSearchClient(MEILI_URL, MEILI_KEY);
     const PAGE_SIZE = 100;
 
     let articles = [];
@@ -410,7 +423,7 @@
       }
       // Stable ID form: "16-0670-LIGHTHOUSE.json" -> /article/16-0670/lighthouse
       const base = filename.replace(/\.json$/, "");
-      const m = base.match(/^(\d{2}-\d{4}-[a-z0-9][a-z0-9-]*?)-(\p{Lu}[\p{Lu}0-9_-]*)$/u);
+      const m = base.match(/^(\d{2}-\d{4}-[a-z0-9][a-z0-9-]*?)-([_\p{Lu}][\p{Lu}0-9_-]*)$/u);
       if (m) return `/article/${m[1]}/${m[2].toLowerCase()}`;
       // Legacy numeric fallback
       const page = base.replace(/^0+/, "").split("-")[0];
@@ -539,7 +552,23 @@
       q = q.replace(/\bmax:(\d+)\b/gi, (m, n) => { filters.push(`body_length <= ${n}`); return ""; });
 
       // type:article or type:plate
-      q = q.replace(/\btype:(\w+)\b/gi, (m, t) => { filters.push(`article_type = "${t}"`); return ""; });
+      let _typeSpecified = false;
+      q = q.replace(/\btype:(\w+)\b/gi, (m, t) => {
+        _typeSpecified = true;
+        filters.push(`article_type = "${t}"`);
+        return "";
+      });
+      // Default: exclude plate-type articles from full-text search.
+      // Plates inherit their parent's title (e.g. SHIPBUILDING), so
+      // searching "SHIPBUILDING" would otherwise return the main
+      // article plus 6 plate duplicates.  Plates are navigated via
+      // their parent's article page.  Use negation to include
+      // records where ``article_type`` is null (our regular articles
+      // store null, not "article" — the "article" default is applied
+      // client-side only).
+      if (!_typeSpecified) {
+        filters.push(`NOT article_type = "plate"`);
+      }
 
       // page:N — articles containing that page
       q = q.replace(/\bpage:(\d+)\b/gi, (m, n) => {
@@ -726,9 +755,16 @@
           const titleEsc = ftEscapeHtml(ftCleanMarkup(titleRaw));
           const pr = hit.page_start === hit.page_end
             ? `p.${hit.page_start}` : `pp.${hit.page_start}\u2013${hit.page_end}`;
-          const occ = ftExtractOccurrences(hit.body || "", parsed.query, MAX_OCC);
+          // When the query matched the article title, skip the body
+          // occurrence enumeration and count badge — the user wants to
+          // see the article once, not "SHIPBUILDING" followed by six
+          // SHIPBUILDING text-hit lines.
+          const titleHit = (hit._titleMatches || 0) > 0;
+          const occ = titleHit
+            ? { items: [], total: 0 }
+            : ftExtractOccurrences(hit.body || "", parsed.query, MAX_OCC);
           const count = hit._matchCount;
-          const countBadge = count > 0
+          const countBadge = (!titleHit && count > 0)
             ? ` <span class="ft-count">${count} match${count === 1 ? "" : "es"}</span>`
             : "";
           let occHtml = "";
@@ -801,15 +837,6 @@
       }).join("");
     }
 
-    // ── Front matter leaf counts (from IA page_numbers.json) ──
-    const FM_LEAVES = {
-      1:37, 2:15, 3:17, 4:20, 5:16, 6:16, 7:16, 8:17,
-      9:17, 10:19, 11:17, 12:16, 13:16, 14:15, 15:16, 16:17,
-      17:17, 18:15, 19:17, 20:18, 21:17, 22:17, 23:16, 24:15,
-      25:19, 26:19, 27:19, 28:18
-    };
-    function fmLeafCount(vol) { return FM_LEAVES[vol] || 0; }
-
     // ── Volume browse ──
     function iaUrl(vol) {
       const padded = String(vol).padStart(2, "0");
@@ -847,11 +874,11 @@
              </div>`
           : ""}
         <div style="margin-top: 8px; font-size: 0.9rem;">
-          ${fmLeafCount(vol) > 0
-            ? `<a href="scans.html?vol=${vol}&start=1&end=${fmLeafCount(vol)}&prefix=fm&label=Front+Matter" style="color: var(--link);">View front matter \u2192</a>`
+          ${volArts.length > 0 && volArts[0].leaf_start > 1
+            ? `<a href="scans.html?vol=${vol}&start=1&end=${volArts[0].leaf_start - 1}&label=Front+Matter" style="color: var(--link);">View front matter \u2192</a>`
             : ""}
           ${volArts.length > 0
-            ? ` &nbsp;\u00b7&nbsp; <a href="scans.html?vol=${vol}&start=${volArts[0].ws_page_start}&end=${volArts[volArts.length - 1].ws_page_end}&prefix=page&label=Volume+Scans&pinit=1" style="color: var(--link);">View volume scans \u2192</a>`
+            ? ` &nbsp;\u00b7&nbsp; <a href="scans.html?vol=${vol}&start=${volArts[0].leaf_start}&end=${volArts[volArts.length - 1].leaf_end}&label=Volume+Scans&pinit=1" style="color: var(--link);">View volume scans \u2192</a>`
             : ""}
         </div>
         <div style="color: var(--muted); font-size: 0.85rem; margin-top: 4px;">
@@ -1048,27 +1075,12 @@
       async function runFulltext(q, myToken) {
         if (q.length < 3) return;
         try {
-          const resp = await fetch(`${MEILI_URL}/indexes/articles/search`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": `Bearer ${MEILI_KEY}`,
-            },
-            body: JSON.stringify({
-              q,
-              limit: 8,
-              attributesToRetrieve: ["title", "filename", "body"],
-              matchingStrategy: "all",
-            }),
+          const hits = await searchClient.searchFulltext(q, {
+            limit: 8,
+            excludeFilenames: new Set(lastTitleHits.map(a => a.filename)),
           });
           if (myToken !== ftToken) return;
-          const data = await resp.json();
-          const ql = q.toLowerCase();
-          const titleFns = new Set(lastTitleHits.map(a => a.filename));
-          const ftHits = (data.hits || [])
-            .filter(h => (h.body || "").toLowerCase().includes(ql)
-                         || (h.title || "").toLowerCase().includes(ql))
-            .filter(h => !titleFns.has(h.filename))
+          const ftHits = hits
             .map(h => ({
               title: h.title,
               filename: h.filename,

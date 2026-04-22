@@ -38,57 +38,36 @@
   <div class="subtitle" id="subtitle"></div>
 </div>
 <div class="nav">
-  <button id="firstBtn" onclick="goTo(startPage)">&laquo;</button>
+  <button id="firstBtn" onclick="goTo(startLeaf)">&laquo;</button>
   <button id="prevBtn" onclick="go(-1)">&lsaquo;</button>
   <span class="page-info" id="pageInfo"></span>
   <button id="nextBtn" onclick="go(1)">&rsaquo;</button>
-  <button id="lastBtn" onclick="goTo(endPage)">&raquo;</button>
+  <button id="lastBtn" onclick="goTo(endLeaf)">&raquo;</button>
   <span class="jump">
-    <label for="jumpInput" id="jumpLabel">Go to p.</label>
+    <label for="jumpInput">Go to page</label>
     <input id="jumpInput" type="text" inputmode="numeric" autocomplete="off" />
     <button id="jumpBtn" onclick="jumpToPrinted()">Go</button>
   </span>
 </div>
 <div class="scan-container" id="scanContainer"></div>
 <script>
+  // Leaf-only scan viewer.  The URL provides a leaf range; every
+  // label comes from printed_pages_leaf.json (int → "p. N",
+  // "fm N" / any string → verbatim, missing → "(unnumbered)").
+  // No ws translation, no modes, no fallback offsets.  Fix label
+  // errors by editing the map, not the viewer.
   const params = new URLSearchParams(location.search);
   const vol = parseInt(params.get("vol")) || 1;
-  let startPage = parseInt(params.get("start")) || 1;
-  const endPage = parseInt(params.get("end")) || startPage;
-  // Printed page numbers for display (fall back to ws numbers)
-  const printedStart = parseInt(params.get("pstart")) || startPage;
-  const printedEnd = parseInt(params.get("pend")) || endPage;
+  const startLeaf = parseInt(params.get("start")) || 1;
+  const endLeaf = parseInt(params.get("end")) || startLeaf;
   const label = params.get("label") || "Pages";
   const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
 
-  let currentPage = startPage;
-  // Optional: jump to a printed page on initial load. Set by the
-  // volume-scans link so vol 3 opens on printed p.1 rather than the
-  // first article's start page.
+  let currentLeaf = startLeaf;
   const initPrinted = parseInt(params.get("pinit")) || 0;
 
-  const prefix = params.get("prefix") || "page";  // "page" or "fm" or "leaf"
-
   document.getElementById("title").textContent = `Volume ${vol}: ${label}`;
-  // In leaf mode for unnumbered ranges, use leaf labels instead of
-  // misleading 'pp.' printed-page labels.
-  function updateSubtitle() {
-    if (prefix === "leaf") {
-      document.getElementById("subtitle").textContent =
-        `leaves ${startPage}\u2013${endPage}`;
-      document.getElementById("jumpLabel").textContent = "Go to leaf";
-    } else if (prefix === "fm") {
-      // Renumbered range: first content page is 1.
-      const count = endPage - startPage + 1;
-      document.getElementById("subtitle").textContent =
-        `fm 1\u2013${count}`;
-      document.getElementById("jumpLabel").textContent = "Go to fm";
-    } else {
-      document.getElementById("subtitle").textContent =
-        `pp. ${printedStart}\u2013${printedEnd}`;
-    }
-  }
-  updateSubtitle();
+
   const backUrl = params.get("back");
   if (backUrl) {
     document.getElementById("backLink").href = backUrl;
@@ -97,70 +76,37 @@
     document.getElementById("backLink").href = IS_LOCAL ? "index.html" : "/index.html";
   }
 
-  // Leaf offset fallback (for pages not in scan_map)
-  const LEAF_OFFSET = {
-    1:7, 2:7, 3:9, 4:9, 5:12, 6:12, 7:7, 8:7,
-    9:9, 10:10, 11:8, 12:7, 13:7, 14:6, 15:17, 16:6,
-    17:9, 18:6, 19:7, 20:0, 21:6, 22:6, 23:7, 24:4,
-    25:8, 26:4, 27:6, 28:5, 29:6
-  };
-
-  let scanMap = null;
   let printedPages = null;
-  let fmFirstContent = null;
-
-  async function loadFmFirstContent() {
-    try {
-      const url = IS_LOCAL ? "/data/derived/fm_first_content.json" : "/data/fm_first_content.json";
-      const resp = await fetch(url);
-      if (resp.ok) fmFirstContent = await resp.json();
-    } catch (e) { /* fall back to 1 */ }
-  }
-
-  async function loadScanMap() {
-    try {
-      const url = IS_LOCAL ? "/data/derived/scan_map.json" : "/data/scan_map.json";
-      const resp = await fetch(url);
-      if (resp.ok) scanMap = await resp.json();
-    } catch (e) { /* fall back to offset */ }
-  }
 
   async function loadPrintedPages() {
     try {
-      // Scan viewer needs leaf-keyed printed pages (it navigates by leaf).
-      // The ws-keyed printed_pages.json is for article exports.
       const url = IS_LOCAL ? "/data/derived/printed_pages_leaf.json" : "/data/printed_pages_leaf.json";
       const resp = await fetch(url);
       if (resp.ok) printedPages = await resp.json();
-    } catch (e) { /* fall back to linear interpolation */ }
+    } catch (e) { /* map missing → everything labels as (unnumbered) */ }
   }
 
-  function printedForLeaf(vol, leaf) {
-    if (printedPages && printedPages[String(vol)]) {
-      const p = printedPages[String(vol)][String(leaf)];
-      if (p !== undefined) return p;
-    }
-    return null; // no printed number (plate / blank / unknown)
+  function labelForLeaf(leaf) {
+    if (!printedPages || !printedPages[String(vol)]) return null;
+    const v = printedPages[String(vol)][String(leaf)];
+    return v === undefined ? null : v;
   }
 
-  function leafForPage(vol, wsPage) {
-    if (scanMap && scanMap[String(vol)] && scanMap[String(vol)][String(wsPage)]) {
-      return scanMap[String(vol)][String(wsPage)];
-    }
-    // Fallback: offset
-    return wsPage + (LEAF_OFFSET[vol] || 0);
+  function displayLabel(leaf) {
+    const v = labelForLeaf(leaf);
+    if (v === null) return "(unnumbered)";
+    if (typeof v === "number") return `p. ${v}`;
+    return String(v);
   }
 
-  function scanUrl(vol, num) {
+  function updateSubtitle() {
+    const first = displayLabel(startLeaf);
+    const last = displayLabel(endLeaf);
+    document.getElementById("subtitle").textContent = `${first} – ${last}`;
+  }
+
+  function scanUrl(leaf) {
     const padVol = String(vol).padStart(2, "0");
-    if (prefix === "fm") {
-      const padNum = String(num).padStart(2, "0");
-      const name = `vol${padVol}_fm${padNum}.jpg`;
-      return IS_LOCAL ? `/data/derived/scans/${name}` : `/data/scans/${name}`;
-    }
-    // prefix === "leaf": currentPage IS the physical leaf number.
-    // prefix === "page": currentPage is a Wikisource page; translate.
-    const leaf = prefix === "leaf" ? num : leafForPage(vol, num);
     const padLeaf = String(leaf).padStart(4, "0");
     const name = `vol${padVol}_leaf${padLeaf}.jpg`;
     return IS_LOCAL ? `/data/derived/scans/${name}` : `/data/scans/${name}`;
@@ -169,156 +115,83 @@
   function render() {
     const container = document.getElementById("scanContainer");
     const img = new Image();
-    img.alt = `Volume ${vol}, page ${currentPage}`;
+    img.alt = `Volume ${vol}, leaf ${currentLeaf}`;
     img.loading = "eager";
     img.onload = () => { container.innerHTML = ""; container.appendChild(img); };
-    img.onerror = () => { container.innerHTML = `<div class="error">Scan not available for page ${currentPage}</div>`; };
-    img.src = scanUrl(vol, currentPage);
+    img.onerror = () => { container.innerHTML = `<div class="error">Scan not available for leaf ${currentLeaf}</div>`; };
+    img.src = scanUrl(currentLeaf);
     container.innerHTML = `<div class="error">Loading...</div>`;
 
-    // Look up the printed page by LEAF, not by ws. The ws → leaf
-    // translation is done via scan_map (identity fallback). Keeping
-    // the printed_pages lookup in leaf space avoids corruption from
-    // stale scan_map entries (vol 20 had several bogus ws → leaf
-    // translations that mangled the display).
-    let pageInfoText;
-    if (prefix === "fm") {
-      // Renumber fm pages so the first content page is "1". The raw
-      // scan index starts from wherever the leading blanks end.
-      pageInfoText = `fm ${currentPage - startPage + 1}`;
-    } else {
-      const leaf = prefix === "leaf" ? currentPage : leafForPage(vol, currentPage);
-      const printed = printedForLeaf(vol, leaf);
-      if (printed !== null) {
-        pageInfoText = `p. ${printed}`;
-      } else if (prefix === "leaf") {
-        // Leaf-mode viewer for unnumbered ranges (e.g. vol 29
-        // classified TOC). Leaf number is the useful identifier.
-        pageInfoText = `leaf ${leaf}`;
-      } else {
-        pageInfoText = `(unnumbered)`;
-      }
-    }
-    document.getElementById("pageInfo").textContent = pageInfoText;
-    document.getElementById("firstBtn").disabled = currentPage <= startPage;
-    document.getElementById("prevBtn").disabled = currentPage <= startPage;
-    document.getElementById("nextBtn").disabled = currentPage >= endPage;
-    document.getElementById("lastBtn").disabled = currentPage >= endPage;
+    document.getElementById("pageInfo").textContent = displayLabel(currentLeaf);
+    document.getElementById("firstBtn").disabled = currentLeaf <= startLeaf;
+    document.getElementById("prevBtn").disabled = currentLeaf <= startLeaf;
+    document.getElementById("nextBtn").disabled = currentLeaf >= endLeaf;
+    document.getElementById("lastBtn").disabled = currentLeaf >= endLeaf;
   }
 
   function go(delta) {
-    currentPage = Math.max(startPage, Math.min(endPage, currentPage + delta));
+    currentLeaf = Math.max(startLeaf, Math.min(endLeaf, currentLeaf + delta));
     render();
   }
 
-  function goTo(page) {
-    currentPage = Math.max(startPage, Math.min(endPage, page));
+  function goTo(leaf) {
+    currentLeaf = Math.max(startLeaf, Math.min(endLeaf, leaf));
     render();
   }
 
-  // Resolve a user-entered number to a ws page within this viewer's
-  // range. Tries printed-page match first (reader-friendly), then leaf
-  // (useful for debugging), then treats the entry as a ws page directly.
+  // Jump resolves entered text against the map: prefer integer
+  // match (printed page), else string match ("fm 3"), else treat as
+  // a leaf number.  Whatever matches first wins.
   function jumpToPrinted() {
     const input = document.getElementById("jumpInput");
     const raw = input.value.trim();
     if (!raw) return;
-    const n = parseInt(raw, 10);
-    if (Number.isNaN(n)) return;
 
-    if (prefix === "fm") {
-      // User entered a renumbered fm page (1-based, first content = 1).
-      // Convert back to raw scan index.
-      goTo(startPage + n - 1);
-      return;
-    }
-
-    if (prefix === "leaf") {
-      // Leaf mode: try printed-page match first, else go to leaf n.
-      if (printedPages && printedPages[String(vol)]) {
-        const volMap = printedPages[String(vol)];
-        for (let leaf = startPage; leaf <= endPage; leaf++) {
-          if (volMap[String(leaf)] === n) {
-            goTo(leaf);
-            return;
-          }
-        }
-      }
-      goTo(n);
-      return;
-    }
-
-    // prefix === "page": currentPage is a ws page.
-    // 1. Printed page: scan this volume's leaves for printed == n.
     if (printedPages && printedPages[String(vol)]) {
       const volMap = printedPages[String(vol)];
-      for (let p = startPage; p <= endPage; p++) {
-        const leaf = leafForPage(vol, p);
-        if (volMap[String(leaf)] === n) {
-          goTo(p);
+      const asInt = parseInt(raw, 10);
+      for (let leaf = startLeaf; leaf <= endLeaf; leaf++) {
+        const v = volMap[String(leaf)];
+        if (v === undefined) continue;
+        if (typeof v === "number" && !Number.isNaN(asInt) && v === asInt) {
+          goTo(leaf);
+          return;
+        }
+        if (typeof v === "string" && v.toLowerCase() === raw.toLowerCase()) {
+          goTo(leaf);
           return;
         }
       }
     }
 
-    // 2. Leaf: find the ws page that maps to leaf == n.
-    if (scanMap && scanMap[String(vol)]) {
-      const volScan = scanMap[String(vol)];
-      for (const [wsStr, leafVal] of Object.entries(volScan)) {
-        if (leafVal === n) {
-          const ws = parseInt(wsStr, 10);
-          if (ws >= startPage && ws <= endPage) {
-            goTo(ws);
-            return;
-          }
-        }
-      }
-    }
-    // Offset-based fallback: ws + offset == leaf  =>  ws = n - offset
-    const off = LEAF_OFFSET[vol] || 0;
-    const wsFromLeaf = n - off;
-    if (wsFromLeaf >= startPage && wsFromLeaf <= endPage) {
-      goTo(wsFromLeaf);
-      return;
-    }
-
-    // 3. Treat as ws page directly.
-    goTo(n);
+    const n = parseInt(raw, 10);
+    if (!Number.isNaN(n)) goTo(n);
   }
 
   document.addEventListener("keydown", (e) => {
     if (e.key === "ArrowLeft") go(-1);
     if (e.key === "ArrowRight") go(1);
-    if (e.key === "Home") goTo(startPage);
-    if (e.key === "End") goTo(endPage);
+    if (e.key === "Home") goTo(startLeaf);
+    if (e.key === "End") goTo(endLeaf);
   });
 
-  if (prefix === "page" || prefix === "leaf") {
-    Promise.all([loadScanMap(), loadPrintedPages()]).then(() => {
-      if (initPrinted > 0) {
-        document.getElementById("jumpInput").value = String(initPrinted);
-        jumpToPrinted();
-        document.getElementById("jumpInput").value = "";
-      } else {
-        render();
-      }
-    });
-  } else if (prefix === "fm") {
-    // Skip leading blank scans (cover paper / end paper).
-    loadFmFirstContent().then(() => {
-      if (fmFirstContent && fmFirstContent[String(vol)]) {
-        const firstContent = fmFirstContent[String(vol)];
-        if (currentPage < firstContent) {
-          currentPage = firstContent;
-          startPage = firstContent;
-          updateSubtitle();
-        }
+  loadPrintedPages().then(() => {
+    updateSubtitle();
+    if (initPrinted > 0) {
+      document.getElementById("jumpInput").value = String(initPrinted);
+      jumpToPrinted();
+      document.getElementById("jumpInput").value = "";
+    } else {
+      // Auto-advance past leading nulls (cover / blanks) so users
+      // land on the first labeled page in the requested range.  The
+      // explicit null entries in the map drive this — no hard-coded
+      // skip logic in the viewer.
+      while (currentLeaf < endLeaf && labelForLeaf(currentLeaf) === null) {
+        currentLeaf += 1;
       }
       render();
-    });
-  } else {
-    render();
-  }
+    }
+  });
 </script>
 </body>
 </html>

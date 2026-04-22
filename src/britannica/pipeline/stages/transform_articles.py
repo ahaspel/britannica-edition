@@ -189,6 +189,12 @@ def _unwrap_content_templates(text: str) -> str:
     text = re.sub(r"\{\{sm\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{right\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{left\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    # Rotation wrapper: {{rotate|angle|content}} → content. Rotation
+    # is purely visual styling (used for rotated column labels in
+    # geology/stratigraphy tables); preserve the text.
+    text = re.sub(
+        r"\{\{rotate\s*\|[^{}|]*\|([^{}]*)\}\}",
+        r"\1", text, flags=re.IGNORECASE)
     # {{fqm|X}} (floating quotation mark — hanging typographical quote
     # at the start of a verse/quotation block) → just X.  Without this
     # the opener quote gets eaten by the ``_strip_templates`` whitelist
@@ -568,6 +574,13 @@ def _transform_body_text(text: str) -> str:
     Each step is explicit.  No fetch stage dependencies.
     Embedded elements have already been extracted.
     """
+    # Strip MediaWiki indent / definition-list prefix `:` and `;` at
+    # the start of a line.  Used throughout EB1911 as visual indent
+    # for numbered equations (e.g. BALLISTICS `:(43) <math>…</math>`).
+    # We don't render these as indented blocks — stripping the sigil
+    # keeps the content flush without a stray colon leaking through.
+    # Bullet `*` and ordered `#` lists are left alone.
+    text = re.sub(r"^[:;]+\s*", "", text, flags=re.MULTILINE)
     text = _convert_hieroglyphs(text)
     text = _convert_links(text)
     text = _unwrap_content_templates(text)
@@ -946,12 +959,31 @@ _PARA_LEGEND_STRICT_RE = _build_legend_line_re(strict=True)
 
 
 def _strip_inline_italic(text: str) -> str:
-    """Remove `«I»…«/I»` open/close markers so a line can be matched
-    against a plain-ASCII legend-label regex.  The markers are just
-    formatting hints — their presence and position vary (some sources
-    close before the comma, some after), and the pattern match
-    doesn't need them."""
-    return re.sub(r"\u00ab/?[A-Z]+\u00bb", "", text)
+    """Remove `«I»…«/I»`, `«B»…«/B»`, `«SC»…«/SC»` open/close markers
+    so a line can be matched against a plain-ASCII legend-label regex.
+
+    Enumerate the exact formatting markers rather than using a
+    permissive ``«/?[A-Z]+»`` pattern: ``«/FN»`` / ``«/SEC»`` / etc.
+    would match that pattern too, but their OPENERS use a trailing
+    colon (``«FN:``, ``«SEC:``) that the regex misses — stripping
+    just the closer turned every footnote into an unclosed marker.
+    Observed corpus-wide: 9 articles had unbalanced FN markers
+    traceable to this (CONVEYORS, GAS, RING, PROBABILITY, …).
+    """
+    return re.sub(r"\u00ab/?(?:I|B|SC)\u00bb", "", text)
+
+
+# EB1911 inline section-heading pattern: ``LABEL. ''italic title.''—prose``
+# (HARMONY vol 13: ``III. ''Modern Harmony and Tonality.''—In the harmonic
+# system of Palestrina…``).  Label + italic-wrapped title + em-dash is
+# the distinguishing shape — legend captions with Roman-numeral labels
+# (CENTIPEDE "I. Mandibles", HYDRAULICS "VI. STEADY FLOW…") do NOT
+# italicize their text or use em-dashes, so this regex misses them.
+_INLINE_SECTION_HEADING_RE = re.compile(
+    r"^\s*[A-Za-z0-9IVXLCDM]+\.?\s+"
+    r"\u00abI\u00bb[^\u00ab]+\u00ab/I\u00bb"
+    r"\s*[.\u2014\u2013\-]"
+)
 
 
 def _match_legend_line(line: str, *, strict: bool = False) -> tuple[str, str] | None:
@@ -972,6 +1004,11 @@ def _match_legend_line(line: str, *, strict: bool = False) -> tuple[str, str] | 
     separator, used for body-paragraph context where `a drilling…`
     (English article "a") should NOT be mistaken for a label.
     """
+    # EB1911 inline section-heading pattern: ``LABEL. ''italic
+    # title.''—prose``.  Check this BEFORE stripping italic markers,
+    # since ``_strip_inline_italic`` would erase the signature.
+    if _INLINE_SECTION_HEADING_RE.match(line):
+        return None
     plain = _strip_inline_italic(line).strip()
     pat = _PARA_LEGEND_STRICT_RE if strict else _PARA_LEGEND_PLAIN_RE
     m = pat.match(plain)
@@ -1604,6 +1641,42 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
                 i += 1
         return ranges
 
+    _table_spans = _table_ranges(raw_wikitext)
+    _crop_pat = re.compile(
+        r"(\{\{\s*Css\s+image\s+crop\s*\|[^}]*\}\})"
+        r"(?:\s*(?:\{\{\s*center\s*\|([^{}]*(?:\{\{[^{}]*\}\}[^{}]*)*)\}\}"
+        r"|\{\{\s*csc\s*\|([^{}]*)\}\}))?",
+        re.IGNORECASE,
+    )
+
+    # Pre-compute crop indices.  ``download_djvu_crops.py`` numbers
+    # every ``{{Css image crop|Image=…djvu|Page=P|…}}`` on a page as
+    # ``_crop0``, ``_crop1``, …  in wikitext order across BOTH
+    # standalone and in-table occurrences.  We must mirror that
+    # indexing so the ``{{IMG:djvu_volNN_pagePPPP_cropI.jpg}}`` marker
+    # references the file that actually got produced.  (Previously
+    # ``_css_crop_replace`` dropped standalone crops into the no-crop
+    # ``djvu_volNN_pagePPPP.jpg`` full-page slot, so SHIPBUILDING
+    # Figs 3, 6, 9, 10 et al pointed at the whole page instead of the
+    # cropped figure.)
+    _CSS_CROP_ALL_RE = re.compile(
+        r"\{\{\s*Css\s+image\s+crop\s*\n?(.*?)\}\}",
+        re.DOTALL | re.IGNORECASE,
+    )
+    _crop_index_at: dict[int, int] = {}   # match-start offset → crop index
+    _page_counts: dict[tuple[int, int], int] = {}
+    for _m in _CSS_CROP_ALL_RE.finditer(raw_wikitext):
+        _body = _m.group(1)
+        _img_m = re.search(
+            r"Image\s*=\s*(EB1911\s+-\s+Volume\s+(\d+)\.djvu)",
+            _body, re.IGNORECASE)
+        _page_m = re.search(r"Page\s*=\s*(\d+)", _body, re.IGNORECASE)
+        if not (_img_m and _page_m):
+            continue
+        _key = (int(_img_m.group(2)), int(_page_m.group(1)))
+        _crop_index_at[_m.start()] = _page_counts.get(_key, 0)
+        _page_counts[_key] = _page_counts.get(_key, 0) + 1
+
     def _css_crop_replace(m: re.Match) -> str:
         body = m.group(1)
         caption = ((m.group(2) if len(m.groups()) >= 2 else None) or
@@ -1617,23 +1690,19 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
                 caption = new
             caption = caption.strip()
         img_m = re.search(
-            r"Image\s*=\s*(EB1911\s+-\s+Volume\s+\d+\.djvu)",
+            r"Image\s*=\s*(EB1911\s+-\s+Volume\s+(\d+)\.djvu)",
             body, re.IGNORECASE)
         page_m = re.search(r"Page\s*=\s*(\d+)", body, re.IGNORECASE)
         if img_m and page_m:
-            ref = f"{img_m.group(1)}/{page_m.group(1)}"
+            vol = int(img_m.group(2))
+            page = int(page_m.group(1))
+            idx = _crop_index_at.get(m.start(), 0)
+            filename = f"djvu_vol{vol:02d}_page{page:04d}_crop{idx}.jpg"
             if caption:
-                return f"[[File:{ref}|{caption}]]"
-            return f"{{{{raw image|{ref}}}}}"
+                return f"[[File:{filename}|{caption}]]"
+            return f"[[File:{filename}]]"
         return m.group(0)
 
-    _table_spans = _table_ranges(raw_wikitext)
-    _crop_pat = re.compile(
-        r"(\{\{\s*Css\s+image\s+crop\s*\|[^}]*\}\})"
-        r"(?:\s*(?:\{\{\s*center\s*\|([^{}]*(?:\{\{[^{}]*\}\}[^{}]*)*)\}\}"
-        r"|\{\{\s*csc\s*\|([^{}]*)\}\}))?",
-        re.IGNORECASE,
-    )
     def _maybe_replace(m: re.Match) -> str:
         for s, e in _table_spans:
             if s <= m.start() < e:

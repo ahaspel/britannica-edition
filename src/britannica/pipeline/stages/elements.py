@@ -152,6 +152,12 @@ def _extract_balanced_tables(text: str, registry: ElementRegistry) -> str:
         # contains ``|}}`` which would otherwise be read as a table
         # closer, truncating the table mid-row (ATMOSPHERIC
         # ELECTRICITY Table IV).
+        #
+        # Also accept ``</table>`` as an alternative closer.  A handful
+        # of Wikisource pages mix syntaxes — open with ``{|`` but close
+        # with ``</table>`` (POST, vol22 ws 208).  MediaWiki tolerates
+        # this; we have to too, otherwise the table leaks as raw
+        # wikitable markup.
         depth = 0
         i = idx
         found = False
@@ -174,11 +180,15 @@ def _extract_balanced_tables(text: str, registry: ElementRegistry) -> str:
             if text[i:i+2] == "{|":
                 depth += 1
                 i += 2
-            elif text[i:i+2] == "|}":
+            elif text[i:i+2] == "|}" or (
+                text[i:i+8].lower() == "</table>" and depth > 0
+            ):
                 depth -= 1
+                # Compute length of the closer we matched.
+                closer_len = 2 if text[i:i+2] == "|}" else 8
                 if depth == 0:
                     # Found the balanced close
-                    table_text = text[idx:i+2]
+                    table_text = text[idx:i + closer_len]
                     # Classify at extraction time
                     if re.search(r"\{\{Css image crop", table_text, re.IGNORECASE):
                         etype = "DJVU_CROP"
@@ -187,10 +197,10 @@ def _extract_balanced_tables(text: str, registry: ElementRegistry) -> str:
                     else:
                         etype = "TABLE"
                     placeholder = registry.add(etype, table_text)
-                    text = text[:idx] + placeholder + text[i+2:]
+                    text = text[:idx] + placeholder + text[i + closer_len:]
                     found = True
                     break
-                i += 2
+                i += closer_len
             else:
                 i += 1
 
@@ -330,7 +340,9 @@ def _process_element(element_type: str, raw: str,
         result = f"[hieroglyph: {inner}]"
     elif element_type == "TABLE":
         table_kind = _classify_table(raw, inner, inner_registry)
-        if table_kind == "EQUATION_LAYOUT":
+        if table_kind == "MATH_LAYOUT":
+            result = _process_math_layout_table(raw)
+        elif table_kind == "EQUATION_LAYOUT":
             result = _process_equation_layout(inner, text_transform)
         elif table_kind == "LAYOUT_WRAPPER":
             result = _unwrap_layout_table(inner, text_transform, inner_registry)
@@ -468,9 +480,173 @@ def _classify_table(raw: str, inner: str, inner_registry: ElementRegistry | None
                    header, re.IGNORECASE))
     if has_data_signal and re.search(r'\{\{[Tt]s\|', raw):
         return "COMPLEX_HTML"
+    if _is_math_layout(raw, inner):
+        return "MATH_LAYOUT"
     if _is_equation_layout(inner, inner_registry):
         return "EQUATION_LAYOUT"
     return "DATA_TABLE"
+
+
+_MATH_CELL_RE = re.compile(
+    r"^(?:"
+    r"''[A-Za-z]''"
+    r"|<su[pb]>[^<]{1,8}</su[pb]>"
+    r"|\{\{Greek\|[^}]{1,8}\}\}"
+    r"|\{\{sfrac\|[^}]{1,20}\}\}"
+    r"|\{\{[A-Za-z]+\s*\|[^}]{1,30}\}\}"
+    r"|[0-9]+"
+    r"|[+\-=\uFF1D\u00D7\u00B7()/., \u2212\u00F7\u2260\u2264\u2265\u2261\u2192]"
+    r"|&nbsp;|&minus;|&emsp;|&ensp;|&thinsp;"
+    r"|<br\s*/?>"
+    r")+$",
+    re.IGNORECASE,
+)
+
+
+def _parse_math_layout_cells(inner: str) -> list[str] | None:
+    """Return list of cell content strings for a candidate math-layout
+    table, or None if the table has a header (``!`` sigil) row."""
+    cells: list[str] = []
+    for line in inner.split("\n"):
+        s = line.strip()
+        if not s or s.startswith("|+") or s == "|}" or s.startswith("|-"):
+            continue
+        if s.startswith("!"):
+            return None  # header row disqualifies
+        if not s.startswith("|"):
+            continue
+        body = s[1:]
+        body = re.sub(r"\{\{[^}]*\}\}",
+                      lambda m: m.group(0).replace("|", "\x04"), body)
+        for chunk in body.split("||"):
+            if "|" in chunk:
+                _, _, content = chunk.rpartition("|")
+            else:
+                content = chunk
+            content = content.replace("\x04", "|").strip()
+            content = re.sub(r"<span\s[^>]*>|</span>", "", content)
+            if content:
+                cells.append(content)
+    return cells
+
+
+def _is_math_layout(raw: str, inner: str) -> bool:
+    """Detect tables that hold math content as positional layout
+    (equation systems, determinants, matrices) rather than prose data.
+
+    Seen on ALGEBRAIC FORMS (vol 1 p624+): transcribers used
+    ``{|{{ts|…}}|}`` wikitables to align successive terms of an
+    equation system or the cells of a determinant.  Rendering such
+    tables as HTML data-tables gives a wholly wrong visual result —
+    they should go through KaTeX as ``\\begin{aligned}`` /
+    ``\\begin{vmatrix}`` blocks instead.
+
+    Requires:
+      * No ``class=wikitable``/``border=N``/``rules=`` data signal.
+      * No ``<ref>`` footnotes (those don't appear in math layouts).
+      * No header row (no ``!`` sigil cell).
+      * Every cell matches the narrow math-token regex.
+      * ≥ 2 cells with a strong math signature (``<su[pb]>`` tag, or
+        an arithmetic operator joining operands).
+    """
+    header = raw.split("\n", 1)[0]
+    if re.search(r'class\s*=\s*"?[^"\s]*(?:wikitable|tablecolhd)',
+                 header, re.IGNORECASE):
+        return False
+    if re.search(r'border\s*=\s*"?[1-9]|rules\s*=',
+                 header, re.IGNORECASE):
+        return False
+    if re.search(r"<ref[\s>]", raw, re.IGNORECASE):
+        return False
+    cells = _parse_math_layout_cells(inner)
+    if cells is None or len(cells) < 2:
+        return False
+    if any(len(c) > 250 for c in cells):
+        return False
+    if not all(_MATH_CELL_RE.match(c) for c in cells):
+        return False
+    strong = 0
+    for c in cells:
+        if re.search(r"<su[pb]>", c):
+            strong += 1
+        elif re.search(
+                r"[+\-\u2212=\uFF1D\u00D7\u00F7]\s*(?:''|[0-9(])", c):
+            strong += 1
+    return strong >= 2
+
+
+def _math_cell_to_latex(content: str) -> str:
+    """Convert a wikitext math cell to LaTeX token sequence."""
+    # Strip {{ts|…}} styling leftovers
+    content = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*\|?\s*", "", content)
+    # Italic letter run: ''xyz'' → xyz
+    content = re.sub(r"''([A-Za-z]+)''", r"\1", content)
+    # Sub/sup
+    content = re.sub(r"<sub>([^<]+)</sub>", r"_{\1}",
+                     content, flags=re.IGNORECASE)
+    content = re.sub(r"<sup>([^<]+)</sup>", r"^{\1}",
+                     content, flags=re.IGNORECASE)
+    # Greek template: keep the character (KaTeX renders Unicode Greek)
+    content = re.sub(r"\{\{Greek\|([^}]+)\}\}", r"\1",
+                     content, flags=re.IGNORECASE)
+    content = content.replace("\uFF1D", "=")   # fullwidth =
+    content = content.replace("\u2212", "-")   # unicode minus
+    content = content.replace("\u00D7", r"\times ")
+    content = content.replace("\u00B7", r"\cdot ")
+    content = re.sub(r"<span[^>]*>|</span>", "", content)
+    content = re.sub(r"&nbsp;|&emsp;|&ensp;|&thinsp;", " ", content)
+    content = re.sub(r"\s+", " ", content).strip()
+    return content
+
+
+def _process_math_layout_table(raw: str) -> str:
+    """Emit a math-layout wikitable as a KaTeX math block.
+
+    Equation system (rows share ``=`` column): ``\\begin{aligned}…\\end{aligned}``.
+    Otherwise (matrix/determinant): ``\\begin{vmatrix}…\\end{vmatrix}``.
+    """
+    inner = re.sub(r"^\{\|[^\n]*\n?", "", raw)
+    inner = re.sub(r"\n?\|\}\s*$", "", inner)
+    raw_rows = re.split(r"^\|-[^\n]*$", inner, flags=re.MULTILINE)
+    rows: list[list[str]] = []
+    for raw_row in raw_rows:
+        row_cells: list[str] = []
+        for line in raw_row.split("\n"):
+            s = line.strip()
+            if not s or s.startswith("|+") or s == "|}":
+                continue
+            if not s.startswith("|"):
+                continue
+            body = s[1:]
+            body = re.sub(r"\{\{[^}]*\}\}",
+                          lambda m: m.group(0).replace("|", "\x04"), body)
+            for chunk in body.split("||"):
+                if "|" in chunk:
+                    _, _, content = chunk.rpartition("|")
+                else:
+                    content = chunk
+                content = content.replace("\x04", "|").strip()
+                if content:
+                    row_cells.append(_math_cell_to_latex(content))
+        if row_cells:
+            rows.append(row_cells)
+    if not rows:
+        return ""
+    is_eqn = any("=" in "".join(row) for row in rows)
+    if is_eqn:
+        lines = []
+        for row in rows:
+            line = " ".join(row).strip()
+            # Align on first = → &=
+            line = re.sub(r"^(.*?)=(.*)$", r"\1 &= \2", line, count=1)
+            lines.append(line)
+        latex = ("\\begin{aligned}\n" + " \\\\\n".join(lines)
+                 + "\n\\end{aligned}")
+    else:
+        lines = [" & ".join(row) for row in rows]
+        latex = ("\\begin{vmatrix}\n" + " \\\\\n".join(lines)
+                 + "\n\\end{vmatrix}")
+    return f"\u00abMATH:{latex}\u00ab/MATH\u00bb"
 
 
 def _is_equation_layout(inner: str, inner_registry: ElementRegistry | None) -> bool:
@@ -577,6 +753,16 @@ def _is_layout_wrapper(raw: str, inner: str, inner_registry: ElementRegistry | N
         return False
     child_types = {t for t, _ in inner_registry.elements.values()}
     if "TABLE" in child_types:
+        # A nested TABLE usually means layout (outer is a shell around
+        # the sub-table).  Exception: if the outer declares a wikitext
+        # table caption via ``|+`` at the top of the table body, it's
+        # a genuine data table.  ``|+`` is the MediaWiki table-caption
+        # sigil — only data tables carry it.  This catches AFRICA's
+        # "BANTU NEGROIDS" table (40 rows of tribe names, plus one
+        # incidental nested bracket-grouping table) without relying on
+        # content-length heuristics.
+        if re.search(r"^\|\+", inner, re.MULTILINE):
+            return False
         return True
     if "IMAGE" in child_types:
         # Strong signal: table contains a `Fig. N.—` / `Plate N.—`
@@ -1908,7 +2094,24 @@ def _process_complex_table(inner: str, text_transform) -> str:
     with placeholders) so that nested elements like <math> are preserved.
     """
 
-    rows = re.split(r"\|-[^\n]*", inner)
+    # Extract the wikitext table caption (`|+ TEXT` on its own line)
+    # so we can render it inside the HTML table's <caption> element.
+    # Without this the caption silently disappears (AFRICA's "BANTU
+    # NEGROIDS", EXCHEQUER's "Revenue"/"Expenditure" / "Surplus", etc.).
+    caption_html = ""
+    cap_match = re.search(r"^\|\+\s*(.+?)$", inner, re.MULTILINE)
+    if cap_match:
+        cap_raw = cap_match.group(1).strip()
+        cap_text = text_transform(cap_raw) if cap_raw else ""
+        if cap_text:
+            caption_html = f"<caption>{cap_text}</caption>"
+
+    # Row split on `|-` wiki row separators — but only when `|-` is at
+    # the start of a line. A `|-` in the middle of a line always means
+    # something else (template arg like ``{{rotate|-90|…}}``, math
+    # inline, etc.) and must not terminate a row. The old pattern
+    # `\|-[^\n]*` ate templates that happened to contain a `|-`.
+    rows = re.split(r"(?:^|\n)\|-[^\n]*", inner)
     html_rows = []
 
     for row in rows:
@@ -1976,12 +2179,20 @@ def _process_complex_table(inner: str, text_transform) -> str:
                     content = re.sub(r"\{\{ditto(?:\|[^{}]*)?\}\}", "\u2033",
                                      content, flags=re.IGNORECASE)
                     content = re.sub(r"\{\{\.\.\.\}\}", "...", content)
-                    content = re.sub(r"\{\{sc\|([^{}]*)\}\}", r"\1", content, flags=re.IGNORECASE)
-                    content = re.sub(r"\{\{[^{}]*\}\}", "", content)
                     content = _strip_br(content)
                     content = content.strip()
+                    # Run text_transform FIRST so it can convert
+                    # templates it knows about (``{{sfrac|…}}``,
+                    # ``{{hi|…}}``, ``{{sc|…}}``, etc.) into their
+                    # marker form.  Previously the catch-all
+                    # ``\{\{[^{}]*\}\}`` strip ran first and ate every
+                    # unlabelled template, dropping SHIPBUILDING's
+                    # ``{{sfrac|…|Volume of Displacement|Length × …}}``
+                    # entirely from the "Block coefficients or" cell.
                     if content:
                         content = text_transform(content)
+                    # Strip any templates text_transform didn't handle.
+                    content = re.sub(r"\{\{[^{}]*\}\}", "", content)
                 cells_html.append(f"<{tag}{attrs}>{content}</{tag}>")
 
         if cells_html:
@@ -2011,6 +2222,7 @@ def _process_complex_table(inner: str, text_transform) -> str:
         parts.append("\n\n" + p + "\n\n")
     if html_rows:
         parts.append("\n\n\u00abHTMLTABLE:<table>" +
+                     caption_html +
                      "".join(html_rows) + "</table>\u00ab/HTMLTABLE\u00bb\n\n")
     return "".join(parts)
 

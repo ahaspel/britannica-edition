@@ -105,6 +105,12 @@ def _clean_caption_markup(text: str) -> str:
     for _ in range(5):
         text = re.sub(r"\{\{\s*(?:sc|smaller|c|center|small|big|bold|italic|nowrap)\s*\|([^{}]*)\}\}",
                       r"\1", text, flags=re.IGNORECASE)
+        # ``{{uc|TEXT}}`` uppercases TEXT in Wikisource rendering —
+        # preserve that when unwrapping (REGALIA plate captions use
+        # it extensively).
+        text = re.sub(r"\{\{\s*uc\s*\|([^{}]*)\}\}",
+                      lambda m: m.group(1).upper(),
+                      text, flags=re.IGNORECASE)
         text = re.sub(r"\{\{\s*fs\s*\|[^{}|]*\|([^{}]*)\}\}",
                       r"\1", text, flags=re.IGNORECASE)
     # Unwrap any other pipe-separated template — keep the last arg
@@ -179,11 +185,54 @@ def _find_following_caption(after_text: str) -> str | None:
       • Separate wikitable after the image
     """
     tail = after_text
-    # Skip whitespace, <br/>, closing tags, and EB1911 fine print close.
+    # Skip whitespace, <br/>, closing tags, EB1911 fine print close,
+    # and inner-wikitable closers.  Plate pages routinely wrap each
+    # image in a 1-cell inner table (``{|…|[[Image:…]]|}``) whose
+    # closer sits between the image reference and the caption text.
     tail = re.sub(
-        r"^(?:\s|<br\s*/?>|</(?:span|div)\s*>|\{\{EB1911 fine print/e\}\})+",
+        r"^(?:\s|<br\s*/?>|</(?:span|div)\s*>"
+        r"|\{\{EB1911 fine print/e\}\}|\|\})+",
         "", tail, flags=re.IGNORECASE,
     )
+    # Peel outer-wikitable row separators + cell-attribute prefixes.
+    # REGALIA Plate III layout puts the caption in the NEXT row of the
+    # outer table after the image's inner ``|}``:
+    #   {| ...inner image table...
+    #   |[[Image:...]]
+    #   |}
+    #   |-                        ← outer-table row separator
+    #   | {{ts|ac}} | N.—CAPTION  ← caption in the next outer cell
+    # Loop because plate pages sometimes have a blank-spacer row
+    # (``|-\n| &nbsp;``) between the image and the caption.
+    while True:
+        new_tail = tail
+        # Row separator: ``|-`` with any attributes, newline.
+        new_tail = re.sub(
+            r"^\|-[^\n]*\n\s*", "", new_tail)
+        # Cell opener with attrs+content-separator: ``| {{ts|…}} |``
+        # or ``| style="…" |``.  Consumes up through the attr-content
+        # pipe.  ``(?!-)`` prevents matching ``|-`` row separators as
+        # cell openers.  The alternation ``\{\{[^}]*\}\}|[^|\n]`` lets
+        # the attrs contain ``{{ts|ac}}``-style templates with internal
+        # pipes — matching the template as an atomic unit rather than
+        # stopping at the first ``|``.
+        new_tail = re.sub(
+            r"^\|(?!-)(?:\{\{[^}]*\}\}|[^|\n])*?\|\s*", "", new_tail)
+        # Blank spacer cells: ``| &nbsp;`` or ``|`` followed by nothing
+        # meaningful.  Treat them as skippable padding.
+        m = re.match(r"^\|(?!-)\s*&(?:nbsp|emsp|ensp|thinsp);?\s*\n",
+                     new_tail)
+        if m:
+            new_tail = new_tail[m.end():]
+        if new_tail == tail:
+            break
+        tail = new_tail
+        # Strip any whitespace/closer noise we may have uncovered.
+        tail = re.sub(
+            r"^(?:\s|<br\s*/?>|</(?:span|div)\s*>"
+            r"|\{\{EB1911 fine print/e\}\}|\|\})+",
+            "", tail, flags=re.IGNORECASE,
+        )
     if not tail:
         return None
 
@@ -219,6 +268,22 @@ def _find_following_caption(after_text: str) -> str | None:
         tail, re.IGNORECASE,
     )
     if m:
+        return _clean_caption_markup(m.group(1))
+
+    # 4b. Bare numbered plate caption: ``N.—CAPTION TEXT`` or
+    # ``N.-CAPTION``.  Common in plate pages where each image is in a
+    # nested wikitable and the caption sits immediately after the inner
+    # ``|}``.  REGALIA Plates I-IV use this exclusively.  Extended
+    # numbered forms (``1(a).``) and letter-indexed (``A.—``) too.
+    # ``[^\n]`` (not ``[^\n}]``) so captions with embedded templates
+    # like ``{{uc|TITLE}}`` aren't truncated at the first ``}`` in
+    # ``}}`` — ``_clean_caption_markup`` unwraps templates below.
+    m = re.match(
+        r"((?:\d+(?:\([a-z]\))?|[A-Z])\.?\s*"
+        r"[\u2014\u2013\-]\s*[^\n]*)",
+        tail,
+    )
+    if m and re.search(r"[A-Za-z]{3,}", m.group(1)):
         return _clean_caption_markup(m.group(1))
 
     # 5. Wikitable: {|…|}. Extract last row-cell as caption.

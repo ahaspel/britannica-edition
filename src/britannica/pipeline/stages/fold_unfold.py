@@ -157,11 +157,14 @@ def _unfold_table(table_wt: str) -> str:
         body = table_wt[span[1]: body_end]
         segments.append((sep_text, body))
 
-    # Scan segments for fold candidates.
+    # Scan segments for fold candidates.  Collect all rather than
+    # bailing at the first duplicate — a multi-row table may have one
+    # real large-N data fold plus smaller incidental ``<br>``-splits
+    # in header rows (ATMOSPHERIC ELECTRICITY Table II: period cells
+    # like ``1862–<br>1864`` give the Period row a spurious N=2 fold
+    # candidate alongside the real N=25 hour row).
     nonempty_segs = 0
-    candidate_idx = -1
-    candidate_n = 0
-    candidate_cells: list[tuple[str, str, str]] = []
+    candidates: list[tuple[int, int, list[tuple[str, str, str]]]] = []
     for i, (_, body) in enumerate(segments):
         cells = _parse_row_cells(body)
         if not cells:
@@ -169,18 +172,32 @@ def _unfold_table(table_wt: str) -> str:
         nonempty_segs += 1
         n = _row_fold_n(cells)
         if n is not None:
-            if candidate_idx != -1:
-                # > 1 candidate → formatting, not fold
-                return table_wt
-            candidate_idx = i
-            candidate_n = n
-            candidate_cells = cells
+            candidates.append((i, n, cells))
 
-    if candidate_idx == -1:
+    if not candidates:
         return table_wt
+
+    # With multiple candidates, prefer the one with the strictly
+    # largest N — that's the real fold axis.  If multiple candidates
+    # tie for the max, or the max isn't clearly dominant (N < 5), treat
+    # the table as ambiguous formatting and bail.
+    if len(candidates) > 1:
+        max_n = max(c[1] for c in candidates)
+        largest = [c for c in candidates if c[1] == max_n]
+        if len(largest) != 1 or max_n < 5:
+            return table_wt
+        candidate_idx, candidate_n, candidate_cells = largest[0]
+    else:
+        candidate_idx, candidate_n, candidate_cells = candidates[0]
+
     if candidate_n < 2:
         return table_wt
-    if 1 * 2 < nonempty_segs:  # candidate must be ≥ half of data rows
+    # Dominance check: the folded row normally has to be ≥ half of the
+    # table's non-empty segments.  Bypass when N ≥ 5 — a cell holding
+    # 5+ ``<br>``-separated values is structurally a real data fold,
+    # not incidental formatting, and tables built this way typically
+    # have 3-5 header rows above the single folded data row.
+    if candidate_n < 5 and 1 * 2 < nonempty_segs:
         return table_wt
 
     # Separate the fold body from any tail content (the ``|}`` closer

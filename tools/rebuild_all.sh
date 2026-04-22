@@ -117,6 +117,17 @@ echo "=== Phase 3b: Linking contributors from front matter [$(elapsed)] ==="
 uv run python tools/pipeline/link_contributors_from_frontmatter.py
 
 
+# --- Phase 3c: Rebuild printed-page mapping (ws→printed / leaf→printed) ---
+# MUST run before Phase 4's re-export: the article exporter consults
+# printed_pages.json to translate each segment's ws-space PAGE marker
+# into its printed-page number.  If this runs AFTER the exports (as it
+# used to, in old Phase 6e), every rebuild ships with stale mappings —
+# visible on SHIPBUILDING where page markers ran past the article's last
+# printed page (981) into the next article's numbering (982+).
+echo
+echo "=== Phase 3c: Rebuilding printed-page mapping [$(elapsed)] ==="
+uv run python tools/pipeline/build_printed_pages.py
+
 # --- Phase 4: Re-export (xref targets now resolved cross-volume) ---
 echo
 echo "=== Phase 4: Re-exporting all volumes (with resolved xrefs) [$(elapsed)] ==="
@@ -175,6 +186,7 @@ if [ -z "$NO_DEPLOY" ]; then
   aws s3 cp tools/viewer/index.html s3://britannica11.org/index.html
   aws s3 cp tools/viewer/search.html s3://britannica11.org/search.html
   aws s3 cp tools/viewer/scans.html s3://britannica11.org/scans.html
+  aws s3 cp tools/viewer/search-api.js s3://britannica11.org/search-api.js
   aws s3 cp tools/viewer/contributors.html s3://britannica11.org/contributors.html
   aws s3 cp tools/viewer/home.html s3://britannica11.org/home.html
   aws s3 cp tools/viewer/preface.html s3://britannica11.org/preface.html

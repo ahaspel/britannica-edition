@@ -188,6 +188,46 @@ def test_header_line_wrap_unchanged():
     assert out == HEADER_LINE_WRAP
 
 
+# ---- Multi-header tables with large-N data fold ----
+# ATMOSPHERIC ELECTRICITY Tables II and III (vol 2 p0910): several
+# header rows precede the single folded data row, and header cells
+# have incidental ``<br>`` splits (period ``1862–<br>1864`` etc.).
+# The large-N fold (25 hourly readings) should dominate and unfold
+# despite the small-N (=2) header candidate and the non-dominant
+# segment count (>2 non-empty segments).
+
+ATM_ELEC_T2_SHAPE = """
+{|class=wikitable
+|-
+| Station. || Karasjok. || Sodankylä. || Lisbon.
+|-
+| Period. || 1903–4. || 1882–<br>1883. || 1884–<br>1886.
+|-
+| Days. || All. || All. || Fine.
+|-
+| Hour.<br>1<br>2<br>3<br>4<br>5<br>6 || <br>83<br>73<br>66<br>63<br>60<br>68 || <br>91<br>85<br>82<br>84<br>89<br>91 || <br>84<br>80<br>78<br>81<br>83<br>92
+|}
+"""
+
+
+def test_atm_elec_t2_shape_unfolds_despite_header_splits():
+    """Table II shape: 3 header rows (one with N=2 incidental splits) +
+    1 big N=7 data fold. Large-N rule wins over non-dominance."""
+    out = unfold_folded_rows(ATM_ELEC_T2_SHAPE)
+    # Hour row should have unfolded: originally 1 data row (N=7 fold),
+    # now 7 separate rows.
+    # 3 original header rows + 7 unfolded data rows = 10 |- separators
+    assert out.count("|-") == 10
+    # Each hour value now on its own row
+    assert "Hour.<br>1" not in out
+    for h in ("Hour.", "1", "2", "3", "4", "5", "6"):
+        assert h in out
+    # The incidental N=2 splits in the Period row must NOT unfold —
+    # they should survive as literal ``<br>``-joined text since they
+    # weren't the dominant fold.
+    assert "1882" in out and "1883" in out
+
+
 # ---- Idempotence and empty-input sanity ----
 
 def test_idempotent():
