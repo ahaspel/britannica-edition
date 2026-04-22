@@ -273,13 +273,15 @@
     td a { color: var(--link); text-decoration: none; }
     td a:hover { text-decoration: underline; }
   </style>
-  <!-- NOT deferred: the inline script below calls createSearchClient() at
-       module load time, so search-api.js must finish loading first. -->
+  <!-- NOT deferred: inline scripts below call createSearchClient() /
+       BritannicaUrls at module load time, so these must finish loading
+       first. -->
   <script>
     (function() {
       var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-      var src = isLocal ? "/tools/viewer/search-api.js" : "/search-api.js";
-      document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<scr' + 'ipt src="' + base + 'article-urls.js"></scr' + 'ipt>');
+      document.write('<scr' + 'ipt src="' + base + 'search-api.js"></scr' + 'ipt>');
     })();
   </script>
 </head>
@@ -418,17 +420,7 @@
     }
 
     function viewerUrl(filename) {
-      if (IS_LOCAL) {
-        return `viewer.html?article=/data/derived/articles/${encodeURIComponent(filename)}`;
-      }
-      // Stable ID form: "16-0670-LIGHTHOUSE.json" -> /article/16-0670/lighthouse
-      const base = filename.replace(/\.json$/, "");
-      const m = base.match(/^(\d{2}-\d{4}-[a-z0-9][a-z0-9-]*?)-([_\p{Lu}][\p{Lu}0-9_-]*)$/u);
-      if (m) return `/article/${m[1]}/${m[2].toLowerCase()}`;
-      // Legacy numeric fallback
-      const page = base.replace(/^0+/, "").split("-")[0];
-      const slug = base.substring(base.indexOf("-") + 1).toLowerCase();
-      return `/article/${page}/${slug}`;
+      return BritannicaUrls.filenameToUrl(filename, IS_LOCAL);
     }
 
     function getMode() {

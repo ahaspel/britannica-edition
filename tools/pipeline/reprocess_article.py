@@ -11,7 +11,9 @@ sys.stdout.reconfigure(encoding="utf-8")
 
 from britannica.db.models import Article, ArticleSegment, SourcePage
 from britannica.db.session import SessionLocal
-from britannica.export.article_json import _safe_filename, _printed_page, stable_id
+from britannica.export.article_json import (
+    _leaf_for_ws, _printed_page, _safe_filename, stable_id,
+)
 from britannica.pipeline.stages.transform_articles import _transform_text_v2
 
 
@@ -66,6 +68,13 @@ def reprocess(article_id=None, title=None, volume=None):
             "page_end": _printed_page(article.volume, article.page_end),
             "ws_page_start": article.page_start,
             "ws_page_end": article.page_end,
+            # Leaf fields are required by the viewer: scanUrl() builds
+            # scans.html?vol=…&start=<leaf>&end=<leaf> for the top-of-
+            # article vol:page link AND every left-margin page marker.
+            # Omit them and every page-link locally clicks onto a URL
+            # with start=undefined.
+            "leaf_start": _leaf_for_ws(article.volume, article.page_start),
+            "leaf_end": _leaf_for_ws(article.volume, article.page_end),
             "article_type": article.article_type or "article",
             "word_count": len(body.split()),
             "body": body,

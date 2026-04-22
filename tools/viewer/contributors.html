@@ -122,6 +122,13 @@
 
     .empty { color: var(--muted); padding: 40px; text-align: center; }
   </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<scr' + 'ipt src="' + base + 'article-urls.js"></scr' + 'ipt>');
+    })();
+  </script>
 </head>
 <body>
   <div class="page">
@@ -162,15 +169,7 @@
 
     const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
     function viewerUrl(filename) {
-      if (IS_LOCAL) {
-        return `viewer.html?article=/data/derived/articles/${encodeURIComponent(filename)}`;
-      }
-      const base = filename.replace(/\.json$/, "");
-      const stable = base.match(/^(\d{2}-\d{4}-[a-z0-9][a-z0-9-]*?)-(\p{Lu}[\p{Lu}0-9_-]*)$/u);
-      if (stable) return `/article/${stable[1]}/${stable[2].toLowerCase()}`;
-      const page = base.replace(/^0+/, "").split("-")[0];
-      const slug = base.substring(base.indexOf("-") + 1).toLowerCase();
-      return `/article/${page}/${slug}`;
+      return BritannicaUrls.filenameToUrl(filename, IS_LOCAL);
     }
 
     function buildContributorIndex(articles) {
@@ -227,13 +226,7 @@
         if (c.description) {
           let descText = c.description.replace(/See the biographical article[,:.]?\s*.*/i, "").trim();
           if (c.bio_article_filename) {
-            const bioUrl = IS_LOCAL ? `/data/derived/articles/${c.bio_article_filename}` : (() => {
-              const base = c.bio_article_filename.replace(/\.json$/, "");
-              const m = base.match(/^(\d{2}-\d{4}-[a-z0-9][a-z0-9-]*?)-(\p{Lu}[\p{Lu}0-9_-]*)$/u);
-              if (m) return `/article/${m[1]}/${m[2].toLowerCase()}`;
-              return `/article/${base.split("-")[0]}/${base.replace(/^\d+-/, "").toLowerCase()}`;
-            })();
-            const bioLink = `<a href="${IS_LOCAL ? '/tools/viewer/viewer.html?article=' + encodeURIComponent('/data/derived/articles/' + c.bio_article_filename) : bioUrl}" style="color: var(--link);">(See biographical article.)</a>`;
+            const bioLink = `<a href="${viewerUrl(c.bio_article_filename)}" style="color: var(--link);">(See biographical article.)</a>`;
             desc = `<div class="contributor-desc">${descText ? escapeHtml(descText) + " " : ""}${bioLink}</div>`;
           } else if (c.description) {
             desc = `<div class="contributor-desc">${escapeHtml(c.description)}</div>`;

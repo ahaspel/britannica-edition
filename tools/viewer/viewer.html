@@ -822,17 +822,19 @@
       margin-bottom: 16px;
     }
   </style>
-  <!-- NOT deferred: the inline script below calls createSearchClient() at
-       module load time, so search-api.js must finish loading first. -->
+  <!-- NOT deferred: inline scripts below call createSearchClient() /
+       BritannicaUrls at module load time, so these must finish loading
+       first. -->
   <script>
     // viewer.html is served from both "/viewer.html" and "/article/<id>/<slug>"
     // in production, so a relative src resolves differently depending on
     // URL depth. Pick the right absolute path synchronously (document.write
-    // blocks parsing — the inline script below depends on createSearchClient).
+    // blocks parsing — the inline script below depends on these).
     (function() {
       var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-      var src = isLocal ? "/tools/viewer/search-api.js" : "/search-api.js";
-      document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<scr' + 'ipt src="' + base + 'article-urls.js"></scr' + 'ipt>');
+      document.write('<scr' + 'ipt src="' + base + 'search-api.js"></scr' + 'ipt>');
     })();
   </script>
 </head>
@@ -1658,22 +1660,7 @@
     }
 
     function articleUrl(filename) {
-      if (IS_LOCAL) {
-        return `?article=/data/derived/articles/${encodeURIComponent(filename)}`;
-      }
-      const base = filename.replace(/\.json$/, "");
-      // Stable IDs: "16-0670-lighthouse-LIGHTHOUSE". The ID is three
-      // hyphen-separated tokens (vol, page, section-slug); everything
-      // after is the title slug.
-      const m = base.match(/^(\d{2}-\d{4}-[a-z0-9][a-z0-9-]*?)-([_\p{Lu}][\p{Lu}0-9_-]*)$/u);
-      if (m) {
-        return `/article/${m[1]}/${m[2].toLowerCase()}`;
-      }
-      // Legacy numeric-ID filenames (shouldn't occur post-rebuild, but
-      // keep the old split as a fallback).
-      const page = base.replace(/^0+/, "").split("-")[0];
-      const slug = base.substring(base.indexOf("-") + 1).toLowerCase();
-      return `/article/${page}/${slug}`;
+      return BritannicaUrls.filenameToUrl(filename, IS_LOCAL);
     }
 
     function buildXrefHref(xref) {
@@ -2016,19 +2003,9 @@
         }
         const suffix = preserved.toString() ? "?" + preserved.toString() : "";
         if (!IS_LOCAL) {
-          // Stable ID form: "16-0670-lighthouse-TITLE.json" →
-          // /article/16-0670-lighthouse/title
-          let fnMatch = path.match(/(\d{2}-\d{4}-[a-z0-9][a-z0-9-]*?)-(\p{Lu}[\p{Lu}0-9_-]*)\.json$/u);
-          if (fnMatch) {
-            const cleanUrl = `/article/${fnMatch[1]}/${fnMatch[2].toLowerCase()}${suffix}`;
+          const cleanUrl = BritannicaUrls.jsonPathToCleanUrl(path, suffix);
+          if (cleanUrl) {
             window.history.replaceState({}, "", cleanUrl);
-          } else {
-            // Legacy numeric fallback
-            fnMatch = path.match(/(\d+)-([^/]+)\.json$/);
-            if (fnMatch) {
-              const cleanUrl = `/article/${fnMatch[1]}/${fnMatch[2].toLowerCase()}${suffix}`;
-              window.history.replaceState({}, "", cleanUrl);
-            }
           }
         } else {
           const url = new URL(window.location.href);
@@ -2139,23 +2116,11 @@
     }
     let initialPath = new URLSearchParams(window.location.search).get("article");
     if (!initialPath && !IS_LOCAL) {
-      // Production: /article/16-0670-lighthouse/LIGHTHOUSE -> 16-0670-lighthouse-LIGHTHOUSE.json
+      // Production: /article/16-0670-lighthouse/LIGHTHOUSE ->
+      //   /data/articles/16-0670-lighthouse-LIGHTHOUSE.json
       // (stable IDs: {vol:02d}-{page:04d}-{section-slug}, durable across rebuilds)
-      const stableMatch = window.location.pathname.match(/^\/article\/(\d{2}-\d{4}-[a-z0-9-]+)\/(.+)/);
-      if (stableMatch) {
-        const id = stableMatch[1];
-        const slug = decodeURIComponent(stableMatch[2]).toUpperCase();
-        initialPath = `${DATA_BASE}/${id}-${slug}.json`;
-      } else {
-        // Legacy numeric-ID URL (pre-stable-ids rebuild). Try the old
-        // format so bookmarks placed before the switch still load.
-        const legacyMatch = window.location.pathname.match(/^\/article\/(\d+)\/(.+)/);
-        if (legacyMatch) {
-          const id = legacyMatch[1];
-          const slug = decodeURIComponent(legacyMatch[2]).toUpperCase();
-          initialPath = `${DATA_BASE}/${id}-${slug}.json`;
-        }
-      }
+      initialPath = BritannicaUrls.pathnameToJsonPath(
+        window.location.pathname, DATA_BASE);
     }
     if (initialPath) {
       loadArticle(initialPath).then(() => {

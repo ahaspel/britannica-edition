@@ -187,6 +187,7 @@ if [ -z "$NO_DEPLOY" ]; then
   aws s3 cp tools/viewer/search.html s3://britannica11.org/search.html
   aws s3 cp tools/viewer/scans.html s3://britannica11.org/scans.html
   aws s3 cp tools/viewer/search-api.js s3://britannica11.org/search-api.js
+  aws s3 cp tools/viewer/article-urls.js s3://britannica11.org/article-urls.js
   aws s3 cp tools/viewer/contributors.html s3://britannica11.org/contributors.html
   aws s3 cp tools/viewer/home.html s3://britannica11.org/home.html
   aws s3 cp tools/viewer/preface.html s3://britannica11.org/preface.html
@@ -216,6 +217,20 @@ fi
 echo
 echo "=== Phase 8: Running quality report [$(elapsed)] ==="
 uv run python tools/diagnostics/quality_report.py
+
+# --- Phase 9: Deploy preflight ---
+# After deploy, verify every asset referenced by the viewer HTML is
+# reachable on britannica11.org.  Catches the "shipped HTML that
+# references a file we forgot to upload" bug class (the article-urls.js
+# near-miss on 2026-04-22).  Runs here — AFTER the quality report —
+# so we get metrics even if the preflight fails, but set -e at the
+# top of this script ensures we don't print the success banner if a
+# reference is missing.
+if [ "$NO_DEPLOY" = "" ]; then
+  echo
+  echo "=== Phase 9: Deploy preflight [$(elapsed)] ==="
+  uv run python tools/diagnostics/check_deploy_refs.py
+fi
 
 echo
 echo "============================================"

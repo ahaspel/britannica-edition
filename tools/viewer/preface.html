@@ -198,6 +198,13 @@
       user-select: none;
     }
   </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<scr' + 'ipt src="' + base + 'article-urls.js"></scr' + 'ipt>');
+    })();
+  </script>
 </head>
 <body>
   <div class="page">
@@ -316,12 +323,7 @@
             const display = hasFile ? g3 : g2;
             const filename = hasFile ? g1 : null;
             if (filename) {
-              const base = filename.replace(/\.json$/, "");
-              const sm = base.match(/^(\d{2}-\d{4}-[a-z0-9][a-z0-9-]*?)-(\p{Lu}[\p{Lu}0-9_-]*)$/u);
-              if (sm) return `<a href="/article/${sm[1]}/${sm[2].toLowerCase()}">${display}</a>`;
-              const page = base.replace(/^0+/, "").split("-")[0];
-              const slug = base.substring(base.indexOf("-") + 1).toLowerCase();
-              return `<a href="/article/${page}/${slug}">${display}</a>`;
+              return `<a href="${BritannicaUrls.filenameToUrl(filename, IS_LOCAL)}">${display}</a>`;
             }
             return `<a href="/contributors.html?q=${encodeURIComponent(target)}">${display}</a>`;
           });

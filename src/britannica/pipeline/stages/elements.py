@@ -752,6 +752,13 @@ def _is_layout_wrapper(raw: str, inner: str, inner_registry: ElementRegistry | N
     if re.search(r'class\s*=\s*"[^"]*(?:wikitable|tablecolhd|border)', header, re.IGNORECASE):
         return False
     child_types = {t for t, _ in inner_registry.elements.values()}
+    # Verse-only layout: <table {{Ts|ma|sm92|lh12}}><tr><td><poem>…
+    # </poem></td></tr></table>.  Editors used these purely to centre
+    # / resize embedded verse; the table carries no tabular meaning.
+    # DONNE's "Sweetest Love, I do not go" passage is the canonical
+    # case.  Unwrap to just the <poem> content (VERSE marker).
+    if child_types == {"POEM"}:
+        return True
     if "TABLE" in child_types:
         # A nested TABLE usually means layout (outer is a shell around
         # the sub-table).  Exception: if the outer declares a wikitext
@@ -1944,6 +1951,21 @@ def _unwrap_layout_table(inner: str, text_transform,
                         return "\n\n".join([img_marker, *trailing])
                     return img_marker
 
+    # Single-POEM-placeholder unwrap: a wikitable whose only content
+    # is a <poem> block (the {|…|} analogue of DONNE's centred-verse
+    # <table>).  Flank with blank lines so the downstream paragraph
+    # splitter treats the resulting {{VERSE:…}VERSE} as a standalone
+    # paragraph and the viewer renders <blockquote class="verse">
+    # (set off from prose like BLANK VERSE), not an inline span.
+    if (
+        len(parts) == 1 and inner_registry is not None
+        and parts[0].strip() in {
+            k for k, (t, _) in inner_registry.elements.items()
+            if t == "POEM"
+        }
+    ):
+        return "\n\n" + parts[0] + "\n\n"
+
     return "\n\n".join(parts)
 
 
@@ -2943,6 +2965,29 @@ def _process_html_table(
         return ("\u00abHTMLTABLE:<table>" +
                 "".join(html_rows) +
                 "</table>\u00ab/HTMLTABLE\u00bb")
+
+    # Verse-only layout: a single-row, single-cell <table> whose
+    # entire content is a <poem> placeholder is an editor's centering
+    # / sizing wrapper around embedded verse (DONNE's "Sweetest Love"
+    # passage).  At this point in the pipeline the cell holds a POEM
+    # placeholder — children are re-substituted by the caller after
+    # we return — so we check the inner_registry instead of looking
+    # for the expanded {{VERSE:…}VERSE} marker.  Emit the placeholder
+    # flanked by blank lines so the downstream paragraph splitter
+    # treats the resulting {{VERSE:…}VERSE} as its own paragraph; the
+    # viewer then renders it as <blockquote class="verse"> (set off
+    # from prose like BLANK VERSE) instead of as an inline span.
+    if (
+        inner_registry is not None
+        and len(parsed_rows) == 1 and len(parsed_rows[0]) == 1
+    ):
+        only_cell = (parsed_rows[0][0][3] or "").strip()
+        poem_phs = {
+            k for k, (t, _) in inner_registry.elements.items()
+            if t == "POEM"
+        }
+        if only_cell in poem_phs:
+            return "\n\n" + only_cell + "\n\n"
 
     text_rows = []
     for parsed in parsed_rows:
