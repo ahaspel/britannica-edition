@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Decorators And Designers &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XVII</span>For Decorators And Designers</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">All the Arts in One</a></li><li><a href="#sh-2">The Influence of Architecture</a></li><li><a href="#sh-3">Design and Mural Painting</a></li><li><a href="#sh-4">The Wall and the Floor</a></li><li><a href="#sh-5">Furniture</a></li><li><a href="#sh-6">Textile Fabrics</a></li><li><a href="#sh-7">Arts and Crafts</a></li><li><a href="#sh-8">Portable Ornaments</a></li><li><a href="#sh-9">Biographies</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">All the Arts in One</span>The decorator and designer is a
+specialist in his purposes rather
+than in his methods, and his taste
+and judgment must be based upon a wide
+range of information. His selection and
+combination of decorative factors call for
+a knowledge of architectural design, of
+painting, sculpture, furniture, textiles,
+pottery, enamels, embroideries, laces and
+all the other arts, crafts and products
+that contribute to the perfecting of “the
+house beautiful.” The variety of the
+materials at his command offers him infinite
+possibilities of successful achievement,
+and as many temptations to incoherence
+and exuberance. The highest
+success in decoration can be attained only
+when the designer
+possesses the resources
+of all these
+arts and crafts, and
+failure perhaps comes oftenest through
+too exclusive a use of one medium of expression
+because it is the one with which
+the designer feels he can most competently
+deal. The ideal should be not only
+to employ, but to enlarge, the scope of
+every contributory medium of form or
+colour, as Wagner found new possibilities
+in the use of every musical instrument in
+one orchestra. This practical usefulness
+of versatility is clearly indicated in one
+of the articles, characteristic of the Britannica,
+where one great expert writes
+about the work of another. William
+<a href="/contributors.html?q=William+Morris">Morris</a> and Walter Crane have been the
+leaders of the modern revival of artistic
+interest in the daily accessories of life;
+and Crane in the Britannica (Vol. 2, p.
+701) says of <a href="/contributors.html?q=William+Morris">Morris</a> that his influence is
+to be attributed to his having “<i>personally
+mastered the working details and handling
+of each craft he took up in turn, as well as
+to his power of inspiring his helpers and
+followers. He was painter, designer,
+scribe, illuminator, wood-engraver, dyer,
+weaver and, finally, printer and paper-maker;
+and, having effectively mastered
+these crafts he could effectively direct and
+criticize the work of others.</i>” Obviously,
+few men can afford to devote forty years,
+as <a href="/contributors.html?q=William+Morris">Morris</a> did, to the close study and actual
+practice of all these pursuits, and
+still fewer could hope to develop so many
+manual dexterities. But any earnest student
+can become a competent critic in all
+these varied fields, and can retain an
+equal appreciation of all the materials and
+methods employed, if he will enlarge and
+refresh his knowledge by constant reading
+of the best authorities. The comprehensiveness
+of the Britannica makes it,
+for such purposes, invaluable to the designer
+and decorator, no matter how
+many technical books his working library
+may contain.</p>
+
+<p><span class="shoulder-heading" id="sh-2">The Influence of Architecture</span>Since harmony of proportion, the essence
+of architecture, is also the primary
+law of interior decoration, the reader of
+the present chapter
+may well begin his
+reading with a number
+of the articles
+described in the chapter <i>For Architects</i>, of
+which only those dwelling most upon the
+use of ornament and colour need be separately
+mentioned in this connection. The
+article <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span> (Vol. 2, p. 369) is
+by <a href="/contributors.html?q=R.+Phen%C3%A9+Spiers">R. Phené Spiers</a>, formerly master of
+the Architectural School of the English
+Royal Academy, with sections on special
+periods and schools of architecture by
+other famous authorities. Oriental architecture,
+with its elaboration of detail, is
+peculiarly suggestive to the decorator,
+who may be surprised to find, in the
+Britannica, treatises so highly specialized
+as <span class="sc"><a href="/article/14-0452-indian-architecture/indian_architecture">Indian Architecture</a></span> (Vol. 14, p.
+428), by Dr. <a href="/contributors.html?q=James+Burgess">James Burgess</a>, editor of the
+standard book on the subject, the <i>History
+of Indian Architecture</i>; the architectural
+part of <span class="sc"><a href="/article/06-0179-china/china">China</a></span>, <i>Art</i> (Vol. 6, p. 214), by
+<a href="/contributors.html?q=Laurence+Binyon">Lawrence Binyon</a>, whose work in the
+great British Museum collection has
+made his reputation as one of the foremost
+modern critics; and <span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span>, <i>Art</i>
+(Vol. 15, p. 181), by <a href="/contributors.html?q=Captain+Frank+Brinkley">Capt. Frank Brinkley</a>,
+whose many years of study in Japan
+have given him an exceptional mastery
+of the subject. Among other articles
+dealing with the decorative aspects of
+architecture are <span class="sc"><a href="/article/20-0201-s2/order">Order</a></span> (Vol. 20, p. 176),
+<span class="sc"><a href="/article/05-0288-capital-architecture/capital__architecture_">Capital</a></span> (Vol. 5, p. 275), and <span class="sc"><a href="/article/13-0829-house/house">House</a></span> (Vol.
+13, p. 810), with its exquisite full page
+plates.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Design and Mural Painting</span>The article <span class="sc"><a href="/article/08-0110-design/design">Design</a></span> (Vol. 8, p. 95), by
+<a href="/contributors.html?q=W.+R.+Lethaby">W. R. Lethaby</a>, principal of the Central
+School of Arts and Crafts, London, contains
+a passage which
+the decorator may
+well bear in mind
+when he has to contend
+against the typical
+client’s unreasoning demand for the
+sensationalism which, for the moment, is
+accepted as an evidence of originality,
+but is always the cause of subsequent
+dissatisfaction and complaint. “Modern
+use has tended to associate design with
+the word ‘original’ in the sense of new or
+abnormal. The end of design, however,
+is properly utility, fitness and delight.
+<i>If a discovery, it should be a discovery of
+what seems inevitable</i>, an inspiration arising
+out of the conditions, and parallel to
+invention in the sciences.” These fifty
+words are but a millionth part of the contents
+of the Britannica; but alone they
+show that the work can practically serve
+the designer. <span class="sc"><a href="/article/19-0030-s2/mural_decoration">Mural Decoration</a></span> (Vol.
+19, p. 16), with its delightful reproduction
+in colour of a wall painting preserved
+in the National Museum at Rome, and its
+other illustrations, is by <a href="/contributors.html?q=William+Morris">William Morris</a>
+and Walter Crane, with a section on
+classical wall paintings by Prof. <a href="/contributors.html?q=John+Henry+Middleton">J. H.
+Middleton</a>, Slade professor of fine art at
+Cambridge University. The “furnishing”
+point of view is considered under other
+headings (see below). Here the distinguished
+contributors give an interesting
+account of marble and stone reliefs, the
+oldest method of wall decoration; marble
+veneer, especially appropriate to 14th
+and 15th century Italian style; wall-linings
+of glazed brick or tiles; coverings
+of hard stucco; the recently revived
+sgraffito method; stamped leather, much
+used in rooms of the 16th–18th century
+period; painted cloth; printed hangings
+and wall-papers, of great antiquity among
+the Hindus and Chinese but not common
+in Europe until the 18th century; wall-painting,
+with description of the characteristic
+schemes of mural art in ancient
+and modern times, and methods of execution.</p>
+
+<p>In further connection with this subject
+the reader should turn to <span class="sc"><a href="/article/09-0033-egypt/egypt">Egypt</a></span>, <i>Art and
+Archaeology</i> (Vol. 9, p. 65), by the noted
+Egyptologist, W. M. Flinders Petrie;
+<span class="sc"><a href="/article/12-0489-greek-art/greek_art">Greek Art</a></span> (Vol. 12, p. 470), by <a href="/contributors.html?q=Percy+Gardner">Percy
+Gardner</a>; <span class="sc"><a href="/article/23-0496-roman-art/roman_art">Roman Art</a></span> (Vol. 23, p. 474),
+by <a href="/contributors.html?q=Henry+Stuart+Jones">H. Stuart Jones</a>; <span class="sc"><a href="/article/20-0497-s2/painting">Painting</a></span> (Vol. 20, p.
+459), by Prof. <a href="/contributors.html?q=Gerard+Baldwin+Brown">G. B. Brown</a>, of Edinburgh
+University, and other authorities;
+<span class="sc"><a href="/article/24-0508-s2/sculpture">Sculpture</a></span> (Vol. 24, p. 488), by <a href="/contributors.html?q=John+Henry+Middleton">Professor
+Middleton</a> and other authorities; <span class="sc"><a href="/article/18-0915-s6/mosaic">Mosaic</a></span>
+(Vol. 18, p. 883), by <a href="/contributors.html?q=John+Henry+Middleton">Professor Middleton</a>
+and H. Stuart <a href="/contributors.html?q=Henry+Stuart+Jones">Jones</a>, with a practical section
+on <i>Modern Mosaic</i> (p. 888), by Sir
+<a href="/contributors.html?q=Sir+William+Blake+Richmond">William Blake Richmond</a>, noted for his
+accomplishments in decorative art. All
+of these articles are richly illustrated.
+See further, the chapters on <i>Fine Arts</i>,
+<i>Painting</i> and <i>Sculpture</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-4">The Wall and the Floor</span><span class="sc"><a href="/article/28-0295-wall-coverings/wall-coverings">Wall-Coverings</a></span> (Vol. 28, p. 279), by
+<a href="/contributors.html?q=James+Bartlett">James Bartlett</a>, of Kings College, London,
+deals with the subject in its practical
+relation to
+house furnishing,
+with reference to the
+conditions of the
+room, the use to which it is to be put, its
+lighting aspect, and its outlook. There
+is much information about the employment
+of marble, mosaic, tiles, metal
+sheeting, tapestry, and wall-papers; and
+separate articles will be found on the following
+materials: <span class="sc"><a href="/article/17-0693-marble/marble">Marble</a></span> (Vol. 17, p.
+676), by <a href="/contributors.html?q=John+Smith+Flett">J. S. Flett</a>; <span class="sc"><a href="/article/26-1011-s2/tile">Tile</a></span>, <i>Wall and Floor</i>
+(Vol. 26, p. 971), illustrated, by <a href="/contributors.html?q=William+Burton">William
+Burton</a>; <span class="sc"><a href="/article/16-0350-s6/leather">Leather</a></span> (Vol. 16, p. 330), illustrated,
+by Dr. <a href="/contributors.html?q=James+Gordon+Parker">J. G. Parker</a>; <span class="sc"><a href="/article/26-0424-s3/tapestry">Tapestry</a></span>
+(Vol. 26, p. 403), by <a href="/contributors.html?q=Alan+Summerly+Cole">A. S. Cole</a>, an admirable
+historical account, fully illustrated,
+and giving information on varieties
+of design, indications of date, the
+marks of makers, modern tapestry weaving,
+etc. <span class="sc"><a href="/article/03-0572-bayeux-tapestry-the/bayeux_tapestry__the">Bayeux Tapestry</a></span> (Vol. 3, p.
+555) is an interesting historical account
+by the antiquarian, J. H. Round, of this
+venerable relic executed by order of the
+half-brother of William the Conqueror;
+it is illustrated with two plates containing
+11 views of the tapestry.</p>
+
+<p>In the matter of Floor-coverings there
+are the articles <span class="sc"><a href="/article/10-0547-floor/floor">Floor-Cloth</a></span> (Vol. 10, p.
+527), <span class="sc"><a href="/article/20-0923-s3/parquetry">Parquetry</a></span> (Vol. 20, p. 861), and
+<span class="sc"><a href="/article/05-0405-carpet/carpet">Carpet</a></span> (Vol. 5, p. 392), illustrated, by
+<a href="/contributors.html?q=Alan+Summerly+Cole">A. S. Cole</a>, devoted to descriptions of
+carpets and rugs as designed and manufactured
+in Europe and Oriental countries.</p>
+
+<p><span class="shoulder-heading" id="sh-5">Furniture</span>The next group of topics begins with
+the article <span class="sc"><a href="/article/11-0376-s3/furniture">Furniture</a></span> (Vol. 11, p. 363)
+with 36 illustrations by <a href="/contributors.html?q=James+George+Joseph+Penderel-Brodhurst">J. G. Penderel-Brodhurst</a>.
+The
+classified Table of
+Articles in the Britannica
+(Vol. 29, p. 888) indicates over
+75 articles on separate pieces of furniture,
+but in this general treatise we have
+a concise history, describing periods and
+styles, with many interesting facts about
+the origin and use of different pieces of
+furniture from the earliest time to the
+“art nouveau” of very recent date.
+Some of the noteworthy separate articles,
+which have been written by <a href="/contributors.html?q=James+George+Joseph+Penderel-Brodhurst">Mr. Penderel-Brodhurst</a>,
+are <span class="sc"><a href="/article/05-0837-chair/chair">Chair</a></span> (Vol. 5, p. 801);
+<span class="sc"><a href="/article/08-0110-desk/desk">Desk</a></span> (Vol. 8, p. 95); <span class="sc"><a href="/article/26-0346-s1/table">Table</a></span> (Vol. 26,
+p. 325), and <span class="sc"><a href="/article/03-0631-bed-furniture/bed__furniture_">Bed</a></span> (Vol. 3, p. 612). See
+also <span class="sc"><a href="/article/17-0768-marquetry/marquetry">Marquetry</a></span> (Vol. 17, p. 751).
+For those who wish to preserve unity
+of style in furnishing a room, these
+articles will prove of the highest value.
+A full list is appended to this chapter;
+and the reader should consult the chapter
+in this Guide <i>For the Manufacturer of
+Furniture</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-6">Textile Fabrics</span>The decorator and designer must be
+familiar with all manner of fabrics, and
+the Britannica contains an immense
+fund of information
+in regard to the nature,
+manufacture
+and use of textiles.
+For purposes of study a beginning would
+perhaps here be made with the article
+Weaving, which is in two parts. The
+first, <i>Industrial Technicology and Machinery</i>
+(Vol. 28, p. 440) with 28 illustrations,
+is by <a href="/contributors.html?q=Thomas+William+Fox">T. W. Fox</a>, professor of
+textiles in the University of Manchester.
+Very useful will be found the classification
+of weaving schemes into groups,
+from which we learn the distinctive
+weaves of plain cloth, twills, satins,
+damasks, compound cloths, repps, piled
+fabrics, chenille, velvets and plushes,
+gauze, etc. All weaving machinery is
+described. The second part, <i>Archaeology
+and Art</i>, is written by <a href="/contributors.html?q=Alan+Summerly+Cole">A. S. Cole</a>.
+It is a most interesting and valuable
+account of the origin of various textiles,
+and the periods to which they are appropriate.
+There are many illustrations
+of typical designs of silk, brocade and
+flax weavings.</p>
+
+<p>The investigation of woven fabrics
+reveals the fact that the almost endless
+variety of effects obtained is due in part
+only to the method of weaving. Consequently,
+it is necessary for the student,
+in order to acquire an expert knowledge
+of the character and effect on any textile
+product which he wishes to employ,
+to have access to the information in the
+articles <span class="sc"><a href="/article/04-0062-bleaching/bleaching">Bleaching</a></span> (Vol. 4, p. 49) illustrated;
+<span class="sc"><a href="/article/18-0169-s4/mercerizing">Mercerizing</a></span> (Vol. 18, p. 150);
+<span class="sc"><a href="/article/08-0771-dyeing/dyeing">Dyeing</a></span> (Vol. 8, p. 744) illustrated, and
+with an elaborate classification of colouring
+matters—acid, direct, and developed
+colours; <span class="sc"><a href="/article/10-0392-finishing/finishing">Finishing</a></span> (Vol. 10, p. 378)
+illustrated, and <span class="sc"><a href="/article/26-0728-textile-printing/textile-printing">Textile Printing</a></span> (Vol.
+26, p. 694), illustrated. The fact that this
+fine series of articles has been prepared
+by Dr. <a href="/contributors.html?q=Edmund+Knecht">Edmund Knecht</a>, professor of
+technological chemistry, University of
+Manchester, assisted by noted authorities
+like the late J. J. Hummel, professor
+of dyeing, University of Leeds, and A. S.
+<a href="/contributors.html?q=Alan+Summerly+Cole">Cole</a>, is a guarantee of their great interest
+and value.</p>
+
+<p>In the matter of the fabrics themselves,
+under <span class="sc"><a href="/article/07-0272-cotton/cotton">Cotton</a></span>, <i>Cotton Goods and Yarn</i>
+(Vol. 7, p. 275) will be found descriptions
+of many cotton fabrics, and see
+also <span class="sc"><a href="/article/25-0112-s2/silk">Silk</a></span> (Vol. 25, p. 96) illustrated, by
+<a href="/contributors.html?q=Arthur+Mellor">Arthur Mellor</a> and other authorities;
+<span class="sc"><a href="/article/28-0830-wool-worsted-and-woollen-manufactures/wool__worsted_and_woollen_manufactures">Wool, Worsted, and Woolen Manufactures</a></span>
+(Vol. 28, p. 805) illustrated,
+by Prof. A. F. Barker of Bradford Technical
+College; <span class="sc"><a href="/article/16-0746-s2/linen">Linen and Linen Manufactures</a></span>
+(Vol. 16, p. 724) by <a href="/contributors.html?q=Thomas+Woodhouse">Thomas
+Woodhouse</a>, head of the weaving and
+textile designing department, Technical
+College, Dundee. Those who desire a
+closer scientific knowledge of fibres may
+obtain it from <span class="sc"><a href="/article/10-0321-fibres/fibres">Fibres</a></span> (Vol. 10, p. 309),
+illustrated, by the well-known English
+analytical chemist, C. F. Cross. There
+are separate articles on <span class="sc"><a href="/article/04-0643-s7/brocade">Brocade</a></span> (Vol. 4,
+p. 620); <span class="sc"><a href="/article/19-0108-muslin/muslin">Muslin</a></span> (Vol. 19, p. 93); <span class="sc"><a href="/article/05-0236-canvas/canvas">Canvas</a></span>
+(Vol. 5, p. 223); <span class="sc"><a href="/article/06-0251-chintz/chintz">Chintz</a></span> (Vol. 6, p. 235);
+<span class="sc"><a href="/article/07-0453-cretonne/cretonne">Cretonne</a></span> (Vol. 7, p. 431); <span class="sc"><a href="/article/11-0555-s4/gauze">Gauze</a></span> (Vol.
+11, p. 357) and other textiles. A full
+list of these materials is appended.</p>
+
+<p>The article <span class="sc"><a href="/article/16-0051-lace/lace">Lace</a></span> (Vol. 16, p. 37) is
+one of the most notable contributions
+to the Britannica. It is written by <a href="/contributors.html?q=Alan+Summerly+Cole">A.
+S. Cole</a>, author of <i>Embroidery and Lace</i>,
+<i>Ancient Needle Point and Pillow Lace</i>,
+etc., and has over 60 illustrations. A
+full history of lacemaking is given, and
+the article is of the highest interest
+throughout. There exists no better manual
+on the subject than this, and the
+pictures alone will enable the student
+to distinguish the different varieties.
+<span class="sc"><a href="/article/09-0328-embroidery/embroidery">Embroidery</a></span> (Vol. 9, p. 309) by <a href="/contributors.html?q=A.+F.+Kendrick">A. F.
+Kendrick</a>, keeper of the Victoria and
+Albert Museum, and <a href="/contributors.html?q=Alan+Summerly+Cole">A. S. Cole</a>, has 18
+illustrations and describes the characteristics
+of the art as practised by different
+nationalities. <span class="sc"><a href="/article/12-0217-gold-and-silver-thread/gold_and_silver_thread">Gold and Silver
+Thread</a></span> (Vol. 12, p. 200), also by <a href="/contributors.html?q=Alan+Summerly+Cole">A. S.
+Cole</a>, is a general and historical account
+of the gold and silver strips, threads and
+gimp used in connection with varieties
+of weaving, embroidery and twisting and
+with plaiting or lace-work.</p>
+
+<p><span class="shoulder-heading" id="sh-7">Arts and Crafts</span>Before taking up the specific objects
+of art used in interior decoration and
+furnishing, attention must be called to
+the many articles of
+great value to those
+engaged in all arts
+and crafts-work
+whose success depends upon a sound
+knowledge of methods and the principle
+of design. In <span class="sc"><a href="/article/02-0744-s2/arts_and_crafts">Arts and Crafts</a></span> (Vol. 2,
+p. 700) Mr. Walter Crane gives an account
+of the recent movement in the arts of
+decorative design and handicraft that
+has for its object the adornment of the
+house. Handicraft workers will find
+valuable material, discussing designs,
+methods and tools, in <span class="sc"><a href="/article/19-0357-s3/needlework">Needlework</a></span>
+(Vol. 19, p. 339); <span class="sc"><a href="/article/28-0812-wood-carving/wood-carving">Wood-carving</a></span> (Vol. 28,
+p. 791) fully illustrated, by <a href="/contributors.html?q=Franklyn+Arden+Crallan">F. A. Crallan</a>,
+author of <i>Gothic Wood-carving</i>; <span class="sc"><a href="/article/05-0455-carving-and-gilding/carving_and_gilding">Carving
+and Gilding</a></span> (Vol. 5, p. 438); <span class="sc"><a href="/article/18-0224-s2/metal-work">Metal-Work</a></span>
+(Vol. 18, p. 205) illustrated, by
+<a href="/contributors.html?q=John+Henry+Middleton">Professor Middleton</a> of Cambridge University,
+with sections on <i>Modern Art
+Metal-work</i> by <a href="/contributors.html?q=John+Starkie+Gardner">John S. Gardner</a>, and on
+<i>Industrial Metal Work</i> by <a href="/contributors.html?q=Joseph+G.+Horner">J. G. Horner</a>,
+author of <i>Practical Metal Turning</i>;
+<span class="sc"><a href="/article/18-0015-medal/medal">Medal</a></span> (Vol. 18, p. 1) illustrated, by <a href="/contributors.html?q=Marion+H.+Spielmann">M.
+H. Spielmann</a>, formerly editor of <i>The
+Magazine of Art</i>; <span class="sc"><a href="/article/12-0120-s2/glass__stained">Glass, Stained</a></span> (Vol.
+12, p. 105) illustrated, by <a href="/contributors.html?q=Lewis+Foreman+Day">Lewis Foreman
+Day</a>, late vice-president of the Society
+of Arts; <span class="sc"><a href="/article/25-0707-s4/spinning">Spinning</a></span> (Vol. 25, p. 685) by
+<a href="/contributors.html?q=Thomas+William+Fox">Professor Fox</a>; <span class="sc"><a href="/article/03-0498-basket/basket">Basket</a></span> (Vol. 3, p. 481)
+with an account of the basket-making
+industry and methods employed, by
+<a href="/contributors.html?q=Thomas+Okey">Thomas Okey</a>, examiner in basket-work
+for the City of London Guilds and Institute;
+<span class="sc"><a href="/article/09-0325-embossing/embossing">Embossing</a></span> (Vol. 9, p. 308);
+<span class="sc"><a href="/article/05-0992-chasing/chasing">Chasing</a></span> (Vol. 5, p. 956); <span class="sc"><a href="/article/23-0125-repouss/repoussé">Repoussé</a></span>
+(Vol. 23, p. 108); <span class="sc"><a href="/article/09-0385-enamel/enamel">Enamel</a></span> (Vol. 9, p.
+362) a very complete historical and
+technical article, fully illustrated, by
+<a href="/contributors.html?q=Alexander+Fisher">Alexander Fisher</a>, author of <i>The Art of
+Enamelling on Metals</i>; <span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span>, <i>Cloisonné
+Enamel</i> (Vol. 15, p. 189); <span class="sc"><a href="/article/14-0605-s2/inlaying">Inlaying</a></span> (Vol.
+14, p. 574). Much knowledge about primitive
+shapes and designs may be obtained
+from <span class="sc"><a href="/article/02-0359-s2/archaeology">Archaeology</a></span> (Vol. 2, p. 344) by
+Dr. Charles H. Read of the British
+Museum, <span class="sc"><a href="/article/01-0276-s3/aegean_civilization">Aegean Civilization</a></span> (Vol. 1,
+p. 245) by <a href="/contributors.html?q=David+George+Hogarth">D. G. Hogarth</a>, the explorer,
+<span class="sc"><a href="/article/24-0302-scandinavian-civilization/scandinavian_civilization">Scandinavian Civilization</a></span> (Vol. 24, p.
+287), and <span class="sc"><a href="/article/01-0851-america/america">America</a></span>, <i>Archaeology</i> (Vol. 1,
+p. 810) by the late O. T. Mason, of the
+National Museum, Washington. These
+articles are beautifully illustrated.</p>
+
+<p><span class="shoulder-heading" id="sh-8">Portable Ornaments</span>Some of the articles on art objects
+have already been mentioned; in addition
+to them there is <span class="sc"><a href="/article/05-0729-ceramics/ceramics">Ceramics</a></span> (Vol. 5,
+p. 703), equivalent
+to 133 pages of this
+Guide, with over 100
+illustrations including
+10 full-page plates, six of which are
+colour. This magnificent article is the
+joint contribution of six special authorities
+and describes the art of pottery and
+porcelain manufacture, potter’s marks,
+etc., in all countries and at all periods,
+with the exception of Japanese ceramics,
+for which see <span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span>, <i>Art</i>, <i>Ceramics</i> (Vol.
+15, p. 183). <span class="sc"><a href="/article/12-0099-s3/glass">Glass</a></span> (Vol. 12, p. 86) has
+a section on the <i>History of Glass Manufacture</i>
+(p. 97) in which glassware from
+the primitive vessels of ancient Egypt
+to modern wares is discussed and illustrated.
+The authors of this valuable
+account are Alexander Nesbitt, who
+wrote the descriptive catalogue of glass
+vessels for the South Kensington Museum,
+and H. J. Powell, of the Whitefriars
+Glass Works, London. <span class="sc"><a href="/article/21-0820-plate/plate">Plate</a></span>
+(Vol. 21, p. 789) illustrated, is the joint
+product of H. Stuart <a href="/contributors.html?q=Henry+Stuart+Jones">Jones</a>, formerly
+director of the British School at Rome;
+H. R. H. Hall, of the British Museum,
+and E. Alfred <a href="/contributors.html?q=Henry+Stuart+Jones">Jones</a>, author of <i>Old English
+Gold Plate</i>. It contains unusually
+full information about hall-marks. There
+are also separate articles on <span class="sc"><a href="/article/21-0359-s5/pewter">Pewter</a></span>
+(Vol. 21, p. 338) and <span class="sc"><a href="/article/24-0858-sheffield-plate/sheffield_plate">Sheffield Plate</a></span>
+(Vol. 24, p. 824) by <a href="/contributors.html?q=Malcolm+Bell">Malcolm Bell</a>,
+author of <i>Pewter Plate</i>, etc.</p>
+
+<p><span class="sc"><a href="/article/06-0554-clock/clock">Clock</a></span> has a section <i>Decorative Aspects</i>
+(Vol. 6, p. 552), by <a href="/contributors.html?q=James+George+Joseph+Penderel-Brodhurst">J. G. Penderel-Brodhurst</a>.
+<span class="sc"><a href="/article/10-0180-fan/fan">Fan</a></span> (Vol. 10, p. 168) by the late
+J. H. Pollen, author of <i>Ancient and Modern
+Furniture and Woodwork</i>, devotes
+special attention to styles of fan painting.
+<span class="sc"><a href="/article/15-0108-ivory/ivory">Ivory</a></span> has a well-illustrated section on
+<i>Ivory Sculpture and the Decorative Arts</i>
+(Vol. 15, p. 95) by <a href="/contributors.html?q=Alfred+Ogle+Maskell">A. O. Maskell</a>, author
+of <i>Ivories</i>, etc. <span class="sc"><a href="/article/18-0602-mirror/mirror">Mirror</a></span> (Vol. 18, p. 575);
+<span class="sc"><a href="/article/10-0794-frame/frame">Frame</a></span> (Vol. 10, p. 773), and <span class="sc"><a href="/article/24-0497-s3/screen">Screen</a></span>
+(Vol. 24, p. 477) are likewise useful
+articles for the decorator and furnisher.
+<span class="sc"><a href="/article/26-0684-s4/terracotta">Terracotta</a></span> (Vol. 26, p. 653) illustrated,
+by H. B. Walters of the British Museum,
+and <a href="/contributors.html?q=William+Burton">William Burton</a>, deals with the use
+of this material in architecture and sculpture,
+describes its manufacture, and contains
+an historical and critical discussion
+of subjects and types. <span class="sc"><a href="/article/04-0930-byzantine-art/byzantine_art">Byzantine Art</a></span>
+by <a href="/contributors.html?q=W.+R.+Lethaby">W. R. Lethaby</a> contains a section,
+<i>Metal Work, Ivories, and Textiles</i> (Vol.
+4, p. 910).</p>
+
+<p>The subject of <span class="sc"><a href="/article/16-0073-s3/lacquer">Lacquer</a></span> (Vol. 16, p.
+53) is further treated under <span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span>,
+<i>Lacquer</i> (Vol. 15, p. 188), a part of a very
+elaborate discussion of all forms of Japanese
+art, including especially <i>Painting
+and Engraving</i> (Vol. 15, p. 172), which,
+as well as <span class="sc"><a href="/article/06-0179-china/china">China</a></span>, <i>Art</i> (Vol. 6, p. 213),
+will be referred to constantly by all who
+are interested in Oriental handiwork
+and design.</p>
+
+<p><span class="shoulder-heading" id="sh-9">Biographies</span>A great number of the biographies in
+the Britannica will possess much interest
+for the decorator and designer. Some
+of the noteworthy
+names of modern
+times are <span class="sc"><a href="/article/18-0903-morris-william/morris__william">Morris,
+William</a></span> (Vol. 18, p. 871); <span class="sc"><a href="/article/07-0386-crane-walter/crane__walter">Crane,
+Walter</a></span> (Vol. 7, p. 366); <span class="sc"><a href="/article/26-1006-tiffany-louis-comfort/tiffany__louis_comfort">Tiffany,
+Louis C.</a></span> (Vol. 26, p. 966); <span class="sc"><a href="/article/16-0084-s4/la_farge__john">La Farge,
+John</a></span> (Vol. 16, p. 64); <span class="sc"><a href="/article/23-0324-richmond-sir-william-blake/richmond__sir_william_blake">Richmond, Sir
+William Blake</a></span> (Vol. 23, p. 307);
+<span class="sc"><a href="/article/06-0253-s2/chippendale__thomas">Chippendale, Thomas</a></span> (Vol. 6, p. 237);
+<span class="sc"><a href="/article/13-0318-s3/hepplewhite__george">Hepplewhite, George</a></span> (Vol. 13, p. 305);
+<span class="sc"><a href="/article/24-0875-sheraton-thomas/sheraton__thomas">Sheraton, Thomas</a></span> (Vol. 24, p.
+841); <span class="sc"><a href="/article/11-0960-s5/gibbons__grinling">Gibbons, Grinling</a></span> (Vol. 11, p.
+936).</p>
+
+<div>
+  
+  <details class="article-list"><summary><span class="list-title">ALPHABETICAL LIST OF ARTICLES IN THE ENCYCLOPAEDIA BRITANNICA OF SPECIAL INTEREST TO THOSE ENGAGED IN DECORATING, DESIGNING, INTERIOR FURNISHING AND ALL FORMS OF ART HANDICRAFT</span><span class="list-count"> (481 articles)</span></summary>
+</div>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0042-s4/abbey__edwin_austin">Abbey, E. A.</a></li>
+  <li class="c018"><a href="/article/01-0186-s8/acroliths">Acroliths</a></li>
+  <li class="c018"><a href="/article/01-0203-s7/adam__robert">Adam, Robert</a></li>
+  <li class="c018"><a href="/article/01-0276-s3/aegean_civilization">Aegean Civilization</a></li>
+  <li class="c018"><a href="/article/01-0478-s3/ainmuller__maximilian_emmanuel">Ainmuller, M. E.</a></li>
+  <li class="c018"><a href="/article/01-0519-s1/alb">Alb</a></li>
+  <li class="c018"><a href="/article/01-0604-s7/alexander__john_white">Alexander, J. W.</a></li>
+  <li class="c018"><a href="/article/01-0761-s5/almuce">Almuce</a></li>
+  <li class="c018"><a href="/article/01-0811-s3/alto-relievo">Alto-Relievo</a></li>
+  <li class="c018">America, <i>Archaeology</i></li>
+  <li class="c018"><a href="/article/01-0905-s2/amice">Amice</a></li>
+  <li class="c018"><a href="/article/01-0946-s4/amphora">Amphora</a></li>
+  <li class="c018"><a href="/article/01-1018-s3/andiron">Andiron</a></li>
+  <li class="c018"><a href="/article/02-0020-s2/angerstein__john_julius">Angerstein, J. J.</a></li>
+  <li class="c018"><a href="/article/02-0139-s2/antimacassar">Antimacassar</a></li>
+  <li class="c018"><a href="/article/02-0211-s2/apostle_spoons">Apostle Spoons</a></li>
+  <li class="c018"><a href="/article/02-0249-s6/aquarelle">Aquarelle</a></li>
+  <li class="c018"><a href="/article/02-0251-s3/aquatint">Aquatint</a></li>
+  <li class="c018"><a href="/article/02-0267-s2/arabesque">Arabesque</a></li>
+  <li class="c018"><a href="/article/02-0357-s6/arch">Arch</a></li>
+  <li class="c018"><a href="/article/02-0359-s2/archaeology">Archaeology</a></li>
+  <li class="c018"><a href="/article/02-0390-s5/architecture">Architecture</a></li>
+  <li class="c018"><a href="/article/02-0617-s3/armoire">Armoire</a></li>
+  <li class="c018"><a href="/article/02-0699-s4/art">Art</a></li>
+  <li class="c018"><a href="/article/02-0744-s2/arts_and_crafts">Arts and Crafts</a></li>
+  <li class="c018"><a href="/article/02-0747-s2/art_teaching">Art Teaching</a></li>
+  <li class="c018"><a href="/article/03-0217-s4/bagging">Bagging</a></li>
+  <li class="c018"><a href="/article/03-0230-s2/bahut">Bahut</a></li>
+  <li class="c018"><a href="/article/03-0242-s5/baize">Baize</a></li>
+  <li class="c018"><a href="/article/03-0287-ball-flower/ball-flower">Ball-flower</a></li>
+  <li class="c018"><a href="/article/03-0441-baroque/baroque">Baroque</a></li>
+  <li class="c018"><a href="/article/03-0498-basin-stand/basin-stand">Basin-stand</a></li>
+  <li class="c018"><a href="/article/03-0498-basket/basket">Basket</a></li>
+  <li class="c018"><a href="/article/03-0514-basso-relievo/basso-relievo">Basso-relievo</a></li>
+  <li class="c018"><a href="/article/03-0590-bead/bead">Bead</a></li>
+  <li class="c018"><a href="/article/03-0590-beaker/beaker">Beaker</a></li>
+  <li class="c018">Bed</li>
+  <li class="c018"><a href="/article/03-0781-b-rain-jean/bérain__jean">Bérain, Jean</a></li>
+  <li class="c018"><a href="/article/03-0861-bezel/bezel">Bezel</a></li>
+  <li class="c018"><a href="/article/03-1003-biretta/biretta">Biretta</a></li>
+  <li class="c018"><a href="/article/04-0062-bleaching/bleaching">Bleaching</a></li>
+  <li class="c018"><a href="/article/04-0089-blondel-jacques-fran-ois/blondel__jacques_françois">Blondel, J. F.</a></li>
+  <li class="c018"><a href="/article/04-0105-blum-robert-frederick/blum__robert_frederick">Blum, R. F.</a></li>
+  <li class="c018"><a href="/article/04-0198-bombay-furniture/bombay_furniture">Bombay Furniture</a></li>
+  <li class="c018"><a href="/article/04-0203-bombazine/bombazine">Bombazine or Bombasine</a></li>
+  <li class="c018">Bonelace</li>
+  <li class="c018"><a href="/article/04-0218-bonheur-du-jour/bonheur_du_jour">Bonheur du Jour</a></li>
+  <li class="c018"><a href="/article/04-0230-bookbinding/bookbinding">Bookbinding</a></li>
+  <li class="c018"><a href="/article/04-0235-bookcase/bookcase">Bookcase</a></li>
+  <li class="c018"><a href="/article/04-0244-book-plates/book-plates">Book-plates</a></li>
+  <li class="c018"><a href="/article/04-0336-boulle-andr-charles/boulle__andré_charles">Boulle, André Charles</a></li>
+  <li class="c018"><a href="/article/04-0364-box/box">Box</a></li>
+  <li class="c018"><a href="/article/04-0374-bracelet/bracelet">Bracelet</a></li>
+  <li class="c018"><a href="/article/04-0381-bracket/bracket">Bracket</a></li>
+  <li class="c018"><a href="/article/04-0449-brasses-monumental/brasses__monumental">Brasses, Monumental</a></li>
+  <li class="c018"><a href="/article/04-0455-brazier/brazier">Brazier</a></li>
+  <li class="c018"><a href="/article/04-0643-s7/brocade">Brocade</a></li>
+  <li class="c018"><a href="/article/04-0664-s6/brooch">Brooch</a></li>
+  <li class="c018"><a href="/article/04-0756-s2/buckram">Buckram</a></li>
+  <li class="c018"><a href="/article/04-0780-s3/buffet">Buffet</a></li>
+  <li class="c018"><a href="/article/04-0825-s4/bunting">Bunting</a></li>
+  <li class="c018"><a href="/article/04-0930-byzantine-art/byzantine_art">Byzantine Art</a></li>
+  <li class="c018">Cable-moulding</li>
+  <li class="c018"><a href="/article/04-0971-s3/caffieri__jacques">Caffieri, Jacques</a></li>
+  <li class="c018"><a href="/article/04-1031-s2/calender">Calender</a></li>
+  <li class="c018"><a href="/article/05-0017-calico/calico">Calico</a></li>
+  <li class="c018"><a href="/article/05-0101-cambric/cambric">Cambric</a></li>
+  <li class="c018"><a href="/article/05-0116-cameo/cameo">Cameo</a></li>
+  <li class="c018"><a href="/article/05-0190-candelabrum/candelabrum">Candelabrum</a></li>
+  <li class="c018"><a href="/article/05-0191-candle/candle">Candle</a></li>
+  <li class="c018"><a href="/article/05-0192-candlestick/candlestick">Candlestick</a></li>
+  <li class="c018"><a href="/article/05-0216-canopy/canopy">Canopy</a></li>
+  <li class="c018"><a href="/article/05-0236-canvas/canvas">Canvas</a></li>
+  <li class="c018"><a href="/article/05-0292-capital-punishment/capital_punishment">Capital</a></li>
+  <li class="c018"><a href="/article/05-0305-capronnier-jean-baptiste/capronnier__jean_baptiste">Capronnier, Jean Baptiste</a></li>
+  <li class="c018"><a href="/article/05-0337-carding/carding">Carding</a></li>
+  <li class="c018"><a href="/article/05-0405-carpet/carpet">Carpet</a></li>
+  <li class="c018"><a href="/article/05-0451-cartoon/cartoon">Cartoon</a></li>
+  <li class="c018"><a href="/article/05-0452-cartouche/cartouche">Cartouche</a></li>
+  <li class="c018"><a href="/article/05-0455-carving/carving">Carving</a></li>
+  <li class="c018"><a href="/article/05-0455-carving-and-gilding/carving_and_gilding">Carving and Gilding</a></li>
+  <li class="c018"><a href="/article/05-0456-caryatides/caryatides">Caryatides</a></li>
+  <li class="c018"><a href="/article/05-0466-casket/casket">Casket</a></li>
+  <li class="c018"><a href="/article/05-0479-cassock/cassock">Cassock</a></li>
+  <li class="c018"><a href="/article/05-0480-cassone/cassone">Cassone</a></li>
+  <li class="c018"><a href="/article/05-0621-ceiling/ceiling">Ceiling</a></li>
+  <li class="c018"><a href="/article/05-0629-cellaret/cellaret">Cellaret</a></li>
+  <li class="c018"><a href="/article/05-0629-cellini-benvenuto/cellini__benvenuto">Cellini, Benvenuto</a></li>
+  <li class="c018"><a href="/article/05-0729-ceramics/ceramics">Ceramics</a></li>
+  <li class="c018"><a href="/article/05-0837-chair/chair">Chair</a></li>
+  <li class="c018"><a href="/article/05-0873-chandlier/chandelier">Chandelier</a></li>
+  <li class="c018"><a href="/article/05-0992-chasing/chasing">Chasing</a></li>
+  <li class="c018"><a href="/article/05-0995-chasuble/chasuble">Chasuble</a></li>
+  <li class="c018"><a href="/article/05-1002-chatelaine/chatelaine">Chatelaine</a></li>
+  <li class="c018">Cheese-cloth</li>
+  <li class="c018"><a href="/article/06-0035-cheffonier/cheffonier">Cheffonier</a></li>
+  <li class="c018"><a href="/article/06-0093-chenille/chenille">Chenille</a></li>
+  <li class="c018"><a href="/article/06-0119-chest/chest">Chest</a></li>
+  <li class="c018"><a href="/article/06-0128-chevron/chevron">Chevron</a></li>
+  <li class="c018"><a href="/article/06-0177-chimere/chimere">Chimere</a></li>
+  <li class="c018">Chimney-piece</li>
+  <li class="c018">China, <i>Art</i></li>
+  <li class="c018"><a href="/article/06-0251-chintz/chintz">Chintz</a></li>
+  <li class="c018"><a href="/article/06-0253-s2/chippendale__thomas">Chippendale, Thomas</a></li>
+  <li class="c018"><a href="/article/06-0382-cimabue-giovanni/cimabue__giovanni">Cimabue, Giovanni</a></li>
+  <li class="c018"><a href="/article/06-0393-s5/cinque_cento">Cinque Cento</a></li>
+  <li class="c018"><a href="/article/06-0575-cloth/cloth">Cloth</a></li>
+  <li class="c018"><a href="/article/06-0670-coffer/coffer">Coffer</a></li>
+  <li class="c018"><a href="/article/06-0769-column/column">Column</a></li>
+  <li class="c018"><a href="/article/06-0836-composite-order/composite_order">Composite Order</a></li>
+  <li class="c018"><a href="/article/06-1004-console/console">Console</a></li>
+  <li class="c018"><a href="/article/07-0091-cookworthy-william/cookworthy__william">Cookworthy, William</a></li>
+  <li class="c018"><a href="/article/07-0110-cope/cope">Cope</a></li>
+  <li class="c018"><a href="/article/07-0111-copeland-henry/copeland__henry">Copeland, Henry</a></li>
+  <li class="c018"><a href="/article/07-0119-copper/copper">Copper</a></li>
+  <li class="c018"><a href="/article/07-0160-corduroy/corduroy">Corduroy</a></li>
+  <li class="c018">Corner Copiae</li>
+  <li class="c018"><a href="/article/07-0190-cornice/cornice">Cornice</a></li>
+  <li class="c018">Corregio</li>
+  <li class="c018"><a href="/article/07-0231-cosmati/cosmati">Cosmati (family)</a></li>
+  <li class="c018"><a href="/article/07-0241-costume/costume">Costume</a></li>
+  <li class="c018"><a href="/article/07-0272-cotton/cotton">Cotton</a></li>
+  <li class="c018"><a href="/article/07-0299-cotton-manufacture/cotton_manufacture">Cotton Manufacture</a></li>
+  <li class="c018"><a href="/article/07-0321-cotton-spinning-machinery/cotton-spinning_machinery">Cotton-spinning Machinery</a></li>
+  <li class="c018"><a href="/article/07-0367-cowl/cowl">Cowl</a></li>
+  <li class="c018"><a href="/article/07-0373-cox-kenyon/cox__kenyon">Cox, Kenyon</a></li>
+  <li class="c018"><a href="/article/07-0380-cradle/cradle">Cradle</a></li>
+  <li class="c018"><a href="/article/07-0386-crane-walter/crane__walter">Crane, Walter</a></li>
+  <li class="c018"><a href="/article/07-0399-crape/crape">Crape</a></li>
+  <li class="c018"><a href="/article/07-0399-crash/crash">Crash</a></li>
+  <li class="c018"><a href="/article/07-0433-cressent-charles/cressent__charles">Cressent, Charles</a></li>
+  <li class="c018"><a href="/article/07-0434-crest/crest">Crest</a></li>
+  <li class="c018"><a href="/article/07-0453-cretonne/cretonne">Cretonne</a></li>
+  <li class="c018"><a href="/article/07-0527-cross/cross">Cross</a></li>
+  <li class="c018"><a href="/article/07-0542-crozat-pierre/crozat__pierre">Crozat, Pierre</a></li>
+  <li class="c018"><a href="/article/07-0546-crunden-john/crunden__john">Crunden, John</a></li>
+  <li class="c018"><a href="/article/07-0656-cupboard/cupboard">Cupboard</a></li>
+  <li class="c018"><a href="/article/07-0672-curtain/curtain">Curtain</a></li>
+  <li class="c018"><a href="/article/07-0689-cushion/cushion">Cushion</a></li>
+  <li class="c018"><a href="/article/07-0783-dais/dais">Dais</a></li>
+  <li class="c018"><a href="/article/07-0798-dalmatic/dalmatic">Dalmatic</a></li>
+  <li class="c018"><a href="/article/07-0807-damascening/damascening">Damascening, or Damaskeening</a></li>
+  <li class="c018"><a href="/article/07-0809-damask/damask">Damask</a></li>
+  <li class="c018"><a href="/article/07-0859-s3/darly__matthias">Darly, Matthias</a></li>
+  <li class="c018"><a href="/article/07-0939-decorated-period/decorated_period">Decorated Period</a></li>
+  <li class="c018"><a href="/article/07-0965-delacroix/delacroix__ferdinand_victor_eugène">Delacroix, F. V. E.</a></li>
+  <li class="c018"><a href="/article/07-0990-della-robbia/della_robbia">Della Robbia</a></li>
+  <li class="c018"><a href="/article/08-0035-denim/denim">Denim</a></li>
+  <li class="c018"><a href="/article/08-0110-design/design">Design</a></li>
+  <li class="c018"><a href="/article/08-0110-desk/desk">Desk</a></li>
+  <li class="c018"><a href="/article/08-0183-diaper/diaper">Diaper</a></li>
+  <li class="c018">Die</li>
+  <li class="c018"><a href="/article/08-0290-dimity/dimity">Dimity</a></li>
+  <li class="c018"><a href="/article/08-0325-diptych/diptych">Diptych</a></li>
+  <li class="c018"><a href="/article/08-0406-dog-tooth/dog-tooth">Dog-tooth</a></li>
+  <li class="c018">Domenichino, Zampieri</li>
+  <li class="c018"><a href="/article/08-0470-doulton-sir-henry/doulton__sir_henry">Doulton, Sir Henry</a></li>
+  <li class="c018"><a href="/article/08-0480-dowlas/dowlas">Dowlas</a></li>
+  <li class="c018"><a href="/article/08-0575-drawing/drawing">Drawing</a></li>
+  <li class="c018"><a href="/article/08-0605-drill/drill">Drill</a></li>
+  <li class="c018"><a href="/article/08-0605-drinking-vessels/drinking_vessels">Drinking Vessels</a></li>
+  <li class="c018"><a href="/article/08-0657-duck/duck">Duck</a></li>
+  <li class="c018">Dumbwaiter</li>
+  <li class="c018"><a href="/article/08-0767-dwight-john/dwight__john">Dwight, John</a></li>
+  <li class="c018"><a href="/article/08-0771-dyeing/dyeing">Dyeing</a></li>
+  <li class="c018"><a href="/article/08-0825-early-english-period/early_english_period">Early English Period</a></li>
+  <li class="c018"><a href="/article/08-0825-ear-ring/ear-ring">Ear-ring</a></li>
+  <li class="c018">Egypt, <i>Archaeology</i></li>
+  <li class="c018"><a href="/article/09-0234-electrolier/electrolier">Electrolier</a></li>
+  <li class="c018"><a href="/article/09-0254-electroplating/electroplating">Electroplating</a></li>
+  <li class="c018"><a href="/article/09-0325-embossing/embossing">Embossing</a></li>
+  <li class="c018"><a href="/article/09-0328-embroidery/embroidery">Embroidery</a></li>
+  <li class="c018"><a href="/article/09-0385-enamel/enamel">Enamel</a></li>
+  <li class="c018"><a href="/article/09-0392-encaustic-painting/encaustic_painting">Encaustic Painting</a></li>
+  <li class="c018"><a href="/article/09-0394-encoignure/encoignure">Encoignure</a></li>
+  <li class="c018"><a href="/article/09-0677-s3/engraving">Engraving</a></li>
+  <li class="c018">Etagère</li>
+  <li class="c018"><a href="/article/09-0836-s5/etching">Etching</a></li>
+  <li class="c018"><a href="/article/10-0138-faience/faience">Faience</a></li>
+  <li class="c018"><a href="/article/10-0180-fan/fan">Fan</a></li>
+  <li class="c018"><a href="/article/10-0257-felt/felt">Felt</a></li>
+  <li class="c018"><a href="/article/10-0264-s2/fender">Fender</a></li>
+  <li class="c018"><a href="/article/10-0306-s4/festoon">Festoon</a></li>
+  <li class="c018"><a href="/article/10-0321-fibres/fibres">Fibres</a></li>
+  <li class="c018"><a href="/article/10-0357-filigree/filigree">Filigree</a></li>
+  <li class="c018"><a href="/article/10-0369-fine-arts/fine_arts">Fine Arts</a></li>
+  <li class="c018"><a href="/article/10-0390-s5/finiguerra__maso">Finiguerra, Maso</a></li>
+  <li class="c018"><a href="/article/10-0392-finishing/finishing">Finishing</a></li>
+  <li class="c018"><a href="/article/10-0434-s2/fireback">Fireback</a></li>
+  <li class="c018"><a href="/article/10-0435-s3/fire-irons">Fire-irons</a></li>
+  <li class="c018"><a href="/article/10-0470-flag/flag">Flag</a></li>
+  <li class="c018"><a href="/article/10-0487-s3/flamboyant_style">Flamboyant Style</a></li>
+  <li class="c018"><a href="/article/10-0498-s3/flannel">Flannel</a></li>
+  <li class="c018"><a href="/article/10-0499-s2/flannelette">Flannelette</a></li>
+  <li class="c018"><a href="/article/10-0544-flock/flock">Flock</a></li>
+  <li class="c018"><a href="/article/10-0547-floor/floor">Floor</a></li>
+  <li class="c018"><a href="/article/10-0547-floorcloth/floorcloth">Floorcloth</a></li>
+  <li class="c018"><a href="/article/10-0649-footman/footman">Footman</a></li>
+  <li class="c018"><a href="/article/10-0794-frame/frame">Frame</a></li>
+  <li class="c018"><a href="/article/11-0166-s2/french_polish">French Polish</a></li>
+  <li class="c018"><a href="/article/11-0222-s2/fresco">Fresco</a></li>
+  <li class="c018"><a href="/article/11-0243-s4/frieze">Frieze</a></li>
+  <li class="c018"><a href="/article/11-0376-s3/furniture">Furniture</a></li>
+  <li class="c018"><a href="/article/11-0393-s2/fustian">Fustian</a></li>
+  <li class="c018"><a href="/article/11-0472-gant/ganté">Ganté</a></li>
+  <li class="c018"><a href="/article/11-0484-gargoyle/gargoyle">Gargoyle</a></li>
+  <li class="c018"><a href="/article/11-0555-s4/gauze">Gauze</a></li>
+  <li class="c018"><a href="/article/11-0578-gem/gem">Gem</a></li>
+  <li class="c018"><a href="/article/11-0589-gem-artificial/gem__artificial">Gem, Artificial</a></li>
+  <li class="c018"><a href="/article/11-0934-s3/gesso">Gesso</a></li>
+  <li class="c018"><a href="/article/11-0945-ghiberti-lorenzo/ghiberti__lorenzo">Ghiberti, Lorenzo</a></li>
+  <li class="c018"><a href="/article/11-0947-ghirlandajo-ridolfo/ghirlandajo__ridolfo">Ghirlandajo</a></li>
+  <li class="c018"><a href="/article/11-0960-s5/gibbons__grinling">Gibbons, Grinling</a></li>
+  <li class="c018"><a href="/article/12-0026-gilding/gilding">Gilding</a></li>
+  <li class="c018"><a href="/article/12-0036-s7/gillow__robert">Gillow, Robert</a></li>
+  <li class="c018"><a href="/article/12-0039-s6a/gimp">Gimp</a></li>
+  <li class="c018"><a href="/article/12-0041-s2/gingham">Gingham</a></li>
+  <li class="c018"><a href="/article/12-0047-s2/giotto">Giotto</a></li>
+  <li class="c018"><a href="/article/12-0057-s5/girandole">Girandole</a></li>
+  <li class="c018"><a href="/article/12-0060-s3/girdle">Girdle</a></li>
+  <li class="c018"><a href="/article/12-0099-s3/glass">Glass</a></li>
+  <li class="c018"><a href="/article/12-0129-s3/glass_cloth">Glass Cloth</a></li>
+  <li class="c018"><a href="/article/12-0120-s2/glass__stained">Glass, Stained</a></li>
+  <li class="c018"><a href="/article/12-0160-glue/glue">Glue</a></li>
+  <li class="c018"><a href="/article/12-0182-s4/gobelin">Gobelin</a></li>
+  <li class="c018"><a href="/article/12-0186-goblet/goblet">Goblet</a></li>
+  <li class="c018"><a href="/article/12-0209-gold/gold">Gold</a></li>
+  <li class="c018"><a href="/article/12-0217-gold-and-silver-thread/gold_and_silver_thread">Gold and Silver Thread</a></li>
+  <li class="c018"><a href="/article/12-0219-goldbeating/goldbeating">Goldbeating</a></li>
+  <li class="c018"><a href="/article/12-0297-s3/gouache">Gouache</a></li>
+  <li class="c018"><a href="/article/12-0308-s2/gouthière__pierre">Gouthière, Pierre</a></li>
+  <li class="c018">Graffito</li>
+  <li class="c018"><a href="/article/12-0395-s2/grate">Grate</a></li>
+  <li class="c018"><a href="/article/12-0440-s3/greco__el">Greco, El</a></li>
+  <li class="c018"><a href="/article/12-0489-greek-art/greek_art">Greek Art</a></li>
+  <li class="c018"><a href="/article/12-0632-grisaille/grisaille">Grisaille</a></li>
+  <li class="c018"><a href="/article/12-0646-s2/grotesque">Grotesque</a></li>
+  <li class="c018"><a href="/article/12-0695-s6/guéridon">Guéridon</a></li>
+  <li class="c018"><a href="/article/12-0713-s4/guido_reni">Guido Reni</a></li>
+  <li class="c018"><a href="/article/12-0748-s2/gunny">Gunny</a></li>
+  <li class="c018"><a href="/article/12-0861-halfpenny-william/halfpenny__william">Halfpenny, W.</a></li>
+  <li class="c018"><a href="/article/12-0883-hallstatt/hallstatt">Hallstatt</a></li>
+  <li class="c018"><a href="/article/12-0902-s2/hamerton__philip_gilbert">Hamerton, P. G.</a></li>
+  <li class="c018"><a href="/article/13-0318-s3/hepplewhite__george">Hepplewhite, George</a></li>
+  <li class="c018"><a href="/article/13-0324-heraldry/heraldry">Heraldry</a></li>
+  <li class="c018"><a href="/article/13-0429-s4/hessian">Hessian</a></li>
+  <li class="c018"><a href="/article/13-0539-hiroshige/hiroshige">Hiroshige</a></li>
+  <li class="c018"><a href="/article/13-0593-hokusai/hokusai">Hokusai</a></li>
+  <li class="c018"><a href="/article/13-0603-holland/holland">Holland</a></li>
+  <li class="c018"><a href="/article/13-0672-s2/honeycomb">Honeycomb</a></li>
+  <li class="c018"><a href="/article/13-0713-s3/horn">Horn</a></li>
+  <li class="c018"><a href="/article/13-0807-hosiery/hosiery">Hosiery</a></li>
+  <li class="c018"><a href="/article/13-0829-house/house">House</a></li>
+  <li class="c018"><a href="/article/13-0873-huckaback/huckaback">Huckaback</a></li>
+  <li class="c018"><a href="/article/14-0283-icon/icon">Icon</a></li>
+  <li class="c018">Illuminated Manuscripts</li>
+  <li class="c018"><a href="/article/14-0340-illustration/illustration">Illustration</a></li>
+  <li class="c018"><a href="/article/14-0362-impressionism/impressionism">Impressionism</a></li>
+  <li class="c018"><a href="/article/14-0367-ince-william/ince__william">Ince, William</a></li>
+  <li class="c018">India, <i>Costume</i></li>
+  <li class="c018"><a href="/article/14-0452-indian-architecture/indian_architecture">Indian Architecture</a></li>
+  <li class="c018">Ingle-work</li>
+  <li class="c018"><a href="/article/14-0605-s2/inlaying">Inlaying</a></li>
+  <li class="c018"><a href="/article/14-0711-s2/intaglio">Intaglio</a></li>
+  <li class="c018"><a href="/article/14-0872-iron-work/iron-work">Iron-work</a></li>
+  <li class="c018"><a href="/article/15-0108-ivory/ivory">Ivory</a></li>
+  <li class="c018"><a href="/article/15-0122-jack/jack">Jack</a></li>
+  <li class="c018"><a href="/article/15-0131-s4/jacobean_style">Jacobean Style</a></li>
+  <li class="c018">Japan, <i>Art</i></li>
+  <li class="c018"><a href="/article/15-0300-japanning/japanning">Japanning</a></li>
+  <li class="c018"><a href="/article/15-0389-jewelry/jewelry">Jewelry</a></li>
+  <li class="c018"><a href="/article/15-0499-s1/johnson__thomas">Johnson, Thomas</a></li>
+  <li class="c018"><a href="/article/15-0571-s3/jug">Jug</a></li>
+  <li class="c018"><a href="/article/15-0630-s2/jute">Jute</a></li>
+  <li class="c018"><a href="/article/15-0714-kashi/kashi">Kashi</a></li>
+  <li class="c018"><a href="/article/15-0903-s2/knitting">Knitting</a></li>
+  <li class="c018"><a href="/article/16-0049-lac/lac">Lac</a></li>
+  <li class="c018"><a href="/article/16-0051-lace/lace">Lace</a></li>
+  <li class="c018"><a href="/article/16-0073-s3/lacquer">Lacquer</a></li>
+  <li class="c018"><a href="/article/16-0075-s3/lacrymatory">Lacrymatory</a></li>
+  <li class="c018"><a href="/article/16-0084-s4/la_farge__john">La Farge, John</a></li>
+  <li class="c018"><a href="/article/16-0156-lampstand/lampstand">Lampstand</a></li>
+  <li class="c018"><a href="/article/16-0205-lantern/lantern">Lantern</a></li>
+  <li class="c018"><a href="/article/16-0320-s6/lawn">Lawn</a></li>
+  <li class="c018"><a href="/article/16-0350-s6/leather">Leather</a></li>
+  <li class="c018"><a href="/article/16-0365-leather-artificial/leather__artificial">Leather, Artificial</a></li>
+  <li class="c018"><a href="/article/16-0377-lectern/lectern">Lectern</a></li>
+  <li class="c018"><a href="/article/16-0464-leonardo-da-vinci/leonardo_da_vinci">Leonardo da Vinci</a></li>
+  <li class="c018"><a href="/article/16-0484-le-pautre-jean/le_pautre__jean">Le Pautre, Jean</a></li>
+  <li class="c018"><a href="/article/16-0743-s2/line_engraving">Line Engraving</a></li>
+  <li class="c018"><a href="/article/16-0746-s2/linen">Linen, and Linen Manufactures</a></li>
+  <li class="c018"><a href="/article/16-0749-s3/linen-press">Linen-press</a></li>
+  <li class="c018">Lithographing</li>
+  <li class="c018"><a href="/article/16-0863-s2/lock__matthias">Lock, Matthias</a></li>
+  <li class="c018"><a href="/article/16-0998-s5/longcloth">Longcloth</a></li>
+  <li class="c018"><a href="/article/17-0087-s7/lowboy">Lowboy</a></li>
+  <li class="c018"><a href="/article/17-0205-s2/macabre">Macabre</a></li>
+  <li class="c018"><a href="/article/17-0466-s1/majolica">Majolica</a></li>
+  <li class="c018"><a href="/article/17-0643-s2/manwaring__robert">Manwaring, Robert</a></li>
+  <li class="c018"><a href="/article/17-0693-marble/marble">Marble</a></li>
+  <li class="c018"><a href="/article/17-0766-marot-daniel/marot__daniel">Marot, Daniel</a></li>
+  <li class="c018"><a href="/article/17-0768-marquetry/marquetry">Marquetry</a></li>
+  <li class="c018"><a href="/article/17-0921-matting/matting">Matting</a></li>
+  <li class="c018"><a href="/article/17-0954-mayhew-thomas/mayhew__thomas">Mayhew, Thomas</a></li>
+  <li class="c018"><a href="/article/17-0961-s4/mazer">Mazer</a></li>
+  <li class="c018"><a href="/article/18-0015-medal/medal">Medal</a></li>
+  <li class="c018"><a href="/article/18-0104-meissonier-juste-aur-le/meissonier__juste_aurèle">Meissonier, J. A.</a></li>
+  <li class="c018"><a href="/article/18-0169-s4/mercerizing">Mercerizing</a></li>
+  <li class="c018"><a href="/article/18-0224-s2/metal-work">Metal-work</a></li>
+  <li class="c018"><a href="/article/18-0372-s6/mezzotint">Mezzotint</a></li>
+  <li class="c018"><a href="/article/18-0383-s5/michelangelo">Michelangelo</a></li>
+  <li class="c018"><a href="/article/18-0547-s4/miniature">Miniature</a></li>
+  <li class="c018"><a href="/article/18-0602-mirror/mirror">Mirror</a></li>
+  <li class="c018"><a href="/article/18-0677-mohair/mohair">Mohair</a></li>
+  <li class="c018"><a href="/article/18-0690-moleskin/moleskin">Moleskin</a></li>
+  <li class="c018"><a href="/article/18-0761-monogram/monogram">Monogram</a></li>
+  <li class="c018"><a href="/article/18-0796-monteith/monteith">Monteith</a></li>
+  <li class="c018"><a href="/article/18-0861-s1/morel-ladeuil__leonard">Morel-Ladeuil, L.</a></li>
+  <li class="c018"><a href="/article/18-0915-s6/mosaic">Mosaic</a></li>
+  <li class="c018"><a href="/article/18-0964-s4/mouldings">Mouldings</a></li>
+  <li class="c018"><a href="/article/18-0992-mull-island/mull__island_">Mull</a></li>
+  <li class="c018"><a href="/article/19-0030-s2/mural_decoration">Mural Decoration</a></li>
+  <li class="c018"><a href="/article/19-0075-s3/museums_of_art">Museums of Art</a></li>
+  <li class="c018"><a href="/article/19-0108-muslin/muslin">Muslin</a></li>
+  <li class="c018"><a href="/article/19-0176-s8/nankeen">Nankeen</a></li>
+  <li class="c018"><a href="/article/19-0357-s3/needlework">Needlework</a></li>
+  <li class="c018"><a href="/article/19-0430-s3/net">Net</a></li>
+  <li class="c018"><a href="/article/19-0697-s5/niello">Niello</a></li>
+  <li class="c018"><a href="/article/19-0901-numismatics/numismatics">Numismatics</a></li>
+  <li class="c018">Oeben, F. F.</li>
+  <li class="c018"><a href="/article/20-0201-s2/order">Order</a></li>
+  <li class="c018"><a href="/article/20-0329-ormolu/ormolu">Ormolu</a></li>
+  <li class="c018"><a href="/article/20-0332-ornament/ornament">Ornament</a></li>
+  <li class="c018"><a href="/article/20-0387-osnaburg/osnaburg">Osnaburg</a></li>
+  <li class="c018"><a href="/article/20-0410-s3/ottoman">Ottoman</a></li>
+  <li class="c018"><a href="/article/20-0418-s4/overdoor">Overdoor</a></li>
+  <li class="c018"><a href="/article/20-0418-s5/overmantel">Overmantel</a></li>
+  <li class="c018"><a href="/article/20-0481-s2/padding">Padding</a></li>
+  <li class="c018"><a href="/article/20-0490-pagoda/pagoda">Pagoda</a></li>
+  <li class="c018"><a href="/article/20-0497-s2/painting">Painting</a></li>
+  <li class="c018"><a href="/article/20-0690-palissy-bernard/palissy__bernard">Palissy, Bernard</a></li>
+  <li class="c018"><a href="/article/20-0739-pantograph/pantograph">Pantograph</a></li>
+  <li class="c018">Papier Maché</li>
+  <li class="c018"><a href="/article/20-0858-s5/parchment">Parchment</a></li>
+  <li class="c018"><a href="/article/20-0923-s3/parquetry">Parquetry</a></li>
+  <li class="c018"><a href="/article/20-0952-pastel/pastel">Pastel</a></li>
+  <li class="c018"><a href="/article/21-0038-pearl/pearl">Pearl</a></li>
+  <li class="c018"><a href="/article/21-0051-pedestal/pedestal">Pedestal</a></li>
+  <li class="c018"><a href="/article/21-0051-pediment/pediment">Pediment</a></li>
+  <li class="c018"><a href="/article/21-0101-s2/pendant">Pendant</a></li>
+  <li class="c018"><a href="/article/21-0161-s2/pergolesi__michael_angelo">Pergolesi, M. A.</a></li>
+  <li class="c018"><a href="/article/21-0196-perpendicular-period/perpendicular_period">Perpendicular Period</a></li>
+  <li class="c018"><a href="/article/21-0296-s2/perugino__pietro">Perugino, Pietro</a></li>
+  <li class="c018"><a href="/article/21-0359-s5/pewter">Pewter</a></li>
+  <li class="c018"><a href="/article/21-0507-photography/photography">Photography</a></li>
+  <li class="c018"><a href="/article/21-0572-s3/phylactery">Phylactery</a></li>
+  <li class="c018"><a href="/article/21-0624-pigments/pigments">Pigments</a></li>
+  <li class="c018"><a href="/article/21-0814-plaque/plaque">Plaque</a></li>
+  <li class="c018"><a href="/article/21-0820-plate/plate">Plate</a></li>
+  <li class="c018"><a href="/article/21-0837-plated-ware/plated_ware">Plated Ware</a></li>
+  <li class="c018"><a href="/article/21-0838-s4/platinum">Platinum</a></li>
+  <li class="c018"><a href="/article/21-0888-s3/plumbago_drawings">Plumbago Drawings</a></li>
+  <li class="c018"><a href="/article/21-0890-plush/plush">Plush</a></li>
+  <li class="c018"><a href="/article/22-0104-s2/poplin">Poplin or Tabinet</a></li>
+  <li class="c018">Poppy-heads</li>
+  <li class="c018"><a href="/article/22-0114-porcelain/porcelain">Porcelain</a></li>
+  <li class="c018"><a href="/article/22-0132-porti-re/portière">Portière</a></li>
+  <li class="c018"><a href="/article/22-0210-poster/poster">Poster</a></li>
+  <li class="c018">Pot-hook</li>
+  <li class="c018"><a href="/article/22-0330-prie-dieu/prie-dieu">Prie-Dieu</a></li>
+  <li class="c018"><a href="/article/22-0364-print/print">Print</a></li>
+  <li class="c018"><a href="/article/22-0429-process-law/process__law_">Process</a></li>
+  <li class="c018"><a href="/article/22-0689-s3/puvis_de_chavannes__pierre_cécile">Puvis de Chavannes, P. C.</a></li>
+  <li class="c018"><a href="/article/22-0917-raphael-sanzio/raphael_sanzio">Raphael Sanzio</a></li>
+  <li class="c018"><a href="/article/23-0078-relief/relief">Relief</a></li>
+  <li class="c018"><a href="/article/23-0122-rep/rep">Rep</a></li>
+  <li class="c018"><a href="/article/23-0125-repouss/repoussé">Repoussé</a></li>
+  <li class="c018"><a href="/article/23-0198-reredos/reredos">Reredos</a></li>
+  <li class="c018"><a href="/article/23-0300-ribbons/ribbons">Ribbons</a></li>
+  <li class="c018"><a href="/article/23-0324-richmond-sir-william-blake/richmond__sir_william_blake">Richmond, Sir W. B.</a></li>
+  <li class="c018"><a href="/article/23-0341-riesener-jean-henri/riesener__jean_henri">Riesener, J. H.</a></li>
+  <li class="c018"><a href="/article/23-0366-s2/ring">Ring</a></li>
+  <li class="c018"><a href="/article/23-0425-s2/robes">Robes</a></li>
+  <li class="c018"><a href="/article/23-0458-rococo/rococo">Rococo</a></li>
+  <li class="c018"><a href="/article/23-0496-roman-art/roman_art">Roman Art</a></li>
+  <li class="c018"><a href="/article/23-0727-r-ntgen-david/röntgen__david">Röntgen, David</a></li>
+  <li class="c018">Rousseau de la Rottiere, J. S.</li>
+  <li class="c018"><a href="/article/23-0847-s3/rubens__peter_paul">Rubens, Peter Paul</a></li>
+  <li class="c018"><a href="/article/23-0864-rug/rug">Rug</a></li>
+  <li class="c018"><a href="/article/23-1020-s2/sacking_and_sack_manufacture">Sacking and Sack Manufacture</a></li>
+  <li class="c018">Salt cellar</li>
+  <li class="c018"><a href="/article/24-0116-salver/salver">Salver</a></li>
+  <li class="c018"><a href="/article/24-0132-s2/samovar">Samovar</a></li>
+  <li class="c018"><a href="/article/24-0133-sampler/sampler">Sampler</a></li>
+  <li class="c018"><a href="/article/24-0234-sargent-john-singer/sargent__john_singer">Sargent, J. S.</a></li>
+  <li class="c018"><a href="/article/24-0302-scandinavian-civilization/scandinavian_civilization">Scandinavian Civilization</a></li>
+  <li class="c018"><a href="/article/24-0319-scarab/scarab">Scarab</a></li>
+  <li class="c018"><a href="/article/24-0320-scarf/scarf">Scarf</a></li>
+  <li class="c018"><a href="/article/24-0425-s7/sconce">Sconce</a></li>
+  <li class="c018"><a href="/article/24-0497-s3/screen">Screen</a></li>
+  <li class="c018"><a href="/article/24-0503-s2/scrim">Scrim</a></li>
+  <li class="c018"><a href="/article/24-0508-s2/sculpture">Sculpture</a></li>
+  <li class="c018"><a href="/article/24-0569-seals/seals">Seals</a></li>
+  <li class="c018">Servan, J. N.</li>
+  <li class="c018"><a href="/article/24-0734-s2/settee">Settee</a></li>
+  <li class="c018"><a href="/article/24-0735-s4/settle">Settle</a></li>
+  <li class="c018"><a href="/article/24-0799-shagreen/shagreen">Shagreen</a></li>
+  <li class="c018"><a href="/article/24-0846-s3/shawl">Shawl</a></li>
+  <li class="c018"><a href="/article/24-0847-shearer-thomas/shearer__thomas">Shearer, Thomas</a></li>
+  <li class="c018"><a href="/article/24-0858-sheffield-plate/sheffield_plate">Sheffield Plate</a></li>
+  <li class="c018"><a href="/article/24-0875-sheraton-thomas/sheraton__thomas">Sheraton, Thomas</a></li>
+  <li class="c018"><a href="/article/25-0053-sideboard/sideboard">Sideboard</a></li>
+  <li class="c018"><a href="/article/25-0112-s2/silk">Silk</a></li>
+  <li class="c018"><a href="/article/25-0128-s3/silver">Silver</a></li>
+  <li class="c018"><a href="/article/25-0360-sofa/sofa">Sofa</a></li>
+  <li class="c018"><a href="/article/25-0479-soutane/soutane">Soutane</a></li>
+  <li class="c018"><a href="/article/25-0707-s4/spinning">Spinning</a></li>
+  <li class="c018"><a href="/article/25-0730-spit/spit">Spit</a></li>
+  <li class="c018"><a href="/article/25-0755-spoon/spoon">Spoon</a></li>
+  <li class="c018"><a href="/article/25-0902-stencil/stencil">Stencil</a></li>
+  <li class="c018"><a href="/article/25-0977-s6/stole">Stole</a></li>
+  <li class="c018"><a href="/article/25-0993-s2/stool">Stool</a></li>
+  <li class="c018"><a href="/article/26-0111-sun-copying/sun_copying">Sun Copying or Photo-Copying</a></li>
+  <li class="c018"><a href="/article/26-0154-surplice/surplice">Surplice</a></li>
+  <li class="c018"><a href="/article/26-0346-s1/table">Table</a></li>
+  <li class="c018"><a href="/article/26-0394-s2/tallboy">Tallboy</a></li>
+  <li class="c018"><a href="/article/26-0420-s1/tankard">Tankard</a></li>
+  <li class="c018"><a href="/article/26-0424-s3/tapestry">Tapestry</a></li>
+  <li class="c018"><a href="/article/26-0459-tarpaulin/tarpaulin">Tarpaulin</a></li>
+  <li class="c018"><a href="/article/26-0464-s2/tartan">Tartan</a></li>
+  <li class="c018"><a href="/article/26-0471-s3/tassie__james">Tassie, James</a></li>
+  <li class="c018"><a href="/article/26-0504-s6/tazza">Tazza</a></li>
+  <li class="c018"><a href="/article/26-0512-s2/tea-caddy">Tea-caddy</a></li>
+  <li class="c018"><a href="/article/26-0515-tea-poy/tea-poy">Tea-poy</a></li>
+  <li class="c018"><a href="/article/26-0608-tempera/tempera">Tempera</a></li>
+  <li class="c018"><a href="/article/26-0684-s4/terracotta">Terracotta</a></li>
+  <li class="c018"><a href="/article/26-0728-textile-printing/textile-printing">Textile-printing</a></li>
+  <li class="c018"><a href="/article/26-0931-s3/throne">Throne</a></li>
+  <li class="c018"><a href="/article/26-0975-s4/ticking">Ticking</a></li>
+  <li class="c018"><a href="/article/26-1003-s4/tiepolo__giovanni_battista">Tiepolo, G. B.</a></li>
+  <li class="c018"><a href="/article/26-1006-tiffany-charles-lewis/tiffany__charles_lewis">Tiffany, C. L.</a></li>
+  <li class="c018"><a href="/article/26-1011-s2/tile">Tile</a></li>
+  <li class="c018"><a href="/article/26-1041-tintoretto-jacopo-robusti/tintoretto__jacopo_robusti">Tintoretto</a></li>
+  <li class="c018"><a href="/article/26-1063-titian/titian">Titian</a></li>
+  <li class="c018"><a href="/article/27-0028-s3/tool">Tool</a></li>
+  <li class="c018"><a href="/article/27-0064-s10/torchère">Torchère</a></li>
+  <li class="c018"><a href="/article/27-0072-torque/torque">Torque</a></li>
+  <li class="c018"><a href="/article/27-0085-s2/tortoiseshell">Tortoiseshell</a></li>
+  <li class="c018"><a href="/article/27-0130-tracery/tracery">Tracery</a></li>
+  <li class="c018"><a href="/article/27-0237-s2/tray">Tray</a></li>
+  <li class="c018"><a href="/article/27-0281-triclinium/triclinium">Triclinium</a></li>
+  <li class="c018"><a href="/article/27-0303-tripod/tripod">Tripod</a></li>
+  <li class="c018"><a href="/article/27-0307-s4/triptych">Triptych</a></li>
+  <li class="c018"><a href="/article/27-0315-s2/trivet">Trivet</a></li>
+  <li class="c018"><a href="/article/27-0380-tudor-period/tudor_period">Tudor Period</a></li>
+  <li class="c018"><a href="/article/27-0384-tulle-town/tulle__town_">Tulle</a></li>
+  <li class="c018"><a href="/article/27-0511-twill/twill">Twill</a></li>
+  <li class="c018"><a href="/article/27-0601-uniforms/uniforms">Uniforms</a></li>
+  <li class="c018"><a href="/article/27-0845-utamaro/utamaro">Utamaro</a></li>
+  <li class="c018"><a href="/article/27-0948-s5/varnish">Varnish</a></li>
+  <li class="c018"><a href="/article/27-0972-vase/vase">Vase</a></li>
+  <li class="c018"><a href="/article/27-1007-s5/velvet">Velvet</a></li>
+  <li class="c018"><a href="/article/27-1008-s2/velveteen">Velveteen</a></li>
+  <li class="c018"><a href="/article/27-1010-s5/veneer">Veneer</a></li>
+  <li class="c018"><a href="/article/27-1060-s2/vernis_martin">Vernis Martin</a></li>
+  <li class="c018"><a href="/article/27-1084-s5/vestments">Vestments</a></li>
+  <li class="c018"><a href="/article/28-0288-walker-henry-oliver/walker__henry_oliver">Walker, H. O.</a></li>
+  <li class="c018"><a href="/article/28-0295-wall-coverings/wall-coverings">Wall-coverings</a></li>
+  <li class="c018"><a href="/article/28-0339-wardrobe/wardrobe">Wardrobe</a></li>
+  <li class="c018"><a href="/article/28-0375-washstand/washstand">Washstand</a></li>
+  <li class="c018"><a href="/article/28-0448-wax-figures/wax_figures">Wax Figures</a></li>
+  <li class="c018"><a href="/article/28-0458-s2/weaving">Weaving</a></li>
+  <li class="c018"><a href="/article/28-0483-s5/wedgwood__josiah">Wedgwood, Josiah</a></li>
+  <li class="c018"><a href="/article/28-0596-what-not/what-not">What-not</a></li>
+  <li class="c018">Window-cornice</li>
+  <li class="c018">Window-seat</li>
+  <li class="c018">Wine Table</li>
+  <li class="c018"><a href="/article/28-0812-wood-carving/wood-carving">Wood-carving</a></li>
+  <li class="c018"><a href="/article/28-0823-wood-engraving/wood_engraving">Wood Engraving</a></li>
+  <li class="c018"><a href="/article/28-0906-wyon-thomas/wyon__thomas">Wyon, Thomas</a></li>
+  <li class="c018"><a href="/article/28-0933-s2/yarn">Yarn</a></li>
+</ul></details>
+
+<div>
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

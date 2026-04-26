@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Greek Literature &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XL</span>Greek Literature</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">The Main Article</a></li><li><a href="#sh-2">Epic</a></li><li><a href="#sh-3">Elegy</a></li><li><a href="#sh-4">Lyric Poetry</a></li><li><a href="#sh-5">Attic Literature</div> <div class="sidenote">Comedy</a></li><li><a href="#sh-6">History</a></li><li><a href="#sh-7">Oratory</a></li><li><a href="#sh-8">Decadence</a></li></ol></div>
+    <div class="body-text">
+
+
+<p>In the article <span class="sc"><a href="/article/16-0805-s5/literature">Literature</a></span> in the Britannica,
+by Professor <a href="/contributors.html?q=James+Fitzmaurice-Kelly">James Fitzmaurice-Kelly</a>,
+himself a specialist in Spanish
+literature, are these sentences:</p>
+
+<p>The evolution of literature is completed
+in Greece, and there its subdivisions may
+best be studied. Epic poetry is represented
+by the Homeric cycle, lyric poetry by Tyrtaeus,
+dramatic poetry by Aeschylus, history
+by Herodotus, oratory by Pericles,
+philosophy by Plato, and criticism by Zoilus,
+the earliest of slashing reviewers; and in
+each department there is a long succession
+of illustrative names. Roughly speaking, all
+subsequent literature is imitative.</p>
+
+<p><span class="shoulder-heading" id="sh-1">The Main Article</span>This testimony to the importance of
+Greek literature is all the more weighty
+as coming from one whose own field of
+criticism is in Romantic literature. The
+authority with which such an important
+subject as Greek literature is treated in
+the Britannica will be apparent to any
+classical student who notes the names of
+the contributors of the articles mentioned
+in the following course of reading.
+The key article
+<span class="sc"><a href="/article/12-0532-greek-literature/greek_literature">Greek Literature</a></span>
+(Vol. 12, p. 507;
+equivalent to 65
+pages of this Guide) is divided into three
+sections: Ancient (p. 507), Byzantine (p.
+516) and Modern (p. 524). The second
+section, by Prof. Karl Krumbacher of
+Munich, author of <i>Geschichte der byzantinischen
+Literatur</i>, and the third, by <a href="/contributors.html?q=James+David+Bourchier">J. D.
+Bourchier</a>, correspondent of <i>The Times</i>
+(London) in South-Eastern Europe, need
+not be dwelt upon here. To the ordinary
+student, in spite of the increasing interest
+shown in Byzantine and modern Hellenic
+literature, “Greek literature” must mean
+the literature of ancient Greece, and for
+him the <i>first</i> part of the article will be the
+foundation of his study of the subject.
+This section of the article is by the late
+<a href="/contributors.html?q=Sir+Richard+Claverhouse+Jebb">Sir Richard C. Jebb</a>, professor of Greek at
+Glasgow and then at Cambridge, known
+as the biographer of Bentley, as the
+author of an excellent brief history of
+Greek literature, and as an authority on
+subdivisions of that subject so diverse as
+rhetoric and oratory on the one side
+and lyric and dramatic poetry on the
+other.</p>
+
+<p><a href="/contributors.html?q=Sir+Richard+Claverhouse+Jebb">Jebb</a>’s article divides ancient Greek
+literature into three periods: <i>Early</i>, including
+epic, elegiac, iambic and lyric
+poetry and coming down to 475 B.C.;
+<i>Attic</i>, 475–300 B.C., including tragic and
+comic drama and historical, oratorical
+and philosophical prose; and <i>Decadence</i>—Alexandrian,
+300–146 B.C., and Greco-Roman,
+146 B.C.–529 A.D.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Epic</span>In the first of these periods the student
+should supplement <a href="/contributors.html?q=Sir+Richard+Claverhouse+Jebb">Professor Jebb</a>’s treatment
+in the article <span class="sc"><a href="/article/12-0532-greek-literature/greek_literature">Greek Literature</a></span>
+by the following articles:
+<span class="sc"><a href="/article/09-0713-epic-poetry/epic_poetry">Epic Poetry</a></span> (Vol. 9, p.
+681), a general sketch of
+the form by <a href="/contributors.html?q=Edmund+Gosse">Edmund Gosse</a>; <span class="sc"><a href="/article/13-0643-s5/homer">Homer</a></span> (Vol.
+13, p. 626; equivalent to 40 pages of this
+Guide), by the late Prof. David Binning
+Monro of Oriel College, Oxford, editor of
+Homer and author of <i>Grammar of the
+Homeric Dialect</i>,—and on the “Homeric
+question” see also the articles <span class="sc"><a href="/article/02-0532-s4/aristarchus">Aristarchus</a></span>
+and <span class="sc"><a href="/article/13-0422-s5/hesilrige__or_heselrig___sir_arthur">F. A. Wolf</a></span>; <span class="sc"><a href="/article/13-0423-s3/hesiod">Hesiod</a></span> (Vol.
+13, p. 407), by <a href="/contributors.html?q=Arthur+Llewellyn+Davies">James Davies</a>, formerly
+head master Ludlow Grammar School,
+and John Henry Freese, formerly fellow
+St. John’s, Cambridge; <span class="sc"><a href="/article/07-0704-cycle/cycle">Cycle</a></span> (Vol. 7, p.
+682; last part of the article); and the
+cyclic poets, <span class="sc"><a href="/article/25-0821-s6/stasinus">Stasinus</a></span>, <span class="sc"><a href="/article/02-0484-s3/arctinus">Arctinus</a></span>, <span class="sc"><a href="/article/16-0509-lesches/lesches">Lesches</a></span>,
+and <span class="sc"><a href="/article/07-0429-creophylus/creophylus">Creophylus</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Elegy</span>For the elegy see <a href="/contributors.html?q=Edmund+Gosse">Edmund Gosse</a>’s article
+<span class="sc"><a href="/article/09-0269-elegy/elegy">Elegy</a></span>; and on the Greek elegists,
+the articles <span class="sc"><a href="/article/05-0069-callinus/callinus">Callinus</a></span> and <span class="sc"><a href="/article/27-0570-s3/tyrtaeus">Tyrtæus</a></span> for
+martial poetry, <span class="sc"><a href="/article/18-0524-mimnermus/mimnermus">Mimnermus</a></span> for melancholy
+verse, <span class="sc"><a href="/article/25-0382-s2/solon">Solon</a></span> for political and
+ethical poetry, <span class="sc"><a href="/article/26-0812-s3/theognis_of_megara">Theognis</a></span>
+and <span class="sc"><a href="/article/21-0471-phocylides/phocylides">Phocylides</a></span> for the
+gnomic elegy, and <span class="sc"><a href="/article/28-0911-xenophanes/xenophanes">Xenophanes</a></span>
+for the use of the measure in didactic
+philosophical verse. On iambic
+verse and its Greek writers before the
+time of the drama see: <span class="sc"><a href="/article/14-0225-iambic/iambic">Iambic</a></span>, <span class="sc"><a href="/article/02-0388-s4/archilochus">Archilochus</a></span>,
+<span class="sc">Simonides of Amorgos</span>, and
+<span class="sc"><a href="/article/13-0538-hipponax/hipponax">Hipponax</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Lyric Poetry</span>The third poetic form of the period,
+one which unfortunately has come down
+to us only in tantalizingly brief fragments—comparable
+to the
+quotations illustrating
+word-usage in
+our dictionaries—is the lyric. On this
+see the general article <span class="sc"><a href="/article/17-0195-lyrical-poetry/lyrical_poetry">Lyrical Poetry</a></span>,
+by <a href="/contributors.html?q=Edmund+Gosse">Edmund Gosse</a>, on this form in different
+literatures, and the sketches of the
+Greek lyrists the Aeolians <span class="sc"><a href="/article/01-0557-s2/alcaeus">Alcaeus</a></span> (see
+also the article <span class="sc"><a href="/article/01-0557-s3/alcaics">Alcaics</a></span>) and <span class="sc"><a href="/article/24-0216-sappho/sappho">Sappho</a></span>, by
+Prof. <a href="/contributors.html?q=John+Arthur+Platt">John Arthur Platt</a>, University College,
+London; <span class="sc"><a href="/article/22-0269-praxilla/praxilla">Praxilla</a></span> and <span class="sc"><a href="/article/09-0776-erinna/erinna">Erinna</a></span>,
+Sappho’s rivals as lyric poetesses; the
+Ionian <span class="sc"><a href="/article/01-0959-s5/anacreon">Anacreon</a></span> (see also the article
+<span class="sc"><a href="/article/01-0960-s2/anacreontics">Anacreontics</a></span>, by <a href="/contributors.html?q=Edmund+Gosse">Edmund Gosse</a>); the
+Dorian <span class="sc"><a href="/article/01-0564-s2/alcman">Alcman</a></span>; <span class="sc"><a href="/article/25-0927-s3/stesichorus">Stesichorus</a></span>, <span class="sc"><a href="/article/02-0530-s2/arion">Arion</a></span>
+and <span class="sc"><a href="/article/14-0238-ibycus/ibycus">Ibycus</a></span>; <span class="sc"><a href="/article/21-0643-s5/pinckney__charles_cotesworth">Simonides</a></span>, who may be
+called Panhellenic; <span class="sc"><a href="/article/21-0644-s4/pindar">Pindar</a></span> (Vol. 21, p.
+617; equivalent to 10 pages of this Guide,
+by <a href="/contributors.html?q=Sir+Richard+Claverhouse+Jebb">Sir R. C. Jebb</a>), the only Greek lyrist
+whose work has come down to us in any
+considerable quantity, and whose poems
+are such remarkable examples of metrical
+structure; <span class="sc"><a href="/article/03-0138-s5/bacchylides">Bacchylides</a></span> (Vol. 3, p. 121;
+equivalent to 9 pages of this Guide; also
+by Sir <a href="/contributors.html?q=Sir+Richard+Claverhouse+Jebb">R. C. Jebb</a>, who was one of the
+first editors), Pindar’s rival, whose poems
+until a few years ago were known to us
+only by brief quotations by grammarians,
+but who had the good luck to survive in
+papyrus lately found in Egypt; and
+<span class="sc"><a href="/article/26-1031-s2/timotheus">Timotheus</a></span> of Miletus, of whose “Persians”
+a valuable fragment was found in
+1903 in what seems to be the oldest papyrus
+in existence.</p>
+
+<p><span class="shoulder-heading" id="sh-5">Attic Literature</div> <div class="sidenote">Comedy</span>The Attic period has two important developments—the
+drama, tragic and comic,
+and the beginnings of a Greek prose.
+For the drama read the part of Prof.
+A. W. Ward’s article
+<span class="sc"><a href="/article/08-0498-drama/drama">Drama</a></span> dealing
+with the Greek period
+(Vol. 8, pp. 488–493),
+and the article <span class="sc"><a href="/article/06-0781-comedy/comedy">Comedy</a></span>; and the articles
+on the great dramatists:—the tragedians
+<span class="sc"><a href="/article/26-0880-thespis/thespis">Thespis</a></span>, <span class="sc"><a href="/article/06-0276-choerilus/choerilus">Choerilus</a></span>, <span class="sc"><a href="/article/21-0571-phrynichus/phrynichus">Phrynichus</a></span> and
+<span class="sc"><a href="/article/22-0268-pratinas/pratinas">Pratinas</a></span> in the earlier period; <span class="sc"><a href="/article/01-0309-aeschylus/aeschylus">Aeschylus</a></span>
+(Vol. 1, p. 272; equivalent to 12 pages
+of this Guide), by <a href="/contributors.html?q=Arthur+Sidgwick">Arthur Sidgwick</a>, fellow
+of Corpus Christi, Oxford, and editor
+of the Oxford text of Aeschylus; <span class="sc"><a href="/article/25-0440-sophocles/sophocles">Sophocles</a></span>
+(Vol. 25, p. 424; equivalent to 12
+pages of this Guide), by <a href="/contributors.html?q=Rev.+Lewis+Campbell">Lewis Campbell</a>,
+editor and translator of this poet; and
+<span class="sc"><a href="/article/09-0933-euripides/euripides">Euripides</a></span> (Vol. 9, p. 901; equivalent to
+15 pages of this Guide), in the main by
+Sir <a href="/contributors.html?q=Sir+Richard+Claverhouse+Jebb">R. C. Jebb</a>; and the comic poets,—the
+Sicilian <span class="sc"><a href="/article/09-0712-epicharmus/epicharmus">Epicharmus</a></span>; the
+representatives of the Attic
+Old Comedy, <span class="sc"><a href="/article/07-0401-cratinus/cratinus">Cratinus</a></span>,
+<span class="sc"><a href="/article/07-0401-crates-actor/crates__actor_">Crates</a></span>, <span class="sc"><a href="/article/21-0386-pherecrates/pherecrates">Pherecrates</a></span>, <span class="sc"><a href="/article/09-0932-eupolis/eupolis">Eupolis</a></span>, <span class="sc"><a href="/article/21-0571-phrynichus/phrynichus">Phrynichus</a></span>
+(not to be confused with the
+tragic poet of that name), <span class="sc"><a href="/article/17-0334-magnes/magnes">Magnes</a></span>,
+<span class="sc"><a href="/article/21-0841-plato/plato">Plato</a></span> (to be distinguished from the philosopher),—all
+these known to us only by
+allusions and chance quotations—and
+<span class="sc"><a href="/article/02-0537-s2/aristophanes">Aristophanes</a></span> (Vol. 2, p. 499; equivalent
+to 7 pages of this Guide, by Sir R. C.
+<a href="/contributors.html?q=Sir+Richard+Claverhouse+Jebb">Jebb</a>), the only Greek poet of whom we
+have complete plays and probably the
+greatest of the writers of Greek comedy;
+the names—they are little more—of
+<span class="sc"><a href="/article/09-0899-s3/eubulus">Eubulus</a></span>, <span class="sc"><a href="/article/02-0145-s5/antiphanes">Antiphanes</a></span>, <span class="sc"><a href="/article/01-0616-s6/alexis">Alexis</a></span> in the
+Middle Comedy; and in the New Comedy
+or third period, <span class="sc"><a href="/article/21-0395-philemon/philemon">Philemon</a></span>, <span class="sc"><a href="/article/18-0129-menander-milinda/menander__milinda_">Menander</a></span>
+(by J. H. Freese), who was so highly
+esteemed and so constantly pilfered from
+by the Roman comic writers, and of whose
+plays large fragments have been found in
+the last few years; <span class="sc"><a href="/article/08-0307-diphilus/diphilus">Diphilus</a></span>, <span class="sc"><a href="/article/02-0198-s4/apollodorus">Apollodorus</a></span>
+of Carystus, <span class="sc"><a href="/article/22-0186-posidippus/posidippus">Posidippus</a></span>, <span class="sc"><a href="/article/23-0262-rhinthon/rhinthon">Rhinthon</a></span>
+and <span class="sc"><a href="/article/25-0451-sotades/sotades">Sotades</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-6">History</span>The prose of the Attic period we may
+divide roughly into history, oratory and
+philosophy. On the historians
+read <span class="sc"><a href="/article/16-0941-s2/logographi">Logographi</a></span>,
+<span class="sc"><a href="/article/12-0443-greece/greece">Greece</a></span>, <i>Ancient History</i>,
+“Authorities” (Vol. 12, p. 454), with
+criticism of the historical accuracy of
+Herodotus, Thucydides, Diodorus, Plutarch,
+Xenophon, etc., <span class="sc"><a href="/article/13-0396-s2/herodas">Hecataeus</a></span> of
+Miletus, <span class="sc"><a href="/article/13-0397-herodotus/herodotus">Herodotus</a></span> (Vol. 13, p. 381;
+equivalent to 10 pages of this Guide), by
+the historian George Rawlinson and E. M.
+<a href="/contributors.html?q=Rev.+Edward+Mewburn+Walker">Walker</a>, librarian of Queen’s College, Oxford;
+<span class="sc"><a href="/article/26-0933-s2/thucydides">Thucydides</a></span> (Vol. 26, p. 893; equivalent
+to 10 pages of the Guide), by Sir
+<a href="/contributors.html?q=Sir+Richard+Claverhouse+Jebb">R. C. Jebb</a>, and Malcolm Mitchell, editor
+of Grote’s <i>Greece</i>; <span class="sc"><a href="/article/28-0912-xenophon/xenophon">Xenophon</a></span> (Vol. 28, p.
+885; equivalent to 7 pages in this Guide),
+by <a href="/contributors.html?q=Rev.+Edward+Mewburn+Walker">E. M. Walker</a> and J. H. Freese;
+<span class="sc"><a href="/article/07-0616-ctesias/ctesias">Ctesias</a></span>, <span class="sc"><a href="/article/21-0426-philistus/philistus">Philistus</a></span>, <span class="sc"><a href="/article/26-0827-theopompus/theopompus">Theopompus</a></span>, and
+<span class="sc"><a href="/article/26-1017-timaeus/timaeus">Timaeus</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-7">Oratory</span>On Attic orators read <span class="sc"><a href="/article/01-1018-s5/andocides">Andocides</a></span>,
+<span class="sc"><a href="/article/17-0197-s3/lysias">Lysias</a></span>, <span class="sc"><a href="/article/14-0910-isocrates/isocrates">Isocrates</a></span>, <span class="sc"><a href="/article/14-0893-s7/isaeus">Isaeus</a></span>, <span class="sc"><a href="/article/02-0145-s7/antiphon">Antiphon</a></span>,
+<span class="sc"><a href="/article/08-0024-demosthenes/demosthenes">Demosthenes</a></span>, <span class="sc"><a href="/article/01-0308-aeschines-greek-statesman/aeschines__greek_statesman_">Aeschines</a></span>, <span class="sc"><a href="/article/14-0212-s2/hypereides">Hypereides</a></span>,—most
+of these articles
+being by Sir <a href="/contributors.html?q=Sir+Richard+Claverhouse+Jebb">R. C. Jebb</a>,
+who was particularly versed
+in this branch of Greek literature. The
+special student of the orators should read
+also the articles <span class="sc"><a href="/article/12-0526-greek-law/greek_law">Greek Law</a></span> (Vol. 12, p.
+501; equivalent to 15 pages in this Guide),
+by Prof. J. E. Sandys of Cambridge, author
+of <i>A History of Classical Scholarship</i>,
+etc.; <span class="sc"><a href="/article/25-0434-sophists/sophists">Sophists</a></span> (Vol. 25, p. 418, equivalent
+to 20 pages of this Guide), by Prof. Henry
+Jackson of Cambridge, a well-known
+writer on Greek philosophy, and <span class="sc"><a href="/article/23-0250-s5/rhetoric">Rhetoric</a></span>
+(Vol. 23, p. 233), by Sir <a href="/contributors.html?q=Sir+Richard+Claverhouse+Jebb">R. C. Jebb</a>.</p>
+
+<p>On Greek philosophical writing see the
+articles <span class="sc"><a href="/article/21-0386-pherecydes-of-leros/pherecydes_of_leros">Pherecydes</a></span> of Syros, <span class="sc"><a href="/article/01-0997-s5/anaximenes">Anaximenes</a></span>
+of Miletus, <span class="sc"><a href="/article/01-0997-s3/anaximander">Anaximander</a></span>, and
+the names great not only in Greek
+thought and literature but in the world’s—<span class="sc"><a href="/article/21-0841-plato/plato">Plato</a></span>
+(Vol. 21, p. 808; equivalent to
+about 50 pages of this Guide), by <a href="/contributors.html?q=Rev.+Lewis+Campbell">Lewis
+Campbell</a>, editor and critic of many of
+the Platonic dialogues, and <span class="sc"><a href="/article/02-0539-s3/aristotle">Aristotle</a></span>
+(Vol. 2, p. 501; equivalent to 70 pages of
+this Guide), by Prof. <a href="/contributors.html?q=Thomas+Case">Thomas Case</a>, Oxford,
+author of <i>Physical Realism</i>, etc.
+For a fuller guide to Greek philosophy
+see the chapter in this Guide on <i>Philosophy</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-8">Decadence</span>The third period of classical Greek literature
+was one of Greek thought in unGreek
+surroundings—see the article <span class="sc"><a href="/article/13-0249-hellenism/hellenism">Hellenism</a></span>,
+by <a href="/contributors.html?q=Edwyn+Robert+Bevan">E. R. Bevan</a>, author of
+<i>The House of Seleucus</i>, etc.,—and this
+came to its first and
+finest flower in Alexandria,
+in Egypt,
+under the Ptolemies—see the article
+<span class="sc"><a href="/article/01-0613-s2/alexandrian_school">Alexandrian School</a></span>, especially that
+part of it dealing with <i>Literature</i> (Vol. 1,
+p. 573). On the writers of the Alexandrian
+period see: for poetry, <span class="sc"><a href="/article/21-0396-philetas/philetas">Philetas</a></span>,
+<span class="sc"><a href="/article/13-0387-hermesianax/hermesianax">Hermesianax</a></span>, <span class="sc"><a href="/article/02-0766-s7/asclepiades">Asclepiades</a></span> of Samos,
+and the comic poets <span class="sc"><a href="/article/25-0451-sotades/sotades">Sotades</a></span> and <span class="sc"><a href="/article/23-0262-rhinthon/rhinthon">Rhinthon</a></span>,
+already mentioned; <span class="sc"><a href="/article/13-0396-s2/herodas">Herodas</a></span>, by
+<a href="/contributors.html?q=Walter+George+Headlam+%281866%E2%80%931908%29">W. G. Headlam</a>, editor of Herodas; the
+idyllist <span class="sc"><a href="/article/26-0800-s5/theocritus">Theocritus</a></span> (Vol. 26, p. 760),
+by <a href="/contributors.html?q=Albert+Curtis+Clark">A. C. Clark</a>, fellow of Queen’s, Oxford;
+Theocritus’s followers <span class="sc"><a href="/article/03-0979-bion-poet/bion__poet_">Bion</a></span> and <span class="sc"><a href="/article/18-0923-moschus/moschus">Moschus</a></span>;
+the mythologist <span class="sc"><a href="/article/05-0069-callimachus-poet/callimachus__poet_">Callimachus</a></span>,
+who influenced Catullus as much as
+Theocritus did the young Virgil; the
+didactic poet <span class="sc"><a href="/article/02-0336-s3/aratus">Aratus</a></span>, whom Cicero
+translated into Latin and whom Virgil
+imitated in his <i>Georgics</i>; the epic <span class="sc"><a href="/article/02-0198-s8/apollonius">Apollonius</a></span>
+of Rhodes, and the late tragedian
+<span class="sc"><a href="/article/17-0168-lycophron/lycophron">Lycophron</a></span>; and for prose the critic
+<span class="sc"><a href="/article/02-0532-s4/aristarchus">Aristarchus</a></span>.</p>
+
+<p>In the Greco-Roman period, following
+the Alexandrian the principal articles for
+the student are: the historians <span class="sc"><a href="/article/22-0032-polybius/polybius">Polybius</a></span>
+and <span class="sc"><a href="/article/08-0298-diodorus-siculus/diodorus_siculus">Diodorus Siculus</a></span>, the satirist
+<span class="sc"><a href="/article/17-0115-s3/lucian">Lucian</a></span>, the later historians <span class="sc"><a href="/article/08-0302-dionysius-halicarnassensis/dionysius_halicarnassensis">Dionysius
+Halicarnassensis</a></span>, <span class="sc"><a href="/article/08-0295-dio-cassius/dio_cassius">Dio Cassius</a></span>, <span class="sc"><a href="/article/02-0690-s4/arrian">Arrian</a></span>,
+<span class="sc"><a href="/article/02-0233-s6/appian">Appian</a></span>, <span class="sc"><a href="/article/13-0397-herodians/herodians">Herodian</a></span>, <span class="sc"><a href="/article/09-0990-eusebius/eusebius">Eusebius</a></span>,
+<span class="sc"><a href="/article/28-1071-s2/zosimus">Zosimus</a></span>, the biographers <span class="sc"><a href="/article/21-0890-plutarch/plutarch">Plutarch</a></span>,
+<span class="sc">Diogenes Laertius</span>, <span class="sc"><a href="/article/21-0467-philostratus/philostratus">Philostratus</a></span>, the
+rhetoricians <span class="sc"><a href="/article/16-1005-longinus-cassius/longinus__cassius">Longinus</a></span> and <span class="sc"><a href="/article/08-0296-dio-chrysostom/dio_chrysostom">Dio Chrysostom</a></span>,
+and the emperor philosopher
+<span class="sc"><a href="/article/17-0710-marcus-aurelius-antoninus/marcus_aurelius_antoninus">Marcus Aurelius</a></span> and his forerunner
+the “slave philosopher” <span class="sc"><a href="/article/09-0714-epictetus/epictetus">Epictetus</a></span>.</p>
+
+<p>Possibly the most typical output of the
+later Greek age is the matchless collection
+of short poems known to us as “the
+Greek Anthology”; on this see the articles
+<span class="sc"><a href="/article/09-0722-epigram/epigram">Epigram</a></span> and <span class="sc"><a href="/article/02-0105-s3/anthology">Anthology</a></span>.</p>
+
+<div>
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

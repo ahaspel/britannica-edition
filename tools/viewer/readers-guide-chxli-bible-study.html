@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bible Study &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XLI</span>Bible Study</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">The Bible as a Focus of Thought</a></li><li><a href="#sh-2">Preliminaries</a></li><li><a href="#sh-3">Hebrew Religion</a></li><li><a href="#sh-4">Biblical History</a></li><li><a href="#sh-5">The Article Bible</a></li><li><a href="#sh-6">Inspiration</a></li><li><a href="#sh-7">The Hexateuch</a></li><li><a href="#sh-8">The Prophets</a></li><li><a href="#sh-9">Minor Prophets</a></li><li><a href="#sh-10">Psalms</a></li><li><a href="#sh-11">Wisdom Literature</a></li><li><a href="#sh-12">Other Old Testament Books</a></li><li><a href="#sh-13">Apocrypha</a></li><li><a href="#sh-14">New Testament</a></li><li><a href="#sh-15">The Gospels</a></li><li><a href="#sh-16">Acts</a></li><li><a href="#sh-17">St. Paul</a></li><li><a href="#sh-18">The Pauline Epistles</a></li><li><a href="#sh-19">The Other Epistles</a></li><li><a href="#sh-20">Johannine Writings</a></li><li><a href="#sh-21">Apocryphal Literature</a></li><li><a href="#sh-22">A Biblical Encyclopaedia</a></li></ol></div>
+    <div class="body-text">
+
+
+<p>It is impossible for the student to
+consider the subject of Bible Study
+without being impressed by the immense
+labour and the profound scholarship
+which have been devoted to the
+interpretation and discussion of Scripture.
+Continued investigation has solved many
+difficulties, but has also vastly increased
+the mass of evidences and conjectures
+which must be weighed in connection
+with any doubtful passages. The Britannica
+tells us, for example, (Vol. 3,
+pp. 903, 904) that the translators of the
+King James’s version spent only two
+years and nine months over their task,
+while the work on the Revised Version
+took eleven years for the New Testament
+and fourteen for the Old Testament.</p>
+
+<p><span class="shoulder-heading" id="sh-1">The Bible as a Focus of Thought</span>It is equally true that all the time
+which learned men have given to translating
+and elucidating the text seems
+nothing when it is
+compared with the
+time that mankind
+at large have spent
+in reading it. But
+the Britannica mentions a report of the
+great English Bible Society, the “British
+and Foreign,” in which the copies circulated
+by it are totalled at more than
+198 million, and, for the American Bible
+Society and its federated associations,
+it gives a total of more than 84 million
+copies (Vol. 3, p. 907). It has often
+been said that the English Bible is the
+only example of a translation that became
+more famous than the original,
+and it is as true that no other translation
+has been the source of so many
+secondary translations, for versions in
+no less than 530 distinct languages and
+dialects have been derived from the English
+text. It is interesting to note, although
+in this case the English version
+has certainly nothing to do with the
+matter, that “in Italy, by a departure
+from the traditional policy of the Roman
+Church, the newly formed, ‘Pious Society
+of St. Jerome for the Dissemination of
+the Holy Gospels’ issued in 1901, from
+the Vatican press, a new Italian version
+of the Four Gospels and <i>Acts</i>,” and sold
+400,000 copies at 4 cents each.</p>
+
+<p>As a sort of threshold-study, it will
+be well to consider three topics: Hebrew
+Literature, Hebrew Religion and Biblical
+History.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Preliminaries</span><span class="sc"><a href="/article/13-0182-hebrew-literature/hebrew_literature">Hebrew Literature</a></span> (Vol. 13, p.
+169), by Dr. <a href="/contributors.html?q=Arthur+Ernest+Cowley">Arthur Cowley</a>, of the
+Bodleian Library, Oxford, points out
+that the term “Hebrew
+Literature” is
+loosely used of “all
+works written in
+Hebrew characters,
+whether the language be Aramaic, Arabic,
+or even some vernacular not related to
+Hebrew;” and that “this literature begins
+with, as it is almost entirely based
+upon, the Old Testament.” This article
+on Hebrew Literature may be supplemented
+by the following articles:</p>
+
+<p><span class="sc"><a href="/article/26-0448-s4/targum">Targum</a></span>, by <a href="/contributors.html?q=John+Frederick+Stenning">John Frederick Stenning</a>,
+lecturer in Aramaic at Oxford.</p>
+
+<table class="table1">
+  <tbody><tr>
+    <td class="c022"><span class="sc"><a href="/article/12-0854-s7/halakha">Halakha</a></span></td>
+ <td class="blt c023 bbt" rowspan="2">by <a href="/contributors.html?q=Israel+Abrahams">Israel Abrahams</a>, reader in Talmudic and Rabbinic Literature, Cambridge.</td>
+  </tr>
+  <tr>
+ <td class="bbt c022"><span class="sc"><a href="/article/22-0721-qaraites/qaraites">Qaraites</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/26-0401-talmud/talmud">Talmud</a></span></td>
+ <td class="blt c023 bbt" rowspan="2">by <a href="/contributors.html?q=Stanley+Arthur+Cook">Stanley Arthur Cook</a>, lecturer in Hebrew and Syriac, Cambridge.</td>
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/18-0443-midrash/midrash">Midrash</a></span></td>
+ 
+  </tr>
+</tbody></table>
+
+<p><span class="sc"><a href="/article/24-0561-s3/seadiah__or_saadia__in_arabic_saʽid__ben_joseph">Seadiah</a></span>, by Dr. <a href="/contributors.html?q=Arthur+Ernest+Cowley">Arthur Cowley</a>.</p>
+
+<p><span class="sc"><a href="/article/17-0445-s7/maimonides">Maimonides</a></span>, by <a href="/contributors.html?q=Herbert+Martin+James+Loewe">Herbert Loewe</a>, curator
+of Oriental Literature,
+Cambridge.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Hebrew Religion</span>Quite as important is the article <span class="sc"><a href="/article/13-0189-hebrew-religion/hebrew_religion">Hebrew
+Religion</a></span> (Vol. 13, p. 176), by
+the Rev. Dr. Owen <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Charles</a> Whitehouse
+of Christ’s and Cheshunt
+Colleges, Cambridge.
+His treatment
+of the subject
+is comparative and historical. There
+is an interesting summary of what is
+known and may be inferred about pre-Mosaic
+religion; and it is important to
+notice that the author does not consider
+that the plural Elohim used in certain
+Old Testament passages to mean “God”
+is to be understood as “a comprehensive
+expression for the multitude of gods
+embraced in the One God of Old Testament
+religion,” but explains the plural
+as one “of majesty” like the “we” of
+royalty. Blood-offerings and magic
+charms against demons and jinns may
+be assumed as belonging to the early
+Hebrew religion as to the later Arabian
+period before Mahomet. Dr. Whitehouse
+thinks that there is little or no
+trace of totemism but possibly some of
+ancestor-worship in the Jews’ religion.</p>
+
+<p>Among the many articles supplementing
+this general treatment of Hebrew
+religion the following are possibly the
+most important:</p>
+
+<p><span class="sc"><a href="/article/06-0405-circumcision/circumcision">Circumcision</a></span>, by <a href="/contributors.html?q=Israel+Abrahams">Israel Abrahams</a>.</p>
+
+<p><span class="sc"><a href="/article/26-0668-s2/teraphim">Teraphim</a></span>, by <a href="/contributors.html?q=William+Robertson+Smith">W. Robertson Smith</a>
+and <a href="/contributors.html?q=Rev.+George+Herbert+Box">G. H. Box</a>, formerly lecturer in
+theology, Oxford.</p>
+
+<p><span class="sc"><a href="/article/03-0103-s2/baal">Baal</a></span>, by <a href="/contributors.html?q=William+Robertson+Smith">W. Robertson Smith</a> and
+<a href="/contributors.html?q=Stanley+Arthur+Cook">Stanley Arthur Cook</a>, editor for Palestine
+Exploration Fund.</p>
+
+<p><span class="sc"><a href="/article/04-1031-s7/calf__the_golden">Calf, The Golden</a></span>, by <a href="/contributors.html?q=Stanley+Arthur+Cook">S. A. Cook</a>.</p>
+
+<p><span class="sc">High Places.</span></p>
+
+<p><span class="sc"><a href="/article/10-0232-s4/feasts_and_festivals">Feasts and Festivals.</a></span></p>
+
+<p><span class="sc"><a href="/article/20-0950-s1/passover">Passover</a></span>, by Dr. Joseph Jacobs of
+the Jewish Theological Seminary of
+New York City.</p>
+
+<p><span class="sc"><a href="/article/21-0138-pentecost/pentecost">Pentecost</a></span>, by Dr. O. C. Whitehouse.</p>
+
+<p><span class="sc"><a href="/article/02-0587-s3/ark">Ark</a></span>, by <a href="/contributors.html?q=Stanley+Arthur+Cook">Stanley Arthur Cook</a>.</p>
+
+<p><span class="sc"><a href="/article/26-0344-s2/tabernacle">Tabernacle</a></span> and <span class="sc"><a href="/article/26-0633-temple/temple">Temple</a></span>, by Dr.
+<a href="/contributors.html?q=Rev.+Archibald+R.+S.+Kennedy">Archibald R. S. Kennedy</a>, professor of
+Hebrew and Semitic languages, Edinburgh.</p>
+
+<p><span class="sc"><a href="/article/09-0708-ephod/ephod">Ephod</a></span>, by <a href="/contributors.html?q=Stanley+Arthur+Cook">S. A. Cook</a>.</p>
+
+<p><span class="sc"><a href="/article/27-0822-s3/urim_and_thummim">Urim and Thummim</a></span>, by <a href="/contributors.html?q=Rev.+George+Herbert+Box">G. H. Box</a>.</p>
+
+<p><span class="sc"><a href="/article/22-0456-prophet/prophet">Prophet</a></span>, by <a href="/contributors.html?q=William+Robertson+Smith">W. Robertson Smith</a>,
+Owen <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Charles</a> Whitehouse, Adolf Harnack
+of Berlin, and Professor A. C. McGiffert
+of Union Theological Seminary,
+New York.</p>
+
+<p><span class="sc"><a href="/article/15-0336-s3/jehovah">Jehovah</a></span>, by <a href="/contributors.html?q=Rev.+George+Foot+Moore">George Foot Moore</a>, professor
+of history of religion, Harvard.</p>
+
+<p><span class="sc"><a href="/article/18-0210-s2/messiah">Messiah</a></span>, by <a href="/contributors.html?q=William+Robertson+Smith">W. Robertson Smith</a> and
+O. C. Whitehouse.</p>
+
+<p><span class="sc"><a href="/article/09-0792-eschatology/eschatology">Eschatology</a></span>, by Dr. <a href="/contributors.html?q=Rev.+Alfred+Ernest+Garvie">A. E. Garvie</a>,
+principal of New College, Hampstead.</p>
+
+<p><span class="sc"><a href="/article/02-0015-s8/angel">Angel</a></span>, by <a href="/contributors.html?q=Rev.+William+Henry+Bennett">William Henry Bennett</a>,
+professor of Old Testament Exegesis in
+New and Hackney Colleges, London.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Biblical History</span>The third topic is history and for
+this the student should read the article
+<span class="sc"><a href="/article/15-0398-jews/jews">Jews</a></span> (Vol. 15, p. 371), especially the
+part on <i>Old Testament History</i>,
+by <a href="/contributors.html?q=Stanley+Arthur+Cook">S. A. Cook</a>; the
+article <span class="sc"><a href="/article/20-0656-palestine/palestine">Palestine</a></span>, <i>Physical
+Features</i>, by <a href="/contributors.html?q=Robert+Alexander+Stewart+Macalister">R. A. S. Macalister</a>,
+director of excavations for the
+Palestine Exploration Fund, <i>Old Testament
+History</i>, by <a href="/contributors.html?q=Stanley+Arthur+Cook">S. A. Cook</a>, especially
+the treatment of Biblical Religion (pp.
+610–611 of Vol. 20); <span class="sc"><a href="/article/05-0152-canaan-canaanites/canaan__canaanites">Canaan</a></span>, by Dr.
+<a href="/contributors.html?q=Rev.+Thomas+Kelly+Cheyne">Thomas Kelly Cheyne</a>, formerly Oriel
+professor of interpretation of Scripture,
+Oxford; <span class="sc"><a href="/article/13-0550-hittites/hittites">Hittites</a></span>, by <a href="/contributors.html?q=David+George+Hogarth">D. G. Hogarth</a>,
+keeper of the Ashmolean Museum,
+Oxford.</p>
+
+<p><span class="shoulder-heading" id="sh-5">The Article Bible</span>But of course the central article for the
+Bible student is the article <span class="sc"><a href="/article/03-0870-bible/bible">Bible</a></span> (Vol.
+3, p. 849), which is divided into two
+main parts—<i>Old
+Testament</i> and <i>New
+Testament</i>, each of
+these being divided
+in turn into five parts: Canon, Texts and
+Versions, Textual Criticism, Higher Criticism,
+and Chronology. This logical
+arrangement greatly enhances the value
+of the article, which is in itself an excellent
+summary of the subject written
+by the following authorities: Dr. Samuel
+Rolles Driver, professor of Hebrew,
+Oxford, on Old Testament canon and
+chronology; <a href="/contributors.html?q=John+Frederick+Stenning">John Frederick Stenning</a>,
+dean of Wadham College, Oxford, and
+lecturer in Aramaic, on Old Testament
+texts and versions; Dr. George Buchanan
+Gray, professor of Hebrew and Old
+Testament exegesis, Mansfield College,
+Oxford, on Old Testament textual and
+higher criticism; Dr. William Sanday,
+professor of Divinity and canon of
+Christ Church, Oxford, on New Testament
+canon; the <a href="/contributors.html?q=Rev.+Kirsopp+Lake">Rev. Kirsopp Lake</a>,
+author of <i>The Text of the New Testament</i>,
+etc., and professor of New Testament
+exegesis at Leiden, on New Testament
+texts and versions and textual criticism;
+Dr. Francis Crawford Burkitt, professor
+of divinity, Cambridge, and author of
+<i>The Gospel History and its Transmission</i>,
+etc., on New Testament higher criticism;
+and Cuthbert Hamilton Turner, of
+Magdalen College, Oxford, on New Testament
+chronology.</p>
+
+<p>The article <span class="sc"><a href="/article/03-0917-bible-english/bible__english">Bible, English</a></span> (Vol. 3,
+p. 894), by Anna C. Paues, author of
+<i>A Fourteenth Century Biblical Version</i>,
+and Canon Henson of Westminster
+Abbey (on the Revised Version) is accompanied
+by a plate with fac-similes of
+several early English Bibles and is
+besides of special value as giving quotations
+from different versions in Anglo-Saxon
+and later English. The article
+<span class="sc"><a href="/article/03-0928-bible-societies/bible_societies">Bible Societies</a></span> (Vol. 3, p. 905), by the
+Rev. Thomas Herbert Darlow, literary
+superintendent of the British and Foreign
+Bible Society, will also be of value
+to the student.</p>
+
+<p><span class="shoulder-heading" id="sh-6">Inspiration</span>One other general article should be
+studied before the articles on different
+books of the Bible are taken up. This is—<span class="sc"><a href="/article/14-0676-s2/inspiration">Inspiration</a></span>
+(Vol. 14, p. 645), by Dr.
+<a href="/contributors.html?q=Rev.+Alfred+Ernest+Garvie">Alfred Ernest Garvie</a>,
+author of <i>Studies
+in the Inner Life of
+Jesus</i>; it outlines the principal theories of
+inspiration—</p>
+
+<p>(1) Mechanical dictation or verbal inspiration;</p>
+
+<p>(2) Dynamic influence or degrees of
+inspiration;</p>
+
+<p>(3) Essential inspiration, distinguishing
+matters of doctrine and conduct from
+the remaining contents of Scripture;</p>
+
+<p>(4) Vital inspiration, emphasizing religious
+and moral life.</p>
+
+<p><span class="shoulder-heading" id="sh-7">The Hexateuch</span>A course of study in the books of the
+Bible may well start with the outline
+in the article <span class="sc"><a href="/article/03-0870-bible/bible">Bible</a></span>,
+especially pages 851–854
+for the Old Testament.
+For the
+Hexateuch the student should read first
+the brief article <span class="sc"><a href="/article/13-0452-hexateuch/hexateuch">Hexateuch</a></span>; then what
+there is under <span class="sc"><a href="/article/03-0870-bible/bible">Bible</a></span> on pp. 851–852 of
+Vol. 3; then under <span class="sc"><a href="/article/15-0398-jews/jews">Jews</a></span> for the early
+period; and then the articles:</p>
+
+<p><span class="sc"><a href="/article/11-0598-genesis/genesis">Genesis</a></span>, by <a href="/contributors.html?q=Stanley+Arthur+Cook">S. A. Cook</a>; and the
+subsidiary articles: <span class="sc"><a href="/article/07-0232-cosmogony/cosmogony">Cosmogony</a></span>, <span class="sc"><a href="/article/08-0950-eden/eden">Eden</a></span>,
+<span class="sc"><a href="/article/20-0807-s3/paradise">Paradise</a></span>, <span class="sc"><a href="/article/01-0198-s6/adam">Adam</a></span>, <span class="sc"><a href="/article/10-0016-eve/eve">Eve</a></span>, <span class="sc"><a href="/article/01-0070-s2/abel">Abel</a></span>, <span class="sc"><a href="/article/04-0975-s2/cain">Cain</a></span>,
+<span class="sc"><a href="/article/09-0681-enoch/enoch">Enoch</a></span>, <span class="sc"><a href="/article/16-0131-s5/lamech">Lamech</a></span>, <span class="sc"><a href="/article/19-0749-noah/noah">Noah</a></span>, <span class="sc"><a href="/article/07-1000-deluge-the/deluge__the">Deluge</a></span>, <span class="sc"><a href="/article/02-0334-s3/ararat">Ararat</a></span>,
+<span class="sc"><a href="/article/02-0587-s3/ark">Ark</a></span>, <span class="sc"><a href="/article/03-0106-s4/babel">Babel</a></span>, <span class="sc"><a href="/article/05-0152-canaan-canaanites/canaan__canaanites">Canaan</a></span>, <span class="sc"><a href="/article/11-0593-genealogy/genealogy">Genealogy</a></span>,
+<span class="sc"><a href="/article/19-0730-nimrod/nimrod">Nimrod</a></span>, <span class="sc"><a href="/article/12-0893-s1/ham">Ham</a></span>, <span class="sc"><a href="/article/24-0868-shem/shem">Shem</a></span>, <span class="sc"><a href="/article/15-0300-japheth/japheth">Japheth</a></span>, <span class="sc"><a href="/article/01-0100-s6/abraham">Abraham</a></span>,
+<span class="sc"><a href="/article/03-0663-beersheba/beersheba">Beersheba</a></span>, <span class="sc"><a href="/article/18-0111-s3/melchizedek">Melchizedek</a></span>, <span class="sc"><a href="/article/14-0890-s5/isaac">Isaac</a></span>,
+<span class="sc"><a href="/article/18-0442-s5/midian">Midian</a></span>, <span class="sc"><a href="/article/01-0094-s3/abimelech">Abimelech</a></span>, <span class="sc"><a href="/article/14-0903-ishmael/ishmael">Ishmael</a></span>, <span class="sc"><a href="/article/09-0792-esau/esau">Esau</a></span>,
+<span class="sc"><a href="/article/15-0129-jacob/jacob">Jacob</a></span>, <span class="sc"><a href="/article/15-0137-jacob-s-well/jacob_s_well">Jacob’s Well</a></span>, <span class="sc"><a href="/article/03-0849-bethel/bethel">Bethel</a></span>, <span class="sc"><a href="/article/14-0918-s2/israel">Israel</a></span>,
+<span class="sc"><a href="/article/25-0137-s2/simeon">Simeon</a></span>, <span class="sc"><a href="/article/24-0848-shechem/shechem">Shechem</a></span>, <span class="sc"><a href="/article/23-0221-s2/reuben">Reuben</a></span>, <span class="sc"><a href="/article/14-0918-s5/issachar">Issachar</a></span>,
+<span class="sc"><a href="/article/28-0989-zebulun/zebulun">Zebulun</a></span>, <span class="sc">Dan</span>, <span class="sc"><a href="/article/19-0182-s4/naphtali">Naphtali</a></span>, <span class="sc"><a href="/article/02-0775-s3/asher">Asher</a></span>, <span class="sc"><a href="/article/11-0400-s2/gad">Gad</a></span>,
+<span class="sc"><a href="/article/17-0557-s5/manasseh">Manasseh</a></span>, <span class="sc"><a href="/article/15-0540-s3/joseph">Joseph</a></span>, <span class="sc"><a href="/article/03-0759-benjamin/benjamin">Benjamin</a></span>, <span class="sc"><a href="/article/17-0029-lot/lot">Lot</a></span>,
+<span class="sc"><a href="/article/18-0661-s2/moab">Moab</a></span>, <span class="sc"><a href="/article/01-0914-s3/ammonites">Ammonites</a></span>, <span class="sc"><a href="/article/12-0281-goshen-egypt/goshen__egypt_">Goshen</a></span>, etc.</p>
+
+<p><span class="sc"><a href="/article/10-0085-exodus-book-of/exodus__book_of">Exodus, Book of</a></span>, by <a href="/contributors.html?q=John+Frederick+Stenning">John Frederick
+Stenning</a>, and <span class="sc"><a href="/article/10-0089-exodus-the/exodus__the">Exodus</a></span> by <a href="/contributors.html?q=Stanley+Arthur+Cook">S. A. Cook</a>;
+and the articles <span class="sc"><a href="/article/18-0927-s5/moses">Moses</a></span>, <span class="sc"><a href="/article/01-0035-aaron/aaron">Aaron</a></span>, <span class="sc"><a href="/article/22-0891-rameses/rameses">Rameses</a></span>,
+<span class="sc"><a href="/article/21-0695-s3/pithom">Pithom</a></span>, <span class="sc"><a href="/article/01-0824-s1/amalekites">Amalekites</a></span>, <span class="sc"><a href="/article/15-0384-jethro/jethro">Jethro</a></span>, <span class="sc"><a href="/article/20-0950-s1/passover">Passover</a></span>,
+<span class="sc"><a href="/article/25-0154-sinai/sinai">Sinai</a></span>, <span class="sc"><a href="/article/13-0709-s4/horeb">Horeb</a></span>, <span class="sc"><a href="/article/07-0931-decalogue/decalogue">Decalogue</a></span>, <span class="sc"><a href="/article/23-1004-s3/sabbath">Sabbath</a></span>,
+<span class="sc"><a href="/article/04-1031-s6/calf">Calf (Golden)</a></span>, <span class="sc"><a href="/article/26-0344-s2/tabernacle">Tabernacle</a></span>, <span class="sc"><a href="/article/02-0587-s3/ark">Ark</a></span>,
+<span class="sc"><a href="/article/27-0822-s3/urim_and_thummim">Urim and Thummim</a></span>.</p>
+
+<p><span class="sc"><a href="/article/16-0535-leviticus/leviticus">Leviticus</a></span>, by <a href="/contributors.html?q=John+Frederick+Stenning">J. F. Stenning</a> and
+<span class="sc"><a href="/article/16-0532-s3/levites">Levites</a></span>, by <a href="/contributors.html?q=Stanley+Arthur+Cook">S. A. Cook</a>; and <span class="sc"><a href="/article/23-1025-sacrifice/sacrifice">Sacrifice</a></span>,
+<span class="sc">Atonement and Day of Atonement</span>,
+<span class="sc"><a href="/article/18-0706-moloch/moloch">Moloch</a></span>, <span class="sc"><a href="/article/21-0138-pentecost/pentecost">Pentecost</a></span>.</p>
+
+<p><span class="sc"><a href="/article/19-0879-s3/number">Numbers</a></span>, by Dr. <a href="/contributors.html?q=Rev.+James+Alexander+Paterson">James Alexander
+Paterson</a>, professor of Hebrew, New
+College, Edinburgh; and the articles
+<span class="sc"><a href="/article/03-0248-s5/balaam">Balaam</a></span>, <span class="sc"><a href="/article/13-0205-hebron/hebron">Hebron</a></span>.</p>
+
+<p><span class="sc"><a href="/article/08-0132-deuteronomy/deuteronomy">Deuteronomy</a></span>, by <a href="/contributors.html?q=Rev.+James+Alexander+Paterson">Dr. Paterson</a>, and
+the articles <span class="sc"><a href="/article/10-0116-ezra/ezra">Ezra</a></span>, <span class="sc"><a href="/article/19-0368-s1/nehemiah">Nehemiah</a></span>, and
+<span class="sc"><a href="/article/15-0547-s3/josiah">Josiah</a></span>.</p>
+
+<p><span class="sc"><a href="/article/15-0544-s3/joshua__book_of">Joshua</a></span>, by <a href="/contributors.html?q=Stanley+Arthur+Cook">S. A. Cook</a>, and the articles
+<span class="sc"><a href="/article/01-0824-s1/amalekites">Amalekites</a></span>, <span class="sc"><a href="/article/11-0962-s2/gibeonites">Gibeonites</a></span>, <span class="sc"><a href="/article/13-0556-hivites/hivites">Hivites</a></span>,
+<span class="sc"><a href="/article/21-0423-philistines/philistines">Philistines</a></span>, <span class="sc"><a href="/article/11-0939-gezer/gezer__the_kazir_of_tethmosis__thothmes__iii">Gezer</a></span>, <span class="sc"><a href="/article/15-0562-s3/judah">Judah</a></span>, <span class="sc"><a href="/article/04-1013-caleb/caleb">Caleb</a></span>,
+<span class="sc"><a href="/article/24-0848-shechem/shechem">Shechem</a></span>.</p>
+
+<p><span class="sc">Judges, Book of</span>, by <a href="/contributors.html?q=Stanley+Arthur+Cook">S. A. Cook</a>, and
+the articles, <span class="sc"><a href="/article/20-0399-s4/othniel">Othniel</a></span>, <span class="sc"><a href="/article/09-0148-ehud/ehud">Ehud</a></span>, <span class="sc"><a href="/article/07-0928-deborah/deborah">Deborah</a></span>,
+<span class="sc"><a href="/article/11-0961-s6/gibeon">Gibeon</a></span>, <span class="sc"><a href="/article/01-0094-s3/abimelech">Abimelech</a></span>, <span class="sc"><a href="/article/15-0347-s2/jephthah">Jephthah</a></span>, <span class="sc"><a href="/article/24-0890-shibboleth/shibboleth">Shibboleth</a></span>,
+<span class="sc"><a href="/article/24-0133-s5/samson">Samson</a></span>, <span class="sc"><a href="/article/09-0708-ephod/ephod">Ephod</a></span>, <span class="sc"><a href="/article/26-0668-s2/teraphim">Teraphim</a></span>,
+<span class="sc"><a href="/article/18-0377-micah/micah">Micah</a></span> (of Ephraim).</p>
+
+<p><span class="sc"><a href="/article/24-0135-s2/samuel__books_of">Samuel, Books of</a></span>, and <span class="sc"><a href="/article/24-0134-s5/samuel">Samuel</a></span>, by
+<a href="/contributors.html?q=Stanley+Arthur+Cook">S. A. Cook</a>; and the articles <span class="sc"><a href="/article/09-0288-eli/eli">Eli</a></span>, <span class="sc"><a href="/article/24-0894-s2/shiloh">Shiloh</a></span>,
+<span class="sc"><a href="/article/02-0587-s3/ark">Ark</a></span>, <span class="sc"><a href="/article/24-0250-s5/saul">Saul</a></span>, <span class="sc"><a href="/article/15-0524-jonathan/jonathan">Jonathan</a></span>, <span class="sc"><a href="/article/07-0877-david/david">David</a></span>, <span class="sc"><a href="/article/12-0242-s1/goliath">Goliath</a></span>,
+<span class="sc"><a href="/article/01-0468-s6/ahithophel">Ahithophel</a></span>, <span class="sc"><a href="/article/15-0302-jashar-book-of/jashar__book_of">Jashar</a></span>, <span class="sc"><a href="/article/01-0104-s2/absalom">Absalom</a></span>, <span class="sc"><a href="/article/15-0347-s4/jerahmeel">Jerahmeel</a></span>,
+<span class="sc"><a href="/article/15-0757-s3/kenites">Kenites</a></span>.</p>
+
+<p><span class="sc">Kings, Books of</span>, by <a href="/contributors.html?q=Stanley+Arthur+Cook">S. A. Cook</a>; and
+the articles <span class="sc"><a href="/article/07-0877-david/david">David</a></span>, <span class="sc"><a href="/article/01-0243-s3/adonijah">Adonijah</a></span>, <span class="sc"><a href="/article/25-0378-solomon/solomon">Solomon</a></span>,
+<span class="sc"><a href="/article/26-0633-temple/temple">Temple</a></span>, <span class="sc"><a href="/article/15-0355-jerusalem/jerusalem">Jerusalem</a></span>, <span class="sc"><a href="/article/01-0093-abiathar/abiathar">Abiathar</a></span>, <span class="sc"><a href="/article/15-0444-s6/joab">Joab</a></span>,
+<span class="sc"><a href="/article/09-0711-ephraim/ephraim">Ephraim</a></span>, <span class="sc"><a href="/article/15-0351-s3/jeroboam">Jeroboam</a></span>, <span class="sc"><a href="/article/23-0065-rehoboam/rehoboam">Rehoboam</a></span>, <span class="sc"><a href="/article/02-0757-s5/asa">Asa</a></span>,
+<span class="sc"><a href="/article/20-0128-omri/omri">Omri</a></span>, <span class="sc"><a href="/article/01-0466-s7/ahab">Ahab</a></span>, <span class="sc"><a href="/article/15-0336-s2/jehoshaphat">Jehoshaphat</a></span>, <span class="sc"><a href="/article/15-0335-s5/jehoram">Jehoram</a></span>,
+<span class="sc"><a href="/article/02-0872-s3/athaliah">Athaliah</a></span>, <span class="sc"><a href="/article/01-0468-s3/ahaziah">Ahaziah</a></span>, <span class="sc"><a href="/article/09-0290-elijah/elijah">Elijah</a></span>, <span class="sc"><a href="/article/05-0370-carmel/carmel">Carmel</a></span>,
+<span class="sc"><a href="/article/15-0536-jordan/jordan">Jordan</a></span>, <span class="sc"><a href="/article/09-0297-elisha/elisha">Elisha</a></span>, <span class="sc"><a href="/article/15-0339-s2/jehu">Jehu</a></span>, <span class="sc"><a href="/article/22-0969-s4/rechabites">Rechabites</a></span>,
+<span class="sc"><a href="/article/15-0449-s5/joash">Joash</a></span>, <span class="sc"><a href="/article/03-0094-s5/azariah">Azariah</a></span>, <span class="sc"><a href="/article/13-0803-hosea/hosea">Hosea</a></span>, <span class="sc"><a href="/article/27-0855-uzziah/uzziah">Uzziah</a></span>, <span class="sc"><a href="/article/01-0468-s2/ahaz">Ahaz</a></span>,
+<span class="sc"><a href="/article/14-0895-s2/isaiah">Isaiah</a></span>, <span class="sc"><a href="/article/13-0456-s3/hezekiah">Hezekiah</a></span>, <span class="sc"><a href="/article/17-0557-s5/manasseh">Manasseh</a></span>, <span class="sc"><a href="/article/15-0547-s3/josiah">Josiah</a></span>,
+<span class="sc"><a href="/article/15-0335-s2/jehoiachin">Jehoiachin</a></span>, <span class="sc"><a href="/article/24-0122-samaria/samaria">Samaria</a></span>.</p>
+
+<p><span class="sc"><a href="/article/06-0314-chronicle/chronicle">Chronicles</a></span>, by <a href="/contributors.html?q=William+Robertson+Smith">W. Robertson Smith</a>
+and <a href="/contributors.html?q=Stanley+Arthur+Cook">S. A. Cook</a>; and the articles <span class="sc"><a href="/article/01-0104-s2/absalom">Absalom</a></span>,
+<span class="sc"><a href="/article/07-0877-david/david">David</a></span>, <span class="sc"><a href="/article/27-0855-uzziah/uzziah">Uzziah</a></span>, <span class="sc"><a href="/article/15-0560-jubilees-book-of/jubilees__book_of">Jubilees</a></span>, <span class="sc"><a href="/article/18-0443-midrash/midrash">Midrash</a></span>,
+<span class="sc"><a href="/article/16-0532-s3/levites">Levites</a></span> and many mentioned above under
+<span class="sc"><a href="/article/24-0134-s5/samuel">Samuel</a></span> and <span class="sc"><a href="/article/15-0834-king/king">Kings</a></span>.</p>
+
+<p><span class="sc"><a href="/article/10-0120-ezra-and-nehemiah-books-of/ezra_and_nehemiah__books_of">Ezra and Nehemiah, Books of</a></span>, by
+<a href="/contributors.html?q=Stanley+Arthur+Cook">S. A. Cook</a>; the article <span class="sc"><a href="/article/10-0116-ezra/ezra">Ezra</a></span>; and, as the
+books are to be grouped with <span class="sc"><a href="/article/06-0314-chronicle/chronicle">Chronicles</a></span>,
+that article and <span class="sc"><a href="/article/08-0132-deuteronomy/deuteronomy">Deuteronomy</a></span>, and the
+article <span class="sc"><a href="/article/24-0123-s2/samaritans">Samaritans</a></span> and those on the
+two “apocryphal” books, <span class="sc"><a href="/article/10-0116-ezra-third-book-of/ezra__third_book_of">Ezra, Third
+Book of</a></span>, and <span class="sc"><a href="/article/10-0116-ezra/ezra">Ezra, Fourth Book of</a></span>,
+by Dr. <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Robert Henry Charles</a>, lecturer
+in Biblical studies, Oxford. See also
+<span class="sc"><a href="/article/26-0312-s4/synagogue">Synagogue</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-8">The Prophets</span>For the prophetical books the article
+<span class="sc"><a href="/article/22-0456-prophet/prophet">Prophet</a></span> as an
+introduction, and
+then:</p>
+
+<p><span class="sc"><a href="/article/14-0895-s2/isaiah">Isaiah</a></span>, by <a href="/contributors.html?q=Rev.+Thomas+Kelly+Cheyne">T. K. Cheyne</a>; and, for
+outline, under <span class="sc"><a href="/article/03-0870-bible/bible">Bible</a></span>, Vol. 3, p. 853; and
+<span class="sc"><a href="/article/09-0364-emmanuel/emmanuel">Emmanuel</a></span> (on chap. 7) and <span class="sc"><a href="/article/18-0210-s2/messiah">Messiah</a></span>
+and <span class="sc"><a href="/article/02-0922-s2/atonement">Atonement</a></span> (on chap. 53).</p>
+
+<p><span class="sc"><a href="/article/15-0348-s3/jeremiah">Jeremiah</a></span>, by <a href="/contributors.html?q=Rev.+Thomas+Kelly+Cheyne">T. K. Cheyne</a>; and the
+articles <span class="sc"><a href="/article/03-0470-baruch/baruch">Baruch</a></span>, <span class="sc"><a href="/article/28-0991-zedekiah/zedekiah">Zedekiah</a></span>, <span class="sc"><a href="/article/19-0347-nebuchadrezzar/nebuchadrezzar">Nebuchadrezzar</a></span>,
+<span class="sc"><a href="/article/08-0976-edom/edom">Edom</a></span>, <span class="sc"><a href="/article/01-0914-s3/ammonites">Ammonites</a></span>, <span class="sc"><a href="/article/18-0661-s2/moab">Moab</a></span>.</p>
+
+<p><span class="sc"><a href="/article/16-0146-s2/lamentations">Lamentations</a></span>, by the <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Rev. Charles</a>
+James Ball, lecturer in <span class="sc">Assyriology</span>,
+Oxford, with peculiarly valuable information
+about poetical structure and
+acrostic verse, some suggested emendations
+of the text, and a summary of the
+arguments in regard to the authorship.</p>
+
+<p><span class="sc"><a href="/article/10-0114-s5/ezekiel">Ezekiel</a></span>, by <a href="/contributors.html?q=Crawford+Howell+Toy">Professor C. H. Toy</a> of
+Harvard University; and the articles
+<span class="sc"><a href="/article/28-0991-zedekiah/zedekiah">Zedekiah</a></span>, and, for certain literary
+forms, <span class="sc"><a href="/article/01-0731-s4/allegory">Allegory</a></span> and <span class="sc"><a href="/article/20-0803-s2/parable">Parable</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-9">Minor Prophets</span>The Minor Prophets: see Vol. 3, p.
+853; Vol. 22, p.
+443; Vol. 13, p.
+183.</p>
+
+<p><span class="sc"><a href="/article/13-0803-hosea/hosea">Hosea</a></span>, by <a href="/contributors.html?q=William+Robertson+Smith">W. Robertson Smith</a> and the
+<a href="/contributors.html?q=Rev.+Henry+Wheeler+Robinson">Rev. Henry Wheeler Robinson</a>, professor
+of church history, Rawdon College,
+Leeds; articles <span class="sc"><a href="/article/03-0103-s2/baal">Baal</a></span>, <span class="sc"><a href="/article/04-1031-s6/calf">Calf (Golden)</a></span>,
+etc.</p>
+
+<p><span class="sc"><a href="/article/15-0455-s2/joel">Joel</a></span>, by <a href="/contributors.html?q=William+Robertson+Smith">W. Robertson Smith</a> and
+<a href="/contributors.html?q=Rev.+Thomas+Kelly+Cheyne">T. K. Cheyne</a>; and <span class="sc"><a href="/article/09-0792-eschatology/eschatology">Eschatology</a></span>, etc.</p>
+
+<p><span class="sc"><a href="/article/01-0928-s4/amos">Amos</a></span>, by <a href="/contributors.html?q=Rev.+Thomas+Kelly+Cheyne">T. K. Cheyne</a>; <span class="sc"><a href="/article/15-0351-s3/jeroboam">Jeroboam</a></span>,
+etc.</p>
+
+<p><span class="sc"><a href="/article/19-0982-s4/obadiah">Obadiah</a></span>, by <a href="/contributors.html?q=William+Robertson+Smith">W. Robertson Smith</a> and
+<a href="/contributors.html?q=Rev.+Henry+Wheeler+Robinson">H. W. Robinson</a>; and <span class="sc"><a href="/article/08-0976-edom/edom">Edom</a></span>, <span class="sc"><a href="/article/09-0792-eschatology/eschatology">Eschatology</a></span>,
+etc.</p>
+
+<p><span class="sc"><a href="/article/15-0523-s3/jonah">Jonah</a></span>, by <a href="/contributors.html?q=Rev.+Thomas+Kelly+Cheyne">T. K. Cheyne</a>; and the article
+<span class="sc"><a href="/article/19-0730-nineveh/nineveh">Nineveh</a></span>, and, for an explanation of
+the “great fish,” <span class="sc"><a href="/article/07-0232-cosmogony/cosmogony">Cosmogony</a></span>.</p>
+
+<p><span class="sc"><a href="/article/18-0377-micah/micah">Micah</a></span>, by <a href="/contributors.html?q=William+Robertson+Smith">W. Robertson Smith</a> and
+<a href="/contributors.html?q=Rev.+Henry+Wheeler+Robinson">H. W. Robinson</a>; and <span class="sc"><a href="/article/24-0122-samaria/samaria">Samaria</a></span>, <span class="sc"><a href="/article/13-0472-s3/high_place">High
+Place</a></span>, <span class="sc"><a href="/article/18-0210-s2/messiah">Messiah</a></span>, <span class="sc"><a href="/article/09-0792-eschatology/eschatology">Eschatology</a></span>.</p>
+
+<p><span class="sc"><a href="/article/19-0168-s4/nahum">Nahum</a></span>, by <a href="/contributors.html?q=Rev.+George+Herbert+Box">G. H. Box</a>; <span class="sc"><a href="/article/19-0730-nineveh/nineveh">Nineveh</a></span>, etc.</p>
+
+<p><span class="sc"><a href="/article/12-0807-habakkuk/habakkuk">Habakkuk</a></span>, by <a href="/contributors.html?q=Rev.+Henry+Wheeler+Robinson">H. W. Robinson</a>;
+<span class="sc">Chaldaean</span>, etc.</p>
+
+<p><span class="sc"><a href="/article/28-1000-zephaniah/zephaniah">Zephaniah</a></span>, by <a href="/contributors.html?q=Stanley+Arthur+Cook">S. A. Cook</a>; and <span class="sc"><a href="/article/03-0103-s2/baal">Baal</a></span>,
+<span class="sc"><a href="/article/18-0706-moloch/moloch">Moloch</a></span>, <span class="sc"><a href="/article/07-0241-costume/costume">Costume</a></span>, <i>Oriental</i> (Vol. 7,
+p. 226 sq., for chap. 1, v. 8), etc.</p>
+
+<p><span class="sc"><a href="/article/12-0839-s8/haggai">Haggai</a></span>, by <a href="/contributors.html?q=William+Robertson+Smith">W. Robertson Smith</a> and
+Dr. A. J. Grieve, professor at the United
+Independent College, Bradford; and the
+article <span class="sc"><a href="/article/26-0633-temple/temple">Temple</a></span>.</p>
+
+<p><span class="sc"><a href="/article/28-0989-zechariah/zechariah">Zechariah</a></span>, by <a href="/contributors.html?q=Julius+Wellhausen">Julius Wellhausen</a>,
+professor at Göttingen, and H. W.
+<a href="/contributors.html?q=Rev.+Henry+Wheeler+Robinson">Robinson</a>; and the articles <span class="sc"><a href="/article/02-0015-s8/angel">Angel</a></span>, <span class="sc"><a href="/article/26-0633-temple/temple">Temple</a></span>,
+<span class="sc"><a href="/article/18-0210-s2/messiah">Messiah</a></span>, <span class="sc"><a href="/article/28-1013-zion/zion">Zion</a></span>, <span class="sc"><a href="/article/15-0300-japheth/japheth">Japheth</a></span> and <span class="sc"><a href="/article/14-0761-ionians/ionians">Ionians</a></span>
+(for “Javan” of chap. 9, v. 13).</p>
+
+<p><span class="sc"><a href="/article/17-0470-malachi/malachi">Malachi</a></span>, by <a href="/contributors.html?q=William+Robertson+Smith">W. Robertson Smith</a> and
+<a href="/contributors.html?q=Rev.+Henry+Wheeler+Robinson">H. W. Robinson</a>.</p>
+
+<p><span class="shoulder-heading" id="sh-10">Psalms</span><span class="sc"><a href="/article/22-0550-s4/psalm">Psalms</a></span> is by <a href="/contributors.html?q=William+Robertson+Smith">W. Robertson Smith</a> and
+Dr. Robert Hatch Kennett, Canon of
+Ely and professor of Hebrew,
+Cambridge; read the articles
+<span class="sc"><a href="/article/12-0880-s3/hallel">Hallel</a></span>, <span class="sc"><a href="/article/07-0877-david/david">David</a></span>, <span class="sc"><a href="/article/25-0378-solomon/solomon">Solomon</a></span>,
+<span class="sc"><a href="/article/26-0633-temple/temple">Temple</a></span>, <span class="sc"><a href="/article/16-0532-s3/levites">Levites</a></span> (for Levitical
+Psalms), <span class="sc"><a href="/article/02-0758-s3/asaph">Asaph</a></span>, <span class="sc"><a href="/article/06-0314-chronicle/chronicle">Chronicles</a></span>, <span class="sc"><a href="/article/10-0116-ezra/ezra">Ezra</a></span>,
+<span class="sc"><a href="/article/22-0556-s2/psaltery">Psaltery</a></span>, <span class="sc"><a href="/article/16-0817-s2/liturgy">Liturgy</a></span>, the section of Hebrew
+Hymnody in, and the whole article
+<span class="sc"><a href="/article/14-0193-hymns/hymns">Hymns</a></span>; <span class="sc"><a href="/article/03-0917-bible-english/bible__english">Bible, English</a></span>, for the version
+of the Psalms in the English Prayer
+Book from the Great Bible; and, for
+Psalms 9, 10, 25, 34, 37, 111, 112, 119
+and 145, and the article <span class="sc"><a href="/article/01-0187-s4/acrostic">Acrostic</a></span>. See
+also <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">R. H. Charles</a>’s article on the apocryphal
+book, <span class="sc"><a href="/article/25-0381-solomon-psalms-of/solomon__psalms_of">Solomon, Psalms of</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-11">Wisdom Literature</span>The student should read the article
+<span class="sc"><a href="/article/28-0771-wisdom-literature/wisdom_literature">Wisdom Literature</a></span>, by Prof. C. H.
+<a href="/contributors.html?q=Crawford+Howell+Toy">Toy</a> of Harvard as an
+introduction to <span class="sc"><a href="/article/22-0521-s3/proverb">Proverbs</a></span>,
+<span class="sc"><a href="/article/15-0449-s6/job">Job</a></span> and <span class="sc"><a href="/article/08-0876-ecclesiastes/ecclesiastes">Ecclesiastes</a></span>
+(and to the
+apocryphal <span class="sc"><a href="/article/28-0770-wisdom-book-of/wisdom__book_of">Wisdom, Book of</a></span>—see
+article by <a href="/contributors.html?q=Crawford+Howell+Toy">Professor Toy</a>; <span class="sc"><a href="/article/08-0895-ecclesiasticus/ecclesiasticus">Ecclesiasticus</a></span>,—see
+article by <a href="/contributors.html?q=Rev.+William+Emery+Barnes">William Emery
+Barnes</a>, Hulsean professor of Divinity,
+Cambridge; <span class="sc"><a href="/article/26-1081-s3/tobit__the_book_of">Tobit</a></span>,—see article by <a href="/contributors.html?q=St+George+Stock">St.
+George Stock</a>, lecturer University of Birmingham;
+and 4th <span class="sc"><a href="/article/17-0212-s3/maccabees">Maccabees</a></span>—see the
+article <span class="sc"><a href="/article/17-0212-s3/maccabees">Maccabees</a></span>, by Dr. <a href="/contributors.html?q=Rev.+William+Fairweather">William Fairweather</a>,
+editor of Maccabees in the
+“Cambridge Bible for Schools.”)</p>
+
+<p><span class="sc"><a href="/article/22-0521-proverbs-book-of/proverbs__book_of">Proverbs, Book of</a></span>, by <a href="/contributors.html?q=Crawford+Howell+Toy">C. H. Toy</a>;
+and the articles <span class="sc"><a href="/article/25-0378-solomon/solomon">Solomon</a></span>, <span class="sc"><a href="/article/22-0521-s3/proverb">Proverb</a></span> and,
+for other famous collections, <span class="sc"><a href="/article/22-0644-publilius-syrus/publilius__less_correctly_publius__syrus">Publilius</a></span>,
+<span class="sc"><a href="/article/09-0759-s5/erasmus__desiderius">Erasmus</a></span>, etc.</p>
+
+<p><span class="sc"><a href="/article/15-0449-s6/job">Job</a></span>, by Dr. <a href="/contributors.html?q=Rev.+Andrew+B.+Davidson">Andrew B. Davidson</a>, late
+professor of Oriental languages, New College,
+Edinburgh, and author of a Commentary
+on Job, and <a href="/contributors.html?q=Crawford+Howell+Toy">Prof. C. H. Toy</a>;
+and the articles <span class="sc"><a href="/article/08-0136-devil/devil">Devil</a></span> (for the meaning of
+“Satan” in chap. 1, v. 6); <span class="sc"><a href="/article/23-1000-sabaeans/sabaeans">Sabaeans</a></span>, <span class="sc"><a href="/article/27-0855-uz/uz">Uz</a></span>,
+<span class="sc"><a href="/article/03-0675-behemoth/behemoth">Behemoth</a></span>, etc.</p>
+
+<p><span class="sc"><a href="/article/08-0876-ecclesiastes/ecclesiastes">Ecclesiastes</a></span>, by <a href="/contributors.html?q=Crawford+Howell+Toy">Professor Toy</a>; the
+articles <span class="sc"><a href="/article/21-0300-pessimism/pessimism">Pessimism</a></span>, <span class="sc"><a href="/article/09-0792-eschatology/eschatology">Eschatology</a></span>, <span class="sc"><a href="/article/23-1034-s3/sadducees">Sadducees</a></span>.</p>
+
+<p><span class="sc"><a href="/article/05-0226-canticles/canticles">Canticles</a></span>, by <a href="/contributors.html?q=William+Robertson+Smith">W. Robertson Smith</a>
+and <a href="/contributors.html?q=Rev.+Henry+Wheeler+Robinson">H. W. Robinson</a>.</p>
+
+<p><span class="shoulder-heading" id="sh-12">Other Old Testament Books</span><span class="sc"><a href="/article/09-0828-s2/esther">Esther</a></span>, by <a href="/contributors.html?q=Rev.+Thomas+Kelly+Cheyne">T. K. Cheyne</a> and, on the
+“additions,” Dr.
+Robert Henry
+<a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Charles</a>, Grinfield
+lecturer, Oxford;
+and the articles
+<span class="sc"><a href="/article/01-0467-s3/ahasuerus">Ahasuerus</a></span>, <span class="sc"><a href="/article/26-0179-s4/susa">Susa</a></span>, <span class="sc"><a href="/article/07-0232-cosmogony/cosmogony">Cosmogony</a></span>, <span class="sc"><a href="/article/22-0677-s2/purim">Purim</a></span>.</p>
+
+<p><span class="sc"><a href="/article/23-0983-s2/ruth__book_of">Ruth</a></span>, by <a href="/contributors.html?q=William+Robertson+Smith">W. Robertson Smith</a> and S.
+A. <a href="/contributors.html?q=Stanley+Arthur+Cook">Cook</a>; and the articles <span class="sc"><a href="/article/03-0850-bethlehem/bethlehem">Bethlehem</a></span>,
+<span class="sc"><a href="/article/04-1013-caleb/caleb">Caleb</a></span>, and, for the marriage custom
+underlying the story, the article on
+<span class="sc"><a href="/article/16-0531-s5/levirate">Levirate</a></span>.</p>
+
+<p><span class="sc"><a href="/article/07-0828-daniel/daniel">Daniel</a></span>, by John Dyneley Prince, professor
+of Semitic languages, Columbia
+University, and, for the “additions,” Susannah,
+Bel and the Dragon, and The
+Song of the Three Children, the Rev. <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Dr.
+Robert Henry Charles</a>; the article <span class="sc"><a href="/article/24-0647-semitic-languages/semitic_languages">Semitic
+Languages</a></span> for the Aramaic of chapters
+2 (from verse 4) to 7; <span class="sc"><a href="/article/02-0015-s8/angel">Angels</a></span>, <span class="sc"><a href="/article/11-0399-s5/gabriel">Gabriel</a></span>,
+<span class="sc"><a href="/article/18-0379-s7/michael">Michael</a></span>; <span class="sc">Chaldaean</span> and <span class="sc"><a href="/article/05-0841-chaldee/chaldee">Chaldee</a></span>;
+<span class="sc"><a href="/article/03-0731-belshazzar/belshazzar">Belshazzar</a></span>; <span class="sc"><a href="/article/02-0181-s5/apocalyptic_literature">Apocalyptic Literature</a></span>
+(for chapters 7–12).</p>
+
+<p><span class="shoulder-heading" id="sh-13">Apocrypha</span>Before passing to the New Testament
+the student should read the article <span class="sc"><a href="/article/02-0187-s3/apocryphal_literature">Apocryphal
+Literature</a></span>, by <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Robert Henry
+Charles</a>; and the articles
+on the separate
+books: <span class="sc"><a href="/article/10-0116-ezra-third-book-of/ezra__third_book_of">Ezra, Third
+Book of</a></span> (1 Esdras) and <span class="sc"><a href="/article/10-0118-ezra-fourth-book-of/ezra__fourth_book__or_apocalypse__of">Ezra, Fourth
+Book</a></span> (or <span class="sc"><a href="/article/02-0181-s3/apocalypse">Apocalypse</a></span>), both by <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Robert
+Henry Charles</a>; <span class="sc"><a href="/article/15-0569-s2/judith__the_book_of">Judith</a></span>, by the same
+scholar; <span class="sc"><a href="/article/08-0895-ecclesiasticus/ecclesiasticus">Ecclesiasticus</a></span>, by Dr. <a href="/contributors.html?q=Rev.+William+Emery+Barnes">W. E.
+Barnes</a>; <span class="sc"><a href="/article/03-0470-baruch/baruch">Baruch</a></span>, by <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">R. H. Charles</a>;
+<span class="sc"><a href="/article/26-1081-s3/tobit__the_book_of">Tobit</a></span>, by <a href="/contributors.html?q=St+George+Stock">St. George Stock</a>; <span class="sc"><a href="/article/15-0350-s2/jeremy__epistle_of">Jeremy,
+Epistle of</a></span>, by <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">R. H. Charles</a>; <span class="sc"><a href="/article/17-0213-s2/maccabees__books_of">Maccabees,
+Books of</a></span>, and <span class="sc"><a href="/article/17-0212-s3/maccabees">Maccabees</a></span>, by the
+Rev. <a href="/contributors.html?q=Rev.+William+Fairweather">Dr. William Fairweather</a>; <span class="sc"><a href="/article/17-0558-manasses-prayer-of/manasses__prayer_of">Manasses,
+Prayer of</a></span>, by <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">R. H. Charles</a>, and
+<span class="sc"><a href="/article/17-0557-s5/manasseh">Manasseh</a></span>; and <span class="sc"><a href="/article/28-0770-wisdom-book-of/wisdom__book_of">Wisdom, Book of</a></span>, by
+<a href="/contributors.html?q=Crawford+Howell+Toy">C. H. Toy</a>.</p>
+
+<p><span class="shoulder-heading" id="sh-14">New Testament</span>The general articles preliminary to a
+study of the New Testament are:—besides
+the part of the article <span class="sc"><a href="/article/03-0870-bible/bible">Bible</a></span> dealing
+with New Testament,
+Canon, Criticism,
+Text, Chronology,
+etc.—the following:</p>
+
+<p><span class="sc"><a href="/article/18-0210-s2/messiah">Messiah</a></span>, by <a href="/contributors.html?q=William+Robertson+Smith">W. Robertson Smith</a> and
+Dr. Owen <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Charles</a> Whitehouse, lecturer
+in Hebrew, Cheshunt College, Cambridge.</p>
+
+<p><span class="sc"><a href="/article/15-0373-jesus-christ/jesus_christ">Jesus Christ</a></span>, by the Very Rev. Dr.
+Joseph Armitage <a href="/contributors.html?q=Rev.+Henry+Wheeler+Robinson">Robinson</a>, dean of
+Westminster, constituting a critical outline
+of the gospel story.</p>
+
+<p><span class="sc"><a href="/article/06-0296-christianity/christianity">Christianity</a></span>, by Dr. <a href="/contributors.html?q=Rev.+George+William+Knox">George William
+Knox</a>, late professor of philosophy and
+history of religion, Union Theological
+Seminary, New York City.</p>
+
+<p>In outlining a course of study on the
+New Testament, the order of the books as
+printed in English Bibles will not be followed
+absolutely. Here, as in studying
+the Old Testament, a rearrangement
+may be worth while for topical study.</p>
+
+<p><span class="shoulder-heading" id="sh-15">The Gospels</span>But first the student should read the
+article <span class="sc"><a href="/article/12-0282-s7/gospel">Gospel</a></span>, by the Rev. Dr. Vincent
+Henry <a href="/contributors.html?q=Rev.+Vincent+Henry+Stanton">Stanton</a>, professor of divinity,
+Cambridge, and author
+of <i>The Gospels
+as Historical Documents</i>,
+etc.; and the article by Dr. Kirsopp
+<a href="/contributors.html?q=Rev.+Kirsopp+Lake">Lake</a> on <span class="sc"><a href="/article/26-0479-tatian/tatian">Tatian</a></span> the compiler of the
+Diatessaron or “Gospel of the Four
+Gospels.”</p>
+
+<p>For the gospel story the student should
+read the following separate articles:</p>
+
+<p><span class="sc"><a href="/article/15-0460-s2/john_the_baptist">John the Baptist</a></span>, <span class="sc"><a href="/article/15-0539-s4/joris__david">Herod Antipas</a></span>,
+<span class="sc"><a href="/article/24-0099-salome/salome">Salome</a></span>, <span class="sc"><a href="/article/15-0540-s3/joseph">Joseph</a></span> (Vol. 15, p. 513, col. 2),
+<span class="sc"><a href="/article/17-0828-s2/mary">Mary</a></span>, <span class="sc"><a href="/article/14-0353-s2/immaculate_conception__the">Immaculate Conception</a></span>, <span class="sc"><a href="/article/03-0850-bethlehem/bethlehem">Bethlehem</a></span>,
+<span class="sc"><a href="/article/19-0334-nazareth/nazareth">Nazareth</a></span>, <span class="sc"><a href="/article/19-0334-nazarenes/nazarenes">Nazarenes</a></span>, <span class="sc"><a href="/article/08-0869-ebionites/ebionites">Ebionites</a></span>,
+<span class="sc"><a href="/article/11-0421-s3/galilee">Galilee</a></span>, <span class="sc"><a href="/article/05-0264-capernaum/capernaum">Capernaum</a></span>, <span class="sc"><a href="/article/05-0152-cana/cana">Cana</a></span>, <span class="sc"><a href="/article/15-0536-jordan/jordan">Jordan</a></span>,
+<span class="sc"><a href="/article/21-0302-s6/peter">Peter</a></span>, <span class="sc"><a href="/article/01-1025-s2/andrew">Andrew</a></span>, <span class="sc"><a href="/article/15-0151-james/james">James</a></span>, <span class="sc"><a href="/article/15-0459-john/john">John</a></span>,
+<span class="sc"><a href="/article/21-0397-s4/philip">Philip</a></span>, <span class="sc"><a href="/article/03-0467-bartholomew-fair/bartholomew_fair">Bartholomew</a></span>, <span class="sc"><a href="/article/26-0903-s3/thomas">Thomas</a></span>, <span class="sc"><a href="/article/17-0914-s4/matthew__st">Matthew</a></span>,
+<span class="sc"><a href="/article/15-0563-judas-tree/judas-tree">Judas</a></span>, <span class="sc"><a href="/article/08-0019-demonology/demonology">Demonology</a></span>, <span class="sc"><a href="/article/22-0187-s3/possession">Possession</a></span>,
+<span class="sc"><a href="/article/10-0092-exorcism/exorcism">Exorcism</a></span>, <span class="sc"><a href="/article/18-0597-s4/miracle">Miracle</a></span>, <span class="sc">Mary Magdalene</span>,
+<span class="sc"><a href="/article/19-0280-nathanael/nathanael">Nathanael</a></span>, <span class="sc"><a href="/article/21-0367-pharisees/pharisees">Pharisees</a></span>, <span class="sc"><a href="/article/23-1034-s3/sadducees">Sadducees</a></span>,
+<span class="sc"><a href="/article/23-1004-s3/sabbath">Sabbath</a></span>, <span class="sc"><a href="/article/20-0950-s1/passover">Passover</a></span>, <span class="sc"><a href="/article/09-0900-s4/eucharist">Eucharist</a></span>, <span class="sc"><a href="/article/20-0803-s2/parable">Parable</a></span>,
+<span class="sc"><a href="/article/04-0969-s6/caesarea_philippi">Caesarea Philippi</a></span>, <span class="sc"><a href="/article/15-0562-s2/judaea">Judaea</a></span>, <span class="sc"><a href="/article/15-0355-jerusalem/jerusalem">Jerusalem</a></span>,
+<span class="sc"><a href="/article/03-0849-bethany/bethany">Bethany</a></span>, <span class="sc"><a href="/article/20-0112-olives-mount-of/olives__mount_of">Olives, Mount of</a></span>;
+<span class="sc"><a href="/article/11-0935-s3/gethsemane">Gethsemane</a></span>, <span class="sc"><a href="/article/21-0629-s5/pilate__pontius">Pilate</a></span>, <span class="sc"><a href="/article/05-0082-calvary/calvary">Calvary</a></span>, <span class="sc"><a href="/article/15-0541-s2/joseph_of_arimathaea">Joseph
+of Arimathaea</a></span>.</p>
+
+<p>In studying the separate Gospels, let
+the reader follow the order suggested in
+the articles <span class="sc"><a href="/article/12-0282-s7/gospel">Gospel</a></span> and <span class="sc"><a href="/article/15-0373-jesus-christ/jesus_christ">Jesus Christ</a></span>.</p>
+
+<p>First he should study the article <span class="sc"><a href="/article/17-0745-s3/mark__gospel_of_st">Mark,
+Gospel of</a></span>, by <a href="/contributors.html?q=Rev.+Vincent+Henry+Stanton">Dr. Stanton</a>; the article
+on <span class="sc">St. Mark</span>, by Dr. <a href="/contributors.html?q=James+Bartlett">James Vernon
+Bartlett</a>, professor of Church History,
+Mansfield College, Oxford, and, for a
+summary of the points in the Marcan or
+Galilean narrative as contrasted with
+the Jerusalem narrative in regard to the
+betrayal of Jesus and the period immediately
+following, the article on <span class="sc">St. Peter</span>
+by Dr. <a href="/contributors.html?q=Rev.+Kirsopp+Lake">Kirsopp Lake</a>.</p>
+
+<p><span class="sc"><a href="/article/17-0915-s3/matthew__gospel_of_st">Matthew, Gospel of St.</a></span>, by Dr.
+<a href="/contributors.html?q=Rev.+Vincent+Henry+Stanton">Vincent H. Stanton</a>, and <span class="sc"><a href="/article/17-0914-s4/matthew__st">Matthew</a></span>, by
+Dr. <a href="/contributors.html?q=James+Bartlett">J. V. Bartlett</a>; with particular attention
+to the paragraph on additions to
+Mark’s narrative in Vol. 15, p. 355, and
+to the stress on the Messianic character,
+the mention of the church and of St. Peter
+as the Rock in chapter 16.</p>
+
+<p><span class="sc"><a href="/article/17-0133-s2/luke__gospel_of_st">Luke, Gospel of St.</a></span>, by <a href="/contributors.html?q=Rev.+Vincent+Henry+Stanton">Dr. Stanton</a>,
+and the biographical sketch of <span class="sc"><a href="/article/17-0132-s6/luke">Luke</a></span>, by
+<a href="/contributors.html?q=James+Bartlett">Dr. Bartlett</a>; and the paragraph on
+Luke’s additions to Mark’s narrative in
+Vol. 15, p. 356. This is the universal
+gospel, just as Mark’s was for extra-Palestinian
+use and Matthew’s particularly
+for the Jew, as is shown by the incidents
+of Zaccheus and of the Samaritan
+leper; and Renan’s characterization of
+the gospel of the one evangelist who was
+not a Jew, “the most beautiful book in
+the world,” is quoted twice in the Britannica.</p>
+
+<p><span class="sc"><a href="/article/15-0479-s2/john__gospel_of_st">John, Gospel of St.</a></span>, and <span class="sc"><a href="/article/15-0459-john/john">John</a></span> (the
+Apostle), both by Baron Friedrich von
+Hügel, author of <i>The Mystical Element of
+Religion</i>: the paragraph on the distinctive
+elements of John’s gospel (in Vol. 15, p.
+357), such as the story of John the Baptist
+(see the article on this “forerunner,”
+by <a href="/contributors.html?q=Rev.+George+Herbert+Box">G. H. Box</a>, late lecturer in theology,
+Oxford); the philosophical prologue (see
+the article <span class="sc"><a href="/article/16-0941-logos/logos">Logos</a></span>, by the late Rev. Dr.
+Stewart Dingwall Fordyce Salmon, professor
+of systematic theology, United
+Free Church College, Aberdeen, and the
+Rev. A. J. Grieve, professor of New Testament
+and church history, Yorkshire
+United Independent College, Bradford);
+the Judean scene as contrasted with the
+predominance of Galilee and Samaria in
+the other three (synoptic) gospels, and
+the prominence given to great abstract
+ideas and symbols—the Light of the
+World, the Living Bread, the Only-Begotten,
+the Re-Birth, Eternal Life, the
+Way, the Truth, and the Life, Water and
+Wine, the Paraclete, and the refrain and
+variations on the theme of Love.</p>
+
+<p>Before studying the articles dealing
+with the book of <span class="sc"><a href="/article/01-0187-s6/act">Acts</a></span>, let the reader
+consult <a href="/contributors.html?q=Rev.+Alfred+Ernest+Garvie">Dr. Garvie</a>’s article <span class="sc"><a href="/article/18-0597-s4/miracle">Miracle</a></span>, for
+a study of the supernatural and particularly
+for a development of the argument
+for miracles from “the congruity of
+the miracle with divine truth and grace”;
+the miracles of Jesus, and of the apostles,
+consist in “the relief of need, the removal
+of suffering, the recovery of health and
+strength.”</p>
+
+<p><span class="shoulder-heading" id="sh-16">Acts</span>The article <span class="sc"><a href="/article/01-0192-s4/acts_of_the_apostles">Acts of the Apostles</a></span>, by
+Dr. <a href="/contributors.html?q=James+Bartlett">J. Vernon Bartlett</a>, should be supplemented
+by referring again to the article
+<span class="sc"><a href="/article/17-0132-s6/luke">Luke</a></span>, and the student
+should call to mind that
+the probable author was not
+a Jew, was a personal friend and traveling
+companion of both Paul and Peter, and
+was a physician, a trained scientific observer,
+as can be seen not only from his
+descriptions of disease, but from his accuracy
+in geographical, meteorological
+and other matters. The importance of
+the testimony of the physician to the
+miracles of the apostles is brought out
+(p. 164, top of column 2) in the article on
+the book. For the study of <span class="sc"><a href="/article/01-0187-s6/act">Acts</a></span>, besides
+the article on the book, read the
+following separate articles:</p>
+
+<p><span class="sc"><a href="/article/17-0132-s6/luke">Luke</a></span>, <span class="sc"><a href="/article/21-0302-s6/peter">Peter</a></span>, <span class="sc"><a href="/article/15-0459-john/john">John</a></span>, <span class="sc"><a href="/article/15-0563-judas-tree/judas-tree">Judas</a></span>, <span class="sc"><a href="/article/01-0165-s8/aceldama">Aceldama</a></span>,
+<span class="sc"><a href="/article/17-0918-s5/matthias">Matthias</a></span>, <span class="sc"><a href="/article/21-0138-pentecost/pentecost">Pentecost</a></span>, <span class="sc"><a href="/article/27-0023-tongues-gift-of/tongues__gift_of">Tongues,
+Gift of</a></span>; <span class="sc"><a href="/article/01-0966-s14/ananias">Ananias</a></span>, <span class="sc"><a href="/article/11-0452-s2/gamaliel">Gamaliel</a></span>, <span class="sc"><a href="/article/25-0904-s4/stephen">Stephen</a></span>,
+<span class="sc"><a href="/article/25-0142-simon-magus/simon_magus">Simon Magus</a></span>, <span class="sc"><a href="/article/21-0397-s4/philip">Philip</a></span>, <span class="sc"><a href="/article/20-1006-s3/paul">Paul</a></span>, <span class="sc"><a href="/article/15-0535-s2/joppa">Joppa</a></span>, <span class="sc"><a href="/article/02-0142-s4/antioch">Antioch</a></span>,
+<span class="sc"><a href="/article/13-0395-s3/herod">Herod</a></span>, <span class="sc"><a href="/article/03-0424-barnabas/barnabas">Barnabas</a></span>, <span class="sc"><a href="/article/14-0283-iconium/iconium">Iconium</a></span>, <span class="sc"><a href="/article/17-0166-s2/lycaonia">Lycaonia</a></span>,
+<span class="sc"><a href="/article/17-0745-mark/mark">Mark</a></span>, <span class="sc"><a href="/article/26-1031-s5/timothy">Timothy</a></span>, <span class="sc"><a href="/article/25-0105-silas/silas">Silas</a></span>, <span class="sc"><a href="/article/21-0411-s4/philippi">Philippi</a></span>,
+<span class="sc">Thessalonica</span>, <span class="sc"><a href="/article/02-0878-s4/athens">Athens</a></span>, <span class="sc"><a href="/article/02-0490-s2/areopagus">Areopagus</a></span>,
+<span class="sc"><a href="/article/07-0164-corinth/corinth">Corinth</a></span>, <span class="sc"><a href="/article/02-0262-s2/aquila">Aquila</a></span>, <span class="sc"><a href="/article/02-0201-s2/apollos">Apollos</a></span>, <span class="sc"><a href="/article/09-0704-ephesus/ephesus">Ephesus</a></span>,
+<span class="sc"><a href="/article/10-0250-s7/felix">Felix</a></span>, <span class="sc"><a href="/article/01-0966-s14/ananias">Ananias</a></span>, <span class="sc"><a href="/article/01-0462-s4/agrippa">Agrippa</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-17">St. Paul</span>For a study of the book of Acts, which
+was probably written before any one of
+the Gospels, one will
+need constantly to
+refer in the Britannica
+to the article on <span class="sc"><a href="/article/20-1006-s3/paul">Paul, the Apostle</a></span>
+(Vol. 20, p. 938), by Dr. <a href="/contributors.html?q=James+Bartlett">J. Vernon
+Bartlett</a>. This article, equivalent to
+55 pages in this Guide, is so important
+that it will be well to outline it
+here. After an introduction, in which
+Paul’s attitude toward Jewish legalism is
+made an explanation of the superficially
+obvious contrast between Jesus and Paul,
+there is a biographical sketch: Paul of
+Tarsus, a Roman citizen with Roman
+name, talking Latin and not a narrow,
+one-sided Jew; his Jewish training; in
+Jerusalem, under Gamaliel (see the article
+<span class="sc"><a href="/article/11-0452-s2/gamaliel">Gamaliel</a></span>); first impressions as to
+Jesus, and Saul as persecutor; the vision
+at Damascus and its spiritual content;
+his new theory of the law and its universal
+value; Christology of Paul,—his deep insight
+into Jesus’s character; Paul’s theology
+rooted in experience; his early apostolate;
+his first missionary journey; the
+issue of Gentile Christianity raised;
+Paul’s conciliatory spirit; Peter’s visit to
+Antioch; Paul’s protest; the second mission
+tour; Paul in Europe—Athens, Corinth,
+etc.; first missionary letters; as an
+ethical teacher; Paul, the Law, the Spirit;
+later travels; later letters; Paulinism—its
+Christocentric character; apparent contrasts
+and contradictions between Paul’s
+gospel and Jesus’s gospel—one seen
+through the eyes of a conscious sinner,
+the other the sinless consciousness of the
+Saviour; Paul’s position between Judaeo-Christianity
+and Gnosticism—see also
+the article <span class="sc"><a href="/article/12-0169-gnosticism/gnosticism">Gnosticism</a></span>, by <a href="/contributors.html?q=Wilhelm+Bousset">Wilhelm
+Bousset</a>, professor of New Testament
+exegesis, Göttingen.</p>
+
+<p><span class="shoulder-heading" id="sh-18">The Pauline Epistles</span>In general on the Pauline epistles the
+student should not only read this article
+<span class="sc"><a href="/article/20-1006-s3/paul">Paul</a></span>, but should turn again to the treatment
+of New Testament
+canon in the article
+<span class="sc"><a href="/article/03-0870-bible/bible">Bible</a></span> (Vol. 3,
+pp. 872–873), and
+should look over the first part of the article
+<span class="sc"><a href="/article/15-0373-jesus-christ/jesus_christ">Jesus Christ</a></span> which finds in 1st
+Thessalonians the earliest extant document
+of Christianity. Then let him read
+the articles:</p>
+
+<p><span class="sc"><a href="/article/26-0881-thessalonians-epistles-to-the/thessalonians__epistles_to_the">Thessalonians, Epistles to the</a></span>, by
+the <a href="/contributors.html?q=Rev.+James+Everett+Frame">Rev. James Everett Frame</a>, professor
+of Biblical theology, Union Theological
+Seminary, New York City. See also in
+the article <span class="sc"><a href="/article/20-1006-s3/paul">Paul</a></span> (Vol. 20, pp. 945–946)
+for Paul at Thessalonica, and the articles
+<span class="sc"><a href="/article/09-0792-eschatology/eschatology">Eschatology</a></span> and <span class="sc"><a href="/article/02-0181-s5/apocalyptic_literature">Apocalyptic Literature</a></span>
+for the doctrine of the “second
+coming” or “Parousia,” especially in 2
+Thess., chap. 2.</p>
+
+<p><span class="sc"><a href="/article/07-0167-corinthians-epistles-to-the/corinthians__epistles_to_the">Corinthians, Epistles to the</a></span>, by the
+Rev. <a href="/contributors.html?q=Rev.+James+Hardy+Ropes">Dr. James Hardy Ropes</a>, professor
+of New Testament criticism and interpretation,
+Harvard; and the articles
+<span class="sc"><a href="/article/07-0164-corinth/corinth">Corinth</a></span>, <span class="sc"><a href="/article/02-0201-s2/apollos">Apollos</a></span>, <span class="sc"><a href="/article/21-0302-s6/peter">Peter</a></span>, <span class="sc"><a href="/article/02-0761-s2/asceticism">Asceticism</a></span>,
+<span class="sc"><a href="/article/10-0205-s2/fasting">Fasting</a></span>, <span class="sc"><a href="/article/09-0900-s4/eucharist">Eucharist</a></span> (1 Cor., chap. 11,
+vs. 23 sqq. is the oldest extant account of
+the Lord’s Supper), <span class="sc"><a href="/article/26-1071-titus/titus">Titus</a></span>.</p>
+
+<p><span class="sc"><a href="/article/11-0412-s2/galatians__epistle_to_the">Galatians, Epistle to the</a></span>, by the
+Rev. <a href="/contributors.html?q=Rev.+James+Moffatt">Dr. James Moffatt</a>, author of <i>The
+Historical New Testament</i>: and the articles
+<span class="sc"><a href="/article/11-0411-s3/galatia">Galatia</a></span> (for the “South Galatian”
+theory), <span class="sc">Antinomianism</span> (for Christianity
+<i>vs.</i> legalism).</p>
+
+<p><span class="sc"><a href="/article/23-0611-romans-epistle-to-the/romans__epistle_to_the">Romans, Epistle to the</a></span>, by <a href="/contributors.html?q=Rev.+James+Moffatt">Dr.
+Moffatt</a>; and the article <span class="sc"><a href="/article/13-0189-hebrew-religion/hebrew_religion">Hebrew Religion</a></span>
+for the covenant which Paul here
+presents as one of faith and not of
+the law.</p>
+
+<p><span class="sc"><a href="/article/09-0702-ephesians-epistle-to-the/ephesians__epistle_to_the">Ephesians, Epistle to the</a></span>, by Prof.
+<a href="/contributors.html?q=Rev.+James+Hardy+Ropes">J. H. Ropes</a>, pointing out that the theme
+is “the unity of mankind in Christ and
+hence the unity and divinity of the
+Church of Christ”; the article <span class="sc"><a href="/article/09-0704-ephesus/ephesus">Ephesus</a></span>;
+the articles on <span class="sc"><a href="/article/06-0748-colossians-epistle-to-the/colossians__epistle_to_the">Colossians</a></span> and on 1st
+<span class="sc"><a href="/article/21-0302-s6/peter">Peter</a></span> for textual criticism; the article
+<span class="sc"><a href="/article/17-0770-marriage/marriage">Marriage</a></span> for Paul’s influence (Eph. ch.
+5, v. 23–32) on the Church’s attitude
+toward marriage; and the article <span class="sc"><a href="/article/12-0169-gnosticism/gnosticism">Gnosticism</a></span>
+for the tendency in the church
+which Paul attacked in this epistle and
+in Colossians.</p>
+
+<p><span class="sc"><a href="/article/06-0748-colossians-epistle-to-the/colossians__epistle_to_the">Colossians</a></span>, by Prof. <a href="/contributors.html?q=Rev.+James+Everett+Frame">J. E. Frame</a>; the
+article <span class="sc"><a href="/article/06-0747-colossae/colossae">Colossae</a></span>; <span class="sc"><a href="/article/02-0015-s8/angel">Angel</a></span> (on chap. 2, v.
+18); <span class="sc"><a href="/article/02-0761-s2/asceticism">Asceticism</a></span> (on chap. 2, v. 16).</p>
+
+<p><span class="sc"><a href="/article/21-0396-philemon-epistle-to/philemon__epistle_to">Philemon, Epistle to</a></span>, by <a href="/contributors.html?q=Rev.+James+Moffatt">Dr. Moffatt</a>;
+the article <span class="sc"><a href="/article/25-0232-s6/slavery">Slavery</a></span>, <i>Rome</i> (Vol. 25,
+p. 218) for the status of a runaway like
+Onesimus.</p>
+
+<p><span class="sc"><a href="/article/21-0411-s5/philippians__epistle_to_the">Philippians, Epistle to the</a></span>, by <a href="/contributors.html?q=Rev.+James+Moffatt">Dr.
+Moffatt</a>; the article <span class="sc"><a href="/article/21-0411-s4/philippi">Philippi</a></span>; <span class="sc">Antinomianism</span>
+(on the beginning of chap. 3);
+and on the Kenosis or emptying of self of
+Christ in Phil. 2, 7, see the article on
+<span class="sc"><a href="/article/02-0268-s1/arabia">Charles Gore</a></span> (Vol. 2, p. 255), and in
+the article <span class="sc"><a href="/article/26-0812-s4/theology">Theology</a></span> the discussion in
+column 1 of p. 781 (Vol. 26).</p>
+
+<p><span class="sc"><a href="/article/26-1031-s6/timothy__first_epistle_to">Timothy, First Epistle to</a></span>; and
+<span class="sc"><a href="/article/26-1033-s2/timothy__second_epistle_to">Timothy, Second Epistle to</a></span>, by <a href="/contributors.html?q=Rev.+James+Moffatt">Dr.
+Moffatt</a>; the article <span class="sc"><a href="/article/26-1031-s5/timothy">Timothy</a></span>; the articles
+<span class="sc"><a href="/article/17-0770-marriage/marriage">Marriage</a></span> and <span class="sc"><a href="/article/05-0626-celibacy/celibacy">Celibacy</a></span> (on 1 Tim. 4,
+3); <span class="sc"><a href="/article/10-0205-s2/fasting">Fasting</a></span>, the article <span class="sc"><a href="/article/12-0169-gnosticism/gnosticism">Gnosticism</a></span> (for
+the “knowledge falsely so-called” of 1
+Tim. 6, 20), and the article <span class="sc"><a href="/article/20-0960-s2/pastoral_epistles">Pastoral
+Epistles</a></span> on these letters and on that to
+Titus. The article <span class="sc"><a href="/article/26-1071-titus/titus">Titus</a></span> has much important
+criticism on Timothy.</p>
+
+<p><span class="sc"><a href="/article/26-1071-s3/titus__the_epistle_to">Titus, The Epistle to</a></span>, by <a href="/contributors.html?q=Rev.+James+Moffatt">Dr. Moffatt</a>;
+the articles <span class="sc"><a href="/article/04-0014-bishop/bishop">Bishop</a></span> and <span class="sc"><a href="/article/22-0295-presbyter/presbyter">Presbyter</a></span>,
+etc.</p>
+
+<p><span class="sc"><a href="/article/13-0201-hebrews-epistle-to-the/hebrews__epistle_to_the">Hebrews, Epistle to the</a></span>, by Dr. <a href="/contributors.html?q=James+Bartlett">J.
+Vernon Bartlett</a>; and, on authorship, the
+articles <span class="sc"><a href="/article/20-1006-s3/paul">Paul</a></span>, <span class="sc"><a href="/article/03-0424-barnabas/barnabas">Barnabas</a></span>, <span class="sc"><a href="/article/02-0201-s2/apollos">Apollos</a></span>,
+<span class="sc"><a href="/article/17-0132-s6/luke">Luke</a></span>, <span class="sc"><a href="/article/06-0498-clement-popes/clement__popes_">Clement</a></span>, <span class="sc"><a href="/article/25-0904-s4/stephen">Stephen</a></span>; and the articles
+<span class="sc"><a href="/article/06-0506-clementine-literature/clementine_literature">Clementine Literature</a></span>, <span class="sc"><a href="/article/13-0189-hebrew-religion/hebrew_religion">Hebrew
+Religion</a></span>, <span class="sc"><a href="/article/26-0633-temple/temple">Temple</a></span>, <span class="sc">Atonement and
+Day of Atonement</span>, <span class="sc"><a href="/article/02-0015-s8/angel">Angel</a></span>, <span class="sc"><a href="/article/18-0927-s5/moses">Moses</a></span>,
+<span class="sc"><a href="/article/22-0330-priest/priest">Priest</a></span>, <span class="sc"><a href="/article/01-0035-aaron/aaron">Aaron</a></span>, <span class="sc"><a href="/article/18-0111-s3/melchizedek">Melchizedek</a></span>, <span class="sc"><a href="/article/23-1025-sacrifice/sacrifice">Sacrifice</a></span>,
+<span class="sc"><a href="/article/18-0210-s2/messiah">Messiah</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-19">The Other Epistles</span>Before turning to the articles on the
+other books of the New Testament, let
+the student read a part of the article
+<span class="sc"><a href="/article/26-0812-s4/theology">Theology</a></span>, by the
+Rev. Dr. Robert
+Mackintosh of the
+Lancashire Independent
+College, Manchester, with special
+attention to the paragraphs (end of p.
+773 and p. 774, Vol. 26) on Jewish theology,
+St. Paul and contents of the New
+Testament. Here “Paulinism” is shown
+not merely in the Pauline writings but in
+the Acts, in 1st Peter (“good independent
+Paulinism”), and even in the Apocalypse,
+at least as regards the atonement
+and Christology. “The Johannine Gospel
+and Epistles are later than Paulinism,
+and presuppose its leading or less startling
+positions.” And the same article
+(p. 783) after pointing out that Luther
+and the evangelical revival “went back
+to St. Paul” asks “can Christianity not
+dig deeper by going back to Jesus?” The
+writer also suggests that the German
+school of Ritschl in “not idolizing Paulinism”
+have “idolized Luther.”</p>
+
+<p>The other principal topics to be studied
+are:</p>
+
+<p><span class="sc"><a href="/article/15-0161-s2/james__epistle_of">James, Epistle of</a></span>, by the Rev. Dr.
+Benjamin Wisner Bacon, professor of
+New Testament criticism and exegesis,
+Yale; the article on <span class="sc"><a href="/article/15-0151-james/james">James</a></span> by the Rev.
+Dr. George Milligan, Professor of divinity
+and Biblical criticism, Glasgow; and
+the articles <span class="sc"><a href="/article/23-0229-revelation/revelation__book_of">Revelation</a></span>, <span class="sc"><a href="/article/06-0498-clement-popes/clement__popes_">Clement</a></span>, <span class="sc"><a href="/article/13-0383-hermas-shepherd-of/hermas__shepherd_of">Hermas</a></span>,
+etc., for the question of date and
+relation with other writings; <span class="sc"><a href="/article/28-0771-wisdom-literature/wisdom_literature">Wisdom
+Literature</a></span>, for earlier writings on the
+“Wisdom” and proverbial expressions of
+chapter 3; <span class="sc"><a href="/article/17-0914-s4/matthew__st">Matthew</a></span>, for a similar view
+of the gospel and the Church; and on
+“Justification,” vol. 20, p. 954, in article
+<span class="sc"><a href="/article/20-1006-s3/paul">Paul</a></span>.</p>
+
+<p><span class="sc"><a href="/article/21-0312-s3/peter__epistles_of">Peter, Epistles of</a></span>, by Dr. <a href="/contributors.html?q=Rev.+Kirsopp+Lake">Kirsopp
+Lake</a>; the article on <span class="sc">St. Peter</span>, by the
+same scholar. For a date earlier than
+that of the Epistle of James, see the article
+on that book. See also <span class="sc"><a href="/article/23-0610-romans/romans">Romans</a></span> and
+<span class="sc"><a href="/article/22-0034-polycarp/polycarp">Polycarp</a></span> to supplement what is here
+said of the relations of 1st Peter to these
+writings; and <span class="sc"><a href="/article/09-0792-eschatology/eschatology">Eschatology</a></span> on the expected
+“second coming” of 2nd Peter,
+chapter 3, vs. 1–13, and <span class="sc">Jude, Epistle
+of</span>, on its relation to this book.</p>
+
+<p><span class="sc">Jude, Epistle of</span>, by Prof. B. W.
+Bacon of Yale; the article on <span class="sc"><a href="/article/13-0221-hegesippus/hegesippus">Hegesippus</a></span>,
+the authority for the little we know
+of Jude; the articles <span class="sc"><a href="/article/09-0792-eschatology/eschatology">Eschatology</a></span> (for
+“the last time” of verse 18), <span class="sc"><a href="/article/02-0015-s8/angel">Angel</a></span>
+(for vs. 6, 9), <span class="sc"><a href="/article/18-0379-s7/michael">Michael</a></span>, and especially
+the articles <span class="sc"><a href="/article/02-0187-s3/apocryphal_literature">Apocryphal Literature</a></span>;
+<span class="sc"><a href="/article/18-0928-s2/moses__assumption_of">Moses, Assumption of</a></span>; and
+<span class="sc"><a href="/article/09-0682-s1/enoch__book_of">Enoch, Book of</a></span>, for the allusions in
+verses 9 and 14.</p>
+
+<p>Under the head of Johannine are
+grouped, besides the fourth gospel, the
+three epistles of John and the Revelation.
+On these see:</p>
+
+<p><span class="shoulder-heading" id="sh-20">Johannine Writings</span><span class="sc"><a href="/article/15-0477-s3/john__the_epistles_of">John, The Epistles of</a></span>, by <a href="/contributors.html?q=Rev.+James+Moffatt">Dr.
+Moffatt</a>, and the article on St. John in
+regard to authorship,
+which may more
+probably be assigned
+to John the presbyter;
+and the articles <span class="sc"><a href="/article/02-0133-s2/antichrist">Antichrist</a></span> (on 1
+John, 2, 22), <span class="sc"><a href="/article/12-0169-gnosticism/gnosticism">Gnosticism</a></span> (for chap. 3,
+vs. 4–7), etc.</p>
+
+<p><span class="sc"><a href="/article/23-0229-revelation/revelation__book_of">Revelation, Book of</a></span>, by the Rev.
+<a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Dr. Robert Henry Charles</a>, lecturer in
+Biblical studies, Oxford. This book, and
+this article, should be studied in connection
+with the article, also by <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Dr. Charles</a>,
+on <span class="sc"><a href="/article/02-0181-s5/apocalyptic_literature">Apocalyptic Literature</a></span>, and the
+canonical apocalyptic passages in Mark
+13, Mathew 24, Luke 21 and 2nd Thessalonians
+2, as well as the extra-canonical
+apocalypses described in <span class="sc"><a href="/article/02-0181-s5/apocalyptic_literature">Apocalyptic
+Literature</a></span> and in the separate articles
+<span class="sc"><a href="/article/14-0897-s2/isaiah__ascension_of">Isaiah, Ascension of</a></span>, and <span class="sc"><a href="/article/13-0383-hermas-shepherd-of/hermas__shepherd_of">Hermas,
+Shepherd of</a></span>. Besides see the articles
+<span class="sc"><a href="/article/09-0792-eschatology/eschatology">Eschatology</a></span>, <span class="sc">Millenium</span>. The student
+should read the article <span class="sc"><a href="/article/19-0408-nero/nero">Nero</a></span>, even if
+“666” does not certainly refer to him, and
+the articles <span class="sc"><a href="/article/08-0426-domitian/domitian">Domitian</a></span> and <span class="sc"><a href="/article/27-1079-s10/vespasian">Vespasian</a></span> on
+the possibility that one of them may have
+been “the beast that was and is not, ...
+himself also an eighth” (see footnote on
+p. 220, Vol. 23).</p>
+
+<p><span class="shoulder-heading" id="sh-21">Apocryphal Literature</span>As an epilogue the student should read
+the articles <span class="sc"><a href="/article/02-0187-s3/apocryphal_literature">Apocryphal Literature</a></span>,
+both of the Old and New Testament periods,
+by <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Dr. Charles</a>
+and at least the first
+part, by Dr. A. C.
+McGiffert of Union
+Theological Seminary, New York City,
+of the article <span class="sc"><a href="/article/06-0346-church-history/church_history">Church History</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-22">A Biblical Encyclopaedia</span>The study outline sketched in this
+chapter will give the student some idea
+of the possibilities of the Britannica in
+helping him. The
+list of articles dealing
+with the Bible
+on pp. 944–945 of the
+Index (Vol. 29) will show that in the
+Britannica there is an adequate and
+excellent encyclopaedia of the Bible or
+text-book of Bible Study.</p>
+
+<div>
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

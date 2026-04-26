@@ -1,0 +1,1719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sculpture &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XXXIV</span>Sculpture</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">The Main Article</a></li><li><a href="#sh-2">Other General Articles</a></li><li><a href="#sh-3">History of Sculpture</a></li><li><a href="#sh-4">Medieval</a></li><li><a href="#sh-5">Renaissance</a></li><li><a href="#sh-6">17th and 18th Century</a></li><li><a href="#sh-7">19th Century and Modern Schools</a></li><li><a href="#sh-8">France</a></li><li><a href="#sh-9">Other European Countries</a></li><li><a href="#sh-10">American Sculpture</a></li><li><a href="#sh-11">Summary</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">The Main Article</span>The Britannica article <span class="sc"><a href="/article/24-0508-s2/sculpture">Sculpture</a></span>
+(Vol. 24, p. 488; equivalent to
+90 pages of this Guide) is a complete
+treatise on the technique and
+history of this branch of art by <a href="/contributors.html?q=John+Henry+Middleton">J. H.
+Middleton</a>, late professor of Fine Art,
+Cambridge, <a href="/contributors.html?q=Marion+H.+Spielmann">M. H. Spielmann</a>, former
+editor of the <i>Magazine of Art</i>, P. G.
+<a href="/contributors.html?q=Paul+George+Konody">Konody</a>, art critic of the <i>Observer</i> and
+<i>Daily Mail</i>, and, for French sculpture,
+Léonce Bénédite, keeper of the Luxembourg
+Museum and author of <i>Histoire
+des Beaux Arts</i>. It is illustrated with
+10 full page plates as follows: I and II.
+<i>Medieval</i>, etc., with examples of the
+work of Jacopo della Quercia, Donatello
+(2), Andrea Pisano, Michelangelo, Verrocchio
+and Leopardo, Luca della Robbia,
+Benvenuto Cellini,
+Peter Vischer, Bernini,
+Goujon, Canova,
+Houdon, Coysevox;
+III. IV. V. <i>Modern British</i>—Alfred
+Stevens, Sir George Frampton,
+Lord Leighton, Harry Bates, H. H.
+Armstead, G. F. Watts (2), A. Gilbert,
+F. W. Pomeroy, E. Onslow Ford, W.
+Hamo Thornycroft (2), Alfred Drury,
+F. Derwent Wood, Bertram Mackennal,
+Albert Toft, Havard Thomas, W. Goscombe
+John, W. R. Colton (2), Sir
+Charles Lawes-Wittewronge, Sir J. Edgar
+Boehm, Thomas Brock; VI. <i>American</i>—J.
+Q. A. Ward, D. C. French and E.
+C. Potter, Augustus St. Gaudens, Frederick
+MacMonnies; VII. VIII. and IX.
+<i>Modern French</i>—Falguière, Barrias, Delaplanche,
+Idrac, Becquer, L. Gérôme,
+Marqueste, Longepied, Frémiet, Guillaume,
+Puech, Saint-Marceaux, Mercié,
+Rodin, Michel, Dalou, Aubé, Chapu,
+Bloche, Gardet, Bartholomé; and X.
+<i>Other Foreign Countries</i>—Sinding, Begas,
+Ximenes, Querol, Antokolski, Lambeaux,
+Meunier.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Other General Articles</span>This article opens with an account
+of technical methods of sculpture which
+should be supplemented by other articles,
+which deal also with
+history and criticism:
+<span class="sc"><a href="/article/28-0812-wood-carving/wood-carving">Wood-Carving</a></span>
+(Vols. 28, p. 791),
+by <a href="/contributors.html?q=Franklyn+Arden+Crallan">Franklyn Arden Crallan</a>, author of
+<i>Gothic Wood-carving</i>, with four plates and
+with descriptions not merely of Gothic
+and Renaissance work in Europe, but
+of Coptic, Mahommedan, Persian, Indian
+and Burmese, Chinese and Japanese,
+and the carving done by savage races;
+<span class="sc"><a href="/article/15-0108-ivory/ivory">Ivory</a></span> (Vol. 15, especially pp. 95–98,
+with 5 illustrations), by <a href="/contributors.html?q=Alfred+Ogle+Maskell">A. Maskell</a>,
+author of <i>Ivories</i>; <span class="sc"><a href="/article/06-0335-chryselephantine/chryselephantine">Chryselephantine</a></span>;
+<span class="sc"><a href="/article/18-0224-s2/metal-work">Metal-Work</a></span> (Vol. 18, p. 205), (with 9
+text cuts and 2 full page plates), by
+Prof. <a href="/contributors.html?q=John+Henry+Middleton">J. H. Middleton</a>, Cambridge, and
+John Starkie <a href="/contributors.html?q=Percy+Gardner">Gardner</a>, author of <i>Armour
+in England</i> and <i>Iron Work</i>; <span class="sc"><a href="/article/11-0578-gem/gem">Gem</a></span> (Vol.
+11, p. 560; with 2 full page plates containing
+76 illustrations, mostly of antique
+gems, besides 10 cuts in the text)
+by <a href="/contributors.html?q=Alexander+Stuart+Murray">Alexander Stuart Murray</a>, author of
+<i>History of Greek Sculpture</i>, <i>Terra Cotta
+Sarcophagi</i>, etc., and Arthur Hamilton
+Smith, keeper of Greek and Roman
+Antiquities, British Museum; <span class="sc"><a href="/article/05-0116-cameo/cameo">Cameo</a></span>;
+<span class="sc"><a href="/article/14-0711-s2/intaglio">Intaglio</a></span>; <span class="sc"><a href="/article/24-0569-seals/seals">Seals</a></span> (Vol. 24, p. 539; with
+9 illustrations), by Sir <a href="/contributors.html?q=Sir+Edward+Maunde+Thompson">E. Maunde Thompson</a>,
+late director British Museum;
+<span class="sc"><a href="/article/19-0901-numismatics/numismatics">Numismatics</a></span> (Vol. 19, p. 869; equivalent
+to 120 pages of this Guide; with 6 plates—20
+Greek coins, 27 Greek and Roman
+coins, 23 Roman and Medieval coins,
+22 Oriental coins, 8 modern coins and
+medals, and 4 Italian medals—and 11
+cuts illustrating modern coins) by <a href="/contributors.html?q=Reginald+Stuart+Poole">Reginald
+Stuart Poole</a>, formerly keeper department
+coins and medals, British
+Museum, Herbert Appold Grueber, keeper
+of the same department in 1906–1912,
+and George Francis Hill, assistant keeper
+of this department; <span class="sc"><a href="/article/18-0015-medal/medal">Medal</a></span> (Vol. 18,
+especially pp. 1 and 2, with 2 plates,
+showing 32 medals), by <a href="/contributors.html?q=Marion+H.+Spielmann">M. H. Spielmann</a>;
+<span class="sc"><a href="/article/26-0678-s4/terpenes">Terra Cotta</a></span> (Vol. 26, p. 652, with 2
+plates, 12 illustrations), by <a href="/contributors.html?q=William+Burton">William
+Burton</a>, author of <i>English Stoneware and
+Earthenware</i> and H. Beauchamp Walters,
+assistant keeper Greek and Roman antiquities,
+British Museum; <span class="sc"><a href="/article/21-0820-plate/plate">Plate</a></span> (Vol. 21,
+p. 789; with 31 illustrations), by <a href="/contributors.html?q=Harry+Reginald+Holland+Hall">H. R. H.
+Hall</a>, author of <i>The Oldest Civilization of
+Greece</i>, H. Stuart <a href="/contributors.html?q=Henry+Stuart+Jones">Jones</a>, author of <i>The
+Roman Empire</i>, and E. Alfred <a href="/contributors.html?q=Henry+Stuart+Jones">Jones</a>,
+author of <i>Old English Gold Plate</i>, etc.;
+<span class="sc"><a href="/article/01-0811-s3/alto-relievo">Alto-relievo</a></span>; <span class="sc"><a href="/article/03-0514-basso-relievo/basso-relievo">Basso-Relievo</a></span>; <span class="sc"><a href="/article/23-0078-relief/relief">Relief</a></span>
+and <span class="sc"><a href="/article/23-0125-repouss/repoussé">Repoussé</a></span>, by <a href="/contributors.html?q=Marion+H.+Spielmann">M. H. Spielmann</a>;
+<span class="sc"><a href="/article/28-0448-wax-figures/wax_figures">Wax Figures</a></span>; <span class="sc"><a href="/article/09-0022-effigies-monumental/effigies__monumental">Effigies, Monumental</a></span>,
+by the late Charles Boutell, author of <i>A
+Manual of British Archaeology</i>, and M.
+H. <a href="/contributors.html?q=Marion+H.+Spielmann">Spielmann</a>.</p>
+
+<p><span class="shoulder-heading" id="sh-3">History of Sculpture</span>Early sculpture is separately treated.
+For “Classical” sculpture see the articles
+<span class="sc"><a href="/article/12-0489-greek-art/greek_art">Greek Art</a></span> by <a href="/contributors.html?q=Percy+Gardner">Percy Gardner</a> and
+<span class="sc"><a href="/article/23-0496-roman-art/roman_art">Roman Art</a></span> by <a href="/contributors.html?q=Henry+Stuart+Jones">H.
+Stuart Jones</a>, both
+elaborately illustrated
+and devoting
+particular attention to statuary, plate;
+etc. See also the illustrations in the
+articles mentioned in the last paragraph,—especially
+<span class="sc"><a href="/article/11-0578-gem/gem">Gem</a></span>, <span class="sc"><a href="/article/19-0901-numismatics/numismatics">Numismatics</a></span>, <span class="sc">Terra
+Cotta</span>; and those in the article <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>
+and subsidiary articles mentioned
+in the chapter of this Guide <i>For
+the Architect</i>. And on Greek art see the
+article <span class="sc"><a href="/article/21-0157-pergamum/pergamum">Pergamum</a></span> and the sketches of
+the great sculptors of Greece:</p>
+
+<ul class="index">
+  <li class="c018"><span class="sc"><a href="/article/01-0404-s6/agasias">Agasias</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/01-0412-s4/agesander">Agesander</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/01-0419-s3/agoracritus">Agoracritus</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/01-0557-s8/alcamenes">Alcamenes</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/02-0103-s4/antenor">Antenor</a></span></li>
+  <li class="c018"><span class="sc">Apollonius of Tralles Archermus</span></li>
+  <li class="c018"><span class="sc"><a href="/article/03-0538-bathycles/bathycles">Bathycles</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/04-0129-boethus/boethus">Boethus</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/04-0722-s2/bryaxis">Bryaxis</a></span></li>
+  <li class="c018"><span class="sc">Bupalus and Athenis</span></li>
+  <li class="c018"><span class="sc"><a href="/article/04-0901-s2/butades">Butades</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/04-0994-s1/calamis">Calamis</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/05-0069-callimachus-poet/callimachus__poet_">Callimachus</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/05-0154-canachus/canachus">Canachus</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/05-0728-cephisodotus/cephisodotus">Cephisodotus</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/05-0894-chares/chares">Chares</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/07-0432-cresilas/cresilas">Cresilas</a></span></li>
+  <li class="c018"><span class="sc">Critius and Nesiotes</span></li>
+  <li class="c018"><span class="sc"><a href="/article/07-0814-damophon/damophon">Damophon</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/07-1007-demetrius-cynic/demetrius__cynic_">Demetrius</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/08-0323-dipoenus-and-scyllis/dipoenus_and_scyllis">Dipoenus and Scyllis</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/09-0408-endoeus/endoeus">Endoeus</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/09-0995-eutychides/eutychides">Eutychides</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/16-0462-s2/leochares">Leochares</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/17-0199-s3/lysippus">Lysippus</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/17-0199-s5/lysistratus">Lysistratus</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/19-0129-myron/myron">Myron</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/20-0129-onatas/onatas">Onatas</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/20-0485-s2/paeonius">Paeonius</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/20-0945-s6/pasiteles">Pasiteles</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/21-0382-s2/pheidias">Pheidias</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/22-0036-polyclitus/polyclitus">Polyclitus</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/22-0269-praxias-and-androsthenes/praxias_and_androsthenes">Praxias and Androsthenes</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/22-0269-praxiteles/praxiteles">Praxiteles</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/23-0287-rhoecus/rhoecus">Rhoecus</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/24-0426-s4/scopas">Scopas</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/25-0105-silanion/silanion">Silanion</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/25-1066-strongylion/strongylion">Strongylion</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/26-0929-s3/thrasymedes">Thrasymedes</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/26-1031-s2/timotheus">Timotheus</a></span></li>
+</ul>
+
+<p>See also the article <span class="sc"><a href="/article/04-0930-byzantine-art/byzantine_art">Byzantine Art</a></span>;
+and for sculpture elsewhere the sections
+<i>Art</i> in the articles <span class="sc"><a href="/article/09-0033-egypt/egypt">Egypt</a></span>, <span class="sc"><a href="/article/06-0179-china/china">China</a></span>, <span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Medieval</span>For medieval sculpture, almost entirely
+an adjunct to architecture and
+particularly ecclesiastical architecture,
+see, besides the treatment
+in the historical part of
+the article <span class="sc"><a href="/article/24-0508-s2/sculpture">Sculpture</a></span> (pp.
+490–496), the articles <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span> and
+<span class="sc"><a href="/article/09-0022-effigies-monumental/effigies__monumental">Effigies, Monumental</a></span>, comparing with
+the latter the article <span class="sc"><a href="/article/04-0449-brasses-monumental/brasses__monumental">Brasses, Monumental</a></span>
+(with 13 illustrations).</p>
+
+<p><span class="shoulder-heading" id="sh-5">Renaissance</span>The close of the medieval period and
+the beginning of the more individualistic
+Renaissance are marked by the occurrence
+of the names
+of great individual
+artists, whose biographies
+are the best summary of the
+sculpture of the period.</p>
+
+<p>See on Italy: the articles <span class="sc"><a href="/article/20-0701-palmerston-henry-john-temple-3rd-viscount/palmerston__henry_john_temple__3rd_viscount">Niccola
+Pisano</a></span> (Vol. 20, p. 648); <span class="sc"><a href="/article/20-0701-palmerston-henry-john-temple-3rd-viscount/palmerston__henry_john_temple__3rd_viscount">Vittore Pisano</a></span>
+(Vol. 20, p. 649); <span class="sc"><a href="/article/20-0701-palmerston-henry-john-temple-3rd-viscount/palmerston__henry_john_temple__3rd_viscount">Andrea Pisano</a></span> (Vol.
+20, p. 647) and the article immediately
+following on his son, <span class="sc"><a href="/article/21-0677-s2/pisano__giovanni">Giovanni Pisano</a></span>;
+each of these four with an illustration;
+<span class="sc"><a href="/article/01-0418-s8/agora">Vittore Pisano</a></span> or Pisanello; <span class="sc"><a href="/article/01-0419-s7/agostino">Agostino</a></span>
+and <span class="sc"><a href="/article/01-0418-s8/agora">Agnolo da Siena</a></span> (Vol. 1, p. 381);
+<span class="sc"><a href="/article/20-0191-orcagna/orcagna">Orcagna</a></span>, “the last great master of the
+Gothic period,” by <a href="/contributors.html?q=John+Henry+Middleton">J. H. Middleton</a>;
+<span class="sc"><a href="/article/07-0990-della-quercia-jacopo/della_quercia__jacopo">Della Quercia</a></span>, who “heralds ...
+the boldest and most original achievements
+of two generations hence,” by <a href="/contributors.html?q=Edward+Fairbrother+Strange">E.
+T. Strange</a>, assistant keeper, South
+Kensington; <span class="sc"><a href="/article/11-0945-ghiberti-lorenzo/ghiberti__lorenzo">Ghiberti</a></span>, “the first of the
+great sculptors of the Renaissance”;
+<span class="sc"><a href="/article/08-0427-donatello/donatello">Donatello</a></span>, by <a href="/contributors.html?q=Paul+George+Konody">P. G Konody</a>; <span class="sc"><a href="/article/18-0392-s3/michelozzo_di_bartolommeo">Michelozzo</a></span>;
+<span class="sc"><a href="/article/07-0990-della-robbia/della_robbia">Della Robbia</a></span> family (with 3
+illustrations), by <a href="/contributors.html?q=John+Henry+Middleton">J. H. Middleton</a> and
+<a href="/contributors.html?q=William+Burton">William Burton</a>, author of <i>English
+Stoneware and Earthenware</i>; <span class="sc"><a href="/article/16-0474-leonardo-of-pisa/leonardo_of_pisa">Leonardo</a></span>,
+by Sir <a href="/contributors.html?q=Sidney+Colvin">Sidney Colvin</a>; <span class="sc"><a href="/article/27-1066-s4/verrocchio__andrea_del">Verrocchio</a></span>, by
+<a href="/contributors.html?q=John+Henry+Middleton">J. H. Middleton</a>; <span class="sc"><a href="/article/16-0478-s2/leopardo__alessandro">Leopardo</a></span>; <span class="sc"><a href="/article/22-0015-pollaiuolo/pollaiuolo">Pollaiuolo</a></span>;
+<span class="sc"><a href="/article/18-0383-s5/michelangelo">Michelangelo</a></span>, by Sir <a href="/contributors.html?q=Sidney+Colvin">Sidney Colvin</a>;
+<span class="sc"><a href="/article/03-0329-bandinelli-bartolommeo/bandinelli__bartolommeo">Bandinelli</a></span>; <span class="sc"><a href="/article/01-0910-s7/ammanati__bartolomeo">Ammanati</a></span>; and in the 16th
+century period of decline <span class="sc"><a href="/article/04-0191-bologna-giovanni-da/bologna__giovanni_da">Giovanni
+da Bologna</a></span>, <span class="sc"><a href="/article/16-0954-lombardo/lombardo">Lombardo</a></span> family, <span class="sc"><a href="/article/05-0629-cellini-benvenuto/cellini__benvenuto">Cellini</a></span>,
+by <a href="/contributors.html?q=William+Michael+Rossetti">W. M. Rossetti</a> and E. Alfred <a href="/contributors.html?q=Henry+Stuart+Jones">Jones</a>,
+author of <i>Old English Gold Plate</i>, etc.</p>
+
+<p>On the Renaissance in France: <span class="sc"><a href="/article/12-0299-s7/goujon__jean">Jean
+Goujon</a></span>, <span class="sc"><a href="/article/24-0237-s4/sarrazin__jacques">Sarrazin</a></span>.</p>
+
+<p>—In Germany: <span class="sc"><a href="/article/25-0996-s5/stoss__veit">Veit Stoss</a></span>, <span class="sc">Adam
+Krafft</span>, the <span class="sc"><a href="/article/28-0143-vischer/vischer">Vischers</a></span>.</p>
+
+<p>—In England: the Italian <span class="sc"><a href="/article/27-0076-s3/torrigiano__pietro">Torrigiano</a></span>.</p>
+
+<p>—In Spain: <span class="sc"><a href="/article/05-0202-cano-alonzo/cano__alonzo">Alonzo Cano</a></span>, <span class="sc"><a href="/article/18-0787-monta-es/montañes__juan_martinez">Montañes</a></span>,
+<span class="sc"><a href="/article/18-0127-s2/mena__pedro_de">Pedro de Mena</a></span>, <span class="sc"><a href="/article/28-0986-zarcillo-y-alcaraz-francisco/zarcillo_y_alcaraz__francisco">Zarcillo</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-6">17th and 18th Century</span>Some of the names just mentioned
+are those of 17th century artists. But
+the rococo character
+of the period is
+best seen in Italy:
+see the articles <span class="sc"><a href="/article/03-0824-bernini-giovanni-lorenzo/bernini__giovanni_lorenzo">Bernini</a></span>,
+<span class="sc"><a href="/article/01-0638-algardi-alessandro/algardi__alessandro">Algardi</a></span>, and, for France, <span class="sc"><a href="/article/12-0059-s4/girardon__françois">Girardon</a></span>
+and <span class="sc"><a href="/article/22-0653-s2/puget__pierre">Puget</a></span>. With the 18th century
+came a classical revival for which the
+great names are <span class="sc"><a href="/article/05-0217-canova-antonio/canova__antonio">Canova</a></span> and <span class="sc"><a href="/article/26-0922-s3/thorwaldsen__bertel">Thorwaldsen</a></span>:
+see the articles on these sculptors,
+that on Canova being by <a href="/contributors.html?q=William+Michael+Rossetti">W. M.
+Rossetti</a>. See also the articles on Thorwaldsen’s
+followers, <span class="sc"><a href="/article/24-0696-s2/sergel__johan_tobias">Sergel</a></span>, <span class="sc"><a href="/article/04-0930-bystr-m-johan-niklas/byström__johan_niklas">Byström</a></span>
+and <span class="sc"><a href="/article/10-0611-s3/fogelberg__benedict__or_bengt__erland">Fogelberg</a></span>. The more important
+articles on French sculpture in this period
+are <span class="sc"><a href="/article/21-0622-pigalle-jean-baptiste/pigalle__jean_baptiste">Pigalle</a></span> and <span class="sc"><a href="/article/13-0827-houdon-jean-antoine/houdon__jean_antoine">Houdon</a></span>, the latter
+known to Americans by his portraits of
+our Revolutionary worthies. For English
+sculpture in the 17th and 18th centuries
+see: <span class="sc"><a href="/article/25-0982-s1/stone__nicholas">Nicholas Stone</a></span>, <span class="sc"><a href="/article/23-0807-s5/roubiliac__more_correctly_roubillac___louis_françois">Roubiliac</a></span>,
+by <a href="/contributors.html?q=Marion+H.+Spielmann">M. H. Spielmann</a>, <span class="sc"><a href="/article/24-0333-s3/scheemakers__peter">Scheemakers</a></span>,
+<span class="sc"><a href="/article/19-0761-s4/nollekens__joseph">Nollekens</a></span>, <span class="sc"><a href="/article/03-0169-s2/bacon__john">John Bacon</a></span>, and, possibly
+most important, <span class="sc"><a href="/article/10-0507-s2/flaxman__john">John Flaxman</a></span>, by Sir
+<a href="/contributors.html?q=Sidney+Colvin">Sidney Colvin</a>. For Germany: <span class="sc"><a href="/article/24-0361-s3/schlüter__andreas">Andreas
+Schlüter</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-7">19th Century and Modern Schools</span>On the 19th century in Germany see
+the articles: <span class="sc"><a href="/article/24-0328-s2/schadow">Schadow</a></span>, <span class="sc"><a href="/article/22-0938-s2/rauch__christian_daniel">Rauch</a></span>, <span class="sc"><a href="/article/23-0342-rietschel-ernst-friedrich-august/rietschel__ernst_friedrich_august">Rietschel</a></span>,
+<span class="sc"><a href="/article/07-0834-dannecker-johann-heinrich-von/dannecker__johann_heinrich_von">Dannecker</a></span>, <span class="sc"><a href="/article/24-0406-s4/schwanthaler__ludwig_michael">Schwanthaler</a></span>, and
+marking a sharp reaction,
+<span class="sc"><a href="/article/03-0671-begas-reinhold/begas__reinhold">Reinhold
+Begas</a></span>, and the
+younger men, known
+also as painters,
+<span class="sc"><a href="/article/25-1075-s3/stuck__franz">Franz Stuck</a></span> and <span class="sc"><a href="/article/15-0876-klinger-max/klinger__max">Max Klinger</a></span>.</p>
+
+<p>On modern British sculpture see the
+articles: <span class="sc"><a href="/article/11-0967-s2/gibson__john">John Gibson</a></span>, <span class="sc">E. H. Baily</span>,
+<span class="sc"><a href="/article/03-0350-banks-thomas/banks__thomas">Thomas Banks</a></span>, <span class="sc"><a href="/article/28-0566-s2/westmacott__sir_richard">Sir Richard Westmacott</a></span>,
+and <span class="sc"><a href="/article/25-0929-s6/stevens__alfred">Alfred Stevens</a></span>; and, for
+the last thirty years, <span class="sc"><a href="/article/07-0801-dalou-jules/dalou__jules">Jules Dalou</a></span>,
+<span class="sc">Lord Leighton</span>, better known as a
+painter, <span class="sc">E. Onslow Ford</span> and <span class="sc"><a href="/article/12-0020-s2/gilbert__alfred">Alfred
+Gilbert</a></span>, the most influential and important
+factors in the awakening, and
+<span class="sc"><a href="/article/28-0843-woolner-thomas/woolner__thomas">Thomas Woolner</a></span>, <span class="sc"><a href="/article/17-0764-marochetti-carlo/marochetti__carlo">Marochetti</a></span>, <span class="sc">Sir
+Edwin Landseer</span>, <span class="sc">Sir J. E. Boehm</span>, <span class="sc">J.
+H. Foley</span>, <span class="sc">H. H. Armstead</span>, <span class="sc"><a href="/article/04-0646-s6/brock__thomas">Thomas
+Brock</a></span>, <span class="sc">W. Hamo Thornycroft</span>, <span class="sc">John
+M. Swan</span>, <span class="sc"><a href="/article/03-0526-bates-harry/bates__harry">Harry Bates</a></span>, <span class="sc">G. F. Watts</span>.
+Scores of others are criticized and their
+work summarized on pp. 501–508 in the
+article <span class="sc"><a href="/article/24-0508-s2/sculpture">Sculpture</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-8">France</span>The 19th century in France opened with
+a pseudo-Roman school,
+and among the names of this
+period are <span class="sc"><a href="/article/22-0254-s4/pradier__james">Pradier</a></span>, <span class="sc"><a href="/article/23-0857-s5/rude__françois">Rude</a></span>,
+<span class="sc">P. J. David</span>, <span class="sc">Etex</span>, and <span class="sc"><a href="/article/05-0397-carpeaux-jean-baptiste/carpeaux__jean_baptiste">Carpeaux</a></span> and
+<span class="sc"><a href="/article/03-0473-barye-antoine-louis/barye__antoine_louis">Barye</a></span>, by <a href="/contributors.html?q=Henri+Frantz">Henri Frantz</a>, who mark
+a transition. For the more modern
+period see <span class="sc"><a href="/article/12-0717-s6/guillaume_d_orange">Guillaume</a></span>, <span class="sc"><a href="/article/08-0652-dubois/dubois">Dubois</a></span>, <span class="sc"><a href="/article/10-0159-s4/falguière__jean_alexandre_joseph">Falguière</a></span>,
+<span class="sc"><a href="/article/18-0171-s2/mercié__marius_jean_antonin">Mercié</a></span>, <span class="sc"><a href="/article/11-0108-fr-miet-emmanuel/frémiet__emmanuel">Frémiet</a></span>, <span class="sc"><a href="/article/07-0402-crauck-gustave/crauck__gustave">Gustave
+Crauck</a></span>, <span class="sc"><a href="/article/07-0801-dalou-jules/dalou__jules">Dalou</a></span>, <span class="sc"><a href="/article/23-0469-rodin-auguste/rodin__auguste">Rodin</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-9">Other European Countries</span>In addition to the discussion of modern
+Belgian sculptors in the section
+on Belgium of the article <span class="sc"><a href="/article/24-0508-s2/sculpture">Sculpture</a></span>
+there are separate
+articles on <span class="sc"><a href="/article/28-0076-vigne-paul-de/vigne__paul_de">Paul de
+Vigne</a></span>, <span class="sc">Van der
+Stappen</span>, <span class="sc"><a href="/article/16-0126-s4/lambeaux__jef">Jef Lambeaux</a></span>,
+<span class="sc"><a href="/article/08-0289-dillens-julien/dillens__julien">Julien Dillens</a></span>, and <span class="sc"><a href="/article/18-0336-s1/meunier__constantin">Constantin
+Meunier</a></span>. For Italian sculpture
+in the 19th century see <span class="sc"><a href="/article/24-0508-s2/sculpture">Bartolini</a></span>, and
+the summary in the article <span class="sc"><a href="/article/24-0508-s2/sculpture">Sculpture</a></span>
+(Vol. 24, p. 513). Separate articles on
+Spanish sculptors are <span class="sc">Jose Alvarez</span> and
+<span class="sc">Manuel Alvarez</span>.</p>
+
+<p><span class="shoulder-heading" id="sh-10">American Sculpture</span>In the United States there was little
+sculpture of native origin, and virtually
+none of the slightest merit, before the
+19th century. The
+following list of
+articles in rough
+chronological order
+will supplement the outline in the article
+<span class="sc"><a href="/article/24-0508-s2/sculpture">Sculpture</a></span> (Vol. 24, p. 516): <span class="sc"><a href="/article/12-0575-s3/greenough__horatio">Horatio
+Greenough</a></span>, <span class="sc"><a href="/article/22-0238-s3/powers__hiram">Hiram Powers</a></span>, <span class="sc"><a href="/article/07-0406-crawford-thomas/crawford__thomas">Thomas
+Crawford</a></span>, <span class="sc"><a href="/article/04-0682-s2/brown__henry_kirke">Henry Kirke Brown</a></span>,
+<span class="sc"><a href="/article/23-0364-s2/rimmer__william">William Rimmer</a></span>, <span class="sc">E. D. Palmer</span>,
+<span class="sc"><a href="/article/03-0280-s4/ball__thomas">Thomas Ball</a></span>, <span class="sc">L. W. Volk</span>, <span class="sc">Harriet G.
+Hosmer</span>, <span class="sc">J. Q. A. Ward</span>, <span class="sc"><a href="/article/26-0910-s3/thompson__launt">Launt Thompson</a></span>,
+<span class="sc">Larkin G. Mead</span>, <span class="sc">G. E. Bissell</span>,
+<span class="sc">Olin L. Warner</span>, <span class="sc">W. R. O’Donovan</span>,
+<span class="sc">Jonathan S. Hartley</span>, <span class="sc"><a href="/article/24-0018-saint-gaudens-augustus/saint-gaudens__augustus">Augustus
+Saint-Gaudens</a></span>, <span class="sc">D. C. French</span>, <span class="sc">J. J.
+Boyle</span>, <span class="sc">C. H. Niehaus</span>, <span class="sc"><a href="/article/26-0375-s5/taft__lorado">Lorado Taft</a></span>,
+<span class="sc">W. O. Partridge</span>, <span class="sc">Cyrus E. Dallin</span>,
+<span class="sc">A. P. Proctor</span>, <span class="sc"><a href="/article/12-0333-s4/grafly__charles">Charles Grafly</a></span>, <span class="sc">F.
+W. MacMonnies</span>, <span class="sc">George Gray Barnard</span>,
+<span class="sc">P. W. Bartlett</span>, <span class="sc">Hermon A.
+MacNeil</span>, <span class="sc">Karl Bitter</span>, <span class="sc"><a href="/article/04-0265-borglum-solon-hannibal/borglum__solon_hannibal">Borglum</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-11">Summary</span>This chapter, and the one before, outline
+courses on these arts in the Britannica,
+but there are many articles
+on these topics to which no
+reference has been made in
+these pages. It may, therefore, be interesting
+to the student of these forms of
+art to have before him a list, fairly complete,
+of articles in the Britannica dealing
+with painting and sculpture. The following
+is such a list in alphabetical
+arrangement. The student should remember
+that the absence from the list—or
+from any similar list in the Guide—of
+a topic on which he wishes information
+does not mean that there is no information
+on the subject in the Britannica,
+but merely that there may be no separate
+article on the subject. In such cases let
+him turn to the general index (Vol. 29).</p>
+
+<details class="article-list"><summary><span class="list-title">LIST OF THE PRINCIPAL ARTICLES DEALING WITH THE FINE ARTS</span><span class="list-count"> (1184 articles)</span></summary>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0038-s7/abati">Abati, N.</a></li>
+  <li class="c018"><a href="/article/01-0042-s4/abbey__edwin_austin">Abbey, E. A.</a></li>
+  <li class="c018"><a href="/article/01-0094-s2/abildgaard__nikolaj_abraham">Abildgaard, N. A.</a></li>
+  <li class="c018"><a href="/article/01-0173-s9/achenbach__andreas">Achenbach, Andreas</a></li>
+  <li class="c018"><a href="/article/01-0186-s8/acroliths">Acroliths</a></li>
+  <li class="c018"><a href="/article/01-0203-s4/adam__lambert_sigisbert">Adam, L. S.</a></li>
+  <li class="c018"><a href="/article/01-0206-s4/adams__herbert">Adams, Herbert</a></li>
+  <li class="c018">Aertszen, Pieter</li>
+  <li class="c018"><a href="/article/01-0335-s4/aetion">Aetion</a></li>
+  <li class="c018"><a href="/article/01-0404-s6/agasias">Agasias</a></li>
+  <li class="c018"><a href="/article/01-0408-s5/agatharchus">Agatharchus</a></li>
+  <li class="c018"><a href="/article/01-0411-s2/ageladas">Ageladas</a></li>
+  <li class="c018"><a href="/article/01-0412-s4/agesander">Agesander</a></li>
+  <li class="c018"><a href="/article/01-0419-s3/agoracritus">Agoracritus</a></li>
+  <li class="c018">Agostino and Agnolo da Siena</li>
+  <li class="c018"><a href="/article/01-0424-s2/agricola__christoph_ludwig">Agricola, C. L.</a></li>
+  <li class="c018"><a href="/article/01-0475-s7/aikman__william">Aikman, William</a></li>
+  <li class="c018"><a href="/article/01-0521-s4/albani">Albani, Francesco</a></li>
+  <li class="c018">Albertinelli Mariotto</li>
+  <li class="c018"><a href="/article/01-0557-s8/alcamenes">Alcamenes</a></li>
+  <li class="c018"><a href="/article/01-0571-s3/aldegrever">Aldegrever, Heinrich</a></li>
+  <li class="c018"><a href="/article/01-0604-s4/alexander__francis">Alexander, Francis</a></li>
+  <li class="c018"><a href="/article/01-0604-s7/alexander__john_white">Alexander, John White</a></li>
+  <li class="c018"><a href="/article/01-0620-s3/alfani__domenico">Alfani, Domenico</a></li>
+  <li class="c018"><a href="/article/01-0638-algardi-alessandro/algardi__alessandro">Algardi, Alessandro</a></li>
+  <li class="c018"><a href="/article/01-0729-s4/allan__david">Allan, David</a></li>
+  <li class="c018"><a href="/article/01-0729-s6/allan__sir_william">Allan, Sir William</a></li>
+  <li class="c018"><a href="/article/01-0741-s4/allori__alessandro">Allori, Alessandro</a></li>
+  <li class="c018"><a href="/article/01-0752-s7/allston__washington">Allston, Washington</a></li>
+  <li class="c018"><a href="/article/01-0755-s4/alma-tadema__sir_laurence">Alma-Tadema, Sir L.</a></li>
+  <li class="c018"><a href="/article/01-0809-altdorfer-albrecht/altdorfer__albrecht">Altdorfer, Albrecht</a></li>
+  <li class="c018"><a href="/article/01-0811-s3/alto-relievo">Alto-Relievo</a></li>
+  <li class="c018"><a href="/article/01-0820-s5/alvarez__don_josé">Alvarez, Don José</a></li>
+  <li class="c018"><a href="/article/01-0820-s6/alvarez__don_manuel">Alvarez, Don Manuel</a></li>
+  <li class="c018"><a href="/article/01-0825-s4/amalteo__pomponio">Amalteo, Pomponio</a></li>
+  <li class="c018"><a href="/article/01-0910-s5/amman__jost">Amman, Jost</a></li>
+  <li class="c018"><a href="/article/01-0910-s7/ammanati__bartolomeo">Ammanati, Bartolomeo</a></li>
+  <li class="c018"><a href="/article/01-0949-s7/amsler__samuel">Amsler, Samuel</a></li>
+  <li class="c018"><a href="/article/01-1022-s3/andrea_del_sarto">Andrea del Sarto</a></li>
+  <li class="c018"><a href="/article/01-1024-s2/andreani__andrea">Andreani, Andrea</a></li>
+  <li class="c018"><a href="/article/01-1027-s5/andrieu__bertrand">Andrieu, Bertrand</a></li>
+  <li class="c018"><a href="/article/02-0017-s4/angelico__fra">Angelico, Fra</a></li>
+  <li class="c018">Anguier, François and Michel</li>
+  <li class="c018"><a href="/article/02-0055-s2/angussola">Angussola, Sophonisba</a></li>
+  <li class="c018"><a href="/article/02-0058-s5/anichini__luigi">Anichini, Luigi</a></li>
+  <li class="c018"><a href="/article/02-0070-s2/anna__baldasarre">Anna, Baldasarre</a></li>
+  <li class="c018"><a href="/article/02-0092-s4/ansdell__richard">Ansdell, Richard</a></li>
+  <li class="c018"><a href="/article/02-0103-s4/antenor">Antenor</a></li>
+  <li class="c018"><a href="/article/02-0145-s6/antiphilus">Antiphilus</a></li>
+  <li class="c018"><a href="/article/02-0160-s4/antonello_da_messina">Antonello da Messina</a></li>
+  <li class="c018"><a href="/article/02-0172-s6/apelles">Apelles</a></li>
+  <li class="c018"><a href="/article/02-0198-s4/apollodorus">Apollodorus</a></li>
+  <li class="c018"><a href="/article/02-0200-s3/apollonius_of_tralles">Apollonius of Tralles</a></li>
+  <li class="c018"><a href="/article/02-0234-s2/appiani__andrea">Appiani, Andrea</a></li>
+  <li class="c018"><a href="/article/02-0249-s6/aquarelle">Aquarelle</a></li>
+  <li class="c018"><a href="/article/02-0251-s3/aquatint">Aquatint</a></li>
+  <li class="c018"><a href="/article/02-0383-s7/archermus">Archermus</a></li>
+  <li class="c018">Aristides of Thebes</li>
+  <li class="c018"><a href="/article/02-0632-s2/armstead__henry_hugh">Armstead, H. H.</a></li>
+  <li class="c018"><a href="/article/02-0813-s3/asper__hans">Asper, Hans</a></li>
+  <li class="c018">Asselyn, Hans</li>
+  <li class="c018"><a href="/article/02-0946-s4/audran">Audran (family)</a></li>
+  <li class="c018"><a href="/article/03-0169-s2/bacon__john">Bacon, John</a></li>
+  <li class="c018"><a href="/article/03-0152-s2/backhuysen">Backhuysen, Ludolf</a></li>
+  <li class="c018"><a href="/article/03-0200-s2/badalocchio__sisto">Badalocchio, Sisto</a></li>
+  <li class="c018"><a href="/article/03-0208-s7/baer__william_jacob">Baer, William Jacob</a></li>
+  <li class="c018"><a href="/article/03-0218-s7/bagnacavallo__bartolommeo">Bagnacavallo, B.</a></li>
+  <li class="c018"><a href="/article/03-0238-s2/baily__edward_hodges">Baily, E. H.</a></li>
+  <li class="c018"><a href="/article/03-0260-s4/baldinucci__filippo">Baldinucci, Filippo</a></li>
+  <li class="c018"><a href="/article/03-0260-s6/baldovinetti__alessio">Baldovinetti, Alessio</a></li>
+  <li class="c018"><a href="/article/03-0280-s4/ball__thomas">Ball, Thomas</a></li>
+  <li class="c018"><a href="/article/03-0329-bandinelli-bartolommeo/bandinelli__bartolommeo">Bandinelli, B.</a></li>
+  <li class="c018"><a href="/article/03-0350-banks-thomas/banks__thomas">Banks, Thomas</a></li>
+  <li class="c018"><a href="/article/03-0404-barbieri-giovanni-francesco/barbieri__giovanni_francesco">Barbieri, G. F.</a></li>
+  <li class="c018"><a href="/article/03-0405-barbizon/barbizon">Barbizon</a></li>
+  <li class="c018"><a href="/article/03-0427-barnard-george-grey/barnard__george_grey">Barnard, G. G.</a></li>
+  <li class="c018">Barocci, Federigo</li>
+  <li class="c018"><a href="/article/03-0461-barry-james/barry__james">Barry, James</a></li>
+  <li class="c018"><a href="/article/03-0464-bartels-hans-von/bartels__hans_von">Bartels, Hans von</a></li>
+  <li class="c018"><a href="/article/03-0467-bartlett-paul-wayland/bartlett__paul_wayland">Bartlett, P. W.</a></li>
+  <li class="c018"><a href="/article/03-0467-bartolini-lorenzo/bartolini__lorenzo">Bartolini, Lorenzo</a></li>
+  <li class="c018"><a href="/article/03-0468-bartolommeo-di-pagholo-fra/bartolommeo_di_pagholo__fra">Bartolommeo di Pagholo, Fra</a></li>
+  <li class="c018"><a href="/article/03-0468-bartolozzi-francesco/bartolozzi__francesco">Bartolozzi, Francesco</a></li>
+  <li class="c018"><a href="/article/03-0473-barye-antoine-louis/barye__antoine_louis">Barye, A. L.</a></li>
+  <li class="c018"><a href="/article/03-0507-bassano-jacopo-da-ponte/bassano__jacopo_da_ponte">Bassano, Jacopo da Ponte</a></li>
+  <li class="c018"><a href="/article/03-0514-basso-relievo/basso-relievo">Basso-Relievo</a></li>
+  <li class="c018"><a href="/article/03-0519-bastien-lepage-jules/bastien-lepage__jules">Bastien-Lepage, Jules</a></li>
+  <li class="c018"><a href="/article/03-0526-bates-harry/bates__harry">Bates, Harry</a></li>
+  <li class="c018"><a href="/article/03-0538-bathycles/bathycles">Bathycles</a></li>
+  <li class="c018"><a href="/article/03-0538-batoni-pompeo-girolamo/batoni__pompeo_girolamo">Batoni, P. G.</a></li>
+  <li class="c018"><a href="/article/03-0555-baudry-paul-jacques-aim/baudry__paul_jacques_aimé">Baudry, P. J. A.</a></li>
+  <li class="c018"><a href="/article/03-0594-beard-william-holbrook/beard__william_holbrook">Beard, William H.</a></li>
+  <li class="c018"><a href="/article/03-0596-beardsley-aubrey-vincent/beardsley__aubrey_vincent">Beardsley, Aubrey V.</a></li>
+  <li class="c018"><a href="/article/03-0619-beaux-cecilia/beaux__cecilia">Beaux, Cecilia</a></li>
+  <li class="c018"><a href="/article/03-0620-beccafumi-domenico-di-pace/beccafumi__domenico_di_pace">Beccafumi, Domenico di Pace</a></li>
+  <li class="c018"><a href="/article/03-0621-becerra-gaspar/becerra__gaspar">Becerra, Gaspar</a></li>
+  <li class="c018">Beck, David</li>
+  <li class="c018"><a href="/article/03-0629-beckwith-james-carroll/beckwith__james_carroll">Beckwith, J. C.</a></li>
+  <li class="c018"><a href="/article/03-0659-beechey-sir-william/beechey__sir_william">Beechey, Sir William</a></li>
+  <li class="c018"><a href="/article/03-0670-begas-karl/begas__karl">Begas, Karl</a></li>
+  <li class="c018"><a href="/article/03-0671-begas-reinhold/begas__reinhold">Begas, Reinhold</a></li>
+  <li class="c018"><a href="/article/03-0720-bellini/bellini">Bellini (family)</a></li>
+  <li class="c018"><a href="/article/03-0725-bellows-albert-f/bellows__albert_f_">Bellows, Albert F.</a></li>
+  <li class="c018"><a href="/article/03-0760-benlliure-y-gil-jos/benlliure_y_gil__josé">Benlliure y Gil, José</a></li>
+  <li class="c018"><a href="/article/03-0765-benson-frank-weston/benson__frank_weston">Benson, F. W.</a></li>
+  <li class="c018">Berchem, Nicolaas</li>
+  <li class="c018"><a href="/article/03-0824-bernini-giovanni-lorenzo/bernini__giovanni_lorenzo">Bernini, G. L.</a></li>
+  <li class="c018"><a href="/article/03-0842-besnard/besnard__paul_albert">Besnard, P. A.</a></li>
+  <li class="c018"><a href="/article/03-0856-beverley-william-roxby/beverley__william_roxby">Beverley, W. R.</a></li>
+  <li class="c018"><a href="/article/03-0858-bewick-thomas/bewick__thomas">Bewick, Thomas</a></li>
+  <li class="c018"><a href="/article/03-0944-bierstadt-albert/bierstadt__albert">Bierstadt, Albert</a></li>
+  <li class="c018"><a href="/article/04-0025-bissell-george-edwin/bissell__george_edwin">Bissell, G. E.</a></li>
+  <li class="c018"><a href="/article/04-0026-bitter-karl-theodore-francis/bitter__karl_theodore_francis">Bitter, K. T. F.</a></li>
+  <li class="c018"><a href="/article/04-0033-blackburn-jonathan/blackburn__jonathan">Blackburn, Jonathan</a></li>
+  <li class="c018"><a href="/article/04-0049-blake-william/blake__william">Blake, William</a></li>
+  <li class="c018"><a href="/article/04-0051-blakelock-ralph-albert/blakelock__ralph_albert">Blakelock, R. A.</a></li>
+  <li class="c018">Blanche, J. E.</li>
+  <li class="c018"><a href="/article/04-0056-blashfield/blashfield__edwin_howland">Blashfield, E. H.</a></li>
+  <li class="c018"><a href="/article/04-0087-bloemaert/bloemaert__abraham">Bloemaert, Abraham</a></li>
+  <li class="c018"><a href="/article/04-0087-bloemen/bloemen__jan_frans_van">Bloemen, J. F. van</a></li>
+  <li class="c018"><a href="/article/04-0105-blum-robert-frederick/blum__robert_frederick">Blum, R. F.</a></li>
+  <li class="c018"><a href="/article/04-0120-b-cklin-arnold/böcklin__arnold">Böcklin, Arnold</a></li>
+  <li class="c018"><a href="/article/04-0125-boehm-sir-joseph-edgar/boehm__sir_joseph_edgar">Boehm, Sir J. E.</a></li>
+  <li class="c018"><a href="/article/04-0129-boethus/boethus">Boethus</a></li>
+  <li class="c018"><a href="/article/04-0191-bologna-giovanni-da/bologna__giovanni_da">Bologna, Giovanni</a></li>
+  <li class="c018"><a href="/article/04-0213-bone-henry/bone__henry">Bone, Henry</a></li>
+  <li class="c018"><a href="/article/04-0216-bonfigli-benedetto/bonfigli__benedetto">Bonfigli, Benedetto</a></li>
+  <li class="c018">Bonheur, Rosa</li>
+  <li class="c018"><a href="/article/04-0223-bonnat-l-on-joseph-florentin/bonnat__léon_joseph_florentin">Bonnat, L. J. F.</a></li>
+  <li class="c018"><a href="/article/04-0261-bordone-paris/bordone__paris">Bordone, Paris</a></li>
+  <li class="c018"><a href="/article/04-0265-borglum-solon-hannibal/borglum__solon_hannibal">Borglum, S. H.</a></li>
+  <li class="c018"><a href="/article/04-0265-borgognone-ambrogio/borgognone__ambrogio">Borgognone, Ambrogio</a></li>
+  <li class="c018">Bosch, Jerom</li>
+  <li class="c018"><a href="/article/04-0302-bossi-giuseppe/bossi__giuseppe">Bossi, Giuseppe</a></li>
+  <li class="c018"><a href="/article/04-0321-botticelli-sandro/botticelli__sandro">Botticelli, Sandro</a></li>
+  <li class="c018"><a href="/article/04-0326-bouchardon-edme/bouchardon__edme">Bouchardon, Edme</a></li>
+  <li class="c018">Boudin, François</li>
+  <li class="c018"><a href="/article/04-0329-boudin-eug-ne/boudin__eugène">Boudin, Eugène</a></li>
+  <li class="c018"><a href="/article/04-0331-boughton-george-henry/boughton__george_henry">Boughton, G. H.</a></li>
+  <li class="c018"><a href="/article/04-0331-bouguereau-adolphe-william/bouguereau__adolphe_william">Bouguereau, A. W.</a></li>
+  <li class="c018"><a href="/article/04-0333-boulanger/boulanger">Boulanger (family)</a></li>
+  <li class="c018"><a href="/article/04-0338-boulogne/boulogne">Boulogne</a></li>
+  <li class="c018"><a href="/article/04-0349-boursse-esaias/boursse__esaias">Boursse, Esaias</a></li>
+  <li class="c018"><a href="/article/04-0369-boyle-john-j/boyle__john_j_">Boyle, John J.</a></li>
+  <li class="c018"><a href="/article/04-0384-bracquemond-f-lix/bracquemond__félix">Bracquemond, Felix</a></li>
+  <li class="c018"><a href="/article/04-0385-bradford-william-painter/bradford__william__painter_">Bradford, William</a></li>
+  <li class="c018"><a href="/article/04-0390-braekeleer-henri-jean-augustin-de/braekeleer__henri_jean_augustin_de">Braekeleer, H. J. A. de</a></li>
+  <li class="c018"><a href="/article/04-0445-brangwyn-frank/brangwyn__frank">Brangwyn, Frank</a></li>
+  <li class="c018"><a href="/article/04-0447-brascassat-jacques-raymond/brascassat__jacques_raymond">Brascassat, J. R.</a></li>
+  <li class="c018"><a href="/article/04-0504-bredael-jan-frans-van/bredael__jan_frans_van">Bredael, J. F. van</a></li>
+  <li class="c018"><a href="/article/04-0519-breton-jules-adolphe-aim-louis/breton__jules_adolphe_aimé_louis">Breton, Jules A. A. L.</a></li>
+  <li class="c018">Breughel, Pieter</li>
+  <li class="c018"><a href="/article/04-0579-s1/bridgman__frederick_arthur">Bridgman, F. A.</a></li>
+  <li class="c018"><a href="/article/04-0583-s3/brierly__sir_oswald_walters">Brierly, Sir O. W.</a></li>
+  <li class="c018"><a href="/article/04-0591-s4/bril__paul">Bril, Paul</a></li>
+  <li class="c018"><a href="/article/04-0593-s2/briosco__andrea">Briosco, Andrea</a></li>
+  <li class="c018"><a href="/article/04-0646-s6/brock__thomas">Brock, Thomas</a></li>
+  <li class="c018"><a href="/article/04-0664-s3/bronzino__il">Bronzino, Il</a></li>
+  <li class="c018"><a href="/article/04-0675-s2/brough__robert">Brough, Robert</a></li>
+  <li class="c018"><a href="/article/04-0679-s5/brouwer">Brouwer, Adrian</a></li>
+  <li class="c018"><a href="/article/04-0680-s3/brown__ford_madox">Brown, Ford Madox</a></li>
+  <li class="c018"><a href="/article/04-0682-s2/brown__henry_kirke">Brown, Henry Kirke</a></li>
+  <li class="c018"><a href="/article/04-0684-s4/brown__john_george">Brown, John George</a></li>
+  <li class="c018"><a href="/article/04-0686-s6/browne__hablôt_knight">Browne, Hablôt Knight</a></li>
+  <li class="c018"><a href="/article/04-0714-s5/brush__george_de_forest">Brush, G. de Forest</a></li>
+  <li class="c018">Bry, T. (Dirk) de</li>
+  <li class="c018"><a href="/article/04-0722-s2/bryaxis">Bryaxis</a></li>
+  <li class="c018"><a href="/article/04-0819-s6/bunbury__henry_william">Bunbury, H. W.</a></li>
+  <li class="c018">Bupalus and Athenis</li>
+  <li class="c018"><a href="/article/04-0832-s3/burckhardt__jakob">Burckhardt, Jakob</a></li>
+  <li class="c018"><a href="/article/04-0840-s2/burgkmair__hans">Burgkmair, Hans</a></li>
+  <li class="c018"><a href="/article/04-0872-s5/burne-jones__sir_edward_burne">Burne-Jones, Sir E. B.</a></li>
+  <li class="c018"><a href="/article/04-0887-s6/burton__sir_frederick_william">Burton, Sir F. W.</a></li>
+  <li class="c018"><a href="/article/04-0893-s6/busch__wilhelm">Busch, Wilhelm</a></li>
+  <li class="c018">Butadeo</li>
+  <li class="c018"><a href="/article/04-0930-bystr-m-johan-niklas/byström__johan_niklas">Byström, Johan Niklas</a></li>
+  <li class="c018"><a href="/article/04-0939-s4/cabanel__alexandre">Cabanel, Alexandre</a></li>
+  <li class="c018"><a href="/article/04-0994-s1/calamis">Calamis</a></li>
+  <li class="c018">Calcar (Kalcker), de</li>
+  <li class="c018"><a href="/article/04-1010-s3/caldecott__randolph">Caldecott, Randolph</a></li>
+  <li class="c018"><a href="/article/05-0068-callcott-sir-augustus-wall/callcott__sir_augustus_wall">Callcott, Sir A. W.</a></li>
+  <li class="c018"><a href="/article/05-0069-callimachus-poet/callimachus__poet_">Callimachus</a></li>
+  <li class="c018"><a href="/article/05-0070-callot-jacques/callot__jacques">Callot, Jacques</a></li>
+  <li class="c018"><a href="/article/05-0081-calvart-denis/calvart__denis">Calvart, Denis</a></li>
+  <li class="c018">Calvert (3 artists)</li>
+  <li class="c018"><a href="/article/05-0094-cambiasi-luca/cambiasi__luca">Cambiasi, Luca</a></li>
+  <li class="c018"><a href="/article/05-0147-camphausen-wilhelm/camphausen__wilhelm">Camphausen, Wilhelm</a></li>
+  <li class="c018"><a href="/article/05-0148-camphuysen-dirk-rafelsz/camphuysen__dirk_rafelsz">Camphuysen, D. R.</a></li>
+  <li class="c018"><a href="/article/05-0148-campi-giulio/campi__giulio">Campi, Guilio</a></li>
+  <li class="c018"><a href="/article/05-0151-camuccini-vincenzo/camuccini__vincenzo">Camuccini, Vincenzo</a></li>
+  <li class="c018"><a href="/article/05-0154-canachus/canachus">Canachus</a></li>
+  <li class="c018">Canale, A. (Canaletto)</li>
+  <li class="c018"><a href="/article/05-0195-canini-giovanni-agnolo/canini__giovanni_agnolo">Canini, G. A.</a></li>
+  <li class="c018"><a href="/article/05-0202-cano-alonzo/cano__alonzo">Cano, Alonzo</a></li>
+  <li class="c018"><a href="/article/05-0217-canova-antonio/canova__antonio">Canova, Antonio</a></li>
+  <li class="c018"><a href="/article/05-0221-cantarini-simone/cantarini__simone">Cantarini, Simone</a></li>
+  <li class="c018"><a href="/article/05-0311-caracci-lodovico-agostino-and-annabale/caracci__lodovico__agostino__and_annabale">Caracci, Lodovico, Agostino and Annibale</a></li>
+  <li class="c018"><a href="/article/05-0314-caran-d-ache/caran_d_ache">Caran d’Ache</a></li>
+  <li class="c018">Caravaggio, M. A. da</li>
+  <li class="c018"><a href="/article/05-0315-caravaggio-polidoro-caldara-da/caravaggio__polidoro_caldara_da">Caravaggio, P. C. da</a></li>
+  <li class="c018"><a href="/article/05-0339-carducci-bartolommeo/carducci__bartolommeo">Carducci, Bartolommeo</a></li>
+  <li class="c018"><a href="/article/05-0344-caricature/caricature">Caricature</a></li>
+  <li class="c018"><a href="/article/05-0394-carolus-duran/carolus-duran">Carolus-Duran</a></li>
+  <li class="c018"><a href="/article/05-0395-carpaccio-vittorio/carpaccio__vittorio">Carpaccio, Vittorio</a></li>
+  <li class="c018">Carpeaux, J. B.</li>
+  <li class="c018"><a href="/article/05-0414-carpi-girolamo-da/carpi__girolamo_da">Carpi, Girolamo da</a></li>
+  <li class="c018"><a href="/article/05-0414-carpi-ugo-da/carpi__ugo_da">Carpi, Ugo da</a></li>
+  <li class="c018"><a href="/article/05-0428-carstens-armus-jacob/carstens__armus_jacob">Carstens, A. J.</a></li>
+  <li class="c018"><a href="/article/05-0451-cartoon/cartoon">Cartoon</a></li>
+  <li class="c018"><a href="/article/05-0455-carving/carving">Carving</a></li>
+  <li class="c018"><a href="/article/05-0473-cassana-niccol/cassana__niccolò">Cassana, Niccolo</a></li>
+  <li class="c018"><a href="/article/05-0480-castagno-andrea-del/castagno__andrea_del">Castagno, Andrea del</a></li>
+  <li class="c018"><a href="/article/05-0488-castello-bernardo/castello__bernardo">Castello, Bernardo</a></li>
+  <li class="c018"><a href="/article/05-0489-castello-giovanni-battista/castello__giovanni_battista">Castello, G. B.</a></li>
+  <li class="c018"><a href="/article/05-0489-castello-valerio/castello__valerio">Castello, Valerio</a></li>
+  <li class="c018"><a href="/article/05-0491-castiglione-giovanni-benedetto/castiglione__giovanni_benedetto">Castiglione, G. B.</a></li>
+  <li class="c018"><a href="/article/05-0557-cattermole-george/cattermole__george">Cattermole, George</a></li>
+  <li class="c018"><a href="/article/05-0586-cavallini-pietro/cavallini__pietro">Cavallini, Pietro</a></li>
+  <li class="c018"><a href="/article/05-0604-cavedone-jacopo/cavedone__jacopo">Cavedone, Jacopo</a></li>
+  <li class="c018"><a href="/article/05-0616-cazin-jean-charles/cazin__jean_charles">Cazin, J. C.</a></li>
+  <li class="c018"><a href="/article/05-0728-cephisodotus/cephisodotus">Cephisodotus</a></li>
+  <li class="c018"><a href="/article/05-0803-cesari-giuseppe/cesari__giuseppe">Cesari, Giuseppe</a></li>
+  <li class="c018">Cespedes, Pablo de</li>
+  <li class="c018"><a href="/article/05-0845-chalmers-george-paul/chalmers__george_paul">Chalmers, G. P.</a></li>
+  <li class="c018"><a href="/article/05-0856-chambers-george/chambers__george">Chambers, George</a></li>
+  <li class="c018"><a href="/article/05-0864-champaigne-philippe-de/champaigne__philippe_de">Champaigne, Philippe de</a></li>
+  <li class="c018"><a href="/article/05-0883-chantrey-sir-francis-legatt/chantrey__sir_francis_legatt">Chantrey, Sir F. L.</a></li>
+  <li class="c018"><a href="/article/05-0893-chardin-jean-simeon/chardin__jean_siméon">Chardin, J. S.</a></li>
+  <li class="c018"><a href="/article/05-0894-chares/chares">Chares</a></li>
+  <li class="c018"><a href="/article/05-0981-charlet-nicholas-toussaint/charlet__nicholas_toussaint">Charlet, N. T.</a></li>
+  <li class="c018"><a href="/article/05-0992-chase-william-merritt/chase__william_merritt">Chase, W. M.</a></li>
+  <li class="c018">Chassériau, Theodore</li>
+  <li class="c018"><a href="/article/06-0131-chiaroscuro/chiaroscuro">Chiaroscuro</a></li>
+  <li class="c018"><a href="/article/06-0276-chodowiecki-daniel-nicholas/chodowiecki__daniel_nicholas">Chodowiecki, D. N.</a></li>
+  <li class="c018"><a href="/article/06-0335-chryselephantine/chryselephantine">Chryselephantine</a></li>
+  <li class="c018"><a href="/article/06-0340-church-frederick-edwin/church__frederick_edwin">Church, F. E.</a></li>
+  <li class="c018">Cibber, C. G.</li>
+  <li class="c018">Cicognara, Count Leopoldo</li>
+  <li class="c018"><a href="/article/06-0380-cignani-carlo/cignani__carlo">Cignani, Carlo</a></li>
+  <li class="c018">Cigoli, L. C. da</li>
+  <li class="c018"><a href="/article/06-0382-cimabue-giovanni/cimabue__giovanni">Cimabue, Giovanni</a></li>
+  <li class="c018"><a href="/article/06-0385-cimon-of-cleonae/cimon_of_cleonae">Cimon of Cleonae</a></li>
+  <li class="c018"><a href="/article/06-0395-cipriani-giovanni-battista/cipriani__giovanni_battista">Cipriani, G. B.</a></li>
+  <li class="c018"><a href="/article/06-0418-s4/civerchio__vincenzo">Civerchio, Vincenzo</a></li>
+  <li class="c018"><a href="/article/06-0463-clarke-thomas-shields/clarke__thomas_shields">Clarke, T. S.</a></li>
+  <li class="c018"><a href="/article/06-0479-claude-of-lorraine/claude_of_lorraine">Claude of Lorraine</a></li>
+  <li class="c018"><a href="/article/06-0483-clausen-george/clausen__george">Clausen, George</a></li>
+  <li class="c018"><a href="/article/06-0490-clays-paul-jean/clays__paul_jean">Clays, Paul Jean</a></li>
+  <li class="c018"><a href="/article/06-0578-clouet-fran-ois/clouet__françois">Clouet, François</a></li>
+  <li class="c018"><a href="/article/06-0579-clouet-jean/clouet__jean">Clouet, Jean</a></li>
+  <li class="c018"><a href="/article/06-0582-clovio-giorgio-giulio/clovio__giorgio_giulio">Clovio, G. G.</a></li>
+  <li class="c018">Cockx, Hieronymus</li>
+  <li class="c018"><a href="/article/06-0663-coello-alonso-sanchez/coello__alonso_sanchez">Coello, A. S.</a></li>
+  <li class="c018"><a href="/article/06-0686-cole-thomas/cole__thomas">Cole, Thomas</a></li>
+  <li class="c018"><a href="/article/06-0686-cole-timothy/cole__timothy">Cole, Timothy</a></li>
+  <li class="c018"><a href="/article/06-0686-cole-vicat/cole__vicat">Cole, Vicat</a></li>
+  <li class="c018"><a href="/article/06-0705-colin-alexandre/colin__alexandre">Colin, Alexandre</a></li>
+  <li class="c018"><a href="/article/06-0705-collaert-hans/collaert__hans">Collaert, Hans</a></li>
+  <li class="c018"><a href="/article/06-0713-collins-william/collins__william">Collins, William</a></li>
+  <li class="c018"><a href="/article/06-0716-colman-samuel/colman__samuel">Colman, Samuel</a></li>
+  <li class="c018"><a href="/article/06-0716-colman-saint/colman__saint">Colman, Sidney</a></li>
+  <li class="c018"><a href="/article/06-0847-conca-sebastiano/conca__sebastiano">Conca, Sebastiano</a></li>
+  <li class="c018"><a href="/article/06-0873-conder-charles/conder__charles">Conder, Charles</a></li>
+  <li class="c018"><a href="/article/06-1007-constable-john/constable__john">Constable, John</a></li>
+  <li class="c018"><a href="/article/06-1012-constant-benjamin/constant__benjamin">Constant, Benjamin</a></li>
+  <li class="c018"><a href="/article/07-0084-conway-sir-william-martin/conway__sir_william_martin">Conway, Sir W. Martin</a></li>
+  <li class="c018"><a href="/article/07-0093-cooper-abraham/cooper__abraham">Cooper, Abraham</a></li>
+  <li class="c018"><a href="/article/07-0093-cooper-alexander/cooper__alexander">Cooper, Alexander</a></li>
+  <li class="c018"><a href="/article/07-0095-cooper-samuel/cooper__samuel">Cooper, Samuel</a></li>
+  <li class="c018"><a href="/article/07-0096-s5/cooper__thomas_sidney">Cooper, Thomas Sidney</a></li>
+  <li class="c018"><a href="/article/07-0118-copley-john-singleton/copley__john_singleton">Copley, John Singleton</a></li>
+  <li class="c018">Coques (Cocx), Gonzales</li>
+  <li class="c018"><a href="/article/07-0161-corenzio-belisario/corenzio__belisario">Corenzio, Belisario</a></li>
+  <li class="c018"><a href="/article/07-0178-cormon-fernand/cormon__fernand">Cormon, Fernand</a></li>
+  <li class="c018"><a href="/article/07-0185-cornelius-peter-von/cornelius__peter_von">Cornelius, P. von</a></li>
+  <li class="c018">Corot, J. B. C.</li>
+  <li class="c018"><a href="/article/07-0211-correggio/correggio">Correggio</a></li>
+  <li class="c018"><a href="/article/07-0222-cort-cornelis/cort__cornelis">Cort, Cornelius</a></li>
+  <li class="c018"><a href="/article/07-0236-costa-giovanni/costa__giovanni">Costa, Giovanni</a></li>
+  <li class="c018"><a href="/article/07-0236-costa-lorenzo/costa__lorenzo">Costa, Lorenzo</a></li>
+  <li class="c018"><a href="/article/07-0266-cosway-richard/cosway__richard">Cosway, Richard</a></li>
+  <li class="c018"><a href="/article/07-0268-cotman-john-sell/cotman__john_sell">Cotman, J. S.</a></li>
+  <li class="c018"><a href="/article/07-0271-cottet-charles/cottet__charles">Cottet, Charles</a></li>
+  <li class="c018"><a href="/article/07-0338-courbet/courbet__gustave">Courbet, Gustave</a></li>
+  <li class="c018">Courtois, Jacques and Guillaume</li>
+  <li class="c018"><a href="/article/07-0350-cousin-jean/cousin__jean">Cousin, Jean</a></li>
+  <li class="c018"><a href="/article/07-0355-cousins-samuel/cousins__samuel">Cousins, Samuel</a></li>
+  <li class="c018"><a href="/article/07-0356-coustou/coustou">Coustou (family)</a></li>
+  <li class="c018"><a href="/article/07-0357-couture-thomas/couture__thomas">Couture, Thomas</a></li>
+  <li class="c018"><a href="/article/07-0371-cox-david/cox__david">Cox, David</a></li>
+  <li class="c018"><a href="/article/07-0373-cox-kenyon/cox__kenyon">Cox, Kenyon</a></li>
+  <li class="c018"><a href="/article/07-0374-coxcie-michael/coxcie__michael">Coxcie, Michael</a></li>
+  <li class="c018"><a href="/article/07-0375-coypel/coypel">Coypel</a></li>
+  <li class="c018"><a href="/article/07-0375-coysevox-charles-antoine/coysevox__charles_antoine">Coysevox, C. A.</a></li>
+  <li class="c018"><a href="/article/07-0384-cranach-lucas/cranach__lucas">Cranach, Lucas</a></li>
+  <li class="c018"><a href="/article/07-0386-crane-walter/crane__walter">Crane, Walter</a></li>
+  <li class="c018"><a href="/article/07-0402-crauck-gustave/crauck__gustave">Crauck, Gustave</a></li>
+  <li class="c018"><a href="/article/07-0406-crawford-thomas/crawford__thomas">Crawford, Thomas</a></li>
+  <li class="c018"><a href="/article/07-0407-crayer-gaspard-de/crayer__gaspard_de">Crayer, Gaspard de</a></li>
+  <li class="c018"><a href="/article/07-0408-crayon/crayon">Crayon</a></li>
+  <li class="c018"><a href="/article/07-0410-credi-lorenzo-di/credi__lorenzo_di">Credi, Lorenzo di</a></li>
+  <li class="c018"><a href="/article/07-0432-cresilas/cresilas">Cresilas</a></li>
+  <li class="c018"><a href="/article/07-0432-crespi-danielle/crespi__danielle">Crespi, Daniele</a></li>
+  <li class="c018"><a href="/article/07-0432-crespi-giovanni-battista/crespi__giovanni_battista">Crespi, Giovanni B.</a></li>
+  <li class="c018"><a href="/article/07-0432-crespi-giuseppe-maria/crespi__giuseppe_maria">Crespi, Giuseppe M.</a></li>
+  <li class="c018"><a href="/article/07-0434-creswick-thomas/creswick__thomas">Creswick, Thomas</a></li>
+  <li class="c018">Critius and Nesiotes</li>
+  <li class="c018"><a href="/article/07-0493-crivelli-carlo/crivelli__carlo">Crivelli, Carlo</a></li>
+  <li class="c018"><a href="/article/07-0505-crome-john/crome__john">Crome, John</a></li>
+  <li class="c018"><a href="/article/07-0524-cropsey-jasper-francis/cropsey__jasper_francis">Cropsey, J. F.</a></li>
+  <li class="c018"><a href="/article/07-0536-crowe-sir-joseph-archer/crowe__sir_joseph_archer">Crowe, Sir J. A.</a></li>
+  <li class="c018"><a href="/article/07-0545-cruikshank-george/cruikshank__george">Cruikshank, George</a></li>
+  <li class="c018"><a href="/article/07-0699-cuyp/cuyp">Cuyp</a></li>
+  <li class="c018"><a href="/article/07-0753-dahl-hans/dahl__hans">Dahl, Hans</a></li>
+  <li class="c018"><a href="/article/07-0753-dahl-johann-christian/dahl__johann_christian">Dahl, J. C.</a></li>
+  <li class="c018"><a href="/article/07-0753-dahl-michael/dahl__michael">Dahl, Michael</a></li>
+  <li class="c018"><a href="/article/07-0791-dallin-cyrus-edwin/dallin__cyrus_edwin">Dallin, Cyrus E.</a></li>
+  <li class="c018"><a href="/article/07-0801-dalou-jules/dalou__jules">Dalou, Jules</a></li>
+  <li class="c018"><a href="/article/07-0814-damophon/damophon">Damophon</a></li>
+  <li class="c018"><a href="/article/07-0818-danby-francis/danby__francis">Danby, Francis</a></li>
+  <li class="c018"><a href="/article/07-0833-daniell-thomas/daniell__thomas">Daniell, Thomas</a></li>
+  <li class="c018"><a href="/article/07-0833-dannat-william-t/dannat__william_t_">Dannat, William T.</a></li>
+  <li class="c018"><a href="/article/07-0834-dannecker-johann-heinrich-von/dannecker__johann_heinrich_von">Dannecker, J. H. von</a></li>
+  <li class="c018"><a href="/article/07-0871-daubigny-charles-fran-ois/daubigny__charles_françois">Daubigny, C. F.</a></li>
+  <li class="c018"><a href="/article/07-0873-daumier-honor/daumier__honoré">Daumier, Honoré</a></li>
+  <li class="c018"><a href="/article/07-0885-david-gerard/david__gerard">David, Gerard</a></li>
+  <li class="c018"><a href="/article/07-0885-david-jacques-louis/david__jacques_louis">David, J. L.</a></li>
+  <li class="c018"><a href="/article/07-0886-david-pierre-jean/david__pierre_jean">David, Pierre Jean</a></li>
+  <li class="c018"><a href="/article/07-0890-davis-charles-howard/davis__charles_howard">Davis, C. H.</a></li>
+  <li class="c018"><a href="/article/07-0890-davis-henry-william-banks/davis__henry_william_banks">Davis, H. W. B.</a></li>
+  <li class="c018"><a href="/article/07-0933-de-camp-joseph/de_camp__joseph">De Camp, Joseph</a></li>
+  <li class="c018"><a href="/article/07-0933-decamps-alexandre-gabriel/decamps__alexandre_gabriel">Decamps, A. G.</a></li>
+  <li class="c018"><a href="/article/07-0955-degas-hilaire-germain-edgard/degas__hilaire_germain_edgard">Degas, H. G. E.</a></li>
+  <li class="c018"><a href="/article/07-0956-de-haas/de_haas__mauritz_frederick_hendrick">De Haas, M. F. H.</a></li>
+  <li class="c018"><a href="/article/07-0962-de-keyser-thomas/de_keyser__thomas">De Keyser, Thomas</a></li>
+  <li class="c018"><a href="/article/07-0965-delacroix/delacroix__ferdinand_victor_eugène">Delacroix, F. V. E.</a></li>
+  <li class="c018">Delaroche, H. (Paul)</li>
+  <li class="c018"><a href="/article/07-0970-delaunay-elie/delaunay__elie">Delaunay, Elie</a></li>
+  <li class="c018"><a href="/article/07-0989-della-bella-stefano/della_bella__stefano">Della Bella, Stefano</a></li>
+  <li class="c018"><a href="/article/07-0989-della-colle-raffaellino/della_colle__raffaellino">Della Colle, Raffaellino</a></li>
+  <li class="c018"><a href="/article/07-0990-della-quercia-jacopo/della_quercia__jacopo">Della Quercia, Jacopo</a></li>
+  <li class="c018"><a href="/article/07-0990-della-robbia/della_robbia">Della Robbia</a></li>
+  <li class="c018"><a href="/article/07-0997-de-loutherbourg-philip-james/de_loutherbourg__philip_james">De Loutherbourg, P. J.</a></li>
+  <li class="c018"><a href="/article/07-1007-demetrius-cynic/demetrius__cynic_">Demetrius</a></li>
+  <li class="c018"><a href="/article/08-0109-desiderio-da-settignano/desiderio_da_settignano">Desiderio da Settignano</a></li>
+  <li class="c018">Detaille, J. B. E.</li>
+  <li class="c018"><a href="/article/08-0154-dewing-thomas-wilmer/dewing__thomas_wilmer">Dewing, T. W.</a></li>
+  <li class="c018"><a href="/article/08-0154-de-wint-peter/de_wint__peter">De Wint, Peter</a></li>
+  <li class="c018"><a href="/article/08-0172-diamante-fra/diamante__fra">Diamante, Fra</a></li>
+  <li class="c018"><a href="/article/08-0188-diaz-narcisse-virgilio/diaz__narcisse_virgilio">Diaz, N. V.</a></li>
+  <li class="c018"><a href="/article/08-0226-dielmann-frederick/dielmann__frederick">Dielmann, Frederick</a></li>
+  <li class="c018"><a href="/article/08-0226-diepenbeck-abraham-van/diepenbeck__abraham_van">Diepenbeck, A. van</a></li>
+  <li class="c018"><a href="/article/08-0228-dies-christoph-albert/dies__christoph_albert">Dies, C. A.</a></li>
+  <li class="c018"><a href="/article/08-0238-dietrich-christian-wilhelm-ernst/dietrich__christian_wilhelm_ernst">Dietrich, C. W. E.</a></li>
+  <li class="c018"><a href="/article/08-0289-dillens-julien/dillens__julien">Dillens, Julien</a></li>
+  <li class="c018"><a href="/article/08-0323-dipoenus-and-scyllis/dipoenus_and_scyllis">Dipoenus and Scyllis</a></li>
+  <li class="c018"><a href="/article/08-0370-dobson-william/dobson__william">Dobson, William</a></li>
+  <li class="c018"><a href="/article/08-0407-dolci-carlo/dolci__carlo">Dolci, Carlo</a></li>
+  <li class="c018">Domenichino, Zampieri</li>
+  <li class="c018"><a href="/article/08-0427-donatello/donatello">Donatello</a></li>
+  <li class="c018"><a href="/article/08-0445-dor-louis-auguste-gustave/doré__louis_auguste_gustave">Doré, L. A. Gustave</a></li>
+  <li class="c018">Douw, Gerhard</li>
+  <li class="c018"><a href="/article/08-0482-downman-john/downman__john">Downman, John</a></li>
+  <li class="c018"><a href="/article/08-0484-doyen-gabriel-fran-ois/doyen__gabriel_françois">Doyen, G. F.</a></li>
+  <li class="c018"><a href="/article/08-0485-doyle-richard/doyle__richard">Doyle, Richard</a></li>
+  <li class="c018"><a href="/article/08-0575-drawing/drawing">Drawing</a></li>
+  <li class="c018"><a href="/article/08-0618-drouais-jean-germain/drouais__jean_germain">Drouais, J. G.</a></li>
+  <li class="c018"><a href="/article/08-0651-dubois-paul/dubois__paul">Dubois, Paul</a></li>
+  <li class="c018"><a href="/article/08-0685-du-maurier-george-louis-palmella-busson/du_maurier__george_louis_palmella_busson">Du Maurier, G. L. P. B.</a></li>
+  <li class="c018"><a href="/article/08-0692-dumont/dumont">Dumont (family)</a></li>
+  <li class="c018"><a href="/article/08-0692-dumont-fran-ois/dumont__françois">Dumont, François</a></li>
+  <li class="c018"><a href="/article/08-0698-duncan-thomas/duncan__thomas">Duncan, Thomas</a></li>
+  <li class="c018"><a href="/article/08-0716-dupr-jules/dupré__jules">Dupré, Jules</a></li>
+  <li class="c018"><a href="/article/08-0720-durand-asher-brown/durand__asher_brown">Durand, Asher Brown</a></li>
+  <li class="c018"><a href="/article/08-0724-d-rer-albrecht/dürer__albrecht">Dürer, Albrecht</a></li>
+  <li class="c018"><a href="/article/08-0764-duveneck-frank/duveneck__frank">Duveneck, Frank</a></li>
+  <li class="c018"><a href="/article/08-0770-dyce-william/dyce__william">Dyce, William</a></li>
+  <li class="c018"><a href="/article/08-0818-eakins-thomas/eakins__thomas">Eakins, Thomas</a></li>
+  <li class="c018"><a href="/article/08-0823-earle-ralph/earle__ralph">Earle, Ralph</a></li>
+  <li class="c018"><a href="/article/08-0824-earlom-richard/earlom__richard">Earlom, Richard</a></li>
+  <li class="c018"><a href="/article/08-0854-east-alfred/east__alfred">East, Alfred</a></li>
+  <li class="c018"><a href="/article/08-0862-eastlake-sir-charles-lock/eastlake__sir_charles_lock">Eastlake, Sir C. L.</a></li>
+  <li class="c018"><a href="/article/08-0866-eaton-wyatt/eaton__wyatt">Eaton, Wyatt</a></li>
+  <li class="c018"><a href="/article/08-0913-eckersberg-kristoffer/eckersberg__kristoffer">Eckersberg, Kristoffer</a></li>
+  <li class="c018"><a href="/article/08-0950-edelinck-gerard/edelinck__gerard">Edelinck, Gerard</a></li>
+  <li class="c018"><a href="/article/09-0020-eeckhout-gerbrand-van-den/eeckhout__gerbrand_van_den">Eeckhout, G. van den</a></li>
+  <li class="c018"><a href="/article/09-0022-effigies-monumental/effigies__monumental">Effigies, Monumental</a></li>
+  <li class="c018"><a href="/article/09-0025-egg-augustus-leopold/egg__augustus_leopold">Egg, A. L.</a></li>
+  <li class="c018"><a href="/article/09-0392-encaustic-painting/encaustic_painting">Encaustic Painting</a></li>
+  <li class="c018"><a href="/article/09-0408-endoeus/endoeus">Endoeus</a></li>
+  <li class="c018"><a href="/article/09-0487-engleheart-george/engleheart__george">Engleheart, George</a></li>
+  <li class="c018"><a href="/article/09-0677-s3/engraving">Engraving</a></li>
+  <li class="c018"><a href="/article/09-0679-enneking-john-joseph/enneking__john_joseph">Enneking, J. J.</a></li>
+  <li class="c018"><a href="/article/09-0836-s5/etching">Etching</a></li>
+  <li class="c018">Etex, Antoine</li>
+  <li class="c018"><a href="/article/09-0895-s7/etty__william">Etty, William</a></li>
+  <li class="c018"><a href="/article/09-0926-s5/euphranor">Euphranor</a></li>
+  <li class="c018"><a href="/article/09-0930-s2/euphronius">Euphronius</a></li>
+  <li class="c018"><a href="/article/09-0932-eupompus/eupompus">Eupompus</a></li>
+  <li class="c018"><a href="/article/09-0995-eutychides/eutychides">Eutychides</a></li>
+  <li class="c018"><a href="/article/10-0019-everdingen-allart-van/everdingen__allart_van">Everdingen, Allart van</a></li>
+  <li class="c018"><a href="/article/10-0102-s2/eyck__van">Eyck, Van</a></li>
+  <li class="c018"><a href="/article/10-0135-s2/faed__thomas">Faed, Thomas</a></li>
+  <li class="c018"><a href="/article/10-0148-faithorne-william/faithorne__william">Faithorne, William</a></li>
+  <li class="c018"><a href="/article/10-0152-s2/falcone__aniello">Falcone, Aniello</a></li>
+  <li class="c018">Falconet, E. M.</li>
+  <li class="c018"><a href="/article/10-0159-s4/falguière__jean_alexandre_joseph">Falguière, J. A. J.</a></li>
+  <li class="c018">Fantin-Latour, I. H. T.</li>
+  <li class="c018"><a href="/article/10-0191-s3/farinato__paolo">Farinato, Paolo</a></li>
+  <li class="c018"><a href="/article/10-0259-s2/feltre__morto_da">Feltre, Morto da</a></li>
+  <li class="c018"><a href="/article/10-0293-s4/fernow__karl_ludwig">Fernow, K. L.</a></li>
+  <li class="c018"><a href="/article/10-0296-s2/ferrari__gaudenzio">Ferrari, Gaudenzio</a></li>
+  <li class="c018"><a href="/article/10-0299-s4/ferri__ciro">Ferri, Ciro</a></li>
+  <li class="c018"><a href="/article/10-0314-feuerbach-anselm/feuerbach__anselm">Feuerbach, Anselm</a></li>
+  <li class="c018"><a href="/article/10-0338-s3/fielding__anthony_vandyke_copley">Fielding, A. V. Copley</a></li>
+  <li class="c018"><a href="/article/10-0353-s4/fildes__sir_luke">Fildes, Sir Luke</a></li>
+  <li class="c018"><a href="/article/10-0368-finden-william/finden__william">Finden, William</a></li>
+  <li class="c018"><a href="/article/10-0407-fiorenzo-di-lorenzo/fiorenzo_di_lorenzo">Fiorenzo di Lorenzo</a></li>
+  <li class="c018"><a href="/article/10-0408-s2/fiorillo__johann_dominicus">Fiorillo, J. D.</a></li>
+  <li class="c018"><a href="/article/10-0443-fisher-alvan/fisher__alvan">Fisher, Alvan</a></li>
+  <li class="c018"><a href="/article/10-0498-s2/flandrin__jean_hippolyte">Flandrin, J. Hippolyte</a></li>
+  <li class="c018"><a href="/article/10-0507-s2/flaxman__john">Flaxman, John</a></li>
+  <li class="c018"><a href="/article/10-0539-s2/flinck__govert">Flinck, Govert</a></li>
+  <li class="c018"><a href="/article/10-0568-s2/floris__frans">Floris, Frans</a></li>
+  <li class="c018"><a href="/article/10-0628-fontana-lavinia/fontana__lavinia">Fontana, Lavinia</a></li>
+  <li class="c018"><a href="/article/10-0628-fontana-prospero/fontana__prospero">Fontana, Prospero</a></li>
+  <li class="c018">Fogelberg, B. E.</li>
+  <li class="c018"><a href="/article/10-0620-s2/foley__john_henry">Foley, J. H.</a></li>
+  <li class="c018"><a href="/article/10-0649-foppa-vincenzo/foppa__vincenzo">Foppa, Vincenzo</a></li>
+  <li class="c018"><a href="/article/10-0649-forain-j-l/forain__j__l">Forain, J. L.</a></li>
+  <li class="c018"><a href="/article/10-0661-s5/ford__edward_onslow">Ford, E. Onslow</a></li>
+  <li class="c018"><a href="/article/10-0695-s3/forster__françois">Forster, François</a></li>
+  <li class="c018"><a href="/article/10-0748-fortuny-mariano-jose-maria-bernardo/fortuny__mariano_jose_maria_bernardo">Fortuny, M. J. M. B.</a></li>
+  <li class="c018"><a href="/article/10-0754-foster-myles-birket/foster__myles_birket">Foster, M. Birket</a></li>
+  <li class="c018"><a href="/article/10-0758-s2/foucquet__jean">Foucquet, Jean</a></li>
+  <li class="c018">Fragonard, J. H.</li>
+  <li class="c018"><a href="/article/10-0795-s7/français__françois_louis">Français, F. L.</a></li>
+  <li class="c018">Franceschi, Piero de’</li>
+  <li class="c018"><a href="/article/10-0953-s3/franceschini__baldassare">Franceschini, Baldassare</a></li>
+  <li class="c018"><a href="/article/10-0955-francia/francia">Francia</a></li>
+  <li class="c018"><a href="/article/10-0956-s2/franciabigio">Franciabigio</a></li>
+  <li class="c018"><a href="/article/11-0015-franck/franck">Franck</a></li>
+  <li class="c018"><a href="/article/11-0017-s2/francken">Francken (family)</a></li>
+  <li class="c018">Frèmiet, Emmanuel</li>
+  <li class="c018"><a href="/article/11-0110-french-daniel-chester/french__daniel_chester">French, Daniel C.</a></li>
+  <li class="c018">Frère, P. E.</li>
+  <li class="c018"><a href="/article/11-0222-s2/fresco">Fresco</a></li>
+  <li class="c018"><a href="/article/11-0223-s3/fresnoy__charles_alphonse_du">Fresnoy, C. A. du</a></li>
+  <li class="c018"><a href="/article/11-0249-frith-william-powell/frith__william_powell">Frith, W. P.</a></li>
+  <li class="c018"><a href="/article/11-0259-fromentin-eug-ne/fromentin__eugène">Fromentin, Eugène</a></li>
+  <li class="c018"><a href="/article/11-0263-frost-william-edward/frost__william_edward">Frost, W. E.</a></li>
+  <li class="c018"><a href="/article/11-0283-fruytiers-philip/fruytiers__philip">Fruytiers, Philip</a></li>
+  <li class="c018"><a href="/article/11-0303-s2/führich__joseph_von">Führich, Joseph von</a></li>
+  <li class="c018"><a href="/article/11-0308-s2/fuller__george">Fuller, George</a></li>
+  <li class="c018"><a href="/article/11-0376-furniss-harry/furniss__harry">Furniss, Harry</a></li>
+  <li class="c018"><a href="/article/11-0383-s3/furse__charles_wellington">Furse, C. W.</a></li>
+  <li class="c018"><a href="/article/11-0386-s4/fuseli__henry">Fuseli, Henry</a></li>
+  <li class="c018"><a href="/article/11-0394-s3/fyt__johannes">Fyt, Johannes</a></li>
+  <li class="c018"><a href="/article/11-0400-s5/gaddi">Gaddi (family)</a></li>
+  <li class="c018"><a href="/article/11-0406-gainsborough-thomas/gainsborough__thomas">Gainsborough, Thomas</a></li>
+  <li class="c018"><a href="/article/11-0430-s4/gallait__louis">Gallait, Louis</a></li>
+  <li class="c018"><a href="/article/11-0550-s1/gauermann__friedrich">Gauermann, Friedrich</a></li>
+  <li class="c018"><a href="/article/11-0550-s4/gaul__gilbert_william">Gaul, G. W.</a></li>
+  <li class="c018"><a href="/article/11-0556-s2/gavarni">Gavarni</a></li>
+  <li class="c018"><a href="/article/11-0559-gay-walter/gay__walter">Gay, Walter</a></li>
+  <li class="c018"><a href="/article/11-0565-geddes-andrew/geddes__andrew">Geddes, Andrew</a></li>
+  <li class="c018"><a href="/article/11-0571-geikie-walter/geikie__walter">Geikie, Walter</a></li>
+  <li class="c018"><a href="/article/11-0597-genelli-giovanni-buonaventura/genelli__giovanni_buonaventura">Genelli, G. B.</a></li>
+  <li class="c018"><a href="/article/11-0614-s4/genga__girolamo">Genga, Girolamo</a></li>
+  <li class="c018"><a href="/article/11-0622-gentile-da-fabriano/gentile_da_fabriano">Gentile da Fabriano</a></li>
+  <li class="c018">Gentileschi, Artemisia and Orazio de’</li>
+  <li class="c018">Gérard, Baron F.</li>
+  <li class="c018"><a href="/article/11-0786-s3/gérard__jean_ignace_isidore">Gérard, J. I. I.</a></li>
+  <li class="c018"><a href="/article/11-0789-g-ricault-jean-louis-andr-th-odore/géricault__jean_louis_andré_théodore">Géricault, J. L. A. T.</a></li>
+  <li class="c018"><a href="/article/11-0925-g-r-me-jean-l-on/gérôme__jean_léon">Gérôme, Jean Léon</a></li>
+  <li class="c018"><a href="/article/11-0932-s2/gervex__henri">Gervex, Henri</a></li>
+  <li class="c018"><a href="/article/11-0945-ghiberti-lorenzo/ghiberti__lorenzo">Ghiberti, Lorenzo</a></li>
+  <li class="c018"><a href="/article/11-0946-ghirlandajo-domenico/ghirlandajo__domenico">Ghirlandajo, Domenico</a></li>
+  <li class="c018"><a href="/article/11-0947-ghirlandajo-ridolfo/ghirlandajo__ridolfo">Ghirlandajo, Ridolfo</a></li>
+  <li class="c018"><a href="/article/11-0966-s2/gibson__charles_dana">Gibson, C. Dana</a></li>
+  <li class="c018"><a href="/article/11-0967-s2/gibson__john">Gibson, John</a></li>
+  <li class="c018"><a href="/article/11-0968-s3/gibson__william_hamilton">Gibson, W. H.</a></li>
+  <li class="c018"><a href="/article/12-0017-s8/gifford__robert_swain">Gifford, R. S.</a></li>
+  <li class="c018"><a href="/article/12-0018-s1/gifford__sandford_robinson">Gifford, S. R.</a></li>
+  <li class="c018"><a href="/article/12-0020-s2/gilbert__alfred">Gilbert, Alfred</a></li>
+  <li class="c018"><a href="/article/12-0021-s3/gilbert__sir_john">Gilbert, Sir John</a></li>
+  <li class="c018"><a href="/article/12-0036-s5/gillot__claude">Gillot, Claude</a></li>
+  <li class="c018"><a href="/article/12-0036-s8/gillray__james">Gillray, James</a></li>
+  <li class="c018"><a href="/article/12-0044-s3/giordano__luca">Giordano, Luca</a></li>
+  <li class="c018"><a href="/article/12-0044-s4/giorgione">Giorgione</a></li>
+  <li class="c018"><a href="/article/12-0046-s2/giottino">Giottino</a></li>
+  <li class="c018"><a href="/article/12-0047-s2/giotto">Giotto</a></li>
+  <li class="c018"><a href="/article/12-0059-s4/girardon__françois">Girardon, François</a></li>
+  <li class="c018"><a href="/article/12-0061-s6/girodet_de_roussy__anne_louis">Girodet de Roussy, A. L.</a></li>
+  <li class="c018"><a href="/article/12-0064-s2/girtin__thomas">Girtin, Thomas</a></li>
+  <li class="c018"><a href="/article/12-0065-s6/giulio_romano">Giulio Romano</a></li>
+  <li class="c018"><a href="/article/12-0067-giunta-pisano/giunta_pisano">Giunta Pisano</a></li>
+  <li class="c018"><a href="/article/12-0068-s6/giusto_da_guanto">Giusto da Guanto</a></li>
+  <li class="c018"><a href="/article/12-0138-gleyre-marc-charles-gabriel/gleyre__marc_charles_gabriel">Gleyre, M. C. G.</a></li>
+  <li class="c018"><a href="/article/12-0198-s2/goes__hugo_van_der">Goes, Hugo van der</a></li>
+  <li class="c018"><a href="/article/12-0230-s5/goldschmidt__hermann">Goldschmidt, Hermann</a></li>
+  <li class="c018"><a href="/article/12-0244-s3/goltzius__hendrik">Goltzius, Hendrik</a></li>
+  <li class="c018"><a href="/article/12-0270-s4/gordon__sir_john_watson">Gordon, Sir J. W.</a></li>
+  <li class="c018"><a href="/article/12-0297-s3/gouache">Gouache</a></li>
+  <li class="c018"><a href="/article/12-0299-s7/goujon__jean">Goujon, Jean</a></li>
+  <li class="c018"><a href="/article/12-0301-s6/gould__sir_francis_carruthers">Gould, Sir F. C.</a></li>
+  <li class="c018">Goya y Lucientes, F.</li>
+  <li class="c018"><a href="/article/12-0321-s2/goyen__jan_josephszoon_van">Goyen, J. J. Van</a></li>
+  <li class="c018"><a href="/article/12-0322-s6/gozzoli__benozzo">Gozzoli, Benozzo</a></li>
+  <li class="c018"><a href="/article/12-0333-s4/grafly__charles">Grafly, Charles</a></li>
+  <li class="c018"><a href="/article/12-0367-s5/granet__françois_marius">Granet, F. M.</a></li>
+  <li class="c018"><a href="/article/12-0370-s6/grant__sir_francis">Grant, Sir Francis</a></li>
+  <li class="c018"><a href="/article/12-0408-s3/gray__henry_peters">Gray, Henry Peters</a></li>
+  <li class="c018"><a href="/article/12-0440-s3/greco__el">Greco, El</a></li>
+  <li class="c018"><a href="/article/12-0561-s2/green__valentine">Green, Valentine</a></li>
+  <li class="c018"><a href="/article/12-0561-s5/greenaway__kate">Greenaway, Kate</a></li>
+  <li class="c018"><a href="/article/12-0575-s3/greenough__horatio">Greenough, Horatio</a></li>
+  <li class="c018"><a href="/article/12-0602-s2/gregory__edward_john">Gregory, Edward John</a></li>
+  <li class="c018"><a href="/article/12-0609-greuze-jean-baptiste/greuze__jean_baptiste">Greuze, J. B.</a></li>
+  <li class="c018"><a href="/article/12-0623-s3/grimaldi__giovanni_francesco">Grimaldi, G. F.</a></li>
+  <li class="c018"><a href="/article/12-0632-grisaille/grisaille">Grisaille</a></li>
+  <li class="c018"><a href="/article/12-0640-gros-antoine-jean/gros__antoine_jean">Gros, Antoine Jean</a></li>
+  <li class="c018"><a href="/article/12-0664-s6/grün">Grün, Hans Baldung</a></li>
+  <li class="c018"><a href="/article/12-0666-s4/grünewald__mathias">Grünewald, Mathias</a></li>
+  <li class="c018"><a href="/article/12-0681-guardi-francesco/guardi__francesco">Guardi, Francesco</a></li>
+  <li class="c018"><a href="/article/12-0684-s4/guariento">Guariento (Guerriero)</a></li>
+  <li class="c018"><a href="/article/12-0695-s7/guérin__jean_baptiste_paulin">Guérin, J. B. P.</a></li>
+  <li class="c018"><a href="/article/12-0695-s8/guérin__pierre_narcisse">Guérin, P. N.</a></li>
+  <li class="c018"><a href="/article/12-0713-s2/guido_of_siena">Guido of Siena</a></li>
+  <li class="c018"><a href="/article/12-0713-s4/guido_reni">Guido Reni</a></li>
+  <li class="c018"><a href="/article/12-0717-guillaume-jean-baptiste-claude-eug-ne/guillaume__jean_baptiste_claude_eugène">Guillaume, J. B. C. E.</a></li>
+  <li class="c018"><a href="/article/12-0766-s4/guthrie__sir_james">Guthrie, Sir James</a></li>
+  <li class="c018"><a href="/article/12-0805-haag-carl/haag__carl">Haag, Carl</a></li>
+  <li class="c018"><a href="/article/12-0822-haden-sir-francis-seymour/haden__sir_francis_seymour">Haden, Sir F. Seymour</a></li>
+  <li class="c018"><a href="/article/12-0890-s6/hals__frans">Hals, Frans</a></li>
+  <li class="c018"><a href="/article/12-0902-s2/hamerton__philip_gilbert">Hamerton, P. G.</a></li>
+  <li class="c018"><a href="/article/12-0925-s2/hamon__jean_louis">Hamon, Jean Louis</a></li>
+  <li class="c018"><a href="/article/12-0967-s5/harding__chester">Harding, Chester</a></li>
+  <li class="c018"><a href="/article/12-0968-harding-james-duffield/harding__james_duffield">Harding, J. D.</a></li>
+  <li class="c018"><a href="/article/13-0028-s2/harpignies__henri">Harpignies, Henri</a></li>
+  <li class="c018"><a href="/article/13-0037-s5/harrison__thomas_alexander">Harrison, T. A.</a></li>
+  <li class="c018"><a href="/article/13-0044-s2/hart__william">Hart, William</a></li>
+  <li class="c018"><a href="/article/13-0048-s4/hartley__jonathan_scott">Hartley, Jonathan S.</a></li>
+  <li class="c018"><a href="/article/13-0055-s2/harvey__sir_george">Harvey, Sir George</a></li>
+  <li class="c018"><a href="/article/13-0064-s3/hassam__childe">Hassam, Childe</a></li>
+  <li class="c018"><a href="/article/13-0124-s2/haydon__benjamin_robert">Haydon, B. R.</a></li>
+  <li class="c018"><a href="/article/13-0127-hayter-sir-george/hayter__sir_george">Hayter, Sir George</a></li>
+  <li class="c018"><a href="/article/13-0133-s3/head__sir_edmund_walker">Head, Sir E. W.</a></li>
+  <li class="c018"><a href="/article/13-0135-healy-george-peter-alexander/healy__george_peter_alexander">Healy, G. P. A.</a></li>
+  <li class="c018"><a href="/article/13-0209-s3/heda__willem_claasz">Heda, Willem Claasz</a></li>
+  <li class="c018"><a href="/article/13-0211-s4/heem__jan_davidsz_van">Heem, Jan Davidsz van</a></li>
+  <li class="c018"><a href="/article/13-0212-s2/heemskerk__martin_jacobsz">Heemskerk, M. J.</a></li>
+  <li class="c018"><a href="/article/13-0226-s3/heim__françois_joseph">Heim, F. J.</a></li>
+  <li class="c018"><a href="/article/13-0265-helst-bartholomaeus-van-der/helst__bartholomaeus_van_der">Helst, B. van der</a></li>
+  <li class="c018"><a href="/article/13-0278-s3/hemy__charles_napier">Hemy, C. Napier</a></li>
+  <li class="c018"><a href="/article/13-0285-s3/hennequin__philippe_auguste">Hennequin, P. A.</a></li>
+  <li class="c018"><a href="/article/13-0285-s4/henner__jean_jacques">Henner, J. J.</a></li>
+  <li class="c018"><a href="/article/13-0312-henry-edward-lamson/henry__edward_lamson">Henry, E. L.</a></li>
+  <li class="c018"><a href="/article/13-0380-herkomer-sir-hubert-von/herkomer__sir_hubert_von">Herkomer, Sir H. von</a></li>
+  <li class="c018">Herlen, Fritz</li>
+  <li class="c018"><a href="/article/13-0404-s5/herrera__francisco">Herrera, Francisco</a></li>
+  <li class="c018"><a href="/article/13-0413-s2/hersent__louis">Hersent, Louis</a></li>
+  <li class="c018"><a href="/article/13-0424-s5/hess">Hess (family)</a></li>
+  <li class="c018"><a href="/article/13-0432-s3/heusch__willem">Heusch, Willem</a></li>
+  <li class="c018"><a href="/article/13-0452-heyden-jan-van-der/heyden__jan_van_der">Heyden, Jan van der</a></li>
+  <li class="c018"><a href="/article/13-0477-s2/hildebrandt__eduard">Hildebrandt, Eduard</a></li>
+  <li class="c018"><a href="/article/13-0477-s3/hildebrandt__theodor">Hildebrandt, Theodor</a></li>
+  <li class="c018"><a href="/article/13-0485-hilliard-lawrence/hilliard__lawrence">Hilliard, Lawrence</a></li>
+  <li class="c018"><a href="/article/13-0485-s3/hilliard__nicholas">Hilliard, Nicholas</a></li>
+  <li class="c018"><a href="/article/13-0486-s2/hilton__william">Hilton, William</a></li>
+  <li class="c018"><a href="/article/13-0539-hiroshige/hiroshige">Hiroshige</a></li>
+  <li class="c018"><a href="/article/13-0549-hitchcock-george/hitchcock__george">Hitchcock, George</a></li>
+  <li class="c018"><a href="/article/13-0560-s3/hobbema__meyndert">Hobbema, Meyndert</a></li>
+  <li class="c018"><a href="/article/13-0576-s2/hoefnagel__joris">Hoefnagel, Joris</a></li>
+  <li class="c018"><a href="/article/13-0582-s3/hogarth__william">Hogarth, William</a></li>
+  <li class="c018"><a href="/article/13-0593-hokusai/hokusai">Hokusai</a></li>
+  <li class="c018"><a href="/article/13-0593-s5/holbein__hans">Holbein, Hans (elder)</a></li>
+  <li class="c018"><a href="/article/13-0593-s5/holbein__hans">Holbein, Hans (younger)</a></li>
+  <li class="c018"><a href="/article/13-0600-s4/holl__frank">Holl, Frank</a></li>
+  <li class="c018"><a href="/article/13-0628-s4/hollar__wenzel">Hollar, Wenzel</a></li>
+  <li class="c018"><a href="/article/13-0635-s5/holroyd__sir_charles">Holroyd, Sir Charles</a></li>
+  <li class="c018"><a href="/article/13-0656-homer-winslow/homer__winslow">Homer, Winslow</a></li>
+  <li class="c018"><a href="/article/13-0666-s2/hondecoeter__melchior_d_">Hondecoeter, M. d’</a></li>
+  <li class="c018"><a href="/article/13-0669-s2/hone__nathaniel">Hone, Nathaniel</a></li>
+  <li class="c018"><a href="/article/13-0680-s3/honthorst__gerard_van">Honthorst, Gerard van</a></li>
+  <li class="c018"><a href="/article/13-0681-s2/hooch__pieter_de">Hooch, Pieter de</a></li>
+  <li class="c018"><a href="/article/13-0686-s2/hoogstraten__samuel_dirksz_van">Hoogstraten, S. D. van</a></li>
+  <li class="c018"><a href="/article/13-0686-s3/hook__james_clarke">Hook, James Clarke</a></li>
+  <li class="c018"><a href="/article/13-0703-s4/hoppner__john">Hoppner, John</a></li>
+  <li class="c018"><a href="/article/13-0758-horsley-john-callcott/horsley__john_callcott">Horsley, J. C.</a></li>
+  <li class="c018"><a href="/article/13-0809-s4/hoskins__john">Hoskins, John</a></li>
+  <li class="c018"><a href="/article/13-0810-s2/hosmer__harriet_goodhue">Hosmer, Harriet G.</a></li>
+  <li class="c018"><a href="/article/13-0823-s2/hotho__heinrich_gustav">Hotho, Heinrich G.</a></li>
+  <li class="c018"><a href="/article/13-0826-houbraken-jacobus/houbraken__jacobus">Houbraken, Jacobus</a></li>
+  <li class="c018"><a href="/article/13-0827-houdon-jean-antoine/houdon__jean_antoine">Houdon, J. A.</a></li>
+  <li class="c018"><a href="/article/13-0854-s5/hovenden__thomas">Hovenden, Thomas</a></li>
+  <li class="c018"><a href="/article/13-0873-huchtenburg/huchtenburg">Huchtenburg (family)</a></li>
+  <li class="c018"><a href="/article/13-0917-humphry-ozias/humphry__ozias">Humphry, Ozias</a></li>
+  <li class="c018"><a href="/article/13-0959-hunt-alfred-william/hunt__alfred_william">Hunt, Alfred William</a></li>
+  <li class="c018"><a href="/article/13-0962-hunt-william-henry/hunt__william_henry">Hunt, William Henry</a></li>
+  <li class="c018"><a href="/article/13-0962-hunt-william-holman/hunt__william_holman">Hunt, William Holman</a></li>
+  <li class="c018"><a href="/article/13-0963-s2/hunt__william_morris">Hunt, William Morris</a></li>
+  <li class="c018"><a href="/article/13-0978-huntington-daniel/huntington__daniel">Huntington, Daniel</a></li>
+  <li class="c018"><a href="/article/13-0984-s3/hurlstone__frederick_yeates">Hurlstone, F. Y.</a></li>
+  <li class="c018"><a href="/article/14-0034-huysmans/huysmans">Huysmans (family)</a></li>
+  <li class="c018"><a href="/article/14-0035-s3/huysum__jan_van">Huysum, Jan van</a></li>
+  <li class="c018"><a href="/article/14-0326-s3/illuminated_mss">Illuminated MSS.</a></li>
+  <li class="c018"><a href="/article/14-0340-illustration/illustration">Illustration</a></li>
+  <li class="c018"><a href="/article/14-0362-impressionism/impressionism">Impressionism</a></li>
+  <li class="c018"><a href="/article/14-0595-ingham-charles-cromwell/ingham__charles_cromwell">Ingham, C. C.</a></li>
+  <li class="c018"><a href="/article/14-0597-s2/ingres__jean_auguste_dominique">Ingres, J. A. D.</a></li>
+  <li class="c018"><a href="/article/14-0606-s2/inman__henry">Inman, Henry</a></li>
+  <li class="c018"><a href="/article/14-0608-s3/inness__george">Inness, George</a></li>
+  <li class="c018"><a href="/article/14-0893-s4/isabey__jean_baptiste">Isabey, Jean Baptiste</a></li>
+  <li class="c018"><a href="/article/14-0918-s4/israëls__josef">Israëls, Josef</a></li>
+  <li class="c018"><a href="/article/15-0108-ivory/ivory">Ivory</a></li>
+  <li class="c018"><a href="/article/15-0126-s4/jackson__mason">Jackson, Mason</a></li>
+  <li class="c018">Jameson, George</li>
+  <li class="c018"><a href="/article/15-0170-s2/janssen">Janssen, Cornelius</a></li>
+  <li class="c018">Janssens, V. H.</li>
+  <li class="c018">Janssens van Nuyssen, Abraham</li>
+  <li class="c018"><a href="/article/15-0301-jarvis-john-wesley/jarvis__john_wesley">Jarvis, J. W.</a></li>
+  <li class="c018">Joanes, Vicente</li>
+  <li class="c018"><a href="/article/15-0489-s3/johnson__eastman">Johnson, Eastman</a></li>
+  <li class="c018"><a href="/article/15-0535-s3/jordaens__jacob">Jordaens, Jacob</a></li>
+  <li class="c018"><a href="/article/15-0552-s3/jouvenet__jean">Jouvenet, Jean</a></li>
+  <li class="c018">Kalckreuth, Leopold von</li>
+  <li class="c018"><a href="/article/15-0725-s8/kauffmann">Kauffmann, Angelica</a></li>
+  <li class="c018"><a href="/article/15-0726-s4/kaulbach__wilhelm_von">Kaulbach, Wilhelm von</a></li>
+  <li class="c018"><a href="/article/15-0730-s4/kay__john">Kay, John</a></li>
+  <li class="c018"><a href="/article/15-0740-s6/keene__charles_samuel">Keene, C. S.</a></li>
+  <li class="c018"><a href="/article/15-0746-s2/keller__albert">Keller, Albert</a></li>
+  <li class="c018"><a href="/article/15-0761-s5/kensett__john_frederick">Kensett, J. F.</a></li>
+  <li class="c018"><a href="/article/15-0807-khnopff-fernand-edmond-jean-marie/khnopff__fernand_edmond_jean_marie">Khnopff, F. E. J. M.</a></li>
+  <li class="c018"><a href="/article/15-0876-klinger-max/klinger__max">Klinger, Max</a></li>
+  <li class="c018"><a href="/article/15-0879-s1/kneller__sir_godfrey">Kneller, Sir Godfrey</a></li>
+  <li class="c018"><a href="/article/15-0880-s2/knight__daniel_ridgway">Knight, D. R.</a></li>
+  <li class="c018"><a href="/article/15-0880-s3/knight__john_buxton">Knight, John Buxton</a></li>
+  <li class="c018"><a href="/article/15-0930-s5/koninck__philip_de">Koninck, Philip de</a></li>
+  <li class="c018">Korin, Ogata</li>
+  <li class="c018">Krafft, Adam</li>
+  <li class="c018">Kyosai, Sho-fu</li>
+  <li class="c018">Laer, Pieter van</li>
+  <li class="c018"><a href="/article/16-0084-s4/la_farge__john">La Farge, John</a></li>
+  <li class="c018"><a href="/article/16-0091-s3/lafosse__charles_de">Lafosse, Charles de</a></li>
+  <li class="c018"><a href="/article/16-0098-s4/lagrenée__louis_jean_françois">Lagrenée, L. J. F.</a></li>
+  <li class="c018"><a href="/article/16-0100-lahire-laurent-de/lahire__laurent_de">Lahire, Laurent de</a></li>
+  <li class="c018"><a href="/article/16-0126-s4/lambeaux__jef">Lambeaux, Jef</a></li>
+  <li class="c018"><a href="/article/16-0173-s2/lancret__nicolas">Lancret, Nicolas</a></li>
+  <li class="c018"><a href="/article/16-0180-s2/landon__charles_paul">Landon, C. P.</a></li>
+  <li class="c018"><a href="/article/16-0186-landseer-sir-edwin-henry/landseer__sir_edwin_henry">Landseer, Sir E. H.</a></li>
+  <li class="c018"><a href="/article/16-0205-s6/lantara__simon_mathurin">Lantara, S. M.</a></li>
+  <li class="c018"><a href="/article/16-0208-s5/lanzi__luigi">Lanzi, Luigi</a></li>
+  <li class="c018"><a href="/article/16-0236-s4/largillière__nicolas">Largillière, Nicolas</a></li>
+  <li class="c018"><a href="/article/16-0262-s2/lathrop__francis">Lathrop, Francis</a></li>
+  <li class="c018">La Tour, Quentin de</li>
+  <li class="c018"><a href="/article/16-0313-s5/lavery__john">Lavery, John</a></li>
+  <li class="c018"><a href="/article/16-0328-lawrence-sir-thomas/lawrence__sir_thomas">Lawrence, Sir Thomas</a></li>
+  <li class="c018"><a href="/article/16-0329-lawson-cecil-gordon/lawson__cecil_gordon">Lawson, Cecil Gordon</a></li>
+  <li class="c018"><a href="/article/16-0340-leader-benjamin-williams/leader__benjamin_williams">Leader, B. W.</a></li>
+  <li class="c018"><a href="/article/16-0350-s2/léandre__charles_lucien">Léandre, C. L.</a></li>
+  <li class="c018"><a href="/article/16-0350-s4/lear__edward">Lear, Edward</a></li>
+  <li class="c018"><a href="/article/16-0372-s2/lebrun__charles_françois">LeBrun, Charles</a></li>
+  <li class="c018"><a href="/article/16-0384-s6/leech__john">Leech, John</a></li>
+  <li class="c018"><a href="/article/16-0400-s3/legros__alphonse">Legros, Alphonse</a></li>
+  <li class="c018">Leighton, Baron Frederick</li>
+  <li class="c018">Lejeune, Baron L. F.</li>
+  <li class="c018"><a href="/article/16-0428-lely-sir-peter/lely__sir_peter">Lely, Sir Peter</a></li>
+  <li class="c018"><a href="/article/16-0436-lemoyne-jean-baptists/lemoyne__jean_baptiste">Lemoyne, J. B.</a></li>
+  <li class="c018"><a href="/article/16-0437-le-nain/le_nain">Le Nain</a></li>
+  <li class="c018"><a href="/article/16-0437-lenbach-franz-von/lenbach__franz_von">Lenbach, Franz von</a></li>
+  <li class="c018"><a href="/article/16-0462-s2/leochares">Leochares</a></li>
+  <li class="c018"><a href="/article/16-0464-leonardo-da-vinci/leonardo_da_vinci">Leonardo da Vinci</a></li>
+  <li class="c018"><a href="/article/16-0478-s2/leopardo__alessandro">Leopardo, Alessandro</a></li>
+  <li class="c018"><a href="/article/16-0511-s6/leslie__charles_robert">Leslie, C. R.</a></li>
+  <li class="c018"><a href="/article/16-0519-s6/le_sueur__eustache">Le Sueur, Eustache</a></li>
+  <li class="c018"><a href="/article/16-0525-s2/leutze__emanuel">Leutze, Emanuel</a></li>
+  <li class="c018"><a href="/article/16-0543-s3/lewis__john_frederick">Lewis, J. F.</a></li>
+  <li class="c018"><a href="/article/16-0549-leys-hendrik-baron/leys__hendrik__baron">Leys, Hendrik</a></li>
+  <li class="c018"><a href="/article/16-0610-s5/liebermann__max">Liebermann, Max</a></li>
+  <li class="c018"><a href="/article/16-0723-limousin/limousin">Limousin, Léonard</a></li>
+  <li class="c018"><a href="/article/16-0743-s2/line_engraving">Line Engraving</a></li>
+  <li class="c018"><a href="/article/16-0755-linnell-john/linnell__john">Linnell, John</a></li>
+  <li class="c018"><a href="/article/16-0758-s2/linton__william_james">Linton, W. J.</a></li>
+  <li class="c018"><a href="/article/16-0761-liotard-jean-etienne/liotard__jean_etienne">Liotard, J. E.</a></li>
+  <li class="c018"><a href="/article/16-0763-lippi/lippi">Lippi</a></li>
+  <li class="c018"><a href="/article/16-0877-s3/lockwood__wilton">Lockwood, Wilton</a></li>
+  <li class="c018"><a href="/article/16-0954-lombardo/lombardo">Lombardo (family)</a></li>
+  <li class="c018"><a href="/article/16-1005-longhi-pietro/longhi__pietro">Longhi, Pietro</a></li>
+  <li class="c018"><a href="/article/17-0036-s4/lotto__lorenzo">Lotto, Lorenzo</a></li>
+  <li class="c018"><a href="/article/17-0087-s5/low__will_hicok">Low, Will Hicok</a></li>
+  <li class="c018"><a href="/article/17-0108-s5/lucas__john_seymour">Lucas, J. Seymour</a></li>
+  <li class="c018"><a href="/article/17-0108-s6/lucas_van_leyden">Leyden, Lucas van</a></li>
+  <li class="c018"><a href="/article/17-0132-s2/luini__bernardino">Luini, Bernardino</a></li>
+  <li class="c018"><a href="/article/17-0199-s3/lysippus">Lysippus</a></li>
+  <li class="c018"><a href="/article/17-0199-s5/lysistratus">Lysistratus</a></li>
+  <li class="c018"><a href="/article/17-0204-s3/mabuse__jan">Mabuse, Jan</a></li>
+  <li class="c018"><a href="/article/17-0222-s3/macculloch__horatio">MacCulloch, Horatio</a></li>
+  <li class="c018"><a href="/article/17-0227-s3/macdonald__lawrence">Macdonald, Lawrence</a></li>
+  <li class="c018"><a href="/article/17-0245-mcentee-jervis/mcentee__jervis">McEntee, Jervis</a></li>
+  <li class="c018"><a href="/article/17-0277-maclise-daniel/maclise__daniel">Maclise, Daniel</a></li>
+  <li class="c018"><a href="/article/17-0279-macmonnies-frederick-william/macmonnies__frederick_william">MacMonnies, F. W.</a></li>
+  <li class="c018"><a href="/article/17-0280-macnee-sir-daniel/macnee__sir_daniel">Macnee, Sir Daniel</a></li>
+  <li class="c018"><a href="/article/17-0280-macneil-hermon-atkins/macneil__hermon_atkins">MacNeil, Hermon A.</a></li>
+  <li class="c018"><a href="/article/17-0303-madou-jean-baptiste/madou__jean_baptiste">Madou, J. B.</a></li>
+  <li class="c018"><a href="/article/17-0307-madrazo-y-kunt/madrazo_y_kunt">Madrazo y Kunt, Don F. de</a></li>
+  <li class="c018"><a href="/article/17-0313-s6/maes__nicolas">Maes, Nicolas</a></li>
+  <li class="c018"><a href="/article/17-0467-s7/makart__hans">Makart, Hans</a></li>
+  <li class="c018"><a href="/article/17-0576-mander-carel-van/mander__carel_van">Mander, Carel van</a></li>
+  <li class="c018">Manet, Edouard</li>
+  <li class="c018"><a href="/article/17-0618-s6/manson__george">Manson, George</a></li>
+  <li class="c018"><a href="/article/17-0619-s5/mantegna__andrea">Mantegna, Andrea</a></li>
+  <li class="c018"><a href="/article/17-0699-s2/marcantonio">Marcantonio</a></li>
+  <li class="c018"><a href="/article/17-0741-s4/maris__jacob">Maris, Jacob</a></li>
+  <li class="c018">Marochetti, Baron Carlo</li>
+  <li class="c018"><a href="/article/17-0769-s4/marr__carl">Marr, Carl</a></li>
+  <li class="c018"><a href="/article/17-0811-s4/martin__homer_dodge">Martin, Homer Dodge</a></li>
+  <li class="c018"><a href="/article/17-0811-s5/martin__john">Martin, John</a></li>
+  <li class="c018"><a href="/article/17-0818-s2/martini__simone">Martini, Simone</a></li>
+  <li class="c018"><a href="/article/17-0851-masaccio/masaccio">Masaccio</a></li>
+  <li class="c018"><a href="/article/17-0856-masolino-da-panicale/masolino_da_panicale">Masolino da Panicale</a></li>
+  <li class="c018"><a href="/article/17-0857-s2/mason__george_hemming">Mason, G. H.</a></li>
+  <li class="c018">Matsys, Quintin</li>
+  <li class="c018"><a href="/article/17-0936-s4/mauve__anton">Mauve, Anton</a></li>
+  <li class="c018"><a href="/article/17-0949-s3/may__phil">May, Phil</a></li>
+  <li class="c018"><a href="/article/17-0964-s4/mead__larkin_goldsmith">Mead, Larkin G.</a></li>
+  <li class="c018"><a href="/article/18-0090-s1/meer__jan_van_der">Meer, Jan van der</a></li>
+  <li class="c018"><a href="/article/18-0103-s2/meissonier__jean_louis_ernest">Meissonier, J. L. E.</a></li>
+  <li class="c018"><a href="/article/18-0108-melanthius/melanthius">Melanthius</a></li>
+  <li class="c018"><a href="/article/18-0111-s1/melchers">Melchers, Gari</a></li>
+  <li class="c018">Melozzo da Forli</li>
+  <li class="c018"><a href="/article/18-0121-melville-arthur/melville__arthur">Melville, Arthur</a></li>
+  <li class="c018">Memling, Hans</li>
+  <li class="c018"><a href="/article/18-0127-s2/mena__pedro_de">Mena, Pedro de</a></li>
+  <li class="c018">Mengs, Anthony Raphael</li>
+  <li class="c018"><a href="/article/18-0165-menzel-adolph-friedrich-erdmann-von/menzel__adolph_friedrich_erdmann_von">Menzel, A. F. E. von</a></li>
+  <li class="c018"><a href="/article/18-0171-s2/mercié__marius_jean_antonin">Mercié, M. J. A.</a></li>
+  <li class="c018"><a href="/article/18-0183-merian-matthew/merian__matthew">Merian, Matthew</a></li>
+  <li class="c018"><a href="/article/18-0195-m-ryon-charles/méryon__charles">Méryon, Charles</a></li>
+  <li class="c018"><a href="/article/18-0278-s5/metcalf__willard_leroy">Metcalf, W. L.</a></li>
+  <li class="c018"><a href="/article/18-0322-s2/metsu__gabriel">Metsu, Gabriel</a></li>
+  <li class="c018"><a href="/article/18-0335-meulen-antony-francis-van-der/meulen__antony_francis_van_der">Meulen, A. F. van der</a></li>
+  <li class="c018"><a href="/article/18-0336-s1/meunier__constantin">Meunier, Constantin</a></li>
+  <li class="c018"><a href="/article/18-0372-s6/mezzotint">Mezzotint</a></li>
+  <li class="c018"><a href="/article/18-0383-s2/michel__claude">Michel, Claude</a></li>
+  <li class="c018"><a href="/article/18-0383-s5/michelangelo">Michelangelo</a></li>
+  <li class="c018"><a href="/article/18-0392-s3/michelozzo_di_bartolommeo">Michelozzo di Bartolommeo</a></li>
+  <li class="c018"><a href="/article/18-0402-micon/micon">Micon</a></li>
+  <li class="c018">Mierevelt, M. J. van</li>
+  <li class="c018"><a href="/article/18-0449-s2/mieris">Mieris (family)</a></li>
+  <li class="c018"><a href="/article/18-0450-s2/mignard__pierre">Mignard, Pierre</a></li>
+  <li class="c018"><a href="/article/18-0451-s2/mignon__abraham">Mignon, Abraham</a></li>
+  <li class="c018"><a href="/article/18-0465-s2/milanesi__gaetano">Milanesi, Gaetano</a></li>
+  <li class="c018"><a href="/article/18-0483-s3/millais__sir_john_everett">Millais, Sir J. E.</a></li>
+  <li class="c018"><a href="/article/18-0489-s2/miller__william">Miller, William</a></li>
+  <li class="c018"><a href="/article/18-0490-millet-francis-davis/millet__francis_davis">Millet, Francis Davis</a></li>
+  <li class="c018">Millet (Milé), Jean François</li>
+  <li class="c018"><a href="/article/18-0490-s5/millet__jean_françois">Millet, Jean François</a></li>
+  <li class="c018"><a href="/article/18-0547-s4/miniature">Miniature</a></li>
+  <li class="c018"><a href="/article/18-0581-mino-di-giovanni/mino_di_giovanni">Mino di Giovanni (da Fiesole)</a></li>
+  <li class="c018"><a href="/article/18-0581-minor-robert-crannell/minor__robert_crannell">Minor, Robert C.</a></li>
+  <li class="c018"><a href="/article/18-0670-models-artists/models__artists_">Models, Artists’</a></li>
+  <li class="c018"><a href="/article/18-0724-monet-claude/monet__claude">Monet, Claude</a></li>
+  <li class="c018"><a href="/article/18-0787-monta-es/montañes__juan_martinez">Montañes, J. M.</a></li>
+  <li class="c018"><a href="/article/18-0839-moore-albert-joseph/moore__albert_joseph">Moore, Albert J.</a></li>
+  <li class="c018"><a href="/article/18-0840-s5/moore__henry">Moore, Henry</a></li>
+  <li class="c018"><a href="/article/18-0845-s8/mora__josé">Mora, José</a></li>
+  <li class="c018"><a href="/article/18-0847-s4/moran__edward">Moran, Edward</a></li>
+  <li class="c018"><a href="/article/18-0847-s5/moran__thomas">Moran, Thomas</a></li>
+  <li class="c018"><a href="/article/18-0858-s4/moreau__gustave">Moreau, Gustave</a></li>
+  <li class="c018"><a href="/article/18-0861-s4/morelli__giovanni">Morelli, Giovanni</a></li>
+  <li class="c018"><a href="/article/18-0863-s6/moretto__il">Moretto, Il</a></li>
+  <li class="c018"><a href="/article/18-0868-morghen-raffaello-sanzio/morghen__raffaello_sanzio">Morghen, R. S.</a></li>
+  <li class="c018"><a href="/article/18-0871-s2/morland__george">Morland, George</a></li>
+  <li class="c018"><a href="/article/18-0882-s2/moro__antonio">Moro, Antonio</a></li>
+  <li class="c018"><a href="/article/18-0893-s4/moroni__giambattista">Moroni, Giambattista</a></li>
+  <li class="c018"><a href="/article/18-0930-s3/mosler__henry">Mosler, Henry</a></li>
+  <li class="c018"><a href="/article/18-0968-s6/mount__william_sidney">Mount, W. S.</a></li>
+  <li class="c018"><a href="/article/18-0980-s3/mowbray__harry_siddons">Mowbray, H. S.</a></li>
+  <li class="c018"><a href="/article/18-0995-s6/müller__william_james">Müller, W. J.</a></li>
+  <li class="c018"><a href="/article/18-0997-s4/mulready__william">Mulready, William</a></li>
+  <li class="c018"><a href="/article/19-0024-s2/munkacsy__michael_von">Munkacsy, Michael von</a></li>
+  <li class="c018"><a href="/article/19-0050-murillo-bartolom-esteban/murillo__bartolomé_esteban">Murillo, B. E.</a></li>
+  <li class="c018"><a href="/article/19-0053-s4/murphy__john_francis">Murphy, John Francis</a></li>
+  <li class="c018"><a href="/article/19-0054-murray-david/murray__david">Murray, David</a></li>
+  <li class="c018"><a href="/article/19-0118-muziano-girolamo/muziano__girolamo">Muziano, Girolamo</a></li>
+  <li class="c018"><a href="/article/19-0118-muzzioli-giovanni/muzzioli__giovanni">Muzzioli, Giovanni</a></li>
+  <li class="c018"><a href="/article/19-0129-myron/myron">Myron</a></li>
+  <li class="c018"><a href="/article/19-0180-s3/nanteuil__robert">Nanteuil, Robert</a></li>
+  <li class="c018"><a href="/article/19-0263-nasmyth-alexander/nasmyth__alexander">Nasmyth, Alexander</a></li>
+  <li class="c018"><a href="/article/19-0266-nast-thomas/nast__thomas">Nast, Thomas</a></li>
+  <li class="c018"><a href="/article/19-0288-s4/nattier__jean_marc">Nattier, J. M.</a></li>
+  <li class="c018"><a href="/article/19-0297-s2/navarrete__juan_fernandez">Navarrete, J. F.</a></li>
+  <li class="c018"><a href="/article/19-0335-s3/neal__david_dalhoff">Neal, D. D.</a></li>
+  <li class="c018"><a href="/article/19-0358-s4/neer__van_der">Neer, van der</a></li>
+  <li class="c018"><a href="/article/19-0439-netscher-gaspar/netscher__gaspar">Netscher, Gaspar</a></li>
+  <li class="c018"><a href="/article/19-0470-neuville/neuville__alphonse_marie_de">Neuville, Alphonse M. de</a></li>
+  <li class="c018"><a href="/article/19-0538-s2/newlyn">Newlyn</a></li>
+  <li class="c018"><a href="/article/19-0697-s2/niehaus__charles_henry">Niehaus, C. H.</a></li>
+  <li class="c018"><a href="/article/19-0685-s2/nicholson__william">Nicholson, William</a></li>
+  <li class="c018"><a href="/article/19-0685-s4/nicias">Nicias</a></li>
+  <li class="c018"><a href="/article/19-0691-s4/nicomachus">Nicomachus</a></li>
+  <li class="c018"><a href="/article/19-0761-s4/nollekens__joseph">Nollekens, Joseph</a></li>
+  <li class="c018"><a href="/article/19-0808-northcote/northcote__james">Northcote, James</a></li>
+  <li class="c018">Oberlander, A. A.</li>
+  <li class="c018"><a href="/article/19-1028-ochtman-leonard/ochtman__leonard">Ochtman, Leonard</a></li>
+  <li class="c018"><a href="/article/20-0027-s3/o_donovan__william_rudolf">O’Donovan, W. R.</a></li>
+  <li class="c018"><a href="/article/20-0112-oliver-isaac/oliver__isaac">Oliver, Isaac</a></li>
+  <li class="c018"><a href="/article/20-0112-oliver-peter/oliver__peter">Oliver, Peter</a></li>
+  <li class="c018"><a href="/article/20-0129-onatas/onatas">Onatas</a></li>
+  <li class="c018"><a href="/article/20-0155-s2/opie__john">Opie, John</a></li>
+  <li class="c018"><a href="/article/20-0191-orcagna/orcagna">Orcagna</a></li>
+  <li class="c018"><a href="/article/20-0193-s3/orchardson__sir_william_quiller">Orchardson, Sir W. Q.</a></li>
+  <li class="c018"><a href="/article/20-0326-s2/orley__bernard_van">Orley, Bernard von</a></li>
+  <li class="c018"><a href="/article/20-0389-ostade/ostade">Ostade</a></li>
+  <li class="c018"><a href="/article/20-0412-oudin-eug-ne-andr/oudiné__eugène_andré">Oudiné, E. A.</a></li>
+  <li class="c018"><a href="/article/20-0417-s4/overbeck__johann_friedrich">Overbeck, J. F.</a></li>
+  <li class="c018"><a href="/article/20-0466-s2/pacchia__girolamo_del">Pacchia, Girolamo del, and Pacchiarotto, Jacopo</a></li>
+  <li class="c018"><a href="/article/20-0466-s6/pacheco__francisco">Pacheco, Francisco</a></li>
+  <li class="c018"><a href="/article/20-0485-s2/paeonius">Paeonius</a></li>
+  <li class="c018"><a href="/article/20-0488-s2/page__william">Page, William</a></li>
+  <li class="c018"><a href="/article/20-0497-s2/painting">Painting</a></li>
+  <li class="c018"><a href="/article/20-0571-s3/pajou__augustin">Pajou, Augustin</a></li>
+  <li class="c018"><a href="/article/20-0684-s2/palette">Palette</a></li>
+  <li class="c018"><a href="/article/20-0698-palma-jacopo/palma__jacopo">Palma, Jacopo</a></li>
+  <li class="c018"><a href="/article/20-0700-palmer-erastus-dow/palmer__erastus_dow">Palmer, E. D.</a></li>
+  <li class="c018"><a href="/article/20-0701-palmer-samuel/palmer__samuel">Palmer, Samuel</a></li>
+  <li class="c018">Palomino, de Castro y Velasco</li>
+  <li class="c018"><a href="/article/20-0714-s3/pamphilus">Pamphilus</a></li>
+  <li class="c018"><a href="/article/20-0719-s6/panaenus">Panaenus</a></li>
+  <li class="c018"><a href="/article/20-0737-s3/panorama">Panorama</a></li>
+  <li class="c018"><a href="/article/20-0861-s4/pareja__juan_de">Pareja, Juan de</a></li>
+  <li class="c018"><a href="/article/20-0915-parmigiano/parmigiano">Parmigiano</a></li>
+  <li class="c018"><a href="/article/20-0924-s6/parrhasius">Parrhasius</a></li>
+  <li class="c018"><a href="/article/20-0938-partridge-john-bernard/partridge__john_bernard">Partridge, J. Bernard</a></li>
+  <li class="c018"><a href="/article/20-0938-partridge-william-ordway/partridge__william_ordway">Partridge, W. O.</a></li>
+  <li class="c018"><a href="/article/20-0945-s6/pasiteles">Pasiteles</a></li>
+  <li class="c018"><a href="/article/20-0952-pastel/pastel">Pastel</a></li>
+  <li class="c018"><a href="/article/20-0998-s5/paton__sir_joseph_noel">Paton, Sir J. Noel</a></li>
+  <li class="c018"><a href="/article/20-1033-s2/paul_veronese">Paul Veronese</a></li>
+  <li class="c018"><a href="/article/20-1037-s2/pausias">Pausias</a></li>
+  <li class="c018"><a href="/article/21-0036-peale-charles-willson/peale__charles_willson">Peale, C. W.</a></li>
+  <li class="c018"><a href="/article/21-0037-s2/peale__rembrandt">Peale, Rembrandt</a></li>
+  <li class="c018"><a href="/article/21-0038-s3/pearce__charles_sprague">Pearce, C. S.</a></li>
+  <li class="c018"><a href="/article/21-0118-s5/pennell__joseph">Pennell, Joseph</a></li>
+  <li class="c018"><a href="/article/21-0118-s6/penni__gianfrancesco">Penni, Gianfrancesco</a></li>
+  <li class="c018"><a href="/article/21-0167-s4/perino_del_vaga">Perino del Vaga</a></li>
+  <li class="c018"><a href="/article/21-0190-s3/perkins__charles_callahan">Perkins, C. C.</a></li>
+  <li class="c018"><a href="/article/21-0296-s2/perugino__pietro">Perugino, Pietro</a></li>
+  <li class="c018"><a href="/article/21-0298-s2/peruzzi__baldassare">Peruzzi, Baldassare</a></li>
+  <li class="c018"><a href="/article/21-0325-s2/petitot__jean">Petitot, Jean</a></li>
+  <li class="c018"><a href="/article/21-0325-s3/petitot__jean_louis">Petitot, Jean Louis</a></li>
+  <li class="c018"><a href="/article/21-0357-pettenkofen-august-von/pettenkofen__august_von">Pettenkofen, A. von</a></li>
+  <li class="c018"><a href="/article/21-0357-pettie-john/pettie__john">Pettie, John</a></li>
+  <li class="c018"><a href="/article/21-0382-s2/pheidias">Pheidias</a></li>
+  <li class="c018"><a href="/article/21-0427-s4/phillip__john">Phillip, John</a></li>
+  <li class="c018"><a href="/article/21-0429-s3/phillips__thomas">Phillips, Thomas</a></li>
+  <li class="c018"><a href="/article/21-0610-picknell-william-lamb/picknell__william_lamb">Picknell, W. L.</a></li>
+  <li class="c018"><a href="/article/21-0616-piero-di-cosimo/piero_di_cosimo">Piero di Cosimo</a></li>
+  <li class="c018"><a href="/article/21-0622-pigalle-jean-baptiste/pigalle__jean_baptiste">Pigalle, J. B.</a></li>
+  <li class="c018"><a href="/article/21-0641-s3/piloty__karl_von">Piloty, Karl von</a></li>
+  <li class="c018"><a href="/article/21-0659-s2/pinturicchio">Pinturicchio</a></li>
+  <li class="c018"><a href="/article/21-0660-s2/pinwell__george_john">Pinwell, G. J.</a></li>
+  <li class="c018"><a href="/article/21-0667-piranesi-giovanni-battista/piranesi__giovanni_battista">Piranesi, G. B.</a></li>
+  <li class="c018"><a href="/article/21-0676-s5/pisano__andrea">Pisano, Andrea</a></li>
+  <li class="c018"><a href="/article/21-0677-s2/pisano__giovanni">Pisano, Giovanni</a></li>
+  <li class="c018"><a href="/article/21-0677-s3/pisano__niccola">Pisano, Niccola</a></li>
+  <li class="c018"><a href="/article/21-0678-s2/pisano__vittore">Pisano, Vittore</a></li>
+  <li class="c018"><a href="/article/21-0681-s4/pissarro__camille">Pissarro, Camille</a></li>
+  <li class="c018"><a href="/article/21-0874-s1/plimer__andrew">Plimer, Andrew</a></li>
+  <li class="c018"><a href="/article/21-0874-s2/plimer__nathaniel">Plimer, Nathaniel</a></li>
+  <li class="c018"><a href="/article/21-0888-s3/plumbago_drawings">Plumbago Drawings</a></li>
+  <li class="c018"><a href="/article/22-0015-pollaiuolo/pollaiuolo">Pollaiuolo (family)</a></li>
+  <li class="c018"><a href="/article/22-0036-polyclitus/polyclitus">Polyclitus</a></li>
+  <li class="c018"><a href="/article/22-0038-s4/polygnotus">Polygnotus</a></li>
+  <li class="c018"><a href="/article/22-0083-pontormo-jacopo-da/pontormo__jacopo_da">Pontormo, Jacopo da</a></li>
+  <li class="c018"><a href="/article/22-0086-s7/poole__paul_falconer">Poole, Paul Falconer</a></li>
+  <li class="c018"><a href="/article/22-0115-s3/pordenone__il">Pordenone, Il</a></li>
+  <li class="c018"><a href="/article/22-0124-s2/portaels__jean_françois">Portaels, J. F.</a></li>
+  <li class="c018"><a href="/article/22-0127-porter-benjamin-curtis/porter__benjamin_curtis">Porter, B. C.</a></li>
+  <li class="c018"><a href="/article/22-0142-s2/portraiture">Portraiture</a></li>
+  <li class="c018"><a href="/article/22-0210-poster/poster">Poster</a></li>
+  <li class="c018"><a href="/article/22-0226-potter-paul/potter__paul">Potter, Paul</a></li>
+  <li class="c018"><a href="/article/22-0236-poussin-nicolas/poussin__nicolas">Poussin, Nicolas</a></li>
+  <li class="c018"><a href="/article/22-0238-s3/powers__hiram">Powers, Hiram</a></li>
+  <li class="c018"><a href="/article/22-0253-s2/poynter__sir_edward_john__bart">Poynter, Sir E. J.</a></li>
+  <li class="c018"><a href="/article/22-0254-s4/pradier__james">Pradier, James</a></li>
+  <li class="c018"><a href="/article/22-0254-s5/pradilla__francisco">Pradilla, Francisco</a></li>
+  <li class="c018"><a href="/article/22-0269-praxias-and-androsthenes/praxias_and_androsthenes">Praxias and Androsthenes</a></li>
+  <li class="c018"><a href="/article/22-0269-praxiteles/praxiteles">Praxiteles</a></li>
+  <li class="c018"><a href="/article/22-0289-s5/predella">Predella</a></li>
+  <li class="c018"><a href="/article/22-0292-s3/preller__friedrich">Preller, Friedrich</a></li>
+  <li class="c018"><a href="/article/22-0337-prieur-pierre/prieur__pierre">Prieur, Pierre</a></li>
+  <li class="c018"><a href="/article/22-0364-prinsep-valentine-cameron/prinsep__valentine_cameron">Prinsep, V. C.</a></li>
+  <li class="c018"><a href="/article/22-0435-s2/proctor__alexander_phimister">Proctor, A. P.</a></li>
+  <li class="c018"><a href="/article/22-0491-protogenes-genus/protogenes__genus_">Protogenes</a></li>
+  <li class="c018"><a href="/article/22-0505-prout-samuel/prout__samuel">Prout, Samuel</a></li>
+  <li class="c018"><a href="/article/22-0533-prud-hon-pierre/prud_hon__pierre">Prud’hon, Pierre</a></li>
+  <li class="c018"><a href="/article/22-0653-s2/puget__pierre">Puget, Pierre</a></li>
+  <li class="c018"><a href="/article/22-0689-s3/puvis_de_chavannes__pierre_cécile">Puvis de Chavannes</a></li>
+  <li class="c018"><a href="/article/22-0714-s3/pythagoras">Pythagoras</a></li>
+  <li class="c018"><a href="/article/22-0695-s2/pyle__howard">Pyle, Howard</a></li>
+  <li class="c018"><a href="/article/22-0828-raeburn/raeburn__sir_henry">Raeburn, Sir Henry</a></li>
+  <li class="c018"><a href="/article/22-0830-raffaellino-del-garbo/raffaellino_del_garbo">Raffaellino del Garbo</a></li>
+  <li class="c018"><a href="/article/22-0830-raffet/raffet__denis_auguste_marie">Raffet, D. A. M.</a></li>
+  <li class="c018"><a href="/article/22-0878-raimbach/raimbach__abraham">Raimbach, Abraham</a></li>
+  <li class="c018"><a href="/article/22-0895-s3/ramsay__allan">Ramsay, Allan</a></li>
+  <li class="c018"><a href="/article/22-0908-s2/ranger__henry_ward">Ranger, H. W.</a></li>
+  <li class="c018"><a href="/article/22-0915-s5/raoux__jean">Raoux, Jean</a></li>
+  <li class="c018"><a href="/article/22-0917-raphael-sanzio/raphael_sanzio">Raphael Sanzio</a></li>
+  <li class="c018"><a href="/article/22-0940-raven-hill-leonard/raven-hill__leonard">Raven-Hill, Leonard</a></li>
+  <li class="c018"><a href="/article/22-0938-s2/rauch__christian_daniel">Rauch, C. D.</a></li>
+  <li class="c018"><a href="/article/22-0985-s6/redgrave__richard">Redgrave, Richard</a></li>
+  <li class="c018"><a href="/article/23-0063-s2/regnault__henri">Regnault, Henri</a></li>
+  <li class="c018"><a href="/article/23-0063-s4/regnault__jean_baptiste">Regnault, J. B.</a></li>
+  <li class="c018"><a href="/article/23-0067-s2/reid__sir_george">Reid, Sir George</a></li>
+  <li class="c018"><a href="/article/23-0067-s3/reid__robert">Reid, Robert</a></li>
+  <li class="c018"><a href="/article/23-0073-s3/reinhart__charles_stanley">Reinhart, C. S.</a></li>
+  <li class="c018"><a href="/article/23-0073-s4/reinhart__joachim_christian">Reinhart, J. C.</a></li>
+  <li class="c018"><a href="/article/23-0078-relief/relief">Relief</a></li>
+  <li class="c018"><a href="/article/23-0094-s3/rembrandt">Rembrandt</a></li>
+  <li class="c018"><a href="/article/23-0098-s5/remington__frederick">Remington, Frederick</a></li>
+  <li class="c018"><a href="/article/23-0118-renoir/renoir__firmin_auguste">Renoir, F. A.</a></li>
+  <li class="c018"><a href="/article/23-0122-s6/repin__ilja_jefimovich">Repin, I. J.</a></li>
+  <li class="c018"><a href="/article/23-0217-s7/restout__jean">Restout, Jean</a></li>
+  <li class="c018"><a href="/article/23-0219-rethel-alfred/rethel__alfred">Rethel, Alfred</a></li>
+  <li class="c018"><a href="/article/23-0244-s2/reynolds__sir_joshua">Reynolds, Sir Joshua</a></li>
+  <li class="c018"><a href="/article/23-0287-rhoecus/rhoecus">Rhoecus</a></li>
+  <li class="c018"><a href="/article/23-0301-s3/ribera__giuseppe">Ribera, Giuseppe</a></li>
+  <li class="c018"><a href="/article/23-0302-ribot-th-odule/ribot__théodule">Ribot, Théodule</a></li>
+  <li class="c018"><a href="/article/23-0303-s3/ricard__louis_gustave">Ricard, L. G.</a></li>
+  <li class="c018"><a href="/article/23-0307-ricciarelli-daniele/ricciarelli__daniele">Ricciarelli, Daniele</a></li>
+  <li class="c018"><a href="/article/23-0316-s5/richards__william_trost">Richards, W. T.</a></li>
+  <li class="c018"><a href="/article/23-0324-richmond-sir-william-blake/richmond__sir_william_blake">Richmond, Sir W. B.</a></li>
+  <li class="c018"><a href="/article/23-0329-s2/richter__adrian_ludwig">Richter, A. L.</a></li>
+  <li class="c018"><a href="/article/23-0342-rietschel-ernst-friedrich-august/rietschel__ernst_friedrich_august">Rietschel, E. F. A.</a></li>
+  <li class="c018"><a href="/article/23-0354-rigaud/rigaud__hyacinthe">Rigaud, Hyacinthe</a></li>
+  <li class="c018"><a href="/article/23-0364-s2/rimmer__william">Rimmer, William</a></li>
+  <li class="c018"><a href="/article/23-0404-s4/riviere__briton">Riviere, Briton</a></li>
+  <li class="c018"><a href="/article/23-0419-s4/robert__hubert">Robert, Hubert</a></li>
+  <li class="c018"><a href="/article/23-0419-s5/robert__louis_léopold">Robert, L. L.</a></li>
+  <li class="c018"><a href="/article/23-0420-s2/robert-fleury__joseph_nicolas">Robert-Fleury, J. N.</a></li>
+  <li class="c018"><a href="/article/23-0420-s3/roberts__david">Roberts, David</a></li>
+  <li class="c018"><a href="/article/23-0446-s2/robinson__theodore">Robinson, Theodore</a></li>
+  <li class="c018"><a href="/article/23-0469-rodin-auguste/rodin__auguste">Rodin, Auguste</a></li>
+  <li class="c018"><a href="/article/23-0478-s3/rogers__john">Rogers, John</a></li>
+  <li class="c018"><a href="/article/23-0487-s3/roll__alfred_philippe">Roll, A. P.</a></li>
+  <li class="c018"><a href="/article/23-0720-s5/romney__george">Romney, George</a></li>
+  <li class="c018"><a href="/article/23-0758-s4/rops__félicien">Rops, Félicien</a></li>
+  <li class="c018"><a href="/article/23-0760-rosa-salvator/rosa__salvator">Rosa, Salvator</a></li>
+  <li class="c018"><a href="/article/23-0775-s5/rosenthal__toby_edward">Rosenthal, T. E.</a></li>
+  <li class="c018"><a href="/article/23-0785-s4/rosselli__cosimo">Rosselli, Cosimo</a></li>
+  <li class="c018"><a href="/article/23-0786-s2/rossellino__antonio">Rossellino, Antonio</a></li>
+  <li class="c018"><a href="/article/23-0787-s2/rossetti__dante_gabriel">Rossetti, D. G.</a></li>
+  <li class="c018">Roubiliac, L. F.</li>
+  <li class="c018"><a href="/article/23-0814-s4/rousseau__jacques">Rousseau, Jacques</a></li>
+  <li class="c018">Rousseau, P. E. T.</li>
+  <li class="c018"><a href="/article/23-0828-s4/rowlandson__thomas">Rowlandson, Thomas</a></li>
+  <li class="c018"><a href="/article/23-0847-s3/rubens__peter_paul">Rubens, Peter Paul</a></li>
+  <li class="c018"><a href="/article/23-0857-s5/rude__françois">Rude, François</a></li>
+  <li class="c018"><a href="/article/23-0894-runciman-alexander/runciman__alexander">Runciman, Alexander</a></li>
+  <li class="c018"><a href="/article/23-0906-s3/russell__john">Russell, John</a></li>
+  <li class="c018">Ruysdael, Jacob van</li>
+  <li class="c018"><a href="/article/23-0994-ryder/ryder__albert_pinkham">Ryder, A. P.</a></li>
+  <li class="c018"><a href="/article/23-0995-s3/ryland__william_wynne">Ryland, W. W.</a></li>
+  <li class="c018"><a href="/article/23-1015-s4/sacchi__andrea">Sacchi, Andrea</a></li>
+  <li class="c018"><a href="/article/24-0018-saint-gaudens-augustus/saint-gaudens__augustus">Saint-Gaudens, Augustus</a></li>
+  <li class="c018"><a href="/article/24-0127-s6/sambourne__edward_linley">Sambourne, E. Linley</a></li>
+  <li class="c018"><a href="/article/24-0151-sandby-paul/sandby__paul">Sandby, Paul</a></li>
+  <li class="c018"><a href="/article/24-0155-sandrart-joachim-von/sandrart__joachim_von">Sandrart, Joachim von</a></li>
+  <li class="c018"><a href="/article/24-0158-sandys-frederick/sandys__frederick">Sandys, Frederick</a></li>
+  <li class="c018"><a href="/article/24-0197-sansovino-andrea-contucci-del-monte/sansovino__andrea_contucci_del_monte">Sansovino, Andrea C. del Monte</a></li>
+  <li class="c018"><a href="/article/24-0197-sansovino-jacopo/sansovino__jacopo">Sansovino, Jacopo</a></li>
+  <li class="c018"><a href="/article/24-0205-santerre-jean-baptiste/santerre__jean_baptiste">Santerre, J. B.</a></li>
+  <li class="c018"><a href="/article/24-0234-sargent-john-singer/sargent__john_singer">Sargent, J. S.</a></li>
+  <li class="c018"><a href="/article/24-0237-s4/sarrazin__jacques">Sarrazin, Jacques</a></li>
+  <li class="c018"><a href="/article/24-0239-sartain-john/sartain__john">Sartain, John</a></li>
+  <li class="c018"><a href="/article/24-0245-satterlee-walter/satterlee__walter">Satterlee, Walter</a></li>
+  <li class="c018">Sayer, James</li>
+  <li class="c018"><a href="/article/24-0328-s2/schadow">Schadow</a></li>
+  <li class="c018"><a href="/article/24-0328-s2/schadow">Schadow, J. G. and R.</a></li>
+  <li class="c018"><a href="/article/24-0330-s3/schalcken__godfried">Schalcken, Godfried</a></li>
+  <li class="c018"><a href="/article/24-0331-scharf-sir-george/scharf__sir_george">Scharf, Sir George</a></li>
+  <li class="c018"><a href="/article/24-0333-s3/scheemakers__peter">Scheemakers, Peter</a></li>
+  <li class="c018"><a href="/article/24-0334-s2/scheffer__ary">Scheffer, Ary</a></li>
+  <li class="c018"><a href="/article/24-0340-schetky-john-christian/schetky__john_christian">Schetky, J. C.</a></li>
+  <li class="c018"><a href="/article/24-0341-schiavonetti-luigi/schiavonetti__luigi">Schiavonetti, Luigi</a></li>
+  <li class="c018"><a href="/article/24-0345-s3/schirmer__friedrich_wilhelm">Schirmer, Friedrich W.</a></li>
+  <li class="c018"><a href="/article/24-0345-schirmer-johann-wilhelm/schirmer__johann_wilhelm">Schirmer, Johann W.</a></li>
+  <li class="c018"><a href="/article/24-0361-s3/schlüter__andreas">Schlüter, Andreas</a></li>
+  <li class="c018"><a href="/article/24-0363-s4/schnorr_von_karolsfeld__julius">Schnorr von Karolsfeld</a></li>
+  <li class="c018">Schongauer, Martin</li>
+  <li class="c018"><a href="/article/24-0396-s5/schreyer__adolf">Schreyer, Adolf</a></li>
+  <li class="c018"><a href="/article/24-0406-s4/schwanthaler__ludwig_michael">Schwanthaler, L. M.</a></li>
+  <li class="c018"><a href="/article/24-0406-s5/schwartze__teresa">Schwartze, Teresa</a></li>
+  <li class="c018">Schwind, Moritz von</li>
+  <li class="c018"><a href="/article/24-0426-s4/scopas">Scopas</a></li>
+  <li class="c018"><a href="/article/24-0488-scott-david/scott__david">Scott, David</a></li>
+  <li class="c018"><a href="/article/24-0495-s2/scott__william_bell">Scott, William Bell</a></li>
+  <li class="c018"><a href="/article/24-0508-s2/sculpture">Sculpture</a></li>
+  <li class="c018"><a href="/article/24-0597-s2/sebastiano_del_piombo">Sebastiano del Piombo</a></li>
+  <li class="c018"><a href="/article/24-0607-s4/seddon__thomas">Seddon, Thomas</a></li>
+  <li class="c018"><a href="/article/24-0611-s4/segantini__giovanni">Segantini, Giovanni</a></li>
+  <li class="c018"><a href="/article/24-0688-s4/sequeira__domingo_antonio_de">Sequeira, D. A. de</a></li>
+  <li class="c018"><a href="/article/24-0696-s2/sergel__johan_tobias">Sergel, Johan Tobias</a></li>
+  <li class="c018"><a href="/article/24-0753-s4/severn__joseph">Severn, Joseph</a></li>
+  <li class="c018"><a href="/article/24-0833-s5/shannon__charles_hazelwood">Shannon, C. H.</a></li>
+  <li class="c018"><a href="/article/24-0833-s6/shannon__james_jebusa">Shannon, J. J.</a></li>
+  <li class="c018"><a href="/article/24-0843-s7/sharp__william">Sharp, William</a></li>
+  <li class="c018"><a href="/article/24-0849-shee-sir-martin-archer/shee__sir_martin_archer">Shee, Sir M. A.</a></li>
+  <li class="c018"><a href="/article/24-0887-sherwin-john-keyse/sherwin__john_keyse">Sherwin, J. K.</a></li>
+  <li class="c018"><a href="/article/24-1083-short-francis-job/short__francis_job">Short, F. J.</a></li>
+  <li class="c018"><a href="/article/25-0073-sigalon-xavier/sigalon__xavier">Sigalon, Xavier</a></li>
+  <li class="c018"><a href="/article/25-0097-s3/signorelli__luca">Signorelli, Luca</a></li>
+  <li class="c018"><a href="/article/25-0105-silanion/silanion">Silanion</a></li>
+  <li class="c018"><a href="/article/25-0140-s4/simon__abraham">Simon, Abraham</a></li>
+  <li class="c018"><a href="/article/25-0147-simon-thomas/simon__thomas">Simon, Thomas</a></li>
+  <li class="c018"><a href="/article/25-0139-s3/simmons__edward_emerson">Simmons, E. E.</a></li>
+  <li class="c018"><a href="/article/25-0153-simson-william/simson__william">Simson, William</a></li>
+  <li class="c018"><a href="/article/25-0175-sisley-alfred/sisley__alfred">Sisley, Alfred</a></li>
+  <li class="c018"><a href="/article/25-0259-s5/slodtz__rené_michel">Slodtz, René Michel</a></li>
+  <li class="c018"><a href="/article/25-0266-s4/smart__john">Smart, John</a></li>
+  <li class="c018"><a href="/article/25-0267-s3/smedley__william_thomas">Smedley, W. T.</a></li>
+  <li class="c018"><a href="/article/25-0270-s2/smillie__james_david">Smillie, J. D.</a></li>
+  <li class="c018"><a href="/article/25-0270-s3/smirke__robert">Smirke, Robert</a></li>
+  <li class="c018"><a href="/article/25-0276-smith-colvin/smith__colvin">Smith, Colvin</a></li>
+  <li class="c018"><a href="/article/25-0283-s2/smith__john_raphael">Smith, John Raphael</a></li>
+  <li class="c018">Smybert, John</li>
+  <li class="c018"><a href="/article/25-0312-snyders-franz/snyders__franz">Snyders, Franz</a></li>
+  <li class="c018"><a href="/article/25-0359-sodoma-il/sodoma__il">Sodoma, Il</a></li>
+  <li class="c018"><a href="/article/25-0373-solario-antonio/solario__antonio">Solario, Antonio</a></li>
+  <li class="c018">Sorolla y Bastida, J.</li>
+  <li class="c018"><a href="/article/25-0546-spagna-lo/spagna__lo">Spagna, Lo</a></li>
+  <li class="c018">Spinello, Aretino</li>
+  <li class="c018"><a href="/article/25-0795-stanfield-william-clarkson/stanfield__william_clarkson">Stanfield, W. C.</a></li>
+  <li class="c018"><a href="/article/25-0804-stannard-joseph/stannard__joseph">Stannard, Joseph</a></li>
+  <li class="c018"><a href="/article/25-0819-s4/stark__james">Stark, James</a></li>
+  <li class="c018"><a href="/article/25-0891-steen-jan-havicksz/steen__jan_havicksz">Steen, Jan Havicksz</a></li>
+  <li class="c018"><a href="/article/25-0892-s4/steer__paul_wilson">Steer, P. Wilson</a></li>
+  <li class="c018"><a href="/article/25-0929-s6/stevens__alfred">Stevens, Alfred</a></li>
+  <li class="c018"><a href="/article/25-0929-s6/stevens__alfred">Stevens, Alfred</a></li>
+  <li class="c018"><a href="/article/25-0935-s2/stewart">Stewart, Julius L.</a></li>
+  <li class="c018"><a href="/article/25-0945-s3/stillman__william_james">Stillman, W. J.</a></li>
+  <li class="c018"><a href="/article/25-0980-s4/stone__frank">Stone, Frank</a></li>
+  <li class="c018"><a href="/article/25-0981-s4/stone__marcus">Stone, Marcus</a></li>
+  <li class="c018"><a href="/article/25-0982-s1/stone__nicholas">Stone, Nicholas</a></li>
+  <li class="c018"><a href="/article/25-0996-s5/stoss__veit">Stoss, Veit</a></li>
+  <li class="c018"><a href="/article/25-0996-s6/stothard__charles_alfred">Stothard, C. A.</a></li>
+  <li class="c018"><a href="/article/25-0996-s7/stothard__thomas">Stothard, Thomas</a></li>
+  <li class="c018"><a href="/article/25-1008-s2/strang__william">Strang, William</a></li>
+  <li class="c018"><a href="/article/25-1008-s3/strange__sir_robert">Strange, Sir Robert</a></li>
+  <li class="c018"><a href="/article/25-1066-strongylion/strongylion">Strongylion</a></li>
+  <li class="c018"><a href="/article/25-1072-s3/stuart__gilbert">Stuart, Gilbert</a></li>
+  <li class="c018"><a href="/article/25-1075-s3/stuck__franz">Stuck, Franz</a></li>
+  <li class="c018"><a href="/article/25-1088-s4/subleyras__pierre">Subleyras, Pierre</a></li>
+  <li class="c018"><a href="/article/26-0074-s2/sully__thomas">Sully, Thomas</a></li>
+  <li class="c018"><a href="/article/26-0196-s6/swan__john_macallan">Swan, J. M.</a></li>
+  <li class="c018"><a href="/article/26-0375-s5/taft__lorado">Taft, Lorado</a></li>
+  <li class="c018"><a href="/article/26-0385-s2/tait__arthur_fitzwilliam">Tait, A. F.</a></li>
+  <li class="c018"><a href="/article/26-0420-s4/tanner__henry_ossawa">Tanner, H. O.</a></li>
+  <li class="c018"><a href="/article/26-0446-tarbell-edmund-c/tarbell__edmund_c_">Tarbell, Edmund C.</a></li>
+  <li class="c018"><a href="/article/26-0608-tempera/tempera">Tempera</a></li>
+  <li class="c018"><a href="/article/26-0646-s2/teniers">Teniers (family)</a></li>
+  <li class="c018"><a href="/article/26-0657-tenniel/tenniel__sir_john">Tenniel, Sir John</a></li>
+  <li class="c018">Ter Borch, Gerard</li>
+  <li class="c018">Terra Cotta</li>
+  <li class="c018"><a href="/article/26-0764-s5/thayer__abbott_handerson">Thayer, Abbott H.</a></li>
+  <li class="c018">Theon of Samos</li>
+  <li class="c018"><a href="/article/26-0902-s5/thoma__hans">Thoma, Hans</a></li>
+  <li class="c018"><a href="/article/26-0910-s3/thompson__launt">Thompson, Launt</a></li>
+  <li class="c018"><a href="/article/26-0914-thomson-john/thomson__john">Thomson, John</a></li>
+  <li class="c018"><a href="/article/26-0920-s4/thornhill__sir_james">Thornhill, Sir James</a></li>
+  <li class="c018"><a href="/article/26-0921-thornycroft-william-hamo/thornycroft__william_hamo">Thornycroft, W. Hamo</a></li>
+  <li class="c018"><a href="/article/26-0922-s3/thorwaldsen__bertel">Thorwaldsen, Bertel</a></li>
+  <li class="c018"><a href="/article/26-0929-s3/thrasymedes">Thrasymedes</a></li>
+  <li class="c018"><a href="/article/26-1003-s4/tiepolo__giovanni_battista">Tiepolo, G. B.</a></li>
+  <li class="c018"><a href="/article/26-1006-tiffany-louis-comfort/tiffany__louis_comfort">Tiffany, L. C.</a></li>
+  <li class="c018"><a href="/article/26-1018-timanthes/timanthes">Timanthes</a></li>
+  <li class="c018"><a href="/article/26-1029-s4/timomachus">Timomachus</a></li>
+  <li class="c018"><a href="/article/26-1031-s2/timotheus">Timotheus</a></li>
+  <li class="c018"><a href="/article/26-1041-tintoretto-jacopo-robusti/tintoretto__jacopo_robusti">Tintoretto</a></li>
+  <li class="c018">Tisio, Benvenuto</li>
+  <li class="c018"><a href="/article/26-1055-tissot-james-joseph-jacques/tissot__james_joseph_jacques">Tissot, J. J. J.</a></li>
+  <li class="c018"><a href="/article/26-1063-titian/titian">Titian</a></li>
+  <li class="c018"><a href="/article/27-0076-s3/torrigiano__pietro">Torrigiano, Pietre</a></li>
+  <li class="c018"><a href="/article/27-0307-s4/triptych">Triptych</a></li>
+  <li class="c018"><a href="/article/27-0331-troy-jean-fran-ois-de/troy__jean_francois_de">Troy, J. F. de</a></li>
+  <li class="c018"><a href="/article/27-0337-s3/troyon__constant">Troyon, Constant</a></li>
+  <li class="c018"><a href="/article/27-0341-s3/trumbull__john">Trumbull, John</a></li>
+  <li class="c018"><a href="/article/27-0356-s3/tryon__dwight_william">Tryon, D. W.</a></li>
+  <li class="c018"><a href="/article/27-0493-s4/turner__charles">Turner, Charles</a></li>
+  <li class="c018"><a href="/article/27-0493-s6/turner__joseph_mallord_william">Turner, J. M. W.</a></li>
+  <li class="c018"><a href="/article/27-0582-s3/uhde__fritz_karl_hermann_von">Uhde, F. K. H. Von</a></li>
+  <li class="c018"><a href="/article/27-0845-utamaro/utamaro">Utamaro</a></li>
+  <li class="c018"><a href="/article/27-0912-s2/vanderlyn__john">Vanderlyn, John</a></li>
+  <li class="c018">Van der Stappen, C.</li>
+  <li class="c018"><a href="/article/27-0913-s2/van_der_weyden__roger">Van der Weyden, R.</a></li>
+  <li class="c018"><a href="/article/27-0913-s3/vandevelde__adrian">Vandevelde, Adrian</a></li>
+  <li class="c018"><a href="/article/27-0913-s4/vandevelde__william">Vandevelde, William</a></li>
+  <li class="c018"><a href="/article/27-0913-s6/van_dyck__sir_anthony">Van Dyck, Sir Anthony</a></li>
+  <li class="c018"><a href="/article/27-0921-s3/vanloo__charles_andrew">Vanloo, C. A.</a></li>
+  <li class="c018"><a href="/article/27-0921-s4/vanloo__john_baptist">Vanloo, J. B.</a></li>
+  <li class="c018"><a href="/article/27-0947-s4/varley__cornelius">Varley, Cornelius</a></li>
+  <li class="c018"><a href="/article/27-0948-s2/varley__john">Varley, John</a></li>
+  <li class="c018"><a href="/article/27-0951-s4/vasari__giorgio">Vasari, Giorgio</a></li>
+  <li class="c018"><a href="/article/27-0992-vedder-elihu/vedder__elihu">Vedder, Elihu</a></li>
+  <li class="c018"><a href="/article/27-1001-s2/veit__philipp">Veit, Philipp</a></li>
+  <li class="c018">Velazquez, D. R. de Silva y</li>
+  <li class="c018"><a href="/article/27-1044-s4/verboeckhoven__eugène_joseph">Verboeckhoven, E. J.</a></li>
+  <li class="c018"><a href="/article/27-1049-s2/vereshchagin__vassili_vassilievich">Vereshchagin, V. V.</a></li>
+  <li class="c018"><a href="/article/27-1052-s2/verlat__michel_marie_charles">Verlat, M. M. C.</a></li>
+  <li class="c018"><a href="/article/27-1058-s2/vernet">Vernet (family)</a></li>
+  <li class="c018"><a href="/article/27-1066-s4/verrocchio__andrea_del">Verrocchio, Andrea del</a></li>
+  <li class="c018"><a href="/article/27-1079-s3/vertue__george">Vertue, George</a></li>
+  <li class="c018"><a href="/article/28-0065-vien-joseph-marie/vien__joseph_marie">Vien, J. M.</a></li>
+  <li class="c018"><a href="/article/28-0072-vierge-daniel/vierge__daniel">Vierge, Daniel</a></li>
+  <li class="c018">Vigée-Lebrun, M. A. E.</li>
+  <li class="c018"><a href="/article/28-0076-vigne-paul-de/vigne__paul_de">Vigne, Paul de</a></li>
+  <li class="c018"><a href="/article/28-0106-vincent-george/vincent__george">Vincent, George</a></li>
+  <li class="c018"><a href="/article/28-0116-vinton/vinton__frederic_porter">Vinton, F. P.</a></li>
+  <li class="c018"><a href="/article/28-0143-vischer/vischer">Vischer (family)</a></li>
+  <li class="c018"><a href="/article/28-0144-s2/vischer__friedrich_theodor">Vischer, F. T.</a></li>
+  <li class="c018"><a href="/article/28-0168-vivarini/vivarini">Vivarini (family)</a></li>
+  <li class="c018"><a href="/article/28-0211-volk/volk__leonard_wells">Volk, L. W.</a></li>
+  <li class="c018"><a href="/article/28-0226-vonnoh-robert-william/vonnoh__robert_william">Vonnoh, R. W.</a></li>
+  <li class="c018"><a href="/article/28-0235-vouet-simon/vouet__simon">Vouet, Simon</a></li>
+  <li class="c018"><a href="/article/28-0236-s3/vrancx__sebastian">Vrancx, Sebastian</a></li>
+  <li class="c018">Vriendt, J. J. de and A. F. L. de</li>
+  <li class="c018"><a href="/article/28-0239-waagen-gustav-friedrich/waagen__gustav_friedrich">Waagen, G. F.</a></li>
+  <li class="c018"><a href="/article/28-0274-waldo-samuel-lovett/waldo__samuel_lovett">Waldo, S. L.</a></li>
+  <li class="c018"><a href="/article/28-0287-walker-frederick/walker__frederick">Walker, Frederick</a></li>
+  <li class="c018"><a href="/article/28-0288-walker-henry-oliver/walker__henry_oliver">Walker, H. O.</a></li>
+  <li class="c018"><a href="/article/28-0288-walker-horatio/walker__horatio">Walker, Horatio</a></li>
+  <li class="c018"><a href="/article/28-0289-walker-robert/walker__robert">Walker, Robert</a></li>
+  <li class="c018"><a href="/article/28-0320-wappers-egide-charles-gustave/wappers__egide_charles_gustave">Wappers, E. C. G.</a></li>
+  <li class="c018"><a href="/article/28-0336-s3/ward__james">Ward, James</a></li>
+  <li class="c018"><a href="/article/28-0335-s4/ward__edward_matthew">Ward, E. M.</a></li>
+  <li class="c018"><a href="/article/28-0336-s4/ward__john_quincy_adams">Ward, J. Q. A.</a></li>
+  <li class="c018"><a href="/article/28-0337-s3/ward__william">Ward, William</a></li>
+  <li class="c018"><a href="/article/28-0342-warner-olin-levi/warner__olin_levi">Warner, Olin Levi</a></li>
+  <li class="c018"><a href="/article/28-0387-waterhouse-john-william/waterhouse__john_william">Waterhouse, J. W.</a></li>
+  <li class="c018"><a href="/article/28-0398-waterlow-sir-ernest-albert/waterlow__sir_ernest_albert">Waterlow, Sir E. A.</a></li>
+  <li class="c018"><a href="/article/28-0435-watteau-antoine/watteau__antoine">Watteau, Antoine</a></li>
+  <li class="c018"><a href="/article/28-0438-watts-george-frederick/watts__george_frederick">Watts, G. F.</a></li>
+  <li class="c018"><a href="/article/28-0442-s3/wauters__emile">Wauters, Emile</a></li>
+  <li class="c018"><a href="/article/28-0448-wax-figures/wax_figures">Wax Figures</a></li>
+  <li class="c018"><a href="/article/28-0481-s4/webster__thomas">Webster, Thomas</a></li>
+  <li class="c018"><a href="/article/28-0484-weeks-edwin-lord/weeks__edwin_lord">Weeks, E. L.</a></li>
+  <li class="c018"><a href="/article/28-0485-weenix-jan-baptist/weenix__jan_baptist">Weenix, J. B.</a></li>
+  <li class="c018"><a href="/article/28-0514-weir-robert-walter/weir__robert_walter">Weir, R. W.</a></li>
+  <li class="c018"><a href="/article/28-0541-s3/werner__anton_alexander_von">Werner, A. A. von</a></li>
+  <li class="c018"><a href="/article/28-0553-s2/west__benjamin">West, Benjamin</a></li>
+  <li class="c018"><a href="/article/28-0553-s4/westall__richard">Westall, Richard</a></li>
+  <li class="c018"><a href="/article/28-0566-s2/westmacott__sir_richard">Westmacott, Sir R.</a></li>
+  <li class="c018"><a href="/article/28-0603-s2/wheatley__francis">Wheatley, Francis</a></li>
+  <li class="c018"><a href="/article/28-0616-whistler-james-abbott-mcneill/whistler__james_abbott_mcneill">Whistler, J. A. McN.</a></li>
+  <li class="c018"><a href="/article/28-0621-white-robert/white__robert">White, Robert</a></li>
+  <li class="c018"><a href="/article/28-0660-wiles-irving-ramsay/wiles__irving_ramsay">Wiles, I. R.</a></li>
+  <li class="c018"><a href="/article/28-0664-wilkie-sir-david/wilkie__sir_david">Wilkie, Sir David</a></li>
+  <li class="c018"><a href="/article/28-0678-willems-florent-joseph-marie/willems__florent_joseph_marie">Willems, F. J. M.</a></li>
+  <li class="c018"><a href="/article/28-0679-willette-leon-adolphe/willette__leon_adolphe">Willette, L. A.</a></li>
+  <li class="c018"><a href="/article/28-0707-willmore-james-tibbitts/willmore__james_tibbitts">Willmore, J. T.</a></li>
+  <li class="c018"><a href="/article/28-0715-wilson-richard/wilson__richard">Wilson, Richard</a></li>
+  <li class="c018"><a href="/article/28-0790-wohlgemuth/wohlgemuth__michael">Wohlgemuth, Michael</a></li>
+  <li class="c018"><a href="/article/28-0793-wolf-joseph/wolf__joseph">Wolf, Joseph</a></li>
+  <li class="c018"><a href="/article/28-0811-woodbury-charles-herbert/woodbury__charles_herbert">Woodbury, C. H.</a></li>
+  <li class="c018">Wood Carving</li>
+  <li class="c018"><a href="/article/28-0823-wood-engraving/wood_engraving">Wood Engraving</a></li>
+  <li class="c018"><a href="/article/28-0843-woollett-william/woollett__william">Woollett, William</a></li>
+  <li class="c018"><a href="/article/28-0843-woolner-thomas/woolner__thomas">Woolner, Thomas</a></li>
+  <li class="c018"><a href="/article/28-0864-s2/wouwerman__philip">Wouwerman, Philip</a></li>
+  <li class="c018"><a href="/article/28-0872-wright-joseph/wright__joseph">Wright, Joseph</a></li>
+  <li class="c018"><a href="/article/28-0887-wyant-alexander-h/wyant__alexander_h_">Wyant, A. H.</a></li>
+  <li class="c018"><a href="/article/28-0898-wylie-robert/wylie__robert">Wylie, Robert</a></li>
+  <li class="c018">Yosai</li>
+  <li class="c018"><a href="/article/28-0986-zarcillo-y-alcaraz-francisco/zarcillo_y_alcaraz__francisco">Zarcillo y Alcaraz, F.</a></li>
+  <li class="c018"><a href="/article/28-1005-zeuxis/zeuxis">Zeuxis</a></li>
+  <li class="c018"><a href="/article/28-1006-ziem-f-lix-fran-ois-george-philibert/ziem__félix_françois_george_philibert">Ziem, F. F. G. P.</a></li>
+  <li class="c018"><a href="/article/28-1027-zoffany-johann/zoffany__johann">Zoffany, Johann</a></li>
+  <li class="c018"><a href="/article/28-1073-zuccarelli-francesco/zuccarelli__francesco">Zuccarelli, Francesco</a></li>
+  <li class="c018"><a href="/article/28-1074-zuccaro/zuccaro">Zuccaro, Taddeo</a></li>
+  <li class="c018"><a href="/article/28-1074-zuccaro/zuccaro">Zuccaro, Federigo</a></li>
+  <li class="c018"><a href="/article/28-1076-zuloaga-ignacio/zuloaga__ignacio">Zuloaga, Ignacio</a></li>
+  <li class="c018"><a href="/article/28-1083-s4/zurbaran__francisco">Zurbaran, Francisco</a></li>
+</ul></details>
+
+<div>
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

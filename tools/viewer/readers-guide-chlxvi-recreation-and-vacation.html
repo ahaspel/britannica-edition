@@ -1,0 +1,2700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recreation And Vacation &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter LXVI</span>Recreation And Vacation</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Recreative Reading about Recreation</a></li><li><a href="#sh-2">Along the Hudson</a></li><li><a href="#sh-3">Sleepy Hollow</a></li><li><a href="#sh-4">Great Barrington</a></li><li><a href="#sh-5">Stockbridge</a></li><li><a href="#sh-6">Lenox</a></li><li><a href="#sh-7">Pittsfield</a></li><li><a href="#sh-8">Williamstown</a></li><li><a href="#sh-9">Bennington</a></li><li><a href="#sh-10">Hanover</a></li><li><a href="#sh-11">Dartmouth College</a></li><li><a href="#sh-12">The White Mountains</a></li><li><a href="#sh-13">Automobiles</a></li><li><a href="#sh-14">Athletics</a></li><li><a href="#sh-15">Hunting</a></li><li><a href="#sh-16">Fishing</a></li><li><a href="#sh-17">Taxidermy</a></li><li><a href="#sh-18">Sailing and Boating</a></li><li><a href="#sh-19">Mountaineering</a></li><li><a href="#sh-20">Winter Sports</a></li><li><a href="#sh-21">Driving, Riding and Polo</a></li><li><a href="#sh-22">Gardening</a></li><li><a href="#sh-23">Needlework, etc.</a></li><li><a href="#sh-24">Dancing, the Stage, etc.</a></li></ol></div>
+    <div class="body-text">
+
+
+<p>“Laying out your work” is a
+familiar phrase, and describes a
+common practice. But hardly
+one man in a hundred deliberately “lays
+out” his play, planning his recreation so
+as to get the best value out of every hour
+of his leisure time. Yet when he consults
+a doctor because his work is not running
+smoothly, one of the first questions he
+has to answer is about the amount and
+form of recreation he takes.</p>
+
+<p><span class="shoulder-heading" id="sh-1">Recreative Reading about Recreation</span>An important branch of the art of
+playing is to learn the value of reading
+about play. The more a man knows
+about any form of
+amusement, the
+more he will enjoy
+the hours he devotes
+to it, and the
+better he will succeed in keeping his
+mind off his business during these hours.
+But there is another and an even greater
+advantage in this kind of reading: <i>it will
+take your mind out-of-doors during hours
+of leisure that you are compelled to spend
+in-doors</i>. Everyone recognizes that out-door
+recreations, involving some degree
+of bodily activity, are the most wholesome
+for men whose work is sedentary,
+as is the case with nearly every reader
+of this Guide, and the best forms of out-door
+recreation are those in which the
+contrast with your work is accentuated
+by the complete change of scene and
+of habits which most men can only
+hope to get once a year, at vacation
+time.</p>
+
+<p>Turn to the next best form of relaxation,
+the out-door amusements that lie
+close at hand. Here, again, your opportunities
+are limited, for all these pleasures
+require daylight, which, during a great
+part of the year, ends before your work is
+done; and most of them require weather
+conditions that you can only get at certain
+seasons. An hour spent in reading
+and thinking about out-door amusements
+and travel, and in making plans
+for such delights, even if the planning
+must be for a future that seems far away,
+is therefore always refreshing.</p>
+
+<p>It is not the purpose of the present
+chapter to suggest a course of reading,
+in the strict sense of the phrase, for it
+cannot be assumed that everyone who
+would like to read about lawn-tennis
+would also like to read about tarpon-fishing.
+But a general account of the
+Britannica articles that afford information
+about recreation and vacations will
+give the reader a choice among subjects
+in which he is already interested and
+among others which may offer him new
+possibilities.</p>
+
+<h4 class="c016">MOTORING</h4>
+
+<p>In connection with motoring, the possessor
+of the Britannica will not be surprised
+to find in it, as might be expected
+from its universal comprehensiveness,
+much fuller technical information in regard
+to the structure and operation of
+his engine, the fuel he employs, and the
+friction and other resistances he must
+overcome, than in any of the ordinary
+manuals on the subject. But it may not
+occur to him that in planning either a
+long or a short tour, he can find in the
+volumes information of other kinds that
+will give added interest and significance
+to everything he sees. It is not only
+when he crosses the Atlantic for his
+motoring trip that cities and villages and
+mountains and rivers have stories to
+tell. In our own country, place-names
+which may at first suggest nothing, are
+found, on reference to the Britannica, to
+be associated with episodes of early exploration,
+of Indian hostilities, of local
+agitation, of one or another war, with the
+lives of famous men, the growth of industries
+and of commerce, the first success
+in a new branch of farming, the
+early days of railroad and canal construction,
+or the development of transportation
+by river, lake or sea. And
+what is being done to-day, in these
+places, is often quite as interesting, and
+quite as difficult to ascertain from any
+source other than the Britannica. This
+use of the work as a guide-book, or rather
+as doing a great deal that guide-books
+lamentably fail to do, is discussed later
+in this chapter in connection with travel
+in general as a form of recreation;
+but motoring gives especial opportunities
+for observation enriched by knowledge.</p>
+
+<p>The value of the Britannica in connection
+with the planning of a motoring
+trip may be illustrated by brief notes on
+some of the articles you might read if
+you were about to make, for example,
+the run from New York through the
+Berkshire Hills and on to the White
+Mountains. <i>The following information
+is all from the Britannica, and from articles
+to which you would naturally turn
+in this connection.</i></p>
+
+<p><i>A Specimen Tour from New York to the White Mountains</i></p>
+
+<p><span class="shoulder-heading" id="sh-2">Along the Hudson</span>Leaving New York by Broadway,
+your first point is <span class="sc"><a href="/article/28-0949-s4/yonkers">Yonkers</a></span> (Vol. 28, p.
+922), where, as the Britannica tells
+you, stands “one of the best examples
+of colonial architecture in America,”
+Philipse Manor Hall, now a museum of
+Revolutionary relics. Frederick Philipse,
+owner in 1779 of the Hall and of
+an estate extending for some distance
+along the bank of the Hudson, was suspected
+of Toryism, and all his property
+was confiscated by act of legislature.
+A mile and a half beyond Yonkers you
+get a magnificent view of the Hudson,
+disclosing the Palisades, of lava rock
+(Vol. 13, p. 852) which, in cooling,
+formed joints like those of the Giant’s
+Causeway in Ireland. The impressive
+breadth of the Hudson and its navigability
+throughout the 151 miles to
+Troy, notwithstanding
+that in all that
+distance it falls only
+five feet (a good
+many New Yorkers would be amazed
+to be told that fact), is due to the low
+grade of the river bed, permitting the
+tide to enter and to back up the water,
+so that this long stretch of the river is
+really a fjord, not a stream. The article
+Fjord (Vol. 10, p. 452) tells you
+how such a rock basin or trough is
+formed by geological action. The article
+<span class="sc"><a href="/article/13-0874-s3/hudson__henry">Henry Hudson</a></span> (Vol. 13, p.
+849) tells you how the great navigator,
+himself an Englishman, although employed
+by the Dutch East India Company
+in 1608 to find a westward route
+to China, sailed the little “Half
+Moon” as far up the river as Albany
+before he was convinced that the
+Pacific did not lie ahead of him.</p>
+
+<p>The next point after Yonkers, <span class="sc"><a href="/article/08-0366-dobbs-ferry/dobbs_ferry">Dobbs
+Ferry</a></span> (Vol. 8, p. 349), was a strategic
+centre of great importance during the
+Revolutionary War. “The American
+Army under Washington encamped
+near Dobbs Ferry on the 4th of July,
+1781, and started thence for Yorktown
+in the following month,” and it was
+there that Washington and Governor
+Clinton, in 1783, “met General Sir
+Guy Carleton to negotiate for the evacuation
+by the British troops of the
+posts they still held in the United
+States.”</p>
+
+<p><span class="shoulder-heading" id="sh-3">Sleepy Hollow</span>In <span class="sc"><a href="/article/26-0462-s2/tarrytown">Tarrytown</a></span>, as the article under
+that title (Vol. 26, p. 433) recounts,
+Washington Irving, who made the legends
+of the Hudson immortal, built
+his home at “Sunnyside,”
+and was
+buried in the old
+Sleepy Hollow
+Cemetery. The article <span class="sc"><a href="/article/14-0889-s2/irving__washington">Irving</a></span> (Vol. 14,
+p. 856), by the late Dr. Richard Garnett,
+the famous literary critic, tells you
+all about Irving’s life; and Professor
+Woodberry of Columbia, in his article
+on <span class="sc"><a href="/article/01-0882-american-literature/american_literature">American Literature</a></span> (Vol. 1, p.
+831), reminds you that, although Irving
+spent 21 of his adult years in
+Europe, he is the one American writer
+who has “linked his memory locally
+with his country so that it hangs over
+the landscape and blends with it forever.”
+“Kaakoot,” one of the large
+estates at Tarrytown, recalls the extraordinary
+career of its owner, described
+in the article <span class="sc"><a href="/article/23-0455-s5/rockefeller__john_davison">John D. Rockefeller</a></span>
+(Vol. 23, p. 433); and “Lyndhurst,”
+that of Jay Gould, of whom
+and of whose daughter, the well-known
+philanthropist, the Britannica tells in
+the article <span class="sc"><a href="/article/12-0301-s7/gould__jay">Gould</a></span> (Vol. 12, p. 284).
+On the post road near Tarrytown is the
+bronze statue of a Continental soldier,
+erected to commemorate the capture of
+Major André, whose life is told in the
+article <span class="sc"><a href="/article/01-1021-s2/andré__john">André</a></span> (Vol. 1, p. 968).</p>
+
+<p>As you mount the hill and leave the
+Hudson, you enter the beautiful region
+of hills, lake and streams, upon
+which the city of New York long
+depended for its water; and you
+will be interested in comparing what
+New York has accomplished in this
+connection with what has been done by
+other great cities, as described in the
+article <span class="sc"><a href="/article/28-0404-water-supply/water_supply">Water Supply</a></span> (Vol. 28, p.
+387), by <a href="/contributors.html?q=George+Frederick+Deacon">G. F. Deacon</a>. Many of the
+large country places you pass are the
+property of prominent New York men,
+of whom there are biographies in the
+Britannica.</p>
+
+<p>Your brief run through the hilly
+northwestern corner of Connecticut, of
+which the physical features are described
+and the history narrated in the
+article <span class="sc"><a href="/article/06-0975-connecticut/connecticut">Connecticut</a></span> (Vol. 6, p. 951),
+takes you through <span class="sc"><a href="/article/24-0092-s3/salisbury">Salisbury</a></span> (Vol. 24,
+p. 78), near Bear Mountain (2355
+feet), “the highest point in the State.”
+A few miles more and you cross the
+line into Massachusetts and enter the
+enchanting region of the Berkshire
+Hills. The article <span class="sc"><a href="/article/17-0868-s3/massachusetts">Massachusetts</a></span>
+(Vol. 17, p. 851) says that “the Berkshire
+country—Berkshire, Hampden,
+Hampshire and Franklin counties—is
+among the most beautiful regions of the
+United States. It is a rolling highland,
+dominated by long, wooded hill-ridges,
+remarkably even-topped in general
+elevation, intersected and broken
+by deep valleys. Scores of charming
+lakes lie in the hollows.”</p>
+
+<p><span class="shoulder-heading" id="sh-4">Great Barrington</span><span class="sc"><a href="/article/12-0414-s3/great_barrington">Great Barrington</a></span> (Vol. 12, p.
+397) “was a centre of disaffection
+during Shays’s Rebellion,” an episode
+for which you may
+consult the article
+<span class="sc"><a href="/article/24-0847-shays-daniel/shays__daniel">Daniel Shays</a></span>
+(Vol. 24, p. 815),
+and the account in the historical section
+of the article <span class="sc"><a href="/article/17-0868-s3/massachusetts">Massachusetts</a></span> (Vol. 17,
+p. 860). In 1786 Shays was known as
+having been “a brave Revolutionary
+captain of no special personal importance.”
+The State finances were in a
+bad condition and taxes were heavy.
+Mobs of discontented citizens, under
+Shays’s leadership, assembled to prevent
+the courts from sitting, so that the
+collection of taxes and other debts
+might be obstructed. “The insurrection
+is regarded as having been very
+potent in preparing public opinion
+throughout the country for the adoption
+of a stronger national government.”
+<span class="sc"><a href="/article/04-0721-s2/bryant__william_cullen">William Cullen Bryant</a></span>
+(Vol. 4, p. 698), “earliest of the master-poets
+of America,” practiced law at
+Great Barrington for nine years.</p>
+
+<p><span class="shoulder-heading" id="sh-5">Stockbridge</span>Leaving Great Barrington, you cross
+Monument Mountain (1710 feet) on
+your way to <span class="sc"><a href="/article/25-0953-stockbridge/stockbridge">Stockbridge</a></span> (Vol. 25, p.
+929) with its famous
+avenue of
+elms—perhaps the
+most characteristic New England scene
+in all the Berkshire country. The conspicuous
+bell-tower was erected by
+<span class="sc"><a href="/article/10-0335-field-david-dudley/field__david_dudley">David Dudley Field</a></span> (Vol. 10, p.
+321), the law reformer, whose proposed
+code of laws for the State of New
+York was the model on which most
+of the existing state codes have been
+based. The park was the gift of his
+brother, <span class="sc"><a href="/article/10-0334-field-cyrus-west/field__cyrus_west">Cyrus W. Field</a></span> (Vol. 10, p.
+320), born at Stockbridge, to whom we
+owe the first Atlantic cable. In 1834,
+at the age of 15, he became a clerk in
+the great New York store described in
+the article <span class="sc"><a href="/article/25-0935-s2/stewart">A. T. Stewart</a></span> (Vol. 25, p.
+912); later embarked in the wholesale
+paper business in New York, failed,
+formed the firm of Cyrus W. Field &amp;
+Co., and in 1853, at the age of 34, had
+made a quarter of a million, a large
+fortune in those days, paid off the debts
+of the paper business, and nominally
+retired. From that time he was chiefly
+occupied with the cable scheme, of
+which the early difficulties are described
+in the cable section of the article
+<span class="sc"><a href="/article/26-0539-telegraph/telegraph">Telegraph</a></span> (Vol. 26, p. 527), although
+he operated actively in stocks, was associated
+with <span class="sc"><a href="/article/12-0301-s7/gould__jay">Jay Gould</a></span> (Vol. 12, p.
+284) in completing the Wabash Railroad,
+and had a controlling interest in
+the New York Elevated Railroad, besides
+being chief proprietor of the New
+York <i>Mail and Express</i>.</p>
+
+<p>When, in 1750, <span class="sc"><a href="/article/09-0015-edwards-jonathan/edwards__jonathan">Jonathan Edwards</a></span>
+(Vol. 9, p. 3), the famous New England
+theologian, had to leave his church
+at Northampton, he became pastor
+at Stockbridge and missionary to
+the Housatonic Indians, remaining
+there until 1759. It was there that he
+wrote his famous treatise on the <i>Freedom
+of the Will</i>. In a cleft on Bear
+Mountain, just outside the village, is
+the curious Ice Glen, with caverns ice-lined
+even in midsummer.</p>
+
+<p><span class="shoulder-heading" id="sh-6">Lenox</span>On the road from Stockbridge to
+Lenox you pass the beautiful lake
+called the Stockbridge Bowl, on the
+shore of which <span class="sc"><a href="/article/13-0115-s2/hawthorne__nathaniel">Nathaniel Hawthorne</a></span>,
+in 1851, wrote <i>The House of
+the Seven Gables</i>. His reason for
+adopting literature as a vocation is
+quaintly stated in a letter to his mother
+quoted in this Britannica biography.
+“I do not want to be a doctor and live
+by men’s diseases, nor a minister to live
+by their sins, nor a lawyer and live by
+their quarrels. So I don’t see that
+there is anything left for me but to
+be an author.” <span class="sc"><a href="/article/16-0441-lenox/lenox">Lenox</a></span> (Vol. 16, p.
+421) is surrounded by high hills, famous
+for their vivid coloring when the
+leaves change their hues
+in the fall, Yokun Seat
+(2080 feet), South
+Mountain (1200 feet), Bald Head
+(1583 feet) and Rattlesnake Hill
+(1540 feet). “The surrounding region
+contains some of the most beautiful
+country of the Berkshires—hills, lakes,
+charming intervales and woods. As
+early as 1835 Lenox began to attract
+summer residents. In the next decade
+began the creation of large estates, although
+the great holdings of the present
+day, and the villas scattered over
+the hills, are comparatively recent features.”
+The township was named after
+the third Duke of <span class="sc"><a href="/article/23-0323-s4/richmond__earls_and_dukes_of">Richmond and
+Lennox</a></span> (Vol. 23, p. 307), “a firm
+supporter of the colonies in the debates
+on the policy that led to the War of
+American Independence; and he initiated
+the debate of 1778 calling for the
+removal of the troops from America.”</p>
+
+<p>Among other names associated with
+Lenox and with its famous schools are
+those of the actress <span class="sc"><a href="/article/15-0751-s2/kemble">Frances Kemble</a></span>—“Fanny”
+Kemble (Vol. 15, p. 724);
+<span class="sc"><a href="/article/03-0658-beecher-henry-ward/beecher__henry_ward">Henry Ward Beecher</a></span> (Vol. 3, p.
+639); <span class="sc"><a href="/article/13-0810-s2/hosmer__harriet_goodhue">Harriet Hosmer</a></span> (Vol. 13, p.
+791), the sculptor; <span class="sc"><a href="/article/13-0701-s8/hopkins__mark">Mark Hopkins</a></span>
+(Vol. 13, p. 684), the famous president
+of Williams College; <span class="sc"><a href="/article/25-0911-stephens-alexander-hamilton/stephens__alexander_hamilton">Alexander H.
+Stephens</a></span> (Vol. 25, p. 887), vice-president
+of the Confederate States, who,
+the article <span class="sc"><a href="/article/06-0923-confederate-states-of-american/confederate_states_of_american">Confederate States of
+America</a></span> (Vol. 6, p. 899), says, was
+“during the war a strong antagonist of
+President Davis’s policy;” and <span class="sc"><a href="/article/28-0929-yancey-william-lowndes/yancey__william_lowndes">William
+H. Yancey</a></span> (Vol. 28, p. 902),
+whose fortunes were influenced by a
+singular event. A lawyer, and editor
+of a little anti-nullification weekly in
+South Carolina, he married a wealthy
+woman; but a few years later, in 1839,
+the accidental poisoning of all the
+slaves on the estate forced him to return
+to the law; and he subsequently
+became one of the political leaders of
+the Confederacy.</p>
+
+<p><span class="shoulder-heading" id="sh-7">Pittsfield</span><span class="sc"><a href="/article/21-0711-s2/pittsfield">Pittsfield</a></span> (Vol. 21, p. 682) is both
+a popular resort and a prosperous manufacturing
+town, with ample water
+power supplied by
+the east and west
+branches of the
+Housatonic on either side of it. It
+was here that <span class="sc"><a href="/article/16-1001-s2/longfellow__henry_wadsworth">Henry W. Longfellow</a></span>
+(Vol. 16, p. 977) wrote <i>The Old Clock
+on the Stairs</i> at “Elm Knoll,” the
+house of his father-in-law, <span class="sc"><a href="/article/02-0236-s3/appleton__nathan">Nathan
+Appleton</a></span> (Vol. 2, p. 224), a reference
+to whose biography in the Britannica
+discloses the interesting fact that
+his son, Thomas Gold Appleton, a famous
+wit in his day, originated the
+saying, “Good Americans when they
+die, go to Paris,” which is generally
+attributed to Oliver Wendell Holmes.
+Just outside Pittsfield lies the village
+of the <span class="sc"><a href="/article/24-0801-shakers/shakers">Shakers</a></span> (Vol. 24, p. 771), the
+curious sect founded by Ann Lee,
+daughter of a blacksmith in Manchester,
+England, who came to America
+with a small party of her adherents in
+1714. The road through <span class="sc"><a href="/article/01-0212-s3/adams">Adams</a></span> (Vol.
+1, p. 181), affords a view of Greylock
+Mountain (3535 feet), the highest
+point in Massachusetts; and at <span class="sc"><a href="/article/19-0787-north-adams/north_adams">North
+Adams</a></span> (Vol. 19, p. 760), there is a
+natural bridge 50–60 feet high across
+Hudson Brook; and you can see the
+ruins of Fort Massachusetts, captured
+in 1746 by the French with the aid of
+the Indians. Here is also the western
+end of the Hoosac Tunnel, 5¾ miles
+long. The article <span class="sc"><a href="/article/27-0416-tunnel/tunnel">Tunnels</a></span> (Vol. 27,
+p. 405) says that the piercing of this
+tunnel, begun in 1835 and not finished
+until 1876, was marked by the first
+American use of air drills and nitroglycerin;
+and the article <span class="sc"><a href="/article/22-0238-power-transmission/power_transmission">Power
+Transmission</a></span> (Vol. 22, p. 232) describes
+the influence which this successful
+employment of compressed air had
+in furthering its use for the noisy
+“gun” tools now so familiar.</p>
+
+<p><span class="shoulder-heading" id="sh-8">Williamstown</span><span class="sc"><a href="/article/28-0705-williamstown-australia/williamstown__australia_">Williamstown</a></span> (Vol. 28, p. 685),
+the last town in Massachusetts on your
+route, is the seat of Williams College;
+and the “Haystack
+Monument”
+in Mission Park,
+stands where the prayer meeting was
+held which was the forerunner of
+the American foreign missionary
+movement described in the article
+<span class="sc"><a href="/article/18-0610-s4/missions">Missions</a></span> (Vol. 18, p. 583), which
+contains the interesting statement that
+in the 3rd century the proportion of
+Christians to the whole human race
+was one to 150, while it is now one to
+three. The article <span class="sc"><a href="/article/27-1053-s4/vermont">Vermont</a></span> (Vol.
+27, p. 1025) contains an interesting
+summary of the early disputes over
+state boundaries in this part of New
+England.</p>
+
+<p><span class="shoulder-heading" id="sh-9">Bennington</span><span class="sc"><a href="/article/03-0763-bennington/bennington">Bennington</a></span> (Vol. 3, p. 743) lies
+at the foot of the Green Mountains,
+near Mt. Anthony (2345 feet). “The
+Bennington Battle
+Monument, a
+shaft 301 feet
+high, is said to be the highest battle
+monument in the world. It commemorates
+the success gained on the 16th of
+August, 1777, by a force of nearly
+2000 ‘Green Mountain Boys’ and
+New Hampshire and Massachusetts
+militia ... over two detachments
+of General Burgoyne’s army,” of whom
+700 were taken prisoners. The article
+<span class="sc"><a href="/article/01-0893-american-war-of-independence/american_war_of_independence">American War of Independence</a></span>
+(Vol. 1, p. 842) shows how important
+an effect this victory had on Burgoyne’s
+campaign. In 1825 <span class="sc"><a href="/article/11-0495-garrison-william-lloyd/garrison__william_lloyd">William Lloyd
+Garrison</a></span> (Vol. 11, p. 477), the anti-slavery
+leader, edited a paper at Bennington,
+leaving it when <span class="sc"><a href="/article/17-0139-s2/lundy__benjamin">Benjamin
+Lundy</a></span> (Vol. 17, p. 124), the Quaker
+abolitionist, determined to secure Garrison’s
+co-operation on a Baltimore
+abolitionist magazine, “walked through
+the ice and snow of a New England
+winter from Boston to Bennington, 125
+miles,” and persuaded Garrison to join
+him. Bennington was the home of
+<span class="sc"><a href="/article/01-0733-s3/allen__ethan">Ethan Allen</a></span> (Vol. 1, p. 691), the
+frontier hero who led the “Green
+Mountain Boys” and of <span class="sc"><a href="/article/28-0343-warner-seth/warner__seth">Seth Warner</a></span>
+(Vol. 28, p. 327), who subsequently
+became their colonel.</p>
+
+<p><span class="shoulder-heading" id="sh-10">Hanover</span>On leaving Bennington you can
+choose any one of several routes to
+bring you over to the Connecticut
+River, but, whichever you take, you
+will be fairly on the main route to the
+White Mountains (by which you would
+have gone from New York through
+Waterbury, Springfield and Greenfield
+if you had not included the Berkshires
+in your itinerary) when
+you reach <span class="sc"><a href="/article/12-0952-s4/hanover">Hanover, N.
+H.</a></span> (Vol. 12, p. 927).
+Here, “ranges of rugged hills, broken
+by deep, narrow gorges and by the
+wider valley of Mink Brook, rise near
+the river and culminate in Moose
+Mountain, 2326 feet above the sea.”
+Near the foot of that peak is the birthplace
+of <span class="sc"><a href="/article/04-0579-s2/bridgman__laura_dewey">Laura D. Bridgman</a></span> (Vol. 4,
+p. 559), the first blind deaf-mute to be
+successfully educated. Dr. <span class="sc"><a href="/article/13-0861-howe-richard-howe-earl/howe__richard_howe__earl">S. G. Howe</a></span>
+(Vol. 13, p. 837), who was head of the
+Perkins Institute for the Blind in Boston,
+heard of her case in 1837, took
+charge of her in October of that year,
+and by June, 1840, at eleven years of
+age, her mind had become as well developed
+as that of a normal child of
+her age. Charles Dickens saw her
+when he was in America in 1842, and
+his account of her case led to the introduction
+in England, and afterwards
+in all parts of Europe, of the Howe
+system of training.</p>
+
+<p><span class="shoulder-heading" id="sh-11">Dartmouth College</span>The attractions which Hanover owes
+to its picturesque site are enhanced by
+the fine buildings and the notably beautiful
+campus of <span class="sc"><a href="/article/07-0862-dartmouth-college/dartmouth_college">Dartmouth College</a></span>
+(Vol. 7, p. 838). The purpose for
+which this college was originally
+founded is quaintly expressed in its
+charter, granted by George III in
+1769. See the article on <span class="sc"><a href="/article/14-0480-indians-north-american/indians__north_american">Indians,
+North American</a></span> (Vol. 14, p. 452).
+This document ordains “that there
+be a college erected in our Province
+of New Hampshire by the name
+of Dartmouth
+College, for the
+education and instruction
+of youth
+of the Indian Tribes in this Land in
+reading, writing and all parts of
+Learning which shall appear necessary
+and expedient for civilizing and christianizing
+children of pagans ...
+and also of English youth and any
+other.”</p>
+
+<p>With the name of Dartmouth College
+will always be associated that of
+<span class="sc"><a href="/article/28-0477-s4/webster__daniel">Daniel Webster</a></span> (Vol. 28, p. 460),
+not only because he was graduated
+there in 1801, but because the famous
+“Dartmouth College case,” in which
+Webster appeared for the college before
+the United States Supreme Court,
+was the first in which that august tribunal
+fully asserted its power to support
+the Federal constitution by nullifying
+any usurpatory statutes passed
+by state legislatures.</p>
+
+<p>When you turn away from the Connecticut
+River to go up the valley of
+the Ammonoosuc, you are fairly in the
+White Mountain region, which the Britannica
+(Vol. 19, p. 490) describes in
+part as follows:</p>
+
+<p><span class="shoulder-heading" id="sh-12">The White Mountains</span>“The White Mountains, a continuation
+of the Appalachian system, rise very
+abruptly in several short ranges and in
+outlying mountain
+masses from a base
+level of 700–1500 ft. to
+generally rounded summits,
+the heights of several
+of which are nowhere exceeded in the
+eastern part of the United States except
+in the Black and the Unaka mountains of
+North Carolina; seventy-four rise more
+than 3000 ft. above the sea, twelve more
+than 5000 ft., and the highest, Mount
+Washington, attains an elevation of 6293 ft.</p>
+
+<p>The principal ranges, the Presidential,
+the Franconia and the Carter-Moriah, have
+a north-eastern and south-western trend.
+The Presidential, in the north-eastern part
+of the region, is separated from the Franconia
+on the south-west by the Crawford,
+or White Mountain Notch, about 2000 ft.
+in depth, in which the Ammonoosuc and
+Saco rivers find a passage, and from the
+Carter-Moriah, parallel to it on the east,
+by the Glen-Ellis and Peabody rivers, the
+former noted for its beautiful falls. On
+the Presidential range, which is about 20
+m. in length, are Mount Washington and
+nine other peaks exceeding 5000 ft. in
+height: Mount Adams, 5805 ft.; Mount Jefferson,
+5725 ft.; Mount Sam Adams, 5585
+ft.; Mount Clay, 5554 ft.; Boot Spur, 5520
+ft.; Mount Monroe, 5390 ft.; J. Q. Adams
+Peak, 5384 ft.; Mount Madison, 5380 ft.;
+and Mount Franklin, 5028 ft. On the
+Franconia, a much shorter range, are
+Mount Lafayette, 5269 ft.; Mount Lincoln,
+5098 ft.; and four others exceeding 4000 ft.
+The highest peak on the Carter-Moriah
+range is Carter Dome, 4860 ft., but seven
+others exceed 4000 ft. Loftiest of the isolated
+mountains is Moosilauke noted for
+its magnificent view-point, 4810 ft. above
+the sea. Separating Franconia and Pemigewasset
+ranges is the romantic Franconia
+Notch, overlooking which from the upper
+cliffs of Profile Mountain is a remarkable
+human profile, <i>The Great Stone Face</i>, immortalized
+by Nathaniel Hawthorne; here,
+too, is the Franconia Flume, a narrow upright
+fissure, 60 ft. in height, with beautiful
+waterfalls.</p>
+
+<p>The whole White Mountain region
+abounds in deep narrow valleys, romantic
+glens, ravines, flumes, waterfalls, brooks
+and lakes.... The headwaters of the
+rivers are for the most part mountain
+streams or elevated lakes; farther on their
+swift and winding currents—flowing sometimes
+between wide intervales, sometimes
+between rocky banks—are marked by numerous
+falls and fed by lakes.</p>
+
+<p>The lakes and ponds, numbering several
+hundred, were formed by glacial action
+and the scenery of many of them is scarcely
+less attractive than that of the mountains.
+The largest and most widely known is Lake
+Winnepesaukee on the S. border of the
+White Mountain region; this is about 20
+m. long and from 1 to 8 m. wide, is dotted
+by 274 islands, mostly verdant, and has
+clear water and a rather level shore, back
+of which hills or mountains rise on all sides.
+Among the more prominent of many others
+that are admired for their beauty are
+Squam, New Found, Sunapee and Ossipee,
+all within a radius of a few miles from
+Winnepesaukee; Massabesic farther S.;
+and Diamond Ponds, Umbagog and Connecticut
+lakes, N. of the White Mountains.
+The rivers with their numerous falls and
+the lakes with their high altitudes furnish
+a vast amount of water power for manufacturing,
+the Merrimac, in particular, into
+which many of the larger lakes, including
+Winnepesaukee, find an outlet, is one of
+the greatest power-yielding streams of the
+world.”</p>
+
+<p>After exploring the country thus described
+in the Britannica, you can take
+for your return trip to New York, the
+route by Portland, Me., that by Lake
+Winnepesaukee and Portsmouth, or, that
+by Plymouth and Manchester, N. H.
+By any of these ways, you will visit Boston,
+and its famous suburbs, Concord,
+Lexington, Brookline, Salem and Marblehead,
+whose historical and literary
+associations are fully described in the
+Britannica.</p>
+
+<p><span class="shoulder-heading" id="sh-13">Automobiles</span>The article <span class="sc"><a href="/article/18-0946-s2/motor_vehicles">Motor Vehicles</a></span> (Vol. 18,
+p. 914), with 37 illustrations, is by the
+late C. S. Rolls, the famous builder and
+driver of motor cars,
+with a special section
+on commercial
+vehicles, by <a href="/contributors.html?q=Edward+Shrapnell+Smith">Edward Shrapnell Smith</a>,
+editor of <i>The Commercial Motor</i>. The
+story of the development of the car, told
+at the beginning of the article, is full of
+human interest, for it shows how national
+characteristics affect industries.
+From 1802, when Richard Trevithick
+built, in England, the first practical road
+carriage, until 1885, all the most promising
+efforts to further mechanical road
+traffic were made by English inventors.
+As early as 1824 there was a regular
+motor-omnibus service between Cheltenham
+and Gloucester, at a speed that
+sometimes (perhaps down a hill) reached
+14 miles an hour; and if inventors had
+been encouraged, the effort to lighten
+road engines would have produced the
+tubular boiler long before it actually appeared.
+But the influence of the landowning,
+horse-breeding, horse-loving English
+aristocracy was too strong, and one
+act of Parliament after another imposed
+destructive restrictions, culminating in
+the law passed in 1865, making 4 miles
+an hour the maximum speed, and requiring
+that a man showing a red flag
+should march ahead of the engine! Of
+course this drove every engine off the
+road except a steam roller or the heaviest
+type of traction engine. In 1885 Daimler
+invented the internal combustion engine,
+and for a moment Germany seemed likely
+to lead the world. But Daimler failed to
+hit upon a satisfactory system of transmission,
+and although his engine worked
+well in motor boats, the risk of starting a
+car on the road was too great. His boat,
+shown at the Paris Exposition of 1887,
+attracted the attention of the French
+firm of Panhard &amp; Levassor, makers of
+wood-working machinery. They bought
+the French rights, and Levassor devised
+the clutch, the gear-box and the whole
+system of connecting the engine with its
+work, which, save for improvements in
+detail, are all in use to-day. In 1895 the
+French car which won the race from Paris
+to Bordeaux covered the 744 miles at a
+mean speed of 15 miles an hour, and the
+world realized that the motor car was a
+practical means of transportation. But
+it was not until 1896 that the English
+parliament gave cars the freedom of the
+roads, and that English manufacturers
+could see a future for themselves.</p>
+
+<p>In the United States, the industry began
+under great difficulties. The roads,
+except in the immediate outskirts of the
+larger cities, were abominable, and no
+system of suspension that could make
+them tolerable had yet been discovered.
+But though starting late, by 1906 the
+United States overtook and passed
+France, becoming the foremost car building
+and car using nation of the world.
+Nowhere else are factories worked upon
+so large a scale, and nowhere else are
+really serviceable cars so light and so
+cheap. And the greatest recent improvement
+in the gasolene engine, the Knight
+sleeve-valve, is an American invention.
+It is, altogether, a curious story, this
+struggle in which England, Germany
+and France, one after another, seemed
+destined to attain the leadership
+which in the end fell to the United
+States.</p>
+
+<p>Turning to the subsidiary articles
+which relate to motoring, the gasolene
+engine is elaborately discussed in <span class="sc"><a href="/article/20-0057-s6/oil_engine">Oil
+Engine</a></span> (Vol. 20, p. 35), by <a href="/contributors.html?q=Dugald+Clerk">Dugald Clerk</a>,
+an expert engineer and himself the inventor
+of the <a href="/contributors.html?q=Dugald+Clerk">Clerk</a> cycle engine. This
+article shows how complete a change
+in engineering practice was effected in
+1883, when it was demonstrated that
+small engines could be run at a thousand
+revolutions a minute, a speed four times
+as great as any previously contemplated.
+All the types of carburetter are described,
+with mechanical diagrams. Other diagrams
+show the action of the inner and
+outer sleeves of the Knight valves.
+Gasolene, and the experiments made in
+search of a less costly fuel, are dealt with
+in the article <span class="sc"><a href="/article/11-0287-fuel/fuel">Fuel</a></span> (Vol. 11, p. 274), by
+Prof. <a href="/contributors.html?q=Georg+Lunge">Georg Lunge</a>, of the Zurich Polytechnic,
+the greatest of all authorities on
+the subject. Tires, the bugbear of every
+car-owner, form the subject of a separate
+article Tire (Vol. 26, p. 1006), by <a href="/contributors.html?q=Archibald+Sharp">Archibald
+Sharp</a>, which contains a number of
+curious and instructive diagrams showing
+the direction of the stress on a tire at the
+point where the road slightly flattens it.
+<span class="sc"><a href="/article/23-0836-s7/rubber">Rubber</a></span> (Vol. 23, p. 795), by <a href="/contributors.html?q=Wyndham+Rowland+Dunstan">W. R.
+Dunstan</a>, president of the International
+Association of Tropical Agriculture, is
+well worth reading for its information as
+to the effect upon tires of exposure to air
+and light, apart from wear. The materials
+used, and the mechanical principles
+involved, in the construction of cars are
+discussed in a number of separate articles
+under obvious titles.</p>
+
+<h4 class="c016">PHOTOGRAPHY</h4>
+
+<p>A large place, in any review of recreations,
+must be given to photography,
+which, even in its most elementary form,
+provides a record and an echo of an infinite
+variety of amusements, and, after
+a little study, not only does this all the
+better, but becomes a delightful art in
+itself, to be enjoyed in-doors as well as
+out-doors, at all hours and at all seasons.
+The amateur can find no more authoritative,
+full and yet concise manual of the
+subject than the Britannica article <span class="sc"><a href="/article/21-0507-photography/photography">Photography</a></span>
+(Vol. 21, p. 485), equivalent to
+about 125 pages of this Guide. The first
+section on History and Technique is by
+Sir <a href="/contributors.html?q=Sir+William+de+Wiveleslie+Abney">William de Wiveleslie Abney</a>, author
+of <i>Instruction in Photography</i>, <i>Colour
+Vision</i>, etc. Next is a section on photographic
+apparatus by <a href="/contributors.html?q=Major-General+James+Waterhouse">Major-Gen. James
+Waterhouse</a>, whose photographic work
+in India is known throughout the world.
+And then comes a discussion of pictorial
+photography by <a href="/contributors.html?q=Arthur+Horsley+Hinton+%281863%E2%80%931908%29">A. Horsley Hinton</a>, author
+of <i>Practical Pictorial Photography</i>.
+The following is an outline of the article:</p>
+
+<p>History.—Eighteenth century experiments
+of Scheele, Senebier and
+Count Rumford. Early 19th century
+discoveries. The Daguerreotype and
+its improvements by Goddard, Claudet
+and Fizeau. The Fox-Talbot process.
+Albumen process on glass. Collodion
+process. Positive pictures by the collodion
+process. Moist collodion process.
+Dry-plates; alkaline developers
+with formulae for some of the most effective;
+developers of organic salts of
+iron; developer restrainers. Dry-plate
+bath process of R. Manners Gordon,
+with formula for preservative. Collodion
+emulsion processes—work of Bolton
+and Sayce and of M. C. Lea and
+W. Cooper; Bolton’s modification; Col.
+Wortley introduces strongly alkaline
+developer. Formula for alkaline developer
+for collodion plates. Gelatin
+emulsion process—Maddox (1871),
+King (1873), Burgess (1873), Stas
+(1874), Bennett (1878), <a href="/contributors.html?q=Sir+William+de+Wiveleslie+Abney">Abney</a>
+(1879), van Monckhoven (1879) and
+his use of hydrobromic acid on silver
+carbonate with ammonia. Heating the
+emulsion—Wortley (1879), Mansfield
+(1879).</p>
+
+<p>Relative rapidities of the processes
+described.</p>
+
+<table class="table5">
+  <tbody><tr>
+    <td class="c011">Daguerreotype, originally,</td>
+    <td class="c011">Half an hour’s</td>
+    <td class="c028">exposure.</td>
+  </tr>
+  <tr>
+    <td class="c011">Calotype</td>
+    <td class="c011">2 or 3 minutes’</td>
+    <td class="c028">„</td>
+  </tr>
+  <tr>
+    <td class="c011">Collodion</td>
+    <td class="c011">10 seconds’</td>
+    <td class="c028">„</td>
+  </tr>
+  <tr>
+    <td class="c011">Collodion emulsion</td>
+    <td class="c011">15 seconds’</td>
+    <td class="c028">„</td>
+  </tr>
+  <tr>
+    <td class="c011">Rapid gelatin emulsion</td>
+    <td class="c011">¹⁄₁₅ second</td>
+    <td class="c028">„</td>
+  </tr>
+</tbody></table>
+
+<p>The second part of the article deals
+with the technique of photography. The
+major topics in it are:</p>
+
+<p>Gelatin emulsions: formulae and directions
+for emulsion with and without
+ammonia. Coating the plates. Exposure.
+Development, with formula for
+alkaline developer. Intensifying and
+varnishing the negative.</p>
+
+<p>Printing processes. Albumen method
+of Fox-Talbot. Sensitizing bath. Toning
+and fixing the print—formulae
+for toning-bath. Collodio-chloride silver
+printing process: Simpson’s formula.
+Gelatino-citrochloride emulsion: <a href="/contributors.html?q=Sir+William+de+Wiveleslie+Abney">Abney</a>’s
+formula. Printing with uranium
+salts: an early formula. Self-toning
+papers. Printing with chromates: carbon
+prints—work of Ponton, Becquerel,
+Dixon, Fox-Talbot, Poitevin, Pouncey,
+Fargier, Swan, Johnson and Sawyer.
+Printing with salts of iron. Photo-mechanical
+printing processes: discoveries
+of Oreloth, de Motay, Marechal and
+Albert; “Lichtdruck” and heliotype.
+Woodbury type. Photolithography:
+the work of E. J. Asser, J. W. Osborne
+and Sir H. James.</p>
+
+<p>Photographs in natural colours are
+next described, and their history is
+traced from 1810 when Seebeck of Jena
+made experiments described in Goethe’s
+famous work on <i>Colours</i>. <i>The first successful
+colour photography was by Becquerel
+in 1848</i> on a daguerreotype plate,
+chlorinized. The later methods of Lippmann
+and Lumière, respectively, with
+collodion dry plates prepared with albumen
+and with dyed gelatin plates (orthochromatic),
+produce pictures in which
+the colours show only from an angle.</p>
+
+<p>The section on the <i>Action of Light on
+Chemical Compounds</i>, with a plate showing
+spectra and graduation scales, contains
+valuable diagrams and a chronological
+table of observers of the action of
+light on different substances. The paragraphs
+of particular interest to the practical
+photographer are those on:</p>
+
+<p>Measurement of the Rapidity of a
+Plate.</p>
+
+<p>Effect of Temperature on Sensitiveness.</p>
+
+<p>Effect of Small Intensities of Light
+on a Sensitive Salt.</p>
+
+<p>Effect of Very Intense Light on a
+Sensitive Salt.</p>
+
+<p>Intermittent Exposure of a Sensitive
+Salt.</p>
+
+<p>Effect of Monochromatic Light of
+Varying Wave-Lengths on a Sensitive
+Salt.</p>
+
+<p>Reproduction of Coloured Objects
+by 3 Photographic Positives: Ives’
+process; Joly’s process; Autochrome
+of Lumière; Positives in 3 Colours.</p>
+
+<p>Another division (equivalent to 60
+pages at least in this Guide) of the article
+is on Apparatus. It deals especially
+with the hand camera as developed from
+1855 to 1888 when the Eastman Kodak
+came out. And it has separate paragraphs
+on Focusing; Plate-holders or
+Dark-slides (1 illustration); Studio cameras;
+Portable and Field cameras; Hand
+cameras (7 illustrations); Twin-lens and
+Reflex cameras (2 illustrations); Panoramic
+cameras (2 illustrations); 3 Colour
+cameras (1 illustration); Enlarging cameras
+and cinematographs.</p>
+
+<p>A separate section deals with objectives,
+and contains 45 illustrations, giving
+special attention to: single achromatic
+(landscape) lens, including aplanatic; unsymmetrical
+doublets; symmetrical doublets;
+triple combinations; anastigmatic
+combinations; telephotographic objectives;
+anachromatic lenses; diaphragm
+apertures.</p>
+
+<p>Then follows a discussion of instantaneous
+shutters (with 9 illustrations) and
+a discussion under “lateral” and “central”
+of flap, drop, drop and flap, rotary,
+roller blind, focal plane, moving blade,
+central and iris shutters.</p>
+
+<p>Exposure meters (4 illustrations) with a
+discussion of the actinic power of light;
+sensitive plates, films and papers: sensitive
+dry plates, plates for colour photography,
+celluloid films, photographic
+printing papers, apparatus for development
+(with 4 illustrations); photographic
+printing apparatus; bibliography.</p>
+
+<p>The last division of this great article is
+on <i>Pictorial Photography</i>, and this is illustrated
+by three full-page plates. It
+deals not merely with portrait photography
+but with “artistic” landscape
+work, and combination printing, which
+“is really what many of us practiced in
+the nursery, that is, cutting out figures
+and pasting them into white spaces left
+for that purpose in the picture book.”</p>
+
+<p>In addition to this comprehensive
+treatise, in itself a complete manual of
+photography, there are other articles
+which will be useful to the advanced
+amateur who desires either to study the
+scientific aspects of the subject or to
+undertake the reproduction of his work
+by processes other than the ordinary
+printing. The production of chemical
+changes by the action of light are discussed
+in <span class="sc"><a href="/article/21-0506-photochemistry/photochemistry">Photochemistry</a></span> (Vol. 21, p.
+484). <span class="sc"><a href="/article/16-0441-lens/lens">Lens</a></span> (Vol. 16, p. 421) is by Dr.
+Otto Henker, of the staff of the Zeiss
+factory at Jena, Germany. <span class="sc"><a href="/article/01-0085-s2/aberration">Aberration</a></span>
+(Vol. 1, p. 54) is by Dr. Eppenstein, another
+expert of the same establishment.
+The making of blocks from your own
+negatives is covered by the article <span class="sc"><a href="/article/22-0422-process-printing/process__printing_">Process</a></span>
+(Vol. 22, p. 408), by <a href="/contributors.html?q=Edwin+Bale">Edwin Bale</a>, art
+director of Cassell &amp; Co., and contains
+coloured plates showing the stages of
+superimposed printing. <span class="sc"><a href="/article/26-0111-sun-copying/sun_copying">Sun Copying</a></span>
+(Vol. 26, p. 93), by <a href="/contributors.html?q=F.+Vincent+Brooks">F. Vincent Brooks</a>, a
+practical printer, describes direct-contact
+printing without the use of a
+camera.</p>
+
+<h4 class="c016">OUT-DOOR GAMES</h4>
+
+<p>The authority which is back of the
+articles in the Britannica and the fact
+that its articles are on a larger scale than
+those of other works of reference make
+its articles on sports and games singularly
+valuable. The reader who is interested in
+<span class="sc"><a href="/article/10-0638-football/football">Football</a></span>, for instance, will find an article
+(Vol. 10, p. 617), of more than 12,000
+words, part of it written by <a href="/contributors.html?q=Walter+Camp">Walter Camp</a>,
+the famous American expert. It includes
+a historical sketch; a description of the
+Rugby Union game by <a href="/contributors.html?q=Charles+James+Nicol+Fleming">Charles James
+Nicol Fleming</a>, inspector in the Scotch
+Education Department, and Charles John
+Bruce Marriott, secretary of the Rugby
+Football Union; of the Association game,
+by <a href="/contributors.html?q=Charles+William+Alcock">Charles William Alcock</a>, late secretary
+of the Football Association, London, and
+Frederick Joseph Wall, secretary of the
+Football Association; and of the game in
+the United States, by <a href="/contributors.html?q=Walter+Camp">Walter Camp</a> and
+Edward Breck. The article <span class="sc"><a href="/article/12-0236-s6/golf">Golf</a></span> is by
+<a href="/contributors.html?q=Horatio+Gordon+Hutchinson">H. G. Hutchinson</a>, amateur golf champion
+in 1886–87, and author of <i>Golf</i>, <i>Book
+of Golf and Golfers</i>, etc. In the same way
+there are authoritative and full articles
+on the following subjects:</p>
+
+<ul class="index">
+  <li class="c018"><a href="/article/02-0894-s6/athletic_sports">Athletic Sports</a></li>
+  <li class="c018"><a href="/article/01-0186-s6/acrobat">Acrobat</a></li>
+  <li class="c018"><a href="/article/01-0752-s3/all-round_athletics">All-Round Athletics</a></li>
+  <li class="c018"><a href="/article/01-0828-s3/amateur">Amateur</a></li>
+  <li class="c018"><a href="/article/02-0383-s8/archery">Archery</a></li>
+  <li class="c018"><a href="/article/03-0280-s5/ball">Ball</a></li>
+  <li class="c018"><a href="/article/03-0475-base-ball/base-ball">Base-ball</a></li>
+  <li class="c018"><a href="/article/03-0551-battledore-and-shuttlecock/battledore_and_shuttlecock">Battledore and Shuttlecock</a></li>
+  <li class="c018"><a href="/article/04-0320-botori/botori">Botori</a></li>
+  <li class="c018"><a href="/article/04-0360-bowls/bowls">Bowls</a></li>
+  <li class="c018"><a href="/article/04-0365-boxing/boxing">Boxing</a></li>
+  <li class="c018"><a href="/article/04-0812-s3/bull-fighting">Bull-fighting</a></li>
+  <li class="c018">Caber-Tossing</li>
+  <li class="c018"><a href="/article/04-0970-s4/caestus">Caestus</a></li>
+  <li class="c018">Camping-Out</li>
+  <li class="c018"><a href="/article/06-0154-children-s-games/children_s_games">Children’s Games</a></li>
+  <li class="c018"><a href="/article/06-0406-circus/circus">Circus</a></li>
+  <li class="c018"><a href="/article/07-0457-cricket-game/cricket__game_">Cricket</a></li>
+  <li class="c018"><a href="/article/07-0524-croquet/croquet">Croquet</a></li>
+  <li class="c018"><a href="/article/07-0704-cycling/cycling">Cycling</a></li>
+  <li class="c018"><a href="/article/08-0329-discus/discus">Discus</a></li>
+  <li class="c018"><a href="/article/10-0638-football/football">Football</a></li>
+  <li class="c018"><a href="/article/11-0458-s2/game">Game</a></li>
+  <li class="c018"><a href="/article/11-0461-games-classical/games__classical">Games, Classical</a></li>
+  <li class="c018"><a href="/article/12-0236-s6/golf">Golf</a></li>
+  <li class="c018"><a href="/article/12-0777-s2/gymkhana">Gymkhana</a></li>
+  <li class="c018">Hammer Throwing</li>
+  <li class="c018">Hurdle-Racing</li>
+  <li class="c018"><a href="/article/15-0580-s5/jumping">Jumping</a></li>
+  <li class="c018"><a href="/article/15-0868-s2/kite-flying">Kite-Flying</a></li>
+  <li class="c018"><a href="/article/16-0074-s6/lacrosse">Lacrosse</a></li>
+  <li class="c018">Lawn-Tennis</li>
+  <li class="c018"><a href="/article/16-1004-s2/long_fives">Long Fives</a></li>
+  <li class="c018"><a href="/article/17-0696-s2/marbles">Marbles</a></li>
+  <li class="c018"><a href="/article/17-0894-s5/matador">Matador</a></li>
+  <li class="c018"><a href="/article/20-0649-s2/palaestra">Palaestra</a></li>
+  <li class="c018"><a href="/article/20-0695-pall-mall/pall-mall">Pall-Mall</a></li>
+  <li class="c018"><a href="/article/20-0695-pallone/pallone">Pallone</a></li>
+  <li class="c018"><a href="/article/21-0090-pelota/pelota">Pelota</a></li>
+  <li class="c018">Pigeon Flying</li>
+  <li class="c018">Pole Vaulting</li>
+  <li class="c018"><a href="/article/22-0218-potato-race/potato_race">Potato Race</a></li>
+  <li class="c018"><a href="/article/22-0653-s3/pugilism">Pugilism</a></li>
+  <li class="c018"><a href="/article/22-0684-s2/pushball">Pushball</a></li>
+  <li class="c018"><a href="/article/22-0688-s2/putting_the_shot">Putting the Shot</a></li>
+  <li class="c018">Quarter Staff</li>
+  <li class="c018"><a href="/article/22-0777-s5/quintain">Quintain</a></li>
+  <li class="c018"><a href="/article/22-0780-s7/quoits">Quoits</a></li>
+  <li class="c018">Rackets</li>
+  <li class="c018">Ringgoal</li>
+  <li class="c018"><a href="/article/23-0812-s2/rounders">Rounders</a></li>
+  <li class="c018"><a href="/article/23-0824-rowing/rowing">Rowing</a></li>
+  <li class="c018"><a href="/article/23-0896-running/running">Running</a></li>
+  <li class="c018"><a href="/article/24-0507-scull/scull">Scull</a></li>
+  <li class="c018"><a href="/article/25-0209-s5/skittles">Skittles</a></li>
+  <li class="c018"><a href="/article/25-0757-s3/sport">Sport</a></li>
+  <li class="c018"><a href="/article/25-0772-s3/stadium">Stadium</a></li>
+  <li class="c018"><a href="/article/25-0993-s3/stool-ball">Stool-Ball</a></li>
+  <li class="c018"><a href="/article/26-0250-s4/swimming">Swimming</a></li>
+  <li class="c018"><a href="/article/27-0065-s2/toreador">Toreador</a></li>
+  <li class="c018"><a href="/article/27-0120-s2/tournament">Tournament</a></li>
+  <li class="c018"><a href="/article/27-0382-s2/tug-of-war">Tug-of-War</a></li>
+  <li class="c018">Walking-Races</li>
+  <li class="c018"><a href="/article/28-0401-s4/water_polo">Water Polo</a></li>
+  <li class="c018"><a href="/article/28-0512-weight-throwing/weight-throwing">Weight-Throwing</a></li>
+</ul>
+
+<p>And among active indoor games on
+which the Britannica contains articles,
+are <span class="sc"><a href="/article/10-0259-s7/fencing">Fencing</a></span>, <span class="sc">Cane Fencing</span>, <span class="sc">Epée-de-Combat</span>,
+<span class="sc"><a href="/article/10-0612-s3/foil-fencing">Foil-Fencing</a></span>, <span class="sc"><a href="/article/23-1012-sabre-fencing/sabre-fencing">Sabre-Fencing</a></span>,
+<span class="sc"><a href="/article/25-0164-single-stick/single-stick">Single-Stick</a></span>, <span class="sc">Basket Ball</span>, <span class="sc"><a href="/article/03-0206-s5/badminton">Badminton</a></span>,
+<span class="sc"><a href="/article/04-0359-bowling/bowling">Bowling</a></span>, <span class="sc"><a href="/article/26-0657-tennis/tennis">Tennis</a></span>, <span class="sc"><a href="/article/25-0940-stick/stické">Stické</a></span>, <span class="sc"><a href="/article/10-0466-fives/fives">Fives</a></span>, <span class="sc"><a href="/article/16-1004-s2/long_fives">Long
+Fives</a></span>, <span class="sc"><a href="/article/23-0489-roller-skating/roller-skating">Roller-Skating</a></span>, <span class="sc"><a href="/article/25-0765-s6/squails">Squails</a></span>, <span class="sc"><a href="/article/24-1099-s4/shuffle-board">Shuffle-Board</a></span>,
+<span class="sc"><a href="/article/27-0228-trapeze/trapeze">Trapeze</a></span>, <span class="sc"><a href="/article/28-0870-wrestling/wrestling">Wrestling</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-14">Athletics</span>The distinction between games and
+athletic sports is an arbitrary one, and the
+articles on athletics have been included
+in the list of those
+on out-door games;
+but a few of them
+seem to call for special mention. The article
+<span class="sc"><a href="/article/02-0894-s6/athletic_sports">Athletic Sports</a></span> (Vol. 2, p. 846)
+gives a general account of amateur associations
+and of national and international
+meetings; and contains a special section
+on the revived Olympic Games. <span class="sc"><a href="/article/02-0894-s5/athlete">Athlete</a></span>
+(Vol. 2, p. 846) and <span class="sc"><a href="/article/11-0461-games-classical/games__classical">Games, Classical</a></span>
+(Vol. 11, p. 443) deal with the ancient
+Greek and Roman contests. <span class="sc"><a href="/article/01-0752-s3/all-round_athletics">All-Round
+Athletics</a></span> (Vol. 1, p. 709) describes the
+championship, instituted in this country,
+for the highest awards attained by one
+athlete in eleven different branches of
+sport. <span class="sc"><a href="/article/01-0828-s3/amateur">Amateur</a></span> (Vol. 1, p. 782) is a
+very full and impartial discussion of the
+interminable controversies regarding the
+distinction between professionals and
+amateurs. Among the articles on special
+sports are <span class="sc"><a href="/article/23-0896-running/running">Running</a></span> (Vol. 23, p. 853),
+dealing with every form of race from the
+100–yard dash to the Marathon run;
+<span class="sc"><a href="/article/13-0983-s3/hurdle_racing">Hurdle-Racing</a></span> (Vol. 13, p. 958); <span class="sc"><a href="/article/15-0580-s5/jumping">Jumping</a></span>
+(Vol. 15, p. 533); <span class="sc"><a href="/article/21-1012-pole-vaulting/pole-vaulting">Pole Vaulting</a></span>
+(Vol. 21, p. 977); <span class="sc"><a href="/article/28-0512-weight-throwing/weight-throwing">Weight-Throwing</a></span>
+(Vol. 28, p. 494); <span class="sc"><a href="/article/22-0688-s2/putting_the_shot">Putting the Shot</a></span> (Vol.
+22, p. 672); <span class="sc"><a href="/article/12-0924-s2/hammer-throwing">Hammer Throwing</a></span> (Vol. 12,
+p. 899); <span class="sc"><a href="/article/04-0943-s2/caber_tossing">Caber-Tossing</a></span> (Vol. 4, p. 917);
+<span class="sc"><a href="/article/08-0329-discus/discus">Discus</a></span> (Vol. 8, p. 312); and <span class="sc"><a href="/article/27-0382-s2/tug-of-war">Tug-of-War</a></span>
+(Vol. 27, p. 365).</p>
+
+<p><span class="shoulder-heading" id="sh-15">Hunting</span>The reader interested in hunting will
+turn first to the articles on sporting
+weapons. <span class="sc"><a href="/article/12-0742-s6/gun">Gun</a></span> (Vol. 12, p. 717), by <a href="/contributors.html?q=William+Henry">Sir
+Henry</a> Seton Karr,
+one of the world’s
+most famous big
+game shots, describes the modern shot
+gun in great detail, with full particulars
+as to barrels, locks and ejectors. <span class="sc"><a href="/article/23-0342-rifle/rifle">Rifle</a></span>
+(Vol. 23, p. 325) of course includes full
+descriptions of the military rifles of all
+armies, and the sections on sporting
+rifles and target rifles (p. 334) are by the
+contributor of the article on shot guns
+just mentioned. <span class="sc"><a href="/article/21-0683-s2/pistol">Pistol</a></span> (Vol. 21, p. 654)
+gives a full account of the modern automatic
+pistol, with diagrams showing the
+mechanism of the Mauser and Colt types.
+A useful table shows the length-over-all,
+barrel-length, weight and composition of
+cartridges, of the eleven standard types
+of Colt and <a href="/contributors.html?q=Edward+Shrapnell+Smith">Smith</a> &amp; Wesson revolvers.
+<span class="sc"><a href="/article/01-0915-s5/ammunition">Ammunition</a></span> (Vol. 1, p. 864) deals with
+the cartridges used for guns, rifles and
+pistols. The “propellants” employed are
+discussed in <span class="sc"><a href="/article/12-0748-s3/gunpowder">Gunpowder</a></span> (Vol. 12, p.
+723), by <a href="/contributors.html?q=William+Richard+Eaton+Hodgkinson">Prof. Hodgkinson</a>; <span class="sc"><a href="/article/10-0093-s2/explosives">Explosives</a></span>
+(Vol. 10, p. 81); and <span class="sc"><a href="/article/07-0155-s4/cordite">Cordite</a></span> (Vol. 7, p.
+139). <span class="sc"><a href="/article/24-1071-shooting/shooting">Shooting</a></span> (Vol. 24, p. 995), by
+<a href="/contributors.html?q=Percy+Somers+Tyringham+Stephens">Percy Stephens</a>, deals with the pursuit of
+birds, ground game and big game in all
+parts of the world. Among the varieties
+of American big game mentioned are the
+huge grizzlies of Alaska, the wapiti,
+moose, caribou, antelope, big horn and
+puma or mountain lion. The section on
+the hunter’s personal equipment contains
+excellent practical hints as to outfit.
+Among other articles of interest in
+this connection are <span class="sc"><a href="/article/03-0982-bird/bird">Bird</a></span> (Vol. 3, p. 959),
+by Prof. <a href="/contributors.html?q=Hans+Friedrich+Gadow">Hans Gadow</a>; <span class="sc"><a href="/article/22-0784-rabbit-text/rabbit__text_">Rabbit</a></span> (Vol. 22,
+p. 767), by Sir <a href="/contributors.html?q=Sir+William+Henry+Flower">William Flower</a> and Richard
+Lyddeker; <span class="sc"><a href="/article/07-0946-s2/deer">Deer</a></span> (Vol. 7, p. 923);
+<span class="sc"><a href="/article/02-0100-s7/antelope">Antelope</a></span> (Vol. 2, p. 89); <span class="sc"><a href="/article/09-0305-elk/elk">Elk</a></span> (Vol. 9,
+p. 290); <span class="sc"><a href="/article/03-0592-bear/bear">Bear</a></span> (Vol. 3, p. 573); <span class="sc"><a href="/article/22-0660-puma/puma">Puma</a></span>
+(Vol. 22, p. 644); and <span class="sc"><a href="/article/05-0379-carnivora/carnivora">Carnivora</a></span> (Vol. 5,
+p. 366). There is a separate article on
+<span class="sc"><a href="/article/21-0624-s3/pigeon-shooting">Pigeon Shooting</a></span> (Vol. 21, p. 597). On
+each species of African and Asiatic big
+game there is an elaborate article. The
+dogs used in sports of all kinds are described
+in the article <span class="sc"><a href="/article/08-0391-dog/dog">Dog</a></span> (Vol. 8, p. 374),
+by <a href="/contributors.html?q=Walter+Baxendale">Walter Baxendale</a>, kennel editor of
+the London <i>Field</i>, and Prof. Chalmers
+Mitchell, with five full-page plates.</p>
+
+<p>Riding to hounds, including fox-hunting,
+stag-hunting, hare-hunting and the
+drag hunt, is covered by the article <span class="sc"><a href="/article/13-0971-s2/hunting">Hunting</a></span>
+(Vol. 13, p. 946), by <a href="/contributors.html?q=Alfred+Edward+Thomas+Watson">A. E. T. Watson</a>,
+editor of the <i>Badminton Library</i>. Other
+forms of the chase are dealt with in
+<span class="sc"><a href="/article/07-0341-coursing/coursing">Coursing</a></span> (Vol. 7, p. 321) and <span class="sc"><a href="/article/10-0153-s3/falconry">Falconry</a></span>
+(Vol. 19, p. 141), by <a href="/contributors.html?q=Lieut.-Colonel+Emilius+C.+Delm%C3%A9+Radcliffe">Lieut.-Col. Delmé
+Radcliffe</a>.</p>
+
+<p><span class="shoulder-heading" id="sh-16">Fishing</span>The key article on line fishing is <span class="sc"><a href="/article/02-0032-s2/angling">Angling</a></span>
+(Vol. 2, p. 21), in length equivalent
+to 35 pages of this Guide. It begins with
+a most interesting
+historical section,
+showing that, before
+the days of the earliest hooks, the cave-men
+used on their lines a little flake of
+flint or strip of stone, fixed in the bait,
+with a groove in the middle of it, around
+which the line was so fastened that when
+the pull came the instrument turned
+crossways in the fish’s stomach and could
+not be disgorged. A delightful section on
+angling literature follows this historical
+matter; and then comes treatment of
+fresh water fishing, with fly-casting and
+the use of surface baits; live-baiting and
+spinning; and bottom-fishing; each of the
+three fully treated. A detailed study is
+then made of the habits of the salmon
+and of the tackle and methods devised
+for his beguiling. Trout, muskelunge,
+bass, perch and roach are successively
+discussed; and then comes the section on
+sea-angling, the tarpon, tuna, jewfish
+and the giant black bass. The article
+ends with a complete bibliography of
+the subject. There are 96 articles on individual
+fish, all listed on p. 891 of Vol.
+29, if the reader desires to refresh his
+memory as to the varieties. <span class="sc"><a href="/article/10-0445-s2/fisheries">Fisheries</a></span>
+(Vol. 10, p. 429), by <a href="/contributors.html?q=Walter+Garstang">Prof. Garstang</a> and
+Prof. Chalmers Mitchell is concerned
+with the industry rather than with sport,
+but it contains much information about
+sea fish which will be of use to the sea-angler.</p>
+
+<p><span class="shoulder-heading" id="sh-17">Taxidermy</span>A thoroughly practical article is <span class="sc"><a href="/article/26-0493-taxidermy/taxidermy">Taxidermy</a></span>
+(Vol. 26, p. 464), by Montague
+Browne, author of a manual of the art.
+His book and Dr.
+W. T. Hornaday’s
+<i>Taxidermy and Zoological
+Collecting</i> are the most important
+special books on the subject, and
+Mr. Browne in this article constantly
+refers to the improved methods introduced
+by Hornaday and other Americans.
+He points out the dangers of using
+arsenical soap and gives the formula for
+the substitute, quite safe except when
+hot, which he himself invented. Minute
+directions are given for skinning, mounting,
+etc. And the article also treats of
+the advantages of modelling as compared
+with the old method of “stuffing”;
+and the placing of specimens in
+natural surroundings, with panoramic
+back-grounds, top- and side-lighting, etc.</p>
+
+<p><span class="shoulder-heading" id="sh-18">Sailing and Boating</span>On sailing, boating and kindred subjects
+the reader should first consult the
+article <span class="sc"><a href="/article/28-0917-yachting/yachting">Yachting</a></span> (Vol. 28, p. 890),
+equivalent to 26
+pages of this Guide,
+by <a href="/contributors.html?q=B.+Heckstall-Smith">B. Heckstall-Smith</a>,
+yachting editor
+the <i>Field</i>, and secretary of the Yacht
+Racing Association and of the International
+Yacht Racing Union. The historical
+part of this article traces yachting
+in England back to the state-barges of
+the Anglo-Saxon kings and through the
+pleasure ship of Elizabeth (1588), which
+was built at Cowes in the Isle of Wight,
+so that this place has been associated
+with the sport for more than three centuries.
+Charles II in 1660 received the
+present of a yacht from the Dutch, and
+at this time the Dutch word “yacht” first
+found its way into the English language.
+Yachting clubs date from the establishment
+in 1720 of the Cork Harbour Water
+Club, now the Royal Cork Yacht Club.
+At Cowes races were sailed as early as
+1780 and a yacht club was organized
+there in 1812. The first yacht club in
+the United States was formed in 1844
+and the first race in the United States
+was at New York in 1846 to Sandy Hook
+light-ship and back. The first important
+alteration in type was in 1848 when the
+“Mosquito” was built—a 50–ton vessel,
+59 ft. 2 in. at water line, 15 ft. 3 in. beam,
+with a long hollow bow and a short and
+rather full after-body. The first races in
+the United States resulted in the building
+of the “America,” which in 1851 crossed
+the ocean and won a race round the Isle
+of Wight, bringing back to the New York
+Yacht Club the “America’s” cup. The
+later races for this cup are described in
+detail at the close of the article, with
+elaborate tables showing the exact tonnage
+or sailing length of competing
+yachts, dates of races, time allowance,
+elapsed time, corrected time, and margin
+by which each race was won. The article
+describes 1870–1880 as the first great era
+of yachting. Changes in the method of
+reckoning length, introduced in 1879, resulted
+in the “lead mine” or plank-on-edge
+type. In 1887 the system of tonnage
+measurement was introduced and a
+method of rating by water-line length
+and sail area—and this “crushed the
+plank-on-edge type completely. There
+was not another boat of the kind built.”
+The era of big cutters followed—in America
+notably the Herreshoff boats. The
+success of the bulb keels in the small
+classes threatened the use of “skimming
+dishes” in the larger classes—and a consequent
+lack of head room and cabin
+accommodation. New linear rating rules
+were therefore adopted—one in 1896 and
+another in 1901, followed in 1904 by international
+rating rules. The English
+types of Fife and Nicholson were succeeded
+by such boats from the Krupp
+yard at Kiel as the “Meteor” and “Germania.”
+See also the article <span class="sc"><a href="/article/18-0670-model-yachting/model-yachting">Model
+Yachting</a></span> (Vol. 18, p. 640).</p>
+
+<p>Other articles on the subject of boating
+are <span class="sc"><a href="/article/05-0202-canoe/canoe">Canoe</a></span> (Vol. 5, p. 189); <span class="sc"><a href="/article/17-0247-macgregor-john/macgregor__john">MacGregor,
+John</a></span> (Vol. 17, p. 232) (for the famous
+“Rob Roy”); <span class="sc"><a href="/article/05-0521-catamaran/catamaran">Catamaran</a></span> (Vol. 5, p.
+502); and <span class="sc"><a href="/article/23-0824-rowing/rowing">Rowing</a></span> (Vol. 23, p. 783), by
+<a href="/contributors.html?q=Charles+Murray+Pitman">Charles Murray Pitman</a>, formerly stroke
+of the Oxford University eight, with a
+special treatment of rowing in the United
+States and a comparison of English and
+American “styles.” The articles <span class="sc"><a href="/article/26-0250-s4/swimming">Swimming</a></span>
+(Vol. 26, p. 231) by <a href="/contributors.html?q=William+Henry">William Henry</a>,
+author of <i>Swimming</i> in the Badminton
+Library, and <span class="sc"><a href="/article/08-0619-drowning-and-life-saving/drowning_and_life_saving">Drowning and Life
+Saving</a></span> (Vol. 8, p. 592) are of practical
+value.</p>
+
+<p><span class="shoulder-heading" id="sh-19">Mountaineering</span>The article <span class="sc"><a href="/article/18-0969-s5/mountaineering">Mountaineering</a></span> (Vol.
+18, p. 937) is by Sir <a href="/contributors.html?q=Robert+Seymour+Conway">W. Martin Conway</a>,
+famous for his ascent to a height of
+23,000 feet in the
+Kara Koram Himalayas,
+for the High
+Level route through the Alps which he
+originated, and for his climbs in Spitsbergen.
+It contains paragraphs on the
+dangers from falling rocks, falling ice,
+snow avalanches, falls from rocks, ice
+slopes, crevasses, and weather; and an
+outline of history of the sport, which has
+been systematically pursued only since
+1854. <span class="sc"><a href="/article/12-0073-s2/glacier">Glacier</a></span> (Vol. 12, p. 60), by E.
+C. Spicer is another article of great interest
+to those who love climbing.
+Among the articles on individual mountains
+and on the great ranges, the first
+place must be given to the scene of the
+classic exploits of the early mountaineers.
+The relevant part of the article <span class="sc"><a href="/article/01-0781-alps/alps">Alps</a></span>
+(Vol. 1, p. 737) is by W. A. B. Coolidge
+who, although an American by birth, is
+more at home in the Alps than any other
+living writer. This magnificent article,
+which would fill nearly 40 pages of this
+Guide, contains a table giving the heights
+of no less than 1,317 separate peaks and
+passes, and also a consecutive narrative
+of Alpine exploration. <span class="sc"><a href="/article/13-0486-himalaya/himalaya">Himalaya</a></span> (Vol.
+13, p. 470) is by Sir <a href="/contributors.html?q=Colonel+Sir+Thomas+Hungerford+Holdich">Thomas H. Holdich</a>,
+superintendent of Frontier Surveys in
+India. The best mountaineering section
+of the Rockies is described in a section of
+the article <span class="sc"><a href="/article/05-0154-canada/canada">Canada</a></span> (Vol. 4, p. 145).
+<span class="sc"><a href="/article/01-1013-s7/andes">Andes</a></span> (Vol. 1, p. 960) describes the peaks
+of the Southern Cordillera. Full articles
+on the mountaineering sections of our
+own country, such as the Appalachians,
+the Adirondacks, the Catskills and White
+Mountains will be found under the
+obvious titles.</p>
+
+<p><span class="shoulder-heading" id="sh-20">Winter Sports</span><span class="sc"><a href="/article/25-0182-skating/skating">Skating</a></span> (Vol. 25, p. 166) deals with
+both speed skating and figure skating,
+and tells of the exploits at Newburgh,
+N. Y., of Charles
+June and of the famous
+Donoghue
+family. A table of amateur records is
+also given. Ice hockey is treated in a
+section of the article <span class="sc"><a href="/article/13-0570-s6/hockey">Hockey</a></span> (Vol. 13, p.
+554). <span class="sc"><a href="/article/07-0667-curling/curling">Curling</a></span> (Vol. 7, p. 645) describes
+the “rink” and stones, as well as the
+game, and contains a glossary of technical
+terms. <span class="sc"><a href="/article/14-0253-ice-yachting/ice-yachting">Ice Yachting</a></span> (Vol. 14, p.
+241) explains the mechanical paradox
+which makes it possible for a boat propelled
+by the wind to move faster than
+the wind is blowing. Ski-running and
+jumping, with the new development of
+military skiing in France and Italy, are
+described in <span class="sc"><a href="/article/25-0202-ski/ski">Ski</a></span> (Vol. 25, p. 186); and it
+will surprise many readers to learn that
+a clear jump of more than 130 feet has
+been made. Other articles dealing with
+winter sports are <span class="sc"><a href="/article/22-0308-prescott-william-hickling/prescott__william_hickling">Snowshoes</a></span> (Vol. 22,
+p. 296), <span class="sc"><a href="/article/06-0622-coasting/coasting">Coasting</a></span> (Vol. 6, p. 603) and
+<span class="sc"><a href="/article/26-1082-s2/tobogganing">Tobogganing</a></span> (Vol. 26, p. 1042).</p>
+
+<p><span class="shoulder-heading" id="sh-21">Driving, Riding and Polo</span>For information in regard to sports
+connected with the horse the reader
+should first study the article <span class="sc"><a href="/article/13-0729-horse/horse">Horse</a></span> and
+particularly that part
+which concerns the
+history of horse
+breeding (pp 717–723
+of Vol. 13), written by <a href="/contributors.html?q=Edwin+Dampier+Brickwood">E. D. Brickwood</a>,
+an English authority on sport, and
+the sections on “breeds of horses” by the
+late William Fream, agricultural correspondent
+of the London <i>Times</i>, and Prof.
+Robert Wallace, of Edinburgh University,
+who also wrote the section on management.</p>
+
+<p><span class="sc"><a href="/article/13-0745-horse-racing/horse-racing">Horse-Racing</a></span> (Vol. 13, p. 726) contains
+a section on racing in the United
+States, including the development of
+trotting races and the stress put upon
+time records, pacing races, racing centres,
+the predominance of dirt-tracks as
+contrasted with the turf courses of England;
+a section on the history of English
+racing, including the institution of the
+St. Leger, the Derby, the Oaks, the Ascot
+races, the Goodwood, Two Thousand
+Guineas, etc., present conditions, including
+classic races, handicaps, with scale
+of weight for age, the £10,000 races, the
+two-year-old races, Newmarket, Ascot
+and other meetings, value of horses,
+trainers and jockeys, foreign horses, time,
+the Jockey Club and steeple-chasing, the
+Grand National; a section on racing in
+Australia; a section on racing in France,
+where, as in England, American owners
+and jockeys have for some years past
+been much to the front; and also a mention
+of the chief meetings in other European
+countries and in Australia. <span class="sc"><a href="/article/13-0745-horsemanship/horsemanship">Horsemanship</a></span>
+(Vol. 13, p. 726) is chiefly concerned
+with exhibition riding. <span class="sc"><a href="/article/08-0612-driving/driving">Driving</a></span>
+(Vol. 8, p. 585), by R. J. McNeill, discusses
+the intricacies of tandem and four-in-hand
+coachmanship, and contains a
+section on the use of the whip. The importance
+of acquiring a light hand, and
+the extent to which this depends on the
+proper use of the three joints in the arm,
+are clearly explained. <span class="sc"><a href="/article/06-0593-coach/coach">Coach</a></span> (Vol. 6, p.
+574) tells about the amateur road coach
+and the four-in-hand clubs in America
+and elsewhere. The coaching horn or
+“post-horn,” as it used to be called, is
+treated under <span class="sc"><a href="/article/13-0713-s3/horn">Horn</a></span> (Vol. 13, p. 697) by
+<a href="/contributors.html?q=Miss+Kathleen+Schlesinger">Kathleen Schlesinger</a>, the great authority
+on musical instruments. <span class="sc"><a href="/article/05-0418-carriage/carriage">Carriage</a></span> (Vol.
+5, p. 401), by J. A. McNaught, notes
+that, although the buggy and rockaway
+are the characteristic pleasure vehicles of
+this country, the heavier dog-cart and
+ralli-cart are much used with horses of a
+certain type.</p>
+
+<p>The article <span class="sc"><a href="/article/22-0025-s2/polo">Polo</a></span> (Vol. 22, p. 11), by
+<a href="/contributors.html?q=Thomas+F.+Dale">Thomas F. Dale</a>, steward of the Polo
+and Riding Pony Society, describes the
+twelve varieties of the game played during
+its existence of at least 2,000 years.
+The three modern forms are the Indian,
+the English and the American, the game
+in England dating from 1869 when it was
+introduced from India by the 10th Hussars—and
+more definitely from 1873
+when it was adopted by the Hurlingham
+Club. The rules of the game are given,
+and its development is traced, and there
+is a section on the polo pony and the
+much discussed systems of measurement.</p>
+
+<p><span class="shoulder-heading" id="sh-22">Gardening</span>Out-door recreation in the garden may
+be fully studied in the article <span class="sc"><a href="/article/13-0760-s6/horticulture">Horticulture</a></span>
+(Vol. 13, p. 741), which is a
+book in itself, for
+its contents are the
+equivalent of about
+140 pages of this Guide. It is written by
+<a href="/contributors.html?q=Liberty+Hyde+Bailey">Liberty Hyde Bailey</a>, director of the
+College of Agriculture, Cornell University,
+who contributes a valuable gardeners’
+calendar for the United States, M. T.
+Masters, editor of <i>Gardeners’ Chronicle</i>,
+and W. R. Williams, superintendent of
+the London County Council Botany
+Centre, who write on “principles”; and
+John Weathers, author of <i>Practical Guide
+to Garden Plants</i>, who writes on the
+“practice” of gardening. The following
+is a partial list of the topics treated in
+this article:</p>
+
+<p>Roots, Root-Pruning and Lifting,
+Watering, Bottom-Heat; Stem; Leaves;
+Buds; Propagation by Buds; Layering;
+Grafting or “Working”; Planting;
+Pruning; Training; Sports or Bud
+Variations; Formation of Flowers;
+Forcing; Retardation; Double Flowers;
+Formation of Seed, Fertilization, Hybridization,
+Reversion, Germination,
+Selection—all to be supplemented by
+the article <span class="sc"><a href="/article/04-0314-botany/botany">Botany</a></span> (Vol. 4, p. 299)
+for more scientific and less practical
+discussion of these topics.</p>
+
+<p>The Practice of Horticulture.</p>
+
+<p>Formation and Preparation of the
+Garden—Site, Soil, Subsoil, Shelter,
+Water Supply, Fence, Walks, Edgings.</p>
+
+<p>Garden Structures—Walls, Espalier
+Rails and other means of training;
+Plant Houses (with 12 illustrations),
+including Conservatory, Greenhouse,
+Fruit House, Vinery, Peach House,
+Forcing House, Pits and Frames,
+Mushroom House, Fruit Room, Heating
+Apparatus, Pipes, Boilers, Water
+Supply, Solar Heat, Ventilation, etc.</p>
+
+<p>Garden Materials and Appliances—Soil,
+Loam, Sand, Peat, Leaf Mould,
+Composts. Manures, with descriptions
+and appraisals of different varieties,
+organic and inorganic. Tools, Tallies
+and Labels.</p>
+
+<p>Garden Operations—Propagation—by
+seeds, offsets, tubers, division, suckers,
+runners, proliferous buds, grafts,
+with description and diagrams of different
+methods—buds, branch cutting,
+leaf cutting, root cutting, single-eye
+cutting, with 12 illustrations.</p>
+
+<p>Planting and Transplanting; Watering;
+Pruning (with 9 illustrations);
+Ringing; Training—horizontal, fan,
+trellis, etc.</p>
+
+<p>Flowers—<a href="/contributors.html?q=Sir+William+<a href="/contributors.html?q=William+Henry">Henry</a>+Flower">Flower</a> Gardens, Pleasure
+Grounds, Lawns; Hardy Annuals, with
+long list and description of plants recommended;
+Hardy Biennials, with list;
+Herbaceous Perennials, with classified
+list (containing more than the equivalent
+of 18 pages of this Guide); Hardy
+Trees; Bedding Plants, etc.</p>
+
+<p>Vegetables.</p>
+
+<p>Calendar for the United States.</p>
+
+<p>A list of other articles on special aspects
+of gardening will be found in the
+chapter <i>For Farmers</i>.</p>
+
+<div>
+  
+  <h4 class="c016">INDOOR GAMES</h4>
+</div>
+
+<p>For learning indoor games—excluding
+indoor athletic games which have been
+listed above—the Britannica is particularly
+valuable, because of its elaborate
+treatment by noted authorities and because
+the handy and convenient form
+of the India paper volume makes an
+article on any indoor game as easy to
+consult as a hand-book dealing with
+only one game.</p>
+
+<p>For example, the article on <span class="sc"><a href="/article/04-0548-bridge/bridge">Bridge</a></span>
+(Vol. 4, p. 528) is by <a href="/contributors.html?q=William+Henry+Whitfeld">William Henry
+Whitfeld</a>, card-editor of <i>The Field</i>. The
+article is the equivalent of 15 pages in
+this Guide; and it describes both auction
+and ordinary bridge, with paragraphs on
+advice to players, declarations, doubling,
+redoubling, play of the hand, playing
+to the score; and other forms of bridge,—three-handed
+bridge, dummy bridge,
+misery bridge, and draw or two-handed
+bridge; and contains a list of authorities.</p>
+
+<p>Even more elaborate, as befits the
+subject, is the article <span class="sc"><a href="/article/06-0106-chess/chess">Chess</a></span> (Vol. 6, p.
+93), equivalent to 45 pages of this Guide.
+It contains diagrams showing the arrangement
+of pieces and the English and German
+methods of notation and a vocabulary
+of terms of the game; it treats the
+comparative value of the pieces—“pawn
+1, bishop 3.25, knight 3.25, rook 5,
+queen 9.5. Three minor pieces may more
+often than not be advantageously exchanged
+for the queen. The knight is
+generally stronger than the bishop in
+the end of the game, but two bishops
+are usually stronger than two knights,
+more especially in open positions.” English,
+French and German modes of notation
+and names of pieces are given.
+The treatment of chess problems is
+accompanied by eight typical problems
+with diagrams and analyses. The section
+on the history of chess gives not
+merely very interesting early material
+but a study critical and biographical,
+of the great chess masters—for example:
+Ruy Lopez, the first chess analyst
+Greco; Philidor, a great blindfold and
+simultaneous player of the 18th century;
+Allgaier; Mahé de la Bourdonnais; the
+English school of the 19th century,
+Sarratt, Lewis, Mac Donnell, Evans
+(of the gambit), Staunton (on whom
+there is a separate article) and Buckle,
+the historian of civilization; the Berlin
+“Pleiades” and the Hungarians, Grimm,
+Szen and Löwenthal; Morphy, the American;
+and among the great players of the
+last half century, Steinitz, Paulsen,
+Blackburne, Zukertort, Horwitz, Mason,
+Teichman, Pillsbury, Lasker, Mieses,
+Marshall, Tarrasch, Tchigorin, etc. The
+results of international tournaments are
+given from 1851 on; and modern tournament
+play is criticised. The article
+closes with an elaborate bibliography.</p>
+
+<p>The article on <span class="sc"><a href="/article/08-0570-draughts/draughts">Draughts</a></span> or Checkers
+(Vol. 8, p. 547) is by <a href="/contributors.html?q=J.+M.+M.+Dallas">J. M. M. Dallas</a>,
+late secretary of the Edinburgh Draughts
+Club, and Richard Jordan, former
+draughts champion of the world, and
+gives the history of the game, with a
+study of the different openings.</p>
+
+<p>The usefulness of the Britannica for
+card games in general may be easily
+tested. Let us turn for instance to the
+article <span class="sc"><a href="/article/21-0932-poker/poker">Poker</a></span> (Vol. 21, p. 899). It is
+equivalent in its contents to seven or
+eight pages of this Guide, and among
+other interesting features it contains a
+vocabulary of technical terms, including
+“big dog”, “little dog”, “cold feet”,
+“splitting”, and the following mathematical
+table of approximate chances.</p>
+
+<p>To improve any hand in the draw,
+the Britannica tells us, the chances
+are:</p>
+
+<table class="table1">
+  <tbody><tr><td class="c008" colspan="3"></td></tr>
+  <tr>
+ <td class="btt bbt blt brt c037">Having in Hand</td>
+ <td class="btt bbt brt c037">To make the Hand below</td>
+ <td class="btt bbt brt c037">The Chance is</td>
+  </tr>
+  <tr>
+ <td class="bbt blt brt c037">1 pair</td>
+ <td class="bbt brt c037">To get two pairs (3-card draw)</td>
+ <td class="bbt brt c037">1 in 4 ½</td>
+  </tr>
+  <tr>
+ <td class="bbt blt brt c037">1 pair</td>
+ <td class="bbt brt c037">To get three of a kind (3-card draw)</td>
+ <td class="bbt brt c037">1 in 9</td>
+  </tr>
+  <tr>
+ <td class="bbt blt brt c037">1 pair</td>
+ <td class="bbt brt c037">To improve either way average value</td>
+ <td class="bbt brt c037">1 in 3</td>
+  </tr>
+  <tr>
+ <td class="bbt blt brt c037">1 pair and 1 odd card</td>
+ <td class="bbt brt c037">To improve either way by drawing two cards</td>
+ <td class="bbt brt c037">1 in 7</td>
+  </tr>
+  <tr>
+ <td class="bbt blt brt c037">2 pairs</td>
+ <td class="bbt brt c037">To get a full hand drawing one card</td>
+ <td class="bbt brt c037">1 in 12</td>
+  </tr>
+  <tr>
+ <td class="bbt blt brt c037">3’s</td>
+ <td class="bbt brt c037">To get a full hand drawing two cards</td>
+ <td class="bbt brt c037">1 in 15 ½</td>
+  </tr>
+  <tr>
+ <td class="bbt blt brt c037">3’s</td>
+ <td class="bbt brt c037">To get four of kind drawing two cards</td>
+ <td class="bbt brt c037">1 in 23 ½</td>
+  </tr>
+  <tr>
+ <td class="bbt blt brt c037">3’s</td>
+ <td class="bbt brt c037">To improve either way drawing two cards</td>
+ <td class="bbt brt c037">1 in 9 ⅖</td>
+  </tr>
+  <tr>
+ <td class="bbt blt brt c037">3’s and 1 odd card</td>
+ <td class="bbt brt c037">To get a full hand by drawing one card</td>
+ <td class="bbt brt c037">1 in 15 ⅓</td>
+  </tr>
+  <tr>
+ <td class="bbt blt brt c037">3’s and 1 odd card</td>
+ <td class="bbt brt c037">To improve either way by drawing one card</td>
+ <td class="bbt brt c037">1 in 11 ¾</td>
+  </tr>
+  <tr>
+ <td class="bbt blt brt c037">4 straight</td>
+ <td class="bbt brt c037">To fill when open at one end only or in the middle as 3 4 6 7, or A 2 3 4</td>
+ <td class="bbt brt c037">1 in 11 ¾</td>
+  </tr>
+  <tr>
+ <td class="bbt blt brt c037">4 straight</td>
+ <td class="bbt brt c037">To fill when open at both ends as 3 4 5 6</td>
+ <td class="bbt brt c037">1 in 6</td>
+  </tr>
+  <tr>
+ <td class="bbt blt brt c037">4 flush</td>
+ <td class="bbt brt c037">To fill the flush drawing one card</td>
+ <td class="bbt brt c037">1 in 5</td>
+  </tr>
+  <tr>
+ <td class="bbt blt brt c037">4-straight flush</td>
+ <td class="bbt brt c037">To fill the straight flush drawing one card</td>
+ <td class="bbt brt c037">1 in 23 ½</td>
+  </tr>
+  <tr>
+ <td class="bbt blt brt c037">3-card flush</td>
+ <td class="bbt brt c037">To make a flush drawing two cards</td>
+ <td class="bbt brt c037">1 in 24</td>
+  </tr>
+</tbody></table>
+
+<p>Among indoor games and kindred topics, each in a separate article, in the
+Britannica, are:</p>
+
+<ul class="index">
+  <li class="c018"><a href="/article/01-0165-s7/ace">Ace</a></li>
+  <li class="c018"><a href="/article/01-0187-s4/acrostic">Acrostic</a></li>
+  <li class="c018">All-Fours</li>
+  <li class="c018"><a href="/article/01-0840-s6/ambigu">Ambigu</a></li>
+  <li class="c018"><a href="/article/04-0311-boston-game/boston__game_">Boston</a></li>
+  <li class="c018"><a href="/article/04-0333-bouillotte/bouillotte">Bouillotte</a></li>
+  <li class="c018"><a href="/article/04-0390-brag/brag">Brag</a></li>
+  <li class="c018"><a href="/article/04-0548-bridge/bridge">Bridge</a></li>
+  <li class="c018"><a href="/article/04-0990-s5/calabresella">Calabresella</a></li>
+  <li class="c018"><a href="/article/05-0337-cards-playing/cards__playing">Cards, Playing</a></li>
+  <li class="c018"><a href="/article/05-0465-casino/casino">Casino</a></li>
+  <li class="c018"><a href="/article/05-0524-catch-the-ten/catch_the_ten">Catch the Ten</a></li>
+  <li class="c018"><a href="/article/05-0892-charade/charade">Charades</a></li>
+  <li class="c018"><a href="/article/06-0034-checkers/checkers">Checkers</a></li>
+  <li class="c018"><a href="/article/06-0106-chess/chess">Chess</a></li>
+  <li class="c018"><a href="/article/06-0154-children-s-games/children_s_games">Children’s Games</a></li>
+  <li class="c018"><a href="/article/06-0790-commerce/commerce">Commerce</a></li>
+  <li class="c018"><a href="/article/06-0967-conjuring/conjuring">Conjuring</a></li>
+  <li class="c018"><a href="/article/06-1004-consolation/consolation">Consolation</a></li>
+  <li class="c018"><a href="/article/07-0060-conundrum/conundrum">Conundrum</a></li>
+  <li class="c018"><a href="/article/07-0382-crambo/crambo">Crambo</a></li>
+  <li class="c018"><a href="/article/07-0455-cribbage/cribbage">Cribbage</a></li>
+  <li class="c018"><a href="/article/08-0131-deuce/deuce">Deuce</a></li>
+  <li class="c018"><a href="/article/08-0193-dice/dice">Dice</a></li>
+  <li class="c018"><a href="/article/08-0410-doll/doll">Doll</a></li>
+  <li class="c018"><a href="/article/08-0425-dominoes/dominoes">Dominoes</a></li>
+  <li class="c018"><a href="/article/08-0570-draughts/draughts">Draughts</a></li>
+  <li class="c018">Ecarté</li>
+  <li class="c018"><a href="/article/09-0909-s2/euchre">Euchre</a></li>
+  <li class="c018"><a href="/article/10-0183-s2/fantan">Fantan</a></li>
+  <li class="c018"><a href="/article/10-0198-s3/faro">Faro</a></li>
+  <li class="c018"><a href="/article/10-0204-s6/fast_and_loose">Fast and Loose</a></li>
+  <li class="c018"><a href="/article/11-0464-s2/gaming_and_wagering">Gaming and Wagering</a></li>
+  <li class="c018">Go, or Go-bang</li>
+  <li class="c018"><a href="/article/12-0258-goose/goose">Goose</a></li>
+  <li class="c018"><a href="/article/12-0888-halma/halma">Halma</a></li>
+  <li class="c018"><a href="/article/13-0130-hazard/hazard">Hazard</a></li>
+  <li class="c018"><a href="/article/13-0147-s5/hearts">Hearts</a></li>
+  <li class="c018"><a href="/article/13-0866-s5/hoyle__edmund">Hoyle</a></li>
+  <li class="c018"><a href="/article/15-0525-jones-henry/jones__henry">Jones, Henry (“Cavendish”)</a></li>
+  <li class="c018"><a href="/article/15-0572-juggler/juggler">Juggler</a></li>
+  <li class="c018"><a href="/article/15-0917-knucklebones/knucklebones">Knucklebones</a></li>
+  <li class="c018"><a href="/article/16-0095-la-gr-ce/la_grâce">La Grâce</a></li>
+  <li class="c018"><a href="/article/16-0396-s3/legerdemain">Legerdemain</a></li>
+  <li class="c018"><a href="/article/16-1012-loo/loo">Loo</a></li>
+  <li class="c018"><a href="/article/17-0036-s5/lotto">Lotto</a></li>
+  <li class="c018"><a href="/article/17-0908-matrimony/matrimony">Matrimony</a></li>
+  <li class="c018"><a href="/article/18-0846-mora/mora">Mora</a></li>
+  <li class="c018"><a href="/article/19-0231-napoleon/napoleon">Napoleon</a></li>
+  <li class="c018"><a href="/article/19-0730-nine-men-s-morris/nine_men_s_morris">Nine Men’s Morris</a></li>
+  <li class="c018"><a href="/article/20-0098-s3/old_maid">Old Maid</a></li>
+  <li class="c018"><a href="/article/20-0125-ombre/ombre">Ombre</a></li>
+  <li class="c018"><a href="/article/20-0466-s7/pachisi">Pachisi</a></li>
+  <li class="c018"><a href="/article/20-0995-patience/patience">Patience</a></li>
+  <li class="c018"><a href="/article/21-0325-s4/petits-chevaux">Petits-Chevaux</a></li>
+  <li class="c018"><a href="/article/21-0655-s4/ping-pong">Ping-Pong</a></li>
+  <li class="c018"><a href="/article/21-0657-s5/pinochle">Pinochle</a></li>
+  <li class="c018"><a href="/article/21-0666-piquet/piquet">Piquet</a></li>
+  <li class="c018"><a href="/article/21-0932-poker/poker">Poker</a></li>
+  <li class="c018">Pope Joan</li>
+  <li class="c018"><a href="/article/22-0321-prestidigitation/prestidigitation">Prestidigitation</a></li>
+  <li class="c018"><a href="/article/22-0352-primero/primero">Primero</a></li>
+  <li class="c018"><a href="/article/22-0691-puzzle/puzzle">Puzzle</a></li>
+  <li class="c018"><a href="/article/22-0830-raffle/raffle">Raffle</a></li>
+  <li class="c018"><a href="/article/22-0967-s4/rebus">Rebus</a></li>
+  <li class="c018"><a href="/article/23-0333-s6/riddles">Riddles</a></li>
+  <li class="c018"><a href="/article/23-0811-s4/roulette">Roulette</a></li>
+  <li class="c018"><a href="/article/24-0104-s2/salta">Salta</a></li>
+  <li class="c018"><a href="/article/24-0894-shio-ghi/shio-ghi">Shio-ghi</a></li>
+  <li class="c018"><a href="/article/25-0182-skat/skat">Skat</a></li>
+  <li class="c018"><a href="/article/25-0310-snip-snap-snorem/snip_snap_snorem">Snip Snap Snorem</a></li>
+  <li class="c018"><a href="/article/25-0378-s2/solitaire">Solitaire</a></li>
+  <li class="c018">Solo Whist</li>
+  <li class="c018"><a href="/article/25-0654-speculation/speculation">Speculation</a></li>
+  <li class="c018"><a href="/article/25-0655-spelling-bee/spelling_bee">Spelling Bee</a></li>
+  <li class="c018"><a href="/article/25-0690-s2/spillikins">Spillikins</a></li>
+  <li class="c018"><a href="/article/25-0735-spoil-five/spoil-five">Spoil-Five</a></li>
+  <li class="c018"><a href="/article/27-0061-s6/top">Top</a></li>
+  <li class="c018"><a href="/article/27-0129-toy/toy">Toy</a></li>
+  <li class="c018">Trent et Quarante</li>
+  <li class="c018"><a href="/article/27-1040-ventriloquism/ventriloquism">Ventriloquism</a></li>
+  <li class="c018"><a href="/article/28-0112-vingt-et-un/vingt-et-un">Vingt-et-Un</a></li>
+  <li class="c018"><a href="/article/28-0115-vint/vint">Vint</a></li>
+  <li class="c018"><a href="/article/28-0613-s1/whist">Whist</a></li>
+</ul>
+
+<p><span class="shoulder-heading" id="sh-23">Needlework, etc.</span>Needlework as treated in the Britannica
+has one element of peculiar value
+and novelty. In this
+department, as
+throughout the book,
+the illustrations have been chosen upon a
+principle unusual in works of reference:
+they really illustrate; they throw light
+on the text; they are not mere pretty
+pictures intended to catch the eye and
+inserted in the book haphazard. Turn
+for instance to the article <span class="sc"><a href="/article/16-0051-lace/lace">Lace</a></span> (Vol. 16,
+p. 37). Among its 61 illustrations are
+not only small diagrams explaining
+different stitches and meshes and patterns
+and larger halftone illustrations of
+“Bone Lace” “Reticella Needlepoint”,
+“Gros Point de Venise”, “Point de
+Flandres à Brides” “Point de Venise à
+Brides Picotées,” “Réseau Rosacé,” etc.,
+but there are reproductions of portraits
+of the 16th, 17th and early 18th centuries,
+showing not merely patterns of lace but
+the method in which it was used and
+how it “combined” and harmonized with
+styles of costume, and of hair dressing.
+These “lace portraits” are: one from the
+Louvre, about 1540 of Catherine de’
+Medici, wearing a linen upturned collar
+of cut work and needlepoint lace; one
+by Morcelse, about 1600, of Amelie Elisabeth,
+comtesse de Hainault, wearing a
+ruff of needlepoint reticella lace; one,
+1614, of Mary, countess of Pembroke,
+wearing a coif and cuffs of reticella lace;
+one by Le Nain, about 1628, of Henri
+II, duc de Montmorency, wearing a
+falling lace collar; one by Riley, about
+1685, of James II, wearing a jabot and
+cuffs of raised needlepoint lace; one,
+about 1664, of Mme. Verbiest, wearing
+pillow-made lace <i>à reseau</i>; one, about
+1695, of Princess Maria Teresa Stuart,
+wearing a flounce or tablier of delicate
+needlepoint lace with small relief clusters;
+and one of de Vintimille, about 1730,
+wearing needlepoint of the <i>Point de Venise
+à brides picotées</i>. This article on
+Lace, equivalent in length to 60 pages
+of this Guide, is by <a href="/contributors.html?q=Alan+Summerly+Cole">A. Summerly Cole</a>,
+author of <i>Ancient Needle Point and
+Pillow Lace</i>. <span class="sc"><a href="/article/09-0328-embroidery/embroidery">Embroidery</a></span> (Vol. 9, p.
+309) is by <a href="/contributors.html?q=Alan+Summerly+Cole">Mr. Cole</a> and A. F. Kendrick,
+keeper of the Victoria and Albert Museum,
+South Kensington; and is illustrated
+with 18 figures showing many styles of
+early embroidery. There are also articles
+on Tapestry, Needlework, Knitting,
+Yarn, etc.</p>
+
+<p><span class="shoulder-heading" id="sh-24">Dancing, the Stage, etc.</span>On dancing and the stage there is
+much of interest in the Britannica. The
+article on the <span class="sc"><a href="/article/07-0818-dance/dance">Dance</a></span> (Vol. 7, p. 794)
+distinguishes dancing as an expression
+of emotion, whether
+social joy or religious
+exultation; dancing
+for pleasure to the
+dancer or the spectator; and mimetic
+dancing, “to represent the actions or
+passions of other people.” A section
+on primitive and ancient dancing describes
+various early dances, many of
+them not unlike the “trots” and “hugs”
+so notorious during the last few years.
+At an Aztec feast, “called Huitzilopochtli,
+the noblemen and women danced
+tied together at the hands, and embracing
+one another, the arms being thrown over
+the neck.” Primitive imitative dances,
+the attitude of the ancient Romans
+towards the dance, religious dances and
+the attacks on the dance of such Puritan
+sects as the Albigenses and Waldenses
+close the section on ancient
+dancing.</p>
+
+<p>“Modern dancing” describes the branle
+(or brawl), the pavane, saraband, minuet,
+gavotte, écossaise, cotillon, galop, lancers,
+schottische, bourrée, waltz, fandango,
+bolero, jota, Morris dances, hornpipe,
+and other English dances of the 17th
+and 18th centuries. In treating of
+present-day dancing the article deals
+especially with the waltz, quadrille,
+country-dance, lancers, polka, galop,
+Washington Post and other American
+barn-dances, polka-mazurka, Polonaise,
+Schottische and Sir Roger de Coverley.
+And it discusses ballet dancing (on which
+there is also a separate article) and
+musical gymnastics. There are separate
+articles on the following dances: <span class="sc"><a href="/article/01-0733-s2/allemande">Allemande</a></span>,
+<span class="sc"><a href="/article/03-0792-bergamask/bergamask">Bergamask</a></span>, <span class="sc"><a href="/article/05-0822-chaconne/chaconne">Chaconne</a></span>, <span class="sc"><a href="/article/05-0993-chass/chasse">Chasse</a></span>,
+<span class="sc"><a href="/article/07-0338-courante/courante">Courante</a></span>, <span class="sc"><a href="/article/11-0557-s3/gavotte">Gavotte</a></span>, <span class="sc"><a href="/article/15-0442-jig/jig">Jig</a></span>, <span class="sc"><a href="/article/17-0961-s5/mazurka">Mazurka</a></span>,
+<span class="sc">Morris Dance</span>, <span class="sc"><a href="/article/20-0947-s4/passacaglia">Passacaglia</a></span>, <span class="sc"><a href="/article/20-1037-s3/pavane">Pavane</a></span>,
+<span class="sc"><a href="/article/21-1019-s3/polka">Polka</a></span>, <span class="sc"><a href="/article/22-0026-s2/polonaise">Polonaise</a></span>, <span class="sc"><a href="/article/22-0723-quadrille/quadrille">Quadrille</a></span>, <span class="sc"><a href="/article/24-0217-s2/saraband">Saraband</a></span>,
+<span class="sc"><a href="/article/24-0395-s4/schottische">Schottische</a></span>.</p>
+
+<p>For a sufficient knowledge of the
+theatre and the drama to heighten his
+enjoyment of a play, the theatre-goer
+should read up the subject, the period
+and the author in the Britannica. For
+a more serious and thorough study of
+opera, music in general and the drama
+as a literary form, he may turn to special
+chapters of this Guide.</p>
+
+<h4 class="c016">TRAVEL AT HOME AND ABROAD</h4>
+
+<p>If the traveler would make the most
+of his vacation journeys—as has already
+been suggested—he should “read up”
+in the Britannica, even if he does not
+wish to make a systematic study of the
+literature, art, architecture, music, etc.,
+of the country he is to visit. If he does
+wish to pursue systematic study he can
+use the Britannica to better advantage
+than a whole library of books of travel
+or special treatises.</p>
+
+<p>The Britannica has often and successfully
+been used in this way. A single
+instance: The Rev. Dr. George R. Van
+DeWater of St. Andrews Church, New
+York City, in a letter addressed to the
+publishers of the new Britannica, wrote:</p>
+
+<p>“I have recently had occasion to look
+up South America with a view to obtaining
+needed information for a proposed
+tour there, and I found all that I wanted
+to know and found it readily.”</p>
+
+<p>Among the general classes of valuable
+information for the traveler are:</p>
+
+<p>The excellent maps, newly made with
+the greatest care from the best sources;</p>
+
+<p>Articles on the great countries of the
+world. Particularly valuable sections
+are those at the beginning of each of
+these articles on physiography, climate,
+etc., and those on transportation by
+rail and water;</p>
+
+<p>Articles on the states of the Union,
+similarly arranged, and like them accompanied
+by maps and with full descriptions
+of the surface of the country
+and the means of communication, climate,
+etc.;</p>
+
+<p>Articles on regions, rivers, mountains,
+etc.,—for instance on the <span class="sc"><a href="/article/23-0404-s3/riviera">Riviera</a></span>, <span class="sc"><a href="/article/01-0781-alps/alps">Alps</a></span>,
+<span class="sc"><a href="/article/19-0719-s5/nile">Nile</a></span>, <span class="sc"><a href="/article/23-0257-rhine/rhine">Rhine</a></span>, <span class="sc"><a href="/article/13-0875-s3/hudson">Hudson</a></span>, <span class="sc"><a href="/article/28-0964-yosemite/yosemite">Yosemite</a></span>, <span class="sc"><a href="/article/28-0939-s1/yellowstone_national_park">Yellowstone</a></span>.</p>
+
+<p>Articles on cities and towns, with descriptions
+of the principal places of interest,
+historical sketches, diagrams of
+battle-fields, etc.;</p>
+
+<p>General articles such as <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>,
+<span class="sc"><a href="/article/20-0497-s2/painting">Painting</a></span>, <span class="sc"><a href="/article/19-0075-s3/museums_of_art">Museums</a></span>, which give critical
+and related accounts of great art treasures
+of different periods and schools.
+To this information, as bearing on the
+particular place the traveler intends to
+visit, he will be guided by the Index;</p>
+
+<p>Biographical articles related to the
+special vicinity to be visited—as for instance,
+<span class="sc"><a href="/article/28-0851-wordsworth-charles/wordsworth__charles">Wordsworth</a></span>, <span class="sc"><a href="/article/06-0702-coleridge-sara/coleridge__sara">Coleridge</a></span> and
+<span class="sc">DeQuincey</span> for the Lake District.</p>
+
+<p>This survey, already too long for the
+limited space of this Guide, yet far too
+brief to represent properly the aspect
+of the Britannica with which it deals,
+will have accomplished its purpose if
+it induces the possessor of the volumes
+to go to them when he needs relaxation.
+Articles of the kind described in this chapter,
+showing you how to make the most
+of leisure hours, are doubly serviceable,
+giving pleasure while they are being
+read, and again when their suggestions
+are carried into effect.</p>
+
+<p>But it is not only in the articles dealing
+with recreation that Britannica reading
+insures future as well as present
+enjoyment. Lafcadio Hearn said it was
+worth while to visit Japan if only because
+what one sees there makes one’s dreams
+more beautiful all through later life. And
+so the fascination of history, of science,
+of biography, does not end, but only
+begins, with the reading which opens
+for you a gate leading into fresh fields.
+What you read this coming year, in any
+department of the Britannica, will be
+still, ten years from now, a source of
+pleasure, for knowledge, once acquired,
+brings continually renewed delight.</p>
+
+<div class="pbb">
+ <hr class="pb c003">
+</div>
+<div class="tnotes x-ebookmaker">
+
+<div class="chapter ph2">
+
+<div class="nf-center-c0">
+<div class="nf-center c004">
+    <div>TRANSCRIBER’S NOTES</div>
+  </div>
+</div>
+
+</div>
+
+ <ul class="ul_1 c002">
+    <li>Typos fixed; non-standard spelling and dialect retained.
+    </li>
+  </ul>
+
+</div>
+
+<div style="text-align:center"></div><section class="pg-boilerplate pgheader" id="pg-footer" lang="en">
+<div id="pg-end-separator">
+<span>*** END OF THE PROJECT GUTENBERG EBOOK THE READER'S GUIDE TO THE ENCYCLOPAEDIA BRITANNICA ***</span>
+</div>
+
+    
+<div>
+Updated editions will replace the previous one—the old editions will
+be renamed.
+</div><div>
+Creating the works from print editions not protected by U.S. copyright
+law means that no one owns a United States copyright in these works,
+so the Foundation (and you!) can copy and distribute it in the United
+States without permission and without paying copyright
+royalties. Special rules, set forth in the General Terms of Use part
+of this license, apply to copying and distributing Project
+Gutenberg™ electronic works to protect the PROJECT GUTENBERG™
+concept and trademark. Project Gutenberg is a registered trademark,
+and may not be used if you charge for an eBook, except by following
+the terms of the trademark license, including paying royalties for use
+of the Project Gutenberg trademark. If you do not charge anything for
+copies of this eBook, complying with the trademark license is very
+easy. You may use this eBook for nearly any purpose such as creation
+of derivative works, reports, performances and research. Project
+Gutenberg eBooks may be modified and printed and given away—you may
+do practically ANYTHING in the United States with eBooks not protected
+by U.S. copyright law. Redistribution is subject to the trademark
+license, especially commercial redistribution.
+</div>
+
+<div id="project-gutenberg-license">START: FULL LICENSE</div>
+
+<h2 id="pg-footer-heading">THE FULL PROJECT GUTENBERG™ LICENSE</h2>
+
+<div class="agate">PLEASE READ THIS BEFORE YOU DISTRIBUTE OR USE THIS WORK
+</div><div>
+To protect the Project Gutenberg™ mission of promoting the free
+distribution of electronic works, by using or distributing this work
+(or any other work associated in any way with the phrase “Project
+Gutenberg”), you agree to comply with all the terms of the Full
+Project Gutenberg License available with this file or online at
+www.gutenberg.org/license.
+</div><div class="secthead">
+Section 1. General Terms of Use and Redistributing Project Gutenberg
+electronic works
+</div><div>
+1.A. By reading or using any part of this Project Gutenberg
+electronic work, you indicate that you have read, understand, agree to
+and accept all the terms of this license and intellectual property
+(trademark/copyright) agreement. If you do not agree to abide by all
+the terms of this agreement, you must cease using and return or
+destroy all copies of Project Gutenberg electronic works in your
+possession. If you paid a fee for obtaining a copy of or access to a
+Project Gutenberg electronic work and you do not agree to be bound
+by the terms of this agreement, you may obtain a refund from the person
+or entity to whom you paid the fee as set forth in paragraph 1.E.8.
+</div><div>
+1.B. “Project Gutenberg” is a registered trademark. It may only be
+used on or associated in any way with an electronic work by people who
+agree to be bound by the terms of this agreement. There are a few
+things that you can do with most Project Gutenberg electronic works
+even without complying with the full terms of this agreement. See
+paragraph 1.C below. There are a lot of things you can do with Project
+Gutenberg electronic works if you follow the terms of this
+agreement and help preserve free future access to Project Gutenberg
+electronic works. See paragraph 1.E below.
+</div><div>
+1.C. The Project Gutenberg Literary Archive Foundation (“the
+Foundation” or PGLAF), owns a compilation copyright in the collection
+of Project Gutenberg electronic works. Nearly all the individual
+works in the collection are in the public domain in the United
+States. If an individual work is unprotected by copyright law in the
+United States and you are located in the United States, we do not
+claim a right to prevent you from copying, distributing, performing,
+displaying or creating derivative works based on the work as long as
+all references to Project Gutenberg are removed. Of course, we hope
+that you will support the Project Gutenberg mission of promoting
+free access to electronic works by freely sharing Project Gutenberg
+works in compliance with the terms of this agreement for keeping the
+Project Gutenberg name associated with the work. You can easily
+comply with the terms of this agreement by keeping this work in the
+same format with its attached full Project Gutenberg License when
+you share it without charge with others.
+</div><div>
+1.D. The copyright laws of the place where you are located also govern
+what you can do with this work. Copyright laws in most countries are
+in a constant state of change. If you are outside the United States,
+check the laws of your country in addition to the terms of this
+agreement before downloading, copying, displaying, performing,
+distributing or creating derivative works based on this work or any
+other Project Gutenberg work. The Foundation makes no
+representations concerning the copyright status of any work in any
+country other than the United States.
+</div><div>
+1.E. Unless you have removed all references to Project Gutenberg:
+</div><div>
+1.E.1. The following sentence, with active links to, or other
+immediate access to, the full Project Gutenberg License must appear
+prominently whenever any copy of a Project Gutenberg work (any work
+on which the phrase “Project Gutenberg” appears, or with which the
+phrase “Project Gutenberg” is associated) is accessed, displayed,
+performed, viewed, copied or distributed:
+</div><blockquote><div>
+    This eBook is for the use of anyone anywhere in the United States and most
+    other parts of the world at no cost and with almost no restrictions
+    whatsoever. You may copy it, give it away or re-use it under the terms
+    of the Project Gutenberg™ License included with this eBook or online
+    at <a href="https://www.gutenberg.org">www.gutenberg.org</a>. If you
+    are not located in the United States, you will have to check the laws
+    of the country where you are located before using this eBook.
+  </div></blockquote><div>
+1.E.2. If an individual Project Gutenberg electronic work is
+derived from texts not protected by U.S. copyright law (does not
+contain a notice indicating that it is posted with permission of the
+copyright holder), the work can be copied and distributed to anyone in
+the United States without paying any fees or charges. If you are
+redistributing or providing access to a work with the phrase “Project
+Gutenberg” associated with or appearing on the work, you must comply
+either with the requirements of paragraphs 1.E.1 through 1.E.7 or
+obtain permission for the use of the work and the Project Gutenberg
+trademark as set forth in paragraphs 1.E.8 or 1.E.9.
+</div><div>
+1.E.3. If an individual Project Gutenberg electronic work is posted
+with the permission of the copyright holder, your use and distribution
+must comply with both paragraphs 1.E.1 through 1.E.7 and any
+additional terms imposed by the copyright holder. Additional terms
+will be linked to the Project Gutenberg License for all works
+posted with the permission of the copyright holder found at the
+beginning of this work.
+</div><div>
+1.E.4. Do not unlink or detach or remove the full Project Gutenberg
+License terms from this work, or any files containing a part of this
+work or any other work associated with Project Gutenberg.
+</div><div>
+1.E.5. Do not copy, display, perform, distribute or redistribute this
+electronic work, or any part of this electronic work, without
+prominently displaying the sentence set forth in paragraph 1.E.1 with
+active links or immediate access to the full terms of the Project
+Gutenberg License.
+</div><div>
+1.E.6. You may convert to and distribute this work in any binary,
+compressed, marked up, nonproprietary or proprietary form, including
+any word processing or hypertext form. However, if you provide access
+to or distribute copies of a Project Gutenberg work in a format
+other than “Plain Vanilla ASCII” or other format used in the official
+version posted on the official Project Gutenberg website
+(www.gutenberg.org), you must, at no additional cost, fee or expense
+to the user, provide a copy, a means of exporting a copy, or a means
+of obtaining a copy upon request, of the work in its original “Plain
+Vanilla ASCII” or other form. Any alternate format must include the
+full Project Gutenberg License as specified in paragraph 1.E.1.
+</div><div>
+1.E.7. Do not charge a fee for access to, viewing, displaying,
+performing, copying or distributing any Project Gutenberg works
+unless you comply with paragraph 1.E.8 or 1.E.9.
+</div><div>
+1.E.8. You may charge a reasonable fee for copies of or providing
+access to or distributing Project Gutenberg electronic works
+provided that:
+</div><ul>
+    <li>• You pay a royalty fee of 20% of the gross profits you derive from
+        the use of Project Gutenberg works calculated using the method
+        you already use to calculate your applicable taxes. The fee is owed
+        to the owner of the Project Gutenberg trademark, but he has
+        agreed to donate royalties under this paragraph to the Project
+        Gutenberg Literary Archive Foundation. Royalty payments must be paid
+        within 60 days following each date on which you prepare (or are
+        legally required to prepare) your periodic tax returns. Royalty
+        payments should be clearly marked as such and sent to the Project
+        Gutenberg Literary Archive Foundation at the address specified in
+        Section 4, “Information about donations to the Project Gutenberg
+        Literary Archive Foundation.”
+    </li>
+    <li>• You provide a full refund of any money paid by a user who notifies
+        you in writing (or by e-mail) within 30 days of receipt that s/he
+        does not agree to the terms of the full Project Gutenberg™
+        License. You must require such a user to return or destroy all
+        copies of the works possessed in a physical medium and discontinue
+        all use of and all access to other copies of Project Gutenberg™
+        works.
+    </li>
+    <li>• You provide, in accordance with paragraph 1.F.3, a full refund of
+        any money paid for a work or a replacement copy, if a defect in the
+        electronic work is discovered and reported to you within 90 days of
+        receipt of the work.
+    </li>
+    <li>• You comply with all other terms of this agreement for free
+        distribution of Project Gutenberg™ works.
+    </li>
+</ul><div>
+1.E.9. If you wish to charge a fee or distribute a Project
+Gutenberg™ electronic work or group of works on different terms than
+are set forth in this agreement, you must obtain permission in writing
+from the Project Gutenberg Literary Archive Foundation, the manager of
+the Project Gutenberg™ trademark. Contact the Foundation as set
+forth in Section 3 below.
+</div><div>
+1.F.
+</div><div>
+1.F.1. Project Gutenberg volunteers and employees expend considerable
+effort to identify, do copyright research on, transcribe and proofread
+works not protected by U.S. copyright law in creating the Project
+Gutenberg™ collection. Despite these efforts, Project Gutenberg™
+electronic works, and the medium on which they may be stored, may
+contain “Defects,” such as, but not limited to, incomplete, inaccurate
+or corrupt data, transcription errors, a copyright or other
+intellectual property infringement, a defective or damaged disk or
+other medium, a computer virus, or computer codes that damage or
+cannot be read by your equipment.
+</div><div>
+1.F.2. LIMITED WARRANTY, DISCLAIMER OF DAMAGES - Except for the “Right
+of Replacement or Refund” described in paragraph 1.F.3, the Project
+Gutenberg Literary Archive Foundation, the owner of the Project
+Gutenberg™ trademark, and any other party distributing a Project
+Gutenberg™ electronic work under this agreement, disclaim all
+liability to you for damages, costs and expenses, including legal
+fees. YOU AGREE THAT YOU HAVE NO REMEDIES FOR NEGLIGENCE, STRICT
+LIABILITY, BREACH OF WARRANTY OR BREACH OF CONTRACT EXCEPT THOSE
+PROVIDED IN PARAGRAPH 1.F.3. YOU AGREE THAT THE FOUNDATION, THE
+TRADEMARK OWNER, AND ANY DISTRIBUTOR UNDER THIS AGREEMENT WILL NOT BE
+LIABLE TO YOU FOR ACTUAL, DIRECT, INDIRECT, CONSEQUENTIAL, PUNITIVE OR
+INCIDENTAL DAMAGES EVEN IF YOU GIVE NOTICE OF THE POSSIBILITY OF SUCH
+DAMAGE.
+</div><div>
+1.F.3. LIMITED RIGHT OF REPLACEMENT OR REFUND - If you discover a
+defect in this electronic work within 90 days of receiving it, you can
+receive a refund of the money (if any) you paid for it by sending a
+written explanation to the person you received the work from. If you
+received the work on a physical medium, you must return the medium
+with your written explanation. The person or entity that provided you
+with the defective work may elect to provide a replacement copy in
+lieu of a refund. If you received the work electronically, the person
+or entity providing it to you may choose to give you a second
+opportunity to receive the work electronically in lieu of a refund. If
+the second copy is also defective, you may demand a refund in writing
+without further opportunities to fix the problem.
+</div><div>
+1.F.4. Except for the limited right of replacement or refund set forth
+in paragraph 1.F.3, this work is provided to you ‘AS-IS’, WITH NO
+OTHER WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+LIMITED TO WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PURPOSE.
+</div><div>
+1.F.5. Some states do not allow disclaimers of certain implied
+warranties or the exclusion or limitation of certain types of
+damages. If any disclaimer or limitation set forth in this agreement
+violates the law of the state applicable to this agreement, the
+agreement shall be interpreted to make the maximum disclaimer or
+limitation permitted by the applicable state law. The invalidity or
+unenforceability of any provision of this agreement shall not void the
+remaining provisions.
+</div><div>
+1.F.6. INDEMNITY - You agree to indemnify and hold the Foundation, the
+trademark owner, any agent or employee of the Foundation, anyone
+providing copies of Project Gutenberg™ electronic works in
+accordance with this agreement, and any volunteers associated with the
+production, promotion and distribution of Project Gutenberg™
+electronic works, harmless from all liability, costs and expenses,
+including legal fees, that arise directly or indirectly from any of
+the following which you do or cause to occur: (a) distribution of this
+or any Project Gutenberg work, (b) alteration, modification, or
+additions or deletions to any Project Gutenberg work, and (c) any
+Defect you cause.
+</div><div class="secthead">
+Section 2. Information about the Mission of Project Gutenberg
+</div><div>
+Project Gutenberg is synonymous with the free distribution of
+electronic works in formats readable by the widest variety of
+computers including obsolete, old, middle-aged and new computers. It
+exists because of the efforts of hundreds of volunteers and donations
+from people in all walks of life.
+</div><div>
+Volunteers and financial support to provide volunteers with the
+assistance they need are critical to reaching Project Gutenberg’s
+goals and ensuring that the Project Gutenberg collection will
+remain freely available for generations to come. In 2001, the Project
+Gutenberg Literary Archive Foundation was created to provide a secure
+and permanent future for Project Gutenberg and future
+generations. To learn more about the Project Gutenberg Literary
+Archive Foundation and how your efforts and donations can help, see
+Sections 3 and 4 and the Foundation information page at www.gutenberg.org.
+</div><div class="secthead">
+Section 3. Information about the Project Gutenberg Literary Archive Foundation
+</div><div>
+The Project Gutenberg Literary Archive Foundation is a non-profit
+501(c)(3) educational corporation organized under the laws of the
+state of Mississippi and granted tax exempt status by the Internal
+Revenue Service. The Foundation’s EIN or federal tax identification
+number is 64-6221541. Contributions to the Project Gutenberg Literary
+Archive Foundation are tax deductible to the full extent permitted by
+U.S. federal laws and your state’s laws.
+</div><div>
+The Foundation’s business office is located at 41 Watchung Plaza #516,
+Montclair NJ 07042, USA, +1 (862) 621-9288. Email contact links and up
+to date contact information can be found at the Foundation’s website
+and official page at www.gutenberg.org/contact
+</div><div class="secthead">
+Section 4. Information about Donations to the Project Gutenberg
+Literary Archive Foundation
+</div><div>
+Project Gutenberg™ depends upon and cannot survive without widespread
+public support and donations to carry out its mission of
+increasing the number of public domain and licensed works that can be
+freely distributed in machine-readable form accessible by the widest
+array of equipment including outdated equipment. Many small donations
+($1 to $5,000) are particularly important to maintaining tax exempt
+status with the IRS.
+</div><div>
+The Foundation is committed to complying with the laws regulating
+charities and charitable donations in all 50 states of the United
+States. Compliance requirements are not uniform and it takes a
+considerable effort, much paperwork and many fees to meet and keep up
+with these requirements. We do not solicit donations in locations
+where we have not received written confirmation of compliance. To SEND
+DONATIONS or determine the status of compliance for any particular state
+visit <a href="https://www.gutenberg.org/donate/">www.gutenberg.org/donate</a>.
+</div><div>
+While we cannot and do not solicit contributions from states where we
+have not met the solicitation requirements, we know of no prohibition
+against accepting unsolicited donations from donors in such states who
+approach us with offers to donate.
+</div><div>
+International donations are gratefully accepted, but we cannot make
+any statements concerning tax treatment of donations received from
+outside the United States. U.S. laws alone swamp our small staff.
+</div><div>
+Please check the Project Gutenberg web pages for current donation
+methods and addresses. Donations are accepted in a number of other
+ways including checks, online payments and credit card donations. To
+donate, please visit: www.gutenberg.org/donate.
+</div><div class="secthead">
+Section 5. General Information About Project Gutenberg electronic works
+</div><div>
+Professor Michael S. Hart was the originator of the Project
+Gutenberg concept of a library of electronic works that could be
+freely shared with anyone. For forty years, he produced and
+distributed Project Gutenberg eBooks with only a loose network of
+volunteer support.
+</div><div>
+Project Gutenberg eBooks are often created from several printed
+editions, all of which are confirmed as not protected by copyright in
+the U.S. unless a copyright notice is included. Thus, we do not
+necessarily keep eBooks in compliance with any particular paper
+edition.
+</div><div>
+Most people start at our website which has the main PG search
+facility: <a href="https://www.gutenberg.org">www.gutenberg.org</a>.
+</div><div>
+This website includes information about Project Gutenberg,
+including how to make donations to the Project Gutenberg Literary
+Archive Foundation, how to help produce our new eBooks, and how to
+subscribe to our email newsletter to hear about new eBooks.
+</div>
+
+</section></body><!-- created with ppgen.py 3.57e on 2024-06-19 23:00:25 GMT --></html>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

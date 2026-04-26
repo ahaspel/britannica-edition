@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Army Officers &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XXIX</span>For Army Officers</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">A New Departure</a></li><li><a href="#sh-2">Army</a></li><li><a href="#sh-3">Theory and Practice</a></li><li><a href="#sh-4">Arms of Service</a></li><li><a href="#sh-5">Strategy and Tactics</a></li><li><a href="#sh-6">Military History and Criticism</a></li><li><a href="#sh-7">A Military Encyclopaedia</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">A New Departure</span>It is often said of an article in the
+Britannica that it is “<i>the last word</i> on
+the subject,” so thoroughly has the
+authority of the book been recognized.
+This is quite as true of military articles
+as of those in any other field; but of the
+military articles it may also be said that
+they are the <i>first word</i>. Of course, there
+have been, in previous
+editions of the
+Britannica and, to a
+less degree in minor
+works of general reference, articles on
+military history and biography. But in
+the new Britannica, for the first time, all
+branches of military knowledge are included,
+and the spirit of the entire treatment
+is comparative and critical. The
+military student will find a discussion not
+merely of Napoleon’s influence on army
+organization or Frederick’s influence on
+cavalry (in the articles on these two
+leaders), but also of the influence of army
+organization on Napoleon (in the articles
+on the French Revolutionary Wars and
+the Napoleonic Campaigns), and of cavalry
+drill on the peculiar generalship of
+Frederick (in such articles as Seven
+Years’ War, on Hohenfriedberg, and on
+Rossbach). Put more concretely, the
+novelty consists in the inclusion of articles
+on wars, campaigns and battles,
+chosen because of their importance in
+military as well as in political history,
+and treated from the point of view of the
+military critic and with particular attention
+to the lessons they contain for the
+modern army officer. The care with
+which the battles and campaigns of the
+American Civil War are analyzed and
+criticized will be of singularly great interest
+to the American soldier, who will
+immediately notice among the contributors
+to the military department of the
+Britannica such names as those of Capt.
+C. F. Atkinson, author of <i>The Wilderness
+and Cold Harbour</i>, Major G. W. Redway,
+author of <i>Fredericksburg: A Study in War</i>,
+Col. G. F. R. Henderson, author of <i>Stonewall
+Jackson and the American Civil War</i>,
+and Col. F. N. <a href="/contributors.html?q=Colonel+Frederic+Natusch+Maude">Maude</a>, lecturer in military
+history, University of Manchester.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Army</span>The best starting point for a study of
+military affairs in the Britannica
+is the article <span class="sc"><a href="/article/02-0634-s2/army">Army</a></span>
+(Vol. 2, p. 592; equivalent
+to more than 100 pages of this Guide).
+This “key” article may be outlined as
+follows:</p>
+
+<p><i>General History</i></p>
+
+<p>Early Armies—<i>Egypt</i> (chariots, infantry,
+archers). <i>Babylon</i> and <i>Assyria</i>
+(horsemen, charioteers, etc.).
+<i>Persian</i>, largely cavalry; the first “organized”
+army. <i>Greece</i>,—compulsory
+service; citizen militia; heavy infantry
+the strong arm; phalanx, the Greek
+formation. <i>Sparta</i>,—a nation in arms.
+<i>Greek</i> mercenaries. <i>Epaminondas</i> and
+<i>Thebes</i>—new phalanx tactics, “oblique
+order”; development of cavalry. <i>Alexander</i>
+and <i>Macedon</i>—a modified Theban
+system. <i>Carthage</i>—mercenary
+troops led by great generals, with modification
+of phalanx for greater elasticity.
+<i>Rome</i>—army under the Republic;
+its characteristics; under the Empire;
+see also separate article <span class="sc"><a href="/article/23-0493-roman-army/roman_army">Roman
+Army</a></span> (Vol. 23, p. 471), by Professor
+F. J. Haverfield of Oxford. <i>The Dark
+Ages</i>, the Byzantines, and the development
+of Feudalism. Medieval Mercenaries.
+Infantry in Feudal Times.
+<i>The Crusades</i>. <i>The Period of Transition</i>
+(1290–1490), development of English
+archers and of professional soldiery,—<i>condottieri</i>,
+<i>Swiss</i>, <i>Landsknechts</i>.
+<i>The Spanish army</i>: “at the
+disposal of its sovereign, trained to the
+due professional standard and organized
+in the best way found by experience.”
+<i>The Sixteenth Century</i>—rise of
+the heavy cavalry armed with pistols,
+and fall of the pikemen. <i>Dutch System</i>—attention
+to minute detail; William
+the Silent and Maurice of Nassau.
+<i>Thirty Years’ War</i>—the <i>Werbe-system</i>,
+small standing army to be increased
+by levy at time of need. <i>The
+Swedish Army</i>—conscription and feudal
+<i>indelta</i>; Gustavus. <i>The English
+Civil War</i>—real national armies;
+Cromwell and the “New Model” only
+an incident without influence on army
+organization. <i>Standing Armies</i>. French
+pre-eminence after Rocroi. Small field
+armies, well-fed and sheltered for economy’s
+sake. <i>18th Century organization</i>:
+“linear” formation and its negative
+results. <i>Frederick the Great</i>: the
+art of war a formal science. <i>The
+French Revolution</i>: a “nation in arms,”
+a war-machine more powerful than
+Frederick’s. The conscription in
+France. <i>Napoleon</i>—his attempt to
+make a dynastic army out of the “nation
+in arms.” <i>The Grande Armée</i> of
+1805–1806; development of artillery;
+the army corps. The Wars of Liberation:
+new Prussian army; excellent
+Austrian organization. <i>Armies of
+1815–1870</i>. <i>American Civil War</i>,—its
+slow decision. Contrast between French
+and Prussian staff systems in 1870.
+<i>Modern Developments</i>: German model
+followed slavishly except in Great Britain
+and the United States.</p>
+
+<p><i>Present Day Armies</i>: The general
+accounts of existing armies, and of the
+past organizations of each country, are
+supplemented by detailed information
+in the articles on different countries.
+Especial attention should be given to
+the military information in the article
+on Japan. Army Systems: <i>Compulsory
+Service</i>; <i>Conscription</i>; <i>Voluntary Service</i>;
+<i>Militia</i>.</p>
+
+<p><i>Army Organization</i></p>
+
+<p>The three chief arms—their relative
+importance: proportion on peace footing—5
+or 6 guns per 1000 men, 16
+cavalry soldiers to 1000 men of other
+arms; proportion in war—Russian
+(1905) 3½ guns per 1000 men of other
+arms, 60 cavalry to 1000 infantry;
+Japanese (1905), 2½ field guns per
+1000 men, 37 cavalry to 1000 infantry.
+<i>Command</i>: <i>Brigade</i>; <i>Division</i>; <i>Army
+Corps</i>, its constitution; <i>Army</i>; <i>Chief
+Command</i> of group of armies; chief of
+general staff and his relations to commander-in-chief—for
+example, von
+Moltke and King William. <i>Branches
+of Administration</i>—war office and general
+staff.</p>
+
+<p><i>Table</i>: Comparative strength of Various
+Armies.</p>
+
+<ul class="index c026">
+  <li class="c018"><i>British Army</i>, <i>Indian Army</i>, <i>Canadian Forces</i>.</li>
+  <li class="c018"><i>Austrian Army</i>.</li>
+  <li class="c018"><i>French Army</i>.</li>
+  <li class="c018"><i>German Army</i>.</li>
+  <li class="c018"><i>Italian Army</i>.</li>
+  <li class="c018"><i>Russian Army</i>.</li>
+  <li class="c018"><i>Spanish Army</i>.</li>
+  <li class="c018"><i>Turkish Army</i>.</li>
+  <li class="c018"><i>United States Army</i>.</li>
+  <li class="c018"><i>Armies of minor countries</i>.</li>
+</ul>
+
+<p><i>Bibliography</i> (2000 words)</p>
+
+<p><span class="shoulder-heading" id="sh-3">Theory and Practice</span>Next in order the student should turn
+to the article <span class="sc"><a href="/article/28-0321-war/war">War</a></span> (Vol. 28, p. 305;
+equivalent to 40 pages of this Guide), by
+Col. G. F. R. Henderson,
+well known
+for his books on the
+American Civil War
+(<i>Fredericksburg</i>, <i>Stonewall Jackson</i>, etc.),
+with a section on <i>Laws of War</i>, by Sir
+<a href="/contributors.html?q=Sir+Thomas+Barclay">Thomas Barclay</a>. Col. Henderson’s article
+lays down important general principles.
+An analysis of modern conditions
+shows that improved methods of communication
+have made war a much speedier
+process, in which the victorious general
+cannot make mistakes at the outset.
+That intellect and education count for
+more than stamina and courage was the
+lesson of the Franco-Prussian War—a
+lesson learned by the Prussians before
+that war. Modern war is a science and
+the amateur has little chance; in this
+respect things have changed. “It is impossible
+to doubt that had the Boers of
+1899 possessed a staff of trained strategists,
+they would have shaken the British
+Empire to its foundations.” There must
+be a concert between diplomacy and
+strategy. Civilian war ministers cannot
+solve strategic problems. The greater
+deadliness of modern warfare, and the
+greater moral effect of being under fire
+call for better foresight, strategy and
+<i>morale</i>. The relation of army and navy
+is discussed and the new doctrine of “sea-power”
+explained. (See the chapter <i>For
+Naval Officers</i> in this Guide). The remaining
+topics in the article are: weakness
+of allied armies; railways and sea as
+lines of operation; amphibious power;
+value of unprofessional troops and the
+need of professional leaders.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Arms of Service</span>In the articles <span class="sc"><a href="/article/14-0546-s2/infantry">Infantry</a></span> (Vol. 14, p.
+517; 2 plates; equivalent to 35 pages of
+this Guide) and <span class="sc"><a href="/article/02-0727-s4/artillery">Artillery</a></span> (Vol. 2, p.
+685; 2 plates; equivalent to 30 pages of
+this Guide), both by
+Capt. Atkinson, and
+in the article <span class="sc"><a href="/article/05-0586-cavalry/cavalry">Cavalry</a></span> (Vol. 5, p. 563;
+illustrated with 2 plates and 1 cut; in
+length equivalent to 30 pages of this
+Guide), by <a href="/contributors.html?q=Colonel+Frederic+Natusch+Maude">Col. F. N. Maude</a>, the
+student will find an elaborate treatment
+of the history, organization and tactics
+(especially since 1870) of each of these
+arms. For details of their organization
+and equipment he should read the
+articles <span class="sc"><a href="/article/09-0431-engineers-military/engineers__military">Engineers</a></span>, <span class="sc"><a href="/article/25-0774-staff/staff">Staff</a></span>, <span class="sc"><a href="/article/18-0971-s6/mounted_infantry">Mounted
+Infantry</a></span>, <span class="sc">Supply and Transport (Military)</span>,
+<span class="sc"><a href="/article/20-0034-officers/officers">Officers</a></span>, <span class="sc"><a href="/article/01-0847-s4/ambulance">Ambulance</a></span>, <span class="sc"><a href="/article/10-0700-s7/fortification_and_siegecraft">Fortification</a></span>,
+<span class="sc">Machine Guns</span>, <span class="sc"><a href="/article/06-0618-coast-defence/coast_defence">Coast Defence</a></span>,
+<span class="sc"><a href="/article/20-0215-s3/ordnance">Ordnance</a></span>, <span class="sc"><a href="/article/03-0287-ballistics/ballistics">Ballistics</a></span>, <span class="sc"><a href="/article/25-0075-s4/sights">Sights</a></span>,
+<span class="sc"><a href="/article/23-0342-rifle/rifle">Rifle</a></span>, <span class="sc"><a href="/article/12-0742-s6/gun">Gun</a></span>, <span class="sc"><a href="/article/21-0683-s2/pistol">Pistol</a></span>, <span class="sc"><a href="/article/10-0093-s2/explosives">Explosive</a></span>, <span class="sc"><a href="/article/12-0748-s3/gunpowder">Gunpowder</a></span>,
+<span class="sc"><a href="/article/12-0746-s3/guncotton">Guncotton</a></span>, <span class="sc"><a href="/article/07-0155-s4/cordite">Cordite</a></span> and
+<span class="sc">Nitro-glycerine</span>. In many geographical
+articles there are descriptions of the
+world’s great fortifications, e. g., <i>Paris</i>,
+<i>Antwerp</i>, and <i>Verdun</i>. Other topics
+of a more miscellaneous character are
+covered by the articles <span class="sc">Army Signalling</span>,
+<span class="sc"><a href="/article/21-0624-s2/pigeon_post">Pigeon Post</a></span>, <span class="sc"><a href="/article/25-0086-s1/signal">Signals</a></span>, <span class="sc"><a href="/article/28-0340-war-game/war_game">War Game</a></span>,
+<span class="sc">Manoeuvres</span>, <span class="sc"><a href="/article/15-0867-kite/kite">Kite</a></span>, etc.</p>
+
+<p>The military use of aeroplanes and
+balloons is very fully shown in the articles
+<span class="sc"><a href="/article/10-0520-s2/flight">Flight</a></span> and <span class="sc"><a href="/article/01-0295-s2/aeronautics">Aeronautics</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-5">Strategy and Tactics</span>Before taking up a systematic course
+in military history, there are two general
+articles that the military student should
+read: <span class="sc"><a href="/article/26-0368-s4/tactics">Tactics</a></span> (Vol.
+26, p. 347; equivalent
+in length to 20
+pages of this Guide),
+by <a href="/contributors.html?q=Neill+Malcolm">Maj. Neill Malcolm</a>, editor of the
+<i>Science of War</i>; and <span class="sc"><a href="/article/25-1012-strategy/strategy">Strategy</a></span> (Vol. 25,
+p. 986; equivalent to 35 pages of this
+Guide), by <a href="/contributors.html?q=Colonel+Frederic+Natusch+Maude">Col. F. N. Maude</a>. The
+former article should be compared with
+the sections on tactics in the articles
+<span class="sc"><a href="/article/14-0546-s2/infantry">Infantry</a></span>, <span class="sc"><a href="/article/05-0586-cavalry/cavalry">Cavalry</a></span> and <span class="sc"><a href="/article/02-0727-s4/artillery">Artillery</a></span>.
+Major <a href="/contributors.html?q=Neill+Malcolm">Malcolm</a> makes much of the continuity
+of military history, comparing
+Metaurus and Ramillies with the fighting
+in Manchuria, and Wellington at Maya
+with Oyama in his contest with Kuropatkin.
+The mistakes that have been
+made once should not be made again;
+at least the careful student of tactical
+history may see to it that if they are
+repeated, it is done by his opponent and
+not by himself. Modern tactics are
+different from ancient because of greater
+fire-power and improved methods of
+transportation. Cavalry tactics are in
+an uncertain condition; there is no recent
+practice to serve as a guide, since neither
+in South Africa in the Boer war nor in
+Manchuria during the Russo-Japanese
+conflict was cavalry much used. Infantry
+must co-operate to make artillery
+bombardment effective. An interesting
+discussion of offensive and defensive
+fighting is summed up in the words
+“To the true general the purely defensive
+battle is unknown” and as evidence
+are adduced Wellington at Salamanca
+and Oyama at Sha-ho. Oyama’s victory
+in the latter battle, it is pointed out,
+shows the increased ease of the process
+of envelopment, which has resulted in
+discarding corps artillery in favour of
+divisional artillery. The importance—and
+the possibility—of the counter stroke;
+the danger of using for the relief of one’s
+own troops forces which might better
+be launched at the enemy’s weakest
+spot; and the similar unwisdom of any
+negative tactics, adopted to avoid loss,
+as in “holding attacks”—are the other
+principal points made in the article.</p>
+
+<p>The article <span class="sc"><a href="/article/25-1012-strategy/strategy">Strategy</a></span> should be read
+in conjunction with the articles <span class="sc"><a href="/article/02-0634-s2/army">Army</a></span>
+and <span class="sc"><a href="/article/28-0321-war/war">War</a></span>. It is impossible to summarize
+or outline it here, but it is worth noting
+that the article closes with a definition
+and discussion of the following terms:
+<i>Base</i>; <i>Line of Communication</i>; <i>Line of
+Operations</i>; <i>Exterior Lines</i>; <i>Obstacles</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-6">Military History and Criticism</span>For a reasoned history of warfare
+in more detail than has been given in
+the general articles
+already alluded to,
+the reader will find
+some outline like the
+following valuable,
+the arrangement being roughly chronological
+and all words in <i>Italics</i> being titles
+of articles in the Britannica.</p>
+
+<p><i>Marathon</i>; <i>Darius</i>; <i>Miltiades</i>; <i>Herodotus</i>.</p>
+
+<p><i>Thermopylae</i>; <i>Leonidas</i>; <i>Salamis</i>.</p>
+
+<p><i>Peloponnesian War</i>; <i>Pericles</i>; <i>Cleon</i>;
+<i>Pylos</i>; <i>Brasidas</i>; <i>Alcibiades</i>; <i>Critias</i>;
+<i>Thucydides</i>; <i>Xenophon</i>.</p>
+
+<p><i>Epaminondas</i>; <i>Mantineia</i>.</p>
+
+<p><i>Philip II of Macedon</i>; <i>Olynthus</i>;
+<i>Chaeroneia</i>; <i>Alexander the Great</i>; <i>Arrian</i>.</p>
+
+<p><i>Pyrrhus</i>.</p>
+
+<p><i>Roman Army</i>; <i>Caudine Forks</i>; <i>Punic
+Wars</i>; <i>Carthage</i>; <i>Hanno</i>; <i>Hannibal</i>;
+<i>Hasdrubal</i>; <i>Mago</i>; <i>Trasimene</i>; <i>Fabius</i>
+(Cunctator); <i>Cannae</i>; <i>Scipio Africanus</i>;
+<i>Scipio Aemilianus</i>; <i>Aemilius
+Paulus</i>; <i>Perseus</i>; <i>Marius</i>; <i>Jugurtha</i>;
+<i>Sulla</i>; <i>Sertorius</i>; <i>Pompey</i>; <i>Caesar</i>; <i>Antonius</i>
+(Mark Antony).</p>
+
+<p><i>Charles Martel</i>.</p>
+
+<p><i>Charlemagne</i>.</p>
+
+<p><i>William I</i> (of England); <i>Hastings</i>;
+<i>Standard, Battle of</i>.</p>
+
+<p><i>Crusades</i> (equivalent to 90 pages of
+this Guide); <i>Godfrey of Bouillon</i>;
+<i>Raymund of Toulouse</i>; <i>Richard I</i> (of
+England); <i>Philip II</i> (of France);
+<i>Saladin</i>; <i>Henry VI</i> (Roman Emperor);
+<i>Baldwin I</i>; <i>Frederick II</i>; <i>Louis IX</i> (of
+France).</p>
+
+<p><i>Bouvines.</i></p>
+
+<p><i>Bannockburn</i>; <i>Robert Bruce</i>.</p>
+
+<p><i>Hundred Years’ War</i>; <i>Philip VI</i>;
+<i>Edward III</i>; <i>Crécy</i>; <i>John of Bohemia</i>;
+<i>Edward</i> (the Black Prince); <i>Calais</i>;
+<i>Poitiers</i>; <i>John II</i> (of France); <i>Lancaster,
+House of</i> (for John of Gaunt);
+<i>Bertrand Du Guesclin</i>; <i>Henry V</i> (of
+England); <i>Agincourt</i>; <i>Joan of Arc</i>; <i>1st
+Duke of Bedford</i> (John Plantagenet);
+Count of <i>Dunois</i>.</p>
+
+<p><i>Wars of the Roses</i>; <i>St. Albans</i>;
+<i>Towton</i>; <i>Earl of Warwick</i> (Richard
+Neville); <i>Edward IV</i>.</p>
+
+<p><i>Ravenna</i>, battle of; <i>Bayard</i> (the
+chevalier); <i>Gaston de Foix</i>; <i>Pescara</i>;
+<i>Navarro</i>; <i>Marignan</i>; <i>Francis</i> I (of
+France).</p>
+
+<p><i>Flodden</i>; <i>James IV</i> (of Scotland);
+<i>Norfolk, 3rd Duke</i>.</p>
+
+<p><i>St. Quentin</i> (1557); <i>Coligny</i>; <i>Montmorency</i>
+(constable); <i>Emmanuel Philibert</i>.</p>
+
+<p><i>Alva</i>; <i>William the Silent</i> (Vol. 28,
+p. 672); <i>Maurice of Nassau</i>; <i>Farnese</i>
+(duke of Parma).</p>
+
+<p><i>Thirty Years’ War</i>; <i>Maximilian I</i>
+(of Bavaria); <i>Frederick V</i> (elector
+palatinate; Vol. 11, p. 59); <i>Mansfeld</i>;
+<i>Tilly</i>; <i>Wallenstein</i>; <i>Gustavus Adolphus</i>;
+<i>Breitenfeld</i>; <i>Lützen</i>; <i>Bernhard
+of Saxe-Weimar</i>; duc de <i>Rohan</i>; <i>Frederick
+Henry</i>; <i>Gallas</i>; <i>Banér</i>; <i>Piccolomini</i>;
+<i>Turenne</i>; <i>Torstensson</i>; <i>Condé</i>;
+<i>Freiburg</i>; <i>Mercy</i>; <i>Nördlingen</i>; <i>Wrangel</i>
+(1613–1676); <i>Fronde</i>.</p>
+
+<p><i>Great Rebellion</i> (English Civil Wars
+of 1642–52); <i>Charles I</i> (of England);
+<i>Prince Rupert</i>; <i>Essex</i> (2nd Earl, Vol.
+9, p. 782); <i>Edgehill</i>; <i>John Hotham</i>;
+<i>Baron Hopton</i>; <i>Sir William Waller</i>;
+<i>Duke of Newcastle</i> (1592–1676); <i>Fairfax
+of Cameron</i> (2nd and 3rd Barons);
+<i>Sir Bevil Grenville</i>; <i>Oliver Cromwell</i>;
+<i>Manchester</i>, 2nd Earl of (Vol. 17, p.
+543); <i>Marston Moor</i>; <i>Leven</i>; <i>Skippon</i>;
+<i>Argyll, 8th Earl</i>; <i>Montrose</i>; <i>Lord Newark</i>;
+<i>Goring</i>; <i>Naseby</i>; <i>John Lambert</i>;
+<i>Charles Fleetwood</i>; <i>Dunbar</i>; <i>Thomas
+Harrison</i>.</p>
+
+<p><i>Dutch Wars</i>; <i>Louis XIV</i>; <i>Condé</i>;
+<i>Frederick William of Brandenburg</i>;
+<i>Turenne</i>; <i>Montecucculi</i>; <i>William III</i>
+(of England); <i>Duke of Luxembourg</i>;
+<i>Charles of Lorraine</i> (Vol. 17, p. 11).</p>
+
+<p><i>Vauban.</i></p>
+
+<p><i>Grand Alliance, War of</i>; <i>Catinat</i>;
+<i>Luxembourg</i>; <i>Vauban</i>; <i>Fleurus</i>; <i>Louvois</i>;
+<i>Duc de Boufflers</i>; <i>Coehoorn</i>; <i>William
+III of England</i>; <i>Steenkirk</i>; <i>Neerwinden</i>;
+<i>Villeroi</i>.</p>
+
+<p><i>Spanish Succession</i>; <i>Marlborough</i>;
+<i>Eugene of Savoy</i>; <i>Villars</i>; <i>Peterborough</i>;
+<i>Ruvigny</i>; <i>Catinat</i>; <i>Vendôme</i>;
+<i>Blenheim</i>; <i>Ramillies</i>; <i>Oudenarde</i>; <i>Malplaquet</i>;
+<i>Berwick</i>.</p>
+
+<p><i>Polish Succession War.</i></p>
+
+<p><i>Austrian Succession</i>; <i>Frederick the
+Great</i>; <i>Count von Schwerin</i>; <i>L. A.
+Khevenhüller</i>; <i>Duc de Broglie</i>; <i>Traun</i>;
+<i>Charles</i> (of Lorraine; Vol. 5, p. 936);
+<i>Seckendorf</i>; <i>George II</i> (of England);
+<i>Noailles</i>; <i>Conti</i> (Vol. 7, p. 28); <i>Hohenfriedberg</i>;
+<i>Fontenoy</i>; comte de <i>Saxe</i>
+(marshal); Duke of <i>Cumberland</i>; <i>Ligonier</i>;
+<i>Belle-Isle</i>.</p>
+
+<p><i>Seven Years’ War</i> (with 5 diagrams):
+<i>Frederick the Great</i>; <i>Clive</i>;
+<i>Amherst</i>; <i>Wolfe</i>; comte de <i>Lally</i>;
+<i>Montcalm</i>; Count von <i>Browne</i>; <i>Ferdinand</i>
+(of Brunswick); <i>Daun</i>; <i>Zieten</i>;
+<i>F. E. J. Keith</i>; <i>Seydlitz</i>; <i>Rossbach</i>;
+<i>Soubise</i> (1715–1787); <i>Leuthen</i>; <i>Loudon</i>;
+<i>Kunersdorf</i>; <i>Finck</i>; <i>Minden</i>;
+<i>Sackville</i>, 1st Viscount; <i>Granby</i>.</p>
+
+<p><i>American War of Independence</i>;
+<i>Lexington</i>; <i>Concord</i>; <i>Bunker Hill</i>; <i>Joseph
+Warren</i>; <i>Israel Putnam</i>; <i>Thomas
+Gage</i>; <i>William Howe</i>; <i>Ethan Allen</i>;
+<i>Ticonderoga</i>; <i>George Washington</i>;
+<i>Benedict Arnold</i>; <i>Richard Montgomery</i>;
+<i>Long Island</i>; <i>Rufus Putnam</i>; <i>William
+Alexander</i>; <i>Trenton and Princeton</i>;
+<i>Henry Knox</i>; <i>Brandywine</i>; <i>Germantown</i>;
+<i>Burgoyne</i>; <i>Bennington</i>; <i>John
+Stark</i>; <i>Saratoga</i>; <i>George Rogers
+Clark</i>; <i>Sir Henry Clinton</i>; <i>Monmouth</i>;
+<i>John Sullivan</i>; <i>Anthony Wayne</i>; <i>William
+Moultrie</i>; <i>Charleston</i> (S. C.);
+<i>Francis Marion</i>; <i>Thomas Sumter</i>; <i>Andrew
+Pickens</i>; <i>Horatio Gates</i>; <i>Nathanael
+Greene</i>; <i>Cornwallis</i>; <i>Kalb</i>; <i>Camden</i>;
+<i>King’s Mountain</i>; <i>Daniel Morgan</i>;
+<i>Henry Lee</i>; <i>Tarleton</i>; <i>Eutawville</i>;
+<i>Lafayette</i>; <i>Yorktown</i>.</p>
+
+<p><i>French Revolutionary Wars</i> (with 6
+diagrams); <i>Dumouriez</i>; <i>Kellerman</i>
+(1735–1820); <i>Custine</i>; <i>Jemappes</i>; <i>Gribeauval</i>;
+<i>Neerwinden</i> (1793); <i>Clerfayt</i>;
+<i>Vendée</i>; <i>L. N. M. Carnot</i>; <i>Jourdan</i>;
+<i>Wattignies</i>; <i>Joubert</i>; <i>Frederick
+Augustus, Duke of York</i>; <i>Souham</i>; <i>Moreau</i>;
+<i>Kray von Krajova</i>; <i>Vandamme</i>;
+<i>Pichegru</i>; <i>Marceau</i>; <i>Charles</i>, archduke
+of Austria (Vol. 5, p. 935); <i>Masséna</i>;
+<i>Napoleon</i>; <i>Augereau</i>; <i>Serurier</i>; <i>Joubert</i>;
+<i>Sir W. Sidney Smith</i>; <i>Kléber</i>;
+<i>Alexandria</i>; <i>Oudinot</i>; <i>Suvarov</i>; <i>Borodino</i>;
+<i>Macdonald</i>; <i>Marengo</i>; <i>Murat</i>;
+<i>Lannes</i>; <i>Berthier</i>; <i>Bautzen</i>.</p>
+
+<p><i>Napoleonic Campaigns</i> (9 diagrams;
+and see, on p. 233 of Vol. 19, “The
+Military Character of Napoleon”);
+<i>Napoleon</i>; <i>Wrede</i>; <i>Murat</i>; <i>Charles
+XIV</i> (Bernadotte); <i>Marmont</i>; <i>Davout</i>;
+<i>Ney</i>; <i>Lannes</i>; <i>Soult</i>; <i>Berthier</i>; <i>Angereau</i>;
+<i>Dupont de l’Etang</i>; <i>Austerlitz</i>;
+<i>Kutusov</i>; <i>Hohenlohe</i> (Vol. 13, p. 572);
+<i>Blücher</i>; <i>Lasalle</i>; <i>Massenbach</i>; <i>Kalckreuth</i>;
+<i>Scharnhorst</i>; <i>Lefebvre-Desnoëttes</i>;
+<i>Count von Bennigsen</i>; <i>Eylau</i>;
+<i>Friedland</i>; <i>Grouchy</i>; <i>Mortier</i>; <i>Senarmont</i>;
+<i>Oudinot</i>; <i>Massena</i>; <i>Aspern-Essling</i>;
+<i>Charles</i>, archduke of Austria;
+<i>Bellegarde</i>; <i>Wagram</i>; <i>Beauharnais</i>;
+<i>Macdonald</i>; Jerome <i>Bonaparte</i> (Vol.
+4, p. 195); <i><a href="/contributors.html?q=Sir+Thomas+Barclay">Barclay</a> de Tolly</i>; <i>Bagration</i>;
+<i>Victor-Perrin</i>; <i>Yorck von Wartenburg</i>;
+<i>Lauriston</i>; <i>Wittgenstein</i>; <i>Bautzen</i>;
+<i>Schwarzenberg</i>; <i>Gouvion St. Cyr</i>;
+<i>Dresden</i> (battle).</p>
+
+<p><i>Peninsular War</i>; <i>Junot</i>; <i>Murat</i>; <i>Dupont
+de l’Etang</i>; <i>Moncey</i>; <i>Palafox y
+Melzi</i>; <i>Wellington</i>; <i>Sir John Moore</i>;
+Sir David <i>Baird</i>; <i>Talavera</i>; <i>Suchet</i>;
+<i>Sebastiani</i>; <i>Foy</i>; <i>Lord Hill</i>; <i>Lord
+Lynedoch</i>; W. C. <i>Beresford</i>; <i>Salamanca</i>;
+<i>Clausel</i>; <i>O’Donnell</i>; <i>Vitoria</i>;
+<i>Sir William Napier</i>.</p>
+
+<p><i>American War</i> of 1812; Isaac
+<i>Brock</i>; <i>Dearborn</i>; <i>Baltimore</i>; <i>Washington</i>;
+<i>New Orleans</i>; Andrew <i>Jackson</i>;
+Jacob <i>Brown</i>; James <i>Wilkinson</i>;
+and for sea-fighting the titles in the
+chapter of this Guide: <i>For Naval
+Officers</i>.</p>
+
+<p><i>Waterloo Campaign</i> (with 3 maps);
+<i>Napoleon</i>; <i>Murat</i>; <i>Schwarzenberg</i>;
+<i><a href="/contributors.html?q=Sir+Thomas+Barclay">Barclay</a> de Tolly</i>; <i>Wellington</i>; <i>Blücher</i>;
+<i>Lord Hill</i>; <i>Anglesey</i>; <i>D’Erlon</i>;
+<i>Gneisenau</i>; <i>Gérard</i>; <i>Grouchy</i>; <i>Vandamme</i>;
+<i>Thielmann</i>; <i>Bülow</i> (1755–1816);
+<i>Ney</i>; <i>Exelmans</i>; <i>Pajol</i>; <i>Picton</i>.</p>
+
+<p><i>Greek Independence</i>; <i>Ypsilanti</i>;
+<i>Mavrocordato</i>; <i>Coraës</i>; <i>Dundonald</i>;
+<i>Sir Richard Church</i>.</p>
+
+<p><i>Russo-Turkish Wars</i> (1828–29);
+<i>Paskevich</i>; <i>Diebitsch</i> (1877–78); <i>Osman</i>;
+<i>Skobelev</i>; <i>Plevna</i> (with diagram);
+<i>Todleben</i>; <i>Shipka Pass</i>.</p>
+
+<p><i>Crimean War</i> (with 2 diagrams):
+<i>Gorchakov</i>; <i>Hess</i>; <i>Raglan</i>; <i>Saint Arnaud</i>;
+<i>Canrobert</i>; <i>Pelissier</i>; <i>Menshikov</i>
+(1787–1869); <i>Bosquet</i>; <i>Todleben</i>;
+<i>Alma</i>; <i>Balaklava</i>; <i>Scarlett</i>; <i>Cardigan</i>;
+<i>Inkerman</i>; <i>Sir George Brown</i>; <i>Sir
+George Cathcart</i>; <i>Kinglake</i>.</p>
+
+<p><i>Italian Wars</i> (1848–1870); <i>Radetzky</i>;
+<i>Charles Albert</i> of Sardinia
+(Vol. 5, p. 938); <i>Durando</i>; <i>Pepe</i>; <i>Victor
+Emmanuel</i>; <i>Pelissier</i>; <i>Canrobert</i>;
+<i>La Marmora</i>; <i>Napoleon III</i>; <i>Forey</i>;
+<i>MacMahon</i>; <i>Bazaine</i>; <i>Wimpffen</i>; <i>Benedek</i>;
+<i>Niel</i>; <i>Custozza</i>; <i>Cialdini</i>.</p>
+
+<p><i>American Civil War</i>; <i>Bull Run</i>; <i>McDowell</i>;
+<i>Beauregard</i>; <i>J. E. Johnston</i>;
+<i>R. E. Lee</i>; <i>Rosecrans</i>; <i>Lexington, Mo.</i>;
+<i>Fremont</i>; <i>Nathaniel Lyon</i>; <i>F. P. Blair,
+Jr.</i>; <i>Pope</i>; <i>Burnside</i>; <i>B. F. Butler</i>; <i>McClellan</i>;
+<i>A. S. Johnston</i>; <i>G. H.
+Thomas</i>; <i>U. S. Grant</i>; <i>C. F. Smith</i>;
+<i>Lew Wallace</i>; <i>McClernand</i>; <i>Halleck</i>;
+<i>O. M. Mitchel</i>; <i>Shiloh</i>; <i>N. P. Banks</i>;
+<i>T. J. (Stonewall) Jackson</i>; <i>Shenandoah</i>;
+<i>Fair Oaks</i>; <i>Seven Days</i>; <i>A. P.
+Hill</i>; <i>D. H. Hill</i>; <i>J. E. B. Stuart</i>;
+<i>Braxton Bragg</i>; <i>Longstreet</i>; <i>Bull Run
+(second battle)</i>; <i>Ewell</i>; <i>Sigel</i>; <i>Hooker</i>;
+<i>Kearny</i>; <i>Fitz-John Porter</i>; <i>Antietam</i>;
+<i>E. V. Sumner</i>; <i>Hood</i>; <i>Burnside</i>; <i>Van
+Dorn</i>; <i>Fredericksburg</i>; <i>W. B. Franklin</i>;
+<i>John F. Reynolds</i>; <i>D. N. Couch</i>;
+<i>Stone River</i>; <i>Hardee</i>; <i>A. McD. McCook</i>;
+<i>T. L. Crittenden</i>; <i>G. H. Thomas</i>;
+<i>J. C. Breckinridge</i>; <i>McPherson</i>; <i>Chancellorsville</i>;
+<i>T. F. Meagher</i>; <i>Meade</i>;
+<i>Gettysburg</i>; <i>O. O. Howard</i>; <i>Doubleday</i>;
+<i>Early</i>; <i>Hancock</i>; <i>Sickles</i>; <i>Vicksburg</i>;
+<i>J. H. Morgan</i>; <i>Chickamauga</i>; <i>N.
+B. Forrest</i>; <i>Chattanooga</i>; <i>Sheridan</i>;
+<i>Wilderness</i> (4 diagrams); <i>Fitz-Hugh
+Lee</i>; <i>J. H. Wilson</i>; <i>G. K. Warren</i>;
+<i>John Sedgwick</i>; <i>Merritt</i>; <i>R. H. Anderson</i>;
+<i>Spottsylvania</i>; <i>Cold Harbor</i>;
+<i>Petersburg</i>; <i>Shenandoah Valley</i>; <i>Cedar
+Creek</i>; <i>W. T. Sherman</i>; <i>Marietta</i>; <i>Atlanta</i>;
+<i>Slocum</i>; <i>Schofield</i>; <i>Joseph
+Wheeler</i>; <i>J. A. Logan</i>; <i>Nashville</i>; <i>Richmond</i>;
+<i>Appomatox Court-House</i>; <i>Durham,
+N. C.</i></p>
+
+<p><i>Seven Weeks’ War</i> (with 2 diagrams):
+<i>William I</i> (of Germany);
+<i>Moltke</i>; <i>Benedek</i>; <i>Frederick III</i> (of
+Germany); <i>Frederick Charles</i> (of
+Prussia; Vol. 11, p. 61); <i>Steinmetz</i>;
+<i>Blumenthal</i>; <i>Hohenlohe-Ingelfingen</i>
+(Vol. 13, p. 573b); <i>Goeben</i>; and see
+<i>Italian Wars</i> above.</p>
+
+<p><i>Franco-German War</i>; <i>Napoleon III</i>;
+<i>Niel</i>; <i>Moltke</i>; <i>William I</i> (of Germany);
+<i>Steinmetz</i>; <i>Frossard</i>; <i>MacMahon</i>;
+<i>Wörth</i> (with plan); <i>Bazaine</i>;
+<i>Metz</i> (2 plans); <i>Alvensleben</i>; <i>Canrobert</i>;
+<i>Bourbaki</i>; <i>Leboeuf</i>; <i>Manteuffel</i>;
+<i>Caprivi</i>; <i>Prince Frederick Charles</i>; <i>Sedan</i>
+(with plan); <i>Vinoy</i>; <i>Wimpffen</i>;
+<i>Gallifet</i>; <i>Werder</i>; <i>Gambetta</i>; <i>Freycinet</i>;
+<i>Aurelle de Paladines</i>; <i>Orleans</i>;
+<i>Bourbaki</i>; <i>Le Mans</i>; <i>Chanzy</i>; <i>Faidherbe</i>;
+<i>Belfort</i>; <i>Clinchant</i>; <i>Paris</i>.</p>
+
+<p><i>Servo-Bulgarian War</i>; <i>Alexander of
+Bulgaria</i> (Vol. 1, p. 544); <i>Milan of
+Servia</i>.</p>
+
+<p><i>Greco-Turkish War</i>; <i>Edhem Pasha</i>.</p>
+
+<p><i>Spanish-American War</i>; <i>Joseph
+Wheeler</i>; <i>F. V. Greene</i>; <i>Roosevelt</i>;
+<i>Miles</i>.</p>
+
+<p><i>Transvaal</i> (Vol. 27, pp. 203 sqq. for
+Boer War of 1899–1902); <i>Kruger</i>;
+<i>Cronje</i>; <i>P. J. Joubert</i>; <i>Sir George
+White</i>; <i>Buller</i>; <i>Lord Roberts</i>; <i>Lord
+Kitchener</i>; <i>J. H. De la Rey</i>; <i>Christian
+DeWet</i>; <i>Louis Botha</i>.</p>
+
+<p><i>Russo-Japanese War</i> (with 4 diagrams);
+<i>Kuroki</i>; <i>Kuropatkin</i>; <i>Inouye</i>;
+<i>Oku</i>; <i>Nozu</i>; <i>Oyama</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-7">A Military Encyclopaedia</span>The military student will see from
+what has already been said that the Britannica
+is not merely a general work of
+reference but a valuable
+aid in the study
+of military history,
+biography, theory,
+practice and phraseology. The following
+alphabetical list names only the chief
+of the articles in the Britannica which
+make it a military cyclopaedia. As has
+been noticed above, many articles are
+special treatises in themselves dealing
+with many related topics, and—for instance—articles
+on wars or campaigns
+contain elaborate descriptions of separate
+battles. Many topics are treated in the
+Britannica, even if they are not in the
+following list, and their whereabouts
+may be readily learned by turning to
+the Index volume.</p>
+
+<ul class="index">
+  <li class="c018"><a href="/article/01-0038-s8/abatis">Abatis</a></li>
+  <li class="c018"><a href="/article/01-0156-s2/accoutrement">Accoutrement</a></li>
+  <li class="c018"><a href="/article/01-0178-s5/acinaces">Acinaces</a></li>
+  <li class="c018"><a href="/article/01-0224-s9/adjutant">Adjutant</a></li>
+  <li class="c018"><a href="/article/01-0225-s2/adjutant-general">Adjutant-general</a></li>
+  <li class="c018"><a href="/article/01-0274-s2/adye__sir_john_miller">Adye, Sir John Miller</a></li>
+  <li class="c018"><a href="/article/01-0291-s2/aelian">Aelian (Aelianus Tacticus)</a></li>
+  <li class="c018"><a href="/article/01-0292-s2/aemilius__paulus">Aemilius, Paulus</a></li>
+  <li class="c018"><a href="/article/01-0292-s4/aeneas_tacticus">Aeneas Tacticus</a></li>
+  <li class="c018"><a href="/article/01-0295-s2/aeronautics">Aeronautics</a></li>
+  <li class="c018"><a href="/article/01-0413-s8/agincourt">Agincourt, Battle of</a></li>
+  <li class="c018"><a href="/article/01-0473-s4/aide-de-camp">Aide-de-camp</a></li>
+  <li class="c018"><a href="/article/01-0533-s5/albert">Albert, Charles, of Sardinia</a></li>
+  <li class="c018"><a href="/article/01-0562-s4/alcibiades">Alcibiades</a></li>
+  <li class="c018"><a href="/article/01-0584-s2/alexander">Alexander</a></li>
+  <li class="c018">Alexander the Great</li>
+  <li class="c018"><a href="/article/01-0605-s3/alexander__william">Alexander, William</a></li>
+  <li class="c018">Alexander of Bulgaria</li>
+  <li class="c018"><a href="/article/01-0608-s4/alexandria">Alexandria</a></li>
+  <li class="c018"><a href="/article/01-0705-s6/alignment">Alignment</a></li>
+  <li class="c018">Allan, Ethan</li>
+  <li class="c018"><a href="/article/01-0753-s6/alma">Alma</a></li>
+  <li class="c018"><a href="/article/01-0819-s5/alva">Alva</a></li>
+  <li class="c018"><a href="/article/01-0820-s9/alvensleben__constantin_von">Alvensleben</a></li>
+  <li class="c018"><a href="/article/01-0850-s3/ambush">Ambush</a></li>
+  <li class="c018"><a href="/article/01-0915-s5/ammunition">Ammunition</a></li>
+  <li class="c018"><a href="/article/01-0869-american-civil-war/american_civil_war">American Civil War</a></li>
+  <li class="c018"><a href="/article/01-0898-american-war-of-1812/american_war_of_1812">American War of 1812</a></li>
+  <li class="c018"><a href="/article/01-0893-american-war-of-independence/american_war_of_independence">American War of Independence</a></li>
+  <li class="c018"><a href="/article/01-0904-s1/amherst">Amherst</a></li>
+  <li class="c018"><a href="/article/01-1013-s3/anderson__richard_henry">Anderson, R. H.</a></li>
+  <li class="c018"><a href="/article/02-0028-s2/anglesey">Anglesey</a></li>
+  <li class="c018"><a href="/article/02-0136-s3/antietam">Antietam</a></li>
+  <li class="c018"><a href="/article/02-0162-s3/antonius">Antonius (Mark Antony)</a></li>
+  <li class="c018"><a href="/article/02-0166-s4/antwerp">Antwerp</a></li>
+  <li class="c018"><a href="/article/02-0383-s8/archery">Archery</a></li>
+  <li class="c018">Argyll, 8th Earl</li>
+  <li class="c018"><a href="/article/02-0615-s2/armet">Armet</a></li>
+  <li class="c018"><a href="/article/02-0624-s2/arms_and_armour">Arms and Armour</a></li>
+  <li class="c018"><a href="/article/02-0634-s2/army">Army</a></li>
+  <li class="c018">Army Corps</li>
+  <li class="c018">Army Signalling</li>
+  <li class="c018"><a href="/article/02-0675-s2/arnold__benedict">Arnold, Benedict</a></li>
+  <li class="c018"><a href="/article/02-0683-s8/arquebus">Arquebus</a></li>
+  <li class="c018"><a href="/article/02-0690-s4/arrian">Arrian</a></li>
+  <li class="c018"><a href="/article/02-0692-s7/arsenal">Arsenal</a></li>
+  <li class="c018"><a href="/article/02-0727-s4/artillery">Artillery</a></li>
+  <li class="c018"><a href="/article/02-0766-s8/asclepiodotus">Asclepiodotus</a></li>
+  <li class="c018"><a href="/article/02-0813-s5/aspern-essling">Aspern-Essling</a></li>
+  <li class="c018"><a href="/article/02-0824-s2/assegai">Assegai</a></li>
+  <li class="c018"><a href="/article/02-0901-s2/atlanta">Atlanta</a></li>
+  <li class="c018"><a href="/article/02-0948-s6/augereau__pierre_françois_charles">Augereau</a></li>
+  <li class="c018"><a href="/article/02-0951-s2/augsburg__war_of_the_league_of">Augsburg, War of the League of</a></li>
+  <li class="c018"><a href="/article/02-0959-s5/augustus">Augustus, Frederick, Duke of York</a></li>
+  <li class="c018"><a href="/article/02-0972-s3/aurelle_de_paladines__louis_jean_baptiste_d_">Aurelle de Paladines</a></li>
+  <li class="c018"><a href="/article/02-0987-s2/austerlitz">Austerlitz</a></li>
+  <li class="c018"><a href="/article/03-0054-s2/austrian_succession__war_of_the">Austrian Succession, War of the</a></li>
+  <li class="c018"><a href="/article/03-0068-s7/aventail">Aventail or Avantaille</a></li>
+  <li class="c018"><a href="/article/03-0223-s2/bagration__peter">Bagration</a></li>
+  <li class="c018"><a href="/article/03-0235-s2/bailey">Bailey</a></li>
+  <li class="c018"><a href="/article/03-0241-s2/baird__sir_david">Baird, Sir David</a></li>
+  <li class="c018"><a href="/article/03-0251-s2/balaklava">Balaklava</a></li>
+  <li class="c018"><a href="/article/03-0261-s5/baldwin_i">Baldwin I</a></li>
+  <li class="c018"><a href="/article/03-0287-ballistics/ballistics">Ballistics</a></li>
+  <li class="c018"><a href="/article/03-0330-bandolier/bandolier">Bandolier</a></li>
+  <li class="c018"><a href="/article/03-0330-baner/banér__banner__banier___johan">Banér</a></li>
+  <li class="c018"><a href="/article/03-0350-banks-nathaniel-prentiss/banks__nathaniel_prentiss">Banks, N. P.</a></li>
+  <li class="c018"><a href="/article/03-0371-bannockburn/bannockburn">Bannockburn</a></li>
+  <li class="c018"><a href="/article/03-0403-barbette/barbette">Barbette</a></li>
+  <li class="c018"><a href="/article/03-0412-barclay-de-tolly-michael-andreas/barclay_de_tolly__michael_andreas">Barclay de Tolly</a></li>
+  <li class="c018"><a href="/article/03-0444-barracks/barracks">Barracks</a></li>
+  <li class="c018"><a href="/article/03-0452-barricade/barricade">Barricade</a></li>
+  <li class="c018"><a href="/article/03-0497-basinet/basinet">Basinet</a></li>
+  <li class="c018"><a href="/article/03-0520-bastion/bastion">Bastion</a></li>
+  <li class="c018"><a href="/article/03-0546-batta/batta">Batta</a></li>
+  <li class="c018"><a href="/article/03-0546-battalion/battalion">Battalion</a></li>
+  <li class="c018"><a href="/article/03-0548-battering-ram/battering_ram">Battering Ram</a></li>
+  <li class="c018"><a href="/article/03-0551-battle/battle">Battle</a></li>
+  <li class="c018"><a href="/article/03-0558-bautzen/bautzen">Bautzen</a></li>
+  <li class="c018"><a href="/article/03-0576-bayonet/bayonet">Bayonet</a></li>
+  <li class="c018"><a href="/article/03-0578-bazaine-achille-fran-ois/bazaine__achille_françois">Bazaine</a></li>
+  <li class="c018">Bayard (the Chevalier)</li>
+  <li class="c018"><a href="/article/03-0607-beauharnais/beauharnais">Beauharnais</a></li>
+  <li class="c018"><a href="/article/03-0617-beauregard-marquis-de/beauregard__marquis_de">Beauregard</a></li>
+  <li class="c018">Bedford, 1st Duke of</li>
+  <li class="c018"><a href="/article/03-0685-belfort-town/belfort__town_">Belfort</a></li>
+  <li class="c018"><a href="/article/03-0716-bellegarde/bellegarde">Bellegarde</a></li>
+  <li class="c018"><a href="/article/03-0717-belle-isle-charles-louis-auguste-fouquet/belle-isle__charles_louis_auguste_fouquet">Belle-Isle</a></li>
+  <li class="c018"><a href="/article/03-0736-benedek-ludwig-ritter-von/benedek__ludwig__ritter_von">Benedek</a></li>
+  <li class="c018">Bennigsen, Count von</li>
+  <li class="c018"><a href="/article/03-0763-bennington/bennington">Bennington</a></li>
+  <li class="c018"><a href="/article/03-0791-beresford-william-carr-beresford-viscount/beresford__william_carr_beresford__viscount">Beresford, W. C.</a></li>
+  <li class="c018"><a href="/article/03-0822-bernhard-of-saxe-weimar/bernhard_of_saxe-weimar">Bernhard of Saxe-Weimar</a></li>
+  <li class="c018"><a href="/article/03-0832-berthier-louis-alexandre/berthier__louis_alexandre">Berthier</a></li>
+  <li class="c018"><a href="/article/03-0837-berwick-upon-tweed/berwick-upon-tweed">Berwick</a></li>
+  <li class="c018"><a href="/article/04-0028-bivouac/bivouac">Bivouac</a></li>
+  <li class="c018">Blair, F. P., Jr.</li>
+  <li class="c018"><a href="/article/04-0070-blenheim/blenheim">Blenheim</a></li>
+  <li class="c018"><a href="/article/04-0087-blockhouse/blockhouse">Blockhouse</a></li>
+  <li class="c018"><a href="/article/04-0103-bl-cher-gebhard-leberecht-von/blücher__gebhard_leberecht_von">Blücher</a></li>
+  <li class="c018"><a href="/article/04-0105-blumenthal-leonhard-count-von/blumenthal__leonhard_count_von">Blumenthal</a></li>
+  <li class="c018"><a href="/article/04-0105-blunderbuss/blunderbuss">Blunderbuss</a></li>
+  <li class="c018"><a href="/article/04-0194-bomb/bomb">Bomb</a></li>
+  <li class="c018"><a href="/article/04-0195-bombardier/bombardier">Bombardier</a></li>
+  <li class="c018"><a href="/article/04-0195-bombardment/bombardment">Bombardment</a></li>
+  <li class="c018"><a href="/article/04-0205-bonaparte/bonaparte">Bonaparte, Jerome</a></li>
+  <li class="c018"><a href="/article/04-0282-borodino/borodino">Borodino</a></li>
+  <li class="c018"><a href="/article/04-0302-bosquet-pierre-fran-ois-joseph/bosquet__pierre_françois_joseph">Bosquet</a></li>
+  <li class="c018"><a href="/article/04-0318-botha-louis/botha__louis">Botha</a></li>
+  <li class="c018">Boufflers, Duc de</li>
+  <li class="c018"><a href="/article/04-0336-boulevard/boulevard">Boulevard</a></li>
+  <li class="c018"><a href="/article/04-0339-bourbaki-charles-denis-sauter/bourbaki__charles_denis_sauter">Bourbaki</a></li>
+  <li class="c018"><a href="/article/04-0351-bouvines/bouvines">Bouvines</a></li>
+  <li class="c018"><a href="/article/04-0391-bragg-braxton/bragg__braxton">Bragg, Braxton</a></li>
+  <li class="c018"><a href="/article/04-0445-brandywine/brandywine">Brandywine</a></li>
+  <li class="c018"><a href="/article/04-0447-brasidas/brasidas">Brasidas</a></li>
+  <li class="c018"><a href="/article/04-0501-breckinridge-john-cabell/breckinridge__john_cabell">Breckinridge, J. C.</a></li>
+  <li class="c018"><a href="/article/04-0510-breitenfeld/breitenfeld">Breitenfeld</a></li>
+  <li class="c018"><a href="/article/04-0521-brevet/brevet">Brevet</a></li>
+  <li class="c018"><a href="/article/04-0535-brialmont-henri-alexis/brialmont__henri_alexis">Brialmont, H. A.</a></li>
+  <li class="c018"><a href="/article/04-0583-s5/brigade">Brigade</a></li>
+  <li class="c018"><a href="/article/04-0586-brigandine/brigandine">Brigandine</a></li>
+  <li class="c018"><a href="/article/04-0591-s8/brin__benedetto">Benedetto Brin</a></li>
+  <li class="c018"><a href="/article/04-0660-s4/bronsart_von_schellendorf__paul">Bronsart von Schellendorf, Paul</a></li>
+  <li class="c018"><a href="/article/04-0681-brown-sir-george/brown__sir_george">Brown, Sir George</a></li>
+  <li class="c018"><a href="/article/04-0682-s3/brown__jacob">Brown, Jacob</a></li>
+  <li class="c018"><a href="/article/04-0686-s4/brown_bess">Brown Bess</a></li>
+  <li class="c018">Browne, Count von</li>
+  <li class="c018"><a href="/article/04-0698-s4/bruce">Bruce, Robert</a></li>
+  <li class="c018"><a href="/article/04-0812-s2/bullet">Bullet</a></li>
+  <li class="c018"><a href="/article/04-0811-s2/buller__charles">Buller</a></li>
+  <li class="c018"><a href="/article/04-0814-s5/bull_run">Bull Run</a></li>
+  <li class="c018"><a href="/article/04-0814-s5/bull_run">Bull Run (second battle)</a></li>
+  <li class="c018"><a href="/article/04-0817-s2/bülow__dietrich_heinrich">Bülow, Dietrich Heinrich</a></li>
+  <li class="c018"><a href="/article/04-0821-s7/bunker_hill">Bunker Hill</a></li>
+  <li class="c018"><a href="/article/04-0841-s3/burgonet">Burgonet, or Burganet</a></li>
+  <li class="c018"><a href="/article/04-0842-s3/burgoyne__john">Burgoyne</a></li>
+  <li class="c018"><a href="/article/04-0885-s2/burnside__ambrose_everett">Burnside</a></li>
+  <li class="c018"><a href="/article/04-0893-s3/busby">Busby</a></li>
+  <li class="c018"><a href="/article/04-0905-s3/butler__benjamin_franklin">Butler, B. F.</a></li>
+  <li class="c018"><a href="/article/04-0954-s5/cadet">Cadet</a></li>
+  <li class="c018"><a href="/article/04-0958-s3/cadre">Cadre</a></li>
+  <li class="c018"><a href="/article/04-0969-s2/caesar__sir_julius">Caesar</a></li>
+  <li class="c018"><a href="/article/04-0992-s3/calais">Calais</a></li>
+  <li class="c018"><a href="/article/05-0066-caliver/caliver">Caliver</a></li>
+  <li class="c018"><a href="/article/05-0081-caltrop/caltrop">Caltrop</a></li>
+  <li class="c018"><a href="/article/05-0113-camden-william/camden__william">Camden</a></li>
+  <li class="c018"><a href="/article/05-0132-camp/camp">Camp</a></li>
+  <li class="c018"><a href="/article/05-0133-campaign/campaign">Campaign</a></li>
+  <li class="c018">Canadian Forces</li>
+  <li class="c018">Cannac</li>
+  <li class="c018"><a href="/article/05-0201-cannon/cannon">Cannon</a></li>
+  <li class="c018"><a href="/article/05-0220-canrobert-fran-ois-certain/canrobert__françois_certain">Canrobert</a></li>
+  <li class="c018"><a href="/article/05-0222-canteen/canteen">Canteen</a></li>
+  <li class="c018"><a href="/article/05-0234-cantonment/cantonment">Cantonment</a></li>
+  <li class="c018"><a href="/article/05-0296-capitulation/capitulation">Capitulation</a></li>
+  <li class="c018"><a href="/article/05-0299-caponier/caponier">Caponier</a></li>
+  <li class="c018"><a href="/article/05-0304-caprivi-de-caprera-de-montecuccoli-georg-leo-von/caprivi_de_caprera_de_montecuccoli__georg_leo_von">Caprivi</a></li>
+  <li class="c018"><a href="/article/05-0306-captain/captain">Captain</a></li>
+  <li class="c018"><a href="/article/05-0310-carabiniers/carabiniers">Carabiniers</a></li>
+  <li class="c018"><a href="/article/05-0317-carbine/carbine">Carbine</a></li>
+  <li class="c018"><a href="/article/05-0332-cardigan/cardigan">Cardigan</a></li>
+  <li class="c018"><a href="/article/05-0389-carnot-lazare-nicolas-marguerite/carnot__lazare_nicolas_marguerite">Carnot, L. N. M.</a></li>
+  <li class="c018"><a href="/article/05-0427-carronade/carronade">Carronade</a></li>
+  <li class="c018"><a href="/article/05-0448-carthage-missouri/carthage__missouri_">Carthage</a></li>
+  <li class="c018"><a href="/article/05-0452-cartridge/cartridge">Cartridge</a></li>
+  <li class="c018">Carrington, H. B.</li>
+  <li class="c018"><a href="/article/05-0461-casemate/casemate">Casemate</a></li>
+  <li class="c018"><a href="/article/05-0462-case-shot/case-shot">Case-Shot</a></li>
+  <li class="c018"><a href="/article/05-0463-cashier/cashier">Cashier</a></li>
+  <li class="c018"><a href="/article/05-0493-castle/castle">Castle</a></li>
+  <li class="c018"><a href="/article/05-0522-catapult/catapult">Catapult</a></li>
+  <li class="c018"><a href="/article/05-0536-cathcart-sir-george/cathcart__sir_george">Cathcart, Sir George</a></li>
+  <li class="c018"><a href="/article/05-0553-catinat-nicolas/catinat__nicolas">Catinat</a></li>
+  <li class="c018"><a href="/article/05-0579-caudine-forks/caudine_forks">Caudine Forks</a></li>
+  <li class="c018"><a href="/article/05-0586-cavalry/cavalry">Cavalry</a></li>
+  <li class="c018"><a href="/article/05-0620-cedar-creek/cedar_creek">Cedar Creek, Va.</a></li>
+  <li class="c018"><a href="/article/05-0824-chaeroneia/chaeroneia">Chaeroneia</a></li>
+  <li class="c018"><a href="/article/05-0871-chancellorsville/chancellorsville">Chancellorsville</a></li>
+  <li class="c018"><a href="/article/05-0885-chanzy-antoine-eugene-alfred/chanzy__antoine_eugène_alfred">Chanzy</a></li>
+  <li class="c018"><a href="/article/05-0887-chaplain/chaplain">Chaplain</a></li>
+  <li class="c018"><a href="/article/05-0927-charlemagne/charlemagne">Charlemagne</a></li>
+  <li class="c018"><a href="/article/05-0933-charles/charles">Charles, Archduke of Austria</a></li>
+  <li class="c018">Charles I (of England)</li>
+  <li class="c018">Charles XIV (Bernadotte)</li>
+  <li class="c018"><a href="/article/05-0978-charles-martel/charles_martel">Charles Martel</a></li>
+  <li class="c018">Charleston, S. C.</li>
+  <li class="c018"><a href="/article/05-0993-chassepot/chassepot">Chassepot</a></li>
+  <li class="c018"><a href="/article/06-0020-chattanooga/chattanooga">Chattanooga, Tenn.</a></li>
+  <li class="c018"><a href="/article/06-0105-chesney-charles-cornwallis/chesney__charles_cornwallis">Chesney, C. C.</a></li>
+  <li class="c018"><a href="/article/06-0106-chesney-sir-george-tomkyns/chesney__sir_george_tomkyns">Chesney, Sir G. T.</a></li>
+  <li class="c018"><a href="/article/06-0127-chevaux-de-frise/chevaux-de-frise">Chevaux-de-frise</a></li>
+  <li class="c018"><a href="/article/06-0341-church-sir-richard/church__sir_richard">Church, Sir Richard</a></li>
+  <li class="c018"><a href="/article/06-0143-chickamauga-creek/chickamauga_creek">Chickamauga Creek</a></li>
+  <li class="c018"><a href="/article/06-0366-cialdini-enrico/cialdini__enrico">Cialdini</a></li>
+  <li class="c018"><a href="/article/06-0406-circumvallation-lines-of/circumvallation__lines_of">Circumvallation, Lines of</a></li>
+  <li class="c018"><a href="/article/06-0458-clark-george-rogers/clark__george_rogers">Clark, George Rogers</a></li>
+  <li class="c018"><a href="/article/06-0482-clausel-bertrand/clausel__more_correctly_clauzel___bertrand">Clausel</a></li>
+  <li class="c018"><a href="/article/06-0483-clausewitz-karl-von/clausewitz__karl_von">Clausewitz, Karl von</a></li>
+  <li class="c018"><a href="/article/06-0490-claymore/claymore">Claymore</a></li>
+  <li class="c018"><a href="/article/06-0510-cleon/cleon">Cleon</a></li>
+  <li class="c018"><a href="/article/06-0512-clerfayt-fran-ois-sebastien-charles-joseph-de-croix/clerfayt__or_clairfayt___françois_sebastien_charles_joseph_de_croix">Clerfayt</a></li>
+  <li class="c018"><a href="/article/06-0545-clinchant-justin/clinchant__justin">Clinchant</a></li>
+  <li class="c018"><a href="/article/06-0547-clinton-sir-henry/clinton__sir_henry">Clinton, Sir Henry</a></li>
+  <li class="c018"><a href="/article/06-0549-clive-caroline/clive__caroline">Clive</a></li>
+  <li class="c018"><a href="/article/06-0618-coast-defence/coast_defence">Coast Defence</a></li>
+  <li class="c018"><a href="/article/06-0621-coastguard/coastguard">Coastguard</a></li>
+  <li class="c018"><a href="/article/06-0661-coehoorn/coehoorn__menno">Coehoorn</a></li>
+  <li class="c018"><a href="/article/06-0685-cold-harbor/cold_harbor">Cold Harbor</a></li>
+  <li class="c018"><a href="/article/06-0704-coligny-gaspard-de/coligny__gaspard_de">Coligny</a></li>
+  <li class="c018"><a href="/article/06-0735-colonel/colonel">Colonel</a></li>
+  <li class="c018"><a href="/article/06-0751-colours-military/colours__military">Colours, Military</a></li>
+  <li class="c018"><a href="/article/06-0753-colour-sergeant/colour-sergeant">Colour-sergeant</a></li>
+  <li class="c018"><a href="/article/06-0789-commander/commander">Commander</a></li>
+  <li class="c018"><a href="/article/06-0789-commandeer/commandeer">Commandeer</a></li>
+  <li class="c018"><a href="/article/06-0789-commando/commando">Commando</a></li>
+  <li class="c018"><a href="/article/06-0798-commissariat/commissariat">Commissariat</a></li>
+  <li class="c018"><a href="/article/06-0855-concord-book-of/concord__book_of">Concord</a></li>
+  <li class="c018"><a href="/article/06-0868-cond/condé">Condé</a></li>
+  <li class="c018"><a href="/article/06-0878-condottiere/condottiere">Condottiere</a></li>
+  <li class="c018"><a href="/article/06-0996-conscription/conscription">Conscription</a></li>
+  <li class="c018"><a href="/article/07-0042-conti-princes-of/conti__princes_of">Conti</a></li>
+  <li class="c018">Coraés</li>
+  <li class="c018"><a href="/article/07-0155-s4/cordite">Cordite</a></li>
+  <li class="c018"><a href="/article/07-0178-cormontaingne-louis-de/cormontaingne__louis_de">Cormontaingne, Louis de</a></li>
+  <li class="c018"><a href="/article/07-0200-cornwallis-sir-william/cornwallis__sir_william">Cornwallis</a></li>
+  <li class="c018"><a href="/article/07-0206-corporal/corporal">Corporal</a></li>
+  <li class="c018"><a href="/article/07-0209-corps/corps">Corps</a></li>
+  <li class="c018"><a href="/article/07-0327-couch-darius-nash/couch__darius_nash">Couch, D. N.</a></li>
+  <li class="c018"><a href="/article/07-0336-counterscarp/counterscarp">Counterscarp</a></li>
+  <li class="c018"><a href="/article/07-0336-countersign/countersign">Countersign</a></li>
+  <li class="c018">Court Marshal</li>
+  <li class="c018"><a href="/article/07-0372-cox-jacob-dolson/cox__jacob_dolson">Cox, J. D.</a></li>
+  <li class="c018"><a href="/article/07-0409-cr-cy/crécy">Crécy</a></li>
+  <li class="c018"><a href="/article/07-0472-crimean-war/crimean_war">Crimean War</a></li>
+  <li class="c018">Crilias</li>
+  <li class="c018">Crittenden, T. L.</li>
+  <li class="c018"><a href="/article/07-0509-s2/cromwell__oliver">Cromwell, Oliver</a></li>
+  <li class="c018"><a href="/article/07-0523-cronje-piet-arnoldus/cronje__piet_arnoldus">Cronje</a></li>
+  <li class="c018"><a href="/article/07-0546-crusades/crusades">Crusades</a></li>
+  <li class="c018"><a href="/article/07-0635-cuirass/cuirass">Cuirass</a></li>
+  <li class="c018"><a href="/article/07-0636-cuirassiers/cuirassiers">Cuirassiers</a></li>
+  <li class="c018">Cumberland, Duke of</li>
+  <li class="c018"><a href="/article/07-0690-custine-adam-philippe/custine__adam_philippe">Custine</a></li>
+  <li class="c018"><a href="/article/07-0691-custozza/custozza">Custozza</a></li>
+  <li class="c018"><a href="/article/07-0693-cutlass/cutlass">Cutlass</a></li>
+  <li class="c018"><a href="/article/07-0751-dagger/dagger">Dagger</a></li>
+  <li class="c018"><a href="/article/07-0834-dannewerk/dannewerk">Dannewerk</a></li>
+  <li class="c018"><a href="/article/07-0856-darius/darius">Darius</a></li>
+  <li class="c018"><a href="/article/07-0873-daun-leopold-josef-count-von/daun__leopold_josef__count_von">Daun</a></li>
+  <li class="c018"><a href="/article/07-0894-davout-louis-nicolas/davout__louis_nicolas">Davout</a></li>
+  <li class="c018">Dearborn</li>
+  <li class="c018"><a href="/article/07-0950-defile/defile">Defile</a></li>
+  <li class="c018"><a href="/article/08-0075-depot/depot">Depot</a></li>
+  <li class="c018"><a href="/article/08-0089-d-erlon-jean-baptiste-drouet/d_erlon__jean_baptiste_drouet">D’Erlon</a></li>
+  <li class="c018"><a href="/article/07-0968-de-la-rey-jacobus-hercules/de_la_rey__jacobus_hercules">De la Rey</a></li>
+  <li class="c018"><a href="/article/08-0139-devolution-war-of/devolution__war_of">Devolution, War of</a></li>
+  <li class="c018"><a href="/article/08-0153-de-wet-christian/de_wet__christian">De Wet</a></li>
+  <li class="c018"><a href="/article/08-0226-diebitsch-hans-karl-friedrich-anton/diebitsch__hans_karl_friedrich_anton">Diebitsch</a></li>
+  <li class="c018"><a href="/article/08-0327-dirk/dirk">Dirk</a></li>
+  <li class="c018"><a href="/article/08-0351-division/division">Division</a></li>
+  <li class="c018"><a href="/article/08-0386-dodge-theodore-ayrault/dodge__theodore_ayrault">Dodge, Theodore A.</a></li>
+  <li class="c018"><a href="/article/08-0435-donelson-fort/donelson__fort">Donelson, Fort</a></li>
+  <li class="c018"><a href="/article/08-0462-doubleday-abner/doubleday__abner">Doubleday</a></li>
+  <li class="c018"><a href="/article/08-0494-dragoon/dragoon">Dragoon</a></li>
+  <li class="c018"><a href="/article/08-0599-dresden/dresden">Dresden</a></li>
+  <li class="c018"><a href="/article/08-0675-du-guesclin-bertrand/du_guesclin__bertrand">Du Guesclin, Bertrand</a></li>
+  <li class="c018"><a href="/article/08-0694-dumouriez-charles-fran-ois/dumouriez__charles_françois">Dumouriez</a></li>
+  <li class="c018"><a href="/article/08-0696-dunbar/dunbar">Dunbar</a></li>
+  <li class="c018"><a href="/article/08-0703-dundonald-thomas-cochrane-10th-earl-of/dundonald__thomas_cochrane__10th_earl_of">Dundonald</a></li>
+  <li class="c018"><a href="/article/08-0705-dunes-battle-of/dunes__battle_of">Dunes</a></li>
+  <li class="c018">Dunois, Count of</li>
+  <li class="c018">Dupont de l’Etang</li>
+  <li class="c018"><a href="/article/08-0716-d-ppel/düppel">Düppel</a></li>
+  <li class="c018"><a href="/article/08-0720-durando-giacomo/durando__giacomo">Durando</a></li>
+  <li class="c018"><a href="/article/08-0756-dutch-wars/dutch_wars">Dutch Wars</a></li>
+  <li class="c018"><a href="/article/08-0825-early-english-period/early_english_period">Early</a></li>
+  <li class="c018">Echelon</li>
+  <li class="c018">Edgehill</li>
+  <li class="c018"><a href="/article/08-0964-edhem-pasha/edhem_pasha">Edhem Pasha</a></li>
+  <li class="c018">Edward (the Black Prince)</li>
+  <li class="c018"><a href="/article/08-1021-edward-iii/edward_iii_">Edward III</a></li>
+  <li class="c018"><a href="/article/08-1022-edward-iv/edward_iv_">Edward IV</a></li>
+  <li class="c018"><a href="/article/09-0364-emmanuel-philibert/emmanuel_philibert">Emmanuel Philibert</a></li>
+  <li class="c018"><a href="/article/09-0364-emmanuel/emmanuel">Emmanuel, Victor</a></li>
+  <li class="c018"><a href="/article/09-0393-enceinte/enceinte">Enceinte</a></li>
+  <li class="c018"><a href="/article/09-0428-s5/enfilade">Enfilade</a></li>
+  <li class="c018"><a href="/article/09-0431-engineers-military/engineers__military">Engineers, Military</a></li>
+  <li class="c018"><a href="/article/09-0685-ensign/ensign">Ensign</a></li>
+  <li class="c018"><a href="/article/09-0698-s2/epaminondas">Epaminondas</a></li>
+  <li class="c018"><a href="/article/09-0698-s4/epaulette">Epaulette</a></li>
+  <li class="c018"><a href="/article/09-0815-s4/essex">Essex</a></li>
+  <li class="c018"><a href="/article/09-0914-s5/eugene_of_savoy">Eugene of Savoy</a></li>
+  <li class="c018"><a href="/article/09-0994-eutawville/eutawville">Eutawville</a></li>
+  <li class="c018"><a href="/article/10-0052-ewell-richard-stoddert/ewell__richard_stoddert">Ewell</a></li>
+  <li class="c018"><a href="/article/10-0076-s3/exelmans__rené_joseph_isidore">Exelmans</a></li>
+  <li class="c018"><a href="/article/10-0093-s2/explosives">Explosives</a></li>
+  <li class="c018"><a href="/article/10-0112-s3/eylau">Eylau</a></li>
+  <li class="c018"><a href="/article/10-0125-s3/fabius">Fabius (Cunctator)</a></li>
+  <li class="c018"><a href="/article/10-0138-faidherbe-louis-l-on-c-sar/faidherbe__louis_léon_césar">Faidherbe</a></li>
+  <li class="c018"><a href="/article/10-0143-fairfax-of-cameron-thomas-fairfax-3rd-baron/fairfax_of_cameron__thomas_fairfax__3rd_baron">Fairfax of Cameron</a></li>
+  <li class="c018"><a href="/article/10-0145-s5/fair_oaks">Fair Oaks, Va.</a></li>
+  <li class="c018"><a href="/article/10-0195-s4/farnese">Farnese (Duke of Parma)</a></li>
+  <li class="c018"><a href="/article/10-0204-s3/fascine">Fascine</a></li>
+  <li class="c018"><a href="/article/10-0273-s2/ferdinand">Ferdinand (of Brunswick)</a></li>
+  <li class="c018"><a href="/article/10-0356-s3/filibuster">Filibuster</a></li>
+  <li class="c018"><a href="/article/10-0368-finck-hermann/finck__hermann">Finck</a></li>
+  <li class="c018"><a href="/article/10-0511-s2/fleetwood__charles">Fleetwood, Charles</a></li>
+  <li class="c018"><a href="/article/10-0517-s4/fleurus">Fleurus</a></li>
+  <li class="c018"><a href="/article/10-0544-flodden/flodden">Flodden</a></li>
+  <li class="c018"><a href="/article/10-0607-s2/flying-fox">Flying</a></li>
+  <li class="c018"><a href="/article/10-0606-flying-column/flying_column">Flying Column</a></li>
+  <li class="c018"><a href="/article/10-0616-s3/foix">Foix, Gaston de</a></li>
+  <li class="c018"><a href="/article/10-0617-s2/folard__jean_charles">Folard, Jean Charles</a></li>
+  <li class="c018"><a href="/article/10-0630-s3/fontenoy">Fontenoy</a></li>
+  <li class="c018"><a href="/article/10-0681-forey-lie-fr-d-ric/forey__élie_frédéric">Forey</a></li>
+  <li class="c018"><a href="/article/10-0687-s6/forlorn_hope">Forlorn Hope</a></li>
+  <li class="c018"><a href="/article/10-0694-s2/forrest__nathan_bedford">Forrest, N. B.</a></li>
+  <li class="c018"><a href="/article/10-0700-s7/fortification_and_siegecraft">Fortification and Siegecraft</a></li>
+  <li class="c018">Foy</li>
+  <li class="c018"><a href="/article/10-0956-s4/francis_i">Francis I (of France)</a></li>
+  <li class="c018"><a href="/article/11-0018-s2/franco-german_war">Franco-German War</a></li>
+  <li class="c018"><a href="/article/11-0045-franklin-william-buel/franklin__william_buel">Franklin, W. B.</a></li>
+  <li class="c018"><a href="/article/11-0058-s2/frederick_ii">Frederick II</a></li>
+  <li class="c018"><a href="/article/11-0061-s2/frederick_iii">Frederick III (of Germany)</a></li>
+  <li class="c018"><a href="/article/11-0071-s3/frederick_v">Frederick V</a></li>
+  <li class="c018">Frederick Charles (of Prussia)</li>
+  <li class="c018"><a href="/article/11-0074-s2/frederick_henry">Frederick Henry</a></li>
+  <li class="c018">Frederick the Great</li>
+  <li class="c018">Frederick William of Brandenburg</li>
+  <li class="c018"><a href="/article/11-0080-s3/fredericksburg">Fredericksburg, Va.</a></li>
+  <li class="c018"><a href="/article/11-0104-s5/freiburg_im_breisgau">Freiburg im Breisgau</a></li>
+  <li class="c018"><a href="/article/11-0110-s3/fremont">Fremont, J. C.</a></li>
+  <li class="c018"><a href="/article/11-0183-french-revolutionary-wars/french_revolutionary_wars">French Revolutionary Wars</a></li>
+  <li class="c018"><a href="/article/11-0224-s5/freycinet__louis_claude_desaulses_de">Freycinet</a></li>
+  <li class="c018"><a href="/article/11-0228-friedland-austria/friedland__austria_">Friedland</a></li>
+  <li class="c018"><a href="/article/11-0243-s5/frigate">Frigate</a></li>
+  <li class="c018">Fronde</li>
+  <li class="c018"><a href="/article/11-0263-s7/frossard__charles_auguste">Frossard</a></li>
+  <li class="c018"><a href="/article/11-0302-s2/fugleman">Fugleman</a></li>
+  <li class="c018"><a href="/article/11-0387-fusilier/fusilier">Fusilier</a></li>
+  <li class="c018"><a href="/article/11-0398-gabion/gabion">Gabion</a></li>
+  <li class="c018"><a href="/article/11-0404-s3/gage__thomas">Gage, Thomas</a></li>
+  <li class="c018"><a href="/article/11-0431-s5/gallas">Gallas</a></li>
+  <li class="c018"><a href="/article/11-0437-galliffet-gaston-alexandre-auguste-marquis-de/galliffet__gaston_alexandre_auguste__marquis_de">Galliffet</a></li>
+  <li class="c018"><a href="/article/11-0453-s2/gambetta__léon">Gambetta</a></li>
+  <li class="c018"><a href="/article/11-0498-garrison/garrison">Garrison</a></li>
+  <li class="c018"><a href="/article/11-0547-s3/gates__horatio">Gates, Horatio</a></li>
+  <li class="c018"><a href="/article/11-0552-s3/gauntlet">Gauntlet</a></li>
+  <li class="c018"><a href="/article/11-0597-general/general">General</a></li>
+  <li class="c018">George II of England</li>
+  <li class="c018"><a href="/article/11-0785-s3/gerard">Gerard</a></li>
+  <li class="c018"><a href="/article/11-0825-germantown/germantown">Germantown</a></li>
+  <li class="c018"><a href="/article/11-0935-s5/gettysburg">Gettysburg</a></li>
+  <li class="c018"><a href="/article/12-0040-s3/gingall">Gingall or Jingal</a></li>
+  <li class="c018"><a href="/article/12-0076-glacis/glacis">Glacis</a></li>
+  <li class="c018"><a href="/article/12-0165-s9/gneisenau__august_wilhelm_anton">Gneisenau</a></li>
+  <li class="c018"><a href="/article/12-0189-s3/godfrey_of_bouillon">Godfrey of Bouillon</a></li>
+  <li class="c018"><a href="/article/12-0197-s2/goeben__august_karl_von">Goeben</a></li>
+  <li class="c018"><a href="/article/12-0263-s6/gorchakov">Gorchakov</a></li>
+  <li class="c018"><a href="/article/12-0274-s2/gorget">Gorget</a></li>
+  <li class="c018"><a href="/article/12-0275-goring/goring__george_goring">Goring</a></li>
+  <li class="c018">Gouvion St. Cyr</li>
+  <li class="c018"><a href="/article/12-0358-s2/granby__john_manners">Granby</a></li>
+  <li class="c018"><a href="/article/12-0359-s3/grand_alliance__war_of_the">Grand Alliance, War of the</a></li>
+  <li class="c018"><a href="/article/12-0372-s6/grant__ulysses_simpson">Grant, U. S.</a></li>
+  <li class="c018"><a href="/article/12-0381-s3/grape">Grape</a></li>
+  <li class="c018"><a href="/article/12-0420-great-rebellion/great_rebellion">Great Rebellion</a></li>
+  <li class="c018"><a href="/article/12-0441-greco-turkish-war-1897/greco-turkish_war__1897">Greco-Turkish War</a></li>
+  <li class="c018"><a href="/article/12-0517-greek-fire/greek_fire">Greek Fire</a></li>
+  <li class="c018"><a href="/article/12-0518-greek-independence-war-of/greek_independence__war_of">Greek Independence, War of</a></li>
+  <li class="c018">Greene, F. V.</li>
+  <li class="c018"><a href="/article/12-0563-s4/greene__nathanael">Greene, Nathanael</a></li>
+  <li class="c018"><a href="/article/12-0603-grenade/grenade">Grenade</a></li>
+  <li class="c018"><a href="/article/12-0604-grenadier/grenadier">Grenadier</a></li>
+  <li class="c018"><a href="/article/12-0605-s2/grenville__sir_bevil">Grenville, Sir Bevil</a></li>
+  <li class="c018"><a href="/article/12-0617-s6/gribeauval__jean_baptiste_de">Gribeauval</a></li>
+  <li class="c018"><a href="/article/12-0649-grouchy-emmanuel-marquis-de/grouchy__emmanuel__marquis_de">Grouchy</a></li>
+  <li class="c018">Guards and Household Troops</li>
+  <li class="c018">Guardship</li>
+  <li class="c018">Guibert, Comte de</li>
+  <li class="c018"><a href="/article/12-0711-guichard-karl-gottlieb/guichard__karl_gottlieb">Guichard, Karl Gottlieb</a></li>
+  <li class="c018"><a href="/article/12-0742-s6/gun">Gun</a></li>
+  <li class="c018"><a href="/article/12-0746-s3/guncotton">Guncotton</a></li>
+  <li class="c018"><a href="/article/12-0747-s4/gunner">Gunner</a></li>
+  <li class="c018"><a href="/article/12-0748-s3/gunpowder">Gunpowder</a></li>
+  <li class="c018"><a href="/article/12-0754-s2/gun-room">Gun-Room</a></li>
+  <li class="c018"><a href="/article/12-0764-gustavus-adolphus-union/gustavus_adolphus_union">Gustavus Adolphus</a></li>
+  <li class="c018"><a href="/article/12-0855-s2/halbert">Halbert</a></li>
+  <li class="c018"><a href="/article/12-0879-s3/halleck__henry_wager">Halleck, H. W.</a></li>
+  <li class="c018"><a href="/article/12-0921-hamley-sir-edward-bruce/hamley__sir_edward_bruce">Hamley, Sir Edward</a></li>
+  <li class="c018"><a href="/article/12-0934-s4/hancock">Hancock</a></li>
+  <li class="c018"><a href="/article/12-0945-s4/hannibal">Hannibal</a></li>
+  <li class="c018"><a href="/article/12-0947-hanno/hanno">Hanno</a></li>
+  <li class="c018"><a href="/article/12-0966-s3/hardee__william_joseph">Hardee</a></li>
+  <li class="c018"><a href="/article/13-0027-harper-s-ferry/harper_s_ferry">Harper’s Ferry, W. Va.</a></li>
+  <li class="c018"><a href="/article/13-0037-s2/harrison__thomas">Harrison, Thomas</a></li>
+  <li class="c018"><a href="/article/13-0063-s2/hasdrubal">Hasdrubal</a></li>
+  <li class="c018"><a href="/article/13-0066-s3/hastings">Hastings</a></li>
+  <li class="c018"><a href="/article/13-0094-haversack/haversack">Haversack</a></li>
+  <li class="c018"><a href="/article/13-0236-heliograph/heliograph">Heliograph</a></li>
+  <li class="c018"><a href="/article/13-0260-s1/helmet">Helmet</a></li>
+  <li class="c018"><a href="/article/13-0280-s3/henderson__george_francis_robert">Henderson, G. F. R.</a></li>
+  <li class="c018">Henry V (of England)</li>
+  <li class="c018">Henry VI (Roman Emperor)</li>
+  <li class="c018"><a href="/article/13-0397-herodotus/herodotus">Herodotus</a></li>
+  <li class="c018"><a href="/article/13-0407-herrings-battle-of-the/herrings__battle_of_the">Herrings, Battle of the</a></li>
+  <li class="c018"><a href="/article/13-0424-s5/hess">Hess</a></li>
+  <li class="c018"><a href="/article/13-0479-s5/hill__ambrose_powell">Hill, A. P.</a></li>
+  <li class="c018"><a href="/article/13-0480-s1/hill__daniel_harvey">Hill, D. H.</a></li>
+  <li class="c018"><a href="/article/13-0483-s2/hill">Hill, Lord Rowland</a></li>
+  <li class="c018"><a href="/article/13-0586-s6/hohenfriedberg">Hohenfriedberg</a></li>
+  <li class="c018">Hohenlohe-Ingelfingen</li>
+  <li class="c018"><a href="/article/13-0636-s2/holster">Holster</a></li>
+  <li class="c018"><a href="/article/13-0685-s3/hood">Hood</a></li>
+  <li class="c018"><a href="/article/13-0688-s2/hooker__joseph">Hooker</a></li>
+  <li class="c018">Hopton, Baron</li>
+  <li class="c018"><a href="/article/13-0820-hostage/hostage">Hostage</a></li>
+  <li class="c018">Hotham, John</li>
+  <li class="c018"><a href="/article/13-0858-s3/howard__oliver_otis">Howard, O. O.</a></li>
+  <li class="c018"><a href="/article/13-0863-howe-william-howe-5th-viscount/howe__william_howe__5th_viscount">Howe, William</a></li>
+  <li class="c018"><a href="/article/13-0865-s2/howitzer">Howitzer</a></li>
+  <li class="c018"><a href="/article/13-0894-s9/hull">Hull, William</a></li>
+  <li class="c018"><a href="/article/13-0918-hundred-years-war/hundred_years__war">Hundred Years’ War</a></li>
+  <li class="c018"><a href="/article/14-0019-hussar/hussar">Hussar</a></li>
+  <li class="c018"><a href="/article/14-0546-s2/infantry">Infantry</a></li>
+  <li class="c018"><a href="/article/14-0604-s2/inkerman__battle_of">Inkerman</a></li>
+  <li class="c018"><a href="/article/14-0618-inouye-kaoru-marquess/inouye__kaoru__marquess">Inouye</a></li>
+  <li class="c018"><a href="/article/14-0907-s6/isly">Isly</a></li>
+  <li class="c018"><a href="/article/14-0945-italian-wars/italian_wars">Italian Wars</a></li>
+  <li class="c018"><a href="/article/15-0123-s4/jackson__andrew">Jackson, Andrew</a></li>
+  <li class="c018">Jackson, T. J. (“Stonewall”)</li>
+  <li class="c018">James IV (of Scotland)</li>
+  <li class="c018">Japan, <i>Army</i></li>
+  <li class="c018"><a href="/article/15-0340-jemappes/jemappes">Jemappes</a></li>
+  <li class="c018"><a href="/article/15-0447-joan-of-arc/joan_of_arc">Joan of Arc</a></li>
+  <li class="c018">John of Bohemia</li>
+  <li class="c018">John II of France</li>
+  <li class="c018"><a href="/article/15-0499-s3/johnston__albert_sidney">Johnston, A. S.</a></li>
+  <li class="c018"><a href="/article/15-0501-s2/johnston__joseph_eggleston">Johnston, J. E.</a></li>
+  <li class="c018">Jomini, Baron A. H.</li>
+  <li class="c018"><a href="/article/15-0549-s3/joubert__petrus_jacobus">Joubert, P. J.</a></li>
+  <li class="c018"><a href="/article/15-0551-s2/jourdan__jean_baptiste">Jourdan</a></li>
+  <li class="c018"><a href="/article/15-0572-s5/jugurtha">Jugurtha</a></li>
+  <li class="c018"><a href="/article/15-0588-junot-laure/junot__laure">Junot</a></li>
+  <li class="c018"><a href="/article/15-0666-s3/kalb__johann">Kalb</a></li>
+  <li class="c018"><a href="/article/15-0666-s6/kalckreuth__leopold">Kalckreuth</a></li>
+  <li class="c018"><a href="/article/15-0735-kearny/kearny">Kearny</a></li>
+  <li class="c018"><a href="/article/15-0744-s2/keith__francis_edward_james">Keith, F. E. J.</a></li>
+  <li class="c018"><a href="/article/15-0746-s6/kellermann__françois_christophe_de">Kellermann</a></li>
+  <li class="c018"><a href="/article/15-0799-khaki/khaki">Khaki</a></li>
+  <li class="c018"><a href="/article/15-0805-s6/khevenhüller__ludwig_andreas">Khevenhüller, L. A.</a></li>
+  <li class="c018"><a href="/article/15-0838-kinglake-alexander-william/kinglake__alexander_william">Kinglake</a></li>
+  <li class="c018"><a href="/article/15-0848-king-s-mountain/king_s_mountain">King’s Mountain</a></li>
+  <li class="c018">Kitchener, Lord</li>
+  <li class="c018"><a href="/article/15-0867-kite/kite">Kite</a></li>
+  <li class="c018"><a href="/article/15-0874-s2/kléber__jean_baptiste">Kléber</a></li>
+  <li class="c018"><a href="/article/15-0903-s3/knobkerrie">Knobkerrie</a></li>
+  <li class="c018"><a href="/article/15-0912-s2/knox__henry">Knox, Henry</a></li>
+  <li class="c018"><a href="/article/15-0959-s2/kray_von_krajova__paul">Kray von Krajova</a></li>
+  <li class="c018"><a href="/article/15-0960-s4/kriegspiel">Kriegspiel</a></li>
+  <li class="c018"><a href="/article/15-0965-s2/kruger__stephanus_johannes_paulus">Kruger</a></li>
+  <li class="c018"><a href="/article/15-0981-s2/kunersdorf">Kunersdorf</a></li>
+  <li class="c018"><a href="/article/15-0986-s4/kuroki__itei">Kuroki</a></li>
+  <li class="c018"><a href="/article/15-0986-s5/kuropatkin__alexei_nikolaievich">Kuropatkin</a></li>
+  <li class="c018"><a href="/article/15-0990-s2/kutusov__golenishchev-kutuzov___mikhail_larionovich">Kutusov</a></li>
+  <li class="c018"><a href="/article/16-0015-laager/laager">Laager</a></li>
+  <li class="c018"><a href="/article/16-0087-s3/lafayette">Lafayette</a></li>
+  <li class="c018">Lally, Comte de</li>
+  <li class="c018"><a href="/article/16-0128-s2/lambert__john">Lambert, John</a></li>
+  <li class="c018"><a href="/article/16-0122-s3/la_marmora__alfonso_ferrero">La Marmora</a></li>
+  <li class="c018"><a href="/article/16-0163-lancaster-house-of/lancaster__house_of">Lancaster, House of</a></li>
+  <li class="c018"><a href="/article/16-0170-lance/lance">Lance</a></li>
+  <li class="c018"><a href="/article/16-0187-s4/landsknecht">Landsknecht</a></li>
+  <li class="c018"><a href="/article/16-0188-s3/landsturm">Landsturm</a></li>
+  <li class="c018"><a href="/article/16-0188-s4/landwehr">Landwehr</a></li>
+  <li class="c018"><a href="/article/16-0197-langlois-hippolyte/langlois__hippolyte">Langlois, H.</a></li>
+  <li class="c018"><a href="/article/16-0202-s4/lannes__jean">Lannes</a></li>
+  <li class="c018"><a href="/article/16-0250-lasalle-antoine-chevalier-louis-collinet/lasalle__antoine_chevalier_louis_collinet">Lasalle</a></li>
+  <li class="c018"><a href="/article/16-0307-s2/lauriston__jacques_alexandre_bernard_law">Lauriston</a></li>
+  <li class="c018">Leboeuf</li>
+  <li class="c018"><a href="/article/16-0380-s5/lee__fitzhugh">Lee, Fitz-Hugh</a></li>
+  <li class="c018"><a href="/article/16-0381-s3/lee__henry">Lee, Henry</a></li>
+  <li class="c018"><a href="/article/16-0382-s4/lee__robert_edward">Lee, R. E.</a></li>
+  <li class="c018"><a href="/article/16-0392-s5/lefebvre-desnoëttes__charles">Lefebvre-Desnoëttes</a></li>
+  <li class="c018"><a href="/article/16-0398-legion/legion">Legion</a></li>
+  <li class="c018"><a href="/article/16-0419-leipzig/leipzig">Leipzig</a></li>
+  <li class="c018"><a href="/article/16-0428-le-mans/le_mans">Le Mans</a></li>
+  <li class="c018"><a href="/article/16-0475-s4/leonidas">Leonidas</a></li>
+  <li class="c018"><a href="/article/16-0524-leuthen/leuthen">Leuthen</a></li>
+  <li class="c018"><a href="/article/16-0527-s2/leven">Leven</a></li>
+  <li class="c018"><a href="/article/16-0546-lexington-baron/lexington__baron">Lexington</a></li>
+  <li class="c018"><a href="/article/16-0701-s3/ligonier__john__jean_louis__ligonier">Ligonier</a></li>
+  <li class="c018"><a href="/article/16-0757-linstock/linstock">Linstock</a></li>
+  <li class="c018"><a href="/article/16-0888-s4/logan__john_alexander">Logan, J. A.</a></li>
+  <li class="c018"><a href="/article/16-1006-long-island/long_island">Long Island, N. Y.</a></li>
+  <li class="c018"><a href="/article/16-1009-s3/longstreet__james">Longstreet</a></li>
+  <li class="c018"><a href="/article/17-0023-lorraine/lorraine">Lorraine, Charles of</a></li>
+  <li class="c018"><a href="/article/17-0040-s3/loudon__ernst_gideon">Loudon</a></li>
+  <li class="c018"><a href="/article/17-0051-s2/louis_ix">Louis IX (of France)</a></li>
+  <li class="c018"><a href="/article/17-0056-s2/louis_xiv">Louis XIV</a></li>
+  <li class="c018"><a href="/article/17-0084-s2/louvois__françois_michel_le_tellier">Louvois</a></li>
+  <li class="c018"><a href="/article/17-0158-s4/lützen">Lützen</a></li>
+  <li class="c018">Luxembourg</li>
+  <li class="c018">Luxembourg, Duke of</li>
+  <li class="c018">Lord Lynedoch</li>
+  <li class="c018"><a href="/article/17-0188-s3/lyon__nathaniel">Lyon, Nathaniel</a></li>
+  <li class="c018"><a href="/article/17-0216-s3/mcclellan__george_brinton">McClellan</a></li>
+  <li class="c018"><a href="/article/17-0217-s2/mcclernand__john_alexander">McClernand</a></li>
+  <li class="c018"><a href="/article/17-0220-s4/mccook__alexander_mcdowell">McCook, A. McD.</a></li>
+  <li class="c018"><a href="/article/17-0224-s4/macdonald__flora">Macdonald</a></li>
+  <li class="c018"><a href="/article/17-0229-s3/mcdowell__irvin">McDowell</a></li>
+  <li class="c018"><a href="/article/17-0283-s2/mcpherson__james_birdseye">McPherson</a></li>
+  <li class="c018">Macedon</li>
+  <li class="c018">Machine Gun</li>
+  <li class="c018"><a href="/article/17-0278-macmahon-marie-edm-patrice-maurice-de/macmahon__marie_edmé_patrice_maurice_de">MacMahon</a></li>
+  <li class="c018"><a href="/article/17-0408-s1/mago">Mago</a></li>
+  <li class="c018"><a href="/article/17-0466-s3/major">Major</a></li>
+  <li class="c018"><a href="/article/17-0507-s6/malleson__george_bruce">Malleson, George Bruce</a></li>
+  <li class="c018"><a href="/article/17-0514-s4/malplaquet">Malplaquet</a></li>
+  <li class="c018"><a href="/article/17-0536-s3/mameluke">Mameluke</a></li>
+  <li class="c018"><a href="/article/17-0561-manchester/manchester">Manchester, 2d Earl of</a></li>
+  <li class="c018">Military Manoeuvres</li>
+  <li class="c018"><a href="/article/17-0616-mansfeld/mansfeld">Mansfeld</a></li>
+  <li class="c018"><a href="/article/17-0621-s3/manteuffel__edwin">Manteuffel</a></li>
+  <li class="c018"><a href="/article/17-0621-s4/mantineia">Mantineia</a></li>
+  <li class="c018"><a href="/article/17-0692-marathon/marathon">Marathon</a></li>
+  <li class="c018"><a href="/article/17-0700-s3/marceau-desgraviers__françois_séverin">Marceau</a></li>
+  <li class="c018"><a href="/article/17-0705-march/march">March</a></li>
+  <li class="c018"><a href="/article/17-0716-s3/marengo">Marengo</a></li>
+  <li class="c018"><a href="/article/17-0732-s6/marietta">Marietta, Ga.</a></li>
+  <li class="c018"><a href="/article/17-0733-s5/marignan__battle_of">Marignan</a></li>
+  <li class="c018"><a href="/article/17-0739-s5/marion__francis">Marion, Francis</a></li>
+  <li class="c018"><a href="/article/17-0742-s5/marius__gaius">Marius</a></li>
+  <li class="c018"><a href="/article/17-0757-s2/marlborough">Marlborough</a></li>
+  <li class="c018"><a href="/article/17-0761-marmont-auguste-fr-d-ric-louis-viesse-de/marmont__auguste_frédéric_louis_viesse_de">Marmont</a></li>
+  <li class="c018"><a href="/article/17-0794-marston-moor/marston_moor__battle_of">Marston Moor</a></li>
+  <li class="c018"><a href="/article/17-0801-martello-tower/martello_tower">Martello Tower</a></li>
+  <li class="c018"><a href="/article/17-0807-s3/martial_law">Martial Law</a></li>
+  <li class="c018"><a href="/article/17-0817-martinet/martinet">Martinet</a></li>
+  <li class="c018"><a href="/article/17-0884-s2/masséna__andré">Masséna</a></li>
+  <li class="c018"><a href="/article/17-0885-s2/massenbach__christian_karl_august_ludwig_von">Massenbach</a></li>
+  <li class="c018"><a href="/article/17-0888-s2/massinissa">Massinissa</a></li>
+  <li class="c018"><a href="/article/17-0909-matross/matross">Matross</a></li>
+  <li class="c018"><a href="/article/17-0929-maurice-of-nassau/maurice_of_nassau">Maurice of Nassau</a></li>
+  <li class="c018"><a href="/article/17-0936-s5/mavrocordato">Mavrocordato</a></li>
+  <li class="c018"><a href="/article/17-0939-s4/maximilian_i">Maximilian I (of Bavaria)</a></li>
+  <li class="c018"><a href="/article/17-0965-s2/meade__william">Meade</a></li>
+  <li class="c018"><a href="/article/17-0965-s4/meagher__thomas_francis">Meagher, T. F.</a></li>
+  <li class="c018"><a href="/article/18-0152-s6/menshikov__alexander_danilovich">Menshikov</a></li>
+  <li class="c018"><a href="/article/18-0169-mercenary/mercenary">Mercenary</a></li>
+  <li class="c018"><a href="/article/18-0178-s3/mercy">Mercy</a></li>
+  <li class="c018"><a href="/article/18-0192-s5/merritt__wesley">Merritt</a></li>
+  <li class="c018"><a href="/article/18-0328-metz/metz">Metz</a></li>
+  <li class="c018">Meuse Line</li>
+  <li class="c018">Milan of Servia</li>
+  <li class="c018"><a href="/article/18-0466-s5/miles__nelson_appleton">Miles</a></li>
+  <li class="c018"><a href="/article/18-0469-s2/military_law">Military Law</a></li>
+  <li class="c018"><a href="/article/18-0473-militia/militia">Militia</a></li>
+  <li class="c018"><a href="/article/18-0503-s4/miltiades">Miltiades</a></li>
+  <li class="c018"><a href="/article/18-0527-minden/minden">Minden</a></li>
+  <li class="c018"><a href="/article/18-0592-minute-men/minute_men">Minute Men</a></li>
+  <li class="c018"><a href="/article/18-0646-mitchel-ormsby-macknight/mitchel__ormsby_macknight">Mitchel, O. M.</a></li>
+  <li class="c018"><a href="/article/18-0665-moat/moat">Moat</a></li>
+  <li class="c018"><a href="/article/18-0707-moltke-adam-gottlob-count/moltke__adam_gottlob__count">Moltke</a></li>
+  <li class="c018"><a href="/article/18-0723-s2/moncey__bon_adrien_jeannot_de">Moncey</a></li>
+  <li class="c018"><a href="/article/18-0757-monmouth/monmouth">Monmouth</a></li>
+  <li class="c018"><a href="/article/18-0781-s4/montalembert__marc_rené">Montalembert</a></li>
+  <li class="c018"><a href="/article/18-0791-s5/montcalm_de_saint_véran__louis_joseph">Montcalm</a></li>
+  <li class="c018"><a href="/article/18-0794-s3/montecucculi__montecuccoli___raimondo">Montecucculi</a></li>
+  <li class="c018"><a href="/article/18-0814-montgomery-richard/montgomery__richard">Montgomery, Richard</a></li>
+  <li class="c018"><a href="/article/18-0817-montmorency/montmorency">Montmorency (constable)</a></li>
+  <li class="c018"><a href="/article/18-0824-s2/montrose">Montrose</a></li>
+  <li class="c018"><a href="/article/18-0841-s3/moore__sir_john">Moore, Sir John</a></li>
+  <li class="c018"><a href="/article/18-0858-s4/moreau__gustave">Moreau</a></li>
+  <li class="c018"><a href="/article/18-0865-s2/morgan__daniel">Morgan, Daniel</a></li>
+  <li class="c018"><a href="/article/18-0866-s2/morgan__john_hunt">Morgan, J. H.</a></li>
+  <li class="c018"><a href="/article/18-0869-morion/morion">Morion</a></li>
+  <li class="c018"><a href="/article/18-0910-s2/mortier__edouard_adolphe_casimir_joseph">Mortier</a></li>
+  <li class="c018">Moselle Line</li>
+  <li class="c018"><a href="/article/18-0967-s6/moultrie__william">Moultrie, William</a></li>
+  <li class="c018"><a href="/article/18-0971-s6/mounted_infantry">Mounted Infantry</a></li>
+  <li class="c018"><a href="/article/19-0042-murat-joachim/murat__joachim">Murat</a></li>
+  <li class="c018"><a href="/article/19-0106-musket/musket">Musket</a></li>
+  <li class="c018"><a href="/article/19-0113-s3/muster">Muster</a></li>
+  <li class="c018"><a href="/article/19-0115-mutiny/mutiny">Mutiny</a></li>
+  <li class="c018"><a href="/article/19-0190-napier-sir-william-francis-patrick/napier__sir_william_francis_patrick">Napier, Sir William</a></li>
+  <li class="c018"><a href="/article/19-0231-napoleon/napoleon">Napoleon</a></li>
+  <li class="c018"><a href="/article/19-0231-napoleonic-campaigns/napoleonic_campaigns">Napoleonic Campaigns</a></li>
+  <li class="c018"><a href="/article/19-0226-napoleon-iii/napoleon_iii_">Napoleon III</a></li>
+  <li class="c018"><a href="/article/19-0259-s2/naseby">Naseby</a></li>
+  <li class="c018"><a href="/article/19-0261-nashville/nashville">Nashville</a></li>
+  <li class="c018"><a href="/article/19-0298-s2/navarro__pedro">Navarro</a></li>
+  <li class="c018"><a href="/article/19-0357-s2/needle-gun">Needle-gun</a></li>
+  <li class="c018"><a href="/article/19-0359-s2/neerwinden">Neerwinden</a></li>
+  <li class="c018"><a href="/article/19-0480-s2/newark">Newark, Lord</a></li>
+  <li class="c018"><a href="/article/19-0490-s2/newcastle__dukes_of">Newcastle, Duke of</a></li>
+  <li class="c018"><a href="/article/19-0549-new-orleans/new_orleans">New Orleans</a></li>
+  <li class="c018">Ney</li>
+  <li class="c018"><a href="/article/19-0697-s3/niel__adolphe">Niel</a></li>
+  <li class="c018">Nitro-glycerine</li>
+  <li class="c018">Noailles</li>
+  <li class="c018"><a href="/article/19-0768-n-rdlingen/nördlingen">Nördlingen</a></li>
+  <li class="c018"><a href="/article/19-0771-norfolk/norfolk">Norfolk, 3rd Duke</a></li>
+  <li class="c018"><a href="/article/19-0874-nozu-michitsura/nozu__michitsura">Nozu</a></li>
+  <li class="c018"><a href="/article/20-0026-s2/o_donnell__henry_joseph">O’Donnell, H. J.</a></li>
+  <li class="c018"><a href="/article/20-0034-officers/officers">Officers</a></li>
+  <li class="c018">Oku</li>
+  <li class="c018"><a href="/article/20-0122-olynthus/olynthus">Olynthus</a></li>
+  <li class="c018"><a href="/article/20-0137-s2/onosander">Onosander</a></li>
+  <li class="c018"><a href="/article/20-0215-s3/ordnance">Ordnance</a></li>
+  <li class="c018"><a href="/article/20-0320-s4/orleans">Orleans</a></li>
+  <li class="c018"><a href="/article/20-0385-osman-pasha/osman__pasha_">Osman</a></li>
+  <li class="c018"><a href="/article/20-0411-s4/oudenarde">Oudenarde</a></li>
+  <li class="c018"><a href="/article/20-0412-oudinot-charles-nicolas/oudinot__charles_nicolas">Oudinot</a></li>
+  <li class="c018"><a href="/article/20-0458-oyama-iwao-prince/oyama__iwao__prince">Oyama</a></li>
+  <li class="c018"><a href="/article/20-0571-s2/pajol__claude_pierre">Pajol</a></li>
+  <li class="c018">Palafox y Melzi</li>
+  <li class="c018"><a href="/article/20-0737-s2/panoply">Panoply</a></li>
+  <li class="c018"><a href="/article/20-0807-parade/parade">Parade</a></li>
+  <li class="c018"><a href="/article/20-0808-s2/parados">Parados</a></li>
+  <li class="c018"><a href="/article/20-0818-s4/parallels">Parallels</a></li>
+  <li class="c018"><a href="/article/20-0863-s2/paris">Paris</a></li>
+  <li class="c018"><a href="/article/20-0922-parole/parole">Parole</a></li>
+  <li class="c018"><a href="/article/20-0933-partisan/partisan">Partisan</a></li>
+  <li class="c018"><a href="/article/20-0945-s7/paskevich__ivan_fedorovich">Paskevich</a></li>
+  <li class="c018"><a href="/article/20-0946-s2/pasley__sir_charles_william">Pasley, Sir C. W.</a></li>
+  <li class="c018"><a href="/article/20-1003-patrol/patrol">Patrol</a></li>
+  <li class="c018"><a href="/article/20-1039-s4/pavis">Pavis, or Pavise</a></li>
+  <li class="c018">Pelissier</li>
+  <li class="c018"><a href="/article/21-0085-peloponnesian-war/peloponnesian_war">Peloponnesian War</a></li>
+  <li class="c018"><a href="/article/21-0104-peninsular-war/peninsular_war">Peninsular War</a></li>
+  <li class="c018"><a href="/article/21-0162-s2/pericles">Pericles</a></li>
+  <li class="c018"><a href="/article/21-0204-perseus-astronomy/perseus__astronomy_">Perseus</a></li>
+  <li class="c018"><a href="/article/21-0299-pescara/pescara">Pescara</a></li>
+  <li class="c018"><a href="/article/21-0302-s3/petard">Petard</a></li>
+  <li class="c018"><a href="/article/21-0314-s2/peterborough">Peterborough</a></li>
+  <li class="c018">Petersburg Campaign</li>
+  <li class="c018"><a href="/article/21-0354-s2/petronel">Petronel</a></li>
+  <li class="c018"><a href="/article/21-0358-petty-officer/petty-officer">Petty-Officer</a></li>
+  <li class="c018"><a href="/article/21-0366-phalanx/phalanx">Phalanx</a></li>
+  <li class="c018"><a href="/article/21-0397-s7/philip_ii">Philip II (of Macedon)</a></li>
+  <li class="c018"><a href="/article/21-0397-s7/philip_ii">Philip II (of France)</a></li>
+  <li class="c018"><a href="/article/21-0404-s2/philip_vi">Philip VI</a></li>
+  <li class="c018"><a href="/article/21-0606-s3/piccolomini">Piccolomini</a></li>
+  <li class="c018"><a href="/article/21-0607-pichegru-charles/pichegru__charles">Pichegru</a></li>
+  <li class="c018"><a href="/article/21-0608-pickens-andrew/pickens__andrew">Pickens, Andrew</a></li>
+  <li class="c018"><a href="/article/21-0610-picket/picket">Picket</a></li>
+  <li class="c018"><a href="/article/21-0612-picton-sir-thomas/picton__sir_thomas">Picton</a></li>
+  <li class="c018"><a href="/article/21-0624-s2/pigeon_post">Pigeon Post</a></li>
+  <li class="c018"><a href="/article/21-0629-s2/pike-perch">Pike</a></li>
+  <li class="c018"><a href="/article/21-0683-s2/pistol">Pistol</a></li>
+  <li class="c018"><a href="/article/21-0858-platoon/platoon">Platoon</a></li>
+  <li class="c018"><a href="/article/21-0900-s2/pneumatic_gun">Pneumatic Gun</a></li>
+  <li class="c018">Poitiers</li>
+  <li class="c018">Polish Succession, War of the</li>
+  <li class="c018"><a href="/article/22-0031-polyaenus/polyaenus">Polyaenus</a></li>
+  <li class="c018"><a href="/article/22-0070-s2/pompey">Pompey</a></li>
+  <li class="c018"><a href="/article/22-0074-poniard/poniard">Poniard</a></li>
+  <li class="c018"><a href="/article/22-0081-s6/pontoon">Pontoon</a></li>
+  <li class="c018"><a href="/article/22-0095-s2/pope">Pope</a></li>
+  <li class="c018"><a href="/article/22-0129-s2/porter__fitz-john">Porter, Fitz-John</a></li>
+  <li class="c018"><a href="/article/22-0313-press-gang/press_gang">Press Gang</a></li>
+  <li class="c018"><a href="/article/22-0454-s2/propellants">Propellants</a></li>
+  <li class="c018"><a href="/article/22-0665-s5/punic_wars">Punic Wars</a></li>
+  <li class="c018"><a href="/article/22-0682-s4/purser">Purser</a></li>
+  <li class="c018"><a href="/article/22-0686-s3/putnam__israel">Putnam, Israel</a></li>
+  <li class="c018"><a href="/article/22-0687-s2/putnam__rufus">Putnam, Rufus</a></li>
+  <li class="c018"><a href="/article/22-0695-pylos/pylos">Pylos</a></li>
+  <li class="c018"><a href="/article/22-0713-s2/pyrrhus">Pyrrhus</a></li>
+  <li class="c018"><a href="/article/22-0722-quadrilateral/quadrilateral">Quadrilateral</a></li>
+  <li class="c018"><a href="/article/22-0780-s5/quiver">Quiver</a></li>
+  <li class="c018"><a href="/article/22-0801-s7/radetzky__josef">Radetzky</a></li>
+  <li class="c018"><a href="/article/22-0832-raglan-fitzroy-james-henry-somerset-1st-baron/raglan__fitzroy_james_henry_somerset__1st_baron">Raglan</a></li>
+  <li class="c018"><a href="/article/22-0893-ramillies/ramillies">Ramillies</a></li>
+  <li class="c018"><a href="/article/22-0905-s4/range-finder">Range-finder, Telemeter or Position-finder</a></li>
+  <li class="c018"><a href="/article/22-0926-s1/rapier">Rapier</a></li>
+  <li class="c018"><a href="/article/22-0926-s4/rapparee">Rapparee</a></li>
+  <li class="c018"><a href="/article/22-0940-ravenna/ravenna">Ravenna</a></li>
+  <li class="c018"><a href="/article/22-0951-s4/raymund_of_toulouse">Raymund of Toulouse</a></li>
+  <li class="c018"><a href="/article/22-0955-razzia/razzia">Razzia</a></li>
+  <li class="c018"><a href="/article/22-0975-s3/reconnaissance">Reconnaissance</a></li>
+  <li class="c018"><a href="/article/22-0984-redan/redan">Redan</a></li>
+  <li class="c018"><a href="/article/22-0986-s5/redoubt">Redoubt</a></li>
+  <li class="c018"><a href="/article/23-0056-regiment/regiment">Regiment</a></li>
+  <li class="c018"><a href="/article/23-0220-retrenchment/retrenchment">Retrenchment</a></li>
+  <li class="c018">Réveillé</li>
+  <li class="c018"><a href="/article/23-0243-s3/reynolds__john_fulton">Reynolds, John F.</a></li>
+  <li class="c018"><a href="/article/23-0311-s3/richard_i">Richard I (of England)</a></li>
+  <li class="c018"><a href="/article/23-0332-s4/ricochet">Ricochet</a></li>
+  <li class="c018"><a href="/article/23-0324-richmond-legh/richmond__legh">Richmond</a></li>
+  <li class="c018"><a href="/article/23-0342-rifle/rifle">Rifle</a></li>
+  <li class="c018">Roberts, Lord</li>
+  <li class="c018"><a href="/article/23-0455-s6/rocket">Rocket</a></li>
+  <li class="c018"><a href="/article/23-0481-s3/rohan">Rohan, duc de</a></li>
+  <li class="c018"><a href="/article/23-0743-roosevelt-theodore/roosevelt__theodore">Roosevelt</a></li>
+  <li class="c018"><a href="/article/23-0758-s2/ropes__john_codman">Ropes, J. C.</a></li>
+  <li class="c018"><a href="/article/23-0774-s2/rosecrans__william_starke">Rosecrans</a></li>
+  <li class="c018"><a href="/article/23-0775-s6/roses__wars_of_the">Roses, Wars of the</a></li>
+  <li class="c018"><a href="/article/23-0783-s4/rossbach">Rossbach</a></li>
+  <li class="c018"><a href="/article/23-0898-rupert-prince/rupert__prince">Rupert, Prince</a></li>
+  <li class="c018"><a href="/article/23-0964-russo-japanese-war/russo-japanese_war">Russo-Japanese War</a></li>
+  <li class="c018"><a href="/article/23-0976-russo-turkish-wars/russo-turkish_wars">Russo-Turkish Wars</a></li>
+  <li class="c018"><a href="/article/23-0982-s2/rüstow__friedrich_wilhelm">Rüstow, Friedrich W.</a></li>
+  <li class="c018"><a href="/article/23-0991-s3/ruvigny__henri_de_massue">Ruvigny</a></li>
+  <li class="c018">Sackville, 1st Viscount</li>
+  <li class="c018"><a href="/article/23-1061-saint-arnaud/saint_arnaud__jacques_leroy_de">Saint Arnaud</a></li>
+  <li class="c018">St. Quentin</li>
+  <li class="c018"><a href="/article/24-0069-s4/salade">Salade, Sallet or Salet</a></li>
+  <li class="c018"><a href="/article/24-0069-s5/saladin">Saladin</a></li>
+  <li class="c018"><a href="/article/24-0070-salamanca-city/salamanca__city_">Salamanca</a></li>
+  <li class="c018"><a href="/article/24-0072-salamis-cyprus/salamis__cyprus_">Salamis</a></li>
+  <li class="c018"><a href="/article/24-0219-s3/saratoga__battles_of">Saratoga, Battles of</a></li>
+  <li class="c018">Saxe, Comte de (marshal)</li>
+  <li class="c018"><a href="/article/24-0293-s3/scabbard">Scabbard</a></li>
+  <li class="c018"><a href="/article/24-0322-s2/scarlett__sir_james_yorke">Scarlett</a></li>
+  <li class="c018"><a href="/article/24-0331-s4/scharnhorst__gerhard_johann_david_von">Scharnhorst</a></li>
+  <li class="c018"><a href="/article/24-0341-schiavone/schiavone">Schiavone</a></li>
+  <li class="c018"><a href="/article/24-0363-s5/schofield__john">Schofield</a></li>
+  <li class="c018"><a href="/article/24-0408-s2/schwarzenberg">Schwarzenberg</a></li>
+  <li class="c018"><a href="/article/24-0412-s2/schwerin">Schwerin, Count von</a></li>
+  <li class="c018"><a href="/article/24-0423-s2/scimitar">Scimitar</a></li>
+  <li class="c018">Scipio Aemilianus</li>
+  <li class="c018">Scipio Africanus</li>
+  <li class="c018"><a href="/article/24-0496-s5/scout">Scout</a></li>
+  <li class="c018">Sebastiani</li>
+  <li class="c018"><a href="/article/24-0599-seckendorf-veit-ludwig-von/seckendorf__veit_ludwig_von">Seckendorf</a></li>
+  <li class="c018"><a href="/article/24-0604-sedan/sedan">Sedan</a></li>
+  <li class="c018"><a href="/article/24-0608-s2/sedgwick__john">Sedgwick, John</a></li>
+  <li class="c018"><a href="/article/24-0664-s4/senarmont__henri_hureau_de">Senarmont</a></li>
+  <li class="c018"><a href="/article/24-0679-sentinel/sentinel">Sentinel or Sentry</a></li>
+  <li class="c018"><a href="/article/24-0682-s3/sepoy">Sepoy</a></li>
+  <li class="c018"><a href="/article/24-0702-serjeant/serjeant">Serjeant</a></li>
+  <li class="c018"><a href="/article/24-0713-s3/sertorius__quintus">Sertorius</a></li>
+  <li class="c018"><a href="/article/24-0729-s6/servo-bulgarian_war">Servo-Bulgarian War</a></li>
+  <li class="c018">Sérurier</li>
+  <li class="c018"><a href="/article/24-0737-s6/seven_days__battle">Seven Days’ Battle</a></li>
+  <li class="c018">Seven Weeks’ War</li>
+  <li class="c018">Seven Years’ War</li>
+  <li class="c018"><a href="/article/24-0783-s2/seydlitz__friedrich_wilhelm">Seydlitz</a></li>
+  <li class="c018"><a href="/article/24-0868-shenandoah-valley-campaigns/shenandoah_valley_campaigns">Shenandoah Valley Campaign</a></li>
+  <li class="c018"><a href="/article/24-0878-s5/sheridan">Sheridan</a></li>
+  <li class="c018"><a href="/article/24-0885-s4/sherman__william_tecumseh">Sherman, W. T.</a></li>
+  <li class="c018"><a href="/article/24-0890-shield/shield">Shield</a></li>
+  <li class="c018"><a href="/article/24-0894-s2/shiloh">Shiloh</a></li>
+  <li class="c018"><a href="/article/24-1057-s2/shipka_pass">Shipka Pass</a></li>
+  <li class="c018"><a href="/article/25-0051-s3/sickles__daniel_edgar">Sickles</a></li>
+  <li class="c018"><a href="/article/25-0062-siege/siege">Siege</a></li>
+  <li class="c018"><a href="/article/25-0075-s2/sigel__franz">Sigel</a></li>
+  <li class="c018"><a href="/article/25-0075-s4/sights">Sights</a></li>
+  <li class="c018"><a href="/article/25-0086-s1/signal">Signal</a></li>
+  <li class="c018"><a href="/article/25-0108-s2/silesian_wars">Silesian Wars</a></li>
+  <li class="c018"><a href="/article/25-0170-sirdar/sirdar">Sirdar</a></li>
+  <li class="c018"><a href="/article/25-0208-s5/skippon__philip">Skippon</a></li>
+  <li class="c018"><a href="/article/25-0209-s6/skobelev__mikhail_dimitribvich">Skobelev</a></li>
+  <li class="c018"><a href="/article/25-0258-s6/sling">Sling</a></li>
+  <li class="c018"><a href="/article/25-0259-s4/slocum__henry_warner">Slocum</a></li>
+  <li class="c018"><a href="/article/25-0275-smith-charles-ferguson/smith__charles_ferguson">Smith, C. F.</a></li>
+  <li class="c018"><a href="/article/25-0288-s2/smith__sir_william_sidney">Smith, Sir W. Sidney</a></li>
+  <li class="c018"><a href="/article/25-0452-soubise/soubise__benjamin_de_rohan">Soubise</a></li>
+  <li class="c018"><a href="/article/25-0452-souham/souham__joseph">Souham</a></li>
+  <li class="c018"><a href="/article/25-0452-soult/soult__nicolas_jean_de_dieu">Soult</a></li>
+  <li class="c018"><a href="/article/25-0543-sowar/sowar">Sowar</a></li>
+  <li class="c018"><a href="/article/25-0547-spahis/spahis">Spahis</a></li>
+  <li class="c018"><a href="/article/25-0615-s2/spanish-american_war_of">Spanish-American War</a></li>
+  <li class="c018"><a href="/article/25-0620-s2/spanish_succession__war_of_the">Spanish Succession, War of The</a></li>
+  <li class="c018"><a href="/article/25-0637-spear/spear">Spear</a></li>
+  <li class="c018"><a href="/article/25-0755-spontoon/spontoon">Spontoon</a></li>
+  <li class="c018"><a href="/article/25-0758-s3/spottsylvania">Spottsylvania</a></li>
+  <li class="c018"><a href="/article/25-0764-spur/spur">Spur</a></li>
+  <li class="c018"><a href="/article/25-0765-spy/spy">Spy</a></li>
+  <li class="c018"><a href="/article/25-0765-s5/squadron">Squadron</a></li>
+  <li class="c018"><a href="/article/25-0774-staff/staff">Staff, military</a></li>
+  <li class="c018"><a href="/article/25-0794-standard-battle-of-the/standard__battle_of_the">Standard, Battle of</a></li>
+  <li class="c018"><a href="/article/25-0820-s2/stark__john">Stark, John</a></li>
+  <li class="c018"><a href="/article/25-0891-steenkirk/steenkirk">Steenkirk</a></li>
+  <li class="c018"><a href="/article/25-0897-steinmetz-karl-friedrich-von/steinmetz__karl_friedrich_von">Steinmetz</a></li>
+  <li class="c018"><a href="/article/25-0944-stiletto/stiletto">Stiletto</a></li>
+  <li class="c018"><a href="/article/25-0992-s2/stone_river__battle_of">Stone River</a></li>
+  <li class="c018"><a href="/article/25-0992-s4/stony_point">Stony Point</a></li>
+  <li class="c018"><a href="/article/25-1012-strategy/strategy">Strategy</a></li>
+  <li class="c018"><a href="/article/25-1033-s3/strelitz">Strelitz</a></li>
+  <li class="c018"><a href="/article/25-1073-stuart-james-ewell-brown/stuart__james_ewell_brown">Stuart, J. E. B.</a></li>
+  <li class="c018"><a href="/article/26-0023-s3/suchet__louis_gabriel">Suchet</a></li>
+  <li class="c018"><a href="/article/26-0070-s5/sulla__lucius_cornelius">Sulla</a></li>
+  <li class="c018"><a href="/article/26-0073-s2/sullivan__john">Sullivan, John</a></li>
+  <li class="c018"><a href="/article/26-0099-s2/sumner__edwin_vose">Sumner, E. V.</a></li>
+  <li class="c018"><a href="/article/26-0101-s2/sumter__thomas">Sumter, Thomas</a></li>
+  <li class="c018">Supply and Transport (Military)</li>
+  <li class="c018"><a href="/article/26-0189-sutler/sutler">Sutler</a></li>
+  <li class="c018">Suvarov</li>
+  <li class="c018"><a href="/article/26-0289-s2/swold__or_swöld___battle_of">Swold</a></li>
+  <li class="c018"><a href="/article/26-0289-s3/sword">Sword</a></li>
+  <li class="c018"><a href="/article/26-0368-s4/tactics">Tactics</a></li>
+  <li class="c018"><a href="/article/26-0387-s4/talavera_de_la_reina">Talavera de la Reina</a></li>
+  <li class="c018"><a href="/article/26-0448-s2/target">Target</a></li>
+  <li class="c018"><a href="/article/26-0457-s3/tarleton__sir_banastre">Tarleton</a></li>
+  <li class="c018"><a href="/article/26-0480-s6/tattoo">Tattoo</a></li>
+  <li class="c018"><a href="/article/26-0876-thermopylae/thermopylae">Thermopylae</a></li>
+  <li class="c018"><a href="/article/26-0887-thielmann-johann-adolf/thielmann__johann_adolf">Thielmann</a></li>
+  <li class="c018">Thirty Years’ War</li>
+  <li class="c018"><a href="/article/26-0906-thomas-george-henry/thomas__george_henry">Thomas, G. H.</a></li>
+  <li class="c018"><a href="/article/26-0933-s2/thucydides">Thucydides</a></li>
+  <li class="c018"><a href="/article/26-0977-s2/ticonderoga">Ticonderoga, N. Y.</a></li>
+  <li class="c018"><a href="/article/26-1016-tilly-johann-tzerclaes-count-of/tilly__johann_tzerclaes__count_of">Tilly</a></li>
+  <li class="c018"><a href="/article/26-1084-s5/todleben__or_totleben___franz_eduard_ivanovich">Todleben</a></li>
+  <li class="c018"><a href="/article/27-0078-torstensson/torstensson__lennart">Torstensson</a></li>
+  <li class="c018"><a href="/article/27-0128-towton/towton">Towton</a></li>
+  <li class="c018"><a href="/article/27-0201-transvaal/transvaal">Transvaal</a></li>
+  <li class="c018"><a href="/article/27-0229-trasimene-lake/trasimene__lake">Trasimene</a></li>
+  <li class="c018"><a href="/article/27-0230-s4/traun__otto_ferdinand">Traun</a></li>
+  <li class="c018"><a href="/article/27-0231-s6/traverse">Traverse</a></li>
+  <li class="c018"><a href="/article/27-0248-s3/trébuchet">Trébuchet</a></li>
+  <li class="c018"><a href="/article/27-0267-trenton-and-princeton-battles-of/trenton_and_princeton__battles_of">Trenton and Princeton</a></li>
+  <li class="c018"><a href="/article/27-0323-troop/troop">Troop</a></li>
+  <li class="c018"><a href="/article/27-0429-s3/turenne__henri_de_la_tour_d_auvergne">Turenne</a></li>
+  <li class="c018"><a href="/article/27-0583-ulan/ulan">Ulan</a></li>
+  <li class="c018"><a href="/article/27-0601-uniforms/uniforms">Uniforms</a></li>
+  <li class="c018"><a href="/article/27-0911-s2/vandamme__dominique_rené">Vandamme</a></li>
+  <li class="c018"><a href="/article/27-0913-s5/van_dorn__earl">Van Dorn</a></li>
+  <li class="c018"><a href="/article/27-0977-s4/vauban__sébastien_le_prestre_de">Vauban</a></li>
+  <li class="c018"><a href="/article/27-0993-vedette/vedette">Vedette</a></li>
+  <li class="c018"><a href="/article/27-0996-s2/vegetius">Vegetius</a></li>
+  <li class="c018"><a href="/article/27-1008-s5/vendée">Vendée</a></li>
+  <li class="c018"><a href="/article/27-1010-s3/vendôme">Vendôme</a></li>
+  <li class="c018"><a href="/article/27-1046-s4/verdun">Verdun</a></li>
+  <li class="c018"><a href="/article/27-1047-s2/verdy_du_vernois__julius_von">Verdy du Vernois</a></li>
+  <li class="c018"><a href="/article/28-0017-veteran/veteran">Veteran</a></li>
+  <li class="c018"><a href="/article/28-0031-vexillum/vexillum">Vexillum</a></li>
+  <li class="c018"><a href="/article/28-0036-vicksburg/vicksburg">Vicksburg</a></li>
+  <li class="c018"><a href="/article/28-0061-victor-perrin-claude/victor-perrin__claude">Victor-Perrin</a></li>
+  <li class="c018"><a href="/article/28-0091-villars-claude-louis-hector-de/villars__claude_louis_hector_de">Villars</a></li>
+  <li class="c018"><a href="/article/28-0100-villeroi-fran-ois-de-neufville-duc-de/villeroi__françois_de_neufville__duc_de">Villeroi</a></li>
+  <li class="c018"><a href="/article/28-0115-vinoy/vinoy__joseph">Vinoy</a></li>
+  <li class="c018"><a href="/article/28-0162-visor/visor">Visor</a></li>
+  <li class="c018"><a href="/article/28-0164-vitoria/vitoria">Vitoria</a></li>
+  <li class="c018"><a href="/article/28-0224-volunteers/volunteers">Volunteers</a></li>
+  <li class="c018"><a href="/article/28-0259-wagram/wagram">Wagram</a></li>
+  <li class="c018"><a href="/article/28-0292-wallace-lewis/wallace__lewis">Wallace, Lewis</a></li>
+  <li class="c018"><a href="/article/28-0299-waller-sir-william/waller__sir_william">Waller, Sir William</a></li>
+  <li class="c018"><a href="/article/28-0296-wallenstein-albrecht-wenzel-eusebius-von/wallenstein__properly_waldstein___albrecht">Wallenstein</a></li>
+  <li class="c018">Ward Room</li>
+  <li class="c018"><a href="/article/28-0340-war-game/war_game">War Game</a></li>
+  <li class="c018">Warrant Officer</li>
+  <li class="c018"><a href="/article/28-0345-warren-gouverneur-kemble/warren__gouverneur_kemble">Warren, G. K.</a></li>
+  <li class="c018"><a href="/article/28-0346-warren-joseph/warren__joseph">Warren, Joseph</a></li>
+  <li class="c018"><a href="/article/28-0353-warwick-earls-of/warwick__earls_of">Warwick, Earl of</a></li>
+  <li class="c018"><a href="/article/28-0360-washington-george/washington__george">Washington, George</a></li>
+  <li class="c018"><a href="/article/28-0388-waterloo-campaign-1815/waterloo_campaign__1815">Waterloo Campaign</a></li>
+  <li class="c018"><a href="/article/28-0437-wattignies/wattignies">Wattignies</a></li>
+  <li class="c018"><a href="/article/28-0450-s2/wayne__anthony">Wayne, Anthony</a></li>
+  <li class="c018"><a href="/article/28-0456-weapon/weapon">Weapon</a></li>
+  <li class="c018"><a href="/article/28-0530-s2/wellington">Wellington</a></li>
+  <li class="c018"><a href="/article/28-0540-werder/werder__karl_wilhelm_friedrich_august_leopold">Werder</a></li>
+  <li class="c018"><a href="/article/28-0606-wheeler-joseph/wheeler__joseph">Wheeler, Joseph</a></li>
+  <li class="c018"><a href="/article/28-0619-white-sir-george-stuart/white__sir_george_stuart">White, Sir George</a></li>
+  <li class="c018"><a href="/article/28-0653-s3/wilderness">Wilderness, Va.</a></li>
+  <li class="c018"><a href="/article/28-0666-wilkinson-james/wilkinson__james">Wilkinson, James</a></li>
+  <li class="c018">William the Silent</li>
+  <li class="c018">William I (of England)</li>
+  <li class="c018">William III (of England)</li>
+  <li class="c018">William I (of Germany)</li>
+  <li class="c018"><a href="/article/28-0715-wilson-james-harrison/wilson__james_harrison">Wilson, J. H.</a></li>
+  <li class="c018"><a href="/article/28-0721-wimpffen/wimpffen__emmanuel_felix_de">Wimpffen</a></li>
+  <li class="c018">Wittgenstein</li>
+  <li class="c018"><a href="/article/28-0794-wolfe-james/wolfe__james">Wolfe</a></li>
+  <li class="c018"><a href="/article/28-0810-wood-sir-henry-evelyn/wood__sir_henry_evelyn">Wood, Sir H. E.</a></li>
+  <li class="c018"><a href="/article/28-0860-s1/worth__charles_frederick">Worth</a></li>
+  <li class="c018"><a href="/article/28-0864-s5/wrangel__karl_gustav_von">Wrangel</a></li>
+  <li class="c018"><a href="/article/28-0868-wrede-karl-philipp-prince-von/wrede__karl_philipp__prince_von">Wrede</a></li>
+  <li class="c018"><a href="/article/28-0912-xenophon/xenophon">Xenophon</a></li>
+  <li class="c018"><a href="/article/28-0934-s5/yataghan">Yataghan</a></li>
+  <li class="c018"><a href="/article/28-0943-s2/yeomanry">Yeomanry</a></li>
+  <li class="c018"><a href="/article/28-0950-yorck-von-wartenburg-hans-david-ludwig/yorck_von_wartenburg__hans_david_ludwig">Yorck von Wartenburg</a></li>
+  <li class="c018"><a href="/article/28-0963-yorktown/yorktown">Yorktown, Va.</a></li>
+  <li class="c018"><a href="/article/28-0968-ypsilanti-family/ypsilanti__family_">Ypsilanti</a></li>
+  <li class="c018"><a href="/article/28-1007-zieten/zieten__hans_joachim_von">Zieten</a></li>
+  <li class="c018"><a href="/article/28-1071-s5/zouave">Zouave</a></li>
+</ul>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

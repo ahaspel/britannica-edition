@@ -1,0 +1,2755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>American History &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XLIII</span>American History</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Battles and Campaigns</a></li><li><a href="#sh-2">Union Generals</a></li><li><a href="#sh-3">Confederate Generals</a></li></ol></div>
+    <div class="body-text">
+
+
+<p>The plan adopted in most of the
+chapters of this Guide is to give
+a separate account of each of the
+more important articles on the subject to
+which the chapter is devoted. But in the
+case of American history, the articles are
+so numerous, and are so accurately dovetailed
+to make a continuous story, that
+the reader’s convenience has been better
+served by reversing this process, and
+grouping the articles under the periods
+with which they deal. The reader is thus
+enabled to turn at once to any one of the
+outstanding episodes of the story, and to
+find explicit references to those parts of
+the Britannica in which the narrative is
+continued from one article to another.
+The summary has been put in the form
+of a table, in order that its contents may
+more easily be surveyed. There is a
+much fuller summary, in narrative form,
+in the Britannica itself in the historical
+portion of the article <span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>
+(Vol. 27, pp. 663–735). This is the most
+complete condensed history of the country
+that has ever been written. It is not
+quite so long as this entire Guide; but
+from each of its 412 sections the reader
+can turn to articles describing in detail
+the events consecutively outlined.</p>
+
+<p>It has been taken for granted that the
+reader will recognize the natural connection
+between this and other chapters of
+the Guide. For example, no attempt has
+been made in this chapter to indicate the
+articles, elsewhere described, which discuss
+the history of American industries
+and commerce, railroads and shipping,
+finance and economics, art and literature.
+Again, the particular history of a
+city, town, or river may be of the greatest
+interest in itself, although the events
+with which its name is associated were
+not so typical of any period as to give the
+article a place in the present chapter.
+Similarly, the numerous and elaborate
+American biographies are represented, in
+this chapter, only by the names of the
+foremost statesmen and soldiers of the
+periods included in the table. In short,
+the articles named are so few, in proportion
+to all those which directly relate to
+American history, that the general effect
+is to make the space which the Britannica
+devotes to the subject seem less than
+it really is. But it is not the purpose of
+this Guide to impress upon the reader the
+magnitude of the volumes he is using.
+In that respect the Britannica speaks for
+itself. The table instances a few of the
+main topics of American history, in order
+to show the reader how he may plan
+fuller courses of reading by combining
+other articles on the principle indicated
+by these illustrations.</p>
+
+<p>The left hand columns present a brief
+outline of the main periods and aspects
+of American history. The right hand
+columns give the titles of the articles to
+be read, the page numbers as well as the
+volume numbers (so that when the reference
+is to only one section of a long article
+the reader can find it at once) and
+the names of the contributors.</p>
+
+<table class="table4">
+<colgroup>
+<col class="colwidth50">
+<col class="colwidth50">
+</colgroup>
+  <tbody><tr><td class="c008" colspan="2"></td></tr>
+  <tr>
+    <th class="c009"><i>Topics for Reading</i></th>
+    <th class="c028"><i>Articles</i></th>
+  </tr>
+  <tr>
+    <td class="c011"><i>The Aborigines.</i></td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Where did they come from, and when? Their food, tools, clothing and customs. How they carried on their wars. Their practical knowledge and religion. What the white man has learned from the Indians. Over 1000 languages and dialects in America.</td>
+    <td class="c029"><span class="sc"><a href="/article/01-0851-america/america">America</a></span>, <i>Ethnology and Archaeology</i> (Vol. 1, p. 810, fully illustrated), by <a href="/contributors.html?q=Otis+Tufton+Mason">Otis Tufton Mason</a>, late curator, Department of Anthropology, National Museum, Washington; author of <i>Primitive Travel and Transportation</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/14-0480-indians-north-american/indians__north_american">Indians, North American</a></span> (Vol. 14, p. 452), by Dr. <a href="/contributors.html?q=Alexander+Francis+Chamberlain">A. F. Chamberlain</a>, professor of anthropology, Clark University.</td>
+  </tr>
+  <tr>
+    <td class="c011">Evidence of Asiatic origin. A state of culture in Mexico and Peru, “which in some respects must have put the Spaniards to shame.”</td>
+    <td class="c029"><span class="sc"><a href="/article/02-0359-s2/archaeology">Archaeology</a></span> (Vol. 2, p. 349), by Dr. <a href="/contributors.html?q=Charles+Hercules+Read">Charles H. Read</a>, keeper of British and Medieval Antiquities and Ethnography, British Museum.</td>
+  </tr>
+  <tr>
+    <td class="c011">The fascinating story of the Aztecs. Did the Asiatic peoples make voyages to America long before Columbus?</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0338-s3/mexico">Mexico</a></span>, <i>Ancient History and Civilization</i> (Vol. 18, p. 329), by Dr. <a href="/contributors.html?q=Edward+Burnett+Tylor">E. B. Tylor</a>, professor of anthropology at Oxford; author of <i>Methods and Results in Mexican Research</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">The splendid past of Central America. What was accomplished during the 500 years of Mayan culture. An interesting calendar.</td>
+    <td class="c029"><span class="sc"><a href="/article/05-0699-central-america/central_america">Central America</a></span>, <i>Archaeology of</i> (Vol. 5, p. 677), by Dr. <a href="/contributors.html?q=Walter+Lehmann">Walter Lehmann</a>, Royal Ethnographical Museum, Munich.</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>First Voyages of Discovery.</i></td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">The Northmen first Europeans to reach American continent, about 1000 A.D. The story of the Icelandic sagas. Was Vinland Nova Scotia?</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0113-vinland/vinland">Vinland</a></span> (Vol. 28, p. 98), by <a href="/contributors.html?q=Julius+Emil+Olson">Julius E. Olson</a>, professor of Scandinavian languages, University of Wisconsin, editor of <i>Voyages of the Northmen</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011">The accident of Leif’s discovery of the American continent.</td>
+    <td class="c029"><span class="sc"><a href="/article/16-0416-s2/leif_ericsson">Leif Ericsson</a></span> (Vol. 16, p. 396), by Dr. <a href="/contributors.html?q=Charles+Raymond+Beazley">C. R. Beazley</a>, professor of modern history in the University of Birmingham, author of <i>The Dawn of Modern Geography</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">The first colonizer (A.D. 1002). Fate of the colony. The hostile Skraelings.</td>
+    <td class="c029"><span class="sc"><a href="/article/26-0918-s2/thorfinn_karlsefni">Thorfinn Karlsefni</a></span> (Vol. 26, p. 878), by Dr. <a href="/contributors.html?q=Charles+Raymond+Beazley">C. R. Beazley</a>, author of <i>The</i> <i>Dawn of Modern Geography</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>Columbus and His Successors.</i></td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Treaty of Tordesillas (1494).</td>
+    <td class="c029"><span class="sc"><a href="/article/01-0851-america/america">America</a></span>, <i>General Historical Sketch</i> (Vol. 1, p. 806), by <a href="/contributors.html?q=David+Hannay">David Hannay</a>, author of <i>A Short History of the Royal Navy</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Columbus thinks he discovers Asia. His voyages and colonies (1492–1504).</td>
+    <td class="c029"><span class="sc"><a href="/article/06-0763-columbus-christopher/columbus__christopher">Columbus, Christopher</a></span> (Vol. 6, p. 741), by Dr. <a href="/contributors.html?q=Charles+Raymond+Beazley">C. R. Beazley</a>, author of <i>The Dawn of Modern Geography</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011">Discovery of the Mainland (1497).</td>
+    <td class="c029"><span class="sc"><a href="/article/04-0947-s6/cabot__john">Cabot, John</a></span> (Vol. 4, p. 921), by <a href="/contributors.html?q=Henry+Percival+Biggar">Henry P. Biggar</a>, author of <i>The Voyage of the Cabots to Greenland</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">How the New World received its name. The beginning of free-lance expeditions. The mystery of the voyage of 1497.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-1081-s2/vespucci__amerigo">Vespucci, Amerigo</a></span> (Vol. 27, p. 1053), by Dr. <a href="/contributors.html?q=Charles+Raymond+Beazley">C. R. Beazley</a>, author of <i>The Dawn of Modern Geography</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011">The Discovery of the Pacific (1513).</td>
+    <td class="c029"><span class="sc"><a href="/article/03-0258-s3/balboa__vasco_nuñez_de">Balboa, Vasco Nuñez de</a></span> (Vol. 3, p. 241).</td>
+  </tr>
+  <tr>
+    <td class="c011">The existence of a new continent distinct from Asia revealed to the world. First circumnavigation of the globe. The Pacific Ocean named (1520).</td>
+    <td class="c029"><span class="sc"><a href="/article/17-0317-s4/magellan__ferdinand">Magellan, Ferdinand</a></span> (Vol. 17, p. 302), by Dr. <a href="/contributors.html?q=Charles+Raymond+Beazley">C. R. Beazley</a>, author of <i>The Dawn of Modern Geography</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/20-0468-s2/pacific_ocean">Pacific Ocean</a></span>, <i>History</i> (Vol. 20, p. 438).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Conquest of Mexico (1519–1521). “The Descendant of the Sun.” Discovery of Lower California. Ingratitude of Charles V.</td>
+    <td class="c029"><span class="sc"><a href="/article/07-0222-cortes-hernan/cortes__hernan">Cortes, Hernan</a></span> (Vol. 7, p. 205).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/05-0033-california-lower/california__lower">California, Lower</a></span> (Vol. 5, p. 21).</td>
+  </tr>
+  <tr>
+    <td class="c011">Exploration of Guatemala and Yucatan (1528), and the Mississippi (1541).</td>
+    <td class="c029"><span class="sc"><a href="/article/25-0451-soto/soto__ferdinando__fernando__or_hernando__de">Soto, Ferdinando de</a></span> (Vol. 25, p. 435).</td>
+  </tr>
+  <tr>
+    <td class="c011">France attacks Spain in the New World.</td>
+    <td class="c029"><span class="sc"><a href="/article/16-0252-s4/las_casas__bartolomé_de">Las Casas, Bartolomé  de</a></span> (Vol. 16, p. 232).</td>
+  </tr>
+  <tr>
+    <td class="c011">Discovery of the St. Lawrence (1534). How Canada got its name. Early Canadian History.</td>
+    <td class="c029"><span class="sc"><a href="/article/05-0450-cartier-jacques/cartier__jacques">Cartier, Jacques</a></span> (Vol. 5, p. 433), by <a href="/contributors.html?q=Henry+Percival+Biggar">H. P. Biggar</a>, author of <i>The Voyage of the Cabots to Greenland</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/05-0154-canada/canada">Canada</a></span>, <i>History</i> (Vol. 5, p. 156), by <a href="/contributors.html?q=George+McKinnon+Wrong">Dr. George McKinnon Wrong</a>, University of Toronto.</td>
+  </tr>
+  <tr>
+    <td class="c011">Foundation of Quebec (1608). Discovery of Lake Champlain (1609). Champlain assists Algonquins and Hurons against the Iroquois. The beginning of the murderous conflicts between the French and the Iroquois.</td>
+    <td class="c029"><span class="sc"><a href="/article/05-0866-champlain-samuel-de/champlain__samuel_de">Champlain, Samuel de</a></span> (Vol. 5, p. 830), by Prof. <a href="/contributors.html?q=Narcisse+Eutrope+Dionne">Narcisse E. Dionne</a>, Librarian of the Legislature of the Province of Quebec, author of <i>Life of Samuel de Champlain, Founder of Quebec</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011">The Fortunes of New France. Colonial Expansion. Horrors of Indian Warfare.</td>
+    <td class="c029"><span class="sc"><a href="/article/11-0262-s2/frontenac_et_palluau__louis_de_buade">Frontenac</a></span> (Vol. 11, p. 249), by Dr. <a href="/contributors.html?q=Arthur+George+Doughty">Arthur G. Doughty</a>, Dominion archivist of Canada, author of <i>The Cradle of New France</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011">Louisiana in possession of France (1682). Discovery of the Ohio River.</td>
+    <td class="c029"><span class="sc"><a href="/article/16-0250-la-salle-ren-robert-cavelier/la_salle__rené_robert_cavelier">La Salle, René Robert, Sieur de</a></span> (Vol. 16, p. 230), by <a href="/contributors.html?q=Charles+Crawford+Whinery">Charles C. Whinery</a>, assistant editor, Encyclopaedia Britannica.</td>
+  </tr>
+  <tr>
+    <td class="c011">The first English colony (1583) unsuccessful.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0498-s2/newfoundland">Newfoundland</a></span>, <i>History</i> (Vol. 19, p. 482), by <a href="/contributors.html?q=Beckles+Willson">Beckles Willson</a>, author of <i>The Romance of Canada</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011">The persistent efforts of Raleigh (1584–1587). First English child born in America (Aug. 15, 1587).</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0799-north-carolina/north_carolina">North Carolina</a></span>, <i>History</i> (Vol. 19, p.</td>
+  </tr>
+  <tr>
+    <td class="c011">775).</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0799-north-carolina/north_carolina">North Carolina</a></span>, <i>History</i> (Vol. 19, p. 775).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/22-0886-raleigh-sir-walter/raleigh__sir_walter">Raleigh, Sir Walter</a></span> (Vol. 22, p. 869), by <a href="/contributors.html?q=David+Hannay">David Hannay</a>, author of <i>Short History of the Royal Navy</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">The first permanent English settlement (1607).</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0132-virginia/virginia">Virginia</a></span>, <i>History</i> (Vol. 28, p. 122).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/15-0164-jamestown-virginia/jamestown__virginia_">Jamestown</a></span> (Vol. 15, p. 148).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>Colonial Expansion and Development of Imperial Control.</i></td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">The Thirteen Original Colonies, their Founders and Leaders, and their early Struggles.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>History</i> (Vol. 27, p. 663), by Dr. Herbert L. Osgood, professor of history, Columbia University, author of <i>The American Colonies in the 17th Century</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011">Virginia.</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0132-virginia/virginia">Virginia</a></span> (Vol. 28, p. 122).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/15-0164-jamestown-virginia/jamestown__virginia_">Jamestown</a></span> (Vol. 15, p. 148).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/25-0280-s6/smith__john">Smith, John</a></span> (Vol. 25, p. 264).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/12-0282-s4/gosnold__bartholomew">Gosnold, Bartholomew</a></span> (Vol. 12, p. 265).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/03-0801-berkeley-sir-william/berkeley__sir_william">Berkeley, Sir William</a></span> (Vol. 3, p. 781).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/04-0047-blair-james/blair__james">Blair, James</a></span> (Vol. 4, p. 34).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/25-0757-s5/spotswood__spottswood_or_spottiswood___alexander">Spotswood, Alexander</a></span> (Vol. 25, p. 735).</td>
+  </tr>
+  <tr>
+    <td class="c011">North Carolina.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0799-north-carolina/north_carolina">North Carolina</a></span> (Vol. 19, p. 775).</td>
+  </tr>
+  <tr>
+    <td class="c011">South Carolina.</td>
+    <td class="c029"><span class="sc"><a href="/article/25-0517-south-carolina/south_carolina">South Carolina</a></span> (Vol. 25, p. 503).</td>
+  </tr>
+  <tr>
+    <td class="c011">New England.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0496-new-england/new_england">New England</a></span> (Vol. 19, p. 476).</td>
+  </tr>
+  <tr>
+    <td class="c011">Massachusetts.</td>
+    <td class="c029"><span class="sc"><a href="/article/17-0868-s3/massachusetts">Massachusetts</a></span> (Vol. 17, p. 858).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/21-0894-plymouth-england/plymouth__england_">Plymouth, Mass.</a></span> (Vol. 21, p. 863).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/04-0385-bradford-william-governor/bradford__william__governor_">Bradford, William</a></span> (Vol. 4, p. 370).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/25-0794-standish/standish__miles">Standish, Miles</a></span> (Vol. 25, p. 772)</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/01-0573-s2/alden__john">Alden, John</a></span> (Vol. 1, p. 533).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0753-winslow-edward/winslow__edward">Winslow, Edward</a></span> (Vol. 28, p. 733).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/09-0407-endecott-john/endecott__john">Endecott, John</a></span> (Vol. 9, p. 382).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/24-0075-salem-massachusetts/salem__massachusetts_">Salem</a></span> (Vol. 24, p. 62).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0756-winthrop-john-1588-1649/winthrop__john__1588-1649_">Winthrop, John</a></span> (Vol. 28, p. 736).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/04-0304-boston-england/boston__england_">Boston, Mass.</a></span> (Vol. 4, p. 290).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/14-0770-ipswich/ipswich">Ipswich, Mass.</a></span> (Vol. 14, p. 739).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/27-0918-s3/vane__sir_henry">Vane, Sir Henry</a></span> (Vol. 27, p. 892).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/14-0024-s2/hutchinson__anne">Hutchinson, Anne</a></span> (Vol. 14, p. 12).</td>
+  </tr>
+  <tr>
+    <td class="c011">Maine (a part of Massachusetts).</td>
+    <td class="c029"><span class="sc"><a href="/article/17-0448-s2/maine">Maine</a></span> (Vol. 17, p. 439).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/22-0102-popham-sir-john/popham__sir_john">Popham, Sir John</a></span> (Vol. 22, p. 88).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/12-0273-s4/gorges__sir_ferdinando">Gorges, Sir Ferdinando</a></span> (Vol. 12, p. 256).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/22-0133-s5/portland">Portland, Me.</a></span> (Vol. 22, p. 120).</td>
+  </tr>
+  <tr>
+    <td class="c011">Rhode Island.</td>
+    <td class="c029"><span class="sc"><a href="/article/23-0265-rhode-island/rhode_island">Rhode Island</a></span> (Vol. 23, p. 251).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0702-williams-roger/williams__roger">Williams, Roger</a></span> (Vol. 28, p. 682).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/22-0525-s2/providence">Providence</a></span> (Vol. 22, p. 512).</td>
+  </tr>
+  <tr>
+    <td class="c011">New Hampshire.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0510-s2/new_hampshire">New Hampshire</a></span> (Vol. 19, p. 496).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/22-0146-portsmouth-england/portsmouth__england_">Portsmouth, N. H.</a></span> (Vol. 22, p. 132).</td>
+  </tr>
+  <tr>
+    <td class="c011">Connecticut.</td>
+    <td class="c029"><span class="sc"><a href="/article/06-0975-connecticut/connecticut">Connecticut</a></span> (Vol. 6, p. 954).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/13-0691-s2/hooker__thomas">Hooker, Thomas</a></span> (Vol. 13, p. 674).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/19-0520-new-haven/new_haven">New Haven</a></span> (Vol. 19, p. 499).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/08-0865-eaton-theophilus/eaton__theophilus">Eaton, Theophilus</a></span> (Vol. 8, p. 838).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/13-0045-s3/hartford">Hartford</a></span> (Vol. 13, p. 33).</td>
+  </tr>
+  <tr>
+    <td class="c011">Vermont.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-1053-s4/vermont">Vermont</a></span> (Vol. 27, p. 1028).</td>
+  </tr>
+  <tr>
+    <td class="c011">Indian Wars in New England.</td>
+    <td class="c029"><span class="sc"><a href="/article/21-0147-s2/pequot">Pequot</a></span> (Vol. 21, p. 132).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/21-0410-s3/philip__king">Philip, King</a></span> (Vol. 21, p. 389).</td>
+  </tr>
+  <tr>
+    <td class="c011">New York.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0618-s6/new_york">New York</a></span> (Vol. 19, p. 603).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/13-0874-s3/hudson__henry">Hudson, Henry</a></span> (Vol. 13, p. 849).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/14-0872-iroquois/iroquois">Iroquois</a></span> (Vol. 14, p. 839).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/19-0635-s2/new_york">New York (City)</a></span> (Vol. 19, p. 620).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/01-0529-s3/albany">Albany</a></span> (Vol. 1, p. 490).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/25-0823-s3/staten_island">Staten Island</a></span> (Vol. 25, p. 802).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/16-1006-long-island/long_island">Long Island</a></span> (Vol. 16, p. 982).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/25-1081-s2/stuyvesant__peter">Stuyvesant, Peter</a></span> (Vol. 25, p. 1055).</td>
+  </tr>
+  <tr>
+    <td class="c011">New Jersey.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0522-s3/new_jersey">New Jersey</a></span> (Vol. 19, p. 508).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/05-0430-carteret-sir-george/carteret__sir_george">Carteret, Sir George</a></span> (Vol. 5, p. 413).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/02-0012-s1/andros__sir_edmund">Andros, Sir Edmund</a></span> (Vol. 2, p. 1).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/09-0304-elizabeth-saint/elizabeth__saint">Elizabeth, N. J.</a></span> (Vol. 9, p. 287).</td>
+  </tr>
+  <tr>
+    <td class="c011">Delaware.</td>
+    <td class="c029"><span class="sc"><a href="/article/07-0971-delaware-state/delaware__state_">Delaware</a></span> (Vol. 7, p. 949).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/16-0541-s2/lewes">Lewes</a></span> (Vol. 16, p. 522).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/19-0492-new-castle/new_castle">New Castle</a></span> (Vol. 19, p. 472).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0710-wilmington-delaware/wilmington__delaware_">Wilmington</a></span> (Vol. 28, p. 690).</td>
+  </tr>
+  <tr>
+    <td class="c011">Pennsylvania.</td>
+    <td class="c029"><span class="sc"><a href="/article/21-0119-s2/pennsylvania">Pennsylvania</a></span> (Vol. 21, p. 111).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/21-0113-s5/penn__william">Penn, William</a></span> (Vol. 21, p. 99), by <a href="/contributors.html?q=Osmund+Airy">Osmund Airy</a>, author of <i>Charles II</i>, editor of the <i>Lauderdale Papers</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/11-0236-s2/friends__society_of">Friends, Society of</a></span> (Vol. 11, p. 227).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/21-0388-s3/philadelphia">Philadelphia</a></span> (Vol. 21, p. 372).</td>
+  </tr>
+  <tr>
+    <td class="c011">Maryland.</td>
+    <td class="c029"><span class="sc"><a href="/article/17-0844-maryland/maryland">Maryland</a></span> (Vol. 17, p. 831), by <a href="/contributors.html?q=Newton+Dennison+Mereness">N. D. Mereness</a>, Ph.D., author of <i>Maryland as a Proprietary Province</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/03-0305-s1/baltimore__george_calvert">Baltimore, George Calvert</a></span>, 1st Baron (Vol. 3, p. 288).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/03-0305-s2/baltimore">Baltimore</a></span> (Vol. 3, p. 290).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/17-0859-s2/mason_and_dixon_line">Mason and Dixon Line</a></span> (Vol. 17, p. 841).</td>
+  </tr>
+  <tr>
+    <td class="c011">Georgia.</td>
+    <td class="c029"><span class="sc"><a href="/article/11-0779-georgia/georgia">Georgia</a></span> (Vol. 11, p. 755).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/20-0042-s5/oglethorpe__james_edward">Oglethorpe, James Edward</a></span> (Vol. 20, p. 24).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/24-0255-savannah/savannah">Savannah</a></span> (Vol. 24, p. 240).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>The French and Indian Wars.</i></td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Struggle of the British and the French in America. Pressure of British on the French “paper barriers.” Old-World quarrel carried into the New World.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>History</i>, The Struggle with the French (1690–1760) (Vol. 27, p. 670), by Prof. H. L. Osgood, Columbia University.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/05-0154-canada/canada">Canada</a></span>, <i>History</i> (Vol. 5, p. 156), by Prof. <a href="/contributors.html?q=George+McKinnon+Wrong">G. M. Wrong</a>, author of <i>A Canadian Manor and Its Seigneurs</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011">Capture of Louisburg, 1745.</td>
+    <td class="c029"><span class="sc"><a href="/article/17-0066-s3/louisburg">Louisburg</a></span> (Vol. 17, p. 52).</td>
+  </tr>
+  <tr>
+    <td class="c011">Albany Congress of 1754.</td>
+    <td class="c029"><span class="sc"><a href="/article/01-0529-s3/albany">Albany</a></span>, N. Y. (Vol. 1, p. 490).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Continental Contest of which the French and Indian Wars were a part.</td>
+    <td class="c029"><span class="sc"><a href="/article/24-0745-s4/seven_years__war">Seven Years’ War</a></span> (Vol. 24, p. 715), by <a href="/contributors.html?q=Colonel+Frederic+Natusch+Maude">Col. F. N. Maude</a>, author of <i>War and the World’s Policy</i>, and <a href="/contributors.html?q=David+Hannay">David Hannay</a>, author of <i>Short History of the Royal Navy</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Western Campaigns. In Pennsylvania and Virginia.</td>
+    <td class="c029"><span class="sc"><a href="/article/21-0707-pittsburg-pennsylvania/pittsburg__pennsylvania_">Pittsburg</a></span> (Vol. 21, p. 680).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/04-0384-braddock-edward/braddock__edward">Braddock, Edward</a></span> (Vol. 4, p. 369).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/22-0080-s2/pontiac">Pontiac</a></span> (Vol. 22, p. 65).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/08-0295-dinwiddie-robert/dinwiddie__robert">Dinwiddie, Robert</a></span> (Vol. 8, p. 278).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/24-1067-s2/shirley__william">Shirley, William</a></span> (Vol. 24, p. 991).</td>
+  </tr>
+  <tr>
+    <td class="c011">The New York Frontier and Fighting there.</td>
+    <td class="c029"><span class="sc"><a href="/article/26-0977-s2/ticonderoga">Ticonderoga</a></span> (Vol. 26, p. 937).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/11-0768-george-lake/george__lake">George, Lake</a></span> (Vol. 11, p. 748).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/19-0661-s4/niagara__fort">Niagara, Fort</a></span> (Vol. 19, p. 634).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/15-0499-s2/johnson__sir_william">Johnson, Sir William</a></span> (Vol. 15, p. 472).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Campaign against Quebec and its Capture by the British.</td>
+    <td class="c029"><span class="sc"><a href="/article/22-0740-s6/quebec">Quebec</a></span> (Vol. 22, p. 728).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0794-wolfe-james/wolfe__james">Wolfe, James</a></span> (Vol. 28, p. 773).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/18-0791-s5/montcalm_de_saint_véran__louis_joseph">Montcalm</a></span> (Vol. 18, p. 761).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>Colonization on the Pacific Coast.</i></td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Spanish Government in California. Rule of the Missions. “A complete failure save in the acquisition of material wealth.”</td>
+    <td class="c029"><span class="sc"><a href="/article/05-0018-california/california">California</a></span>, <i>History</i> (Vol. 5, p. 17).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Spaniards neglect northwestern America.</td>
+    <td class="c029"><span class="sc"><a href="/article/20-0274-s2/oregon">Oregon</a></span>, <i>History</i> (Vol. 20, p. 247).</td>
+  </tr>
+  <tr>
+    <td class="c011">British Traders seize the opportunity.</td>
+    <td class="c029"><span class="sc"><a href="/article/13-0877-hudson-s-bay-company/hudson_s_bay_company">Hudson’s Bay Company</a></span> (Vol. 13, p. 852).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>The Colonial Revolt and Events Leading up to It.</i></td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">(1763–1783).</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>History</i> (Vol. 27, p. 672), by Prof. H. L. Osgood, Columbia University.</td>
+  </tr>
+  <tr>
+    <td class="c011">Immediate Causes:</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">The Stamp Act (1765).</td>
+    <td class="c029"><span class="sc"><a href="/article/25-0793-s2/stamp">Stamp</a></span> (Vol. 25, p. 772).</td>
+  </tr>
+  <tr>
+    <td class="c011">Boston Massacre and Boston Tea Party.</td>
+    <td class="c029"><span class="sc"><a href="/article/04-0305-boston-massachusetts/boston__massachusetts_">Boston</a></span> (Vol. 4, p. 296); <span class="sc"><a href="/article/14-0025-s4/hutchinson__thomas">Hutchinson, Thomas</a></span> (Vol. 14, p. 13).</td>
+  </tr>
+  <tr>
+    <td class="c011">Suffolk Resolves.</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0504-milton-john/milton__john">Milton, Mass.</a></span> (Vol. 18, p. 492).</td>
+  </tr>
+  <tr>
+    <td class="c011">Mecklenburg Resolutions and “Declaration,” May, 1775.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0799-north-carolina/north_carolina">North Carolina</a></span> (Vol. 19, p. 776).</td>
+  </tr>
+  <tr>
+    <td class="c011">Virginia leaders decide on independence to secure foreign assistance.</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0132-virginia/virginia">Virginia</a></span>, <i>History</i> (Vol. 28, p. 123).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Leaders of Public Opinion:</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Virginia.</td>
+    <td class="c029"><span class="sc"><a href="/article/13-0313-henry-patrick/henry__patrick">Henry, Patrick</a></span> (Vol. 13, p. 300), by <a href="/contributors.html?q=Newton+Dennison+Mereness">N. D. Mereness</a>, author of <i>Maryland, a Proprietary Province</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0360-washington-george/washington__george">Washington, George</a></span> (Vol. 28, p. 344), by Prof. <a href="/contributors.html?q=William+Macdonald">William MacDonald</a>, Brown University.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/16-0382-s2/lee__richard_henry">Lee, Richard Henry</a></span> (Vol. 16, p. 362).</td>
+  </tr>
+  <tr>
+    <td class="c011">Massachusetts.</td>
+    <td class="c029"><span class="sc"><a href="/article/20-0400-s4/otis__james">Otis, James</a></span> (Vol. 20, p. 366).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/01-0211-s2/adams__samuel">Adams, Samuel</a></span> (Vol. 1, p. 180), by Prof. Edward Channing, Harvard.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/01-0207-s2/adams__john">Adams, John</a></span> (Vol. 1, p. 176).</td>
+  </tr>
+  <tr>
+    <td class="c011">New Hampshire.</td>
+    <td class="c029"><span class="sc"><a href="/article/16-0192-s3/langdon__john">Langdon, John</a></span> (Vol. 16, p. 172).</td>
+  </tr>
+  <tr>
+    <td class="c011">Pennsylvania.</td>
+    <td class="c029"><span class="sc"><a href="/article/08-0201-dickinson-john/dickinson__john">Dickinson, John</a></span> (Vol. 8, p. 184).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/11-0036-s2/franklin__benjamin">Franklin, Benjamin</a></span> (Vol. 11, p. 24), by <a href="/contributors.html?q=Richard+Webster">Richard Webster</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">New York.</td>
+    <td class="c029"><span class="sc"><a href="/article/12-0905-hamilton-alexander/hamilton__alexander">Hamilton, Alexander</a></span> (Vol. 12, p. 881), by Dr. <a href="/contributors.html?q=Francis+Samuel+Philbrick">F. S. Philbrick</a> and Hugh Chisholm, editor-in-chief Encyclopaedia Britannica.</td>
+  </tr>
+  <tr>
+    <td class="c011">Conservative Leaders.</td>
+    <td class="c029"><span class="sc"><a href="/article/17-0094-s3/loyalists">Loyalists</a></span>, or <span class="sc"><a href="/article/17-0093-s8/lowth__robert">Tories</a></span> (Vol. 17, p. 79).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/11-0439-galloway-joseph/galloway__joseph">Galloway, Joseph</a></span> (Vol. 11, p. 421).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/24-0561-s2/seabury__samuel">Seabury, Samuel</a></span> (Vol. 24, p. 531).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/27-0357-s3/tryon__william">Tryon, William</a></span> (Vol. 27, p. 340).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/15-0499-s2/johnson__sir_william">Johnson, Sir William</a></span> and <span class="sc"><a href="/article/15-0499-s2/johnson__sir_william">Sir John</a></span> (Vol. 15, p. 472).</td>
+  </tr>
+  <tr>
+    <td class="c011">Why did not the Canadians revolt?</td>
+    <td class="c029"><span class="sc"><a href="/article/22-0746-s2/quebec_act">Quebec Act</a></span> (Vol. 22, p. 729).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>Declaration of Independence.</i></td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Resolution of Independence adopted July 2.</td>
+    <td class="c029"><span class="sc"><a href="/article/14-0391-independence-declaration-of/independence__declaration_of">Independence, Declaration of</a></span> (Vol. 14, p. 372), by Dr. <a href="/contributors.html?q=Francis+Samuel+Philbrick">F. S. Philbrick</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Jefferson’s Declaration adopted July 4. Most of the signatures affixed Aug. 2. One not until 1781.</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Some of the “Signers”:</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Virginia.</td>
+    <td class="c029"><span class="sc"><a href="/article/15-0326-s4/jefferson__thomas">Jefferson, Thomas</a></span> (Vol. 15, p. 301), by Dr. <a href="/contributors.html?q=Francis+Samuel+Philbrick">F. S. Philbrick</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/16-0382-s2/lee__richard_henry">Lee, Richard Henry</a></span> (Vol. 16, p. 362).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/16-0381-s5/lee__nathaniel">Lee, Francis Lightfoot</a></span> (Vol. 16, p. 362).</td>
+  </tr>
+  <tr>
+    <td class="c011">Massachusetts.</td>
+    <td class="c029"><span class="sc"><a href="/article/12-0933-s6/hancock__john">Hancock, John</a></span> (Vol. 12, p. 908).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/01-0211-s2/adams__samuel">Adams, Samuel</a></span> (Vol. 1, p. 180), by Prof. Edward Channing.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/01-0207-s2/adams__john">Adams, John</a></span> (Vol. 1, p. 176), by Prof. Edward Channing.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/20-0494-s7/paine__robert_treat">Paine, Robert Treat</a></span> (Vol. 20, p. 456).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/11-0927-s7/gerry__elbridge">Gerry, Elbridge</a></span> (Vol. 11, p. 903).</td>
+  </tr>
+  <tr>
+    <td class="c011">New York.</td>
+    <td class="c029"><span class="sc"><a href="/article/16-0834-s3/livingston__robert">Livingston, Philip</a></span> (Vol. 16, p. 813).</td>
+  </tr>
+  <tr>
+    <td class="c011">Pennsylvania.</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0903-s3/morris__robert">Morris, Robert</a></span> (Vol. 18, p. 871).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/23-0900-s2/rush__benjamin">Rush, Benjamin</a></span> (Vol. 23, p. 857).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/11-0036-s2/franklin__benjamin">Franklin, Benjamin</a></span> (Vol. 11, p. 24).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0713-s2/wilson__james">Wilson, James</a></span> (Vol. 28, p. 693).</td>
+  </tr>
+  <tr>
+    <td class="c011">New Jersey.</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0780-witherspoon-john/witherspoon__john">Witherspoon, John</a></span> (Vol. 28, p. 759).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/13-0702-s5/hopkinson__francis">Hopkinson, Francis</a></span> (Vol. 13, p. 685).</td>
+  </tr>
+  <tr>
+    <td class="c011">Connecticut.</td>
+    <td class="c029"><span class="sc"><a href="/article/24-0885-s2/sherman__roger">Sherman, Roger</a></span> (Vol. 24, p. 851).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0791-wolcott-roger/wolcott__roger">Wolcott, Oliver</a></span> (Vol. 28, p. 770).</td>
+  </tr>
+  <tr>
+    <td class="c011">Rhode Island.</td>
+    <td class="c029"><span class="sc"><a href="/article/09-0307-ellery-william/ellery__william">Ellery, William</a></span> (Vol. 9, p. 290).</td>
+  </tr>
+  <tr>
+    <td class="c011">Maryland.</td>
+    <td class="c029"><span class="sc"><a href="/article/05-0426-carroll-charles/carroll__charles">Carroll, Charles</a></span> (Vol. 5, p. 409).</td>
+  </tr>
+  <tr>
+    <td class="c011">South Carolina.</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0439-s2/middleton__arthur">Middleton, Arthur</a></span> (Vol. 18, p. 415).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/23-0990-rutledge-john/rutledge__john">Rutledge, Edward</a></span> (Vol. 23, p. 945).</td>
+  </tr>
+  <tr>
+    <td class="c011">English Opinion and Policy.</td>
+    <td class="c029"><span class="sc"><a href="/article/11-0760-s2/george_iii">George III</a></span> (Vol. 11, p. 740), by Dr. <a href="/contributors.html?q=Samuel+Rawson+Gardiner">S. R. Gardiner</a>, author of <i>History of England</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/12-0716-s3/guilford">Guilford, Frederick North</a></span>, 2nd Earl (Lord North) (Vol. 12, p. 691).</td>
+  </tr>
+  <tr>
+    <td class="c011">“Conciliation.”</td>
+    <td class="c029"><span class="sc"><a href="/article/04-0847-s6/burke__edmund">Burke, Edmund</a></span> (Vol. 4, p. 824), by John Morley (Viscount Morley of Blackburn).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/06-0014-chatham-william-pitt-1st-earl-of/chatham__william_pitt__1st_earl_of">Chatham, Earl of</a></span> (Pitt) (Vol. 6, p. 1).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/10-0782-s5/fox__charles_james">Fox, Charles James</a></span> (Vol. 10, p. 761), by <a href="/contributors.html?q=David+Hannay">David Hannay</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">American Foreign Agents and their work, especially in France, during the war.</td>
+    <td class="c029"><span class="sc"><a href="/article/11-0036-s2/franklin__benjamin">Franklin, Benjamin</a></span> (Vol. 11, p. 24).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/07-0922-deane-silas/deane__silas">Deane, Silas</a></span> (Vol. 7, p. 898).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/16-0380-s4/lee__arthur">Lee, Arthur</a></span> (Vol. 16, p. 360).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/15-0319-jay-john/jay__john">Jay, John</a></span> (Vol. 15, p. 294).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>The War for Independence.</i></td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">General outline.</td>
+    <td class="c029"><span class="sc"><a href="/article/01-0893-american-war-of-independence/american_war_of_independence">American War of Independence</a></span> (Vol. 1, p. 842), by Prof. <a href="/contributors.html?q=Sir+Harry+Hamilton+Johnston">Harry Phelps Johnston</a>, New York University, author of <i>Loyalist History of the Revolution</i>, and, for naval affairs, by <a href="/contributors.html?q=David+Hannay">David Hannay</a>, author of <i>A Short History of the Royal Navy</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">American Leaders</td>
+    <td class="c029"><span class="sc"><a href="/article/23-0240-revere-paul/revere__paul">Revere, Paul</a></span> (Vol. 23, p. 223).</td>
+  </tr>
+  <tr>
+    <td class="c011">In early fighting in Massachusetts</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0346-warren-joseph/warren__joseph">Warren, Joseph</a></span> (Vol. 28, p. 330).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/22-0686-s3/putnam__israel">Putnam, Israel</a></span> (Vol. 22, p. 670).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0360-washington-george/washington__george">Washington, George</a></span> (Vol. 28, p. 344), by Prof. <a href="/contributors.html?q=William+Macdonald">William MacDonald</a>, Brown University.</td>
+  </tr>
+  <tr>
+    <td class="c011">On the border and in Canada</td>
+    <td class="c029"><span class="sc"><a href="/article/01-0733-s3/allen__ethan">Allen, Ethan</a></span> (Vol. 1, p. 691).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/18-0814-montgomery-richard/montgomery__richard">Montgomery, Richard</a></span> (Vol. 18, p. 784).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/02-0675-s2/arnold__benedict">Arnold, Benedict</a></span> (Vol. 2, p. 633).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/24-0405-schuyler-philip-john/schuyler__philip_john">Schuyler, Philip John</a></span> (Vol. 24, p. 387).</td>
+  </tr>
+  <tr>
+    <td class="c011">In the Middle States</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0360-washington-george/washington__george">Washington, George</a></span> (Vol. 28, p. 344), by Prof. <a href="/contributors.html?q=William+Macdonald">William MacDonald</a>, Brown University.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/25-0948-s6/stirling__william_alexander">Stirling, William Alexander, Earl of</a></span> (Vol. 25, p. 925).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/15-0912-s2/knox__henry">Knox, Henry</a></span> (Vol. 15, p. 878).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/25-0820-s2/stark__john">Stark, John</a></span> (Vol. 25, p. 798).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0450-s2/wayne__anthony">Wayne, Anthony</a></span> (Vol. 28, p. 432).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/11-0547-s3/gates__horatio">Gates, Horatio</a></span> (Vol. 11, p. 529).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/02-0675-s2/arnold__benedict">Benedict, Arnold</a></span> (Vol. 2, p. 633).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/26-0073-s2/sullivan__john">Sullivan, John</a></span> (Vol. 26, p. 57).</td>
+  </tr>
+  <tr>
+    <td class="c011">In the South</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0967-s6/moultrie__william">Moultrie, William</a></span> (Vol. 18, p. 935).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/18-0865-s2/morgan__daniel">Morgan, Daniel</a></span> (Vol. 18, p. 833).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/17-0739-s5/marion__francis">Marion, Francis</a></span> (Vol. 17, p. 722).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/21-0608-pickens-andrew/pickens__andrew">Pickens, Andrew</a></span> (Vol. 21, p. 582).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/26-0101-s2/sumter__thomas">Sumter, Thomas</a></span> (Vol. 26, p. 85).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/24-0860-shelby-isaac/shelby__isaac">Shelby, Isaac</a></span> (Vol. 24, p. 826).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/11-0547-s3/gates__horatio">Gates, Horatio</a></span> (Vol. 11, p. 529).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/16-0381-s3/lee__henry">Lee, Henry</a></span> (Vol. 16, p. 361).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/12-0611-s2/grey__charles_grey">Greene, Nathaniel</a></span> (Vol. 12, p. 588).</td>
+  </tr>
+  <tr>
+    <td class="c011">In the Northwest</td>
+    <td class="c029"><span class="sc"><a href="/article/06-0458-clark-george-rogers/clark__george_rogers">Clark, George Rogers</a></span> (Vol. 6, p. 442).</td>
+  </tr>
+  <tr>
+    <td class="c011">On Sea</td>
+    <td class="c029"><span class="sc"><a href="/article/15-0526-s3/jones__john_paul">Jones, John Paul</a></span> (Vol. 15, p. 499).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/13-0701-s6/hopkins__esek">Hopkins, Esek</a></span> (Vol. 13, p. 684).</td>
+  </tr>
+  <tr>
+    <td class="c011">Foreign Officers in the War</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">French</td>
+    <td class="c029"><span class="sc"><a href="/article/16-0087-s3/lafayette">Lafayette</a></span> (Vol. 16, p. 65).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/23-0447-s5/rochambeau__jean_baptiste_donatien_de_vimeur">Rochambeau</a></span> (Vol. 23, p. 425).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/12-0386-grasse-fran-ois-joseph-paul-comte-de/grasse__françois_joseph_paul__comte_de">Grasse, Comte de</a></span> (Vol. 12, p. 369).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/09-0821-s3/estaing__charles_hector">Estaing, C. H. d’</a></span> (Vol. 9, p. 789).</td>
+  </tr>
+  <tr>
+    <td class="c011">Polish</td>
+    <td class="c029"><span class="sc"><a href="/article/15-0948-kosciuszko-tadeusz-andrzej-bonawentura/kosciuszko__tadeusz_andrzej_bonawentura">Kosciuszko</a></span> (Vol. 15, p. 914).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/22-0656-pulaski-casimir/pulaski__casimir">Pulaski</a></span> (Vol. 22, p. 640).</td>
+  </tr>
+  <tr>
+    <td class="c011">German</td>
+    <td class="c029"><span class="sc"><a href="/article/25-0928-s4/steuben__frederick_william_augustus_henry_ferdinand">Steuben</a></span> (Vol. 25, p. 904).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/15-0666-s3/kalb__johann">Kalb, Johann</a></span> (Vol. 15, p. 639).</td>
+  </tr>
+  <tr>
+    <td class="c011">English Leaders</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">On land</td>
+    <td class="c029"><span class="sc"><a href="/article/13-0864-howitt-william/howitt__william">Howe, William</a></span> (Vol. 13, p. 839).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/06-0547-clinton-sir-henry/clinton__sir_henry">Clinton, Sir Henry</a></span> (Vol. 6, p. 529).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/04-0842-s3/burgoyne__john">Burgoyne, John</a></span> (Vol. 4, p. 819).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/01-1021-s2/andré__john">André, John</a></span> (Vol. 1, p. 968).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/07-0200-cornwallis-charles-cornwallis/cornwallis__charles_cornwallis">Cornwallis, Charles</a></span> (Vol. 7, p. 183).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/26-0457-s3/tarleton__sir_banastre">Tarleton, Sir Banastre</a></span> (Vol. 26, p. 428).</td>
+  </tr>
+  <tr>
+    <td class="c011">On sea</td>
+    <td class="c029"><span class="sc"><a href="/article/13-0066-s3/hastings">Hastings, Marquess of</a></span> (Lord Rawdon) (Vol. 13, p. 53).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/13-0861-howe-richard-howe-earl/howe__richard_howe__earl">Howe, Richard</a></span> (Vol. 13, p. 836).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/23-0469-rodney-george-brydges-rodney-baron/rodney__george_brydges_rodney__baron">Rodney, George Brydges</a></span> (Vol. 23, p. 447).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/04-0930-byron-john-byron/byron__john_byron">Byron, John</a></span> (Vol. 4, p. 906).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Principal Engagements of the War, Separately Treated</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Around Boston</td>
+    <td class="c029"><span class="sc"><a href="/article/16-0547-lexington-massachusetts/lexington__massachusetts_">Lexington</a></span> (Vol. 16, p. 527).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/06-0854-concord-massachusetts/concord__massachusetts_">Concord</a></span> (Vol. 6, p. 830).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/04-0821-s7/bunker_hill">Bunker Hill</a></span> (Vol. 4, p. 798).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/04-0305-boston-massachusetts/boston__massachusetts_">Boston</a></span> (Vol. 4, p. 296).</td>
+  </tr>
+  <tr>
+    <td class="c011">Canada and the Border</td>
+    <td class="c029"><span class="sc"><a href="/article/26-0977-s2/ticonderoga">Ticonderoga</a></span> (Vol. 26, p. 938).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/07-0541-crown-point/crown_point">Crown Point</a></span> (Vol. 7, p. 519).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/22-0740-s6/quebec">Quebec</a></span> (Vol. 22, p. 728).</td>
+  </tr>
+  <tr>
+    <td class="c011">Middle States</td>
+    <td class="c029"><span class="sc"><a href="/article/16-1006-long-island/long_island">Long Island</a></span> (Vol. 16, p. 984), by <a href="/contributors.html?q=Charles+Francis+Atkinson">C. F. Atkinson</a>, author of <i>The Wilderness and Cold Harbour</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/19-0635-s2/new_york">New York City</a></span> (Vol. 19, p. 622).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/27-0267-trenton-and-princeton-battles-of/trenton_and_princeton__battles_of">Trenton and Princeton</a></span> (Vol. 27, p. 252).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/04-0445-brandywine/brandywine">Brandywine</a></span> (Vol. 4, p. 430).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/11-0825-germantown/germantown">Germantown</a></span> (Vol. 11, p. 804).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/24-0219-s4/saratoga_springs">Saratoga</a></span> (Vol. 24, p. 205).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/03-0763-bennington/bennington">Bennington</a></span> (Vol. 3, p. 743).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/27-0890-valley-forge/valley_forge">Valley Forge</a></span> (Vol. 27, p. 864).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/18-0757-monmouth/monmouth">Monmouth</a></span> (Vol. 18, p. 727).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/25-0992-s4/stony_point">Stony Point</a></span> (Vol. 25, p. 966).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0577-west-point/west_point">West Point</a></span> (Vol. 28, p. 559).</td>
+  </tr>
+  <tr>
+    <td class="c011">South</td>
+    <td class="c029"><span class="sc"><a href="/article/05-0979-charleston-south-carolina/charleston__south_carolina_">Charleston</a></span> (Vol. 5, p. 944).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/05-0113-camden-new-jersey/camden__new_jersey_">Camden</a></span> (Vol. 5, p. 102).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/15-0848-king-s-mountain/king_s_mountain">King’s Mountain</a></span> (Vol. 15, p. 819).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/09-0994-eutawville/eutawville">Eutawville</a></span> (Vol. 9, p. 957).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0963-yorktown/yorktown">Yorktown</a></span> (Vol. 28, p. 936).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>Governmental History.</i></td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">First attempts at Confederation (1776–1789). Article of Confederation (1777–1781).</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>History</i> (Vol. 27, p. 681), by Prof. H. L. Osgood, Columbia University.</td>
+  </tr>
+  <tr>
+    <td class="c011">Difficulties of ratification.</td>
+    <td class="c029"><span class="sc"><a href="/article/17-0844-maryland/maryland">Maryland</a></span> (Vol. 17, p. 832), by Dr. <a href="/contributors.html?q=Newton+Dennison+Mereness">N. D. Mereness</a>, author of <i>Maryland, a Proprietary Province</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Necessity for centralization seen (1779–1780).</td>
+    <td class="c029"><span class="sc"><a href="/article/12-0905-hamilton-alexander/hamilton__alexander">Hamilton, Alexander</a></span> (Vol. 12, p. 880), by Dr. <a href="/contributors.html?q=Francis+Samuel+Philbrick">F. S. Philbrick</a> and Hugh Chisholm, editor 11th Edition Encyclopaedia Britannica.</td>
+  </tr>
+  <tr>
+    <td class="c011">Recognition of the United States.<br>Treaty of Versailles (Sept. 1783).</td>
+    <td class="c029"><span class="sc"><a href="/article/11-0036-s2/franklin__benjamin">Franklin, Benjamin</a></span> (Vol. 11, p. 27), by <a href="/contributors.html?q=Richard+Webster">Richard Webster</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/01-0207-s2/adams__john">Adams, John</a></span> (Vol. 1, p. 176), by Dr. Edward Channing, Harvard University.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/15-0319-jay-john/jay__john">Jay, John</a></span> (Vol. 15, p. 294).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/16-0304-s2/laurens__henry">Laurens, Henry</a></span> (Vol. 16, p. 284).</td>
+  </tr>
+  <tr>
+    <td class="c011">Struggle for National Government.<br>The Critical Period.<br>Government found impossible under the articles (1783–1789).</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>History</i> (Vol. 27, p. 684), by Dr. <a href="/contributors.html?q=Alexander+Johnston">Alexander Johnston</a>, late professor of history, Princeton University, and <a href="/contributors.html?q=Charles+Crawford+Whinery">C. C. Whinery</a>, assistant editor, Encyclopaedia Britannica.</td>
+  </tr>
+  <tr>
+    <td class="c011">Territorial cessions and government. Ordinance of 1787.</td>
+    <td class="c029"><span class="sc"><a href="/article/15-0326-s4/jefferson__thomas">Jefferson, Thomas</a></span> (Vol. 15, p. 303), by Dr. <a href="/contributors.html?q=Francis+Samuel+Philbrick">F. S. Philbrick</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Roundabout origin of the Constitutional Conventions:</td>
+    <td class="c029"><span class="sc"><a href="/article/17-0299-s5/madison__james">Madison, James</a></span> (Vol. 17, p. 285).</td>
+  </tr>
+  <tr>
+    <td class="c011">Alexandria (1785).</td>
+    <td class="c029"><span class="sc"><a href="/article/01-0608-s4/alexandria">Alexandria, Va.</a></span> (Vol. 1, p. 572).</td>
+  </tr>
+  <tr>
+    <td class="c011">Annapolis (1786).</td>
+    <td class="c029"><span class="sc"><a href="/article/02-0074-s4/annapolis">Annapolis, Va.</a></span> (Vol. 2, p. 63).</td>
+  </tr>
+  <tr>
+    <td class="c011">Philadelphia (1787).</td>
+    <td class="c029"><span class="sc"><a href="/article/21-0388-s3/philadelphia">Philadelphia</a></span>, <i>History</i> (Vol. 21, p. 372).</td>
+  </tr>
+  <tr>
+    <td class="c011">The three plans:</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Virginia</td>
+    <td class="c029"><span class="sc"><a href="/article/22-0903-s4/randolph__john">Randolph, Edmund J.</a></span> (Vol. 22, p. 886).</td>
+  </tr>
+  <tr>
+    <td class="c011">Pinckney</td>
+    <td class="c029"><span class="sc"><a href="/article/21-0643-s4/pinckney__charles">Pinckney, Charles C.</a></span> (Vol. 21, p. 616).</td>
+  </tr>
+  <tr>
+    <td class="c011">New Jersey (Paterson)</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0522-s3/new_jersey">New Jersey</a></span> (Vol. 19, p. 512).</td>
+  </tr>
+  <tr>
+    <td class="c011">Struggle over State Representation.</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0901-s4/morris__gouverneur">Morris, Gouverneur</a></span> (Vol. 18, p. 869).</td>
+  </tr>
+  <tr>
+    <td class="c011">Origin of the Senate, Connecticut compromise.</td>
+    <td class="c029"><span class="sc"><a href="/article/06-0975-connecticut/connecticut">Connecticut</a></span>, <i>History</i> (Vol. 6, p. 956).</td>
+  </tr>
+  <tr>
+    <td class="c011">Opposition and Ratification.</td>
+    <td class="c029"><span class="sc"><a href="/article/13-0313-henry-patrick/henry__patrick">Henry, Patrick</a></span> (Vol. 13, p. 300).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/12-0905-hamilton-alexander/hamilton__alexander">Hamilton, Alexander</a></span> (Vol. 12, p. 880), by Dr. <a href="/contributors.html?q=Francis+Samuel+Philbrick">F. S. Philbrick</a> and Hugh Chisholm.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/17-0299-s5/madison__james">Madison, James</a></span> (Vol. 17, p. 286).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/15-0319-jay-john/jay__john">Jay, John</a></span> (Vol. 15, p. 294).</td>
+  </tr>
+  <tr>
+    <td class="c011">Federalists and Anti-Federalists.</td>
+    <td class="c029"><span class="sc"><a href="/article/10-0247-s2/federalist_party">Federalist Party</a></span> (Vol. 10, p. 235).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/02-0136-s4/anti-federalists">Anti-Federalists</a></span> (Vol. 2, p. 124).</td>
+  </tr>
+  <tr>
+    <td class="c011">Government Under the Constitution.</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">The form of Government established by the Constitution.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>Constitution and Government</i> (Vol. 27, p. 646), by Hon. <a href="/contributors.html?q=Edmund+Janes+James">James</a> Bryce, British Ambassador at Washington, and author of <i>The American Commonwealth</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Washington as President (1789–1797).</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0360-washington-george/washington__george">Washington, George</a></span> (Vol. 28, p. 347), by Dr. <a href="/contributors.html?q=William+Macdonald">William MacDonald</a>, professor of American History, Brown University.</td>
+  </tr>
+  <tr>
+    <td class="c011">Development of Democracy (1789–1801).</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>History</i> (Vol. 27, p. 688), by Prof. <a href="/contributors.html?q=Alexander+Johnston">Alexander Johnston</a> and <a href="/contributors.html?q=Charles+Crawford+Whinery">C. C. Whinery</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Constitution finally ratified by all the States.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0799-north-carolina/north_carolina">North Carolina</a></span> (Vol. 19, p. 777).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/23-0265-rhode-island/rhode_island">Rhode Island</a></span> (Vol. 23, p. 252).</td>
+  </tr>
+  <tr>
+    <td class="c011">The first Tariff act, 1789, a moderate protective measure.</td>
+    <td class="c029"><span class="sc"><a href="/article/26-0451-s3/tariff">Tariff</a></span> (Vol. 26, p. 425), by Dr. F. W. Taussig, professor Harvard University, author of <i>Principles of Economics</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011">Admission of new States, Vermont and Kentucky.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-1053-s4/vermont">Vermont</a></span> (Vol. 27, p. 1028).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/15-0768-kentucky/kentucky">Kentucky</a></span> (Vol. 15, p. 746).</td>
+  </tr>
+  <tr>
+    <td class="c011">Hamilton’s efforts for strength and stability. His tendency towards Aristocracy. Opposition of Jefferson.</td>
+    <td class="c029"><span class="sc"><a href="/article/12-0905-hamilton-alexander/hamilton__alexander">Hamilton, Alexander</a></span> (Vol. 12, p. 881), by Dr. <a href="/contributors.html?q=Francis+Samuel+Philbrick">F. S. Philbrick</a> and Hugh Chisholm, editor-in-chief Encyclopaedia Britannica.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/15-0326-s4/jefferson__thomas">Jefferson, Thomas</a></span> (Vol. 15, p. 303), by Dr. <a href="/contributors.html?q=Francis+Samuel+Philbrick">F. S. Philbrick</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Excise troubles (1794). First employment by the Federal Executive of power to enforce Federal laws within the States.</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0612-s2/whisky_insurrection">Whisky Insurrection</a></span> (Vol. 28, p. 592).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/11-0432-gallatin-albert/gallatin__albert">Gallatin, Albert</a></span> (Vol. 11, p. 414), by <a href="/contributors.html?q=Hon.+Henry+Cabot+Lodge">Henry Cabot Lodge</a>, U. S. Senator from Massachusetts, biographer of Washington, <a href="/contributors.html?q=Richard+Webster">Webster</a>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011">Jay’s treaty with England (1794). Its defects.</td>
+    <td class="c029"><span class="sc"><a href="/article/15-0319-jay-john/jay__john">Jay, John</a></span> (Vol. 15, p. 294).</td>
+  </tr>
+  <tr>
+    <td class="c011">Presidency of John Adams. Alien and Sedition Laws.</td>
+    <td class="c029"><span class="sc"><a href="/article/01-0207-s2/adams__john">Adams, John</a></span> (Vol. 1, p. 176), by Prof. Edward Channing of Harvard.</td>
+  </tr>
+  <tr>
+    <td class="c011">Organization of Navy Department (1798).</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0314-s5/navy">Navy and Navies</a></span>, <i>The United States</i> (Vol. 19, p. 308), by <a href="/contributors.html?q=David+Hannay">David Hannay</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/01-0226-s2/admiralty_administration">Admiralty Administration</a></span> (Vol. 1, p. 201), by the late Rear-Admiral William T. Sampson, U. S. Navy.</td>
+  </tr>
+  <tr>
+    <td class="c011">Virginia and Kentucky Resolutions.</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0132-virginia/virginia">Virginia</a></span> (Vol. 28, p. 124).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/15-0768-kentucky/kentucky">Kentucky</a></span> (Vol. 15, p. 746).</td>
+  </tr>
+  <tr>
+    <td class="c011">Part in them taken by Jefferson and Madison.</td>
+    <td class="c029"><span class="sc"><a href="/article/17-0299-s5/madison__james">Madison, James</a></span> (Vol. 17, p. 286).</td>
+  </tr>
+  <tr>
+    <td class="c011">Idea of Secession present from the beginning. Early threats.</td>
+    <td class="c029"><span class="sc"><a href="/article/24-0598-s5/secession">Secession</a></span> (Vol. 24, p. 568), by Dr. <a href="/contributors.html?q=Walter+Lynwood+Fleming">Walter L. Fleming</a>, professor Louisiana State University.</td>
+  </tr>
+  <tr>
+    <td class="c011">Invention of cotton gin (1793) and its far-reaching consequences, introducing a commercial element into slavery.</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0631-s2/whitney__eli">Whitney, Eli</a></span> (Vol. 28, p. 611).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>Democracy and Nationality</i> (1801–1829).</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>History</i> (Vol. 27, p. 692), by Prof. <a href="/contributors.html?q=Alexander+Johnston">Alexander Johnston</a> and <a href="/contributors.html?q=Charles+Crawford+Whinery">C. C. Whinery</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Election of Jefferson (1800). The Democratic Party called by Jefferson the Republican Party, later and officially the Democratic-Republican, and later still simply the Democratic Party.</td>
+    <td class="c029"><span class="sc"><a href="/article/08-0016-democratic-party/democratic_party">Democratic Party</a></span> (Vol. 8, p. 2).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/25-0824-s2/state_rights">State Rights</a></span> (Vol. 25, p. 802).</td>
+  </tr>
+  <tr>
+    <td class="c011">The acquisition of Louisiana (1803).</td>
+    <td class="c029"><span class="sc"><a href="/article/17-0077-louisiana-purchase/louisiana_purchase">Louisiana Purchase</a></span> (Vol. 17, p. 62).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Lewis-Clark expedition (1804); a basis for future acquisition of territory in the far west.</td>
+    <td class="c029"><span class="sc"><a href="/article/16-0543-s6/lewis__meriwether">Lewis, Meriwether</a></span> (Vol. 16, p. 523).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/06-0457-clark-francis-edward/clark__francis_edward">Clark, William</a></span> (Vol. 6, p. 442).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/20-0274-s2/oregon">Oregon</a></span>, <i>History</i> (Vol. 20, p. 248).</td>
+  </tr>
+  <tr>
+    <td class="c011">War with the Barbary pirates (1805). These robbers first checked by the little American navy.</td>
+    <td class="c029"><span class="sc"><a href="/article/21-0667-pirate-and-piracy/pirate_and_piracy">Pirate and Piracy</a></span>, <i>History</i> (Vol. 21, p. 638), by <a href="/contributors.html?q=David+Hannay">D. Hannay</a>, author of <i>Short History of the Royal Navy</i>. <span class="sc"><a href="/article/08-0866-eaton-william/eaton__william">Eaton, William</a></span> (Vol. 8, p. 839).</td>
+  </tr>
+  <tr>
+    <td class="c011">War with Barbary Pirates.</td>
+    <td class="c029"><span class="sc"><a href="/article/08-0089-derna/derna">Derna</a></span> (Vol. 8, p. 74), by <a href="/contributors.html?q=David+George+Hogarth">D. G. Hogarth</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/13-0894-s8/hull__isaac">Hull, Isaac</a></span> (Vol. 13, p. 869).</td>
+  </tr>
+  <tr>
+    <td class="c011">Expedition of Aaron Burr (1806–1807).</td>
+    <td class="c029"><span class="sc"><a href="/article/04-0885-s5/burr__aaron">Burr, Aaron</a></span> (Vol. 4, p. 862).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0666-wilkinson-james/wilkinson__james">Wilkinson, James</a></span> (Vol. 28, p. 647), by Dr. Isaac Joslin Cox, professor of history, University of Cincinnati.</td>
+  </tr>
+  <tr>
+    <td class="c011">Election of Madison (1808).</td>
+    <td class="c029"><span class="sc"><a href="/article/17-0299-s5/madison__james">Madison, James</a></span> (Vol. 17, p. 284).</td>
+  </tr>
+  <tr>
+    <td class="c011">Difficulties with Great Britain. Restrictions of Commerce and right of search.</td>
+    <td class="c029"><span class="sc"><a href="/article/24-0590-search/search">Search</a></span>, or <span class="sc"><a href="/article/24-0590-search/search">Visit and Search</a></span> (Vol. 24, p. 560), by Sir <a href="/contributors.html?q=Sir+Thomas+Barclay">Thomas Barclay</a>, author of <i>Problems of International Practice and Diplomacy</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>The War of 1812.</i></td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Military and naval events.</td>
+    <td class="c029"><span class="sc"><a href="/article/01-0898-american-war-of-1812/american_war_of_1812">American War of 1812</a></span> (Vol. 1, p. 847), by <a href="/contributors.html?q=David+Hannay">David Hannay</a>, author of <i>Short History of the Royal Navy</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Principal engagements and Strategic Points.</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">In the Northwest</td>
+    <td class="c029"><span class="sc"><a href="/article/17-0270-s3/mackinac_island">Mackinac Island</a></span> (Vol. 17, p. 255).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/08-0128-detroit/detroit">Detroit</a></span> (Vol. 8, p. 116).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/18-0392-s5/michigan">Michigan</a></span> (Vol. 18, p. 376).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/27-0066-toronto/toronto">Toronto</a></span> (Vol. 27, p. 53).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/23-1019-s3/sackett_s_harbor">Sackett’s Harbor</a></span> (Vol. 23, p. 974).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/21-0858-plattsburg/plattsburg">Plattsburg</a></span> (Vol. 21, p. 825).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/05-0866-champlain/champlain">Champlain</a></span> (Vol. 5, p. 831).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/19-0661-s4/niagara__fort">Niagara, Fort</a></span> (Vol. 19, p. 635).</td>
+  </tr>
+  <tr>
+    <td class="c011">In the East</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0365-washington/washington">Washington</a></span> (Vol. 28, p. 352).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/03-0305-s2/baltimore">Baltimore</a></span> (Vol. 3, p. 290).</td>
+  </tr>
+  <tr>
+    <td class="c011">In the Southwest</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0549-new-orleans/new_orleans">New Orleans</a></span> (Vol. 19, p. 531).</td>
+  </tr>
+  <tr>
+    <td class="c011">Principal Leaders in the War on Land and on Sea.</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">American</td>
+    <td class="c029"><span class="sc"><a href="/article/23-0469-s2/rodgers__john">Rodgers, John</a></span> (Vol. 23, p. 447).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/07-0934-decatur-stephen/decatur__stephen">Decatur, Stephen</a></span> (Vol. 7, p. 910).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/13-0894-s8/hull__isaac">Hull, Isaac</a></span> (Vol. 13, p. 869).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/03-0240-s2/bainbridge__william">Bainbridge, William</a></span> (Vol. 3, p. 223).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/22-0127-porter-david/porter__david">Porter, David</a></span> (Vol. 22, p. 113).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/06-0031-chauncey-isaac/chauncey__isaac">Chauncey, Isaac</a></span> (Vol. 6, p. 18).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/21-0202-perry-oliver-hazard/perry__oliver_hazard">Perry, Oliver Hazard</a></span> (Vol. 21, p. 185).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/04-0682-s3/brown__jacob">Brown, Jacob</a></span> (Vol. 4, p. 659).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/24-0495-s3/scott__winfield">Scott, Winfield</a></span> (Vol. 24, p. 475).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/15-0123-s4/jackson__andrew">Jackson, Andrew</a></span> (Vol. 15, p. 107).</td>
+  </tr>
+  <tr>
+    <td class="c011">On the other side</td>
+    <td class="c029"><span class="sc"><a href="/article/04-0646-s4/brock__sir_isaac">Brock, Sir Isaac</a></span> (Vol. 4, p. 623).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/23-0780-ross-robert/ross__robert">Ross, Robert</a></span> (Vol. 23, p. 740).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/04-0651-s5/broke">Broke, Sir P. B. V.</a></span> (Vol. 4, p. 628).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/26-0528-tecumseh/tecumseh">Tecumseh</a></span> (Vol. 26, p. 499).</td>
+  </tr>
+  <tr>
+    <td class="c011">Weakness of Madison’s Administration.</td>
+    <td class="c029"><span class="sc"><a href="/article/17-0299-s5/madison__james">Madison, James</a></span> (Vol. 17, p. 286).</td>
+  </tr>
+  <tr>
+    <td class="c011">Opposition to the war in New England: The Hartford Convention.</td>
+    <td class="c029"><span class="sc"><a href="/article/13-0045-s3/hartford">Hartford</a></span> (Vol. 13, p. 33).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>After the War.</i></td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Reaction against Federalist party</td>
+    <td class="c029"><span class="sc"><a href="/article/10-0247-s2/federalist_party">Federalist Party</a></span> (Vol. 10, p. 235).</td>
+  </tr>
+  <tr>
+    <td class="c011">Acquisition of Florida (1819)</td>
+    <td class="c029"><span class="sc"><a href="/article/10-0560-florida/florida">Florida</a></span>, <i>History</i> (Vol. 10, p. 545).</td>
+  </tr>
+  <tr>
+    <td class="c011">Bank of the United States (1816).</td>
+    <td class="c029"><span class="sc"><a href="/article/03-0351-banks-and-banking/banks_and_banking">Banks and Banking</a></span>, <i>United States</i> (Vol. 3, p. 345), by <a href="/contributors.html?q=Charles+Arthur+Conant">Charles A. Conant</a>, author of <i>The History of Modern Banks</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Tariff revision (1816–1828).</td>
+    <td class="c029"><span class="sc"><a href="/article/26-0451-s3/tariff">Tariff</a></span> (Vol. 26, p. 425), by Prof. F. W. Taussig, Harvard, author of <i>Tariff History of the United States</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011">“The American System”—Clay’s name for the combination of protective tariff and internal improvements begun by Dallas and carried on by himself and the Whig and Republican parties.</td>
+    <td class="c029"><span class="sc"><a href="/article/22-0479-protection/protection">Protection</a></span> (Vol. 22, p. 465), by Dr. <a href="/contributors.html?q=Edmund+Janes+James">Edmund J. James</a>, president of University of Illinois, author of <i>History of American Tariff Legislation</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/07-0790-dallas-alexander-james/dallas__alexander_james">Dallas, A. J.</a></span> (Vol. 7, p. 768).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/06-0486-clay-henry/clay__henry">Clay, Henry</a></span> (Vol. 6, p. 471), by <a href="/contributors.html?q=Hon.+Carl+Schurz">Carl Schurz</a>, biographer of Clay.</td>
+  </tr>
+  <tr>
+    <td class="c011">The Monroe Doctrine (1823).</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0766-monroe-james/monroe__james">Monroe, James</a></span> (Vol. 18, p. 736).</td>
+  </tr>
+  <tr>
+    <td class="c011">The first weighty international action of the Government—warning to European states at instance of England.</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0768-s3/monroe_doctrine">Monroe Doctrine</a></span> (Vol. 18, p. 738), by Dr. <a href="/contributors.html?q=Theodore+Salisbury+Woolsey">Theodore S. Woolsey</a>, professor of International Law, Yale University.</td>
+  </tr>
+  <tr>
+    <td class="c011">Admission of new States:</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Indiana (1816)</td>
+    <td class="c029"><span class="sc"><a href="/article/14-0444-indiana/indiana">Indiana</a></span>, <i>History</i> (Vol. 14, p. 425).</td>
+  </tr>
+  <tr>
+    <td class="c011">Mississippi (1817)</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0626-mississippi/mississippi">Mississippi</a></span>, <i>History</i> (Vol. 18, p. 602).</td>
+  </tr>
+  <tr>
+    <td class="c011">Illinois (1818)</td>
+    <td class="c029"><span class="sc"><a href="/article/14-0317-illinois/illinois">Illinois</a></span>, <i>History</i> (Vol. 14, p. 309).</td>
+  </tr>
+  <tr>
+    <td class="c011">Alabama (1819)</td>
+    <td class="c029"><span class="sc"><a href="/article/01-0497-s1/alabama">Alabama</a></span>, <i>History</i> (Vol. 1, p. 462).</td>
+  </tr>
+  <tr>
+    <td class="c011">Maine (1820)</td>
+    <td class="c029"><span class="sc"><a href="/article/17-0448-s2/maine">Maine</a></span>, <i>History</i> (Vol. 17, p. 439).</td>
+  </tr>
+  <tr>
+    <td class="c011">Missouri (1821)</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0635-missouri/missouri">Missouri</a></span>, <i>History</i> (Vol. 18, p. 613).</td>
+  </tr>
+  <tr>
+    <td class="c011">Fixing the Northwest Boundary: Agreements with Great Britain (1818 and 1827) and with Russia (1825).</td>
+    <td class="c029"><span class="sc"><a href="/article/20-0274-s2/oregon">Oregon</a></span>, <i>History</i> (Vol. 20, p. 248).</td>
+  </tr>
+  <tr>
+    <td class="c011">A nationalizing element in the Republican Party fostered by commercial and manufacturing elements in the East fuses with broad constructionists to form new party (National Republican, later the Whig) under J. Q. Adams and Clay (1824).</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0609-s2/whig_party">Whig Party</a></span> (Vol. 28, p. 589), by Dr. <a href="/contributors.html?q=Anson+Daniel+Morse">Anson D. Morse</a>, professor of history, Amherst College.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/01-0209-s2/adams__john_quincy">Adams, John Quincy</a></span> (Vol. 1, p. 178), by Prof. Edward Channing, Harvard University.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/06-0486-clay-henry/clay__henry">Clay, Henry</a></span> (Vol. 6, p. 470), by <a href="/contributors.html?q=Hon.+Carl+Schurz">Carl Schurz</a>, author of <i>Life of <a href="/contributors.html?q=Hon.+William+Wirt+Henry">Henry</a> Clay</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/02-0139-s4/anti-masonic_party">Anti-Masonic Party</a></span> (Vol. 2, p. 127).</td>
+  </tr>
+  <tr>
+    <td class="c011">Jackson and the Democratic Party.</td>
+    <td class="c029"><span class="sc"><a href="/article/08-0016-democratic-party/democratic_party">Democratic Party</a></span> (Vol. 8, p. 2).</td>
+  </tr>
+  <tr>
+    <td class="c011">The “power of the people” established.</td>
+    <td class="c029"><span class="sc"><a href="/article/06-0398-circle/circle">Crawford, W. H.</a></span> (Vol. 6, p. 386).</td>
+  </tr>
+  <tr>
+    <td class="c011">Free <i>vs.</i> Slave States.</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0643-missouri-compromise/missouri_compromise">Missouri Compromise</a></span> (Vol. 18, p. 614), by Prof. <a href="/contributors.html?q=William+Roy+Smith">William Roy Smith</a>, Bryn Mawr College.</td>
+  </tr>
+  <tr>
+    <td class="c011">Beginning of a sectional struggle, which Clay and others tried to compromise (1820).</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0635-missouri/missouri">Missouri</a></span>, <i>History</i> (Vol. 18, p. 613).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>Industrial Development and Sectional Divergence.</i></td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>History</i> (Vol. 27, p. 697), by Prof. <a href="/contributors.html?q=Alexander+Johnston">Alexander Johnston</a> and <a href="/contributors.html?q=Charles+Crawford+Whinery">C. C. Whinery</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>Tendencies to Disunion</i> (1829–1851).</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">“The reign of Andrew Jackson” (1829–1837).</td>
+    <td class="c029"><span class="sc"><a href="/article/15-0123-s4/jackson__andrew">Jackson, Andrew</a></span> (Vol. 15, p. 107), by the late Prof. William G. Sumner, Yale University, author of <i>Life of Andrew Jackson</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011">The Kitchen Cabinet and the Cabinet Crisis.</td>
+    <td class="c029"><span class="sc"><a href="/article/12-0559-s3/green__duff">Green, Duff</a></span> (Vol. 12, p. 534).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/08-0865-eaton-margaret-o-neill/eaton__margaret_o_neill">Eaton, Margaret O’Neill</a></span> (“Peggy O’Neill”) (Vol. 8, p. 838).</td>
+  </tr>
+  <tr>
+    <td class="c011">Jackson and the Bank.</td>
+    <td class="c029"><span class="sc"><a href="/article/03-0351-banks-and-banking/banks_and_banking">Banks and Banking</a></span>, <i>United States</i> (Vol. 3, p. 346), by <a href="/contributors.html?q=Charles+Arthur+Conant">C. A. Conant</a>, author of <i>History of Modern Banks of Issue</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">The new school of leaders.</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Jackson’s lieutenant and successor.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0907-s2/van_buren__martin">Van Buren, Martin</a></span> (Vol. 27, p. 881), by Prof. <a href="/contributors.html?q=William+Macdonald">William MacDonald</a>, Brown University.</td>
+  </tr>
+  <tr>
+    <td class="c011">Van Buren’s lieutenant in New York.</td>
+    <td class="c029"><span class="sc"><a href="/article/17-0713-marcy-william-learned/marcy__william_learned">Marcy, W. L.</a></span> (Vol. 17, p. 696).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Jacksonian leader in the Senate.</td>
+    <td class="c029"><span class="sc"><a href="/article/03-0773-benton-thomas-hart/benton__thomas_hart">Benton, T. H.</a></span> (Vol. 3, p. 753).</td>
+  </tr>
+  <tr>
+    <td class="c011">Jackson’s War Secretary, 1831–36.</td>
+    <td class="c029"><span class="sc"><a href="/article/05-0472-cass-lewis/cass__lewis">Cass, Lewis</a></span> (Vol. 5, p. 455).</td>
+  </tr>
+  <tr>
+    <td class="c011">Jackson’s Attorney-General, Treasurer, and (1835) Chief Justice.</td>
+    <td class="c029"><span class="sc"><a href="/article/26-0417-s3/taney__roger_brooke">Taney, R. B.</a></span> (Vol. 26, p. 396).</td>
+  </tr>
+  <tr>
+    <td class="c011">Jackson’s Secretary of State (1831–33), who drafted the anti-nullification proclamation.</td>
+    <td class="c029"><span class="sc"><a href="/article/16-0833-s4/livingston__edward">Livingston, Edward</a></span> (Vol. 16, p. 811).</td>
+  </tr>
+  <tr>
+    <td class="c011">Georgia and the Cherokees. Opposition in the South to the Protective System. Tariff of 1832.</td>
+    <td class="c029"><span class="sc"><a href="/article/11-0779-georgia/georgia">Georgia</a></span>, <i>History</i> (Vol. 11, p. 756).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/26-0451-s3/tariff">Tariff</a></span>, <i>United States</i> (Vol. 26, p. 425), by Prof. F. W. Taussig, Harvard University, author of <i>Tariff History of the United States</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Rise and fall of doctrine of Nullification (1830).</td>
+    <td class="c029"><span class="sc"><a href="/article/05-0012-calhoun-john-caldwell/calhoun__john_caldwell">Calhoun, John C.</a></span> (Vol. 5, p. 1), by <a href="/contributors.html?q=Hon.+Charles+Emory+Smith">Hon. Henry A. M. Smith</a>, U. S. District Judge, South Carolina.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/25-0517-south-carolina/south_carolina">South Carolina</a></span>, <i>History</i> (Vol. 25, p. 504).</td>
+  </tr>
+  <tr>
+    <td class="c011">Nullification not original with Calhoun.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0878-s4/nullification">Nullification</a></span> (Vol. 19, p. 846), by Prof. <a href="/contributors.html?q=Walter+Lynwood+Fleming">Walter L. Fleming</a>, Louisiana State University.</td>
+  </tr>
+  <tr>
+    <td class="c011">The debate in the U. S. Senate on nullification—<a href="/contributors.html?q=Richard+Webster">Webster</a> and Hayne.</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0477-s4/webster__daniel">Webster, Daniel</a></span> (Vol. 28, p. 461), by <a href="/contributors.html?q=Everett+Pepperrell+Wheeler">Everett P. Wheeler</a>, author of <i>Daniel <a href="/contributors.html?q=Richard+Webster">Webster</a></i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/13-0127-s3/hayne__robert_young">Hayne, Robert Young</a></span> (Vol. 13, p. 114).</td>
+  </tr>
+  <tr>
+    <td class="c011">Compromise Tariff of 1833.</td>
+    <td class="c029"><span class="sc"><a href="/article/26-0451-s3/tariff">Tariff</a></span> (Vol. 26, p. 425), by Prof. F. W. Taussig, Harvard, author of <i>Tariff History of the United States</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Beginning of abolitionist movement (1831). The “Liberator.”</td>
+    <td class="c029"><span class="sc"><a href="/article/25-0232-s6/slavery">Slavery</a></span>, <i>United States</i> (Vol. 25, p. 225), by Dr. <a href="/contributors.html?q=John+Kells+Ingram">J. K. Ingram</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Foundation of American Anti-Slavery Society (1831). Its leaders.</td>
+    <td class="c029"><span class="sc"><a href="/article/17-0139-s2/lundy__benjamin">Lundy, Benjamin</a></span> (Vol. 17, p. 124).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/11-0495-garrison-william-lloyd/garrison__william_lloyd">Garrison, W. L.</a></span> (Vol. 11, p. 477).</td>
+  </tr>
+  <tr>
+    <td class="c011">Dissent from this view and formation of anti-slavery political party (1840).</td>
+    <td class="c029"><span class="sc"><a href="/article/21-0429-s4/phillips__wendell">Phillips, Wendell</a></span> (Vol. 21, p. 407), by <a href="/contributors.html?q=Thomas+Wentworth+Higginson">Thomas Wentworth Higginson</a>, author of <i>History of the United States</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/16-0563-liberty-party/liberty_party">Liberty Party</a></span> (Vol. 16, p. 543).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/03-1011-birney-james-gillespie/birney__james_gillespie">Birney, James G.</a></span> (Vol. 3, p. 988).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/25-0277-s5/smith__gerrit">Smith, Gerrit</a></span> (Vol. 25, p. 261).</td>
+  </tr>
+  <tr>
+    <td class="c011">“Dorr’s Rebellion.”</td>
+    <td class="c029"><span class="sc"><a href="/article/23-0265-rhode-island/rhode_island">Rhode Island</a></span> (Vol. 23, p. 252).</td>
+  </tr>
+  <tr>
+    <td class="c011">Seminole War (1835–1842).</td>
+    <td class="c029"><span class="sc"><a href="/article/20-0380-osceola/osceola">Osceola</a></span> (Vol. 20, p. 346).</td>
+  </tr>
+  <tr>
+    <td class="c011">Texas independent of Mexico (1836).</td>
+    <td class="c029"><span class="sc"><a href="/article/26-0721-texas/texas">Texas</a></span>, <i>History</i> (Vol. 26, p. 692).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/13-0853-s2/houston__sam">Houston, Sam</a></span> (Vol. 13, p. 828).</td>
+  </tr>
+  <tr>
+    <td class="c011">Admission of Texas (1845).</td>
+    <td class="c029"><span class="sc"><a href="/article/24-0140-s3/san_antonio">San Antonio, Texas</a></span> (Vol. 24, p. 126).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/02-0990-s4/austin">Austin, S. F.</a></span> (Vol. 2, p. 940).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/07-0499-crockett-david/crockett__david">Crockett, David</a></span> (Vol. 7, p. 477).</td>
+  </tr>
+  <tr>
+    <td class="c011">Polk’s Administration.</td>
+    <td class="c029"><span class="sc"><a href="/article/21-1018-polk-james-knox/polk__james_knox">Polk, J. K.</a></span> (Vol. 21, p. 983), by <a href="/contributors.html?q=William+Roy+Smith">Prof. W. R. Smith</a>, Bryn Mawr College.</td>
+  </tr>
+  <tr>
+    <td class="c011">War with Mexico (1846–1848).</td>
+    <td class="c029"><span class="sc"><a href="/article/26-0502-s5/taylor__zachary">Taylor, Zachary</a></span> (Vol. 26, p. 473), by Prof. Isaac J. Cox, University of Cincinnati.</td>
+  </tr>
+  <tr>
+    <td class="c011">The Generals and the Fighting.</td>
+    <td class="c029"><span class="sc"><a href="/article/24-0495-s3/scott__winfield">Scott, Winfield</a></span> (Vol. 24, p. 475).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/24-0198-s3/santa_ana">Santa-Ana</a></span> (Vol. 24, p. 184).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/18-0338-s3/mexico">Mexico</a></span>, <i>History</i> (Vol. 18, p. 340).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/18-0365-s4/mexico_city">Mexico City</a></span> (Vol. 18, p. 347).</td>
+  </tr>
+  <tr>
+    <td class="c011">Wilmot Proviso and similar measures.</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0711-wilmot-david/wilmot__david">Wilmot, David</a></span> (Vol. 28, p. 691).</td>
+  </tr>
+  <tr>
+    <td class="c011">Cession of California (1848), and Discovery of Gold there.</td>
+    <td class="c029"><span class="sc"><a href="/article/05-0018-california/california">California</a></span>, <i>History</i> (Vol. 5, p. 17).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Gadsden Purchase (1853).</td>
+    <td class="c029"><span class="sc"><a href="/article/11-0402-s2/gadsden__james">Gadsden, James</a></span> (Vol. 11, p. 383).</td>
+  </tr>
+  <tr>
+    <td class="c011">Compromise Measures of 1850.</td>
+    <td class="c029"><span class="sc"><a href="/article/06-0837-compromise-measures-of-1850/compromise_measures_of_1850">Compromise Measures of 1850</a></span> (Vol. 6, p. 813), by <a href="/contributors.html?q=William+Roy+Smith">Prof. W. R. Smith</a>, Bryn Mawr College.</td>
+  </tr>
+  <tr>
+    <td class="c011">Opposition in Georgia.</td>
+    <td class="c029"><span class="sc"><a href="/article/11-0779-georgia/georgia">Georgia</a></span> (Vol. 11, p. 756).</td>
+  </tr>
+  <tr>
+    <td class="c011">Fugitive Slave Laws.</td>
+    <td class="c029"><span class="sc"><a href="/article/11-0301-s3/fugitive_slave_laws">Fugitive Slave Laws</a></span> (Vol. 11, p. 288).</td>
+  </tr>
+  <tr>
+    <td class="c011">Various political elements join to oppose introduction of slavery into territories (1847–1848).</td>
+    <td class="c029"><span class="sc"><a href="/article/11-0099-free-soil-party/free_soil_party">Free Soil Party</a></span> (Vol. 11, p. 87).</td>
+  </tr>
+  <tr>
+    <td class="c011">Tariff Reduction, Walker Bill of 1846.</td>
+    <td class="c029"><span class="sc"><a href="/article/26-0451-s3/tariff">Tariff</a></span> (Vol. 26, p. 425), by Prof. F. W. Taussig, Harvard University.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0289-walker-robert-james/walker__robert_james">Walker, Robert James</a></span> (Vol. 28, p. 273).</td>
+  </tr>
+  <tr>
+    <td class="c011">Independent Treasury System (1846).</td>
+    <td class="c029"><span class="sc"><a href="/article/21-1018-polk-james-knox/polk__james_knox">Polk, J. K.</a></span> (Vol. 21, p. 983), by <a href="/contributors.html?q=William+Roy+Smith">Prof. W. R. Smith</a>, Bryn Mawr.</td>
+  </tr>
+  <tr>
+    <td class="c011">Clayton-Bulwer Treaty (1850).</td>
+    <td class="c029"><span class="sc"><a href="/article/06-0491-clayton-bulwer-treaty/clayton-bulwer_treaty">Clayton-Bulwer Treaty</a></span> (Vol. 6, p. 475).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/06-0490-clayton-john-middleton/clayton__john_middleton">Clayton, John M.</a></span> (Vol. 6, p. 474).</td>
+  </tr>
+  <tr>
+    <td class="c011">The northern boundary “Fifty-four forty or fight.”</td>
+    <td class="c029"><span class="sc"><a href="/article/20-0274-s2/oregon">Oregon</a></span>, <i>History</i> (Vol. 20, p. 249).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0365-washington/washington">Washington</a></span>, <i>History</i> (Vol. 28, p. 357).</td>
+  </tr>
+  <tr>
+    <td class="c011">New Leaders in the ’50’s.</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Northern anti-slavery men.</td>
+    <td class="c029"><span class="sc"><a href="/article/26-0097-s4/sumner__charles">Sumner, Charles</a></span> (Vol. 26, p. 81).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/24-0763-s6/seward__william_henry">Seward, William H.</a></span> (Vol. 24, p. 733).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/05-0991-chase-salmon-portland/chase__salmon_portland">Chase, Salmon P.</a></span> (Vol. 5, p. 955).</td>
+  </tr>
+  <tr>
+    <td class="c011">Southern leaders, protecting slavery in the Territories.</td>
+    <td class="c029"><span class="sc"><a href="/article/07-0891-davis-jefferson/davis__jefferson">Davis, Jefferson</a></span> (Vol. 7, p. 867), by <a href="/contributors.html?q=Hon.+William+Wirt+Henry">Hon. W. W. Henry</a>, late president of the American Historical Association, and <a href="/contributors.html?q=Newton+Dennison+Mereness">Dr. N. D. Mereness</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/26-0926-s3/thrasea_paetus__publius_clodius">Stephens, A. H.</a></span> (Vol. 26, p. 887).</td>
+  </tr>
+  <tr>
+    <td class="c011">Northern “popular sovereignty leader.”</td>
+    <td class="c029"><span class="sc"><a href="/article/08-0467-douglas-stephen-arnold/douglas__stephen_arnold">Douglas, Stephen A.</a></span> (Vol. 8, p. 446).</td>
+  </tr>
+  <tr>
+    <td class="c011">Attempt to uphold Fugitive Slave Law of 1850—a death blow to the Whig Party.</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0609-s2/whig_party">Whig Party</a></span> (Vol. 28, p. 590), by Prof. <a href="/contributors.html?q=Anson+Daniel+Morse">A. D. Morse</a>, Amherst College.</td>
+  </tr>
+  <tr>
+    <td class="c011">The American or “Know Nothing” Party.</td>
+    <td class="c029"><span class="sc"><a href="/article/15-0911-s3/know_nothing__or_american__party">Know Nothing Party</a></span> (Vol. 15, p. 877).</td>
+  </tr>
+  <tr>
+    <td class="c011">Kansas-Nebraska Bill, repealing Missouri Compromise.</td>
+    <td class="c029"><span class="sc"><a href="/article/15-0681-kansas/kansas">Kansas</a></span>, <i>History</i> (Vol. 15, p. 658).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/19-0338-nebraska/nebraska">Nebraska</a></span>, <i>History</i> (Vol. 19, p. 330).</td>
+  </tr>
+  <tr>
+    <td class="c011">Origin of the Republican Party (1854).</td>
+    <td class="c029"><span class="sc"><a href="/article/23-0194-s2/republican_party">Republican Party</a></span> (Vol. 23, p. 177), by Prof. <a href="/contributors.html?q=Anson+Daniel+Morse">A. D. Morse</a>, Amherst College.</td>
+  </tr>
+  <tr>
+    <td class="c011">Opening of Japan (1854).</td>
+    <td class="c029"><span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span>, <i>History</i> (Vol. 15, p. 237), by <a href="/contributors.html?q=Captain+Frank+Brinkley">Capt. Frank Brinkley</a>, late editor of “The Japan Mail”; author of <i>Japan</i>; <span class="sc"><a href="/article/21-0201-s5/perry__matthew_calbraith">Perry, M. C.</a></span> (Vol. 21, p. 184).</td>
+  </tr>
+  <tr>
+    <td class="c011">Efforts to obtain Cuba in the interests of Slavery. The Ostend Manifesto (1854).</td>
+    <td class="c029"><span class="sc"><a href="/article/04-0739-s2/buchanan__james">Buchanan, James</a></span> (Vol. 4, p. 716).</td>
+  </tr>
+  <tr>
+    <td class="c011">The election of 1856.</td>
+    <td class="c029"><span class="sc"><a href="/article/10-0358-s4/fillmore__millard">Fillmore, Millard</a></span> (Vol. 10, p. 344).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/11-0109-s2/frémont__john_charles">Fremont, John C.</a></span> (Vol. 11, p. 97).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Dred Scott decision and its effects (1857).</td>
+    <td class="c029"><span class="sc"><a href="/article/26-0417-s3/taney__roger_brooke">Taney, Roger B.</a></span> (Vol. 26, p. 396).</td>
+  </tr>
+  <tr>
+    <td class="c011">Lincoln and Douglas debates in Illinois. Senatorial contest (1858).</td>
+    <td class="c029"><span class="sc"><a href="/article/16-0725-lincoln-abraham/lincoln__abraham">Lincoln, Abraham</a></span> (Vol. 16, p. 705), by <a href="/contributors.html?q=John+George+Nicolay+%281832%E2%80%931901%29">J. G. Nicolay</a> and <a href="/contributors.html?q=Charles+Crawford+Whinery">C. C. Whinery</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/08-0465-douglas-gavin/douglas__gavin">Douglas, S. A.</a></span> (Vol. 8, p. 446).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/11-0097-s2/freeport">Freeport, Ill.</a></span> (Vol. 11, p. 85).</td>
+  </tr>
+  <tr>
+    <td class="c011">John Brown’s Raid (1859).</td>
+    <td class="c029"><span class="sc"><a href="/article/04-0682-s7/brown__john">Brown, John</a></span> (Vol. 4, p. 660).</td>
+  </tr>
+  <tr>
+    <td class="c011">Admission of Minnesota and Oregon.</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0574-minnesota/minnesota">Minnesota</a></span>, <i>History</i> (Vol. 17, p. 553).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/20-0274-s2/oregon">Oregon</a></span>, <i>History</i> (Vol. 20, p. 249).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Presidential Campaign of 1860.</td>
+    <td class="c029"><span class="sc"><a href="/article/03-0706-bell-john-anatomist/bell__john__anatomist_">Bell, John</a></span> (Vol. 3, p. 686).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/10-0020-everett-edward/everett__edward">Everett, Edward</a></span> (Vol. 10, p. 8), by Dr. <a href="/contributors.html?q=Rev.+Edward+Everett+Hale">Edward Everett Hale</a>, author of <i>The Man Without a Country</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011">Lincoln elected with Hannibal Hamlin of Maine as Vice-President.</td>
+    <td class="c029"><span class="sc"><a href="/article/16-0725-lincoln-abraham/lincoln__abraham">Lincoln, Abraham</a></span> (Vol. 16, p. 703), by <a href="/contributors.html?q=John+George+Nicolay+%281832%E2%80%931901%29">John G. Nicolay</a>, author (with John Hay) of <i>Abraham Lincoln—a History</i>, and <a href="/contributors.html?q=Charles+Crawford+Whinery">C. C. Whinery</a>, assistant editor, 11th edition, Encyclopaedia Britannica.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/12-0921-hamlin-hannibal/hamlin__hannibal">Hamlin, Hannibal</a></span> (Vol. 12, p. 896).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>Secession</i> (1860–1861).</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>History</i> (Vol. 27, p. 707), by the late <a href="/contributors.html?q=Alexander+Johnston">Prof. Alexander Johnston</a> of Princeton and <a href="/contributors.html?q=Charles+Crawford+Whinery">C. C. Whinery</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/24-0598-s5/secession">Secession</a></span> (Vol. 24, p. 568), by Prof. <a href="/contributors.html?q=Walter+Lynwood+Fleming">W. L. Fleming</a>, Louisiana State University.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/25-0824-s2/state_rights">State Rights</a></span> (Vol. 25, p. 802).</td>
+  </tr>
+  <tr>
+    <td class="c011">Organization and administration of the Confederacy.</td>
+    <td class="c029"><span class="sc"><a href="/article/06-0923-confederate-states-of-american/confederate_states_of_american">Confederate States of America</a></span> (Vol. 6, p. 899), by Dr. <a href="/contributors.html?q=John+Christopher+Schwab">J. C. Schwab</a>, Yale, author of <i>The Confederate States of America</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">President</td>
+    <td class="c029"><span class="sc"><a href="/article/07-0891-davis-jefferson/davis__jefferson">Davis, Jefferson</a></span> (Vol. 7, p. 867), by <a href="/contributors.html?q=Hon.+William+Wirt+Henry">Hon. William Wirt Henry</a> and <a href="/contributors.html?q=Newton+Dennison+Mereness">N. D. Mereness</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Vice-President</td>
+    <td class="c029"><span class="sc"><a href="/article/25-0100-sikhism/sikhism">Stephens, Alexander H.</a></span> (Vol. 25, p. 87).</td>
+  </tr>
+  <tr>
+    <td class="c011">Other leaders and administrators</td>
+    <td class="c029"><span class="sc"><a href="/article/03-0759-benjamin-judah-philip/benjamin__judah_philip">Benjamin, Judah P.</a></span> (Vol. 3, p. 739).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/22-0957-s5/reagan__john_henninger">Reagan, John H.</a></span> (Vol. 22, p. 940).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/06-0625-s3/cobb__howell">Cobb, Howell</a></span> (Vol. 6, p. 606).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/27-0061-s3/toombs__robert">Toombs, Robert</a></span> (Vol. 27, p. 47).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/27-0908-s2/vance__zebulon_baird">Vance, Z. B.</a></span> (Vol. 27, p. 882).</td>
+  </tr>
+  <tr>
+    <td class="c011">Commissioners to Europe</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0929-yancey-william-lowndes/yancey__william_lowndes">Yancey, William Lowndes</a></span> (Vol. 28, p. 902).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/17-0857-s3/mason__james_murray">Mason, James Murray</a></span> (Vol. 17, p. 839).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/25-0257-s5/slidell__john">Slidell, John</a></span> (Vol. 25, p. 241).</td>
+  </tr>
+  <tr>
+    <td class="c011">Secession by popular vote, May (1861).</td>
+    <td class="c029"><span class="sc"><a href="/article/26-0649-tennessee/tennessee">Tennessee</a></span>, <i>History</i> (Vol. 26, p. 624).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0132-virginia/virginia">Virginia</a></span>, <i>History</i> (Vol. 28, p. 124).</td>
+  </tr>
+  <tr>
+    <td class="c011">The people of Virginia divide the State (May, 1861).</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0579-west-virginia/west_virginia">West Virginia</a></span>, <i>History</i> (Vol. 28, p. 563).</td>
+  </tr>
+</tbody></table>
+
+<p><span class="shoulder-heading" id="sh-1">Battles and Campaigns</span>The main article <span class="sc"><a href="/article/01-0869-american-civil-war/american_civil_war">American Civil War</a></span>
+(Vol. 1, p. 818), by Capt. Charles F.
+<a href="/contributors.html?q=Charles+Francis+Atkinson">Atkinson</a>, author of <i>The Wilderness and
+Cold Harbour</i>, is richly supplemented with
+detailed accounts of the principal campaigns
+and battles, and biographies of
+military leaders on both the Federal and
+Confederate sides. For battles and campaigns
+see: <span class="sc"><a href="/article/05-0979-charleston-south-carolina/charleston__south_carolina_">Charleston</a></span> (Vol. 5, p. 944);
+<span class="sc"><a href="/article/04-0814-s5/bull_run">Bull Run</a></span> (Vol. 4, p.
+791), with map and description
+of both famous
+battles; <span class="sc"><a href="/article/16-0547-lexington-massachusetts/lexington__massachusetts_">Lexington</a></span>,
+Mo. (Vol. 16, p. 527); <span class="sc"><a href="/article/24-0868-shenandoah-valley-campaigns/shenandoah_valley_campaigns">Shenandoah
+Valley Campaigns</a></span> (Vol. 24, p.
+834); <span class="sc"><a href="/article/28-0963-yorktown/yorktown">Yorktown</a></span> (Vol. 28, p. 936); <span class="sc"><a href="/article/24-0737-s6/seven_days__battle">Seven
+Days’ Battle</a></span> (Vol. 24, p. 707), both
+with fine maps, and written by <a href="/contributors.html?q=Major+George+William+Redway">Major
+George W. Redway</a>, author of <i>The War
+of Secession</i>; <span class="sc"><a href="/article/10-0145-s5/fair_oaks">Fair Oaks</a></span> (Vol. 10, p. 133);
+<span class="sc"><a href="/article/12-0931-hampton-roads/hampton_roads">Hampton Roads</a></span> (Vol. 12, p. 906); <span class="sc"><a href="/article/08-0435-donelson-fort/donelson__fort">Donelson,
+Fort</a></span> (Vol. 8, p. 414); <span class="sc"><a href="/article/24-0893-s7/shiloh__battle_of">Shiloh,
+Battle of</a></span> (Vol. 24, p. 859); <span class="sc"><a href="/article/07-0164-corinth/corinth">Corinth</a></span>
+(Vol. 7, p. 150); <span class="sc"><a href="/article/19-0538-s3/new_madrid">New Madrid</a></span> (Vol. 19,
+p. 516); <span class="sc"><a href="/article/21-0202-perryville/perryville">Perryville</a></span> (Vol. 21, p. 185);
+<span class="sc"><a href="/article/15-0103-iuka/iuka">Iuka</a></span> (Vol. 15, p. 87); <span class="sc"><a href="/article/18-0125-memphis/memphis">Memphis</a></span> (Vol. 18,
+p. 107); <span class="sc"><a href="/article/19-0549-new-orleans/new_orleans">New Orleans</a></span> (Vol. 19, p. 531);
+<span class="sc"><a href="/article/13-0027-harper-s-ferry/harper_s_ferry">Harper’s Ferry</a></span> (Vol. 13, p. 14); <span class="sc"><a href="/article/02-0136-s3/antietam">Antietam</a></span>
+(Vol. 2, p. 124); <span class="sc"><a href="/article/11-0080-s3/fredericksburg">Fredericksburg</a></span>
+(Vol. 11, p. 68); <span class="sc"><a href="/article/25-0992-s2/stone_river__battle_of">Stone River,
+Battle of</a></span> (Vol. 25, p. 966); <span class="sc"><a href="/article/05-0871-chancellorsville/chancellorsville">Chancellorsville</a></span>
+(Vol. 5, p. 835), see also <span class="sc"><a href="/article/28-0653-s3/wilderness">Wilderness</a></span>
+(Vol. 28, p. 633); <span class="sc"><a href="/article/11-0935-s5/gettysburg">Gettysburg</a></span>
+(Vol. 11, p. 911), with map; <span class="sc"><a href="/article/28-0036-vicksburg/vicksburg">Vicksburg</a></span>
+(Vol. 28, p. 21), with maps; <span class="sc"><a href="/article/22-0131-port-hudson/port_hudson">Port Hudson</a></span>
+(Vol. 22, p. 117); <span class="sc"><a href="/article/03-0538-baton-rouge/baton_rouge">Baton Rouge</a></span>
+(Vol. 3, p. 521); <span class="sc"><a href="/article/13-0232-helena-arkansas/helena__arkansas_">Helena, Ark.</a></span> (Vol. 13,
+p. 219); <span class="sc"><a href="/article/06-0143-chickamauga-creek/chickamauga_creek">Chickamauga Creek</a></span> (Vol. 6, p.
+130), with map; <span class="sc"><a href="/article/06-0020-chattanooga/chattanooga">Chattanooga</a></span> (Vol. 6,
+p. 7); <span class="sc"><a href="/article/15-0917-knoxville/knoxville">Knoxville</a></span> (Vol. 15, p. 883); <span class="sc"><a href="/article/22-0986-red-river/red_river">Red
+River</a></span> (Vol. 22, p. 969); <span class="sc"><a href="/article/28-0653-s3/wilderness">Wilderness</a></span>
+(Vol. 28, p. 633), with 4 maps, by <a href="/contributors.html?q=Charles+Francis+Atkinson">C. F.
+Atkinson</a>, author of <i>The Wilderness and
+Cold Harbour</i>; <span class="sc"><a href="/article/28-0365-washington/washington">Washington</a></span> (Vol. 28, p.
+352); <span class="sc"><a href="/article/17-0732-s6/marietta">Marietta</a></span>, Ga. (Vol. 17, p. 715);
+<span class="sc"><a href="/article/02-0901-s2/atlanta">Atlanta</a></span> (Vol. 2, p. 854); <span class="sc"><a href="/article/24-0255-savannah/savannah">Savannah</a></span> (Vol.
+24, p. 241); <span class="sc"><a href="/article/18-0665-mobile/mobile">Mobile</a></span> (Vol. 18, p. 636);
+<span class="sc"><a href="/article/11-0448-galveston/galveston">Galveston</a></span> (Vol. 11, p. 431); <span class="sc"><a href="/article/11-0046-s3/franklin">Franklin</a></span>,
+Tenn. (Vol. 11, p. 34); <span class="sc"><a href="/article/19-0261-nashville/nashville">Nashville</a></span> (Vol.
+19, p. 247); <span class="sc"><a href="/article/21-0317-s3/petersburg">Petersburg</a></span> (Vol. 21, p. 301),
+with two maps, by <a href="/contributors.html?q=Major+George+William+Redway">Major G. W. Redway</a>;
+<span class="sc"><a href="/article/06-0760-columbia-missouri/columbia__missouri_">Columbia</a></span>, S. C. (Vol. 6, p. 738); <span class="sc"><a href="/article/02-0238-s2/appomattox_court_house">Appomattox
+Court House</a></span> (Vol. 2, p. 226);
+<span class="sc"><a href="/article/23-0326-richmond-virginia/richmond__virginia_">Richmond</a></span>, Va. (Vol. 23, p. 311).</p>
+
+<p><span class="shoulder-heading" id="sh-2">Union Generals</span>On the leaders on both sides see the
+biographical articles: <span class="sc"><a href="/article/17-0216-s3/mcclellan__george_brinton">McClellan</a></span>,
+<span class="sc"><a href="/article/17-0216-s3/mcclellan__george_brinton">George Brinton</a></span> (Vol. 17, p. 201);
+<span class="sc"><a href="/article/12-0879-s3/halleck__henry_wager">Halleck, Henry Wager</a></span>
+(Vol. 12, p. 854); <span class="sc"><a href="/article/12-0372-s6/grant__ulysses_simpson">Grant,
+Ulysses Simpson</a></span> (Vol. 12,
+p. 355), by <a href="/contributors.html?q=John+Fiske">John Fiske</a>
+and Capt. <a href="/contributors.html?q=Charles+Francis+Atkinson">C. F. Atkinson</a>; <span class="sc"><a href="/article/08-0363-dix-john-adams/dix__john_adams">Dix, John
+Adams</a></span> (Vol. 8, p. 346); <span class="sc"><a href="/article/17-0229-s3/mcdowell__irvin">McDowell,
+Irvin</a></span> (Vol. 17, p. 214); <span class="sc"><a href="/article/04-0885-s2/burnside__ambrose_everett">Burnside,
+Ambrose Everett</a></span> (Vol. 4, p. 861);
+<span class="sc"><a href="/article/13-0688-s2/hooker__joseph">Hooker, Joseph</a></span> (Vol. 13, p. 671);
+<span class="sc"><a href="/article/17-0964-s7/meade__george_gordon">Meade, George Gordon</a></span> (Vol. 17, p.
+945); <span class="sc"><a href="/article/22-0101-pope-john/pope__john">Pope, John</a></span> (Vol. 22, p. 87); <span class="sc"><a href="/article/04-0774-s5/buell__don_carlos">Buell,
+Don Carlos</a></span> (Vol. 4, p. 751); <span class="sc"><a href="/article/23-0774-s2/rosecrans__william_starke">Rosecrans,
+William Starke</a></span> (Vol. 23, p. 734); <span class="sc"><a href="/article/24-0885-s4/sherman__william_tecumseh">Sherman,
+William Tecumseh</a></span> (Vol. 24, p.
+851); <span class="sc"><a href="/article/26-0906-thomas-george-henry/thomas__george_henry">Thomas, George Henry</a></span> (Vol. 26,
+p. 866); <span class="sc"><a href="/article/17-0282-s4/macpherson__james">MacPherson, James Birdseye</a></span>
+(Vol. 17, p. 268); <span class="sc"><a href="/article/24-0881-s2/sheridan__philip_henry">Sheridan, Philip
+Henry</a></span> (Vol. 24, p. 847); <span class="sc"><a href="/article/25-0259-s4/slocum__henry_warner">Slocum, Henry
+Warner</a></span> (Vol. 25, p. 243); <span class="sc"><a href="/article/04-0905-s3/butler__benjamin_franklin">Butler, Benjamin
+Franklin</a></span> (Vol. 4, p. 881); <span class="sc"><a href="/article/12-0934-s2/hancock__winfield_scott">Hancock,
+Winfield Scott</a></span> (Vol. 12, p. 909);
+<span class="sc"><a href="/article/13-0916-s5/humphreys__andrew_atkinson">Humphreys, Andrew Atkinson</a></span> (Vol.
+13, p. 891); <span class="sc"><a href="/article/24-0608-s2/sedgwick__john">Sedgwick, John</a></span> (Vol. 24, p.
+578); <span class="sc"><a href="/article/23-0243-s3/reynolds__john_fulton">Reynolds, John Fulton</a></span> (Vol. 23,
+p. 226); <span class="sc"><a href="/article/28-0345-warren-gouverneur-kemble/warren__gouverneur_kemble">Warren, Gouverneur Kemble</a></span>
+(Vol. 28, p. 329); <span class="sc"><a href="/article/13-0858-s3/howard__oliver_otis">Howard, Oliver Otis</a></span>
+(Vol. 13, p. 833); <span class="sc"><a href="/article/08-0462-doubleday-abner/doubleday__abner">Doubleday, Abner</a></span>
+(Vol. 8, p. 441); <span class="sc"><a href="/article/25-0051-s3/sickles__daniel_edgar">Sickles, Daniel Edgar</a></span>
+(Vol. 25, p. 36); <span class="sc"><a href="/article/24-0404-schurz-carl/schurz__carl">Schurz, Carl</a></span> (Vol. 24, p.
+386); <span class="sc"><a href="/article/08-0135-devens-charles/devens__charles">Devens, Charles</a></span> (Vol. 8, p. 120);
+<span class="sc"><a href="/article/04-0914-s3/butterfield__daniel">Butterfield, Daniel</a></span> (Vol. 4, p. 890);
+<span class="sc"><a href="/article/22-0130-s2/porter__horace">Porter, Horace</a></span> (Vol. 22, p. 116);
+<span class="sc"><a href="/article/11-0045-franklin-william-buel/franklin__william_buel">Franklin, William Buel</a></span> (Vol. 11, p.
+33); <span class="sc"><a href="/article/22-0129-s2/porter__fitz-john">Porter, Fitz-John</a></span> (Vol. 22, p. 115);
+<span class="sc"><a href="/article/24-0890-shields-james/shields__james">Shields, James</a></span> (Vol. 24, p. 856); <span class="sc"><a href="/article/13-0959-hunt-henry-jackson/hunt__henry_jackson">Hunt,
+Henry Jackson</a></span> (Vol. 13, p. 934); <span class="sc"><a href="/article/07-0327-couch-darius-nash/couch__darius_nash">Couch,
+Darius Nash</a></span> (Vol. 7, p. 307); <span class="sc"><a href="/article/07-0372-cox-jacob-dolson/cox__jacob_dolson">Cox,
+Jacob Dolson</a></span> (Vol. 7, p. 352); <span class="sc"><a href="/article/17-0965-s4/meagher__thomas_francis">Meagher,
+Thomas Francis</a></span> (Vol. 17, p. 946); <span class="sc"><a href="/article/26-0099-s2/sumner__edwin_vose">Sumner,
+Edwin Vose</a></span> (Vol. 26, p. 83); <span class="sc"><a href="/article/25-0075-s2/sigel__franz">Sigel,
+Franz</a></span> (Vol. 25, p. 60); <span class="sc"><a href="/article/15-0735-kearny-philip/kearny__philip">Kearny, Philip</a></span>
+(Vol. 15, p. 707); <span class="sc"><a href="/article/25-0275-smith-charles-ferguson/smith__charles_ferguson">Smith, Charles Ferguson</a></span>
+(Vol. 25, p. 259); <span class="sc"><a href="/article/25-0287-s2/smith__william_farrar">Smith, William
+Farrar</a></span> (Vol. 25, p. 271); <span class="sc"><a href="/article/07-0493-crittenden-john-jordan/crittenden__john_jordan">Crittenden,
+Thomas Leonidas</a></span> (Vol. 7, p. 471); <span class="sc"><a href="/article/17-0217-s2/mcclernand__john_alexander">McClernand,
+John Alexander</a></span> (Vol. 17,
+p. 202); <span class="sc"><a href="/article/25-0275-smith-andrew-jackson/smith__andrew_jackson">Smith, Andrew Jackson</a></span> (Vol.
+25, p.  259); <span class="sc"><a href="/article/11-0482-s2/garfield__james_abram">Garfield, James Abram</a></span> (Vol.
+11, p. 464); <span class="sc"><a href="/article/28-0292-wallace-lewis/wallace__lewis">Wallace, Lewis</a></span> (Vol. 28,
+p. 276); <span class="sc"><a href="/article/03-0350-banks-nathaniel-prentiss/banks__nathaniel_prentiss">Banks, Nathaniel Prentiss</a></span>
+(Vol. 3, p. 333); <span class="sc"><a href="/article/28-0360-washburn-cadwallader-colden/washburn__cadwallader_colden">Washburn, Cadwalader
+Colden</a></span> (Vol. 28, p. 344); <span class="sc"><a href="/article/16-0888-s4/logan__john_alexander">Logan,
+John Alexander</a></span> (Vol. 16, p. 866);
+<span class="sc"><a href="/article/20-0701-palmer-john-mcauley/palmer__john_mcauley">Palmer, John McAuley</a></span> (Vol. 20, p.
+645); <span class="sc"><a href="/article/17-0220-s4/mccook__alexander_mcdowell">McCook, Alexander McDowell</a></span>,
+<span class="sc"><a href="/article/17-0220-s4/mccook__alexander_mcdowell">McCook, Daniel</a></span>, and <span class="sc"><a href="/article/17-0220-s4/mccook__alexander_mcdowell">McCook, John
+James</a></span> (Vol. 17, p. 205); <span class="sc"><a href="/article/25-0283-s4/smith__morgan_lewis">Smith, Morgan
+Lewis</a></span>, and <span class="sc"><a href="/article/25-0280-s6/smith__john">Smith, Giles Alexander</a></span>
+(Vol. 25, p. 267); <span class="sc"><a href="/article/04-0046-blair-francis-preston/blair__francis_preston">Blair, Francis Preston</a></span>
+(Vol. 4, p. 34); <span class="sc"><a href="/article/24-0363-s5/schofield__john">Schofield, John
+McAllister</a></span> (Vol. 24, p. 345); <span class="sc"><a href="/article/19-0616-s3/newton__john">Newton,
+John</a></span> (Vol. 19, p. 592); <span class="sc"><a href="/article/18-0466-s5/miles__nelson_appleton">Miles, Nelson
+A.</a></span> (Vol. 18, p. 442); <span class="sc"><a href="/article/18-0192-s5/merritt__wesley">Merritt, Wesley</a></span>
+(Vol. 18, p. 173); <span class="sc"><a href="/article/07-0690-custer-george-armstrong/custer__george_armstrong">Custer, George Armstrong</a></span>
+(Vol. 7, p. 668); <span class="sc"><a href="/article/25-0986-s2/stoneman__george">Stoneman,
+George</a></span> (Vol. 25, p. 962); <span class="sc"><a href="/article/28-0715-wilson-james-harrison/wilson__james_harrison">Wilson, James
+Harrison</a></span> (Vol. 28, p. 695); <span class="sc"><a href="/article/27-0142-s2/tracy__benjamin_franklin">Tracy, Benjamin
+Franklin</a></span> (Vol. 27, p. 127); <span class="sc"><a href="/article/17-0188-s3/lyon__nathaniel">Lyon,
+Nathaniel</a></span> (Vol. 17, p. 173); <span class="sc"><a href="/article/10-0199-farragut-david-glasgow/farragut__david_glasgow">Farragut,
+David Glasgow</a></span> (Vol. 10, p. 187); <span class="sc"><a href="/article/22-0127-porter-david-dixon/porter__david_dixon">Porter,
+David Dixon</a></span> (Vol. 22, p. 113);
+<span class="sc"><a href="/article/10-0646-s2/foote__andrew_hull">Foote, Andrew Hull</a></span> (Vol. 10, p. 625);
+<span class="sc"><a href="/article/07-0689-cushing-william-barker/cushing__william_barker">Cushing, William Barker</a></span> (Vol. 7, p.
+667).</p>
+
+<p><span class="shoulder-heading" id="sh-3">Confederate Generals</span>And, for Confederate leaders: <span class="sc"><a href="/article/16-0382-s4/lee__robert_edward">Lee,
+Robert Edward</a></span> (Vol. 16, p. 362); <span class="sc"><a href="/article/15-0126-s6/jackson__thomas_jonathan">Jackson,
+Thomas Jonathan, “Stonewall”</a></span>
+(Vol. 15, p. 110);
+<span class="sc"><a href="/article/16-1009-s3/longstreet__james">Longstreet, James</a></span>
+(Vol. 16, p. 985);
+<span class="sc"><a href="/article/15-0499-s3/johnston__albert_sidney">Johnston, Albert
+Sidney</a></span> (Vol. 15, p. 472); <span class="sc"><a href="/article/15-0501-s2/johnston__joseph_eggleston">Johnston, Joseph
+Eggleston</a></span> (Vol. 15, p. 474); <span class="sc"><a href="/article/03-0618-beauregard-pierre-gustave-toutant/beauregard__pierre_gustave_toutant">Beauregard,
+Pierre G. T.</a></span> (Vol. 3, p. 599);
+<span class="sc"><a href="/article/04-0391-bragg-braxton/bragg__braxton">Bragg, Braxton</a></span> (Vol. 4, p. 376); <span class="sc"><a href="/article/13-0682-s2/hood__john_bell">Hood,
+John Bell</a></span> (Vol. 13, p. 665); <span class="sc"><a href="/article/21-1019-s2/polk__leonidas">Polk,
+Leonidas</a></span> (Vol. 21, p. 984); <span class="sc"><a href="/article/12-0966-s3/hardee__william_joseph">Hardee,
+William Joseph</a></span> (Vol. 12, p. 941); <span class="sc"><a href="/article/13-0479-s5/hill__ambrose_powell">Hill,
+Ambrose Powell</a></span> (Vol. 13, p. 463); <span class="sc"><a href="/article/13-0480-s1/hill__daniel_harvey">Hill,
+Daniel Harvey</a></span> (Vol. 13, p. 464); <span class="sc"><a href="/article/10-0052-ewell-richard-stoddert/ewell__richard_stoddert">Ewell,
+Richard Stoddert</a></span> (Vol. 10, p. 40);
+<span class="sc"><a href="/article/08-0824-early-jubal-anderson/early__jubal_anderson">Early, Jubal Anderson</a></span> (Vol. 8, p.
+797); <span class="sc"><a href="/article/01-1013-s3/anderson__richard_henry">Anderson, Richard Henry</a></span> (Vol.
+1, p. 960); <span class="sc"><a href="/article/10-0594-floyd-john-buchanan/floyd__john_buchanan">Floyd, John Buchanan</a></span> (Vol.
+10, p. 573); <span class="sc"><a href="/article/04-0755-s3/buckner__simon_bolivar">Buckner, Simon Bolivar</a></span>
+(Vol. 4, p. 732); <span class="sc"><a href="/article/07-0493-crittenden-john-jordan/crittenden__john_jordan">Crittenden, George
+Bibb</a></span> (Vol. 7, p. 471); <span class="sc"><a href="/article/04-0501-breckinridge-john-cabell/breckinridge__john_cabell">Breckinridge,
+John Cabell</a></span> (Vol. 4, p. 483); <span class="sc"><a href="/article/25-0276-smith-edmund-kirby/smith__edmund_kirby">Smith,
+Edmund Kirby</a></span> (Vol. 25, p. 260); <span class="sc"><a href="/article/16-0384-s5/lee">Lee,
+<span class="pageno" id="Page_266">266</a></span>Stephen Dill</span> (Vol. 16, p. 364); <span class="sc"><a href="/article/27-0913-s5/van_dorn__earl">Van
+Dorn, Earl</a></span> (Vol. 27, p. 887); <span class="sc"><a href="/article/02-0774-s5/ashby__turner">Ashby,
+Turner</a></span> (Vol. 2, p. 730); <span class="sc"><a href="/article/25-1073-stuart-james-ewell-brown/stuart__james_ewell_brown">Stuart, James
+Ewell Brown</a></span> (Vol. 25, p. 1047); <span class="sc"><a href="/article/12-0930-s4/hampton__wade">Hampton,
+Wade</a></span> (Vol. 12, p. 905); <span class="sc"><a href="/article/16-0380-s5/lee__fitzhugh">Lee, Fitzhugh</a></span>
+(Vol. 16, p. 360); <span class="sc"><a href="/article/28-0606-wheeler-joseph/wheeler__joseph">Wheeler, Joseph</a></span>
+(Vol. 28, p. 586); <span class="sc"><a href="/article/10-0694-s2/forrest__nathan_bedford">Forrest, Nathan
+Bedford</a></span> (Vol. 10, p. 673); <span class="sc"><a href="/article/18-0866-s2/morgan__john_hunt">Morgan,
+John Hunt</a></span> (Vol. 18, p. 834); <span class="sc"><a href="/article/18-0922-s2/mosby__john_singleton">Mosby,
+John Singleton</a></span> (Vol. 18, p. 890);
+<span class="sc"><a href="/article/28-0772-wise-henry-alexander/wise__henry_alexander">Wise, Henry Alexander</a></span> (Vol. 28, p.
+751).</p>
+
+<table class="table4">
+<colgroup>
+<col class="colwidth50">
+<col class="colwidth50">
+</colgroup>
+  <tbody><tr>
+    <td class="c011"><i>Topics for Reading</i></td>
+    <td class="c029"><i>Articles</i></td>
+  </tr>
+  <tr>
+    <td class="c011"><i>Political History During the Civil War.</i></td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Paper money (1862).</td>
+    <td class="c029"><span class="sc"><a href="/article/12-0562-s2/greenbacks">Greenbacks</a></span> (Vol. 12, p. 537).</td>
+  </tr>
+  <tr>
+    <td class="c011">Public lands given to settlers at reduced rates (1862), and granted to agricultural colleges (1862).</td>
+    <td class="c029"><span class="sc"><a href="/article/13-0656-homestead-and-exemption-laws/homestead_and_exemption_laws">Homestead and Exemption Laws</a></span> (Vol. 13, p. 639), by Dr. <a href="/contributors.html?q=Newton+Dennison+Mereness">N. D. Mereness</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/18-0901-morrill/morrill__justin_smith">Morrill, J. S.</a></span> (Vol. 18, p. 869).</td>
+  </tr>
+  <tr>
+    <td class="c011">War Tariffs (1862–1864).</td>
+    <td class="c029"><span class="sc"><a href="/article/26-0451-s3/tariff">Tariff</a></span>, <i>United States</i> (Vol. 26, p. 425), by Prof. F. W. Taussig, Harvard, author of <i>Tariff History of the United States</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Establishment of National Banking System (1862–1865).</td>
+    <td class="c029"><span class="sc"><a href="/article/03-0351-banks-and-banking/banks_and_banking">Banks and Banking</a></span>, <i>United States</i> (Vol. 3, p. 347), by <a href="/contributors.html?q=Charles+Arthur+Conant">Charles A. Conant</a>, author of <i>Banks of Issue</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Emancipation (1863).</td>
+    <td class="c029"><span class="sc"><a href="/article/16-0725-lincoln-abraham/lincoln__abraham">Lincoln, Abraham</a></span> (Vol. 16, p. 707), by <a href="/contributors.html?q=John+George+Nicolay+%281832%E2%80%931901%29">J. G. Nicolay</a>, biographer of Lincoln, and <a href="/contributors.html?q=Charles+Crawford+Whinery">C. C. Whinery</a>, assistant editor, Encyclopaedia Britannica.</td>
+  </tr>
+  <tr>
+    <td class="c011">Second election of Lincoln (1864).</td>
+    <td class="c029"><span class="sc"><a href="/article/17-0216-s3/mcclellan__george_brinton">McClellan, G. B.</a></span> (Vol. 17, p. 201).</td>
+  </tr>
+  <tr>
+    <td class="c011">Opposition to the War in the North.</td>
+    <td class="c029"><span class="sc"><a href="/article/15-0902-knights-of-the-golden-circle/knights_of_the_golden_circle">Knights of the Golden Circle</a></span> (Vol. 15, p. 868), by Prof. <a href="/contributors.html?q=Walter+Lynwood+Fleming">W. L. Fleming</a>, Louisiana State University.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/27-0888-s2/vallandigham__clement_laird">Vallandigham, C. L.</a></span> (Vol. 27, p. 862).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/07-0127-copperheads/copperheads">Copperheads</a></span> (Vol. 7, p. 110).</td>
+  </tr>
+  <tr>
+    <td class="c011">The War Governors of the Northern States.</td>
+    <td class="c029"><span class="sc"><a href="/article/01-1026-s2/andrew__john_albion">Andrew, John A.</a></span> (Vol. 1, p. 973).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/07-0673-curtin-andrew-gregg/curtin__andrew_gregg">Curtin, A. G.</a></span> (Vol. 7, p. 651).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/18-0865-s2/morgan__daniel">Morgan, E. D.</a></span> (Vol. 18, p. 833).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/24-0785-s2/seymour__horatio">Seymour, Horatio</a></span> (Vol. 24, p. 755).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/18-0914-s3/morton__oliver_perry">Morton, Oliver P.</a></span> (Vol. 18, p. 882).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0935-yates-richard/yates__richard">Yates, Richard</a></span> (Vol. 28, p. 908).</td>
+  </tr>
+  <tr>
+    <td class="c011">Assassination of Lincoln (1865).</td>
+    <td class="c029"><span class="sc"><a href="/article/16-0725-lincoln-abraham/lincoln__abraham">Lincoln, Abraham</a></span> (Vol. 16, p. 709), by <a href="/contributors.html?q=John+George+Nicolay+%281832%E2%80%931901%29">J. G. Nicolay</a> and <a href="/contributors.html?q=Charles+Crawford+Whinery">C. C. Whinery</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>The Reconstruction Period.</i></td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>History</i> (Vol. 27, p. 711), by Dr. Frederick J. Turner, professor of history, Harvard University.</td>
+  </tr>
+  <tr>
+    <td class="c011">Organizing the negroes into a political party.</td>
+    <td class="c029"><span class="sc"><a href="/article/11-0087-freedmen-s-bureau/freedmen_s_bureau">Freedmen’s Bureau</a></span> (Vol. 11, p. 75), by Prof. <a href="/contributors.html?q=Walter+Lynwood+Fleming">W. L. Fleming</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/13-0857-s3/howard__john">Howard, O. O.</a></span> (Vol. 13, p. 833).</td>
+  </tr>
+  <tr>
+    <td class="c011">Opposition to Reconstruction Measures (1865–1876).</td>
+    <td class="c029"><span class="sc"><a href="/article/15-0976-s3/ku_klux_klan">Ku Klux Klan</a></span> (Vol. 15, p. 942), by Prof. <a href="/contributors.html?q=Walter+Lynwood+Fleming">W. L. Fleming</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Thirteenth, Fourteenth and Fifteenth Amendments.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>Constitution and Government</i> (Vol. 27, pp. 647, 658, etc.), by <a href="/contributors.html?q=Edmund+Janes+James">James</a> Bryce, author of <i>The American Commonwealth</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Character of Reconstruction Government.</td>
+    <td class="c029">See under <i>History</i> in articles on Southern States.</td>
+  </tr>
+  <tr>
+    <td class="c011">“Scalawags” and “Carpet Baggers.”</td>
+    <td class="c029"><span class="sc"><a href="/article/05-0414-carpet-bagger/carpet-bagger">Carpet Bagger</a></span> (Vol. 5, p. 397).</td>
+  </tr>
+  <tr>
+    <td class="c011">Johnson’s Policy: his impeachment.</td>
+    <td class="c029"><span class="sc"><a href="/article/15-0488-s2/johnson__andrew">Johnson, Andrew</a></span> (Vol. 15, p. 461).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/14-0359-impeachment/impeachment">Impeachment</a></span> (Vol. 14, p. 340).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Legal Tenders.</td>
+    <td class="c029"><span class="sc"><a href="/article/17-0222-mcculloch-hugh/mcculloch__hugh">McCulloch, Hugh</a></span> (Vol. 17, p. 207).</td>
+  </tr>
+  <tr>
+    <td class="c011">Grant’s two administrations (1869–1877).</td>
+    <td class="c029"><span class="sc"><a href="/article/12-0372-s6/grant__ulysses_simpson">Grant, U. S.</a></span> (Vol. 12, p. 357), by Dr. <a href="/contributors.html?q=John+Fiske">John Fiske</a>, author of <i>American Political Ideas</i>, etc., and <a href="/contributors.html?q=Charles+Francis+Atkinson">C. F. Atkinson</a>, author of <i>Wilderness and Cold Harbour</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011">Beginning of Woman’s Suffrage (1869).</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0803-women/women">Woman</a></span> (Vol. 28, p. 788).</td>
+  </tr>
+  <tr>
+    <td class="c011">Black Friday (1869).</td>
+    <td class="c029"><span class="sc"><a href="/article/12-0301-s7/gould__jay">Gould, Jay</a></span> (Vol. 12, p. 284).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/10-0453-s4/fisk__james">Fisk, James</a></span> (Vol. 10, p. 437).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Alabama Claims, Treaty of Washington (1871).</td>
+    <td class="c029"><span class="sc"><a href="/article/01-0503-s2/_alabama__arbitration">“Alabama” Arbitration</a></span> (Vol. 1, p. 464), by <a href="/contributors.html?q=Montague+Hughes+Crackanthorpe">Montague H. Crackanthorpe</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">The “Virginius” Affair (1873).</td>
+    <td class="c029"><span class="sc"><a href="/article/24-0206-s2/santiago_de_cuba">Santiago de Cuba</a></span> (Vol. 24, p. 193).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Panic of 1873 and the Inflation Bill (1874).</td>
+    <td class="c029"><span class="sc"><a href="/article/12-0562-s2/greenbacks">Greenbacks</a></span> (Vol. 12, p. 536).</td>
+  </tr>
+  <tr>
+    <td class="c011">Political unrest in the West (1873–1874).</td>
+    <td class="c029"><span class="sc"><a href="/article/10-0193-farmers-movement/farmers__movement">Farmers’ Movement</a></span> (Vol. 10, p. 181).</td>
+  </tr>
+  <tr>
+    <td class="c011">Railway abuses. The greatest American political scandal.</td>
+    <td class="c029"><span class="sc"><a href="/article/07-0411-cr-dit-mobilier-of-america/crédit_mobilier_of_america">Crédit Mobilier of America</a></span> (Vol. 7, p. 391).</td>
+  </tr>
+  <tr>
+    <td class="c011">War with the Sioux. Custer massacre (1876).</td>
+    <td class="c029"><span class="sc"><a href="/article/07-0690-custer-george-armstrong/custer__george_armstrong">Custer, George A</a></span>. (Vol. 7, p. 668).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Hayes-Tilden Contest (1876).</td>
+    <td class="c029"><span class="sc"><a href="/article/09-0189-electoral-commission/electoral_commission">Electoral Commission</a></span> (Vol. 9, p. 172).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/26-1010-s5/tilden__samuel_jones">Tilden, S. J.</a></span> (Vol. 26, p. 970).</td>
+  </tr>
+  <tr>
+    <td class="c011">Withdrawal of Federal troops from the South.</td>
+    <td class="c029"><span class="sc"><a href="/article/13-0125-s2/hayes__rutherford_birchard">Hayes, R. B.</a></span> (Vol. 13, p. 112), by <a href="/contributors.html?q=Hon.+Carl+Schurz">Carl Schurz</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Civil Service Reform.</td>
+    <td class="c029"><span class="sc"><a href="/article/24-0404-schurz-carl/schurz__carl">Schurz, Carl</a></span> (Vol. 24, p. 386).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/12-0191-s2/godkin__edwin_lawrence">Godkin, E. L.</a></span> (Vol. 12, p. 174).</td>
+  </tr>
+  <tr>
+    <td class="c011">Monetary Question—Bland-Allison Act (1878).</td>
+    <td class="c029"><span class="sc"><a href="/article/01-0738-s6/allison__william_boyd">Allison, W. B.</a></span> (Vol. 1, p. 696).</td>
+  </tr>
+  <tr>
+    <td class="c011">Republicans regain control of Congress.</td>
+    <td class="c029"><span class="sc"><a href="/article/06-0974-conkling-roscoe/conkling__roscoe">Conkling, Roscoe</a></span> (Vol. 6, p. 950).</td>
+  </tr>
+  <tr>
+    <td class="c011">Factions in Republican Party.</td>
+    <td class="c029"><span class="sc"><a href="/article/21-0858-platt-thomas-collier/platt__thomas_collier">Platt, T. C.</a></span> (Vol. 21, p. 825).</td>
+  </tr>
+  <tr>
+    <td class="c011">Assassination of Garfield.</td>
+    <td class="c029"><span class="sc"><a href="/article/11-0482-s2/garfield__james_abram">Garfield, James A.</a></span> (Vol. 11, p. 465), by Prof. <a href="/contributors.html?q=John+Bach+McMaster">John B. McMaster</a>, University of Pennsylvania, author of <i>A History of the People of the United States</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Succession of the Vice-President.</td>
+    <td class="c029"><span class="sc"><a href="/article/02-0724-s3/arthur_iii">Arthur, C. A.</a></span> (Vol. 2, p. 683).</td>
+  </tr>
+  <tr>
+    <td class="c011">Anti-Polygamy Act (1882).</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0874-mormons/mormons">Mormons</a></span> (Vol. 18, p. 846).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/27-0838-utah/utah">Utah</a></span> (Vol. 27, p. 818).</td>
+  </tr>
+  <tr>
+    <td class="c011">Triumph of Civil Service Reform (1883).</td>
+    <td class="c029"><span class="sc"><a href="/article/06-0428-civil-service/civil_service">Civil Service</a></span>, <i>United States</i> (Vol. 6, p. 414).</td>
+  </tr>
+  <tr>
+    <td class="c011">Tariff revision (1883).</td>
+    <td class="c029"><span class="sc"><a href="/article/26-0451-s3/tariff">Tariff</a></span> (Vol. 26, p. 426), by Prof. F. W. Taussig, Harvard University, author of <i>Tariff History of the United States</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">The Presidential campaign of 1884. First election of Grover Cleveland.</td>
+    <td class="c029"><span class="sc"><a href="/article/04-0045-blaine-james-gillespie/blaine__james_gillespie">Blaine, James G.</a></span> (Vol. 4, p. 32), by Charles Emory Smith, late editor <i>Albany Journal</i> and <i>Philadelphia Press</i>, and Postmaster-General of the United States.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/06-0517-cleveland-stephen-grover/cleveland__stephen_grover">Cleveland, Grover</a></span> (Vol. 6, p. 501), by <a href="/contributors.html?q=Horace+White">Horace White</a>, formerly editor <i>The Evening Post</i>, New York; author of <i>The Tariff Question</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Party Breaks.</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0988-mugwump/mugwump">Mugwump</a></span> (Vol. 18, p. 956).</td>
+  </tr>
+  <tr>
+    <td class="c011">Increasing problems of Interstate Commerce. Federal legislation (1887) on interstate commerce.</td>
+    <td class="c029"><span class="sc"><a href="/article/14-0742-interstate-commerce/interstate_commerce">Interstate Commerce</a></span> (Vol. 14, p. 711), by Prof. Frank A. Fetter, Princeton University, author of <i>The Principles of Economics.</i></td>
+  </tr>
+  <tr>
+    <td class="c011">Labor combinations, social unrest.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0155-s2/trade_unions">Trade Unions</a></span>, <i>United States</i> (Vol. 27, p. 150), by Carroll D. Wright, late U. S. Commissioner of Labor.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/25-1050-strikes-and-lock-outs/strikes_and_lock-outs">Strikes and Lockouts</a></span>, <i>United States</i> (Vol. 25, p. 1033), by Carroll D. Wright.</td>
+  </tr>
+  <tr>
+    <td class="c011">Republican success in 1888. Benjamin Harrison, president.</td>
+    <td class="c029"><span class="sc"><a href="/article/13-0035-harrison/harrison__benjamin">Harrison, Benjamin</a></span> (Vol. 13, p. 22), by <a href="/contributors.html?q=The+Hon.+John+Watson+Foster">Hon. J. W. Foster</a>, formerly U. S. Secretary of State.</td>
+  </tr>
+  <tr>
+    <td class="c011">Republican policy in Congress.</td>
+    <td class="c029"><span class="sc"><a href="/article/22-0990-s4/reed__thomas_brackett">Reed, Thomas B.</a></span> (Vol. 22, p. 973).</td>
+  </tr>
+  <tr>
+    <td class="c011">American control in Samoa (1889).</td>
+    <td class="c029"><span class="sc"><a href="/article/24-0129-s2/samoa">Samoa</a></span>, <i>History</i> (Vol. 24, p. 116).</td>
+  </tr>
+  <tr>
+    <td class="c011">Republican and Democratic Tariffs: Mills Bill (1888), McKinley Act (1890).</td>
+    <td class="c029"><span class="sc"><a href="/article/26-0451-s3/tariff">Tariff</a></span>, <i>United States</i> (Vol. 26, p. 426), by Prof. F. W. Taussig.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/18-0499-s3/mills__john">Mills, R. Q.</a></span> (Vol. 18, p. 475).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/17-0270-s3/mackinac_island">McKinley, William</a></span> (Vol. 17, p. 256).</td>
+  </tr>
+  <tr>
+    <td class="c011">States powerless to arrest the progress of Industrial Combinations. Federal legislation. Sherman Anti-Trust Law (1890).</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0351-s2/trusts">Trusts</a></span> (Vol. 27, p. 334), by Prof. <a href="/contributors.html?q=Jeremiah+Whipple+Jenks">J. W. Jenks</a>, professor of Economy and Government, New York University, special investigator of Trusts for U. S. Government.</td>
+  </tr>
+  <tr>
+    <td class="c011">Party disruption over free coinage of silver. Sherman Silver Purchase Act (1890).</td>
+    <td class="c029"><span class="sc"><a href="/article/24-0884-s6/sherman__john">Sherman, John</a></span> (Vol. 24, p. 850), by Prof. <a href="/contributors.html?q=William+Archibald+Dunning">W. A. Dunning</a>, Columbia University, author of <i>Essays on Civil War and Reconstruction</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/03-0969-bimetallism/bimetallism">Bimetallism</a></span> (Vol. 3, p. 946), by <a href="/contributors.html?q=Charles+Francis+Bastable">C. F. Bastable</a>, Dublin University, author of <i>Public Finance</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Opening of Indian Lands (1889–1898). Formation of Oklahoma.</td>
+    <td class="c029"><span class="sc"><a href="/article/20-0079-oklahoma/oklahoma">Oklahoma</a></span>, <i>History</i> (Vol. 20, p. 60).</td>
+  </tr>
+  <tr>
+    <td class="c011">Beginning of restriction of Negro suffrage (1890), and adoption of grandfather clauses in constitutions of Southern states.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>Constitution and Government</i> (Vol. 27, p. 647), by Hon. <a href="/contributors.html?q=Edmund+Janes+James">James</a> Bryce. Sections on <i>Government</i> of articles <span class="sc"><a href="/article/18-0626-mississippi/mississippi">Mississippi</a></span>, <span class="sc"><a href="/article/28-0132-virginia/virginia">Virginia</a></span>, <span class="sc"><a href="/article/19-0799-north-carolina/north_carolina">North Carolina</a></span>, <span class="sc"><a href="/article/11-0779-georgia/georgia">Georgia</a></span>, <span class="sc"><a href="/article/01-0497-s1/alabama">Alabama</a></span>, <span class="sc"><a href="/article/17-0067-louisiana/louisiana">Louisiana</a></span> and <span class="sc"><a href="/article/20-0079-oklahoma/oklahoma">Oklahoma</a></span>.</td>
+  </tr>
+  <tr>
+    <td class="c011">The campaign of 1892.</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">The candidates.</td>
+    <td class="c029"><span class="sc"><a href="/article/13-0035-harrison/harrison__benjamin">Harrison, Benjamin</a></span> (Vol. 13, p. 22), by J. W. <a href="/contributors.html?q=The+Hon.+John+Watson+Foster">Foster</a>, late U. S. Secretary of State.</td>
+  </tr>
+  <tr>
+    <td class="c011">Second election of Cleveland.</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0457-weaver-james-baird/weaver__james_baird">Weaver, James B.</a></span> (Vol. 28, p. 439).</td>
+  </tr>
+  <tr>
+    <td class="c011">Panic of 1893.</td>
+    <td class="c029"><span class="sc"><a href="/article/06-0517-cleveland-stephen-grover/cleveland__stephen_grover">Cleveland, Grover</a></span> (Vol. 6, p. 502), by <a href="/contributors.html?q=Horace+White">Horace White</a>, late editor of <i>The New</i> <i>York Evening Post</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Wilson Tariff (1894).</td>
+    <td class="c029"><span class="sc"><a href="/article/26-0451-s3/tariff">Tariff</a></span>, <i>United States</i> (Vol. 26, p. 426), by Prof. F. W. Taussig.</td>
+  </tr>
+  <tr>
+    <td class="c011">Venezuela Boundary Question (1895).</td>
+    <td class="c029"><span class="sc"><a href="/article/06-0517-cleveland-stephen-grover/cleveland__stephen_grover">Cleveland, Grover</a></span> (Vol. 6, p. 503), by <a href="/contributors.html?q=Horace+White">Horace White</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">New phase of Monroe Doctrine.</td>
+    <td class="c029"><span class="sc"><a href="/article/20-0115-olney-richard/olney__richard">Olney, Richard</a></span> (Vol. 20, p. 91).</td>
+  </tr>
+  <tr>
+    <td class="c011">The issues of 1896. McKinley’s election.</td>
+    <td class="c029"><span class="sc"><a href="/article/17-0270-s3/mackinac_island">McKinley, William</a></span> (Vol. 17, p. 257).</td>
+  </tr>
+  <tr>
+    <td class="c011">Republicans and Gold Standard.</td>
+    <td class="c029"><span class="sc"><a href="/article/12-0944-s4/hanna__marcus_alonzo">Hanna, M. A.</a></span> (Vol. 12, p. 919).</td>
+  </tr>
+  <tr>
+    <td class="c011">Democrats and Silver.</td>
+    <td class="c029"><span class="sc"><a href="/article/09-0727-s3/epiphany__feast_of">Bryan, William J.</a></span> (Vol. 9, p. 697).</td>
+  </tr>
+  <tr>
+    <td class="c011">Gold Democrats.</td>
+    <td class="c029"><span class="sc"><a href="/article/20-0701-palmer/palmer">Palmer, J. M.</a></span> (Vol. 20, p. 645).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/04-0755-s3/buckner__simon_bolivar">Buckner, S. B.</a></span> (Vol. 4, p. 732).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Dingley Tariff (1897).</td>
+    <td class="c029"><span class="sc"><a href="/article/26-0451-s3/tariff">Tariff</a></span>, <i>United States</i> (Vol. 26, p. 427), by Prof. F. W. Taussig.</td>
+  </tr>
+  <tr>
+    <td class="c011">Annexation of Hawaii and events leading to it (1898).</td>
+    <td class="c029"><span class="sc"><a href="/article/13-0096-hawaii/hawaii">Hawaii</a></span>, <i>History</i> (Vol. 13, p. 91).</td>
+  </tr>
+  <tr>
+    <td class="c011">War with Spain (1898).</td>
+    <td class="c029"><span class="sc"><a href="/article/25-0615-s2/spanish-american_war_of">Spanish-American War of 1898</a></span> (Vol. 25, p. 594).</td>
+  </tr>
+  <tr>
+    <td class="c011">Treaty of Paris (1898). The United States finds itself “in a position of increased importance and prestige among the nations of the world.”</td>
+    <td class="c029"><span class="sc"><a href="/article/21-0413-philippine-islands/philippine_islands">Philippine Islands</a></span>, <i>History</i> (Vol. 21, p. 399), by Prof. <a href="/contributors.html?q=Hiram+Bingham">Hiram Bingham</a>, Yale University.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/22-0138-porto-rico/porto_rico">Porto Rico</a></span>, <i>History</i> (Vol. 22, p. 126).</td>
+  </tr>
+  <tr>
+    <td class="c011">Regeneration of Cuba (1898–1909).</td>
+    <td class="c029"><span class="sc"><a href="/article/07-0616-cuba/cuba">Cuba</a></span>, <i>History</i> (Vol. 7, p. 604), by <a href="/contributors.html?q=Francis+Samuel+Philbrick">F. S. Philbrick</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Initiative and Referendum first adopted (1898).</td>
+    <td class="c029"><span class="sc"><a href="/article/25-0525-south-dakota/south_dakota">South Dakota</a></span>, <i>History</i> (Vol. 25, p. 508).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>Constitution and Government</i> (Vol. 27, p. 651), by Hon. <a href="/contributors.html?q=Edmund+Janes+James">James</a> Bryce, author of <i>The American Commonwealth</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Discovery of gold in Alaska.</td>
+    <td class="c029"><span class="sc"><a href="/article/01-0511-s4/alaska">Alaska</a></span> (Vol. 1, p. 475).</td>
+  </tr>
+  <tr>
+    <td class="c011">Conservation of National Resources, a new policy.</td>
+    <td class="c029"><span class="sc"><a href="/article/10-0666-forests-and-forestry/forests_and_forestry">Forest and Forestry</a></span>, <i>United States</i> (Vol. 10, p. 651), by <a href="/contributors.html?q=Gifford+Pinchot">Gifford Pinchot</a>, formerly chief of the Forestry Service, U. S. Department of Agriculture.</td>
+  </tr>
+  <tr>
+    <td class="c011">Assassination of McKinley. The Roosevelt Administration (1901–1909).</td>
+    <td class="c029"><span class="sc"><a href="/article/23-0743-roosevelt-theodore/roosevelt__theodore">Roosevelt, Theodore</a></span> (Vol. 23, p. 707), by <a href="/contributors.html?q=Lawrence+F.+Abbott">Lawrence F. Abbott</a>, president of “The Outlook Company.”</td>
+  </tr>
+  <tr>
+    <td class="c011">Isthmian Canal.</td>
+    <td class="c029"><span class="sc"><a href="/article/20-0720-s2/panama">Panama</a></span> (Vol. 20, p. 666).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/20-0722-panama-canal/panama_canal">Panama Canal</a></span> (Vol. 20, p. 666).</td>
+  </tr>
+  <tr>
+    <td class="c011">Panic of 1907.</td>
+    <td class="c029"><span class="sc"><a href="/article/03-0351-banks-and-banking/banks_and_banking">Banks and Banking</a></span> (Vol. 3, p. 348), by <a href="/contributors.html?q=Charles+Arthur+Conant">Charles A. Conant</a>, author of <i>A History of Modern Banks of Issue</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Elkins Law.</td>
+    <td class="c029"><span class="sc"><a href="/article/22-0836-railways/railways">Railways</a></span>, <i>American Legislation</i> (Vol. 22, p. 829).</td>
+  </tr>
+  <tr>
+    <td class="c011">Eastern Policy.</td>
+    <td class="c029"><span class="sc"><a href="/article/13-0118-john-hay/hay__john">Hay, John</a></span> (Vol. 13, p. 105).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/23-0747-root-elihu/root__elihu">Root, Elihu</a></span> (Vol. 23, p. 711).</td>
+  </tr>
+</tbody></table>
+
+<p>This sketch of American History closes
+with the inauguration of President Roosevelt,
+for the questions that have arisen
+since that date are questions into which
+current politics enter, and these are
+treated in the chapter of this Guide on
+<i>Questions of the Day</i>. Here we need only
+say that throughout his study of American
+history the reader will constantly—and
+easily—find many more articles bearing
+on the subject than are mentioned in
+the outline given above. In particular
+let him note:</p>
+
+<p>—that there are many biographies of
+figures prominent in nation and state not
+mentioned above;</p>
+
+<p>—that in each article devoted to a
+state there is a section on history, which
+has a double value, as giving the outline
+of the state’s history and as showing its
+part in the history of the nation;</p>
+
+<p>—and that there is in articles on cities
+and towns a great deal of important information
+of historical value, sometimes
+merely local, but oftener bearing on the
+history of state or nation, or both.</p>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For School-Children &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter LXII</span>For School-Children</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Importance of Correct First Impressions</a></li><li><a href="#sh-2">The Britannica Interesting to Children</a></li><li><a href="#sh-3">Heroes and Heroines of History, Romance and Adventure</div> <div class="sidenote">The Romance of the Middle Ages</div> <div class="sidenote">Heroes of Later Times</div> <div class="sidenote">Famous Women of History</a></li><li><a href="#sh-4">Readings in Natural History</a></li><li><a href="#sh-5">The Habits and Doings of Clever Animals</a></li><li><a href="#sh-6">Knowledge about Plants and Animals</a></li><li><a href="#sh-7">Marvelous Machines</a></li><li><a href="#sh-8">Electrical Apparatus</a></li><li><a href="#sh-9">Industrial Processes</a></li><li><a href="#sh-10">Explorers’ Voyages and Journeys</a></li><li><a href="#sh-11">Modern Exploration</a></li><li><a href="#sh-12">A Complete History of the World</a></li><li><a href="#sh-13">Physical Geography made Interesting</a></li><li><a href="#sh-14">Readings in Astronomy</a></li><li><a href="#sh-15">Games and Pastimes</a></li><li><a href="#sh-16">Diverting and Profitable Occupations</a></li><li><a href="#sh-17">Reading for Girls</a></li><li><a href="#sh-18">The Romance of the Middle Ages</a></li><li><a href="#sh-19">Heroes of Later Times</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">Importance of Correct First Impressions</span>When a stick of hot glass is drawn
+out, no matter how far it is
+stretched, the slender stick retains
+the original shape of the piece—square,
+round or oval. In the same way,
+a child’s mind retains in after life the
+shaping originally given to it. Everyone
+knows from personal
+experience how difficult
+it is to rid the
+mind of a wrong
+impression received
+in childhood. The editors of the new Britannica
+feel that they have solved a
+great problem in making a work of the
+most <i>accurate</i> and <i>authoritative</i> character
+<i>interesting to children</i>, for they have received
+much valuable testimony that this
+end has been attained. Dr. Charles W.
+Eliot, president-emeritus of Harvard
+University, was an early subscriber for
+two sets for the use of his grandchildren.
+He said that he found the work “altogether
+admirable; and my grandchildren,
+who are at the most inquisitive ages,
+are of the same opinion.” Professor
+W. G. Hale, of the University of Chicago,
+wrote, “My children feel the same fascination
+in it that I do.” Judge J. P.
+Gorter, of the Baltimore Supreme Court,
+has expressed his opinion that “every
+family with growing children seeking
+information should have this invaluable
+work in the library.” The owner of
+the new Britannica should constantly
+encourage his children to go to the
+volumes for further information on topics
+included in the course of the day’s studies
+at school. It will not take long to make
+them realize that the volumes open an
+inexhaustible mine of knowledge, and
+answer any question as to which curiosity
+has been aroused. With a little
+help from you, at the beginning, they
+will soon learn to use the Britannica
+for themselves.</p>
+
+<p><span class="shoulder-heading" id="sh-2">The Britannica Interesting to Children</span>The love of reading is quickly developed
+in children. Some are attracted to
+history, to the lives of great men, to
+exploration and to
+adventure; others
+become more interested
+in the world
+of nature; still others
+have a natural bent toward science and
+the mechanical arts. Whatever the inclination
+may be, the Britannica stands
+at the child’s service, giving to him the
+true facts in such a way that he can
+easily understand them.</p>
+
+<p>The following suggestions will help
+children to pursue their favourite lines of
+reading. They may like to begin with
+the heroes of myth and history. Andrew
+Lang contributes a most comprehensive
+article on <span class="sc"><a href="/article/19-0143-mythology/mythology">Mythology</a></span> (Vol. 19, p. 128).
+The classified subject-list in Vol. 29
+(Index) indicates nearly 500 separate
+articles on the gods and mythological
+beings of ancient Greece and Rome, Asia,
+Egypt, Europe and America. The central
+hero of medieval romance, <span class="sc"><a href="/article/02-0723-s2/arthur">Arthur</a></span>
+(Vol. 2, p. 681), is described by Miss
+<a href="/contributors.html?q=Miss+Jessie+Laidlay+Weston">Jessie L. Weston</a>, author of <i>Arthurian
+Romances</i>. The famous deeds of the <span class="sc"><a href="/article/06-0377-cid-the/cid__the">Cid</a></span>
+(Vol. 6, p. 361), the foremost man of
+Spain’s heroic period, are related by <a href="/contributors.html?q=Henry+Edward+Watts">H.
+E. Watts</a>, the well-known translator of
+<i>Don Quixote</i>. <span class="sc"><a href="/article/23-0486-s2/roland__legend_of">Roland, Legend of</a></span> (Vol.
+23, p. 464), tells another stirring story.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Heroes and Heroines of History, Romance and Adventure</div> <p><span class="shoulder-heading" id="sh-18">The Romance of the Middle Ages</span></p> <p><span class="shoulder-heading" id="sh-19">Heroes of Later Times</span></p> <div class="sidenote">Famous Women of History</span>Of peculiar interest to children are
+such articles as <i>Cyrus (The Great)</i>,
+(Vol. 7, p. 706), by Dr. <a href="/contributors.html?q=Eduard+Meyer">Eduard Meyer</a>,
+professor of ancient
+history, University
+of Berlin, author of
+the world-famous
+<i>History of Antiquity</i>;
+<span class="sc"><a href="/article/01-0585-s4/alexander_iii">Alexander III
+(The Great)</a></span>, (Vol. 1, p. 545), by the
+noted Hellenist, Edwyn R. Bevan;
+<span class="sc"><a href="/article/04-0964-s3/caesar__gaius_julius">Caesar, Julius</a></span> (Vol. 4, p. 938), by
+<a href="/contributors.html?q=Henry+Stuart+Jones">Henry Stuart Jones</a>, of Oxford University;
+<span class="sc"><a href="/article/12-0945-s4/hannibal">Hannibal</a></span> (Vol. 12, p. 920), by <a href="/contributors.html?q=Maximilian+Otto+Bismarck+Caspari">M. O. B.
+Caspari</a>, of London University; <span class="sc"><a href="/article/26-0808-s2/theodoric">Theodoric</a></span>
+(Vol. 26, p. 768), the great ruler of
+the Gothic nation, by <a href="/contributors.html?q=Thomas+Hodgkin">Theodore Hodgkin</a>,
+author of <i>Italy and her Invaders</i>; <span class="sc"><a href="/article/05-0927-charlemagne/charlemagne">Charlemagne</a></span>,
+founder of the Holy Roman
+Empire (Vol. 5, p. 891), by <a href="/contributors.html?q=Arthur+William+Holland">Arthur W.
+Holland</a>; <span class="sc"><a href="/article/05-0978-charles-martel/charles_martel">Charles Martel</a></span> (Vol. 5, p.
+942), a great type
+of courage and activity,
+by Christian
+Pfister, professor
+at the Sorbonne,
+Paris; <span class="sc"><a href="/article/01-0622-s3/alfred">Alfred the Great</a></span> (Vol. 1, p.
+582), by <a href="/contributors.html?q=Rev.+Charles+Plummer">Rev. Charles Plummer</a>, author
+of <i>The Life and Times of Alfred the Great</i>;
+<span class="sc"><a href="/article/07-0546-crusades/crusades">Crusades</a></span> (Vol. 7, p. 524), by <a href="/contributors.html?q=Ernest+Barker">Ernest
+Barker</a>, of Oxford University, a narrative
+with all the action and interest
+of the best tales for children; <span class="sc"><a href="/article/26-0621-templars/templars">Templars</a></span>
+(Vol. 26, p. 591), by <a href="/contributors.html?q=Walter+Alison+Phillips">W. Alison Phillips</a>,
+author of <i>Modern Europe</i>, etc.; <span class="sc"><a href="/article/17-0051-s2/louis_ix">Louis IX</a></span>
+(Saint) (Vol. 17, p. 37), by Prof. James
+T. Shotwell, of Columbia University;
+<span class="sc"><a href="/article/06-0993-conradin/conradin">Conradin</a></span> (Vol. 6, p. 968), the pathetic
+life of this marvelous boy who perished
+at the age of seventeen; <span class="sc"><a href="/article/13-0918-hundred-years-war/hundred_years__war">Hundred Years’
+War</a></span> (Vol. 13, p. 893), by <a href="/contributors.html?q=Jules+Viard">Jules Viard</a>,
+archivist of the National Archives, Paris;
+<span class="sc"><a href="/article/11-0255-s2/froissart__jean">Froissart, Jean</a></span> (Vol. 11, p. 242), a
+notable biography, by Sir <a href="/contributors.html?q=Sir+Walter+Besant">Walter Besant</a>;
+<span class="sc"><a href="/article/05-0935-charles-v-roman-emperor/charles_v___roman_emperor_">Charles V</a></span> (Vol. 5, p. 899), by <a href="/contributors.html?q=Edward+Armstrong">Edward
+Armstrong</a>, author of <i>The Emperor
+Charles V</i>, etc.; <span class="sc"><a href="/article/07-0509-s2/cromwell__oliver">Cromwell, Oliver</a></span> (Vol.
+7, p. 487), by <a href="/contributors.html?q=Philip+Chesney+Yorke">Philip Chesney Yorke</a>,
+of Oxford, Capt. C.
+F. Atkinson, and R.
+J. McNeill; <span class="sc"><a href="/article/12-0758-s4/gustavus_i">Gustavus
+Adolphus</a></span>
+(Vol. 12, p. 735), by <a href="/contributors.html?q=Robert+Nisbet+Bain">R. Nisbet Bain</a>,
+author of <i>Scandinavia</i>, etc.; <span class="sc"><a href="/article/17-0757-s2/marlborough">Marlborough</a></span>
+(Vol. 17, p. 737), by Dr. <a href="/contributors.html?q=William+Prideaux+Courtney">W. P.
+Courtney</a>; <span class="sc"><a href="/article/11-0064-frederick-ii-of-prussia/frederick_ii__of_prussia">Frederick II (The Great)</a></span>
+(Vol. 11, p. 52), by <a href="/contributors.html?q=James+Sime">James Sime</a>, author
+of <i>History of Germany</i>, and W. Alison
+<a href="/contributors.html?q=Walter+Alison+Phillips">Phillips</a>; <span class="sc"><a href="/article/19-0205-napoleon-i/napoleon_i_">Napoleon I</a></span> (Vol. 19, p. 190),
+by <a href="/contributors.html?q=John+Holland+Rose">J. Holland Rose</a>; <span class="sc"><a href="/article/19-0370-s5/nelson__horatio_nelson">Nelson</a></span> (Vol. 19, p.
+352), by <a href="/contributors.html?q=David+Hannay">David Hannay</a>, author of <i>Short
+History of the Royal Navy</i>; <span class="sc"><a href="/article/28-0530-s2/wellington">Wellington</a></span>
+(Vol. 28, p. 507); <span class="sc"><a href="/article/28-0360-washington-george/washington__george">Washington, George</a></span>
+(Vol. 28, p. 344), by Dr. <a href="/contributors.html?q=William+Macdonald">William MacDonald</a>,
+professor of American History in
+Brown University; <span class="sc"><a href="/article/16-0725-lincoln-abraham/lincoln__abraham">Lincoln, Abraham</a></span>
+(Vol. 16, p. 703), by <a href="/contributors.html?q=John+George+Nicolay+%281832%E2%80%931901%29">John G. Nicolay</a>,
+private secretary to President Lincoln,
+and <a href="/contributors.html?q=Charles+Crawford+Whinery">Charles C. Whinery</a>, assistant editor
+of the Encyclopaedia Britannica; <span class="sc"><a href="/article/12-0372-s6/grant__ulysses_simpson">Grant,
+Ulysses S.</a></span> (Vol. 12, p. 355), by Capt. C.
+F. Atkinson, and John Fiske, author
+of <i>The American Revolution</i>; <span class="sc"><a href="/article/16-0382-s4/lee__robert_edward">Lee,
+Robert E.</a></span> (Vol. 16, p. 362); <span class="sc"><a href="/article/04-0107-boadicea/boadicea">Boadicea</a></span>
+(Vol. 4, p. 94), by Dr. <a href="/contributors.html?q=Francis+John+Haverfield">F. J. Haverfield</a>,
+professor of ancient history, Oxford University;
+<span class="sc"><a href="/article/17-0907-s5/matilda">Matilda
+(The Great Countess)</a></span>
+(Vol. 17, p. 888),
+by Prof. <a href="/contributors.html?q=Carlton+Joseph+Huntley+Hayes">Carlton H.
+Hayes</a>, of Columbia University; <span class="sc"><a href="/article/15-0447-joan-of-arc/joan_of_arc">Joan of
+Arc</a></span> (Vol. 15, p. 420), by Prof. J. T. Shotwell,
+of Columbia University; <span class="sc"><a href="/article/14-0892-s2/isabella">Isabella</a></span>
+(Vol. 14, p. 859); <span class="sc"><a href="/article/09-0299-elizabeth-of-england/elizabeth_of_england">Elizabeth, Queen of
+England</a></span> (Vol. 9, p. 282), by <a href="/contributors.html?q=Albert+Frederick+Pollard">A. F. Pollard</a>,
+professor of English history, London University;
+<span class="sc"><a href="/article/17-0834-mary-queen-of-scots/mary_queen_of_scots">Mary, Queen of Scots</a></span> (Vol. 17,
+p. 817), by <a href="/contributors.html?q=Algernon+Charles+Swinburne">Algernon C. Swinburne</a>, the
+great poet, author of <i>Mary Stuart</i>, etc.;
+<span class="sc"><a href="/article/05-0547-catherine-de-medici/catherine_de__medici">Catherine de’ Medici</a></span> (Vol. 5, p. 528);
+<span class="sc"><a href="/article/28-0043-victoria-queen/victoria__queen">Victoria, Queen</a></span> (Vol. 28, p. 28), by
+<a href="/contributors.html?q=Hugh+Chisholm">Hugh Chisholm</a>, editor, Encyclopaedia
+Britannica.</p>
+
+<p>The biographies are not dry outlines
+of the subjects’ lives, but narratives of a
+thoroughly interesting and often most
+entertaining nature. There has been a
+generous amount of space alloted the
+biographical articles in the Encyclopaedia
+Britannica. The article on Napoleon I
+is equivalent to 60 pages of this Guide;
+that of George Washington to 13 pages;
+of Abraham Lincoln to 23 pages; of Queen
+Victoria 23 pages. Such length provides
+space for the picturesque details which
+make the articles especially appropriate
+for children, and will establish a taste
+for this kind of reading in later years.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Readings in Natural History</span>Many children show a bent for knowledge
+of the world of nature, and to
+them the new Britannica will prove a
+faithful, constant
+companion. Their
+pleasure in going to
+the encyclopaedia
+will be heightened by
+the many beautiful pictures they will find
+in it. The articles on the domestic animals
+not only relate in simple, readable
+fashion the very interesting facts
+about their history and development,
+but are splendidly illustrated with pictures
+of the different breeds so that by
+this means alone anyone may learn to
+distinguish them. <span class="sc"><a href="/article/05-0504-cat/cat">Cat</a></span> (Vol. 5, p. 487),
+is by <a href="/contributors.html?q=Sir+Richard+Lydekker">Richard Lydekker</a>, the noted
+naturalist; <span class="sc"><a href="/article/05-0558-cattle/cattle">Cattle</a></span> (Vol. 5, p. 539) is
+by Dr. <a href="/contributors.html?q=William+Fream">William Fream</a>, author of <i>Handbook
+of Agriculture</i>, and Robert Wallace,
+professor of agriculture, Edinburgh University;
+<span class="sc"><a href="/article/08-0391-dog/dog">Dog</a></span> (Vol. 8, p. 374) is by <a href="/contributors.html?q=Walter+Baxendale">Walter
+Baxendale</a>, kennel editor of <i>The Field</i>,
+and Dr. F. Chalmers Mitchell; <span class="sc"><a href="/article/13-0729-horse/horse">Horse</a></span>
+(Vol. 13, p. 712) is by Sir <a href="/contributors.html?q=Sir+William+Henry+Flower">William Henry
+Flower</a>, the noted biologist, author of
+<i>The Horse, a Study in Natural History</i>,
+<a href="/contributors.html?q=Sir+Richard+Lydekker">Richard Lydekker</a>, E. D. Brickwood, <a href="/contributors.html?q=William+Fream">Dr.
+William Fream</a> and Robert Wallace;
+<span class="sc"><a href="/article/21-0620-pig/pig">Pig</a></span> (Vol. 21, p. 594) is by Robert
+Wallace, and <span class="sc"><a href="/article/24-0849-sheep/sheep">Sheep</a></span> (Vol. 24, p. 817)
+is by <a href="/contributors.html?q=William+Fream">Dr. Fream</a> and Professor Wallace.</p>
+
+<p>In too many books for children
+about the habits of wild animals, the
+facts of nature are grossly distorted with
+the idea of impressing the imagination.
+We are all familiar with the recent
+spirited controversy over “nature fakers”
+and the reaction to more sober statement
+which it brought about. It is the truth
+about the animal world that is wanted;
+for it is quite wonderful and fascinating
+enough as it is. And the new Britannica
+supplies this need in a most satisfactory
+and thorough manner. Children never
+tire of natural history, and parents may
+be assured that the information in the
+entertaining articles by noted naturalists,
+in the pages of the Britannica, is of the
+most reliable and accurate character.</p>
+
+<p><span class="shoulder-heading" id="sh-5">The Habits and Doings of Clever Animals</span>Nothing, for instance, could be more
+absorbing to the average school-child
+than the article <span class="sc"><a href="/article/02-0096-s4/ant">Ant</a></span> (Vol. 2, p. 85), by
+Prof. George H. Carpenter
+of the Royal
+College of Science,
+Dublin, who wrote
+the well-known book
+<i>Insects; their Structure and Life.</i> Here
+he tells how colonies of ants are founded,
+and how they live, and how they receive
+other insects as guests in order to obtain
+the food they desire, and how some
+species make slaves of other species.
+Numerous examples of their sense and
+intelligence are given, and the question
+as to whether their actions are rational
+or instinctive is discussed in the light
+of the most recent knowledge. The
+story of the <span class="sc"><a href="/article/03-0644-bee/bee">Bee</a></span> (Vol. 3, p. 625), also
+by Professor Carpenter, is equally wonderful,
+for we learn all about the solitary
+and social bees, the social organization
+of the hive, and how the worker bees
+are victimized. Both of these articles
+are fully illustrated. <span class="sc"><a href="/article/25-0685-spiders/spiders">Spiders</a></span> (Vol. 25,
+p. 663), by <a href="/contributors.html?q=Reginald+Innes+Pocock">R. I. Pocock</a>, superintendent
+of the Zoological Gardens, London, is
+another example of the adaptability of
+the Britannica to children’s reading.
+The accounts of their webs, nests and
+modes of catching prey hold the attention
+throughout.</p>
+
+<p>A great deal of the most curious and
+recent knowledge of the animal kingdom
+is related in supplementary articles such
+as <span class="sc"><a href="/article/06-0753-colours-of-animals/colours_of_animals">Colours of Animals</a></span> (Vol. 6, p. 731),
+by Dr. <a href="/contributors.html?q=Edward+Bagnall+Poulton">E. B. Poulton</a>, Hope professor of
+zoology at Oxford, author of <i>The Colours
+of Animals</i>, and <span class="sc"><a href="/article/18-0519-mimicry/mimicry">Mimicry</a></span> (Vol.
+18, p. 495), by <a href="/contributors.html?q=Reginald+Innes+Pocock">R. I. Pocock</a>. The latter
+tells how animals protect themselves
+from their enemies by resemblance to
+other animals or objects.</p>
+
+<p><span class="shoulder-heading" id="sh-6">Knowledge about Plants and Animals</span>Space will not permit further specific
+mention. The life-story of the entire
+animal kingdom, detailed information
+about plants and
+flowers are to be
+found in the pages
+of the new Britannica.
+The accurate
+and beautiful illustrations and the text,
+written in every case by naturalists of
+acknowledged reputation, and written
+always in the clearest language, help
+to give the work its unique position as
+the greatest source of authoritative and
+easily comprehended knowledge.</p>
+
+<p><span class="shoulder-heading" id="sh-7">Marvelous Machines</span>Children delight in machinery and
+what it accomplishes, and the Britannica
+tells about this with great thoroughness
+in its complete section
+dealing with
+processes of manufacture.
+A number of
+the articles on this subject have been
+suggested in the last chapter as suitable
+for parents who wish to interest their
+children in the industrial world, and the
+list may be further extended for the benefit
+of older children by including such
+articles as <span class="sc"><a href="/article/26-0728-textile-printing/textile-printing">Textile Printing</a></span> (Vol. 26,
+p. 694), by Dr. <a href="/contributors.html?q=Edmund+Knecht">Edmund Knecht</a>, of Manchester
+University; <span class="sc"><a href="/article/10-0392-finishing/finishing">Finishing</a></span> (Vol. 10,
+p. 378) also by <a href="/contributors.html?q=Edmund+Knecht">Professor Knecht</a>; <span class="sc"><a href="/article/28-0830-wool-worsted-and-woollen-manufactures/wool__worsted_and_woollen_manufactures">Wool,
+Worsted and Woollen Manufactures</a></span>
+(Vol. 28, p. 805), by <a href="/contributors.html?q=Aldred+Farrer+Barker">Aldred F. Barker</a>,
+professor of textile industries, Bradford
+Technical College; <span class="sc"><a href="/article/27-0528-typography/typography">Typography</a></span>, <i>Modern
+Practical Typography</i> (Vol. 27, p.
+542), by <a href="/contributors.html?q=John+Southward">John Southward</a>, author of
+<i>Practical Printing</i>, and <a href="/contributors.html?q=Hugh+Munro+Ross">H. M. Ross</a>;
+<span class="sc"><a href="/article/22-0364-printing/printing">Printing</a></span> (Vol. 22, p. 350), by <a href="/contributors.html?q=Charles+T.+Jacobi">C. T.
+Jacobi</a>, managing director of the Chiswick
+Press, London; <span class="sc"><a href="/article/08-0585-dredge/dredge">Dredge and Dredging</a></span>
+(Vol. 8, p. 562), by <a href="/contributors.html?q=Walter+Hunter">Walter Hunter</a>,
+a noted consulting engineer; <span class="sc"><a href="/article/22-0961-s4/reaping">Reaping</a></span>
+(Vol. 22, p. 944), by <a href="/contributors.html?q=Primrose+McConnell">Primrose McConnell</a>,
+author of <i>Diary of a Working Farmer</i>, etc.</p>
+
+<p>Boys with a practical, mechanical turn
+of mind will delight in such articles as
+<span class="sc"><a href="/article/04-0553-s1/bridges">Bridges</a></span> (Vol. 4, p. 533), by Prof. <a href="/contributors.html?q=William+Cawthorne+Unwin">W. C.
+Unwin</a>, with many illustrations; <span class="sc"><a href="/article/18-0946-s2/motor_vehicles">Motor
+Vehicles</a></span> (Vol. 18, p. 914), by the late
+C. S. Rolls, a pioneer of motoring, and
+Edward S. Smith; <span class="sc"><a href="/article/10-0520-s2/flight">Flight and Flying</a></span>,
+<i>Artificial Flight</i> (Vol. 10, p. 510), which
+describes, with many pictures, flying machines
+from the earliest types to the
+latest, and <span class="sc"><a href="/article/07-0704-cycling/cycling">Cycling</a></span> (Vol. 7, p. 682), an
+historical and pictorial account of the
+velocipede and bicycle. Nothing could
+be more interesting and instructive than
+<span class="sc"><a href="/article/24-0894-s8/ship">Ship</a></span> (Vol. 24, p. 860), of which the historical
+part is by <a href="/contributors.html?q=Rev.+Edmond+Warre">Rev. Edmond Warre</a>,
+formerly head master of Eton College,
+and the account of modern ships by Sir
+<a href="/contributors.html?q=Sir+Philip+Watts">Philip Watts</a>, who designed the “Dreadnought”
+and the “Mauretania.” It is a
+real story, equivalent in length to 190
+pages of this Guide, with nearly 130
+illustrations of all sorts of craft including
+modern warships, ocean liners and vessels
+for inland navigation. Under <span class="sc"><a href="/article/22-0836-railways/railways">Railways</a></span>
+(Vol. 22, p. 819) there is an equally
+good history of the railway by <a href="/contributors.html?q=Hugh+Munro+Ross">H. M.
+Ross</a>, editor of <i>The Times Engineering
+Supplement</i>, and others.</p>
+
+<p><span class="shoulder-heading" id="sh-8">Electrical Apparatus</span>The remarkable attraction possessed
+by electrical apparatus for many boys
+will doubtless send them to such articles
+as <span class="sc"><a href="/article/08-0791-dynamo/dynamo">Dynamo</a></span> (Vol. 8,
+p. 764), by <a href="/contributors.html?q=Charles+Caesar+Hawkins">C. C.
+Hawkins</a>, author of
+<i>The Dynamo</i>; <span class="sc"><a href="/article/26-0576-telephone/telephone">Telephone</a></span>
+(Vol. 26, p. 547), by <a href="/contributors.html?q=Harry+Robert+Kempe">Harry R.
+Kempe</a>, electrician to the General Post
+Office, London; <span class="sc"><a href="/article/26-0539-telegraph/telegraph">Telegraph</a></span> (Vol. 26, p.
+510), also by <a href="/contributors.html?q=Harry+Robert+Kempe">H. R. Kempe</a>, and the
+chapter on <i>Wireless Telegraphy</i> (p. 529),
+by <a href="/contributors.html?q=John+Ambrose+Fleming">J. A. Fleming</a>, professor of electrical
+engineering in the University of London.
+These accounts are full of the most
+practical information, and will be of inestimable
+help to any boy who wishes to
+experiment for himself.</p>
+
+<p><span class="shoulder-heading" id="sh-9">Industrial Processes</span>Many industrial processes, while not
+employing complicated machinery, nevertheless
+possess much interest, both
+from an historical
+and a technical point
+of view, and on these
+the new Britannica is
+as complete and authentic as in all other
+departments. Especially useful and entertaining
+to children will be found the
+material relating to the manufacture of
+the common objects by which they are
+surrounded. Such, for instance, are
+<span class="sc"><a href="/article/05-0729-ceramics/ceramics">Ceramics</a></span> (Vol. 5, p. 703), by <a href="/contributors.html?q=William+Burton">William
+Burton</a> and several other experts, with
+beautiful illustrations; <span class="sc"><a href="/article/12-0099-s3/glass">Glass</a></span> (Vol. 12,
+p. 86), by <a href="/contributors.html?q=Harry+James+Powell">Harry James Powell</a>, author
+of <i>Glass Making</i>, etc., Alexander Nesbitt,
+and William Rosenhain of the National
+Physical Laboratory, England; and <span class="sc"><a href="/article/22-0422-process-printing/process__printing_">Process</a></span>
+(Vol. 22, p. 408), an illustrated
+account, by <a href="/contributors.html?q=Edwin+Bale">Edwin Bale</a>, of the photomechanical
+processes by which illustrations
+are reproduced in printing.</p>
+
+<p>These and hundreds of similar articles
+will prove most helpful and suggestive
+to school-children who are constantly
+called on to prepare “themes” and write
+compositions. As soon as a child makes
+acquaintance with the new Britannica
+he will quickly realize its inexhaustible
+resources, and the aid it lends him in his
+studies will be continued throughout the
+course of his life, in his business and in
+his general reading.</p>
+
+<p><span class="shoulder-heading" id="sh-10">Explorers’ Voyages and Journeys</span>Children love to read adventures of
+explorers in forcing their way to unknown
+lands. The impression they make is
+much clearer when
+the child has learned
+to distinguish the
+different motives
+which have led to
+discovery and to exploration—commercial
+expansion, fresh conquests, religious
+zeal, flight from persecution, or the advancement
+of knowledge for its own
+sake. With such information he will read
+in a new light the stirring history of adventure,
+the great story of hardship and
+endurance.</p>
+
+<p>The Britannica presents all this on a
+definite, scientific plan. The inquirer
+starts on his trip through any field of
+learning with guide-posts clearly marked,
+and successive ones in sight one from the
+other; so that there is no going astray, no
+uncertain wandering. A reader—young
+or old—with taste for exploration and
+adventure may turn first to <span class="sc"><a href="/article/11-0639-s2/geography">Geography</a></span>,
+<i>Progress of Geographical Discovery</i> (Vol.
+11, p. 623), by Dr. <a href="/contributors.html?q=Hugh+Robert+Mill">H. R. Mill</a>, editor of
+<i>The International Geography.</i> This article
+outlines geographical discovery in
+chronological order from the days of the
+Phoenicians. The reader will doubtless
+make excursions into other parts of the
+books for more detailed accounts, but he
+has always this main article to guide him.
+He will go to the article on <span class="sc"><a href="/article/13-0397-herodotus/herodotus">Herodotus</a></span>
+(Vol. 13, p. 381), the traveler, by Canon
+George Rawlinson, the great Oriental
+archaeologist, and the Rev. E. M. Walker
+of Oxford University; and to the story of
+<span class="sc"><a href="/article/22-0719-pytheas/pytheas">Pytheas</a></span> (Vol. 22, p. 703), the Greek
+navigator who brought the first definite
+news of northwestern Europe to the
+Mediterranean world, by Sir <a href="/contributors.html?q=Sir+Edward+Herbert+Bunbury">Edward H.
+Bunbury</a>, author of <i>A History of Ancient
+Geography</i>, and <a href="/contributors.html?q=Charles+Raymond+Beazley">Dr. C. R. Beazley</a> of the
+University of Birmingham. Other stories
+of exploration and adventure are: <span class="sc"><a href="/article/28-0077-viking/viking">Viking</a></span>
+(Vol. 28, p. 62), by <a href="/contributors.html?q=Charles+Francis+Keary">Charles F. Keary</a>,
+author of <i>The Vikings in Western Christendom</i>;
+<span class="sc"><a href="/article/16-0416-s2/leif_ericsson">Leif Ericsson</a></span> (Vol. 16, p. 396),
+the first European to set foot on the
+American continent, by Prof. <a href="/contributors.html?q=Charles+Raymond+Beazley">C. R.
+Beazley</a>; <span class="sc"><a href="/article/28-0113-vinland/vinland">Vinland</a></span> (Vol. 28, p. 98), with
+all the latest known facts of Leif’s discovery,
+by Prof. J. E. Olson of the University
+of Wisconsin; the marvelous career
+of the great Venetian discoverer, <span class="sc"><a href="/article/22-0021-s4/polo__marco">Polo,
+Marco</a></span> (Vol. 22, p. 7), boldest of medieval
+travelers, by Sir <a href="/contributors.html?q=Colonel+Sir+Henry+Yule">Henry Yule</a>, author
+of <i>The Book of Ser Marco Polo</i>, and <a href="/contributors.html?q=Charles+Raymond+Beazley">Prof.
+C. R. Beazley</a>; <span class="sc"><a href="/article/13-0309-henry-of-portugal/henry_of_portugal">Henry of Portugal</a></span> (the
+Navigator) (Vol. 13, p. 296); <span class="sc"><a href="/article/08-0189-diaz-de-novaes-bartholomeu/diaz_de_novaes__bartholomeu">Diaz de
+Novaes</a></span> (Vol. 8, p. 172); <span class="sc"><a href="/article/06-0763-columbus-christopher/columbus__christopher">Columbus,
+Christopher</a></span> (Vol. 6, p. 741)—all of
+these by <a href="/contributors.html?q=Charles+Raymond+Beazley">Professor Beazley</a>; <span class="sni"><span class="hidev">|</span>America—Its
+Discoverers and
+Conquerors<span class="hidev">|</span></span>
+<span class="sc"><a href="/article/11-0451-s2/gama__vasco_da">Gama, Vasco
+Da</a></span> (Vol. 11, p. 433),
+who discovered the
+Cape route to India;
+<span class="sc"><a href="/article/21-0660-s3/pinzon">Pinzon</a></span> (Vol. 21, p.
+631); <span class="sc"><a href="/article/27-1081-s2/vespucci__amerigo">Vespucci, Amerigo</a></span>
+(Vol. 27, p. 1053), by <a href="/contributors.html?q=Charles+Raymond+Beazley">Professor
+Beazley</a>; <span class="sc"><a href="/article/03-0258-s3/balboa__vasco_nuñez_de">Balboa, Vasco Nuñez de</a></span> (Vol.
+3, p. 241), discoverer of the Pacific Ocean;
+<span class="sc"><a href="/article/04-0947-s5/cabot__george">Cabot</a></span> (Vol. 4, p. 921), by <a href="/contributors.html?q=Henry+Percival+Biggar">H. P. Biggar</a>,
+author of <i>The Voyages of the Cabots to
+Greenland</i>; <span class="sc"><a href="/article/17-0317-s4/magellan__ferdinand">Magellan, Ferdinand</a></span> (Vol.
+17, p. 302), the first circumnavigator of
+the globe, by <a href="/contributors.html?q=Charles+Raymond+Beazley">Professor Beazley</a>; <span class="sc"><a href="/article/25-0451-soto/soto__ferdinando__fernando__or_hernando__de">Soto,
+Ferdinando de</a></span> (Vol. 25, p. 435),
+wrongly called the discoverer of the
+Mississippi; <span class="sc"><a href="/article/21-0281-s2/peru">Peru</a></span>, <i>History</i> (Vol. 21, p.
+274), by Sir <a href="/contributors.html?q=Sir+Clements+Robert+Markham">Clements R. Markham</a>, author
+of <i>Travels in Peru and India</i>, a full
+account of Pizarro’s conquest; <span class="sc"><a href="/article/07-0222-cortes-hernan/cortes__hernan">Cortes,
+Hernan</a></span> (Vol. 7, p. 205), a concise and
+able description of the conquest of Mexico;
+<span class="sc"><a href="/article/05-0450-cartier-jacques/cartier__jacques">Cartier, Jacques</a></span> (Vol. 5, p. 433),
+which tells of the discovery of the St.
+Lawrence; <span class="sc"><a href="/article/13-0874-s3/hudson__henry">Hudson, Henry</a></span> (Vol. 13, p.
+849); <span class="sc"><a href="/article/03-0209-s4/baffin__william">Baffin, William</a></span> (Vol. 3, p. 192);
+<span class="sc"><a href="/article/16-0251-la-salle/la_salle">La Salle</a></span> (Vol. 16, p. 230), by <a href="/contributors.html?q=Charles+Crawford+Whinery">C. C.
+Whinery</a>, assistant editor of the Encyclopaedia
+Britannica; <span class="sni"><span class="hidev">|</span>Great Voyages<span class="hidev">|</span></span>
+<span class="sc"><a href="/article/05-0866-champlain-samuel-de/champlain__samuel_de">Champlain, Samuel
+de</a></span> (Vol. 5, p. 830), by Dr. <a href="/contributors.html?q=Narcisse+Eutrope+Dionne">N. E.
+Dionne</a>, author of
+<i>Life of Samuel
+Champlain</i>, etc.;
+<span class="sc"><a href="/article/08-0496-drake-sir-francis/drake__sir_francis">Drake, Sir Francis</a></span> (Vol. 8, p. 473);
+<span class="sc"><a href="/article/04-0732-s5/buccaneers">Buccaneers</a></span> (Vol. 4, p. 709), by <a href="/contributors.html?q=David+Hannay">David
+Hannay</a>, a stirring account of the piratical
+adventurers of different nationalities
+who united against Spain in the 17th
+century, and <span class="sc"><a href="/article/07-0086-cook-james/cook__james">Cook, James</a></span> (Vol. 7, p.
+71), by <a href="/contributors.html?q=Charles+Raymond+Beazley">Professor Beazley</a>.</p>
+
+<p><span class="shoulder-heading" id="sh-11">Modern Exploration</span>The story of geographical discovery
+and exploration is continued in such articles
+as <span class="sc"><a href="/article/01-0851-america/america">America</a></span>, <i>General Historical
+Sketch</i> (Vol. 1, p. 806), by <a href="/contributors.html?q=David+Hannay">David Hannay</a>;
+<span class="sc"><a href="/article/01-0358-africa/africa">Africa</a></span>, <i>History: Exploration and Survey
+since 1875</i> (Vol. 1, pp. 331 and 352), by <a href="/contributors.html?q=Frank+R.+Cana">F.
+R. Cana</a>, author of <i>South Africa from the
+Great Trek to the Union</i>; <span class="sc"><a href="/article/02-0778-s4/asia">Asia</a></span>, <i>Exploration</i>
+(Vol. 2, p. 738), by <a href="/contributors.html?q=Colonel+Sir+Thomas+Hungerford+Holdich">Col. Sir Thomas
+H. Holdich</a>, formerly superintendent of
+the Frontier Surveys of India; <span class="sc"><a href="/article/02-0991-s4/australia">Australia</a></span>,
+<i>Discovery and Exploration</i> (Vol. 2, p. 958);
+and <span class="sc"><a href="/article/21-0971-s2/polar_regions">Polar Regions</a></span> (Vol. 21, p. 938), by
+Dr. <a href="/contributors.html?q=Fridtjof+Nansen">Fridtjof Nansen</a>, the Arctic explorer,
+and <a href="/contributors.html?q=Hugh+Robert+Mill">Dr. H. R. Mill</a>, which gives a brilliant
+survey of all the attempts to conquer
+the frozen world. In connection
+with these articles should be read the full
+and interesting biographies of the great
+modern explorers such as <span class="sc"><a href="/article/03-0244-s5/baker__sir_samuel_white">Baker, Sir
+Samuel White</a></span> (Vol. 3, p. 227); <span class="sc"><a href="/article/04-0888-s2/burton__sir_richard_francis">Burton,
+Sir Richard F.</a></span> (Vol. 4, p. 864), by Dr.
+<a href="/contributors.html?q=Stanley+Lane-Poole">Stanley Lane-Poole</a>; <span class="sc"><a href="/article/16-0835-s3/livingstone__david">Livingstone, David</a></span>
+(Vol. 16, p. 813), by <a href="/contributors.html?q=John+Scott+Keltie">John Scott Keltie</a>,
+secretary of the Royal Geographical
+Society; <span class="sc"><a href="/article/25-0801-s3/stanley__sir_henry_morton">Stanley, Sir Henry Morton</a></span>
+(Vol. 25, p. 779), by
+<a href="/contributors.html?q=Frank+R.+Cana">F. R. Cana</a>; <span class="sc"><a href="/article/09-0363-emin-pasha/emin_pasha">Emin
+Pasha</a></span> (Vol. 9, p.
+340); <span class="sc"><a href="/article/25-0655-s2/speke__john_hanning">Speke, John
+H.</a></span> (Vol. 25, p. 633); <span class="sc"><a href="/article/20-0927-s3/parry__sir_william_edward">Parry, Sir William
+Edward</a></span> (Vol. 20, p. 865); <span class="sc"><a href="/article/11-0042-s2/franklin__sir_john">Franklin,
+Sir John</a></span> (Vol. 11, p. 30); <span class="sc"><a href="/article/15-0677-s2/kane__elisha_kent">Kane, Elisha
+Kent</a></span> (Vol. 15, p. 650); <span class="sc"><a href="/article/19-0767-nordenski-ld-nils-adolf-erik/nordenskiöld__nils_adolf_erik">Nordenskiöld,
+Nils Adolf Erik</a></span> (Vol. 19, p. 740); <span class="sc"><a href="/article/19-0177-nansen-fridtjof/nansen__fridtjof">Nansen,
+Fridtjof</a></span> (Vol. 19, p. 162); <span class="sc"><a href="/article/21-0044-s2/peary__robert_edwin">Peary,
+Robert Edwin</a></span> (Vol. 21, p. 30). See the
+chapter on <i>Geography</i> in this Guide.</p>
+
+<p><span class="shoulder-heading" id="sh-12">A Complete History of the World</span>A strong taste for history is often found
+in children, and the new Britannica is,
+among other things, a complete history
+of the world, by the
+greatest historians of
+the present day. In
+respect to the treatment
+and arrangement
+of the historical section there are
+many things that make it especially
+adapted for young people’s reading. In
+the first place the great episodes of history,
+such as <span class="sc">French Revolution,
+Renaissance, Reformation, Middle
+Ages</span>, and <span class="sc"><a href="/article/07-0546-crusades/crusades">Crusades</a></span>, are discussed in
+separate articles. Also every battle,
+siege, campaign, or war of importance
+has its article, apart from its treatment
+in the histories of countries. The historical
+articles in the new Britannica will
+send those a little older to other articles
+dealing with government, and thus help
+them to cope intelligently with the social
+and civic problems of the age—in other
+words, enable them to become the best
+kind of citizens. The chapter in this
+Guide headed <i>Questions of the Day</i> covers
+this ground; and see the chapters on
+<i>History</i>.</p>
+
+<p>A child is naturally curious to know
+about mountains, rivers, caverns, the
+causes of rain, dew and wind. Just as
+this encyclopaedia shows itself the best
+of instructors in regard to the plant and
+animal world, so with natural phenomena
+it serves to bring the child into close,
+sympathetic touch with the truths of
+science.</p>
+
+<p><span class="shoulder-heading" id="sh-13">Physical Geography made Interesting</span>The principles of physical geography
+are clearly explained in <span class="sc"><a href="/article/11-0639-s2/geography">Geography</a></span>,
+<i>Principles of</i> (Vol. 11, p. 630), by Dr. <a href="/contributors.html?q=Hugh+Robert+Mill">H.
+R. Mill</a>; and when
+these are learned
+young people will
+turn with eager interest
+to such articles
+as <span class="sc"><a href="/article/01-0781-alps/alps">Alps</a></span> (Vol. 1, p. 737), partly by
+<a href="/contributors.html?q=Rev.+William+Augustus+Brevoort+Coolidge">W. A. B. Coolidge</a>, author of <i>The Alps in
+Nature and in History</i>; <span class="sc"><a href="/article/01-1013-s7/andes">Andes</a></span> (Vol.
+1, p. 960); <span class="sc"><a href="/article/02-0219-s1/appalachian_mountains">Appalachian Mountains</a></span>
+(Vol. 2, p. 207), by Dr. <a href="/contributors.html?q=Leonard+James+Spencer">Arthur C. Spencer</a>,
+geologist to the Geological Survey of the
+United States; <span class="sc"><a href="/article/13-0486-himalaya/himalaya">Himalaya</a></span> (Vol. 13, p.
+470); <span class="sc"><a href="/article/28-0194-volcano/volcano">Volcano</a></span> (Vol, 28, p. 178), by <a href="/contributors.html?q=Frederick+William+Rudler">F.
+W. Rudler</a>, of the Museum of Practical
+Geology, London; <span class="sc"><a href="/article/27-1091-s5/vesuvius">Vesuvius</a></span> (Vol. 27, p.
+1063), by Sir <a href="/contributors.html?q=Sir+Archibald+Geikie">Archibald Geikie</a> and Dr.
+Thomas Ashby; <span class="sc"><a href="/article/08-0844-earthquake/earthquake">Earthquake</a></span> (Vol. 8, p.
+817), by <a href="/contributors.html?q=Frederick+William+Rudler">F. W. Rudler</a> and Dr. John
+Milne, author of <i>Earthquakes</i>, etc.; <span class="sc"><a href="/article/11-0937-geyser/geyser">Geyser</a></span>
+(Vol. 11, p. 913); <span class="sc"><a href="/article/05-0598-cave/cave">Cave</a></span> (Vol. 5, p.
+573), by Dr. <a href="/contributors.html?q=William+Boyd+Dawkins">William Boyd Dawkins</a>, author
+of <i>Cave Hunting</i>, etc.; <span class="sc"><a href="/article/17-0548-mammoth-cave/mammoth_cave">Mammoth
+Cave</a></span> (Vol. 17, p. 531), by <a href="/contributors.html?q=Rev.+Horace+Carter+Hovey">Rev. Horace
+C. Hovey</a>, author of <i>Celebrated American
+Caverns</i>, etc.; <span class="sc"><a href="/article/17-0142-luray-cavern/luray_cavern">Luray Cavern</a></span> (Vol. 17,
+p. 127), also by <a href="/contributors.html?q=Rev.+Horace+Carter+Hovey">Dr. Hovey</a>; <span class="sc"><a href="/article/12-0364-s3/grand_canyon">Grand Canyon</a></span>
+(Vol. 12, p. 347), by <a href="/contributors.html?q=Ralph+Stockman+Tarr">R. S. Tarr</a>, late
+professor of physical geography, Cornell
+University; <span class="sc"><a href="/article/12-0438-great-salt-lake/great_salt_lake">Great Salt Lake</a></span> (Vol. 12,
+p. 421); <span class="sc"><a href="/article/28-0964-yosemite/yosemite">Yosemite</a></span> (Vol. 28, p. 937),
+by Dr. <a href="/contributors.html?q=John+Muir">John Muir</a>, president of the American
+Alpine Club, and author of <i>The
+Mountains of California</i>; <span class="sc"><a href="/article/28-0939-s1/yellowstone_national_park">Yellowstone
+National Park</a></span> (Vol. 28, p. 912); <span class="sc"><a href="/article/12-0073-s2/glacier">Glacier</a></span>
+(Vol. 12, p. 60), by <a href="/contributors.html?q=Rev.+Edward+Clarke+Spicer">Rev. E. C.
+Spicer</a>, of Oxford University; <span class="sc"><a href="/article/19-0661-s1/niagara">Niagara</a></span>
+(Vol. 19, p. 634), by Dr. <a href="/contributors.html?q=Grove+Karl+Gilbert">G. K. Gilbert</a>,
+author of <i>Niagara Falls and their History</i>;
+<span class="sc"><a href="/article/18-0632-mississippi-river/mississippi_river">Mississippi River</a></span> (Vol. 18, p. 604);
+<span class="sc"><a href="/article/01-0829-s6/amazon">Amazon</a></span> (Vol. 1, p. 783), by Col. George
+E. <a href="/contributors.html?q=Colonel+George+Earl+Church">Church</a>, the famous American explorer
+of the Amazon; <span class="sc"><a href="/article/20-0309-orinoco/orinoco">Orinoco</a></span> (Vol. 20,
+p. 275), also by <a href="/contributors.html?q=Colonel+George+Earl+Church">Colonel Church</a>; <span class="sc"><a href="/article/23-0257-rhine/rhine">Rhine</a></span>
+(Vol. 23, p. 240), by Dr. <a href="/contributors.html?q=James+Fullarton+Muirhead">J. F. Muirhead</a>,
+editor of many of Baedeker’s Guide
+Books, and Philip A. Ashworth; <span class="sc"><a href="/article/19-0719-s5/nile">Nile</a></span>
+(Vol. 19, p. 692), by <a href="/contributors.html?q=Frank+R.+Cana">F. R. Cana</a> and Sir
+W. E. Garstin, governing director, Suez
+Canal Co.; <span class="sc"><a href="/article/19-0701-s4/niger">Niger</a></span> (Vol. 19, p. 674)
+and <span class="sc"><a href="/article/06-0938-congo/congo">Congo</a></span> (Vol. 6, p. 914), by <a href="/contributors.html?q=Frank+R.+Cana">F. R.
+Cana</a>; <span class="sc"><a href="/article/28-0930-yangtsze-kiang/yangtsze-kiang">Yangtsze-Kiang</a></span> (Vol. 28, p. 903),
+by <a href="/contributors.html?q=George+Jamieson">George Jamieson</a>, formerly British
+consul-general at Shanghai; <span class="sc"><a href="/article/08-0107-desert/desert">Desert</a></span>
+(Vol. 8, p. 92), by Dr. <a href="/contributors.html?q=Henry+Newton+Dickson">H. N. Dickson</a>,
+professor of geography, University College,
+Reading; <span class="sc"><a href="/article/23-1049-s2/sahara">Sahara</a></span> (Vol. 23, p. 1004),
+by <a href="/contributors.html?q=Edward+Heawood">Edward Heawood</a>, librarian of the
+Royal Geographical Society, London, and
+<a href="/contributors.html?q=Frank+R.+Cana">F. R. Cana</a>. There are also separate
+articles on the oceans and large lakes.</p>
+
+<p>Astronomy is a science which is
+peculiarly attractive to children, since it
+arouses the imagination and makes a
+strong appeal to their delight in all that
+is marvelous. There are 277 astronomical
+articles in the new Encyclopaedia
+Britannica to which the classified list in
+the Index Volume (Vol. 29, p. 888) is the
+key.</p>
+
+<p><span class="shoulder-heading" id="sh-14">Readings in Astronomy</span>In the preceding chapter are mentioned
+a few articles which will serve
+for the beginning
+of an acquaintance
+with astronomy.
+When a child has
+learned to know the zodiacal constellations
+he will certainly want to read
+<span class="sc"><a href="/article/28-1020-zodiac/zodiac">Zodiac</a></span> (Vol. 28, p. 993), by <a href="/contributors.html?q=Miss+Agnes+Mary+Clerke">Agnes M.
+Clerke</a>, author of <i>A History of Astronomy
+in the 19th Century</i>, for the story of the
+signs and what they meant to the nations
+of past ages. There are separate articles
+on the principal constellations and stars.
+<span class="sc"><a href="/article/02-0842-s4/astrology">Astrology</a></span> (Vol. 2, p. 795), by Prof.
+Morris Jastrow of the University of
+Pennsylvania, will prove both entertaining
+and instructive.</p>
+
+<p>Those who wish to know about methods
+of observation will find the complete
+story in <span class="sc"><a href="/article/26-0586-telescope/telescope">Telescope</a></span> (Vol. 26, p. 557), a
+beautifully illustrated article by <a href="/contributors.html?q=H.+Dennis+Taylor">H.
+Dennis Taylor</a>, author of <i>A System of
+Applied Optics</i>, and Sir David Gill, formerly
+astronomer royal at the Cape of
+Good Hope.</p>
+
+<p><span class="shoulder-heading" id="sh-15">Games and Pastimes</span>In the preceding chapter a few articles
+on games were mentioned as being
+useful to parents helping very
+young children to
+amuse themselves. A
+little later, the child
+will be delighted to
+choose for himself among the 260 articles
+on sports and pastimes; and the analysis
+of this department of the Britannica, in
+Part 6 of this Guide, will then be of service.
+We may mention here the articles
+<span class="sc"><a href="/article/12-0236-s6/golf">Golf</a></span> (Vol. 12, p. 219), by <a href="/contributors.html?q=Horatio+Gordon+Hutchinson">H. G.
+Hutchinson</a>, golf champion and author of
+<i>Hints on Golf</i>; <span class="sc"><a href="/article/16-0074-s6/lacrosse">Lacrosse</a></span> (Vol. 16, p. 54);
+<span class="sc"><a href="/article/04-0359-bowling/bowling">Bowling</a></span> (Vol. 4, p. 344); <span class="sc"><a href="/article/23-0824-rowing/rowing">Rowing</a></span> (Vol.
+23, p. 783), by <a href="/contributors.html?q=Charles+Murray+Pitman">C. M. Pitman</a>, formerly
+stroke of the Oxford University Eight;
+<span class="sc"><a href="/article/18-0670-model-yachting/model-yachting">Model-Yachting</a></span> (Vol. 18, p. 640);
+<span class="sc"><a href="/article/02-0032-s2/angling">Angling</a></span>, <i>Methods and Practice</i> (Vol. 2,
+p. 24); <span class="sc"><a href="/article/07-0457-cricket-game/cricket__game_">Cricket</a></span> (Vol. 7, p. 435); <span class="sc"><a href="/article/02-0383-s8/archery">Archery</a></span>,
+<i>Pastime of</i> (Vol. 2, p. 364), by the
+late W. J. Ford. A long list of indoor and
+out-door games will be found in the
+classified subject-list (Vol. 29, p. 946).</p>
+
+<p><span class="shoulder-heading" id="sh-16">Diverting and Profitable Occupations</span>The aptitude of children for diverting
+and often profitable occupations is admirably
+fostered by the new Britannica
+through many of its very practical articles.
+This matter has been discussed
+in the last chapter.
+In addition it is worthy
+of note that an
+ingenious boy could
+learn to make and
+set up a sun-dial with the help of <span class="sc"><a href="/article/08-0164-dial/dial">Dial
+and Dialling</a></span> (Vol. 8, p. 149), by <a href="/contributors.html?q=Hugh+Godfray">Hugh
+Godfray</a>; and could experiment and
+amuse himself with a <span class="sc"><a href="/article/05-0116-camera-lucida/camera_lucida">Camera Lucida</a></span> or
+a <span class="sc"><a href="/article/05-0116-camera-obscura/camera_obscura">Camera Obscura</a></span> (Vol. 5, p. 104), from
+the articles written by <a href="/contributors.html?q=Charles+Jasper+Joly">Charles J. Joly</a>,
+late Astronomer Royal of Ireland; while
+even a younger child could quickly learn
+to tie any kind of a knot from <span class="sc"><a href="/article/15-0905-knot/knot">Knot</a></span>
+(Vol. 15, p. 871), with 54 illustrations, by
+<a href="/contributors.html?q=Peter+Guthrie+Tait">P. G. Tait</a>, the famous British physicist.
+All the crafts that produce objects of
+household utility are practically taught
+in articles by experts, so that the Britannica
+is a complete guide to the use of
+every kind of tool.</p>
+
+<p><span class="shoulder-heading" id="sh-17">Reading for Girls</span>In the field of girls’ occupations there
+is in the Britannica
+much material that
+serves to give knowledge
+of the best
+methods of home making.</p>
+
+<p><i>A great number of articles for girls’
+reading will be found among those named
+in the chapter For Women.</i></p>
+
+<p>In these days parents, and especially
+mothers, are devoting more and more
+time to the study of child development.
+The importance and value of intelligent
+sympathetic guidance in everything a
+child does—and every active child strives
+to do something—has been fully realized.
+The chief problem before the parent is,
+therefore, to have at hand some ready
+means of meeting every expression of a
+child’s interests, every indication of budding
+talents. A short experience with
+the new Britannica will show this to be
+one of its many valuable functions.
+Children do not need to be driven to the
+volumes. They need only to be made
+acquainted with them.</p>
+
+<div>
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

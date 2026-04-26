@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Language And Writing &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XXXV</span>Language And Writing</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Evolution</a></li><li><a href="#sh-2">Philology</a></li><li><a href="#sh-3">Indo-European Languages</a></li><li><a href="#sh-4">Romance Languages</a></li><li><a href="#sh-5">Teutonic Languages</a></li><li><a href="#sh-6">Persia and India</a></li><li><a href="#sh-7">Semitic</a></li><li><a href="#sh-8">Hamitic</a></li><li><a href="#sh-9">Other Tongues</a></li><li><a href="#sh-10">Alphabet</a></li><li><a href="#sh-11">Artificial Languages</a></li><li><a href="#sh-12">Writing</a></li><li><a href="#sh-13">Text Criticism</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">Evolution</span>One of the most interesting subjects
+of scientific study developed
+during the last century is that of
+primitive culture and the gradual advancement
+of primitive man from a
+state of savagery to comparative civilization.
+For this study there are no historical
+documents in the ordinary use of the
+words “historical” and “document.” The
+story must be arrived at by analysis, deduction,
+even by guess-work, supplementing
+the studies of travelers among
+tribes which now are in the lowest stages
+of development and farthest from civilization,
+and therefore most resemble our
+remotest human ancestors. Almost the
+very earliest of writers on
+evolution, the Roman poet
+<span class="sc"><a href="/article/17-0122-s1/lucretius">Lucretius</a></span> (Vol. 17, p. 107),
+who died in 55 B.C., sketched general outlines
+of the development of this primitive
+civilization in much the same way as
+do modern ethnologists. But his description
+was imaginary and was fashioned
+to fit his and Epicurus’s evolutionary
+theories.</p>
+
+<p>The article <span class="sc"><a href="/article/06-0419-civilization/civilization">Civilization</a></span> (Vol. 6, p.
+403) in the Britannica makes the development
+of speech the mark of the first
+period when mankind was in the lower
+stages of savagery. “Our ancestors of
+this epoch inhabited a necessarily restricted
+tropical territory and subsisted
+upon raw nuts and fruit.” The next
+higher period in the progress of civilization
+began with the knowledge of the use
+of fire (p. 404).</p>
+
+<p>This wonderful discovery enabled the developing
+race to extend its habitat almost
+indefinitely, and to include flesh, and in
+particular fish, in its regular dietary. Man
+could now leave the forests and wander
+along the shores and rivers, migrating to
+climates less enervating than those to which
+he had previously been confined. Doubtless
+he became an expert fisher, but he was as
+yet poorly equipped for hunting....
+Primitive races of Australia and Polynesia
+had not advanced beyond this middle status
+of savagery when they were discovered a
+few generations ago.</p>
+
+<p>The next great ethnical discovery was
+that of the bow and arrow, a truly wonderful
+instrument.</p>
+
+<p>The possessor of this device could bring
+down the fleetest animal and could defend
+himself against the most predatory. He
+could provide himself not only with food,
+but with materials for clothing and for
+tent-making, and thus could migrate at will
+back from the seas and large rivers....
+The meat diet, now for the first time freely
+available, probably contributed, along with
+the stimulating climate, to increase the
+physical vigour and courage of this highest
+savage, thus urging him along the paths of
+progress. Nevertheless, many tribes came
+thus far, and no further, as witness the
+Athapascans of the Hudson’s Bay Territory
+and the Indians of the valley of the
+Columbia.</p>
+
+<p>After the use of fire and the discovery of
+the bow and arrow came the invention
+of pottery, the domestication of animals,
+and the smelting of iron, all successive
+stages in man’s history which “in their
+relation to the sum of human progress,
+transcend in relative importance all his
+subsequent works,”—and this is even
+truer if there is included in this period the
+development of a system of writing,
+which may be reckoned either the end of
+the primitive period or the beginning of
+the period of <i>civilization proper</i>. These
+two great steps in the story of civilization,
+language and writing, are closely
+connected in our minds, though so far
+separated in time of origin; and their
+story as told in the Britannica by the
+world’s greatest authorities, English,
+American, German, French, Italian, Danish,
+etc., is an interesting one for the general
+reader, while the articles are invaluable
+to the specialist in linguistic
+study.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Philology</span>The starting point for a course of reading
+is the article <span class="sc"><a href="/article/21-0436-philology/philology">Philology</a></span> (Vol. 21, p.
+414; equivalent to 80 pages in this Guide),
+of which the first
+part, a general treatment,
+is by the
+greatest of American philologists, William
+Dwight Whitney, editor-in-chief of <i>The
+Century Dictionary</i>, and author of <i>Life
+and Growth of Language</i>, one of the
+most important scientific contributions to
+the subject. The second part, on the
+comparative philology of the Indo-European
+languages, is by Prof. Eduard
+Sievers of Leipzig and <a href="/contributors.html?q=Peter+Giles">Prof. Peter Giles</a>
+of Cambridge. Both these names are
+well known to students of the subject,
+the former as that of the author of numerous
+valuable works on Germanic phonetics
+and metric, and the latter as a
+writer on Greek language and as the
+author of <i>A Short Manual of Comparative
+Philology</i>.</p>
+
+<p>The article begins with a definition of
+“philology,” the science of language, and
+of “comparative philology,” the comparison
+of one language with another, in
+order to bring out their relationships,
+their structures, and their histories.
+Prof. Whitney shows how much the recent
+development of linguistic science
+owes to the general scientific movement
+of the age. “No one,” he says, “however
+ingenious and entertaining his speculations,
+will cast any real light on the
+earliest history of speech.” But he notes
+the obvious analogy between speech and
+writing, and he puts stress on the “sociality”
+of man as the prime factor in his
+development of speech. Other topics in
+this part of the article are:</p>
+
+<p>Instrumentalities of expression—gesture,
+grimace, and voice; “language”
+means “tonguiness”—a mute
+would call it “handiness”; advantages
+of voice over gesture.</p>
+
+<p>Imitation as a factor in development
+of language and of writing; onomatopoetic
+origin of words.</p>
+
+<p>Development of sign-making:
+“Among the animals of highest intelligence
+that associate with man and learn
+something of his ways, a certain amount
+of sign-making expressly for communication
+is not to be denied; the dog that
+barks at a door because he knows that
+somebody will come and let him in is an
+instance of it; perhaps, in wild life, the
+throwing out of sentinel birds from a
+flock, whose warning cry shall advertise
+their fellows of the threat of danger,
+is as near an approach to it as is
+anywhere made.”</p>
+
+<p>Brute speech and human speech:
+“Those who put forward language as
+the distinction between man and the
+lower animals, and those who look
+upon our language as the same in kind
+with the means of communication of
+the lower animals, only much more
+complete and perfect, fail alike to comprehend
+the true nature of language,
+and are alike wrong in their arguments
+and conclusions. No addition to or
+multiplication of brute speech would
+make anything like human speech; the
+two are separated by a step which no
+animal below man has ever taken; and,
+on the other hand, language is only the
+most conspicuous among those institutions
+the development of which has
+constituted human progress.”</p>
+
+<p>Language and culture: “Differences
+of language, down to the possession
+of language at all, are differences
+only in respect to education and culture.”</p>
+
+<p>Development of language signs: the
+beginning slow, acceleration cumulative.</p>
+
+<p>The root-stage: first signs must have
+been “integral, significant in their entirety,
+not divisible into parts.”</p>
+
+<p>Earliest phonetic forms: the simplest
+syllabic combination a single consonant
+with a following vowel. See
+the article <span class="sc"><a href="/article/13-0096-hawaii/hawaii">Hawaii</a></span> (Vol. 13, p. 88) for
+a similar language even now in existence:
+“Every syllable is open, ending
+in a vowel sound, and short sentences
+may be constructed wholly of vocalic
+sounds.”</p>
+
+<p>Character of early speech: “first
+language-signs must have denoted
+those physical acts and qualities which
+are directly apprehensible by the senses....
+We are still all the time drawing
+figurative comparisons between material
+and moral things and processes,
+and calling the latter by the names of
+the former.”</p>
+
+<p>Development of language as illustrated
+in Indo-European speech.</p>
+
+<p>Laws of growth and change: internal
+growth by multiplication of meanings;
+phonetic change—the principle
+of economy (euphony); borrowing and
+mixing of vocabularies.</p>
+
+<p>Classification of languages by structural
+types: isolating (Chinese); agglutinative
+(Turkish, etc.); inflective
+(Indo-European); or—a more elaborate
+classification:</p>
+
+<p><span class="shoulder-heading" id="sh-3">Indo-European Languages</span>Indo-European: on which see part II
+of the article <span class="sc"><a href="/article/21-0436-philology/philology">Philology</a></span> and the article
+<span class="sc"><a href="/article/14-0523-indo-european-languages/indo-european_languages">Indo-European Languages</a></span> (Vol. 14, p.
+495; equivalent to
+20 pages of this
+Guide), by Prof.
+<a href="/contributors.html?q=Peter+Giles">Peter Giles</a>,—especially
+interesting for the attempt on a linguistic
+basis to reconstruct the original
+civilization and to discover the home of
+the ancestors of this language-stock
+which now occupies nearly all of Europe
+and is so intimately connected with the
+civilization of the last 2500 years. See:</p>
+
+<p><span class="sc"><a href="/article/12-0521-greek-language/greek_language">Greek Language</a></span> (Vol. 12, p. 496), by
+Professor Giles, and articles <span class="sc"><a href="/article/13-0643-s5/homer">Homer</a></span>
+(Vol. 13, p. 626); <span class="sc"><a href="/article/08-0446-dorians/dorians">Dorians</a></span> (Vol. 8, p.
+423), etc.; but the main treatment of
+different Greek dialects is in the article
+<span class="sc"><a href="/article/12-0521-greek-language/greek_language">Greek Language</a></span> (Vol. 12, p. 496), to
+which the student should refer for Arcadian
+and Cyprian, Aeolic, Ionic-Attic,
+and Doric dialects.</p>
+
+<p><span class="sc"><a href="/article/16-0264-latin-language/latin_language">Latin Language</a></span> (Vol. 16, p. 244), by
+Dr. <a href="/contributors.html?q=Augustus+Samuel+Wilkins">A. S. Wilkins</a>, late professor of Latin,
+Owens College, Manchester, and <a href="/contributors.html?q=Robert+Seymour+Conway">Dr.
+Robert S. Conway</a>, professor of Latin,
+University of Manchester, with a peculiarly
+valuable summary of <i>The Language
+as Recorded</i>, which is a linguistic
+critique of the style and vocabulary of the
+great Roman authors and a comparison
+(p. 253) of Latin and Greek prose. And
+see the articles on the dialects of ancient
+Italy: <span class="sc"><a href="/article/15-0014-italy/italy">Italy</a></span>, <i>Ancient Languages and
+People</i>; <span class="sc"><a href="/article/09-0886-etruria/etruria">Etruria</a></span>, <i>Language</i>; <span class="sc"><a href="/article/16-0702-s3/liguria">Liguria</a></span>,
+<i>Philology</i>; <span class="sc"><a href="/article/25-0051-s4/siculi">Siculi</a></span>; <span class="sc"><a href="/article/22-0064-s2/pompeii">Pompeii</a></span>, <i>Oscan Inscriptions</i>;
+<span class="sc"><a href="/article/23-1010-s2/sabini">Sabini</a></span>; <span class="sc"><a href="/article/10-0160-s2/falisci">Falisci</a></span>; <span class="sc"><a href="/article/28-0213-volsci/volsci">Volsci</a></span>; <span class="sc"><a href="/article/20-0378-osca-lingua/osca_lingua">Osca
+Lingua</a></span>; <span class="sc"><a href="/article/14-0310-s2/iguvium">Iguvium</a></span>; <span class="sc">Brutii</span>; <span class="sc"><a href="/article/27-0595-umbria/umbria">Umbria</a></span>; <span class="sc"><a href="/article/21-0607-picenum/picenum">Picenum</a></span>;
+<span class="sc"><a href="/article/24-0128-samnites/samnites">Samnites</a></span>, etc., by <a href="/contributors.html?q=Robert+Seymour+Conway">Prof. Conway</a>,
+which will serve the student as a foundation
+for this subject, with more recent
+revision of all that is known than there
+is in <a href="/contributors.html?q=Robert+Seymour+Conway">Prof. Conway</a>’s books, in the works
+of C. D. Buck, or in other authorities.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Romance Languages</span>For the descendants of Latin, the article
+<span class="sc"><a href="/article/23-0534-romance-languages/romance_languages">Romance Languages</a></span> (Vol. 23, p.
+504), by Dr. Wilhelm <a href="/contributors.html?q=Paul+Meyer">Meyer</a>-Lübke, Professor
+of romance
+philology in the University
+of Vienna;
+and the following
+separate articles:</p>
+
+<p><span class="sc"><a href="/article/14-0921-s2/italian_language">Italian Language</a></span> (Vol. 14, p. 888),
+by <a href="/contributors.html?q=Graziadio+I.+Ascoli">Graziadio I. Ascoli</a>, professor of comparative
+grammar at the University of
+Milan, and Carlo Salvioni, professor of
+Romance languages in the same university,
+with a valuable summary of the
+dialects of modern Italy.</p>
+
+<p><span class="sc"><a href="/article/11-0115-s2/french_language">French Language</a></span> (Vol. 11, p. 103),
+by Henry Nicol and <a href="/contributors.html?q=Paul+Meyer">Paul Meyer</a>, professor
+at the Collège de France; particularly
+interesting because treated comparatively
+with constant reference to
+English and French influence on English.</p>
+
+<p><span class="sc"><a href="/article/22-0506-s3/provençal_language">Provençal Languages</a></span> (Vol. 22, p.
+491), by Prof. <a href="/contributors.html?q=Paul+Meyer">Paul Meyer</a>.</p>
+
+<p><span class="sc"><a href="/article/25-0547-s3/spain">Spain</a></span>: <i>Language</i> (Vol. 25, p. 573), by
+<a href="/contributors.html?q=Alfred+Morel-Fatio">Alfred Morel-Fatio</a>, professor of Romance
+languages at the Collège de France, and
+James Fitzmaurice-Kelly, professor of
+Spanish, Liverpool University; describing
+the Catalan as well as the Castilian
+and the Portuguese.</p>
+
+<p><span class="sc"><a href="/article/23-0868-rumania/rumania">Rumania</a></span>: <i>Language</i> (Vol. 23, p. 843).</p>
+
+<p><span class="shoulder-heading" id="sh-5">Teutonic Languages</span>The general articles <span class="sc"><a href="/article/24-0309-scandinavian-languages/scandinavian_languages">Scandinavian
+Languages</a></span> (Vol. 24, p. 291), by Dr.
+Adolf Noreen, professor in the University
+of Upsala, with
+sections on Icelandic,
+Norwegian or
+Norse, Swedish, and
+Danish, and the Scandinavian dialects;
+and <span class="sc"><a href="/article/26-0706-teutonic-languages/teutonic__germanic__languages">Teutonic Languages</a></span> (Vol. 26, p.
+673), by <a href="/contributors.html?q=Hector+Munro+Chadwick">Hector Munro Chadwick</a>, Librarian
+of Clare College, Cambridge.</p>
+
+<p>More in detail on the Teutonic languages
+are the articles:</p>
+
+<p><span class="sc"><a href="/article/09-0619-s2/english_language">English Language</a></span> (Vol. 9, pp. 587–600;
+equivalent to 45 pages of this Guide),
+by Sir <a href="/contributors.html?q=Sir+James+Augustus+Henry+Murray">James A. H. Murray</a>, editor-in-chief
+of the (Oxford) <i>New English Dictionary</i>,
+and Miss Hilda Mary R. <a href="/contributors.html?q=Sir+James+Augustus+Henry+Murray">Murray</a>,
+lecturer on English at the Royal Holloway
+College.</p>
+
+<p><span class="sc"><a href="/article/08-0744-dutch-language/dutch_language">Dutch Language</a></span> (Vol. 8, p. 717), by
+Prof. Johann Hendrik Gallée of the University
+of Utrecht.</p>
+
+<p><span class="sc"><a href="/article/11-0798-german-language/german_language">German Language</a></span> (Vol. 11, p. 777),
+Dr. Robert Priebsch, professor of German
+philology, University of London, which
+deals with modern and ancient, new, middle,
+and old, high and low German.</p>
+
+<p>For Indo-Iranian languages, see:</p>
+
+<p><span class="shoulder-heading" id="sh-6">Persia and India</span><span class="sc"><a href="/article/21-0204-persia/persia">Persia</a></span>: <i>Language and Literature</i> (Vol.
+21, p. 246), by Dr. <a href="/contributors.html?q=Karl+Hermann+Eth%C3%A9">Hermann Ethé</a>, professor
+of Oriental languages, University
+College, Wales, dealing
+with Zend, and
+Old, Middle and
+New Persian and
+modern dialects of Persian.</p>
+
+<p><span class="sc"><a href="/article/14-0515-indo-aryan-languages/indo-aryan_languages">Indo-Aryan Languages</a></span> (Vol. 14, p.
+487), by <a href="/contributors.html?q=George+Abraham+Grierson">George Abraham Grierson</a>, formerly
+in charge of the Linguistic survey
+of India, who treats in this article the
+relations of Pisaca, Prakrit and Sanskrit,
+and contributes the separate articles
+<span class="sc">Pisaca Languages</span>, <span class="sc"><a href="/article/22-0265-prakrit/prakrit">Prakrit</a></span>, <span class="sc"><a href="/article/03-0753-bengali/bengali">Bengali</a></span>,
+<span class="sc"><a href="/article/03-0947-bihari/bihari">Bihari</a></span>, <span class="sc"><a href="/article/12-0734-gujarati-and-rajasthani/gujarati_and_rajasthani">Gujarati and Rajasthani</a></span>, <span class="sc"><a href="/article/13-0495-hindostani/hindostani">Hindostani</a></span>,
+<span class="sc"><a href="/article/15-0717-kashmiri/kashmiri">Kashmiri</a></span>, and <span class="sc"><a href="/article/17-0687-marathi/marathi">Marathi</a></span>. More
+important than these minor dialects are
+<span class="sc"><a href="/article/24-0170-sanskrit/sanskrit">Sanskrit Language</a></span> (Vol. 24, p. 156), by
+Dr. Julius Eggeling, professor of Sanskrit,
+Edinburgh University,—an article equivalent
+in length to 90 pages of this Guide;
+and <span class="sc"><a href="/article/20-0686-pali/pali">Pali</a></span> (Vol. 20, p. 630), by Prof. T.
+W. Rhys Davids of Manchester University,
+president of the Pali Text Society.</p>
+
+<p><span class="sc"><a href="/article/02-0611-s2/armenian_language_and_literature">Armenian Language and Literature</a></span>
+(Vol. 2, p. 571), by Dr. <a href="/contributors.html?q=Frederick+Cornwallis+Conybeare">F. C. Conybeare</a>,
+author of <i>The Ancient Armenian
+Texts of Aristotle</i>, etc.</p>
+
+<p><span class="sc"><a href="/article/16-0811-lithuanians-and-letts/lithuanians_and_letts">Lithuanians and Letts</a></span>, <i>Language
+and Literature</i> (Vol. 16, p. 790); <span class="sc"><a href="/article/25-0244-s2/slavs">Slavs</a></span>:
+<i>Language</i> (Vol. 25, p. 233), by <a href="/contributors.html?q=Ellis+Hovell+Minns">Ellis
+Hovell Minns</a>, Lecturer in palaeography,
+Cambridge, with a table of alphabets;
+and supplementary information in the
+articles <span class="sc"><a href="/article/23-0912-russia/russia">Russia</a></span>, <span class="sc"><a href="/article/04-0795-bulgaria/bulgaria">Bulgaria</a></span>, <span class="sc"><a href="/article/24-0716-servia-text/servia__text_">Servia</a></span>,
+<span class="sc"><a href="/article/21-0935-poland/poland">Poland</a></span>, <span class="sc"><a href="/article/04-0134-bohemia/bohemia">Bohemia</a></span>, <span class="sc"><a href="/article/07-0493-croatia-slavonia/croatia-slavonia">Croatia-Slavonia</a></span>,
+<span class="sc"><a href="/article/25-0260-slovaks/slovaks">Slovaks</a></span>, <span class="sc"><a href="/article/25-0261-s2/slovenes">Slovenes</a></span>, <span class="sc"><a href="/article/25-0447-s2/sorbs">Sorbs</a></span>, <span class="sc"><a href="/article/15-0721-s2/kashubes">Kashubes</a></span>,
+<span class="sc"><a href="/article/21-0935-polabs/polabs">Polabs</a></span>.</p>
+
+<p><span class="sc"><a href="/article/01-0521-s8/albania">Albania, Language</a></span> (Vol. 1, p. 485),
+by <a href="/contributors.html?q=James+David+Bourchier">J. D. Bourchier</a>, correspondent of
+<i>The Times</i> (London) in South-eastern
+Europe.</p>
+
+<p><span class="shoulder-heading" id="sh-7">Semitic</span>The material on the Semitic group is
+principally in the article
+<span class="sc"><a href="/article/24-0647-semitic-languages/semitic_languages">Semitic Languages</a></span> (Vol.
+24, p. 617), by Theodor
+Nöldeke, late professor of Oriental languages
+at Strassburg. This article deals
+with:</p>
+
+<p>Assyrian—see also <span class="sc"><a href="/article/07-0651-cuneiform/cuneiform">Cuneiform</a></span> (Vol.
+7, p. 629);</p>
+
+<p>Hebrew—see also <span class="sc"><a href="/article/13-0180-hebrew-language/hebrew_language">Hebrew Language</a></span>
+(Vol. 13, p. 167), by <a href="/contributors.html?q=Arthur+Ernest+Cowley">Arthur Ernest
+Cowley</a>, sub-librarian of the Bodleian,
+Oxford;</p>
+
+<p>Phoenician—see also <span class="sc"><a href="/article/21-0471-phoenicia/phoenicia">Phoenicia</a></span> (Vol.
+21, p. 449), by the Rev. Dr. George
+Albert Cook, author of <i>Text Book of North-Semitic
+Inscriptions</i>, etc.;</p>
+
+<p>Aramaic—and see the separate article
+<span class="sc"><a href="/article/02-0332-s3/aramaic_languages">Aramaic Languages</a></span> (Vol. 2, p. 317);</p>
+
+<p>Arabic, Sabaean, Mahri and Socotri,
+Ethiopic, Tigre and Tigrina, Amharic,
+Harari and Gurague.</p>
+
+<p>And see the article <span class="sc"><a href="/article/26-0330-syriac-language/syriac_language">Syriac Language</a></span>
+(Vol. 26, p. 309), by <a href="/contributors.html?q=Norman+McLean">Norman McLean</a>,
+lecturer in Aramaic, Cambridge.</p>
+
+<p><span class="shoulder-heading" id="sh-8">Hamitic</span>The article <span class="sc"><a href="/article/12-0918-hamitic-races-and-languages/hamitic_races_and_languages">Hamitic Languages</a></span> (Vol.
+12, p. 893) is by Dr. W. Max Müller,
+professor in the Reformed Episcopal
+Seminary, Philadelphia. See
+also the article <span class="sc"><a href="/article/09-0033-egypt/egypt">Egypt</a></span>,
+<i>Language and Writing</i> (Vol.
+9, p. 57), by Dr. <a href="/contributors.html?q=Francis+Llewellyn+Griffith">Francis Llewelyn
+Griffith</a>, reader in Egyptology, Oxford;
+and the articles: <span class="sc"><a href="/article/09-0877-s2/ethiopia">Ethiopia</a></span> (Vol. 9,
+p. 845), by Dr. <a href="/contributors.html?q=David+Samuel+Margoliouth">D. S. Margoliouth</a>, professor
+of Arabic, Oxford; <span class="sc"><a href="/article/03-0784-berber/berber">Berber</a></span>, <i>Language</i>
+(Vol. 3, p. 766) and <span class="sc"><a href="/article/15-0652-kabyles/kabyles">Kabyles</a></span>
+(Vol. 15, p. 625) for the Libyan group
+of the Hamitic languages.</p>
+
+<p><span class="shoulder-heading" id="sh-9">Other Tongues</span>On the mono-syllabic languages see
+<span class="sc"><a href="/article/06-0179-china/china">China</a></span>, <i>Language</i> (Vol. 6, p. 216),
+by Dr. <a href="/contributors.html?q=Herbert+Allen+Giles">H. A. Giles</a>, professor
+of Chinese, Cambridge,
+and Lionel Giles,
+assistant Oriental Department,
+British Museum;</p>
+
+<p><span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span>, <i>Language</i> (Vol. 15, p. 167),
+by <a href="/contributors.html?q=Captain+Frank+Brinkley">Captain Frank Brinkley</a>, late editor
+of the Japan <i>Mail</i>; and</p>
+
+<p><span class="sc"><a href="/article/26-0968-tibeto-burman-languages/tibeto-burman_languages">Tibeto-Burman Languages</a></span> (Vol. 26,
+p. 928), by Dr. Sten Konow, professor
+in the University of Christiania.</p>
+
+<p>The article <span class="sc"><a href="/article/27-0809-ural-altaic/ural-altaic">Ural-Altaic</a></span> (Vol. 27,
+p. 784), by Dr. <a href="/contributors.html?q=Augustus+Henry+Keane">Augustus Henry Keane</a>,
+late professor of Hindustani, University
+College, London, gives a general account
+of the relationship of Turkish, Finno-Ugrian,
+Mongol and Manchu; and is
+supplemented by the articles <span class="sc"><a href="/article/27-0487-s5/turks">Turks</a></span>,
+<i>Language</i> (Vol. 27, p. 472), by Sir Charles
+Eliot, vice-chancellor of Sheffield University;
+<span class="sc"><a href="/article/10-0402-finno-ugrian/finno-ugrian">Finno-Ugrian</a></span> (Vol. 10, p. 388),
+on language of Finns, Lapps and Samoyedes,
+<span class="sc"><a href="/article/13-0919-hungary/hungary">Hungary</a></span> <i>Language</i> (Vol. 13, p.
+924), on Magyar, both by Sir Charles
+Eliot; and <span class="sc"><a href="/article/18-0742-s2/mongols">Mongols</a></span>, <i>Language</i> (Vol. 18,
+p. 719), by Dr. Bernhard Jülg, late
+professor at Innsbruck.</p>
+
+<p>On the non-Aryan languages of Southern
+Africa see the article <span class="sc"><a href="/article/26-0409-tamils/tamils">Tamils</a></span> (Vol.
+26, p. 388), by Dr. <a href="/contributors.html?q=Reinhold+Rost">Reinhold Rost</a>, late
+secretary of the Royal Asiatic Society.</p>
+
+<p>For languages of Malay-Polynesia and
+other Oceanic peoples see <span class="sc"><a href="/article/17-0492-malays/malays">Malays</a></span>,
+<i>Language</i> (Vol. 17, p. 477), by Sir <a href="/contributors.html?q=Sir+Hugh+Charles+Clifford">Hugh
+Charles Clifford</a>, colonial secretary of
+Ceylon, and joint-author of <i>A Dictionary
+of the Malay Language</i>; and the articles
+<span class="sc"><a href="/article/22-0047-s2/polynesia">Polynesia</a></span>, <span class="sc"><a href="/article/24-0129-s2/samoa">Samoa</a></span>, <span class="sc"><a href="/article/15-0309-s2/java">Java</a></span>, <span class="sc"><a href="/article/13-0096-hawaii/hawaii">Hawaii</a></span>, etc.</p>
+
+<p>On the Caucasian language see <span class="sc"><a href="/article/11-0779-georgia/georgia">Georgia</a></span>
+(Vol. 11, p. 758) and <span class="sc"><a href="/article/05-0569-caucasia/caucasia">Caucasia</a></span>
+(Vol. 5, p. 546).</p>
+
+<p>On other European languages see
+<span class="sc"><a href="/article/03-0502-basques/basques">Basques</a></span> (Vol. 3, p. 485), by the late
+Rev. Wentworth Webster, author of
+<i>Basque Legends</i>, and Julien Vinson,
+author of <span class="sc"><a href="/article/09-0886-etruria/etruria">Le Basque et les langues Mexicaines</a></span>;
+and for the Etruscan language
+<span class="sc"><a href="/article/09-0886-etruria/etruria">Etruria</a></span> (Vol. 9, p. 854), by Professor
+<a href="/contributors.html?q=Robert+Seymour+Conway">R. S. Conway</a>.</p>
+
+<p>On African languages see <span class="sc"><a href="/article/03-0373-bantu-languages/bantu_languages">Bantu
+Languages</a></span> (Vol. 3, p. 356), by Sir <a href="/contributors.html?q=Sir+Harry+Hamilton+Johnston">H.
+H. Johnston</a>; <span class="sc"><a href="/article/04-0895-s2/bushmen">Bushmen</a></span> (Vol. 41, p. 871)
+and <span class="sc"><a href="/article/13-0824-hottentots/hottentots">Hottentots</a></span> (Vol. 13, p. 805); and,
+for the intermediate group, the article
+<span class="sc"><a href="/article/13-0082-s3/hausa">Hausa</a></span> (Vol. 13, p. 69).</p>
+
+<p>On the languages of the North American
+Indians see the article <span class="sc"><a href="/article/14-0480-indians-north-american/indians__north_american">Indians,
+North American</a></span> (especially p. 457 of
+Vol. 14), by Dr. <a href="/contributors.html?q=Alexander+Francis+Chamberlain">A. F. Chamberlain</a>,
+professor of anthropology, Clark University,
+Worcester, Massachusetts.</p>
+
+<p><span class="shoulder-heading" id="sh-10">Alphabet</span>This list of articles will serve the student
+as a guide for the purely linguistic
+articles. Besides the general treatment
+in the article <span class="sc"><a href="/article/21-0436-philology/philology">Philology</a></span> from which
+we started, he should read articles on
+such general subjects as <span class="sc"><a href="/article/21-0480-phonetics/phonetics">Phonetics</a></span> (Vol.
+21, p. 458), by Dr. <a href="/contributors.html?q=Henry+Sweet">Henry Sweet</a>, author
+of <i>A Primer of Phonetics</i>, <i>A History of
+English Sounds since the Earliest Period</i>,
+etc. This leads to a study of the article
+<span class="sc"><a href="/article/01-0766-s5/alphabet">Alphabet</a></span> (Vol. 1, p. 723), equivalent
+to 30 pages of this Guide,
+written by Professor Peter
+Giles of Cambridge and
+illustrated with a plate and various
+fac-similes of early alphabets. This article
+is supplemented by Professor Giles’s
+articles on all the letters of the alphabet,
+which deal with the history and form of
+the symbol, the character of the sound
+it stands for and, particularly, the development
+and change of the sound in English
+and its dialects. For instance the article
+on the letter <i>N</i> describes four different
+sounds, of which there are two in English—usually
+distinguished as <i>n</i> and <i>ng</i>;
+explains that in the early Indo-European
+language some <i>n’s</i> and <i>m’s</i> could sometimes
+be pronounced <i>as vowels</i>; describes
+the opposite process, the nasalization of
+vowels, especially in French; and closes
+by saying: “It is possible to nasalize
+some consonants as well as vowels;
+nasalized spirants play an important
+part in the so-called Yankee pronunciation
+of Americans.”</p>
+
+<p><span class="shoulder-heading" id="sh-11">Artificial Languages</span>From alphabets the student may well
+turn to ideal languages in the article
+<span class="sc"><a href="/article/27-0771-universal-languages/universal_languages">Universal Languages</a></span> (Vol. 27, p. 746),
+by Professor <a href="/contributors.html?q=Henry+Sweet">Henry
+Sweet</a>, which criticizes
+Volapük and
+Esperanto and the
+Idiom Neutral as being unscientific, not
+really international—even from a European
+point of view, and still less when one
+considers the growing importance of
+Japan and China in world-trade and
+world-history. Their being based on
+national languages <a href="/contributors.html?q=Henry+Sweet">Dr. Sweet</a> thinks is a
+disadvantage. But in their comparative
+success he sees proof that a universal
+language is possible. See also <a href="/contributors.html?q=Henry+Sweet">Prof.
+Sweet</a>’s separate articles <span class="sc"><a href="/article/28-0194-volap-k/volapük">Volapük</a></span> (Vol.
+28, p. 178) and <span class="sc"><a href="/article/09-0805-esperanto/esperanto">Esperanto</a></span> (Vol. 9, p. 773).</p>
+
+<p><span class="shoulder-heading" id="sh-12">Writing</span>The article <span class="sc"><a href="/article/28-0878-writing/writing">Writing</a></span> (Vol. 28, p. 852)
+deals, chiefly from the anthropological
+standpoint, with primitive attempts to
+record ideas in an intelligible
+form, for example with
+“knot-signs,” “message-sticks,”
+picture-writing and the like.
+The needs, which led to the invention
+of these primitive forms of writing,
+were: mnemonic, recalling that something
+is to be done at a certain time—the
+primitive “tickler” was a knotted
+string or thong, like our knotted handkerchief
+as a reminder, and these knot-strings
+were finally used for elementary
+accountings, commercial or chronological,
+like the use of the abacus in little shops,
+or of the similar system in scoring games
+of pool; to communicate with some one
+at a distance, for which marked or
+notched sticks, engraved or coloured
+pebbles, wampum belts, etc., were used;
+and, third, to distinguish one’s own
+property or handicraft whence cattle-brands,
+trade-marks, etc. In Assyria,
+Egypt and China picture-writing developed
+into conventional signs: on these
+see <span class="sc"><a href="/article/09-0033-egypt/egypt">Egypt</a></span> (Vol. 9, p. 60), and <span class="sc"><a href="/article/06-0179-china/china">China</a></span>
+(Vol. 6, p. 218). All of these are of
+great interest to the general reader, but
+the article <span class="sc"><a href="/article/07-0651-cuneiform/cuneiform">Cuneiform</a></span> (Vol. 7, p. 629)
+by Dr. <a href="/contributors.html?q=Robert+William+Rogers">R. W. Rogers</a>, professor of Hebrew
+and Old Testament exegesis, Drew Theological
+Seminary, Madison, New Jersey,
+has the sort of entertainment in it that
+there is in a good detective story, since
+it tells how the meaning of the mysterious
+wedge-shaped inscriptions on the
+rocks at Mount Rachmet in Persia was
+discovered.</p>
+
+<p>The subject of writing is treated, also,
+in the articles:</p>
+
+<p><span class="sc"><a href="/article/14-0649-inscriptions/inscriptions">Inscriptions</a></span> (Vol. 14, p. 618); <i>Semitic</i>,
+aside from the Cuneiform, by <a href="/contributors.html?q=Arthur+Ernest+Cowley">Arthur
+Ernest Cowley</a>, sub-librarian of the
+Bodleian, Oxford; <i>Indian inscriptions</i>,
+by <a href="/contributors.html?q=John+Faithfull+Fleet">John Faithfull Fleet</a>, author of <i>Inscriptions
+of the Early Gupta Kings</i>, etc.;
+<i>Greek</i>, by <a href="/contributors.html?q=Robert+Drew+Hicks">Edward Lee Hicks</a>, Bishop of
+Lincoln, author of <i>Manual of Greek
+Historical Inscriptions</i>, etc., and George
+Francis Hill, author of <i>Sources for
+Greek History</i>, etc.; and <i>Latin</i>, by Emil
+Hübner, late professor of classical philology
+at Berlin, author of <i>Romische
+Epigraphik</i>, etc., and Dr. W. M. Lindsay,
+of the University of St. Andrews, author
+of <i>The Latin Language</i>, etc.</p>
+
+<p><span class="sc"><a href="/article/20-0608-palaeography/palaeography">Palaeography</a></span> (Vol. 20, p. 556),
+equivalent to 75 pages of this Guide,
+by Sir <a href="/contributors.html?q=Sir+Edward+Maunde+Thompson">Edward Maunde Thompson</a>, late
+librarian of the British Museum and
+author of <i>Handbook of Greek and Latin
+Palaeography</i>, etc. The article is illustrated
+with 50 fac-similes of typical
+handwritings.</p>
+
+<p><span class="sc"><a href="/article/17-0635-manuscript/manuscript">Manuscript</a></span> (Vol. 17, p. 618), equivalent
+to 20 pages of this Guide, by the
+same author, with a description of the
+various forms of manuscripts, of the
+mechanical arrangement of writing in
+MSS., and of writing implements and
+inks. See, also, <span class="sc">Illuminated Manuscripts</span>,
+<span class="sc"><a href="/article/20-0799-s2/papyrus">Papyrus</a></span>, <span class="sc"><a href="/article/20-0781-s4/paper">Paper</a></span> and other
+articles mentioned in the chapter in this
+Guide <i>For Printers</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-13">Text Criticism</span>The student of language and literature
+and of writing will also find much valuable
+information in the article <span class="sc"><a href="/article/26-0744-textual-criticism/textual_criticism">Textual
+Criticism</a></span> (Vol. 26, p. 708),
+equivalent to 25 pages of
+this Guide, by Professor
+J. P. Postgate of the University
+of Liverpool, well-known to
+Latinists as the brilliant editor of Tibullus
+and Propertius. The article gives
+examples of the classes of errors occurring
+in texts and the methods of restoring
+true readings—largely of course by conjecture—and
+illustrates such errors and
+their correction by the very poorly
+printed first editions of the English
+poet Shelley.</p>
+
+<p>In the study of language and writing
+as in courses on other sciences and arts,
+the reader will find an additional interest
+in supplementing general and abstract
+articles by biographical sketches of the
+great men in the science.</p>
+
+<p>The following is a partial list of the
+articles in the Britannica on great
+philologists:</p>
+
+<ul class="index">
+  <li class="c018"><a href="/article/01-0035-aasen-ivar/aasen__ivar">Aasen, Ivar</a></li>
+  <li class="c018"><a href="/article/01-0221-s2/adelung__johann_christoph">Adelung, J. C.</a></li>
+  <li class="c018"><a href="/article/01-0471-s4/ahrens__fhanz_heinrich_ludolf">Ahrens, F. H. L.</a></li>
+  <li class="c018"><a href="/article/02-0766-s9/ascoli__graziadio_isaia">Ascoli, G. I.</a></li>
+  <li class="c018"><a href="/article/03-0208-s3/baehr__johann_christian_felix">Baehr, J. C. F.</a></li>
+  <li class="c018"><a href="/article/03-0242-s3/baiter__johann_georg">Baiter, J. G.</a></li>
+  <li class="c018"><a href="/article/03-0243-s5/bake__jan">Bake, Jan</a></li>
+  <li class="c018"><a href="/article/03-0464-barth-kaspar-von/barth__kaspar_von">Barth, Kaspar von</a></li>
+  <li class="c018"><a href="/article/03-0748-benfey-theodor/benfey__theodor">Benfey, Theodor</a></li>
+  <li class="c018"><a href="/article/03-0760-bennett-charles-edwin/bennett__charles_edwin">Bennett, Charles E.</a></li>
+  <li class="c018"><a href="/article/03-0770-bentley-richard-scholar/bentley__richard__scholar_">Bentley, Richard</a></li>
+  <li class="c018"><a href="/article/03-0823-bernhardy-gottfried/bernhardy__gottfried">Bernhardy, Gottfried</a></li>
+  <li class="c018"><a href="/article/03-0866-bhau-daji/bhau_daji">Bhau Daji</a></li>
+  <li class="c018"><a href="/article/04-0057-blass-friedrich/blass__friedrich">Blass, Friedrich</a></li>
+  <li class="c018"><a href="/article/04-0069-bleek-wilhelm-heinrich-immanuel/bleek__wilhelm_heinrich_immanuel">Bleek, W. H. I.</a></li>
+  <li class="c018"><a href="/article/04-0099-bloomfield-maurice/bloomfield__maurice">Bloomfield, Maurice</a></li>
+  <li class="c018"><a href="/article/04-0150-b-htlingk-otto-von/böhtlingk__otto_von">Böhtlingk, Otto von</a></li>
+  <li class="c018"><a href="/article/04-0255-bopp-franz/bopp__franz">Bopp, Franz</a></li>
+  <li class="c018"><a href="/article/04-0314-bosworth-joseph/bosworth__joseph">Bosworth, Joseph</a></li>
+  <li class="c018"><a href="/article/04-0499-br-al-michel-jules-alfred/bréal__michel_jules_alfred">Bréal, M. J. A.</a></li>
+  <li class="c018"><a href="/article/04-0681-brown-francis/brown__francis">Brown, Francis</a></li>
+  <li class="c018"><a href="/article/04-0741-s2/bücheler__franz">Bücheler, Franz</a></li>
+  <li class="c018"><a href="/article/04-0743-s3/buck__carl_darling">Buck, C. D.</a></li>
+  <li class="c018"><a href="/article/04-0782-s3/bugge__sophus">Bugge, Sophus</a></li>
+  <li class="c018"><a href="/article/04-0870-s2/burmann__pieter">Burmann</a></li>
+  <li class="c018"><a href="/article/04-0874-s2/burnell__arthur_coke">Burnell, A. C.</a></li>
+  <li class="c018"><a href="/article/04-0879-s3/burnouf__eugène">Burnouf, Eugène</a></li>
+  <li class="c018"><a href="/article/04-0914-s9/buttmann__philipp_karl">Buttmann, Philipp Karl</a></li>
+  <li class="c018"><a href="/article/05-0342-carey-william/carey__william">Carey, William</a></li>
+  <li class="c018"><a href="/article/05-0458-casaubon-isaac/casaubon__isaac">Casaubon</a></li>
+  <li class="c018"><a href="/article/05-0469-caspari-karl-paul/caspari__karl_paul">Caspari, K. P.</a></li>
+  <li class="c018"><a href="/article/05-0488-castell-edmund/castell__edmund">Castell, Edmund</a></li>
+  <li class="c018"><a href="/article/05-0491-castiglione-carlo-ottavio/castiglione__carlo_ottavio">Castiglione, Count</a></li>
+  <li class="c018"><a href="/article/05-0499-castr-n-matthias-alexander/castrén__matthias_alexander">Castrén, M. A.</a></li>
+  <li class="c018"><a href="/article/06-0151-childers-robert-caesar/childers__robert_caesar">Childers, R. C.</a></li>
+  <li class="c018">Cleynaerts, Nicolas</li>
+  <li class="c018"><a href="/article/06-0630-cobet-carel-gabriel/cobet__carel_gabriel">Cobet, C. G.</a></li>
+  <li class="c018"><a href="/article/06-0966-conington-john/conington__john">Conington, John</a></li>
+  <li class="c018"><a href="/article/07-0086-cook-albert-stanburrough/cook__albert_stanburrough">Cook, A. S.</a></li>
+  <li class="c018"><a href="/article/07-0221-corssen-wilhelm-paul/corssen__wilhelm_paul">Corssen, W. P.</a></li>
+  <li class="c018"><a href="/article/07-0267-cotgrave-randle/cotgrave__randle">Cotgrave, Randle</a></li>
+  <li class="c018"><a href="/article/07-0453-creuzer-georg-friedrich/creuzer__georg_friedrich">Creuzer, G. F.</a></li>
+  <li class="c018"><a href="/article/07-0614-csoma-de-k-r-s-alexander/csoma_de_körös__alexander">Csoma de Körös, A.</a></li>
+  <li class="c018"><a href="/article/07-0859-s4/darmesteter__james">Darmesteter, J.</a></li>
+  <li class="c018"><a href="/article/07-0989-delius-nikolaus/delius__nikolaus">Delius, N.</a></li>
+  <li class="c018"><a href="/article/08-0239-diez-friedrich-christian/diez__friedrich_christian">Diez, F. C.</a></li>
+  <li class="c018">Döbrowsky, J.</li>
+  <li class="c018"><a href="/article/08-0386-d-derlein-johann-christoph-wilhelm-ludwig/döderlein__johann_christoph_wilhelm_ludwig">Döderlein, J. C. W. L.</a></li>
+  <li class="c018"><a href="/article/08-0427-donaldson-john-william/donaldson__john_william">Donaldson, J. W.</a></li>
+  <li class="c018"><a href="/article/08-0611-drisler-henry/drisler__henry">Drisler, Henry</a></li>
+  <li class="c018"><a href="/article/08-0695-dunash/dunash">Dunash</a></li>
+  <li class="c018"><a href="/article/08-0867-ebel-hermann-wilhelm/ebel__hermann_wilhelm">Ebel, H. W.</a></li>
+  <li class="c018">Egger, Emile</li>
+  <li class="c018"><a href="/article/09-0288-elias/elias">Elias, Levita</a></li>
+  <li class="c018">Ellis, A. J.</li>
+  <li class="c018"><a href="/article/09-0311-ellis-robinson/ellis__robinson">Ellis, Robinson</a></li>
+  <li class="c018"><a href="/article/09-0759-s5/erasmus__desiderius">Erasmus</a></li>
+  <li class="c018">Erpenius, Thomas</li>
+  <li class="c018"><a href="/article/09-0895-s4/ettmüller__ernst_moritz_ludwig">Ettmüller, E. M. L.</a></li>
+  <li class="c018"><a href="/article/10-0132-s5/facciolati__jacopo">Facciolati, J.</a></li>
+  <li class="c018">Fairuzabadi</li>
+  <li class="c018"><a href="/article/10-0510-s2/fleckeisen__carl_friedrich_wilhelm_alfred">Fleckeisen, C. F. W. A.</a></li>
+  <li class="c018"><a href="/article/10-0512-s4/fleischer__heinrich_leberecht">Fleischer, Heinrich L.</a></li>
+  <li class="c018"><a href="/article/10-0595-s4/flügel__gustav_leberecht">Flügel, G. L.</a></li>
+  <li class="c018"><a href="/article/10-0595-s6/flügel__johann_gottfried">Flügel, J. G.</a></li>
+  <li class="c018"><a href="/article/10-0660-s7/forcellini__egidio">Forcellini, Egidio</a></li>
+  <li class="c018"><a href="/article/11-0223-s6/freund__wilhelm">Freund, Wilhelm</a></li>
+  <li class="c018"><a href="/article/11-0225-s3/freytag__georg_wilhelm_friedrich">Freytag, G. W. F.</a></li>
+  <li class="c018"><a href="/article/11-0383-s2/furnivall__frederick_james">Furnivall, F. J.</a></li>
+  <li class="c018"><a href="/article/11-0383-s4/fürst__julius">Fürst, Julius</a></li>
+  <li class="c018"><a href="/article/11-0396-s4/gabelentz__hans_conon_von_der">Gabelentz, H. C. von der</a></li>
+  <li class="c018"><a href="/article/11-0408-gaisford/gaisford__thomas">Gaisford, Thomas</a></li>
+  <li class="c018">Gayangos y Arce, P. de</li>
+  <li class="c018"><a href="/article/12-0025-s5/gildersleeve__basil_lanneau">Gildersleeve, B. L.</a></li>
+  <li class="c018"><a href="/article/12-0197-s3/goeje__michael_jan_de">Goeje, M. J. de</a></li>
+  <li class="c018"><a href="/article/12-0235-s2/goldstücker__theodor">Goldstücker, T.</a></li>
+  <li class="c018"><a href="/article/12-0236-s2/goldziher__ignaz">Goldziher, Ignaz</a></li>
+  <li class="c018"><a href="/article/12-0243-s2/golius">Golius, Jacobus</a></li>
+  <li class="c018"><a href="/article/12-0257-s2/goodwin__william_watson">Goodwin, W. W.</a></li>
+  <li class="c018"><a href="/article/12-0575-s4/greenough__james_bradstreet">Greenough, J. B.</a></li>
+  <li class="c018"><a href="/article/12-0625-s2/grimm__jacob_ludwig_carl">Grimm, J. L. C.</a></li>
+  <li class="c018"><a href="/article/12-0627-s2/grimm__wilhelm_carl">Grimm, W. C.</a></li>
+  <li class="c018"><a href="/article/12-0692-s6/gudeman__alfred">Gudeman, Alfred</a></li>
+  <li class="c018">Gutschmid, Baron von</li>
+  <li class="c018"><a href="/article/12-0824-s2/hadley__james">Hadley, James</a></li>
+  <li class="c018"><a href="/article/12-0838-hagen-friedrich-heinrich-von-der/hagen__friedrich_heinrich_von_der">Hagen, F. H. von der</a></li>
+  <li class="c018"><a href="/article/12-0856-s4/haldeman__samuel_stehman">Haldeman, S. S.</a></li>
+  <li class="c018"><a href="/article/12-0859-s2/hale__william_gardner">Hale, W. G.</a></li>
+  <li class="c018"><a href="/article/12-0862-halhed-nathaniel-brassey/halhed__nathaniel_brassey">Halhed, N. B.</a></li>
+  <li class="c018"><a href="/article/12-0871-hall-fitzedward/hall__fitzedward">Hall, Fitzedward</a></li>
+  <li class="c018"><a href="/article/12-0871-hall-isaac-hollister/hall__isaac_hollister">Hall, Isaac Hollister</a></li>
+  <li class="c018">Hasden, B. P.</li>
+  <li class="c018"><a href="/article/13-0078-s4/haug__martin">Haug, Martin</a></li>
+  <li class="c018"><a href="/article/13-0081-s2/haupt__moritz">Haupt, Moritz</a></li>
+  <li class="c018"><a href="/article/13-0314-henry-victor/henry__victor">Henry, Victor</a></li>
+  <li class="c018"><a href="/article/13-0354-herbelot-de-molainville-barth-lemy-d/herbelot_de_molainville__barthélemy_d_">Herbelot de Molainville, B. d’</a></li>
+  <li class="c018">Hervás y Panduro, L.</li>
+  <li class="c018"><a href="/article/13-0579-s2/hoffmann__johann_joseph">Hoffmann, J. J.</a></li>
+  <li class="c018"><a href="/article/13-0701-s5/hopkins__edward_washburn">Hopkins, E. W.</a></li>
+  <li class="c018"><a href="/article/13-0826-hottinger-johann-heinrich/hottinger__johann_heinrich">Hottinger, J. H.</a></li>
+  <li class="c018"><a href="/article/13-0871-s5/hübner__emil">Hübner, Emil</a></li>
+  <li class="c018"><a href="/article/13-0900-s2/humboldt__karl_wilhelm_von">Humboldt, K. W. von</a></li>
+  <li class="c018"><a href="/article/14-0596-s8/ingram__james">Ingram, James</a></li>
+  <li class="c018">Jauhari</li>
+  <li class="c018">Jawaliqi</li>
+  <li class="c018">Jirecek, Josef</li>
+  <li class="c018"><a href="/article/15-0524-s2/jonah__rabbi">Jonah, Rabbi</a></li>
+  <li class="c018"><a href="/article/15-0528-s4/jones__sir_william">Jones, Sir William</a></li>
+  <li class="c018"><a href="/article/15-0702-s5/karajich__vuk_stefanovich">Karajich, V. S.</a></li>
+  <li class="c018"><a href="/article/15-0786-kern-jan-hendrik/kern__jan_hendrik">Kern, J. H.</a></li>
+  <li class="c018">Khalil ibn Ahmad,</li>
+  <li class="c018">Kimbi (family)</li>
+  <li class="c018"><a href="/article/15-0873-s7/klaproth__heinrich_julius">Klaproth, H. J.</a></li>
+  <li class="c018"><a href="/article/15-0975-s3/kuhn__franz_felix_adalbert">Kuhn, F. F. A.</a></li>
+  <li class="c018"><a href="/article/16-0070-s4/lachmann__karl_konrad_friedrich_wilhelm">Lachmann, Karl</a></li>
+  <li class="c018"><a href="/article/16-0202-s3/lanman__charles_rockwell">Lanman, C. R.</a></li>
+  <li class="c018"><a href="/article/16-0256-s2/lassen__christian">Lassen, Christian</a></li>
+  <li class="c018"><a href="/article/16-0397-s2/legge__james">Legge, James</a></li>
+  <li class="c018"><a href="/article/16-0424-s3/leitner__gottlieb_wilhelm">Leitner, G. W.</a></li>
+  <li class="c018"><a href="/article/16-0608-s3/liddell__henry_george">Liddell, H. G.</a></li>
+  <li class="c018">Littré, M. P. E.</li>
+  <li class="c018">Ludolf, Hiob</li>
+  <li class="c018"><a href="/article/17-0311-s4/madvig__johan_nicolai">Madvig, J. N.</a></li>
+  <li class="c018"><a href="/article/17-0477-malan-solomon-caesar/malan__solomon_caesar">Malan, S. C.</a></li>
+  <li class="c018"><a href="/article/17-0705-march-francis-andrew/march__francis_andrew">March, F. A.</a></li>
+  <li class="c018"><a href="/article/17-0946-max-m-ller/max_müller__friedrich">Max Müller, F.</a></li>
+  <li class="c018"><a href="/article/17-0956-mayor-john-eyton-bickersteth/mayor__john_eyton_bickersteth">Mayor, J. E. B.</a></li>
+  <li class="c018"><a href="/article/18-0130-m-nant-joachim/ménant__joachim">Ménant, Joachim</a></li>
+  <li class="c018"><a href="/article/18-0370-s3/meyer">Meyer, P. H.</a></li>
+  <li class="c018"><a href="/article/18-0372-s5/mezzofanti__giuseppe_caspar">Mezzofanti, Giuseppe C.</a></li>
+  <li class="c018"><a href="/article/18-0461-s6/miklosich__franz_von">Miklosich, Franz von</a></li>
+  <li class="c018"><a href="/article/18-0678-s3/mohl__julius_von">Mohl, Julius von</a></li>
+  <li class="c018"><a href="/article/18-0752-s4/monier-williams__sir_monier">Monier-Williams, Sir M.</a></li>
+  <li class="c018"><a href="/article/18-0903-s2/morris__richard">Morris, Richard</a></li>
+  <li class="c018"><a href="/article/19-0024-s6/munro">Munro, D. B.</a></li>
+  <li class="c018"><a href="/article/19-0057-murray-sir-john/murray__sir_john">Murray, Sir James</a></li>
+  <li class="c018"><a href="/article/19-0440-nettleship-henry/nettleship__henry">Nettleship, Henry</a></li>
+  <li class="c018"><a href="/article/19-0761-n-ldeke-theodor/nöldeke__theodor">Nöldeke, Theodor</a></li>
+  <li class="c018"><a href="/article/20-0166-oppert-julius/oppert__julius">Oppert, Julius</a></li>
+  <li class="c018"><a href="/article/20-0684-s3/paley__frederick_apthorp">Paley, F. A.</a></li>
+  <li class="c018"><a href="/article/20-0863-s5/paris__bruno_paulin_gaston">Paris, B. P. G.</a></li>
+  <li class="c018"><a href="/article/21-0069-s2/peerlkamp__petrus_hofman">Peerlkamp, P. H.</a></li>
+  <li class="c018"><a href="/article/21-0072-s3/peile__john">Peile, John</a></li>
+  <li class="c018"><a href="/article/21-0327-s2/petrarch">Petrarch</a></li>
+  <li class="c018"><a href="/article/21-0923-poggio/poggio">Poggio</a></li>
+  <li class="c018"><a href="/article/21-1017-politian/politian">Politian</a></li>
+  <li class="c018"><a href="/article/22-0120-porson-richard/porson__richard">Porson, Richard</a></li>
+  <li class="c018"><a href="/article/22-0224-s6/pott__august_friedrich">Pott, A. F.</a></li>
+  <li class="c018">Quatremère, E. M.</li>
+  <li class="c018"><a href="/article/22-0929-s3/rask__rasmus_christian">Rask, R. C.</a></li>
+  <li class="c018"><a href="/article/23-0074-s3/reiske__johann_jacob">Reiske, J. J.</a></li>
+  <li class="c018"><a href="/article/23-0075-s3/reland__adrian">Reland, Adrian</a></li>
+  <li class="c018">Rémusat, J. P. A.</li>
+  <li class="c018">Ribbeck, Otto</li>
+  <li class="c018"><a href="/article/23-0342-rieu-charles-pierre-henri/rieu__charles_pierre_henri">Rieu, C. P. H.</a></li>
+  <li class="c018">Ritsche, F. W.</li>
+  <li class="c018"><a href="/article/23-0985-s3/rutherford__william_gunion">Rutherford, W. G.</a></li>
+  <li class="c018">Sale, George</li>
+  <li class="c018">Salesbury, William</li>
+  <li class="c018"><a href="/article/24-0152-s4/sanders__daniel">Sanders, Daniel</a></li>
+  <li class="c018"><a href="/article/24-0291-sayce-archibald-henry/sayce__archibald_henry">Sayce, A. H.</a></li>
+  <li class="c018">Schafarik, P. J.</li>
+  <li class="c018">Scheler, J. A. W.</li>
+  <li class="c018"><a href="/article/24-0341-s6/schiefner__franz_anton">Schiefner, F. A.</a></li>
+  <li class="c018"><a href="/article/24-0348-s2/schleicher__august">Schleicher, August</a></li>
+  <li class="c018"><a href="/article/24-0400-s3/schultens">Schultens (family)</a></li>
+  <li class="c018"><a href="/article/24-0489-s3/scott__robert">Scott, Robert</a></li>
+  <li class="c018"><a href="/article/24-0644-sellar-william-young/sellar__william_young">Sellar, W. Y.</a></li>
+  <li class="c018"><a href="/article/25-0184-skeat-walter-william/skeat__walter_william">Skeat, W. W.</a></li>
+  <li class="c018"><a href="/article/26-0498-s3/taylor__isaac">Taylor, Isaac</a></li>
+  <li class="c018"><a href="/article/26-0643-ten-brink-bernhard-egidius-konrad/ten_brink__bernhard_egidius_konrad">Ten Brink, B. E. K.</a></li>
+  <li class="c018"><a href="/article/26-0705-s5/teuffel__wilhelm_siegmund">Teuffel, W. S.</a></li>
+  <li class="c018"><a href="/article/26-0921-thorpe-benjamin/thorpe__benjamin">Thorpe, Benjamin</a></li>
+  <li class="c018"><a href="/article/28-0261-wailly-no-l-fran-ois-de/wailly__noel_françois_de">Wailly, N. F. de</a></li>
+  <li class="c018"><a href="/article/28-0288-walker-john/walker__john">Walker, John</a></li>
+  <li class="c018"><a href="/article/28-0346-warren-minton/warren__minton">Warren, Minton</a></li>
+  <li class="c018"><a href="/article/28-0481-s2/webster__noah">Webster, Noah</a></li>
+  <li class="c018"><a href="/article/28-0631-s6/whitney__william_dwight">Whitney, W. D.</a></li>
+  <li class="c018"><a href="/article/28-0665-s2/wilkins__sir_charles">Wilkins, Sir Charles</a></li>
+  <li class="c018"><a href="/article/28-0851-wordsworth-charles/wordsworth__charles">Wordsworth, Christopher</a></li>
+  <li class="c018"><a href="/article/28-0988-zarncke-friedrich-karl-theodor/zarncke__friedrich_karl_theodor">Zarncke, F. K. T.</a></li>
+</ul>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

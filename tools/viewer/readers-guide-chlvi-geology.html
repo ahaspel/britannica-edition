@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Geology &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter LVI</span>Geology</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">The Province Geology or Sermons in Stones</a></li><li><a href="#sh-2">Age of the Earth</a></li><li><a href="#sh-3">Geological Formations</a></li><li><a href="#sh-4">The Study of Life</a></li><li><a href="#sh-5">Structure</a></li><li><a href="#sh-6">Distribution</a></li><li><a href="#sh-7">Physiology</a></li><li><a href="#sh-8">Evolution</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">The Province Geology or Sermons in Stones</span>Shakespeare tells us that “there
+are sermons in stones.” No science,
+except possibly astronomy, appeals
+more to the imagination or carries one
+further away from our present workaday
+world than geology. While geology
+“claims as its peculiar territory the rocky
+framework of the globe,” its object is,
+says the Encyclopaedia Britannica (Vol.
+11, p. 638) “to trace
+the structural progress
+of our planet
+from the earliest beginnings
+of its separate existence
+through its various stages of growth
+down to the present condition of things.”
+It goes back millions and hundreds of
+millions of years to the first beginnings
+of things and unravels complicated processes
+by which the earth and each of
+the continents on it has been built up.</p>
+
+<p>“It follows, even into detail, the varied
+sculpture of mountain and valley, crag
+and ravine.” It shows “that the present
+races of plants and animals are the
+descendants of other and very different
+races which once peopled the earth. It
+teaches that there has been a progressive
+development of the inhabitants.” Dead
+and cold though the rocks seem, they are
+filled, to one who can read their secret,
+with the tragedy of past life. Parts of
+Florida are but the graves where millions
+of corals, now crushed into massive
+limestone, once lived and died; the coal
+of Pennsylvania tells of ferns and other
+terrestrial plants matted together into
+a bed whence they originally grew; “the
+snails and lizards which lived and died
+within a hollow tree, the insects which
+have been imprisoned within the exuding
+resin of old forests, the footprints of
+birds and quadrupeds, the trails of worms
+left upon former shores—these and innumerable
+other pieces of evidence” tell
+of the tragedies of former times and
+“enable the geologist to realize in some
+measure what the faunas and floras of
+successive periods have been.”</p>
+
+<p>The foundation for the study of the
+whole subject in the Britannica is the
+article <span class="sc"><a href="/article/11-0658-s4/geology">Geology</a></span> (Vol. 11, p. 638), equivalent
+to 125 pages of this Guide. It is
+by the highest authority in the world,
+Sir Archibald Geikie, long director
+general of the Geological Survey of
+the United Kingdom, and director of the
+Museum of Practical Geology, London. It
+deals with the general principles and gives
+an outline of the subject matter of the
+science. In particular it treats of,</p>
+
+<p><i>The historical development of geological
+science</i>;</p>
+
+<ul class="index">
+  <li class="c018"><i>The cosmical aspects of geology</i>;</li>
+  <li class="c018"><i>Geognosy</i>;</li>
+  <li class="c018"><i>Dynamical Geology</i>;</li>
+  <li class="c018"><i>Geotectonic or Structural Geology</i>;</li>
+  <li class="c018"><i>Palaeontological Geology</i>;</li>
+  <li class="c018"><i>Stratigraphical Geology</i>;</li>
+  <li class="c018"><i>Physiographical Geology</i>.</li>
+</ul>
+
+<p><span class="shoulder-heading" id="sh-2">Age of the Earth</span>While the student will doubtless be
+interested equally in each of these departments,
+the general reader will be
+especially interested in the
+historical development
+which—it is worthy of note—is
+almost the only concise
+account of geological history hitherto
+published in English. Especially interesting
+is the question, fully discussed,
+of the age of the earth. Lord Kelvin
+(Vol. 11, p. 653) declared some few years
+ago that the time “was more than
+twenty and less than forty millions of
+years and probably much nearer twenty
+than forty.” But the trend of later
+investigations, and especially the study
+of radio-activity, has led to the belief
+that the period must have been much
+longer. Sir Archibald Geikie sums up
+the evidence as follows (Vol. 11, p. 653):
+“In the present state of science it is out
+of our power to state positively what
+must be the lowest limit of the age of
+the earth, but we cannot assume it to
+be less, and it may possibly have been
+much more than one hundred millions
+of years.”</p>
+
+<p><span class="shoulder-heading" id="sh-3">Geological Formations</span>The general reader will find of interest,
+too, the table (Vol. 11, p. 670) representing
+the geological record or order
+of succession of the
+formations of the
+earth’s crusts from
+the earliest Archean,
+through Cambrian, Silurian, Devonian
+and Carboniferous to the Post-glacial or
+Human of to-day. A separate article is
+to be found on each of these different
+formations, namely: <span class="sc"><a href="/article/02-0381-s2/archean_system">Archean</a></span> (Vol. 2,
+p. 360); <span class="sc"><a href="/article/05-0098-cambrian-system/cambrian_system">Cambrian</a></span> (Vol. 5, p. 86); <span class="sc"><a href="/article/25-0125-s6/silurian">Silurian</a></span>
+(Vol. 25, p. 109); <span class="sc"><a href="/article/08-0139-devonian-system/devonian_system">Devonian</a></span> (Vol.
+8, p. 124); <span class="sc"><a href="/article/05-0322-carboniferous-system/carboniferous_system">Carboniferous</a></span> (Vol. 5, p.
+309); <span class="sc"><a href="/article/21-0193-s2/permian">Permian</a></span> (Vol. 21, p. 176); <span class="sc"><a href="/article/27-0273-s4/triassic_system">Triassic</a></span>
+(Vol. 27, p. 258); <span class="sc"><a href="/article/15-0594-s2/jurassic">Jurassic</a></span> (Vol. 15,
+p. 567); <span class="sc"><a href="/article/07-0434-cretaceous-system/cretaceous_system">Cretaceous</a></span> (Vol. 7, p. 414);
+<span class="sc"><a href="/article/09-0693-eocene/eocene">Eocene</a></span> (Vol. 9, p. 661); <span class="sc"><a href="/article/20-0105-s3/oligocene_system">Oligocene</a></span>
+(Vol. 20, p. 81); <span class="sc"><a href="/article/18-0592-s4/miocene">Miocene</a></span> (Vol. 18, p.
+565); <span class="sc"><a href="/article/21-0879-s2/pliocene">Pliocene</a></span> (Vol. 21, p. 846); <span class="sc"><a href="/article/21-0868-s7/pleistocene">Pleistocene</a></span>
+(Vol. 21, p. 835); Recent, Post-glacial
+or Human under article <span class="sc"><a href="/article/22-0734-s3/quaternary">Quaternary</a></span>
+(Vol. 22, p. 718).</p>
+
+<p>Full local geological information is
+found in geographical articles. See, for
+instance, in the article <span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>,
+the section on <i>Geology</i> (Vol. 27, pp. 624–632),
+by Professors R. D. Salisbury and
+T. C. Chamberlin of the University
+of Chicago; the section <i>Geology</i> in the
+article <span class="sc"><a href="/article/09-0433-england/england">England</a></span> (Vol. 9, pp. 415–416),
+by <a href="/contributors.html?q=Hugh+Robert+Mill">H. R. Mill</a>, editor of <i>The International
+Geography</i>; the section <i>Geology</i> in the
+article <span class="sc"><a href="/article/01-0358-africa/africa">Africa</a></span> (Vol. 1, pp. 323–325), by
+<a href="/contributors.html?q=Walcot+Gibson">Walcot Gibson</a>, author of <i>Mineral Wealth
+of Africa</i>, etc. These special treatments
+are accompanied by sketch maps. Similarly,
+the articles on each of the different
+states of the Union has a section giving
+information on the geology, the flora
+and fauna, the climate, and the geography
+of the state. And in such articles
+on geographic topics as <span class="sc"><a href="/article/12-0438-great-salt-lake/great_salt_lake">Great Salt
+Lake</a></span>, <span class="sc"><a href="/article/19-0661-s1/niagara">Niagara</a></span>, by <a href="/contributors.html?q=Grove+Karl+Gilbert">G. Karl Gilbert</a>,
+and <span class="sc"><a href="/article/12-0364-s3/grand_canyon">Grand Canyon</a></span>, by <a href="/contributors.html?q=Ralph+Stockman+Tarr">R. S. Tarr</a>,
+there is valuable geological information.</p>
+
+<p>Other important articles which the
+reader should consult are <span class="sc"><a href="/article/21-0340-s2/petrology">Petrology</a></span>
+(Vol. 21, p 323), equivalent to 40 pages
+of this Guide, largely illustrated, by Dr.
+<a href="/contributors.html?q=John+Faithfull+Fleet">J. S. Fleet</a>, petrographer to the Geological
+Survey of Great Britain; <span class="sc"><a href="/article/18-0533-mineralogy/mineralogy">Mineralogy</a></span>
+(Vol. 18, p. 509), equivalent to
+25 pages of this Guide, by <a href="/contributors.html?q=Leonard+James+Spencer">L. J. Spencer</a>,
+editor of the <i>Mineralogical Magazine</i>;
+<span class="sc"><a href="/article/18-0528-mineral-deposits/mineral_deposits">Mineral Deposits</a></span> (Vol. 18, p. 504),
+equivalent to 15 pages of this Guide,
+by <a href="/contributors.html?q=James+Furman+Kemp">James F. Kemp</a>, professor of geology
+of Columbia University, and geologist
+to the United States and New York
+Geological Surveys; <span class="sc"><a href="/article/07-0591-crystallography/crystallography">Crystallography</a></span>
+(Vol. 7, p. 569), equivalent to 60 pages
+of this Guide, also by <a href="/contributors.html?q=Leonard+James+Spencer">L. J. Spencer</a>;
+<span class="sc"><a href="/article/18-0554-s3/mining">Mining</a></span> (Vol. 18, p. 528), equivalent to
+40 pages of this Guide, by <a href="/contributors.html?q=Henry+Smith+Munroe">Henry Smith
+Munroe</a>, professor of mining, Columbia
+University, New York; <span class="sc"><a href="/article/20-0631-palaeontology/palaeontology">Palaeontology</a></span>
+(Vol. 20, p. 579), profusely illustrated,
+equivalent to 35 pages of this Guide, by
+Prof. Henry Fairfield Osborn of Columbia
+University, and president of the
+American Museum of Natural History
+of New York; <span class="sc"><a href="/article/20-0574-palaeobotany/palaeobotany">Palaeobotany</a></span> (Vol. 20,
+p. 524), profusely illustrated, equivalent
+to 100 pages of this Guide, written by
+three of the leading geological writers
+of the day: Dr. D. H. Scott, president
+of the Linnean Society, author of
+<i>Studies in Fossil Botany</i>; A. E. Steward,
+professor of botany of the University
+of Cambridge; and Clement Reid, author
+of <i>Fossil Flora of Tegelen</i>.</p>
+
+<p>Of more popular interest are the three
+articles, Earthquake, Seismometer and
+Volcano. The article <span class="sc"><a href="/article/08-0844-earthquake/earthquake">Earthquake</a></span> is in
+two parts. The first (Vol. 8, p. 817)
+is an historical account telling of the
+extent and damage done by many earthquakes,
+including the terrible San Francisco
+earthquake of April 18, 1906, and
+that of Calabria and Sicily, December 28,
+1908, by <a href="/contributors.html?q=Frederick+William+Rudler">F. W. Rudler</a>, president of the
+Geologists’ Association; the other part
+(Vol. 8, p. 820), by Dr. <a href="/contributors.html?q=John+Milne">J. Milne</a>, late
+professor of geology in the Imperial
+University of Tokio, deals with the physical
+theory of earthquakes. The article
+<span class="sc"><a href="/article/28-0194-volcano/volcano">Volcano</a></span> (Vol. 28, p. 178), equivalent
+to 45 pages of this Guide, is by <a href="/contributors.html?q=Frederick+William+Rudler">F. W.
+Rudler</a>, and gives us the reasons for and
+the history of volcanic disturbances.
+It is of interest both to the scholar and
+to the casual reader. Thus we learn
+that “while Herculaneum was buried
+beneath a flood of mud swept down
+from Vesuvius” in 79 A.D., Pompeii
+“was overwhelmed in great measure by
+loose ashes, capable of removal with
+comparative ease.” Nearly everyone of
+middle age remembers the famous eruption
+of Krakatoa in 1883 and the famous
+sunsets of that year. Concerning this
+the Britannica article tells us (p. 180):</p>
+
+<p>Enormous quantities of dust ejected from
+Krakatoa in 1883 were carried to prodigious
+distances, samples having been collected at
+more than a thousand miles from the volcano;
+whilst the very fine material in ultramicroscopic
+grains which remained suspended
+for months in the higher regions of the
+atmosphere seems to have enjoyed an almost
+world-wide distribution, and to have been
+responsible for the remarkable sunsets at
+that period.</p>
+
+<p>The article <span class="sc"><a href="/article/08-0740-dust/dust">Dust</a></span> (Vol. 8, p. 713), by
+<a href="/contributors.html?q=John+Aitken">John Aitken</a>, inventor of the machine
+for counting particles of dust, explains
+the mechanical causes of this suspension.
+Besides there is much concrete information
+about volcanoes in articles on volcanic
+regions: for instance, on volcanoes
+in the possessions of the United States,
+see articles <span class="sc"><a href="/article/13-0096-hawaii/hawaii">Hawaii</a></span>, <span class="sc"><a href="/article/01-0511-s4/alaska">Alaska</a></span>, <span class="sc">Philippines</span>.</p>
+
+<p>The student should read also the articles
+on the different minerals, many of
+them long and important and all by
+well-known authorities. Thus the article
+<span class="sc"><a href="/article/08-0173-diamond/diamond">Diamond</a></span> (Vol. 8, p. 158), illustrated,
+equivalent to 20 pages of this Guide,
+is by <a href="/contributors.html?q=Henry+Alexander+Miers">Henry Alexander Miers</a>, editor of
+the <i>Mineralogical Magazine</i>. Besides
+dealing with the general character of
+this stone, the article pays particular
+attention to diamond mining in South
+Africa, the text being illustrated by
+plates showing the Kimberley and DeBeers
+workings. The article <span class="sc"><a href="/article/11-0578-gem/gem">Gem</a></span> (Vol.
+11, p. 560), is equivalent to 25 pages of
+this Guide. The article <span class="sc"><a href="/article/11-0589-gem-artificial/gem__artificial">Gem, Artificial</a></span>
+(Vol. 11, p. 569) is by the well-known
+chemist and physicist, Sir William
+Crookes. It tells of the changes
+induced by radioactive emanations and
+of the artificial production of the diamond,
+ruby, sapphire, Oriental emerald,
+amethyst and topaz. The reader will
+be interested, too, in the article <span class="sc"><a href="/article/16-0215-lapidary/lapidary">Lapidary
+and Gem Cutting</a></span> (Vol. 16, p. 195),
+by Dr. <a href="/contributors.html?q=George+Frederick+Kunz">George F. Kunz</a>, gem expert for
+Messrs. Tiffany &amp; Co., New York.</p>
+
+<p>There are special biographical articles
+in the Britannica on all the well-known
+geologists, and in these articles special
+stress has been laid on the part played
+by the subject of the memoirs in promoting
+the science. This is well shown,
+for instance, in the articles <span class="sc"><a href="/article/01-0404-s7/agassiz__alexander_emanuel">Agassiz</a></span>
+(Vol. 1, p. 367); <span class="sc"><a href="/article/14-0028-s1/hutton__james">Hutton</a></span> (Vol. 14, p. 16)
+and <span class="sc"><a href="/article/17-0173-lyell-sir-charles/lyell__sir_charles">Lyell</a></span> (Vol. 17, p. 158).</p>
+
+<p>Geology, by its study of earth deposits,
+age of rocks, etc., and by its estimate
+of the date of certain extinct animals
+like the mammoth and hairy elephant,
+or of the time when certain animals,
+e.g., the elephant and reindeer, were
+found in parts of the world where they
+no longer occur, is an important adjunct
+to the science of anthropology, especially
+in the question of the antiquity of man.
+On this see the section of antiquity of
+man in the article <span class="sc"><a href="/article/02-0119-s3/anthropology">Anthropology</a></span> (Vol.
+2, p. 114), and, in general, the chapter
+in this Guide on <i>Anthropology and
+Ethnology</i>.</p>
+
+<p>From one point of view geology is
+only a branch of geography and the
+student of geology should consult the
+elaborate article on <span class="sc"><a href="/article/11-0639-s2/geography">Geography</a></span> in the
+Britannica, especially all parts dealing
+with physical geography or physiography.
+For a clue to this part of the book see
+the chapter in this Guide on <i>Geography</i>.</p>
+
+<p>The following is a list of the more
+important articles on Geology in the
+Encyclopaedia Britannica:</p>
+
+<details class="article-list"><summary><span class="list-title">LIST OF ARTICLES IN THE ENCYCLOPAEDIA BRITANNICA OF SPECIAL INTEREST TO STUDENTS OF GEOLOGY</span><span class="list-count"> (742 articles)</span></summary>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0093-abich-otto-wilhelm-hermann-von/abich__otto_wilhelm_hermann_von">Abich, O. W. H. von</a></li>
+  <li class="c018"><a href="/article/01-0103-s8/abraum_salts">Abraum salts</a></li>
+  <li class="c018"><a href="/article/01-0140-s2/acadian">Acadian</a></li>
+  <li class="c018"><a href="/article/01-0180-s5/acmite">Acmite, or Aegirite</a></li>
+  <li class="c018"><a href="/article/01-0401-s3/agalmatolite">Agalmatolite</a></li>
+  <li class="c018"><a href="/article/01-0406-s2/agate">Agate</a></li>
+  <li class="c018"><a href="/article/01-0412-s6/agglomerate">Agglomerate</a></li>
+  <li class="c018"><a href="/article/01-0424-s4/agricola__gnaeus_julius">Agricola, Georg</a></li>
+  <li class="c018"><a href="/article/01-0475-s4/aikin__arthur">Aikin, Arthur</a></li>
+  <li class="c018"><a href="/article/01-0505-alabaster/alabaster">Alabaster</a></li>
+  <li class="c018"><a href="/article/01-0543-s2/albertite">Albertite</a></li>
+  <li class="c018"><a href="/article/01-0545-s3/albian">Albian</a></li>
+  <li class="c018"><a href="/article/01-0551-s8/albite">Albite</a></li>
+  <li class="c018"><a href="/article/01-0616-s3/alexandrite">Alexandrite</a></li>
+  <li class="c018"><a href="/article/01-0741-s3/allophane">Allophane</a></li>
+  <li class="c018"><a href="/article/01-0752-s2/allport__samuel">Allport, Samuel</a></li>
+  <li class="c018"><a href="/article/01-0753-s3/alluvium">Alluvium</a></li>
+  <li class="c018"><a href="/article/01-0755-s2/almandine">Almandine</a></li>
+  <li class="c018"><a href="/article/01-0799-alquifou/alquifou">Alquifou</a></li>
+  <li class="c018"><a href="/article/01-0819-s2/alunite">Alunite, or Alumstone</a></li>
+  <li class="c018">Amazon Stone, or Amazonite</li>
+  <li class="c018"><a href="/article/01-0838-s4/amber">Amber</a></li>
+  <li class="c018"><a href="/article/01-0841-s4/amblygonite">Amblygonite</a></li>
+  <li class="c018"><a href="/article/01-0903-s2/amethyst">Amethyst</a></li>
+  <li class="c018"><a href="/article/01-0904-s5/amianthus">Amianthus</a></li>
+  <li class="c018"><a href="/article/01-0934-s3/amphibole">Amphibole</a></li>
+  <li class="c018"><a href="/article/01-0935-s2/amphibolite">Amphibolite</a></li>
+  <li class="c018"><a href="/article/01-0953-s3/amygdaloid">Amygdaloid</a></li>
+  <li class="c018"><a href="/article/01-0965-s1/analcite">Analcite</a></li>
+  <li class="c018"><a href="/article/01-0972-s6/anatase">Anatase</a></li>
+  <li class="c018"><a href="/article/01-1007-s2/andalusite">Andalusite</a></li>
+  <li class="c018"><a href="/article/01-1017-s2/andesine">Andesine</a></li>
+  <li class="c018"><a href="/article/01-1017-s3/andesite">Andesite</a></li>
+  <li class="c018"><a href="/article/02-0029-s2/anglesite">Anglesite</a></li>
+  <li class="c018"><a href="/article/02-0058-s2/anhydrite">Anhydrite</a></li>
+  <li class="c018"><a href="/article/02-0069-s2/ankerite">Ankerite</a></li>
+  <li class="c018"><a href="/article/02-0070-s6/annabergite">Annabergite</a></li>
+  <li class="c018"><a href="/article/02-0085-s3/anning__mary">Anning, Mary</a></li>
+  <li class="c018"><a href="/article/02-0091-s3/anorthite">Anorthite</a></li>
+  <li class="c018"><a href="/article/02-0095-s4/ansted__david_thomas">Ansted, David Thomas</a></li>
+  <li class="c018"><a href="/article/02-0116-s3/anthracite">Anthracite</a></li>
+  <li class="c018"><a href="/article/02-0171-s4/apatite">Apatite</a></li>
+  <li class="c018"><a href="/article/02-0175-s5/aphanite">Aphanite</a></li>
+  <li class="c018"><a href="/article/02-0181-s1/aplite">Aplite</a></li>
+  <li class="c018"><a href="/article/02-0207-s2/apophyllite">Apophyllite</a></li>
+  <li class="c018"><a href="/article/02-0246-s3/aptian">Aptian</a></li>
+  <li class="c018"><a href="/article/02-0249-s5/aquamarine">Aquamarine</a></li>
+  <li class="c018"><a href="/article/02-0329-s2/aragonite">Aragonite</a></li>
+  <li class="c018"><a href="/article/02-0381-s2/archean_system">Archean System</a></li>
+  <li class="c018">Archiac, vicomte d’</li>
+  <li class="c018"><a href="/article/02-0489-s4/arenig_group">Arenig Group</a></li>
+  <li class="c018"><a href="/article/02-0513-s3/argentite">Argentite</a></li>
+  <li class="c018"><a href="/article/02-0526-s2/argyrodite">Argyrodite</a></li>
+  <li class="c018"><a href="/article/02-0758-s4/asbestos">Asbestos</a></li>
+  <li class="c018"><a href="/article/02-0828-s5/assise">Assise</a></li>
+  <li class="c018"><a href="/article/02-0838-asteria/asteria">Asteria, or Star-stone</a></li>
+  <li class="c018"><a href="/article/02-0869-s4/atacamite">Atacamite</a></li>
+  <li class="c018"><a href="/article/02-0893-s4/atherstone__william_guybon">Atherstone, W. G.</a></li>
+  <li class="c018"><a href="/article/02-0949-s4/augite">Augite</a></li>
+  <li class="c018"><a href="/article/03-0064-s5/autunite">Autunite</a></li>
+  <li class="c018"><a href="/article/03-0069-s1/aventurine">Aventurine, or Avanturine</a></li>
+  <li class="c018"><a href="/article/03-0082-s2/avonian">Avonian</a></li>
+  <li class="c018"><a href="/article/03-0083-s4/axinite">Axinite</a></li>
+  <li class="c018"><a href="/article/03-0088-aymestry-limestone/aymestry_limestone">Aymestry Limestone</a></li>
+  <li class="c018"><a href="/article/03-0101-s8/azurite">Azurite, or Chessylite</a></li>
+  <li class="c018"><a href="/article/03-0224-s2/bagshot_beds">Bagshot Beds</a></li>
+  <li class="c018"><a href="/article/03-0238-s4/baily__william_hellier">Baily, William Hellier</a></li>
+  <li class="c018"><a href="/article/03-0239-s2/bain__andrew_geddes">Bain, Andrew Geddes</a></li>
+  <li class="c018"><a href="/article/03-0242-s6/bajocian">Bajocian</a></li>
+  <li class="c018"><a href="/article/03-0246-s3/bakewell__robert">Bakewell, Robert</a></li>
+  <li class="c018"><a href="/article/03-0256-s3/bala_series">Bala Series</a></li>
+  <li class="c018"><a href="/article/03-0448-barrande-joachim/barrande__joachim">Barrande, Joachim</a></li>
+  <li class="c018"><a href="/article/03-0451-barrett-lucas/barrett__lucas">Barrett, Lucas</a></li>
+  <li class="c018"><a href="/article/03-0455-barrois-charles/barrois__charles">Barrois, Charles</a></li>
+  <li class="c018"><a href="/article/03-0470-barton-beds/barton_beds">Barton Beds</a></li>
+  <li class="c018"><a href="/article/03-0473-barytes/barytes">Barytes</a></li>
+  <li class="c018"><a href="/article/03-0473-barytocalcite/barytocalcite">Barytocalcite</a></li>
+  <li class="c018"><a href="/article/03-0474-basalt/basalt">Basalt</a></li>
+  <li class="c018"><a href="/article/03-0497-basin/basin">Basin</a></li>
+  <li class="c018"><a href="/article/03-0530-batholite/batholite">Batholite</a></li>
+  <li class="c018"><a href="/article/03-0530-bathonian-series/bathonian_series">Bathonian Series</a></li>
+  <li class="c018"><a href="/article/03-0538-bathvillite/bathvillite">Bathvillite</a></li>
+  <li class="c018"><a href="/article/03-0559-bauxite/bauxite">Bauxite</a></li>
+  <li class="c018">Bed</li>
+  <li class="c018"><a href="/article/03-0657-beecher-charles-emerson/beecher__charles_emerson">Beecher, C. E.</a></li>
+  <li class="c018"><a href="/article/03-0732-belt-thomas/belt__thomas">Belt, Thomas</a></li>
+  <li class="c018"><a href="/article/03-0734-bembridge-beds/bembridge_beds">Bembridge Beds</a></li>
+  <li class="c018"><a href="/article/03-0747-benett-etheldred/benett__etheldred">Benett, Etheldred</a></li>
+  <li class="c018"><a href="/article/03-0759-benitoite/benitoite">Benitoite</a></li>
+  <li class="c018"><a href="/article/03-0823-bernician-series/bernician_series">Bernician Series</a></li>
+  <li class="c018"><a href="/article/03-0838-beryl/beryl">Beryl</a></li>
+  <li class="c018"><a href="/article/03-0839-beryllonite/beryllonite">Beryllonite</a></li>
+  <li class="c018"><a href="/article/03-0854-beudant-fran-ois-sulpice/beudant__françois_sulpice">Beudant, François S.</a></li>
+  <li class="c018"><a href="/article/03-0860-beyrich-heinrich-ernst-von/beyrich__heinrich_ernst_von">Beyrich, H. E. von</a></li>
+  <li class="c018"><a href="/article/03-0947-bigsby-john-jeremiah/bigsby__john_jeremiah">Bigsby, J. J.</a></li>
+  <li class="c018"><a href="/article/03-0972-binney-edward-william/binney__edward_william">Binney, E. W.</a></li>
+  <li class="c018"><a href="/article/03-0980-biotite/biotite">Biotite</a></li>
+  <li class="c018"><a href="/article/04-0024-bismuthite/bismuthite">Bismuthite</a></li>
+  <li class="c018"><a href="/article/04-0027-bitumen/bitumen">Bitumen</a></li>
+  <li class="c018"><a href="/article/04-0054-blanford-william-thomas/blanford__william_thomas">Blanford, W. T.</a></li>
+  <li class="c018"><a href="/article/04-0069-blende/blende">Blende, or Sphalerite</a></li>
+  <li class="c018"><a href="/article/04-0098-bloodstone/bloodstone">Bloodstone</a></li>
+  <li class="c018"><a href="/article/04-0108-boase-henry-samuel/boase__henry_samuel">Boase, Henry Samuel</a></li>
+  <li class="c018"><a href="/article/04-0171-bole/bole">Bole</a></li>
+  <li class="c018"><a href="/article/04-0194-bomb/bomb">Bomb</a></li>
+  <li class="c018"><a href="/article/04-0216-bone-bed/bone_bed">Bone Bed</a></li>
+  <li class="c018">Bonney, Thomas George</li>
+  <li class="c018"><a href="/article/04-0256-boracite/boracite">Boracite</a></li>
+  <li class="c018">Born, I. von</li>
+  <li class="c018"><a href="/article/04-0282-borolanite/borolanite">Borolanite</a></li>
+  <li class="c018"><a href="/article/04-0291-bort/bort">Bort, or Boart</a></li>
+  <li class="c018"><a href="/article/04-0312-bostonite/bostonite">Bostonite</a></li>
+  <li class="c018">Boucher de Crévecoeur de Perthes, J.</li>
+  <li class="c018"><a href="/article/04-0330-bou-ami/boué__ami">Boué, Ami</a></li>
+  <li class="c018"><a href="/article/04-0334-boulder/boulder">Boulder</a></li>
+  <li class="c018"><a href="/article/04-0334-boulder-clay/boulder_clay">Boulder Clay</a></li>
+  <li class="c018"><a href="/article/04-0348-bournonite/bournonite">Bournonite</a></li>
+  <li class="c018"><a href="/article/04-0352-bovey-beds/bovey_beds">Bovey Beds</a></li>
+  <li class="c018"><a href="/article/04-0358-bowerbank-james-scott/bowerbank__james_scott">Bowerbank, J. S.</a></li>
+  <li class="c018"><a href="/article/04-0381-bracklesham-beds/bracklesham_beds">Bracklesham Beds</a></li>
+  <li class="c018"><a href="/article/04-0387-bradford-clay/bradford_clay">Bradford Clay</a></li>
+  <li class="c018"><a href="/article/04-0442-brander-gustavus/brander__gustavus">Brander, Gustavus</a></li>
+  <li class="c018"><a href="/article/04-0500-breccia/breccia">Breccia</a></li>
+  <li class="c018"><a href="/article/04-0510-breislak-scipione/breislak__scipione">Breislak, Scipione</a></li>
+  <li class="c018"><a href="/article/04-0603-bristow-henry-william/bristow__henry_william">Bristow, H. W.</a></li>
+  <li class="c018"><a href="/article/04-0645-s2/brocchi__giovanni_battista">Brocchi, G. B.</a></li>
+  <li class="c018"><a href="/article/04-0646-s2/brochant_de_villiers__andré_jean_françois_marie">Brochant de Villiers, A. J. F. M.</a></li>
+  <li class="c018"><a href="/article/04-0646-s3/brochantite">Brochantite</a></li>
+  <li class="c018"><a href="/article/04-0648-s7/brodie__peter_bellinger">Brodie, P. B.</a></li>
+  <li class="c018">Brogger, W. C.</li>
+  <li class="c018"><a href="/article/04-0657-s2/bromlite">Bromlite</a></li>
+  <li class="c018"><a href="/article/04-0660-s2/brongniart__alexandre">Brongniart, Alexandre</a></li>
+  <li class="c018"><a href="/article/04-0660-s3/bronn__heinrich_georg">Bronn, Heinrich Georg</a></li>
+  <li class="c018"><a href="/article/04-0664-s4/bronzite">Bronzite</a></li>
+  <li class="c018"><a href="/article/04-0669-s2/brookite">Brookite</a></li>
+  <li class="c018"><a href="/article/04-0700-s5/brucite">Brucite</a></li>
+  <li class="c018"><a href="/article/04-0701-br-ckmann-franz-ernst/brückmann__franz_ernst">Brückmann, Franz Ernst</a></li>
+  <li class="c018">Buch, Baron von</li>
+  <li class="c018"><a href="/article/04-0754-s4/buckland__william">Buckland, William</a></li>
+  <li class="c018"><a href="/article/04-0824-s3/bunter">Bunter</a></li>
+  <li class="c018"><a href="/article/04-0930-bytownite/bytownite">Bytownite</a></li>
+  <li class="c018"><a href="/article/04-0975-s5/cainozoic">Cainozoic</a></li>
+  <li class="c018"><a href="/article/04-0978-s1/cairngorm">Cairngorm</a></li>
+  <li class="c018"><a href="/article/04-0993-s4/calamine">Calamine (Smithsonite)</a></li>
+  <li class="c018"><a href="/article/04-0996-s4/calcite">Calcite</a></li>
+  <li class="c018"><a href="/article/05-0070-callovian/callovian">Callovian</a></li>
+  <li class="c018"><a href="/article/05-0098-cambrian-system/cambrian_system">Cambrian System</a></li>
+  <li class="c018"><a href="/article/05-0190-cancrin-franz-ludwig-von/cancrin__franz_ludwig_von">Cancrin, F. L. von</a></li>
+  <li class="c018"><a href="/article/05-0313-caradoc-series/caradoc_series">Caradoc Series</a></li>
+  <li class="c018"><a href="/article/05-0320-carbonado/carbonado">Carbonado</a></li>
+  <li class="c018"><a href="/article/05-0322-carboniferous-system/carboniferous_system">Carboniferous System</a></li>
+  <li class="c018"><a href="/article/05-0378-carnelian/carnelian">Carnelian</a></li>
+  <li class="c018"><a href="/article/05-0477-cassiterite/cassiterite">Cassiterite</a></li>
+  <li class="c018"><a href="/article/05-0556-cat-s-eye/cat_s-eye">Cat’s-eye</a></li>
+  <li class="c018"><a href="/article/05-0598-cave/cave">Cave</a></li>
+  <li class="c018"><a href="/article/05-0625-celestines/celestines">Celestine</a></li>
+  <li class="c018"><a href="/article/05-0796-cerargyrite/cerargyrite">Cerargyrite</a></li>
+  <li class="c018">Cerussite</li>
+  <li class="c018"><a href="/article/05-0821-chabazite/chabazite">Chabazite</a></li>
+  <li class="c018"><a href="/article/05-0839-chalcedony/chalcedony">Chalcedony</a></li>
+  <li class="c018"><a href="/article/05-0842-chalk/chalk">Chalk</a></li>
+  <li class="c018"><a href="/article/05-0848-chalybite/chalybite">Chalybite</a></li>
+  <li class="c018"><a href="/article/05-0983-charnockite/charnockite">Charnockite</a></li>
+  <li class="c018"><a href="/article/06-0153-childrenite/childrenite">Childrenite</a></li>
+  <li class="c018"><a href="/article/06-0272-chlorite/chlorite">Chlorite</a></li>
+  <li class="c018"><a href="/article/06-0312-chromite/chromite">Chromite</a></li>
+  <li class="c018"><a href="/article/06-0336-chrysoberyl/chrysoberyl">Chrysoberyl</a></li>
+  <li class="c018"><a href="/article/06-0336-chrysocolla/chrysocolla">Chrysocolla</a></li>
+  <li class="c018"><a href="/article/06-0336-chrysolite/chrysolite">Chrysolite</a></li>
+  <li class="c018"><a href="/article/06-0336-chrysoprase/chrysoprase">Chrysoprase</a></li>
+  <li class="c018"><a href="/article/06-0392-cinnabar/cinnabar">Cinnabar</a></li>
+  <li class="c018">Cinnamon Stone</li>
+  <li class="c018"><a href="/article/06-0463-clarke-william-branwhite/clarke__william_branwhite">Clarke, William B.</a></li>
+  <li class="c018"><a href="/article/06-0488-clay/clay">Clay</a></li>
+  <li class="c018"><a href="/article/06-0491-clay-with-flints/clay-with-flints">Clay-with-Flints</a></li>
+  <li class="c018">Clinoclastite</li>
+  <li class="c018"><a href="/article/06-0548-clintonite/clintonite">Clintonite</a></li>
+  <li class="c018"><a href="/article/06-0574-close-maxwell-henry/close__maxwell_henry">Close, Maxwell H.</a></li>
+  <li class="c018"><a href="/article/06-0624-cobaltite/cobaltite">Cobaltite</a></li>
+  <li class="c018"><a href="/article/06-0686-colemanite/colemanite">Colemanite</a></li>
+  <li class="c018"><a href="/article/06-0762-columbite/columbite">Columbite</a></li>
+  <li class="c018"><a href="/article/06-0864-concretion/concretion">Concretion</a></li>
+  <li class="c018"><a href="/article/06-0937-conglomerate/conglomerate">Conglomerate</a></li>
+  <li class="c018"><a href="/article/06-0988-connellite/connellite">Connellite</a></li>
+  <li class="c018"><a href="/article/07-0085-conybeare-william-daniel/conybeare__william_daniel">Conybeare, W. D.</a></li>
+  <li class="c018"><a href="/article/07-0109-copalite/copalite">Copalite, or Copaline</a></li>
+  <li class="c018"><a href="/article/07-0109-cope-edward-drinker/cope__edward_drinker">Cope, Edward D.</a></li>
+  <li class="c018"><a href="/article/07-0127-copper-glance/copper-glance">Copper-glance</a></li>
+  <li class="c018"><a href="/article/07-0128-copper-pyrites/copper-pyrites">Copper-pyrites, or Chalcopyrite</a></li>
+  <li class="c018"><a href="/article/07-0128-coprolites/coprolites">Coprolites</a></li>
+  <li class="c018"><a href="/article/07-0148-corallian/corallian">Corallian</a></li>
+  <li class="c018"><a href="/article/07-0180-cornbrash/cornbrash">Cornbrash</a></li>
+  <li class="c018"><a href="/article/07-0224-corundum/corundum">Corundum</a></li>
+  <li class="c018"><a href="/article/07-0269-cotta-bernhard-von/cotta__bernhard_von">Cotta, Bernard von</a></li>
+  <li class="c018"><a href="/article/07-0358-covellite/covellite">Covellite</a></li>
+  <li class="c018"><a href="/article/07-0401-crater/crater">Crater</a></li>
+  <li class="c018"><a href="/article/07-0412-credner-carl-friedrich-heinrich/credner__carl_friedrich_heinrich">Credner, C. F. H.</a></li>
+  <li class="c018"><a href="/article/07-0434-cretaceous-system/cretaceous_system">Cretaceous System</a></li>
+  <li class="c018"><a href="/article/07-0499-crocidolite/crocidolite">Crocidolite</a></li>
+  <li class="c018"><a href="/article/07-0501-crocoite/crocoite">Crocoite</a></li>
+  <li class="c018"><a href="/article/07-0504-croll-james/croll__james">Croll, James</a></li>
+  <li class="c018"><a href="/article/07-0532-crosskey-henry-william/crosskey__henry_william">Crosskey, Henry W.</a></li>
+  <li class="c018"><a href="/article/07-0584-cryolite/cryolite">Cryolite</a></li>
+  <li class="c018"><a href="/article/07-0590-crystallite/crystallite">Crystallite</a></li>
+  <li class="c018"><a href="/article/07-0591-crystallography/crystallography">Crystallography</a></li>
+  <li class="c018"><a href="/article/07-0639-culm/culm">Culm</a></li>
+  <li class="c018"><a href="/article/07-0650-cumming-joseph-george/cumming__joseph_george">Cumming, Joseph G.</a></li>
+  <li class="c018"><a href="/article/07-0657-cuprite/cuprite">Cuprite</a></li>
+  <li class="c018"><a href="/article/07-0702-cyanite/cyanite">Cyanite</a></li>
+  <li class="c018"><a href="/article/07-0750-dacite/dacite">Dacite</a></li>
+  <li class="c018"><a href="/article/07-0801-dalradian/dalradian">Dalradian</a></li>
+  <li class="c018"><a href="/article/07-0817-dana-james-dwight/dana__james_dwight">Dana, James D.</a></li>
+  <li class="c018"><a href="/article/07-0817-danburite/danburite">Danburite</a></li>
+  <li class="c018"><a href="/article/07-0870-datolite/datolite">Datolite</a></li>
+  <li class="c018"><a href="/article/07-0870-daubeny-charles-giles-bridle/daubeny__charles_giles_bridle">Daubeny, Charles G. B.</a></li>
+  <li class="c018">Daubree, G. A.</li>
+  <li class="c018"><a href="/article/07-0888-davidson-thomas/davidson__thomas">Davidson, Thomas</a></li>
+  <li class="c018"><a href="/article/07-0898-dawson-sir-john-william/dawson__sir_john_william">Dawson, Sir John W.</a></li>
+  <li class="c018"><a href="/article/07-0936-dechen-ernst-heinrich-karl-von/dechen__ernst_heinrich_karl_von">Dechen, E. H. K. von</a></li>
+  <li class="c018"><a href="/article/07-0964-de-la-beche/de_la_beche__sir_henry_thomas">De la Beche, Sir H. T.</a></li>
+  <li class="c018"><a href="/article/07-0977-delesse-achille-ernest-oscar-joseph/delesse__achille_ernest_oscar_joseph">Delesse, A. E. O. J.</a></li>
+  <li class="c018"><a href="/article/07-0999-deluc-jean-andr/deluc__jean_andre">Deluc, Jean Andre</a></li>
+  <li class="c018"><a href="/article/07-1003-demantoid/demantoid">Demantoid</a></li>
+  <li class="c018"><a href="/article/08-0106-des-cloizeaux-alfred-louis-olivier-legrand/des_cloizeaux__alfred_louis_olivier_legrand">Des Cloizeaux, Alfred</a></li>
+  <li class="c018"><a href="/article/08-0106-descloizite/descloizite">Descloizite</a></li>
+  <li class="c018"><a href="/article/08-0109-deshayes-g-rard-paul/deshayes__gérard_paul">Deshayes, G. P.</a></li>
+  <li class="c018"><a href="/article/08-0111-deslongchamps-jacques-amand-eudes/deslongchamps__jacques_amand_eudes-">Deslongchamps, J. A. E.</a></li>
+  <li class="c018"><a href="/article/08-0112-desmarest-nicolas/desmarest__nicolas">Desmarest, Nicolas</a></li>
+  <li class="c018"><a href="/article/08-0116-desnoyers-jules-pierre-fran-ois-stanislas/desnoyers__jules_pierre_françois_stanislas">Desnoyers, J. P. F. S.</a></li>
+  <li class="c018">Desor, P. J. E.</li>
+  <li class="c018"><a href="/article/08-0139-devonian-system/devonian_system">Devonian System</a></li>
+  <li class="c018"><a href="/article/08-0159-diabase/diabase">Diabase</a></li>
+  <li class="c018"><a href="/article/08-0171-diallage/diallage">Diallage</a></li>
+  <li class="c018"><a href="/article/08-0173-diamond/diamond">Diamond</a></li>
+  <li class="c018"><a href="/article/08-0185-diaspore/diaspore">Diaspore</a></li>
+  <li class="c018"><a href="/article/08-0195-dick-robert/dick__robert">Dick, Robert</a></li>
+  <li class="c018"><a href="/article/08-0290-diluvium/diluvium">Diluvium</a></li>
+  <li class="c018"><a href="/article/08-0305-diopside/diopside">Diopside</a></li>
+  <li class="c018"><a href="/article/08-0306-dioptase/dioptase">Dioptase</a></li>
+  <li class="c018"><a href="/article/08-0306-diorite/diorite">Diorite</a></li>
+  <li class="c018"><a href="/article/08-0408-dolerite/dolerite">Dolerite</a></li>
+  <li class="c018"><a href="/article/08-0413-dolomieu-d-odat-guy-silvain-tancr-de-gratet-de/dolomieu__déodat_guy_silvain_tancrède_gratet_de">Dolomieu</a></li>
+  <li class="c018"><a href="/article/08-0414-dolomite/dolomite">Dolomite</a></li>
+  <li class="c018"><a href="/article/08-0442-dopplerite/dopplerite">Dopplerite</a></li>
+  <li class="c018"><a href="/article/08-0604-drift/drift">Drift</a></li>
+  <li class="c018">Dufrenoy, O. P. A. P.</li>
+  <li class="c018"><a href="/article/08-0692-dumont-andr-hubert/dumont__andré_hubert">Dumont, André Hubert</a></li>
+  <li class="c018"><a href="/article/08-0694-dumortierite/dumortierite">Dumortierite</a></li>
+  <li class="c018"><a href="/article/08-0698-duncan-peter-martin/duncan__peter_martin">Duncan, Peter Martin</a></li>
+  <li class="c018"><a href="/article/08-0738-durocher-joseph-marie-elisabeth/durocher__joseph_marie_elisabeth">Durocher, J. M. E.</a></li>
+  <li class="c018"><a href="/article/08-0844-earth-pillar/earth_pillar">Earth pillar</a></li>
+  <li class="c018"><a href="/article/08-0844-earthquake/earthquake">Earthquake</a></li>
+  <li class="c018"><a href="/article/08-0922-eclogite/eclogite">Eclogite</a></li>
+  <li class="c018"><a href="/article/09-0025-egerton-sir-philip-de-malpas-grey/egerton__sir_philip_de_malpas_grey">Egerton, Sir P. de M.</a></li>
+  <li class="c018"><a href="/article/09-0147-ehrenberg-christian-gottfried/ehrenberg__christian_gottfried">Ehrenberg, C. G.</a></li>
+  <li class="c018"><a href="/article/09-0149-eichwald-karl-eduard-von/eichwald__karl_eduard_von">Eichwald, K. E. von</a></li>
+  <li class="c018"><a href="/article/09-0177-elaterite/elaterite">Elaterite</a></li>
+  <li class="c018">Elie De Beaumont</li>
+  <li class="c018"><a href="/article/09-0355-emerald/emerald">Emerald</a></li>
+  <li class="c018"><a href="/article/09-0358-emery/emery">Emery</a></li>
+  <li class="c018"><a href="/article/09-0367-emmons-ebenezer/emmons__ebenezer">Emmons, Ebenezer</a></li>
+  <li class="c018"><a href="/article/09-0679-s6/enniskillen">Enniskillen, 3rd earl of</a></li>
+  <li class="c018"><a href="/article/09-0686-s2/enstatite">Enstatite</a></li>
+  <li class="c018"><a href="/article/09-0693-eocene/eocene">Eocene</a></li>
+  <li class="c018"><a href="/article/09-0720-s2/epidiorite">Epidiorite</a></li>
+  <li class="c018"><a href="/article/09-0721-s2/epidosite">Epidosite</a></li>
+  <li class="c018"><a href="/article/09-0721-s3/epidote">Epidote</a></li>
+  <li class="c018"><a href="/article/09-0789-s2/erubescite">Erubescite</a></li>
+  <li class="c018"><a href="/article/09-0790-s3/erythrite">Erythrite</a></li>
+  <li class="c018"><a href="/article/09-0797-s2/escher_von_der_linth__arnold">Escher von der Linth</a></li>
+  <li class="c018"><a href="/article/09-0800-esker/esker">Esker</a></li>
+  <li class="c018"><a href="/article/09-0840-s2/etheridge__robert">Etheridge, Robert</a></li>
+  <li class="c018">Ettingshausen, Baron</li>
+  <li class="c018"><a href="/article/09-0910-s3/euclase">Euclase</a></li>
+  <li class="c018"><a href="/article/10-0166-s3/fall-line">Fall-line</a></li>
+  <li class="c018"><a href="/article/10-0188-s3/farey__john">Farey, John</a></li>
+  <li class="c018"><a href="/article/10-0217-faujas-de-saint-fond-barth-lemy/faujas_de_saint-fond__barthélemy">Faujas de Saint-Fond</a></li>
+  <li class="c018"><a href="/article/10-0218-fault/fault">Fault</a></li>
+  <li class="c018"><a href="/article/10-0226-favre-jean-alphonse/favre__jean_alphonse">Favre, Jean Alphonse</a></li>
+  <li class="c018"><a href="/article/10-0256-felsite/felsite">Felsite</a></li>
+  <li class="c018"><a href="/article/10-0257-felspar/felspar">Felspar</a></li>
+  <li class="c018"><a href="/article/10-0456-s5/fitton__william_henry">Fitton, William Henry</a></li>
+  <li class="c018"><a href="/article/10-0542-flint-city/flint__city_">Flint</a></li>
+  <li class="c018"><a href="/article/10-0599-fluor-spar/fluor-spar">Fluor-spar</a></li>
+  <li class="c018"><a href="/article/10-0608-s2/flysch">Flysch</a></li>
+  <li class="c018"><a href="/article/10-0618-s2/fold">Fold</a></li>
+  <li class="c018"><a href="/article/10-0658-s2/forbes__david">Forbes, David</a></li>
+  <li class="c018"><a href="/article/10-0661-s2/forchhammer__johann_georg">Forchhammer, J. G.</a></li>
+  <li class="c018"><a href="/article/10-0753-s3/foster__sir_clement_le_neve">Foster, Sir C. le Neve</a></li>
+  <li class="c018">Fouque, F. A.</li>
+  <li class="c018"><a href="/article/10-0779-s4/fournet__joseph_jean_baptiste_xavier">Fournet, J. J. B. X.</a></li>
+  <li class="c018"><a href="/article/10-0788-fox-robert-were/fox__robert_were">Fox, Robert Were</a></li>
+  <li class="c018"><a href="/article/11-0046-s4/franklinite">Franklinite</a></li>
+  <li class="c018">Freestone</li>
+  <li class="c018"><a href="/article/11-0106-freieslebenite/freieslebenite">Freieslebenite</a></li>
+  <li class="c018"><a href="/article/11-0306-fulgurite/fulgurite">Fulgurite</a></li>
+  <li class="c018"><a href="/article/11-0311-s3/fuller_s_earth">Fuller’s Earth</a></li>
+  <li class="c018"><a href="/article/11-0313-fumarole/fumarole">Fumarole</a></li>
+  <li class="c018"><a href="/article/11-0395-gabbro/gabbro">Gabbro</a></li>
+  <li class="c018"><a href="/article/11-0417-s5/galena">Galena</a></li>
+  <li class="c018"><a href="/article/11-0488-garnet/garnet">Garnet</a></li>
+  <li class="c018"><a href="/article/11-0549-s6/gaudry__jean_albert">Gaudry, Jean Albert</a></li>
+  <li class="c018"><a href="/article/11-0552-s2/gault">Gault</a></li>
+  <li class="c018"><a href="/article/11-0570-geikie-sir-archibald/geikie__sir_archibald">Geikie, Sir Archibald</a></li>
+  <li class="c018"><a href="/article/11-0571-geikie-james/geikie__james">Geikie, James</a></li>
+  <li class="c018"><a href="/article/11-0571-s6/geinitz__hans_bruno">Geinitz, H. B.</a></li>
+  <li class="c018"><a href="/article/11-0578-gem/gem">Gem</a></li>
+  <li class="c018"><a href="/article/11-0658-s4/geology">Geology</a></li>
+  <li class="c018"><a href="/article/11-0933-s3/gesner__abraham">Gesner, Abraham</a></li>
+  <li class="c018"><a href="/article/11-0937-geyser/geyser">Geyser</a></li>
+  <li class="c018"><a href="/article/12-0015-giebel-christoph-gottfried-andreas/giebel__christoph_gottfried_andreas">Giebel, C. G. A.</a></li>
+  <li class="c018"><a href="/article/12-0020-s4/gilbert__grove_karl">Gilbert, Grove K.</a></li>
+  <li class="c018"><a href="/article/12-0039-gilsonite/gilsonite">Gilsonite</a></li>
+  <li class="c018"><a href="/article/12-0069-s6/glacial_period">Glacial Period</a></li>
+  <li class="c018"><a href="/article/12-0132-s1/glauconite">Glauconite</a></li>
+  <li class="c018"><a href="/article/12-0166-s2/gneiss">Gneiss</a></li>
+  <li class="c018"><a href="/article/12-0195-s2/godwin-austen__robert_alfred_cloyne">Godwin-Austen, R. A. C.</a></li>
+  <li class="c018"><a href="/article/12-0228-s3/goldfuss__georg_august">Goldfuss, G. A.</a></li>
+  <li class="c018"><a href="/article/12-0251-s2/goniometer">Goniometer</a></li>
+  <li class="c018"><a href="/article/12-0289-g-thite/göthite">Göthite, or Goethite</a></li>
+  <li class="c018"><a href="/article/12-0368-granite/granite">Granite</a></li>
+  <li class="c018"><a href="/article/12-0377-s5/granulite">Granulite</a></li>
+  <li class="c018"><a href="/article/12-0381-graphite/graphite">Graphite</a></li>
+  <li class="c018"><a href="/article/12-0399-gravel/gravel">Gravel, or Pebble Beds</a></li>
+  <li class="c018"><a href="/article/12-0559-s2/green__alexander_henry">Green, A. H.</a></li>
+  <li class="c018"><a href="/article/12-0574-s2/greenockite">Greenockite</a></li>
+  <li class="c018"><a href="/article/12-0575-s2/greenough__george_bellas">Greenough, G. B.</a></li>
+  <li class="c018"><a href="/article/12-0576-s2/greensand">Greensand</a></li>
+  <li class="c018"><a href="/article/12-0602-s7/greisen">Greisen</a></li>
+  <li class="c018"><a href="/article/12-0617-greywacke/greywacke">Greywacke</a></li>
+  <li class="c018"><a href="/article/12-0621-s4/griffith__sir_richard_john">Griffith, Sir Richard J.</a></li>
+  <li class="c018"><a href="/article/12-0646-s4/groth__paul_heinrich_von">Groth, P. H. von</a></li>
+  <li class="c018">Guettard, J. E.</li>
+  <li class="c018">Gumbel, K. W. von</li>
+  <li class="c018"><a href="/article/12-0772-s3/guyot__arnold_henry">Guyot, A. H.</a></li>
+  <li class="c018"><a href="/article/12-0793-s3/gypsum">Gypsum</a></li>
+  <li class="c018"><a href="/article/12-0807-s4/haast__sir_johann_franz_julius_von">Haast, Sir J. F. J. von</a></li>
+  <li class="c018"><a href="/article/12-0829-s2/haematite">Haematite</a></li>
+  <li class="c018">Haidinger, W. K. von</li>
+  <li class="c018"><a href="/article/12-0872-hall-joseph/hall__joseph">Hall, James</a></li>
+  <li class="c018"><a href="/article/12-0872-hall-sir-james/hall__sir_james">Hall, Sir James</a></li>
+  <li class="c018">Halleflinta</li>
+  <li class="c018"><a href="/article/12-0978-s8/harkness__robert">Harkness, Robert</a></li>
+  <li class="c018"><a href="/article/13-0023-s2/harmotome">Harmotome</a></li>
+  <li class="c018"><a href="/article/13-0075-hatchettite/hatchettite">Hatchettite</a></li>
+  <li class="c018">Hauer, F. von</li>
+  <li class="c018"><a href="/article/13-0079-s3/haughton__samuel">Haughton, Samuel</a></li>
+  <li class="c018"><a href="/article/13-0083-s3/hausmann__johann_friedrich_ludwig">Hausmann, J. F. L.</a></li>
+  <li class="c018"><a href="/article/13-0122-s3/hayden__ferdinand_vandeveer">Hayden, F. V.</a></li>
+  <li class="c018">Hebert, Edmond</li>
+  <li class="c018"><a href="/article/13-0209-s4/heddle__matthew_forster">Heddle, M. F.</a></li>
+  <li class="c018"><a href="/article/13-0212-s4/heer__oswald">Heer, Oswald</a></li>
+  <li class="c018"><a href="/article/13-0226-s2/heim__albert_von_st_gallen">Heim, A. von St. Gallen</a></li>
+  <li class="c018"><a href="/article/13-0259-helmersen-gregor-von/helmersen__gregor_von">Helmersen, Gregor von</a></li>
+  <li class="c018"><a href="/article/13-0271-hemimorphite/hemimorphite">Hemimorphite</a></li>
+  <li class="c018"><a href="/article/13-0316-henslow-john-stevens/henslow__john_stevens">Henslow, John Stevens</a></li>
+  <li class="c018"><a href="/article/13-0316-henwood-william-jory/henwood__william_jory">Henwood, William Jory</a></li>
+  <li class="c018"><a href="/article/13-0432-s2/heulandite">Heulandite</a></li>
+  <li class="c018"><a href="/article/13-0464-s3/hicks__henry">Hicks, Henry</a></li>
+  <li class="c018"><a href="/article/13-0465-s5/hiddenite">Hiddenite</a></li>
+  <li class="c018"><a href="/article/13-0549-hitchcock-edward/hitchcock__edward_">Hitchcock, Edward</a></li>
+  <li class="c018"><a href="/article/13-0570-s5/hochstetter__ferdinand_christian_von">Hochstetter, F. C. von</a></li>
+  <li class="c018"><a href="/article/13-0635-s4/holocene">Holocene</a></li>
+  <li class="c018"><a href="/article/13-0669-hone/hone">Hone</a></li>
+  <li class="c018"><a href="/article/13-0702-hopkins-william/hopkins__william">Hopkins, William</a></li>
+  <li class="c018"><a href="/article/13-0724-s2/hornblende">Hornblende</a></li>
+  <li class="c018"><a href="/article/13-0727-horner-leonard/horner__leonard">Horner, Leonard</a></li>
+  <li class="c018">Hornes, Moritz</li>
+  <li class="c018"><a href="/article/13-0727-hornfels/hornfels">Hornfels</a></li>
+  <li class="c018"><a href="/article/13-0894-s7/hulke__john_whitaker">Hulke, J. W.</a></li>
+  <li class="c018"><a href="/article/13-0909-humite/humite">Humite</a></li>
+  <li class="c018"><a href="/article/13-0961-hunt-robert/hunt__robert">Hunt, Robert</a></li>
+  <li class="c018"><a href="/article/13-0962-hunt-thomas-sterry/hunt__thomas_sterry">Hunt, T. Sterry</a></li>
+  <li class="c018"><a href="/article/14-0028-s1/hutton__james">Hutton, James</a></li>
+  <li class="c018">Hyacinth</li>
+  <li class="c018"><a href="/article/14-0212-hypersthene/hypersthene">Hypersthene</a></li>
+  <li class="c018"><a href="/article/14-0302-idrialin/idrialin">Idrialin</a></li>
+  <li class="c018"><a href="/article/14-0311-ijolite/ijolite">Ijolite</a></li>
+  <li class="c018"><a href="/article/14-0346-s3/ilmenite">Ilmenite</a></li>
+  <li class="c018"><a href="/article/14-0757-iolite/iolite">Iolite</a></li>
+  <li class="c018"><a href="/article/14-0920-s3/itacolumite">Itacolumite</a></li>
+  <li class="c018"><a href="/article/15-0138-jade/jade">Jade</a></li>
+  <li class="c018"><a href="/article/15-0164-jameson-robert/jameson__robert">Jameson, Robert</a></li>
+  <li class="c018"><a href="/article/15-0301-jargoon/jargoon">Jargoon</a></li>
+  <li class="c018"><a href="/article/15-0301-jarosite/jarosite">Jarosite</a></li>
+  <li class="c018"><a href="/article/15-0304-s3/jasper">Jasper</a></li>
+  <li class="c018"><a href="/article/15-0383-jet/jet">Jet</a></li>
+  <li class="c018"><a href="/article/15-0510-s3/joints">Joints</a></li>
+  <li class="c018"><a href="/article/15-0527-s6/jones__thomas_rupert">Jones, T. Rupert</a></li>
+  <li class="c018"><a href="/article/15-0574-jukes-joseph-beete/jukes__joseph_beete">Jukes, J. B.</a></li>
+  <li class="c018">Jurassic System</li>
+  <li class="c018"><a href="/article/15-0700-kaolin/kaolin">Kaolin</a></li>
+  <li class="c018"><a href="/article/15-0710-karrer-felix/karrer__felix">Karrer, Felix</a></li>
+  <li class="c018"><a href="/article/15-0711-karsten-karl-johann-bernhard/karsten__karl_johann_bernhard">Karsten, K. J. B.</a></li>
+  <li class="c018"><a href="/article/15-0731-s6/kayser__friedrich_heinrich_emanuel">Kayser, F. H. E.</a></li>
+  <li class="c018"><a href="/article/15-0760-s4/kenngott__gustav_adolph">Kenngott, G. A.</a></li>
+  <li class="c018"><a href="/article/15-0795-s2/keuper">Keuper</a></li>
+  <li class="c018"><a href="/article/15-0812-s5/kidd__john">Kidd, John</a></li>
+  <li class="c018"><a href="/article/15-0828-kimeridgian/kimeridgian">Kimeridgian</a></li>
+  <li class="c018"><a href="/article/15-0832-king-clarence/king__clarence">King, Clarence</a></li>
+  <li class="c018"><a href="/article/15-0863-s5/kirwan__richard">Kirwan, Richard</a></li>
+  <li class="c018"><a href="/article/15-0872-s7/kjerulf__theodor">Kjerulf, Theodor</a></li>
+  <li class="c018">Kobell, W. X. F. von</li>
+  <li class="c018"><a href="/article/15-0920-s1/koenig__karl_dietrich_eberhard">Koenig, K. D. E.</a></li>
+  <li class="c018">Koksharov, N. I. von</li>
+  <li class="c018"><a href="/article/15-0930-s4/koninck__laurent_guillaume_de">Koninck, L. G. de</a></li>
+  <li class="c018"><a href="/article/15-0981-kunzite/kunzite">Kunzite</a></li>
+  <li class="c018"><a href="/article/16-0043-labradorite/labradorite">Labradorite</a></li>
+  <li class="c018"><a href="/article/16-0051-laccolite/laccolite">Laccolite</a></li>
+  <li class="c018"><a href="/article/16-0074-s2/lacroix__antoine_françois_alfred">Lacroix, A. F. A.</a></li>
+  <li class="c018"><a href="/article/16-0155-lamprophyres/lamprophyres">Lamprophyres</a></li>
+  <li class="c018"><a href="/article/16-0219-s2/lapilli">Lapilli</a></li>
+  <li class="c018"><a href="/article/16-0219-s3/lapis_lazuli">Lapis Lazuli</a></li>
+  <li class="c018"><a href="/article/16-0227-s2/lapparent__albert_auguste_cochon_de">Lapparent, A. A. C. de</a></li>
+  <li class="c018"><a href="/article/16-0228-s2/lapworth__charles">Lapworth, Charles</a></li>
+  <li class="c018"><a href="/article/16-0251-lasaulx-arnold-constantin-peter-franz-von/lasaulx__arnold_constantin_peter_franz_von">Lasaulx, A. C. P. F. von</a></li>
+  <li class="c018"><a href="/article/16-0260-laterite/laterite">Laterite</a></li>
+  <li class="c018"><a href="/article/16-0301-s3/laumont__françois_pierre_nicholas_gillet_de">Laumont, F. P. N. G. de</a></li>
+  <li class="c018"><a href="/article/16-0309-s4/lava">Lava</a></li>
+  <li class="c018"><a href="/article/16-0340-leadhillite/leadhillite">Leadhillite</a></li>
+  <li class="c018"><a href="/article/16-0375-le-conte-joseph/le_conte__joseph">Le Conte, Joseph</a></li>
+  <li class="c018"><a href="/article/16-0404-s2/lehmann__johann_gottlob">Lehmann, J. G.</a></li>
+  <li class="c018"><a href="/article/16-0484-lepidolite/lepidolite">Lepidolite, or Lithia-Mica</a></li>
+  <li class="c018"><a href="/article/16-0511-s2/lesley">Lesley, J. Peter</a></li>
+  <li class="c018"><a href="/article/16-0523-s4/leucite">Leucite</a></li>
+  <li class="c018">Lévy, A. M.</li>
+  <li class="c018"><a href="/article/16-0543-s2/lewis__henry_carvill">Lewis, Henry Corvill</a></li>
+  <li class="c018"><a href="/article/16-0553-s3/lias">Lias</a></li>
+  <li class="c018"><a href="/article/16-0701-s2/lignite">Lignite</a></li>
+  <li class="c018"><a href="/article/16-0714-limburgite/limburgite">Limburgite</a></li>
+  <li class="c018"><a href="/article/16-0718-limestone/limestone">Limestone</a></li>
+  <li class="c018"><a href="/article/16-0722-limonite/limonite">Limonite</a></li>
+  <li class="c018">Lindstróm, Gustaf</li>
+  <li class="c018"><a href="/article/16-0792-liroconite/liroconite">Liroconite</a></li>
+  <li class="c018"><a href="/article/16-0801-lister-martin/lister__martin">Lister, Martin</a></li>
+  <li class="c018"><a href="/article/16-0850-s3/llandeilo_group">Llandeilo Group</a></li>
+  <li class="c018"><a href="/article/16-0851-llandovery-group/llandovery_group">Llandovery Group</a></li>
+  <li class="c018"><a href="/article/16-0856-llwyd-edward/llwyd__edward">Llwyd, Edward</a></li>
+  <li class="c018"><a href="/article/16-0884-loess/loess">Loess</a></li>
+  <li class="c018"><a href="/article/16-0889-logan-sir-william-edmond/logan__sir_william_edmond">Logan, Sir William E.</a></li>
+  <li class="c018"><a href="/article/16-0992-s2/london_clay">London Clay</a></li>
+  <li class="c018"><a href="/article/16-1011-s6/lonsdale__william">Lonsdale, William</a></li>
+  <li class="c018"><a href="/article/17-0026-lory-charles/lory__charles">Lory, Charles</a></li>
+  <li class="c018"><a href="/article/17-0128-s3/ludlow_group">Ludlow Group</a></li>
+  <li class="c018"><a href="/article/17-0173-lyell-sir-charles/lyell__sir_charles">Lyell, Sir Charles</a></li>
+  <li class="c018"><a href="/article/17-0221-s4/mccoy__sir_frederick">McCoy, Sir Frederick</a></li>
+  <li class="c018"><a href="/article/17-0223-s2/macculloch__john">Macculloch, John</a></li>
+  <li class="c018"><a href="/article/17-0278-maclure-william/maclure__william">Maclure, William</a></li>
+  <li class="c018"><a href="/article/17-0334-magnesite/magnesite">Magnesite</a></li>
+  <li class="c018"><a href="/article/17-0400-s2/magnetite">Magnetite</a></li>
+  <li class="c018"><a href="/article/17-0471-malachite/malachite">Malachite</a></li>
+  <li class="c018"><a href="/article/17-0508-s4/mallet__robert">Mallet, Robert</a></li>
+  <li class="c018"><a href="/article/17-0588-s2/manganite">Manganite</a></li>
+  <li class="c018"><a href="/article/17-0620-s2/mantell__gideon_algernon">Mantell, G. A.</a></li>
+  <li class="c018"><a href="/article/17-0693-marble/marble">Marble</a></li>
+  <li class="c018"><a href="/article/17-0700-s2/marcasite">Marcasite</a></li>
+  <li class="c018">Marcou, J. B.</li>
+  <li class="c018"><a href="/article/17-0753-marl/marl">Marl</a></li>
+  <li class="c018"><a href="/article/17-0812-s3/martin__william">Martin, William</a></li>
+  <li class="c018"><a href="/article/18-0089-s4/meek__fielding_bradford">Meek, F. B.</a></li>
+  <li class="c018"><a href="/article/18-0090-meerschaum/meerschaum">Meerschaum</a></li>
+  <li class="c018"><a href="/article/18-0105-melaconite/melaconite">Melaconite</a></li>
+  <li class="c018"><a href="/article/18-0207-mesozoic-era/mesozoic_era">Mesozoic</a></li>
+  <li class="c018"><a href="/article/18-0238-metamorphism/metamorphism">Metamorphism</a></li>
+  <li class="c018"><a href="/article/18-0275-metasomatism/metasomatism">Metasomatism</a></li>
+  <li class="c018"><a href="/article/18-0283-s3/meteorite">Meteorite</a></li>
+  <li class="c018"><a href="/article/18-0369-s4/meyer__christian_erich_hermann_von">Meyer, C. E. H. von</a></li>
+  <li class="c018"><a href="/article/18-0376-mica/mica">Mica</a></li>
+  <li class="c018"><a href="/article/18-0379-mica-schist/mica-schist">Mica-schist</a></li>
+  <li class="c018"><a href="/article/18-0402-microcline/microcline">Microcline</a></li>
+  <li class="c018"><a href="/article/18-0413-micropegmatite/micropegmatite">Micropegmatite</a></li>
+  <li class="c018"><a href="/article/18-0487-miller-hugh/miller__hugh">Miller, Hugh</a></li>
+  <li class="c018"><a href="/article/18-0489-miller-william-hallowes/miller__william_hallowes">Miller, W. H.</a></li>
+  <li class="c018"><a href="/article/18-0489-millerite/millerite">Millerite</a></li>
+  <li class="c018"><a href="/article/18-0499-s5/millstone_grit">Millstone Grit</a></li>
+  <li class="c018"><a href="/article/18-0519-mimetite/mimetite">Mimetite</a></li>
+  <li class="c018"><a href="/article/18-0528-mineral-deposits/mineral_deposits">Mineral deposits</a></li>
+  <li class="c018"><a href="/article/18-0533-mineralogy/mineralogy">Mineralogy</a></li>
+  <li class="c018">Miocene System</li>
+  <li class="c018">Mispickel</li>
+  <li class="c018"><a href="/article/18-0667-mocha-stone/mocha_stone">Mocha Stone</a></li>
+  <li class="c018"><a href="/article/18-0675-mofetta/mofetta">Mofetta</a></li>
+  <li class="c018"><a href="/article/18-0680-mohs-friedrich/mohs__friedrich">Mohs, Friedrich</a></li>
+  <li class="c018"><a href="/article/18-0681-mojsisovics-von-mojsvar-johann-august-georg-edmund/mojsisovics_von_mojsvar__johann_august_georg_edmund">Mojsisovics von Mojsvar, J. A. G. E.</a></li>
+  <li class="c018"><a href="/article/18-0682-moldavite/moldavite">Moldavite</a></li>
+  <li class="c018"><a href="/article/18-0711-molybdenite/molybdenite">Molybdenite</a></li>
+  <li class="c018"><a href="/article/18-0722-s2/monazite">Monazite</a></li>
+  <li class="c018"><a href="/article/18-0831-monzonite/monzonite">Monzonite</a></li>
+  <li class="c018"><a href="/article/18-0839-moonstone/moonstone">Moonstone</a></li>
+  <li class="c018"><a href="/article/18-0902-s2/morris__john">Morris, John</a></li>
+  <li class="c018"><a href="/article/19-0025-s4/münster__georg">Münster, Georg, count zu</a></li>
+  <li class="c018"><a href="/article/19-0046-murchison-sir-roderick-impey/murchison__sir_roderick_impey">Murchison, Sir R. I.</a></li>
+  <li class="c018"><a href="/article/19-0059-muschelkalk/muschelkalk">Muschelkalk</a></li>
+  <li class="c018"><a href="/article/19-0065-muscovite/muscovite">Muscovite</a></li>
+  <li class="c018"><a href="/article/19-0128-mylonite/mylonite">Mylonite</a></li>
+  <li class="c018"><a href="/article/19-0251-napoleonite/napoleonite">Napoleonite</a></li>
+  <li class="c018"><a href="/article/19-0288-natrolite/natrolite">Natrolite</a></li>
+  <li class="c018"><a href="/article/19-0293-naumann-georg-amadeus-carl-friedrich/naumann__georg_amadeus_carl_friedrich">Naumann, G. A. C. F.</a></li>
+  <li class="c018"><a href="/article/19-0353-neck/neck">Neck</a></li>
+  <li class="c018"><a href="/article/19-0390-neocomian/neocomian">Neocomian</a></li>
+  <li class="c018"><a href="/article/19-0401-nepheline/nepheline">Nepheline</a></li>
+  <li class="c018"><a href="/article/19-0401-nepheline-syenite/nepheline-syenite">Nepheline-syenite</a></li>
+  <li class="c018"><a href="/article/19-0402-nephelinites/nephelinites">Nephelinites</a></li>
+  <li class="c018"><a href="/article/19-0444-neumayr-melchior/neumayr__melchior">Neumayr, Melchior</a></li>
+  <li class="c018"><a href="/article/19-0483-s3/newberry__john_strong">Newberry, J. S.</a></li>
+  <li class="c018"><a href="/article/19-0673-s3/niccolite">Niccolite</a></li>
+  <li class="c018"><a href="/article/19-0684-s2/nicholson__henry_alleyne">Nicholson, H. A.</a></li>
+  <li class="c018"><a href="/article/19-0688-s2/nicol__james">Nicol, James</a></li>
+  <li class="c018"><a href="/article/19-0738-s5/nitre">Nitre</a></li>
+  <li class="c018"><a href="/article/19-0758-noeggerath-johann-jacob/noeggerath__johann_jacob">Noeggerath, J. J.</a></li>
+  <li class="c018"><a href="/article/19-0999-obsidian/obsidian">Obsidian</a></li>
+  <li class="c018"><a href="/article/20-0097-s5/oldham__thomas">Oldham, Thomas</a></li>
+  <li class="c018"><a href="/article/20-0105-s3/oligocene_system">Oligocene System</a></li>
+  <li class="c018"><a href="/article/20-0106-s2/oligoclase">Oligoclase</a></li>
+  <li class="c018"><a href="/article/20-0111-s4/olivenite">Olivenite</a></li>
+  <li class="c018"><a href="/article/20-0113-s2/olivine">Olivine</a></li>
+  <li class="c018">Omalius d’Halloy, J. d’</li>
+  <li class="c018"><a href="/article/20-0144-onyx/onyx">Onyx</a></li>
+  <li class="c018"><a href="/article/20-0144-oolite/oolite">Oolite</a></li>
+  <li class="c018"><a href="/article/20-0146-s6/opal">Opal</a></li>
+  <li class="c018"><a href="/article/20-0165-oppel-carl-albert/oppel__carl_albert">Oppel, C. A.</a></li>
+  <li class="c018"><a href="/article/20-0190-orbigny-alcide-dessalines-d/orbigny__alcide_dessalines_d_">Orbigny, A. D. d’</a></li>
+  <li class="c018"><a href="/article/20-0268-s1/ordovician_system">Ordovician System</a></li>
+  <li class="c018"><a href="/article/20-0366-orthoclase/orthoclase">Orthoclase</a></li>
+  <li class="c018">Osborn, H. F.</li>
+  <li class="c018"><a href="/article/20-0449-oxfordian/oxfordian">Oxfordian</a></li>
+  <li class="c018"><a href="/article/20-0464-ozokerite/ozokerite">Ozokerite, or Ozocerite</a></li>
+  <li class="c018"><a href="/article/20-0648-palaeozoic-era/palaeozoic_era">Palaeozoic</a></li>
+  <li class="c018"><a href="/article/20-0887-s2/parisite">Parisite</a></li>
+  <li class="c018"><a href="/article/20-0894-s2/parkinson__james">Parkinson, James</a></li>
+  <li class="c018"><a href="/article/21-0031-peach-charles-william/peach__charles_william">Peach, C. W.</a></li>
+  <li class="c018"><a href="/article/21-0070-pegmatite/pegmatite">Pegmatite</a></li>
+  <li class="c018"><a href="/article/21-0101-s5/pendleside_series">Pendleside Series</a></li>
+  <li class="c018"><a href="/article/21-0102-s4/pengelly__william">Pengelly, William</a></li>
+  <li class="c018"><a href="/article/21-0142-s2/peperino">Peperino</a></li>
+  <li class="c018"><a href="/article/21-0164-peridot/peridot">Peridot</a></li>
+  <li class="c018"><a href="/article/21-0165-peridotite/peridotite">Peridotite</a></li>
+  <li class="c018"><a href="/article/21-0191-perlite/perlite">Perlite</a></li>
+  <li class="c018">Permian System</li>
+  <li class="c018"><a href="/article/21-0196-perovskite/perovskite">Perovskite</a></li>
+  <li class="c018"><a href="/article/21-0302-s2/petalite">Petalite</a></li>
+  <li class="c018"><a href="/article/21-0340-s2/petrology">Petrology</a></li>
+  <li class="c018"><a href="/article/21-0376-pharmacosiderite/pharmacosiderite">Pharmacosiderite</a></li>
+  <li class="c018"><a href="/article/21-0385-phenacite/phenacite">Phenacite</a></li>
+  <li class="c018"><a href="/article/21-0428-s4/phillips__john">Phillips, John</a></li>
+  <li class="c018"><a href="/article/21-0430-s2/phillips__william">Phillips, William</a></li>
+  <li class="c018"><a href="/article/21-0430-s4/phillipsite">Phillipsite</a></li>
+  <li class="c018"><a href="/article/21-0469-phlogopite/phlogopite">Phlogopite</a></li>
+  <li class="c018"><a href="/article/21-0493-phonolite/phonolite">Phonolite</a></li>
+  <li class="c018"><a href="/article/21-0496-phosgenite/phosgenite">Phosgenite</a></li>
+  <li class="c018"><a href="/article/21-0496-phosphates/phosphates">Phosphates</a></li>
+  <li class="c018"><a href="/article/21-0500-s2/phosphorite">Phosphorite</a></li>
+  <li class="c018"><a href="/article/21-0572-phyllite/phyllite">Phyllite</a></li>
+  <li class="c018"><a href="/article/21-0611-picrite/picrite">Picrite</a></li>
+  <li class="c018">Pictet, de la Rive, F. J.</li>
+  <li class="c018"><a href="/article/21-0692-pitchblende/pitchblende">Pitchblende, or Uraninite</a></li>
+  <li class="c018"><a href="/article/21-0694-pitchstone/pitchstone">Pitchstone</a></li>
+  <li class="c018"><a href="/article/21-0721-plagioclase/plagioclase">Plagioclase</a></li>
+  <li class="c018">Pleistocene System</li>
+  <li class="c018">Pliocene System</li>
+  <li class="c018"><a href="/article/21-0882-s8/plot__robert">Plot, Robert</a></li>
+  <li class="c018"><a href="/article/21-0888-s2/plumbago">Plumbago</a></li>
+  <li class="c018"><a href="/article/21-0901-pneumatolysis/pneumatolysis">Pneumatolysis</a></li>
+  <li class="c018"><a href="/article/22-0021-s2/pollux__julius">Pollux, or Pollucite</a></li>
+  <li class="c018"><a href="/article/22-0118-porphyry-mineral/porphyry__mineral_">Porphyry</a></li>
+  <li class="c018"><a href="/article/22-0135-portlandian/portlandian">Portlandian</a></li>
+  <li class="c018"><a href="/article/22-0136-portlock-joseph-ellison/portlock__joseph_ellison">Portlock, J. E.</a></li>
+  <li class="c018"><a href="/article/22-0237-s4/powell__john_wesley">Powell, J. W.</a></li>
+  <li class="c018"><a href="/article/22-0280-pre-cambrian/pre-cambrian">Pre-Cambrian</a></li>
+  <li class="c018"><a href="/article/22-0291-prehnite/prehnite">Prehnite</a></li>
+  <li class="c018">Prestwick, Sir Joseph</li>
+  <li class="c018"><a href="/article/22-0326-pr-vost-constant/prévost__constant">Prévost, Constant</a></li>
+  <li class="c018"><a href="/article/22-0505-proustite/proustite">Proustite</a></li>
+  <li class="c018"><a href="/article/22-0558-psilomelane/psilomelane">Psilomelane</a></li>
+  <li class="c018"><a href="/article/22-0661-pumice/pumice">Pumice</a></li>
+  <li class="c018"><a href="/article/22-0673-purbeckian/purbeckian">Purbeckian</a></li>
+  <li class="c018"><a href="/article/22-0690-puy/puy">Puy</a></li>
+  <li class="c018"><a href="/article/22-0701-pyrargyrite/pyrargyrite">Pyrargyrite</a></li>
+  <li class="c018"><a href="/article/22-0708-s1/pyrites">Pyrites</a></li>
+  <li class="c018"><a href="/article/22-0709-pyrolusite/pyrolusite">Pyrolusite</a></li>
+  <li class="c018"><a href="/article/22-0709-pyromorphite/pyromorphite">Pyromorphite</a></li>
+  <li class="c018"><a href="/article/22-0711-pyrope/pyrope">Pyrope</a></li>
+  <li class="c018"><a href="/article/22-0711-pyrophyllite/pyrophyllite">Pyrophyllite</a></li>
+  <li class="c018"><a href="/article/22-0712-s2/pyroxene">Pyroxene</a></li>
+  <li class="c018"><a href="/article/22-0712-pyroxenite/pyroxenite">Pyroxenite</a></li>
+  <li class="c018"><a href="/article/22-0712-s5/pyrrhotite">Pyrrhotite</a></li>
+  <li class="c018"><a href="/article/22-0731-s5/quartz">Quartz</a></li>
+  <li class="c018"><a href="/article/22-0733-quartzite/quartzite">Quartzite</a></li>
+  <li class="c018"><a href="/article/22-0733-quartz-porphyry/quartz-porphyry">Quartz-porphyry</a></li>
+  <li class="c018">Quarternary</li>
+  <li class="c018"><a href="/article/22-0758-quenstedt-friedrich-august-von/quenstedt__friedrich_august_von">Quenstedt, F. A. von</a></li>
+  <li class="c018"><a href="/article/22-0893-rammelsberg-karl-friedrich-august/rammelsberg__karl_friedrich_august">Rammelsberg, K. F. A.</a></li>
+  <li class="c018">Ramsay, Sir Andrew C.</li>
+  <li class="c018"><a href="/article/22-0933-s2/rath__gerhard_vom">Rath, Gerhard von</a></li>
+  <li class="c018"><a href="/article/22-0957-reading-beds/reading_beds">Reading Beds</a></li>
+  <li class="c018"><a href="/article/22-0958-realgar/realgar">Realgar</a></li>
+  <li class="c018"><a href="/article/23-0112-renard-alphonse-fran-ois/renard__alphonse_françois">Renard, A. F.</a></li>
+  <li class="c018"><a href="/article/23-0115-renevier-eug-ne/renevier__eugène">Renevier, Eugène</a></li>
+  <li class="c018"><a href="/article/23-0220-retinite/retinite">Retinite</a></li>
+  <li class="c018"><a href="/article/23-0226-s2/reusch__hans_henrik">Reusch, Hans Henrik</a></li>
+  <li class="c018"><a href="/article/23-0226-s3/reuss__august_emanuel_von">Reuss, A. E. von</a></li>
+  <li class="c018"><a href="/article/23-0247-rhaetic/rhaetic">Rhaetic</a></li>
+  <li class="c018"><a href="/article/23-0286-rhodochrosite/rhodochrosite">Rhodochrosite</a></li>
+  <li class="c018"><a href="/article/23-0287-rhodonite/rhodonite">Rhodonite</a></li>
+  <li class="c018"><a href="/article/23-0292-rhyolite/rhyolite">Rhyolite</a></li>
+  <li class="c018"><a href="/article/23-0455-rock/rock">Rock</a></li>
+  <li class="c018"><a href="/article/23-0455-rock-crystal/rock-crystal">Rock-crystal</a></li>
+  <li class="c018"><a href="/article/23-0474-s2/roemer__friedrich_adolph">Roemer, F. A.</a></li>
+  <li class="c018"><a href="/article/23-0477-s5/rogers__henry_darwin">Rogers, H. D.</a></li>
+  <li class="c018">Rome de l’Isle, J. B. L.</li>
+  <li class="c018"><a href="/article/23-0796-s3/roth__justus_ludwig_adolf">Roth, J. L. A.</a></li>
+  <li class="c018"><a href="/article/23-0847-s2/rubellite">Rubellite</a></li>
+  <li class="c018"><a href="/article/23-0855-ruby/ruby">Ruby</a></li>
+  <li class="c018"><a href="/article/23-0905-s2/russell__israel_cook">Russell, Israel Cook</a></li>
+  <li class="c018"><a href="/article/23-0986-s5/rutile">Rutile</a></li>
+  <li class="c018"><a href="/article/23-0990-rutley-frank/rutley__frank">Rutley, Frank</a></li>
+  <li class="c018"><a href="/article/24-0101-salt/salt">Salt</a></li>
+  <li class="c018"><a href="/article/24-0106-salter-john-william/salter__john_william">Salter, John William</a></li>
+  <li class="c018"><a href="/article/24-0149-sand/sand">Sand</a></li>
+  <li class="c018"><a href="/article/24-0151-sandberger-karl-ludwig-fridolin-von/sandberger__karl_ludwig_fridolin_von">Sandberger, K. L. F. von</a></li>
+  <li class="c018"><a href="/article/24-0155-sandstone/sandstone">Sandstone</a></li>
+  <li class="c018"><a href="/article/24-0215-s5/sapphire">Sapphire</a></li>
+  <li class="c018"><a href="/article/24-0223-sard/sard">Sard</a></li>
+  <li class="c018"><a href="/article/24-0233-sardonyx/sardonyx">Sardonyx</a></li>
+  <li class="c018"><a href="/article/24-0243-s2/satin-spar">Satin-spar</a></li>
+  <li class="c018"><a href="/article/24-0257-savi-paolo/savi__paolo">Savi, Paolo</a></li>
+  <li class="c018"><a href="/article/24-0318-scapolite/scapolite">Scapolite</a></li>
+  <li class="c018"><a href="/article/24-0333-s2/scheelite">Scheelite</a></li>
+  <li class="c018"><a href="/article/24-0345-s6/schists">Schists</a></li>
+  <li class="c018">Schlotheim, Baron von</li>
+  <li class="c018"><a href="/article/24-0395-schorl/schorl">Schorl</a></li>
+  <li class="c018"><a href="/article/24-0425-s6/scolecite">Scolecite</a></li>
+  <li class="c018"><a href="/article/24-0427-scoria/scoria">Scoria</a></li>
+  <li class="c018"><a href="/article/24-0505-scrope-george-julius-poulett/scrope__george_julius_poulett">Scrope, G. J. Poulett</a></li>
+  <li class="c018"><a href="/article/24-0607-s6/sedgwick__adam">Sedgwick, Adam</a></li>
+  <li class="c018"><a href="/article/24-0619-seismometer/seismometer">Seismometer</a></li>
+  <li class="c018"><a href="/article/24-0645-selwyn-alfred-richard-cecil/selwyn__alfred_richard_cecil">Selwyn, A. R. C.</a></li>
+  <li class="c018">Sénarmont, H. H. de</li>
+  <li class="c018"><a href="/article/24-0705-serpentine-mineral/serpentine__mineral_">Serpentine</a></li>
+  <li class="c018">Sharpe, Daniel</li>
+  <li class="c018"><a href="/article/25-0123-sill-door/sill__door_">Sill</a></li>
+  <li class="c018"><a href="/article/25-0125-sillimanite/sillimanite">Sillimanite</a></li>
+  <li class="c018">Silurian System</li>
+  <li class="c018"><a href="/article/25-0165-sinter/sinter">Sinter</a></li>
+  <li class="c018"><a href="/article/25-0226-s2/slate">Slate</a></li>
+  <li class="c018"><a href="/article/25-0265-smaltite/smaltite">Smaltite</a></li>
+  <li class="c018"><a href="/article/25-0286-s5/smith__william">Smith, William</a></li>
+  <li class="c018"><a href="/article/25-0289-s6/smithson__james">Smithson, James</a></li>
+  <li class="c018"><a href="/article/25-0299-s2/smyth__sir_warington_wilkinson">Smyth, Sir W. W.</a></li>
+  <li class="c018"><a href="/article/25-0355-sodalite/sodalite">Sodalite</a></li>
+  <li class="c018"><a href="/article/25-0360-soffioni/soffioni">Soffioni</a></li>
+  <li class="c018"><a href="/article/25-0376-solfatara/solfatara">Solfatara</a></li>
+  <li class="c018"><a href="/article/25-0447-s3/sorby__henry_clifton">Sorby, Henry C.</a></li>
+  <li class="c018"><a href="/article/25-0654-speeton-beds/speeton_beds">Speeton Beds</a></li>
+  <li class="c018"><a href="/article/25-0668-sphene/sphene">Sphene</a></li>
+  <li class="c018"><a href="/article/25-0683-spherulites/spherulites">Spherulites</a></li>
+  <li class="c018"><a href="/article/25-0706-s2/spinel">Spinel</a></li>
+  <li class="c018"><a href="/article/25-0733-s6/spodumene">Spodumene</a></li>
+  <li class="c018"><a href="/article/25-0758-s7/spratt__thomas_abel_brimage">Spratt, Thomas A. B.</a></li>
+  <li class="c018"><a href="/article/25-0788-stalactites/stalactites">Stalactites</a></li>
+  <li class="c018"><a href="/article/25-0804-stannite/stannite">Stannite</a></li>
+  <li class="c018"><a href="/article/25-0837-s4/staurolite">Staurolite</a></li>
+  <li class="c018"><a href="/article/25-0903-s2/steno__nicolaus">Steno, Nicolaus</a></li>
+  <li class="c018"><a href="/article/25-0904-stephanite/stephanite">Stephanite</a></li>
+  <li class="c018"><a href="/article/25-0939-s6/stibnite">Stibnite</a></li>
+  <li class="c018"><a href="/article/25-0943-s2/stilbite">Stilbite</a></li>
+  <li class="c018"><a href="/article/25-0979-s2/stoliczka__ferdinand">Stoliczka, Ferdinand</a></li>
+  <li class="c018"><a href="/article/25-0982-stone/stone">Stone</a></li>
+  <li class="c018"><a href="/article/25-0993-s4/stoppani__antonio">Stoppani, Antonio</a></li>
+  <li class="c018">Stratigraphy</li>
+  <li class="c018"><a href="/article/25-1049-s4/strickland__hugh_edwin">Strickland, Hugh E.</a></li>
+  <li class="c018"><a href="/article/25-1066-strontianite/strontianite">Strontianite</a></li>
+  <li class="c018"><a href="/article/25-1076-studer-bernhard/studer__bernhard">Studer, Bernhard</a></li>
+  <li class="c018"><a href="/article/26-0037-suess-eduard/suess__eduard">Suess, Edward</a></li>
+  <li class="c018"><a href="/article/26-0128-sunstone/sunstone">Sunstone</a></li>
+  <li class="c018"><a href="/article/26-0301-s3/syenite">Syenite</a></li>
+  <li class="c018"><a href="/article/26-0304-s4/sylvanite">Sylvanite</a></li>
+  <li class="c018"><a href="/article/26-0305-s4/sylvite">Sylvite</a></li>
+  <li class="c018"><a href="/article/26-0308-s2/symonds__william_samuel">Symonds, William S.</a></li>
+  <li class="c018">Szabó von Szentmiklos</li>
+  <li class="c018"><a href="/article/26-0365-tachylytes/tachylytes">Tachylytes</a></li>
+  <li class="c018"><a href="/article/26-0389-s5/talc">Talc</a></li>
+  <li class="c018"><a href="/article/26-0478-s5/tate__ralph">Tate, Ralph</a></li>
+  <li class="c018"><a href="/article/26-0504-s8/tchihatcheff__pierre_alexandrowitsch_de">Tchihatcheff, P. A. de</a></li>
+  <li class="c018"><a href="/article/26-0694-tertiary/tertiary">Tertiary</a></li>
+  <li class="c018"><a href="/article/26-0703-s2/tetradymite">Tetradymite</a></li>
+  <li class="c018"><a href="/article/26-0703-s4/tetrahedrite">Tetrahedrite</a></li>
+  <li class="c018"><a href="/article/26-0831-theralite/theralite">Theralite</a></li>
+  <li class="c018"><a href="/article/26-0918-thorianite/thorianite">Thorianite</a></li>
+  <li class="c018"><a href="/article/26-0918-s5/thorite">Thorite</a></li>
+  <li class="c018"><a href="/article/27-0015-tonalite/tonalite">Tonalite</a></li>
+  <li class="c018"><a href="/article/27-0062-s2/topaz">Topaz</a></li>
+  <li class="c018"><a href="/article/27-0064-s7/torbernite">Torbernite</a></li>
+  <li class="c018"><a href="/article/27-0065-s3/torell__otto_martin">Torell, Otto Martin</a></li>
+  <li class="c018"><a href="/article/27-0076-torridonian/torridonian">Torridonian</a></li>
+  <li class="c018"><a href="/article/27-0117-s3/tourmaline">Tourmaline</a></li>
+  <li class="c018"><a href="/article/27-0131-trachyte/trachyte">Trachyte</a></li>
+  <li class="c018"><a href="/article/27-0230-s2/trass">Trass</a></li>
+  <li class="c018"><a href="/article/27-0259-tremolite/tremolite">Tremolite</a></li>
+  <li class="c018"><a href="/article/27-0273-s4/triassic_system">Triassic System</a></li>
+  <li class="c018"><a href="/article/27-0283-s3/tridymite">Tridymite</a></li>
+  <li class="c018"><a href="/article/27-0298-trimmer-joshua/trimmer__joshua">Trimmer, Joshua</a></li>
+  <li class="c018"><a href="/article/27-0380-tuff/tuff">Tuff</a></li>
+  <li class="c018"><a href="/article/27-0501-turquoise/turquoise">Turquoise</a></li>
+  <li class="c018"><a href="/article/27-0904-vanadinite/vanadinite">Vanadinite</a></li>
+  <li class="c018"><a href="/article/27-0947-variolites/variolites">Variolite</a></li>
+  <li class="c018"><a href="/article/27-0947-variscite/variscite">Variscite</a></li>
+  <li class="c018"><a href="/article/27-0997-s4/veins">Veins</a></li>
+  <li class="c018"><a href="/article/27-1059-s3/verneuil">Verneuil, P. E. P. de</a></li>
+  <li class="c018"><a href="/article/27-1091-s4/vesuvianite">Vesuvianite</a></li>
+  <li class="c018"><a href="/article/28-0169-vivianite/vivianite">Vivianite</a></li>
+  <li class="c018"><a href="/article/28-0188-vogt-karl-christoph/vogt__karl_christoph">Vogt, Karl C.</a></li>
+  <li class="c018"><a href="/article/28-0194-volcano/volcano">Volcano</a></li>
+  <li class="c018"><a href="/article/28-0240-waagen-wilhelm-heinrich/waagen__wilhelm_heinrich">Waagen, W. H.</a></li>
+  <li class="c018"><a href="/article/28-0240-wachsmuth-charles/wachsmuth__charles">Wachsmuth, Charles</a></li>
+  <li class="c018"><a href="/article/28-0241-wad/wad">Wad</a></li>
+  <li class="c018"><a href="/article/28-0268-walcott-charles-doolittle/walcott__charles_doolittle">Walcott, Charles D.</a></li>
+  <li class="c018">Waltershausen</li>
+  <li class="c018"><a href="/article/28-0448-wavellite/wavellite">Wavellite</a></li>
+  <li class="c018"><a href="/article/28-0455-wealden/wealden">Wealden</a></li>
+  <li class="c018"><a href="/article/28-0481-s4/webster__thomas">Webster, Thomas</a></li>
+  <li class="c018"><a href="/article/28-0537-wenlock-group/wenlock_group">Wenlock Group</a></li>
+  <li class="c018"><a href="/article/28-0541-s4/werner__abraham_gottlob">Werner, A. G.</a></li>
+  <li class="c018"><a href="/article/28-0622-s4/whiteaves__joseph_frederick">Whiteaves, J. F.</a></li>
+  <li class="c018"><a href="/article/28-0631-s3/whitney__josiah_dwight">Whitney, J. D.</a></li>
+  <li class="c018"><a href="/article/28-0678-willemite/willemite">Willemite</a></li>
+  <li class="c018"><a href="/article/28-0780-witherite/witherite">Witherite</a></li>
+  <li class="c018"><a href="/article/28-0796-wolframite/wolframite">Wolframite</a></li>
+  <li class="c018"><a href="/article/28-0797-wollastonite/wollastonite">Wollastonite</a></li>
+  <li class="c018"><a href="/article/28-0811-wood-searles-valentine/wood__searles_valentine">Wood, S. V.</a></li>
+  <li class="c018"><a href="/article/28-0829-woodward-john/woodward__john">Woodward, John</a></li>
+  <li class="c018"><a href="/article/28-0829-woodward-samuel/woodward__samuel">Woodward, Samuel</a></li>
+  <li class="c018"><a href="/article/28-0845-woolwich-and-reading-beds/woolwich-and-reading_beds">Woolwich-and-Reading Beds</a></li>
+  <li class="c018"><a href="/article/28-0873-wright-thomas-antiquarian/wright__thomas__antiquarian_">Wright, Thomas</a></li>
+  <li class="c018"><a href="/article/28-0881-wulfenite/wulfenite">Wulfenite</a></li>
+  <li class="c018"><a href="/article/28-0951-yoredale-series/yoredale_series">Yoredale Series</a></li>
+  <li class="c018">Zoelites</li>
+  <li class="c018"><a href="/article/28-1011-zincite/zincite">Zincite</a></li>
+  <li class="c018"><a href="/article/28-1016-zircon/zircon">Zircon</a></li>
+  <li class="c018"><a href="/article/28-1018-zirkel-ferdinand/zirkel__ferdinand">Zirkel, Ferdinand</a></li>
+  <li class="c018"><a href="/article/28-1018-zittel-karl-alfred-von/zittel__karl_alfred_von">Zittel, Karl A. von</a></li>
+  <li class="c018"><a href="/article/28-1027-zoisite/zoisite">Zoisite</a></li>
+</ul></details>
+
+<h3 class="c001">CHAPTER LVII<br> <span class="c014">BIOLOGY<br> GENERAL AND INTRODUCTORY</span></h3>
+
+<p>The Britannica tells us that Sir
+Thomas Browne, the famous 17th
+century physician and author,
+once ventured to doubt “whether mice
+may be bred by putrefaction,” and Alexander
+Ross, the poet scientist of 200 years
+ago, commenting on his scepticism wrote,
+“So may he doubt whether in cheese and
+timber worms are generated; or if beetles
+and wasps in cows’ dung; or if butterflies,
+locusts, grasshoppers, shell-fish, snails,
+eels, and such like, be procreated of putrefied
+matter, which is apt to receive the
+form of that creature to which it is by
+formative power disposed. To question
+this is to question reason, sense and experience.
+If he doubts of this let him go
+to Egypt, and there he will find the fields
+swarming with mice, begot of the mud of
+Nylus, to the great calamity of the inhabitants”
+(Vol. 1, p. 64). To-day science
+gives no offhand answer to the question
+of the origin of life. Abiogenesis, or
+“spontaneous generation,” so-called, finds
+a far less simple definition and research
+still in vain bends its best energies to solving
+this problem of problems.</p>
+
+<p>The subject is so vast, dealing as it
+does with all the phenomena manifested
+by living matter, that in this Guide that
+branch of the subject which studies the
+human organism is separately dealt with
+in the chapter <i>Health and Disease</i>. This
+chapter, therefore, is confined to the still
+enormous subject of biology considered
+as dealing with the general problem of
+life; botany and zoology are treated in
+the following chapters. The student of
+either of the two last subjects should preface,
+or at least supplement, his studies,
+by reading the main general articles included
+below.</p>
+
+<p><span class="shoulder-heading" id="sh-4">The Study of Life</span>The guiding article <span class="sc"><a href="/article/03-0977-biology/biology">Biology</a></span> (Vol. 3, p.
+954), which should be read first, serves
+as a key to the discussion of the biological
+sciences. It is not
+long, for the main
+divisions of the subject
+are treated more
+conveniently and logically under their
+own appropriate headings. P. Chalmers
+Mitchell, secretary of the Zoological Society
+of London, who organized the whole
+subject for the new Britannica, is the
+contributor. Supplementing this, the
+article <span class="sc"><a href="/article/16-0620-life/life">Life</a></span> (Vol. 16, p. 600), also by
+Chalmers Mitchell, should be read, with
+those on <span class="sc"><a href="/article/22-0491-protoplasm/protoplasm">Protoplasm</a></span> (Vol. 22, p. 476),
+<span class="sc"><a href="/article/25-0637-s3/species">Species</a></span> (Vol. 25, p. 616), <span class="sc"><a href="/article/01-0095-s3/abiogenesis">Abiogenesis</a></span>
+(Vol. 1, p. 64), <span class="sc"><a href="/article/03-0975-biogenesis/biogenesis">Biogenesis</a></span> (Vol. 3, p.
+952). In the two articles last named the
+theory of spontaneous generation is examined
+and found wanting, or at best
+unproved.</p>
+
+<p><span class="shoulder-heading" id="sh-5">Structure</span>Living matter may be regarded under
+four aspects: structure, distribution, physiology,
+evolution. For the first, the article
+<span class="sc"><a href="/article/18-0895-s2/morphology">Morphology</a></span>
+(Vol. 18, p. 863)
+leads the discussion,
+followed by <span class="sc"><a href="/article/07-0732-cytology/cytology">Cytology</a></span> (Vol. 7, p. 710),
+and <span class="sc"><a href="/article/09-0335-embryology/embryology">Embryology</a></span> (Vol. 9, p. 314), in
+which the growth of cell structures is discussed.
+These articles are introductory to
+the whole subject. Supplementing them
+reference may be made to the Morphology
+sections of the articles <span class="sc"><a href="/article/21-0758-plantin-christophe/plantin__christophe">Plant</a></span> (Vol.
+21, p. 728) and <span class="sc"><a href="/article/28-1049-zoology/zoology">Zoology</a></span> (Vol. 28, p.
+1022).</p>
+
+<p><span class="shoulder-heading" id="sh-6">Distribution</span>A most fascinating branch is that
+which is concerned with the where and
+when of the existence of organisms. The
+articles in the Britannica
+are worthy
+of the interest of the
+subject. Under <span class="sc"><a href="/article/20-0631-palaeontology/palaeontology">Palaeontology</a></span> (Vol.
+20, p. 579) H. F. Osborn, Columbia University,
+New York, president of the
+American Museum of Natural History,
+New York, treats of the archaeology of
+the biological sciences, of the extinct species
+which once inhabited the earth;
+while Clement Reid, of the Geological
+Survey of Great Britain, A. C. Seward,
+professor of botany, Cambridge University,
+and Dr. D. H. Scott, president of
+the Linnean Society, perform the same
+service for plant life in the article <span class="sc"><a href="/article/20-0574-palaeobotany/palaeobotany">Palaeobotany</a></span>
+(Vol. 20, p. 524). The distribution
+of present types is discussed
+under <span class="sc"><a href="/article/28-1029-zoological-distribution/zoological_distribution">Zoological Distribution</a></span> (Vol.
+28, p. 1002), <span class="sc"><a href="/article/21-0759-plants/plants">Plants</a></span>, <i>Distribution</i> (Vol.
+21, p. 777), and <span class="sc"><a href="/article/21-0751-plankton/plankton">Plankton</a></span> (Vol. 21, p.
+720), in which Prof. G. H. Fowler of
+University College, London, describes a
+science which is still young—that of
+tracing the drift and distribution of deep
+sea life. See also <span class="sc"><a href="/article/01-0145-s10/acclimatization">Acclimatization</a></span> (Vol.
+1, p. 114), by <a href="/contributors.html?q=Alfred+Russel+Wallace">Alfred Russel Wallace</a> and
+Frank Finn, of the Indian Museum of
+Calcutta.</p>
+
+<p><span class="shoulder-heading" id="sh-7">Physiology</span>The properties, processes, and functions
+of living things fall in the province
+of <span class="sc"><a href="/article/21-0580-physiology/physiology">Physiology</a></span> (Vol. 21, p. 554), and kindred
+articles; among
+the latter the following
+may profitably
+be consulted: <span class="sc"><a href="/article/02-0059-s3/animal_heat">Animal Heat</a></span> (Vol. 2, p.
+48), and <span class="sc"><a href="/article/21-0759-plants/plants">Plants</a></span>, <i>Physiology</i> (Vol. 21, p.
+744).</p>
+
+<p><span class="shoulder-heading" id="sh-8">Evolution</span>The gradual development of species is
+considered in a number of valuable articles
+such as <span class="sc"><a href="/article/10-0034-evolution/evolution">Evolution</a></span> (Vol. 10, p. 22),
+<span class="sc"><a href="/article/13-0366-heredity/heredity">Heredity</a></span> (Vol. 13,
+p. 350), <span class="sc"><a href="/article/23-0133-reproduction/reproduction">Reproduction</a></span>
+(Vol. 23, p.
+116), <span class="sc"><a href="/article/18-0134-mendelism/mendelism">Mendelism</a></span> (Vol. 18, p. 115), <span class="sc"><a href="/article/26-0538-telegony/telegony">Telegony</a></span>
+(Vol. 25, p. 509), <span class="sc"><a href="/article/27-0932-variation-and-selection/variation_and_selection">Variation and
+Selection</a></span> (Vol. 27, p. 906).</p>
+
+<p>Following is an alphabetical list of the
+<i>general</i> biological articles (those not dealing directly with either Botany or Zoology),
+which are to be found in the Britannica:</p>
+
+<ul class="index">
+  <li class="c018"><a href="/article/01-0095-s3/abiogenesis">Abiogenesis</a></li>
+  <li class="c018"><a href="/article/01-0145-s10/acclimatization">Acclimatization</a></li>
+  <li class="c018"><a href="/article/01-0166-s2/acephalous">Acephalous</a></li>
+  <li class="c018"><a href="/article/01-0197-s3/acuminate">Acuminate</a></li>
+  <li class="c018"><a href="/article/01-0214-s3/adaptation">Adaptation</a></li>
+  <li class="c018"><a href="/article/01-0326-s2/aestivation">Aestivation</a></li>
+  <li class="c018"><a href="/article/01-0546-s2/albino">Albino</a></li>
+  <li class="c018"><a href="/article/01-0821-s2/alveolate">Alveolate</a></li>
+  <li class="c018"><a href="/article/01-0958-s3/anabolism">Anabolism</a></li>
+  <li class="c018"><a href="/article/01-0972-s5/anastomosis">Anastomosis</a></li>
+  <li class="c018"><a href="/article/02-0208-s2/aporose">Aporose</a></li>
+  <li class="c018"><a href="/article/02-0973-s2/auricle">Auricle</a></li>
+  <li class="c018"><a href="/article/03-0060-s9/autogeny__autogenous">Autogeny</a></li>
+  <li class="c018"><a href="/article/03-0538-bathybius/bathybius">Bathybius</a></li>
+  <li class="c018"><a href="/article/03-0975-biogenesis/biogenesis">Biogenesis</a></li>
+  <li class="c018"><a href="/article/03-0977-biology/biology">Biology</a></li>
+  <li class="c018"><a href="/article/03-0980-bipartite/bipartite">Bipartite</a></li>
+  <li class="c018"><a href="/article/05-0508-catabolism/catabolism">Catabolism</a></li>
+  <li class="c018"><a href="/article/06-0090-chemotaxis/chemotaxis">Chemotaxis</a></li>
+  <li class="c018"><a href="/article/06-0381-cilia/cilia">Cilia</a></li>
+  <li class="c018"><a href="/article/07-0732-cytology/cytology">Cytology</a></li>
+  <li class="c018"><a href="/article/09-0335-embryology/embryology">Embryology</a></li>
+  <li class="c018"><a href="/article/09-0693-enzyme/enzyme">Enzyme</a></li>
+  <li class="c018"><a href="/article/10-0034-evolution/evolution">Evolution</a></li>
+  <li class="c018"><a href="/article/10-0287-s3/fermentation">Fermentation</a></li>
+  <li class="c018"><a href="/article/12-0812-s4/habitat">Habitat</a></li>
+  <li class="c018"><a href="/article/13-0366-heredity/heredity">Heredity</a></li>
+  <li class="c018"><a href="/article/13-0457-hibernaculum/hibernaculum">Hibernaculum</a></li>
+  <li class="c018"><a href="/article/13-0543-histology/histology">Histology</a></li>
+  <li class="c018"><a href="/article/14-0038-hybridism/hybridism">Hybridism</a></li>
+  <li class="c018"><a href="/article/16-0620-life/life">Life</a></li>
+  <li class="c018"><a href="/article/16-0998-s7/longevity">Longevity</a></li>
+  <li class="c018"><a href="/article/18-0134-mendelism/mendelism">Mendelism</a></li>
+  <li class="c018"><a href="/article/18-0217-s2/metabolism">Metabolism</a></li>
+  <li class="c018"><a href="/article/18-0431-microtomy/microtomy">Microtomy</a></li>
+  <li class="c018"><a href="/article/18-0765-monotypic/monotypic">Monotypic</a></li>
+  <li class="c018"><a href="/article/18-0895-s2/morphology">Morphology</a></li>
+  <li class="c018"><a href="/article/20-0030-oecology/oecology">Oecology, or Ecology</a></li>
+  <li class="c018"><a href="/article/20-0391-osteology/osteology">Osteology</a></li>
+  <li class="c018"><a href="/article/20-0853-parasitism/parasitism">Parasitism</a></li>
+  <li class="c018"><a href="/article/22-0491-protoplasm/protoplasm">Protoplasm</a></li>
+  <li class="c018"><a href="/article/23-0133-reproduction/reproduction">Reproduction</a></li>
+  <li class="c018"><a href="/article/23-0247-s2/rhacis">Rhacis, or Rachis</a></li>
+  <li class="c018"><a href="/article/25-0637-s3/species">Species</a></li>
+  <li class="c018"><a href="/article/26-0538-telegony/telegony">Telegony</a></li>
+  <li class="c018"><a href="/article/27-0932-variation-and-selection/variation_and_selection">Variation and Selection</a></li>
+</ul>
+
+<h4 class="c016">BIOGRAPHIES OF BIOLOGISTS</h4>
+
+<p>The life and work of the world’s great biologists may be studied in the Britannica,
+and an alphabetical list of the principal articles follows.</p>
+
+<ul class="index">
+  <li class="c018"><a href="/article/01-0173-s6/acharius__erik">Acharius, Erik</a></li>
+  <li class="c018"><a href="/article/01-0205-s7/adams__andrew_leith">Adams, A. L.</a></li>
+  <li class="c018"><a href="/article/01-0214-s2/adanson__michel">Adanson, Michel</a></li>
+  <li class="c018"><a href="/article/01-0400-s3/afzelius__adam">Afzelius, Adam</a></li>
+  <li class="c018"><a href="/article/01-0404-s7/agassiz__alexander_emanuel">Agassiz, A. E.</a></li>
+  <li class="c018"><a href="/article/01-0405-s2/agassiz__jean_louis_rodolphe">Agassiz, J. L. R.</a></li>
+  <li class="c018"><a href="/article/01-0486-s2/aiton__william">Aiton, William</a></li>
+  <li class="c018">Albinus (Weiss), B. S.</li>
+  <li class="c018"><a href="/article/01-0577-s4/aldrovandi__ulissi">Aldrovandi, Ulissi</a></li>
+  <li class="c018"><a href="/article/01-0740-s2/allman__george_james">Allman, George James</a></li>
+  <li class="c018"><a href="/article/01-0781-alpini-prospero/alpini__prospero">Alpini, Prospero</a></li>
+  <li class="c018"><a href="/article/01-0801-alston-charles/alston__charles">Alston, Charles</a></li>
+  <li class="c018"><a href="/article/01-0847-s2/ambrosini__bartolomeo">Ambrosini, Bartolomeo</a></li>
+  <li class="c018"><a href="/article/01-1012-s6/anderson__james">Anderson, James</a></li>
+  <li class="c018"><a href="/article/02-0688-s3/arrenotokous__arrenotoky">Arrenotokous, A.</a></li>
+  <li class="c018"><a href="/article/02-0705-s2/artedi__peter">Artedi, Peter</a></li>
+  <li class="c018"><a href="/article/02-0944-s5/audebert__jean_baptiste">Audebert, J. B.</a></li>
+  <li class="c018"><a href="/article/02-0946-s3/audouin__jean_victor">Audouin, Jean Victor</a></li>
+  <li class="c018"><a href="/article/02-0947-s4/audubon__john_james">Audubon, John James</a></li>
+  <li class="c018"><a href="/article/03-0067-s2/avebury">Avebury, J. Lubbock, Baron</a></li>
+  <li class="c018"><a href="/article/03-0208-s6/baer__karl_ernst_von">Baer, Karl Ernst von</a></li>
+  <li class="c018"><a href="/article/03-0241-s5/baird__spencer_fullerton">Baird, S. F.</a></li>
+  <li class="c018"><a href="/article/03-0271-s2/balfour__francis_maitland">Balfour, F. M.</a></li>
+  <li class="c018"><a href="/article/03-0350-banks-sir-joseph/banks__sir_joseph">Banks, Sir Joseph</a></li>
+  <li class="c018"><a href="/article/03-0469-barton-benjamin-smith/barton__benjamin_smith">Barton, B. S.</a></li>
+  <li class="c018"><a href="/article/03-0526-bates-henry-walter/bates__henry_walter">Bates, Henry Walter</a></li>
+  <li class="c018"><a href="/article/03-0556-bauhin-gaspard/bauhin__gaspard">Bauhin, Gaspard</a></li>
+  <li class="c018"><a href="/article/03-0731-belon-pierre/belon__pierre">Belon, Pierre</a></li>
+  <li class="c018"><a href="/article/03-0766-bentham-george/bentham__george">Bentham, George</a></li>
+  <li class="c018"><a href="/article/03-0801-berkeley-miles-joseph/berkeley__miles_joseph">Berkeley, M. J.</a></li>
+  <li class="c018"><a href="/article/04-0046-blainville-henri-marie-ducrotay-de/blainville__henri_marie_ducrotay_de">Blainville, H. M. Ducrotay de</a></li>
+  <li class="c018"><a href="/article/04-0085-bloch-mark-eliezer/bloch__mark_eliezer">Bloch, Mark Eliezer</a></li>
+  <li class="c018"><a href="/article/04-0105-blumenbach-johann-friedrich/blumenbach__johann_friedrich">Blumenbach, J. F.</a></li>
+  <li class="c018"><a href="/article/04-0226-bonpland-aim-jacques-alexandre/bonpland__aimé_jacques_alexandre">Bonpland, A. J. A.</a></li>
+  <li class="c018"><a href="/article/04-0291-bory-de-saint-vincent-jean-baptiste-george-marie/bory_de_saint-vincent__jean_baptiste_george_marie">Bory de Saint-Vincent, J. B. G. M.</a></li>
+  <li class="c018">Bose, L. A. G.</li>
+  <li class="c018"><a href="/article/04-0594-s7/brisson__mathurin_jacques">Brisson, M. J.</a></li>
+  <li class="c018"><a href="/article/04-0648-s4/broderip__william_john">Broderip, W. J.</a></li>
+  <li class="c018"><a href="/article/04-0659-s5/brongniart__adolphe_théodore">Brongniart, A. T.</a></li>
+  <li class="c018"><a href="/article/04-0679-s4/broussonet__pierre_marie_auguste">Broussonet, P. M. A.</a></li>
+  <li class="c018"><a href="/article/04-0684-s5/brown__robert">Brown, Robert</a></li>
+  <li class="c018"><a href="/article/04-0754-s2/buckland__francis_trevelyan">Buckland, F. T.</a></li>
+  <li class="c018">Buffon, G. L. L. de</li>
+  <li class="c018">Caesalpinus, Andreas</li>
+  <li class="c018"><a href="/article/05-0119-camerarius-joachim/camerarius__joachim">Camerarius, Joachim</a></li>
+  <li class="c018"><a href="/article/05-0120-camerarius-rudolf-jakob/camerarius__rudolf_jakob">Camerarius, R. J.</a></li>
+  <li class="c018"><a href="/article/05-0146-camper-peter/camper__peter">Camper, Peter</a></li>
+  <li class="c018"><a href="/article/05-0193-candolle-augustin-pyrame-de/candolle__augustin_pyrame_de">Candolle, A. P. de</a></li>
+  <li class="c018"><a href="/article/05-0398-carpenter-william-benjamin/carpenter__william_benjamin">Carpenter, W. B.</a></li>
+  <li class="c018"><a href="/article/05-0598-cavanilles-antonio-jos/cavanilles__antonio_josé">Cavanilles, A. J.</a></li>
+  <li class="c018">Claparède, J. L. R. A. E.</li>
+  <li class="c018"><a href="/article/06-0626-cobbold-thomas-spencer/cobbold__thomas_spencer">Cobbold, T. S.</a></li>
+  <li class="c018"><a href="/article/06-0672-cohn-ferdinand-julius/cohn__ferdinand_julius">Cohn, Ferdinand Julius</a></li>
+  <li class="c018"><a href="/article/06-0772-combe-george/combe__george">Combe, George</a></li>
+  <li class="c018"><a href="/article/07-0328-coues-elliott/coues__elliott">Coues, E.</a></li>
+  <li class="c018">Cuvier, Baron</li>
+  <li class="c018"><a href="/article/07-0864-darwin-charles-robert/darwin__charles_robert">Darwin, Charles R.</a></li>
+  <li class="c018"><a href="/article/07-0867-darwin-erasmus/darwin__erasmus">Darwin, Erasmus</a></li>
+  <li class="c018">Daubenton, L. J. M.</li>
+  <li class="c018"><a href="/article/07-0925-de-bary-heinrich-anton/de_bary__heinrich_anton">De Bary, H. A.</a></li>
+  <li class="c018"><a href="/article/08-0108-desfontaines-ren-louiche/desfontaines__rené_louiche">Desfontaines, R. L.</a></li>
+  <li class="c018">Dillen (Dillenius), J. J.</li>
+  <li class="c018"><a href="/article/08-0440-donovan-edward/donovan__edward">Donovan, Edward</a></li>
+  <li class="c018"><a href="/article/08-0635-dryander-jonas/dryander__jonas">Dryander, Jonas</a></li>
+  <li class="c018">Duhamel de Monceau</li>
+  <li class="c018"><a href="/article/08-0763-dutrochet-ren-joachim-henri/dutrochet__rené_joachim_henri">Dutrochet, R. J. H.</a></li>
+  <li class="c018"><a href="/article/09-0014-edwards-george/edwards__george">Edwards, George</a></li>
+  <li class="c018"><a href="/article/09-0797-s3/eschscholtz__johann_friedrich">Eschscholtz, J. F.</a></li>
+  <li class="c018"><a href="/article/10-0131-s5/fabricius__johann_christian">Fabricius, J. C.</a></li>
+  <li class="c018"><a href="/article/10-0152-s3/falconer__hugh">Falconer, Hugh</a></li>
+  <li class="c018"><a href="/article/10-0574-flourens-marie-jean-pierre/flourens__marie_jean_pierre">Flourens, M. J. P.</a></li>
+  <li class="c018"><a href="/article/10-0574-flower-sir-william-henry/flower__sir_william_henry">Flower, Sir William H.</a></li>
+  <li class="c018"><a href="/article/10-0659-s1/forbes__edward">Forbes, Edward</a></li>
+  <li class="c018">Forskal, Peter</li>
+  <li class="c018"><a href="/article/10-0748-fortune-robert/fortune__robert">Fortune, Robert</a></li>
+  <li class="c018"><a href="/article/10-0793-s2/fraas__karl_nikolas">Fraas, Karl Nikolas</a></li>
+  <li class="c018"><a href="/article/11-0242-fries-elias-magnus/fries__elias_magnus">Fries, Elias Magnus</a></li>
+  <li class="c018"><a href="/article/11-0285-s3/fuchs__leonhard">Fuchs, Leonard</a></li>
+  <li class="c018"><a href="/article/11-0429-gall-franz-joseph/gall__franz_joseph">Gall, Franz Joseph</a></li>
+  <li class="c018"><a href="/article/11-0549-s4/gaudichaud-beaupré__charles">Gaudichaud-Beaupré</a></li>
+  <li class="c018"><a href="/article/11-0568-s3/gegenbaur__carl">Gegenbaur, Carl</a></li>
+  <li class="c018">Geoffroy Saint-Hilaire, E.</li>
+  <li class="c018"><a href="/article/11-0639-geoffroy-saint-hilaire-isidore/geoffroy_saint-hilaire__isidore">Geoffroy Saint-Hilaire, I.</a></li>
+  <li class="c018"><a href="/article/11-0786-s4/gerard__john">Gerard, John</a></li>
+  <li class="c018"><a href="/article/11-0931-s4/gervais__paul">Gervais, Paul</a></li>
+  <li class="c018">Gesner, K. von</li>
+  <li class="c018"><a href="/article/12-0285-s5/gosse__philip_henry">Gosse, Philip Henry</a></li>
+  <li class="c018"><a href="/article/12-0301-s3/gould__augustus_addison">Gould, A. A.</a></li>
+  <li class="c018"><a href="/article/12-0407-s2/gray__asa">Gray, Asa</a></li>
+  <li class="c018"><a href="/article/12-0408-s6/gray__john_edward">Gray, John Edward</a></li>
+  <li class="c018"><a href="/article/12-0610-grew-nehemiah/grew__nehemiah">Grew, Nehemiah</a></li>
+  <li class="c018"><a href="/article/12-0828-s2/haeckel__ernst_heinrich">Haeckel, E. H.</a></li>
+  <li class="c018"><a href="/article/12-0839-s4/hagenbeck__carl">Hagenbeck, Carl</a></li>
+  <li class="c018"><a href="/article/12-0859-s6/hales__stephen">Hales, Stephen</a></li>
+  <li class="c018"><a href="/article/13-0064-s8/hasselquist__frederik">Hasselquist, Frederik</a></li>
+  <li class="c018"><a href="/article/13-0580-hofmeister-wilhelm-friedrich-benedict/hofmeister__wilhelm_friedrich_benedict">Hofmeister, W. F. B.</a></li>
+  <li class="c018"><a href="/article/13-0688-s4/hooker__sir_joseph_dalton">Hooker, Sir Joseph D.</a></li>
+  <li class="c018"><a href="/article/13-0691-s3/hooker__sir_william_jackson">Hooker, Sir William J.</a></li>
+  <li class="c018"><a href="/article/13-0870-s6/huber__françois">Huber, François</a></li>
+  <li class="c018"><a href="/article/14-0029-huxley-thomas-henry/huxley__thomas_henry">Huxley, T. H.</a></li>
+  <li class="c018"><a href="/article/14-0038-hyatt-alpheus/hyatt__alpheus">Hyatt, Alpheus</a></li>
+  <li class="c018"><a href="/article/15-0140-j-ger-gustav/jäger__gustav">Jäger, Gustav</a></li>
+  <li class="c018"><a href="/article/15-0360-jesse-edward/jesse__edward">Jesse, Edward</a></li>
+  <li class="c018"><a href="/article/15-0620-jussieu-de/jussieu__de">Jussieu, De (family)</a></li>
+  <li class="c018"><a href="/article/15-0728-kaup-johann-jakob/kaup__johann_jakob">Kaup, Johann Jakob</a></li>
+  <li class="c018"><a href="/article/15-0855-s4/kirby__william">Kirby, William</a></li>
+  <li class="c018"><a href="/article/15-0923-s6/kölliker__rudolph_albert_von">Kölliker, R. A. von</a></li>
+  <li class="c018"><a href="/article/15-0976-s1/kühne__willy">Kühne, Willy</a></li>
+  <li class="c018">Lacépède, B. G. E. de La Ville, comte de</li>
+  <li class="c018"><a href="/article/16-0121-s2/lamarck__jean_baptiste_pierre_antoine_de_monet">Lamarck</a></li>
+  <li class="c018"><a href="/article/16-0295-s1/latreille__pierre_andré">Latreille, P. A.</a></li>
+  <li class="c018"><a href="/article/16-0320-s3/lawes__sir_john_bennet">Lawes, Sir John B.</a></li>
+  <li class="c018"><a href="/article/16-0391-s2/leeuwenhoek">Leeuwenhoek, A. van</a></li>
+  <li class="c018"><a href="/article/16-0415-leidy-joseph/leidy__joseph">Leidy, Joseph</a></li>
+  <li class="c018"><a href="/article/16-0740-lindley-john/lindley__john">Lindley, John</a></li>
+  <li class="c018"><a href="/article/16-0754-linnaeus/linnaeus">Linnaeus</a></li>
+  <li class="c018"><a href="/article/16-0958-s3/lombroso__cesare">Lombroso, Cesare</a></li>
+  <li class="c018"><a href="/article/17-0129-s2/ludwig__karl_friedrich_wilhelm">Ludwig, K. F. W.</a></li>
+  <li class="c018">Macgillivray, W. and J.</li>
+  <li class="c018"><a href="/article/17-0514-s3/malpighi__marcello">Malpighi, Marcello</a></li>
+  <li class="c018"><a href="/article/17-0786-s3/marsh__othniel_charles">Marsh, O. C.</a></li>
+  <li class="c018"><a href="/article/17-0820-s3/martius__carl_friedrich_philipp_von">Martius, C. F. P. von</a></li>
+  <li class="c018"><a href="/article/17-0821-s5/martyn__john">Martyn, John</a></li>
+  <li class="c018"><a href="/article/18-0382-s3/michaux__andré">Michaux, André</a></li>
+  <li class="c018"><a href="/article/18-0500-s2/milne-edwards__henry">Milne-Edwards, Henry</a></li>
+  <li class="c018"><a href="/article/18-0658-mivart-st-george-jackson/mivart__st_george_jackson">Mivart, St. George J.</a></li>
+  <li class="c018"><a href="/article/18-0678-s2/mohl__hugo_von">Mohl, Hugo von</a></li>
+  <li class="c018"><a href="/article/18-0863-s8/morgagni__giovanni_battista">Morgagni, G. B.</a></li>
+  <li class="c018">Müller, F. von, baron</li>
+  <li class="c018"><a href="/article/18-0994-s2/müller__johannes_peter">Müller, J. P.</a></li>
+  <li class="c018"><a href="/article/19-0164-naegeli-karl-wilhelm-von/naegeli__karl_wilhelm_von">Naegeli, K. W. van</a></li>
+  <li class="c018"><a href="/article/19-0360-s2/nees_von_esenbeck__christian_gottfried">Nees von Esenbeck</a></li>
+  <li class="c018"><a href="/article/19-0606-newton-alfred/newton__alfred">Newton, Alfred</a></li>
+  <li class="c018"><a href="/article/19-0786-north-marianne/north__marianne">North, Marianne</a></li>
+  <li class="c018"><a href="/article/19-0966-s2/nuttall__thomas">Nuttall, Thomas</a></li>
+  <li class="c018"><a href="/article/20-0077-oken-lorenz/oken__lorenz">Oken, Lorenz</a></li>
+  <li class="c018"><a href="/article/20-0328-ormerod-eleanor-a/ormerod__eleanor_a_">Ormerod, Eleanor A.</a></li>
+  <li class="c018"><a href="/article/20-0427-owen-sir-richard/owen__sir_richard">Owen, Sir Richard</a></li>
+  <li class="c018"><a href="/article/21-0118-s2/pennant__thomas">Pennant, Thomas</a></li>
+  <li class="c018"><a href="/article/22-0364-pringsheim-nathanael/pringsheim__nathanael">Pringsheim, Nathanael</a></li>
+  <li class="c018"><a href="/article/22-0739-quatrefages-de-br-au-jean-louis-armand-de/quatrefages_de_bréau__jean_louis_armand_de">Quatrefages de Bréau</a></li>
+  <li class="c018">Ray (or Wray), John</li>
+  <li class="c018"><a href="/article/22-0964-s2/réaumur__rené_antoine_ferchault_de">Réaumur, R. A. F. de</a></li>
+  <li class="c018"><a href="/article/23-0317-s2/richardson__sir_john">Richardson, Sir John</a></li>
+  <li class="c018"><a href="/article/23-0555-romanes-george-john/romanes__george_john">Romanes, G. J.</a></li>
+  <li class="c018"><a href="/article/23-0835-s6/royle__john_forbes">Royle, John Forbes</a></li>
+  <li class="c018"><a href="/article/23-1017-s3/sachs__julius_von">Sachs, Julius von</a></li>
+  <li class="c018">Saint-Hilaire, A. de</li>
+  <li class="c018"><a href="/article/24-0253-s3/saussure__nicolas_theodore_de">Saussure, N. T. de</a></li>
+  <li class="c018"><a href="/article/24-0348-s3/schleiden__matthias_jakob">Schleiden, M. J.</a></li>
+  <li class="c018"><a href="/article/24-0401-s2/schultze__max_johann_sigismund">Schultze, M. J. S.</a></li>
+  <li class="c018"><a href="/article/24-0406-s3/schwann__theodor">Schwann, Theodor</a></li>
+  <li class="c018"><a href="/article/24-0667-s1/senebier__jean">Senebier, Jean</a></li>
+  <li class="c018"><a href="/article/25-0034-sibthorp-john/sibthorp__john">Sibthorp, John</a></li>
+  <li class="c018"><a href="/article/25-0061-s3/siebold__carl_theodor_ernst_von">Siebold, C. T. E. vo</a></li>
+  <li class="c018"><a href="/article/25-0543-sowerby-james/sowerby__james">Sowerby, James</a></li>
+  <li class="c018"><a href="/article/25-0613-s4/spallanzani__lazaro">Spallanzani, Lazaro</a></li>
+  <li class="c018"><a href="/article/25-0759-sprengel-kurt/sprengel__kurt">Sprengel, Kurt</a></li>
+  <li class="c018"><a href="/article/25-0765-s3/spurzheim__johann_christoph">Spurzheim, J. C.</a></li>
+  <li class="c018"><a href="/article/26-0196-s4/swammerdam__jan">Swammerdam, Jan</a></li>
+  <li class="c018"><a href="/article/26-0201-s3/swartz__olof">Swartz, Olof</a></li>
+  <li class="c018">Thomson, Sir C. W.</li>
+  <li class="c018"><a href="/article/26-0938-s5/thunberg__karl_peter">Thunberg, K. P.</a></li>
+  <li class="c018"><a href="/article/26-0939-s2/thuret__gustave_adolphe">Thuret, G. A.</a></li>
+  <li class="c018"><a href="/article/26-1002-s3/tiedemann__friedrich">Tiedemann, Friedrich</a></li>
+  <li class="c018"><a href="/article/27-0075-torrey-john/torrey__john">Torrey, John</a></li>
+  <li class="c018"><a href="/article/27-0121-s2/tournefort__joseph_pitton_de">Tournefort, J. P. de</a></li>
+  <li class="c018"><a href="/article/27-0270-s6/treviranus__gottfried_reinhold">Treviranus, G. R.</a></li>
+  <li class="c018"><a href="/article/27-0517-tylor-edward-burnett/tylor__edward_burnett">Tylor, E. B.</a></li>
+  <li class="c018"><a href="/article/28-0125-virchow/virchow__rudolf">Virchow, Rudolf</a></li>
+  <li class="c018"><a href="/article/28-0251-wagner-rudolph/wagner__rudolph">Wagner, Rudolph</a></li>
+  <li class="c018"><a href="/article/28-0291-wallace-alfred-russel/wallace__alfred_russel">Wallace, A. Russel</a></li>
+  <li class="c018"><a href="/article/28-0428-waterton-charles/waterton__charles">Waterton, Charles</a></li>
+  <li class="c018"><a href="/article/28-0517-s2/weismann__august">Weismann, August</a></li>
+  <li class="c018"><a href="/article/28-0619-white-gilbert/white__gilbert">White, Gilbert</a></li>
+  <li class="c018"><a href="/article/28-0704-williamson-william-crawford/williamson__william_crawford">Williamson, W. C.</a></li>
+  <li class="c018"><a href="/article/28-0710-willughby-francis/willughby__francis">Willughby, Francis</a></li>
+  <li class="c018"><a href="/article/28-0711-wilson-alexander/wilson__alexander">Wilson, Alexander</a></li>
+  <li class="c018"><a href="/article/28-0794-wolff-caspar-friedrich/wolff__caspar_friedrich">Wolff, C. F.</a></li>
+  <li class="c018"><a href="/article/28-0811-wood-john-george/wood__john_george">Wood, John George</a></li>
+  <li class="c018"><a href="/article/28-0934-s3/yarrell__william">Yarrell, William</a></li>
+</ul>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

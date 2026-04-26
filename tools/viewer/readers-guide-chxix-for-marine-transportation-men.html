@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Marine Transportation Men &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XIX</span>For Marine Transportation Men</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Problems of the Near Future</a></li><li><a href="#sh-2">Technical Subjects</a></li><li><a href="#sh-3">An Outline of Sea Trade</a></li><li><a href="#sh-4">Story of the Ship</a></li><li><a href="#sh-5">Mast and Sail</a></li><li><a href="#sh-6">Iron Hulls</a></li><li><a href="#sh-7">Early Steamships</a></li><li><a href="#sh-8">History of Shipping</a></li><li><a href="#sh-9">Instructions for the Ship-Builder</a></li><li><a href="#sh-10">A Dictionary of Ships and Shipping</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">Problems of the Near Future</span>The immediate future of marine
+commerce cannot fail to be very
+greatly affected by changed conditions.
+No one believes that England,
+Germany, France, Russia, Austria, Japan
+and China will be able, before the
+middle of the century, to establish a
+stable adjustment of the international
+difficulties which surround them. No
+one knows what changes the Panama
+Canal may make in the movement of
+freights within the first ten years of its
+operation. No one
+knows to what industry
+the United
+States may next apply
+the methods by
+which the country has created the age
+of steel.</p>
+
+<p>Coal and the steam engine may both,
+within a few years, be displaced as factors
+in marine transportation. Sweeping
+tariff changes in the United States, in
+Great Britain and in Germany may vitally
+affect the movement of freights.
+Transatlantic passenger traffic, not only
+a huge business in itself, but also important,
+so long as it is sea-borne, in its
+effects upon transatlantic freights, may
+become aerial instead of marine.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Technical Subjects</span>Confronted by the approach of a period
+so full of changes, the uttermost alertness
+of outlook is merely elementary prudence
+on the part of everyone engaged in the
+business of marine transportation; and
+the new Britannica reviews all the many
+fields of knowledge which are of importance
+in this connection. It supplies
+technical information regarding the construction
+of ships, the management of
+shipping lines, marine engines of every
+kind, shipboard and waterside appliances
+for the handling of cargo, the development
+of harbours and the dredging
+and embankment of rivers, the building
+of docks, warehouses and dry docks,
+ship canals and canal locks, navigation,
+lighthouses, lightships,
+buoys, lanes
+of traffic, marine insurance,
+cold transport—every
+conceivable subject with
+which shipping men are concerned.
+Articles by contributors in twenty different
+countries, deal with all the world’s
+ports, industries, exports, imports and
+shipping. The financial and legal aspects
+of the business are exhaustively
+covered. Tariffs, legislation affecting
+marine transportation, and such questions
+of international policy as the command
+of the sea, the right of search, and the
+position of neutrals in wartime are discussed
+by the highest authorities.</p>
+
+<p>In addition to all this, the Britannica
+articles on these and similar subjects
+contain historical sections which, in conjunction
+with the articles on the history
+of all countries, <i>show how past changes,
+as sweeping as these which are now anticipated,
+have affected commerce</i>. Whether
+your present position—or the position
+you are endeavouring to make for yourself—in
+relation to shipping is such that
+this coming period of transition promises
+to affect you favourably or unfavourably,
+you need to be forewarned and forearmed,
+prepared to keep what you have
+or get what you want.</p>
+
+<p><span class="shoulder-heading" id="sh-3">An Outline of Sea Trade</span>A course of reading should always
+begin with the study of general principles,
+in order that in your subsequent and
+more detailed examination of the field,
+the relative importance of each fact
+that you master may be appreciated.
+The Britannica provides, in the article
+<span class="sc"><a href="/article/06-0790-commerce/commerce">Commerce</a></span> (Vol. 6, p. 766), a bird’s-eye
+view of the whole subject of marine
+transportation. The
+article would not fill
+more than 16 pages
+of this Guide; you
+can read it (and digest it as you read
+it, so clear is it) in an hour, and yet
+it will give you such a grasp of the whole
+science—for it is a science—of international
+trade that you will spend another
+hour in assorting and classifying, in your
+own mind, a mass of impressions you had
+received before, at school or in the course
+of casual reading, impressions which have
+not been so useful to you as they should
+have been because they had not been
+systematically arranged. There is no
+text book in existence which outlines the
+subject so fully and clearly as does this
+one brief article—about one five-thousandth
+part of the total contents of the
+Britannica.</p>
+
+<p>This article will arouse your interest
+in the direct relation between commerce,
+past, present and future, and the progress
+of civilization. You will realize
+that the man who has any part in the
+vast shifting of cargoes from one part of
+the world to another is distributing
+ideas and ideals and ambitions as well
+as commodities, and in the article <span class="sc"><a href="/article/06-0419-civilization/civilization">Civilization</a></span>
+(Vol. 6, p. 403), by Dr. <a href="/contributors.html?q=Rev.+Henry+Herbert+Williams">Henry
+Smith Williams</a>, editor of <i>The Historians’
+History of the World</i>, you will see how
+harbours receive and send on to the inlands
+the influences as well as the manufactures
+of the more advanced communities.</p>
+
+<p>From these articles you should turn
+to the three great articles which deal
+with the methods by which these wonderful
+results are accomplished. These
+three are <span class="sc"><a href="/article/24-0894-s8/ship">Ship</a></span>, <span class="sc"><a href="/article/24-0984-s2/shipbuilding">Shipbuilding</a></span> and <span class="sc"><a href="/article/24-1059-s2/shipping">Shipping</a></span>,
+all in volume 24, and equivalent to
+about 420 or 425 pages of this Guide.
+These three articles contain hundreds of
+illustrations, more than forty being full
+page plates. They are by the most
+eminent authorities. <a href="/contributors.html?q=Sir+Philip+Watts">Sir Philip Watts</a>,
+director of naval construction for the
+British Navy, designer of the Dreadnoughts
+and the Super-Dreadnoughts of
+the British Navy, as well as of the “Mauretania”
+and the “Lusitania,” chairman
+of the Federation of Shipbuilders, and
+naval architect and director of the warshipbuilding
+department of Armstrong,
+Whitworth &amp; Co., Ltd., wrote the articles
+<span class="sc"><a href="/article/24-0984-s2/shipbuilding">Shipbuilding</a></span> and <span class="sc"><a href="/article/24-0894-s8/ship">Ship</a></span> (except the
+history of ships before the invention of
+steamships, which is by <a href="/contributors.html?q=Rev.+Edmond+Warre">Edmund Warre</a>,
+provost of Eton, well-known as a writer
+on nautical history). The article <span class="sc"><a href="/article/24-1059-s2/shipping">Shipping</a></span>
+is by <a href="/contributors.html?q=Douglas+Owen">Douglas Owen</a>, lecturer at the
+Royal Naval War College and author
+of <i>Ports and Docks</i>.</p>
+
+<p>In brief, these three articles in length,
+contents,—both text and illustrations,—and
+authorship, make up a remarkable
+book on the subject, valuable either as a
+text-book or a work of reference for the
+ship builder, the marine engineer or the
+student of shipping.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Story of the Ship</span>Taking the articles separately, the
+article <span class="sc"><a href="/article/24-0894-s8/ship">Ship</a></span> begins with a section of
+nearly 10,000 words on the early development
+of ships. It suggests
+that shells floating on the
+water or the nautilus may
+first have suggested the use
+of a hollowed tree-trunk for transportation—the
+first boat or “ship” (the word
+comes from the same root as “scoop”)
+as distinct from a raft. The evolution of
+boat building is traced,—from dug-out
+to bark- or skin-covered frame, built
+like modern racing-shells sometimes ribs
+first and then skin laid on and sometimes
+shell first and then ribs inserted. In
+spite of the great length of the period
+during which such boats were used—of
+course they are still used by more
+primitive peoples,—it is interesting to
+notice that there were local variations
+which never became general, such as the
+outrigger and weather platform, used in
+the South Pacific and not found elsewhere.</p>
+
+<p>Egyptian vessels we may study in the
+excellent early tomb-paintings still preserved,
+and one of these shows a ship,
+not a canoe or large boat, such as was in
+use from 3000–1000 B. C., fitted with
+oars and a mast in two pieces which could
+be lowered and laid along a high spardeck.</p>
+
+<p>The Phoenicians did more than the
+Egyptians to develop ship and navigation,
+and a Phoenician galley of the 8th
+century B. C. is shown in an Assyrian
+wall painting. The Phoenicians probably
+sailed out of the Mediterranean, to
+Britain for tin, or even around Africa.</p>
+
+<p>Greek ships and shipbuilding we know
+from a full and varied national literature,
+from the figures on coins and vases, and
+from the discovery in 1834 at the Peiraeus,
+the port of Athens, of records of Athenian
+dockyard superintendents for several
+years between 373 and 324 B.C. We
+have besides descriptions, partly technical,
+showing the point of view of the
+engineer or architect, written by Roman
+authors. The article gives a critical
+account of the Greek types of vessels.
+The growth of Roman shipping seems
+to have been due primarily to political
+reasons and to have advanced slowly
+but surely,—practical devices being introduced
+to solve special difficulties in a
+field and on an element where the Romans
+were far from being at home. A five-tiered
+Carthaginian galley which had
+drifted ashore served the Romans as a
+model for their first war-ship, and with
+crews taught to row in a framework
+set up on dry land they manned a fleet
+which was launched in sixty days from
+the time that the trees were felled.</p>
+
+<p><span class="shoulder-heading" id="sh-5">Mast and Sail</span>Passing quickly over the remainder of
+the earlier period, which the reader will
+find treated in full in the article <span class="sc"><a href="/article/24-0894-s8/ship">Ship</a></span>,
+he should notice that
+the sailing vessel
+came into use gradually
+for merchant use, but that galleys
+(propelled by oars) were long the only
+type for warships. There were some
+galleys even in the Spanish Armada of
+1588. In the meantime the invention
+of gunpowder and the development of
+artillery brought about changes in size
+and in form, with a notable tendency
+to more masts and a greater spread of
+sail. The discoveries of the 15th and
+16th centuries and especially the consequent
+expansion of trade in the 17th
+century, all tended to increase the size
+and efficiency of sailing ships. The
+end of the 18th and the beginning of the
+19th century marked the highest point
+in the development of American sailing
+ships. “The Americans with their fast-sailing
+‘clippers’ taught the English
+builders a lesson, showing that increased
+length in proportion to beam gave
+greater speed, while permitting the use
+of lighter rigging in proportion to tonnage,
+and the employment of smaller crews. The
+English shipyards were for a long time
+unequal to the task of producing vessels
+capable of competing with those of their
+American rivals, and their trade suffered
+accordingly. But after the repeal of the
+Navigation Laws in 1850, things improved
+and we find clippers from Aberdeen and
+the Clyde beginning to hold their own
+on the long voyages to China and elsewhere.”</p>
+
+<p>The revolution in marine transportation
+by the introduction of steam is
+summed up by <a href="/contributors.html?q=Sir+Philip+Watts">Sir Philip Watts</a> as
+follows:</p>
+
+<p>Before steam was applied to the propulsion
+of ships, the voyage from Great Britain
+to America lasted for some weeks; at
+the beginning of the 20th century the
+time had been reduced to about six days,
+and in 1910 the fastest vessels could do it
+in four and a half days. Similarly, the voyage
+to Australia, which took about thirteen
+weeks, had been reduced to thirty days or
+less. The fastest of the sailing tea-clippers
+required about three months to bring the
+early teas from China to Great Britain; in
+1910 they were brought to London by the
+ordinary P. &amp; O. service in five weeks. Atlantic
+liners now run between England and
+America which maintain speeds of 25 and
+26 knots over the whole course, as compared
+with about 12 knots before the introduction
+of steam.</p>
+
+<p><span class="shoulder-heading" id="sh-6">Iron Hulls</span>The introduction of iron for wood
+began about the same time as the substitution
+of steam for sails, and there was
+even more prejudice
+against it. This was
+due not merely to
+the sentiment attaching to the oaken
+timbers that typified “hearts of oak,”
+or to the “Wooden Walls of England.”
+In all seriousness it was objected that
+iron would not float! It was feared
+that iron bottoms would be more easily
+perforated when ships grounded; but
+this was found not to be the case when
+construction was careful. It was proved
+that fouling of iron bottoms from weeds
+and barnacles might be remedied by
+frequent cleaning and repainting. The
+most serious objection against iron was
+that it affected the compass; but in 1839
+Sir G. B. Airy laid down rules for the
+correction of compass errors due to iron
+in construction. But even to-day wood is
+preferred for the construction of ships
+for scientific expeditions to the Polar
+regions where the slightest disturbance
+of the compass is to be avoided. Iron
+and steel (first used in shipbuilding to
+any extent in 1870–75) have three advantages
+over wooden ships: less weight;
+greater durability; greater ease in securing
+the necessary general and local
+strengths. But while iron was coming
+into use largely because it is more durable,
+there was a great increase in the
+durability of wooden ships, due to the
+improved knowledge of wood-preservation.
+At the end of the 18th century
+15 or 20 years was the average life of
+a wooden ship; but there are several
+instances of ships built in the first decade
+of the 19th century—or even earlier—which
+were still in commission at the beginning
+of the 20th century.</p>
+
+<p><span class="shoulder-heading" id="sh-7">Early Steamships</span>Full details are given in regard to the
+first ships used for canal and river navigation
+in Great Britain and the United
+States; the comparatively rapid adoption
+of steam vessels on the Irish and
+English channels; and the first steamships
+to make long trips—the American-built
+“Savannah” which crossed the Atlantic
+in 1819 in 25 days using steam only
+a part of the time,
+the “Enterprise”
+which went from
+London to Calcutta
+in 1825 in 103 days (64 under steam), the
+“Sirius,” the “Great Western,” etc.
+All these were propelled by paddle-wheels.
+Jet propulsion had been suggested by
+Benjamin Franklin in 1775 and was tried
+several times with some success. But
+the greater success of the screw-propeller,
+perfected by Colonel John Stevens and
+Captain John Ericsson, soon caused jet-propulsion
+to be abandoned. The screw-propeller
+made possible—and was quickly
+followed by—great improvements in
+engines; the gearing used with paddles
+was soon given up for direct-acting engines—compound
+about 1854, triple-expansion
+in 1874.</p>
+
+<p>Statistics of shipping for all countries
+are given in tables and diagrams equivalent
+to 18 or 20 pages of this Guide.</p>
+
+<p>A brief summary outline of the remainder
+of this article <span class="sc"><a href="/article/24-0894-s8/ship">Ship</a></span> is all that
+can be given here.</p>
+
+<p>Merchant Vessels</p>
+
+<p>Sailing Ships</p>
+
+<p>Barges, Smacks or Cutters,
+Schooners, Brigs and Brigantines</p>
+
+<p>Steamships</p>
+
+<p>Types: Turtle-back, etc. Cargo
+Ships: Modern Developments,
+Great Lake Freighters, Oil Tank
+Steamers, Motor Tank Vessels.
+Passenger Steamers: Ferries,
+River and Sound, Cross-Channel,
+Ocean Liners (Atlantic: Canadian,
+Emigrant Vessels, Liners on
+other Routes; Pacific Liners).
+Special Vessels (Dredge, Train
+Ferries, Ice Breakers, Surveying
+Vessels, Lightships, Coastguard
+and Fishery Cruisers, Salvage and
+Fire Vessels, Lifeboats, Yachts).
+Propulsion by Electricity, by
+Naphtha Engines, by Internal
+Combustion Engines</p>
+
+<p>War Vessels</p>
+
+<p>Battleships and Armour Protection;
+Sir E. J. Reed and the British
+Navy Turret Ships; American
+Monitor; Sir Nathaniel Barnaby
+in England; the work of Sir W.
+H. White; Development from
+1885 to 1902; The “Dreadnought”
+type—in England,
+United States, Germany, France,
+Japan, Russia, Italy, Austria,
+Brazil, Argentina, etc., with
+Table, “Development of Some of
+the Leading Features of Notable
+Armored Battleships from 1860
+to 1910.”</p>
+
+<p>Cruisers, Second-Class Cruisers,
+Third-Class, Armored Cruisers,
+Dreadnought Cruisers, Cruisers in
+Different Navies</p>
+
+<p>Gunboats and Torpedo Craft and
+Torpedo-boat Destroyers</p>
+
+<p>Submarines: American experiments
+in the 18th Century; inventions
+of Holland and Nordenfeldt;
+the Goubet System in France;
+Submarines in different navies.</p>
+
+<p><span class="shoulder-heading" id="sh-8">History of Shipping</span>The article <span class="sc"><a href="/article/24-1059-s2/shipping">Shipping</a></span> (Vol. 24, p. 983)
+is devoted to the history and practice
+of maritime transportation. It outlines
+the early period of
+trade, and the contest
+for trade among
+Spain, Portugal, the
+Netherlands and England, especially in
+the period after the discovery of America,
+when the prizes of commerce became
+suddenly so much richer. The Navigation
+Act of 1651, confining the trade
+between England and her colonies and
+the British coasting trade to English
+ships, was followed by a rapid growth
+of English shipping. The tonnage
+doubled between 1666 and 1688. In the
+18th century and into the 19th, the
+history of shipping was primarily a
+contest for trade between France and
+England, finally won by the latter. The
+19th century, as has already been seen
+in the article <span class="sc"><a href="/article/24-0894-s8/ship">Ship</a></span>, was marked by the
+adoption of steam as a motive power.
+The struggle for supremacy in the Atlantic
+trade and in commerce with China
+and the Far East between the United
+States and Great Britain was won by the
+latter largely for this reason—the American
+ship-builders clung to the sailing
+clipper too long—and they were too
+slow in adopting iron instead of wooden
+hulls. The American Civil War was an
+additional set-back to American commerce.
+Other great factors during the
+last 50 years in the development of shipping,
+treated in the article, may be catalogued
+here:</p>
+
+<p>The opening of the Suez Canal in
+1869.</p>
+
+<p>Improved apparatus for fire prevention.</p>
+
+<p>Refrigerating machinery, making
+possible the shipment of meats
+and other foods.</p>
+
+<p>Germany’s merchant marine.</p>
+
+<p>Japanese merchant vessels.</p>
+
+<p>French efforts to get trade.</p>
+
+<p>The shipping combine of 1902.</p>
+
+<p>“Liners” and “Tramps.”</p>
+
+<p>The freight rate question and increased
+tonnage.</p>
+
+<p>Special passenger transport: tourists,
+emigrants, etc.</p>
+
+<p><span class="shoulder-heading" id="sh-9">Instructions for the Ship-Builder</span>The third of the main articles is
+<span class="sc"><a href="/article/24-0984-s2/shipbuilding">Shipbuilding</a></span> (Vol.
+24, p. 922) by Sir
+<a href="/contributors.html?q=Sir+Philip+Watts">Philip Watts</a>. The
+article is equivalent
+to 200 pages of this
+Guide, and the illustrations include
+more than 120 working drawings. A
+brief outline of the article is all that can
+be given here.</p>
+
+<p><i>Stability</i>: Equilibrium, Stability
+of Equilibrium, Transverse Stability,
+Small Inclinations, Metacentric
+Heights, Inclining Experiment,
+Large Inclinations, Curves of Stability,
+Effect of Freeboard, Effect of
+Beam, Effect of Position on Centre
+of Gravity, Geometrical Properties,
+Dynamical Stability, Sailing Ships,
+Longitudinal Stability, Stability
+when Damaged, Stability in any Direction.</p>
+
+<p><i>Rolling of Ships</i>: Unresisted Rolling—Froude’s
+Theory, Resisted
+Rolling, Methods of Reducing Rolling
+(Bilge-Keels, Water Chambers,
+Gyroscope).</p>
+
+<p><i>Resistance</i>: Components of Force,
+Wake, Frictional Resistance, Law of
+Comparison, Model Experiments,
+Experimental Results.</p>
+
+<p><i>Propulsion</i>: Experimental Results,
+Cavitation.</p>
+
+<p><i>Strength</i>: Longitudinal Bending,
+Transverse Bending.</p>
+
+<p><i>Steering</i>: Nature of Forces when
+Turning, Heel when Turning, Types
+of Rudders, Experimental Results.</p>
+
+<p><i>Process of Design</i></p>
+
+<ul class="index c026">
+  <li class="c018">Registration Societies</li>
+  <li class="c018">Board of Trade Supervision</li>
+  <li class="c018">Load line and Freeboard</li>
+  <li class="c018">Loading of Grain and Timber</li>
+</ul>
+
+<p><i>Ship-yard Work</i></p>
+
+<ul class="index c026">
+  <li class="c018">Structural Parts</li>
+  <li class="c018">Materials</li>
+  <li class="c018">Cranes and Gantries</li>
+</ul>
+
+<p><i>Course of Construction</i></p>
+
+<ul class="index c026">
+  <li class="c018"><a href="/article/18-0668-model/model">Models</a></li>
+  <li class="c018">Laying-off</li>
+  <li class="c018">Sheer Drawing</li>
+  <li class="c018">Fairing the Body</li>
+  <li class="c018">Contracted Method of Fairing</li>
+  <li class="c018">Fairing the End</li>
+  <li class="c018">Stern Mould</li>
+  <li class="c018">Displacement Calculation</li>
+  <li class="c018">Frame Lines</li>
+  <li class="c018">Cant Frames</li>
+  <li class="c018">Double Canted Frame</li>
+  <li class="c018">Swell for Propeller Shaft</li>
+  <li class="c018">Mould for Boss Frame Casting</li>
+  <li class="c018">Shaft Struts</li>
+  <li class="c018">Sight Edges in Body Plan</li>
+  <li class="c018">Inner Bottom</li>
+  <li class="c018">Inner Surface of Frames</li>
+  <li class="c018">Outside Double Bottom</li>
+  <li class="c018">Deck Lines</li>
+  <li class="c018">Framing and Plating behind</li>
+</ul>
+
+<p>Armour</p>
+
+<ul class="index c026">
+  <li class="c018">Laying off Armour of a Warship</li>
+  <li class="c018">Order of Work</li>
+  <li class="c018"><a href="/article/15-0740-s1/keel">Keel</a></li>
+  <li class="c018">Transverse Frames</li>
+  <li class="c018">Scrive-Board</li>
+  <li class="c018">Shoring Ribbands</li>
+  <li class="c018">Deck Beams</li>
+  <li class="c018">Longitudinals</li>
+  <li class="c018">Bilge Keel</li>
+  <li class="c018"><a href="/article/08-0575-drawing/drawing">Drawings</a></li>
+  <li class="c018">Laying Keel Blocks</li>
+  <li class="c018">Keels and Frames</li>
+  <li class="c018"><a href="/article/24-0861-s4/shell">Shell or Outside Plating</a></li>
+</ul>
+
+<p><i>Structural Arrangements</i></p>
+
+<p>Longitudinal System as used in
+New London, Conn.; Great Lake
+steamer; British cargo steamer; Atlantic
+liner; Differences between
+war and merchant ships; Auxiliary
+Machinery.</p>
+
+<p><span class="shoulder-heading" id="sh-10">A Dictionary of Ships and Shipping</span>The student should read the article
+<span class="sc"><a href="/article/19-0314-s5/navy">Navy and Navies</a></span> (Vol. 19, p. 299) and
+refer to the Chapter <i>For Naval Officers</i>.</p>
+
+<p>The following is a partial list of the
+articles in the Britannica of particular
+value to the marine transportation man.</p>
+
+<ul class="index">
+  <li class="c018"><a href="/article/01-1000-s3/anchor">Anchor</a></li>
+  <li class="c018"><a href="/article/03-0286-ballast/ballast">Ballast</a></li>
+  <li class="c018"><a href="/article/03-0416-barge/barge">Barge</a></li>
+  <li class="c018"><a href="/article/03-0682-belay/belay">Belay</a></li>
+  <li class="c018"><a href="/article/03-0832-berth/berth">Berth</a></li>
+  <li class="c018"><a href="/article/03-0955-bilge/bilge">Bilge</a></li>
+  <li class="c018"><a href="/article/03-0972-binnacle/binnacle">Binnacle</a></li>
+  <li class="c018"><a href="/article/04-0109-boat/boat">Boat</a></li>
+  <li class="c018"><a href="/article/04-0359-bowline/bowline">Bowline</a></li>
+  <li class="c018"><a href="/article/04-0819-s3/bumboat">Bumboat</a></li>
+  <li class="c018"><a href="/article/04-0829-s4/buoy">Buoy</a></li>
+  <li class="c018"><a href="/article/04-0835-burgee/burgee">Burgee</a></li>
+  <li class="c018"><a href="/article/04-0946-s4/cable">Cable</a></li>
+  <li class="c018"><a href="/article/04-0949-s2/cabotage">Cabotage</a></li>
+  <li class="c018">Caique</li>
+  <li class="c018"><a href="/article/05-0202-canoe/canoe">Canoe</a></li>
+  <li class="c018"><a href="/article/05-0305-capstan/capstan">Capstan</a></li>
+  <li class="c018"><a href="/article/05-0521-catamaran/catamaran">Catamaran</a></li>
+  <li class="c018"><a href="/article/06-0494-cleat/cleat">Cleat</a></li>
+  <li class="c018"><a href="/article/06-0631-coble/coble">Coble</a></li>
+  <li class="c018"><a href="/article/06-0790-commerce/commerce">Commerce</a></li>
+  <li class="c018"><a href="/article/07-0148-coracle/coracle">Coracle</a></li>
+  <li class="c018">C. H. Cramp</li>
+  <li class="c018"><a href="/article/07-0651-cunard-sir-samuel/cunard__sir_samuel">Sir Samuel Cunard</a></li>
+  <li class="c018"><a href="/article/07-0753-dahabeah/dahabeah">Dahabeah</a></li>
+  <li class="c018"><a href="/article/08-0158-dhow/dhow">Dhow</a></li>
+  <li class="c018"><a href="/article/08-0293-dinghy/dinghy">Dinghy</a></li>
+  <li class="c018"><a href="/article/09-0772-s4/ericsson__john">John Ericsson</a></li>
+  <li class="c018"><a href="/article/10-0259-s4/felucca">Felucca</a></li>
+  <li class="c018"><a href="/article/10-0454-s5/fitch__john">John Fitch</a></li>
+  <li class="c018"><a href="/article/11-0313-fulton-robert/fulton__robert">Robert Fulton</a></li>
+  <li class="c018"><a href="/article/12-0039-s4/gimbal">Gimbal</a></li>
+  <li class="c018"><a href="/article/13-0114-s4/hawser">Hawser</a></li>
+  <li class="c018"><a href="/article/13-0640-s2/holystone">Holystone</a></li>
+  <li class="c018">T. H. Ismay</li>
+  <li class="c018"><a href="/article/15-0586-s3/junk">Junk</a></li>
+  <li class="c018"><a href="/article/15-0731-s3/kayak">Kayak</a></li>
+  <li class="c018"><a href="/article/15-0740-s1/keel">Keel</a></li>
+  <li class="c018"><a href="/article/16-0259-lateen/lateen">Lateen</a></li>
+  <li class="c018">Life-saving Service</li>
+  <li class="c018"><a href="/article/16-0647-s2/lighthouse">Lighthouse</a></li>
+  <li class="c018"><a href="/article/16-0886-s2/log">Log</a></li>
+  <li class="c018"><a href="/article/17-0889-mast/mast">Mast</a></li>
+  <li class="c018"><a href="/article/19-0299-s2/navigation">Navigation</a></li>
+  <li class="c018"><a href="/article/19-0313-s2/navigation_laws">Navigation Laws</a></li>
+  <li class="c018"><a href="/article/19-0974-s2/oar">Oars</a></li>
+  <li class="c018"><a href="/article/21-0638-s5/pilot">Pilot</a></li>
+  <li class="c018"><a href="/article/21-0657-s2/pinnace">Pinnace</a></li>
+  <li class="c018"><a href="/article/21-0671-s6/pirogue">Pirogue</a></li>
+  <li class="c018"><a href="/article/21-0935-polacca/polacca">Polacca</a></li>
+  <li class="c018"><a href="/article/22-0087-s4/poop">Poop</a></li>
+  <li class="c018"><a href="/article/22-0268-pram/pram">Pram</a></li>
+  <li class="c018"><a href="/article/22-0389-proa/proa">Proa</a></li>
+  <li class="c018"><a href="/article/22-0673-punt/punt">Punt</a></li>
+  <li class="c018"><a href="/article/22-0729-s3/quarterdeck">Quarterdeck</a></li>
+  <li class="c018"><a href="/article/22-0740-quay/quay">Quay</a></li>
+  <li class="c018"><a href="/article/22-0905-s2/random">Random</a></li>
+  <li class="c018"><a href="/article/23-0355-s5/rigging">Rigging</a></li>
+  <li class="c018"><a href="/article/23-0829-s4/rowlock">Rowlock</a></li>
+  <li class="c018"><a href="/article/23-0857-rudder/rudder">Rudder</a></li>
+  <li class="c018"><a href="/article/23-1054-sail/sail">Sail, and Sailcloth</a></li>
+  <li class="c018"><a href="/article/24-0132-s4/sampan">Sampan</a></li>
+  <li class="c018"><a href="/article/24-0390-schooner/schooner">Schooner</a></li>
+  <li class="c018"><a href="/article/24-0573-seamanship/seamanship">Seamanship</a></li>
+  <li class="c018">Seamen, Laws of</li>
+  <li class="c018"><a href="/article/24-0645-semaphore/semaphore">Semaphore</a></li>
+  <li class="c018"><a href="/article/24-0894-s8/ship">Ship</a></li>
+  <li class="c018"><a href="/article/24-0984-s2/shipbuilding">Shipbuilding</a></li>
+  <li class="c018">Ship Money</li>
+  <li class="c018"><a href="/article/24-1059-s2/shipping">Shipping</a></li>
+  <li class="c018"><a href="/article/25-0260-s3/sloop">Sloop</a></li>
+  <li class="c018"><a href="/article/25-0262-smack/smack">Smack</a></li>
+  <li class="c018"><a href="/article/25-0816-s3/starboard">Starboard</a></li>
+  <li class="c018"><a href="/article/25-0872-s2/steamship_lines">Steamship Lines</a></li>
+  <li class="c018"><a href="/article/27-0024-s3/tonnage">Tonnage</a></li>
+  <li class="c018"><a href="/article/27-0301-trinity-house-corporation-of/trinity_house__corporation_of">Trinity House</a></li>
+  <li class="c018"><a href="/article/27-0428-s6/turbine">Turbine</a></li>
+  <li class="c018"><a href="/article/28-0594-wharf/wharf">Wharf</a></li>
+  <li class="c018">Sir William H. White</li>
+  <li class="c018"><a href="/article/28-0935-yawl/yawl">Yawl</a></li>
+</ul>
+
+<div>
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

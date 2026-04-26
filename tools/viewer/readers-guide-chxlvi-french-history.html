@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>French History &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XLVI</span>French History</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Early History of France</a></li><li><a href="#sh-2">Medieval France</a></li><li><a href="#sh-3">16th Century</a></li><li><a href="#sh-4">The Bourbons</a></li><li><a href="#sh-5">The Revolution</a></li><li><a href="#sh-6">The First Empire</a></li><li><a href="#sh-7">The Kingdom Again</a></li><li><a href="#sh-8">The Second Empire</a></li><li><a href="#sh-9">Modern Times</a></li></ol></div>
+    <div class="body-text">
+
+
+<p>The article <span class="sc"><a href="/article/10-0796-s4/france">France</a></span> in the Encyclopaedia
+Britannica includes a
+section on <i>History</i> (Vol. 10, pp.
+801–906) equivalent to 320 pages of this
+Guide, of which the first part, down to
+1870, is by <a href="/contributors.html?q=Paul+Wiriath">Paul Wiriath</a>, director of the
+École Supérieure Pratique de Commerce
+et d’Industrie, Paris, and the part since
+1870 is by <a href="/contributors.html?q=John+Edward+Courtenay+Bodley">J. E. C. Bodley</a>, author of
+<i>France</i>, etc. Opposite page 802 are four
+coloured historical maps showing France
+at the end of the 10th, 13th and 14th
+centuries, and the changes in the eastern
+frontier from 1598 to 1789. The historical
+part of the article closes with a
+historiographic section, or critical summary
+of French historical writing, by
+Charles Bémont of the University of
+Paris.</p>
+
+<p>Supplementing this main treatment, see:</p>
+
+<p><span class="shoulder-heading" id="sh-1">Early History of France</span>On prehistoric and Roman France,
+<span class="sc"><a href="/article/11-0550-s5/gaul">Gaul</a></span> (Vol. 11, p. 533), by Prof. <a href="/contributors.html?q=Francis+John+Haverfield">F. J.
+Haverfield</a>, Oxford, the well-known authority
+on Roman
+occupation of Britain
+and Gaul; <span class="sc"><a href="/article/03-0934-bibracte/bibracte">Bibracte</a></span>,
+<span class="sc"><a href="/article/01-0583-s2/alesia">Alesia</a></span>, <span class="sc"><a href="/article/15-0102-itius-portus/itius_portus">Itius
+Portus</a></span>, <span class="sc"><a href="/article/08-0624-druidism/druidism">Druidism</a></span>, and, on Caesar’s
+campaigns, <span class="sc">Caesar, Julius</span>; and, on
+Roman remains, <span class="sc"><a href="/article/02-0597-s3/arles">Arles</a></span>, <span class="sc"><a href="/article/19-0728-s7/nîmes">Nîmes</a></span>, <span class="sc"><a href="/article/20-0174-orange/orange">Orange</a></span>,
+<span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>, <span class="sc"><a href="/article/02-0252-s2/aqueduct">Aqueduct</a></span>, and <span class="sc"><a href="/article/01-0942-s5/amphitheatre">Amphitheatre</a></span>.</p>
+
+<p>On the Franks, the articles <span class="sc"><a href="/article/11-0047-s4/franks">Franks</a></span>
+(Vol. 11, p. 35) and <span class="sc"><a href="/article/24-0082-s4/salic_law">Salic Law</a></span> (Vol. 24,
+p. 68), by Prof. Christian Pfister of the
+Sorbonne; and the articles, <span class="sc"><a href="/article/02-1021-s2/austrasia">Austrasia</a></span>,
+<span class="sc"><a href="/article/18-0191-s5/merovingians">Merovingians</a></span>, <span class="sc"><a href="/article/06-0150-childeric/childeric">Childeric</a></span>, <span class="sc"><a href="/article/06-0582-clovis/clovis">Clovis</a></span>,
+<span class="sc"><a href="/article/06-0150-childebert/childebert">Childebert</a></span>, <span class="sc"><a href="/article/06-0575-clotaire/clotaire">Clotaire</a></span>, <span class="sc"><a href="/article/25-0074-s3/sigebert">Sigebert</a></span>, <span class="sc"><a href="/article/05-0895-charibert/charibert">Charibert</a></span>,
+<span class="sc"><a href="/article/12-0755-s5/guntram">Guntram</a></span>, <span class="sc"><a href="/article/11-0056-s3/fredegond">Fredegond</a></span>, <span class="sc"><a href="/article/04-0707-s3/brunhilda">Brunhilda</a></span>,
+<span class="sc">Clotaire II</span>, <span class="sc"><a href="/article/07-0752-dagobert-i/dagobert_i">Dagobert</a></span>, <span class="sc"><a href="/article/21-0664-pippin/pippin">Pippin</a></span>
+I, II and III, <span class="sc"><a href="/article/05-0976-charles-edward/charles_edward">Ebroin</a></span>, <span class="sc"><a href="/article/05-0394-carolingians/carolingians">Carolingians</a></span>,
+<span class="sc"><a href="/article/05-0978-charles-martel/charles_martel">Charles Martel</a></span> (Vol. 5, p. 942), <span class="sc"><a href="/article/05-0356-carloman-frankish-princes/carloman__frankish_princes_">Carloman</a></span>,
+<span class="sc"><a href="/article/06-0150-childeric/childeric">Childeric</a></span>; <span class="sc"><a href="/article/05-0927-charlemagne/charlemagne">Charlemagne</a></span>, <span class="sc"><a href="/article/23-0486-s2/roland__legend_of">Roland</a></span>,
+<span class="sc"><a href="/article/09-0151-einhard/einhard">Einhard</a></span>, <span class="sc"><a href="/article/01-0569-s6/alcuin">Alcuin</a></span>; <span class="sc"><a href="/article/17-0042-s7/louis_i">Louis I</a></span> “the
+Pious,” <span class="sc"><a href="/article/17-0032-s2/lothair">Lothair</a></span> (Vol. 17, p. 17); <span class="sc"><a href="/article/05-0933-charles-ii/charles_ii_">Charles
+II</a></span> “the Bald” (Vol. 5, p. 897);
+<span class="sc"><a href="/article/10-0309-s3/feudalism">Feudalism</a></span>; <span class="sc"><a href="/article/17-0042-s6/louis">Louis</a></span> II and III; <span class="sc"><a href="/article/05-0934-charles-iii-roman-emperor/charles_iii___roman_emperor_">Charles
+III</a></span> “the Fat” (Vol. 5, p. 898); <span class="sc"><a href="/article/20-0022-s6/odo">Odo</a></span>;
+<span class="sc"><a href="/article/17-0044-s2/louis_iv">Louis IV</a></span> (Vol. 17, p. 35), by <a href="/contributors.html?q=Ren%C3%A9+Poupardin">Dr. René
+Poupardin</a>, secretary of the  École des
+Charles; <span class="sc"><a href="/article/17-0032-s2/lothair">Lothair</a></span> (Vol. 17, p. 18); <span class="sc"><a href="/article/04-0708-s6/bruno">Bruno</a></span>;
+<span class="sc"><a href="/article/17-0049-s2/louis_v">Louis V</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Medieval France</span>For the Capetian period, the articles <span class="sc"><a href="/article/05-0264-capet/capet">Capet</a></span>
+(Vol. 5, p. 251); <span class="sc"><a href="/article/23-0416-s5/robert">Robert</a></span> “the Strong”
+(Vol. 23, p. 402); <span class="sc"><a href="/article/13-0882-s3/hugh">Hugh</a></span> “the Great”
+(Vol. 13, p. 857);
+<span class="sc"><a href="/article/13-0883-s2/hugh_capet">Hugh Capet</a></span> (Vol.
+13, p. 858); <span class="sc"><a href="/article/23-0416-s5/robert">Robert</a></span>
+“the Pious” (Vol. 23,
+p. 399); <span class="sc"><a href="/article/13-0286-s3/henry_i">Henry I</a></span> (Vol. 13, p. 290);
+<span class="sc"><a href="/article/21-0397-s6/philip_i">Philip I</a></span> (Vol. 21, p. 378); <span class="sc"><a href="/article/17-0049-s3/louis_vi">Louis VI</a></span>
+(Vol. 17, p. 35), by Prof. J. T. Shotwell,
+Columbia University; Prof. Shotwell’s
+article on <span class="sc"><a href="/article/17-0050-s2/louis_vii">Louis VII</a></span>; <span class="sc"><a href="/article/26-0064-suger/suger">Suger</a></span>; <span class="sc"><a href="/article/09-0185-eleanor-of-aquitaine/eleanor_of_aquitaine">Eleanor
+of Aquitaine</a></span> (Vol. 9, p. 168); <span class="sc"><a href="/article/21-0399-s3/philip_i">Philip
+Augustus</a></span> (Vol. 21, p. 378); <span class="sc"><a href="/article/14-0594-ingeborg/ingeborg">Ingeborg</a></span>;
+<span class="sc"><a href="/article/01-0545-s4/albigenses">Albigenses</a></span>; and for French and English
+relations, <span class="sc"><a href="/article/23-0311-s3/richard_i">Richard I</a></span> and <span class="sc"><a href="/article/15-0459-john/john">John</a></span> of England;
+<span class="sc"><a href="/article/17-0050-s4/louis_viii">Louis VIII</a></span>; <span class="sc"><a href="/article/04-0053-blanche-of-castile/blanche_of_castile">Blanche of Castile</a></span>
+(Vol. 4, p. 40); Prof. Shotwell’s article on
+<span class="sc"><a href="/article/17-0051-s2/louis_ix">Louis IX</a></span> “St. Louis”; and the article
+<span class="sc"><a href="/article/07-0546-crusades/crusades">Crusades</a></span>; <span class="sc"><a href="/article/21-0398-s2/philip_iii">Philip III</a></span> “the Bold” (Vol.
+21, p. 381); <span class="sc"><a href="/article/21-0399-s1/philip_iv">Philip IV</a></span>; <span class="sc">Boniface VIII</span>;
+<span class="sc"><a href="/article/24-0066-s6/saisset__bernard">Saisset</a></span>; <span class="sc"><a href="/article/19-0759-s4/nogaret__guillaume_de">Nogaret</a></span>; <span class="sc"><a href="/article/26-0621-templars/templars">Templars</a></span>; <span class="sc"><a href="/article/17-0052-s2/louis_x">Louis
+X</a></span>; <span class="sc"><a href="/article/21-0399-s2/philip_v">Philip V</a></span> and <span class="sc"><a href="/article/05-0953-charles-iv/charles_iv_">Charles IV</a></span>.</p>
+
+<p>For the Valois line and the history of
+the period (1328–1498), the article <span class="sc"><a href="/article/13-0918-hundred-years-war/hundred_years__war">Hundred
+Years’ War</a></span>; <span class="sc"><a href="/article/25-0262-sluys-battle-of/sluys__battle_of">Sluys</a></span>; <span class="sc"><a href="/article/07-0409-cr-cy/crécy">Crécy</a></span>; and
+for detail of the war the articles under
+that head in the chapter <i>For the Army
+Officer</i> in this Guide; and <span class="sc"><a href="/article/21-0404-s2/philip_vi">Philip VI</a></span> (Vol.
+21, p. 383); <span class="sc"><a href="/article/10-0496-flanders/flanders">Flanders</a></span>; <span class="sc"><a href="/article/02-0711-s4/artevelde__jacob_van">Artevelde</a></span> (Jacob
+and Philip van); <span class="sc"><a href="/article/07-0875-dauphin/dauphiné">Dauphiné</a></span>; <span class="sc"><a href="/article/07-0874-dauphin/dauphin">Dauphin</a></span>;
+<span class="sc"><a href="/article/11-0397-s2/gabelle">Gabelle</a></span>; <span class="sc"><a href="/article/15-0461-s3/john_ii">John II</a></span> (Vol. 15, p.
+441); <span class="sc">Poitiers</span>; <span class="sc"><a href="/article/05-0957-charles-x/charles_x_">Marcel</a></span>; <span class="sc"><a href="/article/05-0957-charles-x/charles_x_">Le Coq</a></span>; <span class="sc"><a href="/article/05-0957-charles-x/charles_x_">States
+General</a></span>; <span class="sc"><a href="/article/05-0959-charles-ii/charles_ii_">Charles II</a></span> of Navarre (Vol.
+5, p. 924); <span class="sc"><a href="/article/05-0953-charles-v/charles_v_">Charles V</a></span> (Vol. 5, p. 917);
+<span class="sc"><a href="/article/15-0138-s3/jacquerie__the">Jacquerie</a></span>; <span class="sc"><a href="/article/14-0892-s5/isabella_ii">du Guesclin</a></span>; <span class="sc"><a href="/article/14-0892-s5/isabella_ii">Charles VI</a></span>;
+<span class="sc"><a href="/article/02-0602-s3/armagnac">Armagnac</a></span>; <span class="sc"><a href="/article/14-0892-s2/isabella">Isabella</a></span> of Bavaria (Vol.
+14, p. 860); <span class="sc"><a href="/article/03-0738-benedict/benedict">Benedict XIII</a></span> (Vol. 3, p.
+718); <span class="sc"><a href="/article/15-0459-john/john">John</a></span> “the Fearless” (Vol. 15, p.
+445); <span class="sc"><a href="/article/01-0413-s8/agincourt">Agincourt</a></span>; <span class="sc"><a href="/article/02-0723-s2/arthur">Charles VII</a></span>; <span class="sc"><a href="/article/02-0724-s3/arthur_iii">Arthur
+III</a></span> of Brittany (Vol. 2, p. 682);
+<span class="sc"><a href="/article/15-0447-joan-of-arc/joan_of_arc">Joan of Arc</a></span>; <span class="sc"><a href="/article/25-0447-s6/sordino">Coeur</a></span>; <span class="sc"><a href="/article/25-0448-s3/sorel__agnes">Agnes Sorel</a></span> (Vol.
+25, p. 432); <span class="sc"><a href="/article/04-0534-br-z/brézé">Brézé</a></span>; <span class="sc"><a href="/article/22-0264-praguerie-the/praguerie__the">Praguerie</a></span>; <span class="sc"><a href="/article/17-0052-s3/louis_xi">Louis
+XI</a></span>; <span class="sc"><a href="/article/05-0967-charles-xiv/charles_xiv_">Balue</a></span>; <span class="sc"><a href="/article/05-0967-charles-xiv/charles_xiv_">Le Daim</a></span>; <span class="sc"><a href="/article/05-0967-charles-xiv/charles_xiv_">Liège</a></span>, <i>History</i>;
+<span class="sc"><a href="/article/05-0933-charles/charles">Charles</a></span> “the Bold” of Burgundy (Vol.
+5, p. 932); <span class="sc"><a href="/article/02-0080-s4/anne_of_denmark">Charles VIII</a></span>; <span class="sc"><a href="/article/02-0076-s2/anne">Anne</a></span> of
+France (Vol. 2, p. 70); <span class="sc"><a href="/article/02-0076-s2/anne">Anne</a></span> of Brittany
+(Vol. 2, p. 69).</p>
+
+<p><span class="shoulder-heading" id="sh-3">16th Century</span>For the years, 1498–1589, and the Orleans
+dynasty, <span class="sc"><a href="/article/17-0055-s2/louis_xii">Louis XII</a></span> and <span class="sc"><a href="/article/01-0843-s2/amboise">Amboise</a></span>,
+by <a href="/contributors.html?q=Jules+Isaac">Prof. Jules Isaac</a> of the Lyons Lycée;
+<span class="sc"><a href="/article/17-0828-s2/mary">Mary</a></span> (Vol. 17, p.
+824); <span class="sc"><a href="/article/10-0956-s4/francis_i">Francis I</a></span>
+(Vol. 10, p. 934), by
+<a href="/contributors.html?q=Jules+Isaac">Prof. Isaac</a>; <span class="sc"><a href="/article/17-0067-louise-of-savoy/louise_of_savoy">Louise of Savoy</a></span>; <span class="sc"><a href="/article/17-0722-marguerite-de-valois/marguerite_de_valois">Marignano</a></span>;
+<span class="sc"><a href="/article/20-1038-pavia/pavia">Pavia</a></span>; <span class="sc"><a href="/article/17-0722-marguerite-de-valois/marguerite_de_valois">Marguerite D’Angoulême</a></span>
+(Vol. 17, p. 706); <span class="sc"><a href="/article/09-0835-tampes/étampes">Étampes</a></span> (Vol. 9,
+p. 803); <span class="sc"><a href="/article/18-0816-montluc-blaise-de-lassaran-massen-c-me-seigneur-de/montluc__blaise_de_lassaran-massen-côme__seigneur_de">Du Prat</a></span>, <span class="sc"><a href="/article/18-0817-montmorency-anne/montmorency__anne">Anne de Montmorency</a></span>
+(Vol. 18, p. 787); <span class="sc"><a href="/article/13-0286-s4/henry_ii">Henry II</a></span>
+(Vol. 13, p. 291); <span class="sc"><a href="/article/08-0182-diane-de-poitiers/diane_de_poitiers">Diane de Poitiers</a></span>;
+<span class="sc"><a href="/article/05-0547-catherine-de-medici/catherine_de__medici">Catherine de’ Medici</a></span>; <span class="sc"><a href="/article/10-0956-s5/francis_ii">Francis II</a></span>;
+<span class="sc"><a href="/article/12-0724-guise/guise">Guise</a></span> (Vol. 12, p. 699); <span class="sc"><a href="/article/16-0552-l-h-pital-michel-de/l_hôpital__or_l_hospital___michel_de">L’Hôpital</a></span>;
+<span class="sc"><a href="/article/06-0868-cond/condé">Condé</a></span>; <span class="sc"><a href="/article/01-0843-s2/amboise">Amboise</a></span>; <span class="sc"><a href="/article/23-0722-s3/romorantin">Romorantin</a></span>; <span class="sc"><a href="/article/13-0889-s3/huguenots">Huguenots</a></span>;
+<span class="sc"><a href="/article/05-0957-charles-ix/charles_ix_">Charles IX</a></span>; <span class="sc"><a href="/article/06-0704-coligny-gaspard-de/coligny__gaspard_de">Coligny</a></span>; <span class="sc"><a href="/article/23-1059-s4/saint_andré__andré_jeanbon">Saint
+André</a></span>; <span class="sc">St. Bartholomew</span>; <span class="sc"><a href="/article/13-0287-s2/henry_iii">Henry
+III</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-4">The Bourbons</span>For the Bourbon kings, beginning
+1589—<span class="sc"><a href="/article/04-0340-bourbon/bourbon">Bourbon</a></span> (with genealogical chart);
+<span class="sc"><a href="/article/19-0179-nantes/nantes">Henry IV</a></span>; Duke of <span class="sc"><a href="/article/19-0179-nantes/nantes">Mayenne</a></span>; <span class="sc"><a href="/article/19-0180-s2/nantes__edict_of">Edict
+of Nantes</a></span> (Vol. 19,
+p. 165); <span class="sc"><a href="/article/26-0073-s4/sully__james">Sully</a></span>;
+<span class="sc"><a href="/article/17-0055-s3/louis_xiii">Louis XIII</a></span>; <span class="sc"><a href="/article/17-0730-s2/marie_de__medici">Marie
+de’ Medici</a></span>; <span class="sc"><a href="/article/23-0320-s2/richelieu__armand_jean_du_plessis_de">Richelieu</a></span>, by Prof. J. T.
+Shotwell, Columbia University; <span class="sc"><a href="/article/06-0851-concini/concini__concino">Concini</a></span>;
+<span class="sc"><a href="/article/17-0162-s3/luynes">Luynes</a></span>; <span class="sc">Cinque-Mars</span>; <span class="sc"><a href="/article/23-0481-s3/rohan">Rohan</a></span>;
+<span class="sc"><a href="/article/25-0452-soubise/soubise__benjamin_de_rohan">Soubise</a></span>; <span class="sc"><a href="/article/15-0169-s2/jansenism">Jansenism</a></span>; <span class="sc">Thirty Years’
+War</span>; and for leaders and engagements
+in that conflict the titles listed in the
+chapter in this Guide entitled <i>For
+Army Officers</i>; <span class="sc"><a href="/article/17-0056-s2/louis_xiv">Louis XIV</a></span>, by Prof. A. J.
+Grant of Leeds University; <span class="sc"><a href="/article/17-0959-s2/mazarin__jules">Mazarin</a></span>, by
+Prof. <a href="/contributors.html?q=Henry+Morse+Stephens">H. Morse Stephens</a>, University of
+California; <span class="sc">Marie Therèse</span>; <span class="sc"><a href="/article/16-0310-s7/la_vallière__louise_françoise_de">La Vallière</a></span>;
+<span class="sc"><a href="/article/18-0805-montespan/montespan__françoise-athenaïs_de_pardaillan">Montespan</a></span>; <span class="sc"><a href="/article/17-0458-s5/maintenon__françoise_d_aubigné">Maintenon</a></span>; Duc
+de <span class="sc"><a href="/article/03-0604-beaufort/beaufort">Beaufort</a></span>; <span class="sc"><a href="/article/11-0260-s3/fronde__the">Fronde</a></span>; <span class="sc"><a href="/article/27-0429-s3/turenne__henri_de_la_tour_d_auvergne">Turenne</a></span>; <span class="sc"><a href="/article/23-0220-retz-seigneurs-and-dukes-of/retz__seigneurs_and_dukes_of">Retz</a></span>
+and <span class="sc"><a href="/article/16-0240-la-rochefoucauld/la_rochefoucauld">La Rochefoucauld</a></span>, by Prof. George
+Saintsbury of Edinburgh University;
+<span class="sc"><a href="/article/10-0771-s2/fouquet__or_foucquet___nicolas">Fouquet</a></span>; <span class="sc"><a href="/article/06-0678-colbert-jean-baptiste/colbert__jean_baptiste">Colbert</a></span>, by Prof. J. T. Shotwell,
+Columbia; <span class="sc"><a href="/article/05-0866-champlain/champlain">Champlain</a></span>; <span class="sc"><a href="/article/16-0251-la-salle/la_salle">La Salle</a></span>;
+<span class="sc"><a href="/article/17-0084-s2/louvois__françois_michel_le_tellier">Louvois</a></span>; <span class="sc"><a href="/article/05-0125-camisards/camisards">Camisards</a></span>, by <a href="/contributors.html?q=Frank+Puaux">M. Frank
+Puaux</a>, president of the Socíeté de l’Histoire
+du Protestantisme Français; <span class="sc"><a href="/article/15-0169-s2/jansenism">Jansenism</a></span>,
+by Viscount St. Cyres; <span class="sc"><a href="/article/22-0144-port-royal-france/port_royal__france_">Port
+Royal</a></span>; <span class="sc"><a href="/article/04-0302-bossuet-jaques-b-nigne/bossuet__jaques_bénigne">Bossuet</a></span>; <span class="sc">Fenelon</span>; <span class="sc"><a href="/article/16-0520-le-tellier-michel/le_tellier__michel">Le Tellier</a></span>;
+<span class="sc"><a href="/article/12-0359-s3/grand_alliance__war_of_the">Grand Alliance</a></span>; and for details
+of military operations and sketches of
+commanders the articles enumerated in
+the chapter in this Guide <i>For Army
+Officers</i>; <span class="sc"><a href="/article/17-0057-s3/louis_xv">Louis XV</a></span>; Philip II, Duke of
+<span class="sc"><a href="/article/20-0320-s4/orleans">Orleans</a></span> (Vol. 20, p. 286); <span class="sc"><a href="/article/10-0518-s2/fleury">Fleury</a></span>;
+<span class="sc"><a href="/article/03-0054-s2/austrian_succession__war_of_the">Austrian Succession</a></span> and <span class="sc">Seven Years’
+War</span> and articles under these heads in
+the chapter in this Guide <i>For Army
+Officers</i>; <span class="sc"><a href="/article/05-1002-ch-teauroux/chateauroux">Chateauroux</a></span>; <span class="sc"><a href="/article/02-0494-s9/argenson">Pompadour</a></span>; <span class="sc"><a href="/article/02-0494-s9/argenson">Du
+Barry</a></span>; <span class="sc"><a href="/article/02-0494-s9/argenson">Comte d’ Argenson</a></span> (Vol. 2, p.
+459), <span class="sc"><a href="/article/06-0277-choiseul-cesar-duc-de/choiseul__cesar__duc_de">Choiseul</a></span>; <span class="sc"><a href="/article/17-0925-s2/maupeou__rené_nicolas_charles_augustin">Maupeou</a></span>; <span class="sc"><a href="/article/01-0474-s7/aiguillon__marie_madeleine_de_wignerod_du_pont_de_courlay">Aiguillon</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-5">The Revolution</span>On the Revolution and the period immediately
+before it, the articles <span class="sc"><a href="/article/17-0058-s2/louis_xvi">Louis
+XVI</a></span>, by <a href="/contributors.html?q=Robert+Anchel">Robert Anchel</a>, archivist to the
+Department de l’Eure;
+<span class="sc"><a href="/article/17-0727-s2/marie_antoinette">Marie Antoinette</a></span>;
+<span class="sc"><a href="/article/03-0608-beaumarchais-pierre-augustin-caron-de/beaumarchais__pierre_augustin_caron_de">Beaumarchais</a></span>;
+<span class="sc"><a href="/article/17-0926-maurepas-jean-fr-d-ric-ph-lypeaux-comte-de/maurepas__jean_frédéric_phélypeaux__comte_de">Maurepas</a></span>; <span class="sc"><a href="/article/27-0432-s2/turgot__anne_robert_jacques">Turgot</a></span>; <span class="sc"><a href="/article/19-0355-s5/necker__jacques">Necker</a></span>;
+<span class="sc"><a href="/article/27-1049-s5/vergennes__charles_gravier">Vergennes</a></span>; <span class="sc"><a href="/article/05-0072-calonne-charles-alexandre-de/calonne__charles_alexandre_de">Calonne</a></span>; <span class="sc"><a href="/article/10-0165-s2/fallacy">Diamond
+Necklace</a></span>; <span class="sc"><a href="/article/10-0165-s2/fallacy">Loménie de Brienne</a></span>;
+<span class="sc"><a href="/article/10-0165-s2/fallacy">French Revolution</a></span> (Vol. 10, p. 154,
+equivalent to 58 pages of this Guide), by
+Prof. <a href="/contributors.html?q=Francis+Charles+Montague">F. C. Montague</a>, University College,
+London; <span class="sc">Des Moulins</span>; <span class="sc"><a href="/article/18-0597-s2/mirabeau__victor_riqueti">Mirabeau</a></span>;
+<span class="sc"><a href="/article/25-0072-s6/sieyès__emmanuel-joseph">Sieyès</a></span>; <span class="sc"><a href="/article/07-0841-danton-george-jacques/danton__george_jacques">Danton</a></span>; <span class="sc"><a href="/article/23-0438-s2/robespierre__maximilien_françois_marie_isidore">Robespierre</a></span>; <span class="sc">Mounnier</span>;
+<span class="sc"><a href="/article/16-0085-s2/la_fayette__louise_de">La Fayette</a></span>; <span class="sc">Montmorin de Saint-Hérem</span>;
+<span class="sc"><a href="/article/17-0686-marat-jean-paul/marat__jean_paul">Marat</a></span>; <span class="sc"><a href="/article/07-0154-corday-d-armont-marie-anne-charlotte/corday_d_armont__marie_anne_charlotte">Corday</a></span>; <span class="sc"><a href="/article/26-0394-s4/talleyrand-périgord__charles_maurice_de">Talleyrand</a></span>;
+<span class="sc"><a href="/article/02-0827-s3/assignats">Assignats</a></span>; <span class="sc"><a href="/article/19-0252-s5/narbonne-lara__louis_marie_jacques_amalric">Narbonne-Lara</a></span>; <span class="sc"><a href="/article/15-0133-s3/jacobins__the">Jacobins</a></span>;
+<span class="sc"><a href="/article/12-0062-girondists/girondists">Girondists</a></span>; <span class="sc"><a href="/article/23-0486-s2/roland__legend_of">Roland</a></span>; <span class="sc"><a href="/article/04-0595-s1/brissot__jacques_pierre">Brissot</a></span>; <span class="sc"><a href="/article/18-0969-s2/mountain">Mountain</a></span>;
+<span class="sc"><a href="/article/08-0327-directory/directory">Directory</a></span>; <span class="sc"><a href="/article/03-0108-s1/babeuf__françois_noel">Babeuf</a></span>; <span class="sc"><a href="/article/11-0183-french-revolutionary-wars/french_revolutionary_wars">French Revolutionary
+Wars</a></span>; and for battles and
+leaders in these wars the articles mentioned
+under this head in the chapter in
+this Guide <i>For Army Officers</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-6">The First Empire</span>On the Napoleonic period, the articles
+by <a href="/contributors.html?q=John+Holland+Rose">J. Holland Rose</a>, author of <i>Napoleonic
+Studies</i>, etc., on <span class="sc"><a href="/article/19-0231-napoleon/napoleon">Napoleon</a></span> (Vol. 19, p.
+190)—equivalent to
+65 pages of this
+Guide, and on the
+principal figures of
+the Napoleonic period,—for example,
+<span class="sc"><a href="/article/04-0205-bonaparte/bonaparte">Bonaparte</a></span> family, <span class="sc"><a href="/article/10-0755-fouch-joseph-duke-of-otranto/fouché__joseph__duke_of_otranto">Fouché</a></span>, <span class="sc"><a href="/article/11-0477-gardane-claude-matthieu-count/gardane__claude_matthieu__count">Gardane</a></span>,
+<span class="sc"><a href="/article/15-0588-junot-laure/junot__laure">Junot</a></span>; the articles <span class="sc"><a href="/article/19-0231-napoleonic-campaigns/napoleonic_campaigns">Napoleonic Campaigns</a></span>,
+<span class="sc"><a href="/article/21-0104-peninsular-war/peninsular_war">Peninsular War</a></span> and <span class="sc"><a href="/article/28-0388-waterloo/waterloo">Waterloo</a></span>
+and the articles listed under these
+two heads in the chapter in this Guide
+<i>For Army Officers</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-7">The Kingdom Again</span>On the Bourbon restoration, <span class="sc"><a href="/article/17-0061-s2/louis_xviii">Louis
+XVIII</a></span>; <span class="sc"><a href="/article/23-0317-s3/richardson__samuel">Decazes</a></span>; Duc de <span class="sc"><a href="/article/23-0319-s2/richelieu__armand_emmanuel_sophie_septe-manie_du_plessis">Richelieu</a></span>
+(Vol. 23, p. 302);
+Duc de <span class="sc"><a href="/article/03-0830-berry/berry">Berry</a></span>; <span class="sc"><a href="/article/05-0956-charles-vii/charles_vii_">Villèle</a></span>;
+<span class="sc"><a href="/article/05-0957-charles-x/charles_x_">Charles X</a></span>
+(Vol. 5, p. 921);
+<span class="sc"><a href="/article/17-0809-s2/martignac__jean_baptiste_sylvere_gay">Martignac</a></span>; <span class="sc"><a href="/article/21-1016-polignac/polignac">Polignac</a></span>; <span class="sc"><a href="/article/17-0065-s1/louis_philippe_i">Marmont</a></span>.</p>
+
+<p>On the revolution of 1830 and the rule
+of Louis Philippe, the articles <span class="sc"><a href="/article/17-0065-s1/louis_philippe_i">Louis
+Philippe</a></span> (Vol. 17, p. 51); <span class="sc"><a href="/article/05-0583-cavaignac-louis-eug-ne/cavaignac__louis_eugène">Cavaignac</a></span>;
+<span class="sc"><a href="/article/26-0889-thiers/thiers">Thiers</a></span>; <span class="sc"><a href="/article/12-0730-guizot-fran-ois-pierre-guillaume/guizot__françois_pierre_guillaume">Guizot</a></span>; <span class="sc"><a href="/article/06-1012-constant-benjamin/constant__benjamin">Constant</a></span>; <span class="sc">Casimir
+Périer</span>; <span class="sc">Lafitte</span>; <span class="sc"><a href="/article/03-0456-barrot-camille-hyacinthe-odilon/barrot__camille_hyacinthe_odilon">Barrot</a></span>; <span class="sc"><a href="/article/08-0715-dupont-de-l-eure-jacques-charles/dupont_de_l_eure__jacques_charles">Dupont de
+L’Eure</a></span>; <span class="sc"><a href="/article/03-0830-berryer-antoine-pierre/berryer__antoine_pierre">Berryer</a></span>; <span class="sc"><a href="/article/24-0059-s5/saint-simon__claude_de_rouvroy">Saint-Simon</a></span>; <span class="sc"><a href="/article/10-0773-fourier-jean-baptiste-joseph/fourier__jean_baptiste_joseph">Fourier</a></span>;
+<span class="sc"><a href="/article/16-0144-lamennais-hugues-f-licit-robert-de/lamennais__hugues_félicité_robert_de">Lamennais</a></span>; <span class="sc"><a href="/article/04-0052-blanc-louis/blanc__louis">Louis Blanc</a></span>; <span class="sc"><a href="/article/18-0683-mol-mathieu/molé__mathieu">Molé</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-8">The Second Empire</span>On the revolution of 1848 and the
+second Empire, besides most of the articles
+in the preceding paragraph, <span class="sc"><a href="/article/19-0226-napoleon-iii/napoleon_iii_">Napoleon
+III</a></span>, by <a href="/contributors.html?q=Albert+Thomas">Albert
+Thomas</a>, author
+of <i>The Second Empire</i>;
+<span class="sc"><a href="/article/07-0427-cremieux-isaac-mo-se/crémieux__isaac_moïse">Crémieux</a></span>;
+<span class="sc"><a href="/article/16-0379-s6/ledru-rollin__alexandre_auguste">Ledru-Rollin</a></span>; <span class="sc"><a href="/article/05-0389-carnot-lazare-hippolyte/carnot__lazare__hippolyte">Carnot</a></span>; <span class="sc"><a href="/article/11-0491-s2/garnier-pagès__étienne_joseph_louis">Garnier-Pagès</a></span>;
+<span class="sc"><a href="/article/18-0781-s4/montalembert__marc_rené">Montalembert</a></span>; <span class="sc"><a href="/article/20-0113-s3/ollivier__olivier_émile">Ollivier</a></span>; <span class="sc"><a href="/article/23-0810-s5/rouher__eugène">Rouher</a></span>;
+<span class="sc"><a href="/article/10-0226-favre-jean-alphonse/favre__jean_alphonse">Favre</a></span>; <span class="sc"><a href="/article/21-0602-s2/picard__louis_joseph_ernest">Picard</a></span>; <span class="sc"><a href="/article/07-0472-crimean-war/crimean_war">Crimean War</a></span>;
+<span class="sc"><a href="/article/14-0945-italian-wars/italian_wars">Italian Wars</a></span>; <span class="sc">Franco-Prussian War</span>;
+and articles listed under those heads in
+the chapter in this Guide <i>For Army Officers</i>;
+<span class="sc"><a href="/article/17-0942-s2/maximilian_ii">Eugènie</a></span>; <span class="sc"><a href="/article/17-0943-s2/maximilian">Maximilian</a></span> of Mexico (Vol.
+17, p. 924).</p>
+
+<p><span class="shoulder-heading" id="sh-9">Modern Times</span>On the Third Republic, 1870 and the
+following years, the story in Vol. 10, pp.
+873–904 (equivalent
+to 100 pages of this
+Guide) is to be supplemented
+by the articles <span class="sc"><a href="/article/26-0889-thiers/thiers">Thiers</a></span>; <span class="sc"><a href="/article/23-0099-r-musat-charles-fran-ois-marie-comte-de/rémusat__charles_françois_marie__comte_de">Rémusat</a></span>;
+<span class="sc"><a href="/article/25-0142-simon-magus/simon_magus">Simon</a></span>; <span class="sc"><a href="/article/03-0465-barth-lemy-jean-jacques/barthélemy__jean_jacques">Barthélemy</a></span>; <span class="sc"><a href="/article/04-0649-s5/broglie__de">Broglie</a></span>;
+<span class="sc"><a href="/article/17-0278-macmahon-marie-edm-patrice-maurice-de/macmahon__marie_edmé_patrice_maurice_de">MacMahon</a></span>; <span class="sc"><a href="/article/08-0670-dufaure-jules-armand-stanislas/dufaure__jules_armand_stanislas">Dufaure</a></span>; <span class="sc"><a href="/article/12-0610-gr-vy-fran-ois-paul-jules/grèvy__françois_paul_jules">Grèvy</a></span>; <span class="sc"><a href="/article/10-0302-ferry/ferry">Ferry</a></span>;
+<span class="sc"><a href="/article/11-0453-s2/gambetta__léon">Gambetta</a></span>; <span class="sc"><a href="/article/11-0224-s5/freycinet__louis_claude_desaulses_de">Freycinet</a></span>; <span class="sc"><a href="/article/05-0859-chambord/chambord">Chambord</a></span>; <span class="sc">Clémenceau</span>;
+<span class="sc"><a href="/article/04-0594-s6/brisson__eugène_henri">Brisson</a></span>; <span class="sc"><a href="/article/04-0333-boulanger/boulanger">Boulanger</a></span>; <span class="sc"><a href="/article/05-0389-carnot-lazare-hippolyte/carnot__lazare__hippolyte">Carnot</a></span>;
+<span class="sc"><a href="/article/17-0040-ss2/loubet__émile_françois">Loubet</a></span>; <span class="sc"><a href="/article/16-0514-s6/lesseps__ferdinand_de">Lesseps</a></span>; <span class="sc"><a href="/article/05-0465-casimir-p-rier-jean-paul-pierre/casimir-périer__jean_paul_pierre">Casimir-Périer</a></span>;
+<span class="sc"><a href="/article/10-0221-s5/faure__françois_félix">Faure</a></span>; <span class="sc"><a href="/article/23-0302-ribot-th-odule/ribot__théodule">Ribot</a></span>; <span class="sc"><a href="/article/18-0113-s6/méline__félix_jules">Méline</a></span>; <span class="sc"><a href="/article/28-0270-waldeck-rousseau-pierre-marie-ren-ernest/waldeck-rousseau__pierre_marie_rené_ernest">Waldeck-Rousseau</a></span>;
+<span class="sc"><a href="/article/08-0604-dreyfus-alfred/dreyfus__alfred">Dreyfus</a></span>; <span class="sc"><a href="/article/08-0717-dupuy-pierre/dupuy__pierre">Dupuy</a></span>; <span class="sc"><a href="/article/23-0302-ribot-th-odule/ribot__théodule">Ribot</a></span>;
+<span class="sc"><a href="/article/11-0437-galliffet-gaston-alexandre-auguste-marquis-de/galliffet__gaston_alexandre_auguste__marquis_de">Galliffet</a></span>; <span class="sc"><a href="/article/15-0308-s7/jaurès__jean_léon">Jaurès</a></span>; <span class="sc"><a href="/article/18-0489-s5/millerand__alexandre">Millerand</a></span>; <span class="sc"><a href="/article/06-0772-comb/comb">Combes</a></span>;
+<span class="sc"><a href="/article/07-0977-delcass/delcassé__théophile">Delcassé</a></span>; <span class="sc"><a href="/article/23-0822-s2/rouvier__maurice">Rouvier</a></span>; <span class="sc"><a href="/article/21-0083-s5/pelletan__charles_camille">Pelletan</a></span>;
+<span class="sc"><a href="/article/04-0535-briand-aristide/briand__aristide">Briand</a></span>; <span class="sc"><a href="/article/16-0431-lemire-jules-auguste/lemire__jules_auguste">Lemire</a></span>; <span class="sc"><a href="/article/10-0166-s2/fallières__clément_armand">Fallières</a></span>; <span class="sc"><a href="/article/21-0925-poincar-raymond/poincaré__raymond">Poincaré</a></span>.</p>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Merchants And Manufacturers Of Furniture &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter VIII</span>For Merchants And Manufacturers Of Furniture</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Art and Industry</a></li><li><a href="#sh-2">Form and Embellishment</a></li><li><a href="#sh-3">Related Subjects</a></li><li><a href="#sh-4">“Art Nouveau” School</a></li><li><a href="#sh-5">Beds</a></li><li><a href="#sh-6">Chests and Chairs</a></li><li><a href="#sh-7">Bookcases and Desks</a></li><li><a href="#sh-8">Technical Articles</a></li><li><a href="#sh-9">Decoration and Ornament</div> <div class="sidenote">Biographical Articles</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">Art and Industry</span>When you think of your home,
+making a picture in your mind
+of the familiar surroundings associated
+in your memory with your
+greatest pleasures, you are really thinking
+of furniture. Tradition makes the
+dwelling itself the tangible symbol of
+home, because when a primitive tribe
+ceased to be wanderers, the walls that
+excluded wild beasts and inclement
+weather and gave privacy were conspicuous
+evidences of a change for the
+better. But in our higher civilization our
+way of thinking has changed. Nothing
+seems to us more desolate than the bleak
+surfaces and harsh angles of an unfurnished
+house. Colour and softness and
+the curved lines which we instinctively
+love because they suggest softness come
+into the dwelling with furniture, and culture
+has progressed so far that the chair
+or bed must be a delight to the eye as
+well as to the weary
+limbs, that the dinner
+table and the
+bookcase must be so
+designed as to enhance the satisfaction
+we find in refreshing body and mind.
+You would not get so much pleasure as
+you do from your Encyclopaedia Britannica
+if its paper and print and pictures
+and the colour and texture of the bindings
+did not make it one of the chief
+adornments of your home; the volumes
+might be just as useful in a less pleasing
+guise, but you would not feel the same
+affection for the book.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Form and Embellishment</span>To satisfy the spirit of home-love and
+house-pride in the making of furniture is
+an art, and the idea that furniture can
+only be artistic when it is made by hand,
+from a design that is to be used but once,
+is as nonsensical as it would be to say
+that a beautiful etching is not true art
+because a press produces it and others
+like it. “Fine art is everything which
+man does or makes <i>in one way rather than
+another</i> ... in order to express and
+arouse emotion ... with results independent
+of direct utility.” These words
+from Sir Sidney Colvin’s delightful Britannica
+article <span class="sc"><a href="/article/10-0369-fine-arts/fine_arts">Fine Arts</a></span> (Vol. 10, p.
+361), and another passage (p. 370), in
+which he speaks of “the artificers who
+produce wares primarily for use, in a
+form, or with embellishments, that have
+the <i>secondary virtue of giving pleasure</i>,”
+might well be quoted to the supercilious
+and superficial critic
+who condemns every
+product which machinery
+has brought
+within the reach of the less fortunately
+situated. Furniture, made in one form
+rather than another, because that one
+form gives greater pleasure, is artistic
+furniture whether it is made of machined
+pine chemically stained or of handworked
+and hand-polished rosewood.
+The manufacturer and dealer who ingeniously
+minimize the cost of production
+and distribution are benefiting the
+public just as truly as did Thomas Chippendale,
+“at once an artist and a prosperous
+man of business,” or Thomas
+Sheraton, “the great artistic genius who
+lived in chronic poverty.” The adaptation
+and variation of their ideas, under
+modern conditions of manufacture, have
+given pleasure to tens of thousands for
+every one whose home was enriched by
+the original products.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Related Subjects</span>We have, then, in the furniture business,
+the combination of an art with an
+industry of the most practical and useful
+kind, and this art is one which does more
+than any other to “express and arouse”
+the home-cherishing emotions which solidify
+family life. The principles which
+underlie architecture, sculpture, painting,
+metal work, embroidery and the
+weaving of patterns all affect the design
+of furniture, since its contours and surfaces
+are obtained by the application
+of the structural
+and decorative laws of all of them,
+and it might therefore be said that the
+only course of reading in the Britannica
+which could fully justify the title of this
+chapter would be one which covered all
+these diverse fields. The reader can,
+however, with the assistance of other
+chapters of this Guide, easily find his
+way to the Britannica’s articles on each
+of these allied subjects, and an indication
+of the articles dealing specifically with
+furniture will at any rate serve his primary
+purpose.</p>
+
+<p><span class="shoulder-heading" id="sh-4">“Art Nouveau” School</span>The keystone article <span class="sc"><a href="/article/11-0376-s3/furniture">Furniture</a></span> (Vol.
+11, p. 363) is by <a href="/contributors.html?q=James+George+Joseph+Penderel-Brodhurst">James Penderel-Brodhurst</a>,
+one of the greatest of living authorities,
+to whom many of the subsidiary
+articles are also due. The 37 illustrations
+on plate paper include two
+large views of the most famous and resplendent
+piece of furniture ever constructed,
+the cylinder desk, now in the
+Louvre Museum in Paris, made for Louis
+XV by a number of “artist-artificers,”
+the chief among them Oeben and Riesener,
+with bronze mounts by Duplessis,
+Winant and Hervieux. The article explains
+the scanty attention paid to furniture
+in ancient Egypt, Rome and Greece,
+and throughout the Middle Ages in Western
+Europe, as due to the routine of life
+in centuries during which people spent
+their days in the open air, and went to
+bed as soon as it was dark, therefore
+needing but few household appliances.
+The Renaissance was the first era of
+sumptuous and elaborately varied furniture;
+and it was not until the 18th century
+that the art of the cabinet-maker
+was fully developed. The English periods
+of Queen Anne and early Georgian craftsmanship
+and the reigns of Louis XV and
+Louis XVI brought the development to
+its high-water-mark. Since then, there
+has been no really
+new departure except
+the “art nouveau”
+school, which
+professed to be free from all traditions
+and to seek inspiration from nature alone.
+The revolution which was thus attempted
+was not successful, and the permanent influence
+of the movement will, in all probability,
+be less notable for its effect upon
+style than for the very great service it
+rendered in reviving the use of oak.
+Lightly polished, fumed or waxed, this
+wood, which was so long neglected, is the
+most effective that can be employed at
+moderate cost.</p>
+
+<p><span class="shoulder-heading" id="sh-5">Beds</span>The oldest and most indispensable of
+all furnishings is treated in the article
+<span class="sc"><a href="/article/03-0631-bed-furniture/bed__furniture_">Bed</a></span> (Vol. 3, p. 612). The Egyptians had
+high bedsteads to which
+they ascended by steps,
+and the Assyrians, Medes
+and Persians followed the same custom.
+The Greek bed had a wooden frame, with
+a board at the head, and bands of hide
+laced across, upon which skins were laid.
+At a later period, as vase-paintings show,
+the Greeks used folding beds. Another
+ancient application of an idea commonly
+supposed to be of modern origin is found
+in the Roman use of bronze beds, and
+metal is so much more sanitary than
+wood for this purpose that it seems
+strange it was afterwards discarded for
+many centuries. The bed of the Emperor
+Eliogabalus was of solid silver,
+with counterpane and hangings of purple
+embroidered in gold. In Pompeii wall-niches
+for beds, like those still used in
+Holland, are found, and were apparently
+closed by sliding partitions as well as by
+curtains. To our modern ideas, this arrangement
+seems to have been disgustingly
+devoid of ventilation, but the four-poster,
+with its “tester” roof and its curtains,
+which was widely used until the
+middle of the 19th century, was not much
+better. Mattresses developed very slowly,
+for in the 18th century pea-shucks and
+straw were the stuffing materials employed
+in houses of prosperous people,
+and hair had not come into use. The article
+gives a full and interesting account
+of the quaint custom, instituted by Louis
+XI of France, and followed by many of
+his royal successors, of a sovereign remaining
+in bed while he received the
+visits of his ministers and courtiers.</p>
+
+<p><span class="shoulder-heading" id="sh-6">Chests and Chairs</span>The chair, to us the commonest of objects,
+did not come into general use until,
+as the articles <span class="sc"><a href="/article/03-0735-bench/bench">Bench</a></span> (Vol. 3, p. 715) and
+<span class="sc"><a href="/article/25-0993-s2/stool">Stool</a></span> (Vol. 25, p.
+967) indicate, these
+two had long been
+the usual seats. The
+<span class="sc"><a href="/article/06-0119-chest/chest">Chest</a></span> (Vol. 6, p. 106) was also used as a
+seat, and was the original form of wardrobe
+before hanging space and drawers
+were provided. The ecclesiastical chests,
+of great length in order that they might
+contain, without folding, church vestments
+stiff with embroidery, are the most
+ornate of all the models of furniture
+which have been preserved from the 13th
+and 14th centuries. The article <span class="sc"><a href="/article/05-0837-chair/chair">Chair</a></span>
+(Vol. 5, p. 801) shows that chairs were
+everywhere uncommon until the middle
+of the 16th century; and it was not until
+the 17th was well advanced that upholstery
+began to be employed for them.
+The typical Louis XVI chair, with its
+oval back and ample seat, descending
+arms, round-reeded legs and gay tapestry
+was the most beautiful and elaborate
+model that has ever been devised. But
+it was the original Chippendale design
+and the still lighter patterns of Hepplewhite,
+Sheraton and Adam that gave us
+the slender, compact and easily moved
+chairs which will always be the more
+numerous. It is interesting to observe
+that the revolving chair, commonly regarded
+as an office convenience of modern
+origin, has a pedigree of no less than four
+centuries.</p>
+
+<p><span class="shoulder-heading" id="sh-7">Bookcases and Desks</span>It would seem that the old English
+makers of furniture went somewhat
+astray when they gave themselves the
+general designation, still surviving, of
+“cabinet-makers”; for we learn from the
+article <span class="sc"><a href="/article/04-0943-s5/cabinet">Cabinet</a></span> (Vol. 4, p. 918) that the
+elaborate cabinets which have come
+down to us from the 16th, 17th and 18th
+centuries are almost invariably of Italian,
+Dutch and French origin, and it was in
+other branches of work that the English
+were most successful. <span class="sc"><a href="/article/07-0656-cupboard/cupboard">The Cupboard</a></span>
+(Vol. 7, p. 634) was
+used to contain
+books long before
+the <span class="sc"><a href="/article/04-0235-bookcase/bookcase">Bookcase</a></span> (Vol.
+4, p. 221) had assumed a distinct form,
+and in the earlier bookcases the volumes
+were either placed on their sides, or, if
+upright, were ranged with their backs
+to the wall and their edges outwards.
+Until printing had cheapened books, it
+was not the custom to mark the title on
+the back, and the band of leather which
+closed the volume, like the strap on an
+old-fashioned wallet, bore the inscription.
+Sheraton’s satinwood bookcases
+were among the most elegant of all his
+pieces. The <span class="sc"><a href="/article/08-0110-desk/desk">Desk</a></span> (Vol. 8, p. 95) about
+the year 1750 had assumed the form
+which is now described as a library table—a
+flat top with a set of drawers on each
+side of the writer’s knees, when its vogue
+was interrupted by the invention of the
+cylinder-top desk. At first the cover was
+a solid piece of curved wood, but the
+“tambour,” or series of slats mounted on
+canvas proved more serviceable; and the
+American roll-top desk is now exported
+to all parts of the world. Other articles
+dealing with individual pieces of furniture
+are <span class="sc"><a href="/article/28-0339-wardrobe/wardrobe">Wardrobe</a></span> (Vol. 28, p. 323), <span class="sc"><a href="/article/25-0053-sideboard/sideboard">Sideboard</a></span>
+(Vol. 25, p. 38), <span class="sc"><a href="/article/08-0602-dresser/dresser">Dresser</a></span> (Vol. 8,
+p. 577), <span class="sc"><a href="/article/06-0035-cheffonier/cheffonier">Cheffonier</a></span> (Vol. 6, p. 22),
+<span class="sc"><a href="/article/07-0380-cradle/cradle">Cradle</a></span> (Vol. 7, p. 360), <span class="sc"><a href="/article/04-0780-s3/buffet">Buffet</a></span> (Vol. 4,
+p. 757), and <span class="sc"><a href="/article/18-0602-mirror/mirror">Mirror</a></span> (Vol. 18, p. 575).</p>
+
+<p><span class="shoulder-heading" id="sh-8">Technical Articles</span>Of the more technical articles <span class="sc"><a href="/article/26-1018-timber/timber">Timber</a></span>
+(Vol. 26, p. 978) shows the comparative
+advantages of all the varieties of wood
+used for furniture;
+and, as the list at
+the end of this chapter
+shows, there is a
+separate article on each kind. <span class="sc"><a href="/article/27-0028-s3/tool">Tool</a></span>
+(Vol. 27, p. 14), by <a href="/contributors.html?q=Joseph+G.+Horner">J. G. Horner</a>, is of
+great importance. It would fill 75 pages
+of this Guide, and contains 79 illustrations.
+The furniture maker will find in
+it complete information about all the
+hand tools and machine tools used in the
+industry. <span class="sc"><a href="/article/15-0503-s5/joinery">Joinery</a></span> (Vol. 15, p. 476), by
+<a href="/contributors.html?q=James+Bartlett">James Bartlett</a>, describes, with practical
+diagrams, every variety of joint and dovetail.
+Sound guidance for the workshop
+will be found in <span class="sc"><a href="/article/12-0160-glue/glue">Glue</a></span> (Vol. 12, p. 143),
+<span class="sc"><a href="/article/20-0495-painter-work/painter-work">Painter-Work</a></span> (Vol. 20, p. 457), <span class="sc"><a href="/article/16-0049-lac/lac">Lac</a></span>
+(Vol. 16, p. 35), <span class="sc"><a href="/article/16-0073-s3/lacquer">Lacquer</a></span> (Vol. 16, p. 53),
+in regard to which there is also information
+in the article <span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span> (Vol. 15, p. 188),
+<span class="sc"><a href="/article/11-0166-s2/french_polish">French Polish</a></span> (Vol. 11, p. 154), <span class="sc"><a href="/article/28-0458-s2/weaving">Weaving</a></span>,
+<i>Industrial Technology</i> (Vol. 28, p.
+440), <span class="sc"><a href="/article/08-0771-dyeing/dyeing">Dyeing</a></span> (Vol. 8, p. 744), by <a href="/contributors.html?q=J.+J.+Hummel">Profs.
+J. J. Hummel</a> and Edmund Knecht;
+<span class="sc"><a href="/article/23-0122-rep/rep">Rep</a></span> (Vol. 23, p. 105), <span class="sc"><a href="/article/26-0424-s3/tapestry">Tapestry</a></span> (Vol. 26,
+p. 403), with numerous illustrations, by
+<a href="/contributors.html?q=Alan+Summerly+Cole">A. S. Cole</a>; <span class="sc"><a href="/article/25-0112-s2/silk">Silk</a></span>, <i>Manufacture</i> (Vol. 25,
+p. 102); <span class="sc"><a href="/article/21-0890-plush/plush">Plush</a></span> (Vol. 21, p. 857), <span class="sc"><a href="/article/27-1007-s5/velvet">Velvet</a></span>
+(Vol. 27, p. 979), <span class="sc"><a href="/article/17-0693-marble/marble">Marble</a></span> (Vol. 17, p.
+676), by <a href="/contributors.html?q=John+Smith+Flett">J. S. Flett</a>; <span class="sc"><a href="/article/20-0144-onyx/onyx">Onyx</a></span> (Vol. 20, p.
+118); and <span class="sc"><a href="/article/01-0505-alabaster/alabaster">Alabaster</a></span> (Vol. 1, p. 466).</p>
+
+<p><span class="shoulder-heading" id="sh-9">Decoration and Ornament</div> <div class="sidenote">Biographical Articles</span>Although wood, ivory, precious stones,
+bronze, silver and gold have been used
+from antiquity for the decorations of
+furniture, the modern
+maker will be
+more concerned with
+<span class="sc"><a href="/article/28-0812-wood-carving/wood-carving">Wood-Carving</a></span>
+(Vol. 28, p. 791), illustrated, by <a href="/contributors.html?q=Franklyn+Arden+Crallan">F. A.
+Crallan</a>, author of <i>Gothic Wood-carving</i>.
+In this article materials and methods are
+described, and there is much information
+as to the domestic use of wood-carving.
+The article will be most valuable to manufacturers
+and dealers who have to do
+with church fittings. <span class="sc"><a href="/article/12-0026-gilding/gilding">Gilding</a></span> (Vol. 12,
+p. 13) and <span class="sc"><a href="/article/05-0455-carving-and-gilding/carving_and_gilding">Carving and Gilding</a></span> (Vol. 5,
+p. 438) impart knowledge of a practical
+nature as to these processes. The art of
+inlaying is described in <span class="sc"><a href="/article/17-0768-marquetry/marquetry">Marquetry</a></span> (Vol.
+17, p. 751) and <span class="sc"><a href="/article/04-0198-bombay-furniture/bombay_furniture">Bombay Furniture</a></span> (Vol.
+4, p. 185); see also <span class="sc"><a href="/article/27-1010-s5/veneer">Veneer</a></span> (Vol. 27, p.
+982). Materials other than wood used
+for inlaying are described, as, for example,
+<span class="sc"><a href="/article/21-0038-pearl/pearl">Pearl</a></span> (Vol. 21, p. 25) for pearl and
+mother of pearl; <span class="sc"><a href="/article/15-0108-ivory/ivory">Ivory</a></span> (Vol. 15, p. 92),
+<span class="sc"><a href="/article/16-0219-s3/lapis_lazuli">Lapis Lazuli</a></span> (Vol. 16, p. 199), <span class="sc"><a href="/article/27-0085-s2/tortoiseshell">Tortoiseshell</a></span>
+(Vol. 27, p. 71), <span class="sc"><a href="/article/04-0448-brass-alloy/brass__alloy_">Brass</a></span> (Vol. 4, p.
+433), etc. The mention of the last two
+materials naturally
+suggests the name of
+<span class="sc"><a href="/article/04-0336-boulle-andr-charles/boulle__andré_charles">Boulle</a></span> and the
+Britannica’s biography
+of that artist. Such biographies,
+as anyone interested in the subject knows,
+are most difficult to find, and they are included
+in much detail in the new Britannica.
+<span class="sc"><a href="/article/04-0336-boulle-andr-charles/boulle__andré_charles">Boulle</a></span> (Vol. 4, p. 321) was the
+most distinguished of modern cabinet-makers
+before the middle of the 18th
+century; and, beginning with that date,
+both France and England produced a
+number of men whose renown is scarcely
+less than that of the great painters, sculptors,
+architects or musicians of the
+period. The Britannica’s accounts of
+their lives, ideas and work will be of much
+value and interest to those who make or
+deal in furniture. For the French
+schools we get the essential facts about,
+for example, <span class="sc"><a href="/article/20-0029-oeben-jean-fran-ois/oeben__jean_françois">Oeben</a></span> (Vol. 20, p. 11), to
+whom Louis XV’s famous desk owes its
+general plan; <span class="sc"><a href="/article/23-0341-riesener-jean-henri/riesener__jean_henri">Riesener</a></span> (Vol. 23, p. 324),
+his more celebrated pupil, who completed
+the desk; <span class="sc"><a href="/article/23-0727-r-ntgen-david/röntgen__david">Röntgen, David</a></span> (Vol. 23, p.
+693), the maker of “harlequin furniture,”
+several of whose ingenious mechanical devices
+are described; and <span class="sc"><a href="/article/12-0308-s2/gouthière__pierre">Gouthière</a></span> (Vol.
+12, p. 291), the metal-worker whose furniture
+mounts are among the most noted
+art products of the Louis XV and XVI
+periods. <span class="sc"><a href="/article/06-0253-s2/chippendale__thomas">Chippendale</a></span> (Vol. 6, p. 237),
+with whom arose the marvellously brilliant
+school of English cabinet-makers,
+is the subject of a biography describing
+fully the characteristics of his designs;
+and the history of this school is continued
+under such headings as <span class="sc"><a href="/article/13-0318-s3/hepplewhite__george">Hepplewhite</a></span>
+(Vol. 13, p. 305), whose taste at its best
+“was so fine and so full of distinction, so
+simple, modest and sufficient that it
+amounted to genius”; <span class="sc"><a href="/article/01-0203-s7/adam__robert">Adam, Robert</a></span>
+(Vol. 1, p. 172), who left so deep and enduring
+a mark upon English furniture,
+and <span class="sc"><a href="/article/24-0875-sheraton-thomas/sheraton__thomas">Sheraton</a></span> (Vol. 24, p. 841), “the
+most remarkable man in the history of
+English furniture,” whose extravagant
+creations marked the end of the great
+school. Many other biographies are included
+in the list appended.</p>
+
+<details class="article-list"><summary><span class="list-title">ALPHABETICAL LIST OF ARTICLES, INCLUDING BIOGRAPHIES, IN THE ENCYCLOPAEDIA BRITANNICA WHICH ARE OF SPECIAL INTEREST TO FURNITURE MANUFACTURERS AND DEALERS</span><span class="list-count"> (199 articles)</span></summary>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0127-s3/acacia">Acacia</a></li>
+  <li class="c018"><a href="/article/01-0203-s7/adam__robert">Adam, Robert</a></li>
+  <li class="c018"><a href="/article/01-0406-s2/agate">Agate</a></li>
+  <li class="c018"><a href="/article/01-0475-s8/ailanthus">Ailanthus</a></li>
+  <li class="c018"><a href="/article/01-0505-alabaster/alabaster">Alabaster</a></li>
+  <li class="c018"><a href="/article/01-0573-s3/alder">Alder</a></li>
+  <li class="c018"><a href="/article/01-0696-s4/algum">Algum</a></li>
+  <li class="c018"><a href="/article/02-0267-s2/arabesque">Arabesque</a></li>
+  <li class="c018"><a href="/article/02-0353-s3/arbor_vitae">Arbor Vitae</a></li>
+  <li class="c018"><a href="/article/02-0617-s3/armoire">Armoire</a></li>
+  <li class="c018"><a href="/article/02-0744-s2/arts_and_crafts">Arts and Crafts</a></li>
+  <li class="c018"><a href="/article/02-0768-ash/ash">Ash</a></li>
+  <li class="c018"><a href="/article/03-0230-s2/bahut">Bahut</a></li>
+  <li class="c018"><a href="/article/03-0319-s4/bamboo">Bamboo</a></li>
+  <li class="c018"><a href="/article/03-0441-baroque/baroque">Baroque</a></li>
+  <li class="c018"><a href="/article/03-0460-barry-sir-charles/barry__sir_charles">Barry, Sir Charles</a></li>
+  <li class="c018"><a href="/article/03-0498-basin-stand/basin-stand">Basin-stand</a></li>
+  <li class="c018"><a href="/article/03-0498-basket/basket">Basket</a></li>
+  <li class="c018">Bed</li>
+  <li class="c018"><a href="/article/03-0657-beech/beech">Beech</a></li>
+  <li class="c018"><a href="/article/03-0781-b-rain-jean/bérain__jean">Bérain, Jean</a></li>
+  <li class="c018"><a href="/article/03-0981-birch/birch">Birch</a></li>
+  <li class="c018"><a href="/article/04-0198-bombay-furniture/bombay_furniture">Bombay Furniture</a></li>
+  <li class="c018"><a href="/article/04-0218-bonheur-du-jour/bonheur_du_jour">Bonheur du Jour</a></li>
+  <li class="c018"><a href="/article/04-0235-bookcase/bookcase">Bookcase</a></li>
+  <li class="c018"><a href="/article/04-0336-boulle-andr-charles/boulle__andré_charles">Boulle, André Charles</a></li>
+  <li class="c018"><a href="/article/04-0364-box/box">Box</a></li>
+  <li class="c018"><a href="/article/04-0367-boxwood/boxwood">Boxwood</a></li>
+  <li class="c018"><a href="/article/04-0448-brass-alloy/brass__alloy_">Brass</a></li>
+  <li class="c018"><a href="/article/04-0643-s7/brocade">Brocade</a></li>
+  <li class="c018"><a href="/article/04-0780-s3/buffet">Buffet</a></li>
+  <li class="c018"><a href="/article/05-0455-carving-and-gilding/carving_and_gilding">Carving and Gilding</a></li>
+  <li class="c018"><a href="/article/05-0466-casket/casket">Casket</a></li>
+  <li class="c018"><a href="/article/05-0480-cassone/cassone">Cassone</a></li>
+  <li class="c018"><a href="/article/05-0502-casuarina/casuarina">Casuarina</a></li>
+  <li class="c018"><a href="/article/05-0619-cedar/cedar">Cedar</a></li>
+  <li class="c018"><a href="/article/05-0837-chair/chair">Chair</a></li>
+  <li class="c018"><a href="/article/06-0035-cheffonier/cheffonier">Cheffonier</a></li>
+  <li class="c018"><a href="/article/06-0093-chenille/chenille">Chenille</a></li>
+  <li class="c018"><a href="/article/06-0097-cherry/cherry">Cherry</a></li>
+  <li class="c018"><a href="/article/06-0119-chest/chest">Chest</a></li>
+  <li class="c018"><a href="/article/06-0125-chestnut/chestnut">Chestnut</a></li>
+  <li class="c018"><a href="/article/06-0251-chintz/chintz">Chintz</a></li>
+  <li class="c018"><a href="/article/06-0253-s2/chippendale__thomas">Chippendale, Thomas</a></li>
+  <li class="c018"><a href="/article/06-0652-coco-nut-palm/coco-nut_palm">Coco-nut Palm</a></li>
+  <li class="c018"><a href="/article/06-0670-coffer/coffer">Coffer</a></li>
+  <li class="c018"><a href="/article/06-1004-console/console">Console</a></li>
+  <li class="c018"><a href="/article/07-0109-copal/copal">Copal</a></li>
+  <li class="c018"><a href="/article/07-0111-copeland-henry/copeland__henry">Copeland, Henry</a></li>
+  <li class="c018"><a href="/article/07-0160-corduroy/corduroy">Corduroy</a></li>
+  <li class="c018"><a href="/article/07-0380-cradle/cradle">Cradle</a></li>
+  <li class="c018"><a href="/article/07-0399-crash/crash">Crash</a></li>
+  <li class="c018"><a href="/article/07-0433-cressent-charles/cressent__charles">Cressent, Charles</a></li>
+  <li class="c018"><a href="/article/07-0453-cretonne/cretonne">Cretonne</a></li>
+  <li class="c018"><a href="/article/07-0546-crunden-john/crunden__john">Crunden, John</a></li>
+  <li class="c018"><a href="/article/07-0588-cryptomeria/cryptomeria">Cryptomeria</a></li>
+  <li class="c018"><a href="/article/07-0656-cupboard/cupboard">Cupboard</a></li>
+  <li class="c018"><a href="/article/07-0672-curtain/curtain">Curtain</a></li>
+  <li class="c018"><a href="/article/07-0689-cushion/cushion">Cushion</a></li>
+  <li class="c018"><a href="/article/07-0715-cypress/cypress">Cypress</a></li>
+  <li class="c018"><a href="/article/07-0809-damask/damask">Damask</a></li>
+  <li class="c018"><a href="/article/07-0813-dammar/dammar">Dammar</a></li>
+  <li class="c018"><a href="/article/07-0869-date-palm/date_palm">Date Palm</a></li>
+  <li class="c018"><a href="/article/08-0110-design/design">Design</a></li>
+  <li class="c018"><a href="/article/08-0110-desk/desk">Desk</a></li>
+  <li class="c018"><a href="/article/08-0342-divan/divan">Divan</a></li>
+  <li class="c018"><a href="/article/08-0602-dresser/dresser">Dresser</a></li>
+  <li class="c018">Dumb-Waiter</li>
+  <li class="c018"><a href="/article/08-0719-duramen/duramen">Duramen</a></li>
+  <li class="c018"><a href="/article/08-0771-dyeing/dyeing">Dyeing</a></li>
+  <li class="c018"><a href="/article/08-0870-ebony/ebony">Ebony</a></li>
+  <li class="c018"><a href="/article/09-0254-electroplating/electroplating">Electroplating</a></li>
+  <li class="c018"><a href="/article/09-0313-elm/elm">Elm</a></li>
+  <li class="c018"><a href="/article/09-0325-embossing/embossing">Embossing</a></li>
+  <li class="c018"><a href="/article/09-0394-encoignure/encoignure">Encoignure</a></li>
+  <li class="c018">Etagère</li>
+  <li class="c018"><a href="/article/10-0408-s3/fir">Fir</a></li>
+  <li class="c018"><a href="/article/10-0649-footman/footman">Footman</a></li>
+  <li class="c018"><a href="/article/10-0794-frame/frame">Frame</a></li>
+  <li class="c018"><a href="/article/11-0166-s2/french_polish">French Polish</a></li>
+  <li class="c018"><a href="/article/11-0376-s3/furniture">Furniture</a></li>
+  <li class="c018"><a href="/article/12-0026-gilding/gilding">Gilding</a></li>
+  <li class="c018"><a href="/article/12-0036-s7/gillow__robert">Gillow, Robert</a></li>
+  <li class="c018"><a href="/article/12-0160-glue/glue">Glue</a></li>
+  <li class="c018"><a href="/article/12-0308-s2/gouthière__pierre">Gouthière, Pierre</a></li>
+  <li class="c018"><a href="/article/12-0861-halfpenny-william/halfpenny__william">Halfpenny, William</a></li>
+  <li class="c018"><a href="/article/13-0130-hazel/hazel">Hazel</a></li>
+  <li class="c018"><a href="/article/13-0318-s3/hepplewhite__george">Hepplewhite, George</a></li>
+  <li class="c018"><a href="/article/13-0463-s6/hickory">Hickory</a></li>
+  <li class="c018"><a href="/article/13-0631-s3/holly">Holly</a></li>
+  <li class="c018"><a href="/article/13-0982-s5/huon_pine">Huon Pine</a></li>
+  <li class="c018"><a href="/article/14-0367-ince-william/ince__william">Ince, William</a></li>
+  <li class="c018"><a href="/article/14-0596-s2/ingle-nook">Ingle-nook</a></li>
+  <li class="c018"><a href="/article/14-0605-s2/inlaying">Inlaying</a></li>
+  <li class="c018"><a href="/article/14-0829-s4/iron">Iron</a></li>
+  <li class="c018"><a href="/article/15-0108-ivory/ivory">Ivory</a></li>
+  <li class="c018">Japan, <i>Art</i></li>
+  <li class="c018"><a href="/article/15-0300-japanning/japanning">Japanning</a></li>
+  <li class="c018"><a href="/article/15-0301-jarrah-wood/jarrah_wood">Jarrah Wood</a></li>
+  <li class="c018"><a href="/article/15-0499-s1/johnson__thomas">Johnson, Thomas</a></li>
+  <li class="c018"><a href="/article/15-0583-s7/juniper">Juniper</a></li>
+  <li class="c018"><a href="/article/15-0728-kauri-pine/kauri_pine">Kauri Pine</a></li>
+  <li class="c018"><a href="/article/16-0049-lac/lac">Lac</a></li>
+  <li class="c018"><a href="/article/16-0073-s3/lacquer">Lacquer</a></li>
+  <li class="c018"><a href="/article/16-0156-lampstand/lampstand">Lampstand</a></li>
+  <li class="c018"><a href="/article/16-0219-s3/lapis_lazuli">Lapis Lazuli</a></li>
+  <li class="c018"><a href="/article/16-0231-s2/larch">Larch</a></li>
+  <li class="c018"><a href="/article/16-0350-s6/leather">Leather</a></li>
+  <li class="c018"><a href="/article/16-0365-leather-artificial/leather__artificial">Leather, Artificial</a></li>
+  <li class="c018"><a href="/article/16-0484-le-pautre-jean/le_pautre__jean">Le Pautre, Jean</a></li>
+  <li class="c018"><a href="/article/16-0715-s2/lime">Lime, or Linden</a></li>
+  <li class="c018"><a href="/article/16-0749-s3/linen-press">Linen-press</a></li>
+  <li class="c018"><a href="/article/16-0766-liquidambar/liquidambar">Liquidambar</a></li>
+  <li class="c018"><a href="/article/16-0863-s3/lock">Lock</a></li>
+  <li class="c018"><a href="/article/16-0863-s2/lock__matthias">Lock, Matthias</a></li>
+  <li class="c018"><a href="/article/17-0087-s7/lowboy">Lowboy</a></li>
+  <li class="c018"><a href="/article/17-0414-mahogany/mahogany">Mahogany</a></li>
+  <li class="c018"><a href="/article/17-0547-mammee-apple/mammee_apple">Mammee Apple</a></li>
+  <li class="c018"><a href="/article/17-0643-s2/manwaring__robert">Manwaring, Robert</a></li>
+  <li class="c018"><a href="/article/17-0681-s1/maple">Maple</a></li>
+  <li class="c018"><a href="/article/17-0680-s2/maple__sir_john_blundell">Maple, Sir John B.</a></li>
+  <li class="c018"><a href="/article/17-0693-marble/marble">Marble</a></li>
+  <li class="c018"><a href="/article/17-0766-marot-daniel/marot__daniel">Marot, Daniel</a></li>
+  <li class="c018"><a href="/article/17-0768-marquetry/marquetry">Marquetry</a></li>
+  <li class="c018"><a href="/article/17-0892-mastic/mastic">Mastic, or Mastich</a></li>
+  <li class="c018"><a href="/article/17-0954-mayhew-thomas/mayhew__thomas">Mayhew, Thomas</a></li>
+  <li class="c018"><a href="/article/18-0104-meissonier-juste-aur-le/meissonier__juste_aurèle">Meissonier, J. A.</a></li>
+  <li class="c018"><a href="/article/18-0602-mirror/mirror">Mirror</a></li>
+  <li class="c018"><a href="/article/18-0863-moreton-bay-chestnut/moreton_bay_chestnut">Moreton Bay Chestnut</a></li>
+  <li class="c018"><a href="/article/18-0903-morris-william/morris__william">Morris, William</a></li>
+  <li class="c018"><a href="/article/19-0440-nettle-tree/nettle_tree">Nettle Tree</a></li>
+  <li class="c018"><a href="/article/19-0969-s2/oak">Oak</a></li>
+  <li class="c018"><a href="/article/20-0029-oeben-jean-fran-ois/oeben__jean_françois">Oeben, J. F.</a></li>
+  <li class="c018"><a href="/article/20-0109-s2/olive">Olive</a></li>
+  <li class="c018"><a href="/article/20-0144-onyx/onyx">Onyx</a></li>
+  <li class="c018"><a href="/article/20-0329-ormolu/ormolu">Ormolu</a></li>
+  <li class="c018"><a href="/article/20-0332-ornament/ornament">Ornament</a></li>
+  <li class="c018"><a href="/article/20-0384-osier/osier">Osier</a></li>
+  <li class="c018"><a href="/article/20-0410-s3/ottoman">Ottoman</a></li>
+  <li class="c018"><a href="/article/20-0418-s5/overmantel">Overmantel</a></li>
+  <li class="c018"><a href="/article/20-0495-painter-work/painter-work">Painter-work</a></li>
+  <li class="c018"><a href="/article/21-0038-pearl/pearl">Pearl</a></li>
+  <li class="c018"><a href="/article/21-0161-s2/pergolesi__michael_angelo">Pergolesi, M. A.</a></li>
+  <li class="c018"><a href="/article/21-0624-pigments/pigments">Pigments</a></li>
+  <li class="c018"><a href="/article/21-0648-s7/pine">Pine</a></li>
+  <li class="c018"><a href="/article/21-0743-s2/plane">Plane</a></li>
+  <li class="c018"><a href="/article/21-0890-plush/plush">Plush</a></li>
+  <li class="c018"><a href="/article/22-0330-prie-dieu/prie-dieu">Prie-dieu</a></li>
+  <li class="c018"><a href="/article/23-0122-rep/rep">Rep</a></li>
+  <li class="c018"><a href="/article/23-0200-s5/resin">Resin</a></li>
+  <li class="c018"><a href="/article/23-0341-riesener-jean-henri/riesener__jean_henri">Riesener, J. H.</a></li>
+  <li class="c018"><a href="/article/23-0458-rococo/rococo">Rococo</a></li>
+  <li class="c018"><a href="/article/23-0727-r-ntgen-david/röntgen__david">Röntgen, David</a></li>
+  <li class="c018"><a href="/article/23-0776-rosewood/rosewood">Rosewood</a></li>
+  <li class="c018"><a href="/article/23-0820-s2/rousseau_de_la_rottière__jean_simeon">Rousseau de la Rottière, J. S.</a></li>
+  <li class="c018"><a href="/article/23-1009-sabicu-wood/sabicu_wood">Sabicu Wood</a></li>
+  <li class="c018">Satin Wood</li>
+  <li class="c018"><a href="/article/24-0497-s3/screen">Screen</a></li>
+  <li class="c018"><a href="/article/24-0689-s5/sequoia">Sequoia</a></li>
+  <li class="c018"><a href="/article/24-0734-s2/settee">Settee</a></li>
+  <li class="c018"><a href="/article/24-0735-s4/settle">Settle</a></li>
+  <li class="c018"><a href="/article/24-0847-shearer-thomas/shearer__thomas">Shearer, Thomas</a></li>
+  <li class="c018"><a href="/article/24-0875-sheraton-thomas/sheraton__thomas">Sheraton, Thomas</a></li>
+  <li class="c018"><a href="/article/25-0053-sideboard/sideboard">Sideboard</a></li>
+  <li class="c018"><a href="/article/25-0112-s2/silk">Silk</a></li>
+  <li class="c018"><a href="/article/25-0360-sofa/sofa">Sofa</a></li>
+  <li class="c018"><a href="/article/25-0763-spruce/spruce">Spruce</a></li>
+  <li class="c018"><a href="/article/25-0789-stall/stall">Stall</a></li>
+  <li class="c018"><a href="/article/25-0993-s2/stool">Stool</a></li>
+  <li class="c018"><a href="/article/26-0346-s1/table">Table</a></li>
+  <li class="c018"><a href="/article/26-0394-s2/tallboy">Tallboy</a></li>
+  <li class="c018"><a href="/article/26-0424-s3/tapestry">Tapestry</a></li>
+  <li class="c018"><a href="/article/26-0512-s2/tea-caddy">Tea-caddy</a></li>
+  <li class="c018"><a href="/article/26-0512-s4/teak">Teak</a></li>
+  <li class="c018"><a href="/article/26-0515-tea-poy/tea-poy">Tea-poy</a></li>
+  <li class="c018">Textile Printing</li>
+  <li class="c018"><a href="/article/26-0931-s3/throne">Throne</a></li>
+  <li class="c018"><a href="/article/26-0975-s4/ticking">Ticking</a></li>
+  <li class="c018"><a href="/article/26-1018-timber/timber">Timber</a></li>
+  <li class="c018"><a href="/article/27-0085-s2/tortoiseshell">Tortoiseshell</a></li>
+  <li class="c018"><a href="/article/27-0237-s2/tray">Tray</a></li>
+  <li class="c018"><a href="/article/27-0281-triclinium/triclinium">Triclinium</a></li>
+  <li class="c018"><a href="/article/27-0303-tripod/tripod">Tripod</a></li>
+  <li class="c018"><a href="/article/27-0500-turpentine/turpentine">Turpentine</a></li>
+  <li class="c018"><a href="/article/27-0807-s4/upholsterer">Upholsterer</a></li>
+  <li class="c018"><a href="/article/27-0948-s5/varnish">Varnish</a></li>
+  <li class="c018"><a href="/article/27-1007-s5/velvet">Velvet</a></li>
+  <li class="c018"><a href="/article/27-1008-s2/velveteen">Velveteen</a></li>
+  <li class="c018"><a href="/article/27-1060-s2/vernis_martin">Vernis Martin</a></li>
+  <li class="c018"><a href="/article/28-0304-s3/walnut">Walnut</a></li>
+  <li class="c018"><a href="/article/28-0339-wardrobe/wardrobe">Wardrobe</a></li>
+  <li class="c018"><a href="/article/28-0375-washstand/washstand">Washstand</a></li>
+  <li class="c018"><a href="/article/28-0458-s2/weaving">Weaving</a></li>
+  <li class="c018"><a href="/article/28-0596-what-not/what-not">What-not</a></li>
+  <li class="c018"><a href="/article/28-0709-willow-herb/willow-herb">Willow</a></li>
+  <li class="c018">Window-cornice</li>
+  <li class="c018">Window-seat</li>
+  <li class="c018">Wine Table</li>
+  <li class="c018"><a href="/article/28-0812-wood-carving/wood-carving">Wood-carving</a></li>
+</ul></details>
+
+<div>
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

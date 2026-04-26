@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Some Questions Children Sometimes Ask, And Some Questions To Ask Children &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter LXIII</span>Some Questions Children Sometimes Ask, And Some Questions To Ask Children</h1>
+
+    <div class="body-text">
+
+
+<p>A child gains a great part of its
+knowledge by asking questions,
+and he should be encouraged to
+ask them. But parents often find the
+child’s questions, even those about the
+objects he sees every day, so difficult to
+answer, that he is told “not to bother.”
+With the new Encyclopaedia Britannica
+at hand, there is hardly any intelligent
+question that cannot be answered after a
+glance at the Index and at the page to
+which it refers the reader. Again, there
+is no better way at once of amusing and
+instructing the child than to ask him questions
+and help him find his way to the
+answers. Here are a few questions: some
+of the kind that a child might ask, and
+some that may be put to a child. The
+Britannica supplies interesting answers
+to all of them, and some of these answers
+are given here.</p>
+
+<p><i>What makes people snore?</i></p>
+
+<p>The answer, found at once by referring
+to “snoring” in the Index, is that the
+cause is breathing through the mouth,
+which makes the soft palate vibrate.
+When the child is told this, it should also
+be told what the Britannica says about
+mouth-breathing being a dangerous habit
+for children to form, as it often leads to
+sore throats.</p>
+
+<p><i>How does one ant tell another to go to
+work?</i></p>
+
+<p>By patting it with its feelers. The
+article <span class="sc"><a href="/article/02-0096-s4/ant">Ant</a></span>, by Professor Carpenter, will
+supply you with stories to tell children
+as fascinating as any fairy tale.</p>
+
+<p><i>What makes the colours of sunset?</i></p>
+
+<p>Dust. If it were not for the dust
+floating in the air, we should lose not
+only the brilliant sunsets but the glorious
+cloud scenery as well, and there
+would be no twilight. Furthermore, all
+the moisture in the air, which now condenses
+on the particles of floating dust,
+would settle on our clothes and on the
+walls of our rooms. You will find many
+other curious facts in the article <span class="sc"><a href="/article/08-0740-dust/dust">Dust</a></span>,
+by <a href="/contributors.html?q=John+Aitken">John Aitken</a>, who invented the
+machine for counting the particles of
+dust in the atmosphere.</p>
+
+<p><i>How does the brightness of moonlight
+compare with that of sunlight?</i></p>
+
+<p>Most people would guess that sunlight
+is twenty, or, at most, fifty times
+as strong; yet it is really half a million
+times stronger. The article <span class="sc"><a href="/article/18-0832-s7/moon">Moon</a></span>, by
+Dr. <a href="/contributors.html?q=Simon+Newcomb">Simon Newcomb</a>, is full of such
+curious information and of delightful
+pictures.</p>
+
+<p><i>Why did the Israelites in bondage need
+straw to put in their bricks, although we
+do not use it in ours?</i></p>
+
+<p>The article <span class="sc"><a href="/article/04-0537-brick/brick">Brick</a></span> tells you that their
+bricks were made of Nile mud, which
+would not bind without something to
+hold it together.</p>
+
+<p><i>When sea-water freezes, does the salt go
+into the ice?</i></p>
+
+<p>Only one-fifth of it, the article <span class="sc"><a href="/article/14-0238-ice/ice">Ice</a></span>
+says.</p>
+
+<p><i>Are you sure you like the taste of vanilla?</i></p>
+
+<p>This is an excellent puzzle to put to a
+bright child. The curious answer, found
+in the article <span class="sc"><a href="/article/26-0475-s3/taste">Taste</a></span>, is that vanilla, like
+onions and some other substances which
+we think have strong flavors, really has
+no taste at all. We smell them as we eat
+them, and therefore we imagine we taste
+them. This you can prove to a child
+by blindfolding it, while its nose is
+firmly closed, holding a slice of onion
+and a slice of apple near its open mouth,
+and touching its tongue first with one
+and then with the other.</p>
+
+<p><i>What is a beaver’s favourite food?</i></p>
+
+<p>Of all unlikely things—water-lilies!
+This, and other things that will delight
+children, you will find in the article
+<span class="sc"><a href="/article/03-0619-beaver/beaver">Beaver</a></span>, by <a href="/contributors.html?q=Sir+Richard+Lydekker">Richard Lydekker</a>, the
+famous naturalist.</p>
+
+<p><i>Why is it harder to guess the width of
+a river than to guess the width of a field
+as wide?</i></p>
+
+<p>The article <span class="sc"><a href="/article/28-0146-vision/vision">Vision</a></span> will tell you.</p>
+
+<p><i>Why are new-born babies’ eyes often
+slate-blue, for a time?</i></p>
+
+<p>The article <span class="sc"><a href="/article/10-0103-eye/eye">Eye</a></span> will tell you.</p>
+
+<p><i>Why is not spiders’ silk manufactured?</i></p>
+
+<p>Unfortunately, although the silk is of
+the finest quality, quite equal to the
+silkworm’s, the spiders are such fierce
+cannibals that each one would have to
+be kept in a separate box, and this would
+make the silk too costly. The article
+<span class="sc"><a href="/article/25-0685-spiders/spiders">Spiders</a></span>, by <a href="/contributors.html?q=Reginald+Innes+Pocock">R. I. Pocock</a>, superintendent
+of the London Zoological Gardens,
+also tells you how spiders make their
+way through the air to islands in the
+sea; how the wolf-spider builds a nest
+with a hinged door, and how the common
+pond-spider builds his thimble-shaped
+house under water and fills it with air
+by swimming down to it, time after
+time, on each trip taking down a tiny
+bubble of air.</p>
+
+<p><i>Why do not animals that sleep all
+through the winter starve to death?</i></p>
+
+<p>Because they live on the fat they have
+put on during the summer, as the article
+<span class="sc"><a href="/article/13-0457-hibernation/hibernation">Hibernation</a></span> explains.</p>
+
+<p><i>Why could not the Norsemen who visited
+America in the 11th century found permanent
+settlements?</i></p>
+
+<p>The natives were hostile and the
+Norsemen had no firearms. The wonderful
+story of the first voyages to
+America is told in the article <span class="sc"><a href="/article/28-0113-vinland/vinland">Vinland</a></span>.</p>
+
+<p><i>How can you tell how far away a flash
+of lightning is?</i></p>
+
+<p>Sound travels so much more slowly
+than light does, that if the flash is a mile
+away you see it five seconds before you
+hear the report; so by counting the
+seconds you can measure the distance.
+The Index, under “Lightning: distance”
+refers you to the article <span class="sc"><a href="/article/25-0453-s6/sound">Sound</a></span>, by <a href="/contributors.html?q=John+Henry+Poynting">Professor
+Poynting</a>.</p>
+
+<p><i>Why does your hair stand on end when
+you are frightened?</i></p>
+
+<p>The article <span class="sc"><a href="/article/25-0206-s2/skin_diseases">Skin</a></span>, by Professor Parsons,
+will tell you about this curious
+action of the muscles.</p>
+
+<p><i>Why do we count by tens?</i></p>
+
+<p>Because people began by counting on
+their fingers and thumbs, and when they
+got to ten they had to begin again.
+Some tribes used to make twenty their
+basis for counting, adding in their toes.
+The article <span class="sc"><a href="/article/02-0561-s2/arithmetic">Arithmetic</a></span> tells you this;
+and a newspaper critic said of this article
+that he was amazed to find it one of the
+most readable things in the Britannica.
+The truth is that there are no subjects
+that are dull in themselves. There is a
+dull way of treating them, and there is
+also the Britannica way, which is to show
+you <i>how things came to be as they are</i>.
+That is why children are delighted when
+“Britannica time” comes, the hour when
+the parent sits down by the bookcase
+and tells them true stories out of the
+volumes and shows them the exquisite
+pictures.</p>
+
+<p><i>Are men or women oftener stammerers?</i></p>
+
+<p>The article <span class="sc"><a href="/article/25-0792-s2/stammering">Stammering</a></span>, which tells
+you that men are much oftener afflicted
+than women, is one that all parents
+should read. If a child’s speech is carefully
+watched, the first trouble of this
+kind may sometimes be checked before
+it becomes a habit.</p>
+
+<p><i>Why does a room look smaller with red
+than with violet wall-paper?</i></p>
+
+<p>Read the article <span class="sc"><a href="/article/28-0146-vision/vision">Vision</a></span> and you will
+understand this and many other curious
+facts about the way our eyes do their
+work. Furthermore, you will be reminded
+that slight defects in a child’s
+sight should be noticed and treated by
+an oculist before permanent harm has
+been done.</p>
+
+<p><i>Why is winter colder than summer?</i></p>
+
+<p>Simply because the sun’s rays, coming
+aslant instead of from overhead, travel
+through more miles of air and are thus
+robbed of much of their heat before they
+reach us. The polar regions actually
+get more hours of sunlight in a year than
+we get in the United States, more even
+than there are at the equator, but the
+sun is never high above the horizon at
+the poles.</p>
+
+<p><i>Can a snake cross a frozen pond?</i></p>
+
+<p>No, nor move on any other smooth
+surface, as the article <span class="sc"><a href="/article/25-0301-snakes/snakes">Snakes</a></span> shows.</p>
+
+<p><i>How long was Abraham Lincoln at
+school?</i></p>
+
+<p>Less than a year in all, as shown by
+the article <span class="sc"><a href="/article/16-0725-lincoln-abraham/lincoln__abraham">Lincoln, Abraham</a></span>, by J. G.
+Nicolay (Lincoln’s private secretary) and
+C. C. Whinery. But although he could
+not get much teaching, he read over and
+over again every book he could get
+hold of.</p>
+
+<p>Here are a few questions without the
+answers; but the numbers after each
+question show the volume and page
+of the Britannica where each answer
+can be found:</p>
+
+<p><i>What makes blood clot?</i> (Vol. 4, p. 81.)</p>
+
+<p><i>Are there any red-haired human races?</i>
+(Vol. 12, p. 823.)</p>
+
+<p><i>Why does a cut apple turn brown?</i>
+(Vol. 21, p. 756.)</p>
+
+<p><i>What makes negroes black?</i> (Vol. 25,
+p. 190.)</p>
+
+<p><i>Are men or women oftener colour-blind?</i>
+(Vol. 28, p. 139.)</p>
+
+<p><i>Why do stars twinkle?</i> (Vol. 23, p. 29.)</p>
+
+<p><i>What happens in your throat when you
+sob?</i> (Vol. 23, p. 195.)</p>
+
+<p><i>What change in water, as it freezes,
+makes ice float?</i> (Vol. 14, p. 227).</p>
+
+<p><i>Why is the shadow cast by an electric
+light sharper-edged than the shadow cast by
+the sun?</i> (Vol. 24, p. 758).</p>
+
+<p><i>Why does fright make people faint?</i>
+(Vol. 27, p. 942).</p>
+
+<p><i>What makes the beautiful “ice-flowers”
+on a frosted window-pane?</i> (Vol. 14, p.
+226).</p>
+
+<p><i>How do trappers prepare valuable fur-skins
+so as to preserve them until they get
+to market?</i></p>
+
+<p>The skins are simply dried in the air,
+as stated in the article <i>Fur</i>, which was
+written by the head of a great wholesale
+fur business.</p>
+
+<p><i>How does the amount of air in a room
+spoiled by an ordinary gas-burner, or a
+small reading-lamp, compare with the
+amount spoiled by a man’s breathing?</i></p>
+
+<p>The gas burner or the lamp spoils four
+times as much air, as shown in the article
+<span class="sc"><a href="/article/27-1036-s3/ventilation">Ventilation</a></span>.</p>
+
+<p><i>What part of your weight is blood?</i></p>
+
+<p>One-twentieth. (Vol. 27, p. 939).</p>
+
+<p><i>What domestic animal is oftenest born
+with only one eye?</i></p>
+
+<p>The pig. (Vol. 18, p. 743).</p>
+
+<p><i>Which covers the more space, the United
+States (without Alaska) or Europe?</i></p>
+
+<p>Europe. (Vol. 27, p. 612, and Vol. 9,
+p. 907.)</p>
+
+<p><i>If you looked at the moon all night every
+night, how soon would you have seen all
+its surface?</i></p>
+
+<p>Never. Four-tenths of it can never be
+seen from the earth. (Vol. 18, p. 803.)</p>
+
+<p><i>What was the great difference between
+the destruction of Pompeii and that of
+Herculaneum?</i></p>
+
+<p>Pompeii was covered by ashes and
+Herculaneum by mud. (Vol. 22, p. 50,
+and Vol. 13, p. 342.)</p>
+
+<p><i>Why do not high mountains, where
+more snow falls than melts, keep growing
+higher?</i></p>
+
+<p>Because pressure forces the snow,
+changed into ice, to descend in the form
+of glaciers, as explained in the article
+<span class="sc"><a href="/article/12-0073-s2/glacier">Glacier</a></span>.</p>
+
+<p><i>Who wrote to George Washington, on
+behalf of a number of officers in the United
+States army, asking him to make himself
+king of the United States?</i></p>
+
+<p>Col. Lewis Nicola. The article <span class="sc"><a href="/article/28-0360-washington-george/washington__george">Washington,
+George</a></span>, by Professor MacDonald
+of Brown University, gives you
+the words of Washington’s indignant
+reply.</p>
+
+<p><i>How deep has anyone ever dived in
+diver’s dress?</i></p>
+
+<p>The article <span class="sc"><a href="/article/08-0343-diver/diver">Divers</a></span> tells you: 210 feet.</p>
+
+<p><i>In baseball, how is a fielding-record
+calculated?</i></p>
+
+<p>To get the fielder’s average, you divide
+the number of chances he has made the
+most of by the total number of chances
+he has had. (Vol. 3, p. 461.)</p>
+
+<p><i>How tall must a giant be?</i></p>
+
+<p>Seven feet, to be properly called a
+giant. (Vol. 18, p. 741).</p>
+
+<p><i>Where were the first lighthouses built?</i></p>
+
+<p>In lower Egypt, as stated in the article
+<span class="sc"><a href="/article/16-0647-s2/lighthouse">Lighthouse</a></span>, which describes all the
+great lighthouses and gives pictures of
+the towers and of the wonderful lamps.</p>
+
+<p><i>When ships are going through the
+Panama Canal, from the Atlantic to the
+Pacific, will they be heading to the eastward
+or to the westward?</i></p>
+
+<p>Oddly enough, to the eastward; for
+the Isthmus curves so, just where the
+canal line lies, that the Pacific end is
+much to the eastward of the Atlantic end.
+You can see this plainly on the detailed
+map in the article <span class="sc"><a href="/article/20-0722-panama-canal/panama_canal">Panama Canal</a></span>.</p>
+
+<p><i>Why does a tame rabbit die if it is held
+erect for half an hour?</i></p>
+
+<p>Because the muscles of its abdomen
+are so weak that they cannot act as a
+belt, as our muscles do, and all the rabbit’s
+blood settles below the heart. (Vol.
+27, p. 942.)</p>
+
+<p><i>For what price was Manhattan Island
+bought from the Indians in 1626?</i></p>
+
+<p>For $24 worth of goods, as shown in
+the article <span class="sc"><a href="/article/19-0618-s6/new_york">New York</a></span>.</p>
+
+<p><i>Why do people, when they are in the
+polar regions, seldom catch cold?</i></p>
+
+<p>Because colds are caused by microbes
+and there are very few microbes in places
+so far from any masses of people, as you
+can see from the article <span class="sc"><a href="/article/06-0525-climate-and-climatology/climate_and_climatology">Climate</a></span>.</p>
+
+<p><i>If North America were spread out on
+the surface of the moon, what share of the
+moon’s surface would it cover?</i></p>
+
+<p>About four-sevenths. (Vol. 18, p. 805,
+and Vol. 19, p. 764.)</p>
+
+<p><i>Which is the greater: the highest mountain’s
+height or the deepest sea’s depth?</i></p>
+
+<p>The sea’s depth, which is 31,614 feet;
+while Mt. Everest is 29,002 feet high.
+(Vol. 19, p. 973, and Vol. 10, p. 7.)</p>
+
+<p><i>Of what use are the hairs on a caterpillar?</i></p>
+
+<p>Like the bristles on a dog-collar, they
+keep an enemy from biting him. (Vol. 6,
+p. 733.)</p>
+
+<p><i>Why do you twist yourself into an uncomfortable
+position when you have a pain?</i></p>
+
+<p>Because instinct teaches you that discomfort
+will help you by partially taking
+your attention away from the pain. (Vol.
+22, p. 587.)</p>
+
+<p><i>What warm-blooded creature has the
+longest average life?</i></p>
+
+<p>Man, except possibly the whale; but
+not the elephant, as is generally believed.
+The article <span class="sc"><a href="/article/16-0998-s7/longevity">Longevity</a></span> tells how long all
+kinds of animals live.</p>
+
+<p><i>What mistake about American history
+is caused in our minds by the celebration
+of the Fourth of July?</i></p>
+
+<p>The belief that the Declaration of
+Independence was signed on the 4th of
+July. Congress did not order it to be
+engrossed for signature until July 19th.
+The article <span class="sc"><a href="/article/14-0391-independence-declaration-of/independence__declaration_of">Independence, Declaration
+of</a></span>, also shows that the most important
+day was July 2nd, when Congress
+adopted the Resolution of Independence.</p>
+
+<p>If you look up the answers to these
+questions, in the Britannica, you will
+incidentally learn, from the articles to
+which you turn, a great many things that
+will be of practical use to you in every-day
+life. For whether you turn to the
+volumes because you want only a single
+fact, or because you want to learn all
+about some important subject—or even
+because you merely want to pass a
+pleasant hour—you always get from
+them far more than you had hoped to
+find.</p>
+
+<div class="chapter">
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

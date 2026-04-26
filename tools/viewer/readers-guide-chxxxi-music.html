@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Music &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XXXI</span>Music</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">The First Great Climax</a></li><li><a href="#sh-2">Composer of the Golden Age</a></li><li><a href="#sh-3">Famous Monodists</a></li><li><a href="#sh-4">The Second Great Climax</a></li><li><a href="#sh-5">17th and 18th Century Composers</a></li><li><a href="#sh-6">The Third Great Climax</a></li><li><a href="#sh-7">19th Century Composers</a></li><li><a href="#sh-8">Musical Historians</a></li><li><a href="#sh-9">Theorists</a></li><li><a href="#sh-10">Contrapuntal Forms</a></li><li><a href="#sh-11">Suite and Sonata</a></li><li><a href="#sh-12">Programme Music</a></li><li><a href="#sh-13">Opera</a></li><li><a href="#sh-14">Song</a></li></ol></div>
+    <div class="body-text">
+
+
+<p>The general articles on music in
+the Encyclopaedia Britannica provide
+an illuminative discussion
+of broad artistic principles which cannot
+fail to stimulate the musical sense
+and perception of the professional or
+the amateur. The technical and critical
+treatment of the subject was directed
+by <a href="/contributors.html?q=Donald+Francis+Tovey">Donald F. Tovey</a>, composer,
+pianist, and author of <i>Essays in Musical
+Analysis</i>; and no one could be
+better fitted for the work of organizing
+this department of the Britannica. He
+was assisted by <a href="/contributors.html?q=William+Henry+Hadow">W. H. Hadow</a>, the well-known
+musical writer and composer,
+J. A. Fuller Maitland, musical critic of
+<i>The Times</i> (London), E. J. Dent, author
+of <i>Alessandro Scarlatti and His Works</i>,
+R. H. Legge, principal musical critic on
+the <i>Daily Telegraph</i> (London), and others;
+and the section treating of musical instruments
+was organized and contributed
+by Miss <a href="/contributors.html?q=Miss+Kathleen+Schlesinger">Kathleen Schlesinger</a>, the greatest
+living authority on the subject.</p>
+
+<p>In mapping out courses of reading
+the subject is divided into sections as
+follows: (1) Evolution, (2) Theory,
+(3) Musical Forms, (4) Musical Instruments.</p>
+
+<p>The article <span class="sc"><a href="/article/19-0087-music/music">Music</a></span> (Vol. 19, p. 72),
+by <a href="/contributors.html?q=Donald+Francis+Tovey">Donald Tovey</a>, which contains a masterly
+account of the development of the
+art from the earliest time down to the
+present day, provides the reader with
+just that general survey which enables
+him to see the whole picture in perspective.
+This he will naturally turn to first,
+but to fill out the picture there are a
+number of other articles which he will
+wish to read. In the following scheme
+the evolution of the art has been sketched
+in skeleton, so that the student may
+have before him a guide to the study of
+any period in which he is specially
+interested. This outline serves to show
+how very thoroughly the ground is covered
+in the new Encyclopaedia Britannica.</p>
+
+<h4 class="c016">(1) EVOLUTION OF MUSIC</h4>
+
+<table class="table3">
+<colgroup>
+<col class="colwidth50">
+<col class="colwidth50">
+</colgroup>
+  <tbody><tr>
+    <th class="c009"><i>Subject for Reading</i></th>
+    <th class="c028"><i>Article</i></th>
+  </tr>
+  <tr><th class="c008" colspan="2"><i>PRE-HARMONIC STAGE</i></th></tr>
+  <tr>
+    <td class="c011">Primitive Music.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0087-music/music">Music</a></span> (Vol. 19, p. 72).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/25-0416-song/song">Song</a></span> (Vol. 25, p. 406).</td>
+  </tr>
+  <tr>
+    <td class="c011">Musical sense first awakened by the rhythm of the dance.</td>
+    <td class="c029"><span class="sc"><a href="/article/07-0818-dance/dance">Dance</a></span> (Vol. 7, p. 795); see also <span class="sc"><a href="/article/23-0294-s2/rhythm">Rhythm</a></span> (Vol. 23, p. 278).</td>
+  </tr>
+  <tr>
+    <td class="c011">Legendary account of the invention of music by a Judean.</td>
+    <td class="c029"><span class="sc"><a href="/article/07-0877-david/david">David</a></span> (Vol. 7, p. 859).</td>
+  </tr>
+  <tr>
+    <td class="c011">Hebrew music: setting of the Psalms.</td>
+    <td class="c029"><span class="sc"><a href="/article/22-0550-s6/psalms__book_of">Psalms, Book of</a></span> (Vol. 22, p. 539 and p. 536).</td>
+  </tr>
+  <tr>
+    <td class="c011">Suggested Jewish origin of some Gregorian Tunes.</td>
+    <td class="c029"><span class="sc"><a href="/article/21-0734-s6/plain_song">Plain Song</a></span> (Vol. 21, p. 706).</td>
+  </tr>
+  <tr>
+    <td class="c011">Dawn of modern music in Greece. Connection of music with lyric poetry. Terpander of Lesbos (660 B.C.) adds 3 strings to the 4–stringed lyre, giving compass of octave.</td>
+    <td class="c029"><span class="sc"><a href="/article/12-0532-greek-literature/greek_literature">Greek Literature</a></span> (Vol. 12, p. 509).</td>
+  </tr>
+  <tr>
+    <td class="c011">Characteristics of Greek music. Pythagoras (6th century, B.C.) fixes the intervals of the harmonic series and of the diatonic scale.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0087-music/music">Music</a></span> (Vol. 19, p. 73); see also <span class="sc"><a href="/article/22-0714-s3/pythagoras">Pythagoras</a></span> (Vol. 22, p. 699).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Greek scale shows a latent harmonic sense, though octaves only allowed.</td>
+    <td class="c029"><span class="sc"><a href="/article/17-0192-s3/lyre">Lyre</a></span> (Vol. 17, p. 178); see also <span class="sc"><a href="/article/20-0194-s2/orchestra">Orchestra</a></span> (Vol. 20, p. 168); <span class="sc"><a href="/article/02-0965-s5/aulos">Aulos</a></span> (Vol. 2, p. 917); <span class="sc"><a href="/article/06-0411-cithara/cithara">Cithara</a></span> (Vol. 6, p. 395).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/13-0014-harmony/harmony">Harmony</a></span> (Vol. 13, p. 1).</td>
+  </tr>
+  <tr>
+    <td class="c011">Pitch in Greek music.</td>
+    <td class="c029"><span class="sc"><a href="/article/21-0689-s5/pitch__musical">Pitch, Musical</a></span> (Vol. 21, p. 661).</td>
+  </tr>
+  <tr>
+    <td class="c011">Other primitive systems without influence on modern music.</td>
+    <td class="c029"><span class="sc"><a href="/article/06-0179-china/china">China</a></span>, <i>Literature</i> (Vol. 6, p. 228 and p. 215).</td>
+  </tr>
+  <tr>
+    <td class="c011">Chinese adopted Pythagorean system; a lost art recovered in 3rd century, A.D.</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Indian music—Scale of 22 intervals.</td>
+    <td class="c029"><span class="sc"><a href="/article/24-0170-sanskrit/sanskrit">Sanskrit</a></span> (Vol. 24, p. 181).</td>
+  </tr>
+  <tr>
+    <td class="c011">Siamese music: 7 tone scale; orchestras perform in unison.</td>
+    <td class="c029"><span class="sc"><a href="/article/25-0016-s3/siam">Siam</a></span> (Vol. 25, p. 5).</td>
+  </tr>
+  <tr>
+    <td class="c011">The music of the North American Indian.</td>
+    <td class="c029"><span class="sc"><a href="/article/14-0480-indians-north-american/indians__north_american">Indians, North American</a></span> (Vol. 14, p. 470).</td>
+  </tr>
+</tbody></table>
+
+<p>Biographies of musicians of the primitive, non-harmonic, period in the Britannica
+are: <span class="sc"><a href="/article/26-0678-s3/terpander">Terpander</a></span>, 7th century B.C.; <span class="sc"><a href="/article/22-0714-s3/pythagoras">Pythagoras</a></span>, 6th century B.C.; <span class="sc"><a href="/article/02-0560-s2/aristoxenus">Aristoxenus</a></span>,
+4th century; <span class="sc"><a href="/article/01-0822-s2/alypius">Alypius</a></span>, 3rd century B.C.; <span class="sc"><a href="/article/02-0532-s7/aristides">Aristides</a></span>, <span class="sc">Quintilianus</span>, 3rd
+century.</p>
+
+<h4 class="c016"> <i>HARMONIC ORIGINS</i></h4>
+
+<p>The Greeks found that by doubling the melody at the octave a greater sonority
+resulted. It was a great step from this to the discovery that two separate tunes
+could be combined which should be satisfying to the ear. With this discovery
+modern harmony may be said to have begun.</p>
+
+<table class="table4">
+<colgroup>
+<col class="colwidth50">
+<col class="colwidth50">
+</colgroup>
+  <tbody><tr>
+    <th class="c009"><i>Subject</i></th>
+    <th class="c028"><i>Article</i></th>
+  </tr>
+  <tr>
+    <td class="c011">Awakening of the harmonic sense.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0087-music/music">Music</a></span> (Vol. 19, p. 74); <span class="sc"><a href="/article/13-0014-harmony/harmony">Harmony</a></span> (Vol. 13, p. 1).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Grecian modes modified into the ecclesiastical by Ambrose in the 4th century.</td>
+    <td class="c029"><span class="sc"><a href="/article/21-0734-s6/plain_song">Plain Song</a></span> (Vol. 21, p. 705); see also <span class="sc"><a href="/article/01-0844-s4/ambrose">Ambrose</a></span> (Vol. 1, p. 798), and <span class="sc"><a href="/article/12-0591-s2/gregory">Gregory</a></span> (Vol. 12, p. 567).</td>
+  </tr>
+  <tr>
+    <td class="c011">Following Hucbald, “beatus Guido inventor musicae” in the 11th century, invents names for the notes and improves system of notation.</td>
+    <td class="c029"><span class="sc"><a href="/article/12-0712-guido-of-arezzo/guido_of_arezzo">Guido of Arezzo</a></span> (Vol. 12, p. 687); see also <span class="sc"><a href="/article/13-0872-hucbald/hucbald">Hucbald</a></span> (Vol. 13, p. 847).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Troubadour becomes a learned musician in the 13th century.</td>
+    <td class="c029"><span class="sc"><a href="/article/01-0202-s3/adam__or_adan__de_le_hale">Adam de la Hale</a></span>, 13th century (Vol. 1, p. 171); <span class="sc"><a href="/article/17-0248-s2/machaut__guillaume_de">Machaut</a></span> (Vol. 17, p. 233).</td>
+  </tr>
+  <tr>
+    <td class="c011">After Dunstable of England and Dufay of the Netherlands had invented counterpoint comes the first great composer, heralding the advent of the “Golden Age.”</td>
+    <td class="c029"><span class="sc"><a href="/article/08-0118-des-pr-s-josquin/des_prés__josquin">Des Prés, Josquin</a></span> (Vol. 8, p. 103); see also <span class="sc"><a href="/article/03-0971-binchois-egidius/binchois__egidius">Binchois, Egidius</a></span> (Vol. 3, p. 948).</td>
+  </tr>
+</tbody></table>
+
+<h4 class="c016"> <i>THE GOLDEN AGE</i></h4>
+
+<div class="c003"></div>
+<p><span class="shoulder-heading" id="sh-1">The First Great Climax</span>Composers were not long content with the simple combination of two tunes.
+They soon found that three tunes so treated afforded a yet richer texture, and the
+extension to the elaborate polyphony of 16th century choral music was an inevitable
+step. An elaborate system of prohibitions, based on the limitations
+of the human voice, and the difficulty of attacking certain
+intervals, shackled the composer at every turn and formed the
+basis of theories of counterpoint which endured almost to our
+time. Despite the restrictions imposed by their rules, the structure raised by the
+great composers of the first half of the 16th century was of amazing richness and
+complexity.</p>
+
+<table class="table4">
+<colgroup>
+<col class="colwidth50">
+<col class="colwidth50">
+</colgroup>
+  <tbody><tr>
+    <th class="c009"><i>Subject of Reading</i></th>
+    <th class="c028"><i>Article</i></th>
+  </tr>
+  <tr>
+    <td class="c011">The Riot of Choral Polyphony in the 16th century.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0087-music/music">Music</a></span>, <i>The Golden Age</i> (Vol. 19, p. 75); see also <span class="sc"><a href="/article/13-0014-harmony/harmony">Harmony</a></span> (Vol. 13, p. 2); <span class="sc"><a href="/article/14-0682-s3/instrumentation">Instrumentation</a></span>, <i>Vocal Styles of 16th Century</i> (Vol. 14, p. 651).</td>
+  </tr>
+  <tr>
+    <td class="c011">Musical forms brought to great perfection in this period those in which texture holds first place.</td>
+    <td class="c029"><span class="sc"><a href="/article/07-0056-contrapuntal-forms/contrapuntal_forms">Contrapuntal Forms</a></span>, <i>Canonic Forms and Devices</i>, <i>Counterpoint on a Canto Fermo</i> (Vol. 7, p. 42); see also <span class="sc"><a href="/article/17-0866-s3/mass">Mass</a></span>, <i>Polyphonic Masses</i> (Vol. 17, p. 849); <span class="sc"><a href="/article/17-0310-madrigal/madrigal">Madrigal</a></span> (Vol. 17, p. 295); <span class="sc"><a href="/article/18-0937-s2/motet">Motet</a></span> (Vol. 18, p. 905).</td>
+  </tr>
+  <tr>
+    <td class="c011">Leaders of musical thought in the “Golden Age.”</td>
+    <td class="c029"><span class="sc"><a href="/article/16-0258-s2/lasso">Lasso</a></span>, Orlando (Vol. 16, p. 237); <span class="sc"><a href="/article/26-0398-s3/tallis__tallys__talys__or_tallisius___thomas">Tallis</a></span>, T. (Vol. 26, p. 377); <span class="sc"><a href="/article/20-0683-s2/palestrina__giovanni_pierluigi_da">Palestrina</a></span> (Vol. 20, p. 627).</td>
+  </tr>
+</tbody></table>
+
+<p><span class="shoulder-heading" id="sh-2">Composer of the Golden Age</span>Composers of the “Golden Age,” following the polyphonic tradition of the
+early 16th century, biographies of whom appear in the Britannica, are: <i>Netherlandish</i>:
+<span class="sc"><a href="/article/02-0356-s2/arcadelt">Arcadelt, Jacob</a></span>, 1514–1556; <span class="sc"><a href="/article/16-0258-s2/lasso">Lasso, Orlando</a></span>, c. 1530–1594; <i>German</i>: <span class="sc"><a href="/article/10-0368-finck-hermann/finck__hermann">Finck,
+Hermann</a></span>, 1527–1558; <span class="sc"><a href="/article/08-0873-eccard-johann/eccard__johann">Eccard, Johann</a></span>, 1553–1611; <span class="sc"><a href="/article/01-0472-s10/aichinger__gregor">Aichinger, Gregor</a></span>, leader
+of Reformation church music, c. 1565–1628; <i>French</i>: <span class="sc"><a href="/article/12-0297-s5/goudimel__claude">Goudimel,
+C.</a></span>, c. 1510–1572; <i>English</i>: <span class="sc"><a href="/article/28-0652-s2/wilbye__john">Wilbye, John</a></span>, 16th century,
+famous for his madrigals; <span class="sc">Merbeck, John</span>, d. 1585; <span class="sc"><a href="/article/03-0761-bennett-john/bennett__john">Bennett,
+John</a></span>, d.c. 1614; <span class="sc">Bateson, T.</span>, d. 1630, a composer of madrigals;
+<span class="sc">Tallis, T.</span>, c. 1515–1585, “father of English cathedral
+music”; <span class="sc"><a href="/article/10-0200-farrant-richard/farrant__richard">Farrant, R.</a></span>, c. 1530–1581; <span class="sc"><a href="/article/04-0920-s7/byrd__william">Byrd, Wm.</a></span>, 1543–1623; <span class="sc"><a href="/article/18-0873-s3/morley__thomas">Morley, T.</a></span>, 1557–1603;
+<span class="sc"><a href="/article/11-0961-s2/gibbons__orlando">Gibbons, Orlando</a></span>, 1583–1625; <i>Italian</i>: <span class="sc"><a href="/article/02-0066-s2/animuccia__giovanni">Animuccia, Giovanni</a></span>, c. 1490–1571;
+<span class="sc"><a href="/article/28-0987-zarlino-gioseffo/zarlino__gioseffo">Zarlino, Gioseffo</a></span>, 1517–1590, fixed the diatonic scale as now accepted; <span class="sc"><a href="/article/20-0683-s2/palestrina__giovanni_pierluigi_da">Palestrina,
+Giovanni Pierluigi da</a></span>, 1526–1594; <span class="sc">Banchiere, Adriano</span>, c. 1557–1634, fought
+against monodist revolt—see below; <span class="sc"><a href="/article/02-0014-s4/anerio">Anerio</a></span> (brothers), c. 1560–1620; <span class="sc"><a href="/article/02-0749-s2/artusi__giovanni_maria">Artusi,
+G. M.</a></span>, 16th century, opposed Monteverdi’s innovations—see below; <i>Spanish</i>: <span class="sc">Victoria,
+Tommasso L. da</span>, c. 1540–1613.</p>
+
+<div>
+  
+  <h4 class="c016"> <i>THE FIRST ROMANTIC MOVEMENT</i></h4>
+</div>
+
+<p>The last word in polyphony seemed to have been said by such masters as
+Orlando Lasso, and Palestrina, and a change into new paths was inevitable. Moreover,
+men’s minds were craving something more directly stimulating than the passionless
+web of ecclesiastical polyphony, which was the glory of the 16th century.
+Freedom was sought from the conventions of modal counterpoint. The monodist
+revolt was the result.</p>
+
+<table class="table4">
+<colgroup>
+<col class="colwidth50">
+<col class="colwidth50">
+</colgroup>
+  <tbody><tr>
+    <th class="c009"><i>Subject</i></th>
+    <th class="c028"><i>Article</i></th>
+  </tr>
+  <tr>
+    <td class="c011">Revolt against the overelaboration of texture.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0087-music/music">Music</a></span>, <i>The Monodic Revolution</i> (Vol. 19, p. 76); <span class="sc"><a href="/article/13-0014-harmony/harmony">Harmony</a></span>, <i>Modern Harmony</i> (Vol. 13, p. 4).</td>
+  </tr>
+  <tr>
+    <td class="c011">Prominence given to solo part rather than to choral effect leads to development of the aria.</td>
+    <td class="c029"><span class="sc"><a href="/article/25-0416-song/song">Song</a></span> (Vol. 25, p. 406); <span class="sc"><a href="/article/02-0527-s2/aria">Aria</a></span> (Vol. 2, p. 489).</td>
+  </tr>
+  <tr>
+    <td class="c011">The leader in the new paths, the pioneer of modern harmony.</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0808-monteverde/monteverde__claudio">Monteverde, Claudio</a></span> (Vol. 18, p. 778).</td>
+  </tr>
+  <tr>
+    <td class="c011">The first oratorio (1600).</td>
+    <td class="c029"><span class="sc"><a href="/article/20-0187-s3/oratorio">Oratorio</a></span> (Vol. 20, p. 161); see also <span class="sc"><a href="/article/05-0586-cavaliere-emilio-del/cavaliere__emilio_del">Cavaliere, Emilio del</a></span> (Vol. 5, p. 563).</td>
+  </tr>
+  <tr>
+    <td class="c011">The first opera (1600).</td>
+    <td class="c029"><span class="sc"><a href="/article/20-0147-s4/opera">Opera</a></span> (Vol. 20, p. 121); see also <span class="sc"><a href="/article/21-0161-s3/peri__jacopo">Peri, Jacopo</a></span> (Vol. 21, p. 144).</td>
+  </tr>
+  <tr>
+    <td class="c011">The monodic impulse synchronizes with the startling development of the violin family by the Cremona makers.</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0117-violin/violin">Violin</a></span> (Vol. 28, p. 103); see also <span class="sc"><a href="/article/01-0829-s3/amati">Amati</a></span> (Vol. 1, p. 783); <span class="sc"><a href="/article/12-0685-s4/guarnieri">Guarnieri</a></span> (Vol. 12, p. 660); <span class="sc"><a href="/article/25-1003-s2/stradivari__antonio">Stradivari</a></span> (Vol. 25, p. 977).</td>
+  </tr>
+</tbody></table>
+
+<p><span class="shoulder-heading" id="sh-3">Famous Monodists</span>Among distinguished composers of this period and school are: <i>English</i>: <span class="sc"><a href="/article/04-0810-s3/bull__john">Bull,
+John</a></span>, c. 1562–1628; <span class="sc"><a href="/article/10-0664-ford-thomas/ford__thomas">Ford, Thomas</a></span>, b. 1580; <span class="sc"><a href="/article/16-0320-s2/lawes__henry">Lawes, Henry</a></span>, 1595–1662; <i>Italian</i>:
+<span class="sc"><a href="/article/05-0586-cavaliere-emilio-del/cavaliere__emilio_del">Cavaliere, E. del</a></span>, c. 1550–1602; <span class="sc"><a href="/article/21-0161-s3/peri__jacopo">Peri, Jacopo</a></span>, b. 1561; <span class="sc">Gabriele, Giovanni</span>, 1557–c.
+1612, early experimenter in chromatic harmony; <span class="sc"><a href="/article/04-0950-s2/caccini__giulio">Caccini,
+Giulio</a></span>, 1558–1615; <span class="sc"><a href="/article/18-0808-monteverde/monteverde__claudio">Monteverde, Claudio</a></span>, 1567–1643; <span class="sc"><a href="/article/01-0732-allegri-gregorio/allegri__gregorio">Allegri,
+Gregorio</a></span>, c. 1570–1652; <span class="sc"><a href="/article/11-0222-s3/frescobaldi__girolamo">Frescobaldi, Girolamo</a></span>, 1583–1644,
+famous also as a teacher; <span class="sc"><a href="/article/01-0419-s7/agostino">Agostino, P.</a></span>, 1593–1639;
+<span class="sc"><a href="/article/05-0586-cavalli-francesco/cavalli__francesco">Cavalli, F.</a></span>, 1596–1676, popularized opera; <span class="sc"><a href="/article/05-0351-carissimi-giacomo/carissimi__giacomo">Carissimi, G.</a></span>, c. 1604–1674, popularized
+oratorio; <span class="sc"><a href="/article/23-0791-s2/rossi__luigi_de">Rossi, Luigi de</a></span>. All the above have separate articles assigned to them in
+the Britannica.</p>
+
+<h4 class="c016"> <i>THE 17th CENTURY AND AFTER</i></h4>
+
+<div class="c003"></div>
+<p><span class="shoulder-heading" id="sh-4">The Second Great Climax</span>Those who revolted from the traditions of the polyphonic school went, as was
+inevitable, too far. A reaction was equally inevitable, for the language of the new
+music was unformed and was in danger of being stereotyped into the emptiest of
+formulas. The welding of the old and new ideas was all that
+was needed to prepare the way for the colossal achievement of
+a Bach or a Beethoven. It was a busy period when the rules
+of counterpoint were reviewed and revised, when theories of
+harmony as a distinct science took shape. But, save for the work of such men as
+Purcell, the Englishman (Vol. 22, p. 658), born 100 years before his time, the 17th
+century was mainly one of preparation. The next great climax came in the first
+half of the 18th century.</p>
+
+<table class="table4">
+<colgroup>
+<col class="colwidth50">
+<col class="colwidth50">
+</colgroup>
+  <tbody><tr><td class="c008" colspan="2"></td></tr>
+  <tr>
+    <th class="c009"><i>Subject</i></th>
+    <th class="c028"><i>Article</i></th>
+  </tr>
+  <tr>
+    <td class="c011">The renascence of texture, the welding of polyphony and monody.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0087-music/music">Music</a></span> (Vol. 19, p. 77); <span class="sc"><a href="/article/13-0014-harmony/harmony">Harmony</a></span> (Vol. 13, p. 4).</td>
+  </tr>
+  <tr>
+    <td class="c011">Publication in 1715 of the famous <i>Gradus ad Parnassum</i>, the first complete theory of counterpoint.</td>
+    <td class="c029"><span class="sc"><a href="/article/11-0393-fux-johann-joseph/fux__johann_joseph">Fux, Johann Joseph</a></span> (Vol. 11, p. 375).</td>
+  </tr>
+  <tr>
+    <td class="c011">The first systematic theory of harmony published in 1722.</td>
+    <td class="c029"><span class="sc"><a href="/article/22-0891-s3/rameau__jean_philippe">Rameau, J. P.</a></span> (Vol. 22, p. 874).</td>
+  </tr>
+  <tr>
+    <td class="c011">The second great climax in music.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0087-music/music">Music</a></span>, <i>Bach and Handel</i> (Vol. 19, p. 78).</td>
+  </tr>
+  <tr>
+    <td class="c011">The achievement of Johann Sebastian Bach.</td>
+    <td class="c029"><span class="sc"><a href="/article/03-0141-s3/bach__johann_sebastian">Bach, J. S.</a></span> (Vol. 3, p. 124); see also <span class="sc"><a href="/article/07-0056-contrapuntal-forms/contrapuntal_forms">Contrapuntal Forms</a></span> (Vol. 7, p. 41); <span class="sc"><a href="/article/06-0849-concerto/concerto">Concerto</a></span> (Vol. 6, p. 825); <span class="sc"><a href="/article/20-0418-s9/overture">Overture</a></span> (Vol. 20, p. 384); <span class="sc"><a href="/article/26-0067-suite/suite">Suite</a></span> (Vol. 26, p. 51); <span class="sc"><a href="/article/20-0187-s3/oratorio">Oratorio</a></span> (Vol. 20, p. 161); <span class="sc"><a href="/article/05-0222-cantata/cantata">Cantata</a></span> (Vol. 5, p. 209); <span class="sc"><a href="/article/17-0866-s3/mass">Mass</a></span>, <i>Lutheran Masses</i> (Vol. 17, p. 850); <span class="sc"><a href="/article/27-0938-variations/variations">Variations</a></span> (Vol. 27, p. 912); <span class="sc"><a href="/article/14-0682-s3/instrumentation">Instrumentation</a></span>, <i>Decoration</i> and <i>Orchestral Schemes</i> (Vol. 14, p. 651 and p. 655).</td>
+  </tr>
+</tbody></table>
+
+<p><span class="shoulder-heading" id="sh-5">17th and 18th Century Composers</span>Composers of the period who have separate notices in the Britannica are: <i>Italian</i>:
+<span class="sc"><a href="/article/05-0804-cesti-marc-antonio/cesti__marc__antonio">Cesti, M. A.</a></span>, c. 1620–1669; <span class="sc"><a href="/article/06-0736-colonna-giovanni-paolo/colonna__giovanni_paolo">Colonna, Giovanni P.</a></span>, c. 1637–1695; <span class="sc"><a href="/article/20-0947-s3/pasquini__bernardo">Pasquini,
+B.</a></span>, 1637–1710; <span class="sc"><a href="/article/25-1002-s4/stradella__alessandro">Stradella, Alessandro</a></span>, 1645–1682; <span class="sc"><a href="/article/07-0160-corelli-arcangelo/corelli__arcangelo">Corelli, Arcangelo</a></span>, 1653–1713,
+first classic of the violin; <span class="sc"><a href="/article/25-0893-s4/steffani__agostino">Steffani, A.</a></span>, 1653–1728; <span class="sc"><a href="/article/24-0320-s3/scarlatti__alessandro">Scarlatti,
+Alessandro</a></span>, 1659–1725, largely created language of
+modern music; <span class="sc"><a href="/article/21-0696-s1/pitoni__giuseppe_ottavio">Pitoni, G. O.</a></span>, 1657–1743; <span class="sc"><a href="/article/17-0036-s2/lotti__antonio">Lotti, Antonio</a></span>, c.
+1667–1740; <span class="sc"><a href="/article/06-0452-clari-giovanni-carlo-maria/clari__giovanni_carlo_maria">Clari, G. C. M.</a></span>, c. 1669–1745; <span class="sc">Bononcini, G. B.</span>,
+c. 1672–1750; <span class="sc"><a href="/article/01-0550-s3/albinoni__tomasso">Albinoni, T.</a></span>, c. 1674–1745; <span class="sc"><a href="/article/02-0840-s2/astorga__emanuele_d_">Astorga, Emanuele
+d’</a></span>, 1681–1736; <span class="sc"><a href="/article/08-0721-durante-francesco/durante__francesco">Durante, Francesco</a></span>, 1684–1755; <span class="sc"><a href="/article/17-0701-s4/marcello__benedetto">Marcello, B.</a></span>, 1686–1739;
+<span class="sc"><a href="/article/28-0107-vinci-leonardo/vinci__leonardo">Vinci, Leonardo</a></span>, 1690–1730; <span class="sc"><a href="/article/16-0461-s4/leo__leonardo">Leo, Leonardo</a></span>, 1694–1744; <span class="sc">Logroscino, Nicola</span>, c.
+1700–1763; <span class="sc">Pergolesi, Giovanni Battista</span>, 1710–1736; <span class="sc"><a href="/article/01-0542-s4/alberti__domenico">Alberti, Domenico</a></span>, c.
+1710–1740; <i>French</i>: <span class="sc"><a href="/article/05-0094-cambert-robert/cambert__robert">Cambert, R.</a></span>, 1628–1677; <span class="sc"><a href="/article/17-0136-lully-jean-baptiste/lully__jean-baptiste">Lully, Jean-Baptiste</a></span>, c. 1623–1687,
+inventor of the classical French opera style; <i>English</i>: <span class="sc"><a href="/article/16-0874-locke-matthew/locke__matthew">Locke, Matthew</a></span>, c. 1630–1677;
+<span class="sc"><a href="/article/04-0101-blow-john/blow__john">Blow, John</a></span>, 1648–1708; <span class="sc"><a href="/article/22-0674-s2/purcell__henry">Purcell, Henry</a></span>, 1658–1695; <span class="sc">Croft, William</span>,
+1678–1727; <span class="sc"><a href="/article/12-0935-s3/handel__george_frederick">Handel, George Frederick</a></span>, 1685–1759; <span class="sc"><a href="/article/12-0563-s3/greene__maurice">Greene, Maurice</a></span>, 1695–1755;
+<i>German</i>: <span class="sc"><a href="/article/03-0141-s3/bach__johann_sebastian">Bach, Johann Sebastian</a></span>, 1685–1750; <span class="sc"><a href="/article/13-0064-s7/hasse__johann_adolph">Hasse, Johann A.</a></span>, 1699–1783;
+<span class="sc"><a href="/article/08-0868-eberlin-johann-ernst/eberlin__johann_ernst">Eberlin, J. E.</a></span>, 1702–1762.</p>
+
+<h4 class="c016"> <i>THE RISE OF THE SONATA</i></h4>
+
+<div class="c003"></div>
+<p><span class="shoulder-heading" id="sh-6">The Third Great Climax</span>Bach, like Palestrina, seemed to have closed a period; and for nearly a hundred
+years after his death his influence on the course of musical development was astonishingly
+small. Again men sought new channels of expression and found them in instrumental
+music. But a structure less loosely knit than the
+suite form was needed if the new ideas were to be adequately
+stated, and the sonata grew into being, a form which has sufficed
+to this day as a medium for the noblest thoughts of the great
+composers. The 18th century saw, too, the reform of the opera by Gluck, a great
+development of orchestral resources, and the rise of the string quartette in chamber
+music.</p>
+
+<table class="table4">
+<colgroup>
+<col class="colwidth50">
+<col class="colwidth50">
+</colgroup>
+  <tbody><tr><td class="c008" colspan="2"></td></tr>
+  <tr>
+    <th class="c009"><i>Subject</i></th>
+    <th class="c028"><i>Article</i></th>
+  </tr>
+  <tr>
+    <td class="c011">The new language: evolution of the sonata from the suite.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0087-music/music">Music</a></span> (Vol. 19, p. 79); <span class="sc"><a href="/article/25-0410-s3/sonata">Sonata</a></span>, <i>Sonata Style</i> (Vol. 25, p. 394); see also <span class="sc"><a href="/article/24-0319-scarborough/scarborough">Scarletti, Dominico</a></span> (Vol. 24, p. 302); and <span class="sc"><a href="/article/03-0141-s3/bach__johann_sebastian">Bach, K. P. E.</a></span> (Vol. 3, p. 130).</td>
+  </tr>
+  <tr>
+    <td class="c011">Reform of the opera.</td>
+    <td class="c029"><span class="sc"><a href="/article/20-0147-s4/opera">Opera</a></span> (Vol. 20, p. 123); see also <span class="sc"><a href="/article/12-0155-s6/gluck">Gluck</a></span> (Vol. 12, p. 138); <span class="sc"><a href="/article/21-0605-s6/piccinni__niccola">Piccinni</a></span> (Vol. 21, p. 579); <span class="sc"><a href="/article/18-0981-s5/mozart__wolfgang_amadeus">Mozart</a></span> (Vol. 18, p. 951).</td>
+  </tr>
+  <tr>
+    <td class="c011">The rise of the symphony and the string quartette, development of the sonata.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0087-music/music">Music</a></span>, <i>The Symphonic Classes</i> (Vol. 19, p. 78); <span class="sc"><a href="/article/25-0410-s4/sonata_forms">Sonata Forms</a></span> (Vol. 25, p. 395); <span class="sc"><a href="/article/26-0311-s2/symphony">Symphony</a></span> (Vol. 26, p. 290); see also <span class="sc"><a href="/article/13-0122-s6/haydn__franz_joseph">Haydn</a></span> (Vol. 13, p. 110).</td>
+  </tr>
+  <tr>
+    <td class="c011">The growth of the orchestra.</td>
+    <td class="c029"><span class="sc"><a href="/article/14-0682-s3/instrumentation">Instrumentation</a></span>, <i>Symphonic</i> (Vol. 14, p. 652); see also <span class="sc"><a href="/article/13-0122-s6/haydn__franz_joseph">Haydn</a></span> (Vol. 13, p. 110).</td>
+  </tr>
+  <tr>
+    <td class="c011">The third great climax. The perfection of the sonata form.</td>
+    <td class="c029"><span class="sc"><a href="/article/03-0663-beethoven-ludwig-van/beethoven__ludwig_van">Beethoven, L. von</a></span> (Vol. 3, p. 644); see also <span class="sc"><a href="/article/25-0410-s4/sonata_forms">Sonata Forms</a></span> (Vol. 25, p. 397); <span class="sc"><a href="/article/14-0682-s3/instrumentation">Instrumentation</a></span> (Vol. 14, p. 653); <span class="sc"><a href="/article/27-0938-variations/variations">Variations</a></span> (Vol. 27, p. 913); <span class="sc"><a href="/article/17-0866-s3/mass">Mass</a></span> (Vol. 17, p. 850).</td>
+  </tr>
+</tbody></table>
+
+<p>Biographies of the following composers of the period appear in the Britannica:
+<i>German and Austrian</i>: <span class="sc"><a href="/article/03-0147-s2/bach__karl_philipp_emanuel">Bach, Karl Philipp Emanuel</a></span>, 1714–1788; <span class="sc"><a href="/article/12-0155-s6/gluck">Gluck, C. W.</a></span>,
+1714–1787; <span class="sc"><a href="/article/13-0484-s3/hiller__johann_adam">Hiller, J. A.</a></span>, 1728–1804; <span class="sc"><a href="/article/13-0122-s6/haydn__franz_joseph">Haydn, Franz Joseph</a></span>, 1732–1809; <span class="sc"><a href="/article/08-0341-dittersdorf-karl-ditters-von/dittersdorf__karl_ditters_von">Dittersdorf,
+Karl Ditters von</a></span>, 1739–1799; <span class="sc"><a href="/article/28-0754-s5/winter__peter">Winter, P.</a></span>, c. 1755–1825; <span class="sc"><a href="/article/18-0981-s5/mozart__wolfgang_amadeus">Mozart, Wolfgang
+Amadeus</a></span>, 1756–1791; <span class="sc"><a href="/article/13-0492-s4/himmel__frederick_henry">Himmel, F. H.</a></span>, 1765–1814; <span class="sc"><a href="/article/03-0663-beethoven-ludwig-van/beethoven__ludwig_van">Beethoven, Ludwig van</a></span>,
+1770–1827; <i>French</i>: <span class="sc"><a href="/article/12-0286-gossec-fran-ois-joseph/gossec__françois_joseph">Gossec, F. J.</a></span>, 1734–1829; <span class="sc"><a href="/article/12-0609-gretry-andre-ernest-modeste/gretry__andre_ernest_modeste">Gretry, A. E. M.</a></span>, 1741–1813;
+<span class="sc">Mehul, Etienne H.</span>, 1763–1817; <span class="sc"><a href="/article/16-0520-lesueur-jean-fran-ois/lesueur__jean_françois">Lesueur, Jean François</a></span>, c. 1763–1837; <span class="sc"><a href="/article/04-0152-boieldieu-fran-ois-adrien/boieldieu__françois_adrien">Boieldieu,
+F. A.</a></span>, 1775–1834; <i>English</i>: <span class="sc"><a href="/article/02-0670-s3/arne__thomas_augustine">Arne, T. A.</a></span>, 1710–1778, preserved English tradition
+in face of Handelian obsession; <span class="sc"><a href="/article/04-0368-boyce-william/boyce__william">Boyce, William</a></span>, 1710–1779; <span class="sc"><a href="/article/15-0127-jackson-william/jackson__william">Jackson, W.</a></span>,
+1730–1803; <span class="sc"><a href="/article/03-0550-battishill-jonathan/battishill__jonathan">Battishill, J.</a></span>, 1738–1801; <span class="sc"><a href="/article/02-0680-s2/arnold__samuel">Arnold, S.</a></span>, 1740–1802; <span class="sc"><a href="/article/08-0192-dibdin-charles/dibdin__charles">Dibdin, C.</a></span>, 1745–1814;
+<span class="sc"><a href="/article/24-0890-shield-william/shield__william">Shield, W.</a></span>, 1748–1829; <span class="sc"><a href="/article/25-0994-storace-stephen/storace__stephen">Storace, S.</a></span>, 1763–1796; <span class="sc"><a href="/article/02-0935-s5/attwood__thomas">Attwood, T.</a></span>, 1765–1838;
+<span class="sc"><a href="/article/28-0548-s3/wesley__samuel">Wesley, Samuel</a></span>, 1766–1837, father of modern organ playing; <i>Italian</i>: <span class="sc">Scarlatti,
+Domenico</span>, 1685–1757; <span class="sc"><a href="/article/17-0817-s5/martini__giovanni_battista">Martini, G. B.</a></span>, 1706–1784; <span class="sc"><a href="/article/11-0446-s2/galuppi__baldassare">Galuppi, Baldassare</a></span>, 1706–1785;
+<span class="sc"><a href="/article/15-0523-s2/jommelli__niccola">Jommelli, N.</a></span>, 1714–1774; <span class="sc"><a href="/article/12-0699-guglielmi-pietro/guglielmi__pietro">Guglielmi, P.</a></span>, 1727–1804; <span class="sc"><a href="/article/21-0605-s6/piccinni__niccola">Piccinni, N.</a></span>, 1728–1800;
+<span class="sc"><a href="/article/24-0239-sarti-giuseppe/sarti__giuseppe">Sarti, Giuseppe</a></span>, 1729–1802; <span class="sc"><a href="/article/23-1015-s6/sacchini__antonio_maria_gaspare">Sacchini, A. M. G.</a></span>, 1734–1786; <span class="sc">Paisiello, G.</span>,
+1741–1816; <span class="sc"><a href="/article/04-0118-boccherini-luigi/boccherini__luigi">Boccherini, Luigi</a></span>, 1743–1805, last real master of suite form; <span class="sc"><a href="/article/06-0383-cimarosa-domenico/cimarosa__domenico">Cimarosa,
+D.</a></span>, 1749–1801; <span class="sc"><a href="/article/24-0084-s2/salieri__antonio">Salieri, A.</a></span>, 1750–1825; <span class="sc"><a href="/article/06-0100-cherubini-maria-luigi-carlo-zenobio-salvatore/cherubini__maria_luigi_carlo_zenobio_salvatore">Cherubini</a></span>, 1760–1842; <span class="sc">Paer, F.</span>,
+1771–1839.</p>
+
+<h4 class="c016"> <i>NEW PATHS</i></h4>
+
+<p>Early in the 19th century the wave of romanticism broke over Europe. The
+effect on music was not nearly so violent as was the monodic revolt of the 16th–17th
+centuries, since the resources and technique of the art had now been developed;
+but it was nevertheless striking and showed itself in several directions, but mainly
+in two: lyrical and dramatic. The short compositions of Field, Schumann, and
+Chopin, and the development of the art song are instances of the former; the whole
+range of programme music, of which the symphonic poem is the prototype, is evidence
+of the latter; while in opera the reforms started by Gluck were carried to their
+logical conclusion by Wagner. Two other movements are also significant; the return
+to Bach and a recognition of his amazing modernity, and the pronounced revival
+of national characteristics in music, as shown particularly in the new English, Russian,
+and Bohemian Schools.</p>
+
+<table class="table4">
+<colgroup>
+<col class="colwidth50">
+<col class="colwidth50">
+</colgroup>
+  <tbody><tr><td class="c008" colspan="2"></td></tr>
+  <tr>
+    <th class="c009"><i>Subject</i></th>
+    <th class="c028"><i>Article</i></th>
+  </tr>
+  <tr>
+    <td class="c011">The Romantic Period.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0087-music/music">Music</a></span>, <i>From Beethoven to Wagner</i> (Vol. 19, p. 79).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Romantic in opera.</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0473-s7/weber__carl_maria_friedrich_ernest_von">Weber, Carl Maria F. E. von</a></span> (Vol. 28, p. 455); <span class="sc"><a href="/article/25-0416-song/song">Song</a></span> (Vol. 25, p. 409).</td>
+  </tr>
+  <tr>
+    <td class="c011">The first great lyrical song writer.</td>
+    <td class="c029"><span class="sc"><a href="/article/24-0397-s6/schubert__franz_peter">Schubert, Franz Peter</a></span> (Vol. 24, p. 379); <span class="sc"><a href="/article/25-0416-song/song">Song</a></span> (Vol. 25, p. 409).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Romantic in the symphony.</td>
+    <td class="c029"><span class="sc"><a href="/article/22-0439-s5/programme_music">Programme Music</a></span> (Vol. 22, p. 424); see also <span class="sc"><a href="/article/03-0812-berlioz-hector/berlioz__hector">Berlioz, Hector</a></span> (Vol. 3, p. 791).</td>
+  </tr>
+  <tr>
+    <td class="c011">The rediscovery of Bach.</td>
+    <td class="c029"><span class="sc"><a href="/article/02-0136-s1/anticyclone">Bach, J. S.</a></span> (Vol. 2, p. 124); <span class="sc"><a href="/article/18-0139-mendelssohn-moses/mendelssohn__moses">Mendelssohn</a></span> (Vol. 18, pp. 121–124).</td>
+  </tr>
+  <tr>
+    <td class="c011">Development of song forms.</td>
+    <td class="c029"><span class="sc"><a href="/article/25-0416-song/song">Song</a></span> (Vol. 25, p. 410); see also <span class="sc"><a href="/article/24-0401-s5/schumann__robert_alexander">Schumann, Robert</a></span> (Vol. 24, p. 384); <span class="sc"><a href="/article/28-0792-wolf-hugo/wolf__hugo">Wolf, Hugo</a></span> (Vol. 28, p. 771); <span class="sc"><a href="/article/04-0404-brahms-johannes/brahms__johannes">Brahms, J.</a></span> (Vol. 4, p. 390).</td>
+  </tr>
+  <tr>
+    <td class="c011">Discontent with the sonata form.</td>
+    <td class="c029"><span class="sc"><a href="/article/26-0310-s3/symphonic_poem">Symphonic Poem</a></span> (Vol. 26, p. 289); <span class="sc"><a href="/article/16-0802-s4/liszt__franz">Liszt, F.</a></span> (Vol. 16, p. 780).</td>
+  </tr>
+  <tr>
+    <td class="c011">Gluck’s idea realised; union of music</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0087-music/music">Music</a></span> (Vol. 19, p. 80); <span class="sc"><a href="/article/20-0147-s4/opera">Operas</a></span>, <i>Leit-Motif</i> with drama.                             (Vol. 20, p. 125); <span class="sc"><a href="/article/28-0252-wagner-wilhelm-richard/wagner__wilhelm_richard">Wagner, W. Richard</a></span> (Vol. 28, p. 236).</td>
+  </tr>
+  <tr>
+    <td class="c011">The last of the royal line of German composers shows vitality of the sonata form.</td>
+    <td class="c029"><span class="sc"><a href="/article/04-0404-brahms-johannes/brahms__johannes">Brahms, Johannes</a></span> (Vol. 4, p. 389); <span class="sc"><a href="/article/25-0410-s4/sonata_forms">Sonata Forms</a></span>, <i>Sonata since Beethoven</i> (Vol. 25, p. 398).</td>
+  </tr>
+  <tr>
+    <td class="c011">Modern Tendencies.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0087-music/music">Music</a></span> (Vol. 19, p. 82); see also <span class="sc"><a href="/article/25-1029-s4/strauss__richard">Strauss, Richard</a></span> (Vol. 25, p. 1003); <span class="sc"><a href="/article/07-0930-debussy-claude-achille/debussy__claude_achille">Debussy, Achille</a></span> (Vol. 7, p. 906).</td>
+  </tr>
+</tbody></table>
+
+<p>Composers of this period, who have had separate articles assigned to them in
+the Britannica, follow: the growth of national schools will be noted.</p>
+
+<p><span class="shoulder-heading" id="sh-7">19th Century Composers</span><i>German and Austrian</i>: <span class="sc">Gansbacher, J. B.</span>, 1778–1844; <span class="sc"><a href="/article/15-0959-s7/kreutzer__konradin">Kreutzer, K.</a></span>, 1780–1849;
+<span class="sc"><a href="/article/25-0734-spohr-ludwig/spohr__ludwig">Spohr, Ludwig</a></span>, 1784–1859; <span class="sc"><a href="/article/28-0473-s7/weber__carl_maria_friedrich_ernest_von">Weber, Carl Maria F. E. von</a></span>, 1786–1886;
+<span class="sc"><a href="/article/18-0370-s6/meyerbeer__giacomo">Meyerbeer, G.</a></span>, 1791–1863; <span class="sc"><a href="/article/13-0081-s5/hauptmann__moritz">Hauptmann, M.</a></span>, 1792–1868; <span class="sc"><a href="/article/17-0088-s3/löwe__johann_karl_gottfried">Löwe, J. K. G.</a></span>, 1796–1869;
+<span class="sc"><a href="/article/24-0397-s6/schubert__franz_peter">Schubert, Franz Peter</a></span>, 1797–1828; <span class="sc"><a href="/article/17-0026-lortzing-gustav-albert/lortzing__gustav_albert">Lortzing, G. A.</a></span>,
+1801–1851; <span class="sc"><a href="/article/25-1029-s3/strauss__johann">Strauss, Johann</a></span>, 1804–1849, king of valse composers;
+<span class="sc"><a href="/article/18-0140-s2/mendelssohn-bartholdy__jakob_ludwig_felix">Mendelssohn-Bartholdy, J. L. F.</a></span>, 1809–1847; <span class="sc">Nicolai,
+Otto</span>, 1810–1849; <span class="sc"><a href="/article/24-0401-s5/schumann__robert_alexander">Schumann, Robert Alexander</a></span>, 1810–1856;
+<span class="sc"><a href="/article/13-0484-s2/hiller__ferdinand">Hiller, F.</a></span>, 1811–1885; <span class="sc"><a href="/article/28-0251-wagner-rudolph/wagner__rudolph">Wagner, Richard</a></span>, 1813–1883; <span class="sc"><a href="/article/13-0259-heller-stephen/heller__stephen">Heller, Stephen</a></span>,
+1815–1888; <span class="sc"><a href="/article/11-0048-s2/franz__robert">Franz, Robert</a></span>, 1815–1892, song composer; <span class="sc"><a href="/article/01-0109-s3/abt__franz">Abt, Franz</a></span>, 1819–1885, art
+folk-song; <span class="sc">Suppe, F. von</span>, 1820–1895; <span class="sc"><a href="/article/22-0830-raff/raff__joseph_joachim">Raff, J. J.</a></span>, 1822–1882; <span class="sc"><a href="/article/07-0184-cornelius-carl-august-peter/cornelius__carl_august_peter">Cornelius, Carl
+August Peter</a></span>, 1824–1874, song writer; <span class="sc"><a href="/article/04-0701-bruckner-anton/bruckner__anton">Bruckner, Anton</a></span>, 1824–1896, Wagnerian
+symphonist; <span class="sc"><a href="/article/23-0073-s2/reinecke__carl_heinrich_carsten">Reinecke, C. H. C.</a></span>, 1824–1910; <span class="sc"><a href="/article/16-0257-s2/lassen__eduard">Lassen, Eduard</a></span>, 1830–1904; <span class="sc"><a href="/article/15-0446-s2/joachim__joseph">Joachim,
+Joseph</a></span>, 1831–1907; <span class="sc"><a href="/article/04-0404-brahms-johannes/brahms__johannes">Brahms, Johannes</a></span>, 1833–1897; <span class="sc"><a href="/article/04-0700-s2/bruch__max">Bruch, Max</a></span>, b. 1838; <span class="sc"><a href="/article/23-0249-rheinberger-joseph-gabriel/rheinberger__joseph_gabriel">Rheinberger,
+J. G.</a></span>, 1839–1901; <span class="sc"><a href="/article/12-0206-s2/goetz__hermann">Goetz, Hermann</a></span>, 1840–1876; <span class="sc"><a href="/article/19-0430-s2/neszler__victor">Neszler, V.</a></span>, 1841–1890:
+<span class="sc"><a href="/article/13-0916-s3/humperdinck__engelbert">Humperdinck, E.</a></span>, b. 1854; <span class="sc"><a href="/article/28-0792-wolf-hugo/wolf__hugo">Wolf, Hugo</a></span>, 1860–1903; <span class="sc"><a href="/article/25-1029-s4/strauss__richard">Strauss, Richard</a></span>, b. 1864.</p>
+
+<p><i>French</i>: <span class="sc"><a href="/article/02-0937-s3/auber__daniel_françois_esprit">Auber, D. F. E.</a></span>, 1782–1871; <span class="sc">Herold, L. J. F</span>., 1791–1833; <span class="sc">Halevy,
+J. F. F. E.</span>, 1799–1862; <span class="sc"><a href="/article/03-0812-berlioz-hector/berlioz__hector">Berlioz, Hector</a></span>, 1803–1869; <span class="sc"><a href="/article/07-0884-david-f-licien/david__félicien">David, F.</a></span>, 1810–1876;
+<span class="sc"><a href="/article/26-0906-thomas-charles-louis-ambroise/thomas__charles_louis_ambroise">Thomas, C. L. Ambroise</a></span>, 1811–1896; <span class="sc"><a href="/article/12-0302-s2/gounod__charles_françois">Gounod, C. F.</a></span>, 1818–1893; <span class="sc"><a href="/article/20-0033-offenbach-jacques/offenbach__jacques">Offenbach, J.</a></span>,
+1819–1880; <span class="sc"><a href="/article/11-0015-franck-c-sar/franck__césar">Franck, Cesar</a></span>, 1822–1890, founder of Modern French School; <span class="sc"><a href="/article/16-0116-lalo-edouard/lalo__edouard">Lalo,
+E.</a></span>, 1823–1892; <span class="sc"><a href="/article/23-0242-s7/reyer__ernest">Reyer, E.</a></span>, b. 1823; <span class="sc"><a href="/article/16-0375-s2/lecocq__alexandre_charles">Lecocq, A. C.</a></span>, b. 1832; <span class="sc"><a href="/article/03-0763-benoit-peter-leonard-leopold/benoit__peter_leonard_leopold">Benoit, P. L. L.</a></span>, 1834–1901;
+<span class="sc"><a href="/article/24-0058-s2/saint-saëns__charles_camille">Saint-Saëns, Charles Camille</a></span>, b. 1835; <span class="sc"><a href="/article/08-0650-dubois-fran-ois-cl-ment-th-odore/dubois__françois_clément_théodore">Dubois, F. C. T.</a></span>, b. 1837; <span class="sc">Bizet,
+Georges</span>, 1838–1875; <span class="sc">Joncieres, V.</span>, 1839–1903; <span class="sc"><a href="/article/05-0822-chabrier-alexis-emmanuel/chabrier__alexis_emmanuel">Chabrier, A. E.</a></span>, 1841–1894;
+<span class="sc"><a href="/article/02-0947-s2/audran__edmond">Audran, E.</a></span>, 1842–1901; <span class="sc">Massenet, J. E. F.</span>, 1842–1912; <span class="sc">Faure, Gabriel</span>, b., 1845;
+<span class="sc"><a href="/article/28-0640-widor-charles-marie/widor__charles_marie">Widor, Charles Marie</a></span>, b. 1845; <span class="sc"><a href="/article/12-0187-godard-benjamin-louis-paul/godard__benjamin_louis_paul">Godard, Benjamin L. P</a></span>., 1849–1895; <span class="sc">Planquette,
+R.</span>, b. 1850; <span class="sc">D’Indy,. P. M. T. V.</span>, b. 1851; <span class="sc"><a href="/article/18-0207-messager-andre-charles-prosper/messager__andre_charles_prosper">Messager, A. C. P.</a></span>, b. 1853;
+<span class="sc"><a href="/article/04-0704-s2/bruneau__alfred">Bruneau, Alfred</a></span>, b. 1857; <span class="sc"><a href="/article/05-0861-chaminade-c-cile/chaminade__cécile">Chaminade, Cécile</a></span>, b. 1861; <span class="sc"><a href="/article/03-0733-bemberg-herman/bemberg__herman">Bemberg, Herman</a></span>, b.
+1861; <span class="sc"><a href="/article/07-0930-debussy-claude-achille/debussy__claude_achille">Debussy, Claude Achilles</a></span>, b. 1862.</p>
+
+<p><i>Belgian</i>: The violinist <span class="sc">Ysaye</span>, b. 1858.</p>
+
+<p><i>Italian</i>: <span class="sc">Spontani, G. L. P.</span>, 1774–1851; <span class="sc"><a href="/article/23-0791-s4/rossini__gioachino_antonio">Rossini, G. A.</a></span>, 1792–1868;
+<span class="sc"><a href="/article/08-0436-donizetti-gaetano/donizetti__gaetano">Donizetti, G.</a></span>, 1798–1848; <span class="sc"><a href="/article/03-0723-bellini-vincenzo/bellini__vincenzo">Bellini, V.</a></span>, 1801–1835; <span class="sc"><a href="/article/27-1045-s5/verdi__giuseppe_fortunino_francesco">Verdi, Giuseppe</a></span>, 1813–1901;
+<span class="sc"><a href="/article/22-0073-s8/ponchielli__amilcare">Ponchielli, Amilcare</a></span>, 1834–1886, on whom have modelled themselves, Mascagni,
+Leoncavallo, etc.; <span class="sc"><a href="/article/04-0168-boito-arrigo/boito__arrigo">Boito, Arrigo</a></span>, b. 1842; <span class="sc"><a href="/article/24-0787-s2/sgambati__giovanni">Sgambati, G.</a></span>, b. 1843; <span class="sc"><a href="/article/16-0475-s2/leoncavallo__ruggiero">Leoncavallo,
+R.</a></span>, b. 1858; <span class="sc"><a href="/article/22-0648-puccini-giacomo/puccini__giacomo">Puccini, G.</a></span>, b. 1858; <span class="sc"><a href="/article/17-0853-s4/mascagni__pietro">Mascagni, P.</a></span>, b. 1863.</p>
+
+<p><i>British</i>: <span class="sc"><a href="/article/13-0759-s2/horsley__william">Horsley, Wm.</a></span>, 1774–1858; <span class="sc"><a href="/article/25-0266-s2/smart__sir_george_thomas">Smart, Sir George T.</a></span>, 1776–1867; <span class="sc"><a href="/article/04-0014-bishop-sir-henry-rowley/bishop__sir_henry_rowley">Bishop,
+Sir H. R.</a></span>, 1786–1855; <span class="sc"><a href="/article/21-0042-s3/pearsall__robert_lucas_de">Pearsall, R. L. de</a></span>, 1795–1856; <span class="sc"><a href="/article/10-0336-field-john/field__john">Field, John</a></span>, 1782–1837,
+inventor of the nocturne; <span class="sc"><a href="/article/12-0285-s2/goss__sir_john">Goss, Sir John</a></span>, 1800–1880; <span class="sc"><a href="/article/13-0077-s3/hatton__john_liptrot">Hatton, J. L.</a></span>, 1800–1886;
+<span class="sc"><a href="/article/03-0431-barnett-john/barnett__john">Barnett, J.</a></span>, 1802–1890; <span class="sc"><a href="/article/03-0740-benedict-sir-julius/benedict__sir_julius">Benedict, Sir Julius</a></span>, 1804–1885; <span class="sc"><a href="/article/03-0267-s3/balfe__michael_william">Balfe, M. W.</a></span>, 1808–1870;
+<span class="sc"><a href="/article/28-0548-s4/wesley__samuel_sebastian">Wesley, S. S.</a></span>, 1810–1876; <span class="sc"><a href="/article/13-0896-s3/hullah__john_pyke">Hullah, John P.</a></span>, 1812–1884; <span class="sc"><a href="/article/17-0245-macfarren-sir-george-alexander/macfarren__sir_george_alexander">Macfarren, Sir
+G. A.</a></span>, 1813–1887; <span class="sc"><a href="/article/28-0294-wallace-william-vincent/wallace__william_vincent">Wallace, Wm. V.</a></span>, 1814–1865; <span class="sc"><a href="/article/21-0618-pierson/pierson__henry_hugo">Pierson, H. H.</a></span>, 1815–1873; <span class="sc"><a href="/article/03-0761-bennett-sir-william-sterndale/bennett__sir_william_sterndale">Bennett,
+Sir Wm. Sterndale</a></span>, 1816–1875; <span class="sc"><a href="/article/20-0414-ouseley-sir-frederick-arthur-gore/ouseley__sir_frederick_arthur_gore">Ouseley, Sir F. A. G.</a></span>, 1825–1889; <span class="sc"><a href="/article/03-0149-s2/bache__francis_edward">Bache,
+F. E.</a></span>, 1833–1858; <span class="sc"><a href="/article/06-0486-clay-frederic/clay__frederic">Clay, F.</a></span>, 1838–1889; <span class="sc"><a href="/article/03-0429-barnby-sir-joseph/barnby__sir_joseph">Barnby, Sir J.</a></span>, 1838–1896; <span class="sc"><a href="/article/25-0782-s3/stainer__sir_john">Stainer, Sir
+John</a></span>, 1840–1901; <span class="sc"><a href="/article/26-0071-s2/sullivan__sir_arthur_seymour">Sullivan, Sir Arthur S.</a></span>, 1842–1900; <span class="sc"><a href="/article/05-0629-cellier-alfred/cellier__alfred">Cellier, Alfred</a></span>, 1844–1891;
+<span class="sc"><a href="/article/17-0266-s6/mackenzie__sir_alexander_campbell">Mackenzie, Sir A. C.</a></span>, b. 1847; <span class="sc"><a href="/article/20-0927-s2/parry__sir_charles_hubert_hastings">Parry, Sir C. Hubert H.</a></span>, b. 1848, on whom
+fell the mantle of Purcell; <span class="sc"><a href="/article/26-0905-thomas-arthur-goring/thomas__arthur_goring">Thomas, Arthur Goring</a></span>, 1850–1892; <span class="sc">Cowen, F. J.</span>, b.
+1852; <span class="sc"><a href="/article/25-0795-stanford-charles-villiers/stanford__sir_charles_villiers">Stanford, Sir Charles Villiers</a></span>, b. 1852; <span class="sc"><a href="/article/09-0283-elgar-sir-edward/elgar__sir_edward">Elgar, Sir Edward</a></span>, b. 1857;
+<span class="sc"><a href="/article/17-0224-s3/maccunn__hamish">MacCunn, Hamish</a></span>, b. 1868.</p>
+
+<p><i>Bohemian</i>: <span class="sc"><a href="/article/25-0269-smetana-friedrich/smetana__friedrich">Smetana, F.</a></span>, 1824–1884, founder of modern Bohemian School;
+<span class="sc"><a href="/article/08-0766-dvo-k-anton/dvořák__anton">Dvořák, Anton</a></span>, 1841–1904.</p>
+
+<p><i>Hungarian</i>: <span class="sc"><a href="/article/12-0747-s3/gung_l__josef">Gung’l, Josef</a></span>, 1810–1889; <span class="sc"><a href="/article/16-0802-s4/liszt__franz">Liszt, Franz</a></span>, 1811–1886; <span class="sc"><a href="/article/12-0229-s5/goldmark__karl">Goldmark,
+Karl</a></span>, b. 1832; <span class="sc"><a href="/article/20-0481-s7/paderewski__ignace_jan">Paderewski, I. J.</a></span>, b. 1860.</p>
+
+<p><i>Polish</i>: <span class="sc"><a href="/article/06-0284-chopin-frederic-fran-ois/chopin__frederic_françois">Chopin, Frederic François</a></span>, 1810–1849; <span class="sc"><a href="/article/18-0936-s3/moszkowski__moritz">Moszkowski, Moritz</a></span>, b.
+1854.</p>
+
+<p><i>Russian</i>: <span class="sc"><a href="/article/12-0139-glinka-michael-ivanovich/glinka__michael_ivanovich">Glinka, M. Ivanovich</a></span>, 1803–1857, founder of national school; <span class="sc"><a href="/article/07-0856-dargomijsky-alexander-sergeivich/dargomijsky__alexander_sergeivich">Dargomijsky,
+A. Sergeivich</a></span>, 1813–1869; <span class="sc"><a href="/article/23-0852-rubinstein-anton-grigorovich/rubinstein__anton_grigorovich">Rubinstein, Anton</a></span>, 1829–1894; <span class="sc"><a href="/article/04-0281-borodin-alexander-porfyrievich/borodin__alexander_porfyrievich">Borodin,
+A. Porfyrievich</a></span>, 1834–1887; <span class="sc"><a href="/article/18-0976-moussorgsky-modeste-petrovich/moussorgsky__modeste_petrovich">Moussorgsky, M. Petrovich</a></span>, 1835–1881; <span class="sc"><a href="/article/03-0251-s1/balakirev__mili_alexeivich">Balakirev,
+M. Alexeivich</a></span>, b. 1836; <span class="sc">Tschaikovsky, Peter Ilich</span>, 1840–1893; <span class="sc"><a href="/article/23-0365-s2/rimsky-korsakov__nicolas_andreievich">Rimsky-Korsakov,
+N. Andreievich</a></span>, 1844–1908; <span class="sc"><a href="/article/12-0134-s2/glazunov__alexander_constantinovich">Glazunov, A. Constantinovich</a></span>, b. 1865.</p>
+
+<p><i>Norwegian</i>: The violinist <span class="sc"><a href="/article/04-0810-s4/bull__ole_bornemann">Bull, Ole</a></span>, 1810–1880; <span class="sc"><a href="/article/15-0872-s6/kjerulf__halfdan">Kjerulf, Halfdan</a></span>, 1815–1868;
+<span class="sc"><a href="/article/26-0193-s5/svendsen__johann_severin">Svendsen, J. S.</a></span>, b. 1840; <span class="sc"><a href="/article/12-0618-grieg-edvard-hagerup/grieg__edvard_hagerup">Grieg, Edvard Hagerup</a></span>, 1843–1907.</p>
+
+<p><i>Danish</i>: <span class="sc"><a href="/article/11-0401-s2/gade__niels_wilhelm">Gade, Niels W.</a></span>, 1817–1890.</p>
+
+<p><i>Sweden</i>: <span class="sc">Wennerbert, G.</span>, 1817–1901, song writer.</p>
+
+<p><i>American</i>: <span class="sc"><a href="/article/09-0366-emmett-daniel-decatur/emmett__daniel_decatur">Emmett, D. D.</a></span>, started “negro minstrels,” 1815–1904; <span class="sc"><a href="/article/10-0754-s4/foster__stephen_collins">Foster,
+Stephen C.</a></span>, 1826–1864, song writer; <span class="sc"><a href="/article/09-0148-eichberg-julius/eichberg__julius">Eichberg, Julius</a></span>, 1824–1893, founded Boston
+Conservatory of Music; <span class="sc"><a href="/article/04-0743-s4/buck__dudley">Buck, Dudley</a></span>, 1839–1909; <span class="sc"><a href="/article/17-0229-s2/macdowell__edward_alexander">MacDowell, Edward Alexander</a></span>,
+1861–1908. For notices of other modern composers and their tendencies—see
+<span class="sc"><a href="/article/19-0087-music/music">Music</a></span>, <i>Recent Music</i> (Vol. 19, p. 82).</p>
+
+<p><span class="shoulder-heading" id="sh-8">Musical Historians</span>Famous musical historians and writers on music, whose biographies are in the
+Encyclopaedia Britannica, are: <span class="sc"><a href="/article/02-0560-s2/aristoxenus">Aristoxenus</a></span>, 4th century B.C.; <span class="sc"><a href="/article/22-0260-s2/praetorius__michael">Praetorius, M.</a></span>,
+1571–1621; <span class="sc">Perusch, J. C.</span>, 1667–1752; <span class="sc"><a href="/article/03-0427-barnard-john/barnard__john">Barnard, John</a></span>, 17th
+century; <span class="sc"><a href="/article/13-0111-s6/hawkins__sir_john">Hawkins, Sir John</a></span>, 1710–1789; <span class="sc"><a href="/article/11-0787-s6/gerbert__martin">Gerbert, M.</a></span>, 1720–1793;
+<span class="sc"><a href="/article/04-0877-s5/burney__charles">Burney, Ch.</a></span>, 1726–1814; <span class="sc"><a href="/article/11-0787-s3/gerber__ernst_ludwig">Gerber</a></span>, 1746–1819; <span class="sc"><a href="/article/10-0687-s3/forkel__johann_nikolaus">Forkel,
+J. N.</a></span>, 1749–1818; <span class="sc"><a href="/article/03-0240-s5/baini__giuseppe">Baini, G.</a></span>, 1775–1844; <span class="sc"><a href="/article/19-0870-s4/novello__vincent">Novello, V.</a></span>, 1781–1861;
+<span class="sc"><a href="/article/05-0068-callcott-john-wall/callcott__john_wall">Callcott, J. W.</a></span>, 1766–1821; <span class="sc">Fetis, F. J.</span>, 1784–1871; <span class="sc"><a href="/article/06-0286-chorley-henry-fothergill/chorley__henry_fothergill">Chorley, H. F.</a></span>, 1808–1872;
+<span class="sc"><a href="/article/05-0890-chappell-william/chappell__william">Chappell, Wm.</a></span>, 1809–1888; <span class="sc"><a href="/article/08-0768-dwight-john-sullivan/dwight__john_sullivan">Dwight, John S.</a></span>, 1813–1893; <span class="sc"><a href="/article/01-0844-s3/ambros__august_wilhelm">Ambros, A. W.</a></span>,
+1816–1876; <span class="sc"><a href="/article/12-0663-grove-sir-george/grove__sir_george">Grove, Sir George</a></span>, 1820–1900.</p>
+
+<div>
+  
+  <h4 class="c016">(2) THEORETICAL ARTICLES</h4>
+</div>
+
+<p>“In the beginning,” said Hans von
+Bülow, “was rhythm,” and as <span class="sc"><a href="/article/23-0294-s2/rhythm">Rhythm</a></span>
+(Vol. 23, p. 277) is the skeleton of every
+musical phrase and formula, the interesting
+article by <a href="/contributors.html?q=Donald+Francis+Tovey">Donald Tovey</a> on
+rhythm in music may well serve as an
+introduction to the other subjects in
+this section. Passing to the elements,
+the articles <span class="sc"><a href="/article/25-0453-s6/sound">Sound</a></span>, <i>Diatonic Scale</i> (Vol.
+25, p. 448) and <span class="sc"><a href="/article/21-0734-s6/plain_song">Plain Song</a></span> (Vol. 21,
+p. 705) should be read. In the former
+article the physical basis of the modern
+scale is determined, while in the latter
+an account is given of the modes which
+for centuries were the vehicles of musical
+expression. In the article <span class="sc"><a href="/article/19-0101-s4/musical_notation">Musical Notation</a></span>
+(Vol. 19, p. 86) the steps by which
+the present system of recording music
+was reached are noted, and in <span class="sc"><a href="/article/21-0689-s5/pitch__musical">Pitch,
+Musical</a></span> (Vol. 21, p. 660), the whole of
+this interesting and vexed subject is
+reviewed by <a href="/contributors.html?q=Alfred+James+Hipkins">Alfred J. Hipkins</a>, a high
+authority, formerly hon. curator of the
+Royal College of Music. The article
+<span class="sc"><a href="/article/18-0115-melody/melody">Melody</a></span> (Vol. 18, p. 96) contains in
+addition to a discussion of the terms
+a series of useful definitions (e.g., conjunct
+and disjunct motion) and several
+musical examples. This brings us to
+the main articles of this section—<span class="sc"><a href="/article/07-0335-counterpoint/counterpoint">Counterpoint</a></span>
+(Vol. 7, p. 315), <span class="sc"><a href="/article/13-0014-harmony/harmony">Harmony</a></span> (Vol.
+13, p. 1) and <span class="sc"><a href="/article/14-0682-s3/instrumentation">Instrumentation</a></span> (Vol. 14,
+p. 651). All are by <a href="/contributors.html?q=Donald+Francis+Tovey">Donald Tovey</a> and
+all are brilliant. In particular the article
+<span class="sc"><a href="/article/13-0014-harmony/harmony">Harmony</a></span> deserves the most careful
+study, especially interesting being the
+sections <i>Tonality</i> and <i>Key-relationship</i>.
+The article on counterpoint is mainly
+a definition of the principles involved
+and is introductory both to Harmony
+and to Contrapuntal Forms. In <span class="sc"><a href="/article/14-0682-s3/instrumentation">Instrumentation</a></span>
+the question of colour
+is discussed from the historical and
+aesthetic aspects, accompanied by valuable
+analysis of the colour schemes of
+various composers from the choral writers
+of the “Golden Age” down to Wagner
+and Richard Strauss.</p>
+
+<p><span class="shoulder-heading" id="sh-9">Theorists</span>Famous theorists who have helped to
+establish the grammar of music are the
+following: <span class="sc"><a href="/article/26-0678-s3/terpander">Terpander</a></span>, 7th century B.C.,
+founder of Greek music
+(Vol. 26, p. 647); <span class="sc"><a href="/article/22-0714-s3/pythagoras">Pythagoras</a></span>,
+6th century, B.C., said
+to have discovered numerical relation governing
+the harmonic series (Vol. 22, p.
+699); <span class="sc"><a href="/article/01-0822-s2/alypius">Alypius</a></span>, 3rd century B.C. (Vol. 1,
+p. 776); <span class="sc"><a href="/article/02-0533-s5/aristides__quintilianus">Aristides, Quintilianus</a></span>, 3rd
+century A.D.; <span class="sc"><a href="/article/13-0872-hucbald/hucbald">Hucbald</a></span>, c. 840–930, inventor
+of new notation (Vol. 13, p. 847);
+<span class="sc"><a href="/article/12-0712-guido-of-arezzo/guido_of_arezzo">Guido of Arezzo</a></span>, c. 995–1050, “Beatus
+Guido, inventor musicae,” (Vol. 12, p.
+687); <span class="sc"><a href="/article/01-0425-s5/agricola__martin">Agricola, Martin</a></span>, c. 1500–1556;
+<span class="sc"><a href="/article/28-0987-zarlino-gioseffo/zarlino__gioseffo">Zarlino, G.</a></span>, 1517–1590, fixed the diatonic
+scale; <span class="sc"><a href="/article/02-0749-s2/artusi__giovanni_maria">Artusi, G. M.</a></span>, 16th century, opposed
+monodist revolt; <span class="sc"><a href="/article/11-0393-fux-johann-joseph/fux__johann_joseph">Fux, J. J.</a></span>, wrote
+the famous <i>Gradus ad Parnassum</i>, <span class="sc"><a href="/article/22-0891-s3/rameau__jean_philippe">Rameau,
+J. P.</a></span>, 1683–1764, to whom the first
+systematic theory of harmony is due; <span class="sc"><a href="/article/01-0552-s6/albrechtsberger__johann__georg">Albrechtsberger,
+J. G.</a></span>, 1736–1809, the
+teacher of Beethoven; <span class="sc"><a href="/article/23-0065-s6/reicha__anton_joseph">Reicha, A. J.</a></span>,
+1770–1836; <span class="sc"><a href="/article/23-0329-s3/richter__ernst_friedrich_eduard">Richter, E. F. E.</a></span>, 1808–1879;
+<span class="sc"><a href="/article/07-0686-curwen-john/curwen__john">Curwen, J.</a></span>, 1817–1880, inventor of
+tonic sol-fa system; <span class="sc">Berlioz Hector</span>,
+whose text book on instrumentation is
+classic. On all these separate articles will
+be found in the Britannica.</p>
+
+<h4 class="c016">(3) MUSICAL FORMS</h4>
+
+<div class="c003"></div>
+<p><span class="shoulder-heading" id="sh-10">Contrapuntal Forms</span>In making a detailed study of any
+particular form, reference should be made
+to the critical sections
+of the biographies
+of those masters
+who have done most
+towards its development. As has been
+seen in the historical section of this
+chapter, the <span class="sc"><a href="/article/07-0056-contrapuntal-forms/contrapuntal_forms">Contrapuntal Forms</a></span>
+(Vol. 7, p. 41) were the first to attain to
+a high standard of organization in the
+hands of such masters as <span class="sc"><a href="/article/16-0257-s3/lasso__lassus___orlando">Orlando
+Lasso</a></span> (Vol. 16, p. 237) and <span class="sc"><a href="/article/20-0683-s2/palestrina__giovanni_pierluigi_da">Palestrina</a></span>
+(Vol. 20, p. 627). The articles <span class="sc"><a href="/article/17-0866-s3/mass">Mass</a></span>
+(Vol. 17, p. 849), <span class="sc"><a href="/article/18-0937-s2/motet">Motet</a></span> (Vol. 18, p. 905),
+<span class="sc"><a href="/article/17-0310-madrigal/madrigal">Madrigal</a></span> (Vol. 17, p. 295), <span class="sc"><a href="/article/05-0203-canon/canon">Canon</a></span>
+(Vol. 5, p. 190), <span class="sc"><a href="/article/06-0285-chorale/chorale">Chorale</a></span> (Vol. 6, p. 269),
+cover the ground of early choral music.
+In tracing their development reference
+should be made to the articles on <span class="sc"><a href="/article/03-0141-s3/bach__johann_sebastian">Bach,
+J. S.</a></span> (Vol. 3, p. 127), <span class="sc"><a href="/article/03-0663-beethoven-ludwig-van/beethoven__ludwig_van">Beethoven</a></span> (Vol. 3,
+p. 649), <span class="sc"><a href="/article/04-0404-brahms-johannes/brahms__johannes">Brahms</a></span> (Vol. 4, p. 390). <span class="sc"><a href="/article/20-0187-s3/oratorio">Oratorio</a></span>
+(Vol. 20, p. 161) and <span class="sc"><a href="/article/05-0222-cantata/cantata">Cantata</a></span>
+(Vol. 5, p. 209) had their beginning in
+the work of the followers of Monteverde
+in the early 17th century, and their
+development may be traced in the work
+of <span class="sc"><a href="/article/05-0586-cavaliere-emilio-del/cavaliere__emilio_del">Cavaliere</a></span> (Vol. 5, p. 563), <span class="sc"><a href="/article/05-0351-carissimi-giacomo/carissimi__giacomo">Carissimi</a></span>
+(Vol. 5, p. 338), <span class="sc"><a href="/article/22-0674-s2/purcell__henry">Purcell</a></span> (Vol. 22, p. 658),
+<span class="sc"><a href="/article/03-0141-s3/bach__johann_sebastian">Bach</a></span> (Vol. 3, p. 127), <span class="sc"><a href="/article/02-0959-s5/augustus">Handel</a></span> (Vol. 2,
+p. 912), <span class="sc"><a href="/article/11-0013-franciscans/franciscans">Brahms</a></span> (Vol. 4 p. 390), <span class="sc"><a href="/article/11-0015-franck-c-sar/franck__césar">César
+Franck</a></span> (Vol. 11, p. 3), and <span class="sc"><a href="/article/20-0927-s2/parry__sir_charles_hubert_hastings">Sir C.
+Hubert Parry</a></span> (Vol. 20, p. 865).</p>
+
+<p><span class="shoulder-heading" id="sh-11">Suite and Sonata</span>In instrumental music, the <span class="sc"><a href="/article/26-0067-suite/suite">Suite</a></span>
+(Vol. 26, p. 51), of which <span class="sc"><a href="/article/04-0118-boccherini-luigi/boccherini__luigi">Boccherini</a></span>
+(Vol. 4, p. 105) was the last master, most
+nearly foreshadowed
+the Sonata (<span class="sc"><a href="/article/25-0410-s4/sonata_forms">Sonata
+Forms</a></span>, Vol. 25, p.
+394), and together
+they tell the tale of the development of
+absolute music up to modern experiments
+in the more elastic <span class="sc"><a href="/article/26-0310-s3/symphonic_poem">Symphonic
+Poem</a></span> (Vol. 26, p. 289) of which <span class="sc"><a href="/article/16-0802-s4/liszt__franz">Liszt</a></span>
+(Vol. 16, p. 780) was the first to see the
+possibilities. In addition to the articles
+<span class="sc"><a href="/article/25-0410-s3/sonata">Sonata</a></span> and <span class="sc"><a href="/article/25-0410-s4/sonata_forms">Sonata Forms</a></span> the reader
+should carefully study that part of the
+article <span class="sc"><a href="/article/13-0014-harmony/harmony">Beethoven</a></span> beginning on page
+647 of Vol. 3; also the article <span class="sc"><a href="/article/13-0014-harmony/harmony">Harmony</a></span>,
+<i>Key Relationships</i> (Vol. 13, p. 5) which
+contains analyses of several striking key
+systems, and further reference should
+also be made to the articles <span class="sc"><a href="/article/27-0938-variations/variations">Variations</a></span>
+(Vol. 27, p. 912), <span class="sc"><a href="/article/26-0311-s2/symphony">Symphony</a></span> (Vol. 26,
+p. 290).</p>
+
+<p><span class="shoulder-heading" id="sh-12">Programme Music</span>To the Romantic movement of the
+early part of the 19th century may be
+traced the attempt to escape from the
+apparent restrictions
+of the Sonata Form,
+and <span class="sc"><a href="/article/24-0401-s5/schumann__robert_alexander">Schumann’s</a></span>
+(Vol. 24, p. 384) many
+<i>Fantasie-Stücke</i> and <span class="sc"><a href="/article/06-0284-chopin-frederic-fran-ois/chopin__frederic_françois">Chopin’s</a></span> lyrical
+compositions (Vol. 6, p. 268) are prototypes
+in little of the tendencies of the
+time. On a larger canvas are the Ton-dramen
+of Liszt and the symphonic
+poems and the elaborate programme
+music of modern composers such as
+<span class="sc"><a href="/article/25-1029-s4/strauss__richard">Richard Strauss</a></span> (Vol. 25, p. 1003);
+and though <span class="sc"><a href="/article/04-0404-brahms-johannes/brahms__johannes">Brahms</a></span> (Vol. 4, p. 389)
+showed clearly enough that the classical
+sonata form was a framework sufficiently
+elastic to hold the most elaborate and
+modern ideas, the direction in which
+music has tended is towards the Symphonic
+Poem in which, by such devices
+as the transformation of themes and
+the <i>Leitmotif</i> (<span class="sc"><a href="/article/20-0147-s4/opera">Opera</a></span>, Vol. 20, p. 125)
+a still greater elasticity is sought in form
+with a greater continuity of idea in
+substance. See <span class="sc"><a href="/article/22-0439-s5/programme_music">Programme Music</a></span>
+(Vol. 22, p. 424).</p>
+
+<p><span class="shoulder-heading" id="sh-13">Opera</span>Supplementing the article <span class="sc"><a href="/article/20-0147-s4/opera">Opera</a></span> (Vol.
+20, p. 121) are several which should be
+consulted. <span class="sc"><a href="/article/02-0527-s2/aria">Aria</a></span> (Vol. 2, p. 489), <span class="sc"><a href="/article/20-0418-s9/overture">Overture</a></span>
+(Vol. 20, p. 384), and
+especially <span class="sc"><a href="/article/12-0155-s6/gluck">Gluck</a></span> (Vol. 12, p.
+139), <span class="sc"><a href="/article/18-0981-s5/mozart__wolfgang_amadeus">Mozart</a></span> (Vol. 18, p.
+951), <span class="sc"><a href="/article/28-0473-s7/weber__carl_maria_friedrich_ernest_von">Weber</a></span> (Vol. 28, p. 457), and
+<span class="sc"><a href="/article/28-0252-wagner-wilhelm-richard/wagner__wilhelm_richard">Wagner</a></span> (Vol. 28, p. 237). These, with
+the biographical notices of operatic composers,
+which include almost every Italian
+composer from the days of <span class="sc"><a href="/article/21-0161-s3/peri__jacopo">Peri</a></span> (Vol. 21,
+p. 144), and French composers from
+<span class="sc"><a href="/article/17-0136-lully-jean-baptiste/lully__jean-baptiste">Lully</a></span> (Vol. 17, p. 121), give a mass of
+information bearing on the development
+of this popular form.</p>
+
+<p><span class="shoulder-heading" id="sh-14">Song</span><span class="sc"><a href="/article/25-0416-song/song">Song</a></span> (Vol. 25, p. 400), the oldest of
+art forms, and almost the last to be
+rescued from the too narrow formalism
+of which the classical <span class="sc"><a href="/article/02-0527-s2/aria">Aria</a></span>
+(Vol. 2, p. 489) is the beautiful
+example, is so much the
+most generally popular that the article
+on it in the Britannica will probably
+be more widely read than any other on
+musical subjects. Written by <a href="/contributors.html?q=Walter+Armitage+Justice+Ford">W. A. J.
+Ford</a>, a scholarly musician and teacher
+of singing at the Royal College of Music
+(London), it provides a brilliant survey
+of the evolution of the song from its
+earliest beginnings. In connection with
+it the reader will find much to interest
+him in the biographical notices of two
+famous troubadours of the 13th and 14th
+centuries, <span class="sc"><a href="/article/01-0202-s3/adam__or_adan__de_le_hale">Adam de la Hale</a></span> (Vol. 1,
+p. 171) and <span class="sc"><a href="/article/17-0248-s2/machaut__guillaume_de">Machaut, G. De</a></span> (Vol. 17,
+p. 233); of <span class="sc"><a href="/article/18-0808-monteverde/monteverde__claudio">Monteverde</a></span> (Vol. 18, p. 778),
+the pioneer of the monodist revolt at
+the end of the 16th century, of <span class="sc"><a href="/article/24-0320-s3/scarlatti__alessandro">Scarlatti,
+Alessandro</a></span> (Vol. 24, p. 302), 17th century,
+who perfected the aria form, of
+<span class="sc"><a href="/article/22-0674-s2/purcell__henry">Purcell, Henry</a></span> (Vol. 22, p. 658), the
+great English composer of the 17th
+century, of <span class="sc"><a href="/article/03-0141-s3/bach__johann_sebastian">Johann Sebastian Bach</a></span>
+(Vol. 3, p. 126) 18th century, of <span class="sc"><a href="/article/24-0397-s6/schubert__franz_peter">Schubert</a></span>
+(Vol. 24, p. 380), the creator of the
+modern song, of <span class="sc"><a href="/article/24-0401-s5/schumann__robert_alexander">Schumann</a></span> (Vol. 24,
+p. 384) who brought a yet greater intimacy
+into the form, of <span class="sc"><a href="/article/28-0792-wolf-hugo/wolf__hugo">Hugo Wolf</a></span>
+(Vol. 28, p. 771), the most clairvoyant
+of song writers, of <span class="sc"><a href="/article/20-0927-s2/parry__sir_charles_hubert_hastings">Sir Hubert Parry</a></span>
+(Vol. 20, p. 865), and <span class="sc"><a href="/article/25-0795-stanford-charles-villiers/stanford__sir_charles_villiers">Sir Charles
+Villiers Stanford</a></span> (Vol. 25, p. 773),
+who have respectively done the best
+modern work in the English and Irish
+tradition, and of the American <span class="sc"><a href="/article/17-0229-s2/macdowell__edward_alexander">MacDowell</a></span>
+(Vol. 17, p. 214). Reference
+should also be made to the articles
+<span class="sc"><a href="/article/18-0115-melody/melody">Melody</a></span> (Vol. 18, p. 96), <span class="sc"><a href="/article/01-0153-s3/accompaniment">Accompaniment</a></span>
+(Vol. 1, p. 122), <span class="sc"><a href="/article/23-0294-s2/rhythm">Rhythm</a></span> (Vol. 23,
+p. 277). Suggestive also are the articles
+<span class="sc"><a href="/article/03-0281-s3/ballads">Ballads</a></span> (Vol. 3, p. 264), <span class="sc"><a href="/article/21-0910-s2/poetry">Poetry</a></span> (Vol.
+21, p. 889). On the technique of singing
+the article <span class="sc"><a href="/article/28-0188-voice/voice">Voice</a></span> (Vol. 28, p. 172) by
+Dr. <a href="/contributors.html?q=John+Gray+McKendrick">J. G. McKendrick</a>, will be found
+very helpful, especially the section on
+the <i>Physiology of Voice Production</i>.</p>
+
+<h4 class="c016">(4) MUSICAL INSTRUMENTS</h4>
+
+<p>One branch of the subject yet remains,
+that of musical instruments. Here the
+editor of the Britannica had the advantage
+of the assistance of Miss Kathleen
+<a href="/contributors.html?q=Miss+Kathleen+Schlesinger">Schlesinger</a> (author of <i>The Instruments
+of the Orchestra</i>, and the greatest authority
+on the subject), who contributed
+practically all of the articles in the book
+on musical instruments. A list of them
+is given below, classified under their
+most convenient groupings. From these
+articles in the Encyclopaedia Britannica
+the reader will get a full account of
+every known musical instrument whether
+modern or ancient, with its compass, and
+scale, and of its connection with other
+instruments of the same class; so that
+the evolution of every type is clearly
+brought out. As a preliminary to a
+general study of the subject, the articles
+<span class="sc"><a href="/article/20-0194-s2/orchestra">Orchestra</a></span> (Vol. 20, p. 168), and <span class="sc"><a href="/article/14-0682-s3/instrumentation">Instrumentation</a></span>
+(Vol. 14, p. 651) may
+conveniently be read. In the former
+<a href="/contributors.html?q=Miss+Kathleen+Schlesinger">Miss Schlesinger</a> gives a summary of
+the development of the various classes
+of instruments and of their concerted
+use. In the article <span class="sc"><a href="/article/14-0682-s3/instrumentation">Instrumentation</a></span>,
+on the other hand, <a href="/contributors.html?q=Donald+Francis+Tovey">Donald Tovey</a> illustrates
+the <i>principles</i> which govern their
+use. This article closes with an interesting
+survey of the orchestral schemes
+at different periods in the history of the
+art. The following classified list of
+separate articles on musical instruments
+in the Britannica, shows how very completely
+this work covers the field:</p>
+
+<p><b><a href="/article/25-1064-stringed-instruments/stringed_instruments">Stringed Instruments</a></b> (Vol. 25, p. 1038).</p>
+
+<p><i>Strings Plucked by Fingers or Plectrum</i>:
+<span class="sc"><a href="/article/02-0810-s5/asor">Asor</a></span>; <span class="sc">Balalaika</span>; <span class="sc"><a href="/article/03-0335-banjo/banjo">Banjo</a></span>; <span class="sc"><a href="/article/03-0404-barbiton/barbiton">Barbiton</a></span>;
+<span class="sc"><a href="/article/06-0039-chelys/chelys">Chelys</a></span>; <span class="sc"><a href="/article/06-0411-cithara/cithara">Cithara</a></span>; <span class="sc"><a href="/article/06-0413-citole/citole">Citole</a></span>; <span class="sc"><a href="/article/06-0415-s4/cittern">Cittern</a></span>;
+<span class="sc"><a href="/article/09-0721-s5/epigonion">Epigonion</a></span>; <span class="sc"><a href="/article/12-0728-guitar/guitar">Guitar</a></span>; <span class="sc"><a href="/article/13-0024-s6/harp">Harp</a></span>; <span class="sc"><a href="/article/13-0028-s3/harp-lute">Harp-Lute</a></span>;
+<span class="sc"><a href="/article/15-0852-s4/kinnor">Kinnor</a></span>; <span class="sc"><a href="/article/15-0866-s3/kissar">Kissar</a></span>; <span class="sc"><a href="/article/17-0147-s1/lute">Lute</a></span>; <span class="sc"><a href="/article/17-0192-s3/lyre">Lyre</a></span>;
+<span class="sc"><a href="/article/17-0582-s3/mandoline">Mandoline</a></span>; <span class="sc"><a href="/article/19-0176-s7/nanga">Nanga</a></span>; <span class="sc"><a href="/article/20-0731-s10/pandura">Pandura</a></span>; <span class="sc"><a href="/article/22-0556-s2/psaltery">Psaltery</a></span>;
+<span class="sc"><a href="/article/22-0964-s4/rebab">Rebab</a></span>; <span class="sc"><a href="/article/23-0805-rotta/rotta">Rotta</a></span>; <span class="sc"><a href="/article/24-0128-s2/sambuca">Sambuca</a></span>; <span class="sc"><a href="/article/26-0828-theorbo/theorbo">Theorbo</a></span>;
+<span class="sc"><a href="/article/27-0297-trigonon/trigonon">Trigonon</a></span>; <span class="sc"><a href="/article/28-1018-zither/zither">Zither</a></span>. <i>Strings Set in Vibration
+by Friction of the Bow</i>: <span class="sc"><a href="/article/07-0535-crowd/crowd">Crowd</a></span>;
+<span class="sc"><a href="/article/08-0461-double-bass/double_bass">Double Bass</a></span>; <span class="sc"><a href="/article/10-0334-fiddle/fiddle">Fiddle</a></span>; <span class="sc"><a href="/article/11-0569-geige/geige">Geige</a></span>; <span class="sc">Guitar-Fiddle</span>;
+<span class="sc"><a href="/article/12-0758-s3/gusla">Gusla</a></span>; <span class="sc"><a href="/article/19-0169-nail-violin/nail_violin">Nail Violin</a></span>; <span class="sc"><a href="/article/21-0461-s1/philomel">Philomel</a></span>;
+<span class="sc"><a href="/article/22-0939-ravanastron/ravanastron">Ravanastron</a></span>; <span class="sc"><a href="/article/22-0964-s4/rebab">Rebab</a></span>; <span class="sc"><a href="/article/22-0966-s3/rebec">Rebec</a></span>;
+<span class="sc"><a href="/article/27-0319-s2/tromba_marina">Tromba Marina</a></span>; <span class="sc"><a href="/article/28-0065-vielle/vielle">Vielle</a></span>; <span class="sc"><a href="/article/28-0116-viol/viol">Viol</a></span>; <span class="sc"><a href="/article/28-0116-viola/viola">Viola</a></span>;
+<span class="sc"><a href="/article/28-0117-violin/violin">Violin</a></span>; <span class="sc"><a href="/article/28-0123-violoncello/violoncello">Violoncello</a></span>. <i>Strings Struck
+by Hammers or Tangents</i>: <span class="sc"><a href="/article/06-0484-clavecin/clavecin">Clavecin</a></span>;
+<span class="sc"><a href="/article/06-0484-clavicembalo/clavicembalo">Clavicembalo</a></span>; <span class="sc"><a href="/article/06-0484-clavicord/clavichord">Clavichord</a></span>; <span class="sc"><a href="/article/06-0484-clavicytherium/clavicytherium">Clavicytherium</a></span>;
+<span class="sc"><a href="/article/08-0679-dulcimer/dulcimer">Dulcimer</a></span>; <span class="sc"><a href="/article/12-0983-s3/harmonichord">Harmonichord</a></span>;
+<span class="sc"><a href="/article/13-0028-s7/harpsichord">Harpsichord</a></span>; <span class="sc"><a href="/article/21-0585-s2/pianoforte">Pianoforte</a></span>; <span class="sc"><a href="/article/25-0707-s3/spinet">Spinet</a></span>; <span class="sc"><a href="/article/28-0132-virginal/virginal">Virginal</a></span>.
+<i>Strings Set in Vibration by Friction
+of a Wheel</i>: <span class="sc"><a href="/article/13-0983-s4/hurdy-gurdy">Hurdy-Gurdy</a></span>; <span class="sc"><a href="/article/20-0302-organistrum/organistrum">Organistrum</a></span>.
+<i>Strings Set in Vibration by the
+Wind</i>: <span class="sc"><a href="/article/01-0293-s3/aeolian_harp">Aeolian Harp</a></span>. <i>Appliances</i>: <span class="sc"><a href="/article/04-0353-bow/bow">Bow</a></span>;
+<span class="sc"><a href="/article/18-0759-monochord/monochord">Monochord</a></span>; <span class="sc"><a href="/article/19-0114-s2/mute">Mute</a></span>; <span class="sc"><a href="/article/18-0978-s2/mouthpiece">Mouthpiece</a></span>; <span class="sc"><a href="/article/15-0797-s2/keyboard">Keyboard</a></span>;
+<span class="sc"><a href="/article/25-0447-s6/sordino">Sordino</a></span>.</p>
+
+<p><b><a href="/article/28-0729-wind-instruments/wind_instruments">Wind Instruments</a></b> (mouth blown) (Vol.
+28, p. 709.)</p>
+
+<h5 class="c030"> <i>Wood Wind.</i></h5>
+
+<p><i>The Pipe Class</i>: <span class="sc"><a href="/article/09-0923-eunuch-flute/eunuch_flute">Eunuch Flute</a></span>; <span class="sc"><a href="/article/10-0343-fife-scotland/fife__scotland_">Fife</a></span>;
+<span class="sc"><a href="/article/10-0486-flageolet/flageolet">Flageolet</a></span>; <span class="sc"><a href="/article/10-0600-flute/flute">Flute</a></span>; <span class="sc"><a href="/article/19-0333-nay/nay">Nay</a></span>; <span class="sc"><a href="/article/21-0606-piccolo/piccolo">Piccolo</a></span>; <span class="sc">Pipe
+and Tabor</span>; <span class="sc"><a href="/article/22-0983-s3/recorder">Recorder</a></span>; <span class="sc"><a href="/article/26-0338-syrinx/syrinx">Syrinx</a></span>. <i>Single
+Reed Class</i> (cylindrical bore): <span class="sc"><a href="/article/22-0991-reed-instruments/reed_instruments">Reed Instruments</a></span>;
+<span class="sc"><a href="/article/02-0513-s6/arghoul">Arghoul</a></span>; <span class="sc"><a href="/article/02-0965-s5/aulos">Aulos</a></span>; <span class="sc"><a href="/article/03-0508-bass-clarinet/bass_clarinet">Bass Clarinet</a></span>;
+<span class="sc"><a href="/article/03-0510-basset-horn/basset_horn">Basset Horn</a></span>; <span class="sc"><a href="/article/03-0552-batyphone/batyphone">Batyphone</a></span>; <span class="sc"><a href="/article/06-0453-clarinet/clarinet">Clarinet</a></span>;
+<span class="sc"><a href="/article/21-0050-pedal-clarinet/pedal_clarinet">Pedal Clarinet</a></span>. <i>Double Reed
+Class</i> (conical bore): <span class="sc"><a href="/article/22-0991-reed-instruments/reed_instruments">Reed Instruments</a></span>;
+<span class="sc"><a href="/article/02-0965-s5/aulos">Aulos</a></span>; <span class="sc"><a href="/article/03-0512-bassoon/bassoon">Bassoon</a></span>; <span class="sc"><a href="/article/04-0195-bombard/bombard">Bombard</a></span>; <span class="sc"><a href="/article/07-0055-contrafagotto/contrafagotto">Contrafagotto</a></span>;
+<span class="sc"><a href="/article/07-0151-cor-anglais/cor_anglais">Cor Anglais</a></span>; <span class="sc"><a href="/article/19-0988-s3/oboe">Oboe</a></span>; <span class="sc"><a href="/article/22-0062-s5/pommer">Pommer</a></span>;
+<span class="sc"><a href="/article/24-0846-s4/shawm">Shawm</a></span>; <span class="sc"><a href="/article/06-0453-clarina/clarina">Clarina</a></span>; <span class="sc"><a href="/article/13-0641-s5/holztrompete">Holztrompete</a></span>; <span class="sc"><a href="/article/07-0507-cromorne/cromorne">Cromorne</a></span>;
+<span class="sc"><a href="/article/22-0797-s2/rackett">Rackett</a></span>; <span class="sc"><a href="/article/24-0288-s4/saxophone">Saxophone</a></span>; <span class="sc"><a href="/article/25-0447-s6/sordino">Sordino</a></span>;
+<span class="sc"><a href="/article/26-0969-s2/tibia">Tibia</a></span>. To reed instruments also belong
+the <i>Bagpipe Class</i>: <span class="sc"><a href="/article/02-0808-s4/askaules">Askaules</a></span>; <span class="sc">Bagpipe</span>;
+<span class="sc"><a href="/article/03-0971-biniou/biniou">Biniou</a></span>; <span class="sc"><a href="/article/06-0286-chorus/chorus">Chorus</a></span>; <span class="sc"><a href="/article/08-0616-drone/drone">Drone</a></span>; <span class="sc"><a href="/article/21-0838-s2/platerspiel">Platerspiel</a></span>;
+<span class="sc"><a href="/article/26-0310-s2/symphonia">Symphonia</a></span>.</p>
+
+<h5 class="c030"> <i>Brass Wind.</i></h5>
+
+<p><span class="sc"><a href="/article/04-0195-bombardon/bombardon">Bombardon</a></span>; <span class="sc"><a href="/article/04-0734-s3/buccina">Buccina</a></span>; <span class="sc"><a href="/article/04-0783-s2/bugle">Bugle</a></span>; <span class="sc"><a href="/article/07-0187-cornet/cornet">Cornet</a></span>;
+<span class="sc"><a href="/article/09-0924-s4/euphonium">Euphonium</a></span>; <span class="sc"><a href="/article/13-0235-s2/helicon">Helicon</a></span>; <span class="sc"><a href="/article/13-0713-s3/horn">Horn</a></span>; <span class="sc"><a href="/article/16-0822-lituus/lituus">Lituus</a></span>;
+<span class="sc"><a href="/article/20-0152-s2/ophicleide">Ophicleide</a></span>; <span class="sc"><a href="/article/23-1018-s5/sackbut">Sackbut</a></span>; <span class="sc"><a href="/article/24-0278-s2/saxhorn">Saxhorn</a></span>;
+<span class="sc"><a href="/article/24-0705-serpent/serpent">Serpent</a></span>; <span class="sc"><a href="/article/27-0319-s3/trombone">Trombone</a></span>; <span class="sc"><a href="/article/27-0342-s5/trumpet">Trumpet</a></span>; <span class="sc"><a href="/article/27-0370-s2/tuba">Tuba</a></span>;
+to which may be added, though not of
+brass or metal: <span class="sc"><a href="/article/01-0766-s2/alpenhorn__alphorn">Alpenhorn</a></span>; <span class="sc"><a href="/article/20-0108-s2/oliphant">Oliphant</a></span>;
+<span class="sc"><a href="/article/24-1071-shofar/shofar">Shofar</a></span>; see also <span class="sc"><a href="/article/18-0978-s2/mouthpiece">Mouthpiece</a></span>; <span class="sc"><a href="/article/19-0114-s2/mute">Mute</a></span>;
+<span class="sc"><a href="/article/27-0900-s3/valves">Valves</a></span>.</p>
+
+<p><b><a href="/article/28-0729-wind-instruments/wind_instruments">Wind Instruments</a></b> (mechanically blown).</p>
+
+<p><span class="sc"><a href="/article/01-0153-s8/accordion">Accordion</a></span>; <span class="sc"><a href="/article/03-0449-barrel-organ/barrel-organ">Barrel-Organ</a></span>; <span class="sc"><a href="/article/06-0848-concertina/concertina">Concertina</a></span>;
+<span class="sc"><a href="/article/12-0983-s4/harmonium">Harmonium</a></span>; <span class="sc"><a href="/article/20-0196-s1/orchestrion">Orchestrion</a></span>; <span class="sc"><a href="/article/20-0290-s3/organ">Organ</a></span>;
+<span class="sc"><a href="/article/21-0574-s2/physharmonica">Physharmonica</a></span>; <span class="sc"><a href="/article/22-0125-portative-organ/portative_organ">Portative Organ</a></span>;
+<span class="sc">Positive Organ</span>; <span class="sc"><a href="/article/23-0048-s2/regal">Regal</a></span>; to which,
+though mouth blown, may be added
+<span class="sc"><a href="/article/06-0090-cheng/cheng">Cheng</a></span>. See also <span class="sc">Free Reed Vibration</span>;
+<span class="sc"><a href="/article/15-0797-s2/keyboard">Keyboard</a></span>.</p>
+
+<p><b>Instruments of Percussion.</b></p>
+
+<p><i>Sounding a Sensible Note</i>: <span class="sc"><a href="/article/03-0707-bell/bell">Bell</a></span>; <span class="sc"><a href="/article/04-0819-s4/bumbulum">Bumbulum</a></span>;
+<span class="sc"><a href="/article/05-0349-carillon/carillon">Carillon</a></span>; <span class="sc"><a href="/article/12-0140-s8/glockenspiel">Glockenspiel</a></span>; <span class="sc"><a href="/article/12-0250-s6/gong">Gong</a></span>;
+<span class="sc"><a href="/article/12-0981-s2/harmonica">Harmonica</a></span>; <span class="sc">Jews’ Harp</span>; <span class="sc">Musical Box</span>;
+<span class="sc"><a href="/article/20-0929-parsifal-bell-instrument/parsifal_bell-instrument">Parsifal Bell-Instrument</a></span>; <span class="sc"><a href="/article/28-0916-xylophone/xylophone">Xylophone</a></span>.
+<i>Not Sounding a Sensible Note</i>:
+<span class="sc"><a href="/article/05-0481-castanets/castanets">Castanets</a></span>; <span class="sc"><a href="/article/07-0712-cymbals/cymbals">Cymbals</a></span>; <span class="sc"><a href="/article/06-0248-chinese-pavillon/chinese_pavillon">Chinese Pavillon</a></span>;
+<span class="sc"><a href="/article/08-0625-drum/drum">Drum</a></span>; <span class="sc">Kettle Drum</span>; <span class="sc"><a href="/article/19-0162-nacaire/nacaire">Nacaire</a></span>;
+<span class="sc"><a href="/article/25-0177-sistrum/sistrum">Sistrum</a></span>; <span class="sc"><a href="/article/26-0409-tambourine/tambourine">Tambourine</a></span>; <span class="sc"><a href="/article/26-1021-s4/timbrel">Timbrel</a></span>; <span class="sc"><a href="/article/26-1104-s4/tom-tom">Tom-Tom</a></span>;
+<span class="sc"><a href="/article/27-0273-triangle-music/triangle__music_">Triangle</a></span>; <span class="sc"><a href="/article/27-0517-tympanon/tympanon">Tympanon</a></span>.</p>
+
+<div>
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

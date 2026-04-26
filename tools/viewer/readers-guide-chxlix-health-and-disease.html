@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Health And Disease &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XLIX</span>Health And Disease</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Right and Wrong Way to Read</a></li><li><a href="#sh-2">The Danger of “Doctoring” Yourself</a></li><li><a href="#sh-3">The Kind of Knowledge You Need</a></li><li><a href="#sh-4">Eating and Drinking</a></li><li><a href="#sh-5">Hurtful Foods</a></li><li><a href="#sh-6">Sleep and the Want of it</a></li><li><a href="#sh-7">The Right Kind of Air</a></li><li><a href="#sh-8">General Hygiene</a></li><li><a href="#sh-9">Various Diseases</a></li><li><a href="#sh-10">Parts of the Body</a></li><li><a href="#sh-11">More Advanced Study</a></li></ol></div>
+    <div class="body-text">
+
+
+<p>You may have happened to glance
+at one of the text-books written
+for the use of medical students
+and of doctors, and found that you could
+hardly understand a word of it. And yet
+you have found, when you consulted a
+specialist, and he wanted to explain to
+you just what was wrong with some part
+of your body, that he could make it all
+quite clear to you. The six hundred articles
+on health and disease in the Britannica
+are written by specialists, most
+of them, indeed, by professors in the
+leading medical schools; and these contributors
+to the Britannica are also the
+authors of many of the best text-books
+that practising physicians and surgeons
+habitually use. But in the Britannica
+the specialists were writing for the general
+public; and for that reason they have
+taken care not to be too technical either
+in their point of view or in the language
+they use.</p>
+
+<p><span class="shoulder-heading" id="sh-1">Right and Wrong Way to Read</span>In this present chapter of the Reader’s
+Guide, the subject of health and disease
+is treated just as the Guide treats any
+other department of
+knowledge. You may
+want to learn something
+about it because
+it is one of the
+most wonderful branches of science, just
+as you would take up the course of reading
+on astronomy. Or you may feel that
+you ought to know more than you do
+about your own body, about the way you
+should live in order to preserve your
+health, and about the causes of the diseases
+to which you are exposed. Some
+people will tell you that it is unwise to
+read about the subject at all. That is
+absurd. There are no doubt exceptional
+people, with unsound nerves, who will
+imagine they must take every patent
+medicine they see advertised, and who
+long to try every newly discovered serum
+that the newspapers tell them about.</p>
+
+<p><span class="shoulder-heading" id="sh-2">The Danger of “Doctoring” Yourself</span>Again, you may be told that if you try
+to learn something about health and disease,
+you will be tempted to think you
+know as much as the
+doctor; and so neglect
+to go to him
+when you need his
+advice. But this objection,
+again, applies only to people who
+lack good sense. For example, if you read
+the article on <span class="sc"><a href="/article/08-0065-dentistry/dentistry">Dentistry</a></span>, by Dr. <a href="/contributors.html?q=Edward+Cameron+Kirk">E. C.
+Kirk</a>, dean of the Dental Faculty of the
+University of Pennsylvania, it will help
+you to understand whatever your dentist
+may be doing for you. But it will certainly
+not give you the idea that you
+could fill your own teeth.</p>
+
+<p>When you find your watch has stopped,
+you wind it. Then, if it does not start,
+you take it to the watchmaker. If, instead
+of doing that, you tried to tinker
+with it yourself, you would soon be in
+trouble. On the other hand, it would be
+ridiculous to go to the watchmaker without
+first finding out whether the watch
+merely wanted winding, and a man ought
+to know enough about his watch to connect
+the fact that it has stopped with the
+probability that he has forgotten to wind
+it. The daily winding is his work, not the
+watchmaker’s. The chemical and mechanical
+work that is going on within
+you is as complicated as anything
+in a watch or anything that you
+could see in a laboratory or factory.
+It is your business (<i>and your most important
+business, for if you neglect it, you
+will not be able to do anything properly,
+for yourself or for anybody else</i>) to keep
+this machinery running, and to do that
+is not so simple as to wind a watch. Your
+body needs food and warmth. It very
+probably gets too much of both. Furthermore,
+the food is often unwholesome,
+and the warmed air is often bad air. But
+unless you are a millionaire invalid, you
+do not have a private doctor with you at
+all hours to watch the food put on your
+plate and to ventilate your room.</p>
+
+<p><span class="shoulder-heading" id="sh-3">The Kind of Knowledge You Need</span>The average watch is better treated
+than the average human body, and when
+the average body goes wrong, through the
+average man’s
+thoughtlessness, he
+proceeds, without in
+the least knowing
+what is wrong, to
+take violent medicines, or to experiment
+with some fad about diet or underclothing
+or gymnastics, and to make matters very
+much worse. The knowledge he can gain
+from the Britannica will tend to keep him
+from being careless, and also from trying
+to doctor himself when he needs professional
+care. Whether you undertake a
+complete course of medical reading or
+not, it is certainly worth your while to
+read the first group of articles mentioned
+in this chapter—those which have to do
+with the healthy routine of life.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Eating and Drinking</span>You will find the best introduction to
+the subject of diet in general in a section
+(Vol. 26, p. 799) of the article <span class="sc"><a href="/article/26-0833-therapeutics/therapeutics">Therapeutics</a></span>,
+by Sir <a href="/contributors.html?q=Sir+Thomas+Lauder+Brunton">Lauder
+Brunton</a>. He is
+one of the most famous
+consulting physicians
+in the world, and he gives you advice
+which your own doctor will certainly
+confirm when he tells you that the way
+to avoid indigestion is to masticate your
+food well and sip half a pint of hot water
+four times a day—when you go to bed,
+when you get up, and again about an
+hour before luncheon and dinner, instead
+of drinking anything with any meal except
+your breakfast. If you try that
+treatment for a week, you will be glad
+that you looked at this chapter of the
+Guide. <span class="sc"><a href="/article/19-0958-s2/nutrition">Nutrition</a></span> (Vol. 19, p. 920), by
+Prof. Noel Paton and Dr. Cathcart, describes
+the process of nourishment and
+shows how important it is to chew the
+food thoroughly, not only in order to
+break it up, but also in order to combine
+with it a sufficient supply of the chemical
+juices which come from the glands in the
+mouth. <span class="sc"><a href="/article/08-0231-dietetics/dietetics">Dietetics</a></span> (Vol. 8, p. 214) shows
+what use your body makes of each kind
+of food that you eat. This article, by the
+late Dr. Atwater of the United States
+Department of Agriculture, who conducted
+the famous government investigation
+of diet, and R. D. Milner,
+also of the Department, contains tables
+showing the amount of nourishment required
+by persons who are doing light or
+heavy muscular work, as well as by those
+who lead a sedentary life. It will interest
+you to see (p. 218) how the food of an
+American business man compares with
+that of an American working in a lumber
+camp. The article <span class="sc"><a href="/article/08-0229-dietary/dietary">Dietary</a></span> (Vol. 8, p.
+212), describing the food given to prisoners,
+soldiers and sailors in various parts
+of the world, contains some striking information
+as to the possibilities of the
+simple life. In Sweden prisoners get only
+two meals a day, and those consisting
+chiefly of porridge or gruel; and the “punishment
+diet” in English prisons is one
+pound of bread a day, and nothing else
+but water. The article <span class="sc"><a href="/article/28-0404-water-supply/water_supply">Water Supply</a></span>
+(Vol. 28, p. 387), by <a href="/contributors.html?q=George+Frederick+Deacon">G. F. Deacon</a>, deals
+with the storage and distribution of water,
+and shows how it should be filtered for
+drinking. <span class="sc"><a href="/article/24-0765-s4/sewerage">Sewerage</a></span> (Vol. 24, p. 735)
+describes the sanitary systems which prevent
+the pollution of streams and wells.
+<span class="sc"><a href="/article/18-0541-s2/mineral_waters">Mineral Waters</a></span> (Vol. 18, p. 517) describes
+the great variety of springs from
+which the table-waters in general use are
+obtained. Their medicinal values are
+also indicated, and in the table which
+classifies thirty of the most important
+American springs it is curious to see that
+nearly all of them lie in the Appalachian
+Mountain chain.</p>
+
+<p><span class="shoulder-heading" id="sh-5">Hurtful Foods</span><span class="sc"><a href="/article/27-0995-s5/vegetarianism">Vegetarianism</a></span> (Vol. 27, p. 967), by
+Dr. <a href="/contributors.html?q=Josiah+Oldfield">Josiah Oldfield</a>, describes the various
+systems of diet which reject flesh, the
+most extreme of which exclude everything
+but nuts, fruit and cereals, all to be
+eaten raw. <span class="sc"><a href="/article/07-0089-cookery/cookery">Cookery</a></span> (Vol. 7, p. 74)
+shows how the digestibility of food is influenced
+by methods of cooking, and unhesitatingly
+condemns the general practice
+of baking meat. <span class="sc"><a href="/article/01-0249-s5/adulteration">Adulteration</a></span>
+(Vol. 1, p. 218), by Dr. Otto Hehner, describes
+the dangers to health which arise
+from the use of preservatives as well as
+substitutes. For the use of boracic acid,
+which has been proved to be slightly unwholesome,
+but not really dangerous,
+there is at any rate the excuse that it
+keeps food from spoiling, but the article
+has nothing but
+blame for the “coppering”
+of vegetables.
+“Many years ago some artful, if
+stupid, cook found that green vegetables
+like peas or spinach, when cooked in a
+copper pan, by preference a dirty one,
+showed a far more brilliant colour than
+the same vegetable cooked in earthenware
+or iron. The manufacturer who puts up
+substances like peas in pots or tins for
+sale produces the same effect which the
+cook obtained by the wilful addition of a
+substance known to be injurious to
+health, namely, sulphate of copper.”
+<span class="sc"><a href="/article/10-0633-s2/food_preservation">Food Preservation</a></span> (Vol. 10, p. 612)
+also shows the risks of using carelessly
+canned goods. <span class="sc"><a href="/article/26-0608-s5/temperance">Temperance</a></span> (Vol. 26, p.
+578), by Dr. <a href="/contributors.html?q=Arthur+Shadwell">Arthur Shadwell</a>, tells the
+story of the reforms that have been
+effected since the 18th century days when
+London bars used to put up signs inviting
+customers to get “drunk for one penny”
+or “dead drunk for twopence;” and
+<span class="sc"><a href="/article/16-0781-liquor-laws/liquor_laws">Liquor Laws</a></span> (Vol. 16, p. 759) describes
+temperance legislation in all parts of the
+world, with a most interesting section on
+prohibition in the United States. <span class="sc"><a href="/article/08-0628-drunkenness/drunkenness">Drunkenness</a></span>
+(Vol. 8, p. 601) deals specifically
+with the effects of excess on the health.</p>
+
+<p><span class="sc"><a href="/article/01-0705-s8/alimentary_canal">Alimentary Canal</a></span> (Vol. 1, p. 663), by
+Dr. Chalmers Mitchell, describes all the
+organs of the body that deal with food.
+<span class="sc"><a href="/article/08-0279-digestive-organs/digestive_organs">Digestive Organs</a></span> (Vol. 8, p. 262), by
+Dr. <a href="/contributors.html?q=Andrew+Lockhart+Gillespie">Andrew Gillespie</a>, shows how indigestion
+arises, and <span class="sc"><a href="/article/08-0813-dyspepsia/dyspepsia">Dyspepsia</a></span> (Vol. 8, p.
+786) describes the symptoms caused by
+habitual indigestion. <span class="sc"><a href="/article/18-0214-s6/metabolic_diseases">Metabolic Diseases</a></span>
+(Vol. 18, p. 195), by Dr. Noel
+Paton, covers all the maladies arising
+from defective nutrition. <span class="sc"><a href="/article/07-0209-corpulence/corpulence">Corpulence</a></span>
+(Vol. 7, p. 192) tells about the reduction
+of superfluous fat, while <span class="sc"><a href="/article/10-0205-s2/fasting">Fasting</a></span> (Vol.
+10, p. 193) and <span class="sc"><a href="/article/13-0956-hunger-and-thirst/hunger_and_thirst">Hunger and Thirst</a></span> (Vol.
+13, p. 931) discuss the intentional or accidental
+cutting down of the usual food
+supply. <span class="sc"><a href="/article/10-0178-famine/famine">Famine</a></span> (Vol. 10, p. 166) gives a
+most interesting account of the disasters
+with which crop failures still threaten
+Asiatic countries. The feeding of young
+children is, of course, a distinct subject,
+and is treated in great detail in the article
+<span class="sc"><a href="/article/14-0542-infancy/infancy">Infancy</a></span> (Vol. 14, p. 513), by Dr. <a href="/contributors.html?q=Harriet+L.+Hennessy">Harriet
+Hennessy</a>.</p>
+
+<p><span class="shoulder-heading" id="sh-6">Sleep and the Want of it</span><span class="sc"><a href="/article/25-0254-sleep/sleep">Sleep</a></span> (Vol. 25, p. 238), by <a href="/contributors.html?q=John+Gray+McKendrick">Prof. McKendrick</a>,
+is an elaborate study of the
+curious changes in the action of the brain
+and other organs
+which take place
+during slumber.
+<span class="sc"><a href="/article/14-0675-s4/insomnia">Insomnia</a></span> (Vol. 14,
+p. 644) is a practical article on the causes
+and treatment of sleeplessness. Between
+absolutely lying awake and obtaining a
+really good night’s rest there are many
+intermediate stages, and the article
+<span class="sc"><a href="/article/08-0581-dream/dream">Dream</a></span> (Vol. 8, p. 558) contains a great
+deal of curious information about disturbed
+sleep. <span class="sc"><a href="/article/25-0409-s5/somnambulism">Somnambulism</a></span> (Vol. 25,
+p. 393) shows that when dreams are vivid
+enough to produce sleepwalking there
+must be nervous trouble calling for immediate
+treatment. <span class="sc"><a href="/article/19-0254-s2/narcotics">Narcotics</a></span> (Vol.
+19, p. 239) describes the dangers of the
+drugs to produce sleep; and in <span class="sc"><a href="/article/14-0213-hypnotism/hypnotism">Hypnotism</a></span>
+(Vol. 14, p. 201) and <span class="sc"><a href="/article/26-0064-suggestion/suggestion">Suggestion</a></span>
+(Vol. 26, p. 48) there is a full account of
+the treatment frequently used for sleeplessness
+and other nervous disorders.</p>
+
+<p><span class="shoulder-heading" id="sh-7">The Right Kind of Air</span>The effect of climates upon health is
+the subject of a special section (Vol. 6, p.
+526) of the article <span class="sc"><a href="/article/27-1035-s4/venn__henry">Climate</a></span>. <span class="sc"><a href="/article/27-1036-s3/ventilation">Ventilation</a></span>
+(Vol. 27, p.
+1008) shows how to
+secure fresh air in
+the house without
+draughts. <span class="sc"><a href="/article/08-0740-dust/dust">Dust</a></span> (Vol. 8, p. 713), by <a href="/contributors.html?q=John+Aitken">Dr.
+Aitken</a>, the inventor of the ingenious
+machine for counting the particles of
+dust floating in the atmosphere, gives a
+very full account of the impurities in the
+air. <span class="sc"><a href="/article/13-0173-s2/heating">Heating</a></span> (Vol. 13, p. 160) contains
+descriptions and diagrams of the best
+methods of warming houses, and there is
+at the end of the article an account of the
+system of steam heating employed at
+Lockport, N. Y., where buildings anywhere
+within three miles of the central
+plant are heated at a very moderate cost.</p>
+
+<p><span class="shoulder-heading" id="sh-8">General Hygiene</span><span class="sc"><a href="/article/03-0531-baths/baths">Baths</a></span> (Vol. 3, p. 514), and <span class="sc"><a href="/article/14-0177-s2/hydropathy">Hydropathy</a></span>
+(Vol. 14, p. 165), and <span class="sc"><a href="/article/03-0301-s5/balneotherapeutics">Balneotherapeutics</a></span>
+(Vol. 3, p. 284) describe
+all the bathing treatments
+in which water,
+steam and hot
+air are employed.
+Electric baths are described in <span class="sc"><a href="/article/09-0266-electrotherapeutics/electrotherapeutics">Electrotherapeutics</a></span>
+(Vol. 9, p. 249), and
+<span class="sc"><a href="/article/01-0307-s4/aerotherapeutics">Aerotherapeutics</a></span> deals with compressed
+air baths. <span class="sc"><a href="/article/17-0882-s3/massage">Massage</a></span> (Vol. 17, p.
+863), by Dr. <a href="/contributors.html?q=Arthur+Shadwell">Arthur Shadwell</a>, describes
+all the systems of rubbing. <span class="sc"><a href="/article/12-0777-s3/gymnastics_and_gymnasium">Gymnastics</a></span>
+(Vol. 12, p. 752) gives an account of the
+Swedish and other systems of hygienic
+exercise; and out-door exercises of every
+kind are described in the articles mentioned
+in the chapter of <i>Readings in Connection
+with Recreations and Vacations</i>.
+Two other articles which relate to general
+hygiene are <span class="sc"><a href="/article/08-0329-disinfectants/disinfectants">Disinfectants</a></span> (Vol. 8, p.
+312) and <span class="sc"><a href="/article/02-0158-s1/antiseptics">Antiseptics</a></span> (Vol. 2, p. 146).
+The proper care of the hair is indicated in
+the article <span class="sc"><a href="/article/03-0260-s5/baldness">Baldness</a></span> (Vol. 3, p. 243),
+where prescriptions for lotions are given.</p>
+
+<p><span class="shoulder-heading" id="sh-9">Various Diseases</span>The articles already named cover very
+fully the application of medical science
+to the ordinary routine of life, and will
+help you to regulate
+wisely your habits in
+regard to eating,
+sleeping and to the
+general care of your body. It may be
+the case that you wish, for your own sake,
+or for the sake of some member of your
+family, to carry your reading further in
+respect to some one disease or some one
+part of the body. In the list of articles
+at the end of this chapter you will find
+more than two hundred, each of which
+deals with one disease, such as rheumatism,
+catarrh, malaria or neuralgia. In
+the case of a very simple trouble you will
+find directions for treatment, as for example
+in the article <span class="sc"><a href="/article/07-0179-corn/corn">Corn</a></span>, where you are
+advised to use a solution of salicylic acid
+in collodion, or, for a soft corn, to paint
+it with spirits of camphor. Where the
+trouble is anything more serious, you
+should of course consult a doctor, but you
+will understand what he tells you all the
+better, and worry less, if you have read
+an article, which describes the usual
+course of the disease.</p>
+
+<p><span class="shoulder-heading" id="sh-10">Parts of the Body</span>Again, you may have a special reason
+for wishing to learn all you can about
+some one part of the body: the eye, the
+ear, or the heart. There
+are fifty articles, in the list
+below, each dealing with
+some one organ or part of
+the body. The illustrations in these articles
+will help you to understand the
+exact position of any trouble which you
+have read about in the article on a disease
+affecting that particular part. Another
+set of articles divides the body into groups
+of organs, one dealing with the <span class="sc"><a href="/article/19-0418-s4/nervous_system">Nervous
+System</a></span>, another with the <span class="sc"><a href="/article/19-0066-s2/muscular_system">Muscular
+System</a></span>, another with the <span class="sc"><a href="/article/23-0201-s2/respiratory_system">Respiratory
+System</a></span>, and so on. Then you have the
+five general articles: <span class="sc"><a href="/article/01-0973-s5/anatomy">Anatomy</a></span>, <span class="sc"><a href="/article/21-0580-physiology/physiology">Physiology</a></span>,
+<span class="sc"><a href="/article/20-0975-pathology/pathology">Pathology</a></span>, <span class="sc"><a href="/article/26-0833-therapeutics/therapeutics">Therapeutics</a></span> and
+<span class="sc"><a href="/article/26-0143-surgery/surgery">Surgery</a></span>, which outline all medical science.
+The article <span class="sc"><a href="/article/18-0059-medicine/medicine">Medicine</a></span> gives a complete
+history of medical science, and its
+section on <i>Modern Progress</i> reviews all
+that has been accomplished within recent
+years.</p>
+
+<p><span class="shoulder-heading" id="sh-11">More Advanced Study</span>Beginning with the six articles just
+mentioned, and then taking the more detailed
+articles in the groups into which
+their subjects divide
+them, it is quite possible
+to follow in the
+Britannica a complete
+course of reading on medicine and
+surgery, and you may desire to do that,
+just as someone else likes to read about
+geology or astronomy. But do not forget
+that no amount of reading can give you
+more than a theoretical knowledge. When
+your doctor discovers what is the nature
+of your illness (which is much the most
+difficult part of his work), and when he
+gives you the treatment you need, his eye
+is comparing what it sees in your case,
+and his hand is comparing what it
+touches in your case, with the thousands
+of observations that he has made in the
+wards and in the operating theatre of the
+hospital. Without going through the
+course that he has gone through in the
+dissecting room, and studying the living
+body as he has studied it, you can never
+know what he knows. But you will be a
+more understanding patient, and a better
+nurse, if occasion brings nursing for you
+to do, if you have learned something of
+medical science from the Britannica.</p>
+
+<details class="article-list"><summary><span class="list-title">ALPHABETICAL LIST OF ARTICLES IN THE ENCYCLOPAEDIA BRITANNICA RELATING TO MEDICAL SCIENCE</span><span class="list-count"> (465 articles)</span></summary>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0039-s2/abattoir">Abattoir</a></li>
+  <li class="c018"><a href="/article/01-0064-s4/abdomen">Abdomen</a></li>
+  <li class="c018"><a href="/article/01-0098-s9/abortion">Abortion</a></li>
+  <li class="c018"><a href="/article/01-0105-s2/abscess">Abscess</a></li>
+  <li class="c018"><a href="/article/01-0105-s4/abscission">Abscission</a></li>
+  <li class="c018"><a href="/article/01-0180-s6/acne">Acne</a></li>
+  <li class="c018"><a href="/article/01-0182-s4/aconite">Aconite</a></li>
+  <li class="c018"><a href="/article/01-0186-s9/acromegaly">Acromegaly</a></li>
+  <li class="c018"><a href="/article/01-0188-s7/actinomycosis">Actinomycosis (Streptotrichosis)</a></li>
+  <li class="c018"><a href="/article/01-0197-s5/acupressure">Acupressure</a></li>
+  <li class="c018"><a href="/article/01-0197-s6/acupuncture">Acupuncture</a></li>
+  <li class="c018"><a href="/article/01-0212-s4/adam_s_apple">Adam’s Apple</a></li>
+  <li class="c018"><a href="/article/01-0218-s2/addison_s_disease">Addison’s Disease</a></li>
+  <li class="c018"><a href="/article/01-0222-s4/adenoids">Adenoids</a></li>
+  <li class="c018"><a href="/article/01-0249-s5/adulteration">Adulteration</a></li>
+  <li class="c018"><a href="/article/01-0307-s4/aerotherapeutics">Aerotherapeutics</a></li>
+  <li class="c018"><a href="/article/01-0465-s8/ague">Ague</a></li>
+  <li class="c018"><a href="/article/01-0496-ala/ala">Ala</a></li>
+  <li class="c018"><a href="/article/01-0555-s2/albuminuria">Albuminuria</a></li>
+  <li class="c018"><a href="/article/01-0705-s4/alienist">Alienist</a></li>
+  <li class="c018"><a href="/article/01-0705-s8/alimentary_canal">Alimentary Canal</a></li>
+  <li class="c018"><a href="/article/01-0829-s5/amaurosis">Amaurosis</a></li>
+  <li class="c018"><a href="/article/01-0847-s4/ambulance">Ambulance</a></li>
+  <li class="c018"><a href="/article/01-0960-s5/anaemia">Anaemia</a></li>
+  <li class="c018">Anaesthesia and Anaesthetics</li>
+  <li class="c018"><a href="/article/01-0973-s5/anatomy">Anatomy</a></li>
+  <li class="c018"><a href="/article/02-0015-s4/aneurysm">Aneurysm, or Aneurism</a></li>
+  <li class="c018"><a href="/article/02-0020-s4/angina_pectoris">Angina Pectoris</a></li>
+  <li class="c018"><a href="/article/02-0059-s3/animal_heat">Animal Heat</a></li>
+  <li class="c018"><a href="/article/02-0069-s4/ankle">Ankle</a></li>
+  <li class="c018"><a href="/article/02-0069-s6/ankylosis">Ankylosis, or Anchylosis</a></li>
+  <li class="c018"><a href="/article/02-0069-s7/ankylostomiasis">Ankylostomiasis</a></li>
+  <li class="c018"><a href="/article/02-0090-s3/anodyne">Anodyne</a></li>
+  <li class="c018"><a href="/article/02-0158-s1/antiseptics">Antiseptics</a></li>
+  <li class="c018"><a href="/article/02-0175-s6/aphasia">Aphasia</a></li>
+  <li class="c018"><a href="/article/02-0176-s3/aphemia">Aphemia</a></li>
+  <li class="c018"><a href="/article/02-0181-s2/apnoea">Apnoea</a></li>
+  <li class="c018"><a href="/article/02-0206-s4/aponeurosis">Aponeurosis</a></li>
+  <li class="c018"><a href="/article/02-0207-s3/apophysis">Apophysis</a></li>
+  <li class="c018"><a href="/article/02-0207-s4/apoplexy">Apoplexy</a></li>
+  <li class="c018"><a href="/article/02-0217-apothecary/apothecary">Apothecary</a></li>
+  <li class="c018"><a href="/article/02-0229-s3/appendicitis">Appendicitis</a></li>
+  <li class="c018"><a href="/article/02-0249-s1/apyrexia">Apyrexia</a></li>
+  <li class="c018"><a href="/article/02-0335-s3/araroba_powder">Araroba Powder</a></li>
+  <li class="c018"><a href="/article/02-0599-s4/arm">Arm</a></li>
+  <li class="c018"><a href="/article/02-0672-s2/arnica">Arnica</a></li>
+  <li class="c018"><a href="/article/02-0708-s4/arteries">Arteries</a></li>
+  <li class="c018"><a href="/article/02-0715-s2/arthritis">Arthritis</a></li>
+  <li class="c018"><a href="/article/02-0727-s3/articulation">Articulation</a></li>
+  <li class="c018"><a href="/article/02-0757-s2/arytenoid">Arytenoid</a></li>
+  <li class="c018"><a href="/article/02-0757-s6/asafetida">Asafetida</a></li>
+  <li class="c018"><a href="/article/02-0766-s5/ascites">Ascites</a></li>
+  <li class="c018"><a href="/article/02-0815-s2/asphyxia">Asphyxia</a></li>
+  <li class="c018"><a href="/article/02-0838-asthma/asthma">Asthma</a></li>
+  <li class="c018"><a href="/article/02-0894-s3/athetosis">Athetosis</a></li>
+  <li class="c018"><a href="/article/02-0925-s4/atrophy">Atrophy</a></li>
+  <li class="c018"><a href="/article/02-0985-s2/auscultation">Auscultation</a></li>
+  <li class="c018"><a href="/article/03-0064-s2/autopsy">Autopsy</a></li>
+  <li class="c018"><a href="/article/03-0173-s5/bacteriology">Bacteriology</a></li>
+  <li class="c018"><a href="/article/03-0260-s5/baldness">Baldness</a></li>
+  <li class="c018"><a href="/article/03-0301-s5/balneotherapeutics">Balneotherapeutics</a></li>
+  <li class="c018"><a href="/article/03-0302-s4/balsam">Balsam</a></li>
+  <li class="c018"><a href="/article/03-0531-baths/baths">Baths</a></li>
+  <li class="c018"><a href="/article/03-0643-bedsore/bedsore">Bedsore</a></li>
+  <li class="c018"><a href="/article/03-0712-belladonna/belladonna">Belladonna</a></li>
+  <li class="c018">Beriberi</li>
+  <li class="c018"><a href="/article/03-0865-bhang/bhang">Bhang</a></li>
+  <li class="c018"><a href="/article/03-0870-bibirine/bibirine">Bibirine</a></li>
+  <li class="c018"><a href="/article/03-0955-bilharziosis/bilharziosis">Bilharziosis</a></li>
+  <li class="c018"><a href="/article/04-0040-blackwater-fever/blackwater_fever">Blackwater Fever</a></li>
+  <li class="c018"><a href="/article/04-0040-bladder/bladder">Bladder</a></li>
+  <li class="c018"><a href="/article/04-0040-bladder-and-prostate-diseases/bladder_and_prostate_diseases">Bladder and Prostate Diseases</a></li>
+  <li class="c018"><a href="/article/04-0072-blindness/blindness">Blindness</a></li>
+  <li class="c018"><a href="/article/04-0085-blister/blister">Blister</a></li>
+  <li class="c018"><a href="/article/04-0090-blood/blood">Blood</a></li>
+  <li class="c018"><a href="/article/04-0098-blood-letting/blood-letting">Blood-letting</a></li>
+  <li class="c018"><a href="/article/04-0153-boil/boil">Boil</a></li>
+  <li class="c018"><a href="/article/04-0213-bone/bone">Bone</a></li>
+  <li class="c018"><a href="/article/04-0358-bow-leg/bow-leg">Bow-leg</a></li>
+  <li class="c018"><a href="/article/04-0406-brain/brain">Brain</a></li>
+  <li class="c018"><a href="/article/04-0500-breast/breast">Breast</a></li>
+  <li class="c018"><a href="/article/04-0590-s6/bright_s_disease">Bright’s Disease</a></li>
+  <li class="c018"><a href="/article/04-0657-s5/bronchiectasis">Bronchiectasis</a></li>
+  <li class="c018"><a href="/article/04-0657-s6/bronchitis">Bronchitis</a></li>
+  <li class="c018"><a href="/article/04-0659-s2/bronchotomy">Bronchotomy</a></li>
+  <li class="c018"><a href="/article/04-0821-s6/bunion">Bunion</a></li>
+  <li class="c018"><a href="/article/04-0884-s2/burns_and_scalds">Burns and Scalds</a></li>
+  <li class="c018"><a href="/article/04-0969-s4/caesarean_section">Caesarean Section</a></li>
+  <li class="c018"><a href="/article/04-0985-s2/caisson_disease">Caisson Disease</a></li>
+  <li class="c018">Cajaput Oil</li>
+  <li class="c018"><a href="/article/04-0989-s2/calabar_bean">Calabar Bean</a></li>
+  <li class="c018"><a href="/article/05-0188-cancer-luis/cancer__luis">Cancer, or Carcinoma</a></li>
+  <li class="c018"><a href="/article/05-0225-cantharides/cantharides">Cantharides</a></li>
+  <li class="c018"><a href="/article/05-0305-capsicum/capsicum">Capsicum</a></li>
+  <li class="c018"><a href="/article/05-0326-carbuncle/carbuncle">Carbuncle</a></li>
+  <li class="c018"><a href="/article/05-0451-cartilage/cartilage">Cartilage</a></li>
+  <li class="c018"><a href="/article/05-0499-castor-oil/castor_oil">Castor Oil</a></li>
+  <li class="c018"><a href="/article/05-0519-catalepsy/catalepsy">Catalepsy</a></li>
+  <li class="c018"><a href="/article/05-0523-catarrh/catarrh">Catarrh</a></li>
+  <li class="c018"><a href="/article/05-0579-caul/caul">Caul</a></li>
+  <li class="c018"><a href="/article/06-0143-chicken-pox/chicken-pox">Chicken-pox</a></li>
+  <li class="c018"><a href="/article/06-0147-chilblains/chilblains">Chilblains</a></li>
+  <li class="c018"><a href="/article/06-0263-chirugeon/chirurgeon">Chirurgeon</a></li>
+  <li class="c018"><a href="/article/06-0278-cholera/cholera">Cholera</a></li>
+  <li class="c018"><a href="/article/05-0863-chamomile/chamomile">Chamomile, or Camomile Flowers</a></li>
+  <li class="c018"><a href="/article/06-0525-climacteric/climacteric">Climacteric</a></li>
+  <li class="c018">Cleft Palate and Hare-Lip</li>
+  <li class="c018"><a href="/article/06-0545-clinic/clinic">Clinic</a></li>
+  <li class="c018"><a href="/article/06-0587-club-foot/club-foot">Club-foot</a></li>
+  <li class="c018"><a href="/article/06-0656-s3/cod-liver_oil">Cod-Liver Oil</a></li>
+  <li class="c018"><a href="/article/06-0663-goelom-and-serious-membranes/coelom_and_serous_membranes">Coelom and Serous Membranes</a></li>
+  <li class="c018"><a href="/article/06-0703-colic/colic">Colic</a></li>
+  <li class="c018"><a href="/article/06-0735-colon-cuba/colon__cuba">Colon</a></li>
+  <li class="c018"><a href="/article/06-0770-coma/coma">Coma</a></li>
+  <li class="c018"><a href="/article/06-0983-connective-tissues/connective_tissues">Connective Tissues</a></li>
+  <li class="c018"><a href="/article/07-0029-constipation/constipation">Constipation</a></li>
+  <li class="c018"><a href="/article/07-0083-convulsions/convulsions">Convulsions</a></li>
+  <li class="c018"><a href="/article/07-0179-corn/corn">Corn</a></li>
+  <li class="c018"><a href="/article/07-0209-corpulence/corpulence">Corpulence or Obesity</a></li>
+  <li class="c018"><a href="/article/07-0383-cramp/cramp">Cramp</a></li>
+  <li class="c018"><a href="/article/07-0423-cremation/cremation">Cremation</a></li>
+  <li class="c018"><a href="/article/07-0452-cretinism/cretinism">Cretinism</a></li>
+  <li class="c018"><a href="/article/07-0533-croton-oil/croton_oil">Croton Oil</a></li>
+  <li class="c018"><a href="/article/07-0533-croup/croup">Croup</a></li>
+  <li class="c018"><a href="/article/07-0629-cubebs/cubebs">Cubebs</a></li>
+  <li class="c018"><a href="/article/07-0657-cupping/cupping">Cupping</a></li>
+  <li class="c018"><a href="/article/07-0987-delirium/delirium">Delirium</a></li>
+  <li class="c018"><a href="/article/08-0034-dengue/dengue">Dengue</a></li>
+  <li class="c018"><a href="/article/08-0065-dentistry/dentistry">Dentistry</a></li>
+  <li class="c018"><a href="/article/08-0160-diabetes/diabetes">Diabetes</a></li>
+  <li class="c018"><a href="/article/08-0183-diaphoretics/diaphoretics">Diaphoretics</a></li>
+  <li class="c018"><a href="/article/08-0183-diaphragm/diaphragm">Diaphragm</a></li>
+  <li class="c018"><a href="/article/08-0184-diarrhoea/diarrhoea">Diarrhoea</a></li>
+  <li class="c018"><a href="/article/08-0229-dietary/dietary">Dietary</a></li>
+  <li class="c018"><a href="/article/08-0231-dietetics/dietetics">Dietetics</a></li>
+  <li class="c018"><a href="/article/08-0279-digestive-organs/digestive_organs">Digestive Organs</a></li>
+  <li class="c018"><a href="/article/08-0285-digitalis/digitalis">Digitalis</a></li>
+  <li class="c018"><a href="/article/08-0288-dilatation/dilatation">Dilatation</a></li>
+  <li class="c018"><a href="/article/08-0289-dill/dill">Dill</a></li>
+  <li class="c018"><a href="/article/08-0307-diphtheria/diphtheria">Diphtheria</a></li>
+  <li class="c018"><a href="/article/08-0324-dipsomania/dipsomania">Dipsomania</a></li>
+  <li class="c018">Disinfectants</li>
+  <li class="c018"><a href="/article/08-0342-diuretics/diuretics">Diuretics</a></li>
+  <li class="c018"><a href="/article/08-0617-dropsy/dropsy">Dropsy</a></li>
+  <li class="c018"><a href="/article/08-0619-drowning-and-life-saving/drowning_and_life_saving">Drowning and Life Saving</a></li>
+  <li class="c018"><a href="/article/08-0624-drug-india/drug__india_">Drug</a></li>
+  <li class="c018"><a href="/article/08-0628-drunkenness/drunkenness">Drunkenness</a></li>
+  <li class="c018"><a href="/article/08-0660-ductless-glands/ductless_glands">Ductless Glands</a></li>
+  <li class="c018"><a href="/article/08-0812-dysentery/dysentery">Dysentery</a></li>
+  <li class="c018"><a href="/article/08-0813-dyspepsia/dyspepsia">Dyspepsia</a></li>
+  <li class="c018"><a href="/article/08-0818-ear/ear">Ear</a></li>
+  <li class="c018"><a href="/article/08-0947-eczema/eczema">Eczema</a></li>
+  <li class="c018"><a href="/article/09-0177-elaterium/elaterium">Elaterium</a></li>
+  <li class="c018"><a href="/article/09-0181-elbow/elbow">Elbow</a></li>
+  <li class="c018"><a href="/article/09-0266-electrotherapeutics/electrotherapeutics">Electrotherapeutics</a></li>
+  <li class="c018"><a href="/article/09-0278-elephantiasis/elephantiasis">Elephantiasis</a></li>
+  <li class="c018"><a href="/article/09-0359-emetics/emetics">Emetics</a></li>
+  <li class="c018"><a href="/article/09-0370-emphysema/emphysema">Emphysema</a></li>
+  <li class="c018"><a href="/article/09-0686-enteritis/enteritis">Enteritis</a></li>
+  <li class="c018"><a href="/article/09-0723-epilepsy/epilepsy">Epilepsy</a></li>
+  <li class="c018"><a href="/article/09-0733-epistaxis/epistaxis">Epistaxis</a></li>
+  <li class="c018">Epithelial, Endothelial and Glandular Tissues</li>
+  <li class="c018"><a href="/article/09-0754-s3/equilibrium">Equilibrium</a></li>
+  <li class="c018"><a href="/article/09-0769-ergot/ergot">Ergot, or Spurred Rye</a></li>
+  <li class="c018"><a href="/article/09-0789-s3/erysipelas">Erysipelas</a></li>
+  <li class="c018"><a href="/article/09-0899-eucalyptus/eucalyptus">Eucalyptus</a></li>
+  <li class="c018"><a href="/article/09-0926-euphorbium/euphorbium">Euphorbium</a></li>
+  <li class="c018"><a href="/article/10-0073-s2/excretion">Excretion</a></li>
+  <li class="c018"><a href="/article/10-0103-eye/eye">Eye</a></li>
+  <li class="c018"><a href="/article/10-0133-face/face">Face</a></li>
+  <li class="c018"><a href="/article/10-0216-fauces/fauces">Fauces</a></li>
+  <li class="c018"><a href="/article/10-0227-favus/favus">Favus</a></li>
+  <li class="c018"><a href="/article/10-0317-fever/fever">Fever</a></li>
+  <li class="c018"><a href="/article/10-0327-s2/fibrin">Fibrin</a></li>
+  <li class="c018"><a href="/article/10-0353-s3/filariasis">Filariasis</a></li>
+  <li class="c018"><a href="/article/10-0389-finger/finger">Finger</a></li>
+  <li class="c018"><a href="/article/10-0454-s3/fistula">Fistula</a></li>
+  <li class="c018"><a href="/article/10-0632-s3/food">Food</a></li>
+  <li class="c018"><a href="/article/10-0637-foot/foot">Foot</a></li>
+  <li class="c018"><a href="/article/11-0264-frostbite/frostbite">Frostbite</a></li>
+  <li class="c018"><a href="/article/11-0314-s2/fumigation">Fumigation</a></li>
+  <li class="c018"><a href="/article/11-0410-s2/galangal">Galangal</a></li>
+  <li class="c018"><a href="/article/11-0415-galbanum/galbanum">Galbanum</a></li>
+  <li class="c018"><a href="/article/11-0430-s2/gall">Gall</a></li>
+  <li class="c018"><a href="/article/11-0457-gamboge/gamboge">Gamboge</a></li>
+  <li class="c018"><a href="/article/11-0470-gangrene/gangrene">Gangrene</a></li>
+  <li class="c018"><a href="/article/11-0522-gastric-ulcer/gastric_ulcer">Gastric Ulcer</a></li>
+  <li class="c018"><a href="/article/11-0523-gastritis/gastritis">Gastritis</a></li>
+  <li class="c018"><a href="/article/11-0577-gelsemium/gelsemium">Gelsemium</a></li>
+  <li class="c018"><a href="/article/12-0042-s3/ginseng">Ginseng</a></li>
+  <li class="c018"><a href="/article/12-0208-s7/goitre">Goitre</a></li>
+  <li class="c018"><a href="/article/12-0306-gout/gout">Gout</a></li>
+  <li class="c018"><a href="/article/12-0668-s4/guaco">Guaco, Huaco, or Guao</a></li>
+  <li class="c018"><a href="/article/12-0671-s5/guaiacum">Guaiacum</a></li>
+  <li class="c018"><a href="/article/12-0676-guarana/guarana">Guarana</a></li>
+  <li class="c018"><a href="/article/12-0722-s4/guinea-worm">Guinea-Worm</a></li>
+  <li class="c018"><a href="/article/12-0789-gynaecology/gynaecology">Gynaecology</a></li>
+  <li class="c018"><a href="/article/12-0829-haematocele/haematocele">Haematocele</a></li>
+  <li class="c018"><a href="/article/12-0830-haemophilia/haemophilia">Haemophilia</a></li>
+  <li class="c018"><a href="/article/12-0830-haemorrhage/haemorrhage">Haemorrhage</a></li>
+  <li class="c018"><a href="/article/12-0830-haemorrhoids/haemorrhoids">Haemorrhoids</a></li>
+  <li class="c018"><a href="/article/12-0924-hammer-toe/hammer-toe">Hammer-toe</a></li>
+  <li class="c018"><a href="/article/12-0935-s2/hand">Hand</a></li>
+  <li class="c018"><a href="/article/13-0063-s6/hashish">Hashish</a></li>
+  <li class="c018"><a href="/article/13-0126-s2/hay_fever">Hay Fever, or Summer Catarrh</a></li>
+  <li class="c018"><a href="/article/13-0134-s3/head">Head</a></li>
+  <li class="c018"><a href="/article/13-0142-s2/heart">Heart</a></li>
+  <li class="c018"><a href="/article/13-0211-s2/heel">Heel</a></li>
+  <li class="c018"><a href="/article/13-0388-s8/hernia">Hernia</a></li>
+  <li class="c018"><a href="/article/13-0404-herpes/herpes">Herpes</a></li>
+  <li class="c018"><a href="/article/13-0532-hip/hip">Hip</a></li>
+  <li class="c018"><a href="/article/13-0662-s2/homoeopathy">Homoeopathy</a></li>
+  <li class="c018"><a href="/article/13-0810-s4/hospital">Hospital</a></li>
+  <li class="c018"><a href="/article/13-0896-s9/humane_society__royal">Humane Society, Royal</a></li>
+  <li class="c018"><a href="/article/13-0956-hunger-and-thirst/hunger_and_thirst">Hunger and Thirst</a></li>
+  <li class="c018"><a href="/article/14-0123-hydrocele/hydrocele">Hydrocele</a></li>
+  <li class="c018"><a href="/article/14-0123-hydrocephalus/hydrocephalus">Hydrocephalus</a></li>
+  <li class="c018"><a href="/article/14-0177-s2/hydropathy">Hydropathy</a></li>
+  <li class="c018"><a href="/article/14-0179-hydrophobia/hydrophobia">Hydrophobia, or Rabies</a></li>
+  <li class="c018"><a href="/article/14-0187-hygiene/hygiene">Hygiene</a></li>
+  <li class="c018"><a href="/article/14-0212-hypertrophy/hypertrophy">Hypertrophy</a></li>
+  <li class="c018"><a href="/article/14-0213-hypnotism/hypnotism">Hypnotism</a></li>
+  <li class="c018"><a href="/article/14-0219-hypochondriasis/hypochondriasis">Hypochondriasis</a></li>
+  <li class="c018"><a href="/article/14-0223-hysteria/hysteria">Hysteria</a></li>
+  <li class="c018">Icthyosis or Xeroderma</li>
+  <li class="c018"><a href="/article/14-0350-s3/imbecile">Imbecile</a></li>
+  <li class="c018"><a href="/article/14-0542-infancy/infancy">Infancy</a></li>
+  <li class="c018"><a href="/article/14-0583-influenza/influenza">Influenza</a></li>
+  <li class="c018"><a href="/article/14-0628-insanity/insanity">Insanity</a></li>
+  <li class="c018"><a href="/article/14-0675-s4/insomnia">Insomnia</a></li>
+  <li class="c018"><a href="/article/14-0746-intestinal-obstruction/intestinal_obstruction">Intestinal Obstruction</a></li>
+  <li class="c018"><a href="/article/14-0747-intestine/intestine">Intestine</a></li>
+  <li class="c018"><a href="/article/14-0748-intoxication/intoxication">Intoxication</a></li>
+  <li class="c018"><a href="/article/14-0768-ipecacuanha/ipecacuanha">Ipecacuanha</a></li>
+  <li class="c018"><a href="/article/15-0120-s3/jaborandi">Jaborandi</a></li>
+  <li class="c018"><a href="/article/15-0146-jalap/jalap">Jalap</a></li>
+  <li class="c018"><a href="/article/15-0306-jaundice/jaundice">Jaundice</a></li>
+  <li class="c018"><a href="/article/15-0319-jaw/jaw">Jaw</a></li>
+  <li class="c018"><a href="/article/15-0510-s3/joints">Joints</a></li>
+  <li class="c018">Kámalá</li>
+  <li class="c018"><a href="/article/15-0664-kala-azar/kala-azar">Kala-Azar</a></li>
+  <li class="c018"><a href="/article/15-0813-kidney-diseases/kidney_diseases">Kidney Diseases</a></li>
+  <li class="c018"><a href="/article/15-0852-s5/kino">Kino</a></li>
+  <li class="c018"><a href="/article/15-0878-knee/knee">Knee</a></li>
+  <li class="c018"><a href="/article/15-0955-kousso/kousso">Kousso</a></li>
+  <li class="c018"><a href="/article/16-0248-laryngitis/laryngitis">Laryngitis</a></li>
+  <li class="c018"><a href="/article/16-0298-s3/laudanum">Laudanum</a></li>
+  <li class="c018"><a href="/article/16-0340-lead-poisoning/lead_poisoning">Lead Poisoning</a></li>
+  <li class="c018"><a href="/article/16-0392-s7/leg">Leg</a></li>
+  <li class="c018"><a href="/article/16-0475-s5/leontiasis_ossea">Leontiasis Ossea</a></li>
+  <li class="c018"><a href="/article/16-0499-s5/leprosy">Leprosy</a></li>
+  <li class="c018"><a href="/article/16-0520-lethargy/lethargy">Lethargy</a></li>
+  <li class="c018"><a href="/article/16-0598-lichen/lichen">Lichen</a></li>
+  <li class="c018"><a href="/article/16-0628-s3/ligament">Ligament</a></li>
+  <li class="c018"><a href="/article/16-0761-lip/lip">Lip</a></li>
+  <li class="c018"><a href="/article/16-0823-s2/liver">Liver</a></li>
+  <li class="c018"><a href="/article/16-0858-s5/lobe">Lobe</a></li>
+  <li class="c018"><a href="/article/16-0877-locomotor-ataxia/locomotor_ataxia">Locomotor Ataxia</a></li>
+  <li class="c018"><a href="/article/17-0136-lumbago/lumbago">Lumbago</a></li>
+  <li class="c018"><a href="/article/17-0141-lung/lung">Lung</a></li>
+  <li class="c018"><a href="/article/17-0142-lupus/lupus">Lupus</a></li>
+  <li class="c018"><a href="/article/17-0177-s4/lymph">Lymph</a></li>
+  <li class="c018"><a href="/article/17-0181-s2/lymphatic_system">Lymphatic System</a></li>
+  <li class="c018"><a href="/article/17-0477-malaria/malaria">Malaria</a></li>
+  <li class="c018">Malta Fever</li>
+  <li class="c018"><a href="/article/17-0545-mammary-gland/mammary_gland">Mammary Gland</a></li>
+  <li class="c018"><a href="/article/17-0882-s3/massage">Massage</a></li>
+  <li class="c018"><a href="/article/17-0908-matrix/matrix">Matrix</a></li>
+  <li class="c018"><a href="/article/17-0966-measles/measles">Measles</a></li>
+  <li class="c018"><a href="/article/18-0059-medicine/medicine">Medicine</a></li>
+  <li class="c018"><a href="/article/18-0041-medical-education/medical_education">Medical Education</a></li>
+  <li class="c018"><a href="/article/18-0043-medical-jurisprudence/medical_jurisprudence">Medical Jurisprudence</a></li>
+  <li class="c018">Ménière’s Disease</li>
+  <li class="c018"><a href="/article/18-0149-s2/meningitis">Meningitis</a></li>
+  <li class="c018"><a href="/article/18-0214-s6/metabolic_diseases">Metabolic Diseases</a></li>
+  <li class="c018"><a href="/article/18-0448-s3/midwife">Midwife</a></li>
+  <li class="c018"><a href="/article/18-0541-s2/mineral_waters">Mineral Waters</a></li>
+  <li class="c018"><a href="/article/18-0894-s4/morphine">Morphine</a></li>
+  <li class="c018"><a href="/article/18-0910-s4/mortification">Mortification</a></li>
+  <li class="c018"><a href="/article/18-0976-mouth-and-salivary-glands/mouth_and_salivary_glands">Mouth and Salivary Glands</a></li>
+  <li class="c018"><a href="/article/18-1000-mumps/mumps">Mumps</a></li>
+  <li class="c018"><a href="/article/19-0059-muscle-and-nerve/muscle_and_nerve">Muscle and Nerve</a></li>
+  <li class="c018"><a href="/article/19-0066-s2/muscular_system">Muscular System</a></li>
+  <li class="c018"><a href="/article/19-0126-s3/myelitis">Myelitis</a></li>
+  <li class="c018"><a href="/article/19-0159-myxoedema/myxoedema">Myxoedema</a></li>
+  <li class="c018"><a href="/article/19-0165-naevus/naevus">Naevus</a></li>
+  <li class="c018"><a href="/article/19-0254-s2/narcotics">Narcotics</a></li>
+  <li class="c018"><a href="/article/19-0299-s1/navel">Navel</a></li>
+  <li class="c018"><a href="/article/19-0356-necrosis/necrosis">Necrosis</a></li>
+  <li class="c018"><a href="/article/19-0401-nepenthes/nepenthes">Nepenthes</a></li>
+  <li class="c018"><a href="/article/19-0412-s3/nerve">Nerve</a></li>
+  <li class="c018"><a href="/article/19-0418-s4/nervous_system">Nervous System</a></li>
+  <li class="c018"><a href="/article/19-0440-nettlerash/nettlerash">Nettlerash, or Urticaria</a></li>
+  <li class="c018"><a href="/article/19-0445-s2/neuralgia">Neuralgia</a></li>
+  <li class="c018"><a href="/article/19-0446-s2/neurasthenia">Neurasthenia</a></li>
+  <li class="c018"><a href="/article/19-0446-s5/neuritis">Neuritis</a></li>
+  <li class="c018"><a href="/article/19-0447-neuropathology/neuropathology">Neuropathology</a></li>
+  <li class="c018"><a href="/article/19-0854-nose/nose">Nose</a></li>
+  <li class="c018"><a href="/article/19-0854-nosology/nosology">Nosology</a></li>
+  <li class="c018"><a href="/article/19-0854-nostalgia/nostalgia">Nostalgia</a></li>
+  <li class="c018"><a href="/article/19-0952-nursing/nursing">Nursing</a></li>
+  <li class="c018"><a href="/article/19-0958-s2/nutrition">Nutrition</a></li>
+  <li class="c018"><a href="/article/19-0966-s4/nux_vomica">Nux Vomica</a></li>
+  <li class="c018"><a href="/article/19-1000-obstetrics/obstetrics">Obstetrics</a></li>
+  <li class="c018"><a href="/article/20-0032-oesophagus/oesophagus">Oesophagus</a></li>
+  <li class="c018"><a href="/article/20-0040-officinal/officinal">Officinal</a></li>
+  <li class="c018"><a href="/article/20-0101-s5/olfactory_system">Olfactory System</a></li>
+  <li class="c018"><a href="/article/20-0154-ophthalmology/ophthalmology">Ophthalmology</a></li>
+  <li class="c018"><a href="/article/20-0156-s1/opium">Opium</a></li>
+  <li class="c018"><a href="/article/20-0416-ovariotomy/ovariotomy">Ovariotomy</a></li>
+  <li class="c018"><a href="/article/20-0494-s5/pain">Pain</a></li>
+  <li class="c018"><a href="/article/20-0650-palate/palate">Palate</a></li>
+  <li class="c018"><a href="/article/20-0729-s3/pancreas">Pancreas</a></li>
+  <li class="c018"><a href="/article/20-0818-paralysis/paralysis">Paralysis or Palsy</a></li>
+  <li class="c018"><a href="/article/20-0822-s6/paranoia">Paranoia</a></li>
+  <li class="c018"><a href="/article/20-0826-s8/parasitic_diseases">Parasitic Diseases</a></li>
+  <li class="c018"><a href="/article/20-0975-pathology/pathology">Pathology</a></li>
+  <li class="c018"><a href="/article/21-0051-pediculosis/pediculosis">Pediculosis</a></li>
+  <li class="c018"><a href="/article/21-0083-s4/pellagra">Pellagra</a></li>
+  <li class="c018"><a href="/article/21-0091-s6/pelvis">Pelvis</a></li>
+  <li class="c018"><a href="/article/21-0097-pemphigus/pemphigus">Pemphigus</a></li>
+  <li class="c018"><a href="/article/21-0145-s3/pepsin">Pepsin</a></li>
+  <li class="c018"><a href="/article/21-0188-peritonitis/peritonitis">Peritonitis</a></li>
+  <li class="c018"><a href="/article/21-0276-s2/perspiration">Perspiration</a></li>
+  <li class="c018"><a href="/article/21-0363-phagocytosis/phagocytosis">Phagocytosis</a></li>
+  <li class="c018"><a href="/article/21-0368-pharmacology/pharmacology">Pharmacology</a></li>
+  <li class="c018"><a href="/article/21-0374-pharmacopoeia/pharmacopoeia">Pharmacopoeia</a></li>
+  <li class="c018"><a href="/article/21-0376-pharmacy/pharmacy">Pharmacy</a></li>
+  <li class="c018"><a href="/article/21-0380-pharyngitis/pharyngitis">Pharyngitis</a></li>
+  <li class="c018"><a href="/article/21-0380-pharynx/pharynx">Pharynx</a></li>
+  <li class="c018"><a href="/article/21-0468-phlebitis/phlebitis">Phlebitis</a></li>
+  <li class="c018"><a href="/article/21-0560-phrenology/phrenology">Phrenology</a></li>
+  <li class="c018"><a href="/article/21-0572-s2/phthisis">Phthisis</a></li>
+  <li class="c018"><a href="/article/21-0580-physiology/physiology">Physiology</a></li>
+  <li class="c018"><a href="/article/21-0612-picrotoxin/picrotoxin">Picrotoxin</a></li>
+  <li class="c018"><a href="/article/21-0659-pinto/pinto">Pinto</a></li>
+  <li class="c018"><a href="/article/21-0712-pityriasis-versicolor/pityriasis_versicolor">Pityriasis Versicolor</a></li>
+  <li class="c018"><a href="/article/21-0720-s2/placenta">Placenta</a></li>
+  <li class="c018"><a href="/article/21-0722-s2/plague">Plague</a></li>
+  <li class="c018"><a href="/article/21-0870-pleurisy/pleurisy">Pleurisy or Pleuritis</a></li>
+  <li class="c018"><a href="/article/21-0902-pneumonia/pneumonia">Pneumonia</a></li>
+  <li class="c018"><a href="/article/21-0908-podophyllin/podophyllin">Podophyllin</a></li>
+  <li class="c018"><a href="/article/21-0926-poison/poison">Poison</a></li>
+  <li class="c018"><a href="/article/22-0052-polypus/polypus">Polypus</a></li>
+  <li class="c018"><a href="/article/22-0227-poultice/poultice">Poultice</a></li>
+  <li class="c018"><a href="/article/22-0439-prognosis/prognosis">Prognosis</a></li>
+  <li class="c018"><a href="/article/22-0533-pruritus/pruritus">Pruritus</a></li>
+  <li class="c018"><a href="/article/22-0559-psoriasis/psoriasis">Psoriasis</a></li>
+  <li class="c018"><a href="/article/22-0559-s3/psorospermiasis">Psorospermiasis</a></li>
+  <li class="c018"><a href="/article/22-0642-ptomaine-poisoning/ptomaine_poisoning">Ptomaine Poisoning</a></li>
+  <li class="c018"><a href="/article/22-0642-puberty/puberty">Puberty</a></li>
+  <li class="c018"><a href="/article/22-0643-public-health-law-of/public_health__law_of">Public Health, Law of</a></li>
+  <li class="c018"><a href="/article/22-0650-puerperal-fever/puerperal_fever">Puerperal Fever</a></li>
+  <li class="c018"><a href="/article/22-0681-purpura/purpura">Purpura</a></li>
+  <li class="c018"><a href="/article/22-0660-pulse/pulse">Pulse</a></li>
+  <li class="c018"><a href="/article/22-0725-quarantine/quarantine">Quarantine</a></li>
+  <li class="c018"><a href="/article/22-0734-s2/quassia">Quassia</a></li>
+  <li class="c018"><a href="/article/22-0773-s2/quinine">Quinine</a></li>
+  <li class="c018"><a href="/article/22-0777-s4/quinsy">Quinsy</a></li>
+  <li class="c018"><a href="/article/22-0953-s3/raynaud_s_disease">Raynaud’s Disease</a></li>
+  <li class="c018"><a href="/article/23-0075-s4/relapsing_fever">Relapsing Fever</a></li>
+  <li class="c018"><a href="/article/23-0146-reproductive-system/reproductive_system__in_anatomy">Reproductive System</a></li>
+  <li class="c018"><a href="/article/23-0201-s2/respiratory_system">Respiratory System</a></li>
+  <li class="c018"><a href="/article/23-0248-rhamnus-purshiana/rhamnus_purshiana">Rhamnus Purshiana</a></li>
+  <li class="c018"><a href="/article/23-0248-rhatany/rhatany">Rhatany, or Krameria Root</a></li>
+  <li class="c018"><a href="/article/23-0254-s2/rheumatism">Rheumatism</a></li>
+  <li class="c018"><a href="/article/23-0255-s2/rheumatoid_arthritis">Rheumatoid Arthritis</a></li>
+  <li class="c018"><a href="/article/23-0290-rhubarb/rhubarb">Rhubarb</a></li>
+  <li class="c018"><a href="/article/23-0331-rickets/rickets">Rickets</a></li>
+  <li class="c018"><a href="/article/23-0369-ringworm/ringworm">Ringworm</a></li>
+  <li class="c018">St. Vitus’ Dance, or Chorea</li>
+  <li class="c018"><a href="/article/24-0080-salep/salep">Salep</a></li>
+  <li class="c018"><a href="/article/24-0082-s3/salicin__salicinum">Salicin, Salicinum</a></li>
+  <li class="c018"><a href="/article/24-0141-sanatorium/sanatorium">Sanatorium</a></li>
+  <li class="c018"><a href="/article/24-0150-sandalwood/sandalwood">Sandalwood</a></li>
+  <li class="c018"><a href="/article/24-0151-sandarach/sandarach">Sandarach</a></li>
+  <li class="c018"><a href="/article/24-0209-santonin/santonin">Santonin</a></li>
+  <li class="c018"><a href="/article/24-0238-sarsaparilla/sarsaparilla">Sarsaparilla</a></li>
+  <li class="c018"><a href="/article/24-0293-s6/scabies">Scabies, or Itch</a></li>
+  <li class="c018"><a href="/article/24-0301-scalp/scalp">Scalp</a></li>
+  <li class="c018"><a href="/article/24-0321-scarlet-fever/scarlet_fever">Scarlet Fever</a></li>
+  <li class="c018"><a href="/article/24-0414-s4/sciatica">Sciatica</a></li>
+  <li class="c018"><a href="/article/24-0503-scrofula/scrofula">Scrofula, or Struma</a></li>
+  <li class="c018"><a href="/article/24-0547-s2/scurvy">Scurvy</a></li>
+  <li class="c018"><a href="/article/24-0592-sea-sickness/sea-sickness">Sea-Sickness</a></li>
+  <li class="c018"><a href="/article/24-0598-seborrhoea/seborrhoea">Seborrhoea</a></li>
+  <li class="c018"><a href="/article/24-0669-s2/senega">Senega</a></li>
+  <li class="c018"><a href="/article/24-0676-senna/senna">Senna</a></li>
+  <li class="c018"><a href="/article/24-0682-s5/sepsis">Sepsis</a></li>
+  <li class="c018"><a href="/article/24-0765-s4/sewerage">Sewerage</a></li>
+  <li class="c018"><a href="/article/24-1067-shock/shock">Shock or Collapse</a></li>
+  <li class="c018"><a href="/article/24-1090-shoulder/shoulder">Shoulder</a></li>
+  <li class="c018"><a href="/article/25-0163-sinew/sinew">Sinew</a></li>
+  <li class="c018"><a href="/article/25-0185-s4/skeleton">Skeleton</a></li>
+  <li class="c018"><a href="/article/25-0204-skin-and-exoskeleton/skin_and_exoskeleton">Skin and Exoskeleton</a></li>
+  <li class="c018"><a href="/article/25-0206-s2/skin_diseases">Skin Diseases</a></li>
+  <li class="c018"><a href="/article/25-0212-skull/skull">Skull</a></li>
+  <li class="c018"><a href="/article/25-0228-slaughter-house/slaughter-house">Slaughter-house</a></li>
+  <li class="c018"><a href="/article/25-0254-sleep/sleep">Sleep</a></li>
+  <li class="c018"><a href="/article/25-0256-sleeping-sickness/sleeping-sickness">Sleeping-sickness</a></li>
+  <li class="c018"><a href="/article/25-0263-smallpox/smallpox">Smallpox</a></li>
+  <li class="c018"><a href="/article/25-0309-sneezing/sneezing">Sneezing</a></li>
+  <li class="c018"><a href="/article/25-0409-s5/somnambulism">Somnambulism</a></li>
+  <li class="c018"><a href="/article/25-0690-s5/spinal_cord">Spinal Cord</a></li>
+  <li class="c018"><a href="/article/25-0733-s4/spleen">Spleen</a></li>
+  <li class="c018"><a href="/article/25-0764-s1/sprue">Sprue</a></li>
+  <li class="c018"><a href="/article/25-0769-squill/squill">Squill</a></li>
+  <li class="c018"><a href="/article/25-0792-s2/stammering">Stammering or Stuttering</a></li>
+  <li class="c018"><a href="/article/25-0821-s4/starvation">Starvation</a></li>
+  <li class="c018"><a href="/article/25-0927-stethoscope/stethoscope">Stethoscope</a></li>
+  <li class="c018">Stomach</li>
+  <li class="c018"><a href="/article/25-1008-stramonium/stramonium">Stramonium</a></li>
+  <li class="c018"><a href="/article/25-1071-strychnine/strychnine">Strychnine</a></li>
+  <li class="c018"><a href="/article/26-0091-sumbul/sumbul">Sumbul, or Sumbal</a></li>
+  <li class="c018"><a href="/article/26-0128-sunstroke/sunstroke">Sunstroke</a></li>
+  <li class="c018"><a href="/article/26-0134-s2/supra-renal_extract">Supra-renal Extract</a></li>
+  <li class="c018"><a href="/article/26-0143-surgery/surgery">Surgery</a></li>
+  <li class="c018"><a href="/article/26-0150-surgical-instruments-and-appliances/surgical_instruments_and_appliances">Surgical Instruments</a></li>
+  <li class="c018"><a href="/article/26-0204-sweating-sickness/sweating-sickness">Sweating-sickness</a></li>
+  <li class="c018"><a href="/article/26-0242-s2/sweetbread">Sweetbread</a></li>
+  <li class="c018"><a href="/article/26-0308-s6/sympathetic_system">Sympathetic System</a></li>
+  <li class="c018"><a href="/article/26-0313-s6/syncope">Syncope</a></li>
+  <li class="c018"><a href="/article/26-0446-taraxacum/taraxacum">Taraxacum</a></li>
+  <li class="c018"><a href="/article/26-0528-teeth/teeth">Teeth</a></li>
+  <li class="c018"><a href="/article/26-0608-s5/temperance">Temperance</a></li>
+  <li class="c018"><a href="/article/26-0702-s4/tetanus">Tetanus</a></li>
+  <li class="c018"><a href="/article/26-0833-therapeutics/therapeutics">Therapeutics</a></li>
+  <li class="c018"><a href="/article/26-0916-s5/thorax">Thorax</a></li>
+  <li class="c018"><a href="/article/26-0930-s6/throat">Throat</a></li>
+  <li class="c018"><a href="/article/26-0945-thyroid/thyroid">Thyroid</a></li>
+  <li class="c018"><a href="/article/27-0021-tongue/tongue">Tongue</a></li>
+  <li class="c018"><a href="/article/27-0025-s6/tonsillitis">Tonsillitis</a></li>
+  <li class="c018"><a href="/article/27-0128-toxicology/toxicology">Toxicology</a></li>
+  <li class="c018"><a href="/article/27-0131-tracheotomy/tracheotomy">Tracheotomy</a></li>
+  <li class="c018"><a href="/article/27-0131-trachoma/trachoma">Trachoma</a></li>
+  <li class="c018"><a href="/article/27-0281-trichinosis/trichinosis">Trichinosis</a></li>
+  <li class="c018"><a href="/article/27-0371-s2/tuberculosis">Tuberculosis</a></li>
+  <li class="c018"><a href="/article/27-0387-s6/tumour">Tumour</a></li>
+  <li class="c018"><a href="/article/27-0522-s1/typhoid_fever">Typhoid Fever</a></li>
+  <li class="c018"><a href="/article/27-0527-typhus-fever/typhus_fever">Typhus Fever</a></li>
+  <li class="c018"><a href="/article/27-0584-s3/ulcer">Ulcer</a></li>
+  <li class="c018"><a href="/article/27-0807-s3/upas">Upas</a></li>
+  <li class="c018"><a href="/article/27-0822-s5/urinary_system">Urinary System</a></li>
+  <li class="c018"><a href="/article/27-0857-vaccination/vaccination">Vaccination</a></li>
+  <li class="c018"><a href="/article/27-0884-s3/valerian">Valerian</a></li>
+  <li class="c018"><a href="/article/27-0946-s2/varicose_veins">Varicose Veins</a></li>
+  <li class="c018"><a href="/article/27-0952-s2/vascular_system">Vascular System</a></li>
+  <li class="c018"><a href="/article/27-0995-s5/vegetarianism">Vegetarianism</a></li>
+  <li class="c018"><a href="/article/27-0997-s4/veins">Veins</a></li>
+  <li class="c018"><a href="/article/27-1011-s3/venereal_diseases">Venereal Diseases</a></li>
+  <li class="c018"><a href="/article/28-0032-viburnum/viburnum">Viburnum</a></li>
+  <li class="c018"><a href="/article/28-0169-vivisection/vivisection">Vivisection</a></li>
+  <li class="c018"><a href="/article/28-0188-voice/voice">Voice</a></li>
+  <li class="c018"><a href="/article/28-0351-wart/wart">Wart</a></li>
+  <li class="c018">Water-supply</li>
+  <li class="c018"><a href="/article/28-0629-s5/whitlow">Whitlow</a></li>
+  <li class="c018"><a href="/article/28-0636-whooping-cough/whooping-cough">Whooping-Cough</a></li>
+  <li class="c018"><a href="/article/28-0733-windpipe/windpipe">Windpipe</a></li>
+  <li class="c018"><a href="/article/28-0863-wound/wound">Wound</a></li>
+  <li class="c018"><a href="/article/28-0873-wrist/wrist">Wrist</a></li>
+  <li class="c018"><a href="/article/28-0880-wry-neck/wry-neck">Wry-neck</a></li>
+  <li class="c018"><a href="/article/28-0914-x-ray-treatment/x-ray_treatment">X-Ray Treatment</a></li>
+  <li class="c018"><a href="/article/28-0935-yaws/yaws">Yaws</a></li>
+  <li class="c018"><a href="/article/28-0937-s4/yellow_fever">Yellow Fever</a></li>
+  <li class="c018"><a href="/article/28-1091-s3/zymotic_diseases">Zymotic Diseases</a></li>
+</ul></details>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

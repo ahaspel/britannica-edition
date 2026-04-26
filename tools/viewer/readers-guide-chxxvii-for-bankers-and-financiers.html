@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Bankers And Financiers &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XXVII</span>For Bankers And Financiers</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Social History</a></li><li><a href="#sh-2">International Finance</a></li><li><a href="#sh-3">Early Economics</a></li><li><a href="#sh-4">Taxation and Tariff</a></li><li><a href="#sh-5">Private Finance</a></li><li><a href="#sh-6">Currency</a></li><li><a href="#sh-7">Banking</a></li><li><a href="#sh-8">Lives of Financiers</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">Social History</span>Of all classes of business men,
+bankers and financiers study most
+closely the general tendencies of
+public opinion and the general course of
+industrial and commercial development.
+Each day’s financial news reports a position
+which has been reached in the path
+of a movement of which the origin and
+earlier course—and therefore the direction—must
+be sought in the record of
+past months and years, and
+sometimes in the record of
+a past century. But the
+banker who turns to the
+standard histories in his library with the
+desire to trace the course of any gradual
+and long-continued development is generally
+disappointed.
+It is only of late that historical investigation
+has been directed to social
+and commercial activities rather than to
+politics and wars. Yet the history of
+civilization may be said to lie in the
+course of finance and commerce much
+more than in party strife and in civil and
+international wars. For the latter always
+arrest for the moment, even if they
+ultimately further, the progress of civilization.</p>
+
+<p><span class="shoulder-heading" id="sh-2">International Finance</span>The new Britannica has been called
+“the most comprehensive of all surveys
+of past and present civilization,” and its
+treatment of finance and commerce possesses
+a breadth and sweep directly due
+to the international character of the
+book. The American financier knows
+that under existing conditions he must
+take into account the laws and usages of
+foreign countries in regard to banking,
+currency, taxation, stock exchange transactions,
+corporations and all the other
+methods and appliances used in dealing
+with money and credit. The Britannica
+could not have covered this broad field
+authoritatively if its articles had all been
+written by Americans instead of being
+contributed, as they are, by specialists of
+twenty countries. And the very first
+step, in examining any question of American
+finance, may be to consider what has
+been done abroad.
+For example, there
+has been adopted in
+Louisiana a system
+of rural credit such as was strongly urged,
+for more general use, during President
+Taft’s administration. That would seem
+to be purely a matter of internal policy.
+But for a description of the actual working
+of such a system, the sources of information
+are in the Britannica article
+<span class="sc"><a href="/article/22-0834-s7/raiffeisen__friedrich_wilhelm">Raiffeisen</a></span> (Vol. 22, p. 817), the German
+banker who perfected the system of agrarian
+credits, in the article <span class="sc"><a href="/article/24-0401-s3/schulze-delitzsch__franz_hermann">Schulze-Delitzsch</a></span>
+(Vol. 24, p. 383), the Saxon
+economist who founded the German central
+bureau of co-operative societies, and
+in the article <span class="sc"><a href="/article/07-0097-co-operation/co-operation">Co-Operation</a></span> (Vol. 7, p.
+82), where the Danish system of financing
+farmers is described and compared with
+the German and French methods.</p>
+
+<p>Systematic reading in the Britannica
+on financial subjects should begin with
+the article <span class="sc"><a href="/article/10-0361-s5/finance">Finance</a></span> (Vol. 10, p. 347,
+equivalent to 20 pages of this Guide), by
+<a href="/contributors.html?q=Charles+Francis+Bastable">C. F. Bastable</a>, professor of political
+economy in the University of Dublin,
+whose books on economics have been
+largely read in the United States. This
+article deals with state revenue and expenditure,
+or <i>public</i> finance, after pointing
+out the prevailing looseness in the
+use of the word finance. It is interesting
+to know that “in the later middle ages,
+especially in Germany, the word <i>finance</i>
+acquired the sense of usurious or oppressive
+dealing with money and capital.”
+So long ago did an unpopular meaning
+attach to a term connected with “big
+business.” The same is true of the word
+<i>usury</i>, which originally meant use, or interest;
+and the Britannica in an article on
+<span class="sc"><a href="/article/27-0836-s6/usury">Usury</a></span> (Vol. 27, p. 811) says “usury, if
+used in the old sense of the term could
+embrace a multitude of modes of receiving
+interest upon capital to which not the
+slightest moral taint is attached.” In
+each case there may have been some
+reason besides chance for the development
+of the unpleasant meaning, and it
+has always been the custom of the spendthrift
+and the gambler to make the wrong
+use of words as well as of business methods.
+But what we call public finance was
+a century ago called political economy,
+“political” being used strictly to apply to
+the state, and “economy” in its original
+sense of housekeeping or house-rule. The
+word “economy” has thus become broader,
+as the word “usury” has become narrower,
+in significance.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Early Economics</span>It is curious to see how one page after
+another of the historical section of this
+article describes theories of finance which
+are to-day propounded by popular
+agitators as if they were absolutely new
+and not only describes
+them but
+shows how they were
+tried and how they
+failed. The eastern empires taxed land
+produce, usually to the extent of one fourth
+or one fifth (two tithes). In Athens, under
+a more elaborate system, the state owned
+and administered agricultural land and
+silver mines, and yet this state ownership,
+instead of making for democratic equality,
+resulted in too rigid a separation of
+classes; and the Athenian attempt to
+surtax the rich citizens in order to defray
+the cost of public games and theatrical
+performances and to equip ships (in this
+case a close parallel to certain recent German
+legislation) led, as class taxation always
+does, to ingenious evasions and, in
+the end, increased the power it sought to
+restrict.</p>
+
+<p>In Rome, home taxes were suspended
+as soon as conquests brought tribute from
+Spain and Africa. But taxes were always
+the curse of the provinces, and the vexatious
+<i>method</i> of the tax “may be regarded
+as an additional tax.” “The defects of
+the financial organization were a serious
+influence in the complex of causes that
+brought about the fall of the Republic.”
+The early Empire took its revenues from
+public lands, from monopolies, from the
+land tax, from customs, and from taxes
+on inheritances (5%), sales (10%) and
+the purchase of slaves (40%). There was
+no just distribution of taxation among
+the territorial divisions, and the burden
+fell too much upon the actual workers and
+their employers. In the kingdoms which
+succeeded the Empire after its fall, Roman
+customs survived in finance, as in
+all departments of government; and there
+was a want of coherent policy until the
+time of Charlemagne, when centralization
+produced a better system. But scientific
+taxation did not really exist until,
+in the 15th century, under Charles VII,
+the first French standing army was
+created, and its needs led to a new and
+more intelligent system. In England,
+the co-ordination and control of public
+revenue and expenditure was similarly
+due to the growth of the navy. Since
+then the tendency has been to include
+taxes in general categories; the need for
+national credit has developed a system
+of national debts; and expenditures and
+receipts are now governed by legislative
+sanction. Local finance has been revolutionized
+by modern business methods, too
+slowly adopted it is true, and by the gradual
+change from private to public control
+of water supply, lighting and transportation.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Taxation and Tariff</span>The articles <span class="sc"><a href="/article/26-0487-taxation/taxation">Taxation</a></span>, <span class="sc"><a href="/article/19-0281-s5/national_debt">National
+Debt</a></span> and <span class="sc"><a href="/article/26-0451-s3/tariff">Tariff</a></span> should be read after
+this article on public finance. <span class="sc"><a href="/article/26-0487-taxation/taxation">Taxation</a></span>
+(Vol. 26, p. 458;
+equivalent to 25
+pages of this Guide),
+by Sir <a href="/contributors.html?q=Sir+Robert+Giffen">Robert Giffen</a>,
+formerly Controller-General of the British
+Board of Trade, classifies taxes, points
+out that direct and indirect taxes are not
+intrinsically different and that such a
+classification is merely a matter of convenience,
+and the article proceeds to describe
+the principal taxes. It should be
+supplemented by reading the sections on
+finance in the articles on various countries
+and especially by the article <span class="sc"><a href="/article/09-0490-english-finance/english_finance">English
+Finance</a></span> (Vol. 9, p. 458; equivalent
+to 25 pages in this Guide), the section
+on Finance in the article <span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>
+(Vol. 27, p. 660) and similar sections in
+the articles on each of the states of the
+Union. These articles give definite information
+about public debts, national or
+state, but the student should read carefully
+the main treatment in the article
+<span class="sc"><a href="/article/19-0281-s5/national_debt">National Debt</a></span> (Vol. 19, p. 266). The
+articles <span class="sc"><a href="/article/26-0451-s3/tariff">Tariff</a></span> (Vol. 26, p. 422), by Prof.
+F. W. Taussig of Harvard, author of <i>The
+Tariff History of the United States</i>; <span class="sc"><a href="/article/22-0479-protection/protection">Protection</a></span>
+(Vol. 22, p. 464), by <a href="/contributors.html?q=Edmund+Janes+James">Edmund
+Janes James</a>, president of the University
+of Illinois and author of the well-known
+<i>History of American Tariff Legislation</i>;
+and <span class="sc"><a href="/article/11-0100-s6/free_trade">Free Trade</a></span> (Vol. 11, p. 88), by
+William Cunningham, author of <i>Growth
+of English Industry and Commerce</i>, will be
+of great interest. The student should
+read besides the sketches in the Britannica
+of <span class="sc"><a href="/article/06-0486-clay-henry/clay__henry">Henry Clay</a></span> (Vol. 6, p. 470), by
+<a href="/contributors.html?q=Hon.+Carl+Schurz">Carl Schurz</a>, of <span class="sc"><a href="/article/17-0270-s3/mackinac_island">William McKinley</a></span>
+(Vol. 17, p. 256), <span class="sc"><a href="/article/18-0499-s4/mills__roger_quarles">Roger Q. Mills</a></span> (Vol.
+18, p. 475), and of other American tariff-leaders,
+and, for the tariff reform movement
+in England, the articles on <span class="sc"><a href="/article/05-0849-chamberlain-joseph/chamberlain__joseph">Joseph
+Chamberlain</a></span> (Vol. 5, p. 813) and <span class="sc"><a href="/article/03-0267-s4/balfour__arthur_james">Arthur
+J. Balfour</a></span> (Vol. 3, p. 250). Before
+turning from public to private finance the
+reader should study the articles <span class="sc"><a href="/article/10-0066-s2/exchequer">Exchequer</a></span>
+(Vol. 10, p. 54) and <span class="sc"><a href="/article/27-0243-treasury/treasury">Treasury</a></span>
+(Vol. 27, p. 228).</p>
+
+<p><span class="shoulder-heading" id="sh-5">Private Finance</span>For what may be called <i>private</i> finance,
+the student should turn first to the article
+<span class="sc"><a href="/article/03-0351-banks-and-banking/banks_and_banking">Banks and Banking</a></span> (Vol. 3, p. 334;
+equivalent to nearly 60
+pages in this Guide), by
+Sir <a href="/contributors.html?q=Sir+Robert+Harry+Inglis+Palgrave">R. H. I. Palgrave</a>, director
+of Barclay &amp; Co.,
+Ltd., Bankers; <a href="/contributors.html?q=Charles+Arthur+Conant">Charles A. Conant</a>, author
+of <i>The Principles of Money and Banking</i>;
+and Sir J. R. Paget, author of the <i>Law
+of Banking</i>. Further information on the
+early history of banking in the United
+States will be found in the historical
+section of the article <span class="sc"><a href="/article/15-0122-jack/jack">United States</a></span>
+(Vol. 27, especially p. 697), and in the
+article <span class="sc"><a href="/article/15-0123-s4/jackson__andrew">Andrew Jackson</a></span> (Vol. 15, p. 107)
+by Prof. W. G. Sumner of Yale.</p>
+
+<p><span class="shoulder-heading" id="sh-6">Currency</span>Next in his course of reading, he should
+study the article <span class="sc"><a href="/article/18-0724-money-part-1/money_part_1">Money</a></span> (Vol. 18, p.
+694; equivalent to 45 pages in this Guide),
+by <a href="/contributors.html?q=Charles+Francis+Bastable">C. F. Bastable</a>.
+This deals with: the
+functions and varieties
+of money, including coined money
+and all else that can take its place <i>in
+facilitating exchange</i>, <i>in estimating comparative
+values</i>, <i>as a standard of value</i> or
+of <i>deferred payments</i>, as <i>a store of value</i>;
+the determining causes of the value of
+money and of the quantity of money
+required by a country, the credit theory,
+early forms of currency—greenstones,
+ochre, shells, furs, oxen, grain; metals
+as money; coinage and state control;
+representative money, and credit as
+money; economic aspects of the production
+and consumption of precious
+metals; review of the history of some
+important currencies—Greek, Roman,
+medieval, English and French coinages
+are treated in the article <span class="sc"><a href="/article/19-0901-numismatics/numismatics">Numismatics</a></span>
+(Vol. 19, pp. 869–911, equivalent to 135
+pages of this Guide, with 6 plates and
+11 other text illustrations); which discusses
+such questions as the constitution
+of money; typical currency systems;
+statistics of production of gold and silver
+since the discovery of America, and
+coinage systems. Other relevant articles
+are <span class="sc"><a href="/article/03-0969-bimetallism/bimetallism">Bimetallism</a></span>, and <span class="sc"><a href="/article/18-0724-monetary-conferences/monetary_conferences">Monetary Conferences</a></span>
+for the relation of the metals;
+and the articles <span class="sc"><a href="/article/12-0209-gold/gold">Gold</a></span>, <span class="sc"><a href="/article/25-0128-s3/silver">Silver</a></span>, <span class="sc"><a href="/article/24-0616-seigniorage/seigniorage">Seigniorage</a></span>,
+<span class="sc"><a href="/article/08-0019-demonetization/demonetization">Demonetization</a></span>, <span class="sc"><a href="/article/12-0608-s2/gresham_s_law">Gresham’s Law</a></span>,
+<span class="sc"><a href="/article/26-1087-token-money/token_money">Token Money</a></span> and <span class="sc"><a href="/article/12-0562-s2/greenbacks">Greenbacks</a></span>. In
+the article on the <span class="sc"><a href="/article/11-0769-george-junior-republic/george_junior_republic">George Junior Republic</a></span>
+(Vol. 11, p. 749), the “children’s
+state” at Freeville, N. Y., the student
+will find an interesting proof of the relation
+of “token” to “real” money. “The
+government issued its own currency in
+tin and later in aluminium and ‘American’
+money could not be passed within the
+48 acres of the Republic until 1906,
+when depreciation forced the Republic’s
+coinage out of use and ‘American’ coin
+was made legal tender.”</p>
+
+<p><span class="shoulder-heading" id="sh-7">Banking</span>For information as to the methods of
+financial business the reader should study
+the articles <span class="sc"><a href="/article/24-0258-savings-banks/savings_banks">Savings Banks</a></span> (Vol. 24, p.
+243) by Sir <a href="/contributors.html?q=Sir+George+Christopher+Trout+Bartley">G. C. T. Bartley</a>,
+founder of the National
+Penny Bank, and Bradford
+Rhodes, founder of the 34th St. National
+Bank, N. Y. <span class="sc"><a href="/article/11-0230-friendly-societies/friendly_societies">Friendly Societies</a></span> (Vol.
+11, p. 217); <span class="sc"><a href="/article/27-0346-s5/trust_company">Trust Company</a></span> (Vol. 27, p.
+329), by <a href="/contributors.html?q=Charles+Arthur+Conant">Charles A. Conant</a>, author of
+<i>The Principles of Money and Banking</i>;
+<span class="sc"><a href="/article/06-0492-clearing-house/clearing-house">Clearing House</a></span> (Vol. 6, p. 476); <span class="sc"><a href="/article/16-0521-letter-of-credit/letter_of_credit">Letter
+of Credit</a></span> (Vol. 16, p. 501); <span class="sc"><a href="/article/25-0954-stock-exchange/stock_exchange">Stock
+Exchange</a></span> (Vol. 25, p. 930); <span class="sc"><a href="/article/03-0963-bill-of-exchange/bill_of_exchange">Bill of Exchange</a></span>
+(Vol. 3, p. 940); <span class="sc"><a href="/article/10-0062-exchange/exchange">Exchange</a></span>
+(Vol. 10, p. 50); <span class="sc"><a href="/article/11-0393-s5/futures">Futures</a></span> (Vol. 11, p.
+375); <span class="sc"><a href="/article/26-1028-s2/time_bargains">Time Bargains</a></span> (Vol. 26, p. 988);
+<span class="sc"><a href="/article/17-0748-s2/market">Market</a></span> (Vol. 17, p. 731), by <a href="/contributors.html?q=Wynnard+Hooper">Wynnard
+Hooper</a>, financial editor of <i>The Times</i>,
+London, with sections on Movements of
+Prices, Cycles, Tendency to Equilibrium,
+Disturbance of Equilibrium, Future Delivery,
+Corners, Money Market, The Great
+Banks, Foreign Loans, and Discount
+Houses; <span class="sc"><a href="/article/06-1004-consols/consols">Consols</a></span> (Vol. 6, p. 979); <span class="sc"><a href="/article/07-0338-coupon/coupon">Coupon</a></span>
+(Vol. 7, p. 318); <span class="sc"><a href="/article/08-0348-dividend/dividend">Dividend</a></span> (Vol. 8,
+p. 331); and <span class="sc"><a href="/article/22-0293-premium/premium">Premium</a></span> (Vol. 22, p. 279).</p>
+
+<p>Information on distinctive banking
+and business laws in the separate states
+will be found in the section on finance
+of the article on each state. For instance
+in the article <span class="sc"><a href="/article/20-0079-oklahoma/oklahoma">Oklahoma</a></span> (Vol. 20,
+p. 60) there is a summary of the bank
+deposit guaranty fund.</p>
+
+<p>For insurance see the chapter in this
+Guide <i>For Insurance Men</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-8">Lives of Financiers</span>In financial biography, as in history,
+theory and practice, the Britannica is
+valuable because of its full, clear and
+authoritative
+treatment. The student
+will find articles
+on great financiers,
+such as the Astors, the Vanderbilts,
+the Barings, the Rothschilds, <a href="/contributors.html?q=Edmund+Janes+James">James</a>
+Law, George Peabody, <a href="/contributors.html?q=Edmund+Janes+James">James</a> Fisk, Jay
+Gould, E. H. Harriman, <a href="/contributors.html?q=Edmund+Janes+James">James</a> J. Hill,
+J. P. Morgan; and on great authors on
+the subjects of economics and finance,—for
+instance, Malthus, Adam Smith, Walter
+Bagehot, Ricardo, Roscher, Boehm
+von Bawerk, Thorold Rogers, H. C.
+Carey, E. R. A. Seligman, F. A. Walker,
+J. W. Jenks, F. W. Taussig, Richmond
+Mayo-Smith and A. T. Hadley.</p>
+
+<details class="article-list"><summary><span class="list-title">ALPHABETICAL LIST OF ARTICLES IN THE ENCYCLOPAEDIA BRITANNICA OF INTEREST TO BANKERS</span><span class="list-count"> (315 articles)</span></summary>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0154-s1/account">Account</a></li>
+  <li class="c018"><a href="/article/01-0154-s3/accountants">Accountants</a></li>
+  <li class="c018"><a href="/article/01-0173-s10/achenwall__gottfried">Achenwall, Gottfried</a></li>
+  <li class="c018"><a href="/article/01-0206-s3/adams__henry_carter">Adams, Henry Carter</a></li>
+  <li class="c018"><a href="/article/01-0414-s2/agio">Agio</a></li>
+  <li class="c018"><a href="/article/01-0465-s5/aguado__alexandre_marie">Aguado, A. M.</a></li>
+  <li class="c018"><a href="/article/01-0558-s5/alcavala">Alcavala</a></li>
+  <li class="c018"><a href="/article/01-0576-s6/aldrich__nelson_wilmarth">Aldrich, N. W.</a></li>
+  <li class="c018"><a href="/article/01-0751-s2/allport__sir_james_joseph">Allport, Sir J. J.</a></li>
+  <li class="c018">Alstromer, Jonas</li>
+  <li class="c018"><a href="/article/01-0928-s2/amortization">Amortization</a></li>
+  <li class="c018"><a href="/article/02-0015-s8/angel">Angel</a></li>
+  <li class="c018"><a href="/article/02-0070-s3/anna">Anna</a></li>
+  <li class="c018"><a href="/article/02-0086-s4/annuity">Annuity</a></li>
+  <li class="c018"><a href="/article/02-0338-s4/arbitrage">Arbitrage</a></li>
+  <li class="c018">Armour, P. L.</li>
+  <li class="c018">Ashley, W. J.</li>
+  <li class="c018"><a href="/article/02-0827-s3/assignats">Assignats</a></li>
+  <li class="c018"><a href="/article/02-0839-s7/astor__john_jacob">Astor, John Jacob (and family)</a></li>
+  <li class="c018"><a href="/article/02-0900-s5/atkinson__edward">Atkinson, Edward</a></li>
+  <li class="c018"><a href="/article/02-0935-s5/attwood__thomas">Attwood, Thomas</a></li>
+  <li class="c018">Audit and Auditor</li>
+  <li class="c018"><a href="/article/03-0152-s6/backwardation">Backwardation</a></li>
+  <li class="c018"><a href="/article/03-0215-s3/bagehot__walter">Bagehot, Walter</a></li>
+  <li class="c018"><a href="/article/03-0252-s3/balance_of_trade">Balance of Trade</a></li>
+  <li class="c018">Bank Notes</li>
+  <li class="c018"><a href="/article/03-0338-bank-rate/bank_rate">Bank Rate</a></li>
+  <li class="c018"><a href="/article/03-0351-banks-and-banking/banks_and_banking">Banks and Banking</a></li>
+  <li class="c018"><a href="/article/03-0406-barbon-nicholas/barbon__nicholas">Barbon, Nicholas</a></li>
+  <li class="c018"><a href="/article/03-0418-baring/baring">Baring (family)</a></li>
+  <li class="c018"><a href="/article/03-0464-barter/barter">Barter</a></li>
+  <li class="c018"><a href="/article/03-0517-bastiat-fr-d-ric/bastiat__frédéric">Bastiat, Frédéric</a></li>
+  <li class="c018"><a href="/article/03-0527-bates-joshua/bates__joshua">Bates, Joshua</a></li>
+  <li class="c018"><a href="/article/03-0554-baudrillart-henri-joseph-l-on/baudrillart__henri_joseph_léon">Baudrillart, H. J. L.</a></li>
+  <li class="c018"><a href="/article/03-0568-bawbee/bawbee">Bawbee</a></li>
+  <li class="c018"><a href="/article/03-0570-baxter-robert-dudley/baxter__robert_dudley">Baxter, Robert Dudley</a></li>
+  <li class="c018"><a href="/article/03-0734-bemis-edward-webster/bemis__edward_webster">Bemis, E. W.</a></li>
+  <li class="c018"><a href="/article/03-0861-bezant/bezant">Bezant</a></li>
+  <li class="c018"><a href="/article/03-0942-biddle-nicholas/biddle__nicholas">Biddle, Nicholas</a></li>
+  <li class="c018"><a href="/article/03-0963-bill-of-exchange/bill_of_exchange">Bill of Exchange</a></li>
+  <li class="c018"><a href="/article/03-0969-bimetallism/bimetallism">Bimetallism</a></li>
+  <li class="c018"><a href="/article/04-0055-blanqui-j-r-me-adolphe/blanqui__jérôme_adolphe">Blanqui, J. A.</a></li>
+  <li class="c018"><a href="/article/04-0085-bliss-cornelius-newton/bliss__cornelius_newton">Bliss, C. N.</a></li>
+  <li class="c018"><a href="/article/04-0085-block-maurice/block__maurice">Block, Maurice</a></li>
+  <li class="c018"><a href="/article/04-0122-bodin-jean/bodin__jean">Bodin, Jean</a></li>
+  <li class="c018"><a href="/article/04-0123-bodle/bodle">Bodle</a></li>
+  <li class="c018"><a href="/article/04-0125-boehm-von-bawerk-eugen/boehm_von_bawerk__eugen">Boehm von Bawerk</a></li>
+  <li class="c018">Boisguilbert, Sieur de</li>
+  <li class="c018"><a href="/article/04-0239-book-keeping/book-keeping">Book-keeping</a></li>
+  <li class="c018"><a href="/article/04-0349-bourse/bourse">Bourse</a></li>
+  <li class="c018"><a href="/article/04-0493-breaking-bulk/breaking_bulk">Breaking Bulk</a></li>
+  <li class="c018"><a href="/article/04-0514-brentano-ludwig-joseph/brentano__ludwig_joseph">Brentano, L. J.</a></li>
+  <li class="c018"><a href="/article/04-0652-s3/broker">Broker</a></li>
+  <li class="c018"><a href="/article/04-0743-s9/bucketshop">Bucketshop</a></li>
+  <li class="c018"><a href="/article/04-0773-s4/budget">Budget</a></li>
+  <li class="c018"><a href="/article/04-0814-s2/bullion">Bullion</a></li>
+  <li class="c018"><a href="/article/04-0918-s4/buying_in">Buying in</a></li>
+  <li class="c018"><a href="/article/04-0976-s6/cairnes__john_elliott">Cairnes, John Elliott</a></li>
+  <li class="c018"><a href="/article/05-0067-call/call">Call</a></li>
+  <li class="c018"><a href="/article/05-0292-capital-punishment/capital_punishment">Capital</a></li>
+  <li class="c018"><a href="/article/05-0342-carey-henry-charles/carey__henry_charles">Carey, Henry Charles</a></li>
+  <li class="c018"><a href="/article/05-0352-carli-rubbi-giovanni-rinaldo/carli-rubbi__giovanni_rinaldo">Carli-Rubbi</a></li>
+  <li class="c018">Carrying-over</li>
+  <li class="c018"><a href="/article/05-0462-cash/cash">Cash</a></li>
+  <li class="c018"><a href="/article/05-0991-chase-salmon-portland/chase__salmon_portland">Chase, S. P.</a></li>
+  <li class="c018"><a href="/article/06-0094-cheque/cheque">Cheque, or Check</a></li>
+  <li class="c018"><a href="/article/06-0126-chevalier-michel/chevalier__michel">Chevalier, Michel</a></li>
+  <li class="c018"><a href="/article/06-0148-child-sir-josiah/child__sir_josiah">Child, Sir Josiah</a></li>
+  <li class="c018"><a href="/article/06-0405-circular-note/circular_note">Circular Note</a></li>
+  <li class="c018"><a href="/article/06-0434-claflin-horace-brigham/claflin__horace_brigham">Claflin, H. B.</a></li>
+  <li class="c018"><a href="/article/06-0458-clark-john-bates/clark__john_bates">Clark, John Bates</a></li>
+  <li class="c018">Clearing House</li>
+  <li class="c018"><a href="/article/06-0673-cohn-gustav/cohn__gustav">Cohn, Gustav</a></li>
+  <li class="c018"><a href="/article/06-0674-coin/coin">Coin</a></li>
+  <li class="c018">Coeur, Jacques</li>
+  <li class="c018"><a href="/article/06-0758-colston-edward/colston__edward">Colston, Edward</a></li>
+  <li class="c018"><a href="/article/06-0774-combination/combination">Combination</a></li>
+  <li class="c018"><a href="/article/06-0790-commerce/commerce">Commerce</a></li>
+  <li class="c018"><a href="/article/06-0795-commercial-treaties/commercial_treaties">Commercial Treaties</a></li>
+  <li class="c018"><a href="/article/06-1004-consols/consols">Consols</a></li>
+  <li class="c018"><a href="/article/07-0038-contango/contango">Contango</a></li>
+  <li class="c018"><a href="/article/07-0088-cooke-jay/cooke__jay">Cooke, Jay</a></li>
+  <li class="c018"><a href="/article/07-0097-co-operation/co-operation">Co-operation</a></li>
+  <li class="c018"><a href="/article/07-0095-cooper-peter/cooper__peter">Cooper, Peter</a></li>
+  <li class="c018"><a href="/article/07-0234-cossa-luigi/cossa__luigi">Cossa, Luigi</a></li>
+  <li class="c018"><a href="/article/07-0328-coulisse/coulisse">Coulisse</a></li>
+  <li class="c018"><a href="/article/07-0338-coupon/coupon">Coupon</a></li>
+  <li class="c018"><a href="/article/07-0339-courcelle-seneuil-jean-gustave/courcelle-seneuil__jean_gustave">Courcelle-Seneuil, J. G.</a></li>
+  <li class="c018"><a href="/article/07-0341-cournot-antoine-augustin/cournot__antoine_augustin">Cournot, A.</a></li>
+  <li class="c018"><a href="/article/07-0357-coutts-thomas/coutts__thomas">Coutts, Thomas</a></li>
+  <li class="c018"><a href="/article/07-0363-cover/cover">Cover</a></li>
+  <li class="c018"><a href="/article/07-0410-credit/credit">Credit</a></li>
+  <li class="c018"><a href="/article/07-0410-cr-dit-foncier/crédit_foncier">Crédit Foncier</a></li>
+  <li class="c018"><a href="/article/07-0499-crockford-william/crockford__william">Crockford, William</a></li>
+  <li class="c018"><a href="/article/07-0527-crore/crore">Crore</a></li>
+  <li class="c018"><a href="/article/07-0537-crown/crown">Crown (coin)</a></li>
+  <li class="c018"><a href="/article/07-0655-cunningham-william/cunningham__william">Cunningham, William</a></li>
+  <li class="c018">Custom Duties</li>
+  <li class="c018">Custom House</li>
+  <li class="c018"><a href="/article/07-0875-davenant-charles/davenant__charles">Davenant, Charles</a></li>
+  <li class="c018"><a href="/article/07-0937-decker-sir-matthew/decker__sir_matthew">Decker, Sir Matthew</a></li>
+  <li class="c018"><a href="/article/07-0936-decimal-coinage/decimal_coinage">Decimal Coinage</a></li>
+  <li class="c018"><a href="/article/07-0977-delessert-jules-paul-benjamin/delessert__jules_paul_benjamin">Delessert, J. P. B.</a></li>
+  <li class="c018"><a href="/article/07-0978-delfico-melchiorre/delfico__melchiorre">Delfico, Melchiorre</a></li>
+  <li class="c018"><a href="/article/08-0019-demonetization/demonetization">Demonetization</a></li>
+  <li class="c018"><a href="/article/08-0154-dewey-davis-rich/dewey__davis_rich">Dewey, Davis Rich</a></li>
+  <li class="c018"><a href="/article/08-0290-dime/dime">Dime</a></li>
+  <li class="c018"><a href="/article/08-0329-discount/discount">Discount</a></li>
+  <li class="c018"><a href="/article/08-0340-distribution/distribution">Distribution</a></li>
+  <li class="c018"><a href="/article/08-0348-dividend/dividend">Dividend</a></li>
+  <li class="c018"><a href="/article/08-0381-dock-warrant/dock_warrant">Dock Warrant</a></li>
+  <li class="c018"><a href="/article/08-0410-dollar-coin/dollar__coin_">Dollar</a></li>
+  <li class="c018"><a href="/article/08-0574-drawback/drawback">Drawback</a></li>
+  <li class="c018"><a href="/article/08-0604-drexel-anthony-joseph/drexel__anthony_joseph">Drexel, A. J.</a></li>
+  <li class="c018"><a href="/article/08-0655-ducat/ducat">Ducat</a></li>
+  <li class="c018"><a href="/article/09-0318-ely-richard-theodore/ely__richard_theodore">Ely, Richard Theodore</a></li>
+  <li class="c018"><a href="/article/09-0430-engel-ernst/engel__ernst">Engel, Ernst</a></li>
+  <li class="c018"><a href="/article/09-0490-english-finance/english_finance">English Finance</a></li>
+  <li class="c018"><a href="/article/10-0062-exchange/exchange">Exchange</a></li>
+  <li class="c018"><a href="/article/10-0066-s2/exchequer">Exchequer</a></li>
+  <li class="c018"><a href="/article/10-0070-excise/excise">Excise</a></li>
+  <li class="c018"><a href="/article/10-0199-farr-william/farr__william">Farr, William</a></li>
+  <li class="c018">Farrer, Baron</li>
+  <li class="c018"><a href="/article/10-0203-farthing/farthing">Farthing</a></li>
+  <li class="c018"><a href="/article/10-0567-florin/florin">Florin</a></li>
+  <li class="c018"><a href="/article/10-0334-field-cyrus-west/field__cyrus_west">Field, Cyrus West</a></li>
+  <li class="c018"><a href="/article/10-0453-s4/fisk__james">Fisk, James</a></li>
+  <li class="c018"><a href="/article/10-0467-fix-th-odore/fix__théodore">Fix, Theodore</a></li>
+  <li class="c018">Fouquet, Nicolas</li>
+  <li class="c018"><a href="/article/10-0795-franc/franc">Franc</a></li>
+  <li class="c018"><a href="/article/11-0100-s6/free_trade">Free Trade</a></li>
+  <li class="c018"><a href="/article/11-0230-friendly-societies/friendly_societies">Friendly Societies</a></li>
+  <li class="c018"><a href="/article/11-0393-s5/futures">Futures</a></li>
+  <li class="c018"><a href="/article/11-0397-s2/gabelle">Gabelle</a></li>
+  <li class="c018"><a href="/article/11-0432-gallatin-albert/gallatin__albert">Gallatin, Albert</a></li>
+  <li class="c018"><a href="/article/11-0470-ganilh-charles/ganilh__charles">Ganilh, Charles</a></li>
+  <li class="c018"><a href="/article/11-0489-garnier-cl-ment-joseph/garnier__clément_joseph">Garnier, C. J.</a></li>
+  <li class="c018"><a href="/article/11-0490-s4/garnier__marie_joseph_françois">Garnier, Marquis</a></li>
+  <li class="c018"><a href="/article/11-0620-genovesi-antonio/genovesi__antonio">Genovesi, Antonio</a></li>
+  <li class="c018"><a href="/article/11-0767-s7/george__henry">George, Henry</a></li>
+  <li class="c018"><a href="/article/12-0017-s6/giffen__sir_robert">Giffen, Sir Robert</a></li>
+  <li class="c018"><a href="/article/12-0027-gilds/gilds">Gilds</a></li>
+  <li class="c018"><a href="/article/12-0019-s4/gilbart__james_william">Gilbart, James William</a></li>
+  <li class="c018"><a href="/article/12-0043-s3/gioja__melchiorre">Gioja, Melchiorre</a></li>
+  <li class="c018"><a href="/article/12-0058-s3/girard__stephen">Girard, Stephen</a></li>
+  <li class="c018"><a href="/article/12-0231-s2/goldsmid">Goldsmid (family)</a></li>
+  <li class="c018"><a href="/article/12-0301-s7/gould__jay">Gould, Jay (and family)</a></li>
+  <li class="c018"><a href="/article/12-0339-s3/grain_trade">Grain Trade</a></li>
+  <li class="c018"><a href="/article/12-0562-s2/greenbacks">Greenbacks</a></li>
+  <li class="c018"><a href="/article/12-0607-s2/gresham__sir_thomas">Gresham, Sir Thomas</a></li>
+  <li class="c018"><a href="/article/12-0608-s2/gresham_s_law">Gresham’s Law</a></li>
+  <li class="c018"><a href="/article/12-0635-s4/groat">Groat</a></li>
+  <li class="c018"><a href="/article/12-0721-s3/guinea">Guinea</a></li>
+  <li class="c018"><a href="/article/12-0757-s4/gurney">Gurney (family)</a></li>
+  <li class="c018"><a href="/article/12-0823-hadley-arthur-twining/hadley__arthur_twining">Hadley, A. T.</a></li>
+  <li class="c018"><a href="/article/12-0905-hamilton-alexander/hamilton__alexander">Hamilton, Alexander</a></li>
+  <li class="c018"><a href="/article/12-0912-s4/hamilton__robert">Hamilton, Robert</a></li>
+  <li class="c018"><a href="/article/12-0944-s4/hanna__marcus_alonzo">Hanna, M. A.</a></li>
+  <li class="c018"><a href="/article/13-0031-s2/harriman__edward_henry">Harriman, Edward H.</a></li>
+  <li class="c018">Haxthausen, L. von</li>
+  <li class="c018"><a href="/article/13-0382-hermann-friedrich-benedict-wilhelm-von/hermann__friedrich_benedict_wilhelm_von">Hermann, F. B. W. von</a></li>
+  <li class="c018"><a href="/article/13-0483-s2/hill">Hill, James J.</a></li>
+  <li class="c018"><a href="/article/13-0726-horner-francis/horner__francis">Horner, Francis</a></li>
+  <li class="c018"><a href="/article/13-0802-s4/horton__samuel_dana">Horton, Samuel Dana</a></li>
+  <li class="c018"><a href="/article/13-0874-s2/hudson__george">Hudson, George</a></li>
+  <li class="c018"><a href="/article/13-0881-s3/hufeland__gottlieb">Hufeland, Gottlieb</a></li>
+  <li class="c018"><a href="/article/14-0375-income-tax/income_tax">Income Tax</a></li>
+  <li class="c018"><a href="/article/14-0596-ingram-john-kells/ingram__john_kells">Ingram, J. K.</a></li>
+  <li class="c018"><a href="/article/14-0687-insurance/insurance">Insurance</a></li>
+  <li class="c018"><a href="/article/14-0754-invoice/invoice">Invoice</a></li>
+  <li class="c018"><a href="/article/15-0145-jakob-ludwig-heinrich-von/jakob__ludwig_heinrich_von">Jakob, L. H. von</a></li>
+  <li class="c018"><a href="/article/15-0343-jenks-jeremiah-whipple/jenks__jeremiah_whipple">Jenks, J. W.</a></li>
+  <li class="c018"><a href="/article/15-0372-s2/jesup__morris_ketchum">Jesup, M. K.</a></li>
+  <li class="c018"><a href="/article/15-0386-jevons-william-stanley/jevons__william_stanley">Jevons, William S.</a></li>
+  <li class="c018"><a href="/article/15-0527-s5/jones__richard">Jones, Richard</a></li>
+  <li class="c018"><a href="/article/15-0731-s2/kay__joseph">Kay, Joseph</a></li>
+  <li class="c018"><a href="/article/16-0104-laing-samuel/laing__samuel">Laing, Samuel</a></li>
+  <li class="c018"><a href="/article/16-0114-s6/lakh">Lakh</a></li>
+  <li class="c018">Laveleye, E. L. V. de</li>
+  <li class="c018"><a href="/article/16-0317-s3/law__john">Law, John</a></li>
+  <li class="c018"><a href="/article/16-0324-lawrence-amos/lawrence__amos">Lawrence, Amos</a></li>
+  <li class="c018"><a href="/article/16-0499-s2/le_play__pierre_guillaume_frédéric">Le Play, P. G. Frédéric</a></li>
+  <li class="c018"><a href="/article/16-0505-s5/leroy-beaulieu__pierre_paul">Leroy-Beaulieu, P. P.</a></li>
+  <li class="c018"><a href="/article/16-0512-s4/leslie__thomas_edward_cliffe">Leslie, Thomas E. C.</a></li>
+  <li class="c018"><a href="/article/16-0521-letter-of-credit/letter_of_credit">Letter of Credit</a></li>
+  <li class="c018"><a href="/article/16-0525-s5/levasseur__pierre_emile">Levasseur, Pierre Emile</a></li>
+  <li class="c018"><a href="/article/16-0531-s3/levi__leone">Levi, Leone</a></li>
+  <li class="c018"><a href="/article/16-0751-s4/lingen">Lingen, Baron</a></li>
+  <li class="c018"><a href="/article/16-0765-lipton-sir-thomas-johnstone-bart/lipton__sir_thomas_johnstone__bart">Lipton, Sir T. J.</a></li>
+  <li class="c018"><a href="/article/16-0792-lira/lira">Lira</a></li>
+  <li class="c018"><a href="/article/16-0798-s3/list__friedrich">List, Friedrich</a></li>
+  <li class="c018"><a href="/article/16-0855-s2/lloyd_s">Lloyd’s</a></li>
+  <li class="c018">M’Culloch, John R.</li>
+  <li class="c018"><a href="/article/17-0265-s5/mackay__john_william">Mackay, John William</a></li>
+  <li class="c018"><a href="/article/17-0277-macleod-henry-dunning/macleod__henry_dunning">Macleod, Henry Dunning</a></li>
+  <li class="c018"><a href="/article/17-0468-making-up-price/making-up_price">Making-up Price</a></li>
+  <li class="c018"><a href="/article/17-0532-s3/malthus__thomas_robert">Malthus, Thomas Robert</a></li>
+  <li class="c018"><a href="/article/17-0745-mark/mark">Mark</a></li>
+  <li class="c018"><a href="/article/17-0748-s2/market">Market</a></li>
+  <li class="c018"><a href="/article/17-0787-s2/marshall__alfred">Marshall, Alfred</a></li>
+  <li class="c018"><a href="/article/17-0824-s2/marx__heinrich_karl">Marx, Heinrich Karl</a></li>
+  <li class="c018"><a href="/article/17-0957-mayo-smith-richmond/mayo-smith__richmond">Mayo-Smith, Richmond</a></li>
+  <li class="c018"><a href="/article/18-0584-mint-coin/mint__coin">Mint</a></li>
+  <li class="c018"><a href="/article/18-0680-mohur/mohur">Mohur</a></li>
+  <li class="c018"><a href="/article/18-0681-moidore/moidore">Moidore</a></li>
+  <li class="c018"><a href="/article/18-0763-monopoly/monopoly">Monopoly</a></li>
+  <li class="c018"><a href="/article/18-0724-monetary-conferences/monetary_conferences">Monetary Conferences (International)</a></li>
+  <li class="c018"><a href="/article/18-0724-money-part-1/money_part_1">Money</a></li>
+  <li class="c018"><a href="/article/18-0738-money-lending/money-lending">Money-lending</a></li>
+  <li class="c018"><a href="/article/18-0832-s6/moon__sir_richard">Moon, Sir Richard</a></li>
+  <li class="c018"><a href="/article/18-0848-s7/moratorium">Moratorium</a></li>
+  <li class="c018"><a href="/article/18-0866-s3/morgan__john_pierpont">Morgan, John Pierpont</a></li>
+  <li class="c018"><a href="/article/18-0903-s3/morris__robert">Morris, Robert</a></li>
+  <li class="c018"><a href="/article/18-0914-s2/morton__levi_parsons">Morton, L. P.</a></li>
+  <li class="c018"><a href="/article/19-0015-mun-thomas/mun__thomas">Mun, Thomas</a></li>
+  <li class="c018"><a href="/article/19-0281-s5/national_debt">National Debt</a></li>
+  <li class="c018"><a href="/article/19-0542-s2/newmarch__william">Newmarch, William</a></li>
+  <li class="c018"><a href="/article/19-0785-north-sir-dudley/north__sir_dudley">North, Sir Dudley</a></li>
+  <li class="c018"><a href="/article/19-1032-octroi/octroi">Octroi</a></li>
+  <li class="c018">Overstone, 1st baron</li>
+  <li class="c018"><a href="/article/20-0801-s2/par">Par</a></li>
+  <li class="c018"><a href="/article/20-0973-s5/paterson__william">Paterson, William</a></li>
+  <li class="c018"><a href="/article/20-1035-s2/pauperism">Pauperism</a></li>
+  <li class="c018"><a href="/article/20-1040-s6/pawnbroking">Pawnbroking</a></li>
+  <li class="c018"><a href="/article/21-0018-peabody-george/peabody__george">Peabody, George</a></li>
+  <li class="c018"><a href="/article/21-0101-s4/pender__sir_john">Pender, Sir John</a></li>
+  <li class="c018"><a href="/article/21-0130-s2/penny">Penny</a></li>
+  <li class="c018">Penrhyn, 2nd baron</li>
+  <li class="c018"><a href="/article/21-0299-peseta/peseta">Peseta</a></li>
+  <li class="c018"><a href="/article/21-0357-petty-sir-william/petty__sir_william">Petty, Sir William</a></li>
+  <li class="c018"><a href="/article/21-0605-s2/picayune">Picayune</a></li>
+  <li class="c018"><a href="/article/21-0688-pistole/pistole">Pistole</a></li>
+  <li class="c018"><a href="/article/22-0020-s7/poll-tax">Poll-tax</a></li>
+  <li class="c018"><a href="/article/22-0235-pound/pound">Pound</a></li>
+  <li class="c018"><a href="/article/22-0293-premium/premium">Premium</a></li>
+  <li class="c018"><a href="/article/22-0328-price-bonamy/price__bonamy">Price, Bonamy</a></li>
+  <li class="c018"><a href="/article/22-0438-production/production">Production</a></li>
+  <li class="c018"><a href="/article/22-0438-s6/profit-sharing">Profit-sharing</a></li>
+  <li class="c018"><a href="/article/22-0479-protection/protection">Protection</a></li>
+  <li class="c018"><a href="/article/22-0504-proudhon-pierre-joseph/proudhon__pierre_joseph">Proudhon, P. J.</a></li>
+  <li class="c018"><a href="/article/22-0720-s4/pyx">Pyx</a></li>
+  <li class="c018"><a href="/article/22-0760-quesnay-fran-ois/quesnay__françois">Quesnay, François</a></li>
+  <li class="c018"><a href="/article/22-0834-s7/raiffeisen__friedrich_wilhelm">Raiffeisen, F. W.</a></li>
+  <li class="c018"><a href="/article/22-0937-rau-karl-heinrich/rau__karl_heinrich">Rau, Karl Heinrich</a></li>
+  <li class="c018"><a href="/article/22-0966-s2/rebate">Rebate</a></li>
+  <li class="c018"><a href="/article/22-0971-s3/reciprocity">Reciprocity</a></li>
+  <li class="c018"><a href="/article/23-0240-revenue/revenue">Revenue</a></li>
+  <li class="c018"><a href="/article/23-0303-s4/ricardo__david">Ricardo, David</a></li>
+  <li class="c018"><a href="/article/23-0455-s5/rockefeller__john_davison">Rockefeller, J. D.</a></li>
+  <li class="c018"><a href="/article/23-0459-rodbertus-karl-johann/rodbertus__karl_johann">Rodbertus, K. J.</a></li>
+  <li class="c018"><a href="/article/23-0477-s6/rogers__james_edwin_thorold">Rogers, James Edwin</a></li>
+  <li class="c018"><a href="/article/23-0765-s4/roscher__wilhelm_georg_friedrich">Roscher, W. G. F.</a></li>
+  <li class="c018"><a href="/article/23-0798-s3/rothschild">Rothschild (family)</a></li>
+  <li class="c018"><a href="/article/23-0835-s1/royalty">Royalty</a></li>
+  <li class="c018"><a href="/article/23-0898-rupee/rupee">Rupee</a></li>
+  <li class="c018"><a href="/article/23-1038-s3/sadler__michael_thomas">Sadler, Michael Thomas</a></li>
+  <li class="c018"><a href="/article/23-1047-s4/sage__russell">Sage, Russell</a></li>
+  <li class="c018"><a href="/article/24-0059-s5/saint-simon__claude_de_rouvroy">Saint-Simon, Comte de</a></li>
+  <li class="c018"><a href="/article/24-0258-savings-banks/savings_banks">Savings Banks</a></li>
+  <li class="c018"><a href="/article/24-0289-s2/say__jean_baptiste">Say, Jean Baptiste</a></li>
+  <li class="c018"><a href="/article/24-0290-s2/say">Say, Leon</a></li>
+  <li class="c018"><a href="/article/24-0330-s2/schäffle__albert_eberhard_friedrich">Schäffle, A. E. F.</a></li>
+  <li class="c018"><a href="/article/24-0362-s4/schmoller__gustav">Schmoller, Gustav</a></li>
+  <li class="c018"><a href="/article/24-0401-s3/schulze-delitzsch__franz_hermann">Schulze-Delitzsch, F. H.</a></li>
+  <li class="c018"><a href="/article/24-0616-seigniorage/seigniorage">Seigniorage</a></li>
+  <li class="c018"><a href="/article/24-0636-seligman-edwin-robert-anderson/seligman__edwin_robert_anderson">Seligman, E. R. A.</a></li>
+  <li class="c018"><a href="/article/24-0674-senior-nassau-william/senior__nassau_william">Senior, Nassau William</a></li>
+  <li class="c018"><a href="/article/24-0689-s4/sequin">Sequin</a></li>
+  <li class="c018"><a href="/article/24-0859-s3/shekel">Shekel</a></li>
+  <li class="c018"><a href="/article/24-0867-shell-money/shell-money">Shell-money</a></li>
+  <li class="c018"><a href="/article/24-0884-s6/sherman__john">Sherman, John</a></li>
+  <li class="c018"><a href="/article/24-0893-shilling/shilling">Shilling</a></li>
+  <li class="c018"><a href="/article/25-0227-s6/slater__john_fox">Slater, John Fox</a></li>
+  <li class="c018"><a href="/article/25-0270-s4/smith__adam">Smith, Adam</a></li>
+  <li class="c018"><a href="/article/25-0452-sou/sou">Sou</a></li>
+  <li class="c018"><a href="/article/25-0539-sovereign/sovereign">Sovereign (coin)</a></li>
+  <li class="c018"><a href="/article/25-0759-spreckels-claus/spreckels__claus">Spreckels, Claus</a></li>
+  <li class="c018"><a href="/article/25-0781-stag/stag">Stag</a></li>
+  <li class="c018"><a href="/article/25-0793-s2/stamp">Stamp</a></li>
+  <li class="c018"><a href="/article/25-0794-standards-department/standards_department">Standards Department</a></li>
+  <li class="c018"><a href="/article/25-0925-s3/sterling">Sterling</a></li>
+  <li class="c018"><a href="/article/25-0928-s2/steuart__sir_james_denham">Steuart, Sir J. D.</a></li>
+  <li class="c018"><a href="/article/25-0936-s2/stewart__alexander_turney">Stewart, A. T.</a></li>
+  <li class="c018">Stock Exchange</li>
+  <li class="c018"><a href="/article/26-0099-s4/sumner__william_graham">Sumner, W. G.</a></li>
+  <li class="c018"><a href="/article/26-0375-tael/tael">Tael</a></li>
+  <li class="c018"><a href="/article/26-0451-s3/tariff">Tariff</a></li>
+  <li class="c018"><a href="/article/26-0487-taxation/taxation">Taxation</a></li>
+  <li class="c018"><a href="/article/26-0485-s3/taussig__frank_william">Taussig, Frank William</a></li>
+  <li class="c018"><a href="/article/26-0921-thornton-henry/thornton__henry">Thornton, Henry</a></li>
+  <li class="c018"><a href="/article/26-0921-thornton-william-thomas/thornton__william_thomas">Thornton, W. T.</a></li>
+  <li class="c018"><a href="/article/26-1028-s2/time_bargains">Time Bargains</a></li>
+  <li class="c018"><a href="/article/26-1066-s3/title_guarantee_companies">Title Guarantee Companies</a></li>
+  <li class="c018"><a href="/article/26-1087-token-money/token_money">Token Money</a></li>
+  <li class="c018"><a href="/article/27-0025-s2/tonnage_and_poundage">Tonnage and Poundage</a></li>
+  <li class="c018"><a href="/article/27-0026-s5/tontine">Tontine</a></li>
+  <li class="c018"><a href="/article/27-0028-s2/tooke__thomas">Tooke, Thomas</a></li>
+  <li class="c018"><a href="/article/27-0074-s4/torrens__robert">Torrens, Robert</a></li>
+  <li class="c018"><a href="/article/27-0074-s6/torrens__william_torrens_m_cullagh">Torrens, William Torrens M’Cullagh</a></li>
+  <li class="c018"><a href="/article/27-0351-s2/trusts">Trusts</a></li>
+  <li class="c018"><a href="/article/27-0346-s5/trust_company">Trust Company</a></li>
+  <li class="c018"><a href="/article/27-0378-s5/tucker__josiah">Tucker, Josiah</a></li>
+  <li class="c018"><a href="/article/27-0911-s3/vanderbilt__cornelius">Vanderbilt, Cornelius (and family)</a></li>
+  <li class="c018"><a href="/article/28-0251-wagner-adolf/wagner__adolf">Wagner, Adolf</a></li>
+  <li class="c018"><a href="/article/28-0245-wages/wages">Wages</a></li>
+  <li class="c018"><a href="/article/28-0286-walker/walker__francis_amasa">Walker, Francis Amasa</a></li>
+  <li class="c018"><a href="/article/28-0307-s2/walras__marie_esprit_léon">Walras, M. E. L.</a></li>
+  <li class="c018"><a href="/article/28-0318-wanamaker-john/wanamaker__john">Wanamaker, John</a></li>
+  <li class="c018"><a href="/article/28-0430-watkin-sir-edward-william/watkin__sir_edward_william">Watkin, Sir E. W.</a></li>
+  <li class="c018"><a href="/article/28-0455-s3/wealth">Wealth</a></li>
+  <li class="c018"><a href="/article/28-0532-s2/wells__david_ames">Wells, David Ames</a></li>
+  <li class="c018"><a href="/article/28-0733-window-tax/window_tax">Window Tax</a></li>
+  <li class="c018"><a href="/article/28-0798-s5/wolowski__louis_françois_michel_raymond">Wolowski, L. F. M. R.</a></li>
+  <li class="c018"><a href="/article/28-0872-wright-carroll-davidson/wright__carroll_davidson">Wright, Carroll D.</a></li>
+  <li class="c018"><a href="/article/28-1029-zollverein/zollverein">Zollverein</a></li>
+</ul></details>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Parents &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter LXI</span>For Parents</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">The Science of Rearing Children</a></li><li><a href="#sh-2">What is Known about Heredity</a></li><li><a href="#sh-3">The New-Born Child</a></li><li><a href="#sh-4">The Vital Question of Food</a></li><li><a href="#sh-5">Maintenance of Health</a></li><li><a href="#sh-6">Treatment of Infantile Diseases</a></li><li><a href="#sh-7">Diseases most Common to Childhood</a></li><li><a href="#sh-8">Mental Training</a></li><li><a href="#sh-9">Assistance at Home in School Education</a></li><li><a href="#sh-10">The World of Nature</a></li><li><a href="#sh-11">What Happens on the Earth and in the Air</a></li><li><a href="#sh-12">The Training of the Hand</a></li><li><a href="#sh-13">The Foundation of Good Taste</a></li><li><a href="#sh-14">Knowledge of the Fine Arts</a></li><li><a href="#sh-15">The Best Picture-Book in the World</a></li><li><a href="#sh-16">Sport and Recreation</a></li><li><a href="#sh-17">Diverting Occupations</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">The Science of Rearing Children</span>The new Encyclopaedia Britannica
+is full of encouragement for
+parents who are tempted to feel
+that the proper care and training of a
+child require almost superhuman skill
+and energy. Many of the fears and
+doubts by which they are beset rest
+upon vague traditions, handed down
+from a day when a child’s health was
+threatened by more dangers and greater
+dangers than now, and when much less
+was known than is known to-day about
+the training of a child. Statistics are
+dull things, as a rule, but it would be
+difficult to find pleasanter reading than
+the statistical tables which show how
+much the modern progress of science has
+done for children. And these figures,
+in many Britannica articles on various
+diseases and localities, by showing how
+much safer children’s lives are than they
+used to be, also indicate a <i>decrease of
+children’s suffering</i> and an <i>increase of
+children’s happiness</i> which cannot be
+expressed in numbers. Sheer ignorance
+caused much of the pain that children
+used to suffer and also much of the neglect
+that led to bodily and mental deficiency
+in later life. There is still room
+for improvement; but it is no exaggeration
+to say that the child of the average
+American mechanic is more intelligently
+cared for than was, a hundred years ago,
+the heir to a European kingdom.</p>
+
+<p>Every branch of science has contributed
+to these improved conditions. Medical
+and surgical research have no doubt
+been the great factors, as disease and
+deformity were the worst evils; but the
+child’s mind has been as carefully studied
+as its body. Here, again, figures cannot
+tell the whole story. They can show the
+universal benefits of our public school
+system, but they cannot show how greatly
+the children of well-read and thoughtful
+parents benefit by home influences intelligently
+exerted. That element of
+education begins as soon as a child is
+born, and it is based upon such observation
+of its individual needs as only a
+parent’s affection and sympathy can
+achieve. And in this part of the parent’s
+task, as in the case of the child’s health,
+it is essential to be guided by specialists
+of the highest authority, such as those
+who wrote for the Britannica the articles
+of which a brief account is given in this
+chapter.</p>
+
+<p>The child’s individuality, physical and
+mental, is largely inherited.</p>
+
+<p><span class="shoulder-heading" id="sh-2">What is Known about Heredity</span>The vast subject of heredity has indeed
+not yet been reduced to an exact
+science, but the newest theories advanced
+by Weismann, Hertwig, and others, with
+such confirmation as has already been obtained,
+are clearly set forth in Dr. P.
+Chalmers Mitchell’s article <span class="sc"><a href="/article/13-0366-heredity/heredity">Heredity</a></span>
+(Vol. 13, p. 350). As for our knowledge
+of the physiological process of
+heredity, the foundation may be said to
+have been laid by the labours of the Austrian
+monk Mendel, and biologists are
+rapidly extending his work in various
+directions. What has been done in the
+past thirteen years since scientists rediscovered
+Mendel’s work is described in
+<span class="sc"><a href="/article/18-0134-mendelism/mendelism">Mendelism</a></span> (Vol. 18, p. 115), by <a href="/contributors.html?q=Reginald+Crundall+Punnett">R. C.
+Punnett</a>, professor of biology, Cambridge
+University. There is no subject
+of greater interest or fascination before
+the world to-day, and there is no better
+or simpler introduction to it than <a href="/contributors.html?q=Reginald+Crundall+Punnett">Professor
+Punnett</a>’s able article. As he says,
+“Increased knowledge of our heredity
+means increased power of control over
+the living thing.” We know very little
+as yet, but that little “offers the hope
+of a great extension at no very distant
+time. If this hope is borne out, if it
+is shown that the qualities of man, his
+body and his intellect, his immunities
+and his diseases, even his very virtues
+and vices, are dependent upon the ascertainable
+presence or absence of definite
+unit-characters whose mode of transmission
+follows fixed laws, and if also
+man decides that his life shall be ordered
+in the light of this knowledge, it is obvious
+that the social system will have to
+undergo considerable changes.”</p>
+
+<p>The relations between parent and offspring
+are also dealt with in <span class="sc"><a href="/article/23-0133-reproduction/reproduction">Reproduction</a></span>
+(Vol. 23, p. 116), by Dr. Mitchell;
+and those who wish to study the development
+of the organism will find such
+information in <span class="sc"><a href="/article/09-0335-embryology/embryology">Embryology</a></span> (Vol. 9,
+p. 314), by <a href="/contributors.html?q=Adam+Sedgwick">Adam Sedgwick</a>, who is
+professor of zoology at the Imperial College
+of Science and Technology, London.
+This masterly account is supplemented
+by a section (p. 329) on the <i>Physiology
+of Development</i> by Dr. <a href="/contributors.html?q=Hans+A.+E.+Driesch">Hans A. E.
+Driesch</a>, of Heidelberg University.</p>
+
+<p><span class="shoulder-heading" id="sh-3">The New-Born Child</span>The article <span class="sc"><a href="/article/14-0542-infancy/infancy">Infancy</a></span> (Vol. 14, p. 513),
+by Dr. <a href="/contributors.html?q=Harriet+L.+Hennessy">Harriet Hennessy</a>, is devoted to
+the care of the child during its first
+year. The first bath, care of the eyes,
+clothing, increase of weight, etc., are
+thoroughly discussed, and the directions
+for artificial feeding contain tables of
+milk-dilution and of the amounts to be
+given. In <span class="sc"><a href="/article/06-0149-child/child">Child</a></span> (Vol. 6, p. 136) will be
+found a valuable table of average heights
+and weights of children from the ages of
+one to fifteen, and a full bibliography of
+works relating to child-study.</p>
+
+<p>The main points to be considered for
+each sex in the difficult period between
+childhood and maturity are concisely
+set forth in <span class="sc"><a href="/article/01-0241-s5/adolescence">Adolescence</a></span> (Vol. 1, p. 210).
+An ideal system of child raising is outlined,
+dealing with hygiene, clothing,
+and moral and physical training. See
+also <span class="sc"><a href="/article/12-0777-s3/gymnastics_and_gymnasium">Gymnastics and Gymnasium</a></span> (Vol.
+12, p. 752), by R. J. McNeill.</p>
+
+<p><span class="shoulder-heading" id="sh-4">The Vital Question of Food</span>Parents must have a thorough and
+clear understanding of the question of
+bodily nourishment. This is most imperative.
+It means sound bodies for the
+children, their good health in after years,
+their efficiency and success in life. On
+this point the new Britannica provides
+information of a character that for
+authoritativeness and completeness can
+nowhere else be matched.</p>
+
+<p>The important matter of feeding a
+family is treated at great length in
+<span class="sc"><a href="/article/08-0231-dietetics/dietetics">Dietetics</a></span> (Vol. 8, p. 214), by the late
+Prof. W. O. Atwater of Wesleyan University,
+known the world over as an
+authority on this subject, and R. D. Milner,
+formerly assistant in the U. S. Department
+of Agriculture. The article
+gives information as to the composition
+and nutritive values of foods and their
+adaptation to the use of people in health.
+There are tables of food composition, of
+the digestibility of nutrients, of the
+quantities of available nutrients, etc.
+The hygienic and pecuniary economy of
+food are discussed in such a way as to
+be of real service. For those who desire
+further information on the subject of
+food assimilation reference may be made
+to <span class="sc"><a href="/article/19-0958-s2/nutrition">Nutrition</a></span> (Vol. 19, p. 920), by Dr.
+<a href="/contributors.html?q=Diarmid+Noel+Paton">D. Noel Paton</a>, professor of physiology,
+University of Glasgow, and Dr. E. P.
+Cathcart, lecturer in chemical physiology
+in the same institution.</p>
+
+<p><span class="shoulder-heading" id="sh-5">Maintenance of Health</span>In regard to the maintenance of general
+health of children without reference
+to specific ailments there is a vast fund
+of information to be extracted by consulting
+the new Britannica. The titles
+of a few of the articles will sufficiently indicate
+information to which every parent
+should have constant access: <span class="sc"><a href="/article/02-0158-s1/antiseptics">Antiseptics</a></span>
+(Vol. 2, p. 146); <span class="sc"><a href="/article/08-0329-disinfectants/disinfectants">Disinfectants</a></span>
+(Vol. 8, p. 312); <span class="sc"><a href="/article/05-0317-carbolic-acid/carbolic_acid">Carbolic Acid</a></span>,
+<i>Pharmacology and Therapeutics</i>, (Vol. 5,
+p. 305); <span class="sc"><a href="/article/24-0083-s2/salicylic_acid">Salicylic Acid</a></span>, <i>Medicine and
+Therapeutics</i> (Vol. 24, p. 70); <span class="sc"><a href="/article/09-0359-emetics/emetics">Emetics</a></span>
+(Vol. 9, p. 336); <span class="sc"><a href="/article/01-0182-s4/aconite">Aconite</a></span>, <i>Therapeutics</i>
+(Vol. 1, p. 152); <span class="sc"><a href="/article/06-0682-colchicum/colchicum">Colchicum</a></span>, <i>Pharmacology</i>
+(Vol. 6, p. 662); <span class="sc"><a href="/article/21-0384-phenacetin/phenacetin">Phenacetin</a></span> (Vol.
+21, p. 363); <span class="sc"><a href="/article/21-0145-s3/pepsin">Pepsin</a></span> (Vol. 21, p. 130);
+<span class="sc"><a href="/article/23-0290-rhubarb/rhubarb">Rhubarb</a></span> (Vol. 23, p. 273); <span class="sc"><a href="/article/24-0676-senna/senna">Senna</a></span> (Vol.
+24, p. 646); <span class="sc"><a href="/article/21-0926-poison/poison">Poison</a></span>, with list of poisons
+and antidotes (Vol. 21, p. 893); <span class="sc"><a href="/article/12-0830-haemorrhage/haemorrhage">Haemorrhage</a></span>,
+how to tell the different
+kinds (Vol. 12, p. 805); <span class="sc"><a href="/article/28-0863-wound/wound">Wound</a></span>, nature
+of bruises and treatment (Vol. 28, p.
+837); <span class="sc"><a href="/article/04-0884-s2/burns_and_scalds">Burns and Scalds</a></span> (Vol. 4, p. 860);
+<span class="sc"><a href="/article/26-0128-sunstroke/sunstroke">Sunstroke</a></span>, nature of heat prostration
+(Vol. 26, p. 110); nature and treatment
+of frost-bite, <span class="sc"><a href="/article/18-0910-s4/mortification">Mortification</a></span> (Vol. 18,
+p. 878); <span class="sc"><a href="/article/27-0584-s3/ulcer">Ulcer</a></span> (Vol. 27, p. 565); <span class="sc"><a href="/article/06-0147-chilblains/chilblains">Chilblains</a></span>
+(Vol. 6, p. 134); <span class="sc"><a href="/article/08-0947-eczema/eczema">Eczema</a></span> (Vol. 8
+p. 920); relief from choking, <span class="sc"><a href="/article/20-0032-oesophagus/oesophagus">Oesophagus</a></span>
+(Vol. 20, p. 14); <span class="sc"><a href="/article/04-0213-bone/bone">Bone</a></span>, <i>Fractures</i>,
+special fractures in the young (Vol. 4,
+p. 201); <span class="sc"><a href="/article/08-0619-drowning-and-life-saving/drowning_and_life_saving">Drowning and Life Saving</a></span>
+(Vol. 8, p. 592); <span class="sc"><a href="/article/25-0254-sleep/sleep">Sleep</a></span>, amount of sleep
+necessary at different ages (Vol. 25,
+p. 238); <span class="sc"><a href="/article/28-0146-vision/vision">Diseases of Vision</a></span> (Vol. 28,
+p. 142); with its special section (p. 144)
+on the care of the eyesight of children;
+<span class="sc"><a href="/article/04-0072-blindness/blindness">Blindness</a></span>, <i>Causes and Prevention</i>
+(Vol. 4, p. 60), by Sir <a href="/contributors.html?q=Sir+Francis+J.+Campbell">F. J. Campbell</a>,
+principal, Royal Normal College for the
+Blind, London; <span class="sc"><a href="/article/24-1067-shock/shock">Shock</a></span>, injuries and accidents
+(Vol. 24, p. 991). There is a section
+on <i>Action of Baths on the Human System</i>,
+in <span class="sc"><a href="/article/03-0531-baths/baths">Baths and Bathing</a></span> (Vol. 3, p.
+518), telling of the effects of cold, tepid,
+warm, hot, and very hot baths.</p>
+
+<p>Parents will be most grateful to the
+Britannica for the complete descriptions
+of infantile diseases, dealing with symptoms
+and principles of cure and treatment.</p>
+
+<p><span class="shoulder-heading" id="sh-6">Treatment of Infantile Diseases</span><i>The British Medical Journal</i> commenting
+on the nature of the medical
+section of the new Britannica has said
+that it is “an admirable example of the
+kind of exposition which will enable the
+head of a family, without embarrassing
+him with technical details, to deal
+with a situation with which he may
+be confronted at any
+moment.” Realizing the great necessity
+for a popular yet authentic discussion
+of diseases, the editors have produced a
+work which has received the highest
+approval of the medical world for its
+quality of practical usefulness.</p>
+
+<p>In the first place, parents should devote
+much study to Sir T. Lauder Brunton’s
+most clear and able discussion of
+<span class="sc"><a href="/article/26-0833-therapeutics/therapeutics">Therapeutics</a></span> (Vol. 26, p. 793), dealing in
+a general manner with the means employed
+to treat disease. Here we learn about
+the action of microbes, the nature of inflammation
+and fever (which are protective
+processes calculated to defend the organism
+against the attacks of microbes but
+which often become injurious), about defensive
+measures and principles of cure,
+proper nutrition and elimination, flatulence,
+constipation, etc. It is also important
+to know something about the
+action of drugs, and this is fully explained
+in <span class="sc"><a href="/article/21-0368-pharmacology/pharmacology">Pharmacology</a></span> (Vol. 21, p. 350), by
+Dr. Ralph Stockman, of Glasgow University,
+while <a href="/contributors.html?q=Harriet+L.+Hennessy">Dr. H. L. Hennessy</a> in the
+same article (p. 352) explains the terms
+used in the classification of drugs.</p>
+
+<p>Before describing the material devoted
+to the special diseases of children,
+it is well to remind parents of a valuable
+illustrated article on <span class="sc"><a href="/article/20-0826-s8/parasitic_diseases">Parasitic
+Diseases</a></span> (Vol. 20, p. 770), by Dr. G.
+Sims Woodhead, professor of pathology
+in Cambridge University. It is about the
+length of 52 pages in this Guide. The
+information as to the origin of various
+diseases, of those which are due to vegetable
+and those due to animal parasites,
+of the infective diseases in which no
+organism yet discovered has surely been
+connected with the malady (as is the case
+with scarlet fever), and of infective diseases,
+such as measles, mumps, and
+whooping-cough, not yet traced to microorganisms,
+will prove of the highest
+interest because the facts related have
+a most important influence upon present
+methods of treatment.</p>
+
+<p><span class="shoulder-heading" id="sh-7">Diseases most Common to Childhood</span><span class="sc"><a href="/article/07-0533-croup/croup">Croup</a></span> (Vol. 7, p. 511) is a concise
+account of spasmodic croup—so terrifying
+to all parents. The treatment is carefully
+described. The same
+is true of <span class="sc"><a href="/article/27-0025-s6/tonsillitis">Tonsillitis</a></span>
+(Vol. 27, p. 11).
+For other common
+throat diseases see
+<span class="sc"><a href="/article/04-0657-s6/bronchitis">Bronchitis</a></span> (Vol. 4, p. 634); <span class="sc"><a href="/article/23-0201-s2/respiratory_system">Respiratory
+System</a></span>, <i>Pathology of</i> (Vol. 23, p. 195)
+by Dr. <a href="/contributors.html?q=Thomas+Harris">Thomas Harris</a>, a noted authority,
+and <a href="/contributors.html?q=Harriet+L.+Hennessy">Dr. Harriet Hennessy</a>, and <span class="sc"><a href="/article/16-0248-laryngitis/laryngitis">Laryngitis</a></span>
+(Vol. 16, p. 228), which fully describes
+the paroxysmal laryngitis so peculiarly
+fatal to infants. In all these
+articles reference is made to adenoids as
+a contributing cause of the maladies described.
+There is a separate account of
+these recently discovered troublesome
+growths, <span class="sc"><a href="/article/01-0222-s4/adenoids">Adenoids</a></span> (Vol. 1, p. 191), and
+of the comparatively simple operation
+for their removal, by Dr. <a href="/contributors.html?q=Edmund+Owen">Edmund Owen</a>,
+consulting surgeon to the Children’s
+Hospital, London.</p>
+
+<p>The great attention which, in recent
+years, has been paid to <span class="sc"><a href="/article/08-0307-diphtheria/diphtheria">Diphtheria</a></span>
+(Vol. 8, p. 290) has produced most striking
+results. We know its cause and
+nature, we understand the conditions
+which influence its prevalence; and a
+“specific” cure in an antitoxin has been
+found. Specialists now trace to diphtheria
+many of the serious cases which
+would formerly have been thought due
+to other diseases, and especially to croup.</p>
+
+<p><span class="sc"><a href="/article/28-0636-whooping-cough/whooping-cough">Whooping Cough</a></span> (Vol. 28, p. 616) is
+one of the most common diseases of
+infancy, but, except in the most extreme
+cases, does not require the regular attendance
+of a physician. The malady
+has three recognized stages, in the second
+of which complications are apt to arise
+which may become a source of danger
+greater than the malady itself. Parents
+should also understand the curious structural
+changes in the lungs which sometimes
+remain after the disease has run
+its course.</p>
+
+<p>Of all the diseases of earlier childhood,
+<span class="sc"><a href="/article/17-0966-measles/measles">Measles</a></span> (Vol. 17, p. 947) is the most
+prevalent, and its spread is largely due
+to the fact that its initial symptoms
+are slight and not easily recognizable.
+The proper understanding of these is,
+therefore, most necessary, as well as a
+thorough appreciation of possible complications
+and their consequences. The
+best mode of treatment is also indicated
+in this article. There are several well-marked
+varieties of <span class="sc"><a href="/article/24-0321-scarlet-fever/scarlet_fever">Scarlet Fever</a></span> (Vol.
+24, p. 303) of which the chief are simple
+scarlatina, septic scarlatina, and malignant
+scarlatina; and the complications
+and effects of the disease are among the
+most important features which should be
+understood. The list of infantile diseases
+is too long for specific description,
+but parents can appreciate the value and
+significance of this valuable department
+of the work by referring to such articles
+as <span class="sc"><a href="/article/18-1000-mumps/mumps">Mumps</a></span> (Vol. 18, p. 968); <span class="sc"><a href="/article/08-0812-dysentery/dysentery">Dysentery</a></span>
+(Vol. 8, p. 785); <span class="sc"><a href="/article/06-0278-cholera/cholera">Cholera</a></span> (Vol. 6, p. 262),
+with a special section on children’s simple
+cholera; see also <span class="sc"><a href="/article/08-0279-digestive-organs/digestive_organs">Digestive Organs</a></span>,
+<i>General and Local Diseases</i> (Vol. 8, p. 262)
+by Dr. <a href="/contributors.html?q=Andrew+Lockhart+Gillespie">A. L. Gillespie</a>, lecturer on modern
+gastric methods, Edinburgh Post-Graduate
+School, and <span class="sc"><a href="/article/18-0149-s2/meningitis">Meningitis</a></span>, <i>Cerebro-Spinal</i>
+(Vol. 18, p. 130), with an account
+of the new and successful serum
+treatment.</p>
+
+<p><span class="shoulder-heading" id="sh-8">Mental Training</span>In planning the groundwork of education,
+parents should have a clear
+idea of the principles of modern instruction.
+Here the
+Britannica again
+comes to their assistance.
+The biographies
+of <span class="sc"><a href="/article/21-0301-s3/pestalozzi__johann_heinrich">Pestalozzi</a></span> (Vol. 21, p.
+284) and of <span class="sc"><a href="/article/11-0251-s3/froebel__friedrich_wilhelm_august">Froebel</a></span> (Vol. 11, p. 238) describe
+the insistence of these leaders on
+the need of educating a child through
+his own activity, and the results they
+obtained by this method. Further elaboration
+of the subject is given in <span class="sc"><a href="/article/08-0978-education/education">Education</a></span>,
+<i>Theory</i> (Vol. 8, p. 951), by <a href="/contributors.html?q=James+Welton">James
+Welton</a>, professor of education in the
+University of Leeds, to which article
+there are added detailed accounts of
+national systems of education. An interesting
+supplementary article is <span class="sc"><a href="/article/24-0377-schools/schools">Schools</a></span>
+(Vol. 24, p. 359), by <a href="/contributors.html?q=Arthur+Francis+Leach">A. F. Leach</a>, describing
+the stages of experiment by which our
+modern idea of a school has been developed.
+There is an admirably instructive
+article, <span class="sc"><a href="/article/26-0516-technical-education/technical_education">Technical Education</a></span> (Vol. 26,
+p. 487), by Sir <a href="/contributors.html?q=Sir+Philip+Magnus">Philip Magnus</a>, formerly
+member of the Royal Commission of
+Technical Instruction.</p>
+
+<p><span class="shoulder-heading" id="sh-9">Assistance at Home in School Education</span>The new Britannica performs a service
+of the greatest importance in responding
+to the opening mind of the child. Children
+are the greatest
+of question askers,
+and the Britannica
+is the best question
+answerer ever devised.
+They want to know about the
+races of men, the different animals and
+plants they see; in fact, almost every
+object that comes under their observation.
+The inestimable advantage of answering
+an inquiry fully and correctly
+and not in an offhand manner is too obvious
+to need mention. <i>Let your young
+children see you go to your Britannica for
+information and as soon as they are
+old enough they will naturally do the
+same, and then the volumes will be performing
+their most efficient work in the
+household.</i></p>
+
+<p>For helping children with their school
+“themes” and “compositions,” for elucidation
+or amplification of any topic
+that comes up in the course of their
+studies, there is no medium so useful as
+the new Britannica—the most exhaustive
+compendium of knowledge which
+has ever been devised, with its elaborate
+index of 500,000 alphabetical references,
+giving instant access to every fact in
+the whole work. Of equal assistance will
+be its employment in connection with
+Sunday School lessons; for the accounts
+of the Bible and its separate books,
+giving the latest results of Biblical criticism,
+are the product of the highest
+learning of the age.</p>
+
+<p><span class="shoulder-heading" id="sh-10">The World of Nature</span>For the instruction of children about
+the history of mankind, the nature of
+the universe, the animal, plant, and mineral
+world, the new
+Britannica offers a
+complete fund of
+necessary knowledge.
+There are 277 astronomical articles, including
+biographies; 889 zoological articles;
+675 on plants; 380 on minerals
+and rocks. The classified subject-list
+in the Index Volume places the whole of
+this material immediately before the eye.</p>
+
+<p>The articles <span class="sc"><a href="/article/02-0119-s3/anthropology">Anthropology</a></span> (Vol. 2,
+p. 108), by Dr. Edward B. Tylor of Oxford
+University, dean of living anthropologists,
+and <span class="sc"><a href="/article/09-0881-s2/ethnology">Ethnology and Ethnography</a></span>
+(Vol. 9, p. 849) describe the races
+of mankind, man’s place in nature, the
+origin of man, and his antiquity. The
+main article <span class="sc"><a href="/article/28-1049-zoology/zoology">Zoology</a></span> (Vol. 28, p. 1022),
+by Sir <a href="/contributors.html?q=Sir+Edwin+Ray+Lankester">Edwin Ray Lankester</a>, of London
+University, is an introduction to knowledge
+of the whole of the animal world,
+which is amplified, with minute details,
+in separate accounts of all members of
+the animal kingdom. <span class="sc"><a href="/article/28-1029-zoological-distribution/zoological_distribution">Zoological Distribution</a></span>
+(Vol. 28, p. 1002), by the noted
+naturalist, Richard Lydekker, is a mine of
+information about the distribution of
+living animals and their forerunners on
+the surface of the globe. Articles of
+great importance are <span class="sc"><a href="/article/04-0314-botany/botany">Botany</a></span> (Vol. 4,
+p. 299), by Dr. A. B. Rendle of the British
+Museum, and the great article <span class="sc"><a href="/article/21-0759-plants/plants">Plants</a></span>
+(Vol. 21, p. 728), in the various sections
+of which the whole story of the vegetable
+world is told by eight famous specialists.
+There are, of course, separate articles on
+all plants. We also recommend to parents
+a careful study of the section (Vol.
+23, p. 120) of <span class="sc"><a href="/article/23-0133-reproduction/reproduction">Reproduction</a></span>, <i>Reproduction
+of Plants</i>, by Dr. <a href="/contributors.html?q=Sydney+Howard+Vines">S. H. Vines</a>, and
+<span class="sc"><a href="/article/22-0016-pollination/pollination">Pollination</a></span> (Vol. 22, p. 2), from which
+they can give their children much necessary
+instruction. Such a course is now
+strongly advised by educators and authorities
+in child-study as the best
+method of preparing the mind for a
+healthy, sane knowledge of sex matters
+in later years.</p>
+
+<p><span class="shoulder-heading" id="sh-11">What Happens on the Earth and in the Air</span>All the facts about the earth’s surface
+will be found in <span class="sc"><a href="/article/11-0639-s2/geography">Geography</a></span>, in the section
+<i>Principles of Geography</i> (Vol. 11, p.
+630), by Dr. <a href="/contributors.html?q=Hugh+Robert+Mill">H. R.
+Mill</a>, formerly president
+of the Royal
+Meteorological Society;
+and see also
+<span class="sc"><a href="/article/19-1005-ocean-and-oceanography/ocean_and_oceanography">Ocean and Oceanography</a></span> (Vol. 19, p.
+967), by Dr. Otto Krümmel, professor of
+geography, University of Kiel, and Dr. H.
+R. <a href="/contributors.html?q=Hugh+Robert+Mill">Mill</a>. Everything about the weather,
+storms, etc., may be learned from <span class="sc"><a href="/article/18-0285-s2/meteorology">Meteorology</a></span>
+(Vol. 18, p. 264), by Dr. <a href="/contributors.html?q=Cleveland+Abbe">Cleveland
+Abbe</a>, professor of meteorology in
+the U. S. Weather Bureau; and from
+<span class="sc"><a href="/article/02-0908-s3/atmospheric_electricity">Atmospheric Electricity</a></span> (Vol. 2, p.
+860), by Dr. Charles Chree of the National
+Physical Laboratory, England.</p>
+
+<p>Clouds always appeal strongly to a
+child’s imagination. The article <span class="sc"><a href="/article/06-0575-cloud/cloud">Cloud</a></span>
+(Vol. 6, p. 557), by <a href="/contributors.html?q=Arthur+William+Clayden">A. W. Clayden</a>, author
+of <i>Cloud Studies</i>, has beautiful illustrations
+of cloud forms, with explanations.</p>
+
+<p>Lord Rayleigh, a winner of the Nobel
+prize and one of the most distinguished
+of living scientists, in the article <span class="sc"><a href="/article/25-0218-sky/sky">Sky</a></span>
+(Vol. 25, p. 202) explains why the blue of
+the sky varies as it does.</p>
+
+<p>Parents will find a great deal to tell
+their children about phenomena of nature
+in such articles as <span class="sc"><a href="/article/08-0844-earthquake/earthquake">Earthquake</a></span>
+(Vol. 8, p. 817), by <a href="/contributors.html?q=Frederick+William+Rudler">F. W. Rudler</a>, formerly
+president of the Geologists’ Association,
+England, and Dr. John Milne,
+author of <i>Earthquakes</i>; and <span class="sc"><a href="/article/28-0194-volcano/volcano">Volcano</a></span>
+(Vol. 28, p. 178), by <a href="/contributors.html?q=Frederick+William+Rudler">F. W. Rudler</a>. Glaciers
+and their effects are described in
+<span class="sc"><a href="/article/12-0073-s2/glacier">Glacier</a></span> (Vol. 12, p. 60), by <a href="/contributors.html?q=Rev.+Edward+Clarke+Spicer">E. C. Spicer</a>.</p>
+
+<p>In teaching rudimentary things about
+the heavens, it is well to note that <span class="sc"><a href="/article/07-0024-constellation/constellation">Constellation</a></span>
+(Vol. 7, p. 11), by <a href="/contributors.html?q=Charles+Everitt">Charles
+Everitt</a>, contains star-maps by which the
+positions may easily be recognized. After
+reading <span class="sc"><a href="/article/25-0806-star/star">Star</a></span> (Vol. 25, p. 784), by <a href="/contributors.html?q=Sir+Arthur+Stanley+Eddington">A. S.
+Eddington</a>, of the Royal Observatory,
+Greenwich, many wonders of the heavens
+about the number of the stars, their distances,
+the variable and double stars,
+etc., may be told the child. The same
+is true of the articles <span class="sc"><a href="/article/21-0743-s3/planet">Planet</a></span> (Vol. 21, p.
+714), by Dr. <a href="/contributors.html?q=Simon+Newcomb">Simon Newcomb</a>, director
+of the American Nautical Almanac and
+professor of mathematics in the Navy,
+and of the separate accounts of all the
+different planets; <span class="sc"><a href="/article/06-0781-comet/comet">Comet</a></span> (Vol. 6, p. 759),
+by <a href="/contributors.html?q=Simon+Newcomb">Dr. Newcomb</a>; and <span class="sc"><a href="/article/19-0348-s2/nebula">Nebula</a></span> (Vol. 19,
+p. 332), by <a href="/contributors.html?q=Sir+Arthur+Stanley+Eddington">A. S. Eddington</a>, etc. These
+are all very fully illustrated. Ideas as to
+the structure of the universe, the origin
+of the solar system, etc., will be found in
+<span class="sc"><a href="/article/19-0351-s2/nebular_theory">Nebular Theory</a></span> (Vol. 19, p. 333), by
+Sir <a href="/contributors.html?q=Sir+Robert+Stawell+Ball">Robert S. Ball</a>, professor of astronomy,
+Cambridge University.</p>
+
+<p><span class="shoulder-heading" id="sh-12">The Training of the Hand</span>A great many children show a liking
+for the mechanical arts and are curious
+about processes of manufacture. Parents
+will find in the new
+Britannica complete
+information about
+the marvelous things
+ingenious machines do and how they do
+them; for example, <span class="sc"><a href="/article/25-0707-s4/spinning">Spinning</a></span> (Vol. 25,
+p. 685), by <a href="/contributors.html?q=Thomas+William+Fox">T. W. Fox</a>, professor of textiles
+in the University of Manchester;
+<span class="sc"><a href="/article/07-0321-cotton-spinning-machinery/cotton-spinning_machinery">Cotton-Spinning Machinery</a></span> (Vol. 7,
+p. 301), also by <a href="/contributors.html?q=Thomas+William+Fox">Professor Fox</a>; <span class="sc"><a href="/article/28-0458-s2/weaving">Weaving</a></span>
+(Vol. 28, p. 440), by <a href="/contributors.html?q=Thomas+William+Fox">Professor Fox</a>, with
+illustrations; <span class="sc"><a href="/article/13-0807-hosiery/hosiery">Hosiery</a></span> (Vol. 13, p. 788),
+by <a href="/contributors.html?q=Thomas+Brown">Thomas Brown</a>, of the Incorporated
+Weaving, Dyeing and Printing College,
+Glasgow; <span class="sc"><a href="/article/05-0405-carpet/carpet">Carpet</a></span> (Vol. 5, p. 392), by <a href="/contributors.html?q=Alan+Summerly+Cole">A.
+S. Cole</a>, assistant secretary for art, Board
+of Education, England; <span class="sc"><a href="/article/25-0112-s2/silk">Silk</a></span> (Vol. 25, p.
+96), by <a href="/contributors.html?q=Frank+Warner">Frank Warner</a>, president of the
+Silk Association of Great Britain and
+Ireland; Richard Snow, examiner in silk
+throwing and spinning for the City and
+Guilds of London Institute, and Arthur
+Mellor; <span class="sc"><a href="/article/10-0569-s4/flour">Flour and Flour Manufacture</a></span>
+(Vol. 10, p. 548), by <a href="/contributors.html?q=George+Frederick+Zimmer">G. F. Zimmer</a>,
+author of <i>Mechanical Handling of Material</i>;
+<span class="sc"><a href="/article/23-0749-rope-and-rope-making/rope_and_rope-making">Rope and Rope Making</a></span> (Vol. 23,
+p. 713), by <a href="/contributors.html?q=Thomas+Woodhouse">Thomas Woodhouse</a>, head of
+the weaving and textile department,
+Technical College, Dundee; <span class="sc"><a href="/article/26-0048-sugar/sugar">Sugar</a></span>,
+<i>Sugar Manufacture</i> (Vol. 26, p. 35), by <a href="/contributors.html?q=Alfred+Chapman">A.
+Chapman</a>, designer and constructor of
+sugar machinery, and Valentine W.
+<a href="/contributors.html?q=Alfred+Chapman">Chapman</a>.</p>
+
+<p><span class="shoulder-heading" id="sh-13">The Foundation of Good Taste</span>An important service to education is
+rendered by the Britannica in the way
+that it supplements and extends education
+received in
+the school. There,
+far too often children
+learn little or
+nothing of the world of art, of the
+beautiful creations of the human intellect
+by means of which, even before the
+dawn of history, men attempted to express
+in concrete form their sense of
+beauty. It is surely most desirable for
+children to have an idea, at least, of
+principles and styles of architecture; of
+ancient and modern painting and sculpture—to
+know the chief characteristics of
+schools of art; to have a little knowledge
+of musical forms, of what a symphony,
+a concerto, a sonata, an opera, are; to
+be able to recognize a piece of Dresden,
+Sèvres, Italian faience, Copenhagen, or
+Wedgwood ware when they see it; to
+know the different periods and styles
+of furniture; to tell Bohemian from
+Venetian glass; to be familiar with
+lovely textiles and fabrics and to appreciate
+their true value. Such knowledge
+is the foundation of good taste. It serves
+to arouse appreciation of, and respect for,
+the objects with which a child is surrounded,
+and leads to delightful interests,
+recreations and occupations in later years.
+There are few better and more constant
+uses to which the Britannica can be put
+than the systematic education of children
+in matters of general culture and refined
+taste.</p>
+
+<p><span class="shoulder-heading" id="sh-14">Knowledge of the Fine Arts</span>A list of articles to serve this purpose
+would be too long to give here. They are
+easily found by means of other chapters
+in this Guide. But
+special mention may
+be made of <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>
+(Vol. 2, p.
+369), by <a href="/contributors.html?q=R.+Phen%C3%A9+Spiers">R. Phené Spiers</a>, master of the
+architectural school, Royal Academy,
+London, by <a href="/contributors.html?q=John+Bilson">John Bilson</a>, of the University
+of Manchester, and others; <span class="sc"><a href="/article/20-0497-s2/painting">Painting</a></span>
+(Vol. 20, p. 459), by Prof. G. B. <a href="/contributors.html?q=Thomas+Brown">Brown</a> of
+Edinburgh University; L. Bénédite, keeper
+of the Luxembourg Gallery, Paris;
+Richard Muther, professor of modern art,
+Breslau University; and John C. Van
+Dyke, professor of history of art, Rutgers
+College; <span class="sc"><a href="/article/24-0508-s2/sculpture">Sculpture</a></span> (Vol. 24 p. 488), by
+<a href="/contributors.html?q=Marion+H.+Spielmann">Marion H. Spielmann</a>, formerly editor,
+<i>Magazine of Art</i>, P. G. Konody, art critic
+of the <i>Observer</i>, L. Bénédite, and Dr. J. H.
+Middleton, Slade professor of fine art,
+Cambridge University; <span class="sc"><a href="/article/05-0729-ceramics/ceramics">Ceramics</a></span> (Vol.
+5, p. 703), by Hon. William Burton, chairman,
+Joint Committee of Pottery Manufacturers
+of Great Britain, R. L. Hobson
+of the British Museum, and other authorities;
+<span class="sc"><a href="/article/12-0099-s3/glass">Glass</a></span> (Vol. 12, p. 86), by
+<a href="/contributors.html?q=Alexander+Nesbitt">Alexander Nesbitt</a>, H. J. Powell, author of
+<i>Glass Making</i>, and Dr. W. Rosenhain of
+the National Physical Laboratory, England;
+<span class="sc"><a href="/article/16-0051-lace/lace">Lace</a></span> (Vol. 16, p. 37), by <a href="/contributors.html?q=Alan+Summerly+Cole">A. S.
+Cole</a>, author of <i>Embroidery and Lace</i>;
+<span class="sc"><a href="/article/11-0376-s3/furniture">Furniture</a></span> (Vol. 11, p. 363), by <a href="/contributors.html?q=James+George+Joseph+Penderel-Brodhurst">J. Penderel-Brodhurst</a>.
+All of these articles are
+superbly illustrated, and this feature
+alone would give them a direct educational
+value for young people.</p>
+
+<p><span class="shoulder-heading" id="sh-15">The Best Picture-Book in the World</span>In fact, the new Britannica may be
+said to be the greatest and most varied
+picture book in existence. There are
+7,000 text illustrations
+and 450 full-page
+plates. This
+suggests at once a
+special use for the
+work in making children familiar, by
+purely pictorial means, with objects they
+should learn to recognize. When a child
+asks for a description of some object
+whose name has aroused his curiosity, it
+is safe to say that an accurate picture of
+it will be found in the new Britannica.
+Suppose that he has heard of a dirigible
+balloon and wants to know how it differs
+from the ordinary balloon which he has
+seen. The index will guide his instructor
+to the article <span class="sc"><a href="/article/01-0295-s2/aeronautics">Aeronautics</a></span> (Vol. 1, p.
+260), with two full-page plates of dirigible
+balloons. A child can learn to distinguish
+the breeds of domestic animals
+from the illustrations alone. Thirst for
+mechanical knowledge may be satisfied
+by such articles as <span class="sc"><a href="/article/25-0840-s3/steam_engine">Steam Engine</a></span> (Vol.
+25, p. 818), with about 70 illustrations,
+by Prof. <a href="/contributors.html?q=James+Alfred+Ewing">J. A. Ewing</a>, of Cambridge University;
+<span class="sc"><a href="/article/28-0379-watch/watch">Watch</a></span> (Vol. 28, p. 362), by
+<a href="/contributors.html?q=Lord+Grimthorpe">Lord Grimthorpe</a> and Sir H. H. Cunynghame;
+<span class="sc"><a href="/article/16-0647-s2/lighthouse">Lighthouse</a></span> (Vol. 16, p. 627), by
+<a href="/contributors.html?q=William+Tregarthen+Douglass">W. T. Douglass</a> and N. G. Gedye; <span class="sc"><a href="/article/26-0576-telephone/telephone">Telephone</a></span>
+(Vol. 26, p. 547), by <a href="/contributors.html?q=Emile+Garcke">Emile
+Garcke</a>; and <span class="sc"><a href="/article/16-0863-s3/lock">Lock</a></span> (Vol. 16, p. 841), by
+A. B. Chatwood—all fully illustrated.</p>
+
+<p><span class="shoulder-heading" id="sh-16">Sport and Recreation</span>The new Britannica is an exhaustive
+and practical compendium of sports,
+games, and recreations of all kinds. Part
+6 of this Guide contains
+a survey of
+this department in
+the book. There are
+over 260 articles on sports and games
+alone, and they describe clearly how each
+is played, and also give expert advice.
+There is also much that is extremely
+interesting in the historical development
+of pastimes, a knowledge of which heightens
+the interest and pleasure of those
+who participate in them; and parents
+can be of real assistance to their children
+in instructing them about their sports,
+and by acquiring this information themselves
+can give sympathetic appreciation
+to the children’s amusements. Among
+the noteworthy contributions on sports
+and games there are <span class="sc"><a href="/article/06-0154-children-s-games/children_s_games">Children’s Games</a></span>
+(Vol. 6, p. 141), an article for parents by
+<a href="/contributors.html?q=Alice+B.+Gomme">Alice B. Gomme</a>, an expert on this subject;
+<span class="sc"><a href="/article/11-0461-games-classical/games__classical">Games, Classical</a></span> (Vol. 11, p. 443),
+an account which every boy will read
+with pleasure, by <a href="/contributors.html?q=Francis+Storr">Francis Storr</a>, editor
+of the <i>Journal of Education</i>, London;
+<span class="sc"><a href="/article/02-0894-s6/athletic_sports">Athletic Sports</a></span> (Vol. 2, p. 846); <span class="sc"><a href="/article/03-0475-base-ball/base-ball">Base-Ball</a></span>
+(Vol. 3, p. 458), by Edward Breck;
+<span class="sc"><a href="/article/03-0500-basket-ball/basket-ball">Basket-Ball</a></span> (Vol. 3, p. 483), <span class="sc"><a href="/article/10-0638-football/football">Football</a></span>
+(Vol. 10, p. 617), of which the American
+section is written by <a href="/contributors.html?q=Walter+Camp">Walter Camp</a>,
+the football expert; <span class="sc"><a href="/article/15-0868-s2/kite-flying">Kite-flying</a></span> (Vol.
+15, p. 839), by Major-Gen. Baden Powell;
+<span class="sc"><a href="/article/17-0696-s2/marbles">Marbles</a></span> (Vol. 17, p. 679), by <a href="/contributors.html?q=William+Edward+Garrett+Fisher">W. E.
+Garrett Fisher</a>; <span class="sc"><a href="/article/16-0320-s8/lawn-tennis">Lawn Tennis</a></span> (Vol. 16,
+p. 300), by R. J. McNeill; <span class="sc"><a href="/article/26-0250-s4/swimming">Swimming</a></span>
+(Vol. 26, p. 231), by <a href="/contributors.html?q=William+Henry">William Henry</a>,
+founder and chief secretary of the Royal
+Life Saving Society; <span class="sc"><a href="/article/25-0182-skating/skating">Skating</a></span> (Vol. 25,
+p. 166), and <span class="sc"><a href="/article/06-0622-coasting/coasting">Coasting</a></span> (Vol. 6, p. 603).</p>
+
+<p><span class="shoulder-heading" id="sh-17">Diverting Occupations</span>Recreation in the form of diverting
+occupations is sometimes more attractive
+to children, especially to those of a practical
+turn of mind,
+than sports and
+games. It is often
+difficult for parents
+to encourage these inclinations, since they
+themselves may not be familiar with the
+subjects for which their children show a
+special aptitude, and a real talent may
+thus fail to be cultivated. As soon as any
+particular bent in the child is discovered,
+a parent ought to consider it a duty to
+learn to help the boy or girl.</p>
+
+<p>The new Encyclopaedia Britannica will,
+on all subjects of diverting occupations,
+prove of immense practical assistance
+to parents. They will find all that they
+need to know to help their children under
+such headings as <span class="sc"><a href="/article/21-0507-photography/photography">Photography</a></span> (Vol. 21,
+p. 485), by Sir <a href="/contributors.html?q=Sir+William+de+Wiveleslie+Abney">William de Wiveleslie
+Abney</a>, formerly president of the Royal
+Photographic Society, James Waterhouse
+also a former president of the same society,
+who writes on photographic apparatus,
+and A. H. Hinton, author of <i>Practical
+Pictorial Photography</i>, etc.; <span class="sc"><a href="/article/03-0644-bee/bee">Bee</a></span>,
+<i>Bee Keeping</i> (Vol. 3, p. 628), by <a href="/contributors.html?q=W.+Broughton+Carr">W. B.
+Carr</a>, formerly editor of the <i>Bee-Keeper’s
+Record</i>; the article <span class="sc"><a href="/article/03-0075-s2/aviary">Aviary</a></span>, on the keeping
+of birds (Vol. 3, p. 60), by <a href="/contributors.html?q=David+Seth-Smith">David Seth-Smith</a>,
+formerly president of the Avicultural
+Society; <span class="sc"><a href="/article/22-0227-poultry-and-poultry-farming/poultry_and_poultry-farming">Poultry and Poultry
+Farming</a></span> (Vol. 22, p. 213), by <a href="/contributors.html?q=Lewis+Wright">Lewis
+Wright</a>, author of <i>The Practical Poultry-Keeper</i>;
+<span class="sc"><a href="/article/03-0498-basket/basket">Basket</a></span>, <i>Basket Making</i> (Vol.
+3, p. 481); <span class="sc"><a href="/article/13-0760-s6/horticulture">Horticulture</a></span> (Vol. 13, p.
+741), by M. T. Masters, late editor of
+<i>The Gardener’s Chronicle</i>, W. R. W. Williams,
+superintendent of London County
+Council Botany Centre, John Weathers,
+author of <i>Practical Guide to Garden Plants</i>,
+Prof. Liberty Hyde Bailey, director
+of the College of Agriculture, Cornell
+University, and Peter Henderson; <span class="sc"><a href="/article/05-0399-carpentry/carpentry">Carpentry</a></span>
+(Vol. 5, p. 386), by <a href="/contributors.html?q=James+Bartlett">James Bartlett</a>,
+lecturer on construction, at Kings
+College, London; <span class="sc"><a href="/article/06-0967-conjuring/conjuring">Conjuring</a></span> (Vol. 6, p.
+943), by John Algernon Clarke, G. Faur,
+and John Nevil Maskelyne.</p>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

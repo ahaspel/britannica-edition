@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Railroad Men &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XVIII</span>For Railroad Men</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Six Classes of Articles</a></li><li><a href="#sh-2">Technical Authorities</a></li><li><a href="#sh-3">The Key Article</a></li><li><a href="#sh-4">Other Major Articles</a></li><li><a href="#sh-5">Legislation</a></li><li><a href="#sh-6">Biographies</a></li></ol></div>
+    <div class="body-text">
+
+
+<p>There are no less than six distinct
+classes of articles in the new
+Encyclopædia Britannica which
+contain information of peculiar interest
+to railroad men:—</p>
+
+<p>1. Articles on continents contain authoritative
+and original accounts of trans-continental
+routes and traffic. For example
+the article <span class="sc"><a href="/article/09-0939-europe/europe">Europe</a></span> has a table in
+which the 19 chief avenues of trade are
+analyzed, showing the direct distance,
+the distance by sea and the distance by
+rail from point to point; another table
+comparing railroad developments in the
+various parts of Europe, and also an account
+of the contour of Europe from the
+railroad man’s point of view, discussing
+the mountain ranges pierced by tunnels
+and the passes over which lines have
+been carried wholly or largely in the
+open.</p>
+
+<p><span class="shoulder-heading" id="sh-1">Six Classes of Articles</span>2. The articles on separate countries,
+on the individual states of the Union, and
+on colonies contain detailed accounts of
+the railway systems.
+For example, the article
+<span class="sc"><a href="/article/10-0796-s4/france">France</a></span> describes
+the six great
+French railroads, traces their lines and
+explains the financial system by which
+they were constructed, the concessions
+granted to them by the French government,
+and the extent to which direct state
+ownership and management has been
+adopted.</p>
+
+<p>3. The articles on cities show the relation
+of each centre to the general railroad
+system of the country and describe
+the terminals and the methods of urban
+communication. For example, in the
+article <span class="sc"><a href="/article/03-0805-berlin/berlin">Berlin</a></span> there is an account of the
+Stadtbahn, carried through the heart of
+the city, 20 feet above the street, providing
+for through traffic as well as for suburban
+service.</p>
+
+<p>4. The maps as well as the many
+plans of cities, all of which were specially
+prepared for the Britannica, show much
+more clearly than does an ordinary atlas,
+the present development of railroads in
+all parts of the world.</p>
+
+<p>5. The articles on various branches of
+engineering and mechanics, described in
+other chapters of this Guide, are complete
+treatises on the technical subjects
+connected with railroad construction and
+management.</p>
+
+<p>6. The articles devoted exclusively to
+the subject, of which a brief account is
+given in the present chapter, are those to
+which railroad men will naturally first
+turn.</p>
+
+<p>The key article is <span class="sc"><a href="/article/22-0836-railways/railways">Railways</a></span> (Vol. 22,
+p. 819), equivalent in length to more than
+120 pages of this Guide. It is written by
+the foremost authorities on the subject
+both in the Old World and in the New,
+including:</p>
+
+<p><span class="shoulder-heading" id="sh-2">Technical Authorities</span><span class="sc"><a href="/article/12-0823-hadley-arthur-twining/hadley__arthur_twining">Arthur Twining Hadley</a></span>, president
+of Yale University, and author of
+<i>Railroad Transportation</i>.</p>
+
+<p><span class="sc">Hugh Munro
+Ross</span>, author of
+<i>British Railways</i>
+and editor of the
+<i>Engineering Supplement</i> of the London
+Times.</p>
+
+<p><span class="sc">Ray Morris</span>, formerly managing
+editor of the <i>Railway Age Gazette</i> of
+New York and author of <i>Railroad
+Administration</i>.</p>
+
+<p><span class="sc">Lt. Col. H. A. Yorke</span>, C.B., chief
+inspecting officer of railways of the
+English Board of Trade.</p>
+
+<p><span class="sc">Prof. Frank Haigh Dixon</span>, of
+Dartmouth College, author of <i>State
+Railroad Control</i>.</p>
+
+<p><span class="sc">Braman Blanchard Adams</span>, associate
+editor of New York <i>Railway Age
+Gazette</i>.</p>
+
+<p><span class="sc">William Ernest Dalby</span>, professor
+of engineering in the South Kensington
+Central Technical College, and author
+of <i>The Balancing of Engines</i>, etc.</p>
+
+<p><span class="sc">William Barclay Parsons</span>, formerly
+chief engineer to the New York
+City Rapid Transit Commission and
+advisory engineer of the Royal Commission
+on London Traffic.</p>
+
+<p><span class="sc">Maj. Gen. C. E. Webber</span>, founder
+of the Institute of Electrical
+Engineers.</p>
+
+<p><span class="sc">Emile Garcke</span>, managing director
+of the British Electric Traction Co.,
+Ltd., author of <i>Manual of Electrical
+Undertakings</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-3">The Key Article</span>The article opens with an introductory
+historical summary which describes the
+use of railways or tramways before the
+invention of the steam locomotive
+in mining districts
+in England (just as
+in the article <i>Mauch
+Chunk</i>, Vol. 17, p. 903, early mine transportation
+in America is described) and
+the way in which their use induced the
+development of high speed locomotives
+and how the first American trans-continental
+railroads were built. The student
+will find next a section of general
+statistics of railway mileage for the
+world, with a summary of American
+railway building, especially in the Far
+West since 1896. The following section is
+on economics and legislation in general,
+followed by separate treatment of British
+railway legislation and of American railway
+legislation. The great problem of
+government control and operation of
+railways as practised in various European
+countries is also discussed and is of interest
+in connection with contemporary
+American tendencies. The safety of
+railway transportation is treated in a
+section containing in compact form the
+most valuable classified statistics. A
+section on <i>Financial Organization</i> compares
+American and British conditions in
+a most illuminating way.</p>
+
+<p>Of even greater importance to the technical
+student are the remaining sections
+of this great article, namely:</p>
+
+<p>(1) <span class="sc">Construction</span>, with subsections
+on <i>Location</i>, <i>Cuttings and Embankments</i>,
+<i>Gradients</i>, <i>Curves</i>, <i>Gauge</i>, <i>Permanent Way</i>
+(including ballast, ties, fish-plates and
+other rail joints, and rails), <i>Bridges</i>,
+<i>Rack</i> (or cog) <i>Railways</i>, <i>Cable Railways</i>,
+<i>Mono-Rail Systems</i>, <i>Switches and Cross-overs</i>,
+<i>Railway Stations</i> (for passengers
+and for freight), <i>Round Houses for Locomotives</i>,
+and <i>Switching Yards</i>. This treatise
+on construction is equivalent to 22
+pages of the type and size of this Guide,
+and is in itself an adequate brief manual
+for the use of the construction engineer,
+with valuable illustrations in the text.</p>
+
+<p>(2) <span class="sc">Locomotive Power</span>, including
+subsections on <i>Fundamental Relations</i>,
+<i>Methods of Applying Locomotive Power</i>,
+<i>General Locomotive Efficiency</i>, <i>Analysis of
+Train Resistance</i>, <i>Vehicle Resistance</i>, <i>Engine
+Resistance</i>, <i>Maximum Boiler Power</i>,
+<i>Draught</i>, <i>The Steam Engine</i>, <i>Tractive
+Force</i>, <i>Engine Efficiency</i>, <i>Piston Speed</i>,
+<i>Compound Locomotives</i>, <i>Balancing of Locomotives</i>,
+<i>Classes of Locomotives</i>, <i>Current
+Developments</i>. This section of the article
+is a little longer than the preceding,—it
+would fill 25 pages of this Guide,—and
+has illustrations, tables, and formulae.
+It is written by <a href="/contributors.html?q=William+Ernest+Dalby">Prof. Dalby</a>, the principal
+British authority on locomotives.</p>
+
+<p>(3) <span class="sc">Rolling Stock</span>, dealing with dining,
+sleeping, passenger and vestibule
+cars, wood and metal, their heating and
+lighting and their weight and speed; with
+freight cars, their weight and speed; and
+with car-couplers and brakes.</p>
+
+<p>(4) <span class="sc">Intra-Urban</span>, or city street railways,
+elevated and underground, by <a href="/contributors.html?q=William+Barclay+Parsons">W.
+B. Parsons</a>, formerly chief engineer of
+the New York Rapid Transit Commission.</p>
+
+<p>(5) <span class="sc">Light Railways</span> for rural and interurban
+service and portable railways.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Other Major Articles</span>The next article to be read is <i>Tramway</i>
+(Vol. 27, p. 159), dealing with the earliest
+railways used in coal mines, American
+and English, without locomotive power;
+and with modern street railways,—surface
+lines, steam, cable and electric, the
+last being subdivided
+into three classes,
+overhead or trolley,
+open conduit and
+closed conduit. The different types of
+street cars are discussed, and there are
+summaries of legislation and of commercial
+results, with general statistics.</p>
+
+<p>The article <span class="sc"><a href="/article/27-0133-s2/traction">Traction</a></span> (Vol. 27, p. 118,
+equivalent to more than 20 pages of this
+Guide) is by <a href="/contributors.html?q=Louis+Duncan">Louis Duncan</a>, formerly
+head of the department of electrical engineering
+in the Massachusetts Institute
+of Technology. It deals principally with
+electric traction and thus supplements
+the article <span class="sc"><a href="/article/27-0174-s7/tramway">Tramway</a></span>. <i>Steam</i> traction, as
+treated in the section on <i>Locomotive
+Power</i> in the article <span class="sc"><a href="/article/22-0836-railways/railways">Railways</a></span>, by <a href="/contributors.html?q=William+Ernest+Dalby">Prof.
+Dalby</a>, may be studied further in the
+article <span class="sc"><a href="/article/25-0840-s3/steam_engine">Steam-Engine</a></span> (Vol. 25, p. 818),
+and especially that part of the article
+which deals with locomotives (§ 104, p.
+841).</p>
+
+<p>The civil engineer engaged in railway
+work will profit by reading, besides the
+articles already mentioned: Professor W.
+C. Unwin’s article (Vol. 4, p. 533) on
+<span class="sc"><a href="/article/04-0553-s1/bridges">Bridges</a></span>, especially pp. 545 and 547 seq.,
+dealing with railway bridges; and the article
+<span class="sc"><a href="/article/27-0416-tunnel/tunnel">Tunnel</a></span> (Vol. 27, p. 399), by <a href="/contributors.html?q=Howard+Adams+Carson">H. A.
+Carson</a>, engineer-in-charge of the Boston
+Subway and of the East Boston Tunnel,
+which would make about 30 pages if
+printed in the form of this Guide. This
+article classifies tunnels into river, mountain
+and town (subway) tunnels, and
+gives special information about rail corrosion
+and ventilation in tunnels.</p>
+
+<p>The equipment engineer will add to
+the topics already listed (cars, engines,
+etc.) the article <span class="sc"><a href="/article/25-0086-s1/signal">Signal</a></span>, § <i>Railway Signalling</i>
+(Vol. 25, p. 73; as long as 15 pages
+of this Guide), by <a href="/contributors.html?q=Braman+Blanchard+Adams">B. B. Adams</a>, of the
+<i>Railway Age Gazette</i>, and H. M. Ross, of
+the London <i>Times</i> Engineering Supplement;
+and <span class="sc"><a href="/article/04-0428-brake/brake">Brake</a></span> (Vol. 4, p. 414).</p>
+
+<p><span class="shoulder-heading" id="sh-5">Legislation</span>On the history of railroading and on
+statistics there is much information in
+the Britannica in local articles. It has
+already been remarked
+that each
+article dealing with
+a state of the United States, or any of the
+commercial countries of the world, has a
+section on <i>Communications</i>, giving railway
+mileage and describing the principal railway
+lines in the area; and that articles on
+cities and towns give accurate and minute
+information about railway service. In
+pursuing the study of legislation bearing
+on railways, and especially on rate legislation,
+the student should read the article
+<span class="sc"><a href="/article/14-0742-interstate-commerce/interstate_commerce">Interstate Commerce</a></span> (Vol. 14, p. 711),
+by Prof. Frank A. Fetter of Princeton
+University, a part at least of the article
+<span class="sc"><a href="/article/27-0351-s2/trusts">Trusts</a></span> (Vol. 27, p. 334), by Prof. <a href="/contributors.html?q=Jeremiah+Whipple+Jenks">J. W.
+Jenks</a>, of New York University (formerly
+of Cornell), parts of the article on the
+history of the United States, in the same
+volume, especially pp. 315, 316, 353, 367,
+394, 395, 396, 406, 407, and, in separate
+state articles, the sections on laws and
+history, notably <span class="sc"><a href="/article/19-0799-north-carolina/north_carolina">North Carolina</a></span> for
+the rate cases of 1907 (Vol. 19, p. 778),
+<span class="sc"><a href="/article/19-0338-nebraska/nebraska">Nebraska</a></span> for the maximum freight rate
+of 1893 (Vol. 19, p. 329), <span class="sc"><a href="/article/28-0760-wisconsin/wisconsin">Wisconsin</a></span> on
+radical rate legislation and on physical
+valuation for <i>ad valorem</i> tax of railways
+(Vol. 28, p. 744).</p>
+
+<p><span class="shoulder-heading" id="sh-6">Biographies</span>The biographical articles in the new
+Britannica also have much important information
+for the student of railways.</p>
+
+<p>Among the names of
+inventors whose
+lives are outlined are:
+<span class="sc"><a href="/article/19-0495-newcomen-thomas/newcomen__thomas">Thomas Newcomen</a></span> (Vol. 19, p. 475),
+<span class="sc"><a href="/article/28-0432-watt-james/watt__james">James Watt</a></span> (Vol. 28, p. 414), <span class="sc"><a href="/article/04-0339-boulton-matthew/boulton__matthew">Matthew
+Boulton</a></span> (Vol. 4, p. 324), <span class="sc"><a href="/article/11-0766-s4/george">George</a></span> and
+<span class="sc"><a href="/article/25-0912-s3/stephenson__george">Robert Stephenson</a></span> (Vol. 25, pp. 888
+and 889), <span class="sc"><a href="/article/27-0271-s3/trevithick__richard">Richard Trevithick</a></span> (Vol. 27,
+p. 256), <span class="sc"><a href="/article/10-0014-evans-oliver/evans__oliver">Oliver Evans</a></span> (Vol. 10, p. 2),
+<span class="sc"><a href="/article/09-0772-s4/ericsson__john">John Ericsson</a></span> (Vol. 9, p. 740), <span class="sc"><a href="/article/07-0095-cooper-peter/cooper__peter">Peter
+Cooper</a></span> (Vol. 7, p. 80), and <span class="sc"><a href="/article/04-0705-s3/brunel__sir_marc_isambard">Sir Marc I.
+<span class="pageno" id="Page_93">93</a></span>Brunel</span> (Vol. 4, p. 682); among the
+names of engineers and railway and
+bridge builders <span class="sc"><a href="/article/03-0941-bidder-george-parker/bidder__george_parker">George Parker Bidder</a></span>
+(Vol. 3, p. 918), <span class="sc"><a href="/article/04-0452-brassey-thomas/brassey__thomas">Thomas Brassey</a></span> (Vol.
+4, p. 435), <span class="sc"><a href="/article/06-0646-cockerill-william/cockerill__william">John Cockerill</a></span> (Vol. 6, p.
+625), <span class="sc"><a href="/article/07-0191-corning-erastus/corning__erastus">Erastus Corning</a></span> (Vol. 7, p. 174),
+<span class="sc"><a href="/article/08-0816-eads-james-buchanan/eads__james_buchanan">James Buchanan Eads</a></span> (Vol. 8, p. 789),
+<span class="sc"><a href="/article/19-0143-mythology/mythology">Sir William Fairbairn</a></span> (Vol. 19, p. 129),
+<span class="sc"><a href="/article/10-0782-s2/fowler__sir_john">Sir John Fowler</a></span> (Vol. 10, p. 761),
+<span class="sc"><a href="/article/12-0415-s6/greathead__james_henry">James Henry Greathead</a></span> (Vol. 12, p.
+398), <span class="sc"><a href="/article/13-0112-hawkshaw-sir-john/hawkshaw__sir_john">Sir John Hawkshaw</a></span> (Vol. 13, p.
+99), <span class="sc"><a href="/article/15-0846-s2/kingsford__william">William Kingsford</a></span> (Vol. 15, p.
+817), <span class="sc"><a href="/article/23-0067-s4/reid__sir_robert_gillespie">Sir Robert Gillespie Reid</a></span> (Vol.
+23, p. 50), <span class="sc"><a href="/article/23-0118-rennie/rennie__john">John Rennie</a></span> (Vol. 23, p. 101),
+and <span class="sc"><a href="/article/23-0472-s3/roebling__john_augustus">J. A. Roebling</a></span> (Vol. 23, p. 450); and
+among railway financiers,—to take only
+a few American names,—the <span class="sc"><a href="/article/27-0910-s2/vandals">Vanderbilts</a></span>
+(Vol. 27, p. 885), <span class="sc"><a href="/article/12-0301-s7/gould__jay">Jay Gould</a></span> (Vol.
+12, p. 284), <span class="sc"><a href="/article/20-0479-s4/packer__asa">Asa Packer</a></span> (Vol. 20, p. 441)
+and <span class="sc"><a href="/article/13-0031-s3/harriman">E. H. Harriman</a></span> (Vol. 13, p.
+18).</p>
+
+<p>In such articles as <span class="sc"><a href="/article/25-1050-strikes-and-lock-outs/strikes_and_lock-outs">Strikes and Lock
+Outs</a></span> (Vol. 25, p. 1024) and <span class="sc"><a href="/article/27-0155-s2/trade_unions">Trade
+Unions</a></span> (Vol. 27, p. 140), each with American
+sections by Carroll D. Wright, late
+U. S. Commissioner of Labor, the reader
+will find valuable assistance in studying
+railway economics as affected by the
+relations of labour and capital.</p>
+
+<p>For marine transportation see the next
+chapter in this Guide.</p>
+
+<p>The following is a brief list of articles,
+and of sections of articles, of interest to
+all railroad men:</p>
+
+<ul class="index">
+  <li class="c018">Analysis of Train Resistance</li>
+  <li class="c018"><a href="/article/02-0116-s3/anthracite">Anthracite</a></li>
+  <li class="c018"><a href="/article/02-0918-s2/atmospheric_railway">Atmospheric Railway</a></li>
+  <li class="c018"><a href="/article/03-0286-ballast/ballast">Ballast</a></li>
+  <li class="c018">Balancing of Locomotives</li>
+  <li class="c018"><a href="/article/04-0057-blasting/blasting">Blasting</a></li>
+  <li class="c018"><a href="/article/03-0597-bearings/bearings">Bearings</a></li>
+  <li class="c018"><a href="/article/04-0131-bogie/bogie">Bogie</a></li>
+  <li class="c018"><a href="/article/04-0154-boiler/boiler">Boiler</a></li>
+  <li class="c018"><a href="/article/04-0266-s3/boring">Boring</a></li>
+  <li class="c018"><a href="/article/04-0428-brake/brake">Brake</a></li>
+  <li class="c018"><a href="/article/04-0541-brickwork/brickwork">Brickwork</a></li>
+  <li class="c018"><a href="/article/04-0553-s1/bridges">Bridges</a></li>
+  <li class="c018">Cable Railways</li>
+  <li class="c018"><a href="/article/04-0984-s4/caisson">Caisson</a></li>
+  <li class="c018"><a href="/article/05-0181-canal/canal">Canal</a></li>
+  <li class="c018"><a href="/article/05-0230-cantilever/cantilever">Cantilever</a></li>
+  <li class="c018"><a href="/article/05-0310-car/car">Car</a></li>
+  <li class="c018"><a href="/article/05-0678-cement/cement">Cement</a></li>
+  <li class="c018">Classes of Locomotives</li>
+  <li class="c018"><a href="/article/06-0594-coal/coal">Coal</a></li>
+  <li class="c018">Cog Railways</li>
+  <li class="c018">Compound Locomotives</li>
+  <li class="c018"><a href="/article/06-0859-concrete/concrete">Concrete</a></li>
+  <li class="c018"><a href="/article/07-0067-conveyors/conveyors">Conveyors</a></li>
+  <li class="c018"><a href="/article/07-0388-cranes/cranes">Cranes</a></li>
+  <li class="c018">Cross-overs</li>
+  <li class="c018"><a href="/article/07-0675-curve/curve">Curves</a></li>
+  <li class="c018">Current Developments</li>
+  <li class="c018">Cuttings</li>
+  <li class="c018"><a href="/article/08-0370-dock/dock">Dock</a></li>
+  <li class="c018"><a href="/article/08-0570-draught/draught">Draught</a></li>
+  <li class="c018"><a href="/article/08-0585-dredge/dredge">Dredge</a></li>
+  <li class="c018"><a href="/article/09-0280-elevators/elevators">Elevators</a></li>
+  <li class="c018"><a href="/article/09-0323-embankment/embankment">Embankments</a></li>
+  <li class="c018"><a href="/article/09-0431-engine/engine">Engine</a></li>
+  <li class="c018">Engine Efficiency</li>
+  <li class="c018">Engine Resistance</li>
+  <li class="c018"><a href="/article/10-0255-felloe/felloe">Felloe</a></li>
+  <li class="c018">Fire brick</li>
+  <li class="c018">Fish-plates</li>
+  <li class="c018"><a href="/article/10-0759-s5/foundations">Foundations</a></li>
+  <li class="c018"><a href="/article/11-0106-freight/freight">Freight</a></li>
+  <li class="c018"><a href="/article/11-0287-fuel/fuel">Fuel</a></li>
+  <li class="c018"><a href="/article/11-0550-s2/gauge">Gauge</a></li>
+  <li class="c018">General Locomotive Efficiency</li>
+  <li class="c018">Gradients</li>
+  <li class="c018">Horse Power</li>
+  <li class="c018"><a href="/article/14-0047-hydraulics/hydraulics">Hydraulics</a></li>
+  <li class="c018"><a href="/article/14-0834-s2/iron_and_steel">Iron and Steel</a></li>
+  <li class="c018">Location</li>
+  <li class="c018">Locomotive Power</li>
+  <li class="c018">Maximum Boiler Power</li>
+  <li class="c018"><a href="/article/17-0859-s4/masonry">Masonry</a></li>
+  <li class="c018">Methods of applying Locomotive Power</li>
+  <li class="c018">Monorail Systems</li>
+  <li class="c018"><a href="/article/18-0907-mortar/mortar">Mortar</a></li>
+  <li class="c018"><a href="/article/18-0942-motors-electric/motors__electric">Motors, Electric</a></li>
+  <li class="c018"><a href="/article/20-0057-s6/oil_engine">Oil Engine</a></li>
+  <li class="c018">Permanent Way</li>
+  <li class="c018"><a href="/article/21-0614-s3/pier">Pier</a></li>
+  <li class="c018">Piston Speed</li>
+  <li class="c018">Rack Railways</li>
+  <li class="c018"><a href="/article/22-0832-rafter/rafter">Rafter</a></li>
+  <li class="c018"><a href="/article/22-0835-s4/rail">Rail</a></li>
+  <li class="c018"><a href="/article/22-0836-railways/railways">Railways</a></li>
+  <li class="c018">Railway Stations</li>
+  <li class="c018"><a href="/article/23-0391-s4/river_engineering">River Engineering</a></li>
+  <li class="c018"><a href="/article/23-0405-s5/roads_and_streets">Roads and Streets</a></li>
+  <li class="c018">Roadbeds</li>
+  <li class="c018">Rolling Stock</li>
+  <li class="c018"><a href="/article/23-0731-s2/roofs">Roof</a></li>
+  <li class="c018"><a href="/article/24-0645-semaphore/semaphore">Semaphore</a></li>
+  <li class="c018"><a href="/article/24-0765-s4/sewerage">Sewerage</a></li>
+  <li class="c018">Shaft Sinking</li>
+  <li class="c018"><a href="/article/24-1080-s3/shoring">Shoring</a></li>
+  <li class="c018"><a href="/article/24-1090-shovel/shovel">Shovel</a></li>
+  <li class="c018">Signalling</li>
+  <li class="c018"><a href="/article/25-0167-siphon/siphon">Siphon</a></li>
+  <li class="c018"><a href="/article/25-0256-sleeper/sleeper">Sleeper</a></li>
+  <li class="c018"><a href="/article/25-0291-s6/smoke">Smoke</a></li>
+  <li class="c018"><a href="/article/25-0840-s3/steam_engine">Steam Engines</a></li>
+  <li class="c018"><a href="/article/25-0883-s4/steel_construction">Steel Construction</a></li>
+  <li class="c018"><a href="/article/25-0982-stone/stone">Stone</a></li>
+  <li class="c018"><a href="/article/25-1033-s4/strength_of_materials">Strength of Materials</a></li>
+  <li class="c018">Switches (or points)</li>
+  <li class="c018">Switching Yards</li>
+  <li class="c018">Ties</li>
+  <li class="c018"><a href="/article/26-1018-timber/timber">Timber</a></li>
+  <li class="c018"><a href="/article/27-0133-s2/traction">Traction</a></li>
+  <li class="c018">Tractive Force</li>
+  <li class="c018"><a href="/article/27-0174-s7/tramway">Tramway</a></li>
+  <li class="c018"><a href="/article/27-0416-tunnel/tunnel">Tunnels</a></li>
+  <li class="c018">Vehicle Resistance</li>
+  <li class="c018"><a href="/article/27-1036-s3/ventilation">Ventilation</a></li>
+  <li class="c018"><a href="/article/28-0518-s7/welding">Welding</a></li>
+</ul>
+
+<div>
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

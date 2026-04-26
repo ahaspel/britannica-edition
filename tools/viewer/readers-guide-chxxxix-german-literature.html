@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>German Literature &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XXXIX</span>German Literature</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Old High German</a></li><li><a href="#sh-2">Middle Period</a></li><li><a href="#sh-3">14th and 15th Centuries</a></li><li><a href="#sh-4">Renaissance</a></li><li><a href="#sh-5">Classical Period</a></li><li><a href="#sh-6">Sturm und Drang</a></li><li><a href="#sh-7">Romanticism</a></li><li><a href="#sh-8">1832–1870</a></li><li><a href="#sh-9">Since 1870</a></li></ol></div>
+    <div class="body-text">
+
+
+<p>The article in the Britannica on
+German Literature (Vol. 11, p.
+783; equivalent to 55 pages of this
+Guide) is by Professor <a href="/contributors.html?q=John+George+Robertson">John George Robertson</a>,
+University of London, author of
+<i>History of German Literature</i>. This article
+is divided into six sections, and following
+this scheme the course of reading
+below is divided into six parts, in connection
+with each of which the reader
+should first peruse the correspondingly
+numbered section in the article <span class="sc"><a href="/article/11-0804-german-literature/german_literature">German
+Literature</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-1">Old High German</span>I. <i>The Old High
+German Period, 750–1050</i>:—the
+articles
+<span class="sc"><a href="/article/27-0584-s6/ulfilas">Ulfilas</a></span> (Vol. 27, p.
+565), by <a href="/contributors.html?q=Rev.+Charles+Anderson+Scott">Charles Anderson Scott</a>, author
+of <i>Ulfilas, Apostle of the Goths</i>; <span class="sc"><a href="/article/13-0234-s3/heliand">Heliand</a></span>
+(Vol. 13, p. 221), by <a href="/contributors.html?q=Henry+Bradley">Henry Bradley</a>,
+author of <i>The Story of the Goths</i>; <span class="sc"><a href="/article/09-0151-einhard/einhard">Einhard</a></span>
+(Vol. 9, p. 134), by <a href="/contributors.html?q=Arthur+William+Holland">A. W. Holland</a>;
+<span class="sc"><a href="/article/19-0856-notker/notker">Notker</a></span> (Vol. 19, p. 824) and
+<span class="sc"><a href="/article/13-0867-s6/hrosvitha">Hrosvitha</a></span> (Vol. 13, p. 842), by A.
+W. Ward—and see Prof. Ward on the
+medieval drama in the article <span class="sc"><a href="/article/08-0498-drama/drama">Drama</a></span>
+(Vol. 8, especially p. 497).</p>
+
+<p><span class="shoulder-heading" id="sh-2">Middle Period</span>II. <i>The Middle High German Period,
+1050–1350</i>:—the articles <span class="sc"><a href="/article/23-0530-romance/romance">Romance</a></span> (Vol.
+23, p. 500), by <a href="/contributors.html?q=George+Edward+Bateman+Saintsbury">George Saintsbury</a>; <span class="sc"><a href="/article/28-0314-waltharius/waltharius">Waltharius</a></span>
+(Vol. 28, p. 298),
+<span class="sc"><a href="/article/19-0664-s2/nibelungenlied">Nibelungenlied</a></span> (Vol. 19,
+pp. 637–640), <span class="sc"><a href="/article/12-0693-s2/gudrun">Gudrun</a></span> (Vol.
+12, p. 668), <span class="sc"><a href="/article/08-0238-dietrich-of-bern/dietrich_of_bern">Dietrich of Bern</a></span>
+(Vol. 8, p. 221), <span class="sc"><a href="/article/20-0375-ortnit/ortnit">Ortnit</a></span> (Vol. 20, p. 341),
+<span class="sc"><a href="/article/28-0793-wolfdietrich/wolfdietrich">Wolfdietrich</a></span> (Vol. 28, p. 772), <span class="sc"><a href="/article/13-0231-heldenbuch-das/heldenbuch__das">HelDENBUCH</a></span>
+(Vol. 13, p. 218), <span class="sc"><a href="/article/13-0476-s6/hildebrand__lay_of">Lay of Hildebrand</a></span>
+(Vol. 13, p. 460), by <a href="/contributors.html?q=John+George+Robertson">J. G. Robertson</a>;
+<span class="sc"><a href="/article/23-0897-ruodlieb/ruodlieb">Ruodlieb</a></span> (Vol. 23, p. 854), <span class="sc"><a href="/article/02-0726-s2/arthurian_legend">Arthurian
+Legend</a></span> (Vol. 2, p. 684), <span class="sc"><a href="/article/21-0147-s4/perceval">Perceval</a></span>
+(Vol. 21, p. 132), and <span class="sc"><a href="/article/27-0307-s6/tristan">Tristan</a></span>
+(Vol. 27, pp. 292–294), by <a href="/contributors.html?q=Miss+Jessie+Laidlay+Weston">J. L. Weston</a>,
+author of <i>Legends of the Wagner Drama</i>;
+<span class="sc"><a href="/article/13-0050-s1/hartmann_von_aue">Hartmann Von Aue</a></span> (Vol. 13, p. 37),
+<span class="sc"><a href="/article/12-0294-s4/gottfried_von_strassburg">Gottfried von Strassburg</a></span> (Vol. 12, p.
+277), <span class="sc"><a href="/article/28-0796-wolfram-von-eschenbach/wolfram_von_eschenbach">Wolfram von Eschenbach</a></span> (Vol.
+28, p. 775), by <a href="/contributors.html?q=Miss+Jessie+Laidlay+Weston">J. L. Weston</a>; <span class="sc"><a href="/article/28-0315-walther-von-der-vogelweide/walther_von_der_vogelweide">Walther
+von der Vogelweide</a></span> (Vol. 28, p. 299),
+<span class="sc"><a href="/article/18-0573-minnesingers/minnesingers">Minnesingers</a></span> (Vol. 18, p. 547), <span class="sc"><a href="/article/11-0106-freidank/freidank">Freidank</a></span>
+(Vol. 11, p. 94), <span class="sc"><a href="/article/06-0993-conrad-of-w-rzburg/conrad_of_würzburg">Conrad of Würzburg</a></span>
+(Vol. 6, p. 968).</p>
+
+<p><span class="shoulder-heading" id="sh-3">14th and 15th Centuries</span>III. <i>The Transition Period, 1350–1600</i>:—the
+articles <span class="sc"><a href="/article/11-0054-s5/frauenlob">Frauenlob</a></span> (Vol. 11, p.
+42), <span class="sc"><a href="/article/23-0243-s2/reynard_the_fox">Reynard the
+Fox</a></span> (Vol. 23, p. 226),
+<span class="sc"><a href="/article/04-0446-brant-sebastian/brant__sebastian">Sebastian Brant</a></span>
+(Vol. 4, p. 431),
+<span class="sc"><a href="/article/17-0941-maximilian-i/maximilian_i">Maximilian I.</a></span> (Vol. 17, p. 922), by <a href="/contributors.html?q=Arthur+William+Holland">A.
+W. Holland</a>; <span class="sc"><a href="/article/18-0104-s3/meistersinger">Meistersinger</a></span> (Vol. 18,
+p. 86) and <span class="sc"><a href="/article/09-0919-s2/eulenspiegel__ulenspiegel___till">Eulenspiegel</a></span> (Vol. 9, p.
+887), by <a href="/contributors.html?q=John+George+Robertson">J. G. Robertson</a>; <span class="sc"><a href="/article/23-1017-s2/sachs__hans">Hans Sachs</a></span>
+(Vol. 23, p. 972), <span class="sc"><a href="/article/26-0481-s4/tauler__johann">Tauler</a></span> (Vol. 26, p.
+452), <span class="sc"><a href="/article/11-0571-s4/geiler__or_geyler__von_kaisersberg__johann">Geiler von Kaiserberg</a></span> (Vol. 11,
+p. 553), <span class="sc"><a href="/article/09-0759-s5/erasmus__desiderius">Erasmus</a></span> (Vol. 9, p. 727), by
+<a href="/contributors.html?q=Rev.+Mark+Pattison">Mark Pattison</a> and P. S. Allen, editor of
+the Oxford Erasmus; <span class="sc"><a href="/article/23-0221-s3/reuchlin__johann">Reuchlin</a></span> (Vol. 23,
+p. 204), by <a href="/contributors.html?q=William+Robertson+Smith">W. Robertson Smith</a>; <span class="sc"><a href="/article/14-0026-s3/hutten__ulrich_von">Ulrich
+von Hutten</a></span> (Vol. 14, p. 14), by
+the Very Rev. G. W. Kitchin, Dean of
+Durham; <span class="sc"><a href="/article/17-0148-s3/luther__martin">Martin Luther</a></span> (Vol. 17, p.
+133), by Dr. <a href="/contributors.html?q=Rev.+Thomas+Martin+Lindsay">T. M. Lindsay</a>, author of <i>A
+History of the Reformation</i>; <span class="sc"><a href="/article/01-0544-s3/alberus__erasmus">Erasmus Alberus</a></span>
+(Vol. 1, p. 504), <span class="sc"><a href="/article/19-0052-murner-thomas/murner__thomas">Thomas Murner</a></span>
+(Vol. 19, p. 37), <span class="sc"><a href="/article/10-0441-s6/fischart__johann">Johann Fischart</a></span> (Vol.
+10, p. 425), <span class="sc"><a href="/article/11-0245-s5/frischlin__philipp_nikodemus">Philipp Nikodemus Frischlin</a></span>
+(Vol. 11, p. 232), <span class="sc"><a href="/article/28-0639-wickram-j-rg/wickram__jörg">Jörg Wickram</a></span>
+(Vol. 28, p. 619), <span class="sc"><a href="/article/03-0089-ayrer-jakob/ayrer__jakob">Ayrer</a></span> (Vol. 3, p. 74),
+<span class="sc"><a href="/article/10-0222-s3/faust">Faust</a></span> (Vol. 10, p. 210).</p>
+
+<p><span class="shoulder-heading" id="sh-4">Renaissance</span>IV. <i>The Renaissance, 1600–1740</i>:—the
+articles <span class="sc"><a href="/article/11-0789-s3/gerhardt__paul">Paul Gerhardt</a></span> (Vol. 11, p. 768),
+<span class="sc"><a href="/article/04-0126-boehme-jakob/boehme__or_behmen___jakob">Jakob Boehme</a></span> (Vol. 4, p. 113), <span class="sc"><a href="/article/28-0482-s4/weckherlin__georg_rudolf">Georg
+Rudolf Weckherlin</a></span>
+(Vol. 28, p. 464), <span class="sc"><a href="/article/20-0155-s4/opitz_von_boberfeld__martin">Martin
+Opitz</a></span> (Vol. 20, p.
+129), <span class="sc"><a href="/article/13-0042-harsd-rffer-georg-philipp/harsdörffer__georg_philipp">Georg Philipp Harsdörffer</a></span>
+(Vol. 13, p. 29), <span class="sc"><a href="/article/07-0748-dach-simon/dach__simon">Simon Dach</a></span> (Vol.
+7, p. 726), <span class="sc"><a href="/article/10-0512-s5/fleming__paul">Paul Fleming</a></span> (Vol. 10,
+p. 494), von <span class="sc"><a href="/article/16-0899-s3/logau__friedrich">Logau</a></span> (Vol. 16, p.
+877), <span class="sc"><a href="/article/01-0100-s6/abraham">Abraham a Sancta Clara</a></span>
+(Vol. 1, p. 72), <span class="sc"><a href="/article/23-0383-s4/rist__johann_von">Johann von Rist</a></span>
+(Vol. 23, p. 366), <span class="sc"><a href="/article/12-0667-s4/gryphius__andreas">Andreas Gryphius</a></span>
+(Vol. 12, p. 642), <span class="sc"><a href="/article/18-0922-s4/moscherosch__johann_michael">Moscherosch</a></span> (Vol. 18,
+p. 890), <span class="sc"><a href="/article/12-0628-s2/grimmelshausen__hans_jakob_christoffel_von">Grimmelshausen</a></span> (Vol. 12, p.
+603), <span class="sc"><a href="/article/22-0650-s9/pufendorf__samuel">Pufendorf</a></span> (Vol. 22, p. 634),
+<span class="sc"><a href="/article/26-0908-thomasius-christian/thomasius__christian">Thomasius</a></span> (Vol. 26, p. 868), <span class="sc"><a href="/article/28-0795-wolff-christian/wolff__less_correctly_wolf___christian">Christian
+Wolff</a></span> (Vol. 28, p. 774), by <a href="/contributors.html?q=Andrew+Seth+Pringle-Pattison">Andrew Seth
+Pringle-Pattison</a>; <span class="sc"><a href="/article/16-0405-s1/leibnitz__leibniz___gottfried_wilhelm">Leibnitz</a></span> (Vol. 16, p.
+385), by Prof. <a href="/contributors.html?q=William+Ritchie+Sorley">W. R. Sorley</a>, Cambridge;
+<span class="sc"><a href="/article/25-0660-s6/spener__philipp_jakob">Spener</a></span> (Vol. 25, p. 638), von <span class="sc"><a href="/article/05-0196-canitz-frederich-rudolf-ludwig/canitz__friedrich_rudolf_ludwig">Canitz</a></span>
+(Vol. 5, p. 183), <span class="sc"><a href="/article/12-0755-s2/günther__johann_christian">Johann Christian
+Günther</a></span> (Vol. 12, p. 730), <span class="sc"><a href="/article/04-0647-s3/brockes__barthold_heinrich">B. H.
+Brockes</a></span> (Vol. 4, p. 624), and, the dictator
+of the pseudo-classic age, <span class="sc"><a href="/article/12-0296-s4/gottsched__johann_christoph">Gottsched</a></span>
+(Vol. 12, p. 279).</p>
+
+<p><span class="shoulder-heading" id="sh-5">Classical Period</span>V. <i>The Classical Period of Modern German
+Literature, 1740–1832</i>:—the articles
+<span class="sc"><a href="/article/04-0124-bodmer-johann-jakob/bodmer__johann_jakob">J. J. Bodmer</a></span> (Vol. 4, p.
+111), <span class="sc"><a href="/article/11-0576-gellert/gellert">Gellert</a></span> (Vol. 11,
+p. 558), <span class="sc"><a href="/article/22-0790-s2/rabener__gottlieb_wilhelm">Rabener</a></span> (Vol.
+22, p. 773), <span class="sc"><a href="/article/24-0347-s2/schlegel__johann_elias">J. Elias
+Schlegel</a></span> (Vol. 24, p. 329), <span class="sc"><a href="/article/15-0876-klopstock-gottlieb-friedrich/klopstock__gottlieb_friedrich">Klopstock</a></span>
+(Vol. 15, p. 848), <span class="sc"><a href="/article/16-0311-s2/lavater__johann_kaspar">Lavater</a></span>
+(Vol. 16, p. 291), <span class="sc"><a href="/article/11-0931-s2/gerstenberg__heinrich_wilhelm_von">Gerstenberg</a></span> (Vol. 11,
+p. 907), <span class="sc"><a href="/article/12-0135-s4/gleim__johann_wilhelm_ludwig">Gleim</a></span> (Vol. 12, p. 118), <span class="sc"><a href="/article/12-0305-gourville-jean-herauld/gourville__jean_herauld">Götz</a></span>
+(Vol. 12, p. 289), <i>Uz</i> (Vol. 27, p. 828),
+<span class="sc"><a href="/article/22-0893-ramler-karl-wilhelm/ramler__karl_wilhelm">Ramler</a></span> (Vol. 22, p. 876), <span class="sc"><a href="/article/12-0838-hagedorn-friedrich-von/hagedorn__friedrich_von">Hagedorn</a></span>
+(Vol. 12, p. 813), <span class="sc"><a href="/article/12-0880-s4/haller__albrecht_von">Albrecht von Haller</a></span>
+(Vol. 12, p. 855), <span class="sc"><a href="/article/15-0875-kleist-ewald/kleist__ewald_christian_von">E. C. von Kleist</a></span> (Vol.
+15, p. 846), <span class="sc"><a href="/article/16-0516-s2/lessing__gotthold_ephraim">Lessing</a></span> (Vol. 16, pp. 496–499),
+by <a href="/contributors.html?q=James+Sime">James Sime</a>, author of <i>A History
+of Germany</i>, and <a href="/contributors.html?q=John+George+Robertson">J. G. Robertson</a>, and
+Lessing’s associates—<span class="sc"><a href="/article/28-0727-winckelmann-johann-joachim/winckelmann__johann_joachim">Winckelmann</a></span>
+(Vol. 28, p. 707), by <a href="/contributors.html?q=James+Sime">James Sime</a> and J.
+M. Mitchell, <span class="sc"><a href="/article/18-0139-mendelssohn-moses/mendelssohn__moses">Moses Mendelssohn</a></span> (Vol.
+18, p. 120), by <a href="/contributors.html?q=Israel+Abrahams">Israel Abrahams</a>, author of
+<i>A Short History of Jewish Literature</i>, and
+<span class="sc"><a href="/article/19-0689-s2/nicolai__christoph_friedrich">C. F. Nicolai</a></span> (Vol. 19, p. 662)—; <span class="sc"><a href="/article/28-0641-wieland-christoph-martin/wieland__christoph_martin">Wieland</a></span>
+(Vol. 28, p. 621), by <a href="/contributors.html?q=John+George+Robertson">J. G. Robertson</a>;
+<span class="sc"><a href="/article/26-0938-s2/thümmel__moritz_august_von">M. A. von Thümmel</a></span> (Vol. 26, p.
+898), <span class="sc"><a href="/article/15-0879-s4/knigge__adolf_franz_friedrich">A. von Knigge</a></span> (Vol. 15, p. 850),
+<span class="sc"><a href="/article/19-0058-mus/mus">Musäus</a></span> (Vol. 19, p. 43), <span class="sc"><a href="/article/03-0478-basedow-johann-bernhard/basedow__johann_bernhard">Basedow</a></span> (Vol.
+3, p. 461), <span class="sc"><a href="/article/21-0301-s3/pestalozzi__johann_heinrich">Pestalozzi</a></span> (Vol. 21, p. 284),
+<span class="sc"><a href="/article/12-0894-s3/hamann__johann_georg">Hamann</a></span> (Vol. 12, p. 869).</p>
+
+<p><span class="shoulder-heading" id="sh-6">Sturm und Drang</span>On the <i>Sturm und Drang</i> period, the articles
+<span class="sc"><a href="/article/13-0363-herder-johann-gottfried-von/herder__johann_gottfried_von">Herder</a></span> (Vol. 13, p. 347), the <span class="sc"><a href="/article/25-0975-stokes-sir-george-gabriel/stokes__sir_george_gabriel">Stolbergs</a></span>
+(Vol. 25, p. 953), <span class="sc"><a href="/article/28-0231-voss-richard/voss__richard">J. H. Voss</a></span>
+(Vol. 28, p. 215), <span class="sc"><a href="/article/13-0637-s2/hölty__ludwig_heinrich_christoph">Hölty</a></span> (Vol. 13,
+p. 620), <span class="sc"><a href="/article/04-0835-b-rger-gottfried-august/bürger__gottfried_august">Bürger</a></span> (Vol.
+4, p. 812), <span class="sc"><a href="/article/06-0481-claudius/claudius">M. Claudius</a></span>
+(Vol. 6, p. 466),—all
+of the Göttingen
+school; <span class="sc"><a href="/article/12-0199-s1/goethe__johann_wolfgang_von">Goethe</a></span> (Vol. 12, p. 182), by <a href="/contributors.html?q=John+George+Robertson">J.
+G. Robertson</a>; his imitators and followers,
+<span class="sc"><a href="/article/16-0451-s3/lenz__jakob_michael_reinhold">J. M. R. Lenz</a></span> (Vol. 16, p. 431), <span class="sc"><a href="/article/15-0875-klinger-friedrich-maximilian-von/klinger__friedrich_maximilian_von">Klinger</a></span>
+(Vol. 15, p. 846), <span class="sc"><a href="/article/18-0993-s5/müller__friedrich">Friedrich</a></span> (“Maler”)
+<span class="sc"><a href="/article/18-0993-s5/müller__friedrich">Müller</a></span> (Vol. 18, p. 961), <span class="sc"><a href="/article/13-0229-s3/heinse__johann_jakob_wilhelm">Heinse</a></span> (Vol.
+13, p. 216), <span class="sc"><a href="/article/18-0870-s3/moritz__karl_philipp">K. P. Moritz</a></span> (Vol. 18, p.
+838); the great dramatist of the late
+<i>Sturm und Drang</i>, <span class="sc"><a href="/article/24-0342-s2/schiller__johann_christoph_friedrich_von">Schiller</a></span> (Vol. 24, p.
+324), by <a href="/contributors.html?q=John+George+Robertson">J. G. Robertson</a>; <span class="sc"><a href="/article/14-0304-s4/iffland__august_wilhelm">A. W. Iffland</a></span>
+(Vol. 14, p. 291), <span class="sc"><a href="/article/15-0131-s5/jacobi__friedrich_heinrich">F. Jacobi</a></span> (Vol. 15, p.
+115).</p>
+
+<p>On the classical period proper, the latter
+part of the article on Goethe and
+<a href="/contributors.html?q=Ferdinand+Canning+Scott+Schiller">Schiller</a>, <span class="sc"><a href="/article/15-0690-kant-immanuel/kant__immanuel">Immanuel Kant</a></span> (Vol. 15, p.
+662), and <span class="sc"><a href="/article/10-0327-s3/fichte__immanuel_hermann">J. G. Fichte</a></span> (Vol. 10, p. 313),
+both by <a href="/contributors.html?q=Robert+Adamson">Robert Adamson</a>; the historians
+<span class="sc"><a href="/article/24-0360-s2/schlosser__friedrich_christoph">Schlosser</a></span> (Vol. 24, p. 342), <span class="sc"><a href="/article/18-0926-moselle-line/moselle-line">Möser</a></span>
+(Vol. 18, p. 895), and <span class="sc"><a href="/article/18-0994-s3/müller__johannes_von">Johannes von
+Müller</a></span> (Vol. 18, p. 962), by <a href="/contributors.html?q=Rev.+William+Augustus+Brevoort+Coolidge">W. A. B.
+Coolidge</a>; the scientists <span class="sc"><a href="/article/10-0695-s3/forster__françois">J. G. A. Forster</a></span>
+(Vol. 10, p. 674), <span class="sc"><a href="/article/13-0898-s2/humboldt__friedrich_heinrich_alexander">Alexander von Humboldt</a></span>
+(Vol. 13, p. 873), by <a href="/contributors.html?q=Miss+Agnes+Mary+Clerke">Agnes Mary
+Clerke</a>, and <span class="sc"><a href="/article/13-0900-s2/humboldt__karl_wilhelm_von">Karl Wilhelm von Humboldt</a></span>
+(Vol. 13, p. 875), by <a href="/contributors.html?q=Rev.+Archibald+Henry+Sayce">Archibald
+Henry Sayce</a>; the dramatist <span class="sc"><a href="/article/15-0953-kotzebue-august-friedrich-ferdinand-von/kotzebue__august_friedrich_ferdinand_von">Kotzebue</a></span>
+(Vol. 15, p. 919); the novelist <span class="sc"><a href="/article/23-0329-s5/richter__hans">Richter</a></span>,
+“Jean Paul” (Vol. 23, p. 313); and the
+poet <span class="sc"><a href="/article/17-0920-s2/matthisson__friedrich_von">Matthisson</a></span> (Vol. 17, p. 901).</p>
+
+<p><span class="shoulder-heading" id="sh-7">Romanticism</span>On the romantic school: the articles
+on the founders, <span class="sc"><a href="/article/24-0346-s5/schlegel__august_wilhelm_von">August Wilhelm
+Schlegel</a></span> and <span class="sc"><a href="/article/24-0346-s5/schlegel__august_wilhelm_von">Friedrich Schlegel</a></span>
+(Vol. 24, p. 328 and
+329), <span class="sc"><a href="/article/26-1002-s2/tieck__johann_ludwig">Tieck</a></span> (Vol. 26,
+p. 962), <span class="sc"><a href="/article/13-0599-s1/hölderlin__johann_christian_friedrich">Hölderlin</a></span>
+(Vol. 13, p. 583), and <span class="sc"><a href="/article/19-0861-s3/novalis">Novalis</a></span> (Vol.
+19, p. 829); in the second Romantic
+school, the more realistic Heidelbergers
+<span class="sc"><a href="/article/04-0514-brentano-klemens/brentano__klemens">Klemens Brentano</a></span> (Vol. 4, p. 496), <span class="sc"><a href="/article/02-0672-s3/arnim__elisabeth__bettina__von">L.
+A. von Arnim</a></span> (Vol. 2, p. 630), <span class="sc"><a href="/article/12-0277-g-rres/görres__johann_joseph_von">J. J. von
+Görres</a></span> (Vol. 12, p. 260), and, owing
+much to the interest in folk-literature of
+the Heidelbergers, the brothers <span class="sc"><a href="/article/12-0624-s2/grimm__friedrich_melchior">Grimm</a></span>
+(Vol. 12, pp. 600–602), by Dr. Henry
+Sweet of the University of Oxford,
+<span class="sc"><a href="/article/05-0861-chamisso-adelbert-von/chamisso__adelbert_von">Chamisso</a></span> (Vol. 5, p. 825); the patriot
+poets <span class="sc"><a href="/article/15-0947-k-rner-karl-theodor/körner__karl_theodor">Körner</a></span> (Vol. 15, p. 913) and
+<span class="sc"><a href="/article/02-0669-s3/arndt__ernst_moritz">Arndt</a></span> (Vol. 2, p. 627); the North Germans
+<span class="sc"><a href="/article/15-0875-kleist-ewald/kleist__ewald_christian_von">Kleist</a></span> (Vol. 15, p. 846), <span class="sc"><a href="/article/28-0541-s6/werner__friedrich_ludwig_zacharias">Zacharias
+Werner</a></span> (Vol. 28, p. 523), <span class="sc"><a href="/article/10-0770-s3/fouqué__ferdinand_andré">Fouqué</a></span> (Vol.
+10, p. 749), <span class="sc"><a href="/article/13-0576-s4/hofer__andreas">E. T. W. Hoffman</a></span> (Vol. 13,
+p. 561), <span class="sc"><a href="/article/09-0148-eichendorff-joseph-freiherr-von/eichendorff__joseph__freiherr_von">Eichendorff</a></span> (Vol. 9, p. 131),
+and <span class="sc"><a href="/article/23-0856-s3/rückert__johann_michael_friedrich">Rückert</a></span> (Vol. 23, p. 813) and <span class="sc"><a href="/article/18-0995-s5/müller__wilhelm">Wilhelm
+Müller</a></span> (Vol. 18, p. 963), who,
+like Byron, found romance, one in the
+Orient and the other in Greek struggles
+for liberty; and, of the Swabian school,
+<span class="sc"><a href="/article/27-0582-s4/uhland__johann_ludwig">Uhland</a></span> (Vol. 27, p. 563), <span class="sc"><a href="/article/15-0786-kerner-justinus-andreas-christian/kerner__justinus_andreas_christian">Kerner</a></span> (Vol.
+15, p. 757), <span class="sc"><a href="/article/13-0078-s3/hauff__wilhelm">Hauff</a></span> (Vol. 13, p. 65), and
+<span class="sc"><a href="/article/18-0869-m-rike-eduard-friedrich/mörike__eduard_friedrich">Mörike</a></span> (Vol. 18, p. 837); and the philosopher
+<span class="sc"><a href="/article/24-0334-s7/schelling__friedrich_wilhelm_joseph_von">Schelling</a></span> (Vol. 24, p. 316).</p>
+
+<p><span class="shoulder-heading" id="sh-8">1832–1870</span>VI. <i>Literature since Goethe, 1832 onwards</i>:—Read
+<span class="sc"><a href="/article/13-0213-s3/hegel__georg_wilhelm_friedrich">G. W. F. Hegel</a></span> (Vol. 13,
+p. 200, by the late Prof. William Wallace
+of Oxford and Prof. J. H.
+Muirhead, University of
+Birmingham), Schelling’s
+successor as a philosophic force in Germany;
+the articles on the “Young Germans”
+<span class="sc"><a href="/article/13-0226-s5/heine__heinrich">Heine</a></span> (Vol. 13, p. 213), by <a href="/contributors.html?q=J.+Walter+Ferrier">J.
+Walter Ferrier</a> and <a href="/contributors.html?q=John+George+Robertson">J. G. Robertson</a>;
+<span class="sc"><a href="/article/04-0270-s7/börne__karl_ludwig">Börne</a></span> (Vol. 4, p. 255), <span class="sc"><a href="/article/12-0769-s3/gutzkow__karl_ferdinand">Gutzkow</a></span> (Vol.
+12, p. 744) and <span class="sc"><a href="/article/16-0296-s3/laube__heinrich">Laube</a></span> (Vol. 16, p. 276);
+and the historians and philosophers <span class="sc"><a href="/article/25-1028-s5/strauss__david_friedrich">D. F.
+Strauss</a></span> (Vol. 25, p. 1002), <span class="sc"><a href="/article/11-0932-s3/gervinus__georg_gottfried">Gervinus</a></span>
+(Vol. 11, p. 908), <span class="sc"><a href="/article/18-0166-menzel-wolfgang/menzel__wolfgang">W. Menzel</a></span> (Vol. 18, p.
+147) and <span class="sc"><a href="/article/10-0314-feuerbach-ludwig-andreas/feuerbach__ludwig_andreas">Feuerbach</a></span> (Vol. 10, p. 303);
+the dramatists—some more closely connected
+with the preceding period,—<span class="sc"><a href="/article/12-0323-grabbe/grabbe__christian_dietrich">Grabbe</a></span>
+(Vol. 12, p. 306) and <span class="sc"><a href="/article/12-0621-s7/grillparzer__franz">Grillparzer</a></span>
+(Vol. 12, p. 596), <span class="sc"><a href="/article/14-0354-s5/immermann__karl_leberecht">Immermann</a></span>
+(Vol. 14, p. 335) and <span class="sc"><a href="/article/21-0837-platen-hallermund-august-graf-von/platen-hallermund__august__graf_von">Platen-Hallermund</a></span>
+(Vol. 21, p. 804), <span class="sc"><a href="/article/13-0636-s4/holtei__karl_eduard_von">Holtei</a></span> (Vol. 13,
+p. 619), <span class="sc"><a href="/article/22-0938-s7/raupach__ernst_benjamin_salomo">Raupach</a></span> (Vol. 22, p. 921) and
+<span class="sc"><a href="/article/18-0997-s2/müllner__amandus_gottfried_adolf">Müllner</a></span> (Vol. 18, p. 965), and, in Austria,
+besides Grillparzer, <span class="sc"><a href="/article/06-0711-collin-heinrich-joseph-von/collin__heinrich_joseph_von">Collin</a></span> (Vol.
+6, p. 690), <span class="sc"><a href="/article/19-0016-m-nch-bellinghausen-eligius-franz-joseph-freiherr-von/münch-bellinghausen__eligius_franz_joseph__freiherr_von">Münch-Bellinghausen</a></span>,
+“Friedrich Halm” (Vol. 19, p. 2), <span class="sc"><a href="/article/03-0555-bauernfeld-eduard-von/bauernfeld__eduard_von">Bauernfeld</a></span>
+(Vol. 3, p. 538) and <span class="sc"><a href="/article/22-0878-raimund/raimund__ferdinand">Raimund</a></span> (Vol.
+22, p. 861); the novelists <span class="sc"><a href="/article/01-0616-s7/alexis__willibald">Willibald
+Alexis</a></span> (Vol. 1, p. 576), <span class="sc"><a href="/article/13-0078-s3/hauff__wilhelm">Hauff</a></span> (Vol. 13,
+p. 65) and <span class="sc"><a href="/article/28-1073-zschokke-johann-heinrich-daniel/zschokke__johann_heinrich_daniel">Zschokke</a></span> (Vol. 28, p. 1046);
+and such poets of the ’30 and the ’48 as
+<span class="sc"><a href="/article/13-0421-s4/herwegh__georg">Herwegh</a></span> (Vol. 13, p. 405), <span class="sc"><a href="/article/11-0106-freiligrath-ferdinand/freiligrath__ferdinand">Freiligrath</a></span>
+(Vol. 11, p. 94), <span class="sc"><a href="/article/08-0292-dingelstedt-franz-von/dingelstedt__franz_von">Dingelstedt</a></span> (Vol. 8, p.
+275), <span class="sc">Hoffmann von Fallersleben</span> (Vol.
+13, p. 561), and, in Austria, a little earlier,
+<span class="sc"><a href="/article/02-0948-s2/auersperg__anton_alexander">Auersperg</a></span>, “Anastasius Grün” (Vol. 2,
+p. 900); and the possibly greater poets
+who were less interested in politics,
+<span class="sc"><a href="/article/11-0568-s6/geibel__emanuel">Geibel</a></span> (Vol. 11, p. 550), <span class="sc"><a href="/article/16-0437-lenau-nikolaus/lenau__nikolaus">Lenau</a></span> (Vol. 16,
+p. 417), <span class="sc"><a href="/article/25-1002-s3/strachwitz__moritz_karl_wilhelm_anton">Strachwitz</a></span> (Vol. 25, p. 976),
+and <span class="sc"><a href="/article/08-0618-droste-h-lshoff-annette-elisabeth/droste-hülshoff__annette_elisabeth">Droste-Hülshoff</a></span> (Vol. 8, p. 591).</p>
+
+<p>On the mid-century period:—the articles
+on <span class="sc"><a href="/article/24-0390-schopenhauer/schopenhauer__arthur">Schopenhauer</a></span> (Vol. 24, p. 372,
+by Prof. Wallace),—the philosopher of
+the new age; the natural scientists <span class="sc"><a href="/article/28-0188-vogt-karl-christoph/vogt__karl_christoph">Vogt</a></span>
+(Vol. 28, p. 172), and <span class="sc"><a href="/article/04-0742-s4/büchner__friedrich_karl_christian_ludwig">Büchner</a></span> (Vol. 4,
+p. 719); the fiction writers <span class="sc"><a href="/article/25-0689-s2/spielhagen__friedrich_von">Spielhagen</a></span>
+(Vol. 25, p. 667), <span class="sc"><a href="/article/11-0225-s4/freytag__gustav">Gustav Freytag</a></span> (Vol.
+11, p. 212), <span class="sc"><a href="/article/08-0868-ebers-georg-moritz/ebers__georg_moritz">Ebers</a></span> (Vol. 8, p. 841), <span class="sc"><a href="/article/07-0756-dahn-julius-sophus-felix/dahn__julius_sophus_felix">Dahn</a></span>
+(Vol. 7, p. 734), “<span class="sc"><a href="/article/24-0573-s2/sealsfield__charles">Charles Sealsfield</a></span>”
+(Vol. 24, p. 543), <span class="sc"><a href="/article/11-0930-s6/gerstäcker__friedrich">Gerstäcker</a></span> (Vol. 11,
+p. 906), <span class="sc"><a href="/article/25-0995-storm/storm">Storm</a></span> (Vol. 25, p. 968), <span class="sc"><a href="/article/15-0746-s3/keller__gottfried">Gottfried
+Keller</a></span> (Vol. 15, p. 718); and,
+among those who portrayed peasant and
+provincial life, <span class="sc"><a href="/article/04-0028-bitzius-albrecht/bitzius__albrecht">Bitzius</a></span>, “Jeremias Gotthelf”
+(Vol. 4, p. 15), <span class="sc"><a href="/article/02-0947-s6/auerbach__berthold">Auerbach</a></span> (Vol. 2,
+p. 899), <span class="sc"><a href="/article/25-0938-s7/stewart__sir_william">Stifter</a></span> (Vol. 25, p. 915), <span class="sc"><a href="/article/23-0227-s2/reuter__fritz">Fritz
+Reuter</a></span> (Vol. 23, p. 210); the dramatists
+<span class="sc"><a href="/article/13-0178-s3/hebbel__christian_friedrich">Hebbel</a></span> (Vol. 13, p. 165) and <span class="sc"><a href="/article/17-0129-s3/ludwig__otto">Otto Ludwig</a></span>
+(Vol. 17, p. 114); in the Munich
+School, <span class="sc"><a href="/article/04-0122-bodenstedt-friedrich-martin-von/bodenstedt__friedrich_martin_von">Bodenstedt</a></span> (Vol. 4, p. 109),
+<span class="sc"><a href="/article/24-0333-s5/scheffel__joseph_viktor_von">Scheffel</a></span> (Vol. 24, p. 315), <span class="sc"><a href="/article/03-0556-baumbach-rudolf/baumbach__rudolf">Baumbach</a></span>
+(Vol. 3, p. 539), <span class="sc"><a href="/article/12-0901-s5/hamerling__robert">Hamerling</a></span> (Vol. 12, p.
+876), <span class="sc"><a href="/article/13-0454-s2/heyse__paul_johann_ludwig">Heyse</a></span> (Vol. 13, p. 438); and the
+Platt-Deutsch poet <span class="sc"><a href="/article/12-0646-s3/groth__klaus">Klaus Groth</a></span> (Vol.
+12, p. 621).</p>
+
+<p><span class="shoulder-heading" id="sh-9">Since 1870</span>On the period since 1870, see the articles
+<span class="sc"><a href="/article/16-0255-s3/lassalle__ferdinand">Lassalle</a></span> (Vol. 16, p. 235, by <a href="/contributors.html?q=Thomas+Kirkup">Thomas
+Kirkup</a>, author of <i>An Inquiry
+into Socialism</i>) and
+<span class="sc"><a href="/article/17-0824-s2/marx__heinrich_karl">Marx</a></span> (Vol. 17, p. 807, by
+<a href="/contributors.html?q=Eduard+Bernstein">Eduard Bernstein</a>, Socialist deputy on the
+Reichstag) for new economic views; and
+<span class="sc"><a href="/article/17-0037-s4/lotze__rudolf_hermann">Lotze</a></span> (Vol. 17, p. 23), by J. T. Merz,
+author of <i>European Thought in the XIXth
+Century</i>, and Henry Sturt, author of
+<i>Personal Idealism</i>, and <span class="sc"><a href="/article/13-0049-s2/hartmann__karl_robert_eduard_von">Eduard von
+Hartmann</a></span> (Vol. 13, p. 36) for philosophical
+compromises between science
+and metaphysics and between pessimism
+and idealism; the dramatists <span class="sc"><a href="/article/02-0170-s4/anzengruber__ludwig">Anzengruber</a></span>
+(Vol. 2, p. 158), <span class="sc"><a href="/article/16-0739-lindau-paul/lindau__paul">Paul Lindau</a></span> (Vol.
+16, p. 717), and, composer and dramatist,
+<span class="sc"><a href="/article/28-0252-wagner-wilhelm-richard/wagner__wilhelm_richard">Richard Wagner</a></span> (Vol. 28, p. 236), by <a href="/contributors.html?q=William+Smyth+Rockstro">W.
+S. Rockstro</a>, author of <i>A Great History of
+Music</i>, and D. F. Tovey, author of <i>Essays
+in Musical Analysis</i>; the historians <span class="sc"><a href="/article/26-0295-s5/sybel__heinrich_von">Sybel</a></span>
+(Vol. 26, p. 275), <span class="sc"><a href="/article/27-0253-s6/treitschke__heinrich_von">Treitschke</a></span> (Vol. 27, p.
+238), <span class="sc"><a href="/article/22-0910-s1/ranke__leopold_von">Ranke</a></span> (Vol. 22, p. 893), <span class="sc"><a href="/article/18-0713-s3/mommsen__theodor">Mommsen</a></span>
+(Vol. 18, p. 683) and <span class="sc"><a href="/article/04-0832-s3/burckhardt__jakob">Burckhardt</a></span> (Vol.
+4, p. 809); and Burckhardt’s friend, the
+early friend of Wagner and the type of a
+new spirit in German letters, <span class="sc"><a href="/article/19-0699-s7/nietzsche__friedrich_wilhelm">Nietzsche</a></span>
+(Vol. 19, p. 672), by <a href="/contributors.html?q=Ferdinand+Canning+Scott+Schiller">F. C. S. Schiller</a>,
+Oxford, author of <i>Studies in Humanism</i>.</p>
+
+<p>The most important names of the last
+few years are <span class="sc"><a href="/article/26-0036-s2/sudermann__hermann">Sudermann</a></span> (Vol. 26, p. 20)
+and <span class="sc"><a href="/article/13-0081-s4/hauptmann__gerhart">Hauptmann</a></span> (Vol. 13, p. 68). See,
+besides, the articles on <span class="sc"><a href="/article/15-0346-s5/jensen__wilhelm">Wilhelm Jensen</a></span>
+(Vol. 15, p. 321), <span class="sc"><a href="/article/22-0782-raabe-wilhelm/raabe__wilhelm">Wilhelm Raabe</a></span> (Vol.
+22, p. 765), <span class="sc"><a href="/article/04-0893-s6/busch__wilhelm">W. Busch</a></span> (Vol. 4, p. 869),
+<span class="sc"><a href="/article/23-0774-s3/rosegger__peter">Peter Rosegger</a></span> (Vol. 23, p. 734), <span class="sc"><a href="/article/10-0629-s2/fontane__theodor">Fontane</a></span>
+(Vol. 10, p. 608), <span class="sc"><a href="/article/08-0870-ebner-eschenbach-marie/ebner-eschenbach__marie">Ebner-Eschenbach</a></span>
+(Vol. 8, p. 843), <span class="sc"><a href="/article/11-0050-s2/franzos__karl_emil">Franzos</a></span> (Vol. 11,
+p. 38), <span class="sc"><a href="/article/18-0370-s3/meyer">K. F. Meyer</a></span> (Vol. 18, p. 349),
+<span class="sc"><a href="/article/28-0231-voss-richard/voss__richard">Richard Voss</a></span> (Vol. 28, p. 215), <span class="sc"><a href="/article/28-0653-s2/wildenbruch__ernst_von">Ernst
+von Wildenbruch</a></span> (Vol. 28, p. 633), and
+for modern German drama, in the article
+<span class="sc"><a href="/article/08-0498-drama/drama">Drama</a></span> (Vol. 8, especially pp. 535–536).</p>
+
+<div>
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

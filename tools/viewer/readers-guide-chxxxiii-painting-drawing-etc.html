@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painting, Drawing, Etc. &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XXXIII</span>Painting, Drawing, Etc.</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Drawing and Engraving</a></li><li><a href="#sh-2">History of Painting</a></li><li><a href="#sh-3">Early Painting</a></li><li><a href="#sh-4">15th Century: Florence</a></li><li><a href="#sh-5">15th Century: Other Parts of Italy</a></li><li><a href="#sh-6">15th and 16th Centuries: Northern Europe</a></li><li><a href="#sh-7">16th Century: Italian Masters</a></li><li><a href="#sh-8">The Fourth Period: 17th Century and After</a></li><li><a href="#sh-9">Kinds of Painting</a></li><li><a href="#sh-10">National Schools of Painting</a></li><li><a href="#sh-11">British</a></li><li><a href="#sh-12">French</a></li><li><a href="#sh-13">Belgium and Holland</a></li><li><a href="#sh-14">Germany</a></li><li><a href="#sh-15">Austria-Hungary</a></li><li><a href="#sh-16">Italy</a></li><li><a href="#sh-17">Spain</a></li><li><a href="#sh-18">Other European Countries</a></li><li><a href="#sh-19">The United States</a></li></ol></div>
+    <div class="body-text">
+
+
+<p>The article <span class="sc"><a href="/article/20-0497-s2/painting">Painting</a></span> (Vol. 20, p.
+459; equivalent to 190 pages of
+this Guide) is an elaborate “key”
+article which may well be the starting
+point for more definite study. The art
+student who actually wishes to paint or
+draw—as distinct from the student of
+the history of art—will do well to read
+first in this great article its third section,
+<i>The Technique of Painting</i> (pp. 482–497),
+by <a href="/contributors.html?q=Gerard+Baldwin+Brown">Gerard Baldwin Brown</a>, professor of
+fine art, Edinburgh, and author of <i>The
+Fine Arts</i>. The main topics in this part of
+the article are:</p>
+
+<p>The Materials of Painting; The Surfaces
+Covered by the Painter; Binding
+Materials or Media; The Processes of
+Painting, and their Historical Uses;
+Painting with Coloured Vitreous Pastes
+(with bibliography)—on this method
+and on similar processes see the separate
+articles <span class="sc"><a href="/article/05-0729-ceramics/ceramics">Ceramics</a></span>, with remarkably
+valuable and beautiful coloured illustrations;
+<span class="sc"><a href="/article/18-0915-s6/mosaic">Mosaic</a></span>; <span class="sc"><a href="/article/09-0385-enamel/enamel">Enamel</a></span>; <span class="sc"><a href="/article/12-0120-s2/glass__stained">Glass,
+Stained</a></span>. The following sections are
+Fresco Painting (with bibliography)—see
+Fig. 34, Plate X (facing p. 477);
+Fresco-Secco (with bibliography);
+Stereochromy or Water-Glass Painting
+(with bibliography); Spirit Fresco
+or the “Gambier Parry” Process, as
+improved by Professor Church (with
+bibliography); Oil Processes of Wall
+Painting; Tempera Painting on Walls;
+Encaustic Painting on Walls (with bibliography);
+Encaustic Painting in General
+(with bibliography); Tempera
+Painting (with bibliography); Water
+Colour Painting (with bibliography).</p>
+
+<p><span class="shoulder-heading" id="sh-1">Drawing and Engraving</span>In connection with this part of the article—theoretically
+before it, perhaps,—the
+student should
+read the articles
+<span class="sc"><a href="/article/08-0575-drawing/drawing">Drawing</a></span> and <span class="sc"><a href="/article/09-0677-s3/engraving">Engraving</a></span>.</p>
+
+<p><span class="sc"><a href="/article/08-0575-drawing/drawing">Drawing</a></span> (Vol. 8, p. 552), by <a href="/contributors.html?q=J.+R.+Fothergill">John R.
+Fothergill</a>, editor of <i>The Slade</i>, is a peculiarly
+interesting article in its denial of
+the possibility of conveying colour by
+drawing or monochrome, in its tracing the
+development of drawing from the “papery”
+and flat first attempts on early
+Greek vases to the depth, length and
+breadth of the later Greeks or of a
+Michelangelo, for its criticism of the
+definition of artistic drawing as a process
+of selection and elimination from the
+forms of nature, and for its discussion of
+style or personality in drawing. See also
+the articles <span class="sc"><a href="/article/05-0344-caricature/caricature">Caricature</a></span>, <span class="sc"><a href="/article/05-0451-cartoon/cartoon">Cartoon</a></span>, <span class="sc"><a href="/article/14-0340-illustration/illustration">Illustration</a></span>,
+<span class="sc"><a href="/article/22-0210-poster/poster">Poster</a></span>, <span class="sc"><a href="/article/21-0888-s3/plumbago_drawings">Plumbago Drawings</a></span>.</p>
+
+<p><span class="sc"><a href="/article/09-0677-s3/engraving">Engraving</a></span> (Vol. 9, p. 645) is a short
+outline article to be supplemented by:
+<span class="sc"><a href="/article/16-0743-s2/line_engraving">Line-Engraving</a></span> (Vol. 16, p. 721), by
+<a href="/contributors.html?q=Philip+Gilbert+Hamerton">Philip Gilbert Hamerton</a>, author of
+<i>Drawing and Engraving</i>, and more popularly
+known as the author of <i>The Intellectual
+Life</i>, <i>Human Intercourse</i> and other
+essays, and by <a href="/contributors.html?q=Marion+H.+Spielmann">M. H. Spielmann</a>, formerly
+editor of the <i>Magazine of Art</i>; <span class="sc"><a href="/article/28-0823-wood-engraving/wood_engraving">Wood
+Engraving</a></span>, by the same authors; <span class="sc"><a href="/article/18-0372-s6/mezzotint">Mezzotint</a></span>,
+by <a href="/contributors.html?q=Gerald+Philip+Robinson">Gerald Philip Robinson</a>, president
+of the Society of Mezzotint Engravers;
+and Etching.</p>
+
+<p>Supplementing the section in the article
+<span class="sc"><a href="/article/20-0497-s2/painting">Painting</a></span> on <i>The Technique of
+Painting</i> are the separate articles:
+<span class="sc"><a href="/article/07-0408-crayon/crayon">Crayon</a></span>, <span class="sc"><a href="/article/20-0952-pastel/pastel">Pastel</a></span>, <span class="sc"><a href="/article/20-0684-s2/palette">Palette</a></span>; <span class="sc"><a href="/article/02-0251-s3/aquatint">Aquatint</a></span>,
+<span class="sc"><a href="/article/02-0249-s6/aquarelle">Aquarelle</a></span>, <span class="sc"><a href="/article/09-0392-encaustic-painting/encaustic_painting">Encaustic Painting</a></span>, <span class="sc"><a href="/article/11-0222-s2/fresco">Fresco</a></span>,
+<span class="sc"><a href="/article/12-0297-s3/gouache">Gouache</a></span>, <span class="sc">Illuminated Manuscripts</span>
+(with 5 plates), by Sir <a href="/contributors.html?q=Sir+Edward+Maunde+Thompson">E. Maunde
+Thompson</a>, late director British Museum
+and author of <i>English Illuminated Manuscripts</i>;
+<span class="sc"><a href="/article/18-0547-s4/miniature">Miniature</a></span> (with 19 illustrations
+in halftone), by the same author, and by
+<a href="/contributors.html?q=Benjamin+Williamson">G. C. Williamson</a>, author of <i>History of
+Portrait Miniatures</i>, whose articles on the
+miniature painters the <span class="sc">Clouets</span>, <span class="sc"><a href="/article/07-0266-cosway-richard/cosway__richard">Cosway</a></span>,
+the <span class="sc">Hilliards</span>, <span class="sc"><a href="/article/18-0871-s2/morland__george">George Morland</a></span>,
+<span class="sc"><a href="/article/20-0112-oliver-peter/oliver__peter">Peter Oliver</a></span>, the <span class="sc">Petitots</span>, <span class="sc"><a href="/article/22-0337-prieur-pierre/prieur__pierre">Pierre
+Prieur</a></span>, <span class="sc"><a href="/article/25-0266-s4/smart__john">John Smart</a></span>, etc., should also be
+read; <span class="sc"><a href="/article/20-0737-s3/panorama">Panorama</a></span>, <span class="sc"><a href="/article/20-0952-pastel/pastel">Pastel</a></span>, by <a href="/contributors.html?q=Marion+H.+Spielmann">M. H.
+Spielmann</a>, <span class="sc"><a href="/article/22-0142-s2/portraiture">Portraiture</a></span>, by Sir <a href="/contributors.html?q=Sir+George+Reid">George
+Reid</a>, the Scotch artist and late president
+of the Royal Scottish Academy, <span class="sc"><a href="/article/22-0289-s5/predella">Predella</a></span>,
+<span class="sc"><a href="/article/26-0608-tempera/tempera">Tempera</a></span> and <span class="sc"><a href="/article/27-0307-s4/triptych">Triptych</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-2">History of Painting</span>Although the articles enumerated in
+the last paragraph have primarily to do
+with technique, there is in them—especially
+in such articles
+as <span class="sc"><a href="/article/18-0547-s4/miniature">Miniature</a></span>
+and <span class="sc"><a href="/article/22-0142-s2/portraiture">Portraiture</a></span>—much
+historical and
+critical information. And from them the
+student may well turn back to the article
+<span class="sc"><a href="/article/20-0497-s2/painting">Painting</a></span> to pursue there those topics
+which he has not yet covered. These are:
+<i>Part I.—A Sketch of the Development of
+the Art</i> (pp. 460–478); <i>Part II.—Schools
+of Painting</i>, a tabular scheme (pp. 479–481),
+and <i>Recent Schools of Painting</i> (pp.
+497–518), by <a href="/contributors.html?q=Marion+H.+Spielmann">M. H. Spielmann</a>, for
+British; Léonce Bénédite, keeper of
+the Luxembourg Museum, for French;
+Fernand Khnopff, painter and etcher, for
+Belgian; Prof. J. C. Van Dyck, Rutgers
+College, author of <i>History of American
+Art</i>, for the United States; and Prof.
+Richard Muther, Breslau University,
+author of <i>The History of Modern Painting</i>,
+on Dutch, German, Austrian, Italian,
+Spanish, Danish, Swedish, Norwegian,
+Russian and Balkan States.</p>
+
+<p>These parts of the article are illustrated
+with ten plates containing 36 figures, including
+four prehistoric incised drawings
+of animals found in French caves and
+remarkable for their technical accuracy
+and life; two paintings, a boar and a bison,
+reproduced in colours, from the
+palaeolithic cave of Altamira—see also
+Plates II and III in the article <span class="sc"><a href="/article/02-0359-s2/archaeology">Archaeology</a></span>
+(between pp. 348 and 349, Vol. 2),
+Figs. 6, 7 and 8 in Plate accompanying
+<span class="sc"><a href="/article/02-0119-s3/anthropology">Anthropology</a></span> (opposite p. 118, Vol. 2),
+and the plates of American antiques in
+the article <span class="sc"><a href="/article/01-0851-america/america">America</a></span> (Vol. 1, pp. 808–816);
+an excellent Egyptian drawing of
+birds; the François vase (Greek); a Pompeian
+wall painting—see also the reproduction
+in colours of a wall-painting from
+a Roman villa in the article <span class="sc"><a href="/article/19-0030-s2/mural_decoration">Mural
+Decoration</a></span> (Vol. 20, p. 22); a wall
+painting from Brunswick cathedral; and
+typical examples of the work of Hubert
+van Eyck, Giotto, Lorenzetti, Masaccio,
+Uccello, Pollaiuolo, Piero della Francesca,
+Ghirlandajo, Mantegna, Bellini, Giorgione,
+Michelangelo, Botticelli, Titian,
+Holbein, Watteau, Gainsborough, Rembrandt,
+Quintin Matsys, Brouwer, Ruysdael,
+Turner, Chardin.</p>
+
+<p>“A rough division of the whole history
+of art into four main periods” gives
+“first ... the efforts of the older
+Oriental peoples, best represented by the
+painting of the Egyptians; the second includes
+the classical and medieval epochs
+up to the beginning of the 15th century;
+the third the 15th and 16th centuries, and
+the fourth the time from the beginning of
+the 17th century onward. In the first
+period the endeavour is after truth of
+contour, in the second and third after
+truth of form, in the fourth after truth of
+space.”</p>
+
+<p>The Egyptian artist was satisfied if he
+could render with accuracy, and with proper
+emphasis on what is characteristic, the
+silhouettes of things in nature regarded as
+little more than flat objects cut out against
+a light background. The Greek and the
+medieval artist realized that objects had
+three dimensions, and that it was possible
+on a flat surface to give an indication of
+the thickness of anything, that is, of its
+depth away from the spectator, as well as
+its length and breadth, but they cannot be
+said to have fully succeeded in the difficult
+task they set themselves. For this there
+was needful an efficient knowledge of perspective,
+and this the 15th century brought
+with it. During the 15th century the
+painter fully succeeds in mastering the
+representation of the third dimension, and
+during the next he exercises the power thus
+acquired in perfect freedom, producing
+some of the most convincing and masterly
+presentments of solid forms upon a flat
+surface that the art has to show. During
+this period, however, and to a more partial
+extent even in the earlier classical epoch,
+efforts were being made to widen the horizon
+of the art and to embrace within the
+scope of its representations not only solid
+objects in themselves, but such objects as
+a whole in space, in due relation to each
+other and to the universe at large. It was
+reserved, however, for the masters of the
+17th century perfectly to realize this ideal
+of the art, and in their hands painting as
+an art of representation is widened out to
+its fullest possible limits, and the whole of
+nature in all its aspects becomes for the
+first time the subject of the picture.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Early Painting</span>Following this classification, the article
+<span class="sc"><a href="/article/20-0497-s2/painting">Painting</a></span>, after commenting on primitive
+art among bushmen, Eskimo and Australians
+and on the remarkable
+cave drawings
+and paintings of
+Altamira, Gourdan and Lortet,—even the
+paintings are thought to be 50,000 years
+old,—discusses the painting of contour in
+Egypt and Babylonia, in prehistoric
+Greece, in ancient Greece and Italy, and in
+the early Christian and early medieval periods.
+Of particular interest is the criticism
+of Greek drawing.</p>
+
+<p>It may be admitted that in many artistic
+qualities it was beyond praise. In beauty,
+in grace of line, in composition, we can
+imagine works of Apelles, of Zeuxis, of
+Protogenes, excelling even the efforts of
+the Italian painters, or only matched by
+the finest designs of a Raphael or a Leonardo....
+The facts, however, remain,
+first, that the Greek pictures about
+which we chiefly read were of single figures,
+or subjects of a very limited and
+compact order, with little variety of planes;
+and second, that the existing remains of
+ancient painting are so full of mistakes in
+perspective that the representation of distance
+cannot have been a matter to which
+the artists had really set themselves....
+The problem of representing correctly the
+third dimension of space ... had certainly
+not been solved.... It is an additional
+confirmation of this view to find
+early Christian and early medieval painting
+confined to the representation of the few
+near objects which the older Oriental artists
+had all along envisaged.</p>
+
+<p>For more detailed treatment of this
+period see the articles: <span class="sc"><a href="/article/09-0033-egypt/egypt">Egypt</a></span>, <i>Art and
+Archaeology</i> (Vol. 9, pp. 65–77), with
+many illustrations both of painting and
+sculpture, by Dr. <a href="/contributors.html?q=William+Matthew+Flinders+Petrie">W. M. Flinders Petrie</a>,
+the eminent Egyptologist; <span class="sc"><a href="/article/03-0114-s2/babylonia_and_assyria">Babylonia
+and Assyria</a></span>, particularly the two plates
+of illustrations (opposite pp. 104 and 105,
+Vol. 3); <span class="sc"><a href="/article/01-0276-s3/aegean_civilization">Aegean Civilization</a></span>, especially
+the illustrations (Vol. 1, pp. 246–251);
+<span class="sc"><a href="/article/12-0489-greek-art/greek_art">Greek Art</a></span> (Vol. 12, pp. 470–492), by
+<a href="/contributors.html?q=Percy+Gardner">Percy Gardner</a>, author of <i>Grammar of
+Greek Art</i>,—and, mostly by the same author,
+the articles <span class="sc"><a href="/article/01-0408-s5/agatharchus">Agatharchus</a></span>, <span class="sc"><a href="/article/20-0719-s6/panaenus">Panaenus</a></span>,
+<span class="sc"><a href="/article/18-0402-micon/micon">Micon</a></span>, <span class="sc"><a href="/article/22-0038-s4/polygnotus">Polygnotus</a></span>, <span class="sc"><a href="/article/22-0491-protogenes-genus/protogenes__genus_">Protogenes</a></span>,
+<span class="sc"><a href="/article/02-0172-s6/apelles">Apelles</a></span>, <span class="sc"><a href="/article/23-0988-rutland-john-james-robert-manners-7th-duke-of/rutland__john_james_robert_manners__7th_duke_of">Aristides of Thebes</a></span>, <span class="sc"><a href="/article/20-1037-s2/pausias">Pausias</a></span>,
+<span class="sc"><a href="/article/26-0825-s3/theon">Theon</a></span>, <span class="sc"><a href="/article/28-1005-zeuxis/zeuxis">Zeuxis</a></span>; <span class="sc"><a href="/article/23-0496-roman-art/roman_art">Roman Art</a></span> (Vol. 23,
+pp. 474–486), especially Plates V (p. 481)
+and VI (p. 484); and for the early Christian
+and early medieval periods such articles
+as <span class="sc">Illuminated Manuscripts</span>,
+with illustrations, by Sir <a href="/contributors.html?q=Sir+Edward+Maunde+Thompson">E. Maunde
+Thompson</a>, late director British Museum,
+and <span class="sc"><a href="/article/18-0547-s4/miniature">Miniature</a></span>. The reader should also
+consult the articles <span class="sc"><a href="/article/06-0179-china/china">China</a></span> and <span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span> for
+the section on the art of each of these
+countries (Vol. 6, pp. 213–216, with two
+plates, 17 figures; and Vol. 15, pp. 172–190,
+with eight plates, 30 figures—especially
+Plates I-IV, pp. 172–177), as
+Oriental art in general may be said to
+belong to this phase of effort after truth
+of contour and of form. See also the
+separate articles on Japanese artists,
+mostly by <a href="/contributors.html?q=Edward+Fairbrother+Strange">E. F. Strange</a>, author of <i>Japanese
+Illustration</i>, <i>Hokusai</i>, etc.,—particularly
+<span class="sc">Korin</span>, <span class="sc"><a href="/article/27-0845-utamaro/utamaro">Utamaro</a></span>, <span class="sc"><a href="/article/13-0593-hokusai/hokusai">Hokusai</a></span>, <span class="sc"><a href="/article/13-0539-hiroshige/hiroshige">Hiroshige</a></span>,
+and <span class="sc">Yosai</span>.</p>
+
+<p>The first important individual names
+after those of the Greek painters mentioned
+above are those of the Proto-Renaissance
+of the 13th and 14th century.</p>
+
+<p>For Italy see <span class="sc"><a href="/article/05-0586-cavallini-pietro/cavallini__pietro">Pietro Cavallini</a></span>; in
+Florence, <span class="sc"><a href="/article/06-0382-cimabue-giovanni/cimabue__giovanni">Cimabue</a></span>, by <a href="/contributors.html?q=William+Michael+Rossetti">W. M. Rossetti</a>,
+author of <i>Fine Art, Chiefly Contemporary</i>;
+<span class="sc"><a href="/article/12-0047-s2/giotto">Giotto</a></span>, by Sir <a href="/contributors.html?q=Sidney+Colvin">Sidney Colvin</a>, late keeper
+prints and drawings, British Museum;
+<span class="sc"><a href="/article/11-0400-s5/gaddi">Gaddi</a></span>, by <a href="/contributors.html?q=William+Michael+Rossetti">W. M. Rossetti</a>; <span class="sc"><a href="/article/20-0191-orcagna/orcagna">Orcagna</a></span>, by
+the late John Henry Middleton, Slade
+professor of fine arts, Cambridge, art
+director South Kensington Museum;
+<span class="sc"><a href="/article/25-0707-s2/spinello_aretino">Spinello Aretino</a></span> (Vol. 25, p. 685), and
+<span class="sc"><a href="/article/10-0102-s1/eybeschütz__jonathan">Angelico</a></span>, by <a href="/contributors.html?q=William+Michael+Rossetti">W. M. Rossetti</a>; in Siena,
+<span class="sc"><a href="/article/10-0102-s1/eybeschütz__jonathan">Simone Martini</a></span>; and for Flanders, the
+<span class="sc"><a href="/article/10-0102-s2/eyck__van">van Eycks</a></span> (Vol. 10, p. 90), by Sir <a href="/contributors.html?q=Sir+Joseph+Archer+Crowe">Joseph
+Archer Crowe</a>, author with G. B. Cavalcaselle,
+of <i>Early Flemish Painters</i>, etc.</p>
+
+<p><span class="shoulder-heading" id="sh-4">15th Century: Florence</span>With the 15th century, and particularly
+at Florence, begins the third of the four
+periods in the evolution of painting.
+“The father of modern painting is the
+Florentine Masaccio”: see the article
+on him (Vol. 17, p. 833), by <a href="/contributors.html?q=William+Michael+Rossetti">W. M. Rossetti</a>,
+who says “he led the way in representing
+the objects of nature correctly,
+with action, liveliness and relief....
+All the greatest artists of Italy, through
+studying the Brancacci chapel, became
+his champions and disciples.” For the
+other great Florentine names of the century
+see the articles: <span class="sc"><a href="/article/17-0856-masolino-da-panicale/masolino_da_panicale">Masolino da Panicale</a></span>,
+by <a href="/contributors.html?q=William+Michael+Rossetti">Rossetti</a>; <span class="sc"><a href="/article/04-0706-s2/brunelleschi__or_brunellesco___filippo">Brunelleschi</a></span>, architect,
+student of perspective, and, with
+Masolino, master of Masaccio; the two
+earlier <span class="sc"><a href="/article/16-0763-lippi/lippi">Lippi</a></span>, by <a href="/contributors.html?q=William+Michael+Rossetti">Rossetti</a>; <span class="sc"><a href="/article/04-0321-botticelli-sandro/botticelli__sandro">Botticelli</a></span>, by
+Sir <a href="/contributors.html?q=Sidney+Colvin">Sidney Colvin</a>; <span class="sc"><a href="/article/21-0971-s2/polar_regions">Gozzoli</a></span>, by <a href="/contributors.html?q=William+Michael+Rossetti">Rossetti</a>;
+<span class="sc"><a href="/article/21-0971-s2/polar_regions">Rosselli</a></span>; <span class="sc"><a href="/article/21-0616-piero-di-cosimo/piero_di_cosimo">Piero di Cosimo</a></span> (Vol. 21, p.
+950); <span class="sc"><a href="/article/05-0480-castagno-andrea-del/castagno__andrea_del">Castagno</a></span>; <span class="sc"><a href="/article/03-0260-s6/baldovinetti__alessio">Baldovinetti</a></span>, by Sir
+<a href="/contributors.html?q=Sidney+Colvin">Sidney Colvin</a>; <span class="sc"><a href="/article/22-0015-pollaiuolo/pollaiuolo">Pollaiuolo</a></span>; <span class="sc"><a href="/article/11-0947-ghirlandajo-ridolfo/ghirlandajo__ridolfo">Ghirlandajo</a></span>,
+father and son, by <a href="/contributors.html?q=William+Michael+Rossetti">W. M. Rossetti</a>;
+and, marking the perfection of art on the
+formal side, <span class="sc"><a href="/article/01-1021-s2/andré__john">Bartolommeo</a></span>, and <a href="/contributors.html?q=William+Michael+Rossetti">Rossetti</a>’s
+article, <span class="sc"><a href="/article/01-1022-s3/andrea_del_sarto">Andrea del Sarto</a></span> (Vol. 1, p.
+969).</p>
+
+<p><span class="shoulder-heading" id="sh-5">15th Century: Other Parts of Italy</span>As for the remainder of Italy, Sienese
+art declines in this century, but there is
+an advance in Northern Italy and in Umbria.
+See the articles:
+<span class="sc"><a href="/article/10-0953-s1/franceschi__jean_baptiste">Franceschi</a></span>, by
+<a href="/contributors.html?q=William+Michael+Rossetti">Rossetti</a>, <span class="sc"><a href="/article/18-0118-melozzo-da-forl/melozzo_da_forlì">Melozzo</a></span>,
+“the first who practised
+foreshortening
+with much success,” and <span class="sc"><a href="/article/25-0097-s3/signorelli__luca">Signorelli</a></span>;
+Raphael’s master, <span class="sc"><a href="/article/21-0296-s2/perugino__pietro">Perugino</a></span>, by <a href="/contributors.html?q=William+Michael+Rossetti">Rossetti</a>;
+<span class="sc"><a href="/article/17-0619-s5/mantegna__andrea">Mantegna</a></span>, by the same author;
+<span class="sc"><a href="/article/07-0236-costa-lorenzo/costa__lorenzo">Lorenzo Costa</a></span>; <span class="sc"><a href="/article/10-0955-francia/francia">Francia</a></span>, by <a href="/contributors.html?q=William+Michael+Rossetti">Rossetti</a>;
+and at Venice, <span class="sc"><a href="/article/11-0622-gentile/gentile">Gentile</a></span>, the <span class="sc"><a href="/article/28-0168-vivarini/vivarini">Vivarini</a></span>,
+<span class="sc"><a href="/article/02-0160-s4/antonello_da_messina">Antonello da Messina</a></span>, <span class="sc"><a href="/article/03-0719-bellingham-sir-edward/bellingham__sir_edward">Carpaccio</a></span>,
+the <span class="sc"><a href="/article/03-0720-bellini/bellini">Bellini</a></span> (Vol. 3, p. 700), by Sir <a href="/contributors.html?q=Sidney+Colvin">Sidney
+Colvin</a>.</p>
+
+<p><span class="shoulder-heading" id="sh-6">15th and 16th Centuries: Northern Europe</span>In Germany and the Low Countries
+the art of the 15th and 16th centuries
+may be traced in the articles: for Germany—<span class="sc"><a href="/article/24-0376-schongauer-martin/schongauer__or_shön___martin">Schongauer</a></span>;
+<span class="sc"><a href="/article/08-0724-d-rer-albrecht/dürer__albrecht">Dürer</a></span>, by Sir
+<a href="/contributors.html?q=Sidney+Colvin">Sidney Colvin</a>; <span class="sc"><a href="/article/12-0664-s6/grün">Grün</a></span>; the <span class="sc">Holbeins</span> and
+<span class="sc"><a href="/article/07-0384-cranach-lucas/cranach__lucas">Cranach</a></span>, by Sir <a href="/contributors.html?q=Sir+Joseph+Archer+Crowe">Joseph Archer Crowe</a>;
+<span class="sc"><a href="/article/04-0840-s2/burgkmair__hans">Burgkmair</a></span>; <span class="sc"><a href="/article/12-0666-s4/grünewald__mathias">Grünewald</a></span>; and for the
+Low Countries—<span class="sc">Roger
+van der
+Weyden</span>; his greater
+pupil <span class="sc"><a href="/article/18-0123-s3/memlinc__hans">Memlinc</a></span>, by
+Sir <a href="/contributors.html?q=Sir+Joseph+Archer+Crowe">J. A. Crowe</a> and
+<a href="/contributors.html?q=Paul+George+Konody">P. G. Konody</a>, art critic of the <i>Observer</i>
+and <i>Daily Mail</i>; <span class="sc"><a href="/article/12-0198-s3/goes">Goes</a></span>; <span class="sc"><a href="/article/17-0107-s3/lucaris__cyrillos">Gerard David</a></span>,
+by <a href="/contributors.html?q=Paul+George+Konody">P. G. Konody</a>; <span class="sc"><a href="/article/17-0108-s6/lucas_van_leyden">Lucas van Leyden</a></span>
+(Vol. 17, p. 93); <span class="sc"><a href="/article/13-0211-s7/heemskerk__johan_van">Heemskerk</a></span>; <span class="sc"><a href="/article/17-0909-s4/matsys__massys_or_metzys___quintin">Matsys</a></span>;
+<span class="sc"><a href="/article/04-0521-breughel-pieter/breughel__or_brueghel___pieter">Breughel</a></span>; <span class="sc"><a href="/article/17-0204-s3/mabuse__jan">Mabuse</a></span>, by Sir <a href="/contributors.html?q=Sir+Joseph+Archer+Crowe">J. A. Crowe</a>;
+<span class="sc"><a href="/article/10-0568-s2/floris__frans">Floris</a></span>; <span class="sc"><a href="/article/18-0882-s2/moro__antonio">Moro</a></span>; and <span class="sc"><a href="/article/04-0591-s4/bril__paul">Bril</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-7">16th Century: Italian Masters</span>Roughly contemporary with Dürer and
+Holbein the younger were the even
+greater masters of Italian painting. See
+the articles: for Florence—<span class="sc"><a href="/article/16-0464-leonardo-da-vinci/leonardo_da_vinci">Leonardo
+da
+Vinci</a></span> (Vol. 16, p.
+444, equivalent to
+35 pages of this
+Guide), and <span class="sc"><a href="/article/18-0383-s5/michelangelo">Michelangelo</a></span> (Vol. 18, p.
+362), both by Sir <a href="/contributors.html?q=Sidney+Colvin">Sidney Colvin</a>, and
+<span class="sc"><a href="/article/22-0916-rape-crime/rape__crime_">Vasari</a></span>, painter and biographer of painters;
+for Rome—<span class="sc"><a href="/article/22-0917-raphael-sanzio/raphael_sanzio">Raphael Sanzio</a></span> (Vol. 22,
+p. 900, with 7 cuts), by the late Prof.
+John Henry Middleton, and <span class="sc"><a href="/article/12-0065-s6/giulio_romano">Giulio
+Romano</a></span>, by <a href="/contributors.html?q=William+Michael+Rossetti">W. M. Rossetti</a>; for North
+Italy—<span class="sc"><a href="/article/17-0132-s2/luini__bernardino">Luini</a></span>, <span class="sc"><a href="/article/07-0211-correggio/correggio">Correggio</a></span>, <span class="sc"><a href="/article/20-0915-parmigiano/parmigiano">Parmigiano</a></span>,
+and <span class="sc"><a href="/article/18-0893-s4/moroni__giambattista">Moroni</a></span>, all by <a href="/contributors.html?q=William+Michael+Rossetti">Rossetti</a>, and <span class="sc"><a href="/article/18-0863-s6/moretto__il">Moretto</a></span>;
+and for Venice—<span class="sc"><a href="/article/12-0044-s4/giorgione">Giorgione</a></span>, by
+Sir <a href="/contributors.html?q=Sidney+Colvin">Sidney Colvin</a>; <span class="sc"><a href="/article/17-0036-s5/lotto">Lotto</a></span> and <span class="sc"><a href="/article/20-1032-s5/paulus_diaconus">Palma</a></span>,
+<span class="sc"><a href="/article/26-1063-titian/titian">Titian</a></span>, <span class="sc"><a href="/article/20-1032-s5/paulus_diaconus">Tintoretto</a></span>, and <span class="sc"><a href="/article/20-1033-s2/paul_veronese">Paul Veronese</a></span>
+(Vol. 20, p. 965), all by <a href="/contributors.html?q=William+Michael+Rossetti">W. M. Rossetti</a>.</p>
+
+<p>We have now come to modern times so
+far as painting is concerned. The article
+<span class="sc"><a href="/article/20-0497-s2/painting">Painting</a></span> says:</p>
+
+<p><span class="shoulder-heading" id="sh-8">The Fourth Period: 17th Century and After</span>By the 17th century the development of
+painting had passed through all its stages,
+and the picture was
+no longer a mere silhouette
+or a transcript
+of objects
+against a flat background,
+but rather an
+enchanted mirror of the world, in which
+might be reflected space beyond space in infinite
+recession. With this transformation
+of the picture there was connected a complete
+change in the relation of the artist to
+nature. Throughout all the earlier epochs of
+the art the painter had concerned himself
+not with nature as a whole, but with certain
+selected aspects of nature that furnished
+him with his recognized subjects. These
+subjects were selected on account of their
+intrinsic beauty or importance, and as representing
+intrinsic worth they claimed to be
+delineated in the clearest and most substantial
+fashion. In the 17th century, not only
+was the world as a whole brought within
+the artist’s view, but it presented itself as
+worthy in every part of his most reverent
+attention. In other words, the art of the
+17th century, and of the modern epoch in
+general, is democratic, and refuses to acknowledge
+that difference in artistic value
+among the aspects of nature which was at
+the basis of the essentially aristocratic art
+of the Greeks and Italians.... The
+artist who was the first to demonstrate convincingly
+this principle of modern painting
+was Rembrandt.... Rembrandt in
+his later work attended to the pictorial effect
+alone, and practically annulled the objects
+by reducing them to pure tone and
+color. Things are not there at all, but only
+the semblance or effect, or “impression” of
+things. Breadth is in this way combined
+with the most delicate variety, and a new
+form of painting, now called “impressionism,”
+has come into being.</p>
+
+<p>See: <span class="sc"><a href="/article/23-0847-s3/rubens__peter_paul">Rubens</a></span>, by Henri Hymans, author
+of <i>Rubens: sa vie et son œuvre</i>, and P.
+G. <a href="/contributors.html?q=Paul+George+Konody">Konody</a>; <span class="sc"><a href="/article/23-0094-s3/rembrandt">Rembrandt</a></span>, by <a href="/contributors.html?q=John+Forbes+White">John Forbes
+White</a> and <a href="/contributors.html?q=Paul+George+Konody">P. G. Konody</a>; and <span class="sc"><a href="/article/12-0890-s6/hals__frans">Frans
+Hals</a></span>, by <a href="/contributors.html?q=Paul+George+Konody">P. G. Konody</a>. These were the
+leaders of the great 17th century school—the
+Dutch. For the more immediate followers
+of Rembrandt see the articles:
+<span class="sc"><a href="/article/08-0474-douw-gerhard/douw__or_dow___gerhard">Douw</a></span>, <span class="sc"><a href="/article/09-0020-eeckhout-gerbrand-van-den/eeckhout__gerbrand_van_den">Eeckhout</a></span>, <span class="sc"><a href="/article/10-0539-s2/flinck__govert">Flinck</a></span>, <span class="sc"><a href="/article/17-0313-s6/maes__nicolas">Maes</a></span>,
+<span class="sc"><a href="/article/13-0681-s2/hooch__pieter_de">Hooch</a></span>, <span class="sc"><a href="/article/18-0090-s1/meer__jan_van_der">Meer</a></span>. For Rubens’ great pupil
+and rival and his successors, the articles
+<span class="sc"><a href="/article/27-0913-s6/van_dyck__sir_anthony">Van Dyck</a></span> and <span class="sc"><a href="/article/26-0646-s2/teniers">Teniers</a></span>, both by
+Henri Hymans and <a href="/contributors.html?q=Paul+George+Konody">P. G. Konody</a>, <span class="sc"><a href="/article/25-0312-snyders-franz/snyders__franz">Snyders</a></span>
+and the great animal painter <span class="sc">Fyt</span>.
+See <span class="sc"><a href="/article/04-0679-s5/brouwer">Brouwer</a></span> for Hals’ pupil and assistant.
+For the genre painters, the articles:
+<span class="sc"><a href="/article/26-0668-s4/ter_borch__or_terburg___gerard">Ter Borch</a></span>, <span class="sc"><a href="/article/18-0322-s2/metsu__gabriel">Metsu</a></span>, <span class="sc"><a href="/article/25-0891-steen-jan-havicksz/steen__jan_havicksz">Steen</a></span>, <span class="sc">Wouwermann</span>,
+and the <span class="sc"><a href="/article/20-0389-ostade/ostade">Ostade</a></span> family, by Sir <a href="/contributors.html?q=Sir+Joseph+Archer+Crowe">J.
+A. Crowe</a> and <a href="/contributors.html?q=Paul+George+Konody">P. G. Konody</a>. On the
+landscapists see the articles: <span class="sc"><a href="/article/15-0930-s5/koninck__philip_de">Koninck</a></span>,
+<span class="sc"><a href="/article/12-0321-s2/goyen__jan_josephszoon_van">Goyen</a></span>, <span class="sc"><a href="/article/19-0358-s4/neer__van_der">Neer</a></span>, by Sir <a href="/contributors.html?q=Sir+Joseph+Archer+Crowe">J. A. Crowe</a> and
+<a href="/contributors.html?q=Paul+George+Konody">P. G. Konody</a>; <span class="sc"><a href="/article/23-0992-s3/ruysdael__or_ruisdaal___jacob_van">Ruysdael</a></span>, <span class="sc"><a href="/article/13-0560-s3/hobbema__meyndert">Hobbema</a></span>, by
+Sir <a href="/contributors.html?q=Sir+Joseph+Archer+Crowe">J. A. Crowe</a>, and <span class="sc"><a href="/article/03-0787-berchem-nicolaas/berchem__or_berghem___nicolaas">Berchem</a></span>; and, for
+animal and landscape, <span class="sc">A. Vandevelde,
+Cuyp</span>, by Sir <a href="/contributors.html?q=Sir+Joseph+Archer+Crowe">J. A. Crowe</a>, and <span class="sc"><a href="/article/22-0225-s4/potter__john">Potter</a></span>,
+by <a href="/contributors.html?q=Paul+George+Konody">P. G. Konody</a>. The other important
+articles for the Dutch school of the 17th
+century are: <span class="sc"><a href="/article/13-0211-s4/heem__jan_davidsz_van">Heem</a></span>, <span class="sc"><a href="/article/13-0209-s3/heda__willem_claasz">Heda</a></span>, <span class="sc"><a href="/article/13-0666-s2/hondecoeter__melchior_d_">Hondecoeter</a></span>,
+<span class="sc"><a href="/article/28-0485-weenix-jan-baptist/weenix__jan_baptist">Weenix</a></span> and <span class="sc"><a href="/article/14-0035-s3/huysum__jan_van">Huysum</a></span>, painters
+of still life, etc.; <span class="sc">W. Vandevelde</span> and
+<span class="sc"><a href="/article/03-0152-s2/backhuysen">Backhuysen</a></span>, marine painters; and at
+the close of the period, or marking its decline,
+<span class="sc"><a href="/article/18-0449-s2/mieris">Mieris</a></span> and <span class="sc"><a href="/article/19-0439-netscher-gaspar/netscher__gaspar">Netscher</a></span>.</p>
+
+<p>In the article on <span class="sc"><a href="/article/20-0497-s2/painting">Painting</a></span> this summary
+follows the outline of the general development
+of painting through the 17th century:</p>
+
+<p><span class="shoulder-heading" id="sh-9">Kinds of Painting</span>The fact that the Dutch painters have
+left us masterpieces in so many different
+walks of painting,
+makes it convenient
+that we should add
+here some brief notes
+on characteristic modern phases of the
+art on which they stamped the impress of
+their genius. The normal subject for the
+artist, as we have seen, up to the 17th
+century, was the figure-subject, generally
+in some connexion with religion. The Egyptian
+portrayed the men and women of his
+time, but the pictures, through their connexion
+with the sepulchre, had a quasi-religious
+significance.</p>
+
+<p><i>Portraiture</i> is differentiated from this
+kind of subject-picture through stages
+which it would be interesting to trace, but
+the portrait, though secular, is always
+treated in such a way as to exalt or dignify
+the sitter. Another kind of figure-piece,
+also differentiated by degrees from the
+subject-picture of the loftier kind, is the
+so-called <i>Genre Painting</i>, in which the human
+actors and their goings-on are in
+themselves indifferent, trivial, or mean, and
+even repellent; and in which, accordingly,
+intrinsic interest of subject has disappeared
+to be replaced by an artistic interest
+of a different kind. <i>Landscape</i>, in
+modern times so important a branch of
+painting, is also an outcome of the traditional
+figure-piece, for at first it is nothing
+but a background to a scene in which
+human figures are prominent. <i>Marine
+Painting</i> is a branch of landscape art differentiated
+from this, but supplied at first
+in the same way with figure-interest. The
+origin of <i>Animal Painting</i> is to be sought
+partly in figure-pieces, where, as in Egypt
+and Assyria, animals play a part in scenes
+of human life, and partly in landscapes, in
+which cattle, &amp;c., are introduced to enliven
+the foreground. The <i>Hunting Picture</i>, combining
+a treatment of figures and animals
+in action with landscape of a picturesque
+character, gives an artist like Rubens a
+welcome opportunity, and the picture of
+<i>Dead Game</i> may be regarded as its offshoot.
+This brings us to the important
+class of <i>Still-life Painting</i>, the relation of
+which to the figure-piece can be traced
+through the genre picture and the portrait.</p>
+<p>The article then proceeds to sketch the
+history and development of different
+kinds of painting:</p>
+
+<p><i>Portraiture</i>:</p>
+
+<p>It is Gentile and Giovanni Bellini ...
+who may be regarded as the fathers of
+modern portrait painting. Venetian art
+was always more secular in spirit than that
+of the rest of Italy, and Venetian portraits
+were abundant.... Some of the finest
+portraits in the world are the work of the
+great Venetians of the 16th century, for
+they combine pictorial quality with an air
+of easy greatness which later painters find
+it hard to impart to their creations.
+Though greatly damaged, Titian’s equestrian
+portrait of Charles V. at Madrid
+(fig. 26, Plate VIII.) is one of the very
+finest of existing works of the kind. It is
+somewhat remarkable that of the other
+Italian painters who executed portraits the
+most successful was the idealist Raphael,
+whose papal portraits of Julius II. and Leo
+X. are masterpieces of firm and accurate
+delineation. Leonardo’s “Monna Lisa” is
+a study rather than a portrait proper.</p>
+
+<p>The realistic vein, which, as we have
+seen, runs through northern painting, explains
+to some extent the extraordinary
+merit in portraiture of Holbein, who represents
+the culmination of the efforts in
+this direction of masters like Jan van
+Eyck and Dürer.... Frans Hals of
+Haarlem, one of the most brilliant painters
+of the impressionist school that he did
+much to found, achieved remarkable success
+in the artistic grouping of a number
+of portraits.... As portraitists the
+other great 17th-century masters fall into
+two sets, Rembrandt and Velazquez contrasting
+with Rubens and his pupil Van
+Dyck.... In the 18th century, though
+France produced some good limners and
+Spain Goya, yet on the whole England was
+the home of the best portraiture. Van
+Dyck had been in the service of Charles I.,
+and foreign representatives of his style
+carried on afterwards the tradition of his
+essentially courtly art, but there existed at
+the same time a line of native British portraitists
+of whom the latest and best was
+Hogarth. One special form of portraiture,
+the <i>miniature</i> (<i>q.v.</i>), has been characteristically
+English throughout....</p>
+
+<p><i>Genre</i>:</p>
+
+<p>Probably the most excellent painters of
+genre are Ter Borch, Metsu and Brouwer,
+the two first painters of the life of the upper
+classes, the last of peasant existence in
+some of its most unlovely aspects. The
+pictures of Brouwer are among the most
+instructive documents of modern painting....
+He is best represented in the
+Munich Pinacotek, from which has been
+selected fig. 30, Plate IX. Hardly less admirable
+are Teniers in Flanders; De
+Hooch, Ver Meer of Delft, Jan Steen, A.
+van Ostade, in Holland, while in more modern
+times Hogarth, Chardin, Sir David
+Wilkie, Meissonier, and a host of others
+carry the tradition of the work down to
+our own day (see Table VIII.)....</p>
+
+<p><i>Landscape and Marine Painting</i>:</p>
+
+<p>Several of the Dutch masters, even before
+the time of Rembrandt, excelled in the
+truthful rendering of the scenes and objects
+of their own simple but eminently
+paintable country; but it was Rembrandt,
+with his pupil, de Koningk, and his rival in
+this department Jacob Ruysdael, who
+were the first to show how a perfectly natural
+and unconventional rendering of a
+stretch of country under a broad expanse
+of sky might be raised by poetry and ideal
+feeling to the rank of one of the world’s
+masterpieces of painting. Great as was
+Rembrandt in what Bode has called “the
+landscape of feeling,” the “Haarlem from
+the Dunes” of Ruysdael (fig. 31, Plate
+IX.) with some others of this artist’s acknowledged
+successes, surpass even his
+achievement.... Among Turner’s chief
+titles to honour is the fact that he portrayed
+the sea in all its moods with a
+knowledge and sympathy that give him a
+place alone among painters of marine....</p>
+
+<p><i>Animal Painting</i>:</p>
+
+<p>In Holland, in the 17th century, the animal
+nature presented itself under the more
+contemplative aspect of the ruminants in
+the lush water-meadows. True to their
+principle of doing everything they attempt
+in the best possible way, the Dutch paint
+horses (Cuyp, Wouwerman) and cattle
+(Cuyp, Adrian Vandevelde, Paul Potter)
+with canonical perfection, while Hondekoeter
+delineates live cocks and hens, and
+Weenix dead hares and moor-fowl, in a
+way that makes us feel that the last word
+on such themes has been spoken. There is
+a large white turkey by Hondekoeter in
+which the truth of mass and of texture in
+the full soft plumage is combined with a
+delicacy in the detail of the airy filaments,
+that is the despair of the most accomplished
+modern executant.</p>
+
+<p>But animals have been treated more
+nobly than when shown in Flemish agitation
+or in Dutch phlegmatic calm. Leonardo
+da Vinci was specially famed for
+his horses, which he may have treated with
+something of the majesty of Pheidias....</p>
+
+<p><i>Still-Life Painting</i>:</p>
+
+<p>There is no finer Rembrandt for pictorial
+quality than the picture in the Louvre
+representing the carcase of a flayed ox in
+a flesher’s booth. As illustrating the principle
+of modern painting this form of the
+graphic art has a value and importance
+which in itself it could hardly claim....
+The way was prepared for it as has been
+noticed, by the minute and forcible rendering
+of accessory objects in the figure-pieces
+and portraits of the early Flemish masters,
+of Dürer, and above all of Holbein. The
+painting of flower and fruit pieces without
+figure interest by Jan Breughel the
+younger, who was born in 1601, represents
+a stage onward, and contemporary with
+him were several other Dutch and Flemish
+specialists in this department, among whom
+Jan David de Heem, born 1603, and the
+rather older Willem Klaasz Heda may be
+mentioned. Their subjects sometimes took
+the form of a luncheon table with vessels,
+plate, fruit and other eatables; at other
+times of groups of costly vessels of gold, silver
+and glass, or of articles used in art or
+science, such as musical instruments and
+the like; and it is especially to be noted
+that the handling stops always short of
+any illusive reproduction of the actual textures
+of the objects, while at the same time
+the differing surfaces of stuffs and metal
+and glass, of smooth-rinded apples and
+gnarled lemons, are all most justly rendered....
+In this form of painting
+the French 18th-century artist Chardin,
+whose impasto was fuller, whose colouring
+more juicy than those of the Dutch, has
+achieved imperishable fame (see fig. 33,
+Plate X.); and the modern French, who
+understand better than others the technical
+business of painting, have carried on the
+fine tradition which has culminated in the
+work of Vollon. The Germans have also
+painted still-life to good result, but the
+comparative weakness in technique of British
+painters has kept them in this department
+rather in the background.</p>
+
+<p><span class="shoulder-heading" id="sh-10">National Schools of Painting</span>The history of painting since the 17th
+century may best be studied in the Britannica
+in the order in which “recent
+schools” are treated
+(Vol. 20, pp. 497–518),
+and this plan
+will be followed here
+in a brief outline, giving only a few out
+of many articles for each country.</p>
+
+<p><span class="shoulder-heading" id="sh-11">British</span>British art in the 17th and 18th centuries
+is dependent largely on foreign and
+particularly Flemish influences—Van
+Dyck in especial. See <a href="/contributors.html?q=William+Michael+Rossetti">Rossetti</a>’s
+articles on <span class="sc"><a href="/article/16-0428-lely-sir-peter/lely__sir_peter">Lely</a></span> and
+<span class="sc"><a href="/article/15-0879-s1/kneller__sir_godfrey">Kneller</a></span>, who, like Holbein
+and Van Dyck, were importations,
+but, unlike them, were pretty thoroughly
+Anglicized. For the first purely English
+painter see Austin Dobson’s article <span class="sc"><a href="/article/13-0582-s3/hogarth__william">Hogarth</a></span>
+(Vol. 13, p. 566). For “the most
+prominent figure in the English school of
+painting” whose <i>Discourses</i> largely affected
+English notions of aesthetics, see
+<span class="sc"><a href="/article/23-0244-s2/reynolds__sir_joshua">Sir Joshua Reynolds</a></span>; also the article on
+his rival <span class="sc"><a href="/article/23-0720-s5/romney__george">George Romney</a></span>. And read
+<a href="/contributors.html?q=William+Michael+Rossetti">Rossetti</a>’s article <span class="sc"><a href="/article/11-0407-gainsborough/gainsborough">Gainsborough</a></span>; and
+those on the portrait painters <span class="sc"><a href="/article/22-0828-raeburn/raeburn__sir_henry">Raeburn</a></span>
+and <span class="sc"><a href="/article/16-0328-lawrence-sir-thomas/lawrence__sir_thomas">Sir Thomas Lawrence</a></span>. On the Norwich
+school of landscapists see the articles
+<span class="sc"><a href="/article/07-0505-crome-john/crome__john">Crome</a></span>, <span class="sc"><a href="/article/28-0714-s2/wilson__john">Cotman</a></span> and <span class="sc"><a href="/article/28-0714-s2/wilson__john">George Vincent</a></span>.
+For foreign influences on landscape painting
+see <span class="sc"><a href="/article/28-0715-wilson-richard/wilson__richard">Richard Wilson</a></span> (Vol. 28, p. 695)
+for French influence, and <span class="sc"><a href="/article/06-1007-constable-john/constable__john">John Constable</a></span>
+(Vol. 6, p. 982), by <a href="/contributors.html?q=Charles+John+Holmes">C. J. Holmes</a>,
+author of <i>Constable and His Influence on
+Landscape Painting</i>, for German. With
+the article on the greatest of English
+landscapists <span class="sc"><a href="/article/27-0493-s4/turner__charles">J. M. W. Turner</a></span> (Vol. 27,
+p. 474), by Sir <a href="/contributors.html?q=Sir+George+Reid">George Reid</a>, the student
+should read Frederic Harrison’s article on
+<span class="sc"><a href="/article/23-0901-s2/ruskin__john">John Ruskin</a></span>, himself an exquisite
+draughtsman, although unable to compose
+a picture, whose championship of
+Turner and general theories of art so
+strongly influenced British painting. See
+also the articles on the subject painter
+<span class="sc"><a href="/article/25-0996-s7/stothard__thomas">Thomas Stothard</a></span> and the landscapist
+<span class="sc"><a href="/article/12-0064-s2/girtin__thomas">Girtin</a></span>; and on the genre painters, <span class="sc"><a href="/article/28-0664-wilkie-sir-david/wilkie__sir_david">Sir
+David Wilkie</a></span>, by <a href="/contributors.html?q=John+Miller+Gray+%281850%E2%80%931894%29">J. Miller Gray</a>, late
+curator of the Scottish National Portrait
+Gallery, <span class="sc"><a href="/article/18-0997-s4/mulready__william">Mulready</a></span>, <span class="sc"><a href="/article/06-0713-collins-william/collins__william">William Collins</a></span>,
+and <span class="sc"><a href="/article/11-0249-frith-william-powell/frith__william_powell">Frith</a></span>. See the article <span class="sc"><a href="/article/04-0049-blake-william/blake__william">William
+Blake</a></span>, by <a href="/contributors.html?q=J.+W.+Comyns-Carr">J. W. Comyns-Carr</a>, author of
+<i>Essays on Art</i>, for an appreciation of that
+remarkable genius, who in his combination
+of painting and poetry may be reckoned
+a forerunner of the Pre-Raphaelites.
+On the P. R. Brotherhood see the articles:
+<span class="sc">D. G. Rossetti</span>, by <a href="/contributors.html?q=F.+G.+Stephens">F. G. Stephens</a>,
+former art-critic to the <i>Athenaeum</i> and,
+for <a href="/contributors.html?q=William+Michael+Rossetti">Rossetti</a>’s literary work, Theodore
+Watts-Dunton; <span class="sc">Sir J. E. Millais</span> and
+<span class="sc">W. Holman Hunt</span>, by Cosmo Monkhouse,
+the poet and critic; and <span class="sc"><a href="/article/04-0680-s3/brown__ford_madox">Ford
+Madox Brown</a></span>, by <a href="/contributors.html?q=William+Michael+Rossetti">W. M. Rossetti</a>, himself
+a member of the Brotherhood—see
+the article on <span class="sc"><a href="/article/23-0787-s2/rossetti__dante_gabriel">Rossetti</a></span>. Of much the
+same school were several later men. See,
+for instance, the articles: <span class="sc">Lord Leighton</span>,
+by Cosmo Monkhouse; <span class="sc"><a href="/article/18-0903-morris-william/morris__william">William
+Morris</a></span>, by <a href="/contributors.html?q=Arthur+Waugh">Arthur Waugh</a>; <span class="sc"><a href="/article/04-0872-s5/burne-jones__sir_edward_burne">Burne-Jones</a></span>,
+by <a href="/contributors.html?q=Laurence+Binyon">Lawrence Binyon</a>, poet and
+author of monographs on Blake, Crome,
+etc.; <span class="sc"><a href="/article/28-0438-watts-george-frederick/watts__george_frederick">George Frederick Watts</a></span>, by
+<a href="/contributors.html?q=Malcolm+Bell">Malcolm Bell</a>, biographer of Burne-Jones;
+<span class="sc"><a href="/article/07-0386-crane-walter/crane__walter">Walter Crane</a></span>. On the “Newlyn”
+school, see the article <span class="sc"><a href="/article/19-0538-s2/newlyn">Newlyn</a></span>; on
+the etchers, <span class="sc"><a href="/article/28-0616-whistler-james-abbott-mcneill/whistler__james_abbott_mcneill">Whistler</a></span>, by <a href="/contributors.html?q=Frederick+Wedmore">Frederick
+Wedmore</a>, author of <i>Whistler’s Etchings</i>,
+and <span class="sc"><a href="/article/25-1008-s2/strang__william">William Strang</a></span> and <span class="sc">Sir F. S. Haden</span>,
+by Sir Charles Holroyd, artist and
+critic; on figure painters, <span class="sc"><a href="/article/12-0021-s3/gilbert__sir_john">Sir John Gilbert</a></span>,
+<span class="sc">Albert Moore</span>, <span class="sc"><a href="/article/21-0357-pettie-john/pettie__john">John Pettie</a></span>, <span class="sc">G.
+H. Boughton</span>, <span class="sc"><a href="/article/01-0755-s4/alma-tadema__sir_laurence">Alma-Tadema</a></span>, <span class="sc">Sir E. J.
+Poynter</span> and <span class="sc">Sir W. B. Richmond</span>; for
+painters of sentiment, <span class="sc"><a href="/article/25-0981-s4/stone__marcus">Marcus Stone</a></span>,
+<span class="sc"><a href="/article/10-0353-s4/fildes__sir_luke">Sir Luke Fildes</a></span> and <span class="sc"><a href="/article/13-0380-herkomer-sir-hubert-von/herkomer__sir_hubert_von">Sir Hubert von
+Herkomer</a></span>; among portrait painters, <span class="sc">J.
+J. Shannon</span>, and <span class="sc">C. W. Furse</span>; the decorator
+<span class="sc"><a href="/article/04-0445-brangwyn-frank/brangwyn__frank">Frank Brangwyn</a></span>; the realistic
+landscapists, <span class="sc">H. W. B. Davis</span>, <span class="sc"><a href="/article/19-0054-murray-david/murray__david">David
+Murray</a></span>, <span class="sc">Sir E. A. Waterlow</span>, <span class="sc"><a href="/article/06-0686-cole-vicat/cole__vicat">Vicat
+Cole</a></span>; the more imaginative and romantic
+painters of landscape, <span class="sc">Alfred W.
+Hunt</span>, <span class="sc"><a href="/article/16-0329-lawson-cecil-gordon/lawson__cecil_gordon">Cecil Gordon Lawson</a></span>, <span class="sc"><a href="/article/16-0755-linnell-john/linnell__john">John
+Linnell</a></span>, <span class="sc">G. H. Mason</span>, <span class="sc"><a href="/article/28-0287-walker-frederick/walker__frederick">Frederick
+Walker</a></span>, <span class="sc">Sir Alfred East</span>, <span class="sc">J. Buxton
+Knight</span>, <span class="sc"><a href="/article/06-0483-clausen-george/clausen__george">George Clausen</a></span>; the “subjective
+landscapist” <span class="sc">B. W. Leader</span>; the
+marine painters <span class="sc"><a href="/article/18-0840-s5/moore__henry">Henry Moore</a></span>, <span class="sc">C. Napier
+Hemy</span>, <span class="sc"><a href="/article/13-0686-s3/hook__james_clarke">James Clarke Hook</a></span>; the
+animal-painters <span class="sc"><a href="/article/04-0519-breton-nicholas/breton__nicholas">Breton</a></span>, <span class="sc"><a href="/article/23-0404-s4/riviere__briton">Riviere</a></span>, <span class="sc">J. M.
+Swan</span>, and, for the earlier period, <span class="sc"><a href="/article/16-0186-landseer-sir-edwin-henry/landseer__sir_edwin_henry">Landseer</a></span>;
+the Scottish artists <span class="sc"><a href="/article/20-0193-s3/orchardson__sir_william_quiller">Orchardson</a></span>,
+by Sir <a href="/contributors.html?q=Sir+Walter+Armstrong">Walter Armstrong</a>, director of
+National Gallery of Ireland; <span class="sc"><a href="/article/21-0357-pettie-john/pettie__john">John Pettie</a></span>,
+<span class="sc"><a href="/article/10-0135-s2/faed__thomas">Thomas Faed</a></span>, <span class="sc"><a href="/article/19-0054-murray-david/murray__david">David Murray</a></span>,
+<span class="sc"><a href="/article/18-0121-melville-arthur/melville__arthur">Arthur Melville</a></span>, <span class="sc"><a href="/article/16-0313-s5/lavery__john">John Lavery</a></span>, <span class="sc"><a href="/article/04-0675-s2/brough__robert">Robert
+Brough</a></span>, <span class="sc"><a href="/article/12-0766-s4/guthrie__sir_james">Sir James Guthrie</a></span>, and
+<span class="sc"><a href="/article/23-0067-s2/reid__sir_george">Sir George Reid</a></span>, of whom we have already
+spoken as a contributor to the
+Britannica; and the water colorists <span class="sc"><a href="/article/12-0021-s3/gilbert__sir_john">Sir
+John Gilbert</a></span>, by <a href="/contributors.html?q=F.+G.+Stephens">F. G. Stephens</a>,
+former art critic of the <i>Athenaeum</i>,
+<span class="sc"><a href="/article/18-0840-s5/moore__henry">Henry Moore</a></span>, <span class="sc">Albert Moore</span>, <span class="sc"><a href="/article/06-0483-clausen-george/clausen__george">George
+Clausen</a></span>, <span class="sc">E. J. Gregory</span>, <span class="sc">Birket Foster</span>,
+<span class="sc"><a href="/article/12-0805-haag-carl/haag__carl">Haag</a></span>, <span class="sc"><a href="/article/12-0561-s5/greenaway__kate">Kate Greenaway</a></span>, by <a href="/contributors.html?q=Marion+H.+Spielmann">M. H.
+Spielmann</a>, biographer of Kate Greenaway.
+On English illustrators, besides
+those already named, Hogarth and Blake
+notably, see the articles <span class="sc"><a href="/article/03-0858-bewick-thomas/bewick__thomas">Thomas Bewick</a></span>,
+<span class="sc"><a href="/article/03-0468-bartolozzi-francesco/bartolozzi__francesco">Bartolozzi</a></span>, <span class="sc"><a href="/article/10-0507-s2/flaxman__john">Flaxman</a></span>, by Sir <a href="/contributors.html?q=Sidney+Colvin">Sidney
+Colvin</a>, <span class="sc"><a href="/article/05-0557-cattermole-george/cattermole__george">Cattermole</a></span>, <span class="sc"><a href="/article/22-0505-prout-samuel/prout__samuel">Samuel Prout</a></span>,
+<span class="sc"><a href="/article/28-0336-s3/ward__james">James Ward</a></span>, <span class="sc"><a href="/article/12-0036-s8/gillray__james">Gillray</a></span>, <span class="sc"><a href="/article/04-0820-s2/bunbury">Bunbury</a></span>, <span class="sc"><a href="/article/23-0828-s4/rowlandson__thomas">Rowlandson</a></span>,
+<span class="sc"><a href="/article/07-0545-cruikshank-george/cruikshank__george">Cruikshank</a></span>, <span class="sc"><a href="/article/16-0384-s6/leech__john">John Leech</a></span>,
+<span class="sc"><a href="/article/08-0485-doyle-richard/doyle__richard">Richard Doyle</a></span>, <span class="sc"><a href="/article/26-0657-tenniel/tenniel__sir_john">Tenniel</a></span>, <span class="sc"><a href="/article/12-0021-s3/gilbert__sir_john">Sir John
+Gilbert</a></span>, <span class="sc">Aubrey Beardsley</span>, by <a href="/contributors.html?q=Edward+Fairbrother+Strange">E. F.
+Strange</a>, <span class="sc"><a href="/article/07-0434-creswick-thomas/creswick__thomas">Thomas Creswick</a></span>, <span class="sc"><a href="/article/08-0685-du-maurier-george-louis-palmella-busson/du_maurier__george_louis_palmella_busson">Du Maurier</a></span>,
+<span class="sc">C. S. Keene</span>, <span class="sc"><a href="/article/28-0287-walker-frederick/walker__frederick">Frederick Walker</a></span>,
+<span class="sc">G. J. Pinwell</span>, <span class="sc">R. Caldecott</span>, <span class="sc"><a href="/article/11-0376-furniss-harry/furniss__harry">Harry
+Furniss</a></span>, <span class="sc">Sir F. C. Gould</span>, <span class="sc">E. Linley
+Sambourne</span>, <span class="sc"><a href="/article/17-0949-s3/may__phil">Phil May</a></span>, <span class="sc"><a href="/article/22-0940-raven-hill-leonard/raven-hill__leonard">Leonard Raven-Hill</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-12">French</span>On French painting of the 17th century
+read: on landscape, <span class="sc"><a href="/article/06-0478-claude-jean/claude__jean">Poussin</a></span>, and <span class="sc"><a href="/article/06-0479-claude-of-lorraine/claude_of_lorraine">Claude
+of Lorraine</a></span> (Vol. 6, p. 463), by <a href="/contributors.html?q=William+Michael+Rossetti">W. M.
+Rossetti</a>; the historical and
+religious painters <span class="sc"><a href="/article/16-0371-s7/le_brun__charles">Le Brun</a></span>
+and <span class="sc"><a href="/article/16-0519-s6/le_sueur__eustache">Le Sueur</a></span>; and the portraitist
+<span class="sc"><a href="/article/05-0864-champaigne-philippe-de/champaigne__philippe_de">Philippe de Champaigne</a></span>. For
+the 18th century: the articles <span class="sc"><a href="/article/28-0435-watteau-antoine/watteau__antoine">Watteau</a></span>
+and <span class="sc"><a href="/article/10-0793-s5/fragonard__jean-honoré">Fragonard</a></span>, by <a href="/contributors.html?q=Paul+George+Konody">P. G. Konody</a>;
+<span class="sc"><a href="/article/04-0326-boucher-fran-ois/boucher__françois">François Boucher</a></span>, <span class="sc"><a href="/article/16-0173-s2/lancret__nicolas">Lancret</a></span>, <span class="sc"><a href="/article/27-1058-s2/vernet">Vernet</a></span>
+the eldest, <span class="sc"><a href="/article/23-0354-rigaud/rigaud__hyacinthe">Rigaud</a></span>, <span class="sc"><a href="/article/05-0893-chardin-sir-john/chardin__sir_john">Chardin</a></span>, and
+<span class="sc"><a href="/article/12-0609-greuze-jean-baptiste/greuze__jean_baptiste">Greuze</a></span>, by <a href="/contributors.html?q=Lady+Dilke">Lady Dilke</a>, author of
+<i>French Painters of the 18th Century</i>.</p>
+
+<p>In the 19th century came a classical
+reaction: see the article on its leader
+<span class="sc"><a href="/article/07-0885-david-jacques-louis/david__jacques_louis">Jacques Louis David</a></span> and his pupils and
+imitators <span class="sc">J. B. Regnault</span>, <span class="sc"><a href="/article/12-0061-s6/girodet_de_roussy__anne_louis">Girodet</a></span>,
+<span class="sc">Baron Guérin</span>, <span class="sc"><a href="/article/22-0533-prud-hon-pierre/prud_hon__pierre">Prud’hon</a></span>; then a mediate
+movement, on which see <span class="sc"><a href="/article/14-0598-ingress/ingress">Ingres</a></span>, by
+<a href="/contributors.html?q=Lady+Dilke">Lady Dilke</a>, and <span class="sc"><a href="/article/12-0641-gross/gross">Gros</a></span>; and then a Romantic
+revolt—see <span class="sc"><a href="/article/07-0965-delacroix/delacroix__ferdinand_victor_eugène">Delacroix</a></span>, <span class="sc"><a href="/article/11-0789-g-ricault-jean-louis-andr-th-odore/géricault__jean_louis_andré_théodore">Géricault</a></span>,
+<span class="sc"><a href="/article/14-0893-s4/isabey__jean_baptiste">Isabey</a></span>. Other important names
+are <span class="sc"><a href="/article/28-1006-ziem-f-lix-fran-ois-george-philibert/ziem__félix_françois_george_philibert">Ziem</a></span>, <span class="sc"><a href="/article/18-0104-meissonier-juste-aur-le/meissonier__juste_aurèle">Meissonier</a></span> and <span class="sc">Rose Bonheur</span>,
+both by <a href="/contributors.html?q=Henri+Frantz">Henri Frantz</a> of the
+<i>Gazette des Beaux Arts</i>, <span class="sc"><a href="/article/04-0939-s4/cabanel__alexandre">Cabanel</a></span>, <span class="sc"><a href="/article/03-0554-baudry-of-bourgueil/baudry_of_bourgueil">Baudry</a></span>,
+<span class="sc"><a href="/article/11-0925-g-r-me-jean-l-on/gérôme__jean_léon">Gérôme</a></span>, <span class="sc"><a href="/article/04-0331-bouguereau-adolphe-william/bouguereau__adolphe_william">Bouguereau</a></span>, <span class="sc"><a href="/article/06-1012-constant-benjamin/constant__benjamin">Benjamin
+Constant</a></span>, <span class="sc"><a href="/article/07-0178-cormon-fernand/cormon__fernand">Cormon</a></span>, <span class="sc"><a href="/article/04-0223-bonnat-l-on-joseph-florentin/bonnat__léon_joseph_florentin">Bonnat</a></span> and <span class="sc"><a href="/article/13-0285-s4/henner__jean_jacques">Henner</a></span>.
+On the Barbizon school, see the
+articles <span class="sc"><a href="/article/03-0405-barbizon/barbizon">Barbizon</a></span>, <span class="sc">Theodore Rousseau</span>,
+<span class="sc"><a href="/article/07-0871-daubigny-charles-fran-ois/daubigny__charles_françois">Daubigny</a></span>, <span class="sc"><a href="/article/07-0205-corot-jean-baptiste-camille/corot__jean-baptiste_camille">Corot</a></span>, and <span class="sc"><a href="/article/08-0189-diaz-porfirio/diaz__porfirio">Diaz</a></span>, by <a href="/contributors.html?q=David+Croal+Thomson">D.
+Croal Thomson</a>, author of <i>The Barbizon
+School</i>, <span class="sc">J. F. Millet</span>, by <a href="/contributors.html?q=Lady+Dilke">Lady Dilke</a>;
+<span class="sc"><a href="/article/08-0716-dupr-jules/dupré__jules">Dupré</a></span>, <span class="sc"><a href="/article/10-0795-s6/français__antoine">Français</a></span> and <span class="sc"><a href="/article/13-0028-s2/harpignies__henri">Harpignies</a></span>.
+Ranking with Corot and Millet in influence
+is <span class="sc"><a href="/article/07-0338-courbet/courbet__gustave">Courbet</a></span>; see the article on Courbet,
+by <a href="/contributors.html?q=Henri+Frantz">Henri Frantz</a> of the Paris <i>Gazette
+des Beaux Arts</i>, and on Courbet’s followers,
+<span class="sc"><a href="/article/16-0400-s3/legros__alphonse">Legros</a></span>, <span class="sc"><a href="/article/10-0184-s2/fantin-latour__ignace_henri_jean_théodore">Fantin-Latour</a></span>, <span class="sc"><a href="/article/23-0302-ribot-th-odule/ribot__théodule">Ribot</a></span>, by
+<a href="/contributors.html?q=Frederick+Wedmore">Frederick Wedmore</a>, <span class="sc"><a href="/article/05-0394-carolus-duran/carolus-duran">Carolus-Duran</a></span>.
+Contrasted with these nature-lovers are
+the more mystic <span class="sc"><a href="/article/18-0858-s4/moreau__gustave">Moreau</a></span>, <span class="sc"><a href="/article/23-0303-s3/ricard__louis_gustave">Ricard</a></span>, <span class="sc"><a href="/article/07-0970-delaunay-elie/delaunay__elie">Delaunay</a></span>,
+<span class="sc"><a href="/article/11-0259-fromentin-eug-ne/fromentin__eugène">Fromentin</a></span> and <span class="sc"><a href="/article/05-0616-cazin-jean-charles/cazin__jean_charles">Cazin</a></span>.</p>
+
+<p>The later names we may classify: the
+decorative painter—<span class="sc"><a href="/article/14-0361-s4/impey__sir_elijah">Puvis de Chavannes</a></span>,
+by <a href="/contributors.html?q=Henri+Frantz">Henri Frantz</a>; the impressionists—see
+the article <span class="sc"><a href="/article/14-0362-impressionism/impressionism">Impressionism</a></span> (Vol. 14,
+pp. 343–346), by <a href="/contributors.html?q=Dugald+Sutherland+MacColl">D. S. MacColl</a>, keeper of
+the Tate Gallery, and author of <i>Nineteenth
+Century Art</i>, and in the article
+<span class="sc"><a href="/article/20-0497-s2/painting">Painting</a></span> the discussion on pp. 473–474
+of Vol. 20—<span class="sc"><a href="/article/17-0584-s3/manet__édouard">Manet</a></span>, by <a href="/contributors.html?q=Henri+Frantz">Henri Frantz</a>,
+<span class="sc"><a href="/article/18-0724-monet-claude/monet__claude">Monet</a></span>, <span class="sc"><a href="/article/07-0955-degas-hilaire-germain-edgard/degas__hilaire_germain_edgard">Degas</a></span>, <span class="sc"><a href="/article/23-0118-renoir/renoir__firmin_auguste">Renoir</a></span>; the plein-airists
+<span class="sc">Jules Breton</span>, <span class="sc"><a href="/article/03-0519-bastien-lepage-jules/bastien-lepage__jules">Bastien-Lepage</a></span>, by
+<a href="/contributors.html?q=Henri+Frantz">Henri Frantz</a>; <span class="sc"><a href="/article/23-0488-s2/roll">Roll</a></span>, <span class="sc"><a href="/article/11-0932-s2/gervex__henri">Gervex</a></span>; the symbolist
+<span class="sc"><a href="/article/18-0858-s4/moreau__gustave">Gustave Moreau</a></span>; the military
+painters <span class="sc">Alphonse de Neuville</span> and
+<span class="sc"><a href="/article/08-0125-detaille-jean-baptiste-douard/detaille__jean_baptiste_édouard">Detaille</a></span>; and the “neo-evangelist” <span class="sc"><a href="/article/05-0616-cazin-jean-charles/cazin__jean_charles">Cazin</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-13">Belgium and Holland</span>The art of Belgium and Holland in the
+19th century is to be studied in Prof.
+Muther’s sections on these two countries
+(pp. 506–509) in
+the article <span class="sc"><a href="/article/20-0497-s2/painting">Painting</a></span>,
+and in such separate
+articles as <span class="sc"><a href="/article/16-0549-leys-hendrik-baron/leys__hendrik__baron">Leys</a></span>,
+<span class="sc"><a href="/article/25-0929-s6/stevens__alfred">Alfred Stevens</a></span> (to be distinguished
+from the English sculptor), <span class="sc"><a href="/article/04-0390-braekeleer-henri-jean-augustin-de/braekeleer__henri_jean_augustin_de">Braekeleer</a></span>,
+<span class="sc"><a href="/article/28-0678-willems-jean-fran-ois/willems__jean_françois">Willems</a></span>, <span class="sc"><a href="/article/06-0488-clay/clay">Clays</a></span>, <span class="sc"><a href="/article/22-0124-s2/portaels__jean_françois">Portaels</a></span>, <span class="sc"><a href="/article/28-0442-s3/wauters__emile">Wauters</a></span>,
+<span class="sc"><a href="/article/18-0336-s1/meunier__constantin">Constantin Meunier</a></span>, <span class="sc"><a href="/article/27-1052-s2/verlat__michel_marie_charles">Verlat</a></span>, the <span class="sc">de
+Vriendts</span>, <span class="sc"><a href="/article/15-0807-khnopff-fernand-edmond-jean-marie/khnopff__fernand_edmond_jean_marie">Khnopff</a></span>, already mentioned
+as a critic and a contributor to the Britannica,—all
+these are Belgians; and, in
+Holland, <span class="sc"><a href="/article/14-0918-s4/israëls__josef">Israëls</a></span>, <span class="sc"><a href="/article/17-0741-s4/maris__jacob">Maris</a></span>, <span class="sc"><a href="/article/17-0936-s4/mauve__anton">Mauve</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-14">Germany</span>Going back to the close of the 18th
+century for German painters influenced
+by Winckelmann, the important articles
+are <span class="sc"><a href="/article/18-0148-s2/mengs__antony_raphael">Mengs</a></span> and <span class="sc"><a href="/article/05-0428-carstens-armus-jacob/carstens__armus_jacob">Carstens</a></span>.
+See <span class="sc"><a href="/article/20-0417-s4/overbeck__johann_friedrich">Overbeck</a></span>, by J. Beavington
+<a href="/contributors.html?q=Joseph+Beavington+Atkinson">Atkinson</a> for the
+German “pre-Raphaelite” movement—and
+the articles, <span class="sc"><a href="/article/07-0185-cornelius-peter-von/cornelius__peter_von">Peter von Cornelius</a></span>,
+by <a href="/contributors.html?q=W.+Cave+Thomas">W. Cave Thomas</a>, author of <i>Mural or
+Monumental Education</i>; the <span class="sc"><a href="/article/24-0328-s2/schadow">Schadows</a></span>,
+by <a href="/contributors.html?q=Joseph+Beavington+Atkinson">J. B. Atkinson</a>; <span class="sc"><a href="/article/27-1001-s2/veit__philipp">Veit</a></span>, and <span class="sc"><a href="/article/24-0363-s4/schnorr_von_karolsfeld__julius">Schnorr</a></span>.
+The other more important names before
+1870 are: <span class="sc"><a href="/article/03-0849-bethel/bethel">Bethel</a></span>, <span class="sc"><a href="/article/24-0412-s8/schwind__moritz_von">Schwind</a></span>, <span class="sc"><a href="/article/01-0173-s9/achenbach__andreas">Achenbach</a></span>
+and <span class="sc"><a href="/article/22-0292-s4/preller__ludwig">Preller</a></span>. The glorification of
+the Empire and of Prussia is the theme of
+the new historical school: see particularly
+<span class="sc"><a href="/article/18-0166-menzel-wolfgang/menzel__wolfgang">Menzel</a></span>. The study of the old masters
+is to be seen in <span class="sc"><a href="/article/15-0726-s4/kaulbach__wilhelm_von">Kaulbach</a></span> and <span class="sc"><a href="/article/16-0437-lenbach-franz-von/lenbach__franz_von">Lenbach</a></span>.
+Among the members of a more modern
+school are: <span class="sc"><a href="/article/16-0610-s5/liebermann__max">Liebermann</a></span>, <span class="sc"><a href="/article/15-0666-s6/kalckreuth__leopold">Kalckreuth</a></span>,
+<span class="sc"><a href="/article/15-0746-s2/keller__albert">Keller</a></span>, <span class="sc"><a href="/article/27-0582-s3/uhde__fritz_karl_hermann_von">Uhde</a></span>; of another reaction,
+<span class="sc"><a href="/article/10-0314-feuerbach-anselm/feuerbach__anselm">Feuerbach</a></span>, <span class="sc"><a href="/article/26-0903-s3/thomas">Thoma</a></span>, and <span class="sc"><a href="/article/04-0120-b-cklin-arnold/böcklin__arnold">Böcklin</a></span>, by
+<a href="/contributors.html?q=Henri+Frantz">Henri Frantz</a>; and of a sculptural order
+<i>Klinger</i> and <i>Stuck</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-15">Austria-Hungary</span>As for Austria-Hungary, we may here
+mention only three
+articles: <span class="sc"><a href="/article/17-0467-s7/makart__hans">Makart</a></span>,
+<span class="sc">Pettekofen</span>, and
+<span class="sc"><a href="/article/19-0024-s2/munkacsy__michael_von">Munkacsy</a></span>, by <a href="/contributors.html?q=Edward+Fairbrother+Strange">E. F. Strange</a>.</p>
+
+<p><span class="shoulder-heading" id="sh-16">Italy</span>In Italy since the great days of the
+17th century, we may mention <span class="sc"><a href="/article/26-1003-s4/tiepolo__giovanni_battista">Tiepolo</a></span>,
+<span class="sc"><a href="/article/05-0184-canale/canale__or_canaletto___antonio">Canale</a></span> and <span class="sc"><a href="/article/12-0681-guardi-francesco/guardi__francesco">Guardi</a></span> before
+the 19th century, and
+in that era <span class="sc"><a href="/article/24-0611-s4/segantini__giovanni">Segantini</a></span>, <span class="sc"><a href="/article/07-0236-costa-giovanni/costa__giovanni">Giovanni
+Costa</a></span>, and <span class="sc"><a href="/article/19-0118-muzzioli-giovanni/muzzioli__giovanni">Muzzioli</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-17">Spain</span>The art of Spain has not been touched
+heretofore in this summary. For the
+16th century see the articles <span class="sc"><a href="/article/06-0663-coello-antonio/coello__antonio">Coello</a></span>,
+<span class="sc"><a href="/article/03-0621-becerra-gaspar/becerra__gaspar">Becerra</a></span>, <span class="sc">Vincente Joanes</span>,
+<span class="sc"><a href="/article/19-0297-s2/navarrete__juan_fernandez">Navarrete</a></span>, <span class="sc"><a href="/article/12-0440-s3/greco__el">El Greco</a></span>; and
+for the 17th, <i>the</i> Spanish
+century, <span class="sc"><a href="/article/13-0405-s2/herrera">Herrera</a></span>, his great pupil <span class="sc"><a href="/article/27-1002-s4/velazquez__diego_rodriguez_de_silva">Velazquez</a></span>,
+by <a href="/contributors.html?q=John+Forbes+White">J. Forbes White</a> and P. G.
+<a href="/contributors.html?q=Paul+George+Konody">Konody</a>; <span class="sc"><a href="/article/05-0202-cano-alonzo/cano__alonzo">Cano</a></span>, and <span class="sc"><a href="/article/28-1083-s4/zurbaran__francisco">Zurbaran</a></span> and
+<span class="sc"><a href="/article/19-0050-murillo-bartolom-esteban/murillo__bartolomé_esteban">Murillo</a></span>, both by <a href="/contributors.html?q=William+Michael+Rossetti">W. M. Rossetti</a>. In
+the 18th century the only great Spanish
+artist was <span class="sc">Goya y Lucientes</span>, painter
+and etcher. On the 19th century see:
+<span class="sc"><a href="/article/10-0748-fortuny-mariano-jose-maria-bernardo/fortuny__mariano_jose_maria_bernardo">Fortuny</a></span>, by <a href="/contributors.html?q=Alfred+Lys+Baldry">Alfred Lys Baldry</a>, art critic
+of the London <i>Globe</i>; <span class="sc"><a href="/article/22-0254-s5/pradilla__francisco">Pradilla</a></span>; <span class="sc"><a href="/article/03-0760-benlliure-y-gil-jos/benlliure_y_gil__josé">Benlliure
+y Gil</a></span>; <span class="sc">Sorolla y Bastida</span>; <span class="sc"><a href="/article/17-0307-madrazo-y-kunt/madrazo_y_kunt">Madrazo
+y Kunt</a></span>; <span class="sc"><a href="/article/28-1076-zuloaga-ignacio/zuloaga__ignacio">Zuloaga</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-18">Other European Countries</span>To the other countries of Europe, fully
+as their painting is treated in the Britannica,
+we can devote
+little space here. It
+may suffice to mention
+the Norwegian
+<span class="sc"><a href="/article/07-0753-dahl-hans/dahl__hans">Hans Dahl</a></span> and the Russians <span class="sc"><a href="/article/23-0122-s6/repin__ilja_jefimovich">Repin</a></span> and
+<span class="sc">Vereschagin</span>.</p>
+
+<p><span class="shoulder-heading" id="sh-19">The United States</span>On painting in the United States, see
+the section in the article <span class="sc"><a href="/article/20-0497-s2/painting">Painting</a></span>, by
+Prof. J. C. Van Dyke of Rutgers College
+(Vol. 20, pp. 518–519);
+and the articles
+<span class="sc">J. S. Copley</span>, <span class="sc"><a href="/article/28-0553-s2/west__benjamin">Benjamin
+West</a></span>, <span class="sc"><a href="/article/27-0341-s3/trumbull__john">John
+Trumbull</a></span>, <span class="sc"><a href="/article/25-1072-s3/stuart__gilbert">Gilbert Stuart</a></span>, <span class="sc"><a href="/article/27-0912-s2/vanderlyn__john">John Vanderlyn</a></span>,
+<span class="sc"><a href="/article/01-0752-s7/allston__washington">Washington Allston</a></span>, <span class="sc"><a href="/article/21-0037-s2/peale__rembrandt">Rembrandt
+Peale</a></span>, <span class="sc">J. W. Jarvis</span>, <span class="sc"><a href="/article/26-0074-s2/sully__thomas">Thomas
+Sully</a></span>, <span class="sc"><a href="/article/06-0686-cole-thomas/cole__thomas">Thomas Cole</a></span>, <span class="sc">Asher B. Durand</span>,
+<span class="sc">J. F. Kensett</span>, <span class="sc">F. E. Church</span>,
+<span class="sc"><a href="/article/12-0967-s5/harding__chester">Chester Harding</a></span>, <span class="sc"><a href="/article/14-0606-s2/inman__henry">Henry Inman</a></span>, <span class="sc"><a href="/article/20-0488-s2/page__william">William
+Page</a></span>, <span class="sc">G. P. A. Healy</span>, <span class="sc"><a href="/article/13-0978-huntington-daniel/huntington__daniel">Daniel
+Huntington</a></span>, <span class="sc">W. S. Mount</span>, <span class="sc">W. M.
+Hunt</span>, <span class="sc">John La Farge</span>, <span class="sc"><a href="/article/11-0308-s2/fuller__george">George Fuller</a></span>,
+<span class="sc"><a href="/article/15-0489-s3/johnson__eastman">Eastman Johnson</a></span>, <span class="sc"><a href="/article/27-0992-vedder-elihu/vedder__elihu">Elihu Vedder</a></span>,
+<span class="sc"><a href="/article/19-1028-ochtman-leonard/ochtman__leonard">Leonard Ochtman</a></span>, <span class="sc"><a href="/article/13-0656-homer-winslow/homer__winslow">Winslow Homer</a></span>,
+<span class="sc">A. H. Wyant</span>, <span class="sc"><a href="/article/14-0608-s3/inness__george">George Inness</a></span>, <span class="sc">Homer
+D. Martin</span>, <span class="sc">Swain Gifford</span>, the <span class="sc">Morans</span>,
+<span class="sc"><a href="/article/17-0245-mcentee-jervis/mcentee__jervis">Jervis McEntee</a></span>, <span class="sc">D. W. Tryon</span>,
+<span class="sc"><a href="/article/03-0944-bierstadt-albert/bierstadt__albert">Albert Bierstadt</a></span>, <span class="sc">W. H. Beard</span>, <span class="sc"><a href="/article/04-0056-blashfield/blashfield__edwin_howland">Blashfield</a></span>,
+<span class="sc">J. W. Alexander</span>, <span class="sc">W. M. Chase</span>,
+<span class="sc"><a href="/article/08-0764-duveneck-frank/duveneck__frank">Duveneck</a></span>, <span class="sc"><a href="/article/03-0619-beaux-cecilia/beaux__cecilia">Cecilia Beaux</a></span>, <span class="sc">W. H. Low</span>,
+<span class="sc">H. S. Mowbray</span>, <span class="sc">H. O. Tanner</span>, <span class="sc">E. C.
+Tarbell</span>, <span class="sc">R. W. Vonnoh</span>,—and the
+Americans who have made their home
+and their fame in Europe, like <span class="sc"><a href="/article/28-0616-whistler-james-abbott-mcneill/whistler__james_abbott_mcneill">Whistler</a></span>,
+<span class="sc"><a href="/article/24-0234-sargent-john-singer/sargent__john_singer">Sargent</a></span>, <span class="sc">E. A. Abbey</span> and <span class="sc">J. J. Shannon</span>,
+and those whose work is Continental,
+or even purely Parisian in tone, like
+<span class="sc">W. T. Dannat</span>, <span class="sc"><a href="/article/13-0549-hitchcock-george/hitchcock__george">George Hitchcock</a></span>, <span class="sc">Gari
+Melchers</span>, <span class="sc">C. S. Pearce</span>, <span class="sc">E. L. Weeks</span>
+and <span class="sc"><a href="/article/11-0559-gay-walter/gay__walter">Walter Gay</a></span>. On illustrators, see
+the articles: <span class="sc"><a href="/article/22-0695-s2/pyle__howard">Howard Pyle</a></span>, <span class="sc"><a href="/article/23-0098-s5/remington__frederick">Frederick
+Remington</a></span>, <span class="sc">C. S. Reinhart</span>, <span class="sc">W. T.
+Smedley</span>, <span class="sc">Robert Blum</span>, <span class="sc"><a href="/article/11-0966-s2/gibson__charles_dana">Charles Dana
+Gibson</a></span>, <span class="sc">W. Hamilton Gibson</span>, the wood-engraver
+<span class="sc"><a href="/article/06-0686-cole-timothy/cole__timothy">Timothy Cole</a></span>, the etcher
+<span class="sc"><a href="/article/21-0118-s5/pennell__joseph">Joseph Pennell</a></span>; and for caricature the
+article <span class="sc"><a href="/article/05-0344-caricature/caricature">Thomas Nast</a></span> and the section on
+the United States in <a href="/contributors.html?q=Marion+H.+Spielmann">M. H. Spielmann</a>’s
+article <span class="sc"><a href="/article/05-0344-caricature/caricature">Caricature</a></span> (Vol. 5, pp. 334–335).</p>
+
+<p>For a fuller list of articles on painting,
+drawing, engraving, etc., with articles on
+sculpture, see the end of the next chapter
+<i>Sculpture</i>.</p>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

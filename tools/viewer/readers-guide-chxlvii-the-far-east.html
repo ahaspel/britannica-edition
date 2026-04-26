@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Far East &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XLVII</span>The Far East</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Asiatic Characteristics</a></li><li><a href="#sh-2">Early Buddhism</a></li><li><a href="#sh-3">Mahommedans and Moslems</a></li><li><a href="#sh-4">The British Conquest</a></li><li><a href="#sh-5">Japanese in America</a></li><li><a href="#sh-6">Marks of the Race</a></li><li><a href="#sh-7">Foreign intercourse</a></li><li><a href="#sh-8">Recent Wars</a></li><li><a href="#sh-9">Domestic History</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">Asiatic Characteristics</span>An account, in this chapter, of the
+principal articles dealing with the
+history of India, China and Japan,
+will sufficiently indicate to the student
+the plan adopted in the Britannica’s
+treatment of all the countries in the far
+East. But before turning to these three
+groups of articles, he should read <span class="sc"><a href="/article/02-0778-s4/asia">Asia</a></span>
+(Vol. 2, p. 734), which defines the social
+and economic position of the Orient in
+general, and gives a survey of the field
+covered by articles on Eastern countries
+other than the three dealt with in this
+chapter. This article, equivalent in
+length to 65 pages of this Guide, is by Sir
+<a href="/contributors.html?q=Lieut.-Gen.+Sir+Richard+Strachey">Richard Strachey</a>, the famous Indian
+administrator; <a href="/contributors.html?q=Sir+Charles+Norton+Edgecumbe+Eliot">Sir Charles Eliot</a>, of the
+British diplomatic service Sir T. H.
+Holdich, of the Indian Frontier Survey;
+and Philip Lake, the Oriental geologist.
+The general survey
+of Asiatic characteristics,
+as revealed by
+history, with which
+the historical section (p. 749) of the article
+begins, is noteworthy in connection
+with current political questions:</p>
+
+<p>The words “Asiatic” and “oriental” are
+often used as if they denoted a definite and
+homogeneous type, but Russians resemble
+Asiatics in many ways, and Turks, Hindus,
+Chinese, etc., differ in so many important
+points that the common substratum is small.
+It amounts to this, that Asiatics have not
+the same sentiment of independence and
+freedom as Europeans. Individuals are
+thought of as members of a family, state or
+religion, rather than as entities with a destiny
+and rights of their own. This leads to
+autocracy in politics, fatalism in religion,
+and conservatism in both.</p>
+
+<p>All three of these are certainly conspicuous
+in the history of the first Eastern
+country dealt with in this chapter.</p>
+
+<h4 class="c016">INDIA</h4>
+
+<p>In the article <span class="sc"><a href="/article/14-0394-india/india">India</a></span> (Vol. 14, p. 375),
+(equivalent to 140 pages of this Guide)
+there is much of value to the historical
+student besides the chapter on <i>History</i>
+(p. 395), which is written by Sir <a href="/contributors.html?q=Sir+William+Wilson+Hunter">William
+Wilson Hunter</a>, administrative head of
+the statistical survey of India and one of
+the editors of <i>The Imperial Gazetteer of
+India</i>, and by <a href="/contributors.html?q=James+Sutherland+Cotton">James Sutherland Cotton</a>,
+editor of this same Gazetteer. Particularly
+important are the sections, <i>The
+People</i> (p. 382), <i>Administration</i> (p. 385),
+and <i>Indian Costume</i> (p. 417), illustrated
+from pen-and-ink drawings by J. Lockwood
+Kipling, known to many as the
+illustrator of his son’s book <i>Kim</i>. And
+the student of Oriental history will find
+it possible to gain a little comprehension—at
+least—of Oriental ways of thought,
+Eastern setting and colour, by reading in
+the Britannica such articles as <span class="sc"><a href="/article/05-0481-caste/caste">Caste</a></span>
+(Vol. 5, p. 464), <span class="sc"><a href="/article/13-0517-hinduism/hinduism">Hinduism</a></span> (Vol. 13, p.
+501), <span class="sc"><a href="/article/04-0396-brahmanism/brahmanism">Brahmanism</a></span>, <span class="sc"><a href="/article/04-0393-brahman/brahman">Brahman</a></span> and <span class="sc"><a href="/article/04-0392-brahe-tycho/brahe__tycho">Brahmana</a></span>
+(Vol. 4, p. 378), all by Prof. Julius
+Eggeling, Edinburgh; <span class="sc"><a href="/article/04-0760-s4/buddha">Buddha</a></span> and <span class="sc"><a href="/article/04-0765-buddhism/buddhism">Buddhism</a></span>
+(Vol. 4, p. 737), both by Prof. T.
+W. Rhys Davids of Manchester, author
+of <i>Sacred Books of the Buddhas</i>, etc.;
+<span class="sc"><a href="/article/17-0414-mahomet/mahomet">Mahomet</a></span> (Vol. 17, p. 399), by Prof. <a href="/contributors.html?q=David+Samuel+Margoliouth">D.
+G. Margoliouth</a>, Oxford; <span class="sc"><a href="/article/17-0426-mahommedan-institutions/mahommedan_institutions">Mahommedan
+Institutions</a></span> and <span class="sc"><a href="/article/17-0429-mahommedan-law/mahommedan_law">Mahommedan Law</a></span>
+(Vol. 17, p. 411), by Prof. <a href="/contributors.html?q=Duncan+Black+Macdonald">D. S. Macdonald</a>,
+Hartford Theological Seminary,
+and <span class="sc"><a href="/article/17-0432-mahommedan-religion/mahommedan_religion">Mahommedan Religion</a></span> (Vol. 17, p.
+417), by <a href="/contributors.html?q=Rev.+Griffithes+Wheeler+Thatcher">Rev. G. W. Thatcher</a>, Camden
+College, Sydney, N. S. W.; <span class="sc"><a href="/article/14-0462-indian-law/indian_law">Indian Law</a></span>
+(Vol. 14, p. 434), by Sir <a href="/contributors.html?q=Sir+William+Markby">William Markby</a>,
+author of <i>Lectures on English Law</i>, etc.;
+and <span class="sc"><a href="/article/28-1066-zoroaster/zoroaster">Zoroaster</a></span> (Vol. 28, p. 1039), by
+Prof. Karl Geldner, Marburg, and <span class="sc"><a href="/article/20-0928-parsees/parsees">Parsees</a></span>
+(Vol. 20, p. 866). This list of articles
+subsidiary to the history of India
+could be prolonged almost indefinitely,
+but enough has been given to put the
+student on the track of valuable articles
+which might otherwise escape his notice.</p>
+
+<p>Before we come to the authentic history
+of India there is a legendary period,
+the only historic test for which is the rock
+inscriptions,—see the article <span class="sc"><a href="/article/14-0649-inscriptions/inscriptions">Inscriptions</a></span>,
+<i>Indian</i> (Vol. 14, p. 621), by <a href="/contributors.html?q=John+Faithfull+Fleet">J. F.
+Fleet</a>, author of <i>Inscriptions of the Early
+Gupta Kings</i>. On the earliest literary description
+of the Aryans in India and their
+contests with the Dravidians see the article
+<span class="sc"><a href="/article/24-0170-sanskrit/sanskrit">Sanskrit</a></span>, <i>Vedic Period</i> (especially
+p. 161 of Vol. 24, on the <i>Rig Veda</i>)—and
+in general the articles <span class="sc"><a href="/article/02-0755-s5/aryan">Aryan</a></span> and <span class="sc"><a href="/article/08-0573-dravidian/dravidian">Dravidian</a></span>.
+An interesting reconstruction of
+the civilization of the primitive Aryans
+on the basis of languages will be found in
+the article <span class="sc"><a href="/article/14-0523-indo-european-languages/indo-european_languages">Indo-European Languages</a></span>
+(Vol. 14, especially pp. 498–500), by Dr.
+<a href="/contributors.html?q=Peter+Giles">Peter Giles</a>, Cambridge, author of <i>Manual
+of Comparative Philology</i>; and this picture
+of Aryan life before the conquest of India
+will hold in the main for the earlier period
+of the Aryans in India.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Early Buddhism</span>With the 6th century we come to the
+beginning of the Buddhist period. See
+the article <span class="sc"><a href="/article/15-0143-jains/jains">Jains</a></span>, the articles on Buddhism
+already mentioned,
+and the articles:
+<span class="sc"><a href="/article/02-0810-s3/asoka">Asoka</a></span>, the
+great Buddhist emperor
+and organizer of the faith, whose
+rock inscriptions throughout India are so
+valuable as historical records; <span class="sc"><a href="/article/15-0680-s2/kanishka">Kanishka</a></span>,
+the Buddhist king of Kabul and Kashmir;
+<span class="sc"><a href="/article/10-0137-s6/fa-hien">Fa-Hien</a></span> and <span class="sc"><a href="/article/13-0868-s2/hsüan_tsang">Hsüan Tsang</a></span>, the Chinese
+pilgrims of India, who left important
+records of early Buddhism and of Brahmanism,
+which was steadily growing in
+power and strength.</p>
+
+<p>The Hindu period, overlapping the
+Buddhist, is marked by the beginning of
+Western influences on India. For the
+Persians in India see the articles <span class="sc"><a href="/article/21-0204-persia/persia">Persia</a></span>
+(Vol. 21, especially pp. 209–210), <span class="sc"><a href="/article/07-0856-darius/darius">Darius</a></span>
+(Vol. 7, p. 832), and <span class="sc"><a href="/article/24-0549-scylax-of-caryanda/scylax_of_caryanda">Scylax</a></span>, the Greek
+who under Darius’s orders explored the
+course of the Indus. Far more important
+was the conquest by Alexander the Great
+and the establishment of the Hellenistic
+empire of the Seleucids in Syria, Bactria
+and India: see <span class="sc">Alexander the Great</span>
+(Vol. 1, especially p. 548), <span class="sc"><a href="/article/19-0337-s1/nearchus">Nearchus</a></span>,
+Alexander’s admiral and navigator, and
+<span class="sc"><a href="/article/24-0633-seleucid-dynasty/seleucid_dynasty">Seleucid Dynasty</a></span>. The first paramount
+ruler of India was <span class="sc"><a href="/article/05-0875-chandragupta-maurya/chandragupta_maurya">Chandragupta</a></span>
+(Vol. 5, p. 839), whom the Greeks called
+Sandracottus and who crushed the Seleucid
+power and founded the Maurya dynasty.
+Of his grandson Asoka we have
+already spoken in outlining the growth
+and decline of Buddhism. In this period
+Greek thought and art influenced India
+greatly, and in the period immediately
+following—2nd century B.C.—northwestern
+India was invaded again by western
+troops: see <span class="sc"><a href="/article/07-1007-demetrius-cynic/demetrius__cynic_">Demetrius</a></span>, <span class="sc"><a href="/article/09-0912-eucratides/eucratides">Eucratides</a></span>,
+<span class="sc"><a href="/article/18-0129-menander-milinda/menander__milinda_">Menander</a></span>. The records of the next four
+centuries are confused and vague; on the
+invasions from the North, see <span class="sc"><a href="/article/24-0067-saka/saka">Saka</a></span> and
+<span class="sc"><a href="/article/28-0971-yue-chi/yue-chi">Yue-Chi</a></span>, by Sir <a href="/contributors.html?q=Sir+Charles+Norton+Edgecumbe+Eliot">Charles Norton Edgcumbe
+Eliot</a>.</p>
+
+<p>The Yue-Chi founded the Kushan dynasty,
+in which the greatest king was
+<span class="sc"><a href="/article/15-0680-s2/kanishka">Kanishka</a></span> (Vol. 15, p. 653), already mentioned
+as a Buddhist ruler whose policy
+marked the beginning of the end of Buddhism
+in India. On the succeeding dynasty
+see the article <span class="sc"><a href="/article/12-0755-s7/gupta">Gupta</a></span>; and refer
+again to the article <span class="sc"><a href="/article/10-0137-s6/fa-hien">Fa-Hien</a></span> for the Chinese
+account of the rule of the second
+Gupta king, Chandragupta,—on whom in
+legend see <span class="sc"><a href="/article/28-0081-vikramaditya/vikramaditya">Vikramaditya</a></span>. On the White
+Huns and their invasion consult the articles
+<span class="sc"><a href="/article/09-0711-ephthalites/ephthalites">Ephthalites</a></span> and <span class="sc"><a href="/article/13-0957-huns/huns">Huns</a></span>. On the
+only other great king of this period, who
+was paramount monarch of northern India
+in the first half of the 7th century and
+whose administration was described by
+Hsüan-Tsang, see <span class="sc"><a href="/article/13-0043-harsha/harsha">Harsha</a></span>. On the principal
+Deccan dynasties of the Hindu period,
+see <span class="sc"><a href="/article/05-0848-chalukya/chalukya">Chalukya</a></span> and <span class="sc"><a href="/article/22-0929-s2/rashtrakuta">Rashtrakuta</a></span>,
+and the article <span class="sc"><a href="/article/07-0935-deccan/deccan">Deccan</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Mahommedans and Moslems</span>For a general notion of the Mahommedan
+period in India the student should
+read the articles on Mahommedanism already
+mentioned,
+and for more definite
+information about
+India, the articles
+on the 11th century invader <span class="sc"><a href="/article/17-0412-mahmud-of-ghazni/mahmud_of_ghazni">Mahmud of
+Ghazni</a></span> (Vol. 17, p. 397), and on <span class="sc"><a href="/article/25-0409-s6/somnath">Somnath</a></span>,
+the temple city which he captured and
+sacked in 1025. See <span class="sc"><a href="/article/07-0935-deccan/deccan">Deccan</a></span> and <span class="sc"><a href="/article/12-0734-gujarat/gujarat">Gujarat</a></span>
+for the Moslem conquest of these
+states by Ala-ud-din. For the destruction
+of the Tughlak dynasty, which followed
+Ala-ud-din’s successors, see <span class="sc"><a href="/article/01-0343-s2/afghanistan">Afghanistan</a></span>
+(Vol. 1, especially p. 315) and
+<span class="sc"><a href="/article/26-1033-s2/timothy__second_epistle_to">Timur</a></span> (Vol. 26, p. 994), by <a href="/contributors.html?q=Major-General+Sir+Frederick+John+Goldsmid">Major-General
+Sir Frederick John Goldsmid</a>. The
+“last stand made by the national faith in
+India against conquering Islam” was in
+<span class="sc"><a href="/article/28-0077-vijayanagar/vijayanagar">Vijayanagar</a></span> (Vol. 28, p. 62). With the
+16th century and the Mogul dynasty, India
+is quite definitely Moslem: see <span class="sc"><a href="/article/03-0107-s2/baber">Baber</a></span>,
+<span class="sc"><a href="/article/13-0897-humayun/humayun">Humayun</a></span>, <span class="sc"><a href="/article/01-0492-s4/akbar">Akbar</a></span>, <span class="sc"><a href="/article/01-0110-s7/abul_fazl">Abul Fazl</a></span> the historian
+of Akbar’s reign, <span class="sc"><a href="/article/15-0141-jahangir/jahangir">Jahangir</a></span>, <span class="sc"><a href="/article/24-0799-shah-jahan/shah_jahan">Shah
+Jahan</a></span>, and <span class="sc"><a href="/article/01-0419-s11/agra">Agra</a></span> and <span class="sc"><a href="/article/14-0452-indian-architecture/indian_architecture">Indian Architecture</a></span>
+(especially Fig. 17, opposite p. 433,
+Vol. 14) for the Taj Mahal, the Mausoleum
+built by Shah Jahan for his wife
+Mumtäz Mal, and—for the culmination
+of the Mogul power, the beginning of its
+decay, and the first sign of Moslem bigotry
+and intolerance on the part of the
+Mogul emperors,—<span class="sc"><a href="/article/02-0970-s5/aurangzeb">Aurangzeb</a></span>. His attempt
+to conquer the Mahommedan
+kings of the Deccan gave the natives an
+opportunity to regain power: see the article
+<span class="sc"><a href="/article/17-0439-mahrattas/mahrattas">Mahrattas</a></span>, and for the earlier risings
+of the Mahrattas, <span class="sc"><a href="/article/25-0178-sivaji/sivaji">Sivaji</a></span>. And for
+the rise of Afghan power under the
+Durani dynasty and the battle of Panipat
+in 1761, a crushing defeat for the Mahrattas,
+see <span class="sc"><a href="/article/01-0343-s2/afghanistan">Afghanistan</a></span>, <i>History</i> (Vol. 1,
+especially p. 316), and <span class="sc"><a href="/article/01-0469-s2/ahmad_shah">Ahmad Shah</a></span>.</p>
+
+<p>On earlier European settlements in
+India see the article <span class="sc"><a href="/article/14-0394-india/india">India</a></span>, <i>History</i> (Vol.
+14, p. 404), and more particularly for
+Portuguese explorations and settlements
+the articles <span class="sc"><a href="/article/11-0451-s2/gama__vasco_da">Vasco da Gama</a></span> (Vol. 11, p.
+433), <span class="sc"><a href="/article/01-0556-s4/albuquerque">Albuquerque</a></span> (Vol. 1, p. 516), and
+<span class="sc"><a href="/article/12-0176-goa/goa">Goa</a></span> the capitol of Portuguese India, the
+last article being by <a href="/contributors.html?q=Kingsley+Garland+Jayne">K. G. Jayne</a>, author
+of <i>Vasco da Gama and His Successors</i>: for
+Dutch rule the article <span class="sc"><a href="/article/08-0743-dutch-east-india-company-the/dutch_east_india_company__the">Dutch East India
+Company</a></span> (Vol. 8, p. 716); and for the
+beginning of British influence in India
+the articles <span class="sc"><a href="/article/08-0861-east-india-company/east_india_company">East India Company</a></span>; <span class="sc"><a href="/article/26-0135-surat/surat">Surat</a></span>;
+<span class="sc"><a href="/article/17-0306-madras-city/madras__city_">Madras</a></span>, where the first English fort was
+built in 1640 and the first grant, except
+for factory use, was made by the English;
+<span class="sc"><a href="/article/04-0196-bombay-city/bombay_city">Bombay</a></span>, acquired from Portugal in 1661–65;
+<span class="sc">Sir John</span> and <span class="sc"><a href="/article/06-0148-child-sir-josiah/child__sir_josiah">Sir Josiah Child</a></span>; <span class="sc"><a href="/article/05-0983-charnock-job/charnock__job">Job
+Charnock</a></span>, founder of Calcutta, and the
+article on <span class="sc"><a href="/article/04-1008-s2/calcutta">Calcutta</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-4">The British Conquest</span>On British political history in India in
+the 18th century, see the articles on
+<span class="sc"><a href="/article/22-0074-pondicherry/pondicherry">Pondicherry</a></span>, <span class="sc"><a href="/article/08-0714-dupleix-joseph-fran-ois/dupleix__joseph_françois">Dupleix</a></span>, French Governor-General
+in Pondicherry,
+his rival
+<span class="sc"><a href="/article/06-0549-clive-caroline/clive__caroline">Clive</a></span> the founder
+of the British Empire
+and of the power of the East India
+Company in India, <span class="sc">Eyre Coote</span> who
+took Pondicherry from the French in
+1761, <span class="sc"><a href="/article/26-0134-s5/suraj-ud-dowlah">Suraj-ud-Dowlah</a></span> and <span class="sc"><a href="/article/04-1008-s2/calcutta">Calcutta</a></span>
+for the siege of the city and story of the
+Black Hole, <span class="sc"><a href="/article/21-0814-plassey/plassey">Plassey</a></span>, <span class="sc"><a href="/article/24-0799-shah-alam/shah_alam">Shah Alam</a></span> for the
+massacre of <span class="sc"><a href="/article/20-0997-s2/patna">Patna</a></span>; and for the period
+after <span class="sc"><a href="/article/06-0549-clive-caroline/clive__caroline">Clive</a></span> the articles <span class="sc"><a href="/article/13-0068-hastings-warren/hastings__warren">Warren Hastings</a></span>,
+<span class="sc"><a href="/article/17-0439-mahrattas/mahrattas">Mahrattas</a></span> for the first Mahratta
+war, <span class="sc"><a href="/article/14-0044-hyder-ali/hyder_ali">Hyder Ali</a></span> and <span class="sc"><a href="/article/19-0131-s4/mysore">Mysore</a></span> for the
+first Mysore war; <span class="sc"><a href="/article/26-1045-s2/tippoo_sahib">Tippoo Sahib</a></span> and
+<span class="sc"><a href="/article/07-0200-cornwallis-sir-william/cornwallis__sir_william">Cornwallis</a></span> for the second Mysore war;
+<span class="sc"><a href="/article/26-0537-s2/teignmouth">Teignmouth</a></span> and <span class="sc"><a href="/article/03-0749-bengal/bengal">Bengal</a></span>, for the permanent
+settlement of Bengal under Cornwallis;
+<span class="sc"><a href="/article/28-0525-s2/wellesley">Wellesley</a></span> and <span class="sc"><a href="/article/26-1045-s2/tippoo_sahib">Tippoo Sahib</a></span>
+and <span class="sc"><a href="/article/24-0701-s2/seringapatam">Seringapatam</a></span>, <span class="sc"><a href="/article/28-0530-s2/wellington">Wellington</a></span> and
+<span class="sc"><a href="/article/16-0106-s2/lake">Lake</a></span> (Vol. 16, p. 85) for the campaigns
+against the French and natives during
+Wellesley’s governor-generalship; <span class="sc">Lord
+Minto</span> for the years from 1807 to 1813;
+<span class="sc">Marquess of Hastings</span>, <span class="sc"><a href="/article/19-1028-ochterlony-sir-david/ochterlony__sir_david">Ochterlony</a></span>
+and <span class="sc"><a href="/article/19-0396-nepal/nepal">Nepal</a></span> for the war in Nepal; for the
+wars of 1817 the articles <span class="sc"><a href="/article/21-0648-s3/pindaris">Pindaris</a></span>, <span class="sc"><a href="/article/17-0439-mahrattas/mahrattas">Mahrattas</a></span>,
+<span class="sc"><a href="/article/09-0316-elphinstone-william/elphinstone__william">Elphinstone</a></span>, <span class="sc"><a href="/article/17-0502-s2/malcolm__sir_john">Sir John Malcolm</a></span>;
+for the administration (1823–28) of
+Lord Amherst, the articles <span class="sc"><a href="/article/01-0904-s1/amherst">Amherst</a></span>, <span class="sc"><a href="/article/04-0870-s4/burmese_wars">Burmese
+Wars</a></span>, <span class="sc"><a href="/article/03-0865-bharatpur/bharatpur">Bharatpur</a></span> and <span class="sc"><a href="/article/06-0773-combermere-stapleton-cotton/combermere__stapleton_cotton">Combermere</a></span>;
+for Bentinck’s rule, the articles <span class="sc"><a href="/article/03-0769-bentinck-lord-william/bentinck__lord_william">Bentinck</a></span>,
+<span class="sc"><a href="/article/26-0189-s5/suttee">Suttee</a></span>, <span class="sc"><a href="/article/26-0936-s2/thugs">Thugs</a></span> by <a href="/contributors.html?q=Reinhold+Rost">Reinhold Rost</a>,
+late secretary of the Royal Asiatic Society,
+and <span class="sc"><a href="/article/19-0131-s4/mysore">Mysore</a></span>; <span class="sc"><a href="/article/18-0278-s6/metcalfe__charles_theophilus_metcalfe">Metcalfe</a></span>, for a view
+of his short tenure of office; for the
+stormy period of the ’40’s, <span class="sc"><a href="/article/02-0942-s2/auckland">Auckland</a></span>,
+<span class="sc"><a href="/article/09-0306-ellenborough-edward-law-earl-of/ellenborough__edward_law__earl_of">Ellenborough</a></span>, <span class="sc"><a href="/article/01-0343-s2/afghanistan">Afghanistan</a></span>, <span class="sc">Sir W.
+H. Macnaghten</span>, <span class="sc">Sir R. H. Sale</span> and
+<span class="sc"><a href="/article/25-0158-sind/sind">Sind</a></span>; and for the Sikh wars, <span class="sc"><a href="/article/12-0968-hardinge-henry-hardinge/hardinge__henry_hardinge">Hardinge</a></span>,
+<span class="sc"><a href="/article/22-0669-punjab/punjab">Punjab</a></span>, <span class="sc"><a href="/article/25-0103-sikh-wars/sikh_wars">Sikh Wars</a></span>, <span class="sc"><a href="/article/22-0909-s3/ranjit_singh">Ranjit Singh</a></span>, <span class="sc">Sir
+Hugh Gough</span>, <span class="sc"><a href="/article/07-0789-dalhousie-fox-maule-ramsay-11th-earl-of/dalhousie__fox_maule_ramsay__11th_earl_of">Dalhousie</a></span>, <span class="sc">Sir Henry
+Lawrence</span>, <span class="sc"><a href="/article/09-0013-edwardes-sir-herbert-benjamin/edwardes__sir_herbert_benjamin">Edwardes</a></span>, <span class="sc"><a href="/article/04-0870-s4/burmese_wars">Burmese Wars</a></span>
+for the second war of 1852, and <span class="sc">Oudh</span> for
+its annexation; and for the close of the
+Company’s rule, the articles <span class="sc">Lord Canning</span>,
+<span class="sc"><a href="/article/14-0474-indian-mutiny-the/indian_mutiny__the">Indian Mutiny</a></span>, <span class="sc"><a href="/article/07-0978-delhi/delhi">Delhi</a></span>, <span class="sc">Lord
+Lawrence</span>, <span class="sc"><a href="/article/25-0283-s6/smith__richard_baird">Richard Baird Smith</a></span>, <span class="sc"><a href="/article/19-0684-s3/nicholson__john">John
+Nicholson</a></span>, <span class="sc">Sir Neville Chamberlain</span>,
+<span class="sc"><a href="/article/05-0612-cawnpore/cawnpore">Cawnpore</a></span>, <span class="sc"><a href="/article/19-0175-s3/nana_sahib">Nana Sahib</a></span>, <span class="sc"><a href="/article/17-0121-lucknow/lucknow">Lucknow</a></span>, <span class="sc">Sir
+Henry Lawrence</span>, <span class="sc">Sir J. E. W. Inglis</span>,
+<span class="sc"><a href="/article/13-0092-s5/havelock__sir_henry">Havelock</a></span>, <span class="sc">J. G. S. Neill</span>, <span class="sc"><a href="/article/20-0415-outram-sir-james/outram__sir_james">Outram</a></span>, Sir
+Colin Campbell.</p>
+
+<p>On India under the Crown, since 1858,
+see particularly the articles on the viceroys,
+<span class="sc"><a href="/article/05-0199-canning-george/canning__george">Canning</a></span>, <span class="sc"><a href="/article/09-0283-elgin/elgin">Elgin</a></span>, <span class="sc"><a href="/article/16-0324-lawrence-amos/lawrence__amos">Lawrence</a></span>, <span class="sc"><a href="/article/17-0955-mayo/mayo">Mayo</a></span>,
+<span class="sc"><a href="/article/19-0798-northbrook-thomas-george-baring-1st-earl-of/northbrook__thomas_george_baring__1st_earl_of">Northbrook</a></span>, <span class="sc"><a href="/article/17-0201-s2/lytton__edward_robert_bulwer-lytton">Lytton</a></span> (see also <span class="sc"><a href="/article/24-0878-s3/shere_ali_khan">Shere
+Ali</a></span> and <span class="sc"><a href="/article/28-0925-yakub-khan/yakub_khan">Yakub Khan</a></span>),—<span class="sc"><a href="/article/23-0381-s2/ripon">Ripon</a></span> (see also
+<span class="sc"><a href="/article/03-0092-s5/ayub_khan">Ayub Khan</a></span>, <span class="sc">Earl Roberts</span>, and <span class="sc"><a href="/article/01-0068-s2/abdur_rahman_khan">Abdur
+Rahman Khan</a></span>), <span class="sc"><a href="/article/08-0671-dufferin-and-ava-frederick-temple-hamilton-temple-blackwood-1st-marquess-of/dufferin_and_ava__frederick_temple_hamilton-temple-blackwood__1st_marquess_of">Dufferin</a></span> (see also
+<span class="sc"><a href="/article/20-0735-panjdeh/panjdeh">Panjdeh</a></span> for the Russian scare of 1885
+and <span class="sc"><a href="/article/04-0861-s2/burma">Burma</a></span> and <span class="sc"><a href="/article/04-0870-s4/burmese_wars">Burmese Wars</a></span> for the
+dispute with Thebaw), <span class="sc"><a href="/article/07-0687-curzon-of-kedleston-george-nathaniel/curzon_of_kedleston__george_nathaniel">Curzon</a></span> and
+<span class="sc"><a href="/article/15-0867-s6/kitchener__horatio_herbert_kitchener">Kitchener</a></span>, and <span class="sc"><a href="/article/18-0591-minto-william/minto__william">Minto</a></span>.</p>
+
+<h4 class="c016">CHINA</h4>
+
+<p>As with India, so with China, the whole
+of the article in the Britannica is of value
+to the historical student. The article
+<span class="sc"><a href="/article/06-0179-china/china">China</a></span> (Vol. 6, pp. 166–231) is equivalent
+to 200 pages of this Guide. The most
+important part for the student of history
+is section V. (pp. 188–212) on <i>History</i>:
+but such parts of the article as <i>Geography</i>,
+with a coloured map, the <i>People</i> (pp. 171–174),
+<i>Religion</i> (174–177), <i>Economics</i> (177–181),
+<i>Government and Administration</i>
+(181–188), <i>Art</i> (213–216) with illustrations,
+and <i>Language and Literature</i> (216–231)
+are all of importance to help get the
+background that is so baffling to an occidental
+studying the Far East. As was the
+case with India, the study of religions is
+particularly important and besides the
+section <i>Religion</i> in the article <span class="sc"><a href="/article/06-0179-china/china">China</a></span>, the
+student should turn to the articles <span class="sc">Lao-Tsze</span>,
+the founder of a philosophy debased
+into Taoism, <span class="sc"><a href="/article/18-0131-s4/mencius">Mencius</a></span>, and <span class="sc"><a href="/article/06-0931-confucius/confucius">Confucius</a></span>,
+all by the Rev. James Legge, author of
+<i>The Religions of China</i>, and the editor of
+<i>The Chinese Classics</i>, and <span class="sc"><a href="/article/04-0765-buddhism/buddhism">Buddhism</a></span> and
+<span class="sc">Lamaism</span>, the latter the form of Buddhism
+in vogue in China,—and he should
+remember that there are some Mahommedans
+in China. In connection with the
+latest developments in Chinese history
+he should read with great care in the article
+<span class="sc"><a href="/article/06-0179-china/china">China</a></span>, Section IV, <i>Government and
+Administration</i>, especially p. 184 on the
+Civil Service, an elaborate merit system.</p>
+
+<p>Section V. of the article <span class="sc"><a href="/article/06-0179-china/china">China</a></span> opens
+with a treatment by Sir <a href="/contributors.html?q=Colonel+Sir+Henry+Yule">Henry Yule</a>, the
+famous Orientalist, of the European
+knowledge of China before 1615, particularly
+“Cathay” and the early explorers
+of Mongolia, <span class="sc"><a href="/article/05-0414-carpini-joannes-de-plano/carpini__joannes_de_plano">Carpini</a></span> (see Vol. 5, p.
+397) and <span class="sc"><a href="/article/23-0853-rubruquis-william-of/rubruquis__or_rubrouck___william_of">Rubruquis</a></span> (see Vol. 23, pp.
+810–812), and of Cathay itself <span class="sc"><a href="/article/06-0179-china/china">Marco
+Polo</a></span> (see Vol. 22, pp. 7–10). The internal
+history of China begins (Vol. 6, p.
+191) with a discussion of Chinese origins:
+“anthropological arguments seem to contradict
+the idea of any connection with
+Babylonians, Egyptians, Assyrians, or
+Indians. The earliest hieroglyphics of
+the Chinese, ascribed by them to the
+Shang dynasty (second millenium B.C.)
+betray the Mongol character of the nation
+that invented them by the decided obliquity
+of the human eye whenever it appears
+in an ideograph.... Our standpoint
+as regards the origin of the Chinese
+race is, therefore, that of the agnostic....
+Their civilization was already old at a
+time when Britain and Germany were
+peopled by half-naked barbarians, and
+the philosophical and ethical principles
+on which it is based remain, to all appearances,
+as firmly rooted as ever.” Chinese
+legendary history goes back to Fu-hi as
+the “first historical emperor; and they
+place his lifetime in the years 2852–2738
+B.C.” <span class="sni"><span class="hidev">|</span>The First
+Definite Date<span class="hidev">|</span></span>
+There is much that is purely legendary
+and mythical in these early records,
+but with the
+year 776 B.C. we
+find a veritable record:
+in an ode referring
+to a wicked emperor there is mention
+of “certain signs showing that Heaven itself
+is indignant at Yu-wang’s crimes.
+One of these signs was an eclipse of the
+sun ... the date and month being
+clearly stated. This date corresponds
+exactly with August 29, 776 B.C.; and
+astronomers have calculated that on that
+precise date an eclipse of the sun was
+visible in North China.” It is an interesting
+coincidence that this earliest sure
+date in Chinese history is the date of the
+first Greek Olympiad, from which time
+was reckoned in the Greek calendar—though
+there are no certain dates in
+Greek history until much later. The first
+outstanding event in the history of China
+was nearly 20 centuries later—the Mongol
+invasion; see the articles <span class="sc"><a href="/article/18-0742-s2/mongols">Mongols</a></span>
+(Vol. 18, pp. 712–719) and <span class="sc"><a href="/article/15-0341-jenghiz-khan/jenghiz_khan">Jenghiz Khan</a></span>
+(Vol. 15, p. 316), both by Sir <a href="/contributors.html?q=Sir+Robert+Kennaway+Douglas">Robert K.
+Douglas</a>, author of <i>The Life of Jenghiz
+Khan</i>. On the period immediately following
+see <span class="sc"><a href="/article/15-0969-s6/kublai_khan">Kublai Khan</a></span>, for the foundation
+of the Mongol dynasty, and the section
+<i>Medieval Cathay</i> (Vol. 6, p. 189) of
+the article <span class="sc"><a href="/article/06-0179-china/china">China</a></span> for early exploration
+and missionary effort. Mongol rule was
+broken in the 14th century by the founder
+of the Ming dynasty. <span class="sni"><span class="hidev">|</span>Foreign
+Relations<span class="hidev">|</span></span>
+The Portuguese
+arrival at Canton in 1517 marked the
+beginning of modern intercourse with
+Europe; and see the article <span class="sc"><a href="/article/23-0305-ricci-matteo/ricci__matteo">Matteo Ricci</a></span>
+by Sir <a href="/contributors.html?q=Colonel+Sir+Henry+Yule">Henry Yule</a>, for the first important
+work of a Christian
+missionary in China
+early in the 17th century.
+Immediately
+thereafter came the Manchu invasion, on
+which see the article <span class="sc"><a href="/article/17-0569-manchuria/manchuria">Manchuria</a></span>, by Sir
+<a href="/contributors.html?q=Sir+Robert+Kennaway+Douglas">R. K. Douglas</a>. Trade with Europe on
+a large scale began in the second half of
+the 18th century; see the article <span class="sc"><a href="/article/05-0231-canton-john/canton__john">Canton</a></span>.
+British diplomatic missions for the improvement
+of the condition of traders in
+Canton were unsuccessful, but in 1840
+the opium war made China feel the weight
+of Great Britain’s power when Hong
+Kong was ceded to the English and other
+ports were opened to trade: see <span class="sc">Lord
+Napier</span>, <span class="sc">Sir Hugh Gough</span>, and <span class="sc"><a href="/article/13-0674-hong-kong/hong-kong">Hong-Kong</a></span>.
+On the T’ai-p’ing rebellion, the
+“Arrow” affair, and the second interference
+of Great Britain with China, see <span class="sc"><a href="/article/09-0284-elgin-and-kincardine-earls-of/elgin_and_kincardine__earls_of">Sir
+H. S. Parkes</a></span>, <span class="sc"><a href="/article/09-0284-elgin-and-kincardine-earls-of/elgin_and_kincardine__earls_of">Charles George Gordon</a></span>
+(“Chinese Gordon”), <span class="sc"><a href="/article/09-0284-elgin-and-kincardine-earls-of/elgin_and_kincardine__earls_of">Earl of Elgin</a></span>
+(Vol. 9, p. 268), <span class="sc">Tseng Kuo-fan</span>, <span class="sc">Li
+Hung Chang</span>. On the Russian boundary
+disputes of 1858 and 1860 see <span class="sc"><a href="/article/01-0952-s5/amur">Amur</a></span> and
+<span class="sc"><a href="/article/28-0185-vladivostok/vladivostok">Vladivostok</a></span>.</p>
+
+<p>The history of China since 1875 is told
+pretty completely in the article <span class="sc"><a href="/article/06-0179-china/china">China</a></span>,
+in two sections, the first on 1875–1901
+being by Sir <a href="/contributors.html?q=Valentine+Chirol">Valentine Chirol</a>, author
+of <i>The Far Eastern Question</i>. But
+in connection with the general treatment
+the student should read the articles on
+<span class="sc"><a href="/article/15-0942-korea/korea">Korea</a></span>, <span class="sc"><a href="/article/02-0072-s2/annam">Annam</a></span> and <span class="sc"><a href="/article/27-0019-tongking/tongking">Tongking</a></span> for the earlier
+efforts to detach from the Chinese
+empire these quasi-vassals; <span class="sc"><a href="/article/06-0249-chino-japanese-war/chino-japanese_war">Chino-Japanese
+War</a></span> for the military details of the
+struggle by which Japan got command of
+the Korean coast-line; <span class="sc"><a href="/article/18-0104-mekong/mekong">Mekong</a></span> for the
+dispute of 1895 with Great Britain;
+<span class="sc"><a href="/article/15-0812-s3/kiaochow_bay">Kiaochow Bay</a></span>, <span class="sc"><a href="/article/22-0125-s4/port_arthur">Port Arthur</a></span> and <span class="sc"><a href="/article/28-0512-wei-hai-wei/wei-hai-wei">Wei-Hai-Wei</a></span>
+for the seizures of 1897 and
+1898 by Germany, Russia and Great
+Britain respectively; <span class="sc"><a href="/article/13-0118-john-hay/hay__john">John Hay</a></span> for
+America’s part in the Open Door policy;
+<span class="sc"><a href="/article/21-0075-s2/peking">Peking</a></span> and <span class="sc"><a href="/article/26-1003-s3/tientsin">Tientsin</a></span> for details added
+to the general account in the article
+<span class="sc"><a href="/article/06-0179-china/china">China</a></span>, of the “Boxer” rising; <span class="sc"><a href="/article/17-0569-manchuria/manchuria">Manchuria</a></span>
+for Russian encroachments before,
+and <span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span> for Manchuria after the Russo-Japanese
+War.</p>
+
+<h4 class="c016">JAPAN</h4>
+
+<div class="c003"></div>
+<p><span class="shoulder-heading" id="sh-5">Japanese in America</span>The article <span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span> (Vol. 15, p. 156) is
+equivalent to 370 pages of this Guide,—and
+is almost entirely the work of Captain
+Frank Brinkley, editor of the <i>Japan
+Mail</i>, author of <i>Japan</i>, <i>A History of
+Japan</i>, <i>An Unabridged Japanese-English
+Dictionary</i>, etc. The article is divided
+into 10 parts—<i>Geography</i>, <i>People</i>, <i>Language
+and Literature</i>, <i>Art</i>, <i>Economic Conditions</i>,
+<i>Government and Administration</i>,
+<i>Religion</i>, <i>Foreign Intercourse</i>, <i>Domestic
+History</i>, and <i>The Claim of Japan; A Japanese
+View</i>, by <a href="/contributors.html?q=Baron+Dairoku+Kikuchi">Baron Dairoku Kikuchi</a>, in
+which the president of the Imperial University
+of Kyoto and of the Imperial
+Academy of Japan discusses “the ambition
+of the Japanese people ... to be
+recognized as an equal by the Great
+Powers,” their resenting “any discrimination
+against them as an Asiatic people,”
+the “misrepresentation, arising from want
+of proper knowledge of Japanese character
+and feelings,”
+that the Japanese
+immediately after
+the war with Russia
+were “ready and eager to fight with the
+United States”—whereas the Japanese
+have always regarded the Americans
+with a special good will, due no doubt to
+the steady liberal attitude of the American
+government and people towards
+Japan and Japanese, and they look upon
+the idea of war between Japan and the
+United States as ridiculous.</p>
+
+<p><span class="shoulder-heading" id="sh-6">Marks of the Race</span>Any justifiable discrimination against
+the Japanese as Asiatics must of course be
+based upon such characteristics of custom
+and thought as render Japanese immigration
+undesirable, and not upon the
+colour of the Japanese skin or any other
+peculiarity of appearance. But it is none
+the less interesting to turn from Baron
+Dairoku <a href="/contributors.html?q=Baron+Dairoku+Kikuchi">Kikuchi</a>’s argument to Capt.
+Brinkley’s careful study (p. 164) of the
+physical characteristics of the Japanese.
+“The best authorities are agreed that the
+Japanese do not differ, physically, from
+their Korean and Chinese neighbors as
+much as the inhabitants of Northern
+Europe differ from those of Southern
+Europe.” Some of the bodily traits
+which distinguish the Japanese from
+races of European origin are to be observed
+“in the eyes, the eyelashes, the
+cheekbones and the beard.”
+The eyeball does not differ
+from that of an occidental,
+but the eye is less deeply
+set. The conspicuous peculiarity is that
+the upper eyelids are much heavier at the
+inner corners than at the outer, making
+the eyes apparently oblique; and a fold
+of the upper lids hangs over the roots of
+the upper lashes. The lashes, too, are
+short and scanty, and converge, instead
+of diverging as they do in occidentals, so
+that the tips are nearer together than the
+roots. There is but little hair on the
+face (except among the Ainus), and it is
+nearly always straight. The cheekbones
+are prominent among the lower, rather
+than the upper classes. The article proceeds
+to discuss the moral characteristics
+of the Japanese; attributing to them a
+degree of frugality and endurance such
+as to make it virtually impossible for any
+occidental race, living in reasonable comfort,
+to compete with Japanese labour.</p>
+
+<p>As in the study of India and China, it
+will be well for the student of Japanese
+history to make himself familiar with the
+Britannica’s full material on native religion:
+see Vol. 15, p. 222, noting especially
+that in the section on Shinto it is
+said: “The grandson of the sun goddess
+was the first sovereign of Japan, and his
+descendants have ruled the land in unbroken
+succession ever since.”</p>
+
+<p><span class="shoulder-heading" id="sh-7">Foreign intercourse</span>In Japanese history two main topics of
+study present themselves—foreign intercourse
+and domestic or internal history—the
+former naturally the more attractive
+to the foreign student,
+and of additional interest
+both because of its
+picturesque and romantic
+early detail and by reason of its explaining
+the sudden emergence of Japan
+as a power in world politics. Portuguese
+shipwrecked in Japan in 1542 or
+1543 opened the country to Portuguese
+trade and in 1549 landed the great Jesuit
+missionary, <span class="sc"><a href="/article/28-0909-s2/xavier__francisco_de">Francisco de Xavier</a></span>: see
+the article by <a href="/contributors.html?q=Kingsley+Garland+Jayne">K. G. Jayne</a>, author of
+<i>Vasco da Gama and his Successors</i>. The
+contest between Spain and Portugal for
+Eastern trade and between Jesuits and
+Franciscans for Japanese converts to
+Christianity and the other factors that
+resulted in the suppression of Christianity
+in 1614 and the consequent persecutions
+of converts and missionaries are told in
+the article <span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span>—and so also is the
+story of the foothold that Dutch and
+English traders got before the Japanese
+practically excluded them also, as Christians
+rather than as foreigners or traders.
+From the middle of the 17th to the beginning
+of the 19th century Japan was practically
+untouched by Western civilization.
+The part of the United States navy
+in opening the country to trade in 1853
+is described in the article <span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span> (pp. 237–238)
+and in the article <span class="sc"><a href="/article/21-0201-s5/perry__matthew_calbraith">Matthew Calbraith
+Perry</a></span>. The article <span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span> also
+devotes much space (p. 238) to the work
+done by another American, Townsend
+Harris, who was less known than Perry,
+but who carried through the immensely
+important first commercial treaty.</p>
+
+<p><span class="shoulder-heading" id="sh-8">Recent Wars</span>The remainder of the story of Japan’s
+foreign relations is given in the main article
+<span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span>, but the
+student should read
+besides the articles
+<span class="sc"><a href="/article/06-0249-chino-japanese-war/chino-japanese_war">Chino-Japanese War</a></span>, <span class="sc"><a href="/article/17-0569-manchuria/manchuria">Manchuria</a></span>,
+and <span class="sc"><a href="/article/23-0964-russo-japanese-war/russo-japanese_war">Russo-Japanese War</a></span>. The last of
+these would be equivalent to 40 pages of
+this Guide; it is accompanied by the following
+plans: <i>General Dispositions after
+Nanshan</i>, <i>Liao-Yang</i>, <i>Port Arthur</i>, and
+<i>Mukden</i>: and it is a remarkable critical
+summary of the military operations of
+the war. Read also the biographies of
+<span class="sc"><a href="/article/15-0725-s2/katsura__taro">Katsura</a></span>, <span class="sc"><a href="/article/15-0919-s6/kodama__gentaro">Kodama</a></span>, <span class="sc"><a href="/article/15-0986-s4/kuroki__itei">Kuroki</a></span>, <span class="sc"><a href="/article/19-0760-s4/nogi__kiten">Nogi</a></span>,
+<span class="sc"><a href="/article/19-0874-nozu-michitsura/nozu__michitsura">Nozu</a></span>, <span class="sc"><a href="/article/20-0085-okuma-shigenobu-count/okuma__shigenobu___count">Okuma</a></span>, <span class="sc"><a href="/article/20-0458-oyama-iwao-prince/oyama__iwao__prince">Oyama</a></span>, <span class="sc"><a href="/article/26-1086-s2/togo__heihachiro">Togo</a></span>, <span class="sc"><a href="/article/28-0929-yamagata-aritomo/yamagata__aritomo">Yamagata</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-9">Domestic History</span>As for domestic history, it is important
+to note that early Japanese history is
+more purely mythical and legendary, and
+is chronologically untrustworthy
+for a longer period
+than is Chinese history.
+The conventionally
+accepted date of the establishment
+of the Empire is 660 B. C.; and from
+this year all dates are reckoned; but
+Japanese annals are self-contradictory
+and are proved faulty by Chinese and
+Korean records. Even the famed Japanese
+invasion of Korea in 200 is possibly
+apocryphal, and there are few trustworthy
+recorded facts before 400 A.D. or
+dates before 500 A.D. In the middle of
+the 6th century Chinese influence, through
+Korea, became strong, and in 552 Buddhism
+was introduced from Korea. A
+century later legislative government and
+administrative reform began.</p>
+
+<p>On the Japanese feudal system beginning
+in the 12th century see: the article
+<span class="sc"><a href="/article/04-0894-s6/bushido">Bushido</a></span>; in the article <span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span> the account
+of the earlier army; and the articles
+<span class="sc"><a href="/article/24-1071-shogun/shogun">Shogun</a></span> and <span class="sc"><a href="/article/18-0461-s4/mikado">Mikado</a></span>. The more important
+separate articles for the later
+period are: <span class="sc"><a href="/article/26-1087-tokugawa/tokugawa">Tokugawa</a></span> and <span class="sc"><a href="/article/02-0560-s3/arisugawa">Arisugawa</a></span>
+for the rival families of the 17th–19th
+centuries; <span class="sc"><a href="/article/19-0115-mutsu-hito/mutsu_hito">Mutsu Hito</a></span>; <span class="sc"><a href="/article/24-0164-sanjo-sanetomi-prince/sanjo__sanetomi__prince">Sanjo</a></span>; <span class="sc"><a href="/article/20-0085-okubo-toshimitsu/okubo_toshimitsu">Okubo
+Toshimitsu</a></span>; <span class="sc"><a href="/article/23-1054-saigo-takamori/saigo__takamori">Saigo</a></span>; <span class="sc"><a href="/article/19-0115-mutsu-hito/mutsu_hito">Mutsu</a></span>; <span class="sc">Iwakura
+Matsukata</span>, the financier; <span class="sc"><a href="/article/15-0724-s4/kato__taka-akira">Kato</a></span>; <span class="sc"><a href="/article/15-0926-komura/komura__jutaro">Komura</a></span>;
+<span class="sc">Ito</span>; <span class="sc"><a href="/article/09-0684-s2/enomoto__buyo">Enomoto</a></span>; <span class="sc"><a href="/article/14-0920-s4/itagaki__taisuke">Itagaki</a></span>, “the first
+to organize and lead a political party in
+Japan”; <span class="sc"><a href="/article/14-0618-inouye-kaoru-marquess/inouye__kaoru__marquess">Inouye</a></span>; <span class="sc"><a href="/article/20-0085-okuma-shigenobu-count/okuma__shigenobu___count">Okuma</a></span>; <span class="sc"><a href="/article/28-0929-yamagata-aritomo/yamagata__aritomo">Yamagata</a></span>;
+<span class="sc"><a href="/article/13-0122-s2/hayashi__tadasu">Hayashi</a></span>.</p>
+
+<div>
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

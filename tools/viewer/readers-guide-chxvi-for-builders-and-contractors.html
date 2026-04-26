@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Builders And Contractors &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XVI</span>For Builders And Contractors</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">The Builder’s Problems</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">The Builder’s Problems</span>The rapid increase in population,
+and especially in its density, the
+congestion in great cities, with the
+consequent building up of suburbs; and
+the equally rapid upward tendency in the
+scale of comfort, are factors of modern
+civilization which make the work of the
+builder and contractor increasingly complex.
+The good builder is probably much
+commoner than ever
+before, in spite of the
+popular impression
+that building materials
+are poorer and that construction
+work is more often “scamped” than they
+used to be. Increased transportation
+facilities make the builder much less dependent
+on local and often inadequate
+materials. And there has been a change
+in the theory and practice of government:
+the old easy-going policy has been abandoned,
+and new laws, strictly enforced,
+have resulted in such inspection and
+control of building operations as would
+have seemed tyranny to the builder of a
+generation ago and as make modern
+buildings, especially in cities, much safer
+than ever before. Insurance companies
+have done much to the same end.</p>
+
+<p>There is a general prejudice against the
+modern builder on the part of the temperamental
+“praiser of the past.” Occasionally
+similar complaints are made even
+against the builders of the past. Kipling
+sings:</p>
+
+<div class="lg-container-b c024">
+  <div class="linegroup">
+    <div class="group">
+      <div class="line">Who shall doubt the secret hid</div>
+      <div class="line in2">Under Cheops’ pyramid</div>
+      <div class="line">Was that a contractor did</div>
+      <div class="line in2">Cheops out of several millions?</div>
+      <div class="line">Or that Joseph’s sudden rise</div>
+      <div class="line in2">To Comptroller of Supplies</div>
+      <div class="line">Was a fraud of monstrous size</div>
+      <div class="line in2">On King Pharaoh’s swart civilians?</div>
+    </div>
+  </div>
+</div>
+
+<p>The mere duration of the pyramids, undamaged
+except by the hand of man, is an
+answer to such a charge; and in the Britannica
+article <span class="sc"><a href="/article/22-0699-pyramid/pyramid">Pyramid</a></span> the reader will
+find (Vol. 22, p. 683) that even where the
+hidden material was rubbly or of mud
+bricks, “the casings were not a mere
+veneer, but were of massive blocks, usually
+greater in thickness than in height”—in
+other words, that the construction
+was of the best character.</p>
+
+<p>But the builder must be a far better-informed
+man under present conditions
+than ever before. To give him the necessary
+information there is a large and
+growing literature ranging from builders’
+and contractors’ pocket manuals to
+special periodicals. This literature is expensive,
+and like all special literature puts
+the intending purchaser in a difficult position,
+for <i>if he buys it all</i>, he must pay
+much more than the returns from his purchase
+warrant, and he will then have to
+<i>read it all</i> and use his own judgment in
+deciding what is best. If he does not buy
+all, he must be an expert, not merely in
+every branch of his business but in the
+bibliography of his business, to make a
+wise selection,—and if he is sufficiently
+expert for this he will probably need no
+such library. But he will find, to a remarkable
+degree, the best of all that
+there is in such special literature in the
+Encyclopaedia Britannica, with the
+strongest assurance of its being authoritative,
+and with the certainty that for an
+outlay, small in comparison with what
+he would make for such special information
+elsewhere, he will get the guidance
+that he needs for his work and also information
+as excellent on any other
+subject that he or any member of his family
+may wish to pursue.</p>
+
+<p>The key or foundation article for the
+builder or contractor is <span class="sc"><a href="/article/04-0785-s4/building">Building</a></span> (Vol. 4,
+p. 762), by <a href="/contributors.html?q=James+Bartlett">James Bartlett</a>, lecturer on
+construction, etc., King’s College, London,
+who has contributed other articles
+on related topics. The article deals with:</p>
+
+<p>The relation of building to architecture
+and with building laws and
+special types of plans according
+to local governmental requirements</p>
+
+<p>The conditions necessary for a successful
+building, namely—ease of
+access, good light, good service,
+pleasing environment and approaches,
+minimum cost with true
+economy, and, for office buildings,
+ease of arrangement to suit
+tenants</p>
+
+<p>Construction, its general principles</p>
+
+<p>Materials of construction, especially
+stone and brick</p>
+
+<p>Particular objects of construction</p>
+
+<p>Foundation walls</p>
+
+<p>Footings to walls</p>
+
+<p>General procedure for an intended
+building</p>
+
+<p>Builder’s sphere</p>
+
+<p>American building acts</p>
+
+<p>Fire-resisting construction.</p>
+
+<p>This general article is supplemented by
+the following articles:</p>
+
+<p><span class="sc"><a href="/article/10-0759-s4/foundation">Foundation</a></span>, containing 13 diagrams
+and paragraphs on: load
+on foundation; trial boring; construction;
+types—concrete piers,
+pile foundations, concrete piles,
+plank foundations, caissons, well
+foundations, coffer dams, dock
+foundations, cantilever foundations,
+building on sand (at Cape
+Henlopen, Delaware)</p>
+
+<p><span class="sc"><a href="/article/04-0984-s4/caisson">Caisson</a></span></p>
+
+<p><span class="sc"><a href="/article/17-0859-s4/masonry">Masonry</a></span>, with 18 diagrams, and
+with special treatment of tools,
+including hammers, mallets, saws,
+chisels, setting tools, hoisting appliances;
+of seasoning stone; of
+setting stones; of use of mortar;
+of bonding; slip joints; footings;
+walling; random; coursed rubble,
+ashlar, etc.; backing to stone
+work; pointing and stonewash.
+There is also a brief vocabulary
+of technical terms and a discussion
+of methods of facing; joints;
+cramps; dowels; joggles; stone
+arches; tracery and carving; and
+the articles <span class="sc"><a href="/article/02-0777-s2/ashlar">Ashlar</a></span>, <span class="sc"><a href="/article/22-0832-rag-stone/rag-stone">Rag-stone</a></span>,
+<span class="sc"><a href="/article/22-0905-s2/random">Random</a></span></p>
+
+<p><span class="sc"><a href="/article/05-0678-cement/cement">Cement</a></span>, with 3 figures; description
+and analysis of Pozzuolanic and
+Portland cement; mixing; loading
+of kilns; types of kilns; cement
+clinker; testing; hydraulic
+lime; Roman cement; natural cements;
+Passow cement; uses of
+hydraulic cement; calcium sulphate
+cements</p>
+
+<p><span class="sc"><a href="/article/06-0859-concrete/concrete">Concrete</a></span>, with 16 illustrations and
+paragraphs on constituents; proportions;
+mixing; moulds; depositing;
+strength; durability; convenience
+and appearance; resistance
+to fire; cost; artificial
+stones; steel concrete, including
+columns, piles, beams, floor slabs,
+etc.; concrete arches</p>
+
+<p><span class="sc"><a href="/article/18-0907-mortar/mortar">Mortar</a></span>, with sections on slaking;
+hardening; magnesia in mortar;
+strengths; adhesion, decay, effects
+of salt and frost; legal restrictions;
+limes and cements for
+mortar</p>
+
+<p><span class="sc"><a href="/article/16-0715-s2/lime">Lime</a></span></p>
+
+<p><span class="sc"><a href="/article/04-0537-brick/brick">Brick</a></span>, with sections on brick-clays
+and brick-making</p>
+
+<p><span class="sc"><a href="/article/04-0541-brickwork/brickwork">Brickwork</a></span>, with 15 diagrams; sections
+on hollow walls; materials
+and labor; varieties of bricks;
+strength of brickwork; mortar;
+pointing; footing; binding; prevention
+of damp; arches and
+plates; chimneys and flues; brick
+paving</p>
+
+<p><span class="sc"><a href="/article/03-0481-basement/basement">Basement</a></span></p>
+
+<p><span class="sc"><a href="/article/13-0829-house/house">House</a></span>, with 17 illustrations</p>
+
+<p><span class="sc"><a href="/article/04-0821-s4/bungalow">Bungalow</a></span></p>
+
+<p><span class="sc"><a href="/article/05-0399-carpentry/carpentry">Carpentry</a></span>, with 36 diagrams showing
+joints, notching, cogging,
+dovetail, housing, halving, mortise,
+tenons, wedging, dowelling,
+turning-piece, lintel, floors, strutting,
+partition, half timber construction,
+braced frame; and descriptive
+text on these and other
+topics</p>
+
+<p><span class="sc"><a href="/article/25-0883-s4/steel_construction">Steel Construction</a></span>, with 4 illustrations;
+sections on skeleton
+and steel-cage construction; local
+laws; protection from corrosion;
+columns; girders; floors; windbracing;
+materials; floor-filling;
+partitions; time and cost of construction</p>
+
+<p><span class="sc"><a href="/article/25-0982-stone/stone">Stone</a></span>, with sections on constitution,
+colour, testing, preservatives,
+natural bed, seasoning, varieties,
+artificial stone</p>
+
+<p><span class="sc"><a href="/article/17-0693-marble/marble">Marble</a></span>, a descriptive article, about
+4000 words long</p>
+
+<p><span class="sc"><a href="/article/12-0368-granite/granite">Granite</a></span>, with descriptions and analyses
+of typical granites</p>
+
+<p><span class="sc"><a href="/article/16-0718-limestone/limestone">Limestone</a></span>, about 2500 words</p>
+
+<p><span class="sc"><a href="/article/26-1018-timber/timber">Timber</a></span>, with paragraphs on: felling
+timber, conversion of timber—with
+diagram of bastard and
+quarter sawing; seasoning; defects;
+decay; preservation of
+timber; varieties, with description
+of the principal coniferous
+and hard woods—and separate
+articles on <span class="sc"><a href="/article/21-0648-s7/pine">Pine</a></span>, <span class="sc"><a href="/article/10-0408-s3/fir">Fir</a></span>, <span class="sc"><a href="/article/16-0231-s2/larch">Larch</a></span>,
+<span class="sc"><a href="/article/05-0619-cedar/cedar">Cedar</a></span>, <span class="sc"><a href="/article/03-0981-birch/birch">Birch</a></span>, <span class="sc"><a href="/article/03-0657-beech/beech">Beech</a></span>, <span class="sc"><a href="/article/06-0125-chestnut/chestnut">Chestnut</a></span>,
+<span class="sc"><a href="/article/28-0304-s3/walnut">Walnut</a></span>, <span class="sc"><a href="/article/09-0313-elm/elm">Elm</a></span>, <span class="sc"><a href="/article/26-0512-s4/teak">Teak</a></span>, <span class="sc"><a href="/article/17-0414-mahogany/mahogany">Mahogany</a></span>,
+<span class="sc"><a href="/article/17-0681-s1/maple">Maple</a></span>, etc.</p>
+
+<p><span class="sc"><a href="/article/12-0861-half-timber-work/half-timber_work">Half-timber Work</a></span></p>
+
+<p><span class="sc">Chimney-piece</span></p>
+
+<p><span class="sc"><a href="/article/24-0294-s3/scaffold">Scaffold</a></span>, with 4 figures; sections
+on bricklayers’ and masons’ scaffolds,
+material, erection, gantries,
+derrick towers, cradles, chimney
+scaffolds, accidents</p>
+
+<p><span class="sc"><a href="/article/24-1080-s3/shoring">Shoring</a></span>, with 8 figures; sections
+on raking shores; braces, horizontal
+or flying shores; needle,
+vertical and dead, shoring; rules
+and sizes for all shores</p>
+
+<p><span class="sc"><a href="/article/25-0785-s2/staircase">Staircase</a></span>, divided into architecture
+and construction, the latter having
+4 diagrams, description of
+dog-legged or newel stair, open
+newel stair, geometrical stair,
+circular stair, spiral stairs; a defining
+vocabulary of technical
+terms; concrete and stone; moving
+inclines; local building laws</p>
+
+<p><span class="sc"><a href="/article/03-0314-s3/baluster">Baluster</a></span></p>
+
+<p><span class="sc"><a href="/article/03-0314-s4/balustrade">Balustrade</a></span></p>
+
+<p><span class="sc"><a href="/article/09-0280-elevators/elevators">Elevator</a></span>, with 3 illustrations;
+paragraphs on history; construction,
+essentials of design; safety
+devices; traveling staircases;
+freight elevators</p>
+
+<p><span class="sc"><a href="/article/20-0923-s3/parquetry">Parquetry</a></span></p>
+
+<p><span class="sc"><a href="/article/05-0621-ceiling/ceiling">Ceiling</a></span></p>
+
+<p><span class="sc"><a href="/article/23-0731-s2/roofs">Roofs</a></span>, with 23 figures and two
+plates; with sections on forms of
+roof, trusses, open timber roofs,
+mansards; iron roofs, covering
+materials—felt corrugated iron,
+zinc, lead, copper, “tin,” slate,
+tiles, miscellaneous—weight of
+roofs, building laws; and separate
+articles on <span class="sc"><a href="/article/25-0226-s2/slate">Slate</a></span>, <span class="sc"><a href="/article/26-1011-s2/tile">Tile</a></span>, <span class="sc"><a href="/article/26-1035-tin/tin">Tin</a></span>,
+<span class="sc">Tin Plate</span>, etc.</p>
+
+<p><span class="sc">Plaster Work</span>, with paragraphs on
+lathing, metal lathing, limes, hair,
+substitutes for hair, sand, external
+work, rough stucco, roughcast
+or pebble-dash, sgraffito, internal
+work, three coats, moulding,
+cracks, slabs, fibrous plaster.</p>
+
+<p><span class="sc"><a href="/article/15-0503-s5/joinery">Joinery</a></span>, with 13 illustrations, and
+treating such topics as: tools and
+materials; joints, mitre, dovetail,
+etc.; warping; moulding; flooring,
+including wood block and
+parquet; skirting, dados; picture
+rails; windows, bay windows;
+shutters; shop-fronts; doors;
+church work; ironmongery, including
+hinges, locks, etc.</p>
+
+<p><span class="sc"><a href="/article/08-0440-door/door">Door</a></span></p>
+
+<p><span class="sc"><a href="/article/08-0441-doorway/doorway">Doorway</a></span></p>
+
+<p><span class="sc"><a href="/article/05-0461-casement/casement">Casement</a></span></p>
+
+<p><span class="sc"><a href="/article/28-0732-window/window">Windows</a></span></p>
+
+<p><span class="sc"><a href="/article/12-0133-s1/glazing">Glazing</a></span></p>
+
+<p><span class="sc"><a href="/article/12-0120-s2/glass__stained">Stained Glass</a></span></p>
+
+<p><span class="sc">Wall Coverings</span>, with sections on
+marble wall-lining, mosaic, tiles,
+metal sheeting, tapestry, wall-papers—and
+see <span class="sc"><a href="/article/19-0030-s2/mural_decoration">Mural Decoration</a></span>.</p>
+
+<p><span class="sc"><a href="/article/20-0495-painter-work/painter-work">Painter-Work</a></span>, dealing with paint
+bases, vehicles, thinners, driers,
+pigments, enamel, paints, woodwork
+paints, varnish, gums,
+French polishes, putty, tools,
+workmanship, graining, marbling,
+painting on plaster and on iron,
+repainting on old work, blistering
+and cracking, distemper,
+gilding, etc.</p>
+
+<p><span class="sc"><a href="/article/24-0765-s4/sewerage">Sewerage</a></span></p>
+
+<p><span class="sc"><a href="/article/16-0673-s2/lighting">Lighting</a></span>, with sections on oil, gas
+and electric lighting</p>
+
+<p><span class="sc"><a href="/article/16-0695-lightning-conductor/lightning_conductor">Lightning Conductor</a></span></p>
+
+<p><span class="sc"><a href="/article/13-0173-s2/heating">Heating</a></span>, with sections on open fires,
+closed stoves, gas fires, electrical
+heating, oil stoves, low pressure
+hot water, high pressure hot water,
+steam heating, hot water supply,
+safety valves, geysers, incrustation,
+Lockport central steam
+supply</p>
+
+<p><span class="sc"><a href="/article/27-1036-s3/ventilation">Ventilation</a></span>, with sections on rate
+of air consumption, ventilation of
+buildings, with table; chimney
+draught; other outlets; inlets;
+window and door ventilation; arrangements
+in barracks, in public
+buildings, exhaust cowls; extraction
+of vitiated air; fans; water
+spray ventilation; extraction by
+hot-air shaft; measurement of
+air; systems in public buildings</p>
+
+<p>Both the builder and contractor will
+find valuable information to govern their
+financial relations with their clients in
+the article <span class="sc"><a href="/article/04-0789-s2/building_societies">Building Societies</a></span>, of which
+the American part is by Carroll D.
+Wright, late United States Commissioner
+of Labor.</p>
+
+<p>The contractor will find the following
+articles of importance to him, in addition
+to those of more particular interest for
+the builder:</p>
+
+<ul class="index">
+  <li class="c018"><span class="sc"><a href="/article/26-0160-s3/surveying">Surveying</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/11-0627-geodesy/geodesy">Geodesy</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/04-0553-s1/bridges">Bridges</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/05-0230-cantilever/cantilever">Cantilever</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/04-0984-s4/caisson">Caisson</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/06-0670-cofferdam/cofferdam">Cofferdam</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/23-0391-s4/river_engineering">River Engineering</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/12-0960-harbour/harbour">Harbour</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/08-0343-divers-and-diving-apparatus/divers_and_diving_apparatus">Divers and Diving Apparatus</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/08-0370-dock/dock">Docks</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/08-0585-dredge/dredge">Dredges</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/04-0493-breakwater/breakwater">Breakwater</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/27-0416-tunnel/tunnel">Tunnel</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/05-0181-canal/canal">Canal</a></span></li>
+  <li class="c018"><span class="sc">Road</span></li>
+  <li class="c018"><span class="sc"><a href="/article/16-0647-s2/lighthouse">Lighthouse</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/14-0874-irrigation/irrigation">Irrigation</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/22-0971-s6/reclamation_of_land">Reclamation of Land</a></span></li>
+</ul>
+
+<p>and the article <span class="sc"><a href="/article/22-0836-railways/railways">Railway</a></span>, with the other
+articles on railway construction listed in
+the chapter <i>For Railroad Men</i> in this
+Guide.</p>
+
+<p>For an alphabetical list of the principal
+articles and topics of interest to builders
+and contractors, see the end of the chapter
+<i>For Architects</i> in this Guide.</p>
+
+<div>
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

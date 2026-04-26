@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Canadian History &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XLIV</span>Canadian History</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">“Young” Rivers and Lakes</a></li><li><a href="#sh-2">Exploration and Settlement</a></li><li><a href="#sh-3">The War Periods</a></li><li><a href="#sh-4">Federation and Since</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">“Young” Rivers and Lakes</span>All the world thinks of Canada as
+the youngest of countries, for the
+extraordinary rapidity with which
+her western territory has been developed
+within recent years surpasses every other
+record of agricultural expansion. But in
+order to realize how young Canada is, in
+another sense, one must examine the less
+familiar facts of her geological history.
+“The innumerable lakes and waterfalls,”
+says the Britannica (Vol. 5, p. 143), prove
+“that the rivers have not been long at
+work,” and that the country owes its
+contours to comparatively recent geological
+action. “In many cases the lakes
+of Canada simply
+spill over, at the
+lowest point, from
+one basin into the
+next below, since in so young a country
+there has not yet been time for the rivers
+to have carved wide valleys.... Thousands
+of these lakes have been mapped;
+and every new survey brings to light
+small lakes hitherto unknown to the
+white man.... For the great extent of
+lake-filled country there is no comparison”
+in any part of the world. And because
+the rivers have not yet worn their beds
+to an even slope, there are waterfalls
+enough to provide unlimited horse power;
+so that the natural advantages of Canada
+invite manufacturing just as the fertility
+of her soil invites agriculture.</p>
+
+<p>The geographical and geological portions
+of the article <span class="sc"><a href="/article/05-0154-canada/canada">Canada</a></span> (Vol. 5, p.
+142) must be carefully read in order that
+the significance of the historical account
+of the country may be fully grasped; and
+the same is true of those parts of the article
+which deal with agriculture and with
+the commerce of which the first developments
+were associated with early exploration.
+There is ample and authoritative
+information on all these subjects in the
+article, which is equivalent in length to
+85 pages of this Guide. The sections and
+their contributors are: <i>Geography</i>, by
+Prof. <a href="/contributors.html?q=Arthur+Philemon+Coleman">A. P. Coleman</a>, Toronto University;
+<i>Population</i>, <i>Commerce</i>, etc., by Prof. <a href="/contributors.html?q=William+Lawson+Grant">W.
+L. Grant</a>, Queens University, Kingston;
+<i>Agriculture</i>, by <a href="/contributors.html?q=E.+H.+Godfrey">E. H. Godfrey</a>, editor of
+Census and Statistics Office, Department
+of Agriculture, Ottawa; <i>History</i>—to the
+Federation by <a href="/contributors.html?q=George+McKinnon+Wrong">G. M. Wrong</a>, University
+of Toronto, and after the Federation by
+<a href="/contributors.html?q=George+Robert+Parkin">G. R. Parkin</a>, author of <i>Imperial Federation</i>
+and <i>Life of Sir John Macdonald</i>, etc.,
+and <i>Literature</i>—English-Canadian, by <a href="/contributors.html?q=Lawrence+J.+Burpee">L.
+J. Burpee</a>, author of <i>The Search for the
+Western Sea</i>, and French-Canadian by
+<a href="/contributors.html?q=William+Wood">William Wood</a>, author of <i>The Fight for
+Canada</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Exploration and Settlement</span>On the early history of Canada the student
+should compare what is given in
+this Guide on the early history of America
+in general and especially
+the following
+articles: <span class="sc"><a href="/article/16-0416-s2/leif_ericsson">Leif
+Ericsson</a></span> (Vol. 16,
+p. 396); <span class="sc"><a href="/article/28-0113-vinland/vinland">Vinland</a></span> (Vol. 28, p. 98), by Prof.
+<a href="/contributors.html?q=Julius+Emil+Olson">Julius Emil Olson</a>, University of Wisconsin;
+<span class="sc"><a href="/article/04-0947-s6/cabot__john">John Cabot</a></span> (Vol. 4, p. 921); and
+<span class="sc"><a href="/article/05-0450-cartier-jacques/cartier__jacques">Jacques Cartier</a></span> (Vol. 5, p. 433), both
+by <a href="/contributors.html?q=Henry+Percival+Biggar">H. P. Biggar</a>, author of <i>The Voyages of
+the Cabots to Greenland</i>; <span class="sc"><a href="/article/05-0866-champlain-samuel-de/champlain__samuel_de">Samuel de
+Champlain</a></span> (Vol. 5, p. 830), by <a href="/contributors.html?q=Narcisse+Eutrope+Dionne">N. E.
+Dionne</a>, librarian of the Legislature of
+the Province of Quebec and biographer of
+Champlain; <span class="sc"><a href="/article/17-0769-s2/marquette__jacques">Jacques Marquette</a></span> (Vol.
+17, p. 752); <span class="sc"><a href="/article/16-0249-la-sale-antoine-de/la_sale__or_la_salle___antoine_de">Sieur de la Salle</a></span> (Vol. 16, p.
+230), by <a href="/contributors.html?q=Charles+Crawford+Whinery">Charles C. Whinery</a>, assistant-editor
+Encyclopaedia Britannica; <span class="sc"><a href="/article/11-0262-s2/frontenac_et_palluau__louis_de_buade">Frontenac</a></span>
+(Vol. 11, p. 249), by <a href="/contributors.html?q=Arthur+George+Doughty">A. G. Doughty</a>,
+Dominion archivist of Canada; <span class="sc"><a href="/article/17-0066-s3/louisburg">Louisburg</a></span>;
+<span class="sc"><a href="/article/08-0128-detroit/detroit">Detroit</a></span>; <span class="sc">Sault Ste. Marie</span>;
+<span class="sc"><a href="/article/17-0270-s3/mackinac_island">Mackinac Island</a></span>; <span class="sc"><a href="/article/21-0707-pittsburg-kansas/pittsburg__kansas_">Pittsburg</a></span>; <span class="sc"><a href="/article/19-0862-nova-scotia/nova_scotia">Nova
+Scotia</a></span>, <i>History</i>; <span class="sc">Seven Years’ War</span>
+(Vol. 24, especially page 722); <span class="sc"><a href="/article/22-0740-s6/quebec">Quebec</a></span>;
+<span class="sc"><a href="/article/18-0791-s5/montcalm_de_saint_véran__louis_joseph">Montcalm</a></span> and <span class="sc"><a href="/article/28-0794-wolfe-james/wolfe__james">Wolfe</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-3">The War Periods</span>The close of the Seven Years’ War saw
+New France ceded to Great Britain. On
+English rule down to Canadian Federation,
+the student should consult the following
+articles: <span class="sc"><a href="/article/22-0746-s2/quebec_act">Quebec Act</a></span>; <span class="sc"><a href="/article/19-0055-s2/murray__james">James
+Murray</a></span>; <span class="sc"><a href="/article/01-0893-american-war-of-independence/american_war_of_independence">American War of Independence</a></span>—and
+particularly the articles
+on <span class="sc"><a href="/article/18-0815-montgomery/montgomery">Montgomery</a></span> and <span class="sc"><a href="/article/02-0674-s3/arnold">Arnold</a></span>, leaders in
+the nearly successful attempt of the
+Americans to capture Canada, and that
+on the 1st Baron <span class="sc"><a href="/article/08-0443-dorchester-dorsetshire/dorchester__dorsetshire_">Dorchester</a></span>, the British
+defender of Quebec; <span class="sc"><a href="/article/25-0136-simcoe-john-graves/simcoe__john_graves">John Graves
+Simcoe</a></span>; <span class="sc"><a href="/article/17-0094-s3/loyalists">Loyalists</a></span>—and the articles
+<span class="sc"><a href="/article/19-0484-s3/new_brunswick">New Brunswick</a></span> and <span class="sc"><a href="/article/20-0137-s6/ontario">Ontario</a></span>, both
+regions largely influenced by the settlement
+there of these Loyalists;
+<span class="sc"><a href="/article/01-0898-american-war-of-1812/american_war_of_1812">American War of
+1812</a></span>—and especially the
+articles <span class="sc">Isaac Brock</span>, by
+Prof. <a href="/contributors.html?q=William+Lawson+Grant">W. L. Grant</a>, Queens University,
+Kingston; <span class="sc"><a href="/article/09-0773-erie-lake/erie__lake_">Erie</a></span>, <span class="sc"><a href="/article/05-0865-championnet-jean-etienne/championnet__jean_étienne">Oliver H. Perry</a></span>,
+<span class="sc"><a href="/article/23-1019-s3/sackett_s_harbor">Sackett’s Harbor</a></span>, <span class="sc"><a href="/article/26-0528-tecumseh/tecumseh">Tecumseh</a></span>, <span class="sc"><a href="/article/05-0866-champlain/champlain">Lake
+Champlain</a></span> (Vol. 5, p. 830); <span class="sc"><a href="/article/19-0661-s4/niagara__fort">Fort Niagara</a></span>
+(Vol. 19, p. 634); <span class="sc"><a href="/article/25-1000-s2/strachan__john">John Strachan</a></span>;
+<span class="sc"><a href="/article/20-0794-s3/papineau__louis_joseph">Papineau</a></span> and <span class="sc">W. L. Mackenzie</span> for the
+two revolts of 1837; <span class="sc">Lord Durham</span>;
+<span class="sc">Lord Sydenham</span>; <span class="sc"><a href="/article/09-0284-elgin-and-kincardine-earls-of/elgin_and_kincardine__earls_of">Robert Baldwin</a></span> and
+<span class="sc"><a href="/article/09-0284-elgin-and-kincardine-earls-of/elgin_and_kincardine__earls_of">Sir Louis Lafontaine</a></span>, heads of the first
+Liberal administrations; <span class="sc"><a href="/article/09-0284-elgin-and-kincardine-earls-of/elgin_and_kincardine__earls_of">Earl Elgin</a></span>
+(Vol. 9, p. 268); <span class="sc">Sir A. A. Dorion</span>; <span class="sc"><a href="/article/17-0227-s2/macdonald__john_sandfield">John
+Sandfield Macdonald</a></span>, “the Ishmael of
+Parliament”; <span class="sc"><a href="/article/23-0445-s3/robinson__sir_john_beverley">Sir John Beverley Robinson</a></span>,
+head of the Tory “Family Compact”;
+and, for Irish-American outrages
+on the Canadian border, the article
+<span class="sc"><a href="/article/10-0266-fenians/fenians">Fenians</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Federation and Since</span>On the period since federation (1867),
+see the article <span class="sc"><a href="/article/10-0245-s3/federal_government">Federal Government</a></span>
+(Vol. 10, p. 233) for a general description
+of this form of administration;
+the articles <span class="sc"><a href="/article/19-0862-nova-scotia/nova_scotia">Nova Scotia</a></span>,
+<span class="sc"><a href="/article/15-0524-jones-alfred-gilpin/jones__alfred_gilpin">Alfred Gilpin
+Jones</a></span> and <span class="sc"><a href="/article/13-0860-s5/howe__joseph">Joseph Howe</a></span>, for local opposition
+to federation; <span class="sc"><a href="/article/27-0427-s5/tupper__sir_charles">Sir Charles Tupper</a></span>,
+who alone in the delegation from Nova
+Scotia favoured federation; <span class="sc">Thomas
+D’Arcy McGee</span> (by <a href="/contributors.html?q=Arthur+George+Doughty">A. G. Doughty</a>), a
+prominent opponent of Fenianism who
+was assassinated by a Fenian; the articles
+<span class="sc"><a href="/article/13-0877-hudson-s-bay-company/hudson_s_bay_company">Hudson’s Bay Company</a></span> and <span class="sc">Sir
+G. E. Cartier</span>, by Prof. <a href="/contributors.html?q=William+Lawson+Grant">W. L. Grant</a>,
+Queens University, Kingston, for the
+extinction of the Hudson’s Bay Company
+claims and the transfer of its territories
+to the government; <span class="sc"><a href="/article/23-0338-riel-louis/riel__louis">Louis Riel</a></span> for the
+Red River Rebellion; <span class="sc"><a href="/article/22-0358-s2/prince_edward_island">Prince Edward
+Island</a></span> for its entrance into the Dominion;
+<span class="sc"><a href="/article/04-0681-brown-george/brown__george">George Brown</a></span>, a prominent advocate
+of federation, by <a href="/contributors.html?q=William+Lawson+Grant">Prof. Grant</a>;
+<span class="sc"><a href="/article/12-0371-s2/grant__george_monro">George Monro Grant</a></span>, author of <i>Ocean
+to Ocean</i>; <span class="sc">Sir John Macdonald</span>, by <a href="/contributors.html?q=George+Robert+Parkin">G.
+R. Parkin</a>, author of <i>Imperial Federation</i>,
+and biographer of Macdonald; <span class="sc">Sir Francis
+Hincks</span> and <span class="sc">Sir Alexander Galt</span>,
+financiers; <span class="sc"><a href="/article/01-0729-s5/allan__sir_hugh">Sir Hugh Allan</a></span> and <span class="sc">Sir
+David Macpherson</span>, for the Canadian
+Pacific Railway question; <i>Lord Dufferin</i>;
+<i>Alexander Mackenzie</i>, head of
+a Liberal government from 1873 to 1878
+when <span class="sc">Sir John Macdonald</span> returned to
+power on a platform calling for protection
+of Canadian industries; <span class="sc"><a href="/article/08-0036-denison-george-taylor/denison__george_taylor">George
+Taylor Denison</a></span>, founder of the “Canada
+First” party; <span class="sc"><a href="/article/26-1016-tilley-sir-samuel-leonard/tilley__sir_samuel_leonard">Sir Samuel Leonard
+Tilley</a></span>, Macdonald’s minister of finance,
+who was principally responsible for the
+tariff of 1879; <i>Sir Louis Henry Davies</i>,
+Liberal politician and jurist; <i>Lord
+Strathcona</i>, by Prof. <a href="/contributors.html?q=William+Lawson+Grant">W. L. Grant</a>,
+<span class="sc">Baron Mountstephen</span>, <span class="sc">Sir William
+C. Van Horne</span> and <span class="sc"><a href="/article/10-0512-s7/fleming__sir_sandford">Sir Sandford Fleming</a></span>
+for the completion of the Canadian
+Pacific Railway; <span class="sc"><a href="/article/23-0338-riel-louis/riel__louis">Louis Riel</a></span> for the
+Second Riel Rebellion; <span class="sc">Sir John Thompson</span>;
+<span class="sc"><a href="/article/10-0753-s5/foster__george_eulas">George Eulas Foster</a></span>; <span class="sc">Sir H. G.
+Joly de Lotbinière</span>; <span class="sc"><a href="/article/18-0172-s2/mercier__honoré">Honoré Mercier</a></span>,
+the French leader of Quebec; <span class="sc">S. N. Parent</span>;
+<span class="sc"><a href="/article/04-0357-bowell-sir-mackenzie/bowell__sir_mackenzie">Sir Mackenzie Bowell</a></span>, premier in
+1894–1896; his successor, <i>Sir Charles
+Tupper</i>; <span class="sc"><a href="/article/04-0048-blake-edward/blake__edward">Edward Blake</a></span>, a Liberal
+leader who in 1892 left Canadian politics
+to take a seat in the British House of
+Commons; <span class="sc"><a href="/article/18-0979-s5/mowat__sir_oliver">Sir Oliver Mowat</a></span>, Blake’s
+successor as premier of Ontario; <span class="sc"><a href="/article/23-0779-s4/ross__george_william">George
+William Ross</a></span>; <span class="sc"><a href="/article/28-0712-s1/wilson__sir_daniel">Sir Daniel Wilson</a></span>, educational
+reformer, by <a href="/contributors.html?q=William+Lawson+Grant">Professor Grant</a>;
+<span class="sc"><a href="/article/16-0306-s3/laurier__sir_wilfrid">Sir Wilfrid Laurier</a></span> (by <a href="/contributors.html?q=John+Stephen+Willison">J. S. Willison</a>,
+author of <i>Sir W. Laurier and the Liberal
+Party: A Political History</i>), the great
+Liberal leader of the last decade, and
+Laurier’s ministers of finance, <i>Sir Richard
+John Cartwright</i> and <i>W. S. Fielding</i>,
+and his minister of militia <span class="sc"><a href="/article/04-0260-borden-sir-frederick-william/borden__sir_frederick_william">Sir Frederick
+William Borden</a></span>; <span class="sc"><a href="/article/18-0997-s3/mulock__sir_william">Sir William
+Mulock</a></span>; and <span class="sc">Robert L. Borden</span>, long
+leader of the Conservative opposition and
+premier in 1911.</p>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

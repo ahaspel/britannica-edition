@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Ministers &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XXIV</span>For Ministers</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">The Great Preachers</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">The Great Preachers</span>The minister or candidate for the
+ministry will find a valuable course
+of reading laid out for him in this
+Guide under the heading <i>Bible Study</i>, and
+it might be said with little exaggeration
+that <i>any</i> systematic course of reading in
+the Encyclopaedia Britannica should add
+to the efficiency and power of one who
+would be an ideal pastor. If the schools
+of the Middle Ages could truly call all the
+arts and sciences hand-maids and helpers
+to Theology, much more truly, in the
+present age, should the minister, in order
+that he may minister truly, know not
+merely the history of the Bible and of the
+Church, the results of modern criticism,
+and of comparative religion and folk-lore,
+but, almost as fully, general history, literature,
+philosophy, psychology, education,
+something of the fine arts, much of
+law and political science, and still more of
+social science and economics. In a period
+of specialization he cannot afford to be a
+specialist—or, it might be nearer the
+truth to say that, like every other true
+specialist, he must make all knowledge,
+all the circle of the sciences, tributary to
+his specialty, which
+is the knowledge and
+the improvement of
+the human soul. The
+suggestions that follow must necessarily
+be fragmentary, and should be considered
+as including merely a few topics not
+covered in the chapter on <i>Bible Study</i> nor
+in the other courses which, as has just
+been suggested, a minister might profitably
+pursue.</p>
+
+<p>The article <span class="sc"><a href="/article/24-0703-sermon/sermon">Sermon</a></span> (Vol. 24, p. 673) is
+by <a href="/contributors.html?q=Edmund+Gosse">Edmund Gosse</a>, librarian of the House
+of Lords, biographer of John Donne,
+Jeremy Taylor and Dr. Thomas <a href="/contributors.html?q=Edward+Granville+Browne">Browne</a>.
+The writer is especially conversant with
+the English literature of the 17th century,
+in the middle of which, to quote his
+article, “the sermon became one of the
+most highly-cultivated forms of intellectual
+entertainment in Great Britain, and
+when the theatres were closed at the
+Commonwealth it grew to be the only
+public form of eloquence.”</p>
+
+<p>Each name on the following list of great
+preachers is accompanied by volume and
+page reference to the biographical sketch
+in the Britannica, containing criticism of
+the preacher and a bibliography of his
+works and of works about him, so that the
+articles supply the basis for a study of
+the world’s great preachers.</p>
+
+<ul class="index">
+  <li class="center"><i>British.</i></li>
+  <li class="c018"><span class="sc"><a href="/article/28-0892-wycliffe-john/wycliffe__john">John Wycliffe</a></span> (Vol. 28, p. 868)</li>
+  <li class="c018"><span class="sc"><a href="/article/10-0443-fisher-john/fisher__john">John Fisher</a></span> (Vol. 10, p. 427)</li>
+  <li class="c018"><span class="sc"><a href="/article/16-0262-s3/latimer__hugh">Hugh Latimer</a></span> (Vol. 16, p. 242)</li>
+  <li class="c018"><span class="sc"><a href="/article/15-0912-s3/knox__john">John Knox</a></span> (Vol. 15, p. 878)</li>
+  <li class="c018"><span class="sc"><a href="/article/13-0689-s2/hooker__richard">Richard Hooker</a></span> (Vol. 13, p. 672)</li>
+  <li class="c018"><span class="sc"><a href="/article/08-0438-donne-john/donne__john">John Donne</a></span> (Vol. 8, p. 417)</li>
+  <li class="c018"><span class="sc"><a href="/article/12-0872-hall-joseph/hall__joseph">Joseph Hall</a></span> (Vol. 12, p. 847)</li>
+  <li class="c018"><span class="sc"><a href="/article/12-0859-s5/hales__john">John Hales</a></span> (Vol. 12, p. 834)</li>
+  <li class="c018"><span class="sc"><a href="/article/04-0994-s2/calamy__edmund">Edmund Calamy</a></span> (Vol. 4, p. 967)</li>
+  <li class="c018"><span class="sc"><a href="/article/28-0607-s4/whichcote__or_whitchcote___benjamin">Benjamin Whichcote</a></span> (Vol. 28, p. 587)</li>
+  <li class="c018"><span class="sc"><a href="/article/01-0211-s3/adams__thomas">Thomas Adams</a></span> (Vol. 1, p. 180)</li>
+  <li class="c018"><span class="sc"><a href="/article/03-0568-baxter-richard/baxter__richard">Richard Baxter</a></span> (Vol. 3, p. 551)</li>
+  <li class="c018"><span class="sc"><a href="/article/17-0624-s2/manton__thomas">Thomas Manton</a></span> (Vol. 17, p. 607)</li>
+  <li class="c018"><span class="sc"><a href="/article/20-0425-s7/owen__john">John Owen</a></span> (Vol. 20, p. 392)</li>
+  <li class="c018"><span class="sc"><a href="/article/07-0634-cudworth-ralph/cudworth__ralph">Ralph Cudworth</a></span> (Vol. 7, p. 612)</li>
+  <li class="c018"><span class="sc"><a href="/article/16-0418-leighton-robert/leighton__robert">Robert Leighton</a></span> (Vol. 16, p. 398)</li>
+  <li class="c018"><span class="sc"><a href="/article/26-0498-s4/taylor__jeremy">Jeremy Taylor</a></span> (Vol. 26, p. 469)</li>
+  <li class="c018"><span class="sc"><a href="/article/03-0457-barrow-isaac/barrow__isaac">Isaac Barrow</a></span> (Vol. 3, p. 440)</li>
+  <li class="c018"><span class="sc"><a href="/article/25-0479-south/south__robert">Robert South</a></span> (Vol. 25, p. 463)</li>
+  <li class="c018"><span class="sc"><a href="/article/26-1016-tillotson-john/tillotson__john">John Tillotson</a></span> (Vol. 26, p. 976)</li>
+  <li class="c018"><span class="sc"><a href="/article/25-0945-s2/stillingfleet__edward">Edward Stillingfleet</a></span> (Vol. 25, p. 921)</li>
+  <li class="c018"><span class="sc"><a href="/article/13-0558-s2/hoadly__benjamin">Benjamin Hoadly</a></span> (Vol. 13, p. 542)</li>
+  <li class="c018"><span class="sc"><a href="/article/04-0906-s3/butler__joseph">Joseph Butler</a></span> (Vol. 4, p. 882)</li>
+  <li class="c018"><span class="sc"><a href="/article/04-0304-boston-thomas/boston__thomas">Thomas Boston</a></span> (Vol. 4, p. 289)</li>
+  <li class="c018"><span class="sc"><a href="/article/28-0545-s3/wesley__john">John Wesley</a></span> (Vol. 28, p. 527)</li>
+  <li class="c018"><span class="sc"><a href="/article/28-0623-s2/whitefield__george">George Whitefield</a></span> (Vol. 28, p. 603)</li>
+  <li class="c018"><span class="sc"><a href="/article/05-0845-chalmers-thomas/chalmers__thomas">Thomas Chalmers</a></span> (Vol. 5, p. 809)</li>
+  <li class="c018"><span class="sc"><a href="/article/25-0764-s1/sprue">Edward Irving</a></span> (Vol. 14, p, 854)</li>
+  <li class="c018"><span class="sc"><a href="/article/25-0764-s4/spurgeon__charles_haddon">Charles Haddon Spurgeon</a></span> (Vol. 25, p. 742)</li>
+  <li class="c018"><span class="sc"><a href="/article/22-0683-s2/pusey__edward_bouverie">Edward Bouverie Pusey</a></span> (Vol. 22, p. 667)</li>
+  <li class="c018"><span class="sc"><a href="/article/15-0738-keble/keble__john">John Keble</a></span> (Vol. 15, p. 710)</li>
+  <li class="c018"><span class="sc"><a href="/article/19-0539-s2/newman__john_henry">John Henry Newman</a></span> (Vol. 19, p. 517)</li>
+  <li class="c018"><span class="sc"><a href="/article/17-0606-s2/manning__henry_edward">Henry Edward Manning</a></span> (Vol. 17, p. 589)</li>
+  <li class="c018"><span class="sc"><a href="/article/06-0523-clifford-john/clifford__john">John Clifford</a></span> (Vol. 6, p. 507)</li>
+  <li class="c018"><span class="sc"><a href="/article/18-0993-s6/müller__george">George Müller</a></span> (Vol. 18, p. 961)</li>
+  <li class="c018"><span class="sc"><a href="/article/26-0630-temple-frederick/temple__frederick">Frederick Temple</a></span> (Vol. 26, p. 600)</li>
+  <li class="c018"><span class="sc"><a href="/article/26-0384-s3/tait__archibald_campbell">Archibald Campbell Tait</a></span> (Vol. 26, p. 363)</li>
+  <li class="c018"><span class="sc"><a href="/article/15-0554-s2/jowett__benjamin">Benjamin Jowett</a></span> (Vol. 15, p. 527)</li>
+  <li class="c018"><span class="sc"><a href="/article/25-0799-s2/stanley__arthur_penrhyn">Arthur Penrhyn Stanley</a></span> (Vol. 25, p. 777)</li>
+  <li class="c018"><span class="sc"><a href="/article/17-0929-maurice-of-nassau/maurice_of_nassau">J. F. D. Maurice</a></span> (Vol. 17, p. 910)</li>
+  <li class="c018"><span class="sc"><a href="/article/13-0885-s2/hughes__hugh_price">Hugh Price Hughes</a></span> (Vol. 13, p. 860)</li>
+  <li class="c018"><span class="sc"><a href="/article/10-0141-s2/fairbairn__andrew_martin">Andrew M. Fairbairn</a></span> (Vol. 10, p. 129)</li>
+  <li class="c018"><span class="sc"><a href="/article/17-0277-macleod-norman/macleod__norman">Norman Macleod</a></span> (Vol. 17, p. 262)</li>
+  <li class="center"><i>American.</i></li>
+  <li class="c018"><span class="sc"><a href="/article/17-0902-s2/mather__cotton">Cotton Mather</a></span> (Vol. 17, p. 883)</li>
+  <li class="c018"><span class="sc"><a href="/article/17-0903-s2/mather__increase">Increase Mather</a></span> (Vol. 17, p. 884)</li>
+  <li class="c018"><span class="sc"><a href="/article/17-0904-s2/mather__richard">Richard Mather</a></span> (Vol. 17, p. 885)</li>
+  <li class="c018"><span class="sc"><a href="/article/09-0014-edwards-henry-thomas/edwards__henry_thomas">Jonathan Edwards</a></span> (Vol. 9, p. 2)</li>
+  <li class="c018"><span class="sc"><a href="/article/05-0426-carroll-john/carroll__john">John Carroll</a></span> (Vol. 5, p. 409)</li>
+  <li class="c018"><span class="sc"><a href="/article/06-0127-cheverus-jean-louis-anne-magdeleine-lefebve-de/cheverus__jean_louis_anne_magdeleine_lefebvre_de">J. L. A. M. L. de Cheverus</a></span> (Vol. 6, p. 114)</li>
+  <li class="c018"><span class="sc"><a href="/article/04-0717-s2/brut">S. W. G. Bruté</a></span> (Vol. 4, p. 695)</li>
+  <li class="c018"><span class="sc"><a href="/article/28-0780-witherspoon-john/witherspoon__john">John Witherspoon</a></span> (Vol. 28, p. 759)</li>
+  <li class="c018"><span class="sc"><a href="/article/28-0843-woolman-john/woolman__john">John Woolman</a></span> (Vol. 28, p. 817)</li>
+  <li class="c018"><span class="sc"><a href="/article/24-0561-s2/seabury__samuel">Samuel Seabury</a></span> (Vol. 24, p. 531)</li>
+  <li class="c018"><span class="sc"><a href="/article/02-0759-s3/asbury__francis">Francis Asbury</a></span> (Vol. 2, p. 715)</li>
+  <li class="c018"><span class="sc"><a href="/article/05-0452-cartwright-peter/cartwright__peter">Peter Cartwright</a></span> (Vol. 5, p. 435)</li>
+  <li class="c018"><span class="sc"><a href="/article/25-0151-s4/simpson__matthew">Matthew Simpson</a></span> (Vol. 25, p. 135)</li>
+  <li class="c018"><span class="sc"><a href="/article/11-0439-gallitzin-demetrius-augustine/gallitzin__demetrius_augustine">Demetrius A. Gallitzin</a></span> (Vol. 11, p. 421)</li>
+  <li class="c018"><span class="sc"><a href="/article/05-0139-campbell-alexander/campbell__alexander">Alexander Campbell</a></span> (Vol. 5, p. 127)</li>
+  <li class="c018"><span class="sc"><a href="/article/28-0749-winebrenner-john/winebrenner__john">John Winebrenner</a></span> (Vol. 28, p. 729)</li>
+  <li class="c018"><span class="sc"><a href="/article/18-0989-muhlenberg-william-augustus/muhlenberg__william_augustus">William A. Muhlenberg</a></span> (Vol. 18, p. 957)</li>
+  <li class="c018"><span class="sc"><a href="/article/05-0879-channing-william-ellery/channing__william_ellery">William Ellery Channing</a></span> (Vol. 5, p. 843)</li>
+  <li class="c018"><span class="sc"><a href="/article/08-0366-doane-george-washington/doane__george_washington">G. W. Doane</a></span> (Vol. 8, p. 349)</li>
+  <li class="c018"><span class="sc"><a href="/article/21-0016-payson-edward/payson__edward">Edward Payson</a></span> (Vol. 21, p. 2)</li>
+  <li class="c018"><span class="sc"><a href="/article/15-0570-s2/judson__adoniram">Adoniram Judson</a></span> (Vol. 15, p. 543)</li>
+  <li class="c018"><span class="sc"><a href="/article/13-0885-s3/hughes__john">John Hughes</a></span> (Vol. 13, p. 860)</li>
+  <li class="c018"><span class="sc"><a href="/article/01-0604-s3/alexander__archibald">Archibald Alexander</a></span> (Vol. 1, p. 564)</li>
+  <li class="c018"><span class="sc"><a href="/article/25-1074-s3/stuart__moses">Moses Stuart</a></span> (Vol. 25, p. 1048)</li>
+  <li class="c018"><span class="sc"><a href="/article/26-0501-s3/taylor__nathaniel_william">Nathaniel W. Taylor</a></span> (Vol. 26, p. 472)</li>
+  <li class="c018"><span class="sc"><a href="/article/03-0169-s3/bacon__leonard">Leonard Bacon</a></span> (Vol. 3, p. 152)</li>
+  <li class="c018"><span class="sc"><a href="/article/06-0460-clarke-james-freeman/clarke__james_freeman">James Freeman Clarke</a></span> (Vol. 6, p. 444)</li>
+  <li class="c018"><span class="sc"><a href="/article/03-0658-beecher-henry-ward/beecher__henry_ward">Henry Ward Beecher</a></span> (Vol. 3, p. 639)</li>
+  <li class="c018"><span class="sc"><a href="/article/03-0299-s2/ballou__hosea">Hosea Ballou</a></span> (Vol. 3, p. 282)</li>
+  <li class="c018"><span class="sc"><a href="/article/04-0897-s2/bushnell__horace">Horace Bushnell</a></span> (Vol. 4, p. 873)</li>
+  <li class="c018"><span class="sc"><a href="/article/04-0672-s3/brooks__phillips">Phillips Brooks</a></span> (Vol. 4, p. 649)</li>
+  <li class="c018"><span class="sc"><a href="/article/12-0857-s3/hale__edward_everett">Edward Everett Hale</a></span> (Vol. 12, p. 832)</li>
+  <li class="c018"><span class="sc"><a href="/article/25-0995-storrs-richard-salter/storrs__richard_salter">R. S. Storrs</a></span> (Vol. 25, p. 969)</li>
+  <li class="c018"><span class="sc"><a href="/article/07-0945-deems-charles-alexander-force/deems__charles__alexander__force">Charles Force Deems</a></span> (Vol. 7, p. 921)</li>
+  <li class="c018"><span class="sc"><a href="/article/20-0887-s4/park__edwards_amasa">Edwards Amasa Park</a></span> (Vol. 20, p. 825)</li>
+  <li class="c018"><span class="sc"><a href="/article/26-0256-swing-david/swing__david">David Swing</a></span> (Vol. 26, p. 237)</li>
+  <li class="c018"><span class="sc"><a href="/article/07-0214-corrigan-michael-augustine/corrigan__michael_augustine">Michael Augustine Corrigan</a></span> (Vol. 7, p. 197)</li>
+  <li class="c018"><span class="sc"><a href="/article/11-0960-s6/gibbons__james">James Gibbons</a></span> (Vol. 11, p. 936)</li>
+  <li class="c018"><span class="sc"><a href="/article/26-0401-talmage-thomas-de-witt/talmage__thomas_de_witt">T. DeWitt Talmage</a></span> (Vol. 26, p. 380)</li>
+  <li class="c018"><span class="sc"><a href="/article/13-0207-s6/hecker__isaac_thomas">Isaac T. Hecker</a></span> (Vol. 13, p. 194)</li>
+  <li class="c018"><span class="sc"><a href="/article/06-0715-collyer-robert/collyer__robert">Robert Collyer</a></span> (Vol. 6, p. 694)</li>
+  <li class="c018"><span class="sc"><a href="/article/17-0220-s4/mccook__alexander_mcdowell">Henry C. McCook</a></span> (Vol. 17, p. 205)</li>
+  <li class="c018"><span class="sc"><a href="/article/13-0985-s2/hurst__john_fletcher">John Fletcher Hurst</a></span> (Vol. 13, p. 960)</li>
+  <li class="c018"><span class="sc"><a href="/article/18-0832-s4/moody__dwight_lyman">Dwight L. Moody</a></span> (Vol. 18, p. 802)</li>
+  <li class="c018"><span class="sc"><a href="/article/12-0076-s4/gladden__washington">Washington Gladden</a></span> (Vol. 12, p. 63)</li>
+  <li class="c018"><span class="sc"><a href="/article/14-0774-ireland-john-american/ireland__john__american_">John Ireland</a></span> (Vol. 14, p. 742)</li>
+  <li class="c018"><span class="sc"><a href="/article/15-0734-s2/keane__john_joseph">John Joseph Keane</a></span> (Vol. 15, p. 706)</li>
+  <li class="c018"><span class="sc"><a href="/article/24-0254-s3/savage__minot_judson">Minot J. Savage</a></span> (Vol. 24, p. 239)</li>
+  <li class="c018"><span class="sc"><a href="/article/27-0075-s8/torrey__reuben_archer">Reuben Archer Torrey</a></span> (Vol. 27, p. 61)</li>
+  <li class="center"><i>French.</i></li>
+  <li class="c018"><span class="sc"><a href="/article/11-0928-gerson-john/gerson__john">John Gerson</a></span> (Vol. 11, p. 904)</li>
+  <li class="c018"><span class="sc"><a href="/article/05-0083-calvin-john/calvin__john">John Calvin</a></span> (Vol. 5, p. 71)</li>
+  <li class="c018"><span class="sc"><a href="/article/03-0860-beza-theodore/beza__de_bèsze___theodore">Theodore Beza</a></span> (Vol. 3, p. 839)</li>
+  <li class="c018"><span class="sc"><a href="/article/10-0963-francis-of-sales-st/francis__françois__of_sales__st">St. Francis of Sales</a></span> (Vol. 10, p. 940)</li>
+  <li class="c018"><span class="sc"><a href="/article/04-0302-bossuet-jaques-b-nigne/bossuet__jaques_bénigne">J. B. Bossuet</a></span> (Vol. 4, p. 287)</li>
+  <li class="c018"><span class="sc"><a href="/article/04-0344-bourdaloue-louis/bourdaloue__louis">Louis Bourdalous</a></span> (Vol. 4, p. 329)</li>
+  <li class="c018"><span class="sc"><a href="/article/10-0509-s4/fléchier__esprit">Esprit Fléchier</a></span> (Vol. 10, p. 491)</li>
+  <li class="c018"><span class="sc"><a href="/article/17-0854-mascaron/mascaron__jules">Jules Mascaron</a></span> (Vol. 17, p. 836)</li>
+  <li class="c018"><span class="sc"><a href="/article/17-0886-s6/massillon__jean_baptiste">Jean Baptiste Massillon</a></span> (Vol. 17, p. 867)</li>
+  <li class="c018"><span class="sc"><a href="/article/17-0934-s2/maury__jean_siffrein">Jean Siffrein Maury</a></span> (Vol. 17, p. 915)</li>
+</ul>
+
+<p>These lists could easily be made longer
+and fuller, but the articles mentioned give
+such a view of the great preachers of the
+world as cannot fail to stimulate any
+minister. Supplementing what has been
+said above about the necessity of the
+minister’s being a well-rounded man, it
+may be worth while to notice that Donne
+and Keble and, in a less degree, Doane
+and Muhlenberg, were poets as well as
+preachers; that Cudworth was known as
+the founder of the Cambridge Platonists,
+and Jowett as the translator of Plato,
+Barrow as a mathematician, second, in
+his day, only to Isaac Newton, Edward
+Everett Hale as an essayist and writer of
+short stories, and McCook as a great
+naturalist.</p>
+
+<p>The minister will find the Britannica an
+excellent encyclopaedia of comparative
+religion and of church history, with the
+newest and most authoritative information
+on any subject in this field. For a
+brief outline course in these topics let him
+read:</p>
+
+<p>The article <span class="sc"><a href="/article/23-0078-religion/religion">Religion</a></span> (Vol. 23, p. 61;
+equivalent to 50 pages of this Guide), by
+Dr. <a href="/contributors.html?q=Rev.+Joseph+Estlin+Carpenter">Joseph Estlin Carpenter</a>, principal
+of Manchester College, Oxford, and Robert
+R. Marett, fellow and tutor of Exeter
+College, Oxford, author of the <i>Threshold
+of Religion</i> and contributor to the Britannica
+of articles on <span class="sc"><a href="/article/22-0270-prayer/prayer">Prayer</a></span>, <span class="sc"><a href="/article/23-0387-s3/ritual">Ritual</a></span>, etc.
+This article is made up of: a general introduction
+sketching the history of the
+study of religions, especially in the last
+century, and concluding that “the origin
+of religion can never be determined archaeologically
+or historically; it must be
+sought conjecturally through psychology”;
+a section on primitive religion,
+which is a remarkable summary of all
+that is known of this subject; and a
+section on the higher religions which
+discusses developments of animism, transition
+to polytheism, polytheism, the order
+of nature (a half-way stage to monotheism),
+monotheism, classification of religions,
+revelation, ethics and eschatology
+and bibliography.</p>
+
+<p>Another class of articles comprises <span class="sc">Ancestor
+Worship</span>, <span class="sc"><a href="/article/02-0061-s2/animal_worship">Animal Worship</a></span>,
+<span class="sc"><a href="/article/02-0064-s2/animism">Animism</a></span>, <span class="sc"><a href="/article/10-0307-fetishism/fetishism">Fetishism</a></span>, <span class="sc"><a href="/article/10-0622-s2/folklore">Folklore</a></span>, <span class="sc"><a href="/article/17-0319-magic/magic">Magic</a></span>,
+<span class="sc"><a href="/article/19-0143-mythology/mythology">Mythology</a></span>, <span class="sc"><a href="/article/22-0270-prayer/prayer">Prayer</a></span>, <span class="sc"><a href="/article/23-0387-s3/ritual">Ritual</a></span>, <span class="sc"><a href="/article/23-1025-sacrifice/sacrifice">Sacrifice</a></span>,
+<span class="sc"><a href="/article/24-0706-s2/serpent-worship">Serpent-Worship</a></span>, <span class="sc"><a href="/article/27-0093-totemism/totemism">Totemism</a></span> and
+<span class="sc"><a href="/article/27-0250-tree-worship/tree-worship">Tree-Worship</a></span>, written by such authorities
+as N. W. Thomas, author of <i>Kinship
+and Marriage in Australia</i>, etc., Andrew
+Lang, Stanley Arthur Cooke and R. R.
+Marett.</p>
+
+<p>Certain primitive religions are separately
+treated, as in the article <span class="sc"><a href="/article/14-0480-indians-north-american/indians__north_american">Indians,
+North American</a></span> (Vol. 14, especially
+pages 471–473), by <a href="/contributors.html?q=Alexander+Francis+Chamberlain">A. F. Chamberlain</a>,
+assistant professor of anthropology,
+Clark University, Worcester; in the article
+<span class="sc"><a href="/article/02-0991-s4/australia">Australia</a></span> (Vol. 2, especially p.
+957); in the article <i>Hawaii</i> (Vol. 13,
+pages 87, 88).</p>
+
+<p>On higher religions there are the following
+separate articles (among many):</p>
+
+<p><span class="sc"><a href="/article/03-0129-s2/babylonian_and_assyrian_religion">Babylonian and Assyrian Religion</a></span>,
+by Morris Jastrow of the University of
+Pennsylvania; and the articles <span class="sc">Anai</span>,
+<span class="sc"><a href="/article/14-0903-ishtar/ishtar">Ishtar</a></span>, <span class="sc"><a href="/article/08-0815-ea/ea">Ea</a></span>, <span class="sc"><a href="/article/17-0714-s3/marduk">Marduk</a></span>, <span class="sc"><a href="/article/02-0833-s5/assur">Assur</a></span> and <span class="sc"><a href="/article/12-0031-gilgamesh-epic-of/gilgamesh__epic_of">Gilgamesh</a></span>,—all
+by the same author and all
+of particular value as throwing sidelights
+on Hebrew Religion.</p>
+
+<p><span class="sc"><a href="/article/09-0033-egypt/egypt">Egypt</a></span> (Vol. 9, pp. 48–56), by Allan H.
+Gardiner, editor of the <i>New</i> (Berlin)
+<i>Hieroglyphic Dictionary</i>.</p>
+
+<p><span class="sc"><a href="/article/13-0189-hebrew-religion/hebrew_religion">Hebrew Religion</a></span> (Vol. 13, p. 176;
+equivalent to 40 pages of this Guide), by
+Dr. <a href="/contributors.html?q=Rev.+Owen+Charles+Whitehouse">Owen Charles Whitehouse</a>, professor
+of Hebrew, Cheshunt College, Cambridge;
+and the articles <i>Hebrew Literature</i>,
+<i>Jews</i>, etc.</p>
+
+<p><span class="sc"><a href="/article/04-0396-brahmanism/brahmanism">Brahmanism</a></span> (Vol. 4, p. 381) and <span class="sc"><a href="/article/13-0517-hinduism/hinduism">Hinduism</a></span>
+(Vol. 13, p. 501), by Julius Eggeling,
+Professor of Sanskrit, Edinburgh.</p>
+
+<p><span class="sc"><a href="/article/04-0765-buddhism/buddhism">Buddhism</a></span>, <span class="sc"><a href="/article/04-0760-s4/buddha">Buddha</a></span> and <span class="sc">Lamaism</span>, by
+<a href="/contributors.html?q=Thomas+William+Rhys+Davids">T. W. Rhys Davids</a>, author of <i>Buddhist
+India</i>, etc.</p>
+
+<p><span class="sc"><a href="/article/06-0931-confucius/confucius">Confucius</a></span>, by <a href="/contributors.html?q=Rev.+James+Legge">James Legge</a>, author of
+<i>The Religions of China</i>.</p>
+
+<p><span class="sc"><a href="/article/25-0100-sikhism/sikhism">Sikhism</a></span>, by <a href="/contributors.html?q=Max+Arthur+Macauliffe">Max Macauliffe</a>, whose
+book <i>The Sikh Religion</i> is accepted by the
+Sikhs as authoritative.</p>
+
+<p><span class="sc"><a href="/article/28-1066-zoroaster/zoroaster">Zoroaster</a></span>, by Karl Geldner, professor
+at Marburg, and the article <span class="sc"><a href="/article/20-0928-parsees/parsees">Parsees</a></span>.</p>
+
+<p><span class="sc"><a href="/article/17-0432-mahommedan-religion/mahommedan_religion">Mahommedan Religion</a></span> (Vol. 17, p.
+417; equivalent to 45 pages in this Guide),
+by <a href="/contributors.html?q=Rev.+Griffithes+Wheeler+Thatcher">G. W. Thatcher</a>, warden of Camden
+College, Sydney.</p>
+
+<p><span class="sc"><a href="/article/17-0414-mahomet/mahomet">Mahomet</a></span>, by <a href="/contributors.html?q=David+Samuel+Margoliouth">D. S. Margoliouth</a>,
+Laudian professor of Arabic, Oxford;
+<span class="sc"><a href="/article/17-0426-mahommedan-institutions/mahommedan_institutions">Mahommedan Institutions</a></span> and <span class="sc"><a href="/article/17-0429-mahommedan-law/mahommedan_law">Mahommedan
+Laws</a></span>, by <a href="/contributors.html?q=Duncan+Black+Macdonald">D. S. Macdonald</a>,
+professor of Semitic languages, Hartford
+Theological Seminary.</p>
+
+<p><span class="sc">Bábiism</span>, by <a href="/contributors.html?q=Edward+Granville+Browne">E. G. Browne</a>, professor of
+Arabic, Cambridge, and author of <i>History
+of the Báb</i>.</p>
+
+<p><span class="sc"><a href="/article/12-0552-greek-religion/greek_religion">Greek Religion</a></span> (Vol. 12, p. 527), by
+<a href="/contributors.html?q=Lewis+Richard+Farnell">L. R. Farnell</a>, fellow of Exeter College,
+Oxford, author of <i>Cults of the Greek
+States</i>; and such articles as <span class="sc"><a href="/article/07-1004-demeter/demeter">Demeter</a></span>,
+<span class="sc"><a href="/article/13-0206-hecate/hecate">Hecate</a></span>, <span class="sc"><a href="/article/13-0319-hera/hera">Hera</a></span>, <span class="sc"><a href="/article/13-0385-hermes/hermes">Hermes</a></span>, <span class="sc"><a href="/article/13-0430-s2/hestia">Hestia</a></span>, <span class="sc">Nike</span>,
+<span class="sc"><a href="/article/21-0471-phoebus/phoebus">Phoebus</a></span>, <span class="sc"><a href="/article/26-0798-s3/themis">Themis</a></span> and <span class="sc"><a href="/article/28-1002-zeus/zeus">Zeus</a></span>.</p>
+
+<p><span class="sc"><a href="/article/23-0607-roman-religion/roman_religion">Roman Religion</a></span> (Vol. 23, p. 577), by
+<a href="/contributors.html?q=Cyril+Bailey">Cyril Bailey</a>, fellow of Balliol College,
+Oxford, and author of <i>The Religion of
+Ancient Rome</i>; and such articles as <span class="sc"><a href="/article/02-0074-s3/anna_perenna">Anna
+Perenna</a></span>, <span class="sc"><a href="/article/02-0755-s2/arval_brothers">Arval Brothers</a></span>, <span class="sc"><a href="/article/04-0204-bona-dea/bona_dea">Bona Dea</a></span>,
+<span class="sc"><a href="/article/06-0858-concordia-town/concordia__town_">Concordia</a></span>, <span class="sc"><a href="/article/10-0170-fama/fama">Fama</a></span>, <span class="sc"><a href="/article/10-0221-s4/faunus">Faunus</a></span>, <span class="sc"><a href="/article/15-0587-s3/juno">Juno</a></span> and
+<span class="sc"><a href="/article/15-0589-s2/jupiter">Jupiter</a></span>; and the valuable articles on
+Eastern cults in Rome, <span class="sc"><a href="/article/12-0418-great-mother-of-the-gods/great_mother_of_the_gods">Great Mother
+of the Gods</a></span>, <span class="sc"><a href="/article/02-0934-s2/attis">Attis</a></span>, <span class="sc"><a href="/article/18-0651-mithras/mithras">Mithras</a></span>, etc., by
+Professor Grant Showerman of the University
+of Wisconsin.</p>
+
+<p><span class="sc"><a href="/article/06-0296-christianity/christianity">Christianity</a></span> (Vol. 6, p. 280; equivalent
+to 35 pages of this Guide), by <a href="/contributors.html?q=Rev.+George+William+Knox">G. W.
+Knox</a>, professor of philosophy and history
+of religion, Union Theological
+Seminary, New York; <span class="sc"><a href="/article/15-0373-jesus-christ/jesus_christ">Jesus Christ</a></span>
+(Vol. 15, p. 348; equivalent to 35 pages
+of this Guide), by the Very Rev. Joseph
+Armitage Robinson, Dean of Westminster;
+<span class="sc"><a href="/article/12-0282-s7/gospel">Gospel</a></span> (Vol. 12, p. 265), by <a href="/contributors.html?q=Rev.+Vincent+Henry+Stanton">Rev.
+V. H. Stanton</a>, Ely professor of divinity,
+Cambridge; articles on the separate
+gospels; <span class="sc"><a href="/article/20-1006-s3/paul">Paul the Apostle</a></span> (Vol. 20,
+p. 938), by the Rev. James Vernon
+Bartlett, professor of church history,
+Mansfield College, Oxford.</p>
+
+<p><span class="sc">On Church History</span> there is an excellent
+key article in volume 6 (p. 331;
+equivalent to 45 pages of this Guide).
+It begins with an outline of the work of
+the great church historians and divides
+the subject into three parts: <i>first</i>, up to
+590 B.C.,—this part and the general
+introduction are by <a href="/contributors.html?q=Rev.+Arthur+Cushman+McGiffert">A. C. McGiffert</a>,
+professor of church history in Union
+Theological Seminary, New York City;
+<i>second</i>, the Church in the Middle Ages,
+by <a href="/contributors.html?q=Albert+Hauck">Albert Hauck</a>, professor of church
+history at Leipzig; and The Modern
+Church, by <a href="/contributors.html?q=Walter+Alison+Phillips">W. Alison Phillips</a>, author
+of <i>Modern Europe</i>. This sketch may be
+filled in by reference to the following
+articles (among many):</p>
+
+<ul class="index">
+  <li class="c018"><span class="sc"><a href="/article/01-0126-s3/abyssinian_church">Abyssinian Church</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/02-0608-s2/armenian_church">Armenian Church</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/23-0516-roman-catholic-church/roman_catholic_church">Roman Catholic Church</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/20-0743-papacy/papacy">Papacy</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/20-0367-orthodox-eastern-church/orthodox_eastern_church">Orthodox Eastern Church</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/23-0017-s2/reformation__the">Reformation</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/09-0433-england/england">England, Church of</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/14-0822-ireland-church-of/ireland__church_of">Ireland, Church of<span class="pageno" id="Page_131">131</a></span> Scotland, Church of</span></li>
+  <li class="c018"><span class="sc"><a href="/article/24-0430-part1/scotland">Scotland, Episcopal Church in</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/17-0155-s2/lutherans">Lutherans</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/03-0387-baptists/baptists">Baptists</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/22-0297-presbyterianism/presbyterianism">Presbyterianism</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/05-0121-cameronians/cameronians">Cameronians</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/06-0952-congregationalism/congregationalism">Congregationalism</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/18-0314-s2/methodism">Methodism</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/11-0236-s2/friends__society_of">Friends, Society of</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/05-0088-calvinistic-methodists/calvinistic_methodists">Calvinistic Methodists</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/08-0328-disciples-of-christ/disciples_of_christ">Disciples of Christ</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/11-0790-s4/german_baptist_brethren">German Baptist Brethren</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/18-0151-s3/mennonites">Mennonites</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/18-0850-moravian-brethern/moravian_brethren">Moravian Brethren</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/08-0469-doukhobors/doukhobors">Doukhobors</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/11-0791-s2/german_catholics">German Catholics</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/20-0091-s1/old_catholics">Old Catholics</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/27-0620-united-brethren-in-christ/united_brethren_in_christ">United Brethren</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/27-0631-united-presbyterian-church/united_presbyterian_church">United Presbyterian Church</a></span></li>
+</ul>
+
+<p>A brief course in theology and dogma
+is contained in the following articles:</p>
+
+<p><span class="sc"><a href="/article/26-0812-s4/theology">Theology</a></span> (Vol. 26, p. 772; equivalent
+to 45 pages in this Guide), by the Rev.
+Dr. Robert Mackintosh of Lancashire
+Independent College, Manchester.</p>
+
+<ul class="index">
+  <li class="c018"><span class="sc"><a href="/article/02-0922-s2/atonement">Atonement</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/03-0381-baptism/baptism">Baptism</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/06-0926-confession/confession">Confession</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/06-0929-confirmation/confirmation">Confirmation</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/07-0061-conversion/conversion">Conversion</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/08-0405-dogmatic-theology/dogmatic_theology">Dogmatic Theology</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/09-0792-eschatology/eschatology">Eschatology</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/09-0900-s4/eucharist">Eucharist</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/10-0071-excommunication/excommunication">Excommunication</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/12-0326-grace/grace">Grace</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/14-0353-s2/immaculate_conception__the">Immaculate Conception</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/14-0540-s2/infallibility">Infallibility</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/14-0676-s2/inspiration">Inspiration</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/21-0098-s3/penance">Penance</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/22-0289-s6/predestination">Predestination</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/22-0675-s4/purgatory">Purgatory</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/25-0153-sin/sin">Sin</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/27-0201-transubstantiation/transubstantiation">Transubstantiation</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/28-0859-worship/worship">Worship</a></span></li>
+</ul>
+
+<p>On Religious Orders:</p>
+
+<ul class="index">
+  <li class="c018"><span class="sc"><a href="/article/01-0042-s5/abbey">Abbey</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/11-0225-friar/friar">Friars</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/18-0717-monasticism/monasticism">Monasticism</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/18-0754-monk/monk">Monk</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/19-0949-nun/nun">Nun</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/25-0176-sisterhoods/sisterhoods">Sisterhoods</a></span></li>
+</ul>
+
+<p>and see also the names of different orders
+and hundreds of biographical articles on
+saints and heretics, preachers and theologians.</p>
+
+<p>The following alphabetical list includes
+only a part of the articles in the
+Britannica on religious topics; but it
+will serve to show the value of the book
+to a clergyman in his own field:</p>
+
+<ul class="index">
+  <li class="c018"><a href="/article/01-0042-s2/abbess">Abbess</a></li>
+  <li class="c018"><a href="/article/01-0042-s5/abbey">Abbey</a></li>
+  <li class="c018"><a href="/article/01-0054-s5/abbot">Abbot</a></li>
+  <li class="c018"><a href="/article/01-0061-s2/abbreviators">Abbreviators</a></li>
+  <li class="c018"><a href="/article/01-0069-s2/abecedarians">Abecedarians</a></li>
+  <li class="c018"><a href="/article/01-0092-abgar/abgar">Abgar</a></li>
+  <li class="c018"><a href="/article/01-0096-s9/ablution">Ablution</a></li>
+  <li class="c018"><a href="/article/01-0103-s4/abrahamites">Abrahamites</a></li>
+  <li class="c018"><a href="/article/01-0107-s2/absolution">Absolution</a></li>
+  <li class="c018"><a href="/article/01-0108-s4/abstemii">Abstemii</a></li>
+  <li class="c018"><a href="/article/01-0126-s3/abyssinian_church">Abyssinian Church</a></li>
+  <li class="c018"><a href="/article/01-0166-s1/acephali">Acephali</a></li>
+  <li class="c018"><a href="/article/01-0166-s5/acerra">Acerra</a></li>
+  <li class="c018"><a href="/article/01-0181-s1/acoemeti">Acoemeti</a></li>
+  <li class="c018"><a href="/article/01-0181-s2/acolyte">Acolyte</a></li>
+  <li class="c018"><a href="/article/01-0205-s5/adamites">Adamites</a></li>
+  <li class="c018"><a href="/article/01-0223-s4/adiaphorists">Adiaphorists</a></li>
+  <li class="c018"><a href="/article/01-0243-s6/adoptianism">Adoptianism</a></li>
+  <li class="c018"><a href="/article/01-0266-s3/advent">Advent</a></li>
+  <li class="c018"><a href="/article/01-0266-s4/adventists__second">Adventists, Second</a></li>
+  <li class="c018"><a href="/article/01-0273-advocatus-diaboli/advocatus_diaboli">Advocatus Diaboli</a></li>
+  <li class="c018">Agape</li>
+  <li class="c018"><a href="/article/01-0403-s3/agapemonites">Agapemonites</a></li>
+  <li class="c018"><a href="/article/01-0404-s2/agapetae">Agapetae</a></li>
+  <li class="c018"><a href="/article/01-0404-s3/agapetus">Agapetus</a></li>
+  <li class="c018"><a href="/article/01-0416-s6/agnoetae">Agnoetae</a></li>
+  <li class="c018"><a href="/article/01-0416-s8/agnosticism">Agnosticism</a></li>
+  <li class="c018"><a href="/article/01-0418-s2/agnus_dei">Agnus Dei</a></li>
+  <li class="c018"><a href="/article/01-0420-s4/agrapha">Agrapha</a></li>
+  <li class="c018"><a href="/article/01-0519-s1/alb">Alb</a></li>
+  <li class="c018"><a href="/article/01-0545-s4/albigenses">Albigenses</a></li>
+  <li class="c018"><a href="/article/01-0728-s7/allah">Allah</a></li>
+  <li class="c018"><a href="/article/01-0752-s4/all_saints__festival_of">All Saints</a></li>
+  <li class="c018">All Souls Day</li>
+  <li class="c018"><a href="/article/01-0740-s6/allocution">Allocution</a></li>
+  <li class="c018"><a href="/article/01-0759-s3/almoner">Almoner</a></li>
+  <li class="c018"><a href="/article/01-0761-s5/almuce">Almuce</a></li>
+  <li class="c018"><a href="/article/01-0803-altar/altar">Altar</a></li>
+  <li class="c018"><a href="/article/01-0846-s7/ambrosians">Ambrosians</a></li>
+  <li class="c018"><a href="/article/01-0847-s1/ambrosiaster">Ambrosiaster</a></li>
+  <li class="c018"><a href="/article/01-0850-s7/amen">Amen</a></li>
+  <li class="c018"><a href="/article/01-0905-s2/amice">Amice</a></li>
+  <li class="c018">Amora</li>
+  <li class="c018"><a href="/article/01-0947-s3/ampulla">Ampulla</a></li>
+  <li class="c018"><a href="/article/01-0956-s2/anabaptists">Anabaptists</a></li>
+  <li class="c018"><a href="/article/01-0973-s2/anathema">Anathema</a></li>
+  <li class="c018"><a href="/article/02-0015-s8/angel">Angel</a></li>
+  <li class="c018"><a href="/article/02-0019-angelus/angelus">Angelus</a></li>
+  <li class="c018"><a href="/article/02-0030-s2/anglican_communion">Anglican Communion</a></li>
+  <li class="c018"><a href="/article/02-0042-s2/anglo-israelite_theory">Anglo-Israelite Theory</a></li>
+  <li class="c018"><a href="/article/02-0075-s4/annates">Annates</a></li>
+  <li class="c018"><a href="/article/02-0089-s3/annunciation">Annunciation</a></li>
+  <li class="c018"><a href="/article/02-0132-s2/anthropomorphism">Anthropomorphism</a></li>
+  <li class="c018"><a href="/article/02-0133-s2/antichrist">Antichrist</a></li>
+  <li class="c018"><a href="/article/02-0141-s2/antinomians">Antinomians</a></li>
+  <li class="c018"><a href="/article/02-0159-s2/antitype">Antitype</a></li>
+  <li class="c018"><a href="/article/02-0181-s4/apocalypse__knights_of_the">Apocalypse, Knights of</a></li>
+  <li class="c018"><a href="/article/02-0201-s4/apologetics">Apologetics</a></li>
+  <li class="c018"><a href="/article/02-0208-s4/apostasy">Apostasy</a></li>
+  <li class="c018"><a href="/article/02-0208-s6/apostle">Apostle</a></li>
+  <li class="c018"><a href="/article/02-0213-s2/apostolic_canons">Apostolic Canons</a></li>
+  <li class="c018"><a href="/article/02-0213-s3/apostolic_fathers">Apostolic Fathers</a></li>
+  <li class="c018"><a href="/article/02-0211-s3/apostolical_constitutions">Apostolical Constitutions</a></li>
+  <li class="c018"><a href="/article/02-0216-s2/apostolici">Apostolici</a></li>
+  <li class="c018"><a href="/article/02-0217-apotactites/apotactites">Apotactites</a></li>
+  <li class="c018"><a href="/article/02-0218-apotheosis/apotheosis">Apotheosis</a></li>
+  <li class="c018"><a href="/article/02-0249-s7/aquarii">Aquarii</a></li>
+  <li class="c018"><a href="/article/02-0298-s3/arabici">Arabici</a></li>
+  <li class="c018"><a href="/article/02-0377-s6/archbishop">Archbishop</a></li>
+  <li class="c018"><a href="/article/02-0379-s3/archdeacon">Archdeacon</a></li>
+  <li class="c018"><a href="/article/02-0387-s2/arches__court_of">Arches, Court of</a></li>
+  <li class="c018"><a href="/article/02-0389-s2/archimandrite">Archimandrite</a></li>
+  <li class="c018"><a href="/article/02-0483-s1/archpriest">Archpriest</a></li>
+  <li class="c018"><a href="/article/02-0533-s6/aristides__apology_of">Aristides, Apology of</a></li>
+  <li class="c018"><a href="/article/02-0580-s2/arius">Arius</a></li>
+  <li class="c018"><a href="/article/02-0587-s3/ark">Ark</a></li>
+  <li class="c018"><a href="/article/02-0608-s2/armenian_church">Armenian Church</a></li>
+  <li class="c018"><a href="/article/02-0708-s2/artemon">Artemon</a></li>
+  <li class="c018"><a href="/article/02-0758-s3/asaph">Asaph</a></li>
+  <li class="c018"><a href="/article/02-0760-s5/ascension__feast_of_the">Ascension, Feast of</a></li>
+  <li class="c018"><a href="/article/02-0761-s2/asceticism">Asceticism</a></li>
+  <li class="c018"><a href="/article/02-0766-s4/ascitans">Ascitans</a></li>
+  <li class="c018">Ash-Wednesday</li>
+  <li class="c018"><a href="/article/02-0813-s4/asperges">Asperges</a></li>
+  <li class="c018"><a href="/article/02-0820-s5/assassin">Assassins</a></li>
+  <li class="c018"><a href="/article/02-0833-s4/assumption__feast_of">Assumption, Feast of</a></li>
+  <li class="c018">Asterius of Cappadocia</li>
+  <li class="c018"><a href="/article/02-0874-s4/atheism">Atheism</a></li>
+  <li class="c018"><a href="/article/02-0899-s3/athos">Athos, Mount</a></li>
+  <li class="c018"><a href="/article/02-0922-s2/atonement">Atonement</a></li>
+  <li class="c018"><a href="/article/02-0935-s4/attrition">Attrition</a></li>
+  <li class="c018"><a href="/article/02-0950-s5/augsburg__confession_of">Augsburg, Confession of</a></li>
+  <li class="c018"><a href="/article/02-0959-s3/augustinians">Augustinians</a></li>
+  <li class="c018">Augustinians Canons</li>
+  <li class="c018"><a href="/article/02-0959-s2/augustinian_hermits">Augustinian Hermits</a></li>
+  <li class="c018"><a href="/article/03-0060-s3/autocephalous">Autocephalous</a></li>
+  <li class="c018">Auto da Fé</li>
+  <li class="c018">Auxentius of Cappadocia</li>
+  <li class="c018">Azan</li>
+  <li class="c018"><a href="/article/03-0101-s9/azymites">Azymites</a></li>
+  <li class="c018">Bábiism</li>
+  <li class="c018">Babylonian Captivity</li>
+  <li class="c018"><a href="/article/03-0218-s5/bagimond_s_roll">Bagimond’s Roll</a></li>
+  <li class="c018"><a href="/article/03-0240-s6/bairam">Bairam</a></li>
+  <li class="c018"><a href="/article/03-0319-s3/bambino__il">Bambino, Il</a></li>
+  <li class="c018"><a href="/article/03-0334-bangorian-controversy/bangorian_controversy">Bangorian Controversy</a></li>
+  <li class="c018"><a href="/article/03-0380-baphomet/baphomet">Baphomet</a></li>
+  <li class="c018"><a href="/article/03-0381-baptism/baptism">Baptism</a></li>
+  <li class="c018"><a href="/article/03-0387-baptists/baptists">Baptists</a></li>
+  <li class="c018"><a href="/article/03-0480-basel-confession-of/basel__confession_of">Basel, Confession of</a></li>
+  <li class="c018"><a href="/article/03-0480-basel-council-of/basel__council_of">Basel, Council of</a></li>
+  <li class="c018"><a href="/article/03-0486-basilian-monks/basilian_monks">Basilian Monks</a></li>
+  <li class="c018"><a href="/article/03-0601-beatification/beatification">Beatification</a></li>
+  <li class="c018"><a href="/article/03-0671-beguines/beguines">Beguines</a></li>
+  <li class="c018"><a href="/article/03-0741-benedictines/benedictines">Benedictines</a></li>
+  <li class="c018"><a href="/article/03-0743-benediction/benediction">Benediction</a></li>
+  <li class="c018"><a href="/article/03-0744-benedictus/benedictus">Benedictus</a></li>
+  <li class="c018"><a href="/article/03-0850-bethlehemites/bethlehemites">Bethlehemites</a></li>
+  <li class="c018"><a href="/article/03-0928-bible-christians/bible_christians">Bible Christians</a></li>
+  <li class="c018"><a href="/article/03-0941-bidding-prayer/bidding-prayer">Bidding-Prayer</a></li>
+  <li class="c018"><a href="/article/03-1003-biretta/biretta">Biretta</a></li>
+  <li class="c018"><a href="/article/04-0014-bishop/bishop">Bishop</a></li>
+  <li class="c018"><a href="/article/04-0039-black-veil/black_veil">Black Veil</a></li>
+  <li class="c018"><a href="/article/04-0132-bogomils/bogomils">Bogomils</a></li>
+  <li class="c018"><a href="/article/04-0190-bollandists/bollandists">Bollandists</a></li>
+  <li class="c018">Boy’s Brigade</li>
+  <li class="c018"><a href="/article/04-0521-breviary/breviary">Breviary</a></li>
+  <li class="c018"><a href="/article/04-0551-bridgebuilding-brotherhood/bridgebuilding_brotherhood">Bridgebuilding Brotherhood</a></li>
+  <li class="c018"><a href="/article/04-0578-s5/bridgittines">Bridgittines</a></li>
+  <li class="c018"><a href="/article/04-0674-s5/brothers_of_common_life">Brothers of Common Life</a></li>
+  <li class="c018"><a href="/article/04-0954-s7/cadi">Cadi</a></li>
+  <li class="c018"><a href="/article/04-1031-s7/calf__the_golden">Calf, The Golden</a></li>
+  <li class="c018"><a href="/article/05-0082-calvary/calvary">Calvary</a></li>
+  <li class="c018">Calvinistic Ministers</li>
+  <li class="c018"><a href="/article/05-0091-camaldulians/camaldulians">Camaldulians</a></li>
+  <li class="c018"><a href="/article/05-0121-cameronians/cameronians">Cameronians</a></li>
+  <li class="c018"><a href="/article/05-0192-candlemas/candlemas">Candlemas</a></li>
+  <li class="c018"><a href="/article/05-0203-canon/canon">Canon</a></li>
+  <li class="c018"><a href="/article/05-0205-canoness/canoness">Canoness</a></li>
+  <li class="c018"><a href="/article/05-0206-canon-law/canon_law">Canon Law</a></li>
+  <li class="c018"><a href="/article/05-0205-canonization/canonization">Canonization</a></li>
+  <li class="c018"><a href="/article/05-0309-capuchins/capuchins">Capuchins</a></li>
+  <li class="c018"><a href="/article/05-0334-cardinal/cardinal">Cardinal</a></li>
+  <li class="c018"><a href="/article/05-0370-carmathians/carmathians">Carmathians</a></li>
+  <li class="c018"><a href="/article/05-0371-carmelites/carmelites">Carmelites</a></li>
+  <li class="c018"><a href="/article/05-0379-carnival/carnival">Carnival</a></li>
+  <li class="c018"><a href="/article/05-0448-carthage-synods-of/carthage__synods_of">Carthage, Synods of</a></li>
+  <li class="c018"><a href="/article/05-0449-carthusians/carthusians">Carthusians</a></li>
+  <li class="c018"><a href="/article/05-0479-cassock/cassock">Cassock</a></li>
+  <li class="c018"><a href="/article/05-0524-catechism/catechism">Catechism</a></li>
+  <li class="c018"><a href="/article/05-0526-catechumen/catechumen">Catechumen</a></li>
+  <li class="c018"><a href="/article/05-0534-cathars/cathars">Cathars</a></li>
+  <li class="c018"><a href="/article/05-0551-catholic/catholic">Catholic</a></li>
+  <li class="c018"><a href="/article/05-0552-catholic-apostolic-church-the/catholic_apostolic_church__the">Catholic Apostolic Church</a></li>
+  <li class="c018"><a href="/article/05-0625-celestines/celestines">Celestines</a></li>
+  <li class="c018"><a href="/article/05-0626-celibacy/celibacy">Celibacy</a></li>
+  <li class="c018"><a href="/article/05-0686-cenobites/cenobites">Cenobites</a></li>
+  <li class="c018"><a href="/article/05-0796-cerdonians/cerdonians">Cerdonians</a></li>
+  <li class="c018"><a href="/article/05-0838-chalcedon-council-of/chalcedon__council_of">Chalcedon, Council of</a></li>
+  <li class="c018"><a href="/article/05-0841-chaldee/chaldee">Chaldee</a></li>
+  <li class="c018"><a href="/article/05-0841-chalice/chalice">Chalice</a></li>
+  <li class="c018"><a href="/article/05-0859-chambre-ardente/chambre_ardente">Chambre Ardente</a></li>
+  <li class="c018"><a href="/article/05-0882-chant/chant">Chant</a></li>
+  <li class="c018"><a href="/article/05-0885-chantry/chantry">Chantry</a></li>
+  <li class="c018"><a href="/article/05-0886-chapel/chapel">Chapel</a></li>
+  <li class="c018"><a href="/article/05-0891-chapter/chapter">Chapter</a></li>
+  <li class="c018"><a href="/article/05-0887-chaplain/chaplain">Chaplain</a></li>
+  <li class="c018"><a href="/article/05-0995-chasuble/chasuble">Chasuble</a></li>
+  <li class="c018"><a href="/article/06-0174-chiliasm/chiliasm">Chiliasm</a></li>
+  <li class="c018"><a href="/article/06-0177-chimere/chimere">Chimere</a></li>
+  <li class="c018"><a href="/article/06-0289-chrism/chrism">Chrism</a></li>
+  <li class="c018"><a href="/article/06-0290-christ/christ">Christ</a></li>
+  <li class="c018"><a href="/article/06-0290-christadelphians/christadelphians">Christadelphians</a></li>
+  <li class="c018"><a href="/article/06-0295-christian-catholic-church/christian_catholic_church">Christian Catholic Church</a></li>
+  <li class="c018"><a href="/article/06-0295-christian-connection/christian_connection">Christian Connection</a></li>
+  <li class="c018"><a href="/article/06-0295-christian-endeavour-societies/christian_endeavour_societies">Christian Endeavour Societies</a></li>
+  <li class="c018"><a href="/article/06-0296-christianity/christianity">Christianity</a></li>
+  <li class="c018"><a href="/article/06-0307-christian-science/christian_science">Christian Science</a></li>
+  <li class="c018"><a href="/article/06-0309-christmas/christmas">Christmas</a></li>
+  <li class="c018"><a href="/article/06-0342-church/church">Church</a></li>
+  <li class="c018"><a href="/article/06-0345-church-army/church_army">Church Army</a></li>
+  <li class="c018"><a href="/article/06-0346-church-congress/church_congress">Church Congress</a></li>
+  <li class="c018"><a href="/article/06-0346-church-history/church_history">Church History</a></li>
+  <li class="c018"><a href="/article/06-0363-churching-of-women/churching_of_women">Churching of Women</a></li>
+  <li class="c018"><a href="/article/06-0364-churchwarden/churchwarden">Churchwarden</a></li>
+  <li class="c018"><a href="/article/06-0368-ciborum/ciborium">Ciborium</a></li>
+  <li class="c018"><a href="/article/06-0409-cistercians/cistercians">Cistercians</a></li>
+  <li class="c018"><a href="/article/06-0452-clares-poor/clares__poor">Clares, Poor</a></li>
+  <li class="c018"><a href="/article/06-0512-s4/clergy">Clergy</a></li>
+  <li class="c018"><a href="/article/06-0513-s3/clerk">Clerk</a></li>
+  <li class="c018"><a href="/article/06-0506-clementine-literature/clementine_literature">Clementine Literature</a></li>
+  <li class="c018"><a href="/article/06-0588-cluny/cluny">Cluny</a></li>
+  <li class="c018"><a href="/article/06-0672-cohen/cohen">Cohen</a></li>
+  <li class="c018"><a href="/article/06-0789-commendation/commendation">Commendation</a></li>
+  <li class="c018"><a href="/article/06-0802-common-order-book-of/common_order__book_of">Common Order, Book of</a></li>
+  <li class="c018"><a href="/article/06-0851-conclave/conclave">Conclave</a></li>
+  <li class="c018"><a href="/article/06-0855-concord-book-of/concord__book_of">Concord, Book of</a></li>
+  <li class="c018"><a href="/article/06-0856-concordat/concordat">Concordat</a></li>
+  <li class="c018"><a href="/article/06-0926-confession/confession">Confession</a></li>
+  <li class="c018"><a href="/article/06-0928-confessional/confessional">Confessional</a></li>
+  <li class="c018"><a href="/article/06-0929-confessor/confessor">Confessor</a></li>
+  <li class="c018"><a href="/article/06-0929-confirmation/confirmation">Confirmation</a></li>
+  <li class="c018"><a href="/article/06-0930-confirmation-of-bishops/confirmation_of_bishops">Confirmation of Bishops</a></li>
+  <li class="c018"><a href="/article/06-0952-congregation/congregation">Congregation</a></li>
+  <li class="c018"><a href="/article/06-0952-congregationalism/congregationalism">Congregationalism</a></li>
+  <li class="c018"><a href="/article/06-1003-consistory/consistory">Consistory</a></li>
+  <li class="c018"><a href="/article/06-1004-consistory-courts/consistory_courts">Consistory Courts</a></li>
+  <li class="c018"><a href="/article/06-1010-constance-council-of/constance__council_of">Constance, Council of</a></li>
+  <li class="c018"><a href="/article/07-0022-constantinople-councils-of/constantinople__councils_of">Constantinople, Councils of</a></li>
+  <li class="c018"><a href="/article/07-0033-consuetudinary/consuetudinary">Consuetudinary</a></li>
+  <li class="c018"><a href="/article/07-0060-convent/convent">Convent</a></li>
+  <li class="c018"><a href="/article/07-0061-conversion/conversion">Conversion</a></li>
+  <li class="c018"><a href="/article/07-0079-convocation/convocation">Convocation</a></li>
+  <li class="c018"><a href="/article/07-0110-cope/cope">Cope</a></li>
+  <li class="c018"><a href="/article/07-0130-copts/copts">Copts</a></li>
+  <li class="c018"><a href="/article/07-0152-corban/corban">Corban</a></li>
+  <li class="c018"><a href="/article/07-0206-corporal/corporal">Corporal</a></li>
+  <li class="c018"><a href="/article/07-0210-corpus-christi-feast-of/corpus_christi__feast_of">Corpus Christi, Feast of</a></li>
+  <li class="c018"><a href="/article/07-0329-council/council">Council</a></li>
+  <li class="c018"><a href="/article/07-0367-cowl/cowl">Cowl</a></li>
+  <li class="c018"><a href="/article/07-0368-cowley-fathers/cowley_fathers">Cowley Fathers</a></li>
+  <li class="c018"><a href="/article/07-0408-creatianism-and-traducianism/creatianism_and_traducianism">Creatianism and Traducianism</a></li>
+  <li class="c018"><a href="/article/07-0410-credence/credence">Credence</a></li>
+  <li class="c018"><a href="/article/07-0412-creeds/creeds">Creeds</a></li>
+  <li class="c018">Cross and Crucifixion</li>
+  <li class="c018"><a href="/article/07-0542-crozier/crozier">Crozier</a></li>
+  <li class="c018"><a href="/article/07-0637-culdees/culdees">Culdees</a></li>
+  <li class="c018"><a href="/article/07-0661-curia-romana/curia_romana">Curia Romana</a></li>
+  <li class="c018"><a href="/article/07-0658-curate/curate">Curate</a></li>
+  <li class="c018"><a href="/article/07-0723-cyprus-church-of/cyprus__church_of">Cyprus, Church of</a></li>
+  <li class="c018"><a href="/article/07-0798-dalmatic/dalmatic">Dalmatic</a></li>
+  <li class="c018"><a href="/article/07-0886-davidists/davidists">Davidists</a></li>
+  <li class="c018"><a href="/article/07-0901-deacon/deacon">Deacon</a></li>
+  <li class="c018"><a href="/article/07-0902-deaconess/deaconess">Deaconess</a></li>
+  <li class="c018"><a href="/article/07-0920-dean/dean">Dean</a></li>
+  <li class="c018"><a href="/article/07-0939-decretals/decretals">Decretals</a></li>
+  <li class="c018"><a href="/article/07-0942-dedication/dedication">Dedication</a></li>
+  <li class="c018"><a href="/article/07-0957-deism/deism">Deism</a></li>
+  <li class="c018"><a href="/article/08-0090-dervish/dervish">Dervish</a></li>
+  <li class="c018"><a href="/article/08-0136-devil/devil">Devil</a></li>
+  <li class="c018">Didache, The</li>
+  <li class="c018"><a href="/article/08-0296-diocese/diocese">Diocese</a></li>
+  <li class="c018"><a href="/article/08-0299-diognetus-epistle-to/diognetus__epistle_to">Diognetus, Epistle to</a></li>
+  <li class="c018"><a href="/article/08-0301-dionysius-areopagiticus/dionysius_areopagiticus">Dionysius Areopagiticus</a></li>
+  <li class="c018"><a href="/article/08-0325-diptych/diptych">Diptych</a></li>
+  <li class="c018"><a href="/article/08-0327-dirge/dirge">Dirge</a></li>
+  <li class="c018"><a href="/article/08-0328-disciples-of-christ/disciples_of_christ">Disciples of Christ</a></li>
+  <li class="c018"><a href="/article/08-0330-dispensation/dispensation">Dispensation</a></li>
+  <li class="c018"><a href="/article/08-0335-dissenter/dissenter">Dissenter</a></li>
+  <li class="c018"><a href="/article/08-0370-docetae/docetae">Docetae</a></li>
+  <li class="c018"><a href="/article/08-0402-dogma/dogma">Dogma</a></li>
+  <li class="c018"><a href="/article/08-0405-dogmatic-theology/dogmatic_theology">Dogmatic Theology</a></li>
+  <li class="c018"><a href="/article/08-0423-dominicans/dominicans">Dominicans</a></li>
+  <li class="c018"><a href="/article/08-0429-donation-of-constantine/donation_of_constantine">Donation of Constantine</a></li>
+  <li class="c018"><a href="/article/08-0431-donatists/donatists">Donatists</a></li>
+  <li class="c018"><a href="/article/08-0457-dort-synod-of/dort__synod_of">Dort, Synod of</a></li>
+  <li class="c018"><a href="/article/08-0459-dossal/dossal">Dossal</a></li>
+  <li class="c018"><a href="/article/08-0469-doukhobors/doukhobors">Doukhobors</a></li>
+  <li class="c018"><a href="/article/08-0484-doxology/doxology">Doxology</a></li>
+  <li class="c018"><a href="/article/08-0855-easter/easter">Easter</a></li>
+  <li class="c018"><a href="/article/08-0869-ebionites/ebionites">Ebionites</a></li>
+  <li class="c018"><a href="/article/08-0880-ecclesiastical-jurisdiction/ecclesiastical_jurisdiction">Ecclesiastical Jurisdiction</a></li>
+  <li class="c018"><a href="/article/08-0880-ecclesiastical-commissioners/ecclesiastical_commissioners">Ecclesiastical Commissioners</a></li>
+  <li class="c018"><a href="/article/09-0183-elder-plant/elder__plant_">Elder</a></li>
+  <li class="c018"><a href="/article/09-0318-elvira-synod-of/elvira__synod_of">Elvira, Synod of</a></li>
+  <li class="c018"><a href="/article/09-0324-ember-days-and-ember-weeks/ember_days_and_ember_weeks">Ember Days</a></li>
+  <li class="c018"><a href="/article/09-0394-encyclical/encyclical">Encyclical</a></li>
+  <li class="c018">Energia</li>
+  <li class="c018"><a href="/article/09-0433-england/england">England, Church of</a></li>
+  <li class="c018"><a href="/article/09-0686-s6/enthusiasm">Enthusiasm</a></li>
+  <li class="c018"><a href="/article/09-0707-ephesus-council-of/ephesus__council_of">Ephesus, Council of</a></li>
+  <li class="c018"><a href="/article/09-0708-ephod/ephod">Ephod</a></li>
+  <li class="c018"><a href="/article/09-0727-s3/epiphany__feast_of">Epiphany, Feast of</a></li>
+  <li class="c018"><a href="/article/09-0731-episcopacy/episcopacy">Episcopacy</a></li>
+  <li class="c018"><a href="/article/09-0792-eschatology/eschatology">Eschatology</a></li>
+  <li class="c018"><a href="/article/09-0811-s2/essenes">Essenes</a></li>
+  <li class="c018"><a href="/article/09-0819-s2/establishment">Establishment</a></li>
+  <li class="c018"><a href="/article/09-0900-s4/eucharist">Eucharist</a></li>
+  <li class="c018"><a href="/article/09-0996-evangelical-alliance/evangelical_alliance">Evangelical Alliance</a></li>
+  <li class="c018"><a href="/article/09-0997-evangelical-association/evangelical_association">Evangelical Association</a></li>
+  <li class="c018"><a href="/article/10-0013-evangelical-church-conference/evangelical_church_conference">Evangelical Church Conference</a></li>
+  <li class="c018"><a href="/article/10-0013-evangelical-union/evangelical_union">Evangelical Union</a></li>
+  <li class="c018"><a href="/article/10-0061-exarch/exarch">Exarch</a></li>
+  <li class="c018"><a href="/article/10-0071-excommunication/excommunication">Excommunication</a></li>
+  <li class="c018"><a href="/article/10-0092-exorcist/exorcist">Exorcist</a></li>
+  <li class="c018"><a href="/article/10-0101-extreme-unction/extreme_unction">Extreme Unction</a></li>
+  <li class="c018"><a href="/article/10-0148-fakir/fakir">Fakir</a></li>
+  <li class="c018"><a href="/article/10-0159-s2/faldstool">Faldstool</a></li>
+  <li class="c018"><a href="/article/10-0170-familists/familists">Familists</a></li>
+  <li class="c018"><a href="/article/10-0205-s2/fasting">Fasting</a></li>
+  <li class="c018"><a href="/article/10-0212-s2/fathers_of_the_church">Fathers of the Church</a></li>
+  <li class="c018"><a href="/article/10-0232-s4/feasts_and_festivals">Feasts and Festivals</a></li>
+  <li class="c018"><a href="/article/10-0242-s2/febronianism">Febronianism</a></li>
+  <li class="c018"><a href="/article/10-0295-s3/ferrara-florence__council_of">Ferrara-Florence, Council of</a></li>
+  <li class="c018"><a href="/article/10-0481-flagellants/flagellants">Flagellants</a></li>
+  <li class="c018"><a href="/article/10-0626-font/font">Font</a></li>
+  <li class="c018"><a href="/article/11-0013-franciscans/franciscans">Franciscans</a></li>
+  <li class="c018"><a href="/article/11-0033-frankincense/frankincense">Frankincense</a></li>
+  <li class="c018"><a href="/article/11-0053-s2/fraticelli">Fraticelli</a></li>
+  <li class="c018"><a href="/article/11-0081-s7/free_baptists">Free Baptists, or Freewill Baptists</a></li>
+  <li class="c018"><a href="/article/11-0082-free-church-of-england/free_church_of_england">Free Church of England</a></li>
+  <li class="c018"><a href="/article/11-0083-free-church-of-scotland/free_church_of_scotland">Free Church of Scotland</a></li>
+  <li class="c018"><a href="/article/11-0082-free-church-federation/free_church_federation">Free Church Federation</a></li>
+  <li class="c018"><a href="/article/11-0225-friar/friar">Friars</a></li>
+  <li class="c018"><a href="/article/11-0236-s2/friends__society_of">Friends, Society of</a></li>
+  <li class="c018"><a href="/article/11-0436-gallicanism/gallicanism">Gallicanism</a></li>
+  <li class="c018"><a href="/article/11-0473-gaon/gaon">Gaon</a></li>
+  <li class="c018"><a href="/article/11-0790-s4/german_baptist_brethren">German Baptist Brethren, or German Brethren (U. S. A.)</a></li>
+  <li class="c018"><a href="/article/11-0791-s2/german_catholics">German Catholics</a></li>
+  <li class="c018"><a href="/article/11-0795-german-evangelical-synod-of-north-america/german_evangelical_synod_of_north_america">German Evangelical Synod of North America</a></li>
+  <li class="c018"><a href="/article/11-0940-ghazi/ghazi">Ghazi</a></li>
+  <li class="c018"><a href="/article/11-0951-giaour/giaour">Giaour</a></li>
+  <li class="c018"><a href="/article/12-0099-s2/glasites">Glasites</a></li>
+  <li class="c018"><a href="/article/12-0141-s4/glory">Glory</a></li>
+  <li class="c018"><a href="/article/12-0169-gnosticism/gnosticism">Gnosticism</a></li>
+  <li class="c018"><a href="/article/12-0226-s5/golden_rose">Golden Rose</a></li>
+  <li class="c018"><a href="/article/12-0254-s4/good_friday">Good Friday</a></li>
+  <li class="c018"><a href="/article/12-0326-grace/grace">Grace</a></li>
+  <li class="c018"><a href="/article/12-0328-s6/gradual">Gradual</a></li>
+  <li class="c018"><a href="/article/12-0366-grandmontines/grandmontines">Grandmontines</a></li>
+  <li class="c018"><a href="/article/12-0413-s4/great_awakening">Great Awakening</a></li>
+  <li class="c018"><a href="/article/12-0764-gustavus-adolphus-union/gustavus_adolphus_union">Gustavus Adolphus Union</a></li>
+  <li class="c018"><a href="/article/12-0809-s2/habdala">Habdala</a></li>
+  <li class="c018"><a href="/article/12-0839-s7/haggada">Haggada</a></li>
+  <li class="c018"><a href="/article/12-0841-s6/hagiology">Hagiology</a></li>
+  <li class="c018"><a href="/article/12-0852-s3/hajj">Hajj</a></li>
+  <li class="c018"><a href="/article/12-0854-s7/halakha">Halakha</a></li>
+  <li class="c018"><a href="/article/12-0861-s4/halfway_covenant">Halfway Covenant</a></li>
+  <li class="c018">Halisah</li>
+  <li class="c018"><a href="/article/12-0880-s3/hallel">Hallel</a></li>
+  <li class="c018"><a href="/article/12-0957-s3/hanukkah">Hanukkah</a></li>
+  <li class="c018"><a href="/article/12-0959-haptara/haptara">Haptara</a></li>
+  <li class="c018"><a href="/article/12-0975-harem/harem">Harem</a></li>
+  <li class="c018"><a href="/article/13-0189-hebrew-religion/hebrew_religion">Hebrew Religion</a></li>
+  <li class="c018"><a href="/article/13-0224-heidelberg-catechism/heidelberg_catechism__the">Heidelberg Catechism</a></li>
+  <li class="c018"><a href="/article/13-0266-s3/helvetic_confessions">Helvetic Confessions</a></li>
+  <li class="c018"><a href="/article/13-0270-hemerobaptists/hemerobaptists">Hemerobaptists</a></li>
+  <li class="c018"><a href="/article/13-0374-heresy/heresy">Heresy</a></li>
+  <li class="c018"><a href="/article/13-0383-hermas-shepherd-of/hermas__shepherd_of">Hermas, Shepherd of</a></li>
+  <li class="c018"><a href="/article/13-0385-hermeneutics/hermeneutics">Hermeneutics</a></li>
+  <li class="c018"><a href="/article/13-0387-hermit/hermit">Hermit</a></li>
+  <li class="c018"><a href="/article/13-0430-s3/hesychasts">Hesychasts</a></li>
+  <li class="c018"><a href="/article/13-0468-hierarchy/hierarchy">Hierarchy</a></li>
+  <li class="c018"><a href="/article/13-0470-hieronymites/hieronymites">Hieronymites</a></li>
+  <li class="c018"><a href="/article/13-0472-s3/high_place">High Place</a></li>
+  <li class="c018"><a href="/article/13-0536-hippolytus-canons-of/hippolytus__the_canons_of">Hippolytus, The Canons of</a></li>
+  <li class="c018"><a href="/article/13-0637-s6/holy">Holy</a></li>
+  <li class="c018">Holy Water</li>
+  <li class="c018"><a href="/article/13-0640-s4/holy_week">Holy Week</a></li>
+  <li class="c018"><a href="/article/13-0661-s2/homiletics">Homiletics</a></li>
+  <li class="c018"><a href="/article/13-0661-s3/homily">Homily</a></li>
+  <li class="c018"><a href="/article/13-0810-s3/hospice">Hospice</a></li>
+  <li class="c018"><a href="/article/13-0828-houri/houri">Houri</a></li>
+  <li class="c018"><a href="/article/13-0828-hours-canonical/hours__canonical">Hours, Canonical</a></li>
+  <li class="c018"><a href="/article/13-0837-housel/housel">Housel</a></li>
+  <li class="c018"><a href="/article/13-0897-humanitarians/humanitarians">Humanitarians</a></li>
+  <li class="c018"><a href="/article/13-0909-s3/humiliati">Humiliati</a></li>
+  <li class="c018"><a href="/article/14-0019-hussites/hussites">Hussites</a></li>
+  <li class="c018"><a href="/article/14-0193-hymns/hymns">Hymns</a></li>
+  <li class="c018"><a href="/article/14-0219-s5/hypostasis">Hypostasis</a></li>
+  <li class="c018"><a href="/article/14-0231-s2/iblis">Iblis</a></li>
+  <li class="c018"><a href="/article/14-0283-icon/icon">Icon</a></li>
+  <li class="c018"><a href="/article/14-0284-s2/iconoclasts">Iconoclasts</a></li>
+  <li class="c018"><a href="/article/14-0308-ignorantines/ignorantines">Ignorantines</a></li>
+  <li class="c018"><a href="/article/14-0339-illuminati/illuminati">Illuminati</a></li>
+  <li class="c018"><a href="/article/14-0347-s3/image">Image</a></li>
+  <li class="c018">Imam</li>
+  <li class="c018"><a href="/article/14-0352-s1/imitation_of_christ__the">Imitation of Christ, The</a></li>
+  <li class="c018"><a href="/article/14-0353-s2/immaculate_conception__the">Immaculate Conception</a></li>
+  <li class="c018"><a href="/article/14-0355-s4/immortality">Immortality</a></li>
+  <li class="c018"><a href="/article/14-0375-in-coena-domini/in_coena_domini">In Coena Domini</a></li>
+  <li class="c018"><a href="/article/14-0388-incumbent/incumbent">Incumbent</a></li>
+  <li class="c018"><a href="/article/14-0392-independents/independents">Independents</a></li>
+  <li class="c018"><a href="/article/14-0393-index-librorum-prohibitorum/index_librorum_prohibitorum">Index Librorum Prohibitorum</a></li>
+  <li class="c018"><a href="/article/14-0534-s2/indulgence">Indulgence</a></li>
+  <li class="c018"><a href="/article/14-0536-indult/indult">Indult</a></li>
+  <li class="c018"><a href="/article/14-0540-s2/infallibility">Infallibility</a></li>
+  <li class="c018"><a href="/article/14-0614-s2/innocents__day">Innocents’ Day</a></li>
+  <li class="c018"><a href="/article/14-0618-inquisition-the/inquisition__the">Inquisition, The</a></li>
+  <li class="c018"><a href="/article/14-0676-s2/inspiration">Inspiration</a></li>
+  <li class="c018"><a href="/article/14-0679-s2/installation">Installation</a></li>
+  <li class="c018"><a href="/article/14-0681-s3/institutional_church">Institutional Church</a></li>
+  <li class="c018"><a href="/article/14-0724-interim/interim">Interim</a></li>
+  <li class="c018"><a href="/article/14-0715-s2/interdict">Interdict</a></li>
+  <li class="c018"><a href="/article/14-0753-s3/investiture">Investiture</a></li>
+  <li class="c018"><a href="/article/14-0822-ireland-church-of/ireland__church_of">Ireland, Church of</a></li>
+  <li class="c018"><a href="/article/14-0906-islam/islam">Islam</a></li>
+  <li class="c018"><a href="/article/15-0135-s2/jacobite_church">Jacobite Church</a></li>
+  <li class="c018"><a href="/article/15-0169-s2/jansenism">Jansenism</a></li>
+  <li class="c018"><a href="/article/15-0336-s3/jehovah">Jehovah</a></li>
+  <li class="c018"><a href="/article/15-0347-s4/jerahmeel">Jerahmeel</a></li>
+  <li class="c018"><a href="/article/15-0360-jerusalem-synod-of/jerusalem__synod_of">Jerusalem, Synod of</a></li>
+  <li class="c018"><a href="/article/15-0362-jesuati/jesuati">Jesuati</a></li>
+  <li class="c018"><a href="/article/15-0362-jesuits/jesuits">Jesuits</a></li>
+  <li class="c018"><a href="/article/15-0373-jesus-christ/jesus_christ">Jesus Christ</a></li>
+  <li class="c018"><a href="/article/15-0398-jews/jews">Jews</a></li>
+  <li class="c018"><a href="/article/15-0442-s3/jihad">Jihad</a></li>
+  <li class="c018">Jubilee, Year</li>
+  <li class="c018">Jubilee, Year of</li>
+  <li class="c018">Ka’ba</li>
+  <li class="c018"><a href="/article/15-0647-kabbalah/kabbalah">Kabbalah</a></li>
+  <li class="c018"><a href="/article/15-0786-kermesse/kermesse">Kermesse</a></li>
+  <li class="c018"><a href="/article/15-0790-s3/keswick_convention">Keswick Convention</a></li>
+  <li class="c018"><a href="/article/15-0865-kismet/kismet">Kismet</a></li>
+  <li class="c018"><a href="/article/15-0932-koran/koran">Koran</a></li>
+  <li class="c018"><a href="/article/15-0947-koreshan-ecclesia-the/koreshan_ecclesia__the">Koreshan Ecclesia, The</a></li>
+  <li class="c018"><a href="/article/15-0950-s1/kosher">Kosher or Kasher</a></li>
+  <li class="c018"><a href="/article/15-0994-s5/kyrie">Kyrie</a></li>
+  <li class="c018"><a href="/article/16-0020-labour-church-the/labour_church__the">Labour Church, The</a></li>
+  <li class="c018"><a href="/article/16-0125-s2/lamb">Lamb</a></li>
+  <li class="c018"><a href="/article/16-0130-s4/lambeth_conferences">Lambeth Conferences</a></li>
+  <li class="c018"><a href="/article/16-0209-laodicea-synod-of/laodicea__synod_of">Laodicea, Synod of</a></li>
+  <li class="c018"><a href="/article/16-0260-lateran-councils/lateran_councils">Lateran Councils</a></li>
+  <li class="c018"><a href="/article/16-0298-s2/laud">Laud</a></li>
+  <li class="c018"><a href="/article/16-0310-s2/lavabo">Lavabo</a></li>
+  <li class="c018"><a href="/article/16-0330-s5/lay">Lay</a></li>
+  <li class="c018"><a href="/article/16-0332-s2/laymen__houses_of">Laymen, Houses of</a></li>
+  <li class="c018"><a href="/article/16-0333-s2/lazarites">Lazarites</a></li>
+  <li class="c018"><a href="/article/16-0334-s3/lazarus__st__order_of">Lazarus, St., Order of</a></li>
+  <li class="c018"><a href="/article/16-0377-lection-lectionary/lection__lectionary">Lection, Lectionary</a></li>
+  <li class="c018"><a href="/article/16-0378-s2/lector">Lector</a></li>
+  <li class="c018"><a href="/article/16-0394-s4/legate">Legate</a></li>
+  <li class="c018"><a href="/article/16-0447-lent/lent">Lent</a></li>
+  <li class="c018"><a href="/article/16-0557-s2/libellatici">Libellatici</a></li>
+  <li class="c018"><a href="/article/16-0558-liber-diurnus-romanorum-pontificum/liber_diurnus_romanorum_pontificum">Liber Diurnus</a></li>
+  <li class="c018"><a href="/article/16-0562-s3/liber_pontificalis">Liber Pontificalis</a></li>
+  <li class="c018"><a href="/article/16-0563-libertines/libertines">Libertines</a></li>
+  <li class="c018"><a href="/article/16-0697-s2/lights__ceremonial_use_of">Lights, Ceremonial use of</a></li>
+  <li class="c018"><a href="/article/16-0714-limbus/limbus">Limbus</a></li>
+  <li class="c018"><a href="/article/16-0720-s2/limina_apostolorum">Limina Apostolorum</a></li>
+  <li class="c018"><a href="/article/16-0734-lincoln-judgment-the/lincoln_judgment__the">Lincoln Judgment, The</a></li>
+  <li class="c018"><a href="/article/16-0804-s2/litany">Litany</a></li>
+  <li class="c018"><a href="/article/16-0817-s2/liturgy">Liturgy</a></li>
+  <li class="c018"><a href="/article/16-0900-logia/logia">Logia</a></li>
+  <li class="c018"><a href="/article/17-0087-s8/low_churchman">Low Churchman</a></li>
+  <li class="c018"><a href="/article/17-0093-s7/low_sunday">Low Sunday</a></li>
+  <li class="c018"><a href="/article/17-0155-s2/lutherans">Lutheran</a></li>
+  <li class="c018"><a href="/article/17-0157-s2/luther_league">Luther League</a></li>
+  <li class="c018"><a href="/article/17-0191-s2/lyons__councils_of">Lyons, Councils of</a></li>
+  <li class="c018"><a href="/article/17-0410-mahdi/mahdi">Mahdi</a></li>
+  <li class="c018"><a href="/article/17-0426-mahommedan-institutions/mahommedan_institutions">Mahommedan Institutions</a></li>
+  <li class="c018"><a href="/article/17-0429-mahommedan-law/mahommedan_law">Mahommedan Law</a></li>
+  <li class="c018"><a href="/article/17-0432-mahommedan-religion/mahommedan_religion">Mahommedan Religion</a></li>
+  <li class="c018"><a href="/article/17-0571-s6/mandaeans">Mandaeans</a></li>
+  <li class="c018"><a href="/article/17-0589-manichaeism/manichaeism">Manichaeism</a></li>
+  <li class="c018"><a href="/article/17-0599-s2/maniple">Maniple</a></li>
+  <li class="c018"><a href="/article/17-0615-manse/manse">Manse</a></li>
+  <li class="c018"><a href="/article/17-0684-marabout/marabout">Marabout</a></li>
+  <li class="c018"><a href="/article/17-0698-s2/marburg__colloquy_of">Marburg, Colloquy of</a></li>
+  <li class="c018">Marcion and the Marcionite Church</li>
+  <li class="c018"><a href="/article/17-0764-maronites/maronites">Maronites</a></li>
+  <li class="c018"><a href="/article/17-0767-s3/marprelate_controversy">Marprelate Controversy</a></li>
+  <li class="c018"><a href="/article/17-0821-s6/martyr">Martyr</a></li>
+  <li class="c018"><a href="/article/17-0822-martyrology/martyrology">Martyrology</a></li>
+  <li class="c018"><a href="/article/17-0908-matins/matins">Matins</a></li>
+  <li class="c018"><a href="/article/17-0923-s8/maundy_thursday">Maundy Thursday</a></li>
+  <li class="c018"><a href="/article/17-0930-maurists/maurists">Maurists</a></li>
+  <li class="c018"><a href="/article/17-1037-mechitharists/mechitharists">Mechitharists</a></li>
+  <li class="c018"><a href="/article/18-0111-melchites/melchites">Melchites</a></li>
+  <li class="c018"><a href="/article/18-0144-mendicant-movement-and-orders/mendicant_movement_and_orders">Mendicant Movement and Orders</a></li>
+  <li class="c018"><a href="/article/18-0151-s3/mennonites">Mennonites</a></li>
+  <li class="c018"><a href="/article/18-0210-s2/messiah">Messiah</a></li>
+  <li class="c018"><a href="/article/18-0314-s2/methodism">Methodism</a></li>
+  <li class="c018"><a href="/article/18-0318-s2/methodist_new_connexion">Methodist New Connexion</a></li>
+  <li class="c018"><a href="/article/18-0321-s6/metropolitan">Metropolitan</a></li>
+  <li class="c018"><a href="/article/18-0443-midrash/midrash">Midrash</a></li>
+  <li class="c018"><a href="/article/18-0485-s4/millennium">Millennium</a></li>
+  <li class="c018"><a href="/article/18-0568-minister/minister">Minister</a></li>
+  <li class="c018"><a href="/article/18-0597-s4/miracle">Miracle</a></li>
+  <li class="c018"><a href="/article/18-0605-s5/miserere">Miserere</a></li>
+  <li class="c018"><a href="/article/18-0607-s3/missal">Missal</a></li>
+  <li class="c018"><a href="/article/18-0610-s4/missions">Missions</a></li>
+  <li class="c018"><a href="/article/18-0654-mitre/mitre">Mitre</a></li>
+  <li class="c018"><a href="/article/18-0672-moderator/moderator">Moderator</a></li>
+  <li class="c018"><a href="/article/18-0716-monarchianism/monarchianism">Monarchianism</a></li>
+  <li class="c018"><a href="/article/18-0717-monasticism/monasticism">Monasticism</a></li>
+  <li class="c018"><a href="/article/18-0754-monk/monk">Monk</a></li>
+  <li class="c018"><a href="/article/18-0762-s3/monophysites">Monophysites</a></li>
+  <li class="c018"><a href="/article/18-0764-monothelites/monothelites">Monothelites</a></li>
+  <li class="c018"><a href="/article/18-0769-monsignor/monsignor">Monsignor</a></li>
+  <li class="c018"><a href="/article/18-0775-monstrance/monstrance">Monstrance</a></li>
+  <li class="c018"><a href="/article/18-0787-montanism/montanism">Montanism</a></li>
+  <li class="c018"><a href="/article/18-0850-moravian-brethern/moravian_brethren">Moravian Brethren</a></li>
+  <li class="c018"><a href="/article/18-0874-mormons/mormons">Mormons</a></li>
+  <li class="c018"><a href="/article/18-0906-s5/morse">Morse</a></li>
+  <li class="c018"><a href="/article/18-0914-s6/mortuary">Mortuary</a></li>
+  <li class="c018"><a href="/article/18-0981-s4/mozarab">Mozarab</a></li>
+  <li class="c018"><a href="/article/18-0986-s8/muckers">Muckers</a></li>
+  <li class="c018">Mufti</li>
+  <li class="c018"><a href="/article/19-0138-mysticism/mysticism">Mysticism</a></li>
+  <li class="c018"><a href="/article/19-0143-mythology/mythology">Mythology</a></li>
+  <li class="c018"><a href="/article/19-0334-nazarenes/nazarenes">Nazarenes</a></li>
+  <li class="c018"><a href="/article/19-0356-necrology/necrology">Necrology</a></li>
+  <li class="c018"><a href="/article/19-0390-neo-caesarea-synod-of/neo-caesarea__synod_of">Neo-Caesarea, Synod of</a></li>
+  <li class="c018"><a href="/article/19-0390-neophyte/neophyte">Neophyte</a></li>
+  <li class="c018"><a href="/article/19-0425-nestorians/nestorians">Nestorians</a></li>
+  <li class="c018"><a href="/article/19-0536-s2/new_jerusalem_church">New Jerusalem Church</a></li>
+  <li class="c018"><a href="/article/19-0618-s5/new_year_s_day">New Year’s Day</a></li>
+  <li class="c018"><a href="/article/19-0667-s3/nicaea__council_of">Nicaea, Councils of</a></li>
+  <li class="c018"><a href="/article/19-0729-s2/nîmes__councils_of">Nîmes, Councils of</a></li>
+  <li class="c018"><a href="/article/19-0762-s9/nonconformist">Nonconformist</a></li>
+  <li class="c018"><a href="/article/19-0853-nosairis/nosairis">Nosairis</a></li>
+  <li class="c018"><a href="/article/19-0872-novice/novice">Novice</a></li>
+  <li class="c018"><a href="/article/19-0949-nun/nun">Nun</a></li>
+  <li class="c018"><a href="/article/19-0949-nuncio/nuncio">Nuncio</a></li>
+  <li class="c018"><a href="/article/19-0987-s5/oblation">Oblation</a></li>
+  <li class="c018"><a href="/article/20-0030-oecumenical/oecumenical">Oecumenical</a></li>
+  <li class="c018"><a href="/article/20-0034-offertory/offertory">Offertory</a></li>
+  <li class="c018"><a href="/article/20-0040-official/official">Official</a></li>
+  <li class="c018"><a href="/article/20-0091-s1/old_catholics">Old Catholics</a></li>
+  <li class="c018"><a href="/article/20-0112-olivetans/olivetans">Olivetans</a></li>
+  <li class="c018"><a href="/article/20-0154-s3/ophites">Ophites</a></li>
+  <li class="c018"><a href="/article/20-0190-oratory/oratory">Oratory</a></li>
+  <li class="c018">Oratory of St. Philip Neri, Congregation of the</li>
+  <li class="c018"><a href="/article/20-0209-s2/order__holy">Order, Holy</a></li>
+  <li class="c018"><a href="/article/20-0363-s2/orphrey">Orphrey</a></li>
+  <li class="c018"><a href="/article/20-0367-orthodox-eastern-church/orthodox_eastern_church">Orthodox Eastern Church</a></li>
+  <li class="c018"><a href="/article/20-0694-pallium/pallium">Pallium or Pall</a></li>
+  <li class="c018"><a href="/article/20-0706-palm-sunday/palm_sunday">Palm Sunday</a></li>
+  <li class="c018"><a href="/article/20-0738-pantheism/pantheism">Pantheism</a></li>
+  <li class="c018">Party Royal</li>
+  <li class="c018"><a href="/article/20-0949-passion-week/passion_week">Passion Week</a></li>
+  <li class="c018"><a href="/article/20-0960-s3/pastoral_letter">Pastoral Letter</a></li>
+  <li class="c018"><a href="/article/20-0960-pastoral-staff/pastoral_staff">Pastoral Staff</a></li>
+  <li class="c018"><a href="/article/20-0964-s4/patarenes">Patarenes</a></li>
+  <li class="c018"><a href="/article/20-0965-s2/paten">Paten</a></li>
+  <li class="c018"><a href="/article/20-0999-s2/patriarch">Patriarch</a></li>
+  <li class="c018"><a href="/article/20-1003-s4/patron">Patron</a></li>
+  <li class="c018"><a href="/article/20-1027-s3/paulicians">Paulicians</a></li>
+  <li class="c018"><a href="/article/20-1045-s2/pax">Pax</a></li>
+  <li class="c018"><a href="/article/21-0050-pectoral/pectoral">Pectoral</a></li>
+  <li class="c018"><a href="/article/21-0050-peculiar/peculiar">Peculiar</a></li>
+  <li class="c018"><a href="/article/21-0050-peculiar-people/peculiar_people">Peculiar People</a></li>
+  <li class="c018"><a href="/article/21-0076-s3/pelagius">Pelagius</a></li>
+  <li class="c018"><a href="/article/21-0098-s3/penance">Penance</a></li>
+  <li class="c018"><a href="/article/21-0112-penitential/penitential">Penitential</a></li>
+  <li class="c018"><a href="/article/21-0112-penitentiary/penitentiary">Penitentiary</a></li>
+  <li class="c018"><a href="/article/21-0138-pentecost/pentecost">Pentecost</a></li>
+  <li class="c018"><a href="/article/21-0321-s3/peter_s_pence">Peter’s Pence</a></li>
+  <li class="c018"><a href="/article/21-0359-s4/pew">Pew</a></li>
+  <li class="c018"><a href="/article/21-0394-s2/philadelphians">Philadelphians</a></li>
+  <li class="c018"><a href="/article/21-0572-s3/phylactery">Phylactery</a></li>
+  <li class="c018"><a href="/article/21-0600-s3/piarists">Piarists</a></li>
+  <li class="c018"><a href="/article/21-0619-s1/pietism">Pietism</a></li>
+  <li class="c018"><a href="/article/21-0630-s6/pilgrim">Pilgrim</a></li>
+  <li class="c018"><a href="/article/21-0631-s2/pilgrimage">Pilgrimage</a></li>
+  <li class="c018"><a href="/article/21-0670-s2/pirke_aboth">Pirke Aboth</a></li>
+  <li class="c018"><a href="/article/21-0675-pisa-council-of/pisa__council_of">Pisa, Council of</a></li>
+  <li class="c018"><a href="/article/21-0682-s6/pistoia__synod_of">Pistoia, Synod of</a></li>
+  <li class="c018"><a href="/article/21-0897-s3/plymouth_brethren">Plymouth Brethren</a></li>
+  <li class="c018"><a href="/article/21-0930-s2/poissy__colloquy_of">Poissy, Colloquy of</a></li>
+  <li class="c018"><a href="/article/22-0095-s2/pope">Pope</a></li>
+  <li class="c018"><a href="/article/22-0272-prayer-book-of-common/prayer__book_of_common">Prayer, Book of Common</a></li>
+  <li class="c018"><a href="/article/22-0276-prayers-for-the-dead/prayers_for_the_dead">Prayers for the Dead</a></li>
+  <li class="c018"><a href="/article/22-0277-preaching/preaching">Preaching</a></li>
+  <li class="c018"><a href="/article/22-0280-prebendary/prebendary">Prebendary</a></li>
+  <li class="c018"><a href="/article/22-0288-s2/precentor">Precentor</a></li>
+  <li class="c018"><a href="/article/22-0289-s4/preconization">Preconization</a></li>
+  <li class="c018"><a href="/article/22-0289-s6/predestination">Predestination</a></li>
+  <li class="c018"><a href="/article/22-0292-prelate/prelate">Prelate</a></li>
+  <li class="c018"><a href="/article/22-0293-premonstratensians/premonstratensians">Premonstratensians</a></li>
+  <li class="c018"><a href="/article/22-0295-presbyter/presbyter">Presbyter</a></li>
+  <li class="c018"><a href="/article/22-0297-presbyterianism/presbyterianism">Presbyterianism</a></li>
+  <li class="c018"><a href="/article/22-0338-primate/primate">Primate</a></li>
+  <li class="c018"><a href="/article/22-0352-primitive-methodist-church-the/primitive_methodist_church__the">Primitive Methodist Church</a></li>
+  <li class="c018"><a href="/article/22-0373-prior/prior">Prior</a></li>
+  <li class="c018"><a href="/article/22-0429-procession/procession">Procession</a></li>
+  <li class="c018"><a href="/article/22-0432-s2/procession_path">Procession Path</a></li>
+  <li class="c018"><a href="/article/22-0449-s6/prolocutor">Prolocutor</a></li>
+  <li class="c018"><a href="/article/22-0470-s4/proselyte">Proselyte</a></li>
+  <li class="c018"><a href="/article/22-0487-s1/protestant">Protestant</a></li>
+  <li class="c018"><a href="/article/22-0488-s3/protestant_episcopal_church">Protestant Episcopal Church</a></li>
+  <li class="c018"><a href="/article/22-0487-s2/protestantenverein">Protestantenverein</a></li>
+  <li class="c018"><a href="/article/22-0530-s3/provision">Provision</a></li>
+  <li class="c018"><a href="/article/22-0675-s4/purgatory">Purgatory</a></li>
+  <li class="c018"><a href="/article/22-0677-s2/purim">Purim</a></li>
+  <li class="c018"><a href="/article/22-0681-s2/puritanism">Puritanism</a></li>
+  <li class="c018"><a href="/article/22-0721-qaraites/qaraites">Qaraites</a></li>
+  <li class="c018"><a href="/article/22-0725-quakers/quakers">Quakers</a></li>
+  <li class="c018"><a href="/article/22-0766-quietism/quietism">Quietism</a></li>
+  <li class="c018"><a href="/article/22-0784-rabbi/rabbi">Rabbi</a></li>
+  <li class="c018">Ramadan</li>
+  <li class="c018"><a href="/article/22-0912-s3/ranters">Ranters</a></li>
+  <li class="c018">Rawendis</li>
+  <li class="c018"><a href="/article/22-0984-rector/rector">Rector</a></li>
+  <li class="c018"><a href="/article/22-0984-s2/recusant">Recusant</a></li>
+  <li class="c018"><a href="/article/23-0035-s3/reformed_churches">Reformed Churches</a></li>
+  <li class="c018"><a href="/article/23-0035-s4/reformed_church_in_america">Reformed Church in America (Dutch)</a></li>
+  <li class="c018">Reformed Church in U. S. A. (German)</li>
+  <li class="c018"><a href="/article/23-0038-s2/reformed_episcopal_church">Reformed Episcopal Church</a></li>
+  <li class="c018"><a href="/article/23-0062-regium-donum/regium_donum">Regium Donum</a></li>
+  <li class="c018"><a href="/article/23-0065-s1/regular">Regular</a></li>
+  <li class="c018"><a href="/article/23-0076-relics/relics">Relics</a></li>
+  <li class="c018"><a href="/article/23-0078-religion/religion">Religion</a></li>
+  <li class="c018"><a href="/article/23-0099-remonstrants/remonstrants">Remonstrants</a></li>
+  <li class="c018"><a href="/article/23-0198-requiem/requiem">Requiem</a></li>
+  <li class="c018"><a href="/article/23-0198-reredos/reredos">Reredos</a></li>
+  <li class="c018"><a href="/article/23-0218-s4/retable">Retable</a></li>
+  <li class="c018"><a href="/article/23-0240-reverend/reverend">Reverend</a></li>
+  <li class="c018"><a href="/article/23-0387-s3/ritual">Ritual</a></li>
+  <li class="c018"><a href="/article/23-0391-s3/river_brethren">River Brethren</a></li>
+  <li class="c018">Robber, Synod</li>
+  <li class="c018"><a href="/article/23-0453-s2/rochet">Rochet</a></li>
+  <li class="c018"><a href="/article/23-0474-s6/rogation_days">Rogation Days</a></li>
+  <li class="c018">Roman Catholic Church</li>
+  <li class="c018"><a href="/article/23-0730-s2/rood">Rood</a></li>
+  <li class="c018"><a href="/article/23-0764-s3/rosary">Rosary</a></li>
+  <li class="c018"><a href="/article/23-0796-s2/rota__court_of">Rota, Court of</a></li>
+  <li class="c018"><a href="/article/23-0853-rubric/rubric">Rubric</a></li>
+  <li class="c018"><a href="/article/23-0868-rum/rum">Rum</a></li>
+  <li class="c018"><a href="/article/23-1007-s2/sabbation">Sabbation</a></li>
+  <li class="c018">Sabians</li>
+  <li class="c018"><a href="/article/23-1016-s2/sacerdotalism">Sacerdotalism</a></li>
+  <li class="c018"><a href="/article/23-1021-s4/sacrament">Sacrament</a></li>
+  <li class="c018"><a href="/article/23-1024-sacramentals/sacramentals">Sacramentals</a></li>
+  <li class="c018"><a href="/article/23-1024-sacramentarians/sacramentarians">Sacramentarians</a></li>
+  <li class="c018"><a href="/article/23-1025-sacrarium/sacrarium">Sacrarium</a></li>
+  <li class="c018"><a href="/article/23-1025-sacred-heart/sacred_heart">Sacred Heart</a></li>
+  <li class="c018">Saint John of Jerusalem</li>
+  <li class="c018"><a href="/article/24-0114-s4/salvation_army">Salvation Army</a></li>
+  <li class="c018"><a href="/article/24-0218-s2/saragossa__councils_of">Saragossa, Councils of</a></li>
+  <li class="c018"><a href="/article/24-0224-s3/sardica__council_of">Sardica, Council of</a></li>
+  <li class="c018"><a href="/article/24-0345-s5/schism">Schism</a></li>
+  <li class="c018"><a href="/article/24-0422-s2/scillitan_martyrs">Scillitan Martyrs</a></li>
+  <li class="c018"><a href="/article/24-0480-scotland-church-of/scotland__church_of">Scotland, Church of</a></li>
+  <li class="c018"><a href="/article/24-0430-part1/scotland">Scotland, Episcopal Church in</a></li>
+  <li class="c018"><a href="/article/24-0602-s3/sect">Sect</a></li>
+  <li class="c018"><a href="/article/24-0602-s5/secular">Secular</a></li>
+  <li class="c018"><a href="/article/24-0610-see/see">See</a></li>
+  <li class="c018"><a href="/article/24-0685-s2/sepulchre__canons_regular_of_the_holy">Sepulchre, Canons Regular of the Holy</a></li>
+  <li class="c018"><a href="/article/24-0728-servites/servites">Servites</a></li>
+  <li class="c018"><a href="/article/24-0781-s2/sexton">Sexton</a></li>
+  <li class="c018"><a href="/article/24-0801-shakers/shakers">Shakers</a></li>
+  <li class="c018">Shiites</li>
+  <li class="c018"><a href="/article/24-1096-shrine/shrine">Shrine</a></li>
+  <li class="c018"><a href="/article/24-1099-s2/shrove_tuesday">Shrove Tuesday</a></li>
+  <li class="c018"><a href="/article/25-0135-silvestrines/silvestrines">Silvestrines</a></li>
+  <li class="c018"><a href="/article/25-0153-sin/sin">Sin</a></li>
+  <li class="c018"><a href="/article/25-0166-sion-college/sion_college">Sion College</a></li>
+  <li class="c018"><a href="/article/25-0176-sisterhoods/sisterhoods">Sisterhoods</a></li>
+  <li class="c018"><a href="/article/25-0210-skoptsi/skoptsi">Skoptsi</a></li>
+  <li class="c018"><a href="/article/25-0479-soutane/soutane">Soutane</a></li>
+  <li class="c018"><a href="/article/25-0619-s3/spanish_reformed_church">Spanish Reformed Church</a></li>
+  <li class="c018"><a href="/article/25-0754-sponsor/sponsor">Sponsor</a></li>
+  <li class="c018"><a href="/article/25-0828-s5/stations_of_the_cross">Stations of the Cross</a></li>
+  <li class="c018"><a href="/article/25-0941-s6/stigmatization">Stigmatization</a></li>
+  <li class="c018"><a href="/article/25-0977-s6/stole">Stole</a></li>
+  <li class="c018"><a href="/article/26-0045-suffragan/suffragan">Suffragan</a></li>
+  <li class="c018">Sufiism</li>
+  <li class="c018"><a href="/article/26-0121-sunnites/sunnites">Sunnites</a></li>
+  <li class="c018"><a href="/article/26-0129-s4/supererogation">Supererogation</a></li>
+  <li class="c018"><a href="/article/26-0129-s5/superintendent">Superintendent</a></li>
+  <li class="c018"><a href="/article/26-0154-surplice/surplice">Surplice</a></li>
+  <li class="c018"><a href="/article/26-0302-s3/syllabus">Syllabus</a></li>
+  <li class="c018"><a href="/article/26-0305-s5/symbol">Symbol</a></li>
+  <li class="c018"><a href="/article/26-0312-s4/synagogue">Synagogue</a></li>
+  <li class="c018"><a href="/article/26-0313-s2/synagogue__united">Synagogue, United</a></li>
+  <li class="c018">Synazarium</li>
+  <li class="c018"><a href="/article/26-0313-s5/syncellus">Syncellus</a></li>
+  <li class="c018"><a href="/article/26-0315-s2/synedrium">Synedrium</a></li>
+  <li class="c018"><a href="/article/26-0315-s4/synod">Synod</a></li>
+  <li class="c018"><a href="/article/26-0401-talmud/talmud">Talmud</a></li>
+  <li class="c018"><a href="/article/26-0420-s2/tanna">Tanna</a></li>
+  <li class="c018"><a href="/article/26-0448-s4/targum">Targum</a></li>
+  <li class="c018"><a href="/article/26-0621-templars/templars">Templars</a></li>
+  <li class="c018"><a href="/article/26-0645-s2/tenebrae">Tenebræ</a></li>
+  <li class="c018"><a href="/article/26-0693-tertiaries/tertiaries">Tertiaries</a></li>
+  <li class="c018"><a href="/article/26-0701-s2/testamentum_domini">Testamentum Domini</a></li>
+  <li class="c018"><a href="/article/26-0703-s3/tetragrammaton">Tetragrammaton</a></li>
+  <li class="c018"><a href="/article/26-0709-teutonic-order-the/teutonic_order__the">Teutonic Order</a></li>
+  <li class="c018"><a href="/article/26-0784-s2/theism">Theism</a></li>
+  <li class="c018"><a href="/article/26-0800-s4/theocracy">Theocracy</a></li>
+  <li class="c018"><a href="/article/26-0812-s4/theology">Theology</a></li>
+  <li class="c018"><a href="/article/26-0828-theosophy/theosophy">Theosophy</a></li>
+  <li class="c018"><a href="/article/26-0833-therapeutae/therapeutae">Therapeutae</a></li>
+  <li class="c018"><a href="/article/26-0940-s2/thurible">Thurible</a></li>
+  <li class="c018"><a href="/article/26-0951-tiara/tiara">Tiara</a></li>
+  <li class="c018"><a href="/article/26-1059-tithes/tithes">Tithes</a></li>
+  <li class="c018"><a href="/article/26-1092-toledo-councils-of/toledo__councils_of">Toledo, Councils of</a></li>
+  <li class="c018"><a href="/article/27-0026-s3/tonsure">Tonsure</a></li>
+  <li class="c018"><a href="/article/27-0201-transubstantiation/transubstantiation">Transubstantiation</a></li>
+  <li class="c018"><a href="/article/27-0228-trappists/trappists">Trappists</a></li>
+  <li class="c018"><a href="/article/27-0262-s3/trent__council_of">Trent, Council of</a></li>
+  <li class="c018"><a href="/article/27-0301-trinitarians/trinitarians">Trinitarians</a></li>
+  <li class="c018"><a href="/article/27-0301-trinity-sunday/trinity_sunday">Trinity Sunday</a></li>
+  <li class="c018"><a href="/article/27-0409-tunicle/tunicle">Tunicle</a></li>
+  <li class="c018"><a href="/article/27-0584-ulema/ulema">Ulema</a></li>
+  <li class="c018"><a href="/article/27-0589-ultramontism/ultramontanism">Ultramontanism</a></li>
+  <li class="c018"><a href="/article/27-0597-unction/unction">Unction</a></li>
+  <li class="c018"><a href="/article/27-0617-unitarianism/unitarianism">Unitarianism</a></li>
+  <li class="c018"><a href="/article/27-0620-united-brethren-in-christ/united_brethren_in_christ">United Brethren in Christ</a></li>
+  <li class="c018"><a href="/article/27-0620-united-free-church-of-scotland/united_free_church_of_scotland">United Free Church of Scotland</a></li>
+  <li class="c018"><a href="/article/27-0631-united-methodist-church/united_methodist_church">United Methodist Church</a></li>
+  <li class="c018"><a href="/article/27-0631-united-methodist-free-churches/united_methodist_free_churches">United Methodist Free Churches</a></li>
+  <li class="c018"><a href="/article/27-0631-united-presbyterian-church/united_presbyterian_church">United Presbyterian Church</a></li>
+  <li class="c018"><a href="/article/27-0770-universalist-church/universalist_church">Universalist Church</a></li>
+  <li class="c018"><a href="/article/27-0829-s2/ursulines">Ursulines</a></li>
+  <li class="c018"><a href="/article/27-0890-vallombrosians/vallombrosians">Vallombrosians</a></li>
+  <li class="c018">Vatican, Council of</li>
+  <li class="c018"><a href="/article/27-1011-s2/venerable">Venerable</a></li>
+  <li class="c018"><a href="/article/27-1050-s2/verger">Verger</a></li>
+  <li class="c018"><a href="/article/27-1080-s2/vespers">Vespers</a></li>
+  <li class="c018"><a href="/article/27-1084-s5/vestments">Vestments</a></li>
+  <li class="c018"><a href="/article/28-0032-viaticum/viaticum">Viaticum</a></li>
+  <li class="c018"><a href="/article/28-0033-vicar/vicar">Vicar</a></li>
+  <li class="c018"><a href="/article/28-0071-vienne-council-of/vienne__council_of">Vienne, Council of</a></li>
+  <li class="c018"><a href="/article/28-0074-vigil/vigil">Vigil</a></li>
+  <li class="c018">Wahhabis</li>
+  <li class="c018"><a href="/article/28-0271-waldenses/waldenses">Waldenses</a></li>
+  <li class="c018"><a href="/article/28-0549-s2/wesleyan_methodist_church">Wesleyan Methodist Church</a></li>
+  <li class="c018">Westminister Synods</li>
+  <li class="c018"><a href="/article/28-0632-s3/whitsunday">Whitsunday, or Pentecost</a></li>
+  <li class="c018"><a href="/article/28-0859-worship/worship">Worship</a></li>
+  <li class="c018"><a href="/article/28-0946-s5/yezidis">Yezidis</a></li>
+  <li class="c018">Young Men’s Christian Association</li>
+  <li class="c018"><a href="/article/28-0994-zenana/zenana">Zenana</a></li>
+</ul>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

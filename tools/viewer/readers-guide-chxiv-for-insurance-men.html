@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Insurance Men &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XIV</span>For Insurance Men</h1>
+
+    <div class="body-text">
+
+
+<p>For the insurance man, whether
+veteran or tyro, the new <span class="sc">Encyclopaedia
+Britannica</span> has much of
+value and importance, <i>and it has it in
+quickly available form so that the desired
+information may be readily found</i>, whether
+the experienced student wants an authoritative
+statement on a difficult point,
+or the beginner wishes an outline course
+of the subject. This availability, whether
+for the expert or the novice, is secured by
+the Index (the 29th volume), which guides
+the reader immediately to desired information,
+if he does not find it in the alphabetically
+arranged articles in the body of
+the book upon first turning up the article
+in which he expects the subject to be
+treated.</p>
+
+<p>To be more concrete—if you want to
+know something about insurance, turn
+first to the article <span class="sc"><a href="/article/14-0687-insurance/insurance">Insurance</a></span> in Volume
+14, beginning on p. 656. You find an
+elaborate article, which would occupy
+about 75 pages if printed in type and on
+a page like this Guide.</p>
+
+<p><i>In other encyclopaedias</i> you would have
+no clue to the whereabouts of any information
+about insurance except what
+would be given in the article <span class="sc"><a href="/article/14-0687-insurance/insurance">Insurance</a></span>
+or in articles to which it might refer you
+in that article. For anything else you
+would have to guess how the editor’s mind
+had worked to find where in the book he
+had put other information about insurance;
+and to guess how each contributor’s
+mental processes have been related to his
+interest in insurance so that you might
+know whether in some article, on a topic
+apparently not related to insurance at all,
+the contributor had put in some interesting
+and important fact about insurance.</p>
+
+<p>But in the Britannica you have one entire
+volume, the 29th, which was made
+for the sole purpose of increasing the
+practical efficiency of the other 28 volumes.
+Under the heading <i>Insurance</i> in
+this index, you will find references to
+many articles and cross references to
+Title Insurance and to Title Guarantee
+Companies.</p>
+
+<p>Apart from the fact that he has the initial
+<i>assurance</i> that what he gets from the
+Britannica in the first place is fuller and
+better than he would get from another
+work of reference, what are the advantages
+offered by the index in this particular
+instance?</p>
+
+<p><i>First</i>: Instead of having a reference to
+volume 14 only he has references to volumes
+2, 3, 4, 9, 10, 11, 12, 14, 15, 16, 18,
+19, 20, 22, 24, 25, 26, 27 and 28,—nineteen
+volumes in all,—say a gain of 1800%
+in efficiency.</p>
+
+<p><i>Second</i>: Instead of having one article
+Insurance to refer to, he has reference to
+specific information in the following articles:</p>
+
+<ul class="index">
+  <li class="c018"><i>Annuity</i>,</li>
+  <li class="c018"><i>Austria</i>,</li>
+  <li class="c018"><i>Average</i>,</li>
+  <li class="c018"><i>Barratry</i>,</li>
+  <li class="c018"><i>Bonus</i>,</li>
+  <li class="c018"><i>Employers’ Liability</i>,</li>
+  <li class="c018"><i>Fire and Fire Extinction</i>,</li>
+  <li class="c018"><i>Friendly Societies</i>,</li>
+  <li class="c018"><i>Gaming and Wagering</i>,</li>
+  <li class="c018"><i>Guarantee</i>,</li>
+  <li class="c018"><i>Income Tax</i>,</li>
+  <li class="c018"><i>Infanticide</i>,</li>
+  <li class="c018"><i>Japan</i>,</li>
+  <li class="c018"><i>Land Registration</i>,</li>
+  <li class="c018"><i>Lloyds</i>,</li>
+  <li class="c018"><i>Mensuration</i>,</li>
+  <li class="c018"><i>Novation</i>,</li>
+  <li class="c018"><i>Old Age Pensions</i>,</li>
+  <li class="c018"><i>Post Office</i>,</li>
+  <li class="c018"><i>Probability</i>,</li>
+  <li class="c018"><i>Shipbuilding</i>,</li>
+  <li class="c018"><i>Socialism</i>,</li>
+  <li class="c018"><i>Switzerland</i>,</li>
+  <li class="c018"><i>Title Guarantee Companies</i>,</li>
+  <li class="c018"><i>Tontine</i>,</li>
+  <li class="c018"><i>Underwriter</i>,</li>
+  <li class="c018"><i>Unemployment</i>,</li>
+  <li class="c018"><i>Warranty</i>.</li>
+</ul>
+<p>That is, to 28 new articles,—say 2800%
+additional gain.</p>
+
+<p>Observe, too, that this is a gain that
+cannot be expressed in figures. The index
+references are classified. First there
+is a main head <i>Insurance</i>; then subheads,
+<i>Fire</i>, <i>Life</i>, <i>Marine</i>, <i>Title</i>, <i>Workmen’s</i>; and
+under the subheads special topics arranged
+alphabetically.</p>
+
+<p>In brief, the Index facilitates and accelerates
+reference to anything in the
+Britannica that bears on any desired
+topic.</p>
+
+<p>The article <span class="sc"><a href="/article/14-0687-insurance/insurance">Insurance</a></span> opens with a
+definition of that word and with drawing
+a distinction between it and “assurance.”
+The general history of insurance traces
+marine insurance back to Greek commerce
+in the 4th century B.C., but shows
+that modern methods of marine insurance
+were unknown until the 14th century;
+that fire insurance dates from the
+17th century and especially from the
+Great Fire of London in 1666; and that,
+although there were a few instances of
+life insurance in the 16th and 17th centuries,
+it did not become a regular business
+until the 18th century and was not
+widely extended until the 19th century.
+Separate sections of the article deal with
+<i>Casualty</i> (or accident) and <i>Miscellaneous
+Insurance</i>, <i>Fire Insurance</i>, <i>Life Insurance</i>,
+<i>British Post Office Insurance</i>, and <i>Marine
+Insurance</i>.</p>
+
+<p>The section on British Post-Office Insurance
+will give to the American insurance
+man a knowledge of this innovation
+in the post-office to which the American
+post-office seems to be tending, if one
+may judge by the introduction of
+postal savings-banks and the adoption of
+the parcels-post system.</p>
+
+<p>In the same way the article <span class="sc">Old Age
+Pensions</span> will make you acquainted with
+another radical measure which has been
+adopted in Great Britain, Germany,
+France, Denmark, Victoria and notably
+New Zealand, with fuller description in
+the article <span class="sc"><a href="/article/19-0650-new-zealand/new_zealand">New Zealand</a></span>. The importance
+of the subject to the American insurance
+man lies in the fact that similar
+schemes are under consideration or actual
+operation in Massachusetts, New Jersey,
+and other states of the United States. In
+the same way the article on <span class="sc">Employers
+Liability</span> and <span class="sc">Workmen’s Insurance</span>
+will give him a wider grasp of the subject
+of state insurance, mandatory or elective,
+for workmen.</p>
+
+<p>The principal articles on insurance topics
+have already been mentioned. It is to
+be noted, however, that the actuary will
+find important information in the mathematical
+articles <span class="sc"><a href="/article/18-0153-s4/mensuration">Mensuration</a></span> and <span class="sc"><a href="/article/22-0390-probability/probability">Probability</a></span>;
+that the article <span class="sc"><a href="/article/11-0230-friendly-societies/friendly_societies">Friendly Societies</a></span>
+is supplemented by such special
+articles as <span class="sc">Free Masonry</span>, <span class="sc">B’nai Brith</span>,
+<span class="sc"><a href="/article/04-0789-s2/building_societies">Building Societies</a></span>, <span class="sc"><a href="/article/04-0847-s2/burial_societies">Burial Societies</a></span>,
+<span class="sc">Odd Fellows</span>, etc.</p>
+
+<p>In the <i>Classified List of Articles</i> in the
+Index Volume the student of insurance
+will find on page 893 a list of articles in
+the field of economics and social science,
+many of which will bear more or less directly
+on the subject. Among these articles
+and sub-articles are:</p>
+
+<ul class="index">
+  <li class="c018"><a href="/article/01-0037-s9/abandonment">Abandonment</a></li>
+  <li class="c018"><a href="/article/01-0145-s4/accident">Accident</a></li>
+  <li class="c018"><a href="/article/01-0197-s2/actuary">Actuary</a></li>
+  <li class="c018"><a href="/article/02-0086-s4/annuity">Annuity</a></li>
+  <li class="c018"><a href="/article/02-0826-s3/assets">Assets</a></li>
+  <li class="c018"><a href="/article/02-1021-s3/austria">Austria</a></li>
+  <li class="c018"><a href="/article/03-0069-s4/average">Average</a></li>
+  <li class="c018"><a href="/article/03-0112-s3/baby-farming">Baby-Farming</a></li>
+  <li class="c018"><a href="/article/03-0449-barratry/barratry">Barratry</a></li>
+  <li class="c018"><a href="/article/04-0108-boarding-out-system/boarding-out_system">Boarding-out System</a></li>
+  <li class="c018"><a href="/article/04-0227-bonus/bonus">Bonus</a></li>
+  <li class="c018"><a href="/article/04-0339-bounty/bounty">Bounty</a></li>
+  <li class="c018">Casualty Insurance</li>
+  <li class="c018"><a href="/article/05-0687-census/census">Census</a></li>
+  <li class="c018"><a href="/article/05-0896-charity-and-charities/charity_and_charities">Charity</a></li>
+  <li class="c018">Co-insurance</li>
+  <li class="c018"><a href="/article/06-0774-combination/combination">Combination</a></li>
+  <li class="c018"><a href="/article/06-0815-communism/communism">Communism</a></li>
+  <li class="c018">Conflict of Insurance Laws</li>
+  <li class="c018"><a href="/article/07-0097-co-operation/co-operation">Co-operation</a></li>
+  <li class="c018"><a href="/article/09-0360-emigration/emigration">Emigration</a></li>
+  <li class="c018"><a href="/article/09-0379-employers-liability/employers__liability">Employers’ Liability</a></li>
+  <li class="c018"><a href="/article/09-0917-s2/eugenics">Eugenics</a></li>
+  <li class="c018"><a href="/article/10-0417-s2/fire_and_fire_extinction">Fire and Fire Extinction</a></li>
+  <li class="c018">Fire Insurance</li>
+  <li class="c018"><a href="/article/10-0767-s2/foundling_hospitals">Foundling Hospitals</a></li>
+  <li class="c018">F. P. A. Liabilities</li>
+  <li class="c018"><a href="/article/11-0230-friendly-societies/friendly_societies">Friendly Societies</a></li>
+  <li class="c018"><a href="/article/11-0464-s2/gaming_and_wagering">Gaming and Wagering</a></li>
+  <li class="c018"><a href="/article/11-0597-general/general">General</a></li>
+  <li class="c018"><a href="/article/12-0677-guarantee/guarantee">Guarantee</a></li>
+  <li class="c018">Halley’s Table</li>
+  <li class="c018"><a href="/article/13-0837-housing/housing">Housing</a></li>
+  <li class="c018"><a href="/article/14-0314-illegitimacy/illegitimacy">Illegitimacy</a></li>
+  <li class="c018"><a href="/article/14-0375-income-tax/income_tax">Income Tax</a></li>
+  <li class="c018">Industrial Insurance</li>
+  <li class="c018"><a href="/article/14-0545-s1/infanticide">Infanticide</a></li>
+  <li class="c018"><a href="/article/14-0687-insurance/insurance">Insurance</a></li>
+  <li class="c018">Interest factor</li>
+  <li class="c018"><a href="/article/15-0172-japan/japan">Japan</a></li>
+  <li class="c018"><a href="/article/16-0021-s3/labour_legislation">Labour Legislation</a></li>
+  <li class="c018"><a href="/article/16-0182-s3/land_registration">Land Registration</a></li>
+  <li class="c018">Liability</li>
+  <li class="c018">Life Insurance</li>
+  <li class="c018"><a href="/article/16-0855-s2/lloyd_s">Lloyd’s</a></li>
+  <li class="c018">Maritime Insurance</li>
+  <li class="c018"><a href="/article/18-0144-mendicancy/mendicancy">Mendicancy</a></li>
+  <li class="c018"><a href="/article/18-0153-s4/mensuration">Mensuration</a></li>
+  <li class="c018">Mutual Insurance</li>
+  <li class="c018">Mortality Rates</li>
+  <li class="c018">Negative Values</li>
+  <li class="c018">Net Liability</li>
+  <li class="c018">Net Premium</li>
+  <li class="c018">Non-forfeiture</li>
+  <li class="c018">Northampton Table</li>
+  <li class="c018"><a href="/article/19-0864-novation/novation">Novation</a></li>
+  <li class="c018">Old Age Pensions</li>
+  <li class="c018"><a href="/article/20-1035-s2/pauperism">Pauperism</a></li>
+  <li class="c018"><a href="/article/20-1040-s6/pawnbroking">Pawnbroking</a></li>
+  <li class="c018">Policy</li>
+  <li class="c018"><a href="/article/22-0088-s2/poor_law">Poor Law</a></li>
+  <li class="c018"><a href="/article/22-0106-s2/population">Population</a></li>
+  <li class="c018">Post Office</li>
+  <li class="c018"><a href="/article/22-0293-premium/premium">Premium</a></li>
+  <li class="c018"><a href="/article/22-0390-probability/probability">Probability</a></li>
+  <li class="c018"><a href="/article/22-0438-production/production">Production</a></li>
+  <li class="c018">Profit Sharing</li>
+  <li class="c018">Rates of Mortality</li>
+  <li class="c018">Reserve</li>
+  <li class="c018"><a href="/article/24-0113-salvage/salvage">Salvage</a></li>
+  <li class="c018">Selection</li>
+  <li class="c018"><a href="/article/24-0984-s2/shipbuilding">Shipbuilding</a></li>
+  <li class="c018"><a href="/article/25-0317-socialism/socialism">Socialism</a></li>
+  <li class="c018"><a href="/article/25-0324-social-settlements/social_settlements">Social Settlements</a></li>
+  <li class="c018">Subrogation</li>
+  <li class="c018"><a href="/article/26-0066-suicide/suicide">Suicide</a></li>
+  <li class="c018"><a href="/article/26-0099-s6/sumptuary_laws">Sumptuary Laws</a></li>
+  <li class="c018">Surplus</li>
+  <li class="c018">Surrender Values</li>
+  <li class="c018"><a href="/article/26-0257-switzerland/switzerland">Switzerland</a></li>
+  <li class="c018"><a href="/article/26-0451-s3/tariff">Tariff</a></li>
+  <li class="c018">Taxation of Insurance</li>
+  <li class="c018"><a href="/article/26-1066-s3/title_guarantee_companies">Title Guarantee Companies</a></li>
+  <li class="c018"><a href="/article/27-0026-s5/tontine">Tontine</a></li>
+  <li class="c018"><a href="/article/27-0155-s2/trade_unions">Trade Unions</a></li>
+  <li class="c018"><a href="/article/27-0174-tramp/tramp">Tramp</a></li>
+  <li class="c018"><a href="/article/27-0351-s2/trusts">Trusts</a></li>
+  <li class="c018"><a href="/article/27-0597-underwriter/underwriter">Underwriter</a></li>
+  <li class="c018"><a href="/article/27-0597-unemployment/unemployment">Unemployment</a></li>
+  <li class="c018"><a href="/article/27-0836-s6/usury">Usury</a></li>
+  <li class="c018"><a href="/article/28-0245-wages/wages">Wages</a></li>
+  <li class="c018"><a href="/article/28-0345-warranty/warranty">Warranty</a></li>
+  <li class="c018"><a href="/article/28-0455-s3/wealth">Wealth</a></li>
+</ul>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

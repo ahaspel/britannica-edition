@@ -1,0 +1,1886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Questions Of The Day &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter LXIV</span>Questions Of The Day</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">An Intimate Book</a></li><li><a href="#sh-2">Sociology</a></li><li><a href="#sh-3">Education</a></li><li><a href="#sh-4">Defectives and Their Training</a></li><li><a href="#sh-5">The Blind</a></li><li><a href="#sh-6">The Deaf</a></li><li><a href="#sh-7">Psychology</a></li><li><a href="#sh-8">Crime</a></li><li><a href="#sh-9">Children’s Courts</a></li><li><a href="#sh-10">Alcohol</a></li><li><a href="#sh-11">Heredity and Eugenics</a></li><li><a href="#sh-12">Wages and Labour</a></li><li><a href="#sh-13">Labour Legislation</a></li><li><a href="#sh-14">Organized Labour</a></li><li><a href="#sh-15">Immigration</a></li><li><a href="#sh-16">Negro Problem</a></li><li><a href="#sh-17">Trusts</a></li><li><a href="#sh-18">Government Control</a></li><li><a href="#sh-19">Socialism, etc.</a></li><li><a href="#sh-20">Finance</a></li><li><a href="#sh-21">Tariff</a></li><li><a href="#sh-22">Banking Laws</a></li><li><a href="#sh-23">Insurance</a></li><li><a href="#sh-24">Legislation and Courts</a></li><li><a href="#sh-25">Initiative, Referendum and Recall</a></li><li><a href="#sh-26">Suffrage</a></li><li><a href="#sh-27">Municipal Government</a></li><li><a href="#sh-28">International Relations</a></li><li><a href="#sh-29">International Affairs</a></li><li><a href="#sh-30">Sea-Power</a></li><li><a href="#sh-31">The Greater United States</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">An Intimate Book</span>The old idea of an encyclopaedia as
+a remote book, distant from every-day
+needs and the real public
+questions of the day, and to be consulted
+only for information
+about ancient history
+and medieval philosophy,
+was a wrong one.
+It was wrong <i>in theory</i>, if an encyclopaedia
+is to be a live and valuable book. And it
+was wrong <i>in practice</i>. It is not the
+case with the new Britannica. For the
+Britannica is full of information about
+current public questions; and even its
+treatment of the past, remote or near, is
+from a fresh and modern view-point, and
+is of the utmost value as throwing the
+light of history on the problems of modern
+politics and every-day life. The
+spirit of to-day is an intensely wide-awake
+and inquisitive one, and people are no
+longer willing to believe that “whatever
+is, is right”—much less that a thing is
+right because it <i>has been</i>, no matter how
+long. Indeed the very phrase “has been”
+as now used in the vernacular implies the
+outworn, the discarded. The Britannica,
+a book for intimate use on the questions
+of the day, is a record <i>of what is</i>, as well
+as of what has been, and of the great
+changes, the constant flux, of the past and
+of the present.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Sociology</span>One of our symptoms of health is the
+development of a social sense, or, better,
+a social conscience. This is due in no
+small degree to the work
+of Herbert Spencer in
+founding a new science,
+called by him Sociology. For an inspiring
+and stimulating starting-point for the
+study in the Britannica of the great social
+and political questions of the day let the
+reader study the article <span class="sc"><a href="/article/25-0338-sociology/sociology">Sociology</a></span> (Vol.
+25, p. 322), by <a href="/contributors.html?q=Benjamin+Kidd">Benjamin Kidd</a>, who
+wrote <i>Social Evolution</i>, and <i>Principles of
+Western Civilization</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Education</span>Evolution, sociology, Spencerian psychology
+and the closer relation of the
+state to the individual are all important
+factors in the educational
+changes of the last
+few years; and their
+study is indispensable to a clear understanding
+of the great questions of education.
+A more concrete study may be
+based on the article <span class="sc"><a href="/article/08-0978-education/education">Education</a></span> (Vol. 8,
+p. 951) and particularly the part on education
+in the United States by <a href="/contributors.html?q=Nicholas+Murray+Butler">Nicholas
+Murray Butler</a>, president of Columbia
+University. An elaborate course of reading
+on education is given in another chapter
+of this Guide <i>For Teachers</i>. But it
+may be well to call attention here to the
+fact that there are in the articles on individual
+states sections on the educational
+system of each state; and in the separate
+articles on each city similar descriptions
+of schools in those cities; and also that
+either in the article on the city or town in
+which it is situated, or in a separate article
+there is an estimate, a description,
+and a historical sketch of each of the
+great universities and colleges of the
+country. This information is not merely
+of value if one wishes to understand in a
+general way the trend of education, but
+of particular interest to one who is choosing
+the school best adapted to a special
+need. In the same way there are articles
+on other great educational institutions—for
+example a general article on <span class="sc"><a href="/article/19-0079-s2/museums_of_science">Museums
+of Science</a></span> (Vol. 19, p. 64) and one
+on <span class="sc"><a href="/article/16-0565-libraries/libraries">Libraries</a></span> (Vol. 16, p. 545), as well as
+articles on such special institutions as the
+Smithsonian, or treatment of them in the
+article on the places where the institution
+is—as in the article on Washington
+for the Library of Congress, the article on
+New York City for the Metropolitan Museum,
+etc.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Defectives and Their Training</span>But government, particularly in America,
+besides taking a direct interest and
+responsibility in the education of its
+youth, has begun
+within the last few
+years to assume the
+task of uplifting
+those of its citizens who are below the
+normal. Modern methods of dealing with
+criminals and of caring for defectives and
+the insane are based on a principle entirely
+different from that which obtained
+50, or even 20, years ago. The whole
+article <i>Insanity</i> (Vol. 14, p. 597) might
+well be read as a preliminary to a study of
+this topic, since it treats of idiocy and imbecility
+as well as of the more violent
+forms of mental disorder, and since it
+treats them all as forms of disease—the
+basis of the modern method of treatment
+which has substituted the hospital and
+the school for the mere place of detention.
+In particular, however, the last part of
+this article dealing with <i>Hospital Treatment</i>
+should be studied. It is by Dr.
+<a href="/contributors.html?q=Frederick+Peterson">Frederick Peterson</a>, the American specialist,
+and it describes the improved conditions
+of modern asylums. “Physical restraint
+is no longer practised.... The
+general progress of medical science in all
+directions has been manifested in the department
+of psychiatry by improved
+methods of treatment, in the way of
+sleep-producing and alleviating drugs,
+dietetics, physical culture, hydrotherapy
+and the like. There are few asylums now
+without pathological and clinical laboratories....
+The colony scheme has been
+successfully adopted by the state of New
+York at the Craig Colony for Epileptics
+at Sonyea and elsewhere.... Many
+asylums have, as it were, thrown off detached
+cottages for the better care of certain
+patients.... But the ideal system
+is that of the psychopathic hospital and
+the colony for the insane.” It is with the
+“colony” plan that <a href="/contributors.html?q=Frederick+Peterson">Dr. Peterson</a>’s name
+is intimately connected, especially in New
+York state. In the Britannica article on
+New York state there is a full treatment
+(Vol. 19, p. 601) of the state’s charitable
+institutions, including its hospitals for
+the insane, the Craig Colony already
+mentioned, the Letchworth Village custodial
+asylum for epileptics and feeble-minded,
+and other institutions of the
+same kind. And in the same way the
+system in each state is described in the
+separate article on that state with special
+attention to the peculiar features in its
+administration of its hospitals and schools
+for insane and imbeciles.</p>
+
+<p><span class="shoulder-heading" id="sh-5">The Blind</span>There has been a similar change in the
+education of the blind and the deaf—or
+rather education is now provided for these
+classes, whereas they
+formerly received none
+at all. And this education
+is coming under state control and,
+once under governmental supervision, is
+being transferred from departments in
+charge of penal or charitable institutions
+to the department of public schools. For
+the most striking instances of what has
+been accomplished by improved systems
+of training under private supervision see
+the articles on <span class="sc"><a href="/article/13-0862-s3/howe__samuel_gridley">Samuel Gridley Howe</a></span>
+(Vol. 13, p. 837), the great teacher of the
+blind at the Perkins Institution for the
+Blind in Boston; on his blind and deaf
+pupil, <span class="sc"><a href="/article/04-0579-s2/bridgman__laura_dewey">Laura Bridgman</a></span> (Vol. 4, p. 559),
+and on <span class="sc"><a href="/article/15-0746-s4/keller__helen_adams">Helen Adams Keller</a></span> (Vol. 15, p.
+718), another and even more remarkable
+blind and deaf student, whose education,
+coming as a product of a new sociology,
+has made her a most efficient social helper
+and social worker.</p>
+
+<p>From these articles the student should
+go to <i>Blindness</i> (Vol. 4, p. 59), by Sir
+<a href="/contributors.html?q=Sir+Francis+J.+Campbell">Francis J. Campbell</a>, principal of the
+Royal Normal College for the Blind, Norwood,
+London; an article equivalent in
+length to 40 pages of this Guide. Its author,
+the founder of the college, is himself
+a blind man, who, born in Tennessee,
+in 1832, and educated at the Nashville
+school, and afterwards in music at Leipzig
+and Berlin, had from 1858 to 1869
+been associated with Dr. Howe at the
+Perkins Institution, Boston, and was
+knighted in 1909 for his services to the
+education of the blind. The part of his
+article dealing with the education of the
+blind is, therefore, doubly valuable and
+interesting. The main topics with which
+it deals are: early training—other senses
+of the blind not <i>naturally</i> sharper than
+those of the seeing, but developed by
+cultivation of hearing and touch from
+early childhood; physical training to increase
+the average of vitality; mental
+training; early manual training; choice of
+occupation; piano-forte tuning; musical
+training; deaf-mutes should not be educated
+with the blind as their needs are so
+different; blind boys and blind girls
+should not be taught together, as coeducation
+promotes intermarriage, which
+is a calamity. The remainder of the article
+deals with types and books for the
+blind, appliances for educational work,
+employment, and biographical matter,
+with a list of prominent blind people. See
+also, for literary men who were blind, the
+articles on <span class="sc"><a href="/article/18-0504-milton-john/milton__john">John Milton</a></span>, <span class="sc">William H.
+Prescott</span>, and <span class="sc"><a href="/article/07-0902-dead-sea/dead_sea">Philip Bourke Marston</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-6">The Deaf</span><span class="sc"><a href="/article/07-0904-deaf-and-dumb/deaf_and_dumb">Deaf and Dumb</a></span> (Vol. 7, p. 880) is by
+the Rev. Arnold Hill Payne, chaplain to
+the Oxford Diocesan Mission to the deaf
+and dumb, late normal
+fellow of the National
+Deaf Mute College,
+Washington, D. C., and author of many
+books on the subject. He points out the
+mistaken use of the word “dumb”—“In
+the case of the deaf and dumb, as these
+words are generally understood, dumbness
+is merely the result of ignorance in the use
+of the voice, this ignorance being due to
+deafness.” After discussing causes of deafness,
+the condition of the deaf in childhood,
+their natural language, which the contributor
+thinks is “sign” rather than purely
+oral, and their social status, he deals with
+education of the deaf, giving an elaborate
+historical account including the “oral”
+revival in Germany and the work in the
+United States of Dr. Thomas Hopkins
+Gallaudet—see also the separate article on
+him and his two sons (Vol. 11, p. 416)—and
+of the National Deaf-Mute College
+at Washington, D. C. (on which see also
+the article <span class="sc"><a href="/article/28-0365-washington/washington">Washington</a></span>, D. C.). This
+interesting article closes with a section on
+the blind-deaf, telling the story of several
+remarkable cases in England less well-known
+and more recent than Laura
+Bridgman or Helen Keller.</p>
+
+<p><span class="shoulder-heading" id="sh-7">Psychology</span>This chapter began with a reference to
+the article on <span class="sc"><a href="/article/25-0338-sociology/sociology">Sociology</a></span> with the recommendation
+that it be used as a basis for
+the study of present-day
+problems. The
+reader will often have
+heard vague allusions to sociology, and
+his reading this article in the Britannica
+will certainly sharpen and define
+his own idea of the meaning and the
+value of the science. Has he not heard
+much oftener of psychology, and heard it
+mentioned as if it were some sort of magic
+spell to charm away many of the difficulties
+of our modern complex world? But
+has he a full comprehension of the meaning
+of psychology and of the knowledge
+newly gained in regard to the “psychology
+of the senses”? The corrective for any
+vagueness of ideas about psychology is
+best found in the article <span class="sc"><a href="/article/22-0563-psychology/psychology">Psychology</a></span>
+(Vol. 22, p. 547) by Professor <a href="/contributors.html?q=James+Ward">James
+Ward</a>, whose articles for the Britannica
+have been reprinted and used as text-books
+in schools and colleges all over the
+country. Put in a few words, the lesson
+of psychology is that the senses, sensations,
+thoughts and feelings, which, even
+when they are our own, we too often
+speak of as if they were things apart and
+independent, are subject to certain natural
+laws in much the same way as are
+the forces treated by the science of physics.
+The reader who would study the
+subject of psychology in the Britannica
+should make use of the analysis of many
+articles in the chapter in this Guide <i>For
+Teachers</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-8">Crime</span>As with general education, special education
+of defectives, state training of
+feeble-minded, and restraint of the insane,
+so with the state’s
+attitude toward the criminal
+there has been in recent
+years a great change which is still
+working toward full fruition, so that
+prison administration, children’s courts,
+delinquency, probation, etc., are live topics
+of interest.</p>
+
+<p>Just as the whole new science of sociology
+was based by Spencer on biology and
+on the Darwinian theory of evolution, so
+in this field of delinquency a “science”
+has been devised called criminology by
+its “inventor” Cesare Lombroso. The
+article <span class="sc"><a href="/article/16-0958-s3/lombroso__cesare">Lombroso</a></span> (Vol. 16, p. 936) in the
+Britannica criticizes his theories as showing
+“an exaggerated tendency to refer all
+mental facts to biological causes.” His
+theory of a criminal type points to a
+“practical reform ... a classification of
+offenders, so that the born criminal may
+receive a different kind of punishment
+from the offender who is tempted into
+crime.” The article <span class="sc"><a href="/article/07-0486-criminology/criminology">Criminology</a></span> (Vol.
+7, p. 464), by <a href="/contributors.html?q=Major+Arthur+George+Frederick+Griffiths">Major Arthur Griffiths</a>, Inspector
+of Prisons, should be read carefully.
+It lists the supposed criminal
+traits as follows:</p>
+
+<p>Various brain and cerebral anomalies; receding
+foreheads; massive jaws, prognathous
+chins; skulls without symmetry;
+ears long, large and projecting; noses rectilinear,
+wrinkles strongly marked, even in
+the young and in both sexes, hair abundant
+on the head, scanty on the cheeks and chin;
+eyes feline, fixed, cold, glassy, ferocious;
+bad repellent faces.... Other peculiarities
+are:—great width of the extended arms,
+extraordinary ape-like agility; left-handedness
+as well as ambi-dexterism; obtuse
+sense of smell, taste and sometimes of
+hearing, although the eyesight is superior to
+that of normal people.... So much for the
+anatomical and physiological peculiarities
+of the criminal. There remain the psychological
+or mental characteristics, so far as
+they have been observed. Moral insensibility
+is attributed to him, a dull conscience
+that never pricks and a general freedom
+from remorse. He is said to be generally
+lacking in intelligence, hence his stupidity,
+the want of proper precautions, both before
+and after an offence, which leads so
+often to his detection and capture. His
+vanity is strongly marked and shown in
+the pride taken in infamous achievements
+rather than personal appearance.</p>
+
+<p>Although <a href="/contributors.html?q=Major+Arthur+George+Frederick+Griffiths">Major Griffiths</a> thinks that
+criminality is oftener due to environment
+than to congenital defects, he closes his
+article with this estimate of what has
+been accomplished by Lombroso and his
+followers:</p>
+
+<p>The criminologists have strengthened the
+hands of administrators, have emphasized
+the paramount importance of child-rescue
+and judicious direction of adults, have
+held the balance between penal methods,
+advocating the moralizing effect of open-air
+labour as opposed to prolonged isolation,
+and have insisted upon the desirability
+of indefinite detention for all who have
+obstinately determined to wage perpetual
+war against society by the persistent perpetration
+of crime.</p>
+
+<p>The article <span class="sc"><a href="/article/07-0469-crime/crime">Crime</a></span> (Vol. 7, p. 447) is
+full of interesting statistics and facts. It
+tells us that “the growth of criminals is
+greatly stimulated where people are badly
+fed, morally and physically unhealthy,
+infected with any forms of disease and
+vice,” and after proving by the records
+of various countries that men everywhere
+are more addicted to crime than
+are women, ends with this statement:
+“It has been well said that women are
+less criminal according to the figures, because
+when a woman wants a crime committed
+she can generally find a man to do
+it for her.”</p>
+
+<p>Other important articles on the subject
+are <span class="sc"><a href="/article/08-0071-deportation/deportation">Deportation</a></span> (Vol. 8, p. 56) and
+<span class="sc"><a href="/article/22-0375-prison/prison">Prison</a></span> (Vol. 22, p. 361). For English
+prison reforms, see also the article on
+<span class="sc"><a href="/article/13-0857-s3/howard__john">John Howard</a></span> and that on <span class="sc"><a href="/article/11-0284-s2/fry__elizabeth">Elizabeth
+Fry</a></span>, with an outline of the growth in
+Pennsylvania and New York (Auburn
+and Sing Sing), of the method of solitary
+confinement and of its adoption in England,
+and of the development in New
+York (see also the article on <span class="sc"><a href="/article/09-0314-s3/elmira">Elmira</a></span> for
+the work of Zebulon R. Brockway), and
+in Massachusetts (Concord), of distinct
+and different treatment for first offenders.</p>
+
+<p><span class="shoulder-heading" id="sh-9">Children’s Courts</span><span class="sc"><a href="/article/15-0640-juvenile-offenders/juvenile_offenders">Juvenile Offenders</a></span> (Vol. 15, p. 613)
+describes the work of Charles Dickens
+and others in England, the reform in
+Europe and in the
+United States; the
+philanthropic criminal
+code proposed
+by <span class="sc"><a href="/article/16-0833-s4/livingston__edward">Edward Livingston</a></span> (see the biographical
+article, Vol. 16, p. 811); the Randall’s
+Island House of Refuge, the Elmira (N.
+Y.) Reformatory, the reformatory for
+women at Sherborn, Massachusetts, and
+the George Junior Republic at Freeville,
+New York, and its offshoots—see also the
+separate article <span class="sc"><a href="/article/11-0769-george-junior-republic/george_junior_republic">George Junior Republic</a></span>
+(Vol. 11, p. 749); and the Borstal
+scheme, a modification of the American
+state reformatory system adopted in
+England in 1902.</p>
+
+<p><span class="sc"><a href="/article/06-0153-children-s-courts/children_s_courts">Children’s Courts</a></span> (Vol. 6, p. 140)
+calls attention to the origin of these tribunals
+in the United States, in Massachusetts
+and Illinois, and their success in
+Chicago, Indianapolis, Denver and Washington,
+leading to their adoption in England;
+see also the article <span class="sc"><a href="/article/22-0418-probation/probation">Probation</a></span> (Vol.
+22, p. 404) in general and, for particular
+and local methods, the articles on <span class="sc"><a href="/article/03-1006-birmingham-england/birmingham__england_">Birmingham</a></span>
+(Vol. 3, p. 985), <span class="sc"><a href="/article/04-0305-boston-massachusetts/boston__massachusetts_">Boston</a></span> (Vol. 4,
+p. 294), <span class="sc"><a href="/article/06-0131-chicago/chicago">Chicago</a></span> (Vol. 6, p. 124), <span class="sc"><a href="/article/06-0738-colorado/colorado">Colorado</a></span>
+(Vol. 6, p. 722), <span class="sc"><a href="/article/09-0033-egypt/egypt">Egypt</a></span> (Vol. 9, p.
+29), <span class="sc"><a href="/article/14-0317-illinois/illinois">Illinois</a></span> (Vol. 14, p. 308), and <span class="sc"><a href="/article/27-0838-utah/utah">Utah</a></span>
+(Vol. 27, p. 818). The articles on individual
+states also contain detailed information
+about local penal institutions of all
+kinds.</p>
+
+<p>The reader should also study the articles
+<span class="sc"><a href="/article/21-1013-s2/police">Police</a></span> (Vol. 21, p. 978), <span class="sc"><a href="/article/10-0390-s2/finger-prints">Finger
+Prints</a></span> (Vol. 10, p. 376), <span class="sc"><a href="/article/14-0300-s3/identification">Identification</a></span>
+(Vol. 14, p. 287), <span class="sc"><a href="/article/22-0669-punishment/punishment">Punishment</a></span> (Vol.
+22, p. 653), <span class="sc"><a href="/article/05-0292-capital-punishment/capital_punishment">Capital Punishment</a></span> (Vol.
+5, p. 279), <span class="sc"><a href="/article/12-0719-guillotine/guillotine">Guillotine</a></span> (Vol. 12, p. 694),
+<span class="sc"><a href="/article/12-0942-s2/hanging">Hanging</a></span> (Vol. 12, p. 917), and <span class="sc"><a href="/article/09-0227-electrocution/electrocution">Electrocution</a></span>
+(Vol. 9, p. 210), the last by Professor
+<a href="/contributors.html?q=Edward+Anthony+Spitzka">Edward Anthony Spitzka</a>, the
+American authority on the subject. In
+the article on Utah, already mentioned,
+the reader will find that “a person sentenced
+to death may choose one of two
+methods of execution—hanging or shooting.”</p>
+
+<p><span class="shoulder-heading" id="sh-10">Alcohol</span>If a respectable citizen of a century ago
+could return to earth he could not fail to
+be greatly surprised at dinner, whether
+in a private home or in a
+hotel, to see how much less
+alcoholic beverages are used,
+how much lighter they are, and how
+much more common are other drinks. If
+he “returned” to certain parts of the
+United States he would find that he
+could get no alcohol except on a doctor’s
+prescription stating the reason why the
+patient needed it, and he would learn that
+such a prescription could be filled only
+once, and then only by a registered pharmacist
+of good character. No matter to
+what place he came back, he would find a
+constant interference with or supervision
+of the manufacture, sale and consumption
+of alcoholic liquors on the part of the
+government. He would probably wonder
+why the state should interfere with private
+and personal liberty in such matters.
+We have already pointed out that the
+state now <i>does</i> interfere, and that this is
+one of the distinguishing marks of the
+government of the day. For information
+on this particular form of interference,
+its prevalence, its necessity, and its advisability,
+the student may confidently
+turn to the Britannica. The hygienic side
+of the question is outlined in the chapter
+of this Guide on <i>Health and Disease</i>. The
+social or sociological side claims our attention
+here. Read the article <span class="sc"><a href="/article/08-0628-drunkenness/drunkenness">Drunkenness</a></span>
+(Vol. 8, p. 601), and for the relation
+between alcohol and mental disease,
+the section <i>Toxic Insanity</i> (Vol. 14, p.
+609) in the article on <span class="sc"><a href="/article/14-0628-insanity/insanity">Insanity</a></span> already
+mentioned, and also <span class="sc"><a href="/article/19-0447-neuropathology/neuropathology">Neuropathology</a></span>
+(Vol. 19, p. 429); then the article <span class="sc"><a href="/article/14-0538-inebriety-law-of/inebriety__law_of">Inebriety,
+Law of</a></span> (Vol. 14, p. 409); that on
+<span class="sc"><a href="/article/16-0781-liquor-laws/liquor_laws">Liquor Laws</a></span> (Vol. 16, p. 759), with a
+special section referring to the United
+States, which deals with local prohibition,
+state prohibition, public dispensaries,
+and taxation; and for a general and
+elaborate summary of the whole question
+the article <span class="sc"><a href="/article/26-0608-s5/temperance">Temperance</a></span> (Vol. 26, p. 578)
+equivalent to about 50 pages of this
+Guide, by Dr. <a href="/contributors.html?q=Arthur+Shadwell">Arthur Shadwell</a>, author of
+<i>Drink, Temperance and Legislation</i>. In
+the section on the <i>Use and Abuse of Alcohol</i>
+<a href="/contributors.html?q=Arthur+Shadwell">Dr. Shadwell</a> summarizes the results
+of modern scientific investigation of
+the abuse in its bearings upon crime,
+poverty, insanity, mortality, longevity,
+and heredity.</p>
+
+<p>In such articles as those on <span class="sc"><a href="/article/17-0905-s4/mathew__theobald">Theobald
+Mathew</a></span> (“Father Mathew”) (Vol. 17,
+p. 886), <span class="sc"><a href="/article/08-0479-dow-neal/dow__neal">Neal Dow</a></span> (Vol. 8, p. 456), <span class="sc"><a href="/article/12-0299-s2/gough__john_bartholomew">John
+B. Gough</a></span> (Vol. 12, p. 282), and <span class="sc"><a href="/article/28-0678-willard-frances-elizabeth/willard__frances_elizabeth">Frances
+E. Willard</a></span> (Vol. 28, p. 658) the reader
+will find biographies relating to the temperance
+movement; and in the separate
+articles on states there is information
+about state prohibition, local option, and
+the state dispensary system.</p>
+
+<p><span class="shoulder-heading" id="sh-11">Heredity and Eugenics</span><a href="/contributors.html?q=Arthur+Shadwell">Dr. Shadwell</a>’s remarks on the relation
+of alcoholism to heredity may remind us
+that the very word “heredity” would
+seem strange to the typical man of a century
+ago, whose return to life we have
+imagined. We should be no more shocked
+by the occasional crudeness of his intimate
+and excited phraseology than he
+would be at our frankness in discussing
+even in mixed company such subjects as
+birth, reproduction, sexual morality, the
+social evil and the white slave trade.
+The growth of interest in these topics
+may be traced in part to Darwin, Huxley
+and Mendel, to what they did to make
+biology a science. Read in the Britannica
+the interesting story, in the article <span class="sc"><a href="/article/18-0134-mendelism/mendelism">Mendelism</a></span>
+(Vol. 18, p. 115), of the investigations
+of Gregor Mendel, Abbot of
+Brünn, in his cloister garden, in crossing
+peas and classifying the inheritance of
+peculiarities. Then read the articles
+<span class="sc"><a href="/article/13-0366-heredity/heredity">Heredity</a></span> (Vol. 13,
+p. 530), by Prof.
+Chalmers Mitchell,
+and <span class="sc"><a href="/article/14-0038-hybridism/hybridism">Hybridism</a></span> (Vol.
+14, p. 26), by the
+same contributor, and turn to the articles
+<span class="sc"><a href="/article/09-0917-s2/eugenics">Eugenics</a></span> (Vol. 9, p. 855) and <span class="sc"><a href="/article/11-0445-s4/galton__sir_francis">Sir Francis
+Galton</a></span> (Vol. 11, p. 427), for an account
+of the attempt to found a practical
+science to improve the breed of men.</p>
+
+<p>Especially within the last few years
+has the public conscience been aroused
+on the white slave traffic and prostitution,
+both in Great Britain and the United
+States, and particularly in the great
+cities, where this form of vice, if left under
+the jurisdiction of the police, gives
+rise to a singularly dangerous form of
+corruption and to the general disrepute
+of the defenders of public safety. The
+many important aspects of the subject,
+which need not be rehearsed here, are to
+be found in <a href="/contributors.html?q=Arthur+Shadwell">Dr. Shadwell</a>’s article <span class="sc"><a href="/article/22-0472-prostitution/prostitution">Prostitution</a></span>
+(Vol. 22, p. 457) and Dr. Edmund
+Owen’s article <span class="sc"><a href="/article/27-1011-s3/venereal_diseases">Venereal Diseases</a></span>
+(Vol. 27, p. 983).</p>
+
+<p>One of the remedies most commonly
+suggested for the evils of prostitution in
+general and of the white slave trade in
+particular is a minimum wage. <a href="/contributors.html?q=Arthur+Shadwell">Dr. Shadwell</a>’s
+article on prostitution gives “excessively
+laborious and ill-paid work” as
+only one of many secondary causes for
+women’s taking to a life of evil repute.
+Indolence, love of excitement, dislike of
+restraint, and abnormal sexual appetite,
+he counts as primary causes; and among
+secondary causes he names the difficulty
+of finding employment; harsh treatment
+at home, promiscuous living among the
+overcrowded poor; overcrowding in factories;
+the example of luxury, self-indulgence
+and loose manners set by the
+wealthy; demoralizing literature and
+amusements; and the arts of profligate
+men. But the subject of wages is an important
+one in itself, and as an introduction
+to the study of the labour question,
+it may well be taken up here, even if
+the efficacy of minimum-wage laws, or of
+any legislation, in producing a higher
+sexual morality has been exaggerated.</p>
+
+<p><span class="shoulder-heading" id="sh-12">Wages and Labour</span>Read the article <span class="sc"><a href="/article/28-0245-wages/wages">Wages</a></span> (Vol. 28, p.
+229, equivalent to 20 pages of this Guide),
+by <a href="/contributors.html?q=Joseph+Shield+Nicholson">Joseph Shield Nicholson</a>, professor of
+political economy at
+Edinburgh University.
+The difficulty
+of an exact definition,
+and, specifically, of one that distinguishes
+between “wages” and “profits,”
+leads the author to adopt as the best the
+definition of Gen. Francis A. Walker, the
+American economist, “the reward of
+those who are employed in production
+with a view to the profit of their employers
+and are paid at stipulated rates.”
+The distinction between a nominal and
+real wage is based on the difference between
+the money value and the purchasing
+value of the wage as affected by variation
+in the cost of living. Irregularity of
+employment and other elements of uncertainty,
+such as liability to accident or to
+occupational diseases, are factors to be
+considered in estimating real wages.
+<a href="/contributors.html?q=Joseph+Shield+Nicholson">Professor Nicholson</a> discusses the wage-fund
+theory, corrects it by Adam Smith’s
+observation that wages are paid from the
+product of labour; and treats “relative”
+wages, the state-regulation of wages
+(which he does not consider feasible); poor
+relief in aid of wages; factory legislation;
+trade unions; the effects of machinery on
+wages; and the progress of the working-classes.</p>
+
+<p><span class="shoulder-heading" id="sh-13">Labour Legislation</span>The subject of factory legislation brings
+us back to the general topic of “state interference
+with private matters” as the
+old school of political scientists would
+have called it. Two treatises in the Britannica
+are important for the study of this
+subject—the general
+article <span class="sc"><a href="/article/16-0021-s3/labour_legislation">Labour
+Legislation</a></span> (Vol.
+16, p. 7), equivalent
+to 70 pages of this Guide, by <a href="/contributors.html?q=Adelaide+Mary+Anderson">Adelaide
+Mary Anderson</a>, principal lady inspector
+of factories to the British Home Office, and
+Carroll D. Wright, late U. S. Commissioner
+of Labor; and the article <span class="sc"><a href="/article/09-0379-employers-liability/employers__liability">Employers’
+Liability and Workmen’s Compensation</a></span>
+(Vol. 9, p. 356), which is of
+peculiar interest now that in the United
+States recent laws in regard to employers’
+liability and workmen’s compensation
+have shown a change in legislative
+theory and practice. Statutes of this
+kind have been passed by the legislatures
+of several states where nothing of the
+sort would have been attempted a generation
+ago, although legislatures have always
+been readier than courts to approve
+radical laws, and have been far more
+readily influenced by popular sentiment.
+After their passage they have in some
+states been held unconstitutional, and in
+other states the highest court has recognized
+them as valid; the decisions perhaps
+depending to some extent on the
+attitude of the court toward the opposed
+claims of capital and labour. Here as
+elsewhere the student should remember
+that much information of a local character
+is to be found in the articles on
+different states of the Union. The article
+<span class="sc"><a href="/article/16-0020-labor-day/labor_day">Labor Day</a></span> (Vol. 16, p. 6) describes an
+official recognition of the claims of labour
+in the United States.</p>
+
+<p><span class="shoulder-heading" id="sh-14">Organized Labour</span>On labour organizations and their
+work see the articles: <span class="sc"><a href="/article/27-0155-s2/trade_unions">Trade Unions</a></span>
+(Vol. 27, p. 140), and particularly the
+section <i>Economic
+Effects of Trade
+Unionism</i>, and the
+section on trade
+unions in the United States, by Carroll
+D. Wright, late U. S. Commissioner of
+Labor, who deals with such topics as
+railway brotherhoods, national unions,
+the “International,” Knights of Labor,
+American Railway Union, federations of
+labour, especially the American Federation
+of Labor, and estimated strength of
+trade unions. For the earlier history of
+trade unions or similar organizations see
+<span class="sc"><a href="/article/27-0150-s2/trade_organization">Trade Organization</a></span> (Vol. 27, p. 135),
+<span class="sc"><a href="/article/12-0027-gilds/gilds">Gilds</a></span> (Vol. 12, p. 14), <span class="sc"><a href="/article/16-0831-livery-companies/livery_companies">Livery Companies</a></span>
+(Vol. 16, p. 809), and <span class="sc"><a href="/article/02-0240-s2/apprenticeship">Apprenticeship</a></span>
+(Vol. 2, p. 228).</p>
+
+<p><span class="sc"><a href="/article/25-1050-strikes-and-lock-outs/strikes_and_lock-outs">Strikes and Lock Outs</a></span>, particularly
+the sections <i>Economic Effects</i> (Vol. 25,
+p. 1028), <i>Important British Strikes and
+Lock Outs</i> (p. 1029), and on strikes in
+the United States (p. 1033),—the last by
+Dr. Carroll D. Wright, who describes,
+among others, the Homestead strike of
+1892, the Pullman strike of 1894, the steel
+strike of 1901, and the coal strike of
+1902. For these and other strikes see the
+local articles on such storm-centres as
+Homestead, Pullman, Leadville, Cripple
+Creek, Chicago.</p>
+
+<p>See also <span class="sc"><a href="/article/04-0368-boycott/boycott">Boycott</a></span> (Vol. 4, p. 353); and
+<span class="sc"><a href="/article/14-0601-s3/injunction">Injunction</a></span> (Vol. 14, p. 570), and, for a
+“classic” use of the injunction against
+boycott, the article on <span class="sc"><a href="/article/26-0375-s6/taft__william_howard">William Howard
+Taft</a></span> (Vol. 26, p. 354);</p>
+
+<p><span class="sc"><a href="/article/02-0346-s2/arbitration_and_conciliation">Arbitration and Conciliation</a></span> (Vol.
+2, p. 331) for attempts by the state to
+regulate the relations of capital and labour
+at variance.</p>
+
+<p>Related topics which have not been
+analyzed here will be found in the articles
+<span class="sc"><a href="/article/27-0597-unemployment/unemployment">Unemployment</a></span> (Vol. 27, p. 578),
+<span class="sc"><a href="/article/16-0021-s2/labour_exchange">Labour Exchange</a></span> (Vol. 16, p. 7), and
+<span class="sc"><a href="/article/27-0863-vagrancy/vagrancy">Vagrancy</a></span> (Vol. 27, p. 837).</p>
+
+<p><span class="shoulder-heading" id="sh-15">Immigration</span>Closely connected with the American
+labour problems, since growing American
+industries demand a supply of workmen
+that cannot be filled
+by natural increase
+in the population, is
+the question of immigration. The article
+<span class="sc"><a href="/article/18-0451-s6/migration">Migration</a></span> (Vol. 18, p. 427) is divided
+into two parts, the second dealing with
+migration in zoology. The first section,
+dealing with emigration and immigration
+and internal migration of populations, is
+for the most part by Richmond Mayo-Smith,
+late professor of political economy
+and social science in Columbia University,
+New York City. It is appropriate
+that the subject should be treated by an
+American and with special attention to
+the United States, since this country
+owes its origin to an immigration three
+centuries ago; as the presence of many
+recent immigrants puts a strain on our
+powers of assimilation and gives rise to
+other serious problems; and as internal
+migrations are markedly affecting social
+conditions. In a preliminary historical
+sketch the author deals with: prehistoric
+migrations in search of booty, through the
+desire of the stronger to take possession
+of the lands of the weaker, or by pressure
+of population on the food supply; Greek
+and Roman colonization; the German
+conquest; minor migratory movements
+such as the introduction of Flemish
+weavers to England and the forced migration
+of the Huguenots from France;
+the great colonization period after the
+discovery of America; and modern migration—characterized
+by its magnitude, by
+the change of the emigrant’s political
+allegiance, and by the circumstance that
+it is a movement of “individuals seeking
+their own good without state direction or
+aid.” In a statistical discussion of immigration
+to the United States (Vol. 18, p.
+430) there is much valuable information.
+“At first the Irish and Germans were
+most prominent. Of later years, the
+Italians, Czechs, Hungarians and Russians
+were numerously represented.”
+Immigration to other countries, especially
+Canada and South America; the balance
+of migration and temporary emigration;
+and the effects of migration on the
+country “from which” and the country
+“to which”—are topics considered in the
+article, which also discusses the restriction
+of immigration. As to Asiatic immigration
+see <span class="sc"><a href="/article/05-0018-california/california">California</a></span> (especially p.
+20, Vol. 5), <span class="sc"><a href="/article/24-0158-san-francisco/san_francisco">San Francisco</a></span> (p. 148, Vol.
+24), and <span class="sc"><a href="/article/07-0092-coolie/coolie">Coolie</a></span> (Vol. 7, p. 77). See also
+the article <span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, section <i>Population
+and Social Conditions</i> (p. 634, Vol.
+27), and, in separate articles on states
+and larger cities of the United States, the
+analysis of foreign-born population, that
+of foreign parentage, etc. For instance,
+in the article <span class="sc"><a href="/article/17-0868-s3/massachusetts">Massachusetts</a></span> (Vol. 17,
+p. 854), there is a most interesting account
+of the varying sources of immigration
+and of the replacing of Irish labour
+by Canadians and Italians. Boston is
+the second immigrant port of the country.
+A large part of the transatlantic immigrants
+pass speedily to permanent homes
+in the West, but by far the greater part of
+the Canadian influx remains there.</p>
+
+<p>The article on <span class="sc">New York City</span> (p. 617
+of Vol. 19) remarks that</p>
+
+<p>there are in New York City more Germans
+than in any city of Germany, save Berlin,
+and more Irish than in Dublin. There are
+many well-defined foreign communities in
+the city, such as “Little Italy” about Mulberry
+Street, “Chinatown” on Mott, Pell
+and Doyers Streets, the Hebrew quarter
+on the upper Bowery and east of it, a
+“German Colony” east of Second Avenue
+below Fourteenth Street, French quarters
+south of Washington Square about Bleecker
+Street and on the West Side between
+Twentieth and Thirty-fourth Streets; a
+Russian quarter near East Broadway, a
+“Greek Colony” about Sixth Avenue in
+the 40’s, and negro quarters on Thompson
+Street and on the West Side in the 50’s,
+and there are equally well-defined Armenian
+and Arab quarters.</p>
+
+<p>Chicago, as the article on that city
+shows, is the second largest Bohemian
+city in the world, the third Swedish, the
+fourth Norwegian, the fifth Polish and
+the fifth German.</p>
+
+<p><span class="shoulder-heading" id="sh-16">Negro Problem</span>The Southern states of the Union,
+though they have much less immigration
+than the North or
+West, have a population
+problem that is
+even more difficult
+in some respects—that of the negro.
+Many immigrant elements are readily
+“amalgamated” or assimilated into the
+native local population—by marriage, by
+trade, and indeed even by physical environment.
+It seems certain, for instance,
+that the physical type of the children
+of Italian or Hebrew immigrants in
+New York City is different from that of
+their parents and more like a local type,
+even in such respects as the shape and
+contour of the head and its ratio of length
+to breadth. But the negro does not assimilate
+physically or, to any considerable
+degree, mentally; and the communities
+in America in which he is most plentiful
+are so far from eager to assimilate him
+that they socially and politically isolate
+him. The reader should go to the article
+<span class="sc"><a href="/article/19-0362-negro/negro">Negro</a></span> (Vol. 19, p. 344), in which there
+is a general study of the race by <a href="/contributors.html?q=Thomas+Athol+Joyce">T. Athol
+Joyce</a>, assistant in the Department of
+Ethnography, British Museum, and a section
+on <i>Negroes in the United States</i> by Dr.
+<a href="/contributors.html?q=Walter+Francis+Willcox">Walter Francis Willcox</a>, late chief statistician
+U. S. Census Bureau and professor
+of social science and statistics, Cornell
+University. The magnitude of the negro
+problem may be deduced from <a href="/contributors.html?q=Walter+Francis+Willcox">Professor
+Willcox</a>’s remark that the present number
+of negroes in the United States “is
+greater than the total population of the
+United States was in 1820, and nearly as
+great as the population of Norway, Sweden
+and Denmark.” Birth and mortality
+statistics in regard to negroes show that
+they are increasing much less rapidly than
+whites; but it must be remembered that
+there is an absolute increase, that there
+is no prospect of the negro problem being
+solved by the dying out of the race, and
+that even the fact that negroes constitute
+a smaller proportion of the population
+than formerly does not greatly affect the
+problem. There is also much relevant information
+of value in the articles on the
+Southern states, particularly in the sections
+on population, education and government;
+and as to education see the
+articles <span class="sc"><a href="/article/27-0506-s2/tuskegee">Tuskegee</a></span> (Vol. 27, p. 487),
+<span class="sc"><a href="/article/28-0360-washington-booker-taliaferro/washington__booker_taliaferro">Booker T. Washington</a></span> (Vol. 28, p. 344)
+and <span class="sc"><a href="/article/02-0632-s3/armstrong__archibald">S. C. Armstrong</a></span> (Vol. 2, p. 591).
+See also the article <span class="sc"><a href="/article/17-0184-lynch-law/lynch_law">Lynch Law</a></span> (Vol. 17,
+p. 169) by Prof. W. L. Fleming of the
+Louisiana State University.</p>
+
+<p><span class="shoulder-heading" id="sh-17">Trusts</span>There is a very close relation between
+the economic problems connected with
+labour and those which have to do with
+capital and especially with
+capital in its organized and
+monopolistic forms. A monopoly
+of the supply, sale, or manufacture
+of any class of goods was, especially
+in England under the Tudors
+and Stuarts, a crown grant; and the theory
+of patent and copyright law is based
+on such grants, as is shown in the articles
+<span class="sc"><a href="/article/18-0763-monopoly/monopoly">Monopoly</a></span> (Vol. 18, p. 733), <span class="sc"><a href="/article/16-0521-letters-patent/letters_patent">Letters
+Patent</a></span> (Vol. 16, p. 501), and <span class="sc"><a href="/article/20-0965-s4/patents">Patents</a></span>
+(Vol. 20, p. 903). On the modern monopoly
+which, far from being cherished by
+government, is constantly being regulated,
+checked or “crushed,” see the article
+<span class="sc"><a href="/article/27-0351-s2/trusts">Trusts</a></span> (Vol. 22, p. 334) by Prof. <a href="/contributors.html?q=Jeremiah+Whipple+Jenks">J.
+W. Jenks</a>, formerly of Cornell and now of
+New York University, whose treatment
+is from the American point of view—the
+problem is peculiarly an American one—but
+with sections on European experience,
+including paragraphs on Great Britain,
+Germany, France and Austria.</p>
+
+<p>Among the questions answered by this article—questions
+that are continually presenting
+themselves to the mind of every intelligent
+citizen, but that are seldom lucidly answered
+even by the most intelligent—are:</p>
+
+<p>What are trusts? Why are they formed?</p>
+
+<p>Why were they not formed before the latter
+years of the 19th century?</p>
+
+<p>Why can combination be successfully applied
+in some industries and not in others?
+Why do some industries thrive better under
+competition than under combination? Why
+are some combinations bound to fail?</p>
+
+<p>In what respect has the trust advantages
+over the individual competitor?</p>
+
+<p>How do trusts benefit by protective tariffs
+and by discrimination in rates of transportation?</p>
+
+<p>What has been the history of trusts in Europe?</p>
+
+<p>The question of most interest to the ordinary
+person is: Do trusts raise prices? To
+this the Encyclopaedia Britannica answers:
+“Experience seems to show, beyond question,
+that whenever the combinations are powerful
+enough to secure a monopolistic control it has
+usually been the policy to increase the prices
+above those which obtained during the period
+of competition preceding the formation of the
+combination.” Besides this increased price,
+the evils of combinations are: loss to investors
+through promotion and speculation by directors;
+loss to wage-earners, corruption of legislatures,
+and the suppression of independent
+activity.</p>
+
+<p>The most obvious remedies are “more
+rigid laws with reference to the methods
+of incorporation and to the responsibility
+of directors to stockholders and to the
+public,” greater publicity and closer government
+inspection, and the abolition of
+special favours granted by government
+and shipping companies.</p>
+
+<p><span class="shoulder-heading" id="sh-18">Government Control</span>For American legislation in regard to
+trusts see the article <span class="sc"><a href="/article/14-0742-interstate-commerce/interstate_commerce">Interstate Commerce</a></span>
+(Vol. 14, p. 711), equivalent to 10
+pages of this Guide,
+by Prof. Frank A.
+Fetter, formerly of
+Cornell and now of
+Princeton University. This article shows
+the constitutional basis for action by the
+Federal government and the power given
+to Congress to regulate commerce among
+the several states; and it describes the
+Interstate Commerce Act of 1887, amended
+in 1903 by the Elkins Act, and the
+Sherman Anti-Trust Act of 1890. See
+also in the article <span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, the
+section <i>History</i>, §§ 353, 357, 396 (pp. 725,
+726, 733 of Vol. 27).</p>
+
+<p>But although there have been great
+changes in the relation of government to
+the individual in his private and business
+life, the extent of practical government
+control is still much less than many
+theorists would like to see. It is true
+that in many countries of Europe railways
+are owned and operated by the
+state—see p. 826 of Vol. 22, in the article
+<span class="sc"><a href="/article/22-0836-railways/railways">Railways</a></span>. See also the article <span class="sc"><a href="/article/19-0650-new-zealand/new_zealand">New
+Zealand</a></span> and the summary of conditions
+there (p. 307, Vol. 25), in part as follows:</p>
+
+<p>The government owns not only the railways,
+but two-thirds of the whole land, letting
+it on long leases. It sets a limit to
+large estates. It levies a progressive income-tax
+and land tax. It has a labour
+department, strict factory acts and a law
+of compulsory arbitration in labour disputes
+(1895). There are old-age pensions
+(1898), government insurance of life
+(1871) and against fire (1905). Women
+have the suffrage, and, partly in consequence,
+the restriction of the liquor traffic
+is severe. There is a protective tariff, and
+Oriental labour is excluded. The success
+of the experiment is not yet beyond doubt;
+compulsory arbitration, for example, did
+not work with perfect smoothness, and was
+amended in 1908.... It is fair to
+add that the experiment is probably on
+too small a scale to show what might happen
+in larger countries. New Zealand has
+only 100,000 sq. m. of territory and about
+one million of inhabitants, mainly rural
+and of picked quality. The conditions of
+combined isolation and security are not
+easily obtained elsewhere. The action of
+the state has been in the great majority
+of instances rather regulative than constructive.</p>
+
+<p><span class="shoulder-heading" id="sh-19">Socialism, etc.</span>But in general governments have extended
+their control more or less along
+the conventional lines of law and legislative
+theory, and have
+not undertaken ownership
+and operation—even
+in New
+Zealand, as we have just seen, public action
+being “rather regulative than constructive.”
+See the general article <span class="sc"><a href="/article/25-0317-socialism/socialism">Socialism</a></span>
+(Vol. 25, p. 310) and biographies
+of those connected with the Socialist
+movement, such as Marx, Lassalle, Robert
+Owen, Rodbertus, Bebel, Liebknecht,
+Jaures, Ballance, William Morris, Edward
+Bellamy, and Henry George. On
+communism, see the article on that subject,
+the biographies of Owen, Saint-Simon,
+Fourier, Cabet, etc., and descriptions
+of the more important American
+communistic experiments in the articles
+on Brook Farm, Shakers, Amana, Nauvoo,
+Harmony, Oneida Community,
+Hopedale, etc. For communism merely
+as a business scheme see the article <span class="sc"><a href="/article/07-0097-co-operation/co-operation">Co-operation</a></span>
+(Vol. 7, p. 82) and the biographies
+of Raiffeisen and Schulze-Delitzsch.</p>
+
+<p><span class="shoulder-heading" id="sh-20">Finance</span>We have now run through the more
+strikingly novel public questions of the
+day, and we come next to questions which
+have been long discussed
+and longer recognized as
+being within the sphere of
+government. The one of these that is
+most intimately connected with the economic
+problems we have just been discussing
+is the subject of public finance and
+revenue. On this read the articles <span class="sc"><a href="/article/10-0361-s5/finance">Finance</a></span>
+(Vol. 10, p. 374), <span class="sc"><a href="/article/26-0487-taxation/taxation">Taxation</a></span> (Vol.
+26, p. 458), and <span class="sc"><a href="/article/19-0281-s5/national_debt">National Debt</a></span> (Vol.
+19, p. 266); and, on American public
+finance, see Vol. 27, p. 654; on Congressional
+legislation and finance, p. 661 of
+the same volume; for a general and
+statistical treatment of American finance,
+the sections headed <i>Finance</i> in each
+article dealing with a state of the
+Union, the articles <span class="sc"><a href="/article/12-0209-gold/gold">Gold</a></span> (Vol. 12,
+p. 192), <span class="sc"><a href="/article/25-0128-s3/silver">Silver</a></span> (Vol. 25, p. 112), and
+<span class="sc"><a href="/article/03-0969-bimetallism/bimetallism">Bimetallism</a></span> (Vol. 3, p. 946), and
+the biographies of <span class="sc"><a href="/article/18-0903-s3/morris__robert">Robert Morris</a></span>
+(Vol. 18, p. 871), <span class="sc"><a href="/article/12-0905-hamilton-alexander/hamilton__alexander">Alexander Hamilton</a></span>
+(Vol. 12, p. 880), and <span class="sc"><a href="/article/07-0088-cooke-jay/cooke__jay">Jay Cooke</a></span> (Vol. 7,
+p. 73).</p>
+
+<p><span class="shoulder-heading" id="sh-21">Tariff</span>Of perennial interest in the field of public
+finance is the question of tariff reform.
+This is true both in the United States
+and in the United Kingdom, but strangely
+enough “tariff reform” is
+used with absolutely opposite
+meanings in the two
+countries. Tariff reform in England is
+linked with Imperialism and means the
+introduction of higher tariffs for protection
+of colonial as well as British industries.
+In the United States the typical
+tariff reformer is usually an opponent of
+Imperialism (which, of course, does not
+mean the same thing in the two countries),
+and tariff reform here involves
+lowering duties, doing away with protection,
+and, in short, adopting approximately
+the very system now in vogue in
+the United Kingdom, and the very system
+that the followers of Joseph Chamberlain
+wish to replace with something
+not entirely unlike the American protective
+system as it has been since the Civil
+War. On this subject see the article
+<span class="sc"><a href="/article/26-0451-s3/tariff">Tariff</a></span> (Vol. 26, p. 422), by the American
+economist, F. W. Taussig, professor at
+Harvard, the articles <span class="sc"><a href="/article/22-0479-protection/protection">Protection</a></span> (Vol.
+22, p. 464), by <a href="/contributors.html?q=Edmund+Janes+James">E. J. James</a>, president of
+the University of Illinois, and author of
+the <i>History of American Tariff Legislation</i>,
+and <span class="sc"><a href="/article/11-0100-s6/free_trade">Free Trade</a></span> (Vol. 11, p. 88), by
+the Venerable Dr. William Cunningham,
+Archdeacon of Ely, and author of <i>The
+Growth of English Industry and Commerce</i>;
+the biographies of <span class="sc"><a href="/article/12-0905-hamilton-alexander/hamilton__alexander">Alexander
+Hamilton</a></span> (Vol. 12, p. 880), and <span class="sc"><a href="/article/06-0486-clay-henry/clay__henry">Henry
+Clay</a></span> (Vol. 6, p. 470), for the foundation
+of American protection; and the articles
+on <span class="sc"><a href="/article/05-0341-carey-henry/carey__henry">H. C. Carey</a></span> (Vol. 5, p. 329), <span class="sc"><a href="/article/16-0798-s3/list__friedrich">Friedrich
+List</a></span> (Vol. 16, p. 776), and <span class="sc"><a href="/article/17-0270-s3/mackinac_island">William
+McKinley</a></span> (Vol. 17, p. 256) for the principal
+exponents, theoretical and practical,
+outside of Great Britain, of protection;
+the lives of <span class="sc"><a href="/article/06-0626-cobden-richard/cobden__richard">Richard Cobden</a></span> (Vol.
+6, p. 607) and <span class="sc"><a href="/article/04-0587-bright-john/bright__john">John Bright</a></span> (Vol. 4, p.
+567) and the article <span class="sc"><a href="/article/07-0191-corn-laws/corn_laws">Corn-Laws</a></span> (Vol. 7,
+p. 174) for the genesis of free trade in
+Great Britain; and the article on <span class="sc"><a href="/article/05-0849-chamberlain-joseph/chamberlain__joseph">Joseph
+Chamberlain</a></span> (in particular pp. 816–817
+of Vol. 5) for English tariff reform in
+politics.</p>
+
+<p><span class="shoulder-heading" id="sh-22">Banking Laws</span>Another topic in public finance of great
+interest at the present moment is the
+banking laws,—the interference of government
+with banking
+and similar business.
+Local regulations
+in regard to
+banking will be found in sections on legislation
+and finance in articles on each of
+the states of the Union. The article
+<span class="sc"><a href="/article/20-0079-oklahoma/oklahoma">Oklahoma</a></span> (Vol. 20, p. 57), for example,
+contains the following summary of the
+first radical state enactment—constitutional
+in this case,—providing bank
+guarantees:</p>
+
+<p>The unique feature of the banking system
+(with amendments adopted by the second
+legislature becoming effective on the 11th
+of June, 1909) is a fund for the guaranty
+of deposits. The state banking board levies
+against the capital stock of each state
+bank and trust company, organized or existing,
+under the laws of the state to create
+a fund equal to 5% of average daily deposits
+other than the deposits of state
+funds properly secured. One-fifth of this
+fund is payable the first year and one-twentieth
+each year thereafter; 1% of the
+increase in average deposits is collected
+each year. Emergency assessments, not to
+exceed 2%, may be made whenever necessary
+to pay in full the depositors in an
+insolvent bank; if the guaranty fund is
+impaired to such a degree that it is not
+made up by the 2% emergency assessment,
+the state banking board issues certificates
+of indebtedness which draw 6% interest
+and which are paid out of the assessment.
+Any national bank may secure its depositors
+in this manner if it so desires. The
+bank guarantee law was held to be valid
+by the United States Supreme Court in
+1908, after the attorney-general of the
+United States had decided that it was illegal.</p>
+
+<p>More general treatment is to be found
+in the articles <span class="sc"><a href="/article/03-0351-banks-and-banking/banks_and_banking">Banks and Banking</a></span> (Vol.
+3, p. 334), <span class="sc"><a href="/article/24-0258-savings-banks/savings_banks">Savings Banks</a></span> (Vol. 24, p.
+243) and <span class="sc"><a href="/article/27-0346-s5/trust_company">Trust Company</a></span> (Vol. 27, p.
+329); and see further the articles listed in
+the chapter in this Guide <i>For Bankers
+and Financiers</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-23">Insurance</span>Another sphere of private finance over
+which government restriction and regulation
+has been greatly
+extended during the
+last few years, is insurance.
+The entire subject of insurance
+is, moreover, of interest not merely
+to the citizen as a member of the body
+politic but to the individual as the head
+of a family and as an investor for his own
+protection in old age. To every one,
+therefore, the article <span class="sc"><a href="/article/14-0687-insurance/insurance">Insurance</a></span> (Vol. 14,
+p. 656) will be of the utmost value, by
+reason of its rare combination of interest
+and authority. For a full analysis of this
+article and of related topics see the chapter
+in this Guide <i>For the Insurance Man</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-24">Legislation and Courts</span>Much of the earlier part of the present
+chapter has been devoted to the rapid extension
+of governmental control, regulation
+and supervision
+through legislation.
+Interesting and novel
+though this is, it is
+far less important for an intelligent comprehension
+of government than is a careful
+study of the foundations and principles
+of legislation. Only the specialist
+will wish to pursue a complete course in
+political science, but every well-informed
+citizen of the United States should study
+the general powers and functions of national
+and state legislatures and courts.
+This material is given briefly, lucidly and
+critically by the Hon. <a href="/contributors.html?q=Edmund+Janes+James">James</a> Bryce, late
+British Ambassador to the United States,
+former President of the British Board of
+Trade, and author of <i>The American Commonwealth</i>,
+in the section <i>Constitution and
+Government</i>, article <span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span> (Vol.
+27, pp. 646–658). Part of this section deals
+with the governments of the states, as to
+which there is also special information in
+the section on government of the article
+on each state. Regarding city governments
+similar sections will be found in
+the articles on the larger cities. For a
+full analysis and a list of articles see the
+chapter <i>For Lawyers</i> in this Guide. Constitutional
+restrictions of all delegated
+powers must be continually kept in mind
+in the study of the action of legislatures
+and courts, and of the questions that
+arise in regard to legislation or to court
+decisions. Although the legislature represents
+the people more or less directly—the
+lower house being commonly called
+the House of Representatives—and so
+has delegated to it from the people the
+power of making laws, still, in the Federal
+and state constitutions (except those
+of a very recent date) there is a system of
+checks on every delegated power. The
+result is that an act passed by Congress
+does not become law without the approval
+of the president, nor, in most
+states, a local statute without that of the
+governor, and—more important—is not
+a valid law if the highest Federal Court
+(or, if it be a state enactment, the highest
+state court) holds it contrary to the
+terms of the constitution. <span class="sni"><span class="hidev">|</span>The System
+of Checks<span class="hidev">|</span></span>
+For a summary
+of the historical
+arguments for
+this system of checks
+see the section on
+the Constitution (Vol. 27, p. 686), in the
+article <span class="sc"><a href="/article/17-0298-madelenian/madelenian">United States</a></span> and such biographical
+articles as <span class="sc"><a href="/article/17-0299-s5/madison__james">James Madison</a></span> (Vol.
+17, p. 284); <span class="sc"><a href="/article/12-0905-hamilton-alexander/hamilton__alexander">Alexander Hamilton</a></span> (Vol.
+12, p. 880), and <span class="sc"><a href="/article/18-0901-s4/morris__gouverneur">Gouverneur Morris</a></span>
+(Vol. 18, p. 869). The working of this
+system in nation and state has been
+greatly affected by the distinction between
+the legislators’ mandate and that of the
+judge. Legislators have shorter terms of
+service than judges, and especially judges
+of the higher courts, and so may be said to
+be in much closer and more constant contact
+with the people; and the legislator is
+bound by what he thinks the people need
+and want,—something that is continually
+changing. On the other hand, the judge
+is bound by the written law, unchanged
+and unchangeable except by constitutional
+amendments or slightly varying
+interpretation of the constitution. The
+result has been dissatisfaction with the
+courts and with legislatures. The definite
+expression of this dissatisfaction is in
+constitutional amendments or in new
+constitutions, adopted in order that future
+action of the courts may more nearly
+accord with the present sentiment of the
+people. The story of the constitution of
+each state in the Union is told, with a
+summary of important constitutional
+changes, in the section on government of
+each article on a separate state. In his
+analysis of the state constitutions, Mr.
+Bryce says (Vol. 27, p. 647):</p>
+
+<p><span class="shoulder-heading" id="sh-25">Initiative, Referendum and Recall</span>Comparing the old constitutions with the
+new ones, it may be said that the note
+of those enacted in the first
+thirty or forty years of the
+republic was their jealousy
+of executive power and their
+careful safeguarding of the
+rights of the citizen; that of
+the second period, from 1820 to the Civil
+War (1861–65), the democratization of the
+suffrage of institutions generally; that of
+the third period (since the war to the present
+day), a disposition to limit the powers
+and check the action of the legislature, and
+to commit power to the hands of the whole
+people voting at the polls.</p>
+
+<p>And at the close of his treatment of
+local government in the United States,
+the same authority writes (Vol. 27, p.
+651):</p>
+
+<p>Several state constitutions now contain
+provisions enabling a prescribed number
+(or proportion) of the voters in a state or
+city to submit a proposition to all the registered
+voters of the state (or city) for
+their approval. If carried, it takes effect
+as a law. This is the Initiative. These
+constitutions also allow a prescribed number
+of voters to demand that a law passed
+by the state legislature, or an ordinance
+passed by the municipal authority, be submitted
+to all the voters for their approval.
+If rejected by them, it falls to the ground.
+This is the Referendum. Some cities also
+provide in their charters that an official,
+including the mayor or a member of the
+council, may be displaced from office if, at
+a special election held on the demand of a
+prescribed number of the city voters, he
+does not receive the largest number of
+votes cast. This is the Recall. All these
+three institutions are in operation in some
+Western states and are spreading to some
+of the Eastern cities. Their working is observed
+with lively interest, for they carry
+the principle of direct popular sovereignty
+to lengths unprecedented except in Switzerland.
+But it is not merely to the faith
+of the Western Americans in the people
+that their introduction is due. Quite as
+much must be ascribed to the want of faith
+in the legislature of states and cities, which
+are deemed too liable to be influenced by
+selfish corporations.</p>
+
+<p>In connection with the above reference
+to the referendum and initiative in
+Switzerland, see the description of the
+Swiss system of continuous control by
+the electors (Vol. 26, p. 243).</p>
+
+<p>On previous experience, outside the
+United States, with the referendum and
+the initiative, see the article <span class="sc"><a href="/article/23-0014-referendum-and-initiative/referendum_and_initiative">Referendum</a></span>
+(Vol. 23, p. 1), by the Rev. Dr. W. A. B.
+Coolidge, an American whose life has
+been chiefly spent in, and devoted to the
+study of, Switzerland, where the system
+was evolved. In the United States the
+system was first tried in Oregon, and the
+student should read the description in the
+article <span class="sc"><a href="/article/20-0274-s2/oregon">Oregon</a></span> of the legislative department
+(Vol. 20, p. 246), which also deals
+with the recall of officers. See also under
+<span class="sc"><a href="/article/20-0079-oklahoma/oklahoma">Oklahoma</a></span> (Vol. 20, p. 59), and the
+articles on <span class="sc"><a href="/article/25-0525-south-dakota/south_dakota">South Dakota</a></span> and <span class="sc"><a href="/article/17-0026-los-angeles/los_angeles">Los
+Angeles</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-26">Suffrage</span>On suffrage in the United States see p.
+647 of Vol. 27, describing the requirements
+in different states and pointing out
+that “by the Federal Constitution
+state suffrage is
+also the suffrage for Federal
+elections, viz. elections of representatives
+in Congress and of presidential electors.”
+On representation see the passage on p.
+653 of Vol. 27, a portion of which has
+been quoted above; and on representation
+in state legislatures see p. 647 of Vol.
+27 and consult the articles on the separate
+states, where in the sections headed
+<i>Government</i> there is also supplementary
+information about election and ballot
+laws. It is interesting to note, in the
+articles on Mississippi, Virginia, North
+Carolina, South Carolina, Georgia, Alabama,
+Louisiana and Oklahoma, that
+these states have practically disfranchised
+the negro. For a concrete instance
+of the awkward working of the electoral
+college, in the choice of the president in
+1876, see the article <span class="sc"><a href="/article/09-0189-electoral-commission/electoral_commission">Electoral Commission</a></span>
+(Vol. 9, p. 172). On the position of
+aliens see the articles <span class="sc"><a href="/article/01-0731-s2/allegiance">Allegiance</a></span> (Vol.
+1, p. 689) and <span class="sc"><a href="/article/19-0290-s2/naturalization">Naturalization</a></span> (Vol. 19,
+p. 275); and articles on various states.
+In the article <span class="sc"><a href="/article/20-0274-s2/oregon">Oregon</a></span>, for instance (Vol.
+20, p. 245), the reader will find that “the
+constitution provides that no Chinaman,
+not a resident of the state at the time of
+the adoption of the constitution, shall
+ever hold any real estate or mining claim,
+or work any mining claim in the state.”</p>
+
+<p>See also, on the whole subject, the articles
+<span class="sc"><a href="/article/03-0296-s3/ballot">Ballot</a></span> (Vol. 3, p. 279); <span class="sc"><a href="/article/28-0232-vote-and-voting/vote_and_voting">Vote</a></span> (Vol.
+28, p. 216); <span class="sc"><a href="/article/28-0233-voting-machines/voting_machines">Voting Machines</a></span> (Vol. 28,
+p. 217); <span class="sc"><a href="/article/09-0186-election/election">Election</a></span> (Vol. 9, p. 169); <span class="sc"><a href="/article/23-0125-representation/representation">Representation</a></span>
+(Vol. 23, especially pp. 112–116,
+for proportional voting, second choice
+voting, etc.), and <span class="sc"><a href="/article/28-0803-women/women">Women</a></span> (Vol. 28, p. 782)
+for the history of the woman’s suffrage
+movement. In that connection it is
+curious to note in this article (p. 787)
+that, owing to an oversight in the wording
+of the first constitution of New Jersey,
+women could vote in that state from 1776
+to 1807. For any thorough knowledge of
+practical, as contrasted with theoretical
+representative government in the United
+States, the student should read what Mr.
+Bryce has to say about <i>Party Government</i>
+(Vol. 27, p. 658–660); a large part
+of the article on the history of the United
+States after the adoption of the Constitution
+(Vol. 27, pp. 688–735); articles
+on the great parties, <span class="sc"><a href="/article/10-0247-s2/federalist_party">Federalist</a></span> (Vol.
+10, p. 235), <span class="sc"><a href="/article/08-0016-democratic-party/democratic_party">Democratic</a></span> (Vol. 8, p. 2),
+and <span class="sc"><a href="/article/23-0194-s2/republican_party">Republican</a></span> (Vol. 23, p. 177); and
+the lives of the great party leaders from
+Hamilton and Jefferson to McKinley,
+Roosevelt, Bryan and Woodrow Wilson.
+A fuller outline for the study of United
+States history will be found in another
+chapter of this Guide, on <i>History of the
+United States</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-27">Municipal Government</span>But the Federal government and even
+the state governments do not touch any
+one of us so closely as does the local government
+of our city
+and township; and
+Mr. Bryce gives (Vol.
+27, p. 650) a valuable
+criticism of the American system of
+local government,—which, in some cities,
+indeed, seems a lack of system in the business
+sense of that word, and a control of
+the government by political parties prone
+to corruption, bribery and the granting of
+special privilege. Mr. Bryce dwells on
+the over-developed power of the state in
+legislating for the cities or other minor
+governmental units, and the consequent
+activity of local city interests in state and
+national politics, but he also points to the
+growing tendency of the states to permit
+cities to enact their own charters. The
+movement to take the city government
+out of politics has reached its greatest
+force—and its greatest success—in government
+by commission.</p>
+
+<p>In 1902 the city of Galveston, in Texas,
+adopted a new form of municipal government
+by vesting all powers in a commission
+of five persons, elected by the citizens
+on a “general ticket,” one of whom is
+mayor and head of the commission, while
+each of the others has charge of a department
+of municipal administration. A similar
+plan, differing in some details, was subsequently
+introduced in the city of Des
+Moines, in Iowa; and the success which has
+attended this new departure in both cities
+has led to its adoption in many others, especially,
+but not exclusively, in the Western
+states.</p>
+
+<p>For a fuller account see the articles on
+<span class="sc"><a href="/article/11-0448-galveston/galveston">Galveston</a></span> and <span class="sc"><a href="/article/08-0113-des-moines/des_moines">Des Moines</a></span>, where, as
+in other articles on towns and cities, there
+is a summary of their government and
+particularly of the distinctive features of
+local administration.</p>
+
+<p><span class="shoulder-heading" id="sh-28">International Relations</span>What we have said, up to this point,
+has all dealt with our country as a self-contained
+unit—except that we have
+touched on tariffs
+and on immigration
+and on the treatment
+of aliens. In
+the article <span class="sc"><a href="/article/01-0704-s3/alien">Alien</a></span> (Vol. 1, p. 662) the reader
+will find the sentence: “In the United
+States the separate state laws largely determine
+the status of an alien, but subject
+to Federal treaties.” And Mr. Bryce
+(Vol. 27, p. 652) characterizes some of
+the powers allotted to the national government
+“which relate to its action in the
+international sphere.” See particularly
+Mr. Bryce’s remarks (Vol. 27, p. 656) on
+the powers of the president:</p>
+
+<p>In time of war or of public disturbance,
+however, the domestic authority of the
+president expands rapidly. This was
+markedly the case during the Civil War.
+As commander-in-chief of the army and
+navy, and as ‘charged with the faithful execution
+of all laws,’ he is likely to assume,
+and would indeed be expected to assume,
+all the powers which the emergency requires.
+In ordinary times the president
+may be almost compared to the managing
+clerk in a large business establishment,
+whose chief function is to select his subordinates,
+the policy of the concern being
+in the hands of the board of directors. But
+when foreign affairs reach a critical stage,
+or when disorders within the Union require
+Federal intervention, immense responsibility
+is then thrown on one who is
+both commander-in-chief of the army and
+the head of the civil executive. In no European
+country is there any personage to
+whom the president can be said to correspond.
+He may have to exert more authority,
+even if he enjoys less dignity, than a
+European king. He has powers which are
+in ordinary times narrower than those of a
+European prime minister; but these powers
+are more secure, for instead of depending
+on the pleasure of a parliamentary majority,
+they run on to the end of his term.</p>
+
+<p>In this connection you should read the
+articles <span class="sc"><a href="/article/14-0725-s2/international_law">International Law</a></span> and <span class="sc"><a href="/article/14-0725-s2/international_law">International
+Law (Private)</a></span>, <span class="sc"><a href="/article/27-0244-treaties/treaties">Treaties</a></span>,
+<span class="sc"><a href="/article/21-0018-peace/peace">Peace</a></span>, <span class="sc"><a href="/article/21-0030-peace-conferences/peace_conferences">Peace Conferences</a></span>, <span class="sc"><a href="/article/20-0727-s2/pan-american_conferences">Pan-American
+Conferences</a></span> and <span class="sc"><a href="/article/02-0342-s2/arbitration__international">Arbitration,
+International</a></span>; the last showing plainly
+how large a part the United States has
+played in promoting better international
+feeling throughout the world.</p>
+
+<p>Such articles as these tell how peace has
+changed from a purely negative condition to
+a positive subject of international regulation
+and an object of active political effort. They
+answer the following concrete questions on the
+subject:</p>
+
+<p>What was the earliest plan of peace known
+to history? What were the Pax Romana, the
+“Truce of God,” the “Grand Design” of
+Henry IV, and other schemes for the preservation
+of peace?</p>
+
+<p>What was the greatest deliberate effort ever
+made to secure the peace of the world?</p>
+
+<p>What has been done by the two Hague Conferences,
+and when will the next one be held?</p>
+
+<p>How far can disarmament be carried out?</p>
+
+<p>What standing-peace agreements have been
+executed?</p>
+
+<p>What is the history of popular effort for
+international peace, and what peace societies
+exist to-day?</p>
+
+<p>What are the present recognized limitations
+of international arbitration?</p>
+
+<p>What are the first steps toward an era of
+universal peace?</p>
+
+<p>What has been accomplished by the Pan-American
+Conferences?</p>
+
+<p><span class="shoulder-heading" id="sh-29">International Affairs</span>On international affairs of to-day in
+which the United States has a special
+interest there is a wealth of information in
+the Britannica. The
+first topic that will
+naturally present itself
+to the mind of
+the reader is the Panama canal. On this
+see the article <span class="sc"><a href="/article/20-0722-panama-canal/panama_canal">Panama Canal</a></span> (Vol. 20,
+p. 666), with a large-scale map, a history
+of the project and a description of the
+engineering features; and on the politics,
+national and international, of the question
+of building the canal, the articles
+<span class="sc"><a href="/article/06-0721-colombia/colombia">Colombia</a></span>, <span class="sc"><a href="/article/20-0720-s2/panama">Panama</a></span>, <span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">Roosevelt</a></span>, <span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United
+States</a></span>, <i>History</i> (Vol. 27, pp. 730 and
+732), <span class="sc"><a href="/article/13-0118-john-hay/hay__john">John Hay</a></span>, and <span class="sc"><a href="/article/20-1034-s4/pauncefote__julian_pauncefote">Pauncefote</a></span>.</p>
+
+<p>Our relations with Colombia in connection
+with the canal will naturally lead the
+student to a general consideration of the
+relation of the United States with the
+Latin-American countries. Here the
+most interesting factor is the Monroe
+Doctrine, which has been characterized
+“as one of the things that every one
+knows about but that few can explain.”
+Read the article <span class="sc"><a href="/article/18-0768-s3/monroe_doctrine">Monroe Doctrine</a></span> (Vol.
+18, p. 738), by Dr. <a href="/contributors.html?q=Theodore+Salisbury+Woolsey">T. S. Woolsey</a>, Professor
+of international law, Yale University;
+the article <span class="sc"><a href="/article/18-0766-monroe-james/monroe__james">James Monroe</a></span> (Vol. 18,
+p. 736), and, in the article <span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>,
+<i>History</i> § 156 (Vol. 27, p. 695).</p>
+
+<p>A second topic in the story of Latin-America
+and the United States is Cuba;
+and this part of the story has probably
+never been told as accurately and interestingly
+as in the articles <span class="sc"><a href="/article/07-0616-cuba/cuba">Cuba</a></span> (Vol. 7, p.
+594), and <span class="sc"><a href="/article/13-0089-havana/havana">Havana</a></span> (Vol. 13, p. 76) in the
+Britannica, both by Dr. <a href="/contributors.html?q=Francis+Samuel+Philbrick">F. S. Philbrick</a>.</p>
+
+<p>American relations with the Orient is a
+third subject of importance in the foreign
+affairs of the United States; and in this
+subject the most interesting topic is Chinese
+and Japanese exclusion. On this
+see the articles <span class="sc"><a href="/article/05-0018-california/california">California</a></span>, <span class="sc"><a href="/article/24-0158-san-francisco/san_francisco">San Francisco</a></span>,
+<span class="sc"><a href="/article/07-0092-coolie/coolie">Coolie</a></span>, and <span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>,
+<i>History</i> § 339 (Vol. 27, p. 723). At the
+end of the article <span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span> (Vol. 15, p. 156)
+there is a section on <i>The Claims of Japan</i>,
+by <a href="/contributors.html?q=Baron+Dairoku+Kikuchi">Baron Dairoku Kikuchi</a>, which is of
+great interest in this connection.</p>
+
+<p><span class="shoulder-heading" id="sh-30">Sea-Power</span>The place of the United States as a
+world power, we are proud to say, depends
+little on its
+army or navy—because
+of its enormous
+latent strength, its commanding
+geographical position, etc. But the comparatively
+greater importance of navy
+over army is now admitted by nearly
+every serious thinker—it was the
+concrete lesson of the Spanish-American
+War of 1898 as it was the point of the
+valuable historical essays on sea-power
+written before and since that war by the
+American naval officer, Rear-Admiral A.
+T. Mahan. The American navy and the
+navies of the world are matters of interest
+to every one—and like all matters of
+importance they are to be found treated
+in the Britannica.</p>
+
+<p>In general see the elaborate articles
+<span class="sc"><a href="/article/19-0314-s5/navy">Navy</a></span> (Vol. 19, p. 299); <span class="sc"><a href="/article/24-0578-s2/sea-power">Sea-Power</a></span> (Vol.
+25, p. 548); and <span class="sc"><a href="/article/24-0559-sea-command-of-the/sea__command_of_the">Sea, Command of the</a></span>
+(Vol. 24, p. 529); and for a detailed
+course of reading on naval history and
+theory see the chapter in this Guide <i>For
+Naval Officers</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-31">The Greater United States</span>The topics just discussed will serve as
+an introduction to the study of the Imperial
+United States, which may be pursued
+in the articles
+<span class="sc"><a href="/article/01-0511-s4/alaska">Alaska</a></span>, <span class="sc"><a href="/article/13-0096-hawaii/hawaii">Hawaii</a></span>,
+<span class="sc"><a href="/article/21-0413-philippine-islands/philippine_islands">Philippine Islands</a></span>,
+<span class="sc"><a href="/article/22-0138-porto-rico/porto_rico">Porto Rico</a></span>, <span class="sc"><a href="/article/12-0673-s3/guam">Guam</a></span>
+and <span class="sc"><a href="/article/07-0616-cuba/cuba">Cuba</a></span>, and the articles on the towns
+and cities in the outlying possessions.</p>
+
+<p>The result of reading these articles
+will be a determination to know <i>more</i>
+about your country, to master its history,
+its industries and its commerce as
+well as its political conditions.</p>
+
+<div class="chapter">
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

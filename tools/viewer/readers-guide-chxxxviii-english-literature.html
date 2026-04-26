@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>English Literature &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XXXVIII</span>English Literature</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Anglo-Saxon</a></li><li><a href="#sh-2">Chaucer</a></li><li><a href="#sh-3">Elizabethan Literature</div> <div class="sidenote">Spenser</a></li><li><a href="#sh-4">The Drama</div> <div class="sidenote">Shakespeare</a></li><li><a href="#sh-5">16th and 17th Century Prose</a></li><li><a href="#sh-6">Dryden</div> <div class="sidenote">Pepys</a></li><li><a href="#sh-7">Addison, Steele and Swift</div> <div class="sidenote">Pope</div> <div class="sidenote">Burns</div> <div class="sidenote">The Novel</a></li><li><a href="#sh-8">Lake Poets</div> <div class="sidenote">Byron</div> <div class="sidenote">Criticism</div> <div class="sidenote">History</a></li><li><a href="#sh-9">Spenser</span>On English literature in the Elizabethan age read part 3 of the article <span class="sc"><a href="/article/09-0639-english-literature/english_literature">English Literature</a></span> (Vol. 9, p. 616), by Prof. Oliver Elton, University of Liverpool; also <span class="sc"><a href="/article/18-0854-more-thomas/more__sir_thomas">Sir Thomas More</a></span> (Vol. 18, p. 822), by Mark Pattison, the essayist and student of the Renaissance; <span class="sc"><a href="/article/27-0517-tyndale-william/tyndale__or_tindale___william">William Tyndale</a></span> (Vol. 27, p. 498); <span class="sc"><a href="/article/02-0764-s3/ascham__roger">Roger Ascham</a></span> (Vol. 2, p. 720), by A. F. Leach, author of <i>English Schools at the Reformation</i>, etc.; <span class="sc"><a href="/article/08-0695-dunbar-william/dunbar__william">William Dunbar</a></span> (Vol. 8, p. 668), by Prof. G. Gregory Smith; <span class="sc"><a href="/article/13-0569-hoby-sir-thomas/hoby__sir_thomas">Sir Thomas Hoby</a></span> (Vol. 13, p. 553); <span class="sc"><a href="/article/13-0600-s2/holinshed__or_hollingshead___raphael">Raphael Holinshed</a></span> (Vol. 13, p. 584); <span class="sc"><a href="/article/10-0791-s2/foxe__john">John Foxe</a></span> (Vol. 10, p. 770); <span class="sc"><a href="/article/19-0786-north-sir-thomas/north__sir_thomas">Sir Thomas North</a></span> (Vol. 19, p. 759); <span class="sc"><a href="/article/28-0887-wyat-sir-thomas-poet/wyat__sir_thomas__poet_">Sir Thomas Wyat</a></span> (Vol. 28, p. 861); <span class="sc"><a href="/article/26-0156-s2/surrey__earldom_of">Earl of Surrey</a></span> (Vol. 26, p. 138); <span class="sc"><a href="/article/11-0511-gascoigne-george/gascoigne__george">George Gascoigne</a></span> (Vol. 11, p. 493); <span class="sc"><a href="/article/27-0573-udal-nicholas/udal__nicholas">Nicholas Udal</a></span> (Vol. 27, p. 554), by A. F. Leach; <span class="sc"><a href="/article/25-0661-s4/spenser__edmund">Edmund Spenser</a></span> (Vol. 25, p. 639,) by the late Professor William Minto of Aberdeen, and F. J. Snell, author of <i>The Age of Chaucer</i>, etc.; <span class="sc"><a href="/article/25-0058-s2/sidney__sir_philip">Sir Philip Sidney</a></span> (Vol. 25, p. 43); <span class="sc"><a href="/article/17-0174-s2/lyly__lilly__or_lylie___john">John Lyly</a></span> (Vol. 17, p. 159), by Mrs. Humphry Ward; <span class="sc"><a href="/article/09-0930-s4/euphuism">Euphuism</a></span> (Vol. 9, p. 898); <span class="sc"><a href="/article/08-0580-drayton-michael/drayton__michael">Michael Drayton</a></span> (Vol. 8, p. 557), and <span class="sc"><a href="/article/07-0832-daniel-samuel/daniel__samuel">Samuel Daniel</a></span> (Vol. 7, p. 808), all by Edmund Gosse; <span class="sc"><a href="/article/28-0343-warner-william/warner__william">William Warner</a></span> (Vol. 28, p. 327); <span class="sc"><a href="/article/10-0142-fairfax-edward/fairfax__edward">Edward Fairfax</a></span> (Vol. 10, p. 130); <span class="sc"><a href="/article/12-0977-s6/harington__sir_john">Sir John Harington</a></span> (Vol. 12, p. 952); <span class="sc"><a href="/article/10-0515-s2/fletcher__giles">Giles</a></span> and <span class="sc"><a href="/article/10-0516-s4/fletcher__phineas">Phineas Fletcher</a></span> (Vol. 10, p. 498); <span class="sc"><a href="/article/28-0431-watson-thomas/watson__thomas">Thomas Watson</a></span> (Vol. 28, p. 413), by E. Gosse; <span class="sc"><a href="/article/16-0882-s4/lodge__thomas">Thomas Lodge</a></span> (Vol. 16, p. 860), by Prof. A. W. Ward, Cambridge; <span class="sc"><a href="/article/05-0149-campion-thomas/campion__thomas">Thomas Campion</a></span> (Vol. 5, p. 137), by P. Vivian, editor of Campion; <span class="sc"><a href="/article/04-0519-breton-nicholas/breton__nicholas">Nicholas Breton</a></span> (Vol. 4, p. 501); <span class="sc"><a href="/article/25-0537-s3/southwell__robert">Robert <span class="pageno" id="Page_226">226</a></span>Southwell</span> (Vol. 25, p. 517); the metaphysical poets, <span class="sc"><a href="/article/08-0438-donne-john/donne__john">John Donne</a></span> (Vol. 8, p. 417), <span class="sc"><a href="/article/13-0355-herbert-george/herbert__george">George Herbert</a></span> (Vol. 13, p. 339), <span class="sc"><a href="/article/07-0399-crashaw-richard/crashaw__richard">Richard Crashaw</a></span> (Vol. 7, p. 379), <span class="sc"><a href="/article/07-0367-cowley-abraham/cowley__abraham">Abraham Cowley</a></span> (Vol. 7, p. 347), <span class="sc"><a href="/article/27-0170-traherne-thomas/traherne__thomas">Thomas Traherne</a></span> (Vol. 27, p. 155), and <span class="sc"><a href="/article/27-0981-s3/vaughan__henry">Henry Vaughan</a></span> (Vol. 27, p. 955); <span class="sc"><a href="/article/04-0690-s2/browne__william">William Browne</a></span> (Vol. 4, p. 667); <span class="sc"><a href="/article/28-0779-wither-george/wither__george">George Wither</a></span> (Vol. 28, p. 758); <span class="sc"><a href="/article/08-0627-drummond-william/drummond__william">William Drummond</a></span> of Hawthornden (Vol. 8, p. 600); <span class="sc"><a href="/article/13-0405-s3/herrick__robert">Robert Herrick</a></span> (Vol. 13, p. 389), by E. Gosse; <span class="sc"><a href="/article/17-0086-lovelace/lovelace__richard">Richard Lovelace</a></span> (Vol. 17, p. 71); <span class="sc"><a href="/article/26-0023-s5/suckling__sir_john">Sir John Suckling</a></span> (Vol. 26, p. 7); <span class="sc"><a href="/article/17-0822-marvell-andrew/marvell__andrew">Andrew Marvell</a></span> (Vol. 17, p. 805); <span class="sc"><a href="/article/28-0298-waller-edmund/waller__edmund">Edmund Waller</a></span> (Vol. 28, p. 282), by E. Gosse; and <span class="sc"><a href="/article/18-0504-milton-john/milton__john">John Milton</a></span> (Vol. 18, p. 480), in great part by David Masson, late professor at Edinburgh University.</p> <p class="c007"><span class="shoulder-heading" id="sh-4">The Drama</a></li><li><a href="#sh-10">Shakespeare</span>Elizabethan drama—particularly Shakespeare—deserves a separate paragraph, especially as its treatment in the Britannica is so full. Read in the article <span class="sc"><a href="/article/09-0639-english-literature/english_literature">English Literature</a></span>, pp. 622–626; in the article <span class="sc"><a href="/article/08-0498-drama/drama">Drama</a></span>, by Prof. A. W. Ward, Cambridge, pp. 520–524 of Volume 8; and the articles: <span class="sc"><a href="/article/17-0174-s2/lyly__lilly__or_lylie___john">John Lyly</a></span> (Vol. 17, p. 159), by Mrs. Humphry Ward; <span class="sc"><a href="/article/15-0992-s6/kyd__thomas">Thomas Kyd</a></span> (Vol. 15, p. 958), by E. Gosse; <span class="sc"><a href="/article/21-0058-s4/peele__george">George Peele</a></span> (Vol. 21, p. 44); <span class="sc"><a href="/article/12-0564-s2/greene__robert">Robert Greene</a></span> (Vol. 12, p. 539), by A. W. Ward; <span class="sc"><a href="/article/17-0758-s3/marlowe__christopher">Christopher Marlowe</a></span> (Vol. 17, p. 741), by A. C. Swinburne and Thomas Seccombe, author of <i>The Age of Johnson</i>, etc.; and above all <span class="sc"><a href="/article/24-0802-shakespeare-william/shakespeare__william">Shakespeare</a></span> (Vol. 24, p. 772; equivalent to 80 pages of this Guide), containing a biography and sketches of the different works by E. K. Chambers, editor of the “Red Letter Shakespeare” and author of <i>The Medieval Stage</i>, with a discussion of the portraits of Shakespeare (20 of which are reproduced), by M. H. Spielmann, formerly editor of the <i>Magazine of Art</i>, and of the Shakespeare-Bacon controversy by Hugh Chisholm, editor-in chief of the Encyclopaedia Britannica, and an elaborate, classified bibliography by H. R. Tedder, librarian of the Athenaeum Club, London. In his discussion of the Baconian theory of the authorship of the plays Mr. Chisholm says:</p> <p class="c007">“No such idea seems to have occurred to anybody till the middle of the 19th century.... The most competent special students of Shakespeare, however they may differ as to details, and also the most authoritative special students of Bacon, are unanimous in upholding the traditional view.” And he adds that as regards the effort to account for the positive contemporary evidence in favour of the identification of the man Shakespeare with the author of Shakespeare’s works, “it is highly significant that it was not attempted or thought of for centuries.” See also: <span class="sc"><a href="/article/12-0919-hamlet/hamlet">Hamlet</a></span> (Vol. 12, p. 894) for earlier treatment of the legend, and <span class="sc"><a href="/article/17-0212-s2/macbeth">Macbeth</a></span> (Vol. 17, p. 197) for the historical basis of the play.</p> <p class="c007">For the other dramatists of the time see the articles <span class="sc"><a href="/article/15-0529-s2/jonson__ben">Ben Jonson</a></span> (Vol. 15, p. 502), by A. W. Ward; <span class="sc"><a href="/article/05-0888-chapman-george/chapman__george">George Chapman</a></span> (Vol. 5, p. 852), <span class="sc"><a href="/article/28-0480-s2/webster__john">John Webster</a></span> (Vol. 28, p. 462), <span class="sc"><a href="/article/27-0121-s3/tourneur__cyril">Cyril Tourneur</a></span> (Vol. 27, p. 106), and <span class="sc"><a href="/article/03-0611-beaumont-and-fletcher/beaumont_and_fletcher">Beaumont and Fletcher</a></span> (Vol. 3, p. 592), all by A. C. Swinburne; <span class="sc"><a href="/article/07-0963-dekker-thomas/dekker__or_decker___thomas">Thomas Dekker</a></span> (Vol. 7, p. 939), by William Minto and R. B. McKerrow; <span class="sc"><a href="/article/13-0455-s2/heywood__thomas">Thomas Heywood</a></span> (Vol. 13, p. 439); <span class="sc"><a href="/article/18-0440-s2/middleton__thomas">Thomas Middleton</a></span> (Vol. 18, p. 416); <span class="sc"><a href="/article/17-0793-s4/marston__john">John Marston</a></span> (Vol. 17, p. 776); <span class="sc"><a href="/article/17-0887-s4/massinger__philip">Philip Massinger</a></span> (Vol. 17, p. 868); <span class="sc"><a href="/article/10-0662-ford-john/ford__john">John Ford</a></span> (Vol. 10, p. 641), by A. W. Ward; <span class="sc"><a href="/article/24-1066-s4/shirley__or_sherley___james">James Shirley</a></span> (Vol. 24, p. 990).</p> <p class="c007"><span class="shoulder-heading" id="sh-5">16th and 17th Century Prose</span>For Elizabethan prose writers not already mentioned, see: the translators, <span class="sc"><a href="/article/03-0821-berners-john-bourchier/berners__john_bourchier">John Bourchier, Lord Baron Berners</a></span> (Vol. 3, p. 800), <span class="sc"><a href="/article/13-0603-holland-philemon/holland__philemon">Philemon Holland</a></span> (Vol. 13, p. 587) and <span class="sc"><a href="/article/10-0567-florio-giovanni/florio__giovanni">Giovanni Florio</a></span> (Vol. 10, p. 546); and the philosophers and essayists, <span class="sc"><a href="/article/13-0689-s2/hooker__richard">Richard Hooker</a></span> (Vol. 13, p. 672), by T. F. Henderson, <span class="sc"><a href="/article/03-0152-s7/bacon__francis">Francis Bacon</a></span>, (Vol. 3, p. 135; equivalent to 55 pages of this Guide), by Robert Adamson and J. M. Mitchell, <span class="sc"><a href="/article/13-0561-s2/hobbes__thomas">Thomas Hobbes</a></span> (Vol. 13, p. 545), by G. Croom Robertson, biographer of Hobbes, <span class="sc"><a href="/article/04-0689-s2/browne__sir_thomas">Sir Thomas Browne</a></span> (Vol. 4, p. 666), <span class="sc"><a href="/article/28-0316-walton-izaak/walton__izaak">Izaak Walton</a></span> (Vol. 28, p. 300), <span class="sc"><a href="/article/04-0889-s2/burton__robert">Robert Burton</a></span> (Vol. 4, p. 865), <span class="sc"><a href="/article/26-0498-s4/taylor__jeremy">Jeremy Taylor</a></span> (Vol. 26, p. 469), <span class="sc"><a href="/article/11-0309-s4/fuller__thomas">Thomas Fuller</a></span> (Vol. 11, p. 296), <span class="sc"><a href="/article/06-0175-chillingworth-william/chillingworth__william">William Chillingworth</a></span> (Vol. 6, p. 162), <span class="sc"><a href="/article/12-0859-s5/hales__john">John Hales</a></span> (Vol. 12, p. 834), <span class="sc"><a href="/article/07-0634-cudworth-ralph/cudworth__ralph">Ralph Cudworth</a></span> (Vol. 7, p. 612), by Henry Sturt, author of <i>Personal Idealism</i>, etc.; the historian <span class="sc"><a href="/article/06-0444-clarendon-edward-hyde/clarendon__edward_hyde">Clarendon</a></span> (Vol. 6, p. 428), by P. C. Yorke; and the letter-writer <span class="sc"><a href="/article/13-0863-howell-james/howell__james">James Howell</a></span> (Vol. 13, p. 838).</p> <p class="c007"><span class="shoulder-heading" id="sh-6">Dryden</a></li><li><a href="#sh-11">Pepys</span>On the Restoration period—from 1660 to 1700—see Professor Elton’s chapter (Vol. 9, pp. 628–631) in the article <span class="sc"><a href="/article/09-0639-english-literature/english_literature">English Literature</a></span>; and the articles: <span class="sc"><a href="/article/08-0636-dryden-john/dryden__john">John Dryden</a></span> (Vol. 8, p. 609), by William Minto and Margaret Bryant; <span class="sc"><a href="/article/04-0909-s3/butler__or_boteler___samuel">Samuel Butler</a></span> (Vol. 4, p. 885), <span class="sc"><a href="/article/19-0607-s1/newton__sir_isaac">Sir Isaac Newton</a></span> (Vol. 19, p. 583), by H. M. Taylor, Fellow of Trinity College, Cambridge; <span class="sc"><a href="/article/03-0457-barrow-isaac/barrow__isaac">Isaac Barrow</a></span> (Vol. 3, p. 440), <span class="sc"><a href="/article/22-0947-s3/ray">John Ray</a></span> (Vol. 22, p. 931), by Prof. D. Wentworth Thompson, University College, Dundee; <span class="sc"><a href="/article/12-0090-s2/glanvill__or_glanvil___joseph">Joseph Glanvill</a></span> (Vol. 12, p. 77), <span class="sc"><a href="/article/04-0877-s2/burnet__thomas">Thomas Burnet</a></span> (Vol. 4, p. 853), <span class="sc"><a href="/article/26-1016-tillotson-john/tillotson__john">John Tillotson</a></span> (Vol. 26, p. 976), <span class="sc"><a href="/article/26-0632-temple-sir-william/temple__sir_william">Sir William Temple</a></span> (Vol. 26, p. 602), by G. W. Prothero, editor <i>The Quarterly Review</i> and joint-editor <i>Cambridge Modern History</i>, <span class="sc"><a href="/article/12-0863-s3/halifax__charles_montague">Marquess Halifax</a></span> (Vol. 12, p. 839), by P. C. Yorke; <span class="sc"><a href="/article/25-0479-south/south__robert">Robert South</a></span> (Vol. 25, p. 463), <span class="sc"><a href="/article/24-0884-s5/sherlock__william">William Sherlock</a></span> (Vol. 24, p. 850), <span class="sc"><a href="/article/03-0568-baxter-richard/baxter__richard">Richard Baxter</a></span> (Vol. 3, p. 551), <span class="sc"><a href="/article/13-0860-s3/howe__john">John Howe</a></span> (Vol. 13, p. 835), <span class="sc"><a href="/article/10-0786-fox-george/fox__george">George Fox</a></span> (Vol. 10, p. 765), <span class="sc"><a href="/article/04-0826-s1/bunyan__john">John Bunyan</a></span> (Vol. 4, p. 803), by Lord Macaulay; <span class="sc"><a href="/article/23-0449-s6/rochester__john_wilmot">2nd Earl of Rochester</a></span> (Vol. 23, p. 427), <span class="sc"><a href="/article/07-0875-davenant-sir-william/davenant__or_d_avenant___sir_william">Sir William Davenant</a></span> (Vol. 7, p. 851), <span class="sc"><a href="/article/26-0478-s4/tate__nahum">Nahum Tate</a></span> (Vol. 26, p. 449), <span class="sc"><a href="/article/20-0410-s5/otway__thomas">Thomas Otway</a></span> (Vol. 20, p. 376), <span class="sc"><a href="/article/16-0381-s5/lee__nathaniel">Nathaniel Lee</a></span> (Vol. 16, p. 361), Watts-Dunton’s article <span class="sc"><a href="/article/28-0889-wycherley-william/wycherley__william">William Wycherley</a></span> (Vol. 28, p. 863), and the two great diarists <span class="sc"><a href="/article/10-0017-evelyn-john/evelyn__john">John Evelyn</a></span> (Vol. 10, p. 5) and <span class="sc"><a href="/article/21-0145-pepys-samuel/pepys__samuel">Samuel Pepys</a></span> (Vol. 21, p. 130), by D. Hannay.</p> <p class="c007"><span class="shoulder-heading" id="sh-7">Addison, Steele and Swift</a></li><li><a href="#sh-12">Pope</a></li><li><a href="#sh-13">Burns</a></li><li><a href="#sh-14">The Novel</span>On the 18th century literature see the chapter in the article <span class="sc"><a href="/article/09-0639-english-literature/english_literature">English Literature</a></span> (Vol. 9, pp. 631–636), by Thomas Seccombe, author of <i>The Age of Johnson</i>, etc.; and the articles: <span class="sc"><a href="/article/16-0866-s2/locke__john">John Locke</a></span> (Vol. 16, p. 844), by Prof. Alexander Campbell Fraser, Edinburgh; <span class="sc"><a href="/article/01-0215-s4/addison__joseph">Joseph Addison</a></span> (Vol. 1, p. 184), by William Spalding and Austin Dobson; <span class="sc"><a href="/article/25-0889-s3/steele__sir_richard">Sir Richard Steele</a></span> (Vol. 25, p. 865), by William Minto and Austin Dobson; <span class="sc"><a href="/article/26-0243-swift/swift__jonathan">Jonathan Swift</a></span> (Vol. 26, p. 224), by Richard Garnett and Thomas Seccombe; <span class="sc"><a href="/article/02-0354-s5/arbuthnot__john">John Arbuthnot</a></span> (Vol. 2, p. 339), <span class="sc"><a href="/article/17-0576-mandeville-bernard-de/mandeville__bernard_de">Bernard de Mandeville</a></span> (Vol. 17, p. 559), by J. M. Mitchell; <span class="sc"><a href="/article/04-0174-bolingbroke-henry-st-john-viscount/bolingbroke__henry_st_john__viscount">Bolingbroke</a></span> (Vol. 4, p. 161), by P. C. Yorke; <span class="sc"><a href="/article/22-0096-s1/pope__alexander">Alexander Pope</a></span> (Vol. 22, p. 82), by William Minto and Margaret Bryant; <span class="sc"><a href="/article/22-0373-prior-matthew/prior__matthew">Matthew Prior</a></span> (Vol. 22, p. 359), by Austin Dobson; <span class="sc"><a href="/article/11-0558-gay-john/gay__john">John Gay</a></span> (Vol. 11, p. 540), <span class="sc"><a href="/article/20-0921-parnell-thomas/parnell__thomas">Thomas Parnell</a></span> (Vol. 20, p. 859), <span class="sc"><a href="/article/01-0492-s7/akenside__mark">Mark Akenside</a></span> (Vol. 1, p. 454), <span class="sc"><a href="/article/26-0911-thomson-james-poet-1700-1748/thomson__james__poet__1700-1748_">James Thomson</a></span> (Vol. 26, p. 871) and <span class="sc"><a href="/article/12-0409-s4/gray__thomas">Thomas Gray</a></span> (Vol. 12, p. 392), both by D. C. Tovey, editor of Gray’s Letters; <span class="sc"><a href="/article/06-0713-collins-william/collins__william">William Collins</a></span> (Vol. 6, p. 692), by Edmund Gosse; <span class="sc"><a href="/article/25-0265-s4/smart__christopher">Christopher Smart</a></span> (Vol. 25, p. 249), <span class="sc"><a href="/article/07-0368-cowper-william-cowper/cowper__william_cowper">William Cowper</a></span> (Vol. 7, p. 349) and <span class="sc"><a href="/article/07-0378-crabbe-george/crabbe__george">George Crabbe</a></span> (Vol. 7, p. 358), by Clement K. Shorter, editor of <i>The Sphere</i>, <span class="sc"><a href="/article/04-0049-blake-william/blake__william">William Blake</a></span> (Vol. 4, p. 36), by J. W. Comyns-Carr, author of <i>Essays on Art</i>; <span class="sc"><a href="/article/24-0873-s2/shenstone__william">William Shenstone</a></span> (Vol. 24, p. 839), <span class="sc"><a href="/article/06-0023-chatterton/chatterton__thomas">Thomas Chatterton</a></span> (Vol. 6, p. 10), <span class="sc"><a href="/article/21-0151-s3/percy__thomas">Thomas Percy</a></span> (Vol. 21, p. 136), <span class="sc"><a href="/article/28-0353-warton-thomas-1688-1745/warton__thomas__1688-1745_">Thomas Warton</a></span> (Vol. 28, p. 337), <span class="sc"><a href="/article/04-0880-s2/burns__robert">Robert Burns</a></span> (Vol. 4, p. 856), by John Nichol, the biographer of Burns, Byron and Carlyle; among the prose writers, forerunners of the novel, <span class="sc"><a href="/article/07-0951-defoe-daniel/defoe__daniel">Daniel Defoe</a></span> (Vol. 7, p. 927), <span class="sc"><a href="/article/23-0317-s3/richardson__samuel">Samuel Richardson</a></span> (Vol. 23, p. 300) and <span class="sc"><a href="/article/25-0293-smolensk-government/smolensk__government_">Henry Fielding</a></span> (Vol. 10, p. 324), both by Austin Dobson, <span class="sc"><a href="/article/25-0294-smollett-tobias-george/smollett__tobias_george">Tobias Smollett</a></span> (Vol. 25, p. 278), by Thomas Seccombe, and <span class="sc"><a href="/article/25-0925-s5/sterne__laurence">Laurence Sterne</a></span> (Vol. 25, p. 901), by William Minto and Austin Dobson; the other great prose writers of the age, <span class="sni"><span class="hidev">|</span>Johnson<span class="hidev">|</span></span> <span class="sc"><a href="/article/15-0490-s5/johnson__samuel">Samuel Johnson</a></span> (Vol. 15, p. 463), by Lord Macaulay and Thomas Seccombe, <span class="sni"><span class="hidev">|</span>Goldsmith<span class="hidev">|</span></span> <span class="sc"><a href="/article/12-0231-s6/goldsmith__oliver">Oliver Goldsmith</a></span> (Vol. 12, p. 214), by Lord Macaulay and Austin Dobson, <span class="sc"><a href="/article/06-0122-chesterfield-philip-dormer-stanhope/chesterfield__philip_dormer_stanhope">Lord Chesterfield</a></span> (Vol. 6, p. 109), by Austin Dobson, and <span class="sc"><a href="/article/28-0304-s4/walpole__horatio">Horatio Walpole</a></span> (Vol. 28, p. 288), by W. P. Courtney; in a lesser group, <span class="sc"><a href="/article/04-0312-boswell-james/boswell__james">James Boswell</a></span> (Vol. 4, p. 297), by Thomas Seccombe, <span class="sc"><a href="/article/07-0850-d-arblay-frances/d_arblay__frances">Frances D’Arblay</a></span>, “Fanny Burney” (Vol. 7, p. 826), <span class="sc"><a href="/article/21-0661-s7/piozzi__hester_lynch">Hester Lynch Piozzi</a></span> (Vol. 21, p. 632), <span class="sc"><a href="/article/28-0619-white-gilbert/white__gilbert">Gilbert White</a></span> (Vol. 28, p. 599); <span class="sni"><span class="hidev">|</span>History<span class="hidev">|</span></span> the historians <span class="sc"><a href="/article/13-0901-s6/hume__david">David Hume</a></span> (Vol. 13, p. 876), by Robert Adamson and J. M. Mitchell, <span class="sc"><a href="/article/23-0423-s4/robertson__william">William Robertson</a></span> (Vol. 23, p. 406) and <span class="sc"><a href="/article/11-0951-s6/gibbon__edward">Edward Gibbon</a></span> (Vol. 11, p. 927), by Prof. J. B. Bury, editor of <i>The Decline and Fall</i>; and the philosophers, <span class="sc"><a href="/article/04-0906-s3/butler__joseph">Joseph Butler</a></span> (Vol. 4, p. 882), by Robert Adamson and A. J. Grieve, Yorkshire United Independent College, <span class="sni"><span class="hidev">|</span>Philosophy<span class="hidev">|</span></span> <span class="sc"><a href="/article/20-0684-s4/paley__william">William Paley</a></span> (Vol. 20, p. 628), <span class="sc"><a href="/article/03-0797-berkeley-family/berkeley__family_">Berkeley</a></span> (Vol. 3, p. 779), by Robert Adamson and J. M. Mitchell, <span class="sc"><a href="/article/23-0068-s2/reid__thomas">Thomas Reid</a></span> (Vol. 23, p. 51), by Prof. A. Seth Pringle-Pattison, Edinburgh, <span class="sc"><a href="/article/13-0048-s3/hartley__david">David Hartley</a></span> (Vol. 13, p. 35), <span class="sc"><a href="/article/27-0378-s3/tucker__abraham">Abraham Tucker</a></span> (Vol. 27, p. 361), <span class="sc"><a href="/article/20-0494-s8/paine__thomas">Thomas Paine</a></span> (Vol. 20, p. 456), <span class="sc"><a href="/article/22-0336-priestley-joseph/priestley__joseph">Joseph Priestly</a></span> (Vol. 22, p. 322), <span class="sc"><a href="/article/22-0328-price-richard/price__richard">Richard Price</a></span> (Vol. 22, p. 314), by J. M. Mitchell; <span class="sc"><a href="/article/12-0194-godwin-william/godwin__william">William Godwin</a></span> (Vol. 12, p. 177), <span class="sni"><span class="hidev">|</span>Politics<span class="hidev">|</span></span> <span class="sc"><a href="/article/17-0274-s3/mackintosh__sir_james">Sir James Mackintosh</a></span> (Vol. 17, p. 259), <span class="sc"><a href="/article/04-0847-s6/burke__edmund">Edmund Burke</a></span> (Vol. 4, p. 824), by John Morley, and “<span class="sc"><a href="/article/15-0584-s2/junius">Junius</a></span>” (Vol. 15, p. 557),—see also <span class="sc"><a href="/article/10-0964-francis-sir-philip/francis__sir_philip">Sir Philip Francis</a></span> (Vol. 10, p. 941).</p> <p class="c007"><span class="shoulder-heading" id="sh-8">Lake Poets</a></li><li><a href="#sh-15">Byron</a></li><li><a href="#sh-16">Criticism</a></li></ol></div>
+    <div class="body-text">
+
+
+<p>On English literature, with its
+vastly longer history and greater
+volume, there is much more matter
+in the Britannica than on American
+literature—or of course any other national
+literature. The key article is
+<span class="sc"><a href="/article/09-0639-english-literature/english_literature">English Literature</a></span> (Vol. 9, p. 607;
+equivalent to 120 pages of this Guide),
+and an excellent outline for the study
+of this subject may be based on this
+article which should be supplemented
+by the sections on <i>Literature</i> in the
+articles <span class="sc"><a href="/article/24-0430-part1/scotland">Scotland</a></span>, <span class="sc"><a href="/article/05-0154-canada/canada">Canada</a></span>, etc. A
+combination of these with special articles
+may be arranged as follows:</p>
+
+<p><span class="shoulder-heading" id="sh-1">Anglo-Saxon</span>On the period before Chaucer—the
+first part of the article <span class="sc"><a href="/article/09-0639-english-literature/english_literature">English Literature</a></span>
+(Vol. 9, p. 607), by <a href="/contributors.html?q=Henry+Bradley">Henry Bradley</a>,
+joint-editor of <i>The
+New English Dictionary</i>,
+etc.; the
+same author’s <span class="sc"><a href="/article/03-0778-beowulf/beowulf">Beowulf</a></span> (Vol. 3, p.
+758), <span class="sc"><a href="/article/04-0960-s2/cædmon">Cædmon</a></span> (Vol. 4, p. 934) and
+<span class="sc"><a href="/article/07-0712-cynewulf/cynewulf">Cynewulf</a></span> (Vol. 7, p. 690), <span class="sc"><a href="/article/02-0045-s2/anglo-saxon_chronicle">Anglo-Saxon
+Chronicle</a></span> (Vol. 2, p. 34), and
+<span class="sc"><a href="/article/01-0622-s3/alfred">Alfred the Great</a></span> (Vol. 1, p. 582),
+both by the Rev. Charles Plummer,
+author of <i>Life and Times of Alfred the
+Great</i>, etc.; <span class="sc"><a href="/article/18-0392-s2/michel_of_northgate__dan">Dan Michel of Northgate</a></span>
+(Vol. 18, p. 371); <span class="sc"><a href="/article/02-0042-s3/anglo-norman_literature">Anglo-Norman Literature</a></span>
+(Vol. 2, p. 31), by Prof. L. M.
+Brandin, University of London; <span class="sc"><a href="/article/01-1005-s2/ancren_riwle">Ancren
+Riwle</a></span> (Vol. 1, p. 952); <span class="sc"><a href="/article/20-0327-orm/orm">Orm</a></span> (Vol. 20,
+p. 293), by <a href="/contributors.html?q=Henry+Bradley">Henry Bradley</a>; <span class="sc"><a href="/article/16-0331-s2/layamon">Layamon</a></span>
+(Vol. 16, p. 311), by the late Prof. W.
+W. Skeat of Cambridge; <span class="sc"><a href="/article/13-0093-havelok-the-dane/havelok_the_dane">Havelok the
+Dane</a></span> (Vol. 13, p. 80); <span class="sc"><a href="/article/23-0530-romance/romance">Romance</a></span>, <span class="sc">Arthurian
+Romance</span>, etc.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Chaucer</span>On the period from Chaucer to the
+Renaissance, see the second part of the
+article <span class="sc"><a href="/article/09-0639-english-literature/english_literature">English Literature</a></span> (Vol. 9,
+p. 611), by Prof. <a href="/contributors.html?q=John+Matthews+Manly">J. M.
+Manly</a>, University of Chicago,
+author of <i>The Language
+of Chaucer’s Legend of Good Women</i>;
+<span class="sc"><a href="/article/21-0041-s2/pearl__the">The Pearl</a></span> (Vol. 21, p. 27), by Prof.
+<a href="/contributors.html?q=Israel+Gollancz">Israel Gollancz</a>, King’s College, London,
+editor of the Temple <i>Shakespeare</i>, etc.;
+<span class="sc"><a href="/article/16-0194-langland-william/langland__william">Langland</a></span> (Vol. 16, p. 174); <span class="sc"><a href="/article/12-0315-s5/gower__john">John
+Gower</a></span> (Vol. 12, p. 298), by <a href="/contributors.html?q=George+Campbell+Macaulay">G. C.
+Macaulay</a>, editor of Gower’s works;
+<span class="sc"><a href="/article/06-0026-chaucer-geoffrey/chaucer__geoffrey">Geoffrey Chaucer</a></span> (Vol. 6, p. 13), by
+<a href="/contributors.html?q=Alfred+William+Pollard">A. W. Pollard</a>, chief-editor of the “Globe”
+<i>Chaucer</i>; <span class="sc"><a href="/article/17-0171-s2/lydgate__john">John Lydgate</a></span>, (Vol. 17, p.
+156), by <a href="/contributors.html?q=Frederick+John+Snell">Frederick J. Snell</a>, author of
+<i>The Age of Chaucer</i>; <span class="sc"><a href="/article/19-1004-s6/occleve__or_hoccleve___thomas">Thomas Occleve</a></span>
+(Vol. 19, p. 966), by W. S. McCormick,
+formerly professor of English, University
+College, Dundee; <span class="sc"><a href="/article/13-0106-hawes/hawes__stephen">Stephen Hawes</a></span>
+(Vol. 13, p. 93); <span class="sc"><a href="/article/25-0200-s2/skelton__john">John Skelton</a></span> (Vol. 25,
+p. 184); <span class="sc"><a href="/article/03-0822-berners-juliana/berners__juliana">Juliana Berners</a></span> (Vol. 3, p.
+801); <span class="sc"><a href="/article/26-0905-thomas-of-erceldoune/thomas_of_erceldoune">Thomas of Erceldoune</a></span> (Vol. 26,
+p. 865); <span class="sc"><a href="/article/03-0406-barbour-john/barbour__john">John Barbour</a></span> (Vol. 3, p. 389),
+by Professor <a href="/contributors.html?q=George+Gregory+Smith">George Gregory Smith</a>,
+Queen’s University, Belfast; <span class="sc"><a href="/article/28-0899-wyntoun-andrew-of/wyntoun__andrew_of">Andrew of
+Wyntoun</a></span> (Vol. 28, p. 873); <span class="sc"><a href="/article/13-0042-harry-the-minstrel/harry_the_minstrel">Harry the
+Minstrel</a></span> (Vol. 13, p. 29); <span class="sc"><a href="/article/28-0892-wycliffe-john/wycliffe__john">John Wycliffe</a></span>
+(Vol. 28, p. 866), by <a href="/contributors.html?q=Reginald+Lane+Poole">Reginald
+Lane Poole</a>, author of <i>Wycliffe and
+Movements for Reform</i>, and W. Alison
+Phillips; <span class="sc"><a href="/article/21-0047-pecock-reginald/pecock__or_peacock___reginald">Reginald Pecock</a></span> (Vol. 21,
+p. 33); <span class="sc"><a href="/article/10-0699-s2/fortescue__sir_john">Sir John Fortescue</a></span> (Vol. 10,
+p. 678), by <a href="/contributors.html?q=Philip+Chesney+Yorke">P. C. Yorke</a>; <span class="sc"><a href="/article/05-0612-caxton-william/caxton__william">William Caxton</a></span>
+(Vol. 5, p. 587).</p>
+
+<p>The English versions of the Bible are
+dealt with in the chapter of this Guide
+on <i>Bible Study</i>; but the article <span class="sc"><a href="/article/03-0917-bible-english/bible__english">Bible,
+English</a></span> (Vol. 3, p. 894), by Canon
+Henson of Westminster Abbey and
+Anna C. Paues, lecturer in Germanic
+philology at Newnham College, should
+be read in connection with the study of
+this and earlier periods of English literature.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Elizabethan Literature</div> <p><span class="shoulder-heading" id="sh-9">Spenser</span>On English literature in the Elizabethan age read part 3 of the article <span class="sc"><a href="/article/09-0639-english-literature/english_literature">English Literature</a></span> (Vol. 9, p. 616), by Prof. <a href="/contributors.html?q=Oliver+Elton">Oliver Elton</a>, University of Liverpool; also <span class="sc"><a href="/article/18-0854-more-thomas/more__sir_thomas">Sir Thomas More</a></span> (Vol. 18, p. 822), by <a href="/contributors.html?q=Rev.+Mark+Pattison">Mark Pattison</a>, the essayist and student of the Renaissance; <span class="sc"><a href="/article/27-0517-tyndale-william/tyndale__or_tindale___william">William Tyndale</a></span> (Vol. 27, p. 498); <span class="sc"><a href="/article/02-0764-s3/ascham__roger">Roger Ascham</a></span> (Vol. 2, p. 720), by <a href="/contributors.html?q=Arthur+Francis+Leach">A. F. Leach</a>, author of <i>English Schools at the Reformation</i>, etc.; <span class="sc"><a href="/article/08-0695-dunbar-william/dunbar__william">William Dunbar</a></span> (Vol. 8, p. 668), by Prof. <a href="/contributors.html?q=George+Gregory+Smith">G. Gregory Smith</a>; <span class="sc"><a href="/article/13-0569-hoby-sir-thomas/hoby__sir_thomas">Sir Thomas Hoby</a></span> (Vol. 13, p. 553); <span class="sc"><a href="/article/13-0600-s2/holinshed__or_hollingshead___raphael">Raphael Holinshed</a></span> (Vol. 13, p. 584); <span class="sc"><a href="/article/10-0791-s2/foxe__john">John Foxe</a></span> (Vol. 10, p. 770); <span class="sc"><a href="/article/19-0786-north-sir-thomas/north__sir_thomas">Sir Thomas North</a></span> (Vol. 19, p. 759); <span class="sc"><a href="/article/28-0887-wyat-sir-thomas-poet/wyat__sir_thomas__poet_">Sir Thomas Wyat</a></span> (Vol. 28, p. 861); <span class="sc"><a href="/article/26-0156-s2/surrey__earldom_of">Earl of Surrey</a></span> (Vol. 26, p. 138); <span class="sc"><a href="/article/11-0511-gascoigne-george/gascoigne__george">George Gascoigne</a></span> (Vol. 11, p. 493); <span class="sc"><a href="/article/27-0573-udal-nicholas/udal__nicholas">Nicholas Udal</a></span> (Vol. 27, p. 554), by <a href="/contributors.html?q=Arthur+Francis+Leach">A. F. Leach</a>; <span class="sc"><a href="/article/25-0661-s4/spenser__edmund">Edmund Spenser</a></span> (Vol. 25, p. 639,) by the late <a href="/contributors.html?q=William+Minto">Professor William Minto</a> of Aberdeen, and <a href="/contributors.html?q=Frederick+John+Snell">F. J. Snell</a>, author of <i>The Age of Chaucer</i>, etc.; <span class="sc"><a href="/article/25-0058-s2/sidney__sir_philip">Sir Philip Sidney</a></span> (Vol. 25, p. 43); <span class="sc"><a href="/article/17-0174-s2/lyly__lilly__or_lylie___john">John Lyly</a></span> (Vol. 17, p. 159), by Mrs. Humphry <a href="/contributors.html?q=Adolphus+William+Ward">Ward</a>; <span class="sc"><a href="/article/09-0930-s4/euphuism">Euphuism</a></span> (Vol. 9, p. 898); <span class="sc"><a href="/article/08-0580-drayton-michael/drayton__michael">Michael Drayton</a></span> (Vol. 8, p. 557), and <span class="sc"><a href="/article/07-0832-daniel-samuel/daniel__samuel">Samuel Daniel</a></span> (Vol. 7, p. 808), all by <a href="/contributors.html?q=Edmund+Gosse">Edmund Gosse</a>; <span class="sc"><a href="/article/28-0343-warner-william/warner__william">William Warner</a></span> (Vol. 28, p. 327); <span class="sc"><a href="/article/10-0142-fairfax-edward/fairfax__edward">Edward Fairfax</a></span> (Vol. 10, p. 130); <span class="sc"><a href="/article/12-0977-s6/harington__sir_john">Sir John Harington</a></span> (Vol. 12, p. 952); <span class="sc"><a href="/article/10-0515-s2/fletcher__giles">Giles</a></span> and <span class="sc"><a href="/article/10-0516-s4/fletcher__phineas">Phineas Fletcher</a></span> (Vol. 10, p. 498); <span class="sc"><a href="/article/28-0431-watson-thomas/watson__thomas">Thomas Watson</a></span> (Vol. 28, p. 413), by <a href="/contributors.html?q=Edmund+Gosse">E. Gosse</a>; <span class="sc"><a href="/article/16-0882-s4/lodge__thomas">Thomas Lodge</a></span> (Vol. 16, p. 860), by Prof. <a href="/contributors.html?q=Adolphus+William+Ward">A. W. Ward</a>, Cambridge; <span class="sc"><a href="/article/05-0149-campion-thomas/campion__thomas">Thomas Campion</a></span> (Vol. 5, p. 137), by <a href="/contributors.html?q=Percival+Sylvanus+Vivian">P. Vivian</a>, editor of Campion; <span class="sc"><a href="/article/04-0519-breton-nicholas/breton__nicholas">Nicholas Breton</a></span> (Vol. 4, p. 501); <span class="sc"><a href="/article/25-0537-s3/southwell__robert">Robert <span class="pageno" id="Page_226">226</a></span>Southwell</span> (Vol. 25, p. 517); the metaphysical poets, <span class="sc"><a href="/article/08-0438-donne-john/donne__john">John Donne</a></span> (Vol. 8, p. 417), <span class="sc"><a href="/article/13-0355-herbert-george/herbert__george">George Herbert</a></span> (Vol. 13, p. 339), <span class="sc"><a href="/article/07-0399-crashaw-richard/crashaw__richard">Richard Crashaw</a></span> (Vol. 7, p. 379), <span class="sc"><a href="/article/07-0367-cowley-abraham/cowley__abraham">Abraham Cowley</a></span> (Vol. 7, p. 347), <span class="sc"><a href="/article/27-0170-traherne-thomas/traherne__thomas">Thomas Traherne</a></span> (Vol. 27, p. 155), and <span class="sc"><a href="/article/27-0981-s3/vaughan__henry">Henry Vaughan</a></span> (Vol. 27, p. 955); <span class="sc"><a href="/article/04-0690-s2/browne__william">William Browne</a></span> (Vol. 4, p. 667); <span class="sc"><a href="/article/28-0779-wither-george/wither__george">George Wither</a></span> (Vol. 28, p. 758); <span class="sc"><a href="/article/08-0627-drummond-william/drummond__william">William Drummond</a></span> of Hawthornden (Vol. 8, p. 600); <span class="sc"><a href="/article/13-0405-s3/herrick__robert">Robert Herrick</a></span> (Vol. 13, p. 389), by <a href="/contributors.html?q=Edmund+Gosse">E. Gosse</a>; <span class="sc"><a href="/article/17-0086-lovelace/lovelace__richard">Richard Lovelace</a></span> (Vol. 17, p. 71); <span class="sc"><a href="/article/26-0023-s5/suckling__sir_john">Sir John Suckling</a></span> (Vol. 26, p. 7); <span class="sc"><a href="/article/17-0822-marvell-andrew/marvell__andrew">Andrew Marvell</a></span> (Vol. 17, p. 805); <span class="sc"><a href="/article/28-0298-waller-edmund/waller__edmund">Edmund Waller</a></span> (Vol. 28, p. 282), by <a href="/contributors.html?q=Edmund+Gosse">E. Gosse</a>; and <span class="sc"><a href="/article/18-0504-milton-john/milton__john">John Milton</a></span> (Vol. 18, p. 480), in great part by <a href="/contributors.html?q=David+Masson">David Masson</a>, late professor at Edinburgh University.</p> <p><span class="shoulder-heading" id="sh-4">The Drama</span></p> <p><span class="shoulder-heading" id="sh-10">Shakespeare</span>Elizabethan drama—particularly Shakespeare—deserves a separate paragraph, especially as its treatment in the Britannica is so full. Read in the article <span class="sc"><a href="/article/09-0639-english-literature/english_literature">English Literature</a></span>, pp. 622–626; in the article <span class="sc"><a href="/article/08-0498-drama/drama">Drama</a></span>, by Prof. <a href="/contributors.html?q=Adolphus+William+Ward">A. W. Ward</a>, Cambridge, pp. 520–524 of Volume 8; and the articles: <span class="sc"><a href="/article/17-0174-s2/lyly__lilly__or_lylie___john">John Lyly</a></span> (Vol. 17, p. 159), by Mrs. Humphry <a href="/contributors.html?q=Adolphus+William+Ward">Ward</a>; <span class="sc"><a href="/article/15-0992-s6/kyd__thomas">Thomas Kyd</a></span> (Vol. 15, p. 958), by <a href="/contributors.html?q=Edmund+Gosse">E. Gosse</a>; <span class="sc"><a href="/article/21-0058-s4/peele__george">George Peele</a></span> (Vol. 21, p. 44); <span class="sc"><a href="/article/12-0564-s2/greene__robert">Robert Greene</a></span> (Vol. 12, p. 539), by <a href="/contributors.html?q=Adolphus+William+Ward">A. W. Ward</a>; <span class="sc"><a href="/article/17-0758-s3/marlowe__christopher">Christopher Marlowe</a></span> (Vol. 17, p. 741), by <a href="/contributors.html?q=Algernon+Charles+Swinburne">A. C. Swinburne</a> and <a href="/contributors.html?q=Thomas+Seccombe">Thomas Seccombe</a>, author of <i>The Age of Johnson</i>, etc.; and above all <span class="sc"><a href="/article/24-0802-shakespeare-william/shakespeare__william">Shakespeare</a></span> (Vol. 24, p. 772; equivalent to 80 pages of this Guide), containing a biography and sketches of the different works by <a href="/contributors.html?q=Edmund+Kerchever+Chambers">E. K. Chambers</a>, editor of the “Red Letter Shakespeare” and author of <i>The Medieval Stage</i>, with a discussion of the portraits of Shakespeare (20 of which are reproduced), by <a href="/contributors.html?q=Marion+H.+Spielmann">M. H. Spielmann</a>, formerly editor of the <i>Magazine of Art</i>, and of the Shakespeare-Bacon controversy by <a href="/contributors.html?q=Hugh+Chisholm">Hugh Chisholm</a>, editor-in chief of the Encyclopaedia Britannica, and an elaborate, classified bibliography by <a href="/contributors.html?q=Henry+Richard+Tedder">H. R. Tedder</a>, librarian of the Athenaeum Club, London. In his discussion of the Baconian theory of the authorship of the plays <a href="/contributors.html?q=Hugh+Chisholm">Mr. Chisholm</a> says:</p> <p>“No such idea seems to have occurred to anybody till the middle of the 19th century.... The most competent special students of Shakespeare, however they may differ as to details, and also the most authoritative special students of Bacon, are unanimous in upholding the traditional view.” And he adds that as regards the effort to account for the positive contemporary evidence in favour of the identification of the man Shakespeare with the author of Shakespeare’s works, “it is highly significant that it was not attempted or thought of for centuries.” See also: <span class="sc"><a href="/article/12-0919-hamlet/hamlet">Hamlet</a></span> (Vol. 12, p. 894) for earlier treatment of the legend, and <span class="sc"><a href="/article/17-0212-s2/macbeth">Macbeth</a></span> (Vol. 17, p. 197) for the historical basis of the play.</p> <p>For the other dramatists of the time see the articles <span class="sc"><a href="/article/15-0529-s2/jonson__ben">Ben Jonson</a></span> (Vol. 15, p. 502), by <a href="/contributors.html?q=Adolphus+William+Ward">A. W. Ward</a>; <span class="sc"><a href="/article/05-0888-chapman-george/chapman__george">George Chapman</a></span> (Vol. 5, p. 852), <span class="sc"><a href="/article/28-0480-s2/webster__john">John Webster</a></span> (Vol. 28, p. 462), <span class="sc"><a href="/article/27-0121-s3/tourneur__cyril">Cyril Tourneur</a></span> (Vol. 27, p. 106), and <span class="sc"><a href="/article/03-0611-beaumont-and-fletcher/beaumont_and_fletcher">Beaumont and Fletcher</a></span> (Vol. 3, p. 592), all by <a href="/contributors.html?q=Algernon+Charles+Swinburne">A. C. Swinburne</a>; <span class="sc"><a href="/article/07-0963-dekker-thomas/dekker__or_decker___thomas">Thomas Dekker</a></span> (Vol. 7, p. 939), by <a href="/contributors.html?q=William+Minto">William Minto</a> and R. B. McKerrow; <span class="sc"><a href="/article/13-0455-s2/heywood__thomas">Thomas Heywood</a></span> (Vol. 13, p. 439); <span class="sc"><a href="/article/18-0440-s2/middleton__thomas">Thomas Middleton</a></span> (Vol. 18, p. 416); <span class="sc"><a href="/article/17-0793-s4/marston__john">John Marston</a></span> (Vol. 17, p. 776); <span class="sc"><a href="/article/17-0887-s4/massinger__philip">Philip Massinger</a></span> (Vol. 17, p. 868); <span class="sc"><a href="/article/10-0662-ford-john/ford__john">John Ford</a></span> (Vol. 10, p. 641), by <a href="/contributors.html?q=Adolphus+William+Ward">A. W. Ward</a>; <span class="sc"><a href="/article/24-1066-s4/shirley__or_sherley___james">James Shirley</a></span> (Vol. 24, p. 990).</p> <p><span class="shoulder-heading" id="sh-5">16th and 17th Century Prose</span>For Elizabethan prose writers not already mentioned, see: the translators, <span class="sc"><a href="/article/03-0821-berners-john-bourchier/berners__john_bourchier">John Bourchier, Lord Baron Berners</a></span> (Vol. 3, p. 800), <span class="sc"><a href="/article/13-0603-holland-philemon/holland__philemon">Philemon Holland</a></span> (Vol. 13, p. 587) and <span class="sc"><a href="/article/10-0567-florio-giovanni/florio__giovanni">Giovanni Florio</a></span> (Vol. 10, p. 546); and the philosophers and essayists, <span class="sc"><a href="/article/13-0689-s2/hooker__richard">Richard Hooker</a></span> (Vol. 13, p. 672), by <a href="/contributors.html?q=Thomas+F.+Henderson">T. F. Henderson</a>, <span class="sc"><a href="/article/03-0152-s7/bacon__francis">Francis Bacon</a></span>, (Vol. 3, p. 135; equivalent to 55 pages of this Guide), by <a href="/contributors.html?q=Robert+Adamson">Robert Adamson</a> and <a href="/contributors.html?q=John+Malcolm+Mitchell">J. M. Mitchell</a>, <span class="sc"><a href="/article/13-0561-s2/hobbes__thomas">Thomas Hobbes</a></span> (Vol. 13, p. 545), by <a href="/contributors.html?q=Sir+George+Scott+Robertson">G. Croom Robertson</a>, biographer of Hobbes, <span class="sc"><a href="/article/04-0689-s2/browne__sir_thomas">Sir Thomas Browne</a></span> (Vol. 4, p. 666), <span class="sc"><a href="/article/28-0316-walton-izaak/walton__izaak">Izaak Walton</a></span> (Vol. 28, p. 300), <span class="sc"><a href="/article/04-0889-s2/burton__robert">Robert Burton</a></span> (Vol. 4, p. 865), <span class="sc"><a href="/article/26-0498-s4/taylor__jeremy">Jeremy Taylor</a></span> (Vol. 26, p. 469), <span class="sc"><a href="/article/11-0309-s4/fuller__thomas">Thomas Fuller</a></span> (Vol. 11, p. 296), <span class="sc"><a href="/article/06-0175-chillingworth-william/chillingworth__william">William Chillingworth</a></span> (Vol. 6, p. 162), <span class="sc"><a href="/article/12-0859-s5/hales__john">John Hales</a></span> (Vol. 12, p. 834), <span class="sc"><a href="/article/07-0634-cudworth-ralph/cudworth__ralph">Ralph Cudworth</a></span> (Vol. 7, p. 612), by <a href="/contributors.html?q=Henry+Sturt">Henry Sturt</a>, author of <i>Personal Idealism</i>, etc.; the historian <span class="sc"><a href="/article/06-0444-clarendon-edward-hyde/clarendon__edward_hyde">Clarendon</a></span> (Vol. 6, p. 428), by <a href="/contributors.html?q=Philip+Chesney+Yorke">P. C. Yorke</a>; and the letter-writer <span class="sc"><a href="/article/13-0863-howell-james/howell__james">James Howell</a></span> (Vol. 13, p. 838).</p> <p><span class="shoulder-heading" id="sh-6">Dryden</span></p> <p><span class="shoulder-heading" id="sh-11">Pepys</span>On the Restoration period—from 1660 to 1700—see <a href="/contributors.html?q=Oliver+Elton">Professor Elton</a>’s chapter (Vol. 9, pp. 628–631) in the article <span class="sc"><a href="/article/09-0639-english-literature/english_literature">English Literature</a></span>; and the articles: <span class="sc"><a href="/article/08-0636-dryden-john/dryden__john">John Dryden</a></span> (Vol. 8, p. 609), by <a href="/contributors.html?q=William+Minto">William Minto</a> and Margaret Bryant; <span class="sc"><a href="/article/04-0909-s3/butler__or_boteler___samuel">Samuel Butler</a></span> (Vol. 4, p. 885), <span class="sc"><a href="/article/19-0607-s1/newton__sir_isaac">Sir Isaac Newton</a></span> (Vol. 19, p. 583), by <a href="/contributors.html?q=H.+Dennis+Taylor">H. M. Taylor</a>, Fellow of Trinity College, Cambridge; <span class="sc"><a href="/article/03-0457-barrow-isaac/barrow__isaac">Isaac Barrow</a></span> (Vol. 3, p. 440), <span class="sc"><a href="/article/22-0947-s3/ray">John Ray</a></span> (Vol. 22, p. 931), by Prof. <a href="/contributors.html?q=D%27Arcy+Wentworth+Thompson">D. Wentworth Thompson</a>, University College, Dundee; <span class="sc"><a href="/article/12-0090-s2/glanvill__or_glanvil___joseph">Joseph Glanvill</a></span> (Vol. 12, p. 77), <span class="sc"><a href="/article/04-0877-s2/burnet__thomas">Thomas Burnet</a></span> (Vol. 4, p. 853), <span class="sc"><a href="/article/26-1016-tillotson-john/tillotson__john">John Tillotson</a></span> (Vol. 26, p. 976), <span class="sc"><a href="/article/26-0632-temple-sir-william/temple__sir_william">Sir William Temple</a></span> (Vol. 26, p. 602), by <a href="/contributors.html?q=George+Walter+Prothero">G. W. Prothero</a>, editor <i>The Quarterly Review</i> and joint-editor <i>Cambridge Modern History</i>, <span class="sc"><a href="/article/12-0863-s3/halifax__charles_montague">Marquess Halifax</a></span> (Vol. 12, p. 839), by <a href="/contributors.html?q=Philip+Chesney+Yorke">P. C. Yorke</a>; <span class="sc"><a href="/article/25-0479-south/south__robert">Robert South</a></span> (Vol. 25, p. 463), <span class="sc"><a href="/article/24-0884-s5/sherlock__william">William Sherlock</a></span> (Vol. 24, p. 850), <span class="sc"><a href="/article/03-0568-baxter-richard/baxter__richard">Richard Baxter</a></span> (Vol. 3, p. 551), <span class="sc"><a href="/article/13-0860-s3/howe__john">John Howe</a></span> (Vol. 13, p. 835), <span class="sc"><a href="/article/10-0786-fox-george/fox__george">George Fox</a></span> (Vol. 10, p. 765), <span class="sc"><a href="/article/04-0826-s1/bunyan__john">John Bunyan</a></span> (Vol. 4, p. 803), by <a href="/contributors.html?q=Lord+Macaulay">Lord Macaulay</a>; <span class="sc"><a href="/article/23-0449-s6/rochester__john_wilmot">2nd Earl of Rochester</a></span> (Vol. 23, p. 427), <span class="sc"><a href="/article/07-0875-davenant-sir-william/davenant__or_d_avenant___sir_william">Sir William Davenant</a></span> (Vol. 7, p. 851), <span class="sc"><a href="/article/26-0478-s4/tate__nahum">Nahum Tate</a></span> (Vol. 26, p. 449), <span class="sc"><a href="/article/20-0410-s5/otway__thomas">Thomas Otway</a></span> (Vol. 20, p. 376), <span class="sc"><a href="/article/16-0381-s5/lee__nathaniel">Nathaniel Lee</a></span> (Vol. 16, p. 361), <a href="/contributors.html?q=Walter+Theodore+Watts-Dunton">Watts-Dunton</a>’s article <span class="sc"><a href="/article/28-0889-wycherley-william/wycherley__william">William Wycherley</a></span> (Vol. 28, p. 863), and the two great diarists <span class="sc"><a href="/article/10-0017-evelyn-john/evelyn__john">John Evelyn</a></span> (Vol. 10, p. 5) and <span class="sc"><a href="/article/21-0145-pepys-samuel/pepys__samuel">Samuel Pepys</a></span> (Vol. 21, p. 130), by <a href="/contributors.html?q=David+Hannay">D. Hannay</a>.</p> <p><span class="shoulder-heading" id="sh-7">Addison, Steele and Swift</span></p> <p><span class="shoulder-heading" id="sh-12">Pope</span></p> <p><span class="shoulder-heading" id="sh-13">Burns</span></p> <p><span class="shoulder-heading" id="sh-14">The Novel</span>On the 18th century literature see the chapter in the article <span class="sc"><a href="/article/09-0639-english-literature/english_literature">English Literature</a></span> (Vol. 9, pp. 631–636), by <a href="/contributors.html?q=Thomas+Seccombe">Thomas Seccombe</a>, author of <i>The Age of Johnson</i>, etc.; and the articles: <span class="sc"><a href="/article/16-0866-s2/locke__john">John Locke</a></span> (Vol. 16, p. 844), by Prof. <a href="/contributors.html?q=Alexander+Campbell+Fraser">Alexander Campbell Fraser</a>, Edinburgh; <span class="sc"><a href="/article/01-0215-s4/addison__joseph">Joseph Addison</a></span> (Vol. 1, p. 184), by <a href="/contributors.html?q=William+Spalding">William Spalding</a> and Austin Dobson; <span class="sc"><a href="/article/25-0889-s3/steele__sir_richard">Sir Richard Steele</a></span> (Vol. 25, p. 865), by <a href="/contributors.html?q=William+Minto">William Minto</a> and Austin Dobson; <span class="sc"><a href="/article/26-0243-swift/swift__jonathan">Jonathan Swift</a></span> (Vol. 26, p. 224), by <a href="/contributors.html?q=Richard+Garnett">Richard Garnett</a> and <a href="/contributors.html?q=Thomas+Seccombe">Thomas Seccombe</a>; <span class="sc"><a href="/article/02-0354-s5/arbuthnot__john">John Arbuthnot</a></span> (Vol. 2, p. 339), <span class="sc"><a href="/article/17-0576-mandeville-bernard-de/mandeville__bernard_de">Bernard de Mandeville</a></span> (Vol. 17, p. 559), by <a href="/contributors.html?q=John+Malcolm+Mitchell">J. M. Mitchell</a>; <span class="sc"><a href="/article/04-0174-bolingbroke-henry-st-john-viscount/bolingbroke__henry_st_john__viscount">Bolingbroke</a></span> (Vol. 4, p. 161), by <a href="/contributors.html?q=Philip+Chesney+Yorke">P. C. Yorke</a>; <span class="sc"><a href="/article/22-0096-s1/pope__alexander">Alexander Pope</a></span> (Vol. 22, p. 82), by <a href="/contributors.html?q=William+Minto">William Minto</a> and Margaret Bryant; <span class="sc"><a href="/article/22-0373-prior-matthew/prior__matthew">Matthew Prior</a></span> (Vol. 22, p. 359), by Austin Dobson; <span class="sc"><a href="/article/11-0558-gay-john/gay__john">John Gay</a></span> (Vol. 11, p. 540), <span class="sc"><a href="/article/20-0921-parnell-thomas/parnell__thomas">Thomas Parnell</a></span> (Vol. 20, p. 859), <span class="sc"><a href="/article/01-0492-s7/akenside__mark">Mark Akenside</a></span> (Vol. 1, p. 454), <span class="sc"><a href="/article/26-0911-thomson-james-poet-1700-1748/thomson__james__poet__1700-1748_">James Thomson</a></span> (Vol. 26, p. 871) and <span class="sc"><a href="/article/12-0409-s4/gray__thomas">Thomas Gray</a></span> (Vol. 12, p. 392), both by <a href="/contributors.html?q=Rev.+Duncan+Crookes+Tovey">D. C. Tovey</a>, editor of Gray’s Letters; <span class="sc"><a href="/article/06-0713-collins-william/collins__william">William Collins</a></span> (Vol. 6, p. 692), by <a href="/contributors.html?q=Edmund+Gosse">Edmund Gosse</a>; <span class="sc"><a href="/article/25-0265-s4/smart__christopher">Christopher Smart</a></span> (Vol. 25, p. 249), <span class="sc"><a href="/article/07-0368-cowper-william-cowper/cowper__william_cowper">William Cowper</a></span> (Vol. 7, p. 349) and <span class="sc"><a href="/article/07-0378-crabbe-george/crabbe__george">George Crabbe</a></span> (Vol. 7, p. 358), by <a href="/contributors.html?q=Clement+King+Shorter">Clement K. Shorter</a>, editor of <i>The Sphere</i>, <span class="sc"><a href="/article/04-0049-blake-william/blake__william">William Blake</a></span> (Vol. 4, p. 36), by <a href="/contributors.html?q=J.+W.+Comyns-Carr">J. W. Comyns-Carr</a>, author of <i>Essays on Art</i>; <span class="sc"><a href="/article/24-0873-s2/shenstone__william">William Shenstone</a></span> (Vol. 24, p. 839), <span class="sc"><a href="/article/06-0023-chatterton/chatterton__thomas">Thomas Chatterton</a></span> (Vol. 6, p. 10), <span class="sc"><a href="/article/21-0151-s3/percy__thomas">Thomas Percy</a></span> (Vol. 21, p. 136), <span class="sc"><a href="/article/28-0353-warton-thomas-1688-1745/warton__thomas__1688-1745_">Thomas Warton</a></span> (Vol. 28, p. 337), <span class="sc"><a href="/article/04-0880-s2/burns__robert">Robert Burns</a></span> (Vol. 4, p. 856), by <a href="/contributors.html?q=John+Nichol">John Nichol</a>, the biographer of Burns, Byron and Carlyle; among the prose writers, forerunners of the novel, <span class="sc"><a href="/article/07-0951-defoe-daniel/defoe__daniel">Daniel Defoe</a></span> (Vol. 7, p. 927), <span class="sc"><a href="/article/23-0317-s3/richardson__samuel">Samuel Richardson</a></span> (Vol. 23, p. 300) and <span class="sc"><a href="/article/25-0293-smolensk-government/smolensk__government_">Henry Fielding</a></span> (Vol. 10, p. 324), both by Austin Dobson, <span class="sc"><a href="/article/25-0294-smollett-tobias-george/smollett__tobias_george">Tobias Smollett</a></span> (Vol. 25, p. 278), by <a href="/contributors.html?q=Thomas+Seccombe">Thomas Seccombe</a>, and <span class="sc"><a href="/article/25-0925-s5/sterne__laurence">Laurence Sterne</a></span> (Vol. 25, p. 901), by <a href="/contributors.html?q=William+Minto">William Minto</a> and Austin Dobson; the other great prose writers of the age, <span class="sni"><span class="hidev">|</span>Johnson<span class="hidev">|</span></span> <span class="sc"><a href="/article/15-0490-s5/johnson__samuel">Samuel Johnson</a></span> (Vol. 15, p. 463), by <a href="/contributors.html?q=Lord+Macaulay">Lord Macaulay</a> and <a href="/contributors.html?q=Thomas+Seccombe">Thomas Seccombe</a>, <span class="sni"><span class="hidev">|</span>Goldsmith<span class="hidev">|</span></span> <span class="sc"><a href="/article/12-0231-s6/goldsmith__oliver">Oliver Goldsmith</a></span> (Vol. 12, p. 214), by <a href="/contributors.html?q=Lord+Macaulay">Lord Macaulay</a> and Austin Dobson, <span class="sc"><a href="/article/06-0122-chesterfield-philip-dormer-stanhope/chesterfield__philip_dormer_stanhope">Lord Chesterfield</a></span> (Vol. 6, p. 109), by Austin Dobson, and <span class="sc"><a href="/article/28-0304-s4/walpole__horatio">Horatio Walpole</a></span> (Vol. 28, p. 288), by <a href="/contributors.html?q=William+Prideaux+Courtney">W. P. Courtney</a>; in a lesser group, <span class="sc"><a href="/article/04-0312-boswell-james/boswell__james">James Boswell</a></span> (Vol. 4, p. 297), by <a href="/contributors.html?q=Thomas+Seccombe">Thomas Seccombe</a>, <span class="sc"><a href="/article/07-0850-d-arblay-frances/d_arblay__frances">Frances D’Arblay</a></span>, “Fanny Burney” (Vol. 7, p. 826), <span class="sc"><a href="/article/21-0661-s7/piozzi__hester_lynch">Hester Lynch Piozzi</a></span> (Vol. 21, p. 632), <span class="sc"><a href="/article/28-0619-white-gilbert/white__gilbert">Gilbert White</a></span> (Vol. 28, p. 599); <span class="sni"><span class="hidev">|</span>History<span class="hidev">|</span></span> the historians <span class="sc"><a href="/article/13-0901-s6/hume__david">David Hume</a></span> (Vol. 13, p. 876), by <a href="/contributors.html?q=Robert+Adamson">Robert Adamson</a> and <a href="/contributors.html?q=John+Malcolm+Mitchell">J. M. Mitchell</a>, <span class="sc"><a href="/article/23-0423-s4/robertson__william">William Robertson</a></span> (Vol. 23, p. 406) and <span class="sc"><a href="/article/11-0951-s6/gibbon__edward">Edward Gibbon</a></span> (Vol. 11, p. 927), by Prof. <a href="/contributors.html?q=John+Bagnell+Bury">J. B. Bury</a>, editor of <i>The Decline and Fall</i>; and the philosophers, <span class="sc"><a href="/article/04-0906-s3/butler__joseph">Joseph Butler</a></span> (Vol. 4, p. 882), by <a href="/contributors.html?q=Robert+Adamson">Robert Adamson</a> and A. J. Grieve, Yorkshire United Independent College, <span class="sni"><span class="hidev">|</span>Philosophy<span class="hidev">|</span></span> <span class="sc"><a href="/article/20-0684-s4/paley__william">William Paley</a></span> (Vol. 20, p. 628), <span class="sc"><a href="/article/03-0797-berkeley-family/berkeley__family_">Berkeley</a></span> (Vol. 3, p. 779), by <a href="/contributors.html?q=Robert+Adamson">Robert Adamson</a> and <a href="/contributors.html?q=John+Malcolm+Mitchell">J. M. Mitchell</a>, <span class="sc"><a href="/article/23-0068-s2/reid__thomas">Thomas Reid</a></span> (Vol. 23, p. 51), by Prof. <a href="/contributors.html?q=Andrew+Seth+Pringle-Pattison">A. Seth Pringle-Pattison</a>, Edinburgh, <span class="sc"><a href="/article/13-0048-s3/hartley__david">David Hartley</a></span> (Vol. 13, p. 35), <span class="sc"><a href="/article/27-0378-s3/tucker__abraham">Abraham Tucker</a></span> (Vol. 27, p. 361), <span class="sc"><a href="/article/20-0494-s8/paine__thomas">Thomas Paine</a></span> (Vol. 20, p. 456), <span class="sc"><a href="/article/22-0336-priestley-joseph/priestley__joseph">Joseph Priestly</a></span> (Vol. 22, p. 322), <span class="sc"><a href="/article/22-0328-price-richard/price__richard">Richard Price</a></span> (Vol. 22, p. 314), by <a href="/contributors.html?q=John+Malcolm+Mitchell">J. M. Mitchell</a>; <span class="sc"><a href="/article/12-0194-godwin-william/godwin__william">William Godwin</a></span> (Vol. 12, p. 177), <span class="sni"><span class="hidev">|</span>Politics<span class="hidev">|</span></span> <span class="sc"><a href="/article/17-0274-s3/mackintosh__sir_james">Sir James Mackintosh</a></span> (Vol. 17, p. 259), <span class="sc"><a href="/article/04-0847-s6/burke__edmund">Edmund Burke</a></span> (Vol. 4, p. 824), by John Morley, and “<span class="sc"><a href="/article/15-0584-s2/junius">Junius</a></span>” (Vol. 15, p. 557),—see also <span class="sc"><a href="/article/10-0964-francis-sir-philip/francis__sir_philip">Sir Philip Francis</a></span> (Vol. 10, p. 941).</p> <p><span class="shoulder-heading" id="sh-8">Lake Poets</span></p> <p><span class="shoulder-heading" id="sh-15">Byron</span></p> <p><span class="shoulder-heading" id="sh-16">Criticism</span></p> <div class="sidenote">History</span>For the 19th century see the last section
+of the article <span class="sc"><a href="/article/09-0639-english-literature/english_literature">English Literature</a></span>
+(Vol. 9, pp. 636–645), by <a href="/contributors.html?q=Thomas+Seccombe">Thomas Seccombe</a>;
+and the articles:
+<span class="sc"><a href="/article/28-0852-wordsworth-william/wordsworth__william">William
+Wordsworth</a></span> (Vol.
+28, p. 826), by <a href="/contributors.html?q=William+Minto">William Minto</a> and Hugh
+<a href="/contributors.html?q=Hugh+Chisholm">Chisholm</a>; <span class="sc"><a href="/article/06-0698-coleridge-john-duke-coleridge/coleridge__john_duke_coleridge">S. T. Coleridge</a></span> (Vol. 6, p.
+678), by <a href="/contributors.html?q=John+Mackinnon+Robertson">J. Mackinnon Robertson</a>, author
+of <i>Modern Humanists</i>, etc., <a href="/contributors.html?q=Hugh+Chisholm">Hugh Chisholm</a>,
+and the Very Rev. George David
+Boyle; <span class="sc"><a href="/article/16-0124-s2/lamb__charles">Charles Lamb</a></span> (Vol. 16, p. 104),
+by <a href="/contributors.html?q=Edward+Verrall+Lucas">E. V. Lucas</a>, editor of Lamb; <span class="sc"><a href="/article/13-0132-s2/hazlitt__william">William
+Hazlitt</a></span> (Vol. 13, p. 119), <span class="sc"><a href="/article/13-0959-hunt-james-henry-leigh/hunt__james_henry_leigh">Leigh
+Hunt</a></span> (Vol. 13, p. 934); <span class="sc"><a href="/article/08-0076-de-quincey-thomas/de_quincey__thomas">De Quincey</a></span>
+(Vol. 8, p. 61), by <a href="/contributors.html?q=John+Ritchie+Findlay">J. Ritchie Findlay</a>,
+author of <i>Personal Recollections of De
+Quincey</i>; <span class="sc"><a href="/article/15-0736-keats-john/keats__john">Keats</a></span> (Vol. 15, p. 708), by
+<a href="/contributors.html?q=Algernon+Charles+Swinburne">A. C. Swinburne</a> and Margaret Bryant;
+<span class="sc"><a href="/article/03-0633-beddoes-thomas-lovell/beddoes__thomas_lovell">Thomas Lovell Beddoes</a></span> (Vol. 3, p.
+614), <span class="sc"><a href="/article/13-0683-s4/hood__thomas">Thomas Hood</a></span> (Vol. 13, p. 666),
+<span class="sc"><a href="/article/16-0181-s2/landor__walter_savage">Landor</a></span> (Vol. 16, p. 161), by <a href="/contributors.html?q=Algernon+Charles+Swinburne">A. C.
+Swinburne</a>; <span class="sc"><a href="/article/24-0861-shelley-mary-wollstonecraft/shelley__mary_wollstonecraft">Shelley</a></span> (Vol. 24, p. 827),
+by <a href="/contributors.html?q=William+Michael+Rossetti">W. M. Rossetti</a>; <span class="sc"><a href="/article/25-0531-s2/southey__robert">Southey</a></span> (Vol. 25,
+p. 511), <span class="sc"><a href="/article/05-0140-campbell-john-campbell/campbell__john_campbell">Campbell</a></span> (Vol. 5, p. 130),
+<span class="sc"><a href="/article/18-0842-s2/moore__thomas">Thomas Moore</a></span> (Vol. 18,
+p. 810), <span class="sc"><a href="/article/04-0921-byron-george-gordon-byron/byron__george_gordon_byron">Lord Byron</a></span> (Vol.
+4, p. 897), by <a href="/contributors.html?q=Ernest+Hartley+Coleridge">E. Hartley
+Coleridge</a>, editor of <i>Byron’s Poems</i>;
+<span class="sc"><a href="/article/15-0332-jeffrey-francis-jeffrey-lord/jeffrey__francis_jeffrey__lord">Francis Jeffrey</a></span> (Vol. 15, p. 307),
+<span class="sc"><a href="/article/25-0284-s3/smith__sydney">Sydney Smith</a></span> (Vol. 25, p. 268), <span class="sc"><a href="/article/16-0874-lockhart-george/lockhart__george">J. G.
+Lockhart</a></span> (Vol. 16, p. 853),
+<span class="sc"><a href="/article/12-0018-s2/gifford__william">William Gifford</a></span> (Vol. 12,
+p. 5), <span class="sc"><a href="/article/03-0766-bentham-george/bentham__george">Bentham</a></span> (Vol. 3,
+p. 747), by Dr. <a href="/contributors.html?q=Thomas+Erskine+Holland">T. E. Holland</a>, formerly
+professor of international law, Oxford,
+<span class="sc"><a href="/article/17-0532-s3/malthus__thomas_robert">Malthus</a></span> (Vol. 17, p. 515), <span class="sc"><a href="/article/12-0876-hallam-henry/hallam__henry">Henry
+Hallam</a></span> (Vol. 12, p. 851), by Lord
+Lochee of Gowrie; <span class="sc"><a href="/article/23-0766-s2/roscoe__william">William Roscoe</a></span>
+(Vol. 23, p. 726), by <a href="/contributors.html?q=William+Edward+Armytage+Axon">W. E. A. Axon</a>,
+Manchester Libraries; <span class="sc"><a href="/article/16-0750-s3/lingard__john">Lingard</a></span> (Vol. 16,
+p. 728), <span class="sc"><a href="/article/18-0500-s1/milman__henry_hart">Henry Hart Milman</a></span> (Vol. 18,
+p. 476), <span class="sc"><a href="/article/17-0208-macaulay-thomas-babington-macaulay-baron/macaulay__thomas_babington_macaulay__baron">Macaulay</a></span> (Vol. 17, p. 193),
+by <a href="/contributors.html?q=Rev.+Mark+Pattison">Mark Pattison</a>; <span class="sc"><a href="/article/26-0891-thirlwall-connop/thirlwall__connop">Thirlwall</a></span>
+(Vol. 26, p. 851),
+<span class="sc"><a href="/article/18-0649-mitford-william/mitford__william">William Mitford</a></span> (Vol.
+18, p. 620), <span class="sc"><a href="/article/12-0644-s4/grote__george">Grote</a></span> (Vol. 12, p. 619), by
+<a href="/contributors.html?q=John+Malcolm+Mitchell">J. M. Mitchell</a>, edition of Grote’s <i>Greece</i>,
+<span class="sc"><a href="/article/18-0477-s2/mill__james">James Mill</a></span> (Vol. 18, p. 453), <span class="sc"><a href="/article/19-0190-napier-sir-william-francis-patrick/napier__sir_william_francis_patrick">Sir
+William Napier</a></span> (Vol. 19, p. 175),
+<span class="sc"><a href="/article/06-0625-cobbett-william/cobbett__william">William Cobbett</a></span> (Vol. 6, p. 606),
+<span class="sc"><a href="/article/24-0489-s4/scott__sir_walter">Sir Walter Scott</a></span> (Vol. 24, p. 469),
+by <a href="/contributors.html?q=William+Minto">William Minto</a>; <span class="sni"><span class="hidev">|</span>Fiction<span class="hidev">|</span></span>
+<span class="sc"><a href="/article/16-0530-lever/lever">Lever</a></span> (Vol. 16,
+pp. 508–510), <span class="sc"><a href="/article/17-0770-marriage/marriage">Marryat</a></span>
+(Vol. 17, p. 759), <span class="sc"><a href="/article/17-0200-s5/lytton__edward_george_earle_lytton__bulwer-lytton">Bulwer
+Lytton</a></span> (Vol. 17, p. 185),
+by <a href="/contributors.html?q=Arthur+Waugh">Arthur Waugh</a>; <span class="sc"><a href="/article/03-0582-beaconsfield-benjamin-disraeli-earl-of/beaconsfield__benjamin_disraeli__earl_of">Beaconsfield</a></span> (Vol. 3,
+p. 563), by <a href="/contributors.html?q=Frederick+Greenwood">Frederick Greenwood</a>; <span class="sc"><a href="/article/02-0986-s3/austen__jane">Jane
+Austen</a></span> (Vol. 2, p. 936), by <a href="/contributors.html?q=Edward+Verrall+Lucas">E. V. Lucas</a>;
+<span class="sc"><a href="/article/08-0961-edgeworth-maria/edgeworth__maria">Maria Edgeworth</a></span> (Vol. 8, p. 934),
+<span class="sc"><a href="/article/17-0813-s3/martineau__harriet">Harriet Martineau</a></span> (Vol. 17, p. 796),
+<span class="sc"><a href="/article/18-0648-s2/mitford__mary_russell">Mary Russell Mitford</a></span> (Vol. 18, p.
+619), <span class="sc"><a href="/article/11-0519-s2/gaskell__elizabeth_cleghorn">Elizabeth Cleghorn Gaskell</a></span>
+(Vol. 11, p. 501) and the <span class="sc"><a href="/article/04-0660-s5/brontë__charlotte__1816_1855___emily">Brontës</a></span> (Vol.
+4, p. 637), by <a href="/contributors.html?q=Clement+King+Shorter">C. K. Shorter</a>; <span class="sc"><a href="/article/21-0035-s2/peacock__thomas_love">Thomas
+Love Peacock</a></span> (Vol. 21, p. 21), by
+<a href="/contributors.html?q=Richard+Garnett">Richard Garnett</a>; <span class="sc"><a href="/article/18-0179-s4/meredith__george">George Meredith</a></span>
+(Vol. 18, p. 160), by <a href="/contributors.html?q=Hugh+Chisholm">Hugh Chisholm</a>;
+<span class="sni"><span class="hidev">|</span>Tennyson,
+Browning
+and Carlyle<span class="hidev">|</span></span>
+<span class="sc"><a href="/article/26-0661-tennysonb/tennyson__alfred_tennyson">Tennyson</a></span> (Vol. 26,
+p. 630), by <a href="/contributors.html?q=Edmund+Gosse">E. Gosse</a>;
+<span class="sc"><a href="/article/04-0691-s2/browning__elizabeth_barrett">Elizabeth Barrett
+Browning</a></span>
+(Vol. 4, p. 668), by
+<a href="/contributors.html?q=Mrs+Alice+Meynell">Alice Meynell</a>; <span class="sc"><a href="/article/04-0693-s3/browning__robert">Robert Browning</a></span>
+(Vol. 4, p. 670) and <span class="sc"><a href="/article/05-0362-carlyle-alexander/carlyle__alexander">Carlyle</a></span> (Vol. 5, p.
+349), both by Sir <a href="/contributors.html?q=Sir+Leslie+Stephen">Leslie Stephen</a>;
+<span class="sc"><a href="/article/22-0955-reade-charles/reade__charles">Charles Read</a></span> (Vol. 22, p. 938),
+<span class="sc"><a href="/article/08-0195-dickens-charles-john-huffam/dickens__charles_john_huffam">Dickens</a></span> (Vol. 8, p. 178), by <a href="/contributors.html?q=Thomas+Seccombe">Thomas
+Seccombe</a>; <span class="sni"><span class="hidev">|</span>Victorian
+Novelists<span class="hidev">|</span></span>
+<span class="sc"><a href="/article/26-0752-thackeray-william-makepeace/thackeray__william_makepeace">Thackeray</a></span>
+(Vol. 26, p.
+716), by <a href="/contributors.html?q=Walter+Herries+Pollock">W. H. Pollock</a>;
+<span class="sc"><a href="/article/09-0292-eliot-george/eliot__george">George Eliot</a></span>
+(Vol. 9, p. 275), by Mrs. Craigie (“John
+Oliver Hobbes”); <span class="sc"><a href="/article/27-0318-trollope-anthony/trollope__anthony">Anthony Trollope</a></span>
+(Vol. 27, p. 301), <span class="sc"><a href="/article/06-0714-collins-william-wilkie/collins__william_wilkie">Wilkie Collins</a></span> (Vol.
+6, p. 693), <span class="sc"><a href="/article/05-0933-charles/charles">Charles</a></span> and <span class="sc"><a href="/article/15-0846-s3/kingsley__charles">Henry Kingsley</a></span>
+(Vol. 15, p. 817); <span class="sc"><a href="/article/25-0656-s5/spencer__herbert">Herbert Spencer</a></span>
+(Vol. 25, p. 634), by <a href="/contributors.html?q=Ferdinand+Canning+Scott+Schiller">F. C. S. Schiller</a>,
+author of <i>Studies in Humanism</i>,
+etc.; <span class="sni"><span class="hidev">|</span>Natural
+Science<span class="hidev">|</span></span>
+<span class="sc"><a href="/article/18-0478-s3/mill__john_stuart">John Stuart
+Mill</a></span> (Vol. 18, p. 454), by
+<a href="/contributors.html?q=William+Minto">William Minto</a> and J. M.
+<a href="/contributors.html?q=John+Malcolm+Mitchell">Mitchell</a>; <span class="sc"><a href="/article/07-0864-darwin-charles-robert/darwin__charles_robert">Charles Darwin</a></span> (Vol. 7,
+p. 840), by Prof. <a href="/contributors.html?q=Edward+Bagnall+Poulton">E. B. Poulton</a>, Oxford;
+<span class="sc"><a href="/article/14-0029-huxley-thomas-henry/huxley__thomas_henry">Huxley</a></span> (Vol. 14, p. 17), by Sir
+<a href="/contributors.html?q=Sir+William+Turner+Thiselton-Dyer">W. T. Thiselton-Dyer</a>; <span class="sc"><a href="/article/12-0559-s3/green__duff">J. R. Green</a></span> (Vol.
+12, p. 534), <span class="sni"><span class="hidev">|</span>History<span class="hidev">|</span></span>
+<span class="sc"><a href="/article/25-1074-s6/stubbs__william">William Stubbs</a></span>
+(Vol. 25, p. 1048), <span class="sc"><a href="/article/11-0090-s2/freemasonry">E. A.
+Freeman</a></span> (Vol. 11, p. 79)
+and <span class="sc"><a href="/article/11-0265-froude-james-anthony/froude__james_anthony">J. A. Froude</a></span> (Vol. 11, p. 252), all
+by <a href="/contributors.html?q=Rev.+William+Hunt">William Hunt</a>, formerly president
+Royal Historical Society; <span class="sc"><a href="/article/16-0374-s4/lecky__william_edward_hartpole">Lecky</a></span> (Vol. 16,
+p. 354), <span class="sc"><a href="/article/04-0755-s2/buckle__henry_thomas">Buckle</a></span> (Vol. 4, p. 732), <span class="sc"><a href="/article/17-0448-s2/maine">Maine</a></span>
+(Vol. 17, p. 432), by Sir <a href="/contributors.html?q=Sir+Frederick+Pollock">Frederick Pollock</a>;
+<span class="sc"><a href="/article/04-0290-borrow-george-henry/borrow__george_henry">George Borrow</a></span> (Vol. 4, p. 275),
+by <a href="/contributors.html?q=Walter+Theodore+Watts-Dunton">Theodore Watts-Dunton</a>; <span class="sni"><span class="hidev">|</span>Arnold<span class="hidev">|</span></span>
+<span class="sc"><a href="/article/10-0459-s2/fitzgerald__edward">Edward
+Fitzgerald</a></span> (Vol. 10, p.
+443), by <a href="/contributors.html?q=Edmund+Gosse">E. Gosse</a>; <span class="sc"><a href="/article/02-0677-s2/arnold__matthew">Matthew
+Arnold</a></span> (Vol. 2, p.
+635), by <a href="/contributors.html?q=Walter+Theodore+Watts-Dunton">Theodore Watts-Dunton</a> and
+Sir Joshua Girling Fitch;
+<span class="sni"><span class="hidev">|</span>Ruskin<span class="hidev">|</span></span>
+<span class="sc"><a href="/article/23-0901-s2/ruskin__john">John Ruskin</a></span> (Vol. 23,
+p. 858), by <a href="/contributors.html?q=Frederic+Harrison">Frederic Harrison</a>;
+<span class="sc"><a href="/article/23-0787-s2/rossetti__dante_gabriel">Dante Gabriel Rossetti</a></span> (Vol.
+23, p. 747), by <a href="/contributors.html?q=Walter+Theodore+Watts-Dunton">Theodore Watts-Dunton</a>
+and F. G. Stephens, formerly art-critic
+of the <i>Athenaeum</i>; <span class="sc"><a href="/article/26-0253-s2/swinburne__algernon_charles">Swinburne</a></span> (Vol. 26,
+p. 234), by <a href="/contributors.html?q=Edmund+Gosse">E. Gosse</a>; <span class="sc"><a href="/article/18-0903-morris-william/morris__william">William Morris</a></span>
+(Vol. 18, p. 871), <span class="sc"><a href="/article/26-0307-s3/symonds__john_addington">John Addington
+Symonds</a></span> (Vol. 26, p. 286) and <span class="sc"><a href="/article/20-0972-pater-walter-horatio/pater__walter_horatio">Walter
+Pater</a></span> (Vol. 20, p. 910) all by <a href="/contributors.html?q=Arthur+Waugh">Arthur
+Waugh</a>;
+<span class="sni"><span class="hidev">|</span>Oxford
+Movement<span class="hidev">|</span></span>
+<span class="sc"><a href="/article/19-0538-s4/newman__francis_william">Newman</a></span> (Vol. 19, p. 517), by
+<a href="/contributors.html?q=Rev.+Arthur+Wollaston+Hutton">Arthur Wollaston
+Hutton</a>, biographer
+of Manning; <span class="sc"><a href="/article/15-0738-keble/keble__john">John
+Keble</a></span> (Vol. 15, p.
+710), <span class="sc"><a href="/article/22-0683-s2/pusey__edward_bouverie">Edward Bouverie Pusey</a></span> (Vol. 22,
+p. 667), <span class="sc"><a href="/article/15-0325-jefferies-richard/jefferies__richard">Richard Jefferies</a></span> (Vol. 15, p.
+300), by Sir <a href="/contributors.html?q=Sir+Walter+Besant">Walter Besant</a>, biographer
+of Jeffries; <span class="sc"><a href="/article/12-0971-s3/hardy__thomas">Thomas Hardy</a></span> (Vol. 12,
+p. 946), by <a href="/contributors.html?q=Arthur+Symons">Arthur Symons</a>; <span class="sc"><a href="/article/25-0931-s3/stevenson__robert">Robert
+Stevenson</a></span> (Vol. 25, p. 907), by <a href="/contributors.html?q=Edmund+Gosse">E. Gosse</a>;
+and among later names—the historians
+<span class="sc"><a href="/article/01-0190-s4/acton">Lord Acton</a></span> (Vol. 1, p. 159), by <a href="/contributors.html?q=Hugh+Chisholm">Hugh
+Chisholm</a>, <span class="sni"><span class="hidev">|</span>History<span class="hidev">|</span></span>
+<span class="sc"><a href="/article/07-0421-creighton-mandell/creighton__mandell">Mandell
+Creighton</a></span> (Vol. 7, p. 401),
+<span class="sc"><a href="/article/18-0874-morley/morley">Morley</a></span> (Vol. 18, p. 841),
+<span class="sc"><a href="/article/04-0722-s3/bryce__james">Bryce</a></span> (Vol. 4, p. 699) and <span class="sc"><a href="/article/04-0891-s5/bury">Bury</a></span> (Vol. 4,
+p. 867); the novelists <span class="sc"><a href="/article/04-0032-black-william/black__william">William Black</a></span>
+(Vol. 4, p. 19), <span class="sc"><a href="/article/04-0036-blackmore-sir-richard/blackmore__sir_richard">Blackmore</a></span> (Vol. 4, p.
+24), <span class="sc"><a href="/article/04-0384-braddon-mary-elizabeth/braddon__mary_elizabeth">M. E. Braddon</a></span> (Vol. 4, p. 369),
+<span class="sc"><a href="/article/28-0336-s3/ward__james">Mrs. Humphry Ward</a></span> (Vol. 28, p. 320),
+<span class="sc"><a href="/article/07-0160-corelli-marie/corelli__marie">Marie Corelli</a></span> (Vol. 7, p. 143), <span class="sc"><a href="/article/04-0975-s3/caine__thomas_henry_hall">Hall
+Caine</a></span> (Vol. 4, p. 949), <span class="sc"><a href="/article/12-0065-s3/gissing__george_robert">George Gissing</a></span>
+(Vol. 12, p. 52), <span class="sc"><a href="/article/18-0840-moore-george/moore__george">George Moore</a></span> (Vol.
+18, p. 808), <span class="sc"><a href="/article/28-0532-s5/wells">H. G. Wells</a></span> (Vol. 28, p.
+514), <span class="sc"><a href="/article/08-0022-de-morgan-augustus/de_morgan__augustus">William De Morgan</a></span> (Vol. 8, p.
+10), <span class="sni"><span class="hidev">|</span>Fiction<span class="hidev">|</span></span>
+<span class="sc"><a href="/article/15-0854-s5/kipling__rudyard">Rudyard Kipling</a></span> (Vol. 15, p. 825),
+by <a href="/contributors.html?q=William+Price+James">W. Price James</a>, author
+of <i>Romantic Professions</i>,
+etc.; the critics and essayists
+<span class="sc"><a href="/article/03-0215-s3/bagehot__walter">Walter Bagehot</a></span> (Vol. 3, p. 198),
+by <a href="/contributors.html?q=Richard+Garnett">Richard Garnett</a>, <span class="sc"><a href="/article/04-0668-s3/brook_farm">Stopford A. Brook</a></span>
+(Vol. 4, p. 645), <span class="sc"><a href="/article/20-1005-s4/pattison__mark">Mark Pattison</a></span> (Vol.
+20, p. 937), <span class="sni"><span class="hidev">|</span>Essays and
+Criticism<span class="hidev">|</span></span>
+<span class="sc"><a href="/article/25-0909-stephen-sir-leslie/stephen__sir_leslie">Leslie
+Stephen</a></span> (Vol. 25,
+p. 885), by <a href="/contributors.html?q=Thomas+Seccombe">Thomas
+Seccombe</a>, <span class="sc"><a href="/article/27-0170-traill-henry-duff/traill__henry_duff">H. D.
+Traill</a></span> (Vol. 27, p. 155), <span class="sc"><a href="/article/24-0059-saintsbury-george-edward-bateman/saintsbury__george_edward_bateman">George
+Saintsbury</a></span> (Vol. 24, p. 45), <span class="sc"><a href="/article/06-0770-colvin-sidney/colvin__sidney">Sidney
+Colvin</a></span> (Vol. 6, p. 748), <span class="sc"><a href="/article/28-0440-s3/watts-dunton__walter_theodore">Watts-Dunton</a></span>
+(Vol. 28, p. 422), <span class="sc"><a href="/article/15-0324-s2/jebb__john">R. C. Jebb</a></span> (Vol. 15,
+p. 299), <span class="sc"><a href="/article/19-0126-s4/myers__frederic_william_henry">F. W. H. Myers</a></span> (Vol. 19, p. 111),
+<span class="sc"><a href="/article/08-0479-dowden-edward/dowden__edward">Edward Dowden</a></span> (Vol. 8, p. 456), <span class="sc"><a href="/article/02-0383-s6/archer__william">William
+Archer</a></span> (Vol. 2, p. 362), <span class="sc"><a href="/article/11-0489-garnett-richard/garnett__richard">Richard
+Garnett</a></span> (Vol. 11, p. 471), <span class="sc"><a href="/article/12-0285-s4/gosse__edmund">Edmund
+Gosse</a></span> (Vol. 12, p. 268), <span class="sc"><a href="/article/16-0191-s2/lang__andrew">Andrew Lang</a></span>
+(Vol. 16, p. 171), <span class="sc"><a href="/article/06-0124-chesterton-gilbert-keith/chesterton__gilbert_keith">G. K. Chesterton</a></span>
+(Vol. 6, p. 111), <span class="sc"><a href="/article/26-0308-s4/symons__arthur">Arthur Symons</a></span> (Vol.
+26, p. 287),—a list in which it is interesting
+to note how many are contributors to
+the Encyclopaedia
+Britannica; of
+poets, <span class="sni"><span class="hidev">|</span>Recent Poetry<span class="hidev">|</span></span>
+<span class="sc"><a href="/article/04-0552-bridges-robert/bridges__robert">Robert
+Bridges</a></span> (Vol. 4, p. 532), so recently
+named poet-laureate, his predecessor <span class="sc"><a href="/article/02-0988-s2/austin__alfred">Alfred
+Austin</a></span> (Vol. 2, p. 938), <span class="sc"><a href="/article/28-0432-watson-william-conspirator/watson__william__conspirator_">William
+Watson</a></span> (Vol. 28, p. 414), by <a href="/contributors.html?q=William+Price+James">W. Price
+James</a>, <span class="sc"><a href="/article/28-0936-s4/yeats__william_butler">W. B. Yeats</a></span> (Vol. 28, p. 909), <span class="sc"><a href="/article/24-0843-s7/sharp__william">William
+Sharp</a></span>, “Fiona Macleod” (Vol. 24,
+p. 811), <span class="sc"><a href="/article/26-0909-s3/thompson__francis">Francis Thompson</a></span> (Vol. 26, p.
+869), <span class="sc"><a href="/article/07-0887-davidson-john/davidson__john">John Davidson</a></span> (Vol. 7, p. 863),
+<span class="sc"><a href="/article/12-0022-s4/gilbert__sir_william_schwenk">Sir W. S. Gilbert</a></span> (Vol. 12, p. 9), by
+<a href="/contributors.html?q=Thomas+Seccombe">Thomas Seccombe</a>; <span class="sc"><a href="/article/24-0573-seaman-owen/seaman__owen">Owen Seaman</a></span> (Vol.
+24, p. 543), <span class="sc"><a href="/article/03-0975-binyon-laurence/binyon__laurence">Laurence Binyon</a></span> (Vol. 3,
+p. 952), <span class="sc"><a href="/article/19-0483-s4/newbolt__henry_john">H. J. Newbolt</a></span> (Vol. 19, p. 463),
+<span class="sc"><a href="/article/21-0429-s2/phillips__stephen">Stephen Phillips</a></span> (Vol. 21, p. 407),
+<span class="sc"><a href="/article/18-0371-s2/meynell__alice_christiana">Alice Meynell</a></span> (Vol. 18, p. 350);
+and of the younger
+dramatists, <span class="sni"><span class="hidev">|</span>Modern Drama<span class="hidev">|</span></span>
+<span class="sc"><a href="/article/28-0652-s5/wilde__oscar_o_flahertie_wills">Oscar
+Wilde</a></span> (Vol. 28, p.
+632), by <a href="/contributors.html?q=Hugh+Chisholm">Hugh Chisholm</a>, <span class="sc"><a href="/article/21-0654-s6/pinero__sir_arthur_wing">Sir A. W.
+Pinero</a></span> (Vol. 21, p. 625), <span class="sc"><a href="/article/15-0525-s3/jones__ebenezer">A. H. Jones</a></span>
+(Vol. 15, p. 498), <span class="sc"><a href="/article/03-0452-barrie-james-matthew/barrie__james_matthew">J. M. Barrie</a></span> (Vol. 3,
+p. 435), by <a href="/contributors.html?q=William+Price+James">W. Price James</a>; <span class="sc"><a href="/article/24-0844-s5/shaw__george_bernard">G. Bernard
+Shaw</a></span> (Vol. 24, p. 812),—and see
+also under <span class="sc"><a href="/article/08-0498-drama/drama">Drama</a></span> (Vol. 8, especially
+pp. 534–538).</p>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

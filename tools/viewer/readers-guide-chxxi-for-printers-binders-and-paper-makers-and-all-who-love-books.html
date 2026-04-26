@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Printers, Binders And Paper-Makers And All Who Love Books &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XXI</span>For Printers, Binders And Paper-Makers And All Who Love Books</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">From Manuscript to Book</div> <div class="sidenote">Supply and Demand Interacting</a></li><li><a href="#sh-2">History of Paper</a></li><li><a href="#sh-3">Paper Manufacture</a></li><li><a href="#sh-4">India Paper</a></li><li><a href="#sh-5">Ink</a></li><li><a href="#sh-6">Printing</a></li><li><a href="#sh-7">Practical Typography</a></li><li><a href="#sh-8">Press-Work</a></li><li><a href="#sh-9">Modern Presses</a></li><li><a href="#sh-10">Proof-Reading</a></li><li><a href="#sh-11">Bookbinding</a></li><li><a href="#sh-12">Publishing and Book-Selling</a></li><li><a href="#sh-13">Historical and Miscellaneous Articles</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">From Manuscript to Book</div> <div class="sidenote">Supply and Demand Interacting</span>“An author, even an immortal
+genius, is, from the economic
+point of view, a producer of
+raw material,” says the Britannica article
+<span class="sc"><a href="/article/22-0644-publishing/publishing">Publishing</a></span>, and from the educational
+point of view, his product, until it has
+undergone the industrial and commercial
+processes of reduplication and distribution,
+is as undeveloped as the seed lying
+hidden in the winter soil. The history
+of civilization might, indeed, be divided
+into four stages: the period before writing;
+the period before printing, when libraries
+of manuscripts were almost exclusively
+the property of kings and priests; the
+period of costly, hand-printed books;
+and the period of the power-press, which
+began less than a hundred years ago.
+Of these four periods, the first is almost
+unimaginable. You are sometimes
+brought into contact with absolutely
+illiterate people. But they live in shadow,
+not in total darkness; they get the diffused
+light of our age of culture. The
+second period, the
+era of books in manuscript
+we can, however,
+to some extent
+reconstruct; and by one fantastic supposition
+we can even bring it into the
+focus of our 20th century. Let it be
+assumed that for some reason the printing
+of the new Britannica had been enjoined
+by the law courts, but that the
+original typoscript was available for
+consultation—say in a public library at
+New York or Chicago. Instead of your
+29 volumes, weighing only 80 lbs. and
+occupying only about two cubic feet of
+space, the walls of a large room would be
+lined with partitioned shelves on which
+the 300,000 typed sheets and the 7,000
+illustrations, on cardboard, would be
+ranged. What a mob of students there
+would be, waiting their turns to read the
+40,000 articles, what a mass of notebooks
+would be filled each day! The
+impossibility of accomplishing, without
+the use of printing, all that the Britannica
+does, will present itself very forcibly to
+your mind, in another aspect, if you try
+to imagine 1,500 separate audiences,
+assembled each day to listen to lectures
+by the 1,500 contributors to the book.
+Any attempt to imagine the Britannica
+doing its work in any way but the way
+in which it does makes you realize, too,
+that if it were not for modern methods
+of <i>spreading</i> knowledge,
+there would
+be no such system
+of <i>assembling</i> and
+co-ordinating knowledge
+as finds its fullest development in
+the Britannica. It is not only for
+commercial reasons that the demand
+must be sufficient to justify the supply;
+the 1,500 specialists who laid
+aside their usual work in order to
+write these articles would never have
+combined their efforts if this vast public
+of all educated English speaking people
+were not to have been enabled to avail
+themselves of the result.</p>
+
+<p>The industrial arts which make it
+possible to produce books swiftly and to
+sell them at low prices are obviously
+subjects of interest not only to those
+who do the producing and selling, but
+to all who profit by the use of books.
+And, as the articles mentioned in this
+chapter show, these arts are in themselves
+among the most ingenious and
+curious of all processes; so that in a
+double sense they merit the attention
+of everyone to whom the chapters on
+<i>Literature</i> in this Guide would appeal.
+As the warp of cloth carries the weft, so
+the raw material of printers’ paper and
+printers’ ink carries the “raw material”
+of the writer’s thoughts.</p>
+
+<p>The article on <span class="sc"><a href="/article/20-0781-s4/paper">Paper</a></span> (Vol. 20, p. 725)
+is equivalent to 35 pages of this Guide
+and is illustrated with 15 diagrams.
+The article is divided into three parts:
+<i>History</i>, by Sir <a href="/contributors.html?q=Sir+Edward+Maunde+Thompson">Edward Maunde Thompson</a>,
+director of the British Museum;
+<i>Manufacture</i>, by <a href="/contributors.html?q=J.+W.+Wyatt">J. W. Wyatt</a>, author
+of <i>The Art of Making Paper</i>; and <i>India
+Paper</i>, by <a href="/contributors.html?q=William+Edward+Garrett+Fisher">W. E. Garrett Fisher</a>.</p>
+
+<p><span class="shoulder-heading" id="sh-2">History of Paper</span>The history of paper, like that of so
+many other great inventions, dates back
+to an early period in China; and, as is
+the case with almost
+every great contribution
+to civilization
+which came
+from China, paper came to the Western
+world only after many years and only
+by chance. In the 8th century of the
+Christian era, when paper had been made
+in China for 1000 years, some Chinese
+paper-makers were taken captives in
+Samarkand by Arabs, who thus learned
+the methods of its manufacture. The
+Arabs and the Persians used linen as a
+base for the paper instead of the cotton
+the Chinese used; and the name “paper”
+was transferred from the Egyptian rush
+and the writing material made from its
+fibres to the new product. Paper was
+manufactured in Europe first by the
+Moors in Spain at Xativa, Valencia and
+Toledo in the 12th century; and into
+Italy also it seems to have been brought
+by the Arab occupation of Sicily.
+Among other interesting points in regard
+to the history of paper are: water-marks
+as a sign of age; old papers; variation in
+prices of paper; blotting-paper, wrapping
+paper, etc. The articles <span class="sc"><a href="/article/20-0799-s2/papyrus">Papyrus</a></span>
+(Vol. 20, p. 743) and <span class="sc"><a href="/article/20-0858-s5/parchment">Parchment</a></span> (Vol.
+20, p. 798), both by Maunde <a href="/contributors.html?q=Sir+Edward+Maunde+Thompson">Thompson</a>,
+deal with these earlier writing materials.
+<span class="sc"><a href="/article/20-0689-s1/palimpsest">Palimpsest</a></span> (Vol. 20, p. 633) describes
+the processes by which writings which
+have been scraped or washed from sheets
+of vellum, so that the material might be
+used again, can sometimes be chemically
+restored and deciphered.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Paper Manufacture</span>In taking up the study of paper manufacture,
+the first article to be read is
+<span class="sc"><a href="/article/10-0321-fibres/fibres">Fibres</a></span> by <a href="/contributors.html?q=C.+F.+Cross">C. F. Cross</a>, the well-known
+analytical and consulting
+chemist, and
+especially the section
+in it on <i>Paper-making</i>
+(Vol. 10, p. 312). This describes the
+treatment of cotton and flax for writing
+and drawing papers, wood pulp, esparto,
+cellulose and cereal straws for printing-paper,
+etc. See also the article <span class="sc"><a href="/article/05-0631-cellulose/cellulose">Cellulose</a></span>
+(Vol. 5, p. 606) by <a href="/contributors.html?q=C.+F.+Cross">C. F. Cross</a>.
+The section on <i>Manufacture</i> in the article
+<span class="sc"><a href="/article/20-0781-s4/paper">Paper</a></span>, already mentioned, should next
+be read. Here it is stated that rags,
+linen or cotton, were the principal materials
+used for paper in Europe until
+the middle of the 19th century; and then
+when prices rose, because the necessarily
+inelastic supply was no longer sufficient,
+esparto-grass, wood and straw began
+to be used as substitutes. The change
+from hand-making to machinery began
+in France in 1798 and was accomplished
+in England in 1803, with the result that
+hand-made paper is now used only where
+great durability is the chief requisite,
+as for bank-notes and drawing paper.</p>
+
+<p>Actual paper manufacture may be
+divided into two processes: the preliminary
+cleaning and reduction to pulp; and
+the methods of converting pulp to paper—including
+beating, sizing, colouring,
+making the sheet or web, surfacing,
+cutting, etc. Reduction to pulp is described
+in the treatment of esparto,
+straw and wood, and there are cuts
+showing rag-boiler, rag-breaking engine,
+esparto boiler, press-pâte or half-stuff
+machine, esparto bleaching and beating
+plant, and the Porion evaporator and
+the Yaryan multiple-effect evaporator
+for soda recovery.</p>
+
+<p>Paper-making proper, after the pulp
+has been prepared, is next described.
+The first process is beating; and besides
+the esparto bleaching and beating plant,
+described under bleaching, there are
+drawings of the Taylor and Jordan
+beaters and a description of them and of
+the Kingsland beater. Sizing, loading
+and colouring are then explained. The
+other main topics of the section on manufacture
+are: hand manufacture (with
+two illustrations), paper machine, with
+pictures of the paper machine, of the
+dandy roll, of super-calender and of
+reel paper cutters, and paragraphs on
+straining, forming the sheet, shake,
+water marking and couching, pressing
+and drying, surfacing, machine power,
+tub-sizing, glazing or surfacing for better
+grades, cutting, sheeting, sizes (with
+table), standards of quality, the paper
+trade, and a list of the best books on
+paper.</p>
+
+<p><span class="shoulder-heading" id="sh-4">India Paper</span>The article <span class="sc"><a href="/article/20-0781-s4/paper">Paper</a></span> closes with a brief
+history and description of India paper,
+which is of particular interest because
+of the adoption and
+successful use of this
+paper in the new
+Encyclopaedia Britannica. In this true
+India paper, “the material used is
+chiefly rag,” but “the extraordinary
+properties of this paper are due to the
+peculiar care necessary in the treatment
+of the fibres, which are specially beaten
+in the beating engine.” The first India
+paper was brought to England from
+the Far East in 1841 by an Oxford graduate,
+and the name India was used merely
+to express this Oriental origin, as in
+“Indian ink” or in the name “Indians”
+as applied to the American aborigines
+when their home was thought to be a
+part of the East. Just where the paper
+came from is not known. It was given
+to the Oxford University Press and was
+used in printing a very small English
+Bible in 1842. This book was only one-third
+the usual thickness, and attracted
+much attention by its lightness and by
+the opacity of the thin tough paper.</p>
+
+<p>In 1874 a copy of this Bible fell into the
+hands of Henry Frowde, and experiments were
+instituted at the Oxford University paper
+mills at Wolvercote with the object of producing
+similar paper. On the 24th of August
+1875 an impression of the Bible, similar in all
+respects to that of 1842, was placed on sale
+by the Oxford University Press. The feat of
+compression was regarded as astounding, the
+demand was enormous, and in a very short
+time 250,000 copies of this “Oxford India
+paper Bible” had been sold. Many other editions
+of the Bible, besides other books, were
+printed on the Oxford India paper, and the
+marvels of compression accomplished by its
+use created great interest at the Paris Exhibition
+of 1900. Its strength was as remarkable
+as its lightness; volumes of 1500 pages
+were suspended for several months by a single
+leaf, as thin as tissue; and, when they were
+examined at the close of the exhibition, it was
+found that the leaf had not started, the paper
+had not stretched, and the volume closed as
+well as ever. The paper, when subjected to
+severe rubbing, instead of breaking into holes
+like ordinary printing paper, assumed a texture
+resembling chamois leather, and a strip
+3 in. wide was found able to support a weight
+of 28 lb. without yielding. The success of
+the Oxford India paper led to similar experiments
+by other manufacturers, and there were,
+in 1910, nine mills (two each in England, Germany
+and Italy, one each in France, Holland
+and Belgium) in which India paper was being
+produced. India paper is mostly made upon
+a Fourdrinier machine in continuous lengths,
+in contradistinction to a hand-made paper,
+which cannot be made of a greater size than
+the frame employed in its production.</p>
+
+<p>In addition to technical information
+in regard to paper the student of the
+manufacture of books must know something
+about ink.</p>
+
+<p><span class="shoulder-heading" id="sh-5">Ink</span>The necessary information he will find
+in the article <span class="sc"><a href="/article/14-0602-s2/ink">Ink</a></span> (Vol. 14, p. 571) with
+special descriptions of writing inks,
+tannin inks, China or Indian
+ink, logwood ink, aniline ink,
+copying ink, red and blue ink,
+marking ink, gold and silver inks, indelible
+or incorrodible ink, sympathetic
+ink, and, of the most importance for our
+present purpose, printing inks.</p>
+
+<p>The process of putting ink on paper
+is a subject which in the Britannica
+takes much more ink and paper than the
+subject of ink or of paper.</p>
+
+<p><span class="shoulder-heading" id="sh-6">Printing</span>This topic is treated in two main
+articles: one dealing with type and the
+other with presses. The former, <span class="sc"><a href="/article/27-0528-typography/typography">Typography</a></span>
+(Vol. 27, p.
+509), is a good sized
+treatise in itself, being
+equivalent to more than 135 pages
+of this Guide. It is divided into two
+parts: <i>The History of Typography</i>, by
+<a href="/contributors.html?q=John+Henry+Hessels">John Henry Hessels</a>, author of <i>Gutenberg:
+an Historical Investigation</i>; and <i>Modern
+Practical Typography</i>, by <a href="/contributors.html?q=John+Southward">John Southward</a>,
+author of <i>A Dictionary of Typography
+and its Accessory Arts</i>, and Hugh
+Munro Ross, editor of <i>The</i> (London)
+<i>Times Engineering Supplement</i>.</p>
+
+<p>The former part of the article, and the
+longer, is a very important and elaborate
+contribution to the knowledge of early
+printing. On these first developments
+the student should read the same writer’s
+article <span class="sc"><a href="/article/12-0764-gutenberg/gutenberg__johann">Gutenberg</a></span> (Vol. 12, p. 739) and
+should notice the great difficulty surrounding
+the whole question of the
+“invention,” obscured by the fact that
+so many of the documents on Gutenberg
+exist only in copies, while others seem
+to be forgeries by two librarians of the
+city of Mainz who were eager to prove
+the claims of their fellow citizen Gutenberg
+to be the inventor of printing with
+movable metal types. See also Mr.
+Hessel’s article on <span class="sc"><a href="/article/11-0391-fust-johann/fust__johann">Johann Fust</a></span> (Vol. 11,
+p. 373). The honour of the invention of
+typography, <a href="/contributors.html?q=John+Henry+Hessels">Mr. Hessels</a> decides, belongs
+to Lorens Janszoon Coster of
+Haarlem and its date was somewhere
+between 1440 and 1446. In Mexico
+printing was established in 1544, in Manila
+in 1590, and in Cambridge, Massachusetts,
+in 1638 or 1639. The early
+printers had only a few types of each
+character in a fount, and they printed
+books, even small quartos, page by page.</p>
+
+<p>This whole treatment of the history
+of typography is too elaborate  to be
+summarized here, but it is interesting
+to note that the article gives information
+about the history of the earliest types—Gothic,
+Bastard Italian, Roman, Burgundian,
+etc., with fac-similes of 13
+different and characteristic faces between
+1445 and 1479; and of different styles
+and alphabets—Italic, Greek, Hebrew,
+Arabic, Syriac, Armenian, Ethiopic, Coptic,
+Samaritan, Slavonic, Russian, Etruscan,
+Runic, Gothic, Scandinavian, Anglo-Saxon,
+Irish, Music, Characters for the
+Blind, Initials, Ornaments and Flowers.</p>
+
+<p><span class="shoulder-heading" id="sh-7">Practical Typography</span>The second part of the article <span class="sc"><a href="/article/27-0528-typography/typography">Typography</a></span>,
+on <i>Modern Practical Typography</i>,
+will be of more value,
+probably, to most
+students of printing
+and book-making.
+It deals with the following topics:—</p>
+
+<p>Material characteristics of Type. Fount
+may consist of 275 “sorts” or characters.
+Numbers of sorts vary with different
+languages—and with different styles
+and writers; Dickens draws heavily on
+vowels, Macaulay on consonants. Bill of
+type or scheme—how computed.</p>
+
+<p>Logotypes or word character as distinct
+from letters.</p>
+
+<p>Parts of a type—face, stem, serif,
+beard, shoulder, shank, belly, back, counter,
+nick, kern, feet, burr and batter.</p>
+
+<p>Species of letter—short, ascending, descending,
+long, superior, inferior, fat-faced,
+lean-faced, bastard.</p>
+
+<p>Sizes: classification by names and by
+point-system.</p>
+
+<p>Varieties of face: Roman, sanserifs or
+grotesques; black; script; old style; Caslon;
+influence of William Morris and the
+Kelmscott Press; Vale Press.</p>
+
+<p>Manufacture of type: type metal;
+punch, drive and matrix (with illustrations);
+type-casting—by hand and machine;
+inventions of Bruce, Barth, Wicks,
+with description and picture of the Wicks
+rotary type-casting machine.</p>
+
+<p>Type-setting by hand. Type case, with
+illustration. Composition, justifying. Imposition.
+Signatures. Forme, quoin, side-stick,
+foot-stick, shooting-stick. Distributing.</p>
+
+<p>Type-setting by machine. Linotype
+and Monotype. Earlier machines—the
+Paige (in which Mark Twain lost a fortune).
+Distributing machines—Delcambre,
+Fraser, Empire, Dow, Thorne, Simplex
+(with cut). Linotype—with diagrams
+and description. Monotype (the
+machine used for the Encyclopaedia Britannica)
+with illustrations of perforated
+strip.</p>
+
+<p>Electrotyping and Stereotyping. Shells.
+Turtle, Flong. Wood’s Autoplate process.
+See also the articles <span class="sc"><a href="/article/09-0269-electrotyping/electrotyping">Electrotyping</a></span>
+(Vol. 9, p. 252) and <span class="sc"><a href="/article/09-0254-electroplating/electroplating">Electroplating</a></span>
+(Vol. 9, p. 237).</p>
+
+<p>The reader should next turn to the
+articles <span class="sc"><a href="/article/09-0677-s3/engraving">Engraving</a></span> (Vol. 9, p. 645),
+<span class="sc"><a href="/article/16-0743-s2/line_engraving">Line-Engraving</a></span> (Vol. 16, p. 721),
+<span class="sc"><a href="/article/28-0823-wood-engraving/wood_engraving">Wood-Engraving</a></span> (Vol. 28, p. 798)—special
+reference to America where this
+method is still used for some book and
+magazine illustration—to <span class="sc"><a href="/article/16-0807-lithography/lithography">Lithography</a></span>
+(Vol. 16, p. 785) including offset printing;
+and <span class="sc"><a href="/article/22-0422-process-printing/process__printing_">Process</a></span> (Vol. 22, p. 408), for further
+information in regard to “printing”
+apart from (and before) actual press
+work. The last-named of these articles
+is by <a href="/contributors.html?q=Edwin+Bale">Edwin Bale</a>, art director of Cassell
+&amp; Company, Ltd.; it would occupy about
+20 pages of this Guide; and it is illustrated
+by a plate showing the three-colour
+process. The article describes:</p>
+
+<p>(1)—relief processes, line blocks,
+swelled gelatin process, typographic
+etching, halftone processes,
+three colour blocks, colour
+filters;</p>
+
+<p>(2)—intaglio processes, monotype,
+electrotype, steel-facing, blanketing,
+changes in machinery;</p>
+
+<p>(3)—planographic processes, including
+woodburytype, stannotype,
+collotype or phototype, heliotype
+and photolithography. In relation
+to lithography there is further
+information in the biographical
+sketch of Senefelder, its
+inventor.</p>
+
+<p><span class="shoulder-heading" id="sh-8">Press-Work</span>The article <span class="sc"><a href="/article/22-0364-printing/printing">Printing</a></span> (Vol. 22, p. 350)
+deals entirely with the subject of press-work,
+thus using printing in the narrower
+and more correct
+sense of the word.
+In length this article
+is equivalent to 25 pages of this Guide;
+and it contains 9 illustrations of presses.
+The article is by <a href="/contributors.html?q=Charles+T.+Jacobi">C. T. Jacobi</a>, author of
+<i>Printing</i>, and <i>The Printer’s Handbook of
+Trade Recipes</i>. The article gives a
+history of the printing press, which was
+practically unchanged for a century and
+a half, until the Dutch map-maker
+Blaeu greatly simplified it. The first
+important metal press—earlier ones were
+of wood—was invented by Lord Stanhope
+nearly two hundred years later. It had
+greater power with smaller expenditure
+of labour, and its workings, as well as
+that of the Blaeu press, and of the Albion,
+which was used by William Morris at
+Kelmscott, may be readily understood
+from the illustrations in the article.
+Another hand press is the Columbian,
+invented in 1816 by a Philadelphian,
+George Clymer, and still in use for heavy
+hand work. Power presses began to be
+made at the end of the 18th century,
+but the presses invented by William
+Nicholson (1790) and Friedrich König
+(adopted by the London <i>Times</i> in 1814)
+printed only on one side at a time, as
+did the “double platen” machine of a little
+later date. The cylindrical eight feeder
+built by Augustus Applegath in 1848 for
+the London <i>Times</i> and the Hoe Type Revolving
+Machine are described in the
+section on the history of power presses,
+which closes with the story of Bullock’s
+machine (1865) for printing from a continuous
+web of paper.</p>
+
+<p><span class="shoulder-heading" id="sh-9">Modern Presses</span>The closing section of the article on
+printing is devoted to a description
+of modern presses.
+It opens with a list of the
+principal types of presses still
+in use, which are classified under the following
+seven heads:—</p>
+
+<p>(1)—iron hand-presses like the Albion
+or Columbian, for proof-pulling
+or limited editions;</p>
+
+<p>(2)—small platen machines for job or
+commercial work;</p>
+
+<p>(3)—single cylinder machines
+(“Wharfedales”) printing one
+side only;</p>
+
+<p>(4)—perfecting machines, usually two
+cylinder, printing both sides, but
+with two distinct operations;</p>
+
+<p>(5)—two-revolution machines with one
+cylinder;</p>
+
+<p>(6)—two-colour machines, with one
+cylinder usually, but two printing
+surfaces and two sets of inking
+apparatus;</p>
+
+<p>(7)—rotary machines for printing
+from curved plates upon an endless
+web of paper—principally
+for newspapers or periodical
+work.</p>
+
+<p>These seven classes are next described
+in detail and the article illustrates them
+all. A cut of an Albion press is given in
+an early part of the article, and the
+other six presses shown in the cuts are:</p>
+
+<p>The Golding jobber platen machine</p>
+
+<p>Payne &amp; Sons’ Wharfedale stop-cylinder
+machine</p>
+
+<p>Dryden &amp; Foord’s perfecting machine</p>
+
+<p>The Miehle two-revolution cylinder
+machine</p>
+
+<p>Payne &amp; Sons’ two-colour single cylinder
+machine</p>
+
+<p>Hoe’s double-octuple rotary machine</p>
+
+<p>The article closes with a discussion
+of the following very practical topics:
+the preparation or “make ready” for
+printing; recent development in printing
+with cross references to the article
+<span class="sc"><a href="/article/22-0429-process-law/process__law_">Process</a></span>; and a paragraph on the management
+of a printing house.</p>
+
+<p><span class="shoulder-heading" id="sh-10">Proof-Reading</span>From this closing paragraph and the
+article on <span class="sc"><a href="/article/22-0364-printing/printing">Printing</a></span>, the student is referred
+to the article <span class="sc"><a href="/article/22-0453-proof-reading/proof-reading">Proof-Reading</a></span>
+(Vol. 22, p. 438)
+which is by <a href="/contributors.html?q=John+A.+Black">John A.
+Black</a>, head press
+reader of the 10th edition of the Encyclopaedia
+Britannica, and John Randall,
+sub-editor of the <i>Athenaeum</i> and of
+<i>Notes and Queries</i> and former secretary
+of the London Association of Correctors
+of the Press, so that this article, like all
+the other articles on the subject of book-making,
+is written by eminent practical
+authorities on the subject.</p>
+
+<p><span class="shoulder-heading" id="sh-11">Bookbinding</span>The same is true of the article <span class="sc"><a href="/article/04-0230-bookbinding/bookbinding">Bookbinding</a></span>
+(Vol. 4, p. 216), which naturally
+follows in a systematic course of
+study. This is by
+<a href="/contributors.html?q=Cyril+J.+H.+Davenport">Cyril J. H. Davenport</a>,
+assistant keeper
+of books in the British Museum and
+author of <i>History of the Book</i>, etc. This
+article is illustrated with 14 figures,
+including 8 in halftone, showing typical
+fine bindings. The other illustrations
+show machines and processes used in
+binding. Besides a historical sketch
+of book-binding the article treats of the
+following topics:</p>
+
+<p>Modern methods and modern binding
+designers; machine binding, machine
+sewing, rounding and backing, casing,
+wiring, and blocking. A case-making
+machine, a casing-in machine and a
+blocking machine are shown in the illustrations.</p>
+
+<p>A bookbinder or a student of the subject
+will find a great deal of very valuable
+information elsewhere in the book, particularly
+in the article <span class="sc"><a href="/article/16-0350-s6/leather">Leather</a></span> (Vol. 16,
+p. 330) by Dr. <a href="/contributors.html?q=James+Gordon+Parker">J. Gordon Parker</a>, principal
+of the Leathersellers Technical College,
+London, and author of <i>Leather for
+Libraries</i>, etc. The article occupies the
+equivalent of 55 pages of this Guide;
+and the possessor of the Britannica will
+be interested to know that the leather
+bindings used for its volumes were all
+made according to specifications drawn
+up by <a href="/contributors.html?q=James+Gordon+Parker">Dr. Parker</a>, the greatest authority
+in the world on tanning, curing and
+dyeing leather for book-bindings.</p>
+
+<p><span class="shoulder-heading" id="sh-12">Publishing and Book-Selling</span>The last stages in getting the author’s
+raw material “from him to the ultimate
+consumer” are those in which the publisher
+and bookseller
+play their part; and
+for a description of
+their functions the
+student should refer to the articles on
+publishing and book-selling in the Britannica.
+The article <span class="sc"><a href="/article/22-0644-publishing/publishing">Publishing</a></span> (Vol.
+22, p. 628) explains that publishing and
+book-selling were for a long time carried
+on together since “booksellers were
+the first publishers of printed books, as
+they had previously been the agents for
+the production and exchange of authentic
+manuscript copies.” The separation
+of publishing from book-selling is due to
+“the tendency of every composite business
+to break up, as it expands, into
+specialized departments.” As publishers
+became a separate class the work of their
+literary assistants also broke up into
+specialized departments—proof-reading
+and the reading of manuscripts submitted
+by authors—or the work of <i>printers’</i>
+readers and <i>publishers’</i> readers.</p>
+
+<p>The importance of the work of the
+publisher’s reader is dwelt upon in this
+article which sketches besides the growth
+of the Society of Authors in England and
+of the formation there of the Publishers’
+Association and the Booksellers’ Association.
+The article also outlines the
+methods of publishing in the United States
+and gives particular prominence to the
+effect on the British market of the introduction
+of American books and of
+American book-selling methods.</p>
+
+<p><span class="shoulder-heading" id="sh-13">Historical and Miscellaneous Articles</span>Among other articles of interest to the
+manufacturer of books are the following:
+<span class="sc"><a href="/article/04-0227-book/book">Book</a></span> (Vol. 4, p. 214)
+by <a href="/contributors.html?q=Alfred+William+Pollard">Alfred William
+Pollard</a>, assistant
+keeper of books in
+the British Museum,
+gives a general historical description of
+books and in particular calls attention
+to the great change in book-prices in the
+last thirty years. “About 1894 the number
+of medium-priced books was greatly
+increased in England by the substitution
+of single-volume novels at 6s. each
+(subject to discount) for the three-volume
+editions at 31s. 6d.... The preposterous
+price of 10s. 6d. a volume had
+been adopted during the first popularity
+of the Waverley Novels and had continued
+in force for the greater part of the
+century.” To-day, well printed copies
+of these novels sell for 1s. in England
+and for 35 cents in the United
+States.</p>
+
+<p>It may be added that one of the most
+striking lessons to be learned from the
+Britannica, in relation to the improvements
+and economies effected by the
+application of the most modern processes
+to the manufacture of books, is supplied
+by the consideration of the Britannica
+itself. The extent of the composition
+and machinery involved, the accuracy
+of the proof-reading, the novel employment—upon
+a large scale—of India paper
+and flexible bindings, the beauty of
+the illustrations, and, above all, the low
+price at which the product is sold, form
+a combination of the very latest perfections
+of every department of the industry.</p>
+
+<p>Read too <span class="sc"><a href="/article/04-0235-book-collecting/book-collecting">Book-collecting</a></span> (Vol. 4,
+p. 221) also by <a href="/contributors.html?q=Alfred+William+Pollard">A. W. Pollard</a>; the article
+<span class="sc"><a href="/article/04-0244-book-plates/book-plates">Book Plates</a></span> (Vol. 4, p. 230) by <a href="/contributors.html?q=Egerton+Castle">Egerton
+Castle</a>, illustrated with ten cuts of book
+plates (which are so well chosen that
+book plate collectors have not infrequently
+asked the publishers of the Encyclopaedia
+Britannica for extra copies so
+that they might include them in their
+collections); the article <span class="sc"><a href="/article/04-0235-bookcase/bookcase">Bookcase</a></span> (Vol. 4,
+p. 221) from which the reader may be
+surprised to learn that “the whole construction
+and arrangement of bookcases
+was learnedly discussed in the light of
+experience by W. E. Gladstone in the
+<i>Nineteenth Century</i> for March 1890;”
+and the article <span class="sc"><a href="/article/03-0931-bibliography-and-bibliology/bibliography_and_bibliology">Bibliography and BibliOLOGY</a></span>
+(Vol. 3, p. 908) by <a href="/contributors.html?q=Alfred+William+Pollard">A. W. Pollard</a>,
+supplemented by the article <span class="sc"><a href="/article/14-0388-incunabula/incunabula">Incunabula</a></span>
+(Vol. 14, p. 369).</p>
+
+<p>The following alphabetical list of
+articles and sections of articles, although
+it does not profess to be complete, will
+give the student some idea of the large
+number of topics connected with the
+general subject of the manufacture of
+books:</p>
+
+<ul class="index">
+  <li class="c018">Albion Press</li>
+  <li class="c018">Aniline Ink</li>
+  <li class="c018">Applegath, Augustus</li>
+  <li class="c018">Autoplate Process</li>
+  <li class="c018">Backing</li>
+  <li class="c018"><a href="/article/03-0464-barth-heinrich/barth__heinrich">Barth, Henry</a></li>
+  <li class="c018">Bastard Letter</li>
+  <li class="c018"><a href="/article/03-0548-batter/batter">Batter</a></li>
+  <li class="c018"><a href="/article/03-0931-bibliography-and-bibliology/bibliography_and_bibliology">Bibliography and Bibliology</a></li>
+  <li class="c018">Bill of Type</li>
+  <li class="c018">Binding</li>
+  <li class="c018"><a href="/contributors.html?q=John+A.+Black">Black</a> Type</li>
+  <li class="c018">Blaeu Press</li>
+  <li class="c018">Blanketing</li>
+  <li class="c018"><a href="/article/04-0062-bleaching/bleaching">Bleaching</a></li>
+  <li class="c018">Blocking</li>
+  <li class="c018">Blue Ink</li>
+  <li class="c018"><a href="/article/04-0166-boiling-to-death/boiling_to_death">Boiling</a></li>
+  <li class="c018"><a href="/article/04-0227-book/book">Book</a></li>
+  <li class="c018">Book-Binding</li>
+  <li class="c018"><a href="/article/04-0235-bookcase/bookcase">Bookcase</a></li>
+  <li class="c018"><a href="/article/04-0235-book-collecting/book-collecting">Book-collecting</a></li>
+  <li class="c018"><a href="/article/04-0244-book-plates/book-plates">Book-Plates</a></li>
+  <li class="c018"><a href="/article/04-0248-bookselling/bookselling">Bookselling</a></li>
+  <li class="c018"><a href="/article/04-0345-bourgeois/bourgeois">Bourgeois</a></li>
+  <li class="c018"><a href="/article/04-0493-breaking-bulk/breaking_bulk">Breaking</a></li>
+  <li class="c018">Brevier</li>
+  <li class="c018"><a href="/article/04-0698-s4/bruce">Bruce, David</a></li>
+  <li class="c018"><a href="/article/04-0885-s5/burr__aaron">Burr</a></li>
+  <li class="c018">Case-making Machine</li>
+  <li class="c018">Casing</li>
+  <li class="c018">Casing-in machine</li>
+  <li class="c018">Caslon Type</li>
+  <li class="c018">Casting</li>
+  <li class="c018"><a href="/article/05-0631-cellulose/cellulose">Cellulose</a></li>
+  <li class="c018">China Ink</li>
+  <li class="c018">Chinese Paper-makers</li>
+  <li class="c018">Chiswick Press</li>
+  <li class="c018">Clymer, George</li>
+  <li class="c018">Collotype</li>
+  <li class="c018">Colour Filters</li>
+  <li class="c018">Colour Process</li>
+  <li class="c018">Columbian Press</li>
+  <li class="c018"><a href="/article/06-0836-composition/composition">Composition</a></li>
+  <li class="c018">Copying Ink</li>
+  <li class="c018"><a href="/article/07-0239-coster-monger/coster-monger">Coster</a></li>
+  <li class="c018">Couching</li>
+  <li class="c018">Cutter</li>
+  <li class="c018">Dandy Roll</li>
+  <li class="c018">Delcambre Machine</li>
+  <li class="c018">Distributing</li>
+  <li class="c018">Distributing Machines</li>
+  <li class="c018">Dow Machine</li>
+  <li class="c018">Drive</li>
+  <li class="c018">Drying</li>
+  <li class="c018"><a href="/article/09-0254-electroplating/electroplating">Electroplating</a></li>
+  <li class="c018"><a href="/article/09-0269-electrotyping/electrotyping">Electrotyping</a></li>
+  <li class="c018">Empire Machine</li>
+  <li class="c018">English Type</li>
+  <li class="c018"><a href="/article/09-0677-s3/engraving">Engraving</a></li>
+  <li class="c018"><a href="/article/09-0805-esparto/esparto">Esparto</a></li>
+  <li class="c018">Evaporator</li>
+  <li class="c018"><a href="/article/10-0133-face/face">Face</a></li>
+  <li class="c018">Flong</li>
+  <li class="c018">Forme</li>
+  <li class="c018">Fount</li>
+  <li class="c018">Fraser Machine</li>
+  <li class="c018"><a href="/article/11-0391-fust-johann/fust__johann">Fust</a></li>
+  <li class="c018"><a href="/article/12-0133-s1/glazing">Glazing</a></li>
+  <li class="c018">Golding Machine</li>
+  <li class="c018">Gold Ink</li>
+  <li class="c018">Goodson</li>
+  <li class="c018"><a href="/article/12-0764-gutenberg/gutenberg__johann">Gutenberg</a></li>
+  <li class="c018">Half Stuff</li>
+  <li class="c018">Half-tone</li>
+  <li class="c018">Heliotype</li>
+  <li class="c018"><a href="/article/13-0575-s3/hoe__richard_march">Hoe, Robert</a></li>
+  <li class="c018"><a href="/article/14-0362-imposition/imposition">Imposition</a></li>
+  <li class="c018"><a href="/article/14-0388-incunabula/incunabula">Incunabula</a></li>
+  <li class="c018">Indelible Ink</li>
+  <li class="c018">Indian Ink</li>
+  <li class="c018">India Paper</li>
+  <li class="c018"><a href="/article/14-0602-s2/ink">Ink</a></li>
+  <li class="c018">Intaglio Process</li>
+  <li class="c018">Italic Type</li>
+  <li class="c018">Jordan Beaters</li>
+  <li class="c018">Justifying</li>
+  <li class="c018">Kelmscott Press</li>
+  <li class="c018"><a href="/article/15-0786-kern-jan-hendrik/kern__jan_hendrik">Kern</a></li>
+  <li class="c018">Kingsland Beater</li>
+  <li class="c018">König, Friedrich</li>
+  <li class="c018">Lanston Monotype</li>
+  <li class="c018"><a href="/article/16-0350-s6/leather">Leather</a></li>
+  <li class="c018">Line-Engraving</li>
+  <li class="c018">Linotype</li>
+  <li class="c018"><a href="/article/16-0807-lithography/lithography">Lithography</a></li>
+  <li class="c018">Logwood Ink</li>
+  <li class="c018">Machine Presses</li>
+  <li class="c018">Marking Ink</li>
+  <li class="c018">Matrices</li>
+  <li class="c018">Miehle Press</li>
+  <li class="c018"><a href="/article/18-0568-s2/minion">Minion</a></li>
+  <li class="c018">Monoline</li>
+  <li class="c018">Monotype</li>
+  <li class="c018"><a href="/article/18-0903-morris-william/morris__william">Morris, William</a></li>
+  <li class="c018"><a href="/article/19-0685-s2/nicholson__william">Nicholson, William</a></li>
+  <li class="c018">Nick</li>
+  <li class="c018"><a href="/article/19-0765-nonpareil/nonpareil">Nonpareil</a></li>
+  <li class="c018">Octuple Rotary Machine</li>
+  <li class="c018">Off-set Printing</li>
+  <li class="c018">Old-style Type</li>
+  <li class="c018">Paige Composing Machine</li>
+  <li class="c018"><a href="/article/20-0781-s4/paper">Paper</a></li>
+  <li class="c018"><a href="/article/20-0799-s2/papyrus">Papyrus</a></li>
+  <li class="c018"><a href="/article/20-0858-s5/parchment">Parchment</a></li>
+  <li class="c018"><a href="/article/21-0038-pearl/pearl">Pearl (type)</a></li>
+  <li class="c018">Perfecting Machine</li>
+  <li class="c018">Photolithography</li>
+  <li class="c018">Phototype</li>
+  <li class="c018"><a href="/article/21-0601-pica-bird/pica__bird_">Pica</a></li>
+  <li class="c018">Planographic Process</li>
+  <li class="c018"><a href="/article/21-0837-platen-hallermund-august-graf-von/platen-hallermund__august__graf_von">Platen</a></li>
+  <li class="c018">Point System</li>
+  <li class="c018">Porion Evaporator</li>
+  <li class="c018">Power Presses</li>
+  <li class="c018">Pressing</li>
+  <li class="c018">Press Plate</li>
+  <li class="c018">Press-work</li>
+  <li class="c018">Primer</li>
+  <li class="c018">Price of Paper</li>
+  <li class="c018"><a href="/article/22-0364-printing/printing">Printing</a></li>
+  <li class="c018">Printing Ink</li>
+  <li class="c018"><a href="/article/22-0429-process-law/process__law_">Process</a></li>
+  <li class="c018"><a href="/article/22-0453-proof-reading/proof-reading">Proof-reading</a></li>
+  <li class="c018"><a href="/article/22-0644-publishing/publishing">Publishing</a></li>
+  <li class="c018">Pulp</li>
+  <li class="c018"><a href="/article/22-0664-s2/punch">Punch</a></li>
+  <li class="c018">Quality, Standards of Paper</li>
+  <li class="c018">Rag</li>
+  <li class="c018">Red Ink</li>
+  <li class="c018">Reel Paper Cutter</li>
+  <li class="c018">Relief Process</li>
+  <li class="c018">Roman Type</li>
+  <li class="c018">Rotary Presses</li>
+  <li class="c018">Rounding</li>
+  <li class="c018"><a href="/article/23-0855-ruby/ruby">Ruby</a></li>
+  <li class="c018">Scheme of Type</li>
+  <li class="c018"><a href="/article/24-0668-s5/senefelder__alois">Senefelder</a></li>
+  <li class="c018">Serif</li>
+  <li class="c018"><a href="/article/24-0774-sewing-machines/sewing_machines">Sewing</a></li>
+  <li class="c018">Shake</li>
+  <li class="c018">Sheeting</li>
+  <li class="c018"><a href="/article/24-0861-s4/shell">Shells</a></li>
+  <li class="c018"><a href="/article/25-0093-signature/signature">Signature</a></li>
+  <li class="c018">Silver Ink</li>
+  <li class="c018">Simplex Machine</li>
+  <li class="c018">Sizes of Paper</li>
+  <li class="c018">Sizing</li>
+  <li class="c018">Soda Recovery</li>
+  <li class="c018">Stanhope Press</li>
+  <li class="c018">Stannotype</li>
+  <li class="c018">Steel-facing</li>
+  <li class="c018"><a href="/article/25-0899-stem/stem">Stem</a></li>
+  <li class="c018">Stereotyping</li>
+  <li class="c018">Straining</li>
+  <li class="c018">Super Calender</li>
+  <li class="c018">Surfacing</li>
+  <li class="c018">Swelled Gelatin Process</li>
+  <li class="c018">Sympathetic Ink</li>
+  <li class="c018">Tachytype</li>
+  <li class="c018">Tannin Ink</li>
+  <li class="c018">Thorne Machine</li>
+  <li class="c018">Three Colour Process</li>
+  <li class="c018">Tub-sizing</li>
+  <li class="c018">Turtle</li>
+  <li class="c018">Type-case</li>
+  <li class="c018">Typograph</li>
+  <li class="c018"><a href="/article/27-0528-typography/typography">Typography</a></li>
+  <li class="c018">Vale Press</li>
+  <li class="c018">Water mark</li>
+  <li class="c018">Wharfedale Presses</li>
+  <li class="c018">Wicks, Frederick</li>
+  <li class="c018">Wiring</li>
+  <li class="c018">Woodbury Process</li>
+  <li class="c018"><a href="/article/28-0823-wood-engraving/wood_engraving">Wood Engraving</a></li>
+  <li class="c018">Wood’s Autoplate</li>
+  <li class="c018">Writing Ink</li>
+  <li class="c018">Yaryan Evaporator</li>
+</ul>
+
+<div>
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

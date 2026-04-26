@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Merchants And Manufacturers Of Textiles &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter V</span>For Merchants And Manufacturers Of Textiles</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Practical Men Among the Contributors</a></li><li><a href="#sh-2">Textile Fibres and their Treatment</a></li><li><a href="#sh-3">Cotton and Cotton Fabrics</a></li><li><a href="#sh-4">Wool, Linen and Silk</a></li><li><a href="#sh-5">Textile Merchandise</a></li><li><a href="#sh-6">The Seventy Articles on Special Fabrics</a></li><li><a href="#sh-7">Inventors of Textile Machinery and Great Textile Merchants</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">Practical Men Among the Contributors</span>The Course of Reading outlined
+in this chapter will help anyone
+who has to do with the making
+or with the buying and selling of
+textiles, in three ways, at least, each
+of the greatest importance to him—and
+possibly in many more. Taking up
+these three:—In the first place, it will
+teach him many facts about manufacturing
+and merchandizing in general,
+and about dry goods in particular,
+that he could learn nowhere else,
+because the scope of the Britannica
+is broader than that of any other
+book—or, for that matter, than the
+scope of any collegiate course can
+well be. In the second place, the
+number of distinguished men who
+have devoted their exclusive attention
+to the subjects upon which they write,
+and have given to the Britannica the
+results of their research
+and of their
+experience as practical
+experts—in many
+cases, indeed, as successful
+business men—is far greater than
+the number of men who form the faculty
+of any university in the world. The
+fifteen hundred contributors in fact include
+no less than 704 connected with the
+staffs of 151 different universities, technological
+and commercial institutes and
+colleges in twenty countries. The reader
+thus gets the benefit of contact with
+the thought of many, of varied, and always
+of authoritative, personalities. In
+the third place, the <i>textile trade is
+peculiarly an international trade</i>, the
+raw materials often traveling from one
+end of the world to the other before
+manufacture, and making as long a
+journey in the finished form, before they
+reach the consumer, and the international
+character of the Britannica
+gives equal weight to the articles which
+deal with the textiles and with the
+markets of all countries—a statement
+which it would certainly not be safe to
+make about any other book.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Textile Fibres and their Treatment</span>The article <span class="sc"><a href="/article/10-0319-s2/fezzan">Fibers</a></span> (Vol. 10, p. 309), by
+<a href="/contributors.html?q=C.+F.+Cross">C. F. Cross</a>, whose name has been much
+before the public in connection with the
+recent scientific investigation
+of the
+subject, compares
+the fibres yielded by
+all the vegetable
+and animal substances
+used in textiles. The 18
+microscopic photographs on the full
+page plates (facing pp. 310 and
+311) and the table of vegetable
+fibres (p. 311) should be carefully
+studied. <span class="sc"><a href="/article/05-0631-cellulose/cellulose">Cellulose</a></span> (Vol. 5, p. 606)
+deals with the “body” of cotton,
+flax, hemp and jute fibres. <span class="sc"><a href="/article/05-0337-carding/carding">Carding</a></span>
+(Vol. 5, p. 324) deals with the brushing
+and combing of fibres. <span class="sc"><a href="/article/25-0707-s4/spinning">Spinning</a></span> (Vol.
+25, p. 685) covers both cotton and
+linen, and it is curious to note from
+this article that in preparing yarns for
+the exquisite Dacca muslins one pound
+of cotton has been spun into a thread
+252 miles long; while the article <span class="sc"><a href="/article/07-0747-dacca/dacca">Dacca</a></span>
+says that a piece 15 feet by 3 was once
+woven that weighed only 900 grains.
+<span class="sc"><a href="/article/28-0933-s2/yarn">Yarn</a></span> (Vol. 28, p. 906) deals with cotton,
+woollen and silk yarns. <span class="sc"><a href="/article/28-0458-s2/weaving">Weaving</a></span> (Vol.
+28, p. 440), by Prof. <a href="/contributors.html?q=Thomas+William+Fox">T. W. Fox</a>, author
+of <i>Mechanics of Weaving</i>, and Alan
+<a href="/contributors.html?q=Alan+Summerly+Cole">Cole</a>, is the first article you should read
+in a group dealing with processes applied
+to more than one material. The first
+section is on the various combinations of
+warp and weft, and contains 23 illustrations
+showing the chief weaving
+“schemes.” A section on weaving machinery
+follows, and then one on weaving
+as an art, illustrated with a number of
+reproductions of famous specimens of
+hand-loom work. The whole article is
+full of practical every-day information
+of the kind the merchant and manufacturer
+wants to know. <span class="sc"><a href="/article/04-0062-bleaching/bleaching">Bleaching</a></span>
+(Vol. 4, p. 49) describes the chemical processes
+which have expedited the bleaching
+of cotton, wool, linen and silk, which
+it used to take all summer to complete.
+<span class="sc"><a href="/article/08-0771-dyeing/dyeing">Dyeing</a></span> (Vol. 8, p. 744), by <a href="/contributors.html?q=J.+J.+Hummel">Prof.
+Hummel</a>, author of <i>The Dyeing of
+Textile Fabrics</i>, and <a href="/contributors.html?q=Edmund+Knecht">Prof. Knecht</a>,
+author of <i>A Manual of Dyeing</i>, is
+another of the thorough articles which
+entitle the Britannica to rank as a great
+original work on textiles. Every dye is
+separately treated, and the latest models
+of dyeing machinery are carefully described.
+<span class="sc"><a href="/article/10-0392-finishing/finishing">Finishing</a></span> (Vol. 10, p. 378)
+deals with the processes used for cotton,
+woollens, worsteds, pile fabrics, silks and
+yarns. <span class="sc"><a href="/article/26-0728-textile-printing/textile-printing">Textile-Printing</a></span> (Vol. 26, p.
+694) is by <a href="/contributors.html?q=Edmund+Knecht">Prof. Knecht</a> and <a href="/contributors.html?q=Alan+Summerly+Cole">Alan Cole</a>,
+author of <i>Ornament in European Silks</i>,
+and not only describes all the styles of
+printing, but gives sixty recipes for
+various shades of colour. The full page
+plates reproduce fine specimens of early
+printing. The art of textile-printing “is
+very ancient, probably originating in the
+East. It has been practised in China
+and India from time immemorial, and the
+Chinese, at least, are known to have
+made use of engraved wood-blocks many
+centuries before any kind of printing was
+known in Europe.”</p>
+
+<p><span class="shoulder-heading" id="sh-3">Cotton and Cotton Fabrics</span>The elaborate article <span class="sc"><a href="/article/07-0272-cotton/cotton">Cotton</a></span> (Vol.
+7, p. 256) begins by discussing the peculiar
+twist of the hairs on the cotton
+seed which by facilitating
+spinning gives
+cotton its predominant
+position as a
+textile material. The section on cultivation,
+by <a href="/contributors.html?q=William+George+Freeman">W. G. Freeman</a>, deals with
+the soils, bedding, planting, hoeing and
+picking, then with ginning and baling.
+A section on diseases and pests of the
+cotton plant follows, then a discussion
+of the improvement of yield by seed
+selection. The section on marketing and
+supply is by Prof. Chapman, and his
+practical study of “futures,” “options,”
+and “straddles” shows how greatly the
+movement of prices is affected by speculation
+and often by artificial manipulation.</p>
+
+<p><span class="sc"><a href="/article/07-0274-cotton/cotton">Cotton Manufacturing</a></span> (Vol. 7, p.
+281) describes the industry in England,
+that of the United States, with a special
+section on the recent developments in
+the two Carolinas, Georgia and Alabama,
+and also the mills in Germany, France,
+Russia, Switzerland, Italy and in other
+countries, including India, China and
+Japan. It is interesting to note (p. 293)
+that “Americans were making vast
+strides in industrial efficiency even before
+the period when American theories
+and American enterprise were monopolizing
+in a wonderful degree the attention
+of the business world” abroad. As far
+back as 1875 progress in the United
+States was so rapid that the production
+for each operative had increased during
+the ten years 1865–75, by 100% in Massachusetts
+as against only 23% in England.
+One explanation of American success is
+that the American employer “tries to
+save in labour but not in wages, if a
+generalization may be ventured. The
+good workman gets high pay, but he is
+kept at tasks requiring his powers and
+is not suffered to waste his time doing
+the work of unskilled or boy labour.”</p>
+
+<p><span class="sc"><a href="/article/07-0321-cotton-spinning-machinery/cotton-spinning_machinery">Cotton Spinning Machinery</a></span> (Vol.
+7, p. 301) describes all the machines in
+great detail and contains a number of
+full-page plates and other illustrations.
+<span class="sc"><a href="/article/18-0169-s4/mercerizing">Mercerizing</a></span> (Vol. 18, p. 150) is another
+important article.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Wool, Linen and Silk</span><span class="sc"><a href="/article/28-0830-wool-worsted-and-woollen-manufactures/wool__worsted_and_woollen_manufactures">Wool, Worsted and Woollen Manufactures</a></span>
+(Vol. 28, p. 805) is by Prof.
+<a href="/contributors.html?q=Aldred+Farrer+Barker">Aldred F. Barker</a>. The development in
+wool production of
+various countries is
+first described and
+then the wool fibre
+is studied and microscopic photographs
+reproduced to show the structure of
+different varieties. A diagram of a
+fleece shows the qualities obtained from
+various parts of the animal, ranging from
+the shoulders, where the finest is found,
+to the hind quarters. Lamb, hogg and
+wether wools are compared and the
+article discusses shearing, classing, sorting,
+scouring, drying, teasing, burring,
+mule spinning, combing, drawing and
+spinning. The centres of the industry
+are then compared, with details as to the
+special products of each. The article
+contains illustrations of a number of
+machines. Articles dealing with certain
+sources of wool or of the wool-like hair
+used in textiles, and with the finished
+products, are: <span class="sc"><a href="/article/01-0764-s3/alpaca">Alpaca</a></span> (Vol. 1, p. 721),
+the history of its manufacture being “one
+of the romances of commerce;” <span class="sc"><a href="/article/18-0677-mohair/mohair">Mohair</a></span>
+(Vol. 18, p. 647), which deals with the
+hair of the Angora goat, familiar from
+discussions of the Underwood Tariff bill,
+and dealing with its weaving and the
+imitations of the cloth; <span class="sc"><a href="/article/16-0849-s4/llama">Llama</a></span> (Vol.
+16, p. 827); and the articles <span class="sc"><a href="/article/12-0674-s3/guanaco">Guanaco</a></span>
+(Vol. 12, p. 649) and <span class="sc"><a href="/article/28-0061-victor-perrin-claude/victor-perrin__claude">Vicugna</a></span> (Vol. 28,
+p. 47), on the two wild animals from
+whose hair high priced materials, extraordinarily
+warm and light, are woven.</p>
+
+<p><span class="sc"><a href="/article/10-0502-s8/flax">Flax</a></span> (Vol. 10, p. 484) describes the
+cultivation of the crops which are harvested
+by being “pulled,” roots and all,
+instead of being cut, the process of separating
+the capsules from the branches, and
+the subsequent stages of preparation.
+<span class="sc"><a href="/article/16-0746-s2/linen">Linen and Linen Manufactures</a></span> (Vol.
+16, p. 724), by <a href="/contributors.html?q=Thomas+Woodhouse">Thomas Woodhouse</a>, takes
+up the story where the flax fibre is ready
+for market and carries it to the point
+where the yarn is delivered for weaving.
+The winding, warping, dressing and
+beaming, and the looms employed, are
+virtually the same processes and machines
+that are used for cotton. The
+article states that the finest linen threads
+used for lace are produced by Belgian
+hand spinners who can only get the
+desired results by working in damp cellars,
+the spinner being guided by touch
+alone, as the filament is too fine for him
+to see. This thread is said to have been
+sold for as much as $72 an ounce.</p>
+
+<p><span class="sc"><a href="/article/15-0630-s2/jute">Jute</a></span> (Vol. 15, p. 603) deals with the
+vegetable fibre which ranks, in its industrial
+importance, next after cotton
+and flax and with the processes employed
+in its manufacture.</p>
+
+<p><span class="sc"><a href="/article/25-0112-s2/silk">Silk</a></span> (Vol. 25, p. 96) contains illustrations
+of cocoons and worms, microscopic
+photographs of fibre, and pictures
+of the moths which produce wild silk.
+The section on the fibre and its production
+and preparation is by <a href="/contributors.html?q=Frank+Warner">Frank
+Warner</a>, president of the Silk Association
+of Great Britain and Ireland; and
+that on the silk trade by <a href="/contributors.html?q=Arthur+Mellor">Arthur Mellor</a>,
+a well known manufacturer of Macclesfield,
+the great British center. The degree
+of fineness to which silk thread can
+be spun is stated (Vol. 28, p. 906) to
+be such that 450,000 yards of thread
+have been produced from one pound of
+silk, and this is slightly in excess of
+the fineness of the Dacca cotton thread
+already mentioned as producing 252
+miles for a pound. But at Cambrai the
+lace maker’s linen thread already described
+has been made as fine as 272
+miles to the pound, and the drawing of
+platinum wire to the fifty-thousandth
+part of an inch in thickness (Vol. 28, p.
+738) seems hardly more wonderful than
+this. Spider silk is as valuable as the
+best qualities of the silkworm product,
+but spiders are such fierce cannibals that
+it is necessary to keep each one in a
+separate cage, and the cost of doing
+this has prevented the fibre from being
+generally used (Vol. 25, p. 664). Artificial
+or “viscose” silk is described in
+the article <span class="sc"><a href="/article/05-0631-cellulose/cellulose">Cellulose</a></span> (Vol. 5, p. 609),
+and is a textile of which the importance
+is rapidly increasing.</p>
+
+<p>Felting is an even older textile process
+than weaving, just as weaving, which no
+doubt originated in basket making (Vol.
+3, p. 481) is older than spinning. The
+article <span class="sc"><a href="/article/10-0257-felt/felt">Felt</a></span> (Vol. 10, p. 245) deals with
+asphalted felts used for roofing as well
+as with the hat felts; and the article <span class="sc"><a href="/article/13-0073-s4/hat">Hat</a></span>
+(Vol. 13, p. 60) gives further details as to
+both woollen and fur felts and describes
+the machinery for hatmaking, which
+originated in the United States.</p>
+
+<p>Save that gold, silver and other metals
+are occasionally used in cloth or gauze,
+<span class="sc"><a href="/article/02-0758-s4/asbestos">Asbestos</a></span> (Vol. 2, p. 714) is the only
+mineral employed in textiles, and its
+value for jacketing steam pipes and
+boilers and for insulating fabrics and fireproofing
+gives it great importance.
+<span class="sc"><a href="/article/22-0892-ramie/ramie">Ramie</a></span> (Vol. 22, p. 875) is not so
+largely used in textiles, but experiments
+in the production of better fibre are
+being made.</p>
+
+<p><span class="sc"><a href="/article/24-1068-shoddy/shoddy">Shoddy</a></span> (Vol. 24, p. 992) is an article
+which shows how unfair it is to treat the
+re-manufacture of “devilled” fabric as
+an illegitimate if not absolutely fraudulent
+branch of the textile industry, for
+really serviceable cloths are woven from
+it, and masses of poor people who would
+otherwise be in rags are thus comfortably
+clad. “Mungo,” another re-manufactured
+cloth, is described (Vol. 28, p.
+906) in the article <span class="sc"><a href="/article/28-0933-s2/yarn">Yarn</a></span>. Pine-apple
+fibre is described (Vol. 10, p. 311) as of
+exceptional fineness and is used in yarn
+cloths of the best quality. The article
+<span class="sc"><a href="/article/21-0654-s2/pine-apple">Pine-apple</a></span> (Vol. 21, p. 625) describes
+its culture. <span class="sc"><a href="/article/25-0174-sisal-hemp/sisal_hemp">Sisal Hemp</a></span> (Vol. 25, p.
+158) is used in bagging as well as cordage,
+and the same is true of <span class="sc"><a href="/article/21-0493-phormium/phormium">Phormium</a></span>
+(Vol. 21, p. 471), sometimes called New
+Zealand flax. Paper pulp yields a yarn
+which is used in some cheap fabrics as
+described (Vol. 5, p. 609) in the article
+<span class="sc"><a href="/article/05-0631-cellulose/cellulose">Cellulose</a></span> already mentioned.</p>
+
+<p><span class="shoulder-heading" id="sh-5">Textile Merchandise</span>The many varieties of woven cloths
+are described in the articles already mentioned
+in the manufacture of cotton,
+linen, wool, and silk,
+and in articles on
+special fabrics. <span class="sc"><a href="/article/13-0807-hosiery/hosiery">Hosiery</a></span>
+(Vol. 13, p.
+788) covers the textiles that are produced
+by knitting or looping, and gives an
+account, with illustrations, of the machinery
+employed. <span class="sc"><a href="/article/19-0430-s3/net">Net</a></span> (Vol. 19, p.
+412) covers the textiles of which the
+mesh is knotted.</p>
+
+<p><span class="sc"><a href="/article/16-0051-lace/lace">Lace</a></span> (Vol. 16, p. 37), by <a href="/contributors.html?q=Alan+Summerly+Cole">Alan Cole</a>,
+contains some of the most beautiful full-page
+plates and other illustrations to be
+found in the Britannica, and is a very
+full treatise on the history and the present
+state of the lacemaking art.</p>
+
+<p><span class="sc"><a href="/article/10-0498-s3/flannel">Flannel</a></span> (Vol. 10, p. 480) describes
+the true flannels made from wool, and
+<span class="sc"><a href="/article/10-0499-s2/flannelette">Flannelette</a></span> (Vol. 10, p. 481) the cotton
+imitations and the new fire-resisting
+fabrics of this class. <span class="sc"><a href="/article/08-0605-drill/drill">Drill</a></span> (Vol. 8, p.
+580) covers both the cotton and linen
+tissues sold under this name. <span class="sc"><a href="/article/07-0398-crantor/crantor">Crepe</a></span>
+(Vol. 7, p. 379) mentions the curious
+fact that the Chinese and Japanese
+makers of soft crepe guard their secret
+processes, which are still unknown to
+western manufacturers, so carefully that
+the different stages of their production
+are carried on in towns far distant from
+one another.</p>
+
+<p><span class="sc"><a href="/article/05-0405-carpet/carpet">Carpet</a></span> (Vol. 5, p. 392) contains full-page
+plates of rare specimens and describes
+pile carpets, flat-surfaced carpets
+and the printed carpetings.</p>
+
+<p><span class="sc"><a href="/article/26-0424-s3/tapestry">Tapestry</a></span> (Vol. 26, p. 403) deals with
+another luxurious branch of the textile
+industry, and is illustrated with photographs
+of the finest specimens and
+with pictures showing the methods of
+weaving. <span class="sc"><a href="/article/04-0643-s7/brocade">Brocade</a></span> (Vol. 4, p. 620)
+describes and illustrates this stately class
+of fabrics. <span class="sc"><a href="/article/09-0328-embroidery/embroidery">Embroidery</a></span> (Vol. 9, p. 309)
+with six full-page plates and <span class="sc"><a href="/article/24-0846-s3/shawl">Shawl</a></span> (Vol.
+24, p. 814) deal with other art textiles.</p>
+
+<p><span class="sc"><a href="/article/26-0464-s2/tartan">Tartan</a></span> (Vol. 26, p. 431) describes
+the colours and patterns of all Scottish
+clan tartans. <span class="sc"><a href="/article/07-0809-damask/damask">Damask</a></span> (Vol. 7, p. 785)
+discusses this fine class of fabrics, the
+weaving of which is the subject of a
+special section (Vol. 28, p. 454) of the
+article <span class="sc"><a href="/article/28-0458-s2/weaving">Weaving</a></span>. The enormous consumption
+of coarse bags for the packing
+of raw cotton and of sugar gives importance
+to the articles <span class="sc"><a href="/article/03-0217-s4/bagging">Bagging</a></span> (Vol.
+3, p. 200) and <span class="sc"><a href="/article/23-1020-s2/sacking_and_sack_manufacture">Sacking and Sack Manufacture</a></span>
+(Vol. 23, p. 975). <span class="sc"><a href="/article/05-0236-canvas/canvas">Canvas</a></span> (Vol.
+5, p. 223) discusses sail cloth and artists’
+canvas, and <span class="sc"><a href="/article/26-0459-tarpaulin/tarpaulin">Tarpaulin</a></span> (Vol. 26, p. 430)
+deals with waterproof covers.</p>
+
+<p><span class="shoulder-heading" id="sh-6">The Seventy Articles on Special Fabrics</span>It is unnecessary to describe one by
+one the seventy articles on other fabrics
+and tissues, ranging through the alphabet
+from Alpaca to
+Velveteen; but they
+are all included in
+the list at the end of
+this chapter, and all
+are fully described in the Britannica.
+<span class="sc"><a href="/article/07-0241-costume/costume">Costume</a></span> (Vol. 7, p. 224) is a long and
+important article, with a full page plate
+and many other illustrations. The section
+on dress in general is by <a href="/contributors.html?q=Thomas+Athol+Joyce">T. A.
+Joyce</a>, of the British Museum staff, that
+on ancient costumes by <a href="/contributors.html?q=Henry+Stuart+Jones">H. S. Jones</a>,
+director of the British School at Rome,
+and that on modern costume by <a href="/contributors.html?q=Oswald+Barron">Oswald
+Barron</a>, editor of <i>The Ancestor</i>. The
+account of underclothing is of especial
+interest, as most books on costume altogether
+neglect this branch of the subject.
+Another section of this article is on
+national and official costumes by <a href="/contributors.html?q=Walter+Alison+Phillips">W.
+Alison Phillips</a>, principal assistant editor
+of the Britannica. The study of
+ceremonial robes is carried into further
+detail by the article <span class="sc"><a href="/article/23-0424-s3/roberval__gilles_personne__or_personier__de">Robe</a></span> (Vol. 23, p.
+408), with its five richly colored plates,
+in one of which the judicial robes of the
+U. S. Supreme Court Justices are shown.
+Liturgical vestments are dealt with in
+<span class="sc"><a href="/article/27-1084-s5/vestments">Vestments</a></span> (Vol. 28, p. 27) and in a
+series of articles such as <span class="sc"><a href="/article/07-0798-dalmatic/dalmatic">Dalmatic</a></span> (Vol.
+7, p. 776) and <span class="sc"><a href="/article/01-0519-s1/alb">Alb</a></span> (Vol. 1, p. 497).</p>
+
+<p><span class="shoulder-heading" id="sh-7">Inventors of Textile Machinery and Great Textile Merchants</span>Among the biographies which are of
+interest in connection with textiles are
+those of <span class="sc"><a href="/article/02-0596-s4/arkwright__sir_richard">Arkwright, Richard</a></span> (Vol. 2,
+p. 556), the barber who invented the
+spinning frame; <span class="sc"><a href="/article/05-0452-cartwright-edmund/cartwright__edmund">Cartwright, Edmund</a></span>,
+(Vol. 5, p. 425), inventor of the power
+loom; <span class="sc"><a href="/article/07-0508-crompton-samuel/crompton__samuel">Crompton,
+Samuel</a></span> (Vol. 7, p.
+486), inventor of
+the spinning mule;
+<span class="sc"><a href="/article/23-0100-renaissance-the/renaissance__the">Salt, Titus</a></span> (Vol.
+23, p. 87), who
+created the alpaca industry; <span class="sc"><a href="/article/25-1070-strutt-jedediah/strutt__jedediah">Strutt,
+Jedediah</a></span> (Vol. 25, p. 1044), who did much
+to perfect the manufacture of cotton; and
+of <span class="sc"><a href="/article/28-0631-s2/whitney__eli">Whitney, Eli</a></span> (Vol. 28, p. 611), who
+went from Yale to Savannah to secure a
+position as school teacher and then, being
+disappointed, turned his attention to
+a device for separating the cotton fibre
+from the seeds and refuse, and invented
+the gin which has “profoundly influenced
+American industrial economic and
+social history.” Another name of a great
+American inventor who individually rendered
+great services to the textile industry
+is that of <span class="sc"><a href="/article/13-0860-s2/howe__elias">Howe, Elias</a></span> (Vol. 13, p.
+835), who invented the sewing machine.
+You will also be interested in the lives
+of successful merchants such as <span class="sc"><a href="/article/05-0236-canynges-william/canynges__william">Canynges,
+William</a></span> (Vol. 5, p. 223), the
+great 15th Century cloth manufacturer
+who became a clergyman after making
+a large fortune; <span class="sc"><a href="/article/17-0265-s2/macintosh__charles">Mackintosh, Charles</a></span>
+(Vol. 17, p. 250), who introduced lightweight
+waterproof garments; <span class="sc"><a href="/article/28-0318-wanamaker-john/wanamaker__john">Wanamaker,
+John</a></span> (Vol. 28, p. 302), who began
+life as an errand boy in a book store; <span class="sc"><a href="/article/10-0336-field-marshall/field__marshall">Field,
+Marshall</a></span> (Vol. 10, p. 322), who when
+Chicago was a comparatively unimportant
+city founded there what has become
+the finest dry goods store in the world;
+<span class="sc"><a href="/article/25-0935-s2/stewart">Stewart, A. T.</a></span> (Vol. 25, p. 912), who
+after studying for the ministry in Dublin,
+immigrated to New York and gradually
+built up the largest retail store in
+the city; <span class="sc"><a href="/article/21-0045-s3/pease__edward">Pease, Edward</a></span> (Vol. 21, p.
+31), founder of a famous Quaker family
+of textile manufacturers in England; and
+<span class="sc"><a href="/article/06-0434-claflin-horace-brigham/claflin__horace_brigham">Claflin, H. B.</a></span> (Vol. 6, p. 418), who came
+from Worcester, Mass., to New York
+where he for years controlled “the greatest
+mercantile business in the world.”
+If you turn to the Article <span class="sc"><a href="/article/28-0848-worcester-massachusetts/worcester__massachusetts_">Worcester</a></span>
+(Vol. 28, p. 823) you will note the
+associations of the locality with Elias
+Howe, Eli Whitney, Samuel Crompton,
+already mentioned, L. J. Knowles,
+another inventor who helped to perfect
+the power loom, and Erastus Bigelow,
+who invented the carpet-weaving machine
+(Vol. 6, p. 530) and was one of
+the incorporators of the Massachusetts
+Institute of Technology. Other lives of
+successful textile makers and dealers are
+those of <span class="sc"><a href="/article/23-0995-s4/rylands__john">Rylands, John</a></span> (Vol. 23, p.
+950), founder of the largest cotton mills
+in Lancashire; <span class="sc"><a href="/article/08-0156-dexter-timothy/dexter__timothy">Dexter, Timothy</a></span> (Vol.
+8, p. 141), the eccentric New England
+merchant of the 18th Century who beat
+his wife for not weeping heartily enough
+at the rehearsal of his funeral; <span class="sc"><a href="/article/13-0729-horrocks-john/horrocks__john">Horrocks,
+John</a></span> (Vol. 13, p. 712), the great
+English cotton manufacturer who was
+far ahead of his time and died of brain
+fever produced by overwork in 1804;
+<span class="sc"><a href="/article/28-0860-s1/worth__charles_frederick">Worth, C. F.</a></span> (Vol. 28, p. 834), the
+famous Paris dressmaker who began
+life as a London draper’s apprentice;
+<span class="sc"><a href="/article/28-0624-s6/whitehead__william">Whitely, William</a></span> (Vol. 28, p. 605),
+“the Universal Provider,” of London;
+and <span class="sc"><a href="/article/26-0477-s2/tata__jamsetji_nasarwanji">Tata, J. N.</a></span> (Vol. 26, p. 448), the
+great Parsee textile manufacturer.</p>
+
+<details class="article-list"><summary><span class="list-title">A LIST OF THE PRINCIPAL ARTICLES IN THE BRITANNICA OF SPECIAL INTEREST TO MERCHANTS AND MANUFACTURERS OF TEXTILE GOODS</span><span class="list-count"> (167 articles)</span></summary>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0519-s1/alb">Alb</a></li>
+  <li class="c018"><a href="/article/01-0764-s3/alpaca">Alpaca</a></li>
+  <li class="c018"><a href="/article/02-0240-s2/apprenticeship">Apprenticeship</a></li>
+  <li class="c018">Arkwright, Richard</li>
+  <li class="c018"><a href="/article/02-0705-s4/artel">Artel</a></li>
+  <li class="c018"><a href="/article/02-0758-s4/asbestos">Asbestos</a></li>
+  <li class="c018"><a href="/article/03-0217-s4/bagging">Bagging</a></li>
+  <li class="c018"><a href="/article/03-0242-s5/baize">Baize</a></li>
+  <li class="c018"><a href="/article/04-0062-bleaching/bleaching">Bleaching</a></li>
+  <li class="c018"><a href="/article/04-0203-bombazine/bombazine">Bombazine or Bombasine</a></li>
+  <li class="c018"><a href="/article/04-0239-book-keeping/book-keeping">Book-keeping</a></li>
+  <li class="c018"><a href="/article/04-0339-bounty/bounty">Bounty</a></li>
+  <li class="c018"><a href="/article/04-0643-s7/brocade">Brocade</a></li>
+  <li class="c018"><a href="/article/04-0756-s2/buckram">Buckram</a></li>
+  <li class="c018"><a href="/article/04-0825-s4/bunting">Bunting</a></li>
+  <li class="c018"><a href="/article/04-1031-s2/calender">Calender</a></li>
+  <li class="c018"><a href="/article/05-0017-calico/calico">Calico</a></li>
+  <li class="c018"><a href="/article/05-0101-cambric/cambric">Cambric</a></li>
+  <li class="c018"><a href="/article/05-0114-camel/camel">Camel</a></li>
+  <li class="c018"><a href="/article/05-0236-canvas/canvas">Canvas</a></li>
+  <li class="c018"><a href="/article/05-0236-canynges-william/canynges__william">Canynges, William</a></li>
+  <li class="c018"><a href="/article/05-0337-carding/carding">Carding</a></li>
+  <li class="c018"><a href="/article/05-0405-carpet/carpet">Carpet</a></li>
+  <li class="c018"><a href="/article/05-0452-cartwright-edmund/cartwright__edmund">Cartwright, Edmund</a></li>
+  <li class="c018"><a href="/article/05-0631-cellulose/cellulose">Cellulose</a></li>
+  <li class="c018"><a href="/article/05-0995-chasuble/chasuble">Chasuble</a></li>
+  <li class="c018"><a href="/article/06-0035-cheese-cloth/cheese_cloth">Cheese Cloth</a></li>
+  <li class="c018"><a href="/article/06-0093-chenille/chenille">Chenille</a></li>
+  <li class="c018"><a href="/article/06-0251-chintz/chintz">Chintz</a></li>
+  <li class="c018"><a href="/article/06-0434-claflin-horace-brigham/claflin__horace_brigham">Claflin, H. B.</a></li>
+  <li class="c018"><a href="/article/06-0575-cloth/cloth">Cloth</a></li>
+  <li class="c018"><a href="/article/06-0580-clouting/clouting">Clouting</a></li>
+  <li class="c018"><a href="/article/06-0656-codilla/codilla">Codilla</a></li>
+  <li class="c018"><a href="/article/06-0675-coir/coir">Coir</a></li>
+  <li class="c018"><a href="/article/06-0790-commerce/commerce">Commerce</a></li>
+  <li class="c018"><a href="/article/07-0160-corduroy/corduroy">Corduroy</a></li>
+  <li class="c018"><a href="/article/07-0241-costume/costume">Costume</a></li>
+  <li class="c018"><a href="/article/07-0272-cotton/cotton">Cotton</a></li>
+  <li class="c018"><a href="/article/07-0299-cotton-manufacture/cotton_manufacture">Cotton Manufacture</a></li>
+  <li class="c018">Cotton Spinning Machinery</li>
+  <li class="c018"><a href="/article/07-0399-crash/crash">Crash</a></li>
+  <li class="c018"><a href="/article/07-0403-cravat/cravat">Cravat</a></li>
+  <li class="c018">Crepe</li>
+  <li class="c018"><a href="/article/07-0453-cretonne/cretonne">Cretonne</a></li>
+  <li class="c018"><a href="/article/07-0508-crompton-samuel/crompton__samuel">Crompton, Samuel</a></li>
+  <li class="c018"><a href="/article/07-0798-dalmatic/dalmatic">Dalmatic</a></li>
+  <li class="c018"><a href="/article/07-0809-damask/damask">Damask</a></li>
+  <li class="c018"><a href="/article/08-0035-denim/denim">Denim</a></li>
+  <li class="c018"><a href="/article/08-0156-dexter-timothy/dexter__timothy">Dexter, Timothy</a></li>
+  <li class="c018"><a href="/article/08-0031-demurrage/demurrage">Demurrage</a></li>
+  <li class="c018"><a href="/article/08-0183-diaper/diaper">Diaper</a></li>
+  <li class="c018">Die</li>
+  <li class="c018"><a href="/article/08-0290-dimity/dimity">Dimity</a></li>
+  <li class="c018"><a href="/article/08-0480-dowlas/dowlas">Dowlas</a></li>
+  <li class="c018"><a href="/article/08-0605-drill/drill">Drill</a></li>
+  <li class="c018"><a href="/article/08-0657-duck/duck">Duck</a></li>
+  <li class="c018"><a href="/article/08-0771-dyeing/dyeing">Dyeing</a></li>
+  <li class="c018"><a href="/article/09-0328-embroidery/embroidery">Embroidery</a></li>
+  <li class="c018"><a href="/article/10-0257-felt/felt">Felt</a></li>
+  <li class="c018"><a href="/article/10-0321-fibres/fibres">Fibres</a></li>
+  <li class="c018"><a href="/article/10-0336-field-marshall/field__marshall">Field, Marshall</a></li>
+  <li class="c018"><a href="/article/10-0392-finishing/finishing">Finishing</a></li>
+  <li class="c018"><a href="/article/10-0498-s3/flannel">Flannel</a></li>
+  <li class="c018"><a href="/article/10-0499-s2/flannelette">Flannelette</a></li>
+  <li class="c018"><a href="/article/10-0502-s8/flax">Flax</a></li>
+  <li class="c018"><a href="/article/10-0544-flock/flock">Flock</a></li>
+  <li class="c018"><a href="/article/10-0547-floorcloth/floorcloth">Floorcloth</a></li>
+  <li class="c018"><a href="/article/11-0251-frock/frock">Frock</a></li>
+  <li class="c018"><a href="/article/11-0393-s2/fustian">Fustian</a></li>
+  <li class="c018">Gante</li>
+  <li class="c018"><a href="/article/11-0555-s4/gauze">Gauze</a></li>
+  <li class="c018"><a href="/article/12-0039-s6a/gimp">Gimp</a></li>
+  <li class="c018"><a href="/article/12-0041-s2/gingham">Gingham</a></li>
+  <li class="c018"><a href="/article/12-0060-s3/girdle">Girdle</a></li>
+  <li class="c018"><a href="/article/12-0129-s3/glass_cloth">Glass Cloth</a></li>
+  <li class="c018"><a href="/article/12-0674-s3/guanaco">Guanaco</a></li>
+  <li class="c018"><a href="/article/12-0748-s2/gunny">Gunny</a></li>
+  <li class="c018"><a href="/article/12-0811-s2/haberdasher">Haberdasher</a></li>
+  <li class="c018"><a href="/article/13-0073-s4/hat">Hat</a></li>
+  <li class="c018"><a href="/article/13-0429-s4/hessian">Hessian</a></li>
+  <li class="c018"><a href="/article/13-0603-holland/holland">Holland</a></li>
+  <li class="c018"><a href="/article/13-0672-s2/honeycomb">Honeycomb</a></li>
+  <li class="c018"><a href="/article/13-0729-horrocks-john/horrocks__john">Horrocks, John</a></li>
+  <li class="c018"><a href="/article/13-0807-hosiery/hosiery">Hosiery</a></li>
+  <li class="c018"><a href="/article/13-0805-s2/hose-pipe">Hose-pipe</a></li>
+  <li class="c018"><a href="/article/13-0860-s2/howe__elias">Howe, Elias,</a></li>
+  <li class="c018"><a href="/article/13-0873-huckaback/huckaback">Huckaback</a></li>
+  <li class="c018"><a href="/article/15-0630-s2/jute">Jute</a></li>
+  <li class="c018"><a href="/article/15-0903-s2/knitting">Knitting</a></li>
+  <li class="c018"><a href="/article/16-0051-lace/lace">Lace</a></li>
+  <li class="c018"><a href="/article/16-0320-s6/lawn">Lawn</a></li>
+  <li class="c018"><a href="/article/16-0746-s2/linen">Linen</a></li>
+  <li class="c018"><a href="/article/16-0849-s4/llama">Llama</a></li>
+  <li class="c018"><a href="/article/16-0998-s5/longcloth">Longcloth</a></li>
+  <li class="c018"><a href="/article/17-0597-manila-hemp/manila_hemp">Manila Hemp</a></li>
+  <li class="c018"><a href="/article/17-0265-s2/macintosh__charles">Macintosh, Charles</a></li>
+  <li class="c018"><a href="/article/17-0599-s2/maniple">Maniple</a></li>
+  <li class="c018"><a href="/article/17-0623-s6/mantle">Mantle</a></li>
+  <li class="c018"><a href="/article/17-0921-matting/matting">Matting</a></li>
+  <li class="c018"><a href="/article/18-0167-mercantile-system/mercantile_system">Mercantile System</a></li>
+  <li class="c018"><a href="/article/18-0169-s4/mercerizing">Mercerizing</a></li>
+  <li class="c018"><a href="/article/18-0170-s2/merchant">Merchant</a></li>
+  <li class="c018"><a href="/article/18-0677-mohair/mohair">Mohair</a></li>
+  <li class="c018"><a href="/article/18-0690-moleskin/moleskin">Moleskin</a></li>
+  <li class="c018"><a href="/article/18-0992-mull-island/mull__island_">Mull</a></li>
+  <li class="c018"><a href="/article/19-0108-muslin/muslin">Muslin</a></li>
+  <li class="c018"><a href="/article/19-0176-s8/nankeen">Nankeen</a></li>
+  <li class="c018"><a href="/article/19-0430-s3/net">Net</a></li>
+  <li class="c018"><a href="/article/20-0387-osnaburg/osnaburg">Osnaburg</a></li>
+  <li class="c018"><a href="/article/20-0481-s2/padding">Padding</a></li>
+  <li class="c018"><a href="/article/21-0045-s3/pease__edward">Pease, Edward</a></li>
+  <li class="c018"><a href="/article/21-0357-petticoat/petticoat">Petticoat</a></li>
+  <li class="c018"><a href="/article/21-0493-phormium/phormium">Phormium</a></li>
+  <li class="c018"><a href="/article/21-0654-s2/pine-apple">Pine-apple</a></li>
+  <li class="c018"><a href="/article/21-0734-s3/plaid">Plaid</a></li>
+  <li class="c018"><a href="/article/21-0890-plush/plush">Plush</a></li>
+  <li class="c018"><a href="/article/22-0104-s2/poplin">Poplin or Tabinet</a></li>
+  <li class="c018"><a href="/article/22-0364-print/print">Print</a></li>
+  <li class="c018"><a href="/article/22-0479-protection/protection">Protection</a></li>
+  <li class="c018"><a href="/article/22-0892-ramie/ramie">Ramie</a></li>
+  <li class="c018"><a href="/article/23-0122-rep/rep">Rep</a></li>
+  <li class="c018"><a href="/article/23-0300-ribbons/ribbons">Ribbons</a></li>
+  <li class="c018"><a href="/article/23-0366-s2/ring">Ring</a></li>
+  <li class="c018"><a href="/article/23-0425-s2/robes">Robes</a></li>
+  <li class="c018"><a href="/article/23-0995-s4/rylands__john">Rylands, John</a></li>
+  <li class="c018"><a href="/article/23-1020-s2/sacking_and_sack_manufacture">Sacking</a></li>
+  <li class="c018"><a href="/article/24-0101-salt/salt">Salt, Titus</a></li>
+  <li class="c018"><a href="/article/24-0113-salvage/salvage">Salvage</a></li>
+  <li class="c018"><a href="/article/24-0320-scarf/scarf">Scarf</a></li>
+  <li class="c018"><a href="/article/24-0503-s2/scrim">Scrim</a></li>
+  <li class="c018"><a href="/article/24-0846-s3/shawl">Shawl</a></li>
+  <li class="c018"><a href="/article/24-0856-sheet/sheet">Sheet</a></li>
+  <li class="c018"><a href="/article/24-1068-shoddy/shoddy">Shoddy</a></li>
+  <li class="c018"><a href="/article/25-0112-s2/silk">Silk</a></li>
+  <li class="c018"><a href="/article/25-0174-sisal-hemp/sisal_hemp">Sisal Hemp</a></li>
+  <li class="c018"><a href="/article/25-0257-s2/sleeve">Sleeve</a></li>
+  <li class="c018"><a href="/article/25-0707-s4/spinning">Spinning</a></li>
+  <li class="c018"><a href="/article/25-0936-s2/stewart__alexander_turney">Stewart, A. T.</a></li>
+  <li class="c018"><a href="/article/25-0961-stocking/stocking">Stocking</a></li>
+  <li class="c018"><a href="/article/25-0977-s6/stole">Stole</a></li>
+  <li class="c018"><a href="/article/25-1070-strutt-jedediah/strutt__jedediah">Strutt, Jedediah</a></li>
+  <li class="c018"><a href="/article/26-0447-s2/tare_and_tret">Tare and Tret</a></li>
+  <li class="c018"><a href="/article/26-0451-s3/tariff">Tariff</a></li>
+  <li class="c018"><a href="/article/26-0459-tarpaulin/tarpaulin">Tarpaulin</a></li>
+  <li class="c018"><a href="/article/26-0464-s2/tartan">Tartan</a></li>
+  <li class="c018"><a href="/article/26-0477-s2/tata__jamsetji_nasarwanji">Tata, J. N.</a></li>
+  <li class="c018"><a href="/article/26-0424-s3/tapestry">Tapestry</a></li>
+  <li class="c018"><a href="/article/26-0516-technical-education/technical_education">Technical Education</a></li>
+  <li class="c018"><a href="/article/26-0728-textile-printing/textile-printing">Textile-printing</a></li>
+  <li class="c018"><a href="/article/26-0975-s4/ticking">Ticking</a></li>
+  <li class="c018"><a href="/article/27-0124-s3/tow">Tow</a></li>
+  <li class="c018"><a href="/article/27-0124-s6/towel">Towel</a></li>
+  <li class="c018"><a href="/article/27-0328-s4/trousers">Trousers</a></li>
+  <li class="c018"><a href="/article/27-0384-tulle-town/tulle__town_">Tulle</a></li>
+  <li class="c018"><a href="/article/27-0511-twill/twill">Twill</a></li>
+  <li class="c018"><a href="/article/27-0997-veil/veil">Veil</a></li>
+  <li class="c018"><a href="/article/27-1007-s5/velvet">Velvet</a></li>
+  <li class="c018"><a href="/article/27-1008-s2/velveteen">Velveteen</a></li>
+  <li class="c018"><a href="/article/27-1084-s5/vestments">Vestments</a></li>
+  <li class="c018">Vicugna</li>
+  <li class="c018"><a href="/article/28-0318-wanamaker-john/wanamaker__john">Wanamaker, John</a></li>
+  <li class="c018"><a href="/article/28-0458-s2/weaving">Weaving</a></li>
+  <li class="c018"><a href="/article/28-0625-s4/whiteley__william">Whiteley, William</a></li>
+  <li class="c018"><a href="/article/28-0631-s2/whitney__eli">Whitney, Eli</a></li>
+  <li class="c018"><a href="/article/28-0830-wool-worsted-and-woollen-manufactures/wool__worsted_and_woollen_manufactures">Wool, Worsted and Woollen Manufactures</a></li>
+  <li class="c018"><a href="/article/28-0860-s1/worth__charles_frederick">Worth, C. F.</a></li>
+  <li class="c018"><a href="/article/28-0933-s2/yarn">Yarn</a></li>
+</ul></details>
+
+<div>
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

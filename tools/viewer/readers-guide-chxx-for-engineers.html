@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Engineers &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XX</span>For Engineers</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">What “Engineering” Includes</a></li><li><a href="#sh-2">Mathematical Articles</a></li><li><a href="#sh-3">Articles for Civil Engineers</a></li><li><a href="#sh-4">Railways and Transportation</a></li><li><a href="#sh-5">Structural Engineering</a></li><li><a href="#sh-6">For the Mechanical Engineer</a></li><li><a href="#sh-7">For the Electrical Engineer</a></li><li><a href="#sh-8">American Practice in Mining</a></li><li><a href="#sh-9">The Metallurgical Section</a></li><li><a href="#sh-10">Biographies of Engineers</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">What “Engineering” Includes</span>The history of a word will sometimes
+supply the key to the
+gradual development of an art.
+“Engineering” was originally used to
+describe a mere branch of military
+science, the construction of fortifications
+and the trenching and sapping
+needed for their capture. Then
+about a century and a half ago the use
+of the phrase “civil engineering” came
+into use to indicate the broadening of
+the engineer’s functions to civil pursuits,
+but even then it served for a long time
+chiefly to describe surveying, road-making
+and bridge building. To-day, the
+specialized knowledge of engineers of one
+kind or another directs or facilitates
+every branch of industry. Consider for
+a moment the handling of iron, which,
+as the Britannica article <span class="sc"><a href="/article/14-0834-s2/iron_and_steel">Iron and Steel</a></span>
+shows, has become the most indispensable
+of all substances save air and water,
+because we can find
+no substitute for it
+that possesses its
+strength, the hardness
+and the pliability
+we can give to it, and its magnetic
+properties, upon which all our
+electrical work depends. The mining
+engineer is concerned with the ore, the
+mechanical engineer with the machinery
+employed in its treatment; the transportation
+of the finished iron or steel
+depends upon the skill of the engineers
+who construct railroads and ships; the
+structural engineer shapes our buildings
+from the girders and erects them on the
+sites indicated by the surveying engineer;
+the sanitary engineer makes them
+wholesome, and the electrical engineer
+provides them with the many convenient
+appliances we need. Various primitive
+races have believed that the earth is
+supported upon the back of a tortoise,
+an elephant, or a fish; but when we
+begin to look into the origin of the surroundings
+we have made for ourselves,
+we cannot carry our examination very
+far before we find that almost everything
+we possess begins with a blueprint.</p>
+
+<p>It seems a paradox, and yet it is true,
+that the more a man’s profession tends
+to specialization, the more help he can
+get from the comprehensiveness of the
+Britannica. He finds it necessary to dig
+so deep that the shaft he sinks must
+perforce be of narrow diameter, limiting
+his daily vision to but a small circle of
+the broad sky above him. The engineer
+of each class has his own text books, but
+at any moment his work may bring him
+into temporary relation with allied subjects
+which they do not cover, and in
+connection with which he may need
+trustworthy information. There is certainly
+no other book which surveys so
+authoritatively and minutely as does the
+Britannica the whole field of applied science.
+The services rendered by the 73
+engineering experts—German, American,
+English, French and Italian—who
+collaborated in the production of the
+work are not to be measured only by the
+articles they wrote; for the advice and
+assistance many of them gave the editors
+in planning the book as a whole, ensured
+such treatment as an engineer
+would desire of many subjects indirectly
+connected with his work.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Mathematical Articles</span>The engineer will naturally turn first
+to the mathematical articles, which may
+be described as text-books of the most
+concise and useful
+nature, written by
+leading mathematicians
+of the age.
+<span class="sc"><a href="/article/01-0639-algebra/algebra">Algebra</a></span> (Vol. 1, p. 599) is by <a href="/contributors.html?q=William+Fleetwood+Sheppard">Dr. Sheppard</a>,
+and G. B. Mathews, formerly professor
+of mathematics, University College
+of North Wales; <span class="sc"><a href="/article/01-0660-algebraic-forms/algebraic_forms">Algebraic Forms</a></span>
+(Vol. 1, p. 620) by <a href="/contributors.html?q=Percy+Alexander+Macmahon">Major P. A. Macmahon</a>,
+formerly president of the London
+Mathematical Society; <span class="sc"><a href="/article/11-0695-geometry/geometry">Geometry</a></span> (Vol.
+11, p. 675), <i>Euclidean</i>, <i>Projective</i>, <i>Descriptive</i>,
+by <a href="/contributors.html?q=Olaus+Magnus+Friedrich+Henrici">Dr. Henrici</a>, professor of
+mathematics, Central Technical College
+of the City and Guilds of London Institute;
+<i>Analytical</i>, by <a href="/contributors.html?q=Edwin+Bailey+Elliott">E. B. Elliott</a>, Waynflete
+professor of pure mathematics,
+Oxford; <i>Line</i>, by B. A. W. Russell,
+author of <i>Foundations of Geometry</i>, etc.,
+and <a href="/contributors.html?q=Alfred+North+Whitehead">Dr. A. N. Whitehead</a> of Trinity College,
+Cambridge; <i>Axioms</i>, by <a href="/contributors.html?q=Alfred+North+Whitehead">Dr. Whitehead</a>;
+<span class="sc"><a href="/article/27-0286-s3/trigonometry">Trigonometry</a></span> (Vol. 27, p. 271)
+by Dr. E. W. Hobson of Cambridge
+University; <span class="sc"><a href="/article/26-0160-s3/surveying">Surveying</a></span> (Vol. 26, p. 142),
+<i>Geodetic Triangulation, Levelling, Topographical
+Surveys, and Geographical Surveying</i>,
+by Sir <a href="/contributors.html?q=Colonel+Sir+Thomas+Hungerford+Holdich">Thomas Holdich</a>, formerly
+superintendent of Frontier Surveys, India;
+<i>Nautical</i>, by <a href="/contributors.html?q=Arthur+Mostyn+Field">Vice-Admiral A. M.
+Field</a>, R.N., author of <i>Hydrographical
+Surveying</i>, etc.; <span class="sc"><a href="/article/11-0627-geodesy/geodesy">Geodesy</a></span> (Vol. 11, p.
+607) by Col. A. R. Clarke of the
+British ordinance survey, and Prof.
+F. R. Helmert of the University of
+Berlin; <span class="sc"><a href="/article/16-0890-s1/logarithm">Logarithm</a></span> (Vol. 16, p. 868) by
+Dr. <a href="/contributors.html?q=James+Whitbread+Lee+Glaisher">J. W. L. Glaisher</a>, editor of the <i>Quarterly
+Journal of Pure and Applied Mathematics</i>;
+<span class="sc"><a href="/article/17-0974-mechanics/mechanics">Mechanics</a></span> (Vol. 17, p. 955),
+<i>Statics</i>, <i>Kinetics</i>, by Dr. <a href="/contributors.html?q=Horace+Lamb">Horace Lamb</a>,
+professor of mathematics, University of
+Manchester; <i>Theory of Structures</i>, <i>Theory
+of Machines</i>, <i>Applied Dynamics</i>, by
+Dr. <a href="/contributors.html?q=William+John+Macquorn+Rankine">W. J. M. Rankine</a>, late professor of
+civil engineering, Glasgow University,
+and <a href="/contributors.html?q=William+Ernest+Dalby">W. E. Dalby</a>, professor of civil and
+mechanical engineering, City and Guilds
+of London Institute; <span class="sc"><a href="/article/08-0783-dynamics/dynamics">Dynamics</a></span> (Vol. 8,
+p. 756) by <a href="/contributors.html?q=Horace+Lamb">Professor Lamb</a>; <span class="sc"><a href="/article/08-0240-differences-calculus-of/differences__calculus_of">Differences,
+Calculus of</a></span> (Vol. 8, p. 223), by
+Dr. <a href="/contributors.html?q=William+Fleetwood+Sheppard">W. F. Sheppard</a>; <span class="sc"><a href="/article/14-0566-s2/infinitesimal_calculus">Infinitesimal
+Calculus</a></span> (Vol. 14, p. 535) by Dr. <a href="/contributors.html?q=Augustus+Edward+Hough+Love">A. E.
+H. Love</a>, secretary of the London Mathematical
+Society; <span class="sc"><a href="/article/27-0941-s2/variations__calculus_of">Variations, Calculus
+of</a></span> (Vol. 27, p. 915), by <a href="/contributors.html?q=Augustus+Edward+Hough+Love">Dr. Love</a>;
+<span class="sc"><a href="/article/22-0734-s4/quaternions">Quaternions</a></span> (Vol. 22, p. 718) by
+<a href="/contributors.html?q=Alexander+McAulay">Alexander McAulay</a>, professor of mathematics
+and physics, University of Tasmania;
+<span class="sc"><a href="/article/08-0161-diagram/diagram">Diagram</a></span> (Vol. 8, p. 146), by
+Dr. <a href="/contributors.html?q=James+Clerk+Maxwell">James Clerk Maxwell</a>, the noted
+physicist; <span class="sc"><a href="/article/18-0153-s4/mensuration">Mensuration</a></span> (Vol. 18, p.
+135) by <a href="/contributors.html?q=William+Fleetwood+Sheppard">Dr. Sheppard</a>; <span class="sc"><a href="/article/26-0346-s2/table__mathematical">Table, Mathematical</a></span>
+(Vol 26, p. 325), by Dr. <a href="/contributors.html?q=James+Whitbread+Lee+Glaisher">J.
+W. L. Glaisher</a>; <span class="sc"><a href="/article/27-0763-s2/units__physical">Units, Physical</a></span> (Vol.
+27, p. 738), by Dr. <a href="/contributors.html?q=John+Ambrose+Fleming">J. A Fleming</a>, professor
+of electrical engineering, University
+of London; <span class="sc"><a href="/article/27-0761-s2/units__dimensions_of">Units, Dimensions of</a></span> (Vol.
+27, p. 736), by Sir <a href="/contributors.html?q=Sir+Joseph+Larmor">Joseph Larmor</a>, secretary
+of the Royal Society, England; and
+<span class="sc"><a href="/article/04-0999-s2/calculating_machines">Calculating Machines</a></span> (Vol. 4, p. 972),
+with 24 illustrations, is by <a href="/contributors.html?q=Olaus+Magnus+Friedrich+Henrici">Professor
+Henrici</a>.</p>
+
+<p>These admirable treatises as well as
+the article <span class="sc"><a href="/article/08-0575-drawing/drawing">Drawing</a></span>, <i>Drawing-Office
+work</i> (Vol. 8, p. 556), by <a href="/contributors.html?q=Joseph+G.+Horner">Joseph G.
+Horner</a>, will be useful to all engineers,
+and in the special field of civil engineering
+the following partial list of articles
+will convey some idea of the scope
+of the material to which the professional
+man has immediate access.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Articles for Civil Engineers</span><span class="sc"><a href="/article/04-0553-s1/bridges">Bridges</a></span> (Vol. 4, p. 533), with 72 illustrations,
+diagrams, etc., is a thorough
+discussion of the subject by Dr. <a href="/contributors.html?q=William+Cawthorne+Unwin">William
+C. Unwin</a>, emeritus
+professor of engineering,
+Central
+Technical College,
+City and Guilds of London Institute,
+author of <i>Wrought Iron Bridges and
+Roofs</i>, etc. This article covers the whole
+theory of bridge design, and describes
+all the typical structures from the timber
+Pons Sublicius of ancient Rome, the
+bridge Horatius defended, to the Manhattan
+Bridge over the East River at
+New York. <span class="sc"><a href="/article/23-0405-s5/roads_and_streets">Roads and Streets</a></span> (Vol.
+23, p. 388); <span class="sc"><a href="/article/23-0391-s4/river_engineering">River Engineering</a></span> (Vol.
+23, p. 374), with 26 illustrations, by the
+late L. F. Vernon-Harcourt, professor
+of civil engineering, University College,
+London, and author of <i>Rivers and Canals</i>,
+etc.; <span class="sc"><a href="/article/15-0384-jetty/jetty">Jetty</a></span> (Vol. 15, p. 359), with 6
+illustrations, and <span class="sc"><a href="/article/21-0614-s3/pier">Pier</a></span> (Vol. 21, p. 588),
+illustrated, also by Prof. Vernon-Harcourt;
+<span class="sc"><a href="/article/08-0585-dredge/dredge">Dredge and Dredging</a></span>
+(Vol. 8, p. 562), with 13 illustrations, by
+<a href="/contributors.html?q=Sir+William+Wilson+Hunter">William Hunter</a>, consulting engineer for
+Waterworks to Crown agents for the
+Colonies.</p>
+
+<p><span class="sc"><a href="/article/14-0047-hydraulics/hydraulics">Hydraulics</a></span> (Vol. 14, p. 35), with 213
+illustrations, is by <a href="/contributors.html?q=William+Cawthorne+Unwin">Prof. W. C. Unwin</a>—an
+article in which the whole theory and
+practice of water-power, including discussions
+of water-motors and turbines,
+are brought fully up to date by the
+designer of the first water-motors at
+Niagara, the section dealing with hydraulic
+machines occupying 25 pages;
+<span class="sc"><a href="/article/14-0127-s1/hydromechanics">Hydromechanics</a></span> (Vol. 14, p. 115) by
+Sir <a href="/contributors.html?q=Sir+Alfred+George+Greenhill">Alfred George Greenhill</a>, formerly
+professor of mathematics in the Ordnance
+College, Woolwich; <span class="sc"><a href="/article/27-1036-s3/ventilation">Ventilation</a></span>
+(Vol. 27, p. 1008), illustrated, by <a href="/contributors.html?q=James+Bartlett">James
+Bartlett</a>; <span class="sc"><a href="/article/28-0404-water-supply/water_supply">Water Supply</a></span> (Vol. 28, p.
+387), with 20 illustrations, diagrams, and
+maps, by Dr. <a href="/contributors.html?q=George+Frederick+Deacon">G. F. Deacon</a>, formerly
+engineer-in-chief for the Liverpool
+Water Supply; <span class="sc"><a href="/article/02-0252-s2/aqueduct">Aqueduct</a></span>, <i>Modern Construction</i>
+(Vol. 2, p. 244), by <a href="/contributors.html?q=Ernest+Prescot+Hill">E. P. Hill</a>;
+<span class="sc"><a href="/article/24-0765-s4/sewerage">Sewerage</a></span> (Vol. 24, p. 735), with 29 illustrations,
+by <a href="/contributors.html?q=James+Bartlett">James Bartlett</a>; <span class="sc"><a href="/article/14-0874-irrigation/irrigation">Irrigation</a></span>
+(Vol 14, p. 841).</p>
+
+<p><span class="sc"><a href="/article/05-0181-canal/canal">Canal</a></span> (Vol. 5, p. 168), by Sir <a href="/contributors.html?q=Sir+Edward+Leader+Williams+%281828%E2%80%931910%29">E.
+Leader Williams</a>, chief engineer of Manchester
+Ship Canal during construction,
+is an interesting article. There are also
+separate articles on great engineering
+undertakings, such as <span class="sc"><a href="/article/20-0722-panama-canal/panama_canal">Panama Canal</a></span>
+(Vol. 20, p. 667); <span class="sc"><a href="/article/17-0567-manchester-ship-canal/manchester_ship_canal">Manchester Ship
+Canal</a></span> (Vol. 17, p. 550) by Sir <a href="/contributors.html?q=Sir+Edward+Leader+Williams+%281828%E2%80%931910%29">E. Leader
+Williams</a>; <span class="sc"><a href="/article/26-0038-suez-canal/suez_canal">Suez Canal</a></span> (Vol. 26, p. 22).
+It will surprise many readers to learn
+that the project of a ship canal across
+Central America was considered as early
+as 1550, when a book demonstrating its
+feasibility was published in Portugal.
+Only a year later the King of Spain was
+strongly urged, in a memorial presented
+by De Gomara, the Spanish historian,
+to undertake the work.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Railways and Transportation</span><span class="sc"><a href="/article/27-0416-tunnel/tunnel">Tunnel</a></span> (Vol. 27, p. 399), with many
+plans and illustrations, by <a href="/contributors.html?q=Howard+Adams+Carson">H. A. Carson</a>,
+in charge of designing and constructing
+the Boston Subway; <span class="sc"><a href="/article/08-0370-dock/dock">Dock</a></span> (Vol. 8, p.
+353), with illustrations and plans; <span class="sc"><a href="/article/04-0984-s4/caisson">Caisson</a></span>
+(Vol. 4, p. 957); <span class="sc"><a href="/article/04-0493-breakwater/breakwater">Breakwater</a></span> (Vol.
+4, p. 475), with 16 illustrations; <span class="sc"><a href="/article/12-0960-harbour/harbour">Harbour</a></span>
+(Vol. 12, p. 935), illustrated;
+<span class="sc"><a href="/article/22-0971-s6/reclamation_of_land">Reclamation of Land</a></span> (Vol. 22, p.
+954), with 13 illustrations. The last
+five articles are by Professor Vernon-Harcourt;
+<span class="sc"><a href="/article/16-0647-s2/lighthouse">Lighthouse</a></span> (Vol. 16, p. 627),
+with 59 illustrations, by <a href="/contributors.html?q=William+Tregarthen+Douglass">W. T. Douglass</a>,
+who erected the Eddystone and Bishop
+Rock Lighthouses, and Nicholas G. Gedye,
+chief engineer to the Tyne Improvement
+Commission; <span class="sc"><a href="/article/24-0984-s2/shipbuilding">Shipbuilding</a></span> (Vol.
+24, p. 922), with 125 illustrations—a complete
+treatise on the subject by Sir <a href="/contributors.html?q=Sir+Philip+Watts">Philip
+Watts</a>, director of naval construction
+for the British Navy; <span class="sc"><a href="/article/27-0133-s2/traction">Traction</a></span> (Vol.
+27, p. 119), illustrated,
+by Prof. <a href="/contributors.html?q=Louis+Duncan">Louis
+Duncan</a>, of the Massachusetts
+Institute
+of Technology; <span class="sc"><a href="/article/27-0174-s7/tramway">Tramway</a></span> (Vol. 27, p.
+159), illustrated, by <a href="/contributors.html?q=Emile+Garcke">Emile Garcke</a>, managing
+director of the British Electric
+Traction Co., Ltd.; <span class="sc"><a href="/article/22-0836-railways/railways">Railways</a></span> (Vol. 22,
+p. 819), a magnificent composite article,
+fully illustrated, in which the <i>Introduction</i>
+and the sections on <i>Construction and
+Rolling Stock</i> are by <a href="/contributors.html?q=Hugh+Munro+Ross">H. M. Ross</a>, editor
+of <i>The Times Engineering Supplement</i>;
+<i>General Statistics and Financial Organization</i>,
+by <a href="/contributors.html?q=Ray+Morris">Ray Morris</a>, formerly of the
+<i>Railway Age Gazette</i>, New York, and
+author of <i>Railroad Administration</i>; <i>Economics
+and Legislation</i>, by <a href="/contributors.html?q=Arthur+Twining+Hadley">Arthur T.
+Hadley</a>, president of Yale University;
+<i>American Railway Legislation</i>, by Prof.
+<a href="/contributors.html?q=Frank+Haigh+Dixon">Frank H. Dixon</a>, of Dartmouth College,
+author of <i>State Railroad Control</i>; <i>Accident
+Statistics</i>, by <a href="/contributors.html?q=Braman+Blanchard+Adams">B. B. Adams</a>, associate
+editor, <i>Railway Age Gazette</i>; <i>Intra
+Urban Railways</i>, by <a href="/contributors.html?q=William+Barclay+Parsons">W. B. Parsons</a>,
+formerly chief engineer, Rapid Transit
+Commission, New York, and <i>Light Railways</i>,
+by C. E. Webber of the Royal
+Engineers, and <a href="/contributors.html?q=Emile+Garcke">Emile Garcke</a>. No
+book on the subject has ever before
+contained so great a collection of expert
+knowledge as this article presents.</p>
+
+<p><span class="shoulder-heading" id="sh-5">Structural Engineering</span>In regard to construction, engineers
+will find most valuable for reference and
+study the elaborate treatises <span class="sc"><a href="/article/25-1033-s4/strength_of_materials">Strength
+of Materials</a></span> (Vol.
+25, p. 1007), with 42
+diagrams and illustrations,
+by Prof.
+<a href="/contributors.html?q=James+Alfred+Ewing">J. A. Ewing</a>, and <span class="sc"><a href="/article/09-0158-elasticity/elasticity">Elasticity</a></span> (Vol.
+9, p. 141), with 32 diagrams, by
+Prof. <a href="/contributors.html?q=Augustus+Edward+Hough+Love">A. E. H. Love</a>. Notable articles
+in this connection are <span class="sc"><a href="/article/14-0834-s2/iron_and_steel">Iron and
+Steel</a></span> (Vol. 14, p. 801), illustrated, by
+Dr. <a href="/contributors.html?q=John+Allen+Howe">H. M. Howe</a>, professor of metallurgy,
+Columbia University; and <span class="sc"><a href="/article/25-0883-s4/steel_construction">Steel
+Construction</a></span> (Vol. 25, p. 861), illustrated.
+It is interesting to note that
+early in the 19th century a tall shot-tower
+was built in New York city by
+erecting a braced cage of iron and filling
+in the panels with masonry. <span class="sc"><a href="/article/25-0982-stone/stone">Stone</a></span>
+(Vol. 25, p. 958); <span class="sc"><a href="/article/17-0859-s4/masonry">Masonry</a></span> (Vol. 17, p.
+841), with 18 illustrations; <span class="sc"><a href="/article/04-0541-brickwork/brickwork">Brickwork</a></span>
+(Vol. 4, p. 521), with 15 illustrations—these
+four articles by <a href="/contributors.html?q=James+Bartlett">James Bartlett</a>,
+lecturer on construction at King’s College,
+London; <span class="sc"><a href="/article/05-0678-cement/cement">Cement</a></span> (Vol. 5, p. 653),
+illustrated, by <a href="/contributors.html?q=Bertram+Blount">Bertram Blount</a>, hon.
+president, Cement Section of International
+Association for Testing Materials,
+Budapest; <span class="sc"><a href="/article/06-0859-concrete/concrete">Concrete</a></span> (Vol. 6, p. 835),
+with 16 illustrations, by F. E. Wentworth-Shields,
+dock engineer of the
+London and South-Western Railway;
+<span class="sc"><a href="/article/18-0907-mortar/mortar">Mortar</a></span> (Vol. 18, p. 875); <span class="sc"><a href="/article/10-0759-s5/foundations">Foundations</a></span>
+(Vol. 10, p. 733), with 13 illustrations;
+<span class="sc"><a href="/article/26-1018-timber/timber">Timber</a></span> (Vol. 26, p. 978); <span class="sc"><a href="/article/23-0731-s2/roofs">Roofs</a></span> (Vol.
+23, p. 697), with 23 illustrations; <span class="sc"><a href="/article/24-0294-s3/scaffold">Scaffold</a></span>
+(Vol. 24, p. 279) illustrated; <span class="sc"><a href="/article/24-1080-s3/shoring">Shoring</a></span>
+(Vol. 24, p. 1004), illustrated—the
+last six by <a href="/contributors.html?q=James+Bartlett">James Bartlett</a>.</p>
+
+<p><span class="shoulder-heading" id="sh-6">For the Mechanical Engineer</span>The Engineering Section of the new
+Britannica provides an equal wealth
+of authentic material for members of
+other branches of the
+profession. It is impossible
+to indicate
+the exact lines
+of demarcation between
+these branches, and many articles
+are of use to all engineers alike; but in
+the special field of mechanical engineering
+there are <span class="sc"><a href="/article/26-0848-s2/thermodynamics">Thermodynamics</a></span> (Vol. 26,
+p. 808) by Dr. <a href="/contributors.html?q=Hugh+Longbourne+Callendar">H. L. Callendar</a>, professor
+of physics, Royal College of Science,
+London; <span class="sc"><a href="/article/25-0840-s3/steam_engine">Steam Engine</a></span> (Vol. 25, p. 818)
+by <a href="/contributors.html?q=James+Alfred+Ewing">Prof. Ewing</a>, more than 30 pages long,
+with 68 illustrations. This article, with
+its up-to-date section on turbines, is one
+of the many in the engineering department
+of the Britannica which have been
+said by technical critics to merit separate
+publication as text-books. But
+such articles are all the more useful because
+they form part of one great library
+of universal knowledge. Other mechanical
+articles are <span class="sc"><a href="/article/01-0481-s8/air-engine">Air Engine</a></span> (Vol. 1,
+p. 443), illustrated, also by <a href="/contributors.html?q=James+Alfred+Ewing">Professor
+Ewing</a>; <span class="sc"><a href="/article/11-0513-s2/gas_engine">Gas Engine</a></span> (Vol. 11, p. 495),
+illustrated, by <a href="/contributors.html?q=Dugald+Clerk">Dugald Clerk</a>, inventor of
+the <a href="/contributors.html?q=Dugald+Clerk">Clerk</a> Cycle Gas Engine; <span class="sc"><a href="/article/20-0057-s6/oil_engine">Oil Engine</a></span>
+(Vol. 20, p. 35), illustrated, also by
+<a href="/contributors.html?q=Dugald+Clerk">Dugald Clerk</a>; <span class="sc"><a href="/article/04-0154-boiler/boiler">Boiler</a></span> (Vol. 4, p. 141),
+with 20 illustrations, by <a href="/contributors.html?q=James+Tayler+Milton">James T. Milton</a>,
+chief engineer surveyor to Lloyd’s
+Registry of Shipping, and Joseph G.
+<a href="/contributors.html?q=Joseph+G.+Horner">Horner</a>, author of <i>Plating and Boiler
+Making</i>; <span class="sc"><a href="/article/14-0601-s2/injector">Injector</a></span> (Vol. 14, p. 570);
+<span class="sc"><a href="/article/28-0399-s1/water_motors">Water Motors</a></span> (Vol. 28, p. 382), illustrated,
+by <a href="/contributors.html?q=Thomas+Hudson+Beare">T. H. Beare</a>, Regius professor
+of engineering in the University of Edinburgh;
+<span class="sc"><a href="/article/28-0730-windmill/windmill">Windmill</a></span> (Vol. 28, p. 710), illustrated,
+by <a href="/contributors.html?q=William+Cawthorne+Unwin">Professor Unwin</a>; <span class="sc"><a href="/article/11-0287-fuel/fuel">Fuel</a></span> (Vol.
+11, p. 274), illustrated, <i>Solid Fuels</i> by
+<a href="/contributors.html?q=Hilary+Bauermann">Hilary Bauermann</a>, of the Ordnance College,
+Woolwich; <i>Liquid Fuel</i>, by Sir
+<a href="/contributors.html?q=Sir+James+Fortescue-Flannery">James Fortescue-Flannery</a>, formerly president
+of the Institute of Marine Engineers;
+<i>Gaseous Fuel</i>, by Dr. <a href="/contributors.html?q=Georg+Lunge">Georg Lunge</a>,
+professor of technical chemistry at the
+Zurich Polytechnic; <span class="sc"><a href="/article/11-0499-gas/gas">Gas</a></span>, <i>Gas for Fuel
+and Power</i> (Gas producers) (Vol. 11, p.
+490), illustrated, also by <a href="/contributors.html?q=Georg+Lunge">Professor Lunge</a>.</p>
+
+<p><span class="sc"><a href="/article/22-0238-power-transmission/power_transmission">Power Transmission</a></span> (Vol. 22, p. 224),
+illustrated, <i>Mechanical</i>, by <a href="/contributors.html?q=William+Ernest+Dalby">Professor
+Dalby</a>; <i>Hydraulic</i>, by <a href="/contributors.html?q=Edward+B.+Ellington">Edward B. Ellington</a>,
+chief engineer of the General Hydraulic
+Power Co., Ltd.; <i>Pneumatic</i>, by
+<a href="/contributors.html?q=Arthur+de+Wint+Foote">A. de W. Foote</a>, superintendent of the
+North Star Mining Co., California; <span class="sc"><a href="/article/22-0656-s10/pulley">Pulley</a></span>
+(Vol. 22, p. 641), illustrated, by Dr.
+<a href="/contributors.html?q=Ernest+George+Coker">Ernest G. Coker</a>, professor of mechanical
+Engineering in the City and Guilds
+of London Technical College; <span class="sc"><a href="/article/22-0661-s3/pump">Pump</a></span>
+(Vol. 22, p. 645), illustrated; <span class="sc"><a href="/article/04-0428-brake/brake">Brake</a></span>
+(Vol. 4, p. 413), illustrated; <span class="sc"><a href="/article/27-0028-s3/tool">Tool</a></span> (Vol.
+27, p. 14), with 79 illustrations, by <a href="/contributors.html?q=Joseph+G.+Horner">Joseph
+G. Horner</a>; <span class="sc"><a href="/article/07-0388-cranes/cranes">Cranes</a></span> (Vol. 7, p. 368), with
+21 illustrations, by <a href="/contributors.html?q=Walter+Pitt">Walter Pitt</a>; <span class="sc"><a href="/article/09-0280-elevators/elevators">Elevators</a></span>
+(Vol. 9, p. 263), illustrated, by <a href="/contributors.html?q=George+Frederick+Zimmer">G. F.
+Zimmer</a>, author of <i>Mechanical Handling
+of Material</i>; <span class="sc"><a href="/article/17-0102-lubricants/lubricants">Lubricants</a></span> (Vol. 17, p. 89)
+by <a href="/contributors.html?q=Richard+Mountford+Deeley">R. M. Deeley</a>, joint author of <i>Lubrication
+and Lubricants</i>; <span class="sc"><a href="/article/21-0898-s4/pneumatic_despatch">Pneumatic Despatch</a></span>
+(Vol. 21, p. 865) by <a href="/contributors.html?q=Harry+Robert+Kempe">H. R. Kempe</a>,
+electrician to the General Post Office,
+London; <span class="sc"><a href="/article/12-0794-s2/gyroscope_and_gyrostat">Gyroscope and Gyrostat</a></span>
+(Vol. 12, p. 769), illustrated, by Sir <a href="/contributors.html?q=Sir+Alfred+George+Greenhill">Alfred
+Greenhill</a>; <span class="sc"><a href="/article/18-0946-s2/motor_vehicles">Motor Vehicles</a></span> (Vol.
+18, p. 914), with 37 illustrations—<i>Light</i>,
+by the Hon. C. S. Rolls, late managing
+director of the Rolls Royce Co., Ltd.;
+<i>Heavy Commercial Vehicles</i>, by <a href="/contributors.html?q=Edward+Shrapnell+Smith">Edward
+S. Smith</a>, editor of <i>The Commercial Motor</i>;
+<span class="sc"><a href="/article/22-0836-railways/railways">Railways</a></span>, <i>Locomotive Power</i> (Vol.
+22, p. 842) by Professor <a href="/contributors.html?q=William+Ernest+Dalby">W. E. Dalby</a>.</p>
+
+<p><span class="shoulder-heading" id="sh-7">For the Electrical Engineer</span>The key article describing the general
+principles of electrical engineering is
+<span class="sc"><a href="/article/09-0210-electricity-supply/electricity_supply">Electricity Supply</a></span> (Vol. 9, p. 192),
+illustrated, by
+<a href="/contributors.html?q=Emile+Garcke">Emile Garcke</a>, but
+at the immediate
+service of the electrical
+engineer
+there also stand <span class="sc"><a href="/article/08-0791-dynamo/dynamo">Dynamo</a></span> (Vol. 8, p.
+764), with 42 illustrations, by <a href="/contributors.html?q=Charles+Caesar+Hawkins">C. C.
+Hawkins</a>, author of <i>The Dynamo</i>; <span class="sc"><a href="/article/22-0238-power-transmission/power_transmission">Power
+Transmission</a></span>, <i>Electrical</i> (Vol. 22, p.
+233) by Dr. Louis Bell, chief engineer,
+Electric Power Transmission Dept., General
+Electric Co.; <span class="sc"><a href="/article/06-0879-conduction-electric/conduction__electric">Conduction, Electric</a></span>
+(Vol. 6, p. 855), <i>Conduction in Solids</i>
+by <a href="/contributors.html?q=John+Ambrose+Fleming">Professor Fleming</a>; <i>in Liquids</i>, by
+<a href="/contributors.html?q=William+Cecil+Dampier+Whetham">W. C. D. Whetham</a>; in Gases, by Sir <a href="/contributors.html?q=Sir+Joseph+John+Thomson">J.
+J. Thomson</a>, a Nobel prize-winner and
+professor of experimental physics at
+Cambridge; <span class="sc"><a href="/article/09-0234-electrolysis/electrolysis">Electrolysis</a></span> (Vol. 9, p.
+217) by <a href="/contributors.html?q=William+Cecil+Dampier+Whetham">W. C. D. Whetham</a>; <span class="sc"><a href="/article/09-0227-electrokinetics/electrokinetics">Electrokinetics</a></span>
+(Vol. 9, p. 210), illustrated;
+<span class="sc"><a href="/article/09-0257-electrostatics/electrostatics">Electrostatics</a></span> (Vol. 9, p. 240); <span class="sc"><a href="/article/09-0243-electromagnetism/electromagnetism">Electromagnetism</a></span>
+(Vol. 9, p. 226), illustrated;
+<span class="sc"><a href="/article/27-0763-s2/units__physical">Units, Physical</a></span>, <i>Electrical Units</i>
+(Vols. 27, p. 740); <span class="sc"><a href="/article/11-0446-s5/galvanometer">Galvanometer</a></span> (Vol.
+11, p. 428), illustrated; <span class="sc"><a href="/article/09-0251-electrometer/electrometer">Electrometer</a></span>
+(Vol. 9, p. 234), illustrated; <span class="sc"><a href="/article/01-0930-s3/amperemeter">Amperemeter</a></span>
+(Vol. 1, p. 879), illustrated; <span class="sc"><a href="/article/28-0222-voltmeter/voltmeter">Voltmeter</a></span>
+(Vol. 28, p. 206), illustrated; <span class="sc"><a href="/article/20-0056-s4/ohmmeter">Ohmmeter</a></span>
+(Vol. 20, p. 34), illustrated; <span class="sc"><a href="/article/28-0437-wattmeter/wattmeter">Wattmeter</a></span>
+(Vol. 28, p. 419)—all of these by
+<a href="/contributors.html?q=John+Ambrose+Fleming">Professor Fleming</a>; <span class="sc"><a href="/article/22-0219-potentiometer/potentiometer">Potentiometer</a></span> (Vol.
+22, p. 205); <span class="sc"><a href="/article/01-0157-s2/accumulator">Accumulator</a></span> (Vol. 1, p.
+126), with 24 illustrations and diagrams,
+by <a href="/contributors.html?q=Walter+Hibbert">Walter Hibbert</a>, of the London Polytechnic;
+<span class="sc"><a href="/article/27-0188-transformers/transformers">Transformers</a></span> (Vol. 27, p. 173),
+with 15 illustrations and diagrams, and
+<span class="sc"><a href="/article/28-0604-s2/wheatstone_s_bridge">Wheatstone’s Bridge</a></span> (Vol. 28, p. 584),
+illustrated, by <a href="/contributors.html?q=John+Ambrose+Fleming">Professor Fleming</a>;
+<span class="sc"><a href="/article/18-0942-motors-electric/motors__electric">Motors, Electric</a></span> (Vol. 18, p. 910), by
+Dr. Louis Bell; <span class="sc"><a href="/article/18-0312-s2/meter__electric">Meter, Electric</a></span>, (Vol.
+18, p. 291), by <a href="/contributors.html?q=John+Ambrose+Fleming">Professor Fleming</a>; <span class="sc"><a href="/article/16-0673-s2/lighting">Lighting</a></span>,
+<i>Electric</i> (Vol. 16, p. 659), with 16
+illustrations, by <a href="/contributors.html?q=John+Ambrose+Fleming">Professor Fleming</a>, and
+a chapter on its commercial aspects,
+methods of charging, wiring of houses,
+testing meters, etc., by <a href="/contributors.html?q=Emile+Garcke">Emile Garcke</a>;
+<span class="sc"><a href="/article/26-0539-telegraph/telegraph">Telegraph</a></span> (Vol. 26, p. 510), fully illustrated,
+<i>Land and Submarine Telegraphy</i>,
+by <a href="/contributors.html?q=Harry+Robert+Kempe">H. R. Kempe</a>; <i>Wireless Telegraphy</i>,
+by <a href="/contributors.html?q=John+Ambrose+Fleming">Professor Fleming</a>, and <i>Commercial
+Aspects</i>, by <a href="/contributors.html?q=Emile+Garcke">Emile Garcke</a>; <span class="sc"><a href="/article/26-0576-telephone/telephone">Telephone</a></span>
+(Vol. 26, p. 547), illustrated, by <a href="/contributors.html?q=Harry+Robert+Kempe">H. R.
+Kempe</a> and <a href="/contributors.html?q=Emile+Garcke">Emile Garcke</a>; <span class="sc"><a href="/article/27-0133-s2/traction">Traction</a></span>,
+<i>Electric</i> (Vol. 27, p. 120), illustrated, by
+<a href="/contributors.html?q=Louis+Duncan">Professor Duncan</a>. An admirable historical
+sketch of electricity will be found in
+<span class="sc"><a href="/article/09-0196-electricity/electricity">Electricity</a></span> (Vol. 9, p. 179), by <a href="/contributors.html?q=John+Ambrose+Fleming">Professor
+Fleming</a>, which contains also an account
+of the development of electric
+theory.</p>
+
+<p><span class="shoulder-heading" id="sh-8">American Practice in Mining</span>It is typical of the policy pursued in
+making the new Britannica that the Editor
+placed the mining section in the
+hands of American
+experts, since they
+are universally regarded
+as the best in
+the world. This entire
+section is a worthy monument to
+American learning and practice.</p>
+
+<p>The key-article <span class="sc"><a href="/article/18-0554-s3/mining">Mining</a></span> (Vol. 18, p.
+528), fully illustrated, is by Dr. <a href="/contributors.html?q=Henry+Smith+Munroe">Henry
+Smith Munroe</a>, professor of mining in
+Columbia University. This covers
+every branch of the subject, but further
+discussion of its special phases is continued
+in <span class="sc"><a href="/article/18-0528-mineral-deposits/mineral_deposits">Mineral Deposits</a></span> (Vol. 18,
+p. 504) by Dr. <a href="/contributors.html?q=James+Furman+Kemp">James F. Kemp</a>, professor
+of geology, Columbia University; <span class="sc"><a href="/article/22-0728-s4/quarrying">Quarrying</a></span>
+(Vol. 22, p. 712) by Dr. <a href="/contributors.html?q=Hon.+Frederick+James+Hamilton+Merrill">F. J. H.
+Merrill</a>, formerly state geologist of New
+York; <span class="sc"><a href="/article/20-0270-s6/ore-dressing">Ore-Dressing</a></span> (Vol. 20, p. 238),
+illustrated, by Dr. <a href="/contributors.html?q=Robert+Hallowell+Richards">R. H. Richards</a>, professor
+of mining and metallurgy, Massachusetts
+Institute of Technology; <span class="sc"><a href="/article/24-0796-s3/shaft-sinking">Shaft-Sinking</a></span>
+(Vol. 24, p. 766), illustrated;
+<span class="sc"><a href="/article/04-0266-s3/boring">Boring</a></span> (Vol. 4, p. 251), illustrated;
+<span class="sc"><a href="/article/04-0057-blasting/blasting">Blasting</a></span> (Vol. 4, p. 44), illustrated—the
+last three by <a href="/contributors.html?q=Robert+Peele">Robert Peele</a>, professor
+of mining in Columbia University.</p>
+
+<p><span class="shoulder-heading" id="sh-9">The Metallurgical Section</span><span class="sc"><a href="/article/18-0222-s2/metallurgy">Metallurgy</a></span> (Vol. 18, p. 203) describes
+in outline the general sequence
+of operations. <span class="sc"><a href="/article/02-0822-s3/assaying">Assaying</a></span> (Vol. 18, p.
+776) is by <a href="/contributors.html?q=Andrew+Alexander+Blair">Andrew
+A. Blair</a>, formerly
+chief chemist U. S.
+Geological Survey.
+See also <span class="sc"><a href="/article/18-0217-s3/metal">Metal</a></span>
+(Vol. 18, p. 198). <span class="sc"><a href="/article/18-0217-s3/metal">Metalography</a></span> (Vol.
+18, p. 202), illustrated, is an account of
+the new and important method of microscopical
+examination of alloys and metals
+by Sir <a href="/contributors.html?q=Sir+William+Chandler+Roberts-Austen">William Chandler Roberts-Austen</a>;
+and Francis H. Neville. <span class="sc"><a href="/article/01-0746-s5/alloys">Alloys</a></span>
+(Vol. 1, p. 704), with unique photomicrographs
+of alloys and metals, is also
+by the authors of the article <span class="sc"><a href="/article/18-0221-s2/metallography">Metallography</a></span>.
+<span class="sc"><a href="/article/02-0081-s3/annealing__hardening_and_tempering">Annealing, Hardening and
+Tempering</a></span> (Vol. 2, p. 70), illustrated, is
+by <a href="/contributors.html?q=Joseph+G.+Horner">Joseph G. Horner</a>, who also writes
+<span class="sc"><a href="/article/10-0684-s3/forging">Forging</a></span> (Vol. 10, p. 663), which has 19
+illustrations, <span class="sc"><a href="/article/10-0764-s2/founding">Founding</a></span> (Vol. 10, p. 743),
+with 11 illustrations, and <span class="sc"><a href="/article/23-0490-s3/rolling-mill">Rolling-Mill</a></span>
+(Vol. 23, p. 468), with 8 illustrations. The
+material on <span class="sc"><a href="/article/11-0287-fuel/fuel">Fuel</a></span> has already been mentioned.
+<span class="sc"><a href="/article/11-0371-s4/furnace">Furnace</a></span> (Vol. 11, p. 358) describes
+and illustrates all the latest designs.
+<span class="sc"><a href="/article/28-0518-s7/welding">Welding</a></span> (Vol. 28, p. 501) is by
+<a href="/contributors.html?q=Joseph+G.+Horner">J. G. Horner</a> and Elihu <a href="/contributors.html?q=Sir+Joseph+John+Thomson">Thomson</a>, who
+writes on his own invention, <i>Electric
+Welding</i>.</p>
+
+<p>The mining engineer or metallurgist
+will have in the new Britannica constantly
+at his elbow a complete series of
+articles dealing with the mining and
+metallurgy of all minerals and metals.
+<a href="/contributors.html?q=John+Allen+Howe">Professor Howe</a>’s exhaustive article <span class="sc"><a href="/article/14-0834-s2/iron_and_steel">Iron
+and Steel</a></span> has already been noted in
+another part of this chapter. A few of
+the other important articles are <span class="sc"><a href="/article/07-0119-copper/copper">Copper</a></span>
+(Vol. 7, p. 103); <span class="sc"><a href="/article/12-0209-gold/gold">Gold</a></span> (Vol. 12, p. 192);
+<span class="sc"><a href="/article/25-0128-s3/silver">Silver</a></span> (Vol. 25, p. 112); <span class="sc"><a href="/article/16-0334-s6/lead">Lead</a></span> (Vol. 16,
+p. 314); <span class="sc"><a href="/article/26-1035-tin/tin">Tin</a></span> (Vol. 26, p. 995); <span class="sc"><a href="/article/28-1008-zinc/zinc">Zinc</a></span>
+(Vol. 28, p. 981); <span class="sc"><a href="/article/17-0586-s3/manganese">Manganese</a></span> (Vol. 17,
+p. 569); <span class="sc"><a href="/article/01-0812-s5/alum">Aluminum</a></span> (Vol. 1, p. 767) by
+<a href="/contributors.html?q=Emanuel+Joseph+Ristori">E. J. Ristori</a>, member of Council, Institute
+of Metals. <span class="sc"><a href="/article/23-1043-safety-lamp/safety-lamp">Safety-Lamp</a></span>  (Vol. 23,
+p. 998) is written by <a href="/contributors.html?q=Hilary+Bauermann">Hilary Bauermann</a>.
+The latest mining statistics of all countries
+are to be found under their respective
+headings.</p>
+
+<p><span class="shoulder-heading" id="sh-10">Biographies of Engineers</span>Military men are familiar with the
+lives and deeds of great soldiers; lovers of
+art and literature know something of the
+careers of their favorites;
+but as a rule
+the engineer knows
+little or nothing
+about the lives of the great ornaments of
+his profession, the splendid heroes of
+peace who have done much more than
+the soldier and the artist to create the
+world of to-day. The reason for this is
+that engineering biographies are very
+scarce, and in this connection the new
+Britannica <i>fills a positive gap</i> in the engineer’s
+library. There are considerably
+more than 100 biographies of great engineers,
+living and dead, written in the
+most interesting fashion by authoritative
+contributors. Among these articles
+are <span class="sc"><a href="/article/28-0432-watt-james/watt__james">Watt, James</a></span> (Vol. 28, p. 414) by <a href="/contributors.html?q=James+Alfred+Ewing">Professor
+Ewing</a>; <span class="sc"><a href="/article/02-0596-s4/arkwright__sir_richard">Arkwright, Sir Richard</a></span>
+(Vol. 2, p. 556); <span class="sc"><a href="/article/25-0912-s3/stephenson__george">Stephenson, George</a></span>
+(Vol. 25, p. 888); <span class="sc"><a href="/article/03-0844-bessemer-sir-henry/bessemer__sir_henry">Bessemer, Sir Henry</a></span>
+(Vol. 3, p. 823); <span class="sc"><a href="/article/28-0636-whitworth-sir-joseph/whitworth__sir_joseph">Whitworth, Sir Joseph</a></span>
+(Vol. 28, p. 616); <span class="sc"><a href="/article/23-0118-rennie/rennie__john">Rennie, John</a></span>
+(Vol. 23, p. 101); <span class="sc"><a href="/article/16-0514-s6/lesseps__ferdinand_de">Lesseps, Ferdinand
+de</a></span> (Vol. 16, p. 494) by <a href="/contributors.html?q=Henri+G.+S.+A.+de+Blowitz">Henri G. S. A. de
+Blowitz</a>; <span class="sc"><a href="/article/08-0816-eads-james-buchanan/eads__james_buchanan">Eads, James B.</a></span> (Vol. 8, p. 789);
+<span class="sc"><a href="/article/08-0973-edison-thomas-alva/edison__thomas_alva">Edison, Thomas A.</a></span> (Vol. 8, p. 946);
+<span class="sc"><a href="/article/09-0772-s4/ericsson__john">Ericsson, John</a></span> (Vol. 9, p. 740); <span class="sc"><a href="/article/17-0937-s3/maxim__sir_hiram_stevens">Maxim,
+Sir Hiram</a></span> (Vol. 17, p. 918); <span class="sc"><a href="/article/23-0472-s3/roebling__john_augustus">Roebling,
+John A.</a></span> (Vol. 23, p. 450); <span class="sc"><a href="/article/25-0062-s7/siemens__sir_william">Siemens, Sir
+William</a></span> (Vol. 25, p. 47) by <a href="/contributors.html?q=James+Alfred+Ewing">Professor
+Ewing</a>; <span class="sc"><a href="/article/26-0603-s6/telford__thomas">Telford, Thomas</a></span> (Vol. 26, p.
+573); <span class="sc"><a href="/article/17-0205-s3/mcadam__john_loudon">McAdam, John L.</a></span> (Vol. 17, p. 190),
+and <span class="sc"><a href="/article/27-0271-s3/trevithick__richard">Trevithick, Richard</a></span> (Vol. 27, p.
+256).</p>
+
+<details class="article-list"><summary><span class="list-title">ALPHABETICAL LIST OF THE PRINCIPAL ARTICLES IN THE ENCYCLOPÆDIA BRITANNICA OF SPECIAL INTEREST TO ENGINEERS</span><span class="list-count"> (642 articles)</span></summary>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0085-s2/aberration">Aberration</a></li>
+  <li class="c018"><a href="/article/01-0103-s7/abrasion">Abrasion</a></li>
+  <li class="c018">Abscissa</li>
+  <li class="c018"><a href="/article/01-0107-s4/absorption_of_light">Absorption of Light</a></li>
+  <li class="c018"><a href="/article/01-0142-s8/acceleration">Acceleration</a></li>
+  <li class="c018"><a href="/article/01-0157-s2/accumulator">Accumulator</a></li>
+  <li class="c018"><a href="/article/01-0176-s3/achromatism">Achromatism</a></li>
+  <li class="c018"><a href="/article/01-0184-s7/acoustics">Acoustics</a></li>
+  <li class="c018"><a href="/article/01-0188-s6/actinometer">Actinometer</a></li>
+  <li class="c018"><a href="/article/01-0223-s3/adhesion">Adhesion</a></li>
+  <li class="c018"><a href="/article/01-0224-s8/adjutage">Adjutage</a></li>
+  <li class="c018"><a href="/article/01-0275-s3/adze">Adze</a></li>
+  <li class="c018"><a href="/article/01-0295-s2/aeronautics">Aeronautics</a></li>
+  <li class="c018"><a href="/article/01-0329-s3/aether">Aether, or Ether</a></li>
+  <li class="c018"><a href="/article/01-0413-s4/aggregation">Aggregation</a></li>
+  <li class="c018"><a href="/article/01-0418-s6/agonic_lines">Agonic Lines</a></li>
+  <li class="c018">Air Engine</li>
+  <li class="c018"><a href="/article/01-0639-algebra/algebra">Algebra</a></li>
+  <li class="c018"><a href="/article/01-0660-algebraic-forms/algebraic_forms">Algebraic Forms</a></li>
+  <li class="c018"><a href="/article/01-0713-s4/aliquot">Aliquot</a></li>
+  <li class="c018"><a href="/article/01-0746-s5/alloys">Alloys</a></li>
+  <li class="c018"><a href="/article/01-0813-aluminium/aluminium">Aluminium</a></li>
+  <li class="c018"><a href="/article/01-0904-s6/amicable_numbers">Amicable Numbers</a></li>
+  <li class="c018"><a href="/article/01-0930-s3/amperemeter">Amperemeter, or Ammeter</a></li>
+  <li class="c018"><a href="/article/01-1000-s3/anchor">Anchor</a></li>
+  <li class="c018"><a href="/article/02-0025-s3/angle">Angle</a></li>
+  <li class="c018"><a href="/article/02-0081-s3/annealing__hardening_and_tempering">Annealing, Hardening and Tempering</a></li>
+  <li class="c018"><a href="/article/02-0116-s3/anthracite">Anthracite</a></li>
+  <li class="c018"><a href="/article/02-0169-s4/anvil">Anvil</a></li>
+  <li class="c018"><a href="/article/02-0175-s3/aperture">Aperture</a></li>
+  <li class="c018"><a href="/article/02-0252-s2/aqueduct">Aqueduct</a></li>
+  <li class="c018"><a href="/article/02-0390-s2/archimedes__screw_of">Archimedes, Screw of</a></li>
+  <li class="c018"><a href="/article/02-0390-s5/architecture">Architecture</a></li>
+  <li class="c018"><a href="/article/02-0596-s4/arkwright__sir_richard">Arkwright, Sir Richard</a></li>
+  <li class="c018"><a href="/article/02-0603-s3/armature">Armature</a></li>
+  <li class="c018"><a href="/article/02-0618-s4/armour_plates">Armour Plates</a></li>
+  <li class="c018">Armstrong, 1st Baron</li>
+  <li class="c018"><a href="/article/02-0711-s3/artesian_wells">Artesian Wells</a></li>
+  <li class="c018"><a href="/article/02-0822-s3/assaying">Assaying</a></li>
+  <li class="c018"><a href="/article/02-0908-s3/atmospheric_electricity">Atmospheric Electricity</a></li>
+  <li class="c018"><a href="/article/02-0918-s2/atmospheric_railway">Atmospheric Railway</a></li>
+  <li class="c018"><a href="/article/02-0948-s5/auger">Auger</a></li>
+  <li class="c018"><a href="/article/03-0060-s5/autoclave">Autoclave</a></li>
+  <li class="c018"><a href="/article/03-0082-s9/awl">Awl</a></li>
+  <li class="c018"><a href="/article/03-0082-s10/axe">Axe</a></li>
+  <li class="c018"><a href="/article/03-0083-s6/axis">Axis</a></li>
+  <li class="c018"><a href="/article/03-0083-s7/axle">Axle</a></li>
+  <li class="c018"><a href="/article/03-0241-s4/baird__james">Baird, James</a></li>
+  <li class="c018"><a href="/article/03-0244-s2/baker__sir_benjamin">Baker, Sir Benjamin</a></li>
+  <li class="c018"><a href="/article/03-0286-ballast/ballast">Ballast</a></li>
+  <li class="c018"><a href="/article/03-0287-ballistics/ballistics">Ballistics</a></li>
+  <li class="c018"><a href="/article/03-0296-s2/balloon">Balloon</a></li>
+  <li class="c018"><a href="/article/03-0337-banket/banket">Banket</a></li>
+  <li class="c018"><a href="/article/03-0420-barker-s-mill/barker_s_mill">Barker’s Mill</a></li>
+  <li class="c018"><a href="/article/03-0435-barometer/barometer">Barometer</a></li>
+  <li class="c018"><a href="/article/03-0438-barometric-light/barometric_light">Barometric Light</a></li>
+  <li class="c018"><a href="/article/03-0548-battery/battery">Battery</a></li>
+  <li class="c018"><a href="/article/03-0580-bazalgette-sir-joseph-william/bazalgette__sir_joseph_william">Bazalgette, Sir Joseph William</a></li>
+  <li class="c018"><a href="/article/03-0597-bearings/bearings">Bearings</a></li>
+  <li class="c018"><a href="/article/03-0705-bell-henry/bell__henry">Bell, Henry</a></li>
+  <li class="c018"><a href="/article/03-0725-bellows-and-blowing-machines/bellows_and_blowing_machines">Bellows and Blowing Machines</a></li>
+  <li class="c018"><a href="/article/03-0736-bench-mark/bench-mark">Bench-mark</a></li>
+  <li class="c018"><a href="/article/03-0805-berlin/berlin">Berlin</a></li>
+  <li class="c018"><a href="/article/03-0833-berthon-edward-lyon/berthon__edward_lyon">Berthon, Edward Lyon</a></li>
+  <li class="c018"><a href="/article/03-0833-berthoud-ferdinand/berthoud__ferdinand">Berthoud, Ferdinand</a></li>
+  <li class="c018"><a href="/article/03-0843-bessel-function/bessel_function">Bessel Function</a></li>
+  <li class="c018"><a href="/article/03-0844-bessemer-sir-henry/bessemer__sir_henry">Bessemer, Sir Henry</a></li>
+  <li class="c018"><a href="/article/03-0936-bicycle/bicycle">Bicycle</a></li>
+  <li class="c018"><a href="/article/03-0941-bidder-george-parker/bidder__george_parker">Bidder, George Parker</a></li>
+  <li class="c018"><a href="/article/03-0941-biddery/biddery">Biddery</a></li>
+  <li class="c018"><a href="/article/03-0972-binocular-instrument/binocular_instrument">Binocular Instrument</a></li>
+  <li class="c018"><a href="/article/03-0974-binomial/binomial">Binomial</a></li>
+  <li class="c018"><a href="/article/03-0980-biquadratic/biquadratic">Biquadratic</a></li>
+  <li class="c018"><a href="/article/03-1015-bisectrix/bisectrix">Bisectrix</a></li>
+  <li class="c018"><a href="/article/04-0057-blasting/blasting">Blasting</a></li>
+  <li class="c018"><a href="/article/04-0098-bloom/bloom">Bloom</a></li>
+  <li class="c018"><a href="/article/04-0131-bogie/bogie">Bogie</a></li>
+  <li class="c018"><a href="/article/04-0154-boiler/boiler">Boiler</a></li>
+  <li class="c018"><a href="/article/04-0266-s3/boring">Boring</a></li>
+  <li class="c018"><a href="/article/04-0339-boulton-matthew/boulton__matthew">Boulton, Matthew</a></li>
+  <li class="c018"><a href="/article/04-0381-brachistochrone/brachistochrone">Brachistochrone</a></li>
+  <li class="c018"><a href="/article/04-0384-bradawl/bradawl">Bradawl</a></li>
+  <li class="c018"><a href="/article/04-0428-brake/brake">Brake</a></li>
+  <li class="c018"><a href="/article/04-0432-bramah-joseph/bramah__joseph">Bramah, Joseph</a></li>
+  <li class="c018"><a href="/article/04-0448-brass-alloy/brass__alloy_">Brass</a></li>
+  <li class="c018"><a href="/article/04-0452-brassey-thomas/brassey__thomas">Brassey, Thomas</a></li>
+  <li class="c018"><a href="/article/04-0481-brazing-and-soldering/brazing_and_soldering">Brazing and Soldering</a></li>
+  <li class="c018"><a href="/article/04-0493-breakwater/breakwater">Breakwater</a></li>
+  <li class="c018"><a href="/article/04-0537-brick/brick">Brick</a></li>
+  <li class="c018"><a href="/article/04-0541-brickwork/brickwork">Brickwork</a></li>
+  <li class="c018"><a href="/article/04-0553-s1/bridges">Bridges</a></li>
+  <li class="c018">Bridgewater, 3rd Duke of</li>
+  <li class="c018"><a href="/article/04-0587-bright-sir-charles-tilston/bright__sir_charles_tilston">Bright, Sir Charles</a></li>
+  <li class="c018"><a href="/article/04-0592-s2/brindley__james">Brindley, James</a></li>
+  <li class="c018"><a href="/article/04-0662-s4/bronze">Bronze</a></li>
+  <li class="c018"><a href="/article/04-0664-s2/bronzing">Bronzing</a></li>
+  <li class="c018"><a href="/article/04-0684-s3/brown__sir_john">Brown, Sir John</a></li>
+  <li class="c018"><a href="/article/04-0705-s2/brunel__isambard_kingdom">Brunel, I. K.</a></li>
+  <li class="c018"><a href="/article/04-0705-s3/brunel__sir_marc_isambard">Brunel, Sir Marc</a></li>
+  <li class="c018"><a href="/article/04-0829-s4/buoy">Buoy</a></li>
+  <li class="c018"><a href="/article/04-0785-s4/building">Building</a></li>
+  <li class="c018"><a href="/article/04-0879-s5/burns__sir_george">Burns, Sir George</a></li>
+  <li class="c018"><a href="/article/04-0894-s3/bush">Bush</a></li>
+  <li class="c018"><a href="/article/04-0938-s2/cab">Cab</a></li>
+  <li class="c018"><a href="/article/04-0946-s4/cable">Cable</a></li>
+  <li class="c018"><a href="/article/04-0984-s4/caisson">Caisson</a></li>
+  <li class="c018"><a href="/article/04-0985-s2/caisson_disease">Caisson Disease</a></li>
+  <li class="c018"><a href="/article/04-0999-s2/calculating_machines">Calculating Machines</a></li>
+  <li class="c018"><a href="/article/04-1014-caledonian-canal/caledonian_canal">Caledonian Canal</a></li>
+  <li class="c018"><a href="/article/05-0072-calorescence/calorescence">Calorescence</a></li>
+  <li class="c018"><a href="/article/05-0072-calorimetry/calorimetry">Calorimetry</a></li>
+  <li class="c018"><a href="/article/05-0116-camera-lucida/camera_lucida">Camera Lucida</a></li>
+  <li class="c018"><a href="/article/05-0116-camera-obscura/camera_obscura">Camera Obscura</a></li>
+  <li class="c018"><a href="/article/05-0152-camus-fran-ois-joseph-des/camus__françois_joseph_des">Camus, F. J. des</a></li>
+  <li class="c018"><a href="/article/05-0181-canal/canal">Canal</a></li>
+  <li class="c018"><a href="/article/05-0230-cantilever/cantilever">Cantilever</a></li>
+  <li class="c018"><a href="/article/05-0269-capillary-action/capillary_action">Capillary Action</a></li>
+  <li class="c018"><a href="/article/05-0310-car/car">Car</a></li>
+  <li class="c018"><a href="/article/05-0337-cardioid/cardioid">Cardioid</a></li>
+  <li class="c018"><a href="/article/05-0377-carnegie-andrew/carnegie__andrew">Carnegie, Andrew</a></li>
+  <li class="c018"><a href="/article/05-0399-carpentry/carpentry">Carpentry,</a></li>
+  <li class="c018"><a href="/article/05-0428-cart/cart">Cart</a></li>
+  <li class="c018"><a href="/article/05-0452-cartwright-edmund/cartwright__edmund">Cartwright, Edmund</a></li>
+  <li class="c018"><a href="/article/05-0463-cash-register/cash_register">Cash Register</a></li>
+  <li class="c018"><a href="/article/05-0530-catenary/catenary">Catenary</a></li>
+  <li class="c018"><a href="/article/05-0581-causeway/causeway">Causeway</a></li>
+  <li class="c018"><a href="/article/05-0581-caustic/caustic">Caustic</a></li>
+  <li class="c018"><a href="/article/05-0582-cautley-sir-proby-thomas/cautley__sir_proby_thomas">Cautley, Sir Proby Thomas</a></li>
+  <li class="c018"><a href="/article/05-0678-cement/cement">Cement</a></li>
+  <li class="c018"><a href="/article/05-0837-chain/chain">Chain</a></li>
+  <li class="c018"><a href="/article/05-0890-chappe-claude/chappe__claude">Chappe, Claude</a></li>
+  <li class="c018"><a href="/article/05-0985-chart/chart">Chart</a></li>
+  <li class="c018"><a href="/article/06-0263-chisel/chisel">Chisel</a></li>
+  <li class="c018"><a href="/article/06-0317-chronograph/chronograph">Chronograph</a></li>
+  <li class="c018"><a href="/article/06-0338-s3/chubb__charles">Chubb, Charles</a></li>
+  <li class="c018"><a href="/article/06-0390-cinematograph/cinematograph">Cinematograph</a></li>
+  <li class="c018"><a href="/article/06-0398-circle/circle">Circle</a></li>
+  <li class="c018"><a href="/article/06-0409-cissoid/cissoid">Cissoid</a></li>
+  <li class="c018"><a href="/article/06-0458-clark-josiah-latimer/clark__josiah_latimer">Clark, Josiah Latimer</a></li>
+  <li class="c018"><a href="/article/06-0554-clock/clock">Clock</a></li>
+  <li class="c018"><a href="/article/06-0594-coal/coal">Coal</a></li>
+  <li class="c018">Cockerill, W. (and J.)</li>
+  <li class="c018"><a href="/article/06-0670-cofferdam/cofferdam">Cofferdam</a></li>
+  <li class="c018"><a href="/article/06-0685-cold-harbor/cold_harbor">Cold</a></li>
+  <li class="c018"><a href="/article/06-0750-colour/colour">Colour</a></li>
+  <li class="c018">Combinational Analysis</li>
+  <li class="c018"><a href="/article/06-0828-compass/compass">Compass</a></li>
+  <li class="c018"><a href="/article/06-0850-conchoid/conchoid">Conchoid</a></li>
+  <li class="c018"><a href="/article/06-0859-concrete/concrete">Concrete</a></li>
+  <li class="c018"><a href="/article/06-0868-condensation-of-gases/condensation_of_gases">Condensation of Gases</a></li>
+  <li class="c018"><a href="/article/06-0879-conduction-electric/conduction__electric">Conduction, Electric</a></li>
+  <li class="c018"><a href="/article/06-0914-conduction-of-heat/conduction_of_heat">Conduction of Heat</a></li>
+  <li class="c018"><a href="/article/06-0920-cone/cone">Cone</a></li>
+  <li class="c018"><a href="/article/06-0963-congreve-sir-william/congreve__sir_william">Congreve, Sir William</a></li>
+  <li class="c018"><a href="/article/06-0964-conic-section/conic_section">Conic Section</a></li>
+  <li class="c018"><a href="/article/06-0989-conoid/conoid">Conoid</a></li>
+  <li class="c018"><a href="/article/07-0045-continued-fractions/continued_fractions">Continued Fractions</a></li>
+  <li class="c018"><a href="/article/07-0048-contour-contour-line/contour__contour-line">Contour, Contour-line</a></li>
+  <li class="c018"><a href="/article/07-0067-conveyors/conveyors">Conveyors</a></li>
+  <li class="c018"><a href="/article/07-0085-coode-sir-john/coode__sir_john">Coode, Sir John</a></li>
+  <li class="c018"><a href="/article/07-0119-copper/copper">Copper</a></li>
+  <li class="c018"><a href="/article/07-0134-copying-machines/copying_machines">Copying Machines</a></li>
+  <li class="c018"><a href="/article/07-0155-s4/cordite">Cordite</a></li>
+  <li class="c018"><a href="/article/07-0191-corning-erastus/corning__erastus">Corning, Erastus</a></li>
+  <li class="c018"><a href="/article/07-0374-coxwell-henry-tracey/coxwell__henry_tracey">Coxwell, Henry Tracey</a></li>
+  <li class="c018"><a href="/article/07-0383-cramp-charles-henry/cramp__charles_henry">Cramp, Charles Henry</a></li>
+  <li class="c018"><a href="/article/07-0388-cranes/cranes">Cranes</a></li>
+  <li class="c018"><a href="/article/07-0394-crank/crank">Crank</a></li>
+  <li class="c018"><a href="/article/07-0508-crompton-samuel/crompton__samuel">Crompton, Samuel</a></li>
+  <li class="c018"><a href="/article/07-0628-cube/cube">Cube</a></li>
+  <li class="c018"><a href="/article/07-0629-cubitt-thomas/cubitt__thomas">Cubitt, Thomas</a></li>
+  <li class="c018"><a href="/article/07-0629-cubitt-sir-william/cubitt__sir_william">Cubitt, Sir William</a></li>
+  <li class="c018"><a href="/article/07-0651-cunard-sir-samuel/cunard__sir_samuel">Cunard, Sir Samuel</a></li>
+  <li class="c018"><a href="/article/07-0670-curricle/curricle">Curricle</a></li>
+  <li class="c018"><a href="/article/07-0675-curve/curve">Curve</a></li>
+  <li class="c018"><a href="/article/07-0707-cycloid/cycloid">Cycloid</a></li>
+  <li class="c018"><a href="/article/07-0708-cyclometer/cyclometer">Cyclometer</a></li>
+  <li class="c018"><a href="/article/07-0711-cylinder/cylinder">Cylinder</a></li>
+  <li class="c018"><a href="/article/07-0807-damascening/damascening">Damascening or Damaskeening</a></li>
+  <li class="c018"><a href="/article/07-0810-damask-steel/damask_steel">Damask Steel or Damascus Steel</a></li>
+  <li class="c018"><a href="/article/08-0061-density/density">Density</a></li>
+  <li class="c018"><a href="/article/08-0119-destructors/destructors">Destructors</a></li>
+  <li class="c018"><a href="/article/08-0126-determinant/determinant">Determinant</a></li>
+  <li class="c018"><a href="/article/08-0161-diagonal/diagonal">Diagonal</a></li>
+  <li class="c018">Diagram</li>
+  <li class="c018"><a href="/article/08-0172-diamagnetism/diamagnetism">Diamagnetism</a></li>
+  <li class="c018"><a href="/article/08-0172-diameter/diameter">Diameter</a></li>
+  <li class="c018"><a href="/article/08-0226-dielectric/dielectric">Dielectric</a></li>
+  <li class="c018"><a href="/article/08-0240-differences-calculus-of/differences__calculus_of">Differences, Calculus of</a></li>
+  <li class="c018"><a href="/article/08-0242-differential-equation/differential_equation">Differential Equation</a></li>
+  <li class="c018"><a href="/article/08-0255-diffraction-of-light/diffraction_of_light">Diffraction of Light</a></li>
+  <li class="c018"><a href="/article/08-0272-diffusion/diffusion">Diffusion</a></li>
+  <li class="c018"><a href="/article/08-0290-dimension/dimension">Dimension</a></li>
+  <li class="c018"><a href="/article/08-0332-dispersion/dispersion">Dispersion</a></li>
+  <li class="c018"><a href="/article/08-0343-divers-and-diving-apparatus/divers_and_diving_apparatus">Divers and Diving Apparatus</a></li>
+  <li class="c018"><a href="/article/08-0370-dock/dock">Dock</a></li>
+  <li class="c018"><a href="/article/08-0386-dodecahedron/dodecahedron">Dodecahedron</a></li>
+  <li class="c018"><a href="/article/08-0575-drawing/drawing">Drawing</a></li>
+  <li class="c018">Dredge and Dredging</li>
+  <li class="c018"><a href="/article/08-0605-drill/drill">Drill</a></li>
+  <li class="c018"><a href="/article/08-0627-drummond-thomas/drummond__thomas">Drummond, Thomas</a></li>
+  <li class="c018"><a href="/article/08-0640-dry-rot/dry_rot">Dry Rot</a></li>
+  <li class="c018"><a href="/article/08-0718-dupuy-de-l-me-stanislas-charles-henri-laurent/dupuy_de_lôme__stanislas_charles_henri_laurent">Dupuy de Lôme, S.C.H.L.</a></li>
+  <li class="c018"><a href="/article/08-0783-dynamics/dynamics">Dynamics</a></li>
+  <li class="c018"><a href="/article/08-0791-dynamite/dynamite">Dynamite</a></li>
+  <li class="c018"><a href="/article/08-0791-dynamo/dynamo">Dynamo</a></li>
+  <li class="c018"><a href="/article/08-0809-dynamometer/dynamometer">Dynamometer</a></li>
+  <li class="c018"><a href="/article/08-0816-eads-james-buchanan/eads__james_buchanan">Eads, James Buchanan</a></li>
+  <li class="c018"><a href="/article/08-0840-earth-currents/earth_currents">Earth Currents</a></li>
+  <li class="c018"><a href="/article/08-0828-earth-figure-of-the/earth__figure_of_the">Earth, Figure of the</a></li>
+  <li class="c018"><a href="/article/08-0973-edison-thomas-alva/edison__thomas_alva">Edison, Thomas Alva</a></li>
+  <li class="c018"><a href="/article/09-0158-elasticity/elasticity">Elasticity</a></li>
+  <li class="c018">Electrical, or Electrostatic Machine</li>
+  <li class="c018"><a href="/article/09-0196-electricity/electricity">Electricity</a></li>
+  <li class="c018"><a href="/article/09-0210-electricity-supply/electricity_supply">Electricity Supply</a></li>
+  <li class="c018"><a href="/article/09-0220-electric-waves/electric_waves">Electric Waves</a></li>
+  <li class="c018"><a href="/article/09-0225-electrochemistry/electrochemistry">Electrochemistry</a></li>
+  <li class="c018"><a href="/article/09-0227-electrokinetics/electrokinetics">Electrokinetics</a></li>
+  <li class="c018"><a href="/article/09-0234-electrolysis/electrolysis">Electrolysis</a></li>
+  <li class="c018"><a href="/article/09-0243-electromagnetism/electromagnetism">Electromagnetism</a></li>
+  <li class="c018"><a href="/article/09-0249-electrometallurgy/electrometallurgy">Electrometallurgy</a></li>
+  <li class="c018"><a href="/article/09-0251-electrometer/electrometer">Electrometer</a></li>
+  <li class="c018"><a href="/article/09-0254-electron/electron">Electron</a></li>
+  <li class="c018"><a href="/article/09-0254-electroplating/electroplating">Electroplating</a></li>
+  <li class="c018"><a href="/article/09-0256-electroscope/electroscope">Electroscope</a></li>
+  <li class="c018"><a href="/article/09-0257-electrostatics/electrostatics">Electrostatics</a></li>
+  <li class="c018"><a href="/article/09-0269-electrotyping/electrotyping">Electrotyping</a></li>
+  <li class="c018"><a href="/article/09-0269-electrum-electron/electrum__electron">Electrum</a></li>
+  <li class="c018"><a href="/article/09-0280-elevators/elevators">Elevators, Lifts or Hoists</a></li>
+  <li class="c018"><a href="/article/09-0309-ellipse/ellipse">Ellipse</a></li>
+  <li class="c018"><a href="/article/09-0310-ellipsoid/ellipsoid">Ellipsoid</a></li>
+  <li class="c018"><a href="/article/09-0323-embankment/embankment">Embankment</a></li>
+  <li class="c018"><a href="/article/09-0379-employers-liability/employers__liability">Employers’ Liability</a></li>
+  <li class="c018"><a href="/article/09-0415-energetics/energetics">Energetics</a></li>
+  <li class="c018"><a href="/article/09-0423-energy/energy">Energy</a></li>
+  <li class="c018"><a href="/article/09-0431-engine/engine">Engine</a></li>
+  <li class="c018"><a href="/article/09-0431-engineering/engineering">Engineering</a></li>
+  <li class="c018"><a href="/article/09-0718-epicycloid/epicycloid">Epicycloid</a></li>
+  <li class="c018"><a href="/article/09-0741-s3/equation">Equation</a></li>
+  <li class="c018"><a href="/article/09-0772-s4/ericsson__john">Ericsson, John</a></li>
+  <li class="c018"><a href="/article/10-0014-evans-oliver/evans__oliver">Evans, Oliver</a></li>
+  <li class="c018"><a href="/article/10-0093-s2/explosives">Explosives</a></li>
+  <li class="c018"><a href="/article/10-0141-s3/fairbairn__sir_william">Fairbairn, Sir William</a></li>
+  <li class="c018"><a href="/article/10-0255-felloe/felloe">Felloe</a></li>
+  <li class="c018"><a href="/article/10-0284-ferguson-james/ferguson__james">Ferguson, James</a></li>
+  <li class="c018"><a href="/article/10-0349-s2/figurate_numbers">Figurate Numbers</a></li>
+  <li class="c018"><a href="/article/10-0353-s5/file">File</a></li>
+  <li class="c018"><a href="/article/10-0360-s3/filter">Filter</a></li>
+  <li class="c018">Finlay, Sir George</li>
+  <li class="c018"><a href="/article/10-0417-s2/fire_and_fire_extinction">Fire and Fire Extinction</a></li>
+  <li class="c018"><a href="/article/10-0434-s4/firebrick">Firebrick</a></li>
+  <li class="c018"><a href="/article/10-0441-s3/firth__mark">Firth, Mark</a></li>
+  <li class="c018"><a href="/article/10-0454-s5/fitch__john">Fitch, John</a></li>
+  <li class="c018">Flight and Flying</li>
+  <li class="c018"><a href="/article/10-0595-s8/flume">Flume</a></li>
+  <li class="c018"><a href="/article/10-0604-s2/flux">Flux</a></li>
+  <li class="c018"><a href="/article/10-0608-s6/focus">Focus</a></li>
+  <li class="c018"><a href="/article/10-0621-folium/folium">Folium</a></li>
+  <li class="c018"><a href="/article/10-0684-s3/forging">Forging</a></li>
+  <li class="c018"><a href="/article/10-0700-s7/fortification_and_siegecraft">Fortification and Siegecraft</a></li>
+  <li class="c018"><a href="/article/10-0752-fossick/fossick">Fossick</a></li>
+  <li class="c018"><a href="/article/10-0759-s5/foundations">Foundations</a></li>
+  <li class="c018"><a href="/article/10-0764-s2/founding">Founding</a></li>
+  <li class="c018"><a href="/article/10-0774-fourier-s-series/fourier_s_series">Fourier’s Series</a></li>
+  <li class="c018"><a href="/article/10-0782-s1/fowler__john">Fowler, John</a></li>
+  <li class="c018"><a href="/article/10-0782-s2/fowler__sir_john">Fowler, Sir John</a></li>
+  <li class="c018"><a href="/article/11-0227-friction/friction">Friction</a></li>
+  <li class="c018"><a href="/article/11-0283-frustum/frustum">Frustum</a></li>
+  <li class="c018"><a href="/article/11-0287-fuel/fuel">Fuel</a></li>
+  <li class="c018"><a href="/article/11-0313-fulton-robert/fulton__robert">Fulton, Robert</a></li>
+  <li class="c018"><a href="/article/11-0314-s6/function">Function</a></li>
+  <li class="c018"><a href="/article/11-0371-s4/furnace">Furnace</a></li>
+  <li class="c018"><a href="/article/11-0387-fusible-metal/fusible_metal">Fusible Metal</a></li>
+  <li class="c018"><a href="/article/11-0387-fusion/fusion">Fusion</a></li>
+  <li class="c018"><a href="/article/11-0393-fuze/fuze">Fuze, or Fuse</a></li>
+  <li class="c018"><a href="/article/11-0446-s4/galvanized_iron">Galvanized Iron</a></li>
+  <li class="c018"><a href="/article/11-0446-s5/galvanometer">Galvanometer</a></li>
+  <li class="c018"><a href="/article/11-0513-s2/gas_engine">Gas Engine</a></li>
+  <li class="c018"><a href="/article/11-0548-gatling-richard-jordan/gatling__richard_jordan">Gatling, Richard Jordan</a></li>
+  <li class="c018"><a href="/article/11-0550-s2/gauge">Gauge, or Gage</a></li>
+  <li class="c018"><a href="/article/11-0627-geodesy/geodesy">Geodesy</a></li>
+  <li class="c018"><a href="/article/11-0658-s2/geoid">Geoid</a></li>
+  <li class="c018"><a href="/article/11-0694-geometrical-continuity/geometrical_continuity">Geometrical Continuity</a></li>
+  <li class="c018"><a href="/article/11-0695-geometry/geometry">Geometry</a></li>
+  <li class="c018"><a href="/article/12-0039-s5/gimlet">Gimlet</a></li>
+  <li class="c018"><a href="/article/12-0058-s2/girard__philippe_henri_de">Girard, Philippe Henri de</a></li>
+  <li class="c018"><a href="/article/12-0133-s1/glazing">Glazing</a></li>
+  <li class="c018"><a href="/article/12-0169-gnomon/gnomon">Gnomon</a></li>
+  <li class="c018"><a href="/article/12-0209-gold/gold">Gold</a></li>
+  <li class="c018"><a href="/article/12-0254-s2/gooch__sir_daniel">Gooch, Sir Daniel</a></li>
+  <li class="c018"><a href="/article/12-0257-s6/goodyear__charles">Goodyear, Charles</a></li>
+  <li class="c018"><a href="/article/12-0298-s5/gouge">Gouge</a></li>
+  <li class="c018"><a href="/article/12-0329-s1/graduation">Graduation</a></li>
+  <li class="c018"><a href="/article/12-0350-gramophone/gramophone">Gramophone</a></li>
+  <li class="c018"><a href="/article/12-0381-graphical-methods/graphical_methods">Graphical Methods</a></li>
+  <li class="c018"><a href="/article/12-0401-gravitation/gravitation">Gravitation</a></li>
+  <li class="c018"><a href="/article/12-0415-s6/greathead__james_henry">Greathead, James Henry</a></li>
+  <li class="c018">Grimthorpe, 1st Baron</li>
+  <li class="c018"><a href="/article/12-0651-s6/groups">Groups, Theory of</a></li>
+  <li class="c018"><a href="/article/12-0746-s3/guncotton">Guncotton</a></li>
+  <li class="c018"><a href="/article/12-0794-s2/gyroscope_and_gyrostat">Gyroscope and Gyrostat</a></li>
+  <li class="c018"><a href="/article/12-0748-s3/gunpowder">Gunpowder</a></li>
+  <li class="c018"><a href="/article/12-0818-hachure/hachure">Hachure</a></li>
+  <li class="c018"><a href="/article/12-0922-hammer/hammer">Hammer</a></li>
+  <li class="c018"><a href="/article/12-0960-harbour/harbour">Harbour</a></li>
+  <li class="c018"><a href="/article/12-0980-s9/harmonic">Harmonic</a></li>
+  <li class="c018"><a href="/article/12-0981-s3/harmonic_analysis">Harmonic Analysis</a></li>
+  <li class="c018"><a href="/article/13-0036-s3/harrison__john">Harrison, John</a></li>
+  <li class="c018"><a href="/article/13-0048-s2/hartley__sir_charles_augustus">Hartley, Sir Charles Augustus</a></li>
+  <li class="c018"><a href="/article/13-0112-hawkshaw-sir-john/hawkshaw__sir_john">Hawkshaw, Sir John</a></li>
+  <li class="c018"><a href="/article/13-0113-hawksley-thomas/hawksley__thomas">Hawksley, Thomas</a></li>
+  <li class="c018"><a href="/article/13-0114-s4/hawser">Hawser</a></li>
+  <li class="c018"><a href="/article/13-0148-s2/heat">Heat</a></li>
+  <li class="c018"><a href="/article/13-0172-s2/heathcoat__john">Heathcoat, John</a></li>
+  <li class="c018"><a href="/article/13-0173-s2/heating">Heating</a></li>
+  <li class="c018"><a href="/article/13-0243-heliostat/heliostat">Heliostat</a></li>
+  <li class="c018"><a href="/article/13-0573-s3/hodgkinson__eaton">Hodgkinson, Eaton</a></li>
+  <li class="c018"><a href="/article/13-0574-s2/hodograph">Hodograph</a></li>
+  <li class="c018"><a href="/article/13-0598-s4/holden__sir_isaac">Holden, Sir Isaac</a></li>
+  <li class="c018"><a href="/article/13-0745-horse-power/horse-power">Horse-Power</a></li>
+  <li class="c018"><a href="/article/13-0805-s2/hose-pipe">Hose-pipe</a></li>
+  <li class="c018"><a href="/article/14-0047-hydraulics/hydraulics">Hydraulics</a></li>
+  <li class="c018"><a href="/article/14-0125-s2/hydrodynamics">Hydrodynamics</a></li>
+  <li class="c018"><a href="/article/14-0126-s2/hydrography">Hydrography</a></li>
+  <li class="c018"><a href="/article/14-0127-s1/hydromechanics">Hydromechanics</a></li>
+  <li class="c018"><a href="/article/14-0173-hydrometer/hydrometer">Hydrometer</a></li>
+  <li class="c018"><a href="/article/14-0183-hydrostatics/hydrostatics">Hydrostatics</a></li>
+  <li class="c018"><a href="/article/14-0211-hyperbola/hyperbola">Hyperbola</a></li>
+  <li class="c018"><a href="/article/14-0221-hypsometer/hypsometer">Hypsometer</a></li>
+  <li class="c018"><a href="/article/14-0223-hysteresis/hysteresis">Hysteresis</a></li>
+  <li class="c018"><a href="/article/14-0287-s3/icosahedron">Icosahedron</a></li>
+  <li class="c018"><a href="/article/14-0339-illumination/illumination">Illumination</a></li>
+  <li class="c018"><a href="/article/14-0373-s4/inclinometer">Inclinometer</a></li>
+  <li class="c018"><a href="/article/14-0531-s2/induction_coil">Induction Coil</a></li>
+  <li class="c018"><a href="/article/14-0566-s2/infinitesimal_calculus">Infinitesimal Calculus</a></li>
+  <li class="c018"><a href="/article/14-0596-s7/ingot">Ingot</a></li>
+  <li class="c018"><a href="/article/14-0601-s2/injector">Injector</a></li>
+  <li class="c018"><a href="/article/14-0716-s2/interference_of_light">Interference of Light</a></li>
+  <li class="c018"><a href="/article/14-0737-s2/interpolation">Interpolation</a></li>
+  <li class="c018"><a href="/article/14-0748-s10/invar">Invar</a></li>
+  <li class="c018"><a href="/article/14-0752-s2/inversion">Inversion</a></li>
+  <li class="c018"><a href="/article/14-0754-involution/involution">Involution</a></li>
+  <li class="c018"><a href="/article/14-0834-s2/iron_and_steel">Iron and Steel</a></li>
+  <li class="c018"><a href="/article/14-0874-irrigation/irrigation">Irrigation</a></li>
+  <li class="c018"><a href="/article/14-0909-s3/ismay__thomas_henry">Ismay, Thomas Henry</a></li>
+  <li class="c018"><a href="/article/15-0138-s2/jacquard__joseph_marie">Jacquard, Joseph Marie</a></li>
+  <li class="c018"><a href="/article/15-0343-jenkin-henry-charles-fleeming/jenkin__henry_charles_fleeming">Jenkin, H. C. F.</a></li>
+  <li class="c018"><a href="/article/15-0384-jetty/jetty">Jetty</a></li>
+  <li class="c018"><a href="/article/15-0503-s5/joinery">Joinery</a></li>
+  <li class="c018"><a href="/article/15-0510-s3/joints">Joints</a></li>
+  <li class="c018"><a href="/article/15-0520-joist/joist">Joist</a></li>
+  <li class="c018"><a href="/article/15-0666-kaleidoscope/kaleidoscope">Kaleidoscope</a></li>
+  <li class="c018"><a href="/article/15-0826-kiln/kiln">Kiln</a></li>
+  <li class="c018"><a href="/article/15-0831-kinematics/kinematics">Kinematics</a></li>
+  <li class="c018"><a href="/article/15-0831-kinetics/kinetics">Kinetics</a></li>
+  <li class="c018"><a href="/article/15-0846-s2/kingsford__william">Kingsford, W.</a></li>
+  <li class="c018"><a href="/article/15-0879-s3/knife">Knife</a></li>
+  <li class="c018"><a href="/article/15-0905-knot/knot">Knot</a></li>
+  <li class="c018"><a href="/article/15-0968-s2/krupp__alfred">Krupp, Alfred</a></li>
+  <li class="c018"><a href="/article/16-0021-s3/labour_legislation">Labour Legislation</a></li>
+  <li class="c018"><a href="/article/16-0079-ladder/ladder">Ladder</a></li>
+  <li class="c018"><a href="/article/16-0152-lamp/lamp">Lamp</a></li>
+  <li class="c018"><a href="/article/16-0205-lantern/lantern">Lantern</a></li>
+  <li class="c018"><a href="/article/16-0261-lath/lath">Lath</a></li>
+  <li class="c018"><a href="/article/16-0261-s4/lathe">Lathe</a></li>
+  <li class="c018"><a href="/article/16-0287-latitude/latitude">Latitude</a></li>
+  <li class="c018"><a href="/article/16-0295-s5/latten">Latten</a></li>
+  <li class="c018"><a href="/article/16-0334-s6/lead">Lead</a></li>
+  <li class="c018"><a href="/article/16-0432-lemniscate/lemniscate">Lemniscate</a></li>
+  <li class="c018"><a href="/article/16-0441-lens/lens">Lens</a></li>
+  <li class="c018"><a href="/article/16-0514-s6/lesseps__ferdinand_de">Lesseps, Ferdinand de</a></li>
+  <li class="c018"><a href="/article/16-0530-lever/lever">Lever</a></li>
+  <li class="c018"><a href="/article/16-0548-leyden-jar/leyden_jar">Leyden Jar, or Condenser</a></li>
+  <li class="c018"><a href="/article/16-0622-s1/life-boat">Life-boat</a></li>
+  <li class="c018"><a href="/article/16-0628-s5/light">Light</a></li>
+  <li class="c018"><a href="/article/16-0647-s2/lighthouse">Lighthouse</a></li>
+  <li class="c018"><a href="/article/16-0673-s2/lighting">Lighting</a></li>
+  <li class="c018"><a href="/article/16-0695-lightning-conductor/lightning_conductor">Lightning Conductor</a></li>
+  <li class="c018"><a href="/article/16-0712-lima-on/limaçon">Limaçon</a></li>
+  <li class="c018"><a href="/article/16-0741-lindley-william/lindley__william">Lindley, William</a></li>
+  <li class="c018"><a href="/article/16-0742-line/line">Line</a></li>
+  <li class="c018"><a href="/article/16-0766-s5/liquid_gases">Liquid Gases</a></li>
+  <li class="c018"><a href="/article/16-0863-s3/lock">Lock</a></li>
+  <li class="c018"><a href="/article/16-0879-locus/locus">Locus</a></li>
+  <li class="c018"><a href="/article/16-0890-s1/logarithm">Logarithm</a></li>
+  <li class="c018"><a href="/article/16-0941-s1/logocyclic_curve__strophoid">Logocyclic Curve, Strophoid, or Foliate</a></li>
+  <li class="c018"><a href="/article/16-1008-longitude/longitude">Longitude</a></li>
+  <li class="c018"><a href="/article/17-0094-s2/loxodrome">Loxodrome</a></li>
+  <li class="c018"><a href="/article/17-0102-lubricants/lubricants">Lubricants</a></li>
+  <li class="c018"><a href="/article/17-0104-lubrication/lubrication">Lubrication</a></li>
+  <li class="c018"><a href="/article/17-0325-magic-square/magic_square">Magic Square</a></li>
+  <li class="c018"><a href="/article/17-0336-s2/magnetism">Magnetism</a></li>
+  <li class="c018"><a href="/article/17-0368-s2/magnetism__terrestrial">Magnetism, Terrestrial</a></li>
+  <li class="c018"><a href="/article/17-0400-magnetograph/magnetograph">Magnetograph</a></li>
+  <li class="c018"><a href="/article/17-0401-s2/magnetometer">Magnetometer</a></li>
+  <li class="c018"><a href="/article/17-0403-s2/magneto-optics">Magneto-Optics</a></li>
+  <li class="c018"><a href="/article/17-0567-manchester-ship-canal/manchester_ship_canal">Manchester Ship Canal</a></li>
+  <li class="c018"><a href="/article/17-0586-s3/manganese">Manganese</a></li>
+  <li class="c018"><a href="/article/17-0610-manometer/manometer">Manometer</a></li>
+  <li class="c018"><a href="/article/17-0646-map/map">Map</a></li>
+  <li class="c018">Masham, Baron</li>
+  <li class="c018"><a href="/article/17-0859-s4/masonry">Masonry</a></li>
+  <li class="c018"><a href="/article/17-0897-s5/mathematics">Mathematics</a></li>
+  <li class="c018"><a href="/article/17-0910-s3/matter">Matter</a></li>
+  <li class="c018"><a href="/article/17-0937-s6/maxima_and_minima">Maxima and Minima</a></li>
+  <li class="c018"><a href="/article/17-0937-s3/maxim__sir_hiram_stevens">Maxim, Sir Hiram</a></li>
+  <li class="c018"><a href="/article/17-0205-s3/mcadam__john_loudon">McAdam, John Loudon</a></li>
+  <li class="c018"><a href="/article/17-0221-s2/mccormick__cyrus_hall">McCormick, Cyrus Hall</a></li>
+  <li class="c018"><a href="/article/17-0974-mechanics/mechanics">Mechanics</a></li>
+  <li class="c018"><a href="/article/18-0153-s4/mensuration">Mensuration</a></li>
+  <li class="c018"><a href="/article/18-0185-meridian/meridian">Meridian</a></li>
+  <li class="c018"><a href="/article/18-0217-s3/metal">Metal</a></li>
+  <li class="c018"><a href="/article/18-0221-s2/metallography">Metallography</a></li>
+  <li class="c018"><a href="/article/18-0222-s2/metallurgy">Metallurgy</a></li>
+  <li class="c018"><a href="/article/18-0312-s2/meter__electric">Meter, Electric</a></li>
+  <li class="c018"><a href="/article/18-0320-metric-system/metric_system">Metric System</a></li>
+  <li class="c018"><a href="/article/18-0414-s2/microscope">Microscope</a></li>
+  <li class="c018"><a href="/article/18-0478-s2/mill__john">Mill</a></li>
+  <li class="c018"><a href="/article/18-0528-mineral-deposits/mineral_deposits">Mineral Deposits</a></li>
+  <li class="c018"><a href="/article/18-0554-s3/mining">Mining</a></li>
+  <li class="c018"><a href="/article/18-0602-mirror/mirror">Mirror</a></li>
+  <li class="c018"><a href="/article/18-0668-model/model">Model</a></li>
+  <li class="c018"><a href="/article/18-0684-s2/molecule">Molecule</a></li>
+  <li class="c018"><a href="/article/18-0907-mortar/mortar">Mortar</a></li>
+  <li class="c018"><a href="/article/18-0912-s2/mortise">Mortise, or Mortice</a></li>
+  <li class="c018"><a href="/article/18-0938-s4/motion__laws_of">Motion, Laws of</a></li>
+  <li class="c018"><a href="/article/18-0942-motors-electric/motors__electric">Motors, Electric</a></li>
+  <li class="c018"><a href="/article/18-0946-s2/motor_vehicles">Motor Vehicles</a></li>
+  <li class="c018"><a href="/article/19-0048-murdoch-william/murdock__william">Murdock, William</a></li>
+  <li class="c018">Myddelton, Sir Hugh</li>
+  <li class="c018"><a href="/article/19-0264-s2/nasmyth__james">Nasmyth, James</a></li>
+  <li class="c018"><a href="/article/19-0299-s2/navigation">Navigation</a></li>
+  <li class="c018"><a href="/article/19-0495-newcomen-thomas/newcomen__thomas">Newcomen, Thomas</a></li>
+  <li class="c018">Nitro-glycerine</li>
+  <li class="c018"><a href="/article/19-0746-nixon-john/nixon__john">Nixon, John</a></li>
+  <li class="c018"><a href="/article/19-0757-s2/noble__sir_andrew">Noble, Sir Andrew</a></li>
+  <li class="c018"><a href="/article/19-0879-s3/number">Number</a></li>
+  <li class="c018"><a href="/article/19-0897-s2/numbers__partition_of">Numbers, Partition of</a></li>
+  <li class="c018"><a href="/article/19-0898-numeral/numeral">Numeral</a></li>
+  <li class="c018"><a href="/article/19-0986-s4/objective">Objective, or Object Glass</a></li>
+  <li class="c018"><a href="/article/19-1030-s8/octahedron">Octahedron</a></li>
+  <li class="c018"><a href="/article/20-0056-s4/ohmmeter">Ohmmeter</a></li>
+  <li class="c018"><a href="/article/20-0057-s6/oil_engine">Oil Engine</a></li>
+  <li class="c018"><a href="/article/20-0167-optics/optics">Optics</a></li>
+  <li class="c018">Ordinate</li>
+  <li class="c018">Ore Dressing</li>
+  <li class="c018"><a href="/article/20-0381-s6/oscillograph">Oscillograph</a></li>
+  <li class="c018"><a href="/article/20-0416-oval/oval">Oval</a></li>
+  <li class="c018"><a href="/article/20-0495-painter-work/painter-work">Painter-work</a></li>
+  <li class="c018"><a href="/article/20-0650-palanquin/palanquin">Palanquin</a></li>
+  <li class="c018"><a href="/article/20-0700-palmer-sir-charles-mark/palmer__sir_charles_mark">Palmer, Sir Charles Mark</a></li>
+  <li class="c018"><a href="/article/20-0722-panama-canal/panama_canal">Panama Canal</a></li>
+  <li class="c018"><a href="/article/20-0739-pantograph/pantograph">Pantograph</a></li>
+  <li class="c018"><a href="/article/20-0803-parabola/parabola">Parabola</a></li>
+  <li class="c018"><a href="/article/20-0806-parachute/parachute">Parachute</a></li>
+  <li class="c018"><a href="/article/20-0818-s3/parallel_motion">Parallel Motion</a></li>
+  <li class="c018"><a href="/article/21-0052-pedometer/pedometer">Pedometer</a></li>
+  <li class="c018"><a href="/article/21-0190-s4/perkins__jacob">Perkins, Jacob</a></li>
+  <li class="c018"><a href="/article/21-0192-s4/permeability__magnetic">Permeability, Magnetic</a></li>
+  <li class="c018"><a href="/article/21-0193-s1/permeameter">Permeameter</a></li>
+  <li class="c018"><a href="/article/21-0197-perpetual-motion/perpetual_motion">Perpetual Motion, or Perpetuum Mobile</a></li>
+  <li class="c018"><a href="/article/21-0274-perspective/perspective">Perspective</a></li>
+  <li class="c018"><a href="/article/21-0489-phonograph/phonograph">Phonograph</a></li>
+  <li class="c018"><a href="/article/21-0507-photography/photography">Photography</a></li>
+  <li class="c018"><a href="/article/21-0551-photometry/photometry">Photometry</a></li>
+  <li class="c018">Physics</li>
+  <li class="c018"><a href="/article/21-0614-s3/pier">Pier</a></li>
+  <li class="c018"><a href="/article/21-0688-s3/piston">Piston</a></li>
+  <li class="c018"><a href="/article/21-0815-s4/plaster-work">Plaster-work</a></li>
+  <li class="c018"><a href="/article/21-0898-s4/pneumatic_despatch">Pneumatic Despatch</a></li>
+  <li class="c018"><a href="/article/21-0901-pneumatics/pneumatics">Pneumatics</a></li>
+  <li class="c018"><a href="/article/21-0965-polarity/polarity">Polarity</a></li>
+  <li class="c018"><a href="/article/21-0965-polarization-of-light/polarization_of_light">Polarization of Light</a></li>
+  <li class="c018"><a href="/article/21-1011-s3/pole__william">Pole, William</a></li>
+  <li class="c018"><a href="/article/22-0038-s5/polygon">Polygon</a></li>
+  <li class="c018"><a href="/article/22-0041-s2/polygonal_numbers">Polygonal Numbers</a></li>
+  <li class="c018"><a href="/article/22-0041-s4/polyhedral_numbers">Polyhedral Numbers</a></li>
+  <li class="c018"><a href="/article/22-0041-s5/polyhedron">Polyhedron</a></li>
+  <li class="c018"><a href="/article/22-0116-s6/porism">Porism</a></li>
+  <li class="c018"><a href="/article/22-0219-potentiometer/potentiometer">Potentiometer</a></li>
+  <li class="c018"><a href="/article/22-0238-power-transmission/power_transmission">Power Transmission</a></li>
+  <li class="c018"><a href="/article/22-0375-prism/prism">Prism</a></li>
+  <li class="c018"><a href="/article/22-0390-probability/probability">Probability</a></li>
+  <li class="c018"><a href="/article/22-0442-s3/projection">Projection</a></li>
+  <li class="c018"><a href="/article/22-0452-s5/prony__gaspard_clair_françois_marie_riche_de">Prony, G. C. F. M. R. de</a></li>
+  <li class="c018"><a href="/article/22-0656-s10/pulley">Pulley</a></li>
+  <li class="c018"><a href="/article/22-0661-s3/pump">Pump</a></li>
+  <li class="c018"><a href="/article/22-0709-pyrometer/pyrometer">Pyrometer</a></li>
+  <li class="c018"><a href="/article/22-0722-quadratrix/quadratrix">Quadratrix</a></li>
+  <li class="c018"><a href="/article/22-0728-s4/quarrying">Quarrying</a></li>
+  <li class="c018"><a href="/article/22-0734-s4/quaternions">Quaternions</a></li>
+  <li class="c018"><a href="/article/22-0802-s6/radiation__theory_of">Radiation, Theory of</a></li>
+  <li class="c018"><a href="/article/22-0823-radiometer/radiometer">Radiometer</a></li>
+  <li class="c018"><a href="/article/22-0832-rafter/rafter">Rafter</a></li>
+  <li class="c018"><a href="/article/22-0836-railways/railways">Railways</a></li>
+  <li class="c018"><a href="/article/22-0905-s2/random">Random</a></li>
+  <li class="c018"><a href="/article/22-0911-s2/rankine__william_john_macquorn">Rankine, W. J. M.</a></li>
+  <li class="c018"><a href="/article/22-0946-rawlinson-sir-robert/rawlinson__sir_robert">Rawlinson, Sir Robert</a></li>
+  <li class="c018"><a href="/article/22-0971-s6/reclamation_of_land">Reclamation of Land</a></li>
+  <li class="c018"><a href="/article/23-0015-s2/reflection_of_light">Reflection of Light</a></li>
+  <li class="c018"><a href="/article/23-0038-s3/refraction">Refraction</a></li>
+  <li class="c018">Refrigerating and Ice Making</li>
+  <li class="c018"><a href="/article/23-0067-s4/reid__sir_robert_gillespie">Reid, Sir Robert G.</a></li>
+  <li class="c018"><a href="/article/23-0118-rennie/rennie__john">Rennie, John</a></li>
+  <li class="c018"><a href="/article/23-0391-s4/river_engineering">River Engineering</a></li>
+  <li class="c018"><a href="/article/23-0404-s2/rivet">Rivet</a></li>
+  <li class="c018"><a href="/article/23-0405-s5/roads_and_streets">Roads and Streets</a></li>
+  <li class="c018"><a href="/article/23-0472-s3/roebling__john_augustus">Roebling, J. A.</a></li>
+  <li class="c018"><a href="/article/23-0490-s3/rolling-mill">Rolling-mill</a></li>
+  <li class="c018"><a href="/article/23-0731-s2/roofs">Roofs</a></li>
+  <li class="c018"><a href="/article/23-0811-s4/roulette">Roulette</a></li>
+  <li class="c018"><a href="/article/23-1040-s2/safes__strong-rooms_and_vaults">Safes, Strong-rooms and Vaults</a></li>
+  <li class="c018"><a href="/article/23-1043-safety-lamp/safety-lamp">Safety-lamp</a></li>
+  <li class="c018"><a href="/article/24-0272-s2/saw">Saw</a></li>
+  <li class="c018"><a href="/article/24-0294-s3/scaffold">Scaffold, Scaffolding</a></li>
+  <li class="c018"><a href="/article/24-0316-scantling/scantling">Scantling</a></li>
+  <li class="c018"><a href="/article/24-0341-schichau-ferdinand/schichau__ferdinand">Schichau, Ferdinand</a></li>
+  <li class="c018"><a href="/article/24-0414-s5/science">Science</a></li>
+  <li class="c018"><a href="/article/24-0425-s3/scissors">Scissors</a></li>
+  <li class="c018"><a href="/article/24-0497-s4/screw">Screw</a></li>
+  <li class="c018"><a href="/article/24-0645-semaphore/semaphore">Semaphore</a></li>
+  <li class="c018"><a href="/article/24-0682-s4/seppings__sir_robert">Seppings, Sir Robert</a></li>
+  <li class="c018"><a href="/article/24-0698-series/series">Series</a></li>
+  <li class="c018"><a href="/article/24-0705-serpentine-mineral/serpentine__mineral_">Serpentine</a></li>
+  <li class="c018"><a href="/article/24-0765-s4/sewerage">Sewerage</a></li>
+  <li class="c018"><a href="/article/24-0774-sewing-machines/sewing_machines">Sewing Machines</a></li>
+  <li class="c018"><a href="/article/24-0779-sextant/sextant">Sextant</a></li>
+  <li class="c018"><a href="/article/24-0788-s3/shadoof">Shadoof</a></li>
+  <li class="c018"><a href="/article/24-0788-s4/shadow">Shadow</a></li>
+  <li class="c018"><a href="/article/24-0796-s3/shaft-sinking">Shaft-sinking</a></li>
+  <li class="c018"><a href="/article/24-0847-shears/shears">Shears</a></li>
+  <li class="c018"><a href="/article/24-0894-s8/ship">Ship</a></li>
+  <li class="c018"><a href="/article/24-0984-s2/shipbuilding">Shipbuilding</a></li>
+  <li class="c018"><a href="/article/24-1080-s3/shoring">Shoring</a></li>
+  <li class="c018"><a href="/article/24-1090-shovel/shovel">Shovel</a></li>
+  <li class="c018"><a href="/article/24-1100-shuttle/shuttle">Shuttle</a></li>
+  <li class="c018"><a href="/article/25-0062-s7/siemens__sir_william">Siemens, Sir William (Karl Wilhelm)</a></li>
+  <li class="c018"><a href="/article/25-0072-s5/sieve">Sieve</a></li>
+  <li class="c018"><a href="/article/25-0086-s1/signal">Signal</a></li>
+  <li class="c018"><a href="/article/25-0128-s3/silver">Silver</a></li>
+  <li class="c018"><a href="/article/25-0167-siphon/siphon">Siphon, or Syphon</a></li>
+  <li class="c018"><a href="/article/25-0256-sleeper/sleeper">Sleeper</a></li>
+  <li class="c018"><a href="/article/25-0257-s4/sleigh">Sleigh, Sled, or Sledge</a></li>
+  <li class="c018"><a href="/article/25-0266-s5/smeaton__john">Smeaton, John</a></li>
+  <li class="c018"><a href="/article/25-0291-s6/smoke">Smoke</a></li>
+  <li class="c018"><a href="/article/25-0374-solder/solder">Solder</a></li>
+  <li class="c018"><a href="/article/25-0453-s6/sound">Sound</a></li>
+  <li class="c018"><a href="/article/25-0476-sounding/sounding">Sounding</a></li>
+  <li class="c018"><a href="/article/25-0546-spade/spade">Spade</a></li>
+  <li class="c018"><a href="/article/25-0641-s2/spectroscopy">Spectroscopy</a></li>
+  <li class="c018"><a href="/article/25-0654-speculum/speculum">Speculum</a></li>
+  <li class="c018"><a href="/article/25-0669-s3/sphere">Sphere</a></li>
+  <li class="c018"><a href="/article/25-0671-s3/spherical_harmonics">Spherical Harmonics</a></li>
+  <li class="c018"><a href="/article/25-0683-spheroid/spheroid">Spheroid</a></li>
+  <li class="c018">Sphereometer</li>
+  <li class="c018"><a href="/article/25-0714-s3/spiral">Spiral</a></li>
+  <li class="c018"><a href="/article/25-0820-s3/starley__james">Starley, James</a></li>
+  <li class="c018"><a href="/article/25-0828-s3/statics">Statics</a></li>
+  <li class="c018"><a href="/article/25-0883-s4/steel_construction">Steel Construction</a></li>
+  <li class="c018"><a href="/article/25-0840-s3/steam_engine">Steam Engine</a></li>
+  <li class="c018"><a href="/article/25-0912-s3/stephenson__george">Stephenson, George</a></li>
+  <li class="c018"><a href="/article/25-0913-s1/stephenson__robert">Stephenson, Robert</a></li>
+  <li class="c018"><a href="/article/25-0919-s2/stereoscope">Stereoscope</a></li>
+  <li class="c018"><a href="/article/25-0931-s3/stevenson__robert">Stevenson, Robert</a></li>
+  <li class="c018"><a href="/article/25-0982-stone/stone">Stone</a></li>
+  <li class="c018"><a href="/article/25-1033-s4/strength_of_materials">Strength of Materials</a></li>
+  <li class="c018"><a href="/article/25-1070-strutt-jedediah/strutt__jedediah">Strutt, Jedediah</a></li>
+  <li class="c018"><a href="/article/25-1075-stucco/stucco">Stucco</a></li>
+  <li class="c018"><a href="/article/26-0038-suez-canal/suez_canal">Suez Canal</a></li>
+  <li class="c018"><a href="/article/26-0111-sun-copying/sun_copying">Sun Copying, or Photo Copying</a></li>
+  <li class="c018"><a href="/article/26-0135-surface/surface">Surface</a></li>
+  <li class="c018"><a href="/article/26-0160-s3/surveying">Surveying</a></li>
+  <li class="c018"><a href="/article/26-0346-s2/table__mathematical">Table, Mathematical</a></li>
+  <li class="c018"><a href="/article/26-0362-s5/tacheometry">Tacheometry</a></li>
+  <li class="c018"><a href="/article/26-0419-s2/tangye__sir_richard">Tangye, Sir Richard</a></li>
+  <li class="c018"><a href="/article/26-0516-technical-education/technical_education">Technical Education</a></li>
+  <li class="c018"><a href="/article/26-0539-telegraph/telegraph">Telegraph</a></li>
+  <li class="c018"><a href="/article/26-0576-telephone/telephone">Telephone</a></li>
+  <li class="c018"><a href="/article/26-0603-s6/telford__thomas">Telford, Thomas</a></li>
+  <li class="c018"><a href="/article/26-0704-s2/tetrahedron">Tetrahedron</a></li>
+  <li class="c018"><a href="/article/26-0803-s2/theodolite">Theodolite</a></li>
+  <li class="c018"><a href="/article/26-0848-s2/thermodynamics">Thermodynamics</a></li>
+  <li class="c018"><a href="/article/26-0854-thermoelectricity/thermoelectricity">Thermoelectricity</a></li>
+  <li class="c018"><a href="/article/26-0861-thermometry/thermometry">Thermometry</a></li>
+  <li class="c018"><a href="/article/26-0907-thomas-sidney-gilchrist/thomas__sidney_gilchrist">Thomas, Sidney Gilchrist</a></li>
+  <li class="c018"><a href="/article/26-0978-s2/tide">Tide</a></li>
+  <li class="c018"><a href="/article/26-1018-timber/timber">Timber</a></li>
+  <li class="c018"><a href="/article/26-1023-s3/time__measurement_of">Time, Measurement of</a></li>
+  <li class="c018"><a href="/article/26-1027-s2/time__standard">Time, Standard</a></li>
+  <li class="c018"><a href="/article/26-1035-tin/tin">Tin</a></li>
+  <li class="c018"><a href="/article/26-1040-tin-plate-and-terne-plate/tin-plate_and_terne-plate">Tin-plate and Terne-plate</a></li>
+  <li class="c018"><a href="/article/26-1046-tire/tire">Tire</a></li>
+  <li class="c018"><a href="/article/27-0021-tongs/tongs">Tongs</a></li>
+  <li class="c018"><a href="/article/27-0028-s3/tool">Tool</a></li>
+  <li class="c018"><a href="/article/27-0064-s5/topography">Topography</a></li>
+  <li class="c018"><a href="/article/27-0133-s2/traction">Traction</a></li>
+  <li class="c018"><a href="/article/27-0174-s7/tramway">Tramway</a></li>
+  <li class="c018"><a href="/article/27-0188-transformers/transformers">Transformers</a></li>
+  <li class="c018"><a href="/article/27-0249-s3/tredgold__thomas">Tredgold, Thomas</a></li>
+  <li class="c018"><a href="/article/27-0271-s3/trevithick__richard">Trevithick, Richard</a></li>
+  <li class="c018"><a href="/article/27-0273-triangle-music/triangle__music_">Triangle</a></li>
+  <li class="c018"><a href="/article/27-0282-tricycle/tricycle">Tricycle</a></li>
+  <li class="c018"><a href="/article/27-0286-s3/trigonometry">Trigonometry</a></li>
+  <li class="c018"><a href="/article/27-0307-s5/trisectrix">Trisectrix</a></li>
+  <li class="c018"><a href="/article/27-0342-s5/trumpet">Trumpet, Speaking and Hearing</a></li>
+  <li class="c018"><a href="/article/27-0371-s1/tube">Tube</a></li>
+  <li class="c018"><a href="/article/27-0416-tunnel/tunnel">Tunnel</a></li>
+  <li class="c018"><a href="/article/27-0428-s6/turbine">Turbine</a></li>
+  <li class="c018"><a href="/article/27-0510-tweezers/tweezers">Tweezers</a></li>
+  <li class="c018"><a href="/article/27-0520-s2/typewriter">Typewriter</a></li>
+  <li class="c018"><a href="/article/27-0761-s2/units__dimensions_of">Units, Dimensions of</a></li>
+  <li class="c018"><a href="/article/27-0763-s2/units__physical">Units, Physical</a></li>
+  <li class="c018"><a href="/article/27-0860-s5/vacuum_tube">Vacuum Tube</a></li>
+  <li class="c018"><a href="/article/27-0900-s2/valve">Valve</a></li>
+  <li class="c018"><a href="/article/27-0923-s5/vaporization">Vaporization</a></li>
+  <li class="c018"><a href="/article/27-0938-variations/variations">Variations, of Calculus</a></li>
+  <li class="c018"><a href="/article/27-0990-s7/vector_analysis">Vector Analysis</a></li>
+  <li class="c018"><a href="/article/27-1036-s3/ventilation">Ventilation</a></li>
+  <li class="c018"><a href="/article/27-1059-s5/vernier__pierre">Vernier</a></li>
+  <li class="c018"><a href="/article/28-0146-vision/vision">Vision</a></li>
+  <li class="c018"><a href="/article/28-0222-voltmeter/voltmeter">Voltmeter</a></li>
+  <li class="c018"><a href="/article/28-0259-wagon/wagon">Wagon or Waggon</a></li>
+  <li class="c018"><a href="/article/28-0399-s1/water_motors">Water Motors</a></li>
+  <li class="c018"><a href="/article/28-0404-water-supply/water_supply">Water Supply</a></li>
+  <li class="c018"><a href="/article/28-0432-watt-james/watt__james">Watt, James</a></li>
+  <li class="c018"><a href="/article/28-0437-wattmeter/wattmeter">Wattmeter</a></li>
+  <li class="c018"><a href="/article/28-0442-s4/wave">Wave</a></li>
+  <li class="c018"><a href="/article/28-0483-wedge/wedge">Wedge</a></li>
+  <li class="c018"><a href="/article/28-0486-weighing-machines/weighing_machines">Weighing Machines</a></li>
+  <li class="c018"><a href="/article/28-0495-weights-and-measures/weights_and_measures">Weights and Measures</a></li>
+  <li class="c018"><a href="/article/28-0514-weir/weir">Weir</a></li>
+  <li class="c018"><a href="/article/28-0518-s7/welding">Welding</a></li>
+  <li class="c018"><a href="/article/28-0522-well/well">Well</a></li>
+  <li class="c018">Wheatstone’s Bridge</li>
+  <li class="c018"><a href="/article/28-0622-s3/white__sir_william_henry">White, Sir William H.</a></li>
+  <li class="c018"><a href="/article/28-0631-s2/whitney__eli">Whitney, Eli</a></li>
+  <li class="c018"><a href="/article/28-0636-whitworth-sir-joseph/whitworth__sir_joseph">Whitworth, Sir Joseph</a></li>
+  <li class="c018"><a href="/article/28-0667-wilkinson-john/wilkinson__john">Wilkinson, John</a></li>
+  <li class="c018"><a href="/article/28-0730-windmill/windmill">Windmill</a></li>
+  <li class="c018"><a href="/article/28-0779-witch-of-agnesi/witch_of_agnesi">Witch of Agnesi</a></li>
+  <li class="c018"><a href="/article/28-1002-zero/zero">Zero</a></li>
+  <li class="c018"><a href="/article/28-1008-zinc/zinc">Zinc</a></li>
+</ul></details>
+
+<div>
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

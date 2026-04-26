@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chemistry &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter LV</span>Chemistry</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Triumphs of Chemistry</a></li></ol></div>
+    <div class="body-text">
+
+
+<p>We have traveled far since Chemistry
+had as its simple basis four
+elements: fire, air, water, and
+earth, regarded as perfect and complete
+since they embody every essence of which
+a body was supposedly capable: for fire
+was hot and dry; air, hot and wet; water,
+cold and wet; earth, cold and dry. We
+have outlived the belief in the philosopher’s
+stone which animated the Middle
+Ages. Yet these fallacies are but manifestations
+of the effort—old as thought—to
+reduce the manifoldness of matter to
+primordial elements, from which, in one
+form or other, every substance should
+be capable of being built up. The ultimate
+problem of chemistry is, therefore,
+the constitution of matter, and the fight
+around this is waged on the marches of the
+physical and chemical sciences.</p>
+
+<p><span class="shoulder-heading" id="sh-1">Triumphs of Chemistry</span>The great commercial triumphs of
+chemistry are, of course, those due to the
+conquest of waste, to the utilization of
+by-products which
+for thousands of
+years had been regarded
+as useless.
+We are all familiar with the uses to which
+the by-products of coal-tar are put; we
+swallow one derivative to relieve headache,
+we may sugar our tea and flavour
+our ice-cream with others; with one derivative
+we clean our clothes which have
+been dyed with others; and we disinfect
+them with yet another. Phenacetin,
+saccharin, synthetic vanilla, benzine,
+naphthaline, analine dyes, carbolic acid,
+are only a few of the many substances
+won to the consumer by the chemist in
+his laboratory; and this is only one field
+of research. The chemist is always busy
+(as now with rubber, camphor, etc.),
+working at the synthesis of natural products
+in the hope that he will be able to
+find a means of manufacturing them in
+quantities at a cost which will make
+them, commercially possible, and thus
+lessen the drain on the world’s natural
+supply. In almost every detail of our
+lives this science enters so familiarly that
+we forget that the many things made
+possible by the chemist do not simply
+“happen,” but are the result of laborious
+research in the laboratory.</p>
+
+<p>It is not possible to attain proficiency
+in any experimental science without laboratory
+work; but to the student of
+chemistry the lucid and original articles
+in the Britannica will provide a most
+useful commentary on his work with test-tube
+and burner. The general reader will
+find in these articles an admirable survey
+of the subject, and of its bearings on
+problems of daily life. The main article
+<span class="sc"><a href="/article/06-0046-chemistry/chemistry">Chemistry</a></span> (Vol. 6, p. 33) generally
+covers the ground, and serves as an introduction
+to separate articles on important
+divisions of the subject. Following
+its arrangement the scheme outlined
+below suggests a useful course of reading.</p>
+
+<p>(i.) Chemistry, <i>History</i> (Vol. 6, p. 33).
+Supplementary to this section are the articles
+<span class="sc"><a href="/article/01-0559-s3/alchemy">Alchemy</a></span> (Vol. 1, p. 519), <span class="sc"><a href="/article/09-0270-element/element">Element</a></span>
+(Vol. 9, p. 253), <span class="sc"><a href="/article/18-0684-s2/molecule">Molecule</a></span> (Vol.
+18, p. 654), <span class="sc"><a href="/article/02-0918-s4/atom">Atom</a></span> (Vol. 2, p. 870); and
+reference may also be made to <span class="sc"><a href="/article/18-0059-medicine/medicine">Medicine</a></span>,
+<i>Iatro-chemical School</i> (Vol. 18, p. 50).</p>
+
+<p>(ii.) Chemistry, <i>General Principles</i>
+(Vol. 6, p. 39), with reference to <span class="sc"><a href="/article/27-0873-valency/valency">Valency</a></span>
+(Vol. 27, p. 847), <span class="sc"><a href="/article/06-0039-chemical-action/chemical_action">Chemical Action</a></span> (Vol.
+6, p. 26), <span class="sc"><a href="/article/05-0520-catalysis/catalysis">Catalysis</a></span> (Vol. 5, p. 501),
+<span class="sc"><a href="/article/14-0914-isomerism/isomerism">Isomerism</a></span> (Vol. 14, p. 881), <span class="sc"><a href="/article/25-0914-s6/stereo-isomerism">Stereo-isomerism</a></span>
+(Vol. 25, p. 890), <span class="sc"><a href="/article/22-0810-radioactivity/radioactivity">Radioactivity</a></span>
+(Vol. 22, p. 793).</p>
+
+<p>(iii.) <i>Inorganic Chemistry</i> (Vol. 6, p.
+44). See also <span class="sc"><a href="/article/01-0176-s4/acid">Acid</a></span> (Vol. 1, p. 145), <span class="sc"><a href="/article/01-0716-s3/alkali">Alkali</a></span>
+(Vol. 1, p. 674), and the list of 138
+elements and compounds under this
+heading below.</p>
+
+<p>(iv.) <i>Organic Chemistry</i> (Vol. 6, p. 47),
+with all the 240 articles enumerated under
+this heading below, especially that on
+<span class="sc"><a href="/article/22-0043-s2/polymethylenes">Polymethylenes</a></span> (Vol. 22, p. 29); see
+also <span class="sc"><a href="/article/10-0093-s2/explosives">Explosives</a></span> (Vol. 10, p. 81).</p>
+
+<p>(v.) <i>Analytical Chemistry</i> (Vol. 6, p. 60),
+with which may be consulted, <span class="sc"><a href="/article/04-0101-blow-gun/blow-gun">Blow Pipe</a></span>
+(Vol. 4, p. 89), <span class="sc"><a href="/article/08-0335-distillation/distillation">Distillation</a></span> (Vol. 8,
+p. 318), <span class="sc"><a href="/article/09-0234-electrolysis/electrolysis">Electrolysis</a></span> (Vol. 9, p. 217),
+<span class="sc"><a href="/article/14-0510-indicator/indicator">Indicator</a></span> (Vol. 14, p. 482), <span class="sc"><a href="/article/25-0384-s5/solution">Solution</a></span>
+(Vol. 25, p. 368), <span class="sc"><a href="/article/25-0963-s5/stoichiometry">Stoichiometry</a></span> (Vol.
+25, p. 939).</p>
+
+<p>(vi.) <i>Physical Chemistry</i> (Vol. 6, p. 65)
+supplemented by <span class="sc"><a href="/article/09-0415-energetics/energetics">Energetics</a></span> (Vol. 9,
+p. 390), <span class="sc"><a href="/article/06-0039-chemical-action/chemical_action">Chemical Action</a></span> (Vol. 6, p. 26),
+<span class="sc"><a href="/article/26-0844-s4/thermochemistry">Thermochemistry</a></span> (Vol. 26, p. 804),
+<span class="sc"><a href="/article/25-0384-s5/solution">Solution</a></span> (Vol. 25, p. 368), <span class="sc"><a href="/article/08-0335-distillation/distillation">Distillation</a></span>
+(Vol. 8, p. 318), <span class="sc"><a href="/article/06-0868-condensation-of-gases/condensation_of_gases">Condensation of
+Gases</a></span> (Vol. 6, p. 844), with the important
+articles <span class="sc"><a href="/article/21-0506-photochemistry/photochemistry">Photochemistry</a></span> (Vol. 21, p.
+484), <span class="sc"><a href="/article/09-0225-electrochemistry/electrochemistry">Electrochemistry</a></span> (Vol. 9, p.
+208), <span class="sc"><a href="/article/18-0222-s2/metallurgy">Metallurgy</a></span> (Vol. 18, p. 203),
+<span class="sc"><a href="/article/09-0249-electrometallurgy/electrometallurgy">Electrometallurgy</a></span> (Vol. 9, p. 232),
+<span class="sc"><a href="/article/02-0822-s3/assaying">Assaying</a></span> (Vol. 2, p. 776).</p>
+
+<p>Among the contributors to the chemical
+department of the Britannica are:
+Professor Ernest Rutherford, of the
+University of Manchester; Walter Nernst,
+professor of physical chemistry in the
+University of Berlin; W. C. D. Whetham,
+author of <i>Theory of Solution</i>, etc.; Prof.
+James Walker of the University of Edinburgh;
+Johannes Diderik van der Waals,
+professor of physics, University of Amsterdam;
+W. R. E. Hodgkinson, professor
+of chemistry and physics, Ordnance
+College, Woolwich, perhaps the greatest
+living authority on explosives.</p>
+
+<p>The following is a classified list of
+the articles on Chemistry which are contained
+in the Britannica. For discussions
+of the application of chemistry to
+photography, the reader should consult
+the article <span class="sc"><a href="/article/21-0507-photography/photography">Photography</a></span> (Vol. 21, p.
+485), of which the chemical section is
+by Sir <a href="/contributors.html?q=Sir+William+de+Wiveleslie+Abney">W. de W. Abney</a>, adviser in
+Science to the English Board of Education.</p>
+
+<div>
+  
+  <h4 class="c016">CHEMISTRY—GENERAL</h4>
+</div>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0338-s4/affinity__chemical">Affinity, Chemical</a></li>
+  <li class="c018"><a href="/article/01-0559-s3/alchemy">Alchemy</a></li>
+  <li class="c018"><a href="/article/01-0580-alembic/alembic">Alembic</a></li>
+  <li class="c018"><a href="/article/01-0746-s2/allotropy">Allotropy</a></li>
+  <li class="c018"><a href="/article/01-0927-s6/amorphism">Amorphism</a></li>
+  <li class="c018"><a href="/article/01-0965-s3/analysis">Analysis</a></li>
+  <li class="c018"><a href="/article/02-0822-s3/assaying">Assaying</a></li>
+  <li class="c018"><a href="/article/02-0908-s1/atmolysis">Atmolysis</a></li>
+  <li class="c018"><a href="/article/02-0918-s4/atom">Atom</a></li>
+  <li class="c018"><a href="/article/04-0102-blowpipe/blowpipe">Blowpipe</a></li>
+  <li class="c018"><a href="/article/05-0520-catalysis/catalysis">Catalysis</a></li>
+  <li class="c018"><a href="/article/06-0039-chemical-action/chemical_action">Chemical Action</a></li>
+  <li class="c018"><a href="/article/06-0046-chemistry/chemistry">Chemistry</a></li>
+  <li class="c018"><a href="/article/06-0780-combustion/combustion">Combustion</a></li>
+  <li class="c018"><a href="/article/06-0873-condenser/condenser">Condenser</a></li>
+  <li class="c018"><a href="/article/07-0591-crystallization/crystallization">Crystallization</a></li>
+  <li class="c018"><a href="/article/07-0938-decolourizing/decolourizing">Decolourizing</a></li>
+  <li class="c018"><a href="/article/08-0109-desiccation/desiccation">Desiccation</a></li>
+  <li class="c018"><a href="/article/08-0172-dialysis/dialysis">Dialysis</a></li>
+  <li class="c018"><a href="/article/08-0335-dissociation/dissociation">Dissociation</a></li>
+  <li class="c018"><a href="/article/08-0335-distillation/distillation">Distillation</a></li>
+  <li class="c018"><a href="/article/09-0225-electrochemistry/electrochemistry">Electrochemistry</a></li>
+  <li class="c018"><a href="/article/09-0234-electrolysis/electrolysis">Electrolysis</a></li>
+  <li class="c018"><a href="/article/09-0270-element/element">Element</a></li>
+  <li class="c018"><a href="/article/09-0298-elixir/elixir">Elixir</a></li>
+  <li class="c018"><a href="/article/09-0759-s2/equivalent">Equivalent</a></li>
+  <li class="c018"><a href="/article/10-0093-s2/explosives">Explosives</a></li>
+  <li class="c018"><a href="/article/10-0487-s4/flame">Flame</a></li>
+  <li class="c018"><a href="/article/10-0693-formula/formula">Formula</a></li>
+  <li class="c018"><a href="/article/11-0499-gas/gas">Gas</a></li>
+  <li class="c018"><a href="/article/14-0126-s3/hydrolysis">Hydrolysis</a></li>
+  <li class="c018"><a href="/article/14-0227-iatrochemistry/iatrochemistry">Iatrochemistry</a></li>
+  <li class="c018"><a href="/article/14-0510-indicator/indicator">Indicator</a></li>
+  <li class="c018"><a href="/article/14-0914-isomerism/isomerism">Isomerism</a></li>
+  <li class="c018"><a href="/article/17-0908-matrass/matrass">Matrass</a></li>
+  <li class="c018"><a href="/article/18-0684-s2/molecule">Molecule</a></li>
+  <li class="c018"><a href="/article/21-0506-photochemistry/photochemistry">Photochemistry</a></li>
+  <li class="c018"><a href="/article/21-0624-pigments/pigments">Pigments</a></li>
+  <li class="c018"><a href="/article/22-0711-pyrophorus/pyrophorus">Pyrophorus</a></li>
+  <li class="c018"><a href="/article/22-0810-radioactivity/radioactivity">Radioactivity</a></li>
+  <li class="c018"><a href="/article/25-0384-s5/solution">Solution</a></li>
+  <li class="c018"><a href="/article/25-0914-s5/stereochemistry">Stereochemistry</a></li>
+  <li class="c018"><a href="/article/25-0914-s6/stereo-isomerism">Stereo-isomerism</a></li>
+  <li class="c018"><a href="/article/25-0963-s5/stoichiometry">Stoichiometry</a></li>
+  <li class="c018"><a href="/article/26-0844-s4/thermochemistry">Thermochemistry</a></li>
+  <li class="c018"><a href="/article/27-0873-valency/valency">Valency</a></li>
+</ul>
+
+<h4 class="c016">INORGANIC CHEMISTRY</h4>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0176-s4/acid">Acid</a></li>
+  <li class="c018"><a href="/article/01-0638-s4/algaroth__powder_of">Algaroth, Powder of</a></li>
+  <li class="c018"><a href="/article/01-0716-s3/alkali">Alkali</a></li>
+  <li class="c018"><a href="/article/01-0716-s4/alkali_manufacture">Alkali Manufacture</a></li>
+  <li class="c018"><a href="/article/01-0727-s2/alkaline_earths">Alkaline Earths</a></li>
+  <li class="c018"><a href="/article/01-0812-s5/alum">Alum</a></li>
+  <li class="c018"><a href="/article/01-0813-aluminium/aluminium">Aluminium</a></li>
+  <li class="c018"><a href="/article/01-0824-s3/amalgam">Amalgam</a></li>
+  <li class="c018"><a href="/article/01-0912-s3/ammonia">Ammonia</a></li>
+  <li class="c018"><a href="/article/02-0139-s5/antimony">Antimony</a></li>
+  <li class="c018"><a href="/article/02-0513-s8/argon">Argon</a></li>
+  <li class="c018"><a href="/article/02-0693-s2/arsenic">Arsenic</a></li>
+  <li class="c018"><a href="/article/03-0097-s2/azoimide">Azoimide, or Hydrazoic Acid</a></li>
+  <li class="c018"><a href="/article/03-0100-s2/azoth">Azoth</a></li>
+  <li class="c018"><a href="/article/03-0419-barium/barium">Barium</a></li>
+  <li class="c018"><a href="/article/03-0475-base/base">Base</a></li>
+  <li class="c018"><a href="/article/03-0838-beryllium/beryllium">Beryllium, or Glucinum</a></li>
+  <li class="c018"><a href="/article/03-0935-bichromates-and-chromates/bichromates_and_chromates">Bichromates and Chromates</a></li>
+  <li class="c018"><a href="/article/04-0022-bismuth/bismuth">Bismuth</a></li>
+  <li class="c018"><a href="/article/04-0027-bittern-bird/bittern__bird_">Bittern</a></li>
+  <li class="c018"><a href="/article/04-0258-borax/borax">Borax</a></li>
+  <li class="c018"><a href="/article/04-0266-s2/boric_acid">Boric Acid, or Boracic Acid</a></li>
+  <li class="c018"><a href="/article/04-0282-boron/boron">Boron</a></li>
+  <li class="c018"><a href="/article/04-0591-s7/brimstone">Brimstone</a></li>
+  <li class="c018"><a href="/article/04-0655-s3/bromine">Bromine</a></li>
+  <li class="c018"><a href="/article/04-0956-s2/cadmium">Cadmium</a></li>
+  <li class="c018"><a href="/article/04-0970-s2/caesium">Caesium</a></li>
+  <li class="c018"><a href="/article/04-0997-s2/calcium">Calcium</a></li>
+  <li class="c018"><a href="/article/05-0071-calomel/calomel">Calomel</a></li>
+  <li class="c018"><a href="/article/05-0317-carbide/carbide">Carbide</a></li>
+  <li class="c018"><a href="/article/05-0318-carbon/carbon">Carbon</a></li>
+  <li class="c018"><a href="/article/05-0321-carbonates/carbonates">Carbonates</a></li>
+  <li class="c018"><a href="/article/05-0322-carbon-bisulphide/carbon_bisulphide__cs">Carbon Bisulphide</a></li>
+  <li class="c018"><a href="/article/05-0322-carbonic-acid/carbonic_acid">Carbonic Acid</a></li>
+  <li class="c018"><a href="/article/05-0326-carborundum/carborundum">Carborundum</a></li>
+  <li class="c018"><a href="/article/05-0581-caustic/caustic">Caustic</a></li>
+  <li class="c018"><a href="/article/05-0797-cerium/cerium">Cerium</a></li>
+  <li class="c018"><a href="/article/05-0892-charcoal/charcoal">Charcoal</a></li>
+  <li class="c018"><a href="/article/06-0270-chlorates/chlorates">Chlorates</a></li>
+  <li class="c018"><a href="/article/06-0270-chlorine/chlorine">Chlorine</a></li>
+  <li class="c018"><a href="/article/06-0312-chromium/chromium">Chromium</a></li>
+  <li class="c018"><a href="/article/06-0623-cobalt/cobalt">Cobalt</a></li>
+  <li class="c018"><a href="/article/06-0684-colcothar/colcothar">Colcothar</a></li>
+  <li class="c018"><a href="/article/06-0762-columbium/columbium">Columbium, or Niobium</a></li>
+  <li class="c018"><a href="/article/07-0119-copper/copper">Copper</a></li>
+  <li class="c018"><a href="/article/07-0127-copperas/copperas">Copperas</a></li>
+  <li class="c018"><a href="/article/07-0214-corrosive-sublimate/corrosive_sublimate">Corrosive Sublimate</a></li>
+  <li class="c018"><a href="/article/08-0225-didymium/didymium">Didymium</a></li>
+  <li class="c018"><a href="/article/08-0826-earth/earth">Earth</a></li>
+  <li class="c018"><a href="/article/09-0741-epsom-salts/epsom_salts">Epsom Salts</a></li>
+  <li class="c018"><a href="/article/09-0765-s4/erbium">Erbium</a></li>
+  <li class="c018"><a href="/article/09-0990-europium/europium">Europium</a></li>
+  <li class="c018"><a href="/article/10-0598-fluorine/fluorine">Fluorine</a></li>
+  <li class="c018"><a href="/article/11-0401-s3/gadolinium">Gadolinium</a></li>
+  <li class="c018"><a href="/article/11-0439-gallium/gallium">Gallium</a></li>
+  <li class="c018"><a href="/article/11-0798-germanium/germanium">Germanium</a></li>
+  <li class="c018"><a href="/article/12-0131-s5/glauber_s_salt">Glauber’s Salt</a></li>
+  <li class="c018"><a href="/article/12-0155-glucinum/glucinum">Glucinum</a></li>
+  <li class="c018"><a href="/article/12-0209-gold/gold">Gold</a></li>
+  <li class="c018"><a href="/article/12-0748-s3/gunpowder">Gunpowder</a></li>
+  <li class="c018"><a href="/article/12-0890-halogens/halogens">Halogens</a></li>
+  <li class="c018"><a href="/article/13-0050-s2/hartshorn__spirits_of">Hartshorn, Spirits of</a></li>
+  <li class="c018"><a href="/article/13-0246-helium/helium">Helium</a></li>
+  <li class="c018"><a href="/article/14-0046-hydrate/hydrate">Hydrate</a></li>
+  <li class="c018"><a href="/article/14-0122-hydrazine/hydrazine">Hydrazine</a></li>
+  <li class="c018"><a href="/article/14-0125-s1/hydrochloric_acid">Hydrochloric Acid</a></li>
+  <li class="c018"><a href="/article/14-0125-s3/hydrogen">Hydrogen</a></li>
+  <li class="c018"><a href="/article/14-0183-hydroxylamine/hydroxylamine__nh">Hydroxylamine</a></li>
+  <li class="c018"><a href="/article/14-0220-hyposulphite-of-soda/hyposulphite_of_soda">Hyposulphite of Soda</a></li>
+  <li class="c018"><a href="/article/14-0238-ice/ice">Ice</a></li>
+  <li class="c018"><a href="/article/14-0514-indium/indium">Indium</a></li>
+  <li class="c018"><a href="/article/14-0755-iodine/iodine">Iodine</a></li>
+  <li class="c018"><a href="/article/14-0829-s4/iron">Iron</a></li>
+  <li class="c018"><a href="/article/15-0748-kelp/kelp">Kelp</a></li>
+  <li class="c018"><a href="/article/15-0785-s6/kermes">Kermes</a></li>
+  <li class="c018"><a href="/article/16-0153-lamp-black/lamp-black">Lamp-black</a></li>
+  <li class="c018"><a href="/article/16-0207-s5/lanthanum">Lanthanum</a></li>
+  <li class="c018"><a href="/article/16-0334-s6/lead">Lead</a></li>
+  <li class="c018"><a href="/article/16-0715-s2/lime">Lime</a></li>
+  <li class="c018"><a href="/article/16-0807-lithium/lithium">Lithium</a></li>
+  <li class="c018"><a href="/article/17-0334-s5/magnesium">Magnesium</a></li>
+  <li class="c018"><a href="/article/17-0586-s3/manganese">Manganese</a></li>
+  <li class="c018"><a href="/article/18-0173-mercury-deity/mercury__deity_">Mercury</a></li>
+  <li class="c018"><a href="/article/18-0403-microcosmic-salt/microcosmic_salt">Microcosmic Salt</a></li>
+  <li class="c018"><a href="/article/18-0711-molybdenum/molybdenum">Molybdenum</a></li>
+  <li class="c018"><a href="/article/19-0685-s6/nickel">Nickel</a></li>
+  <li class="c018">Niobium</li>
+  <li class="c018"><a href="/article/19-0738-s5/nitre">Nitre</a></li>
+  <li class="c018"><a href="/article/19-0738-s6/nitric_acid____aqua_fortis_____hno">Nitric Acid</a></li>
+  <li class="c018"><a href="/article/19-0741-s2/nitrogen">Nitrogen</a></li>
+  <li class="c018"><a href="/article/19-1027-ochres/ochres">Ochres</a></li>
+  <li class="c018"><a href="/article/20-0363-orpiment/orpiment">Orpiment</a></li>
+  <li class="c018"><a href="/article/20-0386-osmium/osmium">Osmium</a></li>
+  <li class="c018"><a href="/article/20-0452-oxide/oxide">Oxide</a></li>
+  <li class="c018"><a href="/article/20-0457-oxygen/oxygen">Oxygen</a></li>
+  <li class="c018"><a href="/article/20-0458-oxyhydrogen-flame/oxyhydrogen_flame">Oxyhydrogen Flame</a></li>
+  <li class="c018"><a href="/article/20-0464-ozone/ozone">Ozone</a></li>
+  <li class="c018"><a href="/article/20-0692-palladium-image/palladium__image_">Palladium</a></li>
+  <li class="c018"><a href="/article/21-0496-phosphates/phosphates">Phosphates</a></li>
+  <li class="c018"><a href="/article/21-0500-s3/phosphorus">Phosphorus</a></li>
+  <li class="c018"><a href="/article/21-0815-s3/plaster_of_paris">Plaster of Paris</a></li>
+  <li class="c018"><a href="/article/21-0838-s4/platinum">Platinum</a></li>
+  <li class="c018"><a href="/article/22-0211-potashes/potashes">Potashes</a></li>
+  <li class="c018"><a href="/article/22-0211-potassium/potassium">Potassium</a></li>
+  <li class="c018"><a href="/article/22-0824-radium/radium">Radium</a></li>
+  <li class="c018"><a href="/article/22-0926-s6/rare_earths">Rare Earths</a></li>
+  <li class="c018"><a href="/article/23-0285-rhodium/rhodium">Rhodium</a></li>
+  <li class="c018"><a href="/article/23-0810-rouge/rouge">Rouge</a></li>
+  <li class="c018"><a href="/article/23-0851-rubidium/rubidium">Rubidium</a></li>
+  <li class="c018"><a href="/article/23-0981-rust/rust">Rust</a></li>
+  <li class="c018"><a href="/article/23-0984-s4/ruthenium">Ruthenium</a></li>
+  <li class="c018"><a href="/article/24-0073-s2/sal_ammoniac">Sal Ammoniac</a></li>
+  <li class="c018"><a href="/article/24-0101-salt/salt">Salt</a></li>
+  <li class="c018"><a href="/article/24-0107-saltpetre/saltpetre">Saltpetre</a></li>
+  <li class="c018"><a href="/article/24-0125-samarium/samarium">Samarium</a></li>
+  <li class="c018"><a href="/article/24-0316-scandium/scandium">Scandium</a></li>
+  <li class="c018">Schlippe’s Salt</li>
+  <li class="c018"><a href="/article/24-0631-s4/selenium">Selenium</a></li>
+  <li class="c018"><a href="/article/25-0108-s5/silica">Silica</a></li>
+  <li class="c018"><a href="/article/25-0109-s2/silicon">Silicon</a></li>
+  <li class="c018"><a href="/article/25-0128-s3/silver">Silver</a></li>
+  <li class="c018"><a href="/article/25-0356-sodium/sodium">Sodium</a></li>
+  <li class="c018"><a href="/article/25-0840-steam/steam">Steam</a></li>
+  <li class="c018"><a href="/article/25-1066-strontium/strontium">Strontium</a></li>
+  <li class="c018"><a href="/article/26-0077-s2/sulphur">Sulphur</a></li>
+  <li class="c018"><a href="/article/26-0081-s2/sulphuric_acid">Sulphuric Acid</a></li>
+  <li class="c018"><a href="/article/26-0421-s5/tantalum">Tantalum</a></li>
+  <li class="c018"><a href="/article/26-0607-tellurium/tellurium">Tellurium</a></li>
+  <li class="c018"><a href="/article/26-0668-s3/terbium">Terbium</a></li>
+  <li class="c018"><a href="/article/26-0758-thallium/thallium">Thallium</a></li>
+  <li class="c018"><a href="/article/26-0918-s6/thorium">Thorium</a></li>
+  <li class="c018"><a href="/article/26-1035-tin/tin">Tin</a></li>
+  <li class="c018"><a href="/article/26-1057-titanium/titanium">Titanium</a></li>
+  <li class="c018"><a href="/article/27-0394-tungsten/tungsten">Tungsten</a></li>
+  <li class="c018"><a href="/article/27-0589-ultramarine/ultramarine">Ultramarine</a></li>
+  <li class="c018"><a href="/article/27-0595-umber/umber">Umber</a></li>
+  <li class="c018"><a href="/article/27-0813-s3/uranium">Uranium</a></li>
+  <li class="c018"><a href="/article/27-0904-s4/vanadium">Vanadium</a></li>
+  <li class="c018"><a href="/article/27-1053-s2/vermilion">Vermilion</a></li>
+  <li class="c018"><a href="/article/28-0166-vitriol/vitriol">Vitriol</a></li>
+  <li class="c018"><a href="/article/28-0969-ytterbium/ytterbium">Ytterbium (Neo-ytterbium)</a></li>
+  <li class="c018"><a href="/article/28-0969-yttrium/yttrium">Yttrium</a></li>
+  <li class="c018"><a href="/article/28-1008-zinc/zinc">Zinc</a></li>
+  <li class="c018"><a href="/article/28-1017-zirconium/zirconium">Zirconium</a></li>
+</ul>
+<h4 class="c016">ORGANIC CHEMISTRY</h4>
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0165-s9/acenaphthene">Acenaphthene</a></li>
+  <li class="c018"><a href="/article/01-0166-s8/acetic_acid____acidum_aceticum_____ch">Acetic Acid</a></li>
+  <li class="c018"><a href="/article/01-0166-s9/aceto-acetic_ester">Aceto-acetic Ester</a></li>
+  <li class="c018"><a href="/article/01-0167-acetone/acetone">Acetone</a></li>
+  <li class="c018"><a href="/article/01-0167-acetophenone/acetophenone">Acetophenone</a></li>
+  <li class="c018"><a href="/article/01-0168-s1/acetylene">Acetylene</a></li>
+  <li class="c018">Acid Amides</li>
+  <li class="c018"><a href="/article/01-0186-s3/acridine">Acridine</a></li>
+  <li class="c018"><a href="/article/01-0222-s3/adenine">Adenine</a></li>
+  <li class="c018"><a href="/article/01-0223-s6/adipocere">Adipocere</a></li>
+  <li class="c018"><a href="/article/01-0553-s10/albumin">Albumin, or Albumen</a></li>
+  <li class="c018"><a href="/article/01-0565-s2/alcohol">Alcohol</a></li>
+  <li class="c018"><a href="/article/01-0567-s2/alcohols">Alcohols</a></li>
+  <li class="c018"><a href="/article/01-0571-s4/aldehydes">Aldehydes</a></li>
+  <li class="c018"><a href="/article/01-0715-alizarin/alizarin">Alizarin</a></li>
+  <li class="c018"><a href="/article/01-0716-s2/alkahest">Alkahest</a></li>
+  <li class="c018"><a href="/article/01-0727-s3/alkaloid">Alkaloid</a></li>
+  <li class="c018"><a href="/article/01-0728-s3/alkanet">Alkanet</a></li>
+  <li class="c018">Allantoin</li>
+  <li class="c018"><a href="/article/01-0746-s4/alloxan">Alloxan</a></li>
+  <li class="c018"><a href="/article/01-0746-alloxantin/alloxantin">Alloxantin</a></li>
+  <li class="c018"><a href="/article/01-0753-s4/allyl_alcohol">Allyl Alcohol</a></li>
+  <li class="c018"><a href="/article/01-0906-s3/amidines">Amidines</a></li>
+  <li class="c018"><a href="/article/01-0907-s2/amines">Amines</a></li>
+  <li class="c018"><a href="/article/01-0953-s2/amygdalin">Amygdalin</a></li>
+  <li class="c018"><a href="/article/01-0953-s4/amyl_alcohols">Amyl Alcohols</a></li>
+  <li class="c018">Amyl Nitrate</li>
+  <li class="c018"><a href="/article/02-0058-s6/aniline">Aniline</a></li>
+  <li class="c018"><a href="/article/02-0116-s2/anthracene">Anthracene</a></li>
+  <li class="c018"><a href="/article/02-0117-s3/anthraquinone">Anthraquinone</a></li>
+  <li class="c018"><a href="/article/02-0146-s2/antipyrine">Antipyrine</a></li>
+  <li class="c018"><a href="/article/02-0513-s7/argol">Argol</a></li>
+  <li class="c018"><a href="/article/02-0810-s7/asparagine">Asparagine</a></li>
+  <li class="c018"><a href="/article/03-0096-s4/azo_compounds">Azo Compounds</a></li>
+  <li class="c018"><a href="/article/03-0100-s6/azoximes">Azoximes</a></li>
+  <li class="c018"><a href="/article/03-0774-benzaldehyde/benzaldehyde">Benzaldehyde</a></li>
+  <li class="c018">Benzene</li>
+  <li class="c018"><a href="/article/03-0775-benzidine/benzidine__dipara-diamino-diphenyl___nh">Benzidine</a></li>
+  <li class="c018"><a href="/article/03-0776-benzoic-acid/benzoic_acid">Benzoic Acid</a></li>
+  <li class="c018"><a href="/article/03-0777-benzoin-resin/benzoin__resin_">Benzoin</a></li>
+  <li class="c018"><a href="/article/03-0777-benzophenone/benzophenone">Benzophenone</a></li>
+  <li class="c018"><a href="/article/03-0777-benzyl-alcohol/benzyl_alcohol">Benzyl Alcohol</a></li>
+  <li class="c018"><a href="/article/03-0784-berberine/berberine">Berberine</a></li>
+  <li class="c018"><a href="/article/03-0848-beta-ne/betaïne">Betaïne</a></li>
+  <li class="c018"><a href="/article/04-0700-s4/brucine">Brucine</a></li>
+  <li class="c018"><a href="/article/04-0916-s2/butyl_alcohols">Butyl Alcohols</a></li>
+  <li class="c018"><a href="/article/04-0916-s3/butyric_acid">Butyric Acid</a></li>
+  <li class="c018"><a href="/article/04-0971-s2/caffeine">Caffeine</a></li>
+  <li class="c018"><a href="/article/05-0147-camphors/camphors">Camphors</a></li>
+  <li class="c018"><a href="/article/05-0316-carbazol/carbazol">Carbazol</a></li>
+  <li class="c018"><a href="/article/05-0317-carbohydrate/carbohydrate">Carbohydrate</a></li>
+  <li class="c018"><a href="/article/05-0317-carbolic-acid/carbolic_acid">Carbolic Acid, or Phenol</a></li>
+  <li class="c018"><a href="/article/05-0454-carvacrol/carvacrol">Carvacrol</a></li>
+  <li class="c018"><a href="/article/05-0631-cellulose/cellulose">Cellulose</a></li>
+  <li class="c018"><a href="/article/06-0269-chloral/chloral">Chloral</a></li>
+  <li class="c018"><a href="/article/06-0273-chloroform/chloroform__trichlor-methane___chc">Chloroform</a></li>
+  <li class="c018"><a href="/article/06-0273-chlorophyll/chlorophyll">Chlorophyll</a></li>
+  <li class="c018"><a href="/article/06-0273-chlorpicrin/chlorpicrin">Chlorpicrin</a></li>
+  <li class="c018"><a href="/article/06-0335-chrysene/chrysene">Chrysene</a></li>
+  <li class="c018"><a href="/article/06-0392-cinnamic-acid/cinnamic_acid">Cinnamic Acid</a></li>
+  <li class="c018"><a href="/article/06-0393-cinnolin/cinnolin">Cinnolin</a></li>
+  <li class="c018"><a href="/article/06-0413-citric-acid/citric_acid">Citric Acid</a></li>
+  <li class="c018"><a href="/article/06-0614-coal-tar/coal-tar">Coal-tar</a></li>
+  <li class="c018"><a href="/article/06-0634-cocaine/cocaine">Cocaine</a></li>
+  <li class="c018"><a href="/article/06-0715-collodion/collodion">Collodion</a></li>
+  <li class="c018"><a href="/article/06-0966-conine/conine">Conine</a></li>
+  <li class="c018"><a href="/article/07-0328-coumarin/coumarin">Coumarin</a></li>
+  <li class="c018"><a href="/article/07-0329-coumarones/coumarones">Coumarones</a></li>
+  <li class="c018"><a href="/article/07-0430-creosote/creosote">Creosote</a></li>
+  <li class="c018"><a href="/article/07-0432-cresols/cresols">Cresols</a></li>
+  <li class="c018"><a href="/article/07-0533-crotonic-acid/crotonic_acid">Crotonic Acid</a></li>
+  <li class="c018"><a href="/article/07-0701-cyanamide/cyanamide__nc">Cyanamide</a></li>
+  <li class="c018"><a href="/article/07-0701-cyanic-acid-and-cyanates/cyanic_acid_and_cyanates">Cyanic Acid and Cyanates</a></li>
+  <li class="c018"><a href="/article/07-0702-cyanide/cyanide">Cyanide</a></li>
+  <li class="c018"><a href="/article/07-0702-cyanogen/cyanogen">Cyanogen</a></li>
+  <li class="c018"><a href="/article/07-0731-cytisine/cytisine">Cytisine</a></li>
+  <li class="c018"><a href="/article/08-0156-dextrine/dextrine">Dextrine</a></li>
+  <li class="c018"><a href="/article/08-0190-diazo-compounds/diazo_compounds">Diazo Compounds</a></li>
+  <li class="c018"><a href="/article/08-0307-diphenyl/diphenyl">Diphenyl</a></li>
+  <li class="c018"><a href="/article/08-0724-durene/durene">Durene</a></li>
+  <li class="c018"><a href="/article/08-0791-dynamite/dynamite">Dynamite</a></li>
+  <li class="c018"><a href="/article/08-0897-ecgonine/ecgonine">Ecgonine</a></li>
+  <li class="c018"><a href="/article/09-0790-s3/erythrite">Erythrite</a></li>
+  <li class="c018"><a href="/article/09-0827-s2/esters">Esters</a></li>
+  <li class="c018"><a href="/article/09-0838-s5/ether">Ether</a></li>
+  <li class="c018"><a href="/article/09-0840-s3/ethers">Ethers</a></li>
+  <li class="c018"><a href="/article/09-0883-s2/ethyl">Ethyl</a></li>
+  <li class="c018"><a href="/article/09-0883-s3/ethyl_chloride">Ethyl chloride</a></li>
+  <li class="c018"><a href="/article/09-0883-ethylene/ethylene">Ethylene</a></li>
+  <li class="c018"><a href="/article/09-0918-s2/eugenol">Eugenol</a></li>
+  <li class="c018"><a href="/article/09-0932-eupion/eupion">Eupion</a></li>
+  <li class="c018"><a href="/article/10-0502-s7/flavin">Flavin</a></li>
+  <li class="c018"><a href="/article/10-0596-fluoranthene/fluoranthene">Fluoranthene</a></li>
+  <li class="c018"><a href="/article/10-0596-fluorene/fluorene">Fluorene</a></li>
+  <li class="c018"><a href="/article/10-0596-fluorescein/fluorescein">Fluorescein</a></li>
+  <li class="c018"><a href="/article/10-0688-formalin/formalin">Formalin, or Formaldehyde</a></li>
+  <li class="c018"><a href="/article/10-0689-formic-acid/formic_acid">Formic Acid</a></li>
+  <li class="c018"><a href="/article/11-0266-fructose/fructose">Fructose, or Fruit-sugar</a></li>
+  <li class="c018"><a href="/article/11-0286-s2/fuchsine">Fuchsine</a></li>
+  <li class="c018"><a href="/article/11-0312-fulminic-acid/fulminic_acid__hcno">Fulminic Acid</a></li>
+  <li class="c018"><a href="/article/11-0313-s6/fumaric_and_maleic_acids">Fumaric and Maleic Acids</a></li>
+  <li class="c018"><a href="/article/11-0370-s2/furazanes">Furazanes</a></li>
+  <li class="c018"><a href="/article/11-0370-s5/furfurane">Furfurane, or Furane</a></li>
+  <li class="c018"><a href="/article/11-0386-s5/fusel_oil">Fusel Oil</a></li>
+  <li class="c018"><a href="/article/11-0436-gallic-acid/gallic_acid">Gallic Acid</a></li>
+  <li class="c018"><a href="/article/11-0572-s7/gelatin">Gelatin or Gelatine</a></li>
+  <li class="c018"><a href="/article/12-0158-glucose/glucose">Glucose</a></li>
+  <li class="c018"><a href="/article/12-0159-glucoside/glucoside">Glucoside</a></li>
+  <li class="c018"><a href="/article/12-0161-glutaric-acid/glutaric_acid">Glutaric Acid</a></li>
+  <li class="c018"><a href="/article/12-0163-s2/glycerin">Glycerin</a></li>
+  <li class="c018"><a href="/article/12-0164-s2/glycols">Glycols</a></li>
+  <li class="c018"><a href="/article/12-0676-guanidine/guanidine__cn">Guanidine</a></li>
+  <li class="c018"><a href="/article/12-0746-s3/guncotton">Guncotton</a></li>
+  <li class="c018"><a href="/article/13-0539-hippuric-acid/hippuric_acid">Hippuric Acid</a></li>
+  <li class="c018">Hydantoin</li>
+  <li class="c018"><a href="/article/14-0046-hydracrylic-acid/hydracrylic_acid__ethylene_lactic_acid___ch">Hydracrylic Acid</a></li>
+  <li class="c018"><a href="/article/14-0046-hydrastine/hydrastine">Hydrastine</a></li>
+  <li class="c018"><a href="/article/14-0123-hydrazone/hydrazone">Hydrazone</a></li>
+  <li class="c018"><a href="/article/14-0123-hydrocarbon/hydrocarbon">Hydrocarbon</a></li>
+  <li class="c018">Imidazoles or Glyoxalines</li>
+  <li class="c018"><a href="/article/14-0390-indazoles/indazoles">Indazoles, or Glyoxalines</a></li>
+  <li class="c018"><a href="/article/14-0390-indazoles/indazoles">Indazoles</a></li>
+  <li class="c018"><a href="/article/14-0390-indene/indene">Indene</a></li>
+  <li class="c018"><a href="/article/14-0513-s2/indigo">Indigo</a></li>
+  <li class="c018"><a href="/article/14-0529-indole/indole">Indole</a></li>
+  <li class="c018"><a href="/article/14-0536-indulines/indulines">Indulines</a></li>
+  <li class="c018"><a href="/article/14-0748-inulin/inulin">Inulin</a></li>
+  <li class="c018"><a href="/article/14-0757-s2/iodoform__chi">Iodoform</a></li>
+  <li class="c018"><a href="/article/14-0898-isatin/isatin">Isatin</a></li>
+  <li class="c018"><a href="/article/14-0918-s1/isoxazoles">Isoxazoles</a></li>
+  <li class="c018"><a href="/article/15-0790-s7/ketenes">Ketenes</a></li>
+  <li class="c018"><a href="/article/15-0791-ketones/ketones">Ketones</a></li>
+  <li class="c018"><a href="/article/16-0076-s2/lactic_acid">Lactic Acid</a></li>
+  <li class="c018"><a href="/article/16-0076-s3/lactones">Lactones</a></li>
+  <li class="c018"><a href="/article/16-0084-s3/laevulinic_acid">Laevulinic Acid</a></li>
+  <li class="c018"><a href="/article/16-0813-litmus/litmus">Litmus</a></li>
+  <li class="c018"><a href="/article/17-0506-s2/malic_acid">Malic Acid</a></li>
+  <li class="c018"><a href="/article/17-0512-s5/malonic_acid">Malonic Acid</a></li>
+  <li class="c018"><a href="/article/17-0576-mandelic-acid/mandelic_acid">Mandelic Acid</a></li>
+  <li class="c018"><a href="/article/17-0790-marsh-gas/marsh_gas__methane___ch">Marsh Gas</a></li>
+  <li class="c018"><a href="/article/18-0114-s7/mellitic_acid">Mellitic Acid</a></li>
+  <li class="c018"><a href="/article/18-0168-mercaptans/mercaptans">Mercaptans</a></li>
+  <li class="c018"><a href="/article/18-0206-mesoxalic-acid/mesoxalic_acid">Mesoxalic Acid</a></li>
+  <li class="c018"><a href="/article/18-0319-methyl-alcohol/methyl_alcohol">Methyl Alcohol</a></li>
+  <li class="c018"><a href="/article/18-0986-s6/mucic_acid">Mucic Acid</a></li>
+  <li class="c018"><a href="/article/19-0049-murexide/murexide">Murexide</a></li>
+  <li class="c018"><a href="/article/19-0113-s2/mustard_oils">Mustard Oils</a></li>
+  <li class="c018"><a href="/article/19-0182-s5/naphtha">Naphtha</a></li>
+  <li class="c018"><a href="/article/19-0182-s6/naphthalene">Naphthalene</a></li>
+  <li class="c018"><a href="/article/19-0183-s2/naphthols">Naphthols</a></li>
+  <li class="c018"><a href="/article/19-0184-naphthylamines/naphthylamines">Naphthylamines</a></li>
+  <li class="c018"><a href="/article/19-0692-nicotine/nicotine">Nicotine</a></li>
+  <li class="c018"><a href="/article/19-0739-s2/nitrobenzene">Nitrobenzene</a></li>
+  <li class="c018"><a href="/article/19-0740-s2/nitro_compounds">Nitro Compounds</a></li>
+  <li class="c018"><a href="/article/19-0743-s3/nitroglycerin">Nitroglycerin</a></li>
+  <li class="c018"><a href="/article/20-0100-s1/olefine">Olefine</a></li>
+  <li class="c018"><a href="/article/20-0101-s2/oleic_acid">Oleic Acid</a></li>
+  <li class="c018"><a href="/article/20-0199-orcin/orcin">Orcin</a></li>
+  <li class="c018"><a href="/article/20-0433-oxalic-acid/oxalic_acid">Oxalic Acid</a></li>
+  <li class="c018"><a href="/article/20-0434-s2/oxazoles">Oxazoles</a></li>
+  <li class="c018"><a href="/article/20-0452-oximes/oximes">Oximes</a></li>
+  <li class="c018"><a href="/article/20-0706-palmitic-acid/palmitic_acid">Palmitic Acid</a></li>
+  <li class="c018"><a href="/article/20-0808-s4/paraffin">Paraffin</a></li>
+  <li class="c018"><a href="/article/20-0816-paraldehyde/paraldehyde">Paraldehyde</a></li>
+  <li class="c018"><a href="/article/21-0384-phenacetin/phenacetin">Phenacetin</a></li>
+  <li class="c018"><a href="/article/21-0385-phenanthrene/phenanthrene">Phenanthrene</a></li>
+  <li class="c018"><a href="/article/21-0385-phenazine/phenazine">Phenazine</a></li>
+  <li class="c018"><a href="/article/21-0386-phenolphthalein/phenolphthalein">Phenolphthalein</a></li>
+  <li class="c018"><a href="/article/21-0571-phthalazines/phthalazines">Phthalazines</a></li>
+  <li class="c018"><a href="/article/21-0571-phthalic-acids/phthalic_acids">Phthalic Acids</a></li>
+  <li class="c018"><a href="/article/21-0607-picene/picene">Picene</a></li>
+  <li class="c018"><a href="/article/21-0611-s2/picric_acid">Picric Acid</a></li>
+  <li class="c018"><a href="/article/21-0638-s3/pilocarpine">Pilocarpine</a></li>
+  <li class="c018"><a href="/article/21-0664-piperazin/piperazin">Piperazin</a></li>
+  <li class="c018"><a href="/article/21-0664-piperine/piperine">Piperine</a></li>
+  <li class="c018"><a href="/article/21-0664-piperonal/piperonal">Piperonal</a></li>
+  <li class="c018"><a href="/article/22-0043-s2/polymethylenes">Polymethylenes</a></li>
+  <li class="c018"><a href="/article/22-0356-primuline/primuline">Primuline</a></li>
+  <li class="c018"><a href="/article/22-0464-propiolic-acid/propiolic_acid__ch">Propiolic Acid</a></li>
+  <li class="c018"><a href="/article/22-0465-propyl-alcohols/propyl_alcohols">Propyl Alcohols</a></li>
+  <li class="c018"><a href="/article/22-0544-s3/prussic_acid">Prussic Acid</a></li>
+  <li class="c018"><a href="/article/22-0678-s2/purin">Purin</a></li>
+  <li class="c018"><a href="/article/22-0702-s2/pyrazines">Pyrazines</a></li>
+  <li class="c018"><a href="/article/22-0702-s4/pyrazoles">Pyrazoles</a></li>
+  <li class="c018"><a href="/article/22-0703-s2/pyrene">Pyrene</a></li>
+  <li class="c018"><a href="/article/22-0706-s2/pyridine">Pyridine</a></li>
+  <li class="c018"><a href="/article/22-0707-s2/pyrimidines">Pyrimidines</a></li>
+  <li class="c018"><a href="/article/22-0709-pyrocatechin/pyrocatechin">Pyrocatechin</a></li>
+  <li class="c018"><a href="/article/22-0709-pyrogallol/pyrogallol">Pyrogallol</a></li>
+  <li class="c018"><a href="/article/22-0710-s2/pyrones">Pyrones</a></li>
+  <li class="c018"><a href="/article/22-0713-s5/pyrrol">Pyrrol</a></li>
+  <li class="c018"><a href="/article/22-0714-pyruvic-acid/pyruvic_acid">Pyruvic Acid</a></li>
+  <li class="c018"><a href="/article/22-0759-quercitron/quercitron">Quercitron</a></li>
+  <li class="c018"><a href="/article/22-0769-s4/quinazolines">Quinazolines</a></li>
+  <li class="c018"><a href="/article/22-0775-s2/quinoline">Quinoline</a></li>
+  <li class="c018"><a href="/article/22-0777-s2/quinones">Quinones</a></li>
+  <li class="c018"><a href="/article/22-0777-s3/quinoxalines">Quinoxalines</a></li>
+  <li class="c018"><a href="/article/23-0200-s7/resorcin">Resorcin</a></li>
+  <li class="c018"><a href="/article/23-0219-retene/retene">Retene</a></li>
+  <li class="c018"><a href="/article/23-1014-s5/saccharic_acid">Saccharic Acid</a></li>
+  <li class="c018"><a href="/article/23-1015-s2/saccharin">Saccharin</a></li>
+  <li class="c018"><a href="/article/23-1045-safranine/safranine">Safranine</a></li>
+  <li class="c018"><a href="/article/24-0083-s2/salicylic_acid">Salicylic Acid</a></li>
+  <li class="c018"><a href="/article/25-0882-s2/stearic_acid">Stearic Acid</a></li>
+  <li class="c018"><a href="/article/25-1085-s2/styrolene">Styrolene</a></li>
+  <li class="c018"><a href="/article/26-0022-s2/succinic_acid">Succinic Acid</a></li>
+  <li class="c018"><a href="/article/26-0048-sugar/sugar">Sugar</a></li>
+  <li class="c018"><a href="/article/26-0076-s2/sulphonal">Sulphonal</a></li>
+  <li class="c018"><a href="/article/26-0076-s3/sulphonic_acids">Sulphonic Acids</a></li>
+  <li class="c018"><a href="/article/26-0420-s7/tannin">Tannin or Tannic Acid</a></li>
+  <li class="c018"><a href="/article/26-0443-s3/tar">Tar</a></li>
+  <li class="c018"><a href="/article/26-0464-s3/tartar">Tartar</a></li>
+  <li class="c018"><a href="/article/26-0465-s2/tartaric_acid__dihydroxy-succinic_acid___qh">Tartaric Acid</a></li>
+  <li class="c018"><a href="/article/26-0678-s4/terpenes">Terpenes</a></li>
+  <li class="c018"><a href="/article/26-0704-s6/tetrazines">Tetrazines</a></li>
+  <li class="c018"><a href="/article/26-0704-s7/tetrazoles">Tetrazoles</a></li>
+  <li class="c018"><a href="/article/26-0884-s5/thiazines">Thiazines</a></li>
+  <li class="c018"><a href="/article/26-0885-s2/thiazoles">Thiazoles</a></li>
+  <li class="c018"><a href="/article/26-0890-thiophen/thiophen">Thiophen</a></li>
+  <li class="c018"><a href="/article/26-0945-thymol/thymol">Thymol</a></li>
+  <li class="c018"><a href="/article/26-1102-s4/toluene">Toluene</a></li>
+  <li class="c018"><a href="/article/27-0275-s2/triazines">Triazines</a></li>
+  <li class="c018"><a href="/article/27-0276-s2/triazoles">Triazoles</a></li>
+  <li class="c018"><a href="/article/27-0302-s4/triphenylmethane">Triphenylmethane</a></li>
+  <li class="c018"><a href="/article/27-0323-tropine/tropine">Tropine</a></li>
+  <li class="c018"><a href="/article/27-0818-urea/urea">Urea, or Carbamide</a></li>
+  <li class="c018"><a href="/article/27-0819-urethane/urethane__nh">Urethane</a></li>
+  <li class="c018"><a href="/article/27-0821-uric-acid/uric_acid">Uric Acid</a></li>
+  <li class="c018"><a href="/article/27-0826-s3/urotropin">Urotropin</a></li>
+  <li class="c018"><a href="/article/27-0885-s3/valeric_acid">Valeric Acid</a></li>
+  <li class="c018"><a href="/article/27-1046-s3/verdigris">Verdigris</a></li>
+  <li class="c018"><a href="/article/27-1065-s2/veronal">Veronal</a></li>
+  <li class="c018"><a href="/article/28-0908-xanthic-acid/xanthic_acid">Xanthic Acid</a></li>
+  <li class="c018"><a href="/article/28-0908-xanthone/xanthone">Xanthone</a></li>
+  <li class="c018"><a href="/article/28-0916-xylene/xylene">Xylene</a></li>
+</ul>
+<h4 class="c016">BIOGRAPHIES</h4>
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0070-s3/abel__sir_frederick_augustus">Abel, Sir Frederick A.</a></li>
+  <li class="c018"><a href="/article/01-0173-s5/achard__franz_carl">Achard, F. C.</a></li>
+  <li class="c018"><a href="/article/01-1027-s3/andrews__thomas">Andrews, Thomas</a></li>
+  <li class="c018">Baeyer, Adolf von</li>
+  <li class="c018"><a href="/article/03-0256-s2/balard__antoine_jerôme">Balard, Antoine J.</a></li>
+  <li class="c018"><a href="/article/03-0556-baum-antoine/baumé__antoine">Baumé, Antoine</a></li>
+  <li class="c018"><a href="/article/03-0621-becher-johann-joachim/becher__johann_joachim">Becher, J. J.</a></li>
+  <li class="c018"><a href="/article/03-0706-bell-jacob/bell__jacob">Bell, Jacob</a></li>
+  <li class="c018"><a href="/article/03-0794-bergman-torbern-olof/bergman__torbern_olof">Bergman, Torbern Olof</a></li>
+  <li class="c018"><a href="/article/03-0832-berthelot-marcellin-pierre-eug-ne/berthelot__marcellin_pierre_eugène">Berthelot, M. P. E.</a></li>
+  <li class="c018"><a href="/article/03-0833-berthollet-claude-louis/berthollet__claude_louis">Berthollet, C. L.</a></li>
+  <li class="c018"><a href="/article/03-0839-berzelius-j-ns-jakob/berzelius__jöns_jakob">Berzelius, J. J.</a></li>
+  <li class="c018"><a href="/article/04-0031-black-joseph/black__joseph">Black, Joseph</a></li>
+  <li class="c018"><a href="/article/04-0349-boussingault-jean-baptiste-joseph-dieudonn/boussingault__jean_baptiste_joseph_dieudonné">Boussingault</a></li>
+  <li class="c018"><a href="/article/04-0435-brande-william-thomas/brande__william_thomas">Brande, William Thomas</a></li>
+  <li class="c018"><a href="/article/04-0684-s6/brown__samuel_morison">Brown, S. M.</a></li>
+  <li class="c018"><a href="/article/04-0824-s2/bunsen__robert_wilhelm_von">Bunsen, R. W. von</a></li>
+  <li class="c018"><a href="/article/05-0082-calvert-frederick-crace/calvert__frederick_crace">Calvert, F. Crace</a></li>
+  <li class="c018"><a href="/article/05-0201-cannizzaro-stanislao/cannizzaro__stanislao">Cannizzaro, Stanislao</a></li>
+  <li class="c018"><a href="/article/05-0605-cavendish-henry/cavendish__henry">Cavendish, Henry</a></li>
+  <li class="c018"><a href="/article/06-0128-chevreul-michel-eug-ne/chevreul__michel_eugène">Chevreul, M. E.</a></li>
+  <li class="c018"><a href="/article/06-0459-clark-thomas/clark__thomas">Clark, Thomas</a></li>
+  <li class="c018"><a href="/article/07-0523-crookes-sir-william/crookes__sir_william">Crookes, Sir William</a></li>
+  <li class="c018"><a href="/article/07-0801-dalton-john/dalton__john">Dalton, John</a></li>
+  <li class="c018"><a href="/article/07-0833-daniell-john-frederic/daniell__john_frederic">Daniell, John F.</a></li>
+  <li class="c018"><a href="/article/07-0895-davy-sir-humphry/davy__sir_humphry">Davy, Sir Humphry</a></li>
+  <li class="c018"><a href="/article/08-0152-dewar-sir-james/dewar__sir_james">Dewar, Sir James</a></li>
+  <li class="c018"><a href="/article/08-0367-d-bereiner-johann-wolfgang/döbereiner__johann_wolfgang">Döbereiner, J. W.</a></li>
+  <li class="c018"><a href="/article/08-0679-dulong-pierre-louis/dulong__pierre_louis">Dulong, Pierre Louis</a></li>
+  <li class="c018"><a href="/article/08-0684-dumas-jean-baptiste-andr/dumas__jean_baptiste_andré">Dumas, J. B. A.</a></li>
+  <li class="c018"><a href="/article/09-0766-s6/erdmann__otto_linné">Erdmann, Otto Linné</a></li>
+  <li class="c018"><a href="/article/10-0248-fehling-hermann-von/fehling__hermann_von">Fehling, Hermann von</a></li>
+  <li class="c018"><a href="/article/10-0442-fischer-emil/fischer__emil">Fischer, Emil</a></li>
+  <li class="c018"><a href="/article/10-0456-s2/fittig__rudolf">Fittig, Rudolf</a></li>
+  <li class="c018"><a href="/article/10-0492-s2/flamel__nicolas">Flamel, Nicolas</a></li>
+  <li class="c018">Fourcroy, A. F., de</li>
+  <li class="c018"><a href="/article/11-0035-frankland-sir-edward/frankland__sir_edward">Frankland, Sir Edward</a></li>
+  <li class="c018"><a href="/article/11-0110-s6/frémy__edmond">Frémy, Edmond</a></li>
+  <li class="c018"><a href="/article/11-0222-s4/fresenius__karl_remigius">Fresenius, Karl R.</a></li>
+  <li class="c018"><a href="/article/11-0228-friedel-charles/friedel__charles">Friedel, Charles</a></li>
+  <li class="c018"><a href="/article/11-0285-s2/fuchs__johann_nepomuk_von">Fuchs, Johann N. von</a></li>
+  <li class="c018"><a href="/article/11-0470-gannal-jean-nicolas/gannal__jean_nicolas">Gannal, J. N.</a></li>
+  <li class="c018"><a href="/article/11-0560-s6/gay-lussac__joseph_louis">Gay-Lussac, J. L.</a></li>
+  <li class="c018"><a href="/article/11-0563-geber/geber">Geber</a></li>
+  <li class="c018">Geoffroy, E. F.</li>
+  <li class="c018"><a href="/article/11-0789-s2/gerhardt__charles_frédéric">Gerhardt, Charles F.</a></li>
+  <li class="c018"><a href="/article/11-0961-s4/gibbs__oliver_wolcott">Gibbs, Oliver Wolcott</a></li>
+  <li class="c018"><a href="/article/12-0021-s4/gilbert__sir_joseph_henry">Gilbert, Sir Joseph H.</a></li>
+  <li class="c018"><a href="/article/12-0079-gladstone-john-hall/gladstone__john_hall">Gladstone, John Hall</a></li>
+  <li class="c018"><a href="/article/12-0093-s2/glaser__christopher">Glaser, Christopher</a></li>
+  <li class="c018"><a href="/article/12-0131-s4/glauber__johann_rudolf">Glauber, Johann R.</a></li>
+  <li class="c018">Gmelin (family)</li>
+  <li class="c018"><a href="/article/12-0335-s6/graham__thomas">Graham, Thomas</a></li>
+  <li class="c018"><a href="/article/12-0721-s2/guimet__jean_baptiste">Guimet, Jean B.</a></li>
+  <li class="c018"><a href="/article/12-0772-s5/guyton_de_morveau__louis_bernard">Guyton de Morveau</a></li>
+  <li class="c018"><a href="/article/12-0965-s2/harcourt__william_vernon">Harcourt, W. Vernon</a></li>
+  <li class="c018"><a href="/article/13-0262-helmont-jean-baptiste-van/helmont__jean_baptiste_van">Helmont, Jean B. van</a></li>
+  <li class="c018"><a href="/article/13-0315-henry-william/henry__william">Henry, William</a></li>
+  <li class="c018"><a href="/article/13-0579-s3/hofmann__august_wilhelm_von">Hofmann, A. W. von</a></li>
+  <li class="c018"><a href="/article/13-0641-s7/homberg__wilhelm">Homberg, William</a></li>
+  <li class="c018"><a href="/article/15-0745-s4/kekulé__friedrich_august">Kekulé, F. August</a></li>
+  <li class="c018"><a href="/article/15-0873-s8/klaproth__martin_heinrich">Klaproth, M. H.</a></li>
+  <li class="c018"><a href="/article/15-0922-s2/kolbe__adolphe_wilhelm_hermann">Kolbe, A. W. Hermann</a></li>
+  <li class="c018"><a href="/article/15-0931-kopp/kopp__hermann_franz_moritz">Kopp, Hermann F. M.</a></li>
+  <li class="c018">Kunkel von Lowenstjern</li>
+  <li class="c018"><a href="/article/16-0315-s2/lavoisier__antoine_laurent">Lavoisier, A. L.</a></li>
+  <li class="c018">LeBlanc, Nicolas</li>
+  <li class="c018"><a href="/article/16-0430-lemery-nicolas/lemery__nicolas">Lemery, Nicolas</a></li>
+  <li class="c018">Liebig, J. von, baron</li>
+  <li class="c018"><a href="/article/17-0141-s6/lunge__georg">Lunge, Georg</a></li>
+  <li class="c018"><a href="/article/17-0407-s4/magnus__heinrich_gustav">Magnus, H. G.</a></li>
+  <li class="c018"><a href="/article/17-0722-s2/marggraf__andreas_sigismund">Marggraf, Andreas S.</a></li>
+  <li class="c018"><a href="/article/17-0733-s3/marignac__jean_charles_galissard_de">Marignac, J. C. G. de</a></li>
+  <li class="c018"><a href="/article/17-0957-s6/mayow__john">Mayow, John</a></li>
+  <li class="c018"><a href="/article/18-0134-mendel-eff-dmitri-ivanovich/mendeléeff__dmitri_ivanovich">Mendeléeff, Dmitri I.</a></li>
+  <li class="c018"><a href="/article/18-0369-s6/meyer__julius_lothar">Meyer, J. Lothar</a></li>
+  <li class="c018"><a href="/article/18-0370-s4/meyer__victor">Meyer, Victor</a></li>
+  <li class="c018"><a href="/article/18-0657-mitscherlich-eilhardt/mitscherlich__eilhardt">Mitscherlich, E.</a></li>
+  <li class="c018"><a href="/article/18-0680-mohr-karl-friedrich/mohr__karl_friedrich">Mohr, K. Friedrich</a></li>
+  <li class="c018"><a href="/article/18-0681-moissan-henri/moissan__henri">Moissan, Henri</a></li>
+  <li class="c018"><a href="/article/18-0723-s5/mond__ludwig">Mond, Ludwig</a></li>
+  <li class="c018"><a href="/article/19-0056-s2/murray__john">Murray, John</a></li>
+  <li class="c018">Muspratt, J. and J. S.</li>
+  <li class="c018"><a href="/article/19-0537-s3/newlands__john_alexander_reina">Newlands, John A. R.</a></li>
+  <li class="c018"><a href="/article/19-0750-nobel-alfred-bernard/nobel__alfred_bernhard">Nobel, Alfred B.</a></li>
+  <li class="c018"><a href="/article/20-0954-pasteur-louis/pasteur__louis">Pasteur, Louis</a></li>
+  <li class="c018"><a href="/article/21-0091-s3/pelouze__théophile_jules">Pelouze, T. Jules</a></li>
+  <li class="c018"><a href="/article/21-0190-s2/perkin__sir_william_henry">Perkin, Sir W. H.</a></li>
+  <li class="c018"><a href="/article/21-0357-pettenkofer-max-joseph-von/pettenkofer__max_joseph_von">Pettenkofer, M. J. von</a></li>
+  <li class="c018"><a href="/article/21-0858-plattner-karl-friedrich/plattner__karl_friedrich">Plattner, K. F.</a></li>
+  <li class="c018"><a href="/article/22-0336-priestley-joseph/priestley__joseph">Priestley, Joseph</a></li>
+  <li class="c018"><a href="/article/22-0505-proust-joseph-louis/proust__joseph_louis">Proust, Joseph Louis</a></li>
+  <li class="c018"><a href="/article/22-0506-s2/prout__william">Prout, William</a></li>
+  <li class="c018"><a href="/article/22-0897-s1/ramsay__sir_william">Ramsay, Sir William</a></li>
+  <li class="c018"><a href="/article/22-0915-s4/raoult__françois_marie">Raoult, François M.</a></li>
+  <li class="c018"><a href="/article/23-0063-s3/regnault__henri_victor">Regnault, H. V.</a></li>
+  <li class="c018"><a href="/article/23-0330-s2/richter__jeremias_benjamin">Richter, J. B.</a></li>
+  <li class="c018"><a href="/article/23-0472-s5/roebuck__john">Roebuck, John</a></li>
+  <li class="c018"><a href="/article/23-0765-roscoe-sir-henry-enfield/roscoe__sir_henry_enfield">Roscoe, Sir H. E.</a></li>
+  <li class="c018"><a href="/article/23-0768-s4/rose">Rose (family)</a></li>
+  <li class="c018"><a href="/article/23-0808-s3/rouelle__guillaume_françois">Rouelle, G. F.</a></li>
+  <li class="c018"><a href="/article/24-0015-sainte-claire-deville-tienne-henri/sainte-claire_deville__étienne_henri">Sainte-Claire Deville</a></li>
+  <li class="c018"><a href="/article/24-0332-s4/scheele__karl_wilhelm">Scheele, K. W.</a></li>
+  <li class="c018"><a href="/article/24-0376-sch-nbein-christian-friedrich/schönbein__christian_friedrich">Schönbein, C. F.</a></li>
+  <li class="c018"><a href="/article/24-0405-sch-tzenberger-paul/schützenberger__paul">Schützenberger, P.</a></li>
+  <li class="c018"><a href="/article/25-0125-silliman-benjamin/silliman__benjamin">Silliman, Benjamin</a></li>
+  <li class="c018"><a href="/article/25-0782-s2/stahl__georg_ernst">Stahl, G. E.</a></li>
+  <li class="c018"><a href="/article/25-0821-s5/stas__jean_servais">Stas, J. S.</a></li>
+  <li class="c018"><a href="/article/26-0648-s3/tennant__charles">Tennant, Charles</a></li>
+  <li class="c018"><a href="/article/26-0648-s4/tennant__smithson">Tennant, Smithson</a></li>
+  <li class="c018"><a href="/article/26-0799-s2/thénard__louis_jacques">Thénard, L. J.</a></li>
+  <li class="c018">Thomsen, Julius</li>
+  <li class="c018"><a href="/article/26-0915-thomson-thomas/thomson__thomas">Thomson, Thomas</a></li>
+  <li class="c018"><a href="/article/27-0922-s4/van_t_hoff__jacobus_hendricus">Van’t Hoff, J. H.</a></li>
+  <li class="c018"><a href="/article/27-0989-s2/vauquelin__louis_nicolas">Vauquelin, L. N.</a></li>
+  <li class="c018"><a href="/article/28-0522-weldon-walter/weldon__walter">Weldon, Walter</a></li>
+  <li class="c018"><a href="/article/28-0539-s3/wenzel__karl_friedrich">Wenzel, K. F.</a></li>
+  <li class="c018"><a href="/article/28-0704-williamson-alexander-william/williamson__alexander_william">Williamson, A. W.</a></li>
+  <li class="c018"><a href="/article/28-0774-wislicenus-johannes/wislicenus__johannes">Wislicenus, J.</a></li>
+  <li class="c018"><a href="/article/28-0789-w-hler/wöhler__friedrich">Wöhler, Friedrich</a></li>
+  <li class="c018"><a href="/article/28-0797-wollaston-william-hyde/wollaston__william_hyde">Wollaston, W. H.</a></li>
+  <li class="c018"><a href="/article/28-0885-wurtz-charles-adolphe/wurtz__charles_adolphe">Wurtz, C. A.</a></li>
+  <li class="c018"><a href="/article/28-0967-young-james/young__james">Young, James</a></li>
+</ul>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Naval Officers &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XXX</span>For Naval Officers</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Three Other Relevant Chapters</a></li><li><a href="#sh-2">The Key Article</a></li><li><a href="#sh-3">Naval Administration</a></li><li><a href="#sh-4">Policy, Strategy, Tactics</a></li><li><a href="#sh-5">Special Historical Articles</a></li><li><a href="#sh-6">Armaments</a></li></ol></div>
+    <div class="body-text">
+
+
+<p>The scope of a naval officer’s professional
+interests is so broad that
+the present chapter of this Guide
+could not, without duplicating other
+chapters, indicate all the aspects of the
+Britannica with which he is directly concerned.
+And he will find that his use of
+the Britannica is simplified by the subdivisions
+about to be specified, which virtually
+present his subjects under four different
+heads. Of course he may be called
+upon, in the exercise of his duties, simultaneously
+to think and to act in all his
+capacities, to concentrate upon the swift
+solution of one problem his knowledge of
+warfare, of shipbuilding, of navigation
+and of mechanical engineering; but his
+reading upon these topics naturally divides
+itself into these four parts.</p>
+
+<p><span class="shoulder-heading" id="sh-1">Three Other Relevant Chapters</span>Inasmuch as army officers, even when
+they are at sea, are passengers, and, save
+in relation to the discipline of their troops,
+have nothing to do
+with the ship’s management,
+it could not
+be assumed that the
+present chapter
+would appeal to them. But naval officers,
+when co-operating in a land expedition,
+need to employ every kind of knowledge
+that is of use to army officers, and as the
+chapter <i>For Army Officers</i> in this Guide
+would therefore in any case be read by
+them, it has seemed convenient to include
+in it the description of those articles in
+the Britannica which deal with war in
+general.</p>
+
+<p>The chapter <i>For Marine Transportation
+Men</i> in this Guide is also one to
+which the naval officer should refer, as it
+deals with ships and navigation in general.
+The articles <span class="sc"><a href="/article/24-0894-s8/ship">Ship</a></span> and <span class="sc"><a href="/article/24-0984-s2/shipbuilding">Shipbuilding</a></span>
+mentioned in that chapter are (except
+for the historical section of the former)
+by Sir <a href="/contributors.html?q=Sir+Philip+Watts">Philip Watts</a>, designer of the
+British “Dreadnoughts” and “Super-Dreadnoughts;”
+and the article <span class="sc"><a href="/article/24-1059-s2/shipping">Shipping</a></span>
+is by <a href="/contributors.html?q=Douglas+Owen">Douglas Owen</a>, of the Royal Naval
+War College at Portsmouth. Obviously
+these and many other articles described
+in that chapter are of the greatest importance
+to naval officers.</p>
+
+<p>The chapter <i>For Engineers</i> in this
+Guide describes the articles dealing with
+steam engines, internal combustion engines,
+electrical machinery and fuels of
+all kinds; and it would be a waste of space
+to repeat in this chapter a summary of
+the Britannica treatment of these subjects.</p>
+
+<p>All three of the chapters mentioned
+should therefore be treated as forming
+constituent parts of the general plan of
+this present chapter, in which the naval
+officer will find no repetition of their
+contents.</p>
+
+<p><span class="shoulder-heading" id="sh-2">The Key Article</span>The article to which he will naturally
+first turn is <span class="sc"><a href="/article/19-0314-s5/navy">Navy and Navies</a></span> (Vol. 19,
+p. 299), by <a href="/contributors.html?q=David+Hannay">David Hannay</a>,
+author of <i>A Short History
+of the Royal Navy</i>. This
+article is equivalent to 60
+pages of this Guide in length. It contains:</p>
+
+<p><i>Naval Personnel.</i></p>
+
+<p>Sketches of the <i>Administrative History
+of navies</i>: <i>Athenian</i>; <i>Roman</i>; <i>Byzantine</i>;
+<i>Medieval</i>; <i>British</i>, with special
+attention to the period since the
+Restoration, and the reforms under
+James II when Samuel Pepys was secretary;</p>
+
+<p><i>French</i>—modern navy dating from
+the time of Richelieu;</p>
+
+<p><i>Spanish</i>—a great navy without an
+organization before the 18th century;</p>
+
+<p><i>Dutch</i>—good seamen and well-fed,
+led by able admirals, but unorganized,
+and unimportant after the 17th century;</p>
+
+<p><i>United States</i>—the first great extra-European
+power on the sea;</p>
+
+<p><i>Russian</i>—dating from the reign of
+Peter the Great, when it was organized
+and led by foreigners.</p>
+
+<p><i>The Balance of Navies in History</i>:
+influence of sea-power—“when Napoleon
+fell, the navy of Great Britain was
+not merely the first in the world; it was
+the only powerful navy in existence.”
+<i>Modern Rivalry</i> between Italy and
+Germany (1871), United States
+(1890), Japan; England and the Dual
+Alliance—“naval scares” since 1874;
+British Naval Defence Act of 1889;
+Russia’s navy crushed (1904); new navies
+rivalling Great Britain and
+France,—Italy, Germany, United
+States, Japan.</p>
+
+<p><i>Latest developments</i>: “Dreadnoughts”;
+Building Programmes.</p>
+
+<p><i>Bibliography</i> (about 1800 words).</p>
+
+<p><i>Naval Strategy and Tactics</i>.</p>
+
+<p><i>Historical evolution</i>: inter-relation of
+the ship’s capacity and armament.</p>
+
+<p><i>Early history</i>: ramming demanded
+oars for propulsion; small warships,
+large fighting crews,—no blockade,
+short cruises;</p>
+
+<p><i>Greek and Roman methods</i>: boarding
+introduced by Romans; “bearding,”
+that is, fortifying with iron bands
+across the bows, an early form of armor
+plate.</p>
+
+<p><i>Sailing ships</i>: ramming discarded;
+“line ahead” formation displaces “line
+abreast”; principles of fighting tactics—order
+at beginning to be kept
+throughout, thus no advantage taken of
+enemy’s disorder; Clerk’s theories
+(1790–97)—not maximum safety but
+immediate mêlée the <i>desideratum</i>; Suffren,
+Rodney and Howe and their disregard
+of accepted tactics.</p>
+
+<p><i>Improved shipbuilding and modern
+times</i>: New problems—steam propulsion,
+its gain in speed, but its dependence
+on fuel; fleet in being; risk of
+transporting troops while enemy is unbeaten;
+ramming and pell-mell battles
+forbidden by torpedoes; searchlight as
+check to torpedoes; failure of attempts
+to “bottle up” harbours; gun-fire still
+the great factor; position; speed; submarines
+still an unknown factor.</p>
+
+<p><i>Bibliography</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Naval Administration</span>The first part of this article <span class="sc"><a href="/article/01-0225-s8/admiral">Navy and
+Navies</a></span> should be supplemented by the
+article <span class="sc"><a href="/article/01-0226-s2/admiralty_administration">Admiralty Administration</a></span> (Vol.
+1, p. 195), by Admiral
+Sir R. Vesey Hamilton,
+and, for the
+United States, the
+late Admiral W. T. Sampson. The American
+part of this article describes the divisions
+and the working of the Navy Department,
+its bureaus, judge advocate-general,
+office of naval intelligence, boards
+etc.; and there is additional information
+on the subject in such articles as <span class="sc"><a href="/article/08-0381-dockyards/dockyards">Dockyards</a></span>,
+and <span class="sc"><a href="/article/27-0761-s1/united_states_naval_academy">United States Naval Academy</a></span>.</p>
+
+<p>For the legal side of naval administration
+the reader should study the article
+<span class="sc"><a href="/article/01-0236-s3/admiralty_jurisdiction">Admiralty Jurisdiction</a></span> (Vol. 1, p. 205),
+by Sir <a href="/contributors.html?q=Sir+Walter+George+Frank+Phillimore">Walter Phillimore</a>, former president
+of the International Law Association
+(and author of the Britannica article
+<span class="sc"><a href="/article/01-0234-s2/admiralty__high_court_of">Admiralty, High Court of</a></span>), and, for the
+United States, by <a href="/contributors.html?q=J.+Arthur+Barrett">J. Arthur Barrett</a>; and
+also the general articles <span class="sc"><a href="/article/14-0725-s2/international_law">International
+Law</a></span> (Vol. 14, p. 694), by Sir <a href="/contributors.html?q=Sir+Thomas+Barclay">Thomas
+Barclay</a>, author of <i>Problems of International
+Practice and Diplomacy</i>, and <span class="sc"><a href="/article/14-0725-s2/international_law">International
+Law, Private</a></span> (Vol. 14, p. 701),
+by Dr. <a href="/contributors.html?q=John+Westlake">John Westlake</a>, formerly professor
+of international law, Cambridge University,
+and member for the United Kingdom
+of the International (Hague) Court
+of Arbitration; as well as such special
+articles as <span class="sc"><a href="/article/24-0590-search/search">Search</a></span> (Vol. 24, p. 560), by
+Sir <a href="/contributors.html?q=Sir+Thomas+Barclay">Thomas Barclay</a>, and <span class="sc"><a href="/article/24-0565-sea-laws/sea_laws">Sea Laws</a></span> (Vol.
+24, p. 535), by Sir <a href="/contributors.html?q=Sir+Travers+Twiss">Travers Twiss</a>.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Policy, Strategy, Tactics</span>It has already been noticed that the
+closing part of the article <span class="sc">Navy and
+Navies</span> dealt with strategy and tactics in
+a general way. This subject
+is treated in fuller detail
+by <a href="/contributors.html?q=Cyprian+Arthur+George+Bridge">Admiral Sir Cyprian
+Bridge</a>, G.C.B. (former Director
+of Naval Intelligence,
+British Navy, author of <i>Sea-Power and
+other Studies</i>) in two articles <span class="sc"><a href="/article/24-0578-s2/sea-power">Sea-Power</a></span>
+(Vol. 24, p. 548) and <span class="sc"><a href="/article/24-0559-sea-command-of-the/sea__command_of_the">Sea, Command of
+the</a></span> (Vol. 24, p. 529). Each of these articles
+will be of great value and interest
+to the naval officer as a summary and
+criticism of the theories of Captain A. T.
+Mahan and Vice-Admiral P. H. Colomb;
+and this will be made evident by the brief
+outline of the two articles which follows.</p>
+
+<p>Article, <span class="sc"><a href="/article/24-0578-s2/sea-power">Sea-Power</a></span>—Use of the
+term to mean (1) a state pre-eminently
+strong at sea; and (2)—as in this
+article—the various factors in a state’s
+naval strength. Thucydides as a forerunner
+of Mahan; he makes Pericles in
+comparing Athenian resources with
+those of her enemies comment on the
+importance of “sea-power.”</p>
+
+<p>The meaning of sea-power can only
+be learned historically. Although there
+have been more land-wars, “the course
+of history has been profoundly changed
+more often by contests on the water.”
+Salamis saved Greece and held back
+Oriental invasion. The loss of the
+Peloponnesian War by Athens was due
+to her weakening sea-power. The
+First Punic War, Roman rather than
+Carthaginian control of the Mediterranean,
+was won by Roman naval predominance.
+Mahommedan conquest
+spread west in Africa only with the
+creation of a navy. The crusades could
+not have continued had not Mahommedan
+naval power sunk as the Venetian,
+Pisan, and Genoese grew. The defeat
+of Genoa by Venice gave the latter a
+right to perform the ceremony of
+“wedding the sea” with a ring as
+token of “perpetual sway.” Lepanto
+(1571) the end of Turkish sea-power.</p>
+
+<p>Spanish and Portuguese sea-power
+crushed by English growth and the
+loss of the Armada. Early English
+naval history: the importance of the
+battle of Dover in 1217. Appearance
+of standing navies. The New World
+and its influence on sea-power. The
+sea-power of the Dutch; its sudden
+rise; its basis in foreign trade; the
+Dutch wars with England resulted in
+England’s becoming the first great
+naval power, but did not crush the
+United Provinces because of their sea-power.
+Torrington and the “Fleet in
+Being” in 1690. Change in naval operations
+in 17th century—the scene
+thereafter in the enemy’s waters, not
+near the coast of England.</p>
+
+<p>The 18th century. Rise of Russia’s
+sea-power—an artificial creation.
+Seven Years’ War and its gains to
+Great Britain. War of American Independence:
+British mistakes—the
+enemy’s coast <i>not</i> considered the frontier.
+Wars of the French Revolution
+and Empire: Great Britain’s advantage
+not in organization, discipline or “science,”
+but in sea-experience.</p>
+
+<p>The War of 1812. “The British
+had now to meet the <i>élite</i> of one of the
+finest communities of seamen ever
+known.... In any future war British
+sea-power, great as it may be, should
+not receive shocks like those that it unquestionably
+did suffer in 1812.”</p>
+
+<p>Later Manifestations of Sea-Power.
+American Civil War—“By dominating
+the rivers the Federals cut the Confederacy
+asunder; and, by the power
+they possessed of moving troops by sea
+at will, perplexed and harassed the defence,
+and facilitated the occupation of
+important points.” Russo-Turkish War
+of 1877–78—Turkish control of Black
+Sea forced Russians to invade by land
+through the difficult Balkans. Chilean
+Civil War of 1891—an army defeated
+by a navy. Chino-Japanese War of
+1894–95—Japanese navy in transport
+work and in crushing last resistance.
+Spanish-American War: “Spaniards
+were defeated by the superiority of the
+American sea-power.”</p>
+
+<p>Article, <span class="sc"><a href="/article/24-0559-sea-command-of-the/sea__command_of_the">Sea, Command of the</a></span>—Sketch
+of Sovereignty of the Sea;
+Command different from Sovereignty
+or Dominion.</p>
+
+<p>Attempts to gain Command: Dutch
+Wars.</p>
+
+<p>Strategic Command or Control—largely
+the power of carrying out considerable
+over-sea expeditions at will.
+Seeking the enemy’s fleet. Temporary
+command in smaller operations.</p>
+
+<p><span class="shoulder-heading" id="sh-5">Special Historical Articles</span>As for the army officer, so the Britannica
+has for the naval officer many separate
+articles on wars, campaigns, battles,
+generals, commanders. The following
+list of articles will
+serve as a guide to a
+course of reading
+constituting a history of naval warfare,
+furnishing the concrete separate facts on
+which are based the articles already described.</p>
+
+<p><i>Ancient History.</i></p>
+
+<p><i>Greece</i>: articles <i>Salamis</i>, <i>Themistocles</i>,
+<i>Xerxes I</i>, <i>Peloponnesian War</i>,
+<i>Pericles</i>.</p>
+
+<p><i>Rome</i>: articles <i>Punic Wars</i>, <i>Carthage</i>,
+<i>Pompey</i>, <i>Actium</i>.</p>
+
+<p><i>Medieval History.</i></p>
+
+<p><i>Crusades</i>; <i>Swold</i>; <i>Dover, Battle of</i>;
+<i>Sluys, Battle of</i>; <i>Espagnols sur Mer</i>
+(and article <i>Edward III</i>), <i>Chioggia</i>
+(and articles <i>Venice</i> and <i>Genoa</i>).</p>
+
+<p><i>16th Century.</i></p>
+
+<p><i>Lepanto</i> (and article <i>Don John of
+Austria</i>).</p>
+
+<p><i>Armada</i> (and articles on <i>Howard</i>,
+<i>Hawkins</i>, <i>Drake</i>, <i>Frobisher</i>, <i>Raleigh</i>,
+<i>Richard Grenville</i>, and the
+other heroes of this first bright
+glow of England’s naval glory).</p>
+
+<p><i>The Era of Sailing Vessels.</i></p>
+
+<p><i>Dutch Wars</i> (and articles <i>Tromp</i>,
+<i>Robert Blake</i>, <i>Ayscue</i>, <i>De Ruyter</i>,
+<i>Cornelius De Witt</i>, <i>William
+Penn</i>, <i>George Monk</i>, <i>Sir John
+Lawson</i>, <i>James II</i>, <i>Prince Rupert</i>,
+<i>First Earl of Sandwich</i>,
+<i>Abraham Duquesne</i>).</p>
+
+<p><i>Grand Alliance, Naval Operations</i>
+(and articles <i>Earl of Torrington</i>,
+and <i>Beachy Head, Battle of</i>; <i>La
+Hogue</i>, <i>Earl of Oxford</i> [Edward
+Russell] and <i>Tourville</i>).</p>
+
+<p><i>Spanish Succession, Naval Operations</i>
+(and <i>Château-Renault</i>, <i>Benbow</i>,
+<i>Rooke</i>, <i>Cloudesley Shovel</i>,
+<i>Duguay-Trouin</i>, <i>Forbin</i>).</p>
+
+<p><i>Austrian Succession, Naval Operations</i>
+(and the articles <i>Edward
+Vernon</i>, <i>Lord Anson</i>, <i>Toulon,
+Battle of</i>, and <i>Thomas Mathews</i>,
+marking the official sanction in
+England of an absurd formal system
+of tactics).</p>
+
+<p><i>Seven Years’ War, Naval Operations</i>
+(and <i>Boscawen</i>, <i>Byng</i>,
+<i>Hawke</i>, <i>Pocock</i>, <i>Quiberon</i>).</p>
+
+<p><i>American War of Independence,
+Naval Operations</i> (and <i>Esek
+Hopkins</i>, <i>John Paul Jones</i>, <i>Comte
+d’Estaing</i>, <i>Suffren St. Tropez</i>,
+<i>Thomas Truxtun</i>, <i>Lord Howe</i>,
+<i>John Byron</i>, <i>Hotham</i>, <i>Hyde
+Parker</i>, <i>Rodney</i>, <i>Guichen</i>, <i>Comte
+de Grasse</i>).</p>
+
+<p><i>French Revolutionary Wars, Naval
+Operations</i> (and <i>First of June,
+Battle of</i>, <i>Howe</i>, <i>Villaret de Joyeuse</i>,
+<i>Lord Bridport</i>, <i>Lord Hood</i>,
+<i>Earl of St. Vincent</i> [John
+Jervis], <i>St. Vincent, Battle of</i>,
+<i>Lord Keith</i>, <i>Lord Duncan</i>, <i>Nile</i>,
+<i>Nelson</i>, <i>Sir Thomas Troubridge</i>).</p>
+
+<p><i>Napoleonic Campaigns, Naval Operations</i>
+(and <i>Baron de Saumarez</i>,
+<i>Copenhagen, Battle of</i>, <i>Sir
+Hyde Parker</i>, <i>Sir Robert Calder</i>,
+<i>Villeneuve</i>, <i>Trafalgar</i>, <i>Lord Collingwood</i>).</p>
+
+<p><i>American War of</i> 1812 (and <i>John
+Rodgers</i>, <i>Isaac Hull</i>, <i>William
+Bainbridge</i>, <i>Stephen Decatur</i>,
+<i>David Porter</i>, <i>Oliver Hazard
+Perry</i>, <i>Sir Philip Broke</i>, <i>Thomas
+Macdonough</i>).</p>
+
+<p>And <i>Lissa</i> (1811), closely resembling
+Trafalgar, and <i>Navarino</i>, decisive for
+Greek Independence.</p>
+
+<p><i>The Era of Steam.</i></p>
+
+<p><i>American Civil War</i> (and <i>Hampton
+Roads</i>, <i>Andrew Hull Foote</i>, <i>New
+Madrid</i>, <i>D. G. Farragut</i>, <i>D. D.
+Porter</i>, <i>W. B. Cushing</i>).</p>
+
+<p><i>Chile-Peruvian War.</i></p>
+
+<p><i>Chilean Civil War.</i></p>
+
+<p><i>Chino-Japanese War</i> (and see <i>Ito</i>).</p>
+
+<p><i>Spanish-American War</i> (and see the
+articles <i>W. T. Sampson</i>, <i>W. S.
+Schley</i>, <i>George Dewey</i>, <i>Pascual
+Cervera y Topete Cervera</i>).</p>
+
+<p><i>Russo-Japanese War</i> (and <i>Togo</i>,
+<i>Dogger Bank</i>, <i>Tsushima</i>).</p>
+
+<p><span class="shoulder-heading" id="sh-6">Armaments</span>The subject of <i>armaments</i> is treated in
+the articles <span class="sc"><a href="/article/24-0894-s8/ship">Ship</a></span> and <span class="sc"><a href="/article/24-0984-s2/shipbuilding">Shipbuilding</a></span> (see
+chapter <i>For Marine Transportation Men</i>),
+<span class="sc"><a href="/article/02-0618-s4/armour_plates">Armour Plates</a></span>, with illustrations, by
+<a href="/contributors.html?q=Major+William+Egerton+Edwards">Major William Egerton
+Edwards</a>, late lecturer at the Royal
+Naval War College, Greenwich, <span class="sc"><a href="/article/20-0215-s3/ordnance">Ordnance</a></span>,
+<span class="sc"><a href="/article/01-0915-s5/ammunition">Ammunition</a></span>, <span class="sc"><a href="/article/27-0067-s2/torpedo">Torpedo</a></span>, etc.</p>
+
+<p>The following is an alphabetical list of
+articles in the Britannica of especial interest
+to naval officers or other students
+of naval warfare.</p>
+
+<ul class="index">
+  <li class="c018"><a href="/article/01-0190-s2/actium">Actium</a></li>
+  <li class="c018"><a href="/article/01-0225-s8/admiral">Admiral</a></li>
+  <li class="c018"><a href="/article/01-0226-s2/admiralty_administration">Admiralty Administration</a></li>
+  <li class="c018"><a href="/article/01-0236-s3/admiralty_jurisdiction">Admiralty Jurisdiction</a></li>
+  <li class="c018"><a href="/article/01-0869-american-civil-war/american_civil_war">American Civil War</a></li>
+  <li class="c018"><a href="/article/01-0893-american-war-of-independence/american_war_of_independence">American War of Independence</a></li>
+  <li class="c018"><a href="/article/01-0898-american-war-of-1812/american_war_of_1812">American War of 1812</a></li>
+  <li class="c018"><a href="/article/01-0915-s5/ammunition">Ammunition</a></li>
+  <li class="c018">Anson, Lord</li>
+  <li class="c018"><a href="/article/02-0600-s1/armada__the">Armada</a></li>
+  <li class="c018"><a href="/article/02-0618-s4/armour_plates">Armour Plates</a></li>
+  <li class="c018"><a href="/article/02-0624-s2/arms_and_armour">Arms and Armour</a></li>
+  <li class="c018"><a href="/article/03-0092-s2/ayscue__erroneously_askew_or_ayscough___sir_george">Ayscue</a></li>
+  <li class="c018"><a href="/article/03-0240-s2/bainbridge__william">Bainbridge, William</a></li>
+  <li class="c018"><a href="/article/03-0581-beachy-head/beachy_head">Beachy Head</a></li>
+  <li class="c018"><a href="/article/03-0735-benbow-john/benbow__john">Benbow</a></li>
+  <li class="c018"><a href="/article/03-0790-beresford-john/beresford__john">Beresford</a></li>
+  <li class="c018"><a href="/article/04-0048-blake-robert/blake__robert">Blake, Robert</a></li>
+  <li class="c018"><a href="/article/04-0292-boscawen-edward/boscawen__edward">Boscawen</a></li>
+  <li class="c018"><a href="/article/04-0581-s2/bridport">Bridport, Lord</a></li>
+  <li class="c018"><a href="/article/04-0651-s6/broke__sir_philip_bowes_vere">Broke, Sir Philip</a></li>
+  <li class="c018"><a href="/article/04-0920-s5/byng__john">Byng</a></li>
+  <li class="c018"><a href="/article/04-0930-byron-john-byron/byron__john_byron">Byron, John</a></li>
+  <li class="c018"><a href="/article/04-1010-s4/calder__sir_robert">Calder, Sir Robert</a></li>
+  <li class="c018">Camperdown</li>
+  <li class="c018"><a href="/article/05-0448-carthage-missouri/carthage__missouri_">Carthage</a></li>
+  <li class="c018"><a href="/article/05-0461-casemate/casemate">Casemate</a></li>
+  <li class="c018"><a href="/article/05-0462-case-shot/case-shot">Case-shot</a></li>
+  <li class="c018"><a href="/article/05-0802-cervera-pascual-cervera-y-topete/cervera__pascual_cervera_y_topete">Cervera</a></li>
+  <li class="c018"><a href="/article/05-1001-ch-teau-renault-fran-ois-louis-de-rousselet/château-renault__françois_louis_de_rousselet">Château-Renault</a></li>
+  <li class="c018"><a href="/article/06-0173-chile-peruvian-war/chile-peruvian_war">Chile-Peruvian War</a></li>
+  <li class="c018"><a href="/article/06-0173-chilean-civil-war/chilean_civil_war">Chilean Civil War</a></li>
+  <li class="c018"><a href="/article/06-0249-chino-japanese-war/chino-japanese_war">Chino-Japanese War</a></li>
+  <li class="c018"><a href="/article/06-0251-chioggia/chioggia">Chioggia</a></li>
+  <li class="c018"><a href="/article/06-0612-coaling-stations/coaling_stations">Coaling Stations</a></li>
+  <li class="c018"><a href="/article/06-0618-coast-defence/coast_defence">Coast Defence</a></li>
+  <li class="c018">Coast Guard</li>
+  <li class="c018"><a href="/article/06-0657-codrington-sir-edward/codrington__sir_edward">Codrington</a></li>
+  <li class="c018"><a href="/article/06-0704-coligny-gaspard-de/coligny__gaspard_de">Coligny</a></li>
+  <li class="c018">Collingwood, Lord</li>
+  <li class="c018"><a href="/article/06-0721-colombes/colombes">Colomb</a></li>
+  <li class="c018"><a href="/article/06-0801-commodore/commodore">Commodore</a></li>
+  <li class="c018"><a href="/article/07-0111-copenhagen/copenhagen">Copenhagen, Battle of</a></li>
+  <li class="c018"><a href="/article/07-0546-crusades/crusades">Crusades</a></li>
+  <li class="c018"><a href="/article/07-0689-cushing-william-barker/cushing__william_barker">Cushing, W. B.</a></li>
+  <li class="c018"><a href="/article/07-0934-decatur-stephen/decatur__stephen">Decatur, Stephen</a></li>
+  <li class="c018">d’Estaing</li>
+  <li class="c018"><a href="/article/08-0090-de-ruyter-michael-adrianzoon/de_ruyter__michael_adrianzoon">De Ruyter</a></li>
+  <li class="c018">De Saumarez, Baron</li>
+  <li class="c018"><a href="/article/08-0154-dewey-george/dewey__george">Dewey, George</a></li>
+  <li class="c018"><a href="/article/08-0155-de-witt-cornelius/de_witt__cornelius">De Witt, Cornelius</a></li>
+  <li class="c018"><a href="/article/08-0381-dockyards/dockyards">Dockyards</a></li>
+  <li class="c018"><a href="/article/08-0401-dogger-bank/dogger_bank">Dogger Bank</a></li>
+  <li class="c018">Dover, Battle of (1217)</li>
+  <li class="c018"><a href="/article/08-0497-drake-nathan/drake__nathan">Drake</a></li>
+  <li class="c018"><a href="/article/08-0675-duguay-trouin-ren/duguay-trouin__rené">Duguay-Trouin</a></li>
+  <li class="c018"><a href="/article/08-0676-duilius-gaius/duilius__or_duellius___gaius">Duilius</a></li>
+  <li class="c018"><a href="/article/08-0697-duncan/duncan">Duncan, Lord</a></li>
+  <li class="c018"><a href="/article/08-0718-duquesne-abraham/duquesne__abraham">Duquesne, Abraham</a></li>
+  <li class="c018"><a href="/article/08-0756-dutch-wars/dutch_wars">Dutch Wars</a></li>
+  <li class="c018"><a href="/article/08-1021-edward-iii/edward_iii_">Edward III</a></li>
+  <li class="c018"><a href="/article/09-0803-espagnols-sur-mer-les/espagnols_sur_mer__les">Espagnols sur Mer</a></li>
+  <li class="c018"><a href="/article/10-0199-farragut-david-glasgow/farragut__david_glasgow">Farragut, D. G.</a></li>
+  <li class="c018"><a href="/article/10-0435-s5/fireship">Fireship</a></li>
+  <li class="c018"><a href="/article/10-0440-s3/first_of_june">First of June</a></li>
+  <li class="c018"><a href="/article/10-0486-flagship/flagship">Flagship</a></li>
+  <li class="c018"><a href="/article/10-0510-s4/fleet">Fleet</a></li>
+  <li class="c018"><a href="/article/10-0606-flying-column/flying_column">Flying Column</a></li>
+  <li class="c018"><a href="/article/10-0646-s2/foote__andrew_hull">Foote, Andrew Hull</a></li>
+  <li class="c018"><a href="/article/10-0660-s5/forbin__claude_de">Forbin</a></li>
+  <li class="c018"><a href="/article/11-0183-french-revolutionary-wars/french_revolutionary_wars">French Revolutionary Wars</a></li>
+  <li class="c018"><a href="/article/11-0243-s5/frigate">Frigate</a></li>
+  <li class="c018"><a href="/article/11-0250-frobisher-sir-martin/frobisher__sir_martin">Frobisher</a></li>
+  <li class="c018"><a href="/article/11-0617-genoa/genoa">Genoa</a></li>
+  <li class="c018"><a href="/article/12-0359-s3/grand_alliance__war_of_the">Grand Alliance</a></li>
+  <li class="c018"><a href="/article/12-0386-grasse/grasse">Grasse, Comte de</a></li>
+  <li class="c018">Grenville, Richard</li>
+  <li class="c018"><a href="/article/12-0518-greek-independence-war-of/greek_independence__war_of">Greek Independence</a></li>
+  <li class="c018">Guardship Perry,</li>
+  <li class="c018"><a href="/article/12-0711-guichen-luc-urbain-de-bou-xic-comte-de/guichen__luc_urbain_de_bouëxic__comte_de">Guichen</a></li>
+  <li class="c018"><a href="/article/12-0931-hampton-roads/hampton_roads">Hampton Roads</a></li>
+  <li class="c018"><a href="/article/13-0108-s2/hawke__edward_hawke">Hawke</a></li>
+  <li class="c018"><a href="/article/13-0111-s6/hawkins__sir_john">Hawkins</a></li>
+  <li class="c018"><a href="/article/13-0685-s3/hood">Hood, Lord</a></li>
+  <li class="c018"><a href="/article/13-0701-s6/hopkins__esek">Hopkins, Esek</a></li>
+  <li class="c018"><a href="/article/13-0822-s6/hotham__sir_john">Hotham</a></li>
+  <li class="c018"><a href="/article/13-0854-s7/howard">Howard</a></li>
+  <li class="c018"><a href="/article/17-0019-lord-howe/lord_howe">Howe, Lord</a></li>
+  <li class="c018"><a href="/article/13-0894-s8/hull__isaac">Hull, Isaac</a></li>
+  <li class="c018"><a href="/article/14-0725-s2/international_law">International Law</a></li>
+  <li class="c018">James II</li>
+  <li class="c018"><a href="/article/15-0526-s3/jones__john_paul">Jones, John Paul</a></li>
+  <li class="c018"><a href="/article/15-0743-s3/keith">Keith, Lord</a></li>
+  <li class="c018"><a href="/article/16-0100-la-hogue-battle-of/la_hogue__battle_of">La Hogue</a></li>
+  <li class="c018"><a href="/article/16-0330-s2/lawson__sir_john">Lawson, Sir John</a></li>
+  <li class="c018"><a href="/article/16-0483-s3/lepanto">Lepanto</a></li>
+  <li class="c018"><a href="/article/16-0749-s4/liner">Liner</a></li>
+  <li class="c018"><a href="/article/16-0798-s2/lissa">Lissa (1811, 1866)</a></li>
+  <li class="c018"><a href="/article/17-0228-s5/macdonough__thomas">Macdonough, Thomas</a></li>
+  <li class="c018"><a href="/article/19-0538-s3/new_madrid">Madrid, New</a></li>
+  <li class="c018"><a href="/article/17-0409-s7/mahan__alfred_thayer">Mahan</a></li>
+  <li class="c018"><a href="/article/17-0736-marines/marines">Marines</a></li>
+  <li class="c018"><a href="/article/17-0906-mathews-thomas/mathews__thomas">Mathews, Thomas</a></li>
+  <li class="c018"><a href="/article/18-0117-meloria/meloria">Meloria</a></li>
+  <li class="c018"><a href="/article/18-0375-s7/miaoulis__andreas_vokos">Miaoulis</a></li>
+  <li class="c018"><a href="/article/18-0447-midshipman/midshipman">Midshipman</a></li>
+  <li class="c018"><a href="/article/18-0754-monk/monk">Monk, George</a></li>
+  <li class="c018"><a href="/article/19-0231-napoleonic-campaigns/napoleonic_campaigns">Napoleonic Campaigns</a></li>
+  <li class="c018"><a href="/article/19-0291-nauarchia/nauarchia">Nauarchia</a></li>
+  <li class="c018"><a href="/article/19-0291-s5/naucrary">Naucrary</a></li>
+  <li class="c018">Naval Operations</li>
+  <li class="c018"><a href="/article/19-0296-s4/navarino__battle_of">Navarino</a></li>
+  <li class="c018">Navy and Navies</li>
+  <li class="c018"><a href="/article/19-0376-s2/nelson__robert">Nelson</a></li>
+  <li class="c018"><a href="/article/19-0726-nile-battle-of-the/nile__battle_of_the">Nile, Battle of the</a></li>
+  <li class="c018"><a href="/article/20-0215-s3/ordnance">Ordnance</a></li>
+  <li class="c018"><a href="/article/20-0436-s2/oxford__earls_of">Oxford, Earl of</a></li>
+  <li class="c018">Parker, Hyde</li>
+  <li class="c018"><a href="/article/20-0889-s5/parker__sir_hyde">Parker, Sir Hyde</a></li>
+  <li class="c018"><a href="/article/21-0085-peloponnesian-war/peloponnesian_war">Peloponnesian War</a></li>
+  <li class="c018"><a href="/article/21-0113-s5/penn__william">Penn, William</a></li>
+  <li class="c018"><a href="/article/21-0145-pepys-samuel/pepys__samuel">Pepys</a></li>
+  <li class="c018"><a href="/article/21-0162-s2/pericles">Pericles</a></li>
+  <li class="c018"><a href="/article/21-0202-perry-oliver-hazard/perry__oliver_hazard">Perry, Oliver Hazard</a></li>
+  <li class="c018">Piracy</li>
+  <li class="c018"><a href="/article/21-0906-pocock-sir-george/pocock__sir_george">Pocock</a></li>
+  <li class="c018"><a href="/article/22-0070-s2/pompey">Pompey</a></li>
+  <li class="c018"><a href="/article/22-0127-porter-david/porter__david">Porter, David</a></li>
+  <li class="c018"><a href="/article/22-0127-porter-david-dixon/porter__david_dixon">Porter, D. D.</a></li>
+  <li class="c018"><a href="/article/22-0384-privateer/privateer">Privateer</a></li>
+  <li class="c018"><a href="/article/22-0665-s5/punic_wars">Punic Wars</a></li>
+  <li class="c018">Quiberon, Battle of</li>
+  <li class="c018"><a href="/article/22-0888-raleigh/raleigh">Raleigh</a></li>
+  <li class="c018"><a href="/article/22-0905-s4/range-finder">Range-finder</a></li>
+  <li class="c018"><a href="/article/23-0469-s2/rodgers__john">Rodgers, John</a></li>
+  <li class="c018"><a href="/article/23-0469-rodney-george-brydges-rodney-baron/rodney__george_brydges_rodney__baron">Rodney</a></li>
+  <li class="c018"><a href="/article/23-0741-s3/rooke__sir_george">Rooke</a></li>
+  <li class="c018"><a href="/article/23-0898-rupert-prince/rupert__prince">Rupert, Prince</a></li>
+  <li class="c018"><a href="/article/23-0964-russo-japanese-war/russo-japanese_war">Russo-Japanese War</a></li>
+  <li class="c018"><a href="/article/23-1063-saint-bon-simone-arturo/saint-bon__simone_arturo">Saint-Bon</a></li>
+  <li class="c018">Saint Vincent</li>
+  <li class="c018"><a href="/article/24-0057-saints-battle-of-the/saints__battle_of_the">Saints, Battle of the</a></li>
+  <li class="c018"><a href="/article/24-0072-salamis-cyprus/salamis__cyprus_">Salamis</a></li>
+  <li class="c018"><a href="/article/24-0133-sampson-william-thomas/sampson__william_thomas">Sampson, W. T.</a></li>
+  <li class="c018"><a href="/article/24-0157-s2/sandwich">Sandwich, 1st Earl of</a></li>
+  <li class="c018"><a href="/article/24-0358-s3/schley__winfield_scott">Schley, W. S.</a></li>
+  <li class="c018"><a href="/article/24-0559-sea-command-of-the/sea__command_of_the">Sea, Command of the</a></li>
+  <li class="c018"><a href="/article/24-0565-sea-laws/sea_laws">Sea Laws</a></li>
+  <li class="c018"><a href="/article/24-0573-seamanship/seamanship">Seamanship</a></li>
+  <li class="c018"><a href="/article/24-0578-s2/sea-power">Sea-Power</a></li>
+  <li class="c018"><a href="/article/24-0590-search/search">Search</a></li>
+  <li class="c018">Seven Years’ War</li>
+  <li class="c018"><a href="/article/24-0894-s8/ship">Ship, Shipbuilding</a></li>
+  <li class="c018"><a href="/article/24-1090-shovel/shovel">Shovel, Cloudesley</a></li>
+  <li class="c018"><a href="/article/25-0262-sluys-battle-of/sluys__battle_of">Sluys</a></li>
+  <li class="c018"><a href="/article/25-0615-s2/spanish-american_war_of">Spanish-American War</a></li>
+  <li class="c018"><a href="/article/25-0620-s2/spanish_succession__war_of_the">Spanish Succession</a></li>
+  <li class="c018"><a href="/article/25-0765-s5/squadron">Squadron</a></li>
+  <li class="c018"><a href="/article/26-0017-submarine-mines/submarine_mines">Submarine Mines</a></li>
+  <li class="c018">Suffren, St. Tropez</li>
+  <li class="c018"><a href="/article/26-0289-s2/swold__or_swöld___battle_of">Swold</a></li>
+  <li class="c018"><a href="/article/26-0798-s5/themistocles">Themistocles</a></li>
+  <li class="c018"><a href="/article/26-1086-s2/togo__heihachiro">Togo</a></li>
+  <li class="c018"><a href="/article/27-0067-s2/torpedo">Torpedo</a></li>
+  <li class="c018"><a href="/article/27-0077-s3/torrington">Torrington</a></li>
+  <li class="c018"><a href="/article/27-0112-toulon/toulon">Toulon, Battle of</a></li>
+  <li class="c018"><a href="/article/27-0123-s2/tourville__anne-hilarion_de_cotentin">Tourville</a></li>
+  <li class="c018"><a href="/article/27-0168-trafalgar-battle-of/trafalgar__battle_of">Trafalgar</a></li>
+  <li class="c018"><a href="/article/27-0321-s2/tromp">Tromp</a></li>
+  <li class="c018"><a href="/article/27-0328-s2/troubridge__sir_thomas">Troubridge, Sir Thomas</a></li>
+  <li class="c018"><a href="/article/27-0356-s2/truxtun__thomas">Truxtun, Thomas</a></li>
+  <li class="c018">Tsushima</li>
+  <li class="c018">U. S. Naval Academy</li>
+  <li class="c018"><a href="/article/27-1023-venice/venice">Venice</a></li>
+  <li class="c018"><a href="/article/27-1060-s3/vernon__edward">Vernon, Edward</a></li>
+  <li class="c018"><a href="/article/28-0091-villaret-de-joyeuse-louis-thomas/villaret_de_joyeuse__louis_thomas">Villaret de Joyeuse</a></li>
+  <li class="c018"><a href="/article/28-0100-villeneuve-sur-lot/villeneuve-sur-lot">Villeneuve</a></li>
+  <li class="c018">Xerxes I</li>
+</ul>
+
+<div class="chapter">
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

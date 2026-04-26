@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Journalists And Authors &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XXII</span>For Journalists And Authors</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">The Development of Style</a></li><li><a href="#sh-2">“Vitalized Observation”</a></li><li><a href="#sh-3">Practical Tests</a></li><li><a href="#sh-4">The Journalist’s Needs</a></li><li><a href="#sh-5">Literary Criticism</a></li><li><a href="#sh-6">Newspapers and Magazines</a></li><li><a href="#sh-7">Literary Biographies</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">The Development of Style</span>No writer can consider the use he
+will make of the tools of his trade—and
+the Britannica is certainly
+the chief among them—unless he has
+very definite views as to the particular
+kind of work he is trying to do. Where
+writing is regarded as a business, the art
+of writing is the art of being read, and the
+art of being read lies, nowadays, in convincing
+the reader that you have something
+fresh to say, rather than in arousing
+his admiration of your way of saying
+it. Writing is none the less one of the
+fine arts: the modern writer must form
+his style with the utmost care, and always
+guard himself against the temptation
+to relax his standards. But the
+juggling with words, the “rhythmical sequences
+of recurring consonants,” the
+musical prose in which sounds are adjusted
+as artfully as in verse, presuppose
+readers to whom these elaborations are
+delightful. Such readers are rare, to-day.
+Thirty or forty years ago it was a
+matter of course, in thousands of homes,
+for some one member of the household to
+read aloud to the others. The custom
+has almost disappeared, and there has
+been a change in public taste, due, perhaps,
+in great measure to a change in the
+<i>pace</i> at which people read. A book does
+not “last” as it did.
+Newspaper reading
+has trained the eye
+and the mind to
+swifter consumption. The modern professional
+writer adapts himself to the
+existing conditions. He knows that those
+who ride in automobiles do not peer under
+tufts of leaves to look for roadside violets.
+But he also knows that they want a
+straight, smooth road. He endeavors to
+write as concisely as possible, yet to
+write so clearly that every point he makes
+is made once for all; and he can work
+fully as hard, and apply talents fully as
+great, in forming a style that pleases by
+its simple directness—or, better, that
+pleases because the reader does not think
+of it as “style,”—as if he were aiming at
+the most elaborate ornament.</p>
+
+<p><span class="shoulder-heading" id="sh-2">“Vitalized Observation”</span>In developing the power of clear and
+concise statement, the first essential is to
+form the habit of getting your “something
+to say” absolutely plain to your
+own mind before you attempt to say it.
+A writer deliberately strives to be wordy
+and vague when he is trying to misrepresent
+facts, and it is impossible, when he
+is groping for his facts, that he should
+avoid wordiness and vagueness. The
+Britannica article on Rudyard Kipling
+speaks of his “powers
+of observation
+vitalized by imagination.”
+It would be
+difficult to find a phrase more tersely describing
+the ideal equipment of a writer,
+and Kipling’s observation is rapid observation
+<i>amplified by deliberate investigation</i>.
+He gets a swift impression of the
+complex framework of a ship or of the intricate
+machinery of a locomotive, and
+then, before he writes “The Ship that
+Found Herself” or “.007,” he makes as
+elaborate a technical study as if he were
+writing an engineering article instead of
+a story. His imagination so vitalizes the
+result that when you read the story, although
+it describes beams and valves you
+never saw, you recognize the accuracy of
+his technical description as you recognize,
+in an art gallery, the fidelity of a
+portrait, although you never saw the person
+portrayed. In using the Britannica,
+the investigation by which you amplify
+your personal observation helps you in
+four ways. <i>First</i>, you correct your facts
+if they need correction. Whatever your
+subject may be, you find information so
+authoritative that you cannot question
+it. <i>Second</i>, you amplify your own observations;
+you discover the underlying
+causes and relations of the events or
+opinions you are about to discuss. <i>Third</i>,
+the reading by which you have, consciously
+or unconsciously, been influenced
+in forming your style, is rendered more
+profitable and stimulating by your study
+of the Britannica articles in which the
+work of all the world’s great writers, past
+and present, is analyzed by the most
+brilliant critics. <span class="sni"><span class="hidev">|</span>Models of
+Style<span class="hidev">|</span></span>
+<i>Fourth</i>,
+you have in the Britannica
+itself such examples of
+scholarly, forcible, compacted
+English as cannot often be found
+in contemporary books. It is not within
+the province of this Guide to institute
+detailed comparisons between these articles
+by the leading literary men of the
+day and other writings from the same
+pens. But the reader will discover for
+himself that the editorial policy which
+demanded rigorous concision has stimulated,
+not hampered, the distinguished
+writers whose Britannica articles are, in
+case after case, the best of their productions.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Practical Tests</span>The foregoing summary of the uses of
+the Britannica to writers is based upon
+reviews of the work which have appeared
+in the daily and weekly press; and it may
+be supplemented by brief extracts from
+one or two letters to the publishers,
+written by men whose reputations give
+their opinions great weight. In one of
+these Horace White, formerly editor of
+the <i>Evening Post</i> of New York, spoke
+highly of the practical utility of the Britannica.
+Joseph Pulitzer, of the New
+York <i>World</i>, shortly before his death
+wrote: “I want to thank you for the intellectual
+pleasure I enjoyed this winter
+in examining this extraordinary production.
+I have already distributed a dozen
+sets in America as presents among <i>editors</i>
+and my children. [He afterwards ordered
+six more sets.] The work is a liberal education.”
+John Habberton wrote: “The
+new edition of the Britannica
+has already cost me
+hundreds of hours that I
+should have given to my
+work, but I do not regret the outlay, for
+I have been richly repaid. There never
+was a handier book for a desk or a more
+readable one.”</p>
+
+<p>It is not only true that no ordinary
+library would supply the information to
+be found in the Britannica, but it is as
+true, and as relevant, that no ordinary
+library presents information in a form as
+stimulating to the writer who uses books
+as the tools of his trade. The editor-in-chief
+of the Britannica had all the
+world’s greatest experts in all fields of
+human knowledge and endeavour to
+choose from. He chose in each instance
+the expert whose knowledge was so
+thorough, and whose correlation of his
+special knowledge with related branches
+was so complete, that his articles are not
+merely “last word” information but interesting
+and alive. You may remember
+the new interest you felt in natural science
+when you first read an essay by Huxley,
+because he had the power of creating enthusiasm.
+It is a justifiable figure of
+speech to say that, in this sense, the Britannica
+has been written by Huxleys.
+Perhaps you have ransacked a public library
+for some out-of-the-way fact and
+finally found it, in skeleton form, and in
+crabbed German, in <i>Meyer</i> or <i>Brockhaus</i>
+or some other German encyclopaedia. Or
+did your search end by finding the fact in
+<i>Larousse</i> or <i>La Grande Encyclopédie</i>, in
+some clever phrase, so brilliantly written,
+so strikingly put, that it was the phrase
+and not the fact that you had got—and
+you felt that the Frenchman had hidden
+the fact, if he ever had had it, in his epigram?
+You may have wished, then, for
+a third type of encyclopaedia which
+should be “German-thorough” and
+“French-interesting.” Such a combination
+is the Britannica,—more authoritative,
+more up-to-date, more interesting,
+than any other book.</p>
+
+<p><span class="shoulder-heading" id="sh-4">The Journalist’s Needs</span>A newspaper man, reporter or editor,
+must be informed at a moment’s notice
+on any one of so large a number and so
+wide a range of topics that the best library
+of reference
+obtainable can be
+none too good for him. This is especially
+true of the man on the smaller newspaper
+which does not have the luxury of specialists
+on its editorial staff, or of many reporters
+dividing among them the work
+of gathering news on such lines that each
+may work in a field with which he is intimately
+acquainted and in which he is
+particularly versed. And the rural newspaper
+is, besides, further from good public
+libraries and financially less able to
+have a large office library. The authority,
+the scope, the interest and the convenience
+of the Britannica make it just the
+book to fill these varied needs of the newspaper
+man. If he has to write a “murder
+story” in which some unusual poison has
+been used, he can find a full description of
+the origin, the use, the action and the tests
+of the drug by turning to the Britannica—instead
+of hunting for (and then through)
+a text book on medicine. And if, on the
+same day, or the next, he must write an
+editorial on the tariff, he will find in the
+article <span class="sc"><a href="/article/26-0451-s3/tariff">Tariff</a></span>, in the articles <span class="sc"><a href="/article/11-0100-s6/free_trade">Free
+Trade</a></span> and <span class="sc"><a href="/article/22-0479-protection/protection">Protection</a></span>, and in that part
+of the article <span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span> which deals
+with the country’s economic history, the
+information that he wants; and he can get
+it quickly, and can be sure of its being
+authoritative.</p>
+
+<p>If the Britannica is evidently <i>the</i> work
+of reference for the writer, how is he to
+use it?</p>
+
+<p>It has already been suggested that he
+will find authoritative and recent information
+on any topic connected with the subject
+on which he is writing. It would be
+interesting to see—or at least to imagine—how
+largely the Britannica might be
+used as a source for fiction. A novelist
+with an appetite for human documents
+like Balzac’s or like that of Charles Reade—with
+his many albums full of newspaper
+clippings,—could satisfy himself with the
+Britannica, taking his characters “from
+life” in its biographical and historical articles
+and his setting from its geographical
+articles.</p>
+
+<p><span class="shoulder-heading" id="sh-5">Literary Criticism</span>It has already been suggested that the
+writer will find in the Britannica the
+clearness and conciseness of style which
+he cannot but wish to attain in his own
+work. Here he has the writings of great
+masters of English. He may remember
+Robert Louis Stevenson’s story of how he
+played “the sedulous ape” to the great
+stylists; and in the Britannica he can
+read not only an excellent sketch of Stevenson
+by <a href="/contributors.html?q=Edmund+Gosse">Edmund Gosse</a>, his friend and
+a well-known essayist, but Stevenson’s
+own article on Béranger. He may read
+Matthew Arnold on Sainte-Beuve; Walter
+Besant on Froissart and on Richard
+Jefferies; John Burroughs on Walt Whitman;
+G. W. Cable on William Cullen
+Bryant; Edmund
+Kerchever Chambers
+on Shakespeare:
+Ernest Hartley Coleridge
+on Byron; Sidney Colvin on Giotto,
+Leonardo, etc.; Austin Dobson on Fielding,
+Hogarth, Richardson, etc.; Henry
+van Dyke on Emerson; John Fiske on
+Francis Parkman; Richard Garnett on T.
+L. Peacock and on Satire; Israel Gollancz
+on “The Pearl”; <a href="/contributors.html?q=Edmund+Gosse">Edmund Gosse</a> on many
+literary <i>genres</i>, on Ibsen, etc.; Edward
+Everett Hale on James Freeman Clarke
+and on Edward Everett; Frederic Harrison
+on Ruskin; W. E. Henley on James
+Fenimore Cooper; William Price James
+on Barrie, Henley and Kipling; Prince
+Karageorgevitch on Marie Bashkirtseff;
+Stanley Lane-Poole on Richard Burton;
+Andrew Lang on Ballads, Molière, etc.;
+Henry Cabot Lodge on Albert Gallatin;
+E. V. Lucas on Jane Austen and Charles
+Lamb; Lord Macaulay on Bunyan, Goldsmith,
+Johnson and Pitt; David Masson
+on Milton; Brander Matthews on Mark
+Twain; Alice Meynell on Mrs. Browning;
+William Minto on Dryden, Pope, Spenser
+and Wordsworth; John Nichol on Robert
+Burns; Charles Eliot Norton on George
+William Curtis; Mark Pattison on Casaubon,
+Erasmus, Macaulay and Thomas
+More; W. H. Pollock on Thackeray and
+de Musset; Quiller-Couch on Thomas
+Edward Brown; Whitelaw Reid on Greeley;
+C. F. Richardson on Bronson Alcott
+and John Fiske; W. M. Rossetti on
+Shelley; Viscount St. Cyres on Fénelon
+and Madame Guyon; Saintsbury on
+French literature, Balzac, Montaigne,
+Rabelais, etc.; Carl Schurz on Henry
+Clay; H. E. Scudder on Lowell and Harriet
+Beecher Stowe; Thomas Seccombe
+on Boswell, Dickens, Charles Lever, etc.;
+William Sharp (“Fiona McLeod”) on
+Thoreau; <a href="/contributors.html?q=Clement+King+Shorter">Clement Shorter</a> on the Brontës,
+Crabbe, Cowper and Mrs. Gaskell; W. W.
+Skeat on Layamon; E. C. Stedman on
+Whittier; Sir Leslie Stephen on Browning
+and Carlyle; Richard Henry Stoddard on
+Hawthorne; Swinburne on Beaumont and
+Fletcher, Congreve, Hugo, Landor, Marlowe,
+Mary, Queen of Scots; John Addington
+Symonds on the Renaissance,
+Machiavelli, Tasso, etc.; Arthur Symons
+on Hardy, Mallarmé, Verlaine; W. P.
+Trent on Sidney Lanier; A. W. Ward on
+Drama; Mrs. Humphry Ward on Lyly;
+Theodore Watts-Dunton on Poetry, Sonnet,
+Borrow, Wycherley, Matthew Arnold;
+Arthur Waugh on William Morris, Walter
+Pater; and <a href="/contributors.html?q=George+Edward+Woodberry">G. E. Woodberry</a> on American
+Literature.</p>
+
+<p>The more you know of the subjects or
+authors in this list the more likely you
+will be to say what a Western professor
+of theology said, in reviewing the articles
+in the Britannica dealing with the Bible:
+“They are the very authorities that I
+would have chosen to write these articles!”</p>
+
+<p>But the Britannica will serve the professional
+author in other ways than by
+giving him information in special fields
+and by keeping before him admirable
+models of style. He might well follow any
+of the courses suggested in the chapter on
+<i>Literature</i> in this Guide; and if he will
+read the articles on great authors written
+by great authors, already mentioned, he
+will have a doubly valuable course in
+biographical criticism by the ablest of
+literary critics.</p>
+
+<p>Any newspaper writer or contributor
+to the periodical press should read such
+articles as:</p>
+
+<p><span class="shoulder-heading" id="sh-6">Newspapers and Magazines</span><span class="sc"><a href="/article/19-0568-newspapers/newspapers">Newspapers</a></span> (Vol. 19, p. 544; equivalent
+to 125 pages of this Guide), by <a href="/contributors.html?q=Hugh+Chisholm">Hugh
+Chisholm</a>, editor-in-chief of the Britannica,
+with sections
+on the price of
+newspapers by <a href="/contributors.html?q=The+Rt.+Hon.+Lord+Northcliffe">Lord
+Northcliffe</a>, on illustrated
+papers by <a href="/contributors.html?q=Clement+King+Shorter">Clement Shorter</a>, general
+information on American newspapers, and
+an elaborate historical account of British,
+American and foreign newspapers.</p>
+
+<p><span class="sc"><a href="/article/21-0168-periodicals/periodicals">Periodicals</a></span> (Vol. 21, p. 151; equivalent
+to 40 pages in this Guide), by <a href="/contributors.html?q=Henry+Richard+Tedder">Henry
+Richard Tedder</a>, librarian of the Athenaeum
+Club of London, treats the subject
+under the heads: <i>British</i>, <i>United States</i>,
+<i>Canada</i>, <i>South Africa</i>, <i>Australia and New
+Zealand</i>, <i>West Indies and British Crown
+Colonies</i>, <i>India and Ceylon</i>, <i>France</i>, <i>Germany</i>,
+<i>Austria</i>, <i>Italy</i>, <i>Belgium</i>, <i>Holland</i>,
+<i>Denmark</i>, <i>Norway</i>, <i>Sweden</i>, <i>Spain</i>, <i>Portugal</i>,
+<i>Greece</i>, <i>Russia</i>, and <i>other Countries</i>.</p>
+
+<p><span class="sc"><a href="/article/25-0325-societies-learned/societies__learned">Societies, Learned</a></span> (Vol. 25, p. 309),
+also by <a href="/contributors.html?q=Henry+Richard+Tedder">H. R. Tedder</a>, deals with the publications
+of such societies and classifies
+them (with geographical sub-classification
+for each head) under <i>Science Generally</i>,
+<i>Mathematics</i>, <i>Astronomy</i>, <i>Physics</i>,
+<i>Chemistry</i>, <i>Geology</i>, <i>Mineralogy</i> and <i>Palaeontology</i>,
+<i>Meteorology</i>, <i>Microscopy</i>, <i>Botany
+and Horticulture</i>, <i>Zoology</i>, <i>Anthropology</i>,
+<i>Sociology</i>, <i>Medicine and Surgery</i>,
+<i>Engineering and Architecture</i>, <i>Naval and
+Military Science</i>, <i>Agriculture and Trades</i>,
+<i>Literature</i>, <i>History and Archaeology</i>, and
+<i>Geography</i>.</p>
+
+<p>Local information in regard to newspapers
+and journalism will be found in
+separate local articles. Thus under Boston,
+Philadelphia, New York City, New
+Orleans, San Francisco, etc., there is
+valuable information in regard to these
+cities as literary centers and about their
+principal periodical publications, including
+newspapers; and in the articles on
+smaller cities, such as Albany and Springfield,
+Mass., there are valuable historical
+sketches of the local press of each.</p>
+
+<p><span class="shoulder-heading" id="sh-7">Literary Biographies</span>The newspaper man should read the
+biographies of great American printers
+and editors: <span class="sc"><a href="/article/04-0385-bradford-william-governor/bradford__william__governor_">William Bradford</a></span> (Vol. 4,
+p. 370); <span class="sc"><a href="/article/11-0036-s2/franklin__benjamin">Benjamin
+Franklin</a></span> (Vol. 11,
+p. 24; equivalent to
+20 pages of this
+Guide); <span class="sc"><a href="/article/26-0907-thomas-isaiah/thomas__isaiah">Isaiah Thomas</a></span> (Vol. 26, p.
+867); <span class="sc"><a href="/article/28-0481-s2/webster__noah">Noah Webster</a></span> (Vol. 28, p. 463);
+<span class="sc"><a href="/article/04-0721-s2/bryant__william_cullen">William Cullen Bryant</a></span> (Vol. 4, p.
+698); <span class="sc"><a href="/article/03-1011-birney-james-gillespie/birney__james_gillespie">James G. Birney</a></span> (Vol. 3, p. 988);
+<span class="sc"><a href="/article/03-0234-s3/bailey__gamaliel">Gamaliel Bailey</a></span> (Vol. 3, p. 217); <span class="sc"><a href="/article/11-0495-garrison-william-lloyd/garrison__william_lloyd">W.
+L. Garrison</a></span> (Vol. 11, p. 477); <span class="sc"><a href="/article/03-0760-bennett-james-gordon/bennett__james_gordon">James
+Gordon Bennett</a></span> (Vol. 3, p. 740);
+<span class="sc"><a href="/article/28-0484-weed-thurlow/weed__thurlow">Thurlow Weed</a></span> (Vol. 28, p. 466); <span class="sc"><a href="/article/28-0524-s2/welles__gideon">Gideon
+Welles</a></span> (Vol. 28, p. 506); <span class="sc"><a href="/article/03-0945-bigelow-john/bigelow__john">John
+Bigelow</a></span> (Vol. 3, p. 922); <span class="sc"><a href="/article/12-0556-s1/greeley__horace">Horace
+Greeley</a></span> (Vol. 12, p. 531); <span class="sc"><a href="/article/22-0950-raymond-henry-jarvis/raymond__henry_jarvis">Henry J.
+Raymond</a></span> (Vol. 22, p. 933); <span class="sc"><a href="/article/23-0380-s4/ripley__george">George
+Ripley</a></span> (Vol. 23, p. 363); <span class="sc"><a href="/article/07-0815-dana-charles-anderson/dana__charles_anderson">C. A. Dana</a></span>
+(Vol. 7, p. 791); <span class="sc"><a href="/article/07-0674-curtis-george-william/curtis__george_william">George William Curtis</a></span>
+(Vol. 7, p. 652); <span class="sc"><a href="/article/24-0404-schurz-carl/schurz__carl">Carl Schurz</a></span> (Vol.
+24, p. 386); <span class="sc"><a href="/article/04-0359-bowles-samuel/bowles__samuel">Samuel Bowles</a></span> (Vol. 4, p.
+344); <span class="sc"><a href="/article/13-0114-s2/hawley__joseph_roswell">Joseph R. Hawley</a></span> (Vol. 13, p.
+101); <span class="sc"><a href="/article/23-0069-s3/reid__whitelaw">Whitelaw Reid</a></span> (Vol. 23, p. 52);
+<span class="sc"><a href="/article/06-0154-childs-george-william/childs__george_william">George W. Childs</a></span> (Vol. 6, p. 141); <span class="sc"><a href="/article/12-0191-s2/godkin__edwin_lawrence">E.
+L. Godkin</a></span> (Vol. 12, p. 174); and <span class="sc"><a href="/article/28-0436-watterson-henry/watterson__henry">Henry
+Watterson</a></span> (Vol. 28, p. 418).</p>
+
+<p>The reading of these biographies will
+give the student many interesting starting-points
+for studies in American politics,
+economics, literature, reform movements
+as widely separated as abolition
+and the introduction of the merit system
+into the civil service. The author should
+also read the article <span class="sc"><a href="/article/01-0882-american-literature/american_literature">American Literature</a></span>
+(Vol. 1, p. 831; equivalent to 35
+pages of this Guide), by Professor <a href="/contributors.html?q=George+Edward+Woodberry">G. E.
+Woodberry</a>, and, if his field is that of the
+publicist, he should read the article on
+the history of the <span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span> (Vol.
+27, p. 663), equivalent to 225 pages of
+this Guide; and the allied articles to
+which he is referred from that.</p>
+
+<p>The advertising writer will find a valuable
+and stimulating article on <span class="sc"><a href="/article/01-0266-s7/advertisement">Advertisement</a></span>
+(Vol. 1, p. 235, equivalent to
+20 pages in this Guide), which gives a
+history of the subject, deals with posters
+and signs, circulars, periodical advertising,
+and legal regulation and taxation.
+For a full list of articles of particular
+usefulness for the author, see the chapter
+<i>Literature</i> in this Guide. The following
+brief list may serve as the basis for a preliminary
+course of reading.</p>
+
+<ul class="index">
+  <li class="c018"><a href="/article/01-0739-s2/alliteration">Alliteration</a></li>
+  <li class="c018"><a href="/article/01-0955-s2/ana">Ana</a></li>
+  <li class="c018"><a href="/article/02-0013-s2/anecdote">Anecdote</a></li>
+  <li class="c018"><a href="/article/02-0105-s3/anthology">Anthology</a></li>
+  <li class="c018"><a href="/article/02-0135-s2/anticlimax">Anticlimax</a></li>
+  <li class="c018"><a href="/article/02-0158-s4/antithesis">Antithesis</a></li>
+  <li class="c018"><a href="/article/02-0177-s2/aphorism">Aphorism</a></li>
+  <li class="c018"><a href="/article/02-0206-s2/apologue">Apologue</a></li>
+  <li class="c018"><a href="/article/02-0206-s5/apophthegm">Apophthegm</a></li>
+  <li class="c018"><a href="/article/02-0377-s2/archaism">Archaism</a></li>
+  <li class="c018"><a href="/article/02-0832-s2/assonance">Assonance</a></li>
+  <li class="c018"><a href="/article/03-0531-bathos/bathos">Bathos</a></li>
+  <li class="c018"><a href="/article/03-0719-belles-lettres/belles-lettres">Belles-Lettres</a></li>
+  <li class="c018"><a href="/article/03-0975-biography/biography">Biography</a></li>
+  <li class="c018"><a href="/article/04-0227-book/book">Book</a></li>
+  <li class="c018"><a href="/article/04-0235-book-collecting/book-collecting">Book-Collecting</a></li>
+  <li class="c018"><a href="/article/04-0248-bookselling/bookselling">Bookselling</a></li>
+  <li class="c018"><a href="/article/04-0859-s3/burlesque">Burlesque</a></li>
+  <li class="c018"><a href="/article/06-0781-comedy/comedy">Comedy</a></li>
+  <li class="c018"><a href="/article/07-0490-criticism/criticism">Criticism</a></li>
+  <li class="c018"><a href="/article/08-0171-dialogue/dialogue">Dialogue</a></li>
+  <li class="c018"><a href="/article/08-0498-drama/drama">Drama</a></li>
+  <li class="c018"><a href="/article/09-0269-elegy/elegy">Elegy</a></li>
+  <li class="c018"><a href="/article/09-0394-encyclopaedia/encyclopaedia">Encyclopaedia</a></li>
+  <li class="c018"><a href="/article/09-0713-epic-poetry/epic_poetry">Epic Poetry</a></li>
+  <li class="c018"><a href="/article/09-0722-epigram/epigram">Epigram</a></li>
+  <li class="c018"><a href="/article/09-0725-epilogue/epilogue">Epilogue</a></li>
+  <li class="c018"><a href="/article/09-0733-epistle/epistle">Epistle</a></li>
+  <li class="c018"><a href="/article/09-0808-essay-essayist/essay__essayist">Essay</a></li>
+  <li class="c018"><a href="/article/09-0924-s3/euphemism">Euphemism</a></li>
+  <li class="c018"><a href="/article/10-0126-fable/fable">Fable</a></li>
+  <li class="c018"><a href="/article/10-0317-s2/feuilleton">Feuilleton</a></li>
+  <li class="c018"><a href="/article/11-0563-gazette/gazette">Gazette</a></li>
+  <li class="c018"><a href="/article/13-0913-s3/humour">Humour</a></li>
+  <li class="c018"><a href="/article/14-0211-hyperbole/hyperbole">Hyperbole</a></li>
+  <li class="c018">Idyll</li>
+  <li class="c018"><a href="/article/14-0366-impromptu/impromptu">Impromptu</a></li>
+  <li class="c018"><a href="/article/14-0392-index/index">Index</a></li>
+  <li class="c018"><a href="/article/14-0872-irony/irony">Irony</a></li>
+  <li class="c018"><a href="/article/16-0154-lampoon/lampoon">Lampoon</a></li>
+  <li class="c018"><a href="/article/16-0302-laureate/laureate">Laureate</a></li>
+  <li class="c018"><a href="/article/16-0395-s3/legend">Legend</a></li>
+  <li class="c018"><a href="/article/16-0565-libraries/libraries">Libraries</a></li>
+  <li class="c018"><a href="/article/16-0716-s2/limerick">Limerick</a></li>
+  <li class="c018"><a href="/article/16-0814-litotes/litotes">Litotes</a></li>
+  <li class="c018"><a href="/article/17-0195-lyrical-poetry/lyrical_poetry">Lyrical Poetry</a></li>
+  <li class="c018"><a href="/article/17-0635-manuscript/manuscript">Manuscript</a></li>
+  <li class="c018"><a href="/article/18-0115-melodrama/melodrama">Melodrama</a></li>
+  <li class="c018"><a href="/article/18-0245-metaphor/metaphor">Metaphor</a></li>
+  <li class="c018"><a href="/article/18-0320-metonymy/metonymy">Metonymy</a></li>
+  <li class="c018"><a href="/article/18-0320-s7/metre">Metre</a></li>
+  <li class="c018"><a href="/article/18-0761-monologue/monologue">Monologue</a></li>
+  <li class="c018"><a href="/article/19-0281-s4/national_anthems_or_hymns">National Anthems</a></li>
+  <li class="c018"><a href="/article/19-0568-newspapers/newspapers">Newspapers</a></li>
+  <li class="c018"><a href="/article/19-0865-novel/novel">Novel</a></li>
+  <li class="c018"><a href="/article/20-0019-ode/ode">Ode</a></li>
+  <li class="c018"><a href="/article/20-0715-pamphlets/pamphlets">Pamphlets</a></li>
+  <li class="c018"><a href="/article/20-0803-s2/parable">Parable</a></li>
+  <li class="c018"><a href="/article/20-0808-s3/paradox">Paradox</a></li>
+  <li class="c018"><a href="/article/20-0826-paraphrase/paraphrase">Paraphrase</a></li>
+  <li class="c018"><a href="/article/20-0922-parody/parody">Parody</a></li>
+  <li class="c018"><a href="/article/20-0947-s2/pasquinade">Pasquinade</a></li>
+  <li class="c018"><a href="/article/21-0168-periodicals/periodicals">Periodicals</a></li>
+  <li class="c018"><a href="/article/21-0413-philippics/philippics">Philippics</a></li>
+  <li class="c018"><a href="/article/21-0721-plagiarism/plagiarism">Plagiarism</a></li>
+  <li class="c018"><a href="/article/21-0869-pleonasm/pleonasm">Pleonasm</a></li>
+  <li class="c018"><a href="/article/21-0910-s2/poetry">Poetry</a></li>
+  <li class="c018"><a href="/article/22-0453-proof-reading/proof-reading">Proof-Reading</a></li>
+  <li class="c018"><a href="/article/22-0465-prose/prose">Prose</a></li>
+  <li class="c018"><a href="/article/22-0472-prosody/prosody">Prosody</a></li>
+  <li class="c018"><a href="/article/22-0521-s3/proverb">Proverb</a></li>
+  <li class="c018"><a href="/article/22-0550-s4/psalm">Psalm</a></li>
+  <li class="c018"><a href="/article/22-0557-pseudonym/pseudonym">Pseudonym</a></li>
+  <li class="c018"><a href="/article/22-0663-s3/pun">Pun</a></li>
+  <li class="c018"><a href="/article/22-0739-s3/quatrain">Quatrain</a></li>
+  <li class="c018"><a href="/article/22-0781-s4/quotation">Quotation</a></li>
+  <li class="c018"><a href="/article/23-0123-reporting/reporting">Reporting</a></li>
+  <li class="c018"><a href="/article/23-0250-s5/rhetoric">Rhetoric</a></li>
+  <li class="c018"><a href="/article/23-0291-rhyme/rhyme">Rhyme</a></li>
+  <li class="c018"><a href="/article/23-0294-s2/rhythm">Rhythm</a></li>
+  <li class="c018"><a href="/article/23-0530-romance/romance">Romance</a></li>
+  <li class="c018"><a href="/article/23-1045-saga/saga">Saga</a></li>
+  <li class="c018"><a href="/article/24-0243-satire/satire">Satire</a></li>
+  <li class="c018"><a href="/article/25-0416-song/song">Song</a></li>
+  <li class="c018"><a href="/article/25-0430-s5/sonnet">Sonnet</a></li>
+  <li class="c018"><a href="/article/25-0769-squib/squib">Squib</a></li>
+  <li class="c018"><a href="/article/25-0806-stanza/stanza">Stanza</a></li>
+  <li class="c018"><a href="/article/25-1081-style-column/style__column_">Style</a></li>
+  <li class="c018"><a href="/article/26-0390-s4/tale">Tale</a></li>
+  <li class="c018"><a href="/article/27-0132-s2/tract">Tract</a></li>
+  <li class="c018"><a href="/article/27-0247-s2/treatise">Treatise</a></li>
+  <li class="c018"><a href="/article/27-1069-s2/verse">Verse</a></li>
+</ul>
+
+<div>
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

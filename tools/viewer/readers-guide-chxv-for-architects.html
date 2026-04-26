@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Architects &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XV</span>For Architects</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Early Oriental Architecture</a></li><li><a href="#sh-2">Greece and Rome</a></li><li><a href="#sh-3">Modern Architecture</a></li></ol></div>
+    <div class="body-text">
+
+
+<p>Although architecture is more
+and more coming to be recognized
+as one of the fine arts, it is
+at the same time so largely practical and
+utilitarian that its theory and methods
+may to a great extent be gathered from
+systematic reading. In the article Fine
+Arts in the Britannica, by Sir <a href="/contributors.html?q=Sidney+Colvin">Sidney
+Colvin</a>, it is well said that “The original
+or rudimentary type of the architect,
+considered not as a mere builder but as
+an artist, is the savage, who, when his
+tribe had taken to live in tents or huts
+instead of caves, first arranged the skins
+and timbers of his tent or hut in one way
+because it pleased his eye, rather than in
+some other way which was as good for
+shelter.” Whether the architect wishes
+to learn how the eye may be pleased, to
+study critically the history of architecture,
+or, like the less imaginative savage
+who failed of being the first inspired
+architect, to consider comfort and shelter
+rather than beauty and charm, he will
+find much to help him in the Britannica.
+If his interest is chiefly practical, he
+should consult the chapter <i>For Builders</i>
+in this Guide.</p>
+
+<p>The architect should read first—and
+he will constantly be referring to it
+afterwards—the article <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>
+(Vol. 2, p. 369), equivalent in length to
+235 pages of this Guide and illustrated
+by 140 figures, about one-third of which
+are photogravures. The article is historical
+in the main and a brief outline
+of it is as follows:—</p>
+
+<ul class="index">
+  <li class="c018">Egyptian</li>
+  <li class="c018">Assyrian</li>
+  <li class="c018">Persian</li>
+  <li class="c018"><a href="/article/12-0489-greek-art/greek_art">Greek</a></li>
+  <li class="c018">Parthian</li>
+  <li class="c018">Sassanian</li>
+  <li class="c018">Etruscan</li>
+  <li class="c018"><a href="/article/23-0493-roman/roman">Roman</a></li>
+  <li class="c018"><a href="/article/04-0930-byzantine-art/byzantine_art">Byzantine</a></li>
+  <li class="c018">Early Christian</li>
+  <li class="c018">Coptic Church in Egypt</li>
+  <li class="c018">Romanesque and Gothic in
+    <ul>
+      <li>Italy</li>
+      <li>France</li>
+      <li>Spain</li>
+      <li>England</li>
+      <li>Germany</li>
+      <li>Belgium and Holland</li>
+    </ul>
+  </li>
+  <li class="c018">Renaissance: Introduction
+    <ul>
+      <li>Italy</li>
+      <li>France</li>
+      <li>Spain</li>
+      <li>England</li>
+      <li>Germany</li>
+      <li>Belgium and Holland</li>
+    </ul>
+  </li>
+  <li class="c018"><a href="/article/17-0429-mahommedan-law/mahommedan_law">Mahommedan</a></li>
+  <li class="c018">Modern
+    <ul>
+      <li>Classical Revival in British Architecture</li>
+      <li>Classical Revival in Germany</li>
+      <li>French Classicism</li>
+      <li>Barry’s “Commonsense” Style</li>
+      <li>Gothic Revival in England</li>
+    </ul>
+  </li>
+  <li class="c018">Gothic Revival in France</li>
+  <li class="c018">Queen Anne Style</li>
+  <li class="c018">“Free Classic” Style</li>
+  <li class="c018">Arts allied to Architecture</li>
+  <li class="c018">Craftsmanship Ideal</li>
+  <li class="c018">Architecture in United States (Figures 97, 98, 99, 131, 132, 133, 134, 135, 136, 137, 138)</li>
+  <li class="c018">English Churches</li>
+  <li class="c018">English Public Buildings</li>
+  <li class="c018">English Domestic and Street Architecture</li>
+  <li class="c018">Recent French Architecture</li>
+  <li class="c018"><a href="/article/11-0825-germany/germany">Germany</a></li>
+  <li class="c018">Other Countries</li>
+</ul>
+
+<p>The part of the article dealing with
+Modern Architecture is by H. H. Statham
+author of a well-known book on the subject.
+Earlier sections are by <a href="/contributors.html?q=R.+Phen%C3%A9+Spiers">R. Phené
+Spiers</a>, late master of the Royal Academy’s
+Architectural School, with sections
+on the Romanesque and Gothic in France
+by <a href="/contributors.html?q=W.+R.+Lethaby">W. R. Lethaby</a>, principal of the Central
+(London County) School of Arts and
+Crafts.</p>
+
+<p>Before continuing his more systematic
+historical readings the student may well
+read the article <span class="sc"><a href="/article/13-0829-house/house">House</a></span> (Vol. 13, p. 810),
+illustrated with 12 figures (3 plates),
+including four particularly fine examples
+of “half timbered buildings,” and one
+English house, the Jew’s House at Lincoln,
+dating from the 12th century. An
+interesting article on <span class="sc"><a href="/article/19-0030-s2/mural_decoration">Mural Decoration</a></span>
+(Vol. 19, p. 16) is by a remarkably
+distinguished trio: William Morris, poet,
+craftsman and painter, John Henry
+Middleton, late Slade professor of fine
+art, Cambridge, and Walter Crane, the
+well-known illustrator and decorator.
+This is illustrated with 16 figures in black
+and white and with a reproduction in
+colours of a wall-painting from a Roman
+villa of the early Empire. The article
+deals with: reliefs in marble and stone;
+marble veneer; glazed bricks or tiles;
+hard stucco; sgraffito; stamped leather;
+painted cloth; printed hangings and wall-papers;
+and painting.</p>
+
+<p>If the student of architecture would
+know about the buildings of prehistoric
+times, in which there was little architecture
+in the sense of a fine art, he should
+read the articles <span class="sc"><a href="/article/02-0359-s2/archaeology">Archaeology</a></span>, (Vol. 2,
+p. 344), <span class="sc"><a href="/article/16-0111-s2/lake_dwellings">Lake Dwellings</a></span> (Vol. 16, p. 91),
+<span class="sc"><a href="/article/25-0985-s1/stonehenge">Stonehenge</a></span> (Vol. 25, p. 961) and <span class="sc"><a href="/article/25-0986-s3/stone_monuments__primitive">Stone
+Monuments, Primitive</a></span> (Vol. 25, p. 962),—the
+last two of particular interest to
+the building engineer because it is so
+puzzling a problem how these great
+blocks could have been brought such
+distances and set in place without modern
+appliances.</p>
+
+<p><span class="shoulder-heading" id="sh-1">Early Oriental Architecture</span>Engineering problems will be the most
+interesting in a large part of the student’s
+reading about Egyptian architecture.
+Supplementing the
+4,000 or 5,000 words
+on this subject under
+<span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>,
+accompanied by seven illustrations, there
+is much information in the articles
+<span class="sc"><a href="/article/09-0033-egypt/egypt">Egypt</a></span> (Vol. 9, p. 21); <span class="sc"><a href="/article/01-0112-s6/abydos">Abydos</a></span> (Vol. 1,
+p. 81) and <span class="sc"><a href="/article/15-0708-karnak/karnak">Karnak</a></span> (Vol. 15, p. 680);
+and in the articles <span class="sc"><a href="/article/22-0699-pyramid/pyramid">Pyramid</a></span> (Vol. 22,
+p. 683), (by W. M. Flinders Petrie) and
+<span class="sc"><a href="/article/25-0684-sphinx/sphinx">Sphinx</a></span> (Vol. 25, p. 662) by <a href="/contributors.html?q=Francis+Llewellyn+Griffith">Francis
+Llewellyn Griffith</a>, another well-known
+Egyptologist. In the former article the
+author points out that the outside and
+inside work on all the pyramids was excellent
+and that the casings were not a
+mere veneer but were “of massive blocks,
+usually greater in thickness than in
+height, and in some cases (as at South
+Dahshur) reminding the observer of
+horizontal leaves with sloping edges.”
+The massive character of the roofing of
+the sepulchral chambers is indicated by
+Prof. Petrie’s estimate that “in Pepi’s
+pyramid it is of three layers of stone
+beams, each deeper than their breadth,
+resting one on another, the thirty stones
+weighing more than 30 tons each.” But
+neither Stonehenge nor the pyramid was
+really an engineering problem. Here, and
+as in all his studies of early architecture,
+artist or engineer will find religion and
+worship the aim and the reason of the
+building even more, if that is possible,
+than in the great European cathedrals of
+comparatively recent times.</p>
+
+<p>In the article <span class="sc"><a href="/article/03-0114-s2/babylonia_and_assyria">Babylonia</a></span> and <span class="sc"><a href="/article/02-0836-assyria/assyria">Assyria</a></span>
+there is a brief section (Vol. 3, p. 108)
+on <i>Art</i>, supplementing the treatment
+under <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>. It is interesting
+to note that even in Assyria architecture
+was trammelled, reactionary, governed by
+Babylonian styles and using brick and
+clay because Babylon did, although there
+was stone in Assyria, and none in Babylonia;
+and keeping the heavy brick
+platform foundation which the Babylonian
+architects had adopted because of
+the marshy character of their country,
+although there was no need of such construction
+in Assyria. Here too the function
+of architecture was largely as an
+aid to religion: as shown in the article
+<span class="sc"><a href="/article/19-0734-s4/nippur">Nippur</a></span> (Vol. 19, p. 707), with its description
+of the “ziggurat” or artificial
+mountain in the shrine, built probably
+40 or 45 centuries B. C. One temple was
+272 ft. square, with seven storeys, each
+smaller than the one below and thus
+surrounded by a terrace, each dedicated
+to a planet, each coloured a separate
+tint, the first probably 45 ft. high, and
+the total height 160 ft.</p>
+
+<p>In Assyria great palaces of the 9th,
+8th and 7th centuries B. C. have been
+found, and these are probably the earliest
+large buildings of any architectural importance
+not religious in their purpose;
+but this distinction must not be carried
+too far, for the king was sacrosanct,
+half priest and half god, and his palace
+was a shrine.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Greece and Rome</span>Although the main treatment of Greek
+and Roman architecture is in the article
+<span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>, the student should read
+the articles <span class="sc"><a href="/article/12-0489-greek-art/greek_art">Greek
+Art</a></span> (Vol. 12, p. 470;
+equivalent to 70
+pages in this Guide;
+written by <a href="/contributors.html?q=Percy+Gardner">Percy Gardner</a>, author of
+<i>Grammar of Greek Art</i>) and <span class="sc"><a href="/article/23-0496-roman-art/roman_art">Roman Art</a></span>
+(Vol. 23, p. 474; equivalent to 40 pages
+of this Guide; written by <a href="/contributors.html?q=Henry+Stuart+Jones">H. Stuart Jones</a>,
+director of the British School at Rome).
+The article on <span class="sc"><a href="/article/12-0489-greek-art/greek_art">Greek Art</a></span> contains 82
+illustrations, many of them halftones.
+It makes clear the dependence of the other
+fine arts in Greece on architecture—and
+on religion—in showing that the greatest
+sculptures were adjuncts to temples,
+and (p. 471–472) in a discussion of the
+architecture of Greek temples calls attention
+to four basal principles of Greek
+architecture:</p>
+
+<p>(1) Each member of the building
+has one function and only one, and this
+function controls even the decoration of
+that member. Pillars support architraves;
+their perpendicular flutings emphasize
+this. Moulding at a column’s
+base suggests the support of a great
+weight.</p>
+
+<p>(2) Simple and natural relations
+prevailed between various members of
+a construction.</p>
+
+<p>(3) Rigidity of simple lines is
+avoided; scarcely any outline is actually
+straight. Columns are not equidistant.</p>
+
+<p>(4) Elaborate decoration is reserved
+for those parts of the temple which
+have, or seem to have, no strain laid
+upon them.</p>
+
+<p>The article <span class="sc"><a href="/article/26-0633-temple/temple">Temple</a></span> (Vol. 26, p. 603)
+gives plans and general information
+about Greek and Roman sacred architecture,
+as well as Hebrew, Egyptian and
+Assyrian temples; and the reader should
+study the article <span class="sc"><a href="/article/20-0931-parthenon/parthenon">Parthenon</a></span> (Vol. 20,
+p. 869) and the diagram in that article,
+and the article <span class="sc"><a href="/article/21-0157-pergamum/pergamum">Pergamum</a></span> (Vol. 21, p.
+142) and the two plates which accompany
+it.</p>
+
+<p>The article <span class="sc"><a href="/article/23-0496-roman-art/roman_art">Roman Art</a></span> (Vol. 23, p. 474)
+is probably the first brief and authoritative
+treatment of a topic long overshadowed
+in popular interest by the
+earlier art of Greece and the later art
+of Italy. It begins with a history of
+recent research. Architecture, pre-eminently
+the most Roman of the arts as
+combining utility with beauty, is outlined
+(pp. 476–477 especially) and the main
+point in regard to Roman architecture is
+brought out as follows: “the specific
+achievement of the Roman architect
+was the artistic application of a new set
+of principles—those which are expressed
+in the arch, the vault and the dome,”
+as contrasted with the rectilinear buildings
+of the Greeks. The arch, particularly
+the triumphal arch, is specifically a
+Roman product and is specifically Roman
+besides in being an expression of reverence
+for governmental authority,—which, it
+should, however, be remembered, cannot
+be separated from religion. Among the
+most important of Roman sculptures and
+particularly reliefs are those of the arches,
+described in the articles <span class="sc"><a href="/article/02-0357-s6/arch">Arch</a></span> (Vol. 2,
+p. 342) and <span class="sc"><a href="/article/27-0314-triumphal-arch/triumphal_arch">Triumphal Arch</a></span> (Vol. 27,
+p. 297), the latter with eight figures.
+The part of the article <span class="sc"><a href="/article/02-0252-s2/aqueduct">Aqueduct</a></span> which
+deals with Roman aqueducts (Vol. 2,
+pp. 241–243, with 2 plates, 6 illustrations)
+will interest the architect as well as the
+contractor or engineer. And he should
+read the article on the Roman architect
+and writer on architecture, <span class="sc"><a href="/article/28-0166-vitruvius/vitruvius">Vitruvius</a></span>
+(Vol. 28, p. 150), whose book so strongly
+affected the Renaissance.</p>
+
+<p>Before taking up modern architecture
+as distinguished from ancient, the student
+will do well to examine the architecture
+of some more remote peoples—for
+instance,</p>
+
+<ul class="index">
+  <li class="c018"><i>Aztec</i> (Vol. 5, p. 441 and p. 677)</li>
+  <li class="c018"><i>Abyssinian</i> (Vol. 12, p. 232)</li>
+  <li class="c018"><i>Hittite</i> (Vol. 13, p. 537)</li>
+  <li class="c018"><i>Indian</i> (Vol. 14, p. 428, with 4 plates)</li>
+  <li class="c018"><i>Japanese</i> (Vol. 15, pp. 181–182)</li>
+  <li class="c018"><i>Chinese</i> (Vol. 6, p. 214)</li>
+  <li class="c018"><i>Byzantine</i> (Vol. 4, p. 906, with 2 plates), and the article <span class="sc"><a href="/article/07-0016-constantinople/constantinople">Constantinople</a></span> (Vol. 7, p. 3)</li>
+</ul>
+
+<p><span class="shoulder-heading" id="sh-3">Modern Architecture</span>The last topic will serve as a transition
+to the modern architecture of Europe, especially
+because the influence of the Byzantine
+was so strong
+in the early church.</p>
+
+<p>The study of the Italian Romanesque
+and Gothic in an elaborate section of
+<span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span> (Vol. 2, p. 391) may well
+be supplemented by reading the articles
+on the Italian cities in which this art
+is preserved. The following list is roughly
+chronological, the cities named first
+being those in which there are the oldest
+churches.</p>
+
+<table class="table1">
+  <tbody><tr><th class="c008" colspan="2"><span class="sc"><a href="/article/22-0940-ravenna/ravenna">Ravenna</a></span>, <span class="sc"><a href="/article/21-0672-s1/pisa">Pisa</a></span> and <span class="sc"><a href="/article/27-1023-venice/venice">Venice</a></span>, for Byzantine Romanesque.</th></tr>
+  <tr>
+ <td class="btt c022"><span class="sc"><a href="/article/18-0461-milan/milan">Milan</a></span></td>
+ <td class="btt blt c023 bbt" rowspan="7">for Lombard Romanesque</td>
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/20-1038-pavia/pavia">Pavia</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/04-0516-brescia/brescia">Brescia</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/03-0792-bergamo/bergamo">Bergamo</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/21-0584-piacenza/piacenza">Piacenza</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/20-0912-s1/parma">Parma</a></span></td>
+ 
+  </tr>
+  <tr>
+ <td class="bbt c022"><span class="sc"><a href="/article/18-0671-modena/modena">Modena</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/03-0417-bari-town/bari__town_">Bari</a></span></td>
+ <td class="blt c023 bbt" rowspan="2">for Southern Romanesque</td>
+  </tr>
+  <tr>
+ <td class="bbt c022"><span class="sc"><a href="/article/18-0691-s3/molfetta">Molfetta</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/20-0654-s3/palermo">Palermo</a></span></td>
+ <td class="blt c023 bbt" rowspan="4">for Sicilian Romanesque</td>
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/18-0213-messina/messina">Messina</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/18-0766-monreale/monreale">Monreale</a></span></td>
+ 
+  </tr>
+  <tr>
+ <td class="bbt c022"><span class="sc"><a href="/article/05-0620-cefalu/cefalu">Cefalu</a></span></td>
+ 
+  </tr>
+  <tr>
+ <td class="bbt c022" colspan="2"><span class="sc"><a href="/article/28-0886-w-rzburg/würzburg">Würzburg</a></span>, for Romanesque in Germany</td>
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/11-0617-genoa/genoa">Genoa</a></span></td>
+ <td class="blt c023 bbt" rowspan="6">for Italian Gothic</td>
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/02-0828-s6/assisi">Assisi</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/20-0376-orvieto/orvieto">Orvieto</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/27-1061-s6/verona">Verona</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/21-0295-perugia/perugia">Perugia</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/25-0063-siena/siena">Siena</a></span></td>
+ 
+  </tr>
+</tbody></table>
+
+<p>In the same way, for Gothic in other
+countries, the student should read:</p>
+
+<table class="table1">
+  <tbody><tr>
+    <td class="c022"><span class="sc"><a href="/article/01-0486-s8/aix-la-chapelle">Aix-la-Chapelle</a></span></td>
+ <td class="blt c023 bbt" rowspan="11">for French Gothic</td>
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/16-0502-le-puy/le_puy">Le Puy</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/02-0052-s3/angoulême">Angoulême</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/02-0597-s3/arles">Arles</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc">Nimes</span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc">St. Denis</span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/19-0874-noyon/noyon">Noyon</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/24-0675-senlis/senlis">Senlis</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/24-0678-sens/sens">Sens</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/23-0070-s3/reims">Reims</a></span></td>
+ 
+  </tr>
+  <tr>
+ <td class="bbt c022"><span class="sc"><a href="/article/16-0428-le-mans/le_mans">Le Mans</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/20-0424-s3/oviedo">Oviedo</a></span></td>
+ <td class="blt c023 bbt" rowspan="9">for Spanish Gothic</td>
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/16-0463-s6/leon">Leon</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/03-0080-s2/avila">Avila</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/24-0612-s4/segovia">Segovia</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc">Lerida</span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/26-1089-s3/toledo">Toledo</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/04-0841-s4/burgos">Burgos</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/24-0761-s2/seville">Seville</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/24-0070-salamanca-city/salamanca__city_">Salamanca</a></span></td>
+ 
+  </tr>
+  <tr><td class="c008" colspan="2">_</td></tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/08-0735-durham-city/durham__city_">Durham</a></span></td>
+ <td class="blt c023 bbt" rowspan="4">for English Gothic</td>
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/16-0732-lincoln/lincoln">Lincoln</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/24-0092-s3/salisbury">Salisbury</a></span></td>
+ 
+  </tr>
+  <tr>
+ <td class="bbt c022"><span class="sc"><a href="/article/12-0148-gloucester/gloucester">Gloucester</a></span>, etc.</td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/01-0486-s7/aix">Aix</a></span></td>
+ <td class="blt c023 bbt" rowspan="5">for German Gothic</td>
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/17-0460-s2/mainz">Mainz</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/28-0858-worms/worms">Worms</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/25-0715-s3/spires">Spires</a></span></td>
+ 
+  </tr>
+  <tr>
+ <td class="bbt c022"><span class="sc"><a href="/article/06-0718-cologne/cologne">Cologne</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022" colspan="2"><span class="sc"><a href="/article/27-0118-s2/tournai">Tournai</a></span>, <span class="sc"><a href="/article/17-0082-s3/louvain">Louvain</a></span>, etc., for Belgian,</td>
+  </tr>
+</tbody></table>
+
+<p>and in general, the articles <span class="sc"><a href="/article/05-0537-cathedral/cathedral">Cathedral</a></span>,
+<span class="sc"><a href="/article/19-0298-nave/nave">Nave</a></span>, <span class="sc"><a href="/article/01-0485-aisle/aisle">Aisle</a></span>, <span class="sc"><a href="/article/06-0276-choir/choir">Choir</a></span>, <span class="sc"><a href="/article/02-0243-s5/apse">Apse</a></span>, <span class="sc"><a href="/article/06-0127-chevet/chevet">Chevet</a></span>,
+<span class="sc"><a href="/article/16-0082-lady-chapel/lady-chapel">Lady-Chapel</a></span>, <span class="sc"><a href="/article/27-0982-s4/vault">Vault</a></span>, <span class="sc"><a href="/article/10-0606-flying-buttress/flying_buttress">Flying Buttress</a></span>,
+<span class="sc"><a href="/article/21-0657-pinnacle/pinnacle">Pinnacle</a></span>, <span class="sc"><a href="/article/06-0512-clerestory/clerestory">Clerestory</a></span> and <span class="sc"><a href="/article/27-0285-triforium/triforium">Triforium</a></span>.
+The article Cathedral has
+plans of Canterbury, Salisbury, Durham,
+Ely, Chartres, Sens and Angoulême and
+a perspective of Amiens cathedral.</p>
+
+<p>In the same way the student of the
+Renaissance architecture may supplement
+the section in the article <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>
+(p. 408, etc.) by reference to
+the articles on the cities in which the
+great Renaissance buildings stand. But
+now “the career of the individual has to
+be taken into consideration,” so true is
+it that the Renaissance in architecture
+as in scholarship was intensely individualistic.
+The article <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>
+points this out and in this section is
+largely biographical in its treatment.
+The reader should study the following
+separate articles also</p>
+
+<h4 class="c016"> <i>For Italian Renaissance</i></h4>
+
+<ul class="index c003">
+  <li class="c018"><span class="sc">Filippo Brunelleschi</span></li>
+  <li class="c018"><span class="sc"><a href="/article/10-0549-florence-italy/florence__italy_">Florence</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/01-0542-s5/alberti__leone_battista">Leone Battista Alberti</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/18-0392-s3/michelozzo_di_bartolommeo">Michelozzo di Bartolommeo</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/04-0433-bramante/bramante">Bramante</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/23-0614-rome/rome">Rome</a></span> (for St. Peters: see Fig. 51 in <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>)</li>
+  <li class="c018"><span class="sc"><a href="/article/04-0265-borgognone-ambrogio/borgognone__ambrogio">Borgognone</a></span></li>
+  <li class="c018"><span class="sc">Baccio d’Agnolo</span></li>
+  <li class="c018"><span class="sc"><a href="/article/24-0162-sangallo/sangallo">Sangallo</a></span></li>
+  <li class="c018"><span class="sc">Pollaiulo</span></li>
+  <li class="c018"><span class="sc"><a href="/article/18-0383-s5/michelangelo">Michelangelo</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/24-0197-sansovino-jacopo/sansovino__jacopo">Jacopo Sansovino</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/24-0168-sanmichele-michele/sanmichele__michele">Michele Sanmichele</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/20-0691-palladio-andrea/palladio__andrea">Andrea Palladio</a></span></li>
+  <li class="c018"><span class="sc">Barocchio da Vignola</span></li>
+  <li class="c018"><span class="sc"><a href="/article/01-0583-s5/alessi__galeazzo">Galeazzo Alessi</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/16-0954-lombardo/lombardo">Lombardo</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/10-0628-fontana-domenico/fontana__domenico">Domenico Fontana</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/21-0298-s2/peruzzi__baldassare">Baldassare Peruzzi</a></span></li>
+</ul>
+
+<h4 class="c016"> <i>The French Renaissance</i></h4>
+
+<p>For this period, less individual than in
+Italy, the reader will find it best to study
+the geographical articles. Let him read</p>
+
+<ul class="index">
+  <li class="c018"><span class="sc"><a href="/article/04-0088-blois-town/blois__town_">Blois</a></span> (noting Plate VIII, fig. 84, in the article <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>)</li>
+  <li class="c018"><span class="sc"><a href="/article/27-0122-s5/tours">Tours</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/05-0859-chambord/chambord">Chambord</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/20-0320-s4/orleans">Orleans</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/06-0093-chenonceaux/chenonceaux">Chenonceaux</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/10-0627-s3/fontainebleau">Fontainebleau</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/20-0863-s2/paris">Paris</a></span></li>
+</ul>
+
+<h4 class="c016"> <i>Spanish Renaissance</i></h4>
+
+<ul class="index c003">
+  <li class="c018"><span class="sc"><a href="/article/12-0352-s2/granada">Granada</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/27-0887-s3/valladolid">Valladolid</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/24-0217-s7/saragossa">Saragossa</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/17-0475-malaga/malaga">Malaga</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/24-0070-salamanca-city/salamanca__city_">Salamanca</a></span> (Plate V., fig. 73 in <i>Architecture</i>)</li>
+  <li class="c018"><span class="sc"><a href="/article/24-0761-s2/seville">Seville</a></span> (Plate V., fig. 74 in <i>Architecture</i>)</li>
+  <li class="c018"><span class="sc"><a href="/article/09-0798-s3/escorial">Escorial</a></span> (with plan)</li>
+  <li class="c018"><span class="sc"><a href="/article/17-0307-madrid-city/madrid__city">Madrid</a></span> (Palacio Royal)</li>
+</ul>
+
+<h4 class="c016"> <i>English Renaissance</i></h4>
+
+<ul class="index c003">
+  <li class="c018"><span class="sc">John Thorpe</span></li>
+  <li class="c018"><span class="sc"><a href="/article/15-0525-jones-inigo/jones__inigo">Inigo Jones</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/28-0869-s2/wren__sir_christopher">Sir Christopher Wren</a></span></li>
+  <li class="c018"><span class="sc">St. Paul’s Cathedral</span> (see Fig. 53 in <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>)</li>
+  <li class="c018"><span class="sc"><a href="/article/12-0578-s4/greenwich">Greenwich</a></span> (for Hospital)</li>
+  <li class="c018"><span class="sc"><a href="/article/13-0113-hawksmoor-nicholas/hawksmoor__nicholas">Nicholas Hawksmoor</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/27-0906-s2/vanbrugh__sir_john">Sir John Vanbrugh</a></span></li>
+  <li class="c018"><span class="sc">Dean Henry Aldrich</span></li>
+  <li class="c018"><span class="sc">George and James Dance</span></li>
+  <li class="c018"><span class="sc"><a href="/article/15-0763-kent-william/kent__william">William Kent</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/01-0203-s7/adam__robert">Robert Adam</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/05-0857-chambers-sir-william/chambers__sir_william">Sir William Chambers</a></span></li>
+</ul>
+
+<div>
+  
+  <h4 class="c016"> <i>German Renaissance</i></h4>
+</div>
+
+<ul class="index c003">
+  <li class="c018"><span class="sc"><a href="/article/23-0797-s3/rothenburg-ob-der-tauber">Rothenburg</a></span> (town-hall)</li>
+  <li class="c018"><span class="sc"><a href="/article/02-0950-s4/augsburg">Augsburg</a></span> (town-hall)</li>
+  <li class="c018"><span class="sc"><a href="/article/13-0222-heidelberg/heidelberg">Heidelberg</a></span> (see Plate VII in <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>)</li>
+</ul>
+
+<h4 class="c016"> <i>Renaissance in Belgium and Holland</i></h4>
+
+<ul class="index c003">
+  <li class="c018"><span class="sc"><a href="/article/02-0166-s4/antwerp">Antwerp</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/01-0949-s8/amsterdam">Amsterdam</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/23-0806-s2/rotterdam">Rotterdam</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/12-0806-haarlem/haarlem">Haarlem</a></span></li>
+</ul>
+
+<p>On <i>Mahommedan Architecture</i> the student
+should read not only the section
+(Vol. 2, pp. 422–427) in the article <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>,
+with eight illustrations, but
+the separate articles</p>
+
+<ul class="index">
+  <li class="c018"><span class="sc"><a href="/article/14-0452-indian-architecture/indian_architecture">Indian Architecture</a></span> (with 4 plates, 17 figures)</li>
+  <li class="c018"><span class="sc"><a href="/article/18-0931-s2/mosque">Mosque</a></span> (with 3 diagrams)</li>
+  <li class="c018"><span class="sc"><a href="/article/18-0525-minaret/minaret">Minaret</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/04-0979-s4/cairo">Cairo</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/07-0016-constantinople/constantinople">Constantinople</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/07-0808-damascus/damascus">Damascus</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/15-0355-jerusalem/jerusalem">Jerusalem</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/17-0969-mecca/mecca">Mecca</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/15-0662-s5/kairawan">Kairawan</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/07-0159-cordova-city/cordova__city_">Cordova</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/01-0696-s6/alhambra__the">Alhambra</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/26-0362-s3/tabriz">Tabriz</a></span></li>
+  <li class="c018"><span class="sc">Isfahan</span></li>
+</ul>
+
+<p>On the more recent period, the 19th
+century, roughly, the student should
+supplement the last part of the article
+<span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span> by reading the following
+articles</p>
+
+<h4 class="c016"> <i>For the Classical Revival in the British Isles</i></h4>
+
+<ul class="index c003">
+  <li class="c018"><span class="sc"><a href="/article/08-0645-dublin-city/dublin__city_">Dublin</a></span> (see also Fig. 85 in <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>)</li>
+  <li class="c018"><span class="sc"><a href="/article/08-0964-edinburgh/edinburgh">Edinburgh</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/25-0312-soane-sir-john/soane__sir_john">Sir John Soane</a></span></li>
+</ul>
+
+<h4 class="c016"> <i>English Gothic Revival</i></h4>
+
+<ul class="index c003">
+  <li class="c018"><span class="sc">A. W. N. Pugin</span></li>
+  <li class="c018"><span class="sc"><a href="/article/24-0488-scott-sir-george-gilbert/scott__sir_george_gilbert">Sir George Gilbert Scott</a></span></li>
+  <li class="c018"><span class="sc">George S. Street</span></li>
+  <li class="c018"><span class="sc"><a href="/article/04-0914-s4/butterfield__william">William Butterfield</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/21-0043-s4/pearson__john_loughborough">John Loughborough Pearson</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/28-0387-waterhouse-alfred/waterhouse__alfred">Alfred Waterhouse</a></span></li>
+</ul>
+
+<h4 class="c016"><i>France</i> (Figs. 122–129 in article <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>)</h4>
+
+<ul class="index c003">
+  <li class="c018"><span class="sc">L. P. Baltard</span></li>
+  <li class="c018"><span class="sc">J. L. C. Garnier</span></li>
+</ul>
+
+<h4 class="c016"> <i>The Last 50 Years</i></h4>
+
+<table class="table2">
+  <tbody><tr>
+    <td class="c022"><span class="sc"><a href="/article/04-0123-bodley-george-frederick/bodley__george_frederick">George Frederick Bodley</a></span></td>
+ <td class="blt c023 bbt" rowspan="6">England</td>
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc">R. Norman Shaw</span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/18-0903-morris-william/morris__william">William Morris</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc">Harvey L. Elmes</span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc">Charles R. Cockerell</span></td>
+ 
+  </tr>
+  <tr>
+ <td class="bbt c022"><span class="sc"><a href="/article/16-0826-liverpool/liverpool">Liverpool</a></span> (and Fig. 86 in <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>)</td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc">H. H. Richardson</span></td>
+ <td class="blt c023 bbt" rowspan="7">United States (and see Plates XV and XVI, and Figs. 97, 98, 99 in article <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>)</td>
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc">Richard M. Hunt</span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc">Charles F. McKim</span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc">Stanford White</span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc">William R. Mead</span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/25-1079-sturgis-russell/sturgis__russell">Russell Sturgis</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/25-0883-s4/steel_construction">Steel Construction</a></span></td>
+ 
+  </tr>
+</tbody></table>
+
+<h4 class="c016"> <i>Classical Revival in Germany</i></h4>
+
+<ul class="index c003">
+  <li class="c018"><span class="sc"><a href="/article/24-0345-s2/schinkel__karl_friedrich">Karl Friedrich Schinkel</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/03-0805-berlin/berlin">Berlin</a></span> (and Fig. 87 in <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>)</li>
+  <li class="c018"><span class="sc"><a href="/article/22-0224-s5/potsdam">Potsdam</a></span> (and Fig. 88 in <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>)</li>
+  <li class="c018"><span class="sc"><a href="/article/19-0019-munich/munich">Munich</a></span> (and Fig. 89 in <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>)</li>
+  <li class="c018"><span class="sc"><a href="/article/24-0662-semper-gottfried/semper__gottfried">Gottfried Semper</a></span></li>
+</ul>
+
+<h4 class="c016"> <i>French Classicism</i></h4>
+
+<ul class="index c003">
+  <li class="c018"><span class="sc">Adolphe Theodore Brongniart</span></li>
+  <li class="c018"><span class="sc"><a href="/article/13-0556-hittorff-jacques-ignace/hittorff__jacques_ignace">Jacques Ignace Hittorff</a></span> (Plate XII in <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>)</li>
+</ul>
+
+<h4 class="c016"> <i>English “Commonsense”</i></h4>
+
+<ul class="index c003">
+  <li class="c018"><span class="sc"><a href="/article/03-0460-barry-sir-charles/barry__sir_charles">Sir Charles Barry</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/12-0868-s2/halifax">Halifax</a></span> (Fig. 90 in <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>)</li>
+  <li class="c018"><span class="sc"><a href="/article/28-0568-s3/westminster">Westminster</a></span> (Houses of Parliament; see Fig. 91 in <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>)</li>
+  <li class="c018"><span class="sc"><a href="/article/04-0757-s2/budapest">Budapest</a></span> (Fig. 92 in <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>)</li>
+</ul>
+
+<p>The sections of the article <span class="sc"><a href="/article/02-0390-s5/architecture">Architecture</a></span>
+dealing with France and Germany
+in the last two generations may best
+be supplemented by a study of the articles
+<span class="sc"><a href="/article/20-0863-s2/paris">Paris</a></span>, <span class="sc"><a href="/article/03-0805-berlin/berlin">Berlin</a></span>, <span class="sc"><a href="/article/28-0065-vienna/vienna">Vienna</a></span>, and <span class="sc"><a href="/article/04-0757-s2/budapest">Budapest</a></span>.</p>
+
+<p>The following is a brief alphabetical
+list of architectural articles and topics
+in the <i>Britannica</i>, including topics for
+the builder and contractor.</p>
+<ul class="index">
+  <li class="c018">Abacus</li>
+  <li class="c018"><a href="/article/01-0038-s5/abated">Abated</a></li>
+  <li class="c018"><a href="/article/01-0042-s5/abbey">Abbey</a></li>
+  <li class="c018"><a href="/article/01-0112-s4/abutment">Abutment</a></li>
+  <li class="c018"><a href="/article/01-0187-s5/acroterium">Acroterium</a></li>
+  <li class="c018"><a href="/article/01-0203-s7/adam__robert">Adam, Robert</a></li>
+  <li class="c018"><a href="/article/01-0275-s7/aedicula">Aedicula</a></li>
+  <li class="c018"><a href="/article/01-0485-aisle/aisle">Aisle</a></li>
+  <li class="c018"><a href="/article/01-0486-s6/aiwan">Aiwan</a></li>
+  <li class="c018"><a href="/article/01-0542-s5/alberti__leone_battista">Leone Battista Alberti</a></li>
+  <li class="c018"><a href="/article/01-0569-s3/alcove">Alcove</a></li>
+  <li class="c018"><a href="/article/01-0583-s5/alessi__galeazzo">Galeazzo Alessi</a></li>
+  <li class="c018"><a href="/article/01-0736-s2/alley">Alley</a></li>
+  <li class="c018"><a href="/article/01-0757-s6/almery">Almery</a></li>
+  <li class="c018"><a href="/article/01-0760-s2/almonry">Almonry</a></li>
+  <li class="c018"><a href="/article/01-0761-s4/almshouse">Almshouse</a></li>
+  <li class="c018"><a href="/article/01-0819-s4/alure">Alure</a></li>
+  <li class="c018"><a href="/article/01-0842-s2/ambo">Ambo</a></li>
+  <li class="c018"><a href="/article/01-0850-s2/ambulatory">Ambulatory</a></li>
+  <li class="c018"><a href="/article/01-0942-s3/amphiprostyle">Amphiprostyle</a></li>
+  <li class="c018"><a href="/article/01-0942-s5/amphitheatre">Amphitheatre</a></li>
+  <li class="c018"><a href="/article/01-1028-s6/andron">Andron</a></li>
+  <li class="c018"><a href="/article/02-0019-angel-lights/angel-lights">Angel-lights</a></li>
+  <li class="c018"><a href="/article/02-0099-s2/antae">Antae</a></li>
+  <li class="c018"><a href="/article/02-0100-s4/ante-chapel">Ante-chapel</a></li>
+  <li class="c018"><a href="/article/02-0100-s5/ante-choir">Ante-choir</a></li>
+  <li class="c018"><a href="/article/02-0100-s6/ante-fixae">Ante-fixae</a></li>
+  <li class="c018"><a href="/article/02-0104-s6/anthemion">Anthemion</a></li>
+  <li class="c018"><a href="/article/02-0207-s1/apophyge">Apophyge</a></li>
+  <li class="c018">Apollodorus of Damascus</li>
+  <li class="c018"><a href="/article/02-0243-s5/apse">Apse</a></li>
+  <li class="c018"><a href="/article/02-0246-s2/apteral">Apteral</a></li>
+  <li class="c018"><a href="/article/02-0252-s2/aqueduct">Aqueduct</a></li>
+  <li class="c018"><a href="/article/02-0327-s2/araeostyle">Araeostyle</a></li>
+  <li class="c018"><a href="/article/02-0327-s3/araeosystyle">Araeosystyle</a></li>
+  <li class="c018"><a href="/article/02-0355-s3/arcade">Arcade</a></li>
+  <li class="c018"><a href="/article/02-0357-s6/arch">Arch</a></li>
+  <li class="c018"><a href="/article/02-0479-s2/architrave">Architrave</a></li>
+  <li class="c018"><a href="/article/02-0479-s4/archivolt">Archivolt</a></li>
+  <li class="c018"><a href="/article/02-0483-s6/arcosolium">Arcosolium</a></li>
+  <li class="c018"><a href="/article/02-0489-s2/arena">Arena</a></li>
+  <li class="c018"><a href="/article/02-0691-s2/arris">Arris</a></li>
+  <li class="c018"><a href="/article/02-0777-s2/ashlar">Ashlar</a></li>
+  <li class="c018"><a href="/article/02-0840-s6/astragal">Astragal</a></li>
+  <li class="c018"><a href="/article/02-0868-s3/astylar">Astylar</a></li>
+  <li class="c018"><a href="/article/02-0925-s3/atrium">Atrium</a></li>
+  <li class="c018"><a href="/article/02-0930-s4/attic">Attic</a></li>
+  <li class="c018"><a href="/article/02-0932-s2/attic_base">Attic Base</a></li>
+  <li class="c018">Baccio d’Agnolo</li>
+  <li class="c018"><a href="/article/03-0150-s3/back-choir">Back-choir</a></li>
+  <li class="c018"><a href="/article/03-0235-s2/bailey">Bailey</a></li>
+  <li class="c018"><a href="/article/03-0259-s4/balcony">Balcony</a></li>
+  <li class="c018"><a href="/article/03-0287-ball-flower/ball-flower">Ball-flower</a></li>
+  <li class="c018">L. P. Baltard</li>
+  <li class="c018"><a href="/article/03-0314-s4/balustrade">Balustrade</a></li>
+  <li class="c018"><a href="/article/03-0336-banker-marks/banker-marks">Banker-marks</a></li>
+  <li class="c018"><a href="/article/03-0387-baptistery/baptistery">Baptistery</a></li>
+  <li class="c018"><a href="/article/03-0404-barbican/barbican">Barbican</a></li>
+  <li class="c018"><a href="/article/03-0416-bargeboard/bargeboard">Bargeboard</a></li>
+  <li class="c018">Giacomo Barocchio</li>
+  <li class="c018"><a href="/article/03-0467-bartizan/bartizan">Bartizan</a></li>
+  <li class="c018"><a href="/article/03-0475-base/base">Base</a></li>
+  <li class="c018"><a href="/article/03-0481-basement/basement">Basement</a></li>
+  <li class="c018"><a href="/article/03-0487-basilica-building/basilica__building_">Basilica</a></li>
+  <li class="c018">Batement-lights</li>
+  <li class="c018"><a href="/article/03-0531-baths/baths">Baths</a></li>
+  <li class="c018"><a href="/article/03-0548-batter/batter">Batter</a></li>
+  <li class="c018"><a href="/article/03-0551-battlement/battlement">Battlement</a></li>
+  <li class="c018"><a href="/article/03-0570-bay/bay">Bay</a></li>
+  <li class="c018"><a href="/article/03-0641-bed-mould/bed-mould">Bed-mould</a></li>
+  <li class="c018"><a href="/article/03-0686-belfry/belfry">Belfry</a></li>
+  <li class="c018"><a href="/article/03-0716-bell-cot/bell-cot">Bell-cot</a></li>
+  <li class="c018"><a href="/article/03-0732-belvedere-building/belvedere__building_">Belvedere</a></li>
+  <li class="c018"><a href="/article/03-0733-bema/bema">Bema</a></li>
+  <li class="c018">Bench-table</li>
+  <li class="c018"><a href="/article/03-0856-bevel/bevel">Bevel</a></li>
+  <li class="c018"><a href="/article/03-0861-bezant-e/bezantée">Bezantée</a></li>
+  <li class="c018">Sir A. W. Blomfield</li>
+  <li class="c018">G. W. Bodley</li>
+  <li class="c018">Bonding</li>
+  <li class="c018"><a href="/article/04-0226-bonomi-giuseppi/bonomi__giuseppi">Giuseppi Bonomi</a></li>
+  <li class="c018"><a href="/article/04-0290-borromini-francesco/borromini__francesco">Francesco Borromini</a></li>
+  <li class="c018"><a href="/article/04-0364-bowtell/bowtell">Bowtell</a></li>
+  <li class="c018"><a href="/article/04-0381-bracket/bracket">Bracket</a></li>
+  <li class="c018"><a href="/article/04-0433-bramante/bramante">Bramante</a></li>
+  <li class="c018"><a href="/article/04-0454-brattishing/brattishing">Brattishing</a></li>
+  <li class="c018"><a href="/article/04-0454-bray-sir-reginald/bray__sir_reginald">Sir Reginald Bray</a></li>
+  <li class="c018"><a href="/article/04-0537-brick/brick">Brick, and Brickwork</a></li>
+  <li class="c018"><a href="/article/04-0553-s1/bridges">Bridges</a></li>
+  <li class="c018"><a href="/article/04-0643-s3/broach">Broach</a></li>
+  <li class="c018">Sir I. M. Brunel</li>
+  <li class="c018">Filippo Brunelleschi</li>
+  <li class="c018"><a href="/article/04-0785-s4/building">Building</a></li>
+  <li class="c018"><a href="/article/04-0795-bulfinch/bulfinch__charles">Charles Bulfinch</a></li>
+  <li class="c018"><a href="/article/04-0821-s4/bungalow">Bungalow</a></li>
+  <li class="c018"><a href="/article/04-0914-s4/butterfield__william">William Butterfield</a></li>
+  <li class="c018"><a href="/article/04-0915-s2/buttress">Buttress</a></li>
+  <li class="c018"><a href="/article/04-0947-s2/cable_moulding">Cable moulding</a></li>
+  <li class="c018"><a href="/article/04-0973-s3/cagnola__luigi">Luigi Cagnola</a></li>
+  <li class="c018"><a href="/article/04-0984-s4/caisson">Caissons</a></li>
+  <li class="c018"><a href="/article/05-0094-camber/camber">Camber</a></li>
+  <li class="c018"><a href="/article/05-0136-campanile/campanile">Campanile</a></li>
+  <li class="c018">N. le Camus de Mézières</li>
+  <li class="c018"><a href="/article/05-0181-canal/canal">Canal</a></li>
+  <li class="c018"><a href="/article/05-0185-canalis/canalis">Canalis</a></li>
+  <li class="c018"><a href="/article/05-0188-cancelli/cancelli">Cancelli</a></li>
+  <li class="c018"><a href="/article/05-0190-candelabrum/candelabrum">Candelabrum</a></li>
+  <li class="c018"><a href="/article/05-0195-canephorae/canephorae">Canephorae</a></li>
+  <li class="c018"><a href="/article/05-0216-canopy/canopy">Canopy</a></li>
+  <li class="c018">Cantilever Foundations</li>
+  <li class="c018"><a href="/article/05-0292-capital-punishment/capital_punishment">Capital</a></li>
+  <li class="c018"><a href="/article/05-0399-carpentry/carpentry">Carpentry</a></li>
+  <li class="c018"><a href="/article/05-0452-cartouche/cartouche">Cartouche</a></li>
+  <li class="c018"><a href="/article/05-0456-caryatides/caryatides">Caryatides</a></li>
+  <li class="c018"><a href="/article/05-0461-casement/casement">Casement</a></li>
+  <li class="c018"><a href="/article/05-0493-castle/castle">Castle</a></li>
+  <li class="c018"><a href="/article/05-0537-cathedral/cathedral">Cathedral</a></li>
+  <li class="c018"><a href="/article/05-0551-cathetus/cathetus">Cathetus</a></li>
+  <li class="c018"><a href="/article/05-0580-cauliculus/cauliculus">Cauliculus</a></li>
+  <li class="c018"><a href="/article/05-0583-cavaedium/cavaedium">Cavaedium</a></li>
+  <li class="c018"><a href="/article/05-0604-cavea/cavea">Cavea</a></li>
+  <li class="c018"><a href="/article/05-0607-cavetto/cavetto">Cavetto</a></li>
+  <li class="c018"><a href="/article/05-0621-ceiling/ceiling">Ceiling</a></li>
+  <li class="c018"><a href="/article/05-0629-cella/cella">Cella</a></li>
+  <li class="c018"><a href="/article/05-0678-cement/cement">Cements</a></li>
+  <li class="c018"><a href="/article/05-0840-chalcidicum/chalcidicum">Chalcidicum</a></li>
+  <li class="c018"><a href="/article/05-0857-chambers-sir-william/chambers__sir_william">Sir William Chambers</a></li>
+  <li class="c018"><a href="/article/05-0860-chamfer/chamfer">Chamfer</a></li>
+  <li class="c018"><a href="/article/05-0868-chancel/chancel">Chancel</a></li>
+  <li class="c018"><a href="/article/05-0891-chapter-house/chapter-house">Chapter-house</a></li>
+  <li class="c018">Charnel-house</li>
+  <li class="c018">Chateau</li>
+  <li class="c018"><a href="/article/06-0098-chersiphron/chersiphron">Chersiphron</a></li>
+  <li class="c018"><a href="/article/06-0127-chevet/chevet">Chevet</a></li>
+  <li class="c018"><a href="/article/06-0128-chevron/chevron">Chevron</a></li>
+  <li class="c018"><a href="/article/06-0178-chimney/chimney">Chimney</a></li>
+  <li class="c018">Chimney-piece</li>
+  <li class="c018"><a href="/article/06-0276-choir/choir">Choir</a></li>
+  <li class="c018"><a href="/article/06-0289-chresmographion/chresmographion">Chresmographion</a></li>
+  <li class="c018"><a href="/article/06-0393-s5/cinque_cento">Cinque Cento</a></li>
+  <li class="c018"><a href="/article/06-0497-cleithral/cleithral">Cleithral</a></li>
+  <li class="c018"><a href="/article/06-0512-clerestory/clerestory">Clerestory</a></li>
+  <li class="c018"><a href="/article/06-0554-cloaca/cloaca">Cloaca</a></li>
+  <li class="c018"><a href="/article/06-0572-cloister/cloister">Cloister</a></li>
+  <li class="c018">C. R. Cockerell</li>
+  <li class="c018"><a href="/article/06-0665-coenaculum/coenaculum">Coenaculum</a></li>
+  <li class="c018"><a href="/article/06-0670-coffer/coffer">Coffer, and Coffer Dams</a></li>
+  <li class="c018">Cogging</li>
+  <li class="c018"><a href="/article/06-0736-colonnade/colonnade">Colonnade</a></li>
+  <li class="c018"><a href="/article/06-0760-columbani-placido/columbani__placido">Placido Columbani</a></li>
+  <li class="c018"><a href="/article/06-0769-column/column">Column</a></li>
+  <li class="c018"><a href="/article/06-0835-compluvium/compluvium">Compluvium</a></li>
+  <li class="c018"><a href="/article/06-0836-composite-order/composite_order">Composite Order</a></li>
+  <li class="c018"><a href="/article/06-0837-compound-pier/compound_pier">Compound pier</a></li>
+  <li class="c018"><a href="/article/06-0850-conch/conch">Conch</a></li>
+  <li class="c018"><a href="/article/06-0859-concrete/concrete">Concrete, Concrete Piers, etc.</a></li>
+  <li class="c018">Consisterium</li>
+  <li class="c018">Construction</li>
+  <li class="c018"><a href="/article/07-0118-coping/coping">Coping</a></li>
+  <li class="c018"><a href="/article/07-0153-corbel/corbel">Corbel</a></li>
+  <li class="c018"><a href="/article/07-0153-corbie/corbie">Corbie</a></li>
+  <li class="c018"><a href="/article/07-0190-cornice/cornice">Cornice</a></li>
+  <li class="c018"><a href="/article/07-0335-counterfort/counterfort">Counterfort</a></li>
+  <li class="c018">Coursed Rubble</li>
+  <li class="c018"><a href="/article/07-0383-cramp/cramp">Cramps</a></li>
+  <li class="c018"><a href="/article/07-0428-crenelle/crenelle">Crenelle</a></li>
+  <li class="c018"><a href="/article/07-0434-crest/crest">Crest</a></li>
+  <li class="c018"><a href="/article/07-0499-crocket/crocket">Crocket</a></li>
+  <li class="c018"><a href="/article/07-0532-crossing/crossing">Crossing</a></li>
+  <li class="c018"><a href="/article/07-0532-cross-springer/cross_springer">Cross springer</a></li>
+  <li class="c018"><a href="/article/07-0584-crypt/crypt">Crypt</a></li>
+  <li class="c018"><a href="/article/07-0588-crypto-porticus/crypto-porticus">Crypto-porticus</a></li>
+  <li class="c018"><a href="/article/07-0629-cubicle/cubicle">Cubicle</a></li>
+  <li class="c018"><a href="/article/07-0655-cuneus/cuneus">Cuneus</a></li>
+  <li class="c018"><a href="/article/07-0657-cupola/cupola">Cupola</a></li>
+  <li class="c018"><a href="/article/07-0686-curvilinear/curvilinear">Curvilinear</a></li>
+  <li class="c018"><a href="/article/07-0689-cusp/cusp">Cusp</a></li>
+  <li class="c018"><a href="/article/07-0699-cuvilles-fran-ois-de/cuvilles__françois_de">François de Cuvilles</a></li>
+  <li class="c018"><a href="/article/07-0708-cyclopean-masonry/cyclopean_masonry">Cyclopean Masonry</a></li>
+  <li class="c018"><a href="/article/07-0711-cyclostyle/cyclostyle">Cyclostyle</a></li>
+  <li class="c018"><a href="/article/07-0712-cyma/cyma">Cyma</a></li>
+  <li class="c018"><a href="/article/07-0728-cyrto-style/cyrto-style">Cyrto-style</a></li>
+  <li class="c018"><a href="/article/07-0742-cyzicenus/cyzicenus">Cyzicenus</a></li>
+  <li class="c018"><a href="/article/07-0750-daedalus/daedalus">Daedalus</a></li>
+  <li class="c018"><a href="/article/07-0783-dais/dais">Dais</a></li>
+  <li class="c018"><a href="/article/07-0818-dance/dance">Dance (family)</a></li>
+  <li class="c018"><a href="/article/07-0934-decastyle/decastyle">Decastyle</a></li>
+  <li class="c018"><a href="/article/07-0939-decorated-period/decorated_period">Decorated Period</a></li>
+  <li class="c018"><a href="/article/08-0065-dentil/dentil">Dentil</a></li>
+  <li class="c018"><a href="/article/08-0161-diaconicon/diaconicon">Diaconicon</a></li>
+  <li class="c018"><a href="/article/08-0186-diastyle/diastyle">Diastyle</a></li>
+  <li class="c018"><a href="/article/08-0188-diaulos/diaulos">Diaulos</a></li>
+  <li class="c018"><a href="/article/08-0192-diazomata/diazomata">Diazomata</a></li>
+  <li class="c018"><a href="/article/08-0287-dikka/dikka">Dikka</a></li>
+  <li class="c018"><a href="/article/08-0294-dinocrates/dinocrates">Dinocrates</a></li>
+  <li class="c018"><a href="/article/08-0325-dipteral/dipteral">Dipteral</a></li>
+  <li class="c018">Philibert De l’Orme</li>
+  <li class="c018"><a href="/article/08-0328-discharging-arch/discharging_arch">Discharging Arch</a></li>
+  <li class="c018"><a href="/article/08-0340-distyle/distyle">Distyle</a></li>
+  <li class="c018"><a href="/article/08-0370-dock/dock">Docks</a></li>
+  <li class="c018"><a href="/article/08-0386-dodecastyle/dodecastyle">Dodecastyle</a></li>
+  <li class="c018"><a href="/article/08-0406-dog-tooth/dog-tooth">Dog-tooth</a></li>
+  <li class="c018"><a href="/article/08-0417-dome/dome">Dome</a></li>
+  <li class="c018"><a href="/article/08-0437-donjon/donjon">Donjon</a></li>
+  <li class="c018"><a href="/article/08-0440-door/door">Door</a></li>
+  <li class="c018"><a href="/article/08-0441-doorway/doorway">Doorway</a></li>
+  <li class="c018"><a href="/article/08-0450-dormer/dormer">Dormer</a></li>
+  <li class="c018"><a href="/article/08-0450-dormitory/dormitory">Dormitory</a></li>
+  <li class="c018"><a href="/article/08-0459-dosseret/dosseret">Dosseret</a></li>
+  <li class="c018">Dovetail</li>
+  <li class="c018">Dowels</li>
+  <li class="c018"><a href="/article/08-0488-drafted-masonry/drafted_masonry">Drafted masonry</a></li>
+  <li class="c018">Dredging</li>
+  <li class="c018"><a href="/article/08-0611-dripstone/dripstone">Dripstone</a></li>
+  <li class="c018"><a href="/article/08-0616-dromos/dromos">Dromos</a></li>
+  <li class="c018"><a href="/article/08-0707-dungeon/dungeon">Dungeon</a></li>
+  <li class="c018"><a href="/article/08-0825-early-english-period/early_english_period">Early English Period</a></li>
+  <li class="c018"><a href="/article/08-0867-eaves/eaves">Eaves</a></li>
+  <li class="c018"><a href="/article/08-0909-echinus/echinus">Echinus</a></li>
+  <li class="c018"><a href="/article/09-0150-eiffel-tower/eiffel_tower">Eiffel Tower</a></li>
+  <li class="c018"><a href="/article/09-0280-elevators/elevators">Elevator</a></li>
+  <li class="c018"><a href="/article/09-0305-elizabethan-style/elizabethan_style">Elizabethan Style</a></li>
+  <li class="c018">H. L. Elmes</li>
+  <li class="c018"><a href="/article/09-0313-elmes-james/elmes__james">James Elmes</a></li>
+  <li class="c018"><a href="/article/09-0328-embrasure/embrasure">Embrasure</a></li>
+  <li class="c018"><a href="/article/09-0429-engaged-column/engaged_column">Engaged Column</a></li>
+  <li class="c018"><a href="/article/09-0686-s3/entablature">Entablature</a></li>
+  <li class="c018"><a href="/article/09-0686-entasis/entasis">Entasis</a></li>
+  <li class="c018"><a href="/article/09-0701-ephebeum/ephebeum">Ephebeum</a></li>
+  <li class="c018">Epi</li>
+  <li class="c018"><a href="/article/09-0726-s4/epinaos">Epinaos</a></li>
+  <li class="c018"><a href="/article/09-0735-epistyle/epistyle">Epistyle</a></li>
+  <li class="c018"><a href="/article/09-0833-estrade/estrade">Estrade</a></li>
+  <li class="c018"><a href="/article/09-0923-eupalinus/eupalinus">Eupalinus</a></li>
+  <li class="c018"><a href="/article/09-0994-eustyle/eustyle">Eustyle</a></li>
+  <li class="c018"><a href="/article/10-0076-exedra/exedra">Exedra</a></li>
+  <li class="c018"><a href="/article/10-0101-s2/extrados">Extrados</a></li>
+  <li class="c018"><a href="/article/10-0132-s4/façade">Façade</a></li>
+  <li class="c018">Facing</li>
+  <li class="c018"><a href="/article/10-0184-s4/fan_vault">Fan Vault</a></li>
+  <li class="c018"><a href="/article/10-0259-s6/femerell">Femerell</a></li>
+  <li class="c018"><a href="/article/10-0266-fenestration/fenestration">Fenestration</a></li>
+  <li class="c018"><a href="/article/10-0282-s4/feretory">Feretory</a></li>
+  <li class="c018"><a href="/article/10-0285-fergusson-james/fergusson__james">James Fergusson</a></li>
+  <li class="c018"><a href="/article/10-0306-s4/festoon">Festoon</a></li>
+  <li class="c018"><a href="/article/10-0358-s3/fillet">Fillet</a></li>
+  <li class="c018"><a href="/article/10-0390-s4/finial">Finial</a></li>
+  <li class="c018"><a href="/article/10-0487-s3/flamboyant_style">Flamboyant Style</a></li>
+  <li class="c018"><a href="/article/10-0509-s3/flèche">Flèche</a></li>
+  <li class="c018"><a href="/article/10-0547-floor/floor">Floor</a></li>
+  <li class="c018">Flue</li>
+  <li class="c018"><a href="/article/10-0606-flying-buttress/flying_buttress">Flying Buttress</a></li>
+  <li class="c018">Pierre F. L. Fontaine</li>
+  <li class="c018"><a href="/article/10-0628-fontana-domenico/fontana__domenico">Domenico Fontana</a></li>
+  <li class="c018">Footing</li>
+  <li class="c018"><a href="/article/10-0649-foot-stall/foot-stall">Foot-stall</a></li>
+  <li class="c018"><a href="/article/10-0689-formeret/formeret">Formeret</a></li>
+  <li class="c018"><a href="/article/10-0759-s4/foundation">Foundation</a></li>
+  <li class="c018"><a href="/article/10-0768-s2/fountain">Fountain</a></li>
+  <li class="c018"><a href="/article/10-0781-s3/fowler__charles">Charles Fowler</a></li>
+  <li class="c018"><a href="/article/11-0052-s3/frater">Frater</a></li>
+  <li class="c018">Freestone</li>
+  <li class="c018"><a href="/article/11-0223-s4/fret">Fret</a></li>
+  <li class="c018"><a href="/article/11-0243-s4/frieze">Frieze</a></li>
+  <li class="c018"><a href="/article/11-0244-s5/frigidarium">Frigidarium</a></li>
+  <li class="c018"><a href="/article/11-0263-frontispiece/frontispiece">Frontispiece</a></li>
+  <li class="c018"><a href="/article/11-0398-gable/gable">Gable</a></li>
+  <li class="c018"><a href="/article/11-0399-gablets/gablets">Gablets</a></li>
+  <li class="c018">Galilee</li>
+  <li class="c018"><a href="/article/11-0435-gallery/gallery">Gallery</a></li>
+  <li class="c018"><a href="/article/11-0484-gargoyle/gargoyle">Gargoyle</a></li>
+  <li class="c018">J. L. C. Garnier</li>
+  <li class="c018"><a href="/article/11-0492-garret/garret">Garret</a></li>
+  <li class="c018">Garretting</li>
+  <li class="c018"><a href="/article/11-0545-s4/gate">Gate</a></li>
+  <li class="c018"><a href="/article/11-0547-gatehouse/gatehouse">Gatehouse</a></li>
+  <li class="c018"><a href="/article/11-0563-gazebo/gazebo">Gazebo</a></li>
+  <li class="c018">Girder</li>
+  <li class="c018"><a href="/article/12-0133-s1/glazing">Glazing</a></li>
+  <li class="c018"><a href="/article/12-0164-s5/glyph">Glyph</a></li>
+  <li class="c018"><a href="/article/12-0164-s7/glyptothek">Glyptothek</a></li>
+  <li class="c018"><a href="/article/12-0193-godroon/godroon">Godroon</a></li>
+  <li class="c018"><a href="/article/12-0289-gothic/gothic">Gothic</a></li>
+  <li class="c018"><a href="/article/12-0368-s2/grange">Grange</a></li>
+  <li class="c018"><a href="/article/12-0368-granite/granite">Granite</a></li>
+  <li class="c018"><a href="/article/12-0619-griffe/griffe">Griffe</a></li>
+  <li class="c018"><a href="/article/12-0636-groin/groin">Groin</a></li>
+  <li class="c018">C. G. Guarini</li>
+  <li class="c018"><a href="/article/12-0719-guilloche/guilloche">Guilloche</a></li>
+  <li class="c018"><a href="/article/12-0768-s2/gutta">Gutta</a></li>
+  <li class="c018"><a href="/article/12-0769-s2/gutter">Gutter</a></li>
+  <li class="c018"><a href="/article/12-0775-s2/gwilt__joseph">Joseph Gwilt</a></li>
+  <li class="c018"><a href="/article/12-0789-gynaeceum/gynaeceum">Gynaeceum</a></li>
+  <li class="c018"><a href="/article/12-0842-hagioscope/hagioscope">Hagioscope</a></li>
+  <li class="c018"><a href="/article/12-0861-half-timber-work/half-timber_work">Half-timber Work</a></li>
+  <li class="c018"><a href="/article/12-0876-hall/hall">Hall</a></li>
+  <li class="c018">Halving</li>
+  <li class="c018"><a href="/article/12-0922-hammerbeam-roof/hammerbeam_roof">Hammerbeam Roof</a></li>
+  <li class="c018">J. A. Hansom</li>
+  <li class="c018"><a href="/article/13-0113-hawksmoor-nicholas/hawksmoor__nicholas">Nicholas Hawksmoor</a></li>
+  <li class="c018"><a href="/article/13-0173-s2/heating">Heating</a></li>
+  <li class="c018">K. A. von Heideloff</li>
+  <li class="c018"><a href="/article/13-0247-helix/helix">Helix</a></li>
+  <li class="c018"><a href="/article/13-0271-hemicycle/hemicycle">Hemicycle</a></li>
+  <li class="c018"><a href="/article/13-0407-herring-bone/herring-bone">Herring-bone</a></li>
+  <li class="c018"><a href="/article/13-0452-hexastyle/hexastyle">Hexastyle</a></li>
+  <li class="c018"><a href="/article/13-0532-hip-knob/hip-knob">Hip-knob</a></li>
+  <li class="c018"><a href="/article/13-0532-hipped-roof/hipped_roof">Hipped roof</a></li>
+  <li class="c018"><a href="/article/13-0535-hippodamus/hippodamus">Hippodamus</a></li>
+  <li class="c018"><a href="/article/13-0535-hippodrome/hippodrome">Hippodrome</a></li>
+  <li class="c018">J. I. Hittorff</li>
+  <li class="c018"><a href="/article/13-0822-h-tel-de-ville/hôtel-de-ville">Hôtel-de-Ville</a></li>
+  <li class="c018"><a href="/article/13-0822-h-tel-dieu/hôtel-dieu">Hôtel-Dieu</a></li>
+  <li class="c018">Hot-water Heating and Supply</li>
+  <li class="c018"><a href="/article/13-0829-house/house">House</a></li>
+  <li class="c018"><a href="/article/14-0210-hypaethros/hypaethros">Hypaethros</a></li>
+  <li class="c018"><a href="/article/14-0219-hypocaust/hypocaust">Hypocaust</a></li>
+  <li class="c018"><a href="/article/14-0220-s2/hypostyle">Hypostyle</a></li>
+  <li class="c018"><a href="/article/14-0220-s6/hypotrachelium">Hypotrachelium</a></li>
+  <li class="c018"><a href="/article/14-0255-ichnography/ichnography">Ichnography</a></li>
+  <li class="c018"><a href="/article/14-0287-s2/iconostasis">Iconostasis</a></li>
+  <li class="c018"><a href="/article/14-0287-s5/ictinus">Ictinus</a></li>
+  <li class="c018"><a href="/article/14-0350-s4/imbrex">Imbrex</a></li>
+  <li class="c018"><a href="/article/14-0362-impluvium/impluvium">Impluvium</a></li>
+  <li class="c018"><a href="/article/14-0362-impost/impost">Impost</a></li>
+  <li class="c018"><a href="/article/14-0367-in-antis/in-antis">In-antis</a></li>
+  <li class="c018"><a href="/article/14-0452-indian-architecture/indian_architecture">Indian Architecture</a></li>
+  <li class="c018"><a href="/article/14-0714-s5/intercolumniation">Intercolumniation</a></li>
+  <li class="c018"><a href="/article/14-0724-interlaced-arches/interlaced_arches">Interlaced arches</a></li>
+  <li class="c018"><a href="/article/14-0748-s4/intrados">Intrados</a></li>
+  <li class="c018"><a href="/article/15-0131-s4/jacobean_style">Jacobean Style</a></li>
+  <li class="c018"><a href="/article/15-0151-jamb/jamb">Jamb</a></li>
+  <li class="c018"><a href="/article/15-0360-jesse/jesse">Jesse</a></li>
+  <li class="c018"><a href="/article/15-0503-s5/joinery">Joinery</a></li>
+  <li class="c018"><a href="/article/15-0510-s3/joints">Joints</a></li>
+  <li class="c018">Joggles</li>
+  <li class="c018"><a href="/article/15-0525-jones-inigo/jones__inigo">Inigo Jones</a></li>
+  <li class="c018"><a href="/article/15-0527-s4/jones__owen">Owen Jones</a></li>
+  <li class="c018"><a href="/article/15-0559-jub/jubé">Jubé</a></li>
+  <li class="c018"><a href="/article/15-0740-keel-moulding/keel-moulding">Keel-moulding</a></li>
+  <li class="c018"><a href="/article/15-0741-keep/keep">Keep</a></li>
+  <li class="c018"><a href="/article/15-0798-s2/keystone">Keystone</a></li>
+  <li class="c018"><a href="/article/16-0017-label/label">Label</a></li>
+  <li class="c018"><a href="/article/16-0044-s3/labrum">Labrum</a></li>
+  <li class="c018"><a href="/article/16-0072-s3/laconicum">Laconicum</a></li>
+  <li class="c018"><a href="/article/16-0076-s5/lacunar">Lacunar</a></li>
+  <li class="c018"><a href="/article/16-0082-lady-chapel/lady-chapel">Lady-Chapel</a></li>
+  <li class="c018"><a href="/article/16-0172-s2/lancet">Lancet</a></li>
+  <li class="c018"><a href="/article/16-0205-lantern/lantern">Lantern</a></li>
+  <li class="c018"><a href="/article/16-0207-s3/lanterns_of_the_dead">Lanterns of the Dead</a></li>
+  <li class="c018"><a href="/article/16-0377-lectern/lectern">Lectern</a></li>
+  <li class="c018"><a href="/article/16-0565-libon/libon">Libon</a></li>
+  <li class="c018"><a href="/article/16-0673-s2/lighting">Lighting</a></li>
+  <li class="c018"><a href="/article/16-0695-lightning-conductor/lightning_conductor">Lightning Conductor</a></li>
+  <li class="c018"><a href="/article/16-0718-limestone/limestone">Limestone</a></li>
+  <li class="c018"><a href="/article/16-0757-s4/lintel">Lintel</a></li>
+  <li class="c018"><a href="/article/16-0885-s3/loft">Loft</a></li>
+  <li class="c018"><a href="/article/17-0082-s4/louver">Louver (Louvre)</a></li>
+  <li class="c018"><a href="/article/17-0108-s2/lucarne">Lucarne</a></li>
+  <li class="c018"><a href="/article/17-0140-s6/lunette">Lunette</a></li>
+  <li class="c018">C. F. McKim</li>
+  <li class="c018"><a href="/article/17-0252-s2/machicolation">Machicolation</a></li>
+  <li class="c018"><a href="/article/17-0468-s5/maksoora">Maksoora</a></li>
+  <li class="c018"><a href="/article/17-0614-manor-house/manor-house">Manor-house</a></li>
+  <li class="c018"><a href="/article/17-0693-marble/marble">Marble</a></li>
+  <li class="c018"><a href="/article/17-0890-s2/mastaba">Mastaba</a></li>
+  <li class="c018"><a href="/article/17-0936-mausoleum/mausoleum">Mausoleum</a></li>
+  <li class="c018"><a href="/article/18-0095-megaron/megaron">Megaron</a></li>
+  <li class="c018"><a href="/article/18-0190-s2/merlon">Merlon</a></li>
+  <li class="c018"><a href="/article/18-0197-s2/meshrebiya">Meshrebiya</a></li>
+  <li class="c018"><a href="/article/18-0214-s5/meta">Meta</a></li>
+  <li class="c018"><a href="/article/18-0320-metope/metope">Metope</a></li>
+  <li class="c018"><a href="/article/18-0372-s4/mezzanine">Mezzanine</a></li>
+  <li class="c018"><a href="/article/18-0461-s3/mihrab">Mihrab</a></li>
+  <li class="c018"><a href="/article/18-0525-minaret/minaret">Minaret</a></li>
+  <li class="c018"><a href="/article/18-0527-s2/minbar">Minbar</a></li>
+  <li class="c018"><a href="/article/18-0583-minster/minster">Minster</a></li>
+  <li class="c018"><a href="/article/18-0672-modillion/modillion">Modillion</a></li>
+  <li class="c018"><a href="/article/18-0673-module/module">Module</a></li>
+  <li class="c018"><a href="/article/18-0765-monotriglyph/monotriglyph">Monotriglyph</a></li>
+  <li class="c018"><a href="/article/18-0907-mortar/mortar">Mortar</a></li>
+  <li class="c018">Mortice</li>
+  <li class="c018"><a href="/article/18-0931-s2/mosque">Mosque</a></li>
+  <li class="c018"><a href="/article/18-0964-s4/mouldings">Mouldings</a></li>
+  <li class="c018">Moving Stairs</li>
+  <li class="c018"><a href="/article/18-0996-s5/mullion">Mullion</a></li>
+  <li class="c018"><a href="/article/19-0030-s2/mural_decoration">Mural Decoration</a></li>
+  <li class="c018"><a href="/article/19-0117-mutule/mutule">Mutule</a></li>
+  <li class="c018"><a href="/article/19-0257-s4/narthex">Narthex</a></li>
+  <li class="c018"><a href="/article/19-0298-nave/nave">Nave</a></li>
+  <li class="c018">W. E. Nesfield</li>
+  <li class="c018"><a href="/article/19-0496-newel/newel">Newel</a></li>
+  <li class="c018"><a href="/article/19-0675-s4/niche">Niche</a></li>
+  <li class="c018">Notching</li>
+  <li class="c018"><a href="/article/19-0968-nymphaeum/nymphaeum">Nymphaeum</a></li>
+  <li class="c018"><a href="/article/19-0983-s4/obelisk">Obelisk</a></li>
+  <li class="c018">Octastyle</li>
+  <li class="c018"><a href="/article/20-0022-s2/odeum">Odeum</a></li>
+  <li class="c018"><a href="/article/20-0030-oecus/oecus">Oecus</a></li>
+  <li class="c018"><a href="/article/20-0041-ogee/ogee">Ogee</a></li>
+  <li class="c018"><a href="/article/20-0042-s4/ogive">Ogive</a></li>
+  <li class="c018"><a href="/article/20-0065-s2/oillets">Oillets</a></li>
+  <li class="c018"><a href="/article/20-0201-s2/order">Order</a></li>
+  <li class="c018"><a href="/article/20-0214-s2/ordinance">Ordinance</a></li>
+  <li class="c018"><a href="/article/20-0303-s6/oriel">Oriel</a></li>
+  <li class="c018"><a href="/article/20-0303-s7/orientation">Orientation</a></li>
+  <li class="c018"><a href="/article/20-0375-orthostatae/orthostatae">Orthostatae</a></li>
+  <li class="c018"><a href="/article/20-0375-orthostyle/orthostyle">Orthostyle</a></li>
+  <li class="c018"><a href="/article/20-0411-s2/oubliette">Oubliette</a></li>
+  <li class="c018"><a href="/article/20-0425-s3/ovolo">Ovolo</a></li>
+  <li class="c018"><a href="/article/20-0490-pagoda/pagoda">Pagoda</a></li>
+  <li class="c018"><a href="/article/20-0495-painter-work/painter-work">Painter-work</a></li>
+  <li class="c018"><a href="/article/20-0572-s3/palace">Palace</a></li>
+  <li class="c018"><a href="/article/20-0649-s2/palaestra">Palaestra</a></li>
+  <li class="c018"><a href="/article/20-0691-palladio-andrea/palladio__andrea">Andrea Palladio</a></li>
+  <li class="c018"><a href="/article/20-0691-palladian/palladian">Palladian</a></li>
+  <li class="c018"><a href="/article/20-0733-panel/panel">Panel</a></li>
+  <li class="c018"><a href="/article/20-0739-pantheon/pantheon">Pantheon</a></li>
+  <li class="c018"><a href="/article/20-0821-parament/parament">Parament</a></li>
+  <li class="c018"><a href="/article/20-0826-parapet/parapet">Parapet</a></li>
+  <li class="c018"><a href="/article/20-0826-parascenium/parascenium">Parascenium</a></li>
+  <li class="c018"><a href="/article/20-0859-s2/parclose">Parclose</a></li>
+  <li class="c018"><a href="/article/20-0862-pargetting/pargetting">Pargetting</a></li>
+  <li class="c018"><a href="/article/20-0889-s6/parker__john_henry">John Henry Parker</a></li>
+  <li class="c018"><a href="/article/20-0923-s3/parquetry">Parquetry</a></li>
+  <li class="c018"><a href="/article/20-0931-parthenon/parthenon">Parthenon</a></li>
+  <li class="c018"><a href="/article/20-0939-parvis/parvis">Parvis</a></li>
+  <li class="c018"><a href="/article/20-0973-s2/patera">Patera</a></li>
+  <li class="c018"><a href="/article/20-0995-patio/patio">Patio</a></li>
+  <li class="c018"><a href="/article/20-1037-s4/pavement">Pavement</a></li>
+  <li class="c018"><a href="/article/20-1039-s3/pavilion">Pavilion</a></li>
+  <li class="c018">J. L. Pearson</li>
+  <li class="c018">Paruzzi</li>
+  <li class="c018"><a href="/article/21-0051-pedestal/pedestal">Pedestal</a></li>
+  <li class="c018"><a href="/article/21-0051-pediment/pediment">Pediment</a></li>
+  <li class="c018"><a href="/article/21-0101-s2/pendant">Pendant</a></li>
+  <li class="c018"><a href="/article/21-0101-s3/pendentive">Pendentive</a></li>
+  <li class="c018"><a href="/article/21-0157-pergamum/pergamum">Pergamum</a></li>
+  <li class="c018"><a href="/article/21-0186-peripteral/peripteral">Peripteral</a></li>
+  <li class="c018"><a href="/article/21-0188-peristyle/peristyle">Peristyle</a></li>
+  <li class="c018"><a href="/article/21-0196-perpendicular-period/perpendicular_period">Perpendicular Period</a></li>
+  <li class="c018">Perpent Stones</li>
+  <li class="c018"><a href="/article/21-0201-s2/perron">Perron</a></li>
+  <li class="c018"><a href="/article/21-0461-s2/philon">Philon</a></li>
+  <li class="c018"><a href="/article/21-0601-piazza/piazza">Piazza</a></li>
+  <li class="c018"><a href="/article/21-0614-s3/pier">Pier</a></li>
+  <li class="c018"><a href="/article/21-0629-pilaster/pilaster">Pilaster</a></li>
+  <li class="c018">Pile Foundations</li>
+  <li class="c018"><a href="/article/21-0637-s3/pillar">Pillar</a></li>
+  <li class="c018"><a href="/article/21-0643-pinacotheca/pinacotheca">Pinacotheca</a></li>
+  <li class="c018"><a href="/article/21-0657-pinnacle/pinnacle">Pinnacle</a></li>
+  <li class="c018"><a href="/article/21-0680-s2/piscina">Piscina</a></li>
+  <li class="c018"><a href="/article/21-0736-plan/plan">Plan</a></li>
+  <li class="c018"><a href="/article/21-0742-planceer/planceer">Planceer</a></li>
+  <li class="c018"><a href="/article/21-0815-s2/plaster">Plaster</a></li>
+  <li class="c018"><a href="/article/21-0874-s5/plinth">Plinth</a></li>
+  <li class="c018"><a href="/article/21-0907-podium/podium">Podium</a></li>
+  <li class="c018"><a href="/article/22-0105-poppy-heads/poppy_heads">Poppy Heads</a></li>
+  <li class="c018"><a href="/article/22-0114-porch/porch">Porch</a></li>
+  <li class="c018">Porticullis</li>
+  <li class="c018"><a href="/article/22-0132-portico/portico">Portico</a></li>
+  <li class="c018"><a href="/article/22-0211-postern/postern">Postern</a></li>
+  <li class="c018"><a href="/article/22-0308-presbytery/presbytery">Presbytery</a></li>
+  <li class="c018"><a href="/article/22-0329-prick-posts/prick_posts">Prick Posts</a></li>
+  <li class="c018"><a href="/article/22-0464-propylaea/propylaea">Propylaea</a></li>
+  <li class="c018"><a href="/article/22-0465-proscenium/proscenium">Proscenium</a></li>
+  <li class="c018"><a href="/article/22-0479-prostyle/prostyle">Prostyle</a></li>
+  <li class="c018"><a href="/article/22-0490-s5/prothesis">Prothesis</a></li>
+  <li class="c018"><a href="/article/22-0557-s4/pseudo-dipteral">Pseudo-dipteral</a></li>
+  <li class="c018"><a href="/article/22-0557-pseudo-peripteral/pseudo-peripteral">Pseudo-peripteral</a></li>
+  <li class="c018"><a href="/article/22-0632-pteron/pteron">Pteron</a></li>
+  <li class="c018"><a href="/article/21-0461-s2/philon">Philon</a></li>
+  <li class="c018">A. W. N. Pugin</li>
+  <li class="c018"><a href="/article/22-0660-pulpit/pulpit">Pulpit</a></li>
+  <li class="c018"><a href="/article/22-0681-purlin/purlin">Purlin</a></li>
+  <li class="c018"><a href="/article/22-0693-pycnostyle/pycnostyle">Pycnostyle</a></li>
+  <li class="c018"><a href="/article/22-0699-pyramid/pyramid">Pyramid</a></li>
+  <li class="c018"><a href="/article/22-0701-pyramidion/pyramidion">Pyramidion</a></li>
+  <li class="c018"><a href="/article/22-0720-pythis/pythis">Pythis</a></li>
+  <li class="c018"><a href="/article/22-0722-quadriga/quadriga">Quadriga</a></li>
+  <li class="c018"><a href="/article/22-0740-s2/quatrefoil">Quatrefoil</a></li>
+  <li class="c018"><a href="/article/22-0780-s6/quoins">Quoins</a></li>
+  <li class="c018"><a href="/article/22-0832-rag-stone/rag-stone">Rag-stone</a></li>
+  <li class="c018"><a href="/article/22-0905-s2/random">Random</a></li>
+  <li class="c018"><a href="/article/22-0963-s3/rear_vault">Rear vault</a></li>
+  <li class="c018"><a href="/article/23-0014-refectory/refectory">Refectory</a></li>
+  <li class="c018"><a href="/article/23-0064-regula/regula">Regula</a></li>
+  <li class="c018"><a href="/article/23-0198-reredos/reredos">Reredos</a></li>
+  <li class="c018"><a href="/article/23-0217-respond/respond">Respond</a></li>
+  <li class="c018"><a href="/article/23-0298-s3/rib">Rib</a></li>
+  <li class="c018"><a href="/article/23-0316-richardson-george/richardson__george">George Richardson</a></li>
+  <li class="c018">H. H. Richardson</li>
+  <li class="c018"><a href="/article/23-0332-rickman-thomas/rickman__thomas">Thomas Rickman</a></li>
+  <li class="c018"><a href="/article/23-0391-s4/river_engineering">River Engineering</a></li>
+  <li class="c018">Road</li>
+  <li class="c018"><a href="/article/23-0730-s2/rood">Rood</a></li>
+  <li class="c018"><a href="/article/23-0810-s4/rough_cast">Rough Cast</a></li>
+  <li class="c018"><a href="/article/23-0847-s1/rubble">Rubble</a></li>
+  <li class="c018"><a href="/article/23-0981-rustication/rustication">Rustication</a></li>
+  <li class="c018"><a href="/article/23-1033-sacristy/sacristy">Sacristy</a></li>
+  <li class="c018"><a href="/article/23-1033-saddle/saddle">Saddle</a></li>
+  <li class="c018"><a href="/article/24-0162-sangallo/sangallo">Sangallo (family)</a></li>
+  <li class="c018"><a href="/article/24-0168-sanmichele-michele/sanmichele__michele">Sanmichele</a></li>
+  <li class="c018"><a href="/article/24-0293-s5/scabbling">Scabbling</a></li>
+  <li class="c018"><a href="/article/24-0294-s3/scaffold">Scaffold</a></li>
+  <li class="c018"><a href="/article/24-0302-scamilli-impares/scamilli_impares">Scamilli impares</a></li>
+  <li class="c018">K. F. Schinkel</li>
+  <li class="c018">Sir G. G. Scott</li>
+  <li class="c018"><a href="/article/24-0429-scotia/scotia">Scotia</a></li>
+  <li class="c018"><a href="/article/24-0608-sedilia/sedilia">Sedilia</a></li>
+  <li class="c018"><a href="/article/24-0662-semper-gottfried/semper__gottfried">Gottfried Semper</a></li>
+  <li class="c018"><a href="/article/24-0685-s4/sepulchre__easter">Sepulchre, Easter</a></li>
+  <li class="c018"><a href="/article/24-0757-s2/severy">Severy</a></li>
+  <li class="c018"><a href="/article/24-0765-s4/sewerage">Sewerage</a></li>
+  <li class="c018"><a href="/article/24-0779-sexpartite-vault/sexpartite_vault">Sexpartite vault</a></li>
+  <li class="c018"><a href="/article/24-0790-s2/shaft">Shaft</a></li>
+  <li class="c018">R. Norman Shaw</li>
+  <li class="c018"><a href="/article/24-1080-s3/shoring">Shoring</a></li>
+  <li class="c018"><a href="/article/25-0123-sill-door/sill__door_">Sill</a></li>
+  <li class="c018">Skeleton Construction</li>
+  <li class="c018">Slaking</li>
+  <li class="c018">Slip Joints</li>
+  <li class="c018"><a href="/article/25-0262-slype/slype">Slype</a></li>
+  <li class="c018"><a href="/article/25-0312-soane-sir-john/soane__sir_john">Sir John Soane</a></li>
+  <li class="c018"><a href="/article/25-0360-soffit/soffit">Soffit</a></li>
+  <li class="c018">Solar (Soller)</li>
+  <li class="c018"><a href="/article/25-0409-s2/sommer">Sommer</a></li>
+  <li class="c018"><a href="/article/25-0614-spandril/spandril">Spandril</a></li>
+  <li class="c018"><a href="/article/25-0668-sphaeristerium/sphaeristerium">Sphaeristerium</a></li>
+  <li class="c018"><a href="/article/25-0690-s3/spina">Spina</a></li>
+  <li class="c018"><a href="/article/25-0714-s5/spire">Spire</a></li>
+  <li class="c018"><a href="/article/25-0715-s2/spire_light">Spire light</a></li>
+  <li class="c018"><a href="/article/25-0761-springer/springer">Springer</a></li>
+  <li class="c018"><a href="/article/25-0769-squinch/squinch">Squinch</a></li>
+  <li class="c018"><a href="/article/25-0769-squint/squint">Squint</a></li>
+  <li class="c018">Stag Bars</li>
+  <li class="c018"><a href="/article/25-0781-stage/stage">Stage</a></li>
+  <li class="c018"><a href="/article/12-0120-s2/glass__stained">Stained Glass</a></li>
+  <li class="c018"><a href="/article/25-0785-s2/staircase">Staircase</a></li>
+  <li class="c018">Stairn</li>
+  <li class="c018"><a href="/article/25-0789-stall/stall">Stall</a></li>
+  <li class="c018"><a href="/article/25-0794-stanchion/stanchion">Stanchion</a></li>
+  <li class="c018">Steam-Heating</li>
+  <li class="c018"><a href="/article/25-0883-s4/steel_construction">Steel Construction</a></li>
+  <li class="c018"><a href="/article/25-0892-s2/steeple">Steeple</a></li>
+  <li class="c018"><a href="/article/25-0898-stele/stele">Stele</a></li>
+  <li class="c018"><a href="/article/25-0914-s4/stereobate">Stereobate</a></li>
+  <li class="c018"><a href="/article/25-0944-stillicidium/stillicidium">Stillicidium</a></li>
+  <li class="c018"><a href="/article/25-0947-stilted/stilted">Stilted</a></li>
+  <li class="c018"><a href="/article/25-0953-stoa/stoa">Stoa</a></li>
+  <li class="c018"><a href="/article/25-0982-stone/stone">Stone, Stone Wash</a></li>
+  <li class="c018"><a href="/article/25-0994-storey/storey">Storey</a></li>
+  <li class="c018">G. E. Street</li>
+  <li class="c018"><a href="/article/25-1079-sturgis-russell/sturgis__russell">Russell Sturgis</a></li>
+  <li class="c018"><a href="/article/25-1081-style-column/style__column_">Style</a></li>
+  <li class="c018"><a href="/article/25-1084-s2/stylobate">Stylobate</a></li>
+  <li class="c018"><a href="/article/25-1086-s4/suardi__bartolommeo">Bartolommeo Suardi</a></li>
+  <li class="c018"><a href="/article/26-0035-sudatorium/sudatorium">Sudatorium</a></li>
+  <li class="c018"><a href="/article/26-0135-surbase/surbase">Surbase</a></li>
+  <li class="c018"><a href="/article/26-0160-s3/surveying">Surveying</a></li>
+  <li class="c018"><a href="/article/26-0181-s2/suspensura">Suspensura</a></li>
+  <li class="c018"><a href="/article/26-0338-systyle/systyle">Systyle</a></li>
+  <li class="c018"><a href="/article/26-0344-s2/tabernacle">Tabernacle</a></li>
+  <li class="c018"><a href="/article/26-0358-tablinum/tablinum">Tablinum</a></li>
+  <li class="c018"><a href="/article/26-0362-s4/tabularium">Tabularium</a></li>
+  <li class="c018"><a href="/article/26-0375-taenia/taenia">Taenia</a></li>
+  <li class="c018"><a href="/article/26-0387-s3/talar">Talar</a></li>
+  <li class="c018"><a href="/article/26-0407-talus/talus">Talus</a></li>
+  <li class="c018"><a href="/article/26-0409-tambour/tambour">Tambour</a></li>
+  <li class="c018"><a href="/article/26-0424-s2/taper">Taper</a></li>
+  <li class="c018"><a href="/article/26-0466-tas-de-charge/tas-de-charge">Tas-de-charge</a></li>
+  <li class="c018"><a href="/article/26-0535-tegula/tegula">Tegula</a></li>
+  <li class="c018"><a href="/article/26-0537-s5/telamones">Telamones</a></li>
+  <li class="c018"><a href="/article/26-0607-temenos/temenos">Temenos</a></li>
+  <li class="c018"><a href="/article/26-0633-temple/temple">Temple</a></li>
+  <li class="c018">Tenon</li>
+  <li class="c018"><a href="/article/26-0667-s4/tepidarium">Tepidarium</a></li>
+  <li class="c018"><a href="/article/26-0673-terminal-figures/terminal_figures">Terminal Figures</a></li>
+  <li class="c018"><a href="/article/26-0684-terrace/terrace">Terrace</a></li>
+  <li class="c018"><a href="/article/26-0697-tessellated/tessellated">Tessellated</a></li>
+  <li class="c018"><a href="/article/26-0704-s4/tetrastoön">Tetrastoön</a></li>
+  <li class="c018"><a href="/article/26-0704-s5/tetrastyle">Tetrastyle</a></li>
+  <li class="c018"><a href="/article/26-0764-thatch/thatch">Thatch</a></li>
+  <li class="c018"><a href="/article/26-0765-theatre/theatre">Theatre</a></li>
+  <li class="c018"><a href="/article/26-0877-s3/thesaurus">Thesaurus</a></li>
+  <li class="c018"><a href="/article/26-0902-s2/tholobate">Tholobate</a></li>
+  <li class="c018"><a href="/article/26-0902-s3/tholos">Tholos</a></li>
+  <li class="c018">John Thorpe</li>
+  <li class="c018"><a href="/article/26-1018-timber/timber">Timber</a></li>
+  <li class="c018"><a href="/article/26-1059-tite-sir-william/tite__sir_william">Sir William Tite</a></li>
+  <li class="c018"><a href="/article/27-0064-s6/toran">Toran</a></li>
+  <li class="c018"><a href="/article/27-0093-torus/torus">Torus</a></li>
+  <li class="c018"><a href="/article/27-0125-s1/tower">Tower</a></li>
+  <li class="c018"><a href="/article/27-0130-s2/trabeated">Trabeated</a></li>
+  <li class="c018"><a href="/article/27-0130-tracery/tracery">Tracery</a></li>
+  <li class="c018"><a href="/article/27-0131-trachelium/trachelium">Trachelium</a></li>
+  <li class="c018"><a href="/article/27-0187-transept/transept">Transept</a></li>
+  <li class="c018"><a href="/article/27-0201-transom/transom">Transom</a></li>
+  <li class="c018"><a href="/article/27-0225-transverse-rib/transverse_rib">Transverse Rib</a></li>
+  <li class="c018"><a href="/article/27-0228-trapezophoron/trapezophoron">Trapezophoron</a></li>
+  <li class="c018"><a href="/article/27-0253-s2/trefoil">Trefoil</a></li>
+  <li class="c018">Trial Boring</li>
+  <li class="c018"><a href="/article/27-0278-tribune/tribune">Tribune</a></li>
+  <li class="c018"><a href="/article/27-0285-triforium/triforium">Triforium</a></li>
+  <li class="c018"><a href="/article/27-0286-s2/triglyph">Triglyph</a></li>
+  <li class="c018"><a href="/article/27-0314-triumphal-arch/triumphal_arch">Triumphal arch</a></li>
+  <li class="c018"><a href="/article/27-0380-s2/tudor_flower">Tudor flower</a></li>
+  <li class="c018"><a href="/article/27-0380-tudor-period/tudor_period">Tudor period</a></li>
+  <li class="c018"><a href="/article/27-0416-tunnel/tunnel">Tunnel</a></li>
+  <li class="c018">Tunnel-vault</li>
+  <li class="c018">Turning-piece</li>
+  <li class="c018"><a href="/article/27-0502-turret/turret">Turret</a></li>
+  <li class="c018"><a href="/article/27-0597-under-croft/under-croft">Under-croft</a></li>
+  <li class="c018"><a href="/article/27-0920-s2/vane">Vane</a></li>
+  <li class="c018"><a href="/article/27-0982-s4/vault">Vault</a></li>
+  <li class="c018"><a href="/article/27-1036-s3/ventilation">Ventilation</a></li>
+  <li class="c018"><a href="/article/27-1043-verandah/verandah">Verandah</a></li>
+  <li class="c018"><a href="/article/27-1049-s4/verge">Verge</a></li>
+  <li class="c018"><a href="/article/27-1079-s8/vesica_piscis">Vesica Piscis</a></li>
+  <li class="c018"><a href="/article/27-1084-s3/vestibule">Vestibule</a></li>
+  <li class="c018"><a href="/article/28-0076-vignette/vignette">Vignette</a></li>
+  <li class="c018"><a href="/article/28-0082-villa/villa">Villa</a></li>
+  <li class="c018"><a href="/article/28-0122-viollet-le-duc/viollet-le-duc__eugène_emmanuel">Viollet-le-Duc</a></li>
+  <li class="c018"><a href="/article/28-0166-vitruvius/vitruvius">Vitruvius</a></li>
+  <li class="c018"><a href="/article/28-0226-volute/volute">Volute</a></li>
+  <li class="c018"><a href="/article/28-0235-voussoir/voussoir">Voussoir</a></li>
+  <li class="c018"><a href="/article/28-0291-wall/wall">Wall, and Walling, and Wall Coverings</a></li>
+  <li class="c018"><a href="/article/28-0387-waterhouse-alfred/waterhouse__alfred">Alfred Waterhouse</a></li>
+  <li class="c018">Water Spray Ventilation</li>
+  <li class="c018"><a href="/article/28-0437-wattle-and-dab/wattle_and_dab">Wattle and dab</a></li>
+  <li class="c018">Wedging</li>
+  <li class="c018">Well Foundations</li>
+  <li class="c018"><a href="/article/28-0728-wind-braces/wind_braces">Wind braces</a></li>
+  <li class="c018"><a href="/article/28-0732-window/window">Window</a></li>
+  <li class="c018"><a href="/article/28-0869-s2/wren__sir_christopher">Sir Christopher Wren</a></li>
+  <li class="c018"><a href="/article/28-0889-wyatt-james/wyatt__james">James Wyatt</a></li>
+  <li class="c018"><a href="/article/28-0916-xystus/xystus">Xystus</a></li>
+</ul>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

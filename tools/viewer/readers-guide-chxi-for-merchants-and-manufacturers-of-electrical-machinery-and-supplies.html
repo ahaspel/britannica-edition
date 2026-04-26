@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Merchants And Manufacturers Of Electrical Machinery And Supplies &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XI</span>For Merchants And Manufacturers Of Electrical Machinery And Supplies</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Construction and Operation</a></li><li><a href="#sh-2">Batteries and Dynamos</a></li><li><a href="#sh-3">Lighting Appliances</a></li><li><a href="#sh-4">Trolley Cars and Railroads</a></li><li><a href="#sh-5">Telegraph and Telephone</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">Construction and Operation</span>Electrical machinery and supplies
+include three main groups of
+appliances: The apparatus by which
+electricity is originally generated; the apparatus
+by which current is transmitted
+and, if necessary, modified before it is
+used; and the infinitely various appliances
+for its final employment. In connection
+with any one of the latter, information
+may be needed as to its structure
+and its mechanical or electrochemical
+method of operation, or as to its
+uses, and in the treatment of these two
+aspects of a vast number of subjects the
+advantages of the encyclopaedic plan of
+the Britannica are obvious. One article
+will explain the method by which the
+same principles are applied to a number
+of different machines. Another article
+will deal with a group of appliances all
+used for similar purposes; and a reference
+to the Index of 500,000
+entries (Vol. 29)
+will at once guide
+the reader who turns
+to the name of any electrical appliance to
+either kind of information he desires at
+the moment, whether he wants to know
+how the machine is made and operated,
+or what kind of work it does and how
+efficiently it does it.</p>
+
+<p>The reader to whom this chapter is addressed
+is already familiar with the general
+subject of electricity, but he may at
+any moment desire to review or to supplement
+his general knowledge in connection
+with some new appliance which,
+for the first time, applies to commercial
+use one of the many and intricate laws
+of electrical vibration. The whole subject
+of the nature and action of electricity
+is outlined in the article <span class="sc"><a href="/article/09-0196-electricity/electricity">Electricity</a></span>
+(Vol. 9, p. 179), by Prof. <a href="/contributors.html?q=John+Ambrose+Fleming">J. A. Fleming</a>,
+of the University of London, one of the
+world’s foremost authorities. In a space
+equivalent to hardly more than 30 pages
+of this Guide, the field covered in detail
+by many other articles is so concisely and
+clearly surveyed that you get a complete
+view of the theoretical and practical developments
+by which electrical science
+and industry have reached their present
+position. The same contributor then
+considers <span class="sc"><a href="/article/09-0257-electrostatics/electrostatics">Electrostatics</a></span> (Vol. 9, p. 240)
+and <span class="sc"><a href="/article/09-0227-electrokinetics/electrokinetics">Electrokinetics</a></span> (Vol. 9, p. 210);
+and, in <span class="sc"><a href="/article/06-0879-conduction-electric/conduction__electric">Conduction, Electric</a></span> (Vol. 6,
+p. 855), deals with metallic, non-metallic,
+dielectric and gaseous conductors. One
+section of this article is by Sir <a href="/contributors.html?q=Sir+Joseph+John+Thomson">J. J. Thomson</a>,
+winner, in 1906, of the Nobel Prize
+for Physics. The form in which metal is
+chiefly employed for the conduction of
+electricity is the subject of a separate
+article, <span class="sc"><a href="/article/28-0758-wire/wire">Wire</a></span> (Vol. 28, p. 738); and the
+articles on the individual metals deal with
+their electrical properties.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Batteries and Dynamos</span>The whole subject of the chemical production
+of electricity is discussed in
+<span class="sc"><a href="/article/09-0234-electrolysis/electrolysis">Electrolysis</a></span> (Vol. 9, p. 217), by <a href="/contributors.html?q=William+Cecil+Dampier+Whetham">W. C.
+D. Whetham</a>, of the
+technical staff of
+Cambridge University.
+<span class="sc"><a href="/article/03-0548-battery/battery">Battery</a></span> (Vol.
+3, p. 531), fully illustrated, deals with all
+the forms of primary battery, and <span class="sc"><a href="/article/01-0157-s2/accumulator">Accumulator</a></span>
+(Vol. 1, p. 126), also illustrated,
+by <a href="/contributors.html?q=Walter+Hibbert">Walter Hibbert</a>, of the London Polytechnic,
+with all the secondary types.
+The alkaline accumulators, of which the
+Edison apparatus is a well known type,
+are the subject of a special section. Turning
+to mechanically produced electricity,
+the first article to read is <span class="sc"><a href="/article/09-0243-electromagnetism/electromagnetism">Electromagnetism</a></span>
+(Vol. 9, p. 226). This brings you
+naturally to the article <span class="sc"><a href="/article/08-0791-dynamo/dynamo">Dynamo</a></span> (Vol. 8,
+p. 764), by <a href="/contributors.html?q=Charles+Caesar+Hawkins">C. C. Hawkins</a>, author of one
+of the best practical text-books on the
+subject. This copiously illustrated article,
+in length equivalent to 50 pages of
+this Guide, discusses <i>continuous current
+dynamos</i>, <i>lap-winding</i>, <i>commutators</i>, <i>field-magnets</i>,
+<i>forgings and castings for magnets</i>,
+<i>air-gaps</i>, <i>armature cores</i>, <i>carbon brushes</i>,
+<i>cooling surfaces</i> and <i>alternators</i>.</p>
+
+<p>Having thus covered the subject of obtaining
+current, the group of articles next
+to be considered is that dealing with its
+measurement and the examination of resistances.
+The general article <span class="sc"><a href="/article/27-0763-s2/units__physical">Units,
+Physical</a></span> (Vol. 27, p. 740), contains a
+section on <i>electrical units</i>. Then come
+<span class="sc"><a href="/article/22-0219-potentiometer/potentiometer">Potentiometer</a></span> (Vol. 22, p. 205); <span class="sc"><a href="/article/18-0312-s2/meter__electric">Meter,
+Electric</a></span> (Vol. 18, p. 291); <span class="sc"><a href="/article/28-0222-voltmeter/voltmeter">Voltmeter</a></span>
+(Vol. 28, p. 206), illustrated;
+<span class="sc"><a href="/article/01-0930-s3/amperemeter">Amperemeter</a></span> (Vol. 1, p. 879), illustrated;
+<span class="sc"><a href="/article/20-0056-s4/ohmmeter">Ohmmeter</a></span> (Vol. 20, p. 34);
+<span class="sc"><a href="/article/28-0437-wattmeter/wattmeter">Wattmeter</a></span> (Vol. 28, p. 419); <span class="sc"><a href="/article/11-0446-s5/galvanometer">Galvanometer</a></span>
+(Vol. 11, p. 428), illustrated;
+<span class="sc"><a href="/article/09-0251-electrometer/electrometer">Electrometer</a></span> (Vol. 9, p. 234), illustrated;
+<span class="sc"><a href="/article/09-0256-electroscope/electroscope">Electroscope</a></span> (Vol. 9, p. 239),
+illustrated; <span class="sc"><a href="/article/28-0604-s2/wheatstone_s_bridge">Wheatstone’s Bridge</a></span> (Vol.
+28, p. 584), illustrated; and <span class="sc"><a href="/article/20-0381-s6/oscillograph">Oscillograph</a></span>
+(Vol. 20, p. 347), illustrated.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Lighting Appliances</span>The commercial supply of current is
+covered by a series of articles of which
+the first to be read is <span class="sc"><a href="/article/09-0210-electricity-supply/electricity_supply">Electricity Supply</a></span>
+(Vol. 9, p. 193), to which Emile
+Garcke, the famous electrical engineer,
+contributes a section. <span class="sc"><a href="/article/22-0238-power-transmission/power_transmission">Power Transmission</a></span>,
+<i>Electrical</i> (Vol. 22, p. 233), is by
+Louis Bell, chief engineer of the General
+Electric Co., Boston; and contains full
+details as to the use of both two-phase
+and three-phase generators in transmission.
+<span class="sc"><a href="/article/14-0531-s2/induction_coil">Induction
+Coil</a></span> (Vol. 14, p.
+502) and <span class="sc"><a href="/article/27-0188-transformers/transformers">Transformers</a></span>
+(Vol. 27, p.
+173) are both fully illustrated. <span class="sc"><a href="/article/16-0673-s2/lighting">Lighting</a></span>,
+<i>Electric</i> (Vol. 16, p. 659) deals with arc, incandescent
+and vapour lamps, and with
+wiring. The section on household work
+gives excellent practical information
+about the best arrangements of lights. A
+special class of electric light supplies is
+discussed in <span class="sc"><a href="/article/16-0647-s2/lighthouse">Lighthouse</a></span> (Vol. 16, p.
+627), by <a href="/contributors.html?q=William+Tregarthen+Douglass">W. T. Douglass</a>, who erected the
+new Eddystone and the Bishop’s Rock
+lights, and by <a href="/contributors.html?q=Nicholas+G.+Gedye">N. G. Gedye</a>, another
+practical expert.</p>
+
+<p>The appliances used to convert current
+back again into the mechanical
+energy from which it had been derived are
+described in the article <span class="sc"><a href="/article/18-0942-motors-electric/motors__electric">Motors, Electric</a></span>
+(Vol. 18, p. 910). This article divides
+continuous current motors into five
+classes: <i>Separately excited</i>; <i>series-wound
+constant current</i>; <i>series-wound constant potential</i>;
+<i>series-wound interdependent current
+and potential</i>; and <i>shunt-wound constant
+potential</i>. Alternating current motors
+are similarly classified as <i>Synchronous
+constant potential</i>; <i>induction-polyphase
+constant potential</i>; <i>induction monophase
+constant potential</i>; <i>repulsion commutating</i>,
+and <i>series-commutating</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Trolley Cars and Railroads</span>Machinery for applying electric power
+to transportation, both for trolley cars
+and heavy railroad traffic, is described
+in the article
+<span class="sc"><a href="/article/27-0133-s2/traction">Traction</a></span> (Vol. 27,
+p. 118), by Prof.
+<a href="/contributors.html?q=Louis+Duncan">Louis Duncan</a>, who
+designed the first electric locomotives
+employed with large loads—those introduced
+in 1895 by the Baltimore &amp; Ohio
+R.R. for its track in the tunnel under
+Baltimore. The article gives, with many
+mechanical diagrams, accounts of the appliances
+by which the current is taken
+from trolley wires, conduits and third
+rails, and of the types of motors and controllers
+employed. <span class="sc"><a href="/article/07-0387-crane/crane">Crane</a></span> (Vol. 7, p.
+368), by <a href="/contributors.html?q=Walter+Pitt">Walter Pitt</a>, describes the peculiar
+type of “crane-rated” motor, by the
+aid of which steam and hydraulic cranes
+can be displaced. The electric furnaces
+used for the reduction of ores and for
+manufacturing processes in which exceptionally
+high temperatures are required,
+are treated in <span class="sc"><a href="/article/09-0249-electrometallurgy/electrometallurgy">Electrometallurgy</a></span>
+(Vol. 9, p. 232), by W. G. M’Millan,
+lecturer on metallurgy at Mason
+College, Birmingham. Electric machinery
+for the refining of metals is dealt with
+in the article <span class="sc"><a href="/article/09-0225-electrochemistry/electrochemistry">Electrochemistry</a></span> (Vol. 9,
+p. 208). Under <span class="sc"><a href="/article/26-0150-surgical-instruments-and-appliances/surgical_instruments_and_appliances">Surgical Instruments</a></span>
+(Vol. 26, p. 133) there is a description of
+the apparatus used for cautery and for
+illuminating parts of the interior of the
+body. The appliances used in <span class="sc"><a href="/article/09-0266-electrotherapeutics/electrotherapeutics">Electrotherapeutics</a></span>
+are dealt with under that
+heading (Vol. 9, p. 249). Information as
+to other medical and surgical apparatus
+will be found under <span class="sc"><a href="/article/23-0728-r-ntgen-rays/röntgen_rays">Röntgen Rays</a></span> (Vol.
+23, p. 694), <span class="sc"><a href="/article/28-0914-x-ray-treatment/x-ray_treatment">X-Ray Treatment</a></span> (Vol. 28,
+p. 887), by Dr. <a href="/contributors.html?q=Henry+Lewis+Jones">H. L. Jones</a>, of St. Bartholomew’s
+Hospital, London; and <span class="sc"><a href="/article/10-0596-fluorescence/fluorescence">Fluorescence</a></span>
+(Vol. 10, p. 575), by Prof. <a href="/contributors.html?q=Joseph+Rogerson+Cotter">J.
+R. Cotter</a>, of Trinity College, Dublin.</p>
+
+<p><span class="shoulder-heading" id="sh-5">Telegraph and Telephone</span><span class="sc"><a href="/article/26-0539-telegraph/telegraph">Telegraph</a></span> (Vol. 26, p. 510), equivalent
+in length to 70 pages of this Guide,
+and fully illustrated, is by a number of
+contributors, and discusses
+both land lines
+and submarine cables.
+The section on
+instruments, by <a href="/contributors.html?q=Harry+Robert+Kempe">H. R. Kempe</a>, electrician
+to the General Post Office, London, includes
+a full description of the transmitters
+and receivers employed in the various
+systems of wireless telegraphy. <span class="sc"><a href="/article/26-0576-telephone/telephone">Telephone</a></span>
+(Vol. 26, p. 547) deals with the
+fixed and portable instruments, the batteries
+and switchboards, the new automatic
+exchange “selectors,” and with
+special applications of the microphone.</p>
+
+<p>A number of other electric appliances
+are discussed in separate articles, such as
+<span class="sc"><a href="/article/03-0707-bell/bell">Bell</a></span> (Vol. 3, p. 692), by <a href="/contributors.html?q=Hugh+Munro+Ross">H. M. Ross</a>, in
+which burglar alarm devices are described;
+and <span class="sc"><a href="/article/27-1036-s3/ventilation">Ventilation</a></span>, <i>Fan</i> (Vol. 27,
+p. 1011), by <a href="/contributors.html?q=James+Bartlett">James Bartlett</a>; while sparking
+plugs and other ignition appliances
+are treated under <span class="sc"><a href="/article/20-0057-s6/oil_engine">Oil Engine</a></span> (Vol. 20,
+p. 35).</p>
+
+<p>There are also a number of appliances
+used mostly in experimental and educational
+work. Such, for instance, are
+<span class="sc"><a href="/article/09-0193-electrical-machine/electrical__or_electrostatic__machine">Electrical or Electrostatic Machine</a></span>
+(Vol. 9, p. 176), with many illustrations;
+<span class="sc"><a href="/article/09-0254-electrophorus/electrophorus">Electrophorus</a></span> (Vol. 9, p. 237), and
+<span class="sc"><a href="/article/16-0548-leyden-jar/leyden_jar">Leyden Jar</a></span> (Vol. 16, p. 528).</p>
+
+<p>The metals, chemicals and other materials
+sold by dealers in electrical supplies,
+and their properties and uses, are
+described in <span class="sc"><a href="/article/07-0119-copper/copper">Copper</a></span> (Vol. 7, p. 102),
+<span class="sc"><a href="/article/28-1008-zinc/zinc">Zinc</a></span> (Vol. 28, p. 981), <span class="sc"><a href="/article/16-0334-s6/lead">Lead</a></span> (Vol. 16, p.
+314), <span class="sc"><a href="/article/26-0081-s2/sulphuric_acid">Sulphuric Acid</a></span> (Vol. 26, p. 65),
+<span class="sc"><a href="/article/25-0356-sodium/sodium">Sodium</a></span>, <i>Compounds</i> (Vol. 25, p. 341);
+<span class="sc"><a href="/article/06-0312-chromium/chromium">Chromium</a></span> (Vol. 6, p. 296); <span class="sc"><a href="/article/19-0741-s2/nitrogen">Nitrogen</a></span>,
+<i>Compounds</i> (Vol. 19, p. 715); <span class="sc"><a href="/article/24-0073-s2/sal_ammoniac">Sal Ammoniac</a></span>
+(Vol. 24, p. 59), <span class="sc"><a href="/article/03-0935-bichromates-and-chromates/bichromates_and_chromates">Bichromates
+and Chromates</a></span> (Vol. 3, p. 912), <span class="sc"><a href="/article/05-0318-carbon/carbon">Carbon</a></span>
+(Vol. 5, p. 305), <span class="sc"><a href="/article/23-0836-s7/rubber">Rubber</a></span> (Vol. 23, p.
+795), and <span class="sc"><a href="/article/12-0768-s3/gutta_percha">Gutta Percha</a></span> (Vol. 12, p.
+743).</p>
+
+<p>The following is a partial list, in alphabetical
+order, of articles of peculiar interest
+to dealers in electrical supplies.</p>
+
+<ul class="index">
+  <li class="c018"><a href="/article/01-0157-s2/accumulator">Accumulator</a></li>
+  <li class="c018"><a href="/article/01-0930-s3/amperemeter">Amperemeter, or Ammeter</a></li>
+  <li class="c018"><a href="/article/02-0603-s3/armature">Armature</a></li>
+  <li class="c018"><a href="/article/03-0548-battery/battery">Battery</a></li>
+  <li class="c018"><a href="/article/03-0707-bell/bell">Bell</a></li>
+  <li class="c018"><a href="/article/03-0935-bichromates-and-chromates/bichromates_and_chromates">Bichromates and Chromates</a></li>
+  <li class="c018"><a href="/article/05-0318-carbon/carbon">Carbon</a></li>
+  <li class="c018"><a href="/article/06-0312-chromium/chromium">Chromium</a></li>
+  <li class="c018"><a href="/article/06-0873-condenser/condenser">Condenser</a></li>
+  <li class="c018">Conductor, Electric</li>
+  <li class="c018"><a href="/article/07-0119-copper/copper">Copper</a></li>
+  <li class="c018"><a href="/article/08-0226-dielectric/dielectric">Dielectric</a></li>
+  <li class="c018"><a href="/article/08-0791-dynamo/dynamo">Dynamo</a></li>
+  <li class="c018"><a href="/article/09-0196-electricity/electricity">Electricity</a></li>
+  <li class="c018">Electrical, or Electrostatic, Machine</li>
+  <li class="c018"><a href="/article/09-0210-electricity-supply/electricity_supply">Electricity Supply</a></li>
+  <li class="c018"><a href="/article/09-0227-electrokinetics/electrokinetics">Electrokinetics</a></li>
+  <li class="c018"><a href="/article/09-0234-electrolysis/electrolysis">Electrolysis</a></li>
+  <li class="c018"><a href="/article/09-0243-electromagnetism/electromagnetism">Electromagnetism</a></li>
+  <li class="c018"><a href="/article/09-0251-electrometer/electrometer">Electrometer</a></li>
+  <li class="c018"><a href="/article/09-0254-electrophorus/electrophorus">Electrophorus</a></li>
+  <li class="c018"><a href="/article/09-0256-electroscope/electroscope">Electroscope</a></li>
+  <li class="c018"><a href="/article/09-0266-electrotherapeutics/electrotherapeutics">Electrotherapeutics</a></li>
+  <li class="c018"><a href="/article/10-0596-fluorescence/fluorescence">Fluorescence</a></li>
+  <li class="c018"><a href="/article/11-0393-fuze/fuze">Fuze, or Fuse</a></li>
+  <li class="c018"><a href="/article/11-0446-s5/galvanometer">Galvanometer</a></li>
+  <li class="c018"><a href="/article/12-0768-s3/gutta_percha">Gutta Percha</a></li>
+  <li class="c018"><a href="/article/14-0531-s2/induction_coil">Induction Coil</a></li>
+  <li class="c018"><a href="/article/16-0334-s6/lead">Lead</a></li>
+  <li class="c018"><a href="/article/16-0548-leyden-jar/leyden_jar">Leyden Jar</a></li>
+  <li class="c018"><a href="/article/16-0673-s2/lighting">Lighting</a></li>
+  <li class="c018"><a href="/article/18-0312-s2/meter__electric">Meter, Electric</a></li>
+  <li class="c018"><a href="/article/18-0942-motors-electric/motors__electric">Motors, Electric</a></li>
+  <li class="c018">Nitrogen, <i>Compounds</i></li>
+  <li class="c018"><a href="/article/20-0056-s4/ohmmeter">Ohmmeter</a></li>
+  <li class="c018"><a href="/article/20-0057-s6/oil_engine">Oil Engine</a></li>
+  <li class="c018"><a href="/article/20-0381-s6/oscillograph">Oscillograph</a></li>
+  <li class="c018"><a href="/article/22-0219-potentiometer/potentiometer">Potentiometer</a></li>
+  <li class="c018"><a href="/article/22-0238-power-transmission/power_transmission">Power Transmission</a></li>
+  <li class="c018">Röntgen Rays, <i>Apparatus</i></li>
+  <li class="c018"><a href="/article/23-0836-s7/rubber">Rubber</a></li>
+  <li class="c018"><a href="/article/24-0073-s2/sal_ammoniac">Sal Ammoniac</a></li>
+  <li class="c018">Sodium, <i>Compounds</i></li>
+  <li class="c018"><a href="/article/26-0081-s2/sulphuric_acid">Sulphuric Acid</a></li>
+  <li class="c018"><a href="/article/26-0150-surgical-instruments-and-appliances/surgical_instruments_and_appliances">Surgical Instruments</a></li>
+  <li class="c018"><a href="/article/26-0539-telegraph/telegraph">Telegraph</a></li>
+  <li class="c018"><a href="/article/26-0576-telephone/telephone">Telephone</a></li>
+  <li class="c018">Thermometry, <i>Electrical</i></li>
+  <li class="c018">Traction, <i>Electric</i></li>
+  <li class="c018"><a href="/article/27-0174-s7/tramway">Tramway</a></li>
+  <li class="c018"><a href="/article/27-0188-transformers/transformers">Transformers</a></li>
+  <li class="c018"><a href="/article/27-0763-s2/units__physical">Units, Physical</a></li>
+  <li class="c018"><a href="/article/27-0860-s5/vacuum_tube">Vacuum Tube</a></li>
+  <li class="c018"><a href="/article/27-1036-s3/ventilation">Ventilation</a></li>
+  <li class="c018"><a href="/article/28-0222-voltmeter/voltmeter">Voltmeter</a></li>
+  <li class="c018"><a href="/article/28-0437-wattmeter/wattmeter">Wattmeter</a></li>
+  <li class="c018">Wheatstone’s Bridge</li>
+  <li class="c018"><a href="/article/28-0758-wire/wire">Wire</a></li>
+  <li class="c018"><a href="/article/28-1008-zinc/zinc">Zinc</a></li>
+</ul>
+
+<div>
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

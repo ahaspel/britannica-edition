@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>American Literature &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XXXVII</span>American Literature</h1>
+
+    <div class="body-text">
+
+
+<p>The list in the preceding chapter of the key articles dealing with national
+literatures shows that the Britannica separately treats the literary products
+of some 30 countries. To outline 30 courses of reading, mentioning the 3,000
+critical and biographical articles, would make this Guide unwieldy. On pp. 929–937
+of Vol. 29 the reader will find classified lists of these articles, and only four groups
+are selected here for detailed treatment: those on American, English, German and
+Greek literature. The main article in the literature of each of the other countries
+indicates the characteristic forms, the typical works of the leading writers discussed
+in special articles, so that courses of reading as systematic as these four can easily
+be planned for other countries by the reader.</p>
+
+<table class="table4">
+<colgroup>
+<col class="colwidth50">
+<col class="colwidth50">
+</colgroup>
+  <tbody><tr>
+    <th class="c009"><i>Topic of Study</i></th>
+    <th class="c028"><i>Article and Contributor</i></th>
+  </tr>
+  <tr>
+    <td class="c011">General Summary of the subject, with critical appreciation of main tendencies and great authors.</td>
+    <td class="c029"><span class="sc"><a href="/article/01-0882-american-literature/american_literature">American Literature</a></span> (Vol. 1, p. 831), by <a href="/contributors.html?q=George+Edward+Woodberry">George E. Woodberry</a>, formerly professor in Columbia University, biographer of Poe and Hawthorne, author of <i>America in Literature</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>Colonial Period.</i></td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">English writers, especially historical.</td>
+    <td class="c029"><span class="sc"><a href="/article/25-0280-s6/smith__john">John Smith</a></span> (Vol. 25, p. 264), by Prof. Edward Arber, editor of <i>English Garner</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011">Colonial writers, especially of Puritan New England.</td>
+    <td class="c029"><span class="sc"><a href="/article/17-0868-s3/massachusetts">Massachusetts</a></span>, <i>History</i> (Vol. 17, p. 858); <span class="sc"><a href="/article/06-0975-connecticut/connecticut">Connecticut</a></span>, <i>History</i> (Vol. 6, p. 954).</td>
+  </tr>
+  <tr>
+    <td class="c011">Massachusetts governors and historical writing.</td>
+    <td class="c029"><span class="sc"><a href="/article/04-0385-bradford-william-governor/bradford__william__governor_">William Bradford</a></span> (Vol. 4, p. 370); <span class="sc"><a href="/article/28-0756-winthrop-john-1588-1649/winthrop__john__1588-1649_">John Winthrop</a></span> (Vol. 28, p. 736).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Clergy as writers of History, and of Theology of the Puritan School.</td>
+    <td class="c029"><span class="sc"><a href="/article/07-0273-cotton-john/cotton__john">John Cotton</a></span> (Vol. 7, p. 255), by Prof. <a href="/contributors.html?q=Williston+Walker">Williston Walker</a>, Yale, author of <i>History</i> <i>of the Congregational Churches in</i> <i>the United States</i>; <span class="sc"><a href="/article/13-0691-s2/hooker__thomas">Thomas Hooker</a></span> (Vol. 13, p. 674).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Mathers.</td>
+    <td class="c029"><span class="sc"><a href="/article/07-0272-cotton/cotton">Cotton</a></span>, <span class="sc"><a href="/article/17-0897-s5/mathematics">Increase</a></span>, and <span class="sc"><a href="/article/17-0902-s2/mather__cotton">Richard Mather</a></span> (Vol. 17, p. 883).</td>
+  </tr>
+  <tr>
+    <td class="c011">Apostle to the Indians.</td>
+    <td class="c029"><span class="sc"><a href="/article/09-0294-eliot-john/eliot__john">John Eliot</a></span> (Vol. 9, p. 278), by <a href="/contributors.html?q=Williston+Walker">Prof. Walker</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Revolt against Puritanism.</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Ethical.</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0914-s4/morton__thomas">Thomas Morton</a></span> (Vol. 18, p. 882).</td>
+  </tr>
+  <tr>
+    <td class="c011">Theological.</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0702-williams-roger/williams__roger">Roger Williams</a></span> (Vol. 28, p. 682).</td>
+  </tr>
+  <tr>
+    <td class="c011">New England Verse.</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0646-wigglesworth-michael/wigglesworth__michael">Michael Wigglesworth</a></span> (Vol. 28, p. 626).</td>
+  </tr>
+  <tr>
+    <td class="c011">The New England Diarist.</td>
+    <td class="c029"><span class="sc"><a href="/article/24-0763-s3/sewall__samuel">Samuel Sewall</a></span> (Vol. 24, p. 733).</td>
+  </tr>
+  <tr>
+    <td class="c011">The great New England Philosopher and Theologian; the first American author with a lasting and European reputation.</td>
+    <td class="c029"><span class="sc"><a href="/article/09-0015-edwards-jonathan/edwards__jonathan">Jonathan Edwards</a></span> (Vol. 9, pp. 3–6), by Prof. <a href="/contributors.html?q=Harry+Norman+Gardiner">Harry Norman Gardiner</a>, editor of <i>Jonathan Edwards—a Retrospect</i>, and Riehard <a href="/contributors.html?q=Richard+Webster">Webster</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Edwards’s contemporaries.</td>
+    <td class="c029"><span class="sc"><a href="/article/06-0031-chauncey-charles/chauncy__charles">Charles Chauncy</a></span> (Vol. 6, p. 18).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/17-0954-s4/mayhew__jonathan">Jonathan Mayhew</a></span> (Vol. 17, p. 935).</td>
+  </tr>
+  <tr>
+    <td class="c011">Edwards’s followers,—the New England theology.</td>
+    <td class="c029"><span class="sc"><a href="/article/03-0714-bellamy-joseph/bellamy__joseph">Joseph Bellamy</a></span> (Vol. 3, p. 694).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/13-0702-s2/hopkins__samuel">Samuel Hopkins</a></span> (Vol. 13, p. 685).</td>
+  </tr>
+  <tr>
+    <td class="c011">The first newspaper in New York.</td>
+    <td class="c029"><span class="sc"><a href="/article/04-0385-bradford-william-governor/bradford__william__governor_">William Bradford</a></span> (Vol. 4, p. 370).</td>
+  </tr>
+  <tr>
+    <td class="c011">A Virginia educator.</td>
+    <td class="c029"><span class="sc"><a href="/article/04-0047-blair-james/blair__james">James Blair</a></span> (Vol. 4, p. 34).</td>
+  </tr>
+  <tr>
+    <td class="c011">The American Quaker preacher.</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0843-woolman-john/woolman__john">John Woolman</a></span> (Vol. 28, p. 817).</td>
+  </tr>
+  <tr>
+    <td class="c011">A royal governor and historian.</td>
+    <td class="c029"><span class="sc"><a href="/article/14-0025-s4/hutchinson__thomas">Thomas Hutchinson</a></span> (Vol. 14, p. 13).</td>
+  </tr>
+  <tr>
+    <td class="c011">A New York statesman and philosopher.</td>
+    <td class="c029"><span class="sc"><a href="/article/06-0684-colden-cadwallader/colden__cadwallader">Cadwallader Colden</a></span> (Vol. 6, p. 663).</td>
+  </tr>
+  <tr>
+    <td class="c011">The first great American figure in secular literature,—essayist, pamphleteer, politician, autobiographer.</td>
+    <td class="c029"><span class="sc"><a href="/article/11-0036-s2/franklin__benjamin">Benjamin Franklin</a></span> (Vol. 11, p. 24), by <a href="/contributors.html?q=Richard+Webster">Richard Webster</a>, late fellow Princeton University, editorial staff, Encyclopaedia Britannica.</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>Revolutionary Period.</i></td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">The patriotic orators and Pamphleteers.</td>
+    <td class="c029"><span class="sc"><a href="/article/20-0400-s4/otis__james">James Otis</a></span> (Vol. 20, p. 366).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/13-0313-henry-patrick/henry__patrick">Patrick Henry</a></span> (Vol. 13, p. 300).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/01-0207-s2/adams__john">John Adams</a></span> (Vol. 1, p. 176).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/22-0770-s3/quincy__josiah">Josiah Quincy</a></span> (Vol. 22, p. 753).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0713-s2/wilson__james">James Wilson</a></span> (Vol. 28, p. 693).</td>
+  </tr>
+  <tr>
+    <td class="c011">“Common Sense.”</td>
+    <td class="c029"><span class="sc"><a href="/article/20-0494-s8/paine__thomas">Thomas Paine</a></span> (Vol. 20, p. 456).</td>
+  </tr>
+  <tr>
+    <td class="c011">James Otis’s Sister.</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0346-warren-mercy/warren__mercy">Mercy Warren</a></span> (Vol. 28, p. 330).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Declaration of Independence and its author.</td>
+    <td class="c029"><span class="sc"><a href="/article/14-0391-independence-declaration-of/independence__declaration_of">Independence, Declaration of</a></span> (Vol. 14, p. 372), and <span class="sc"><a href="/article/15-0326-s4/jefferson__thomas">Thomas Jefferson</a></span> (Vol. 15, p. 301), both by Dr. <a href="/contributors.html?q=Francis+Samuel+Philbrick">F. S. Philbrick</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Prominent Patriots in New Jersey.</td>
+    <td class="c029"><span class="sc"><a href="/article/16-0835-s2/livingston__william">William Livingston</a></span> (Vol. 16, p. 813).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0780-witherspoon-john/witherspoon__john">John Witherspoon</a></span> (Vol. 28, p. 759).</td>
+  </tr>
+  <tr>
+    <td class="c011">A Connecticut Educator and Patriot.</td>
+    <td class="c029"><span class="sc"><a href="/article/25-0943-s4/stiles__ezra">Ezra Stiles</a></span> (Vol. 25, p. 919).</td>
+  </tr>
+  <tr>
+    <td class="c011">Opponents of Independence.</td>
+    <td class="c029"><span class="sc"><a href="/article/11-0439-galloway-joseph/galloway__joseph">Joseph Galloway</a></span> (Vol. 11, p. 421).</td>
+  </tr>
+  <tr>
+    <td class="c011">“A Westchester Farmer.”</td>
+    <td class="c029"><span class="sc"><a href="/article/24-0561-s2/seabury__samuel">Samuel Seabury</a></span> (Vol. 24, p. 531).</td>
+  </tr>
+  <tr>
+    <td class="c011">In Massachusetts.</td>
+    <td class="c029"><span class="sc"><a href="/article/04-0920-s3/byles__mather">Mather Byles</a></span> (Vol. 4, p. 896).</td>
+  </tr>
+  <tr>
+    <td class="c011">In Maryland.</td>
+    <td class="c029"><span class="sc"><a href="/article/04-0327-boucher-jonathan/boucher__jonathan">Jonathan Boucher</a></span> (Vol. 4, p. 312).</td>
+  </tr>
+  <tr>
+    <td class="c011">Patriotic Poetry.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0341-s3/trumbull__john">John Trumbull</a></span> (Vol. 27, p. 324).</td>
+  </tr>
+  <tr>
+    <td class="c011">The “Hartford Wits.”</td>
+    <td class="c029"><span class="sc"><a href="/article/08-0768-dwight-timothy/dwight__timothy">Timothy Dwight</a></span> (Vol. 8, p. 741).</td>
+  </tr>
+  <tr>
+    <td class="c011">Satire and Epic.</td>
+    <td class="c029"><span class="sc"><a href="/article/03-0423-barlow-joel/barlow__joel">Joel Barlow</a></span> (Vol. 3, p. 406).</td>
+  </tr>
+  <tr>
+    <td class="c011">“Battle of the Kegs.”</td>
+    <td class="c029"><span class="sc"><a href="/article/13-0702-s5/hopkinson__francis">Francis Hopkinson</a></span> (Vol. 13, p. 685).</td>
+  </tr>
+  <tr>
+    <td class="c011">A Western Traveler.</td>
+    <td class="c029"><span class="sc"><a href="/article/05-0454-carver-jonathan/carver__jonathan">Jonathan Carver</a></span> (Vol. 5, p. 437).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>The National Period.</i></td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">The Constitution and its Pamphleteers—“The Federalist,” the greatest application of elementary principles of government to practical administration.</td>
+    <td class="c029"><span class="sc"><a href="/article/17-0299-s5/madison__james">James Madison</a></span> (Vol. 17, p. 284).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/12-0905-hamilton-alexander/hamilton__alexander">Alexander Hamilton</a></span> (Vol. 12, p. 880), by Dr. <a href="/contributors.html?q=Francis+Samuel+Philbrick">F. S. Philbrick</a> and Hugh Chisholm.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/15-0319-jay-john/jay__john">John Jay</a></span> (Vol. 15, pp. 294–296).</td>
+  </tr>
+  <tr>
+    <td class="c011">Importance of the early national period on the development of American literature.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>History</i>, §106 (Vol. 27, p. 688), by the late Prof. Alexander Johnson, Princeton, and C. C. Whinery, assistant editor, Encyclopaedia Britannica.</td>
+  </tr>
+  <tr>
+    <td class="c011">The first professional “man of letters.”</td>
+    <td class="c029"><span class="sc"><a href="/article/04-0680-s2/brown__charles_brockden">Charles Brockden Brown</a></span> (Vol. 4, p. 657).</td>
+  </tr>
+  <tr>
+    <td class="c011">First foreign vogue.</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Essay and History: “The American Goldsmith.”</td>
+    <td class="c029"><span class="sc"><a href="/article/14-0889-s2/irving__washington">Washington Irving</a></span> (Vol. 14, p. 856), by <a href="/contributors.html?q=Richard+Garnett">Richard Garnett</a>, late librarian British Museum.</td>
+  </tr>
+  <tr>
+    <td class="c011">Fiction: “The American Scott.”</td>
+    <td class="c029"><span class="sc"><a href="/article/07-0094-cooper-james-fenimore/cooper__james_fenimore">James Fenimore Cooper</a></span> (Vol. 7, p. 79), by <a href="/contributors.html?q=William+Ernest+Henley">W. E. Henley</a>, poet, critic and essayist.</td>
+  </tr>
+  <tr>
+    <td class="c011">Poetry.</td>
+    <td class="c029"><span class="sc"><a href="/article/04-0721-s2/bryant__william_cullen">William Cullen Bryant</a></span> (Vol. 4, p. 698), by <a href="/contributors.html?q=George+Washington+Cable">G. W. Cable</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">The Knickerbocker School.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0635-s2/new_york">New York City</a></span>, <i>Literature</i> (Vol. 19, p. 615).</td>
+  </tr>
+  <tr>
+    <td class="c011">New York as a literary centre.</td>
+    <td class="c029"><span class="sc"><a href="/article/20-1026-s2/paulding__james_kirke">James Kirke Paulding</a></span> (Vol. 20, p. 958).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/12-0879-s2/halleck__fitz-greene">Fitz-Greene Halleck</a></span> (Vol. 12, p. 854).</td>
+  </tr>
+  <tr>
+    <td class="c011">A Southern novelist and poet.</td>
+    <td class="c029"><span class="sc"><a href="/article/25-0139-s4/simms__william_gilmore">W. G. Simms</a></span> (Vol. 25, p. 123).</td>
+  </tr>
+  <tr>
+    <td class="c011">Cooper’s successor as novelist of the sea.</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0121-melville-herman/melville__herman">Herman Melville</a></span> (Vol. 18, p. 102).</td>
+  </tr>
+  <tr>
+    <td class="c011">Poetesses of the early 19th century.</td>
+    <td class="c029"><span class="sc"><a href="/article/25-0098-sigourney-lydia-huntley/sigourney__lydia_huntley">Lydia Huntley Sigourney</a></span> (Vol. 25, p. 82).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/05-0455-cary-alice-and-phoebe/cary__alice_and_phoebe">Alice and Phoebe Cary</a></span> (Vol. 5, p. 438).</td>
+  </tr>
+  <tr>
+    <td class="c011">The “Literati.”</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0706-willis-nathaniel-parker/willis__nathaniel_parker">N. P. Willis</a></span> (Vol. 28, p. 686).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/12-0635-s2/griswold__rufus_wilmot">Rufus Wilmot Griswold</a></span> (Vol. 12, p. 610).</td>
+  </tr>
+  <tr>
+    <td class="c011">The short story.</td>
+    <td class="c029"><span class="sc"><a href="/article/21-0908-s6/poe__edgar_allan">Edgar Allan Poe</a></span> (Vol. 21, p. 875), by <a href="/contributors.html?q=David+Hannay">David Hannay</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Traveler, Translator, Poet.</td>
+    <td class="c029"><span class="sc"><a href="/article/26-0496-s2/taylor__bayard">Bayard Taylor</a></span> (Vol. 26, p. 467).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>New England in the 19th century.</i></td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Boston and Cambridge.</td>
+    <td class="c029"><span class="sc"><a href="/article/04-0305-boston-massachusetts/boston__massachusetts_">Boston</a></span> (Vol. 4, p. 293).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/13-0051-s2/harvard_university">Harvard University</a></span> (Vol. 13, p. 38).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/26-0976-s2/ticknor__george">George Ticknor</a></span> (Vol. 26, p. 936).</td>
+  </tr>
+  <tr>
+    <td class="c011">History and Scholarship as affected   by European contacts.</td>
+    <td class="c029"><span class="sc"><a href="/article/03-0324-s6/bancroft__george">George Bancroft</a></span> (Vol. 3, p. 307), by Prof. <a href="/contributors.html?q=William+Milligan+Sloane">W. M. Sloane</a>, Columbia.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/10-0020-everett-edward/everett__edward">Edward Everett</a></span> (Vol. 10, p. 8), by <a href="/contributors.html?q=Rev.+Edward+Everett+Hale">Edward Everett Hale</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/25-0620-s2/spanish_succession__war_of_the">Jared Sparks</a></span> (Vol. 25, p. 608), by Prof. <a href="/contributors.html?q=William+Lee+Corbin">W. L. Corbin</a>, Wells College.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/20-0685-s3/palfrey">J. G. Palfrey</a></span> (Vol. 20, p. 629).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/22-0308-prescott-william-hickling/prescott__william_hickling">W. H. Prescott</a></span> (Vol. 22, p. 294).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/18-0941-s3/motley__john_lothrop">J. L. Motley</a></span> (Vol. 18, p. 909).</td>
+  </tr>
+  <tr>
+    <td class="c011">Unitarianism and its Literary Leaders, Influencing and Influenced by Transcendentalism.</td>
+    <td class="c029"><span class="sc"><a href="/article/03-0299-s2/ballou__hosea">Hosea Ballou</a></span> (Vol. 3, p. 282).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/05-0879-channing-william-ellery/channing__william_ellery">William Ellery Channing</a></span> (Vol. 5, p. 843), by <a href="/contributors.html?q=Richard+Webster">Richard Webster</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/06-0460-clarke-james-freeman/clarke__james_freeman">James Freeman Clarke</a></span> (Vol. 6, p. 444), by <a href="/contributors.html?q=Rev.+Edward+Everett+Hale">E. E. Hale</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/20-0891-s4/parker__theodore">Theodore Parker</a></span> (Vol. 20, p. 829).</td>
+  </tr>
+  <tr>
+    <td class="c011">Transcendentalism and the Concord School—central figures.</td>
+    <td class="c029"><span class="sc"><a href="/article/01-0568-s4/alcott__amos_bronson">Amos Bronson Alcott</a></span> (Vol. 1, p. 528), by Prof. <a href="/contributors.html?q=Rufus+Byam+Richardson">C. F. Richardson</a>, Dartmouth College.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/09-0355-emerson-ralph-waldo/emerson__ralph_waldo">Ralph Waldo Emerson</a></span> (Vol. 9, p. 332), by Prof. <a href="/contributors.html?q=Henry+van+Dyke">Henry Van Dyke</a>, Princeton.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/26-0917-s2/thoreau__henry_david">Henry David Thoreau</a></span> (Vol. 26, p. 877), by William Sharp (“Fiona Macleod”).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Dial.</td>
+    <td class="c029"><span class="sc"><a href="/article/11-0308-s3/fuller__margaret">Margaret Fuller</a></span> (Vol. 11, p. 295).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/23-0380-s4/ripley__george">George Ripley</a></span> (Vol. 23, p. 363), by <a href="/contributors.html?q=Edward+Livermore+Burlingame">Edward Livermore Burlingame</a>, editor of <i>Scribner’s</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Brook Farm.</td>
+    <td class="c029"><span class="sc"><a href="/article/04-0668-s3/brook_farm">Brook Farm</a></span> (Vol. 4, p. 645), by <a href="/contributors.html?q=Edward+Livermore+Burlingame">E. L. Burlingame</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">The author of “Margaret.”</td>
+    <td class="c029"><span class="sc"><a href="/article/15-0563-s3/judd__sylvester">Sylvester Judd</a></span> (Vol. 15, p. 536).</td>
+  </tr>
+  <tr>
+    <td class="c011">The great New England Novelist.</td>
+    <td class="c029"><span class="sc"><a href="/article/13-0115-s2/hawthorne__nathaniel">Nathaniel Hawthorne</a></span> (Vol. 13, p. 102), by <a href="/contributors.html?q=Richard+Henry+Stoddard">Richard Henry Stoddard</a>, poet and essayist.</td>
+  </tr>
+  <tr>
+    <td class="c011">The great New England Poet.</td>
+    <td class="c029"><span class="sc"><a href="/article/16-1001-s2/longfellow__henry_wadsworth">Henry Wadsworth Longfellow</a></span> (Vol. 16, p. 977), by <a href="/contributors.html?q=Thomas+Davidson">Thomas Davidson</a>, author of <i>The Philosophical System of Rosmini</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Earlier Romanticism.</td>
+    <td class="c029"><span class="sc"><a href="/article/01-0752-s7/allston__washington">Washington Allston</a></span> (Vol. 1, p. 709).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/07-0816-dana-francis/dana__francis">Richard Henry Dana</a></span> (Vol. 7, p. 792).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>Oratory.</i></td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">In the North.</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0477-s4/webster__daniel">Daniel Webster</a></span> (Vol. 28, p. 459), by <a href="/contributors.html?q=Everett+Pepperrell+Wheeler">Everett P. Wheeler</a>, author of <i>Daniel <a href="/contributors.html?q=Richard+Webster">Webster</a></i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/06-0274-choate-rufus/choate__rufus">Rufus Choate</a></span> (Vol. 6, p. 258).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/21-0429-s4/phillips__wendell">Wendell Phillips</a></span> (Vol. 21, p. 407), by <a href="/contributors.html?q=Thomas+Wentworth+Higginson">Col. T. W. Higginson</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/26-0097-s4/sumner__charles">Charles Sumner</a></span> (Vol. 26, p. 81).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0756-winthrop-robert-charles/winthrop__robert_charles">Robert Charles Winthrop</a></span> (Vol. 28, p. 736).</td>
+  </tr>
+  <tr>
+    <td class="c011">In the South.</td>
+    <td class="c029"><span class="sc"><a href="/article/06-0486-clay-henry/clay__henry">Henry Clay</a></span> (Vol. 6, p. 470), by <a href="/contributors.html?q=Hon.+Carl+Schurz">Carl Schurz</a>, biographer of Clay.</td>
+  </tr>
+  <tr>
+    <td class="c011">Other Southern Orators.</td>
+    <td class="c029"><span class="sc"><a href="/article/05-0012-calhoun-john-caldwell/calhoun__john_caldwell">John C. Calhoun</a></span> (Vol. 5, p. 1), by Judge H. A. M. <a href="/contributors.html?q=Benjamin+Eli+Smith">Smith</a>, South Carolina.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/13-0127-s3/hayne__robert_young">Robert Young Hayne</a></span> (Vol. 13, p. 114).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Pulpit Orator of the North.</td>
+    <td class="c029"><span class="sc"><a href="/article/03-0658-beecher-henry-ward/beecher__henry_ward">Henry Ward Beecher</a></span> (Vol. 3, p. 639), by Dr. <a href="/contributors.html?q=Lyman+Abbott">Lyman Abbott</a>, editor <i>The Outlook</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">The Abolition Novelist, author of <i>Uncle Tom’s Cabin</i>.</td>
+    <td class="c029"><span class="sc"><a href="/article/25-0998-s4/stowe__harriet_elizabeth">Harriet Elizabeth Beecher Stowe</a></span> (Vol. 25, p. 972), by <a href="/contributors.html?q=Horace+Elisha+Scudder">Horace E. Scudder</a>, late editor of the <i>Atlantic Monthly.</i></td>
+  </tr>
+  <tr>
+    <td class="c011">Another anti-slavery authoress.</td>
+    <td class="c029"><span class="sc"><a href="/article/06-0148-child-lydia-maria/child__lydia_maria">Lydia Maria Child</a></span> (Vol. 6, p. 135).</td>
+  </tr>
+  <tr>
+    <td class="c011">The New England Poets prominent in the Anti-Slavery Movement.</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0633-whittier-john-greenleaf/whittier__john_greenleaf">John Greenleaf Whittier</a></span> (Vol. 28, p. 613), by <a href="/contributors.html?q=Edmund+Clarence+Stedman">Edmund Clarence Stedman</a>, poet and critic.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/17-0089-s4/lowell__james_russell">James Russell Lowell</a></span> (Vol. 17, p. 74), by <a href="/contributors.html?q=Horace+Elisha+Scudder">Horace E. Scudder</a>, biographer of Lowell.</td>
+  </tr>
+  <tr>
+    <td class="c011">Their Contemporary, the “Autocrat.”</td>
+    <td class="c029"><span class="sc"><a href="/article/13-0633-s4/holmes__oliver_wendell">Oliver Wendell Holmes</a></span> (Vol. 13, p. 616), by <a href="/contributors.html?q=Anson+Daniel+Morse">J. T. Morse</a>, biographer of Holmes.</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>The</i> American Poet—by the criterion of foreign standards.</td>
+    <td class="c029">Walt Whitman (Vol. 28, p. 610), by John Burroughs, author of <i>Whitman, A Study</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Scholarship and criticism in this Period and the Next: the particularly Important Work done by Americans in Grammar, Language, Text Criticism, etc.</td>
+    <td class="c029"><span class="sc"><a href="/article/06-0148-child-francis-james/child__francis_james">Francis James Child</a></span> (Vol. 6, p. 135).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/10-0258-s3/felton__cornelius_conway">Cornelius C. Felton</a></span> (Vol. 10, p. 246).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/17-0785-marsh-george-perkins/marsh__george_perkins">George Perkins Marsh</a></span> (Vol. 17, p. 768).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0631-s6/whitney__william_dwight">William Dwight Whitney</a></span> (Vol. 28, p. 611), by <a href="/contributors.html?q=Benjamin+Eli+Smith">Benjamin E. Smith</a>, editor <i>Century Dictionary</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0621-white-richard-grant/white__richard_grant">Richard Grant White</a></span> (Vol. 28, p. 601).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/11-0375-furness-horace-howard/furness__horace_howard">Horace Howard Furness</a></span> (Vol. 11, p. 362).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/17-0705-march-francis-andrew/march__francis_andrew">Francis Andrew March</a></span> (Vol. 17, p. 688).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/12-0025-s5/gildersleeve__basil_lanneau">Basil Lanneau Gildersleeve</a></span> (Vol. 12, p. 12).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/19-0827-norton-charles-eliot/norton__charles_eliot">Charles Eliot Norton</a></span> (Vol. 19, p. 797).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>The later Poets.</i></td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">New England.</td>
+    <td class="c029"><span class="sc"><a href="/article/01-0576-s7/aldrich__thomas_bailey">Thomas Bailey Aldrich</a></span> (Vol. 1, p. 536).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/13-0861-s2/howe__julia_ward">Julia Ward Howe</a></span> (Vol. 13, p. 836).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/25-0996-s3/story__william_wetmore">William Wetmore Story</a></span> (Vol. 25, p. 970).</td>
+  </tr>
+  <tr>
+    <td class="c011">New York.</td>
+    <td class="c029"><span class="sc"><a href="/article/25-0883-s2/stedman__edmund_clarence">Edmund Clarence Stedman</a></span> (Vol. 25, p. 861).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/25-0963-s3/stoddard__richard_henry">Richard Henry Stoddard</a></span> (Vol. 25, p. 939).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/12-0025-s4/gilder__richard_watson">Richard Watson Gilder</a></span> (Vol. 12, p. 12).</td>
+  </tr>
+  <tr>
+    <td class="c011">Pennsylvania.</td>
+    <td class="c029"><span class="sc"><a href="/article/16-0425-s5/leland__charles_godfrey">Charles Godfrey Leland</a></span> (Vol. 16, p. 405).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/18-0647-mitchell-silas-weir/mitchell__silas_weir">Silas Weir Mitchell</a></span> (Vol. 18, p. 618).</td>
+  </tr>
+  <tr>
+    <td class="c011">The South.</td>
+    <td class="c029"><span class="sc"><a href="/article/16-0201-lanier-sidney/lanier__sidney">Sidney Lanier</a></span> (Vol. 16, p. 181), by Prof. <a href="/contributors.html?q=William+Peterfield+Trent">W. P. Trent</a>, Columbia.</td>
+  </tr>
+  <tr>
+    <td class="c011"><a href="/contributors.html?q=George+Stephen+West">The Middle West</a> (especially humorous, light and character verse).</td>
+    <td class="c029"><span class="sc"><a href="/article/13-0118-john-hay/hay__john">John Hay</a></span> (Vol. 13, p. 105).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/10-0335-field-eugene/field__eugene">Eugene Field</a></span> (Vol. 10, p. 321).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/23-0360-s4/riley__james_whitcomb">James Whitcomb Riley</a></span> (Vol. 23, p. 343).</td>
+  </tr>
+  <tr>
+    <td class="c011"><a href="/contributors.html?q=George+Stephen+West">The Far West</a>.</td>
+    <td class="c029"><span class="sc"><a href="/article/13-0044-s3/harte__francis_bret">Francis Bret Harte</a></span> (Vol. 13, p. 31).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/18-0488-s2/miller__joaquin">Joaquin Miller</a></span> (Vol. 18, p. 464).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/25-0123-s2/sill__edward_rowland">Edward Rowland Sill</a></span> (Vol. 25, p. 107).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>Later Fiction.</i></td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">The American Realist.</td>
+    <td class="c029"><span class="sc"><a href="/article/13-0864-howells-william-dean/howells__william_dean">W. D. Howells</a></span> (Vol. 13, p. 839).</td>
+  </tr>
+  <tr>
+    <td class="c011">The American Cosmopolite.</td>
+    <td class="c029"><span class="sc"><a href="/article/15-0159-s5/james__henry">Henry James</a></span> (Vol. 15, p. 143).</td>
+  </tr>
+  <tr>
+    <td class="c011">Stories of Italy.</td>
+    <td class="c029"><span class="sc"><a href="/article/07-0406-crawford-francis-marion/crawford__francis_marion">F. Marion Crawford</a></span> (Vol. 7, p. 386).</td>
+  </tr>
+  <tr>
+    <td class="c011">Historical Romance.</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0292-wallace-lewis/wallace__lewis">Lewis Wallace</a></span> (Vol. 28, p. 276).</td>
+  </tr>
+  <tr>
+    <td class="c011">Humorous Short Story.</td>
+    <td class="c029"><span class="sc"><a href="/article/25-0962-s2/stockton__francis_richard">Francis R. Stockton</a></span> (Vol. 25, p. 938).</td>
+  </tr>
+  <tr>
+    <td class="c011">Pietistic Novel.</td>
+    <td class="c029"><span class="sc"><a href="/article/23-0471-s4/roe__edward_payson">E. P. Roe</a></span> (Vol. 23, p. 449).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/13-0603-holland/holland">J. G. Holland</a></span> (Vol. 13, p. 587).</td>
+  </tr>
+  <tr>
+    <td class="c011">The Provincial Types—</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Maine.</td>
+    <td class="c029"><span class="sc"><a href="/article/15-0398-jewett-sarah-orne/jewett__sarah_orne">Sarah Orne Jewett</a></span> (Vol. 15, p. 371).</td>
+  </tr>
+  <tr>
+    <td class="c011">New England.</td>
+    <td class="c029"><span class="sc"><a href="/article/28-0666-wilkins-mary-eleanor/wilkins__mary_eleanor">Mary E. Wilkins</a></span> (Vol. 28, p. 646).</td>
+  </tr>
+  <tr>
+    <td class="c011"><a href="/contributors.html?q=George+Stephen+West">West</a>.</td>
+    <td class="c029"><span class="sc"><a href="/article/09-0029-eggleston-edward/eggleston__edward">Edward Eggleston</a></span> (Vol. 9, p. 17).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/10-0646-s3/foote__mary_hallock">Mary Hallock Foote</a></span> (Vol. 10, p. 625).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/13-0044-s3/harte__francis_bret">Francis Bret Harte</a></span> (Vol. 13, p. 31).</td>
+  </tr>
+  <tr>
+    <td class="c011">South: Tennessee.</td>
+    <td class="c029">“<span class="sc"><a href="/article/07-0380-craddock/craddock__charles_egbert">Charles Egbert Craddock</a></span>” (Vol. 7, p. 360).</td>
+  </tr>
+  <tr>
+    <td class="c011">Kentucky.</td>
+    <td class="c029"><span class="sc"><a href="/article/01-0733-s5/allen__james_lane">James Lane Allen</a></span> (Vol. 1, p. 691).</td>
+  </tr>
+  <tr>
+    <td class="c011">Virginia.</td>
+    <td class="c029"><span class="sc"><a href="/article/20-0488-s1/page__thomas_nelson">Thomas Nelson Page</a></span> (Vol. 20, p. 450).</td>
+  </tr>
+  <tr>
+    <td class="c011">New Orleans.</td>
+    <td class="c029"><span class="sc"><a href="/article/04-0946-s3/cable__george_washington">George W. Cable</a></span> (Vol. 4, p. 920).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>Essayists.</i></td>
+    <td class="c029"><span class="sc"><a href="/article/13-0471-s2/higginson__thomas_wentworth">Thomas Wentworth Higginson</a></span> (Vol. 13, p. 455).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/12-0857-s3/hale__edward_everett">Edward Everett Hale</a></span> (Vol. 12, p. 832).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0342-warner-charles-dudley/warner__charles_dudley">Charles Dudley Warner</a></span> (Vol. 28, p. 326).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/07-0674-curtis-george-william/curtis__george_william">George William Curtis</a></span> (Vol. 7, p. 652), by <a href="/contributors.html?q=Charles+Eliot+Norton">Charles Eliot Norton</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>Humor.</i></td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/24-0845-s2/shaw__henry_wheeler">Henry Wheeler Shaw</a></span>, “Josh Billings” (Vol. 24, p. 813).</td>
+  </tr>
+  <tr>
+    <td class="c011">The American “Hood.”</td>
+    <td class="c029"><span class="sc"><a href="/article/24-0273-s5/saxe__john_godfrey">John Godfrey Saxe</a></span> (Vol. 24, p. 258).</td>
+  </tr>
+  <tr>
+    <td class="c011">“Bill Nye.”</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0967-s5/nye__edgar_wilson">Edgar Wilson Nye</a></span> (Vol. 19, p. 929).</td>
+  </tr>
+  <tr>
+    <td class="c011">America’s Great Humorist.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0509-s2/twain__mark">Mark Twain</a></span> (Vol. 27, p. 490), by Prof. <a href="/contributors.html?q=Brander+Matthews">Brander Matthews</a>, Columbia.</td>
+  </tr>
+  <tr>
+    <td class="c011">“Uncle Remus.”</td>
+    <td class="c029"><span class="sc"><a href="/article/13-0033-s2/harris__joel_chandler">Joel Chandler Harris</a></span> (Vol. 13, p. 20).</td>
+  </tr>
+  <tr>
+    <td class="c011">Puck.</td>
+    <td class="c029"><span class="sc"><a href="/article/04-0822-s3/bunner__henry_cuyler">H. C. Bunner</a></span> (Vol. 4, p. 799).</td>
+  </tr>
+  <tr>
+    <td class="c011">“Mr. Dooley.”</td>
+    <td class="c029"><span class="sc"><a href="/article/08-0709-dunne-finley-peter/dunne__finley_peter">Finley Peter Dunne</a></span> (Vol. 8, p. 682).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>History.</i></td>
+    <td class="c029"><span class="sc"><a href="/article/20-0894-s3/parkman__francis">Francis Parkman</a></span> (Vol. 20, p. 832), by <a href="/contributors.html?q=John+Fiske">John Fiske</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/28-0226-von-holst-hermann-eduard/von_holst__hermann_eduard">Hermann Eduard Von Holst</a></span> (Vol. 28, p. 210).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/16-0610-s4/lieber__francis">Francis Lieber</a></span> (Vol. 16, p. 590).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/11-0560-s4/gayarré__charles_étienne_arthur">C. E. A. Gayarré</a></span> (Vol. 11, p. 542).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/16-0334-s4/lea__henry_charles">Henry Charles Lea</a></span> (Vol. 16, p. 314).</td>
+  </tr>
+  <tr>
+    <td class="c011">Historians.</td>
+    <td class="c029"><span class="sc"><a href="/article/03-0241-s3/baird__henry_martyn">Henry Martyn Baird</a></span> (Vol. 3, p. 224).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/10-0453-s6/fiske__john">John Fiske</a></span> (Vol. 10, p. 437), by Prof. <a href="/contributors.html?q=Rufus+Byam+Richardson">C. F. Richardson</a>, Dartmouth.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/23-0274-rhodes-james-ford/rhodes__james_ford">James Ford Rhodes</a></span> (Vol. 23, p. 257).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/16-0882-s1/lodge__henry_cabot">Henry Cabot Lodge</a></span> (Vol. 16, p. 860).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/17-0279-mcmaster-john-bach/mcmaster__john_bach">James B. McMaster</a></span> (Vol. 17, p. 264).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/24-0395-s5/schouler__james">James Schouler</a></span> (Vol. 24, p. 377).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/08-0386-dodge-theodore-ayrault/dodge__theodore_ayrault">Theodore A. Dodge</a></span> (Vol. 8, p. 369).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/23-0758-s2/ropes__john_codman">John Codman Ropes</a></span> (Vol. 23, p. 718).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/17-0409-s7/mahan__alfred_thayer">Alfred T. Mahan</a></span> (Vol. 17, p. 394).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/13-0043-hart-albert-bushnell/hart__albert_bushnell">Albert Bushnell Hart</a></span> (Vol. 13, p. 30).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/03-0326-s2/bancroft__hubert_howe">Hubert H. Bancroft</a></span> (Vol. 3, p. 309).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/23-0743-roosevelt-theodore/roosevelt__theodore">Theodore Roosevelt</a></span> (Vol. 23, p. 711), by <a href="/contributors.html?q=Lawrence+F.+Abbott">Lawrence F. Abbott</a>, New York <i>Outlook</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Newspaper Men.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0568-newspapers/newspapers">Newspapers</a></span>, <i>American</i> (Vol. 19, pp. 566–572).</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/21-0168-periodicals/periodicals">Periodicals</a></span>, <i>United States</i> (Vol. 21, pp. 154–155).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>New York Tribune.</i></td>
+    <td class="c029"><span class="sc"><a href="/article/12-0556-s1/greeley__horace">Horace Greeley</a></span> (Vol. 12, p. 531), by <a href="/contributors.html?q=Whitelaw+Reid">Whitelaw Reid</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011"> </td>
+    <td class="c029"><span class="sc"><a href="/article/23-0069-s3/reid__whitelaw">Whitelaw Reid</a></span> (Vol. 23, p. 52).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>New York Herald.</i></td>
+    <td class="c029"><span class="sc"><a href="/article/03-0760-bennett-james-gordon/bennett__james_gordon">James Gordon Bennett</a></span> (Vol. 3, p. 740).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>Springfield Republican.</i></td>
+    <td class="c029"><span class="sc"><a href="/article/04-0359-bowles-samuel/bowles__samuel">Samuel Bowles</a></span> (Vol. 4, p. 344).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>New York Times.</i></td>
+    <td class="c029"><span class="sc"><a href="/article/22-0950-raymond-henry-jarvis/raymond__henry_jarvis">H. J. Raymond</a></span> (Vol. 22, p. 933).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>New York Sun.</i></td>
+    <td class="c029"><span class="sc"><a href="/article/07-0815-dana-charles-anderson/dana__charles_anderson">C. A. Dana</a></span> (Vol. 7, p. 791).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>New York Evening Post.</i></td>
+    <td class="c029"><span class="sc"><a href="/article/12-0191-s2/godkin__edwin_lawrence">Edwin Lawrence Godkin</a></span> (Vol. 12, p. 174).</td>
+  </tr>
+  <tr>
+    <td class="c011"><i>Louisville Courier-Journal.</i></td>
+    <td class="c029"><span class="sc"><a href="/article/28-0436-watterson-henry/watterson__henry">Henry Watterson</a></span> (Vol. 28, p. 418).</td>
+  </tr>
+</tbody></table>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

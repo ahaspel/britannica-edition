@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Fine Arts: General And Introductory &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XXXII</span>The Fine Arts: General And Introductory</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Theory of Art</a></li><li><a href="#sh-2">Fine Arts</a></li></ol></div>
+    <div class="body-text">
+
+
+<p>The art-student and every other
+reader interested in the fine arts
+will find in the Britannica the
+material for courses of reading of very
+great range and of the utmost interest
+and value—whether he wishes to study
+theory, practice or history.</p>
+
+<p><span class="shoulder-heading" id="sh-1">Theory of Art</span>Of course no adequate treatment of
+the arts, or of any one of them, could
+logically, much less advantageously, separate
+theory, practice and
+history. But the theory
+of art, though it may be
+inferred or deduced from
+many other articles in the book, including
+those the most devoted to the practical
+or historical, may best and most directly
+be studied in three articles, <span class="sc"><a href="/article/01-0314-s4/aesthetics">Aesthetics</a></span>,
+<span class="sc"><a href="/article/02-0699-s4/art">Art</a></span>, and <span class="sc"><a href="/article/10-0369-fine-arts/fine_arts">Fine Arts</a></span>. Of these, the first,
+<span class="sc"><a href="/article/01-0314-s4/aesthetics">Aesthetics</a></span> (Vol. 1, p. 277), equivalent
+to nearly 40 pages of this Guide, is written
+by Professor <a href="/contributors.html?q=James+Sully">James Sully</a>, late of
+University College, London, and author
+of <i>The Human Mind</i> and other psychological
+studies. It discusses the meaning
+of beauty and the problem of the nature
+of pleasure, especially “higher” pleasure,
+its relation to play, etc. And the article
+closes with a history of Aesthetic Theories,
+including those of the following
+philosophers, on all of whom the student
+will find separate and elaborate critical
+biographies in the Britannica: <span class="sc"><a href="/article/21-0841-plato/plato">Plato</a></span>,
+who set beauty high, but thought art
+a mere trick of imitation and wished it
+be censored rather than encouraged in
+his model republic; <span class="sc"><a href="/article/02-0539-s3/aristotle">Aristotle</a></span>, who sets
+beauty above the useful and necessary,
+but whose aesthetic seems to be applied
+to poetry rather than to any other art;
+the German philosophers, <span class="sc"><a href="/article/15-0690-kant-immanuel/kant__immanuel">Kant</a></span>, <span class="sc"><a href="/article/24-0337-s2/schelling__karoline">Schelling</a></span>,
+<span class="sc"><a href="/article/13-0213-s3/hegel__georg_wilhelm_friedrich">Hegel</a></span>, <span class="sc"><a href="/article/02-0698-s4/arsuf">Schopenhauer</a></span>, who so
+deeply impressed their theories on the
+literature of their times, etc. The articles
+<span class="sc"><a href="/article/02-0699-s4/art">Art</a></span> (Vol. 2, p. 657) and <span class="sc"><a href="/article/10-0369-fine-arts/fine_arts">Fine Arts</a></span>
+are both by Sir <a href="/contributors.html?q=Sidney+Colvin">Sidney Colvin</a>, formerly
+keeper of prints and drawings, British
+Museum. The former begins with a
+contrast between art and nature—the
+contrast made famous by Pope, by
+Chaucer, repeatedly by Shakespeare and
+by Dr. Johnson in his definition of Art
+as “the power of doing something which
+is not taught by Nature or by instinct.”
+This definition is in itself an excellent
+text for a discourse on the importance
+in the study of the fine arts of the best
+literature on the subject. But Sir Sidney
+<a href="/contributors.html?q=Sidney+Colvin">Colvin</a> points out that the definition
+is incomplete, since Art</p>
+
+<p>is a name not only for the power of doing
+something, but for the exercise of the power;
+and not only for the exercise of the
+power, but for the rules according to which
+it is exercised; and not only for the rules,
+but for the result. Painting, for instance,
+is an art, and the word connotes not only
+the power to paint, but the act of painting;
+and not only the act, but the laws for
+performing the act rightly; and not only
+all these, but the material consequences of
+the act or the thing painted.</p>
+
+<p>Art is then “<i>Every regulated</i> operation
+or dexterity by which organized beings
+pursue ends which they know beforehand,
+together with the rules and the
+result of every such operation or dexterity.”</p>
+
+<p>And a consideration of the etymology
+of the words “Art” and “Kunst” is the
+basis of a discussion of the relation of
+Science and Art, which is summed up in
+these words:</p>
+
+<p>Science consists in knowing, Art consists
+in doing. What I must do in order to
+know, is Art subservient to Science: what
+I must know in order to do, is Science subservient
+to Art.</p>
+
+<p>After speaking of dancing, music, drawing,
+painting, sculpture, architecture,
+poetry, the author says:</p>
+
+<p>Of all these arts, the end is not use, but
+pleasure, or pleasure before use, or at least
+pleasure and use conjointly. In modern
+language, there has grown up a usage
+which has put them into a class by themselves
+under the name of the Fine Arts, as
+distinguished from the Useful or Mechanical
+Arts. (See <span class="sc"><a href="/article/01-0314-s4/aesthetics">Aesthetics</a></span> and <span class="sc"><a href="/article/10-0369-fine-arts/fine_arts">Fine
+Arts</a></span>.) Nay, more, to them alone is often
+appropriated the use of the generic word
+Art.... And further yet, custom has
+reduced the number which the class-word is
+meant to include. When Art and the works
+of Art are now currently spoken of in this
+sense, not even music or poetry is frequently
+denoted, but only architecture,
+sculpture and painting by themselves, or
+with their subordinate and decorative
+branches.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Fine Arts</span>The article <span class="sc"><a href="/article/10-0369-fine-arts/fine_arts">Fine Arts</a></span> (Vol. 10, p. 355;
+equivalent to 70 pages of this Guide)
+is divided into the following parts:
+<i>General Definition</i>, with
+particular attention to
+the theory that makes the
+arts a form of play and to the definitions
+of Plato and Schiller; <i>Classification</i>—architecture,
+sculpture, painting, music
+and poetry classified as “shaping” and
+“speaking” or as imitative and “non-imitative,”
+with definitions from the
+aesthetic or philosophic point of view of
+sculpture and of painting; and <i>Historical
+Development</i>, with a criticism of Spencer’s
+theory of the evolution and gradual
+separation of the arts and of Taine’s
+natural history, as well as a critical and
+illuminating outline history of the arts.</p>
+
+<p>Whether we include under the fine
+arts music and poetry, or with the more
+popular usage make the fine arts not five
+but three, architecture, painting and
+sculpture, the arts may be studied in the
+Britannica and there is the basis for this
+study in this Guide.</p>
+
+<p>Music is the subject of a separate
+chapter.</p>
+
+<p>Poetry is treated in the chapters on
+Literature, but it will be well to remind
+the student of the philosophy of art of
+the remarkable article <span class="sc"><a href="/article/21-0910-s2/poetry">Poetry</a></span> (Vol. 21,
+p. 877; equivalent to 45 pages in this
+Guide) by <a href="/contributors.html?q=Walter+Theodore+Watts-Dunton">Theodore Watts-Dunton</a>,
+and of the articles on the different poetic
+forms, mostly by <a href="/contributors.html?q=Edmund+Gosse">Edmund Gosse</a>.</p>
+
+<p>Architecture in the Britannica is outlined
+in this Guide in the chapter <i>For
+Architects</i>.</p>
+
+<p>The two chapters immediately following
+this are devoted respectively to
+Painting, Engraving and Drawing and
+to Sculpture and the Subsidiary Arts.
+Of practical value to the art student
+as an introduction to these two chapters
+are the articles <span class="sc"><a href="/article/02-0745-s2/art_societies">Art Societies</a></span>, by A. C.
+Robinson Carter, editor of <i>The Year’s
+Art</i>, and <span class="sc"><a href="/article/02-0747-s2/art_teaching">Art Teaching</a></span>, by <a href="/contributors.html?q=Walter+Crane">Walter
+Crane</a>, the English illustrator, who also
+contributed the article <span class="sc"><a href="/article/02-0744-s2/arts_and_crafts">Arts and Crafts</a></span>.</p>
+
+<p>For an alphabetical list of articles on
+the fine arts see the end of the chapter
+on <i>Sculpture</i>.</p>
+
+<div>
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

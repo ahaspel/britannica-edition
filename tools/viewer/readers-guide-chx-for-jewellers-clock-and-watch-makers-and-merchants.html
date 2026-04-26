@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Jewellers, Clock And Watch Makers And Merchants &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter X</span>For Jewellers, Clock And Watch Makers And Merchants</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Specimens Reproduced</a></li><li><a href="#sh-2">The “Personal Art” Movement</a></li><li><a href="#sh-3">Rings for Love and Murder</a></li><li><a href="#sh-4">Precious Metals</a></li><li><a href="#sh-5">Precious Stones</a></li><li><a href="#sh-6">Synthetic Stones</a></li><li><a href="#sh-7">Semi-Precious Stones</a></li><li><a href="#sh-8">Watches and Clocks</a></li></ol></div>
+    <div class="body-text">
+
+
+<p>By long established custom, watches
+and the higher grade of clocks form
+part of the jeweller’s stock, and he
+sells a few other articles of utility, such as
+purses and bags, but to all intents and
+purposes he shares with the artist and
+art-dealer the distinction of making a
+living by adding pleasure to the lives of
+others. The very word “jewelry” carries,
+in its root form, the idea of joy; and
+when a Senwosri princess, 43 centuries
+ago, smiled happily as she raised her
+brown arms to fasten the clasp of a new
+necklace, the jeweller of Memphis on the
+Nile no doubt took his little profit, as the
+jeweller of Memphis on the Mississippi
+takes his to-day, all the more gladly for
+being, in the oriental phrase, a “Distributor
+of delights.” Sour philosophers
+have always sneered at women for loving
+jewels, and most of all for piercing their
+ears and noses to vary its display, but
+the nose-ring that overhangs a thick
+Nubian lip is an expression of the same
+charming instinct that makes a child
+diversify the arrangement of her daisychains.
+And jewelry plays its part in the
+higher emotions as well as in the pretty
+vanities; witness the engagement ring,
+the marriage ring and all the uses, described
+in the Britannica, of jewels as
+religious symbols.</p>
+
+<p><span class="shoulder-heading" id="sh-1">Specimens Reproduced</span>The article <span class="sc"><a href="/article/15-0389-jewelry/jewelry">Jewelry</a></span> (Vol. 15, p. 364),
+by <a href="/contributors.html?q=Arthur+Hamilton+Smith">A. H. Smith</a>, the official in charge of
+the great jewel collection in the British
+Museum, contains
+nearly a hundred illustrations,
+half of
+them on plate paper,
+which include examples of every period
+and every variety of the jeweller’s art,
+and these, with the illustrations in other
+articles mentioned in this chapter, are so
+full of interest to the jeweller’s customers
+that he ought really to keep his Britannica
+at his place of business rather than
+at his house. It is, at any rate, amusing
+to recall that in a speech made by the
+Editor-in-chief of the Britannica, on the
+occasion of a banquet given to celebrate
+the completion of the new edition, he remarked
+that when he had chanced to
+take home the proof sheets of this article,
+to read them at night, he carefully kept
+them out of his wife’s sight lest they
+might suggest too tempting possibilities.
+The article divides modern jewelry into
+three classes:</p>
+
+<p><i>(1) objects in which gems and stones
+form the principal portions, and in which
+the work in silver, platinum or gold is really
+only a means for carrying out the design
+by fixing the gems or stones in the position
+arranged by the designer, the metal employed
+being visible only as a setting</i>;</p>
+
+<p><i>(2) when gold work plays an important
+part in the development of the design, being
+itself ornamented by engraving (now rarely
+used) or enamelling or both, the stones and
+gems being arranged in subordination to the
+gold work in such positions as to give a decorative
+effect to the whole</i>;</p>
+
+<p><i>(3) when gold or other metal is alone
+used, the design being wrought out by hammering
+in repoussé, casting, engraving,
+chasing or by the addition of filigree work,
+or when the surfaces are left absolutely
+plain but polished and highly finished</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-2">The “Personal Art” Movement</span>The second of these three classes includes
+the work which has completely
+revolutionized the theory of design, so
+far as the best class of trade is concerned,
+since the Paris International Exposition
+of 1900 first drew general attention to the
+exquisite creations of Lalique and his
+school. L. C. Tiffany, in the United
+States, and Philippe
+Wolfers, in Belgium,
+have done more than
+any designers other
+than the French to extend this new movement;
+but in England, Germany, Austria,
+Russia and Switzerland there has been a
+notable increase of individual effort and
+purpose, and a recognition of the possibilities
+of personal art as at any rate an
+important factor in the business. Side
+by side with this development new standards
+have been established in mechanical
+work. “Nearly every kind of gold chain
+now made is manufactured by machinery,
+and nothing like the beauty of design or
+perfection of workmanship could be obtained
+by hand at, probably, any cost.”
+The article, equivalent in length to about
+35 pages of this Guide, contains a full
+review, amplified by the results of the
+most recent excavations (some of them
+undertaken expressly for the archaeological
+purposes of this edition of the Britannica)
+of the history of jewelry, Egyptian,
+Assyrian, Mycenean, Greek, Etruscan,
+Roman, Merovingian, Oriental and
+Renaissance.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Rings for Love and Murder</span><span class="sc"><a href="/article/23-0366-s2/ring">Ring</a></span> (Vol. 23, p. 349), of which <a href="/contributors.html?q=John+Henry+Middleton">Prof.
+Middleton</a>, long art director of the South
+Kensington Museum, is the chief contributor,
+is another copiously illustrated
+article. Among the curious items of information
+it contains, there is the unromantic
+origin of the engagement ring
+(which may be cited by the jeweller to
+prove that it should always be a costly
+one), the ancient Romans regarding it as
+a pledge to assure the donor’s fulfilment
+of his promise; the fact that the modern
+rheumatism ring had its medieval forerunner
+in the rings, blessed by the sovereign,
+which were worn as a preservative
+against cramp; and the description of the
+old poison rings, which were of two kinds:
+those merely affording, in the bezel, a
+secret receptacle so that the poison might
+be always at hand
+for suicide, and those
+provided with a hollow
+point to which,
+on touching a spring, the venom ran as
+in a snake’s fang, so that the murderer
+could give a fatal scratch while shaking
+hands with his victim. <span class="sc"><a href="/article/04-0664-s6/brooch">Brooch</a></span> (Vol. 4,
+p. 641) traces, with many illustrations of
+typical specimens, the “fibula” or safety
+pin from its origin in Central Europe
+during the Bronze Age, through the
+modifications which introduced the bow
+shape, providing space for thicker folds
+of cloth, to the modern ornament. The
+long brooch is not a new fashion, for silver
+brooches no less than 15 inches in length
+have been found in Viking hoards of the
+7th, 8th and 9th centuries. <span class="sc"><a href="/article/08-0825-ear-ring/ear-ring">Ear-ring</a></span>
+(Vol. 8, p. 798) describes ear “ornaments”
+of the most grotesque size. In
+Borneo the hole in the ear lobe is stretched
+to a calibre of 3¾ inches, but the Masai
+tribes in equatorial Africa far outdo this,
+stretching the lobes, year after year, until
+they can wear stone ear-plugs weighing
+2 lbs. 14 ozs. each, with a diameter of 4½
+inches; and they thus achieve the supreme
+elegance of making the two long
+flaps of flesh meet above their heads. It
+is also curious to note the custom of
+some oriental tribes of wearing one ear-ring
+only. <span class="sc"><a href="/article/04-0374-bracelet/bracelet">Bracelet</a></span> (Vol. 4, p. 359) describes
+the three distinct models worn by
+the Israelites, all of which the Authorized
+Version calls “bracelet,” although the
+original Hebrew has separate names for
+them. Armlets have always been conspicuous
+in the regalia of Eastern kings,
+and the pair captured at Delhi and taken
+to Persia by Nadir Shah in 1739 contain
+jewels valued at more than $5,000,000,
+including the famous “Sea of Light”
+diamond, which, although it weighs only
+186 carats as against the 516½ of the
+largest fraction into which the Cullinan
+stone was cut, is unique as possessing the
+finest lustre of any known specimen. The
+24 plate illustrations in the article <span class="sc"><a href="/article/24-0302-scandinavian-civilization/scandinavian_civilization">Scandinavian
+Civilization</a></span> (Vol. 24, p. 287),
+by Miss <a href="/contributors.html?q=Bertha+Surtees+Phillpotts">B. S. Phillpotts</a>, show some exquisite
+designs of clasps, collars and pins
+exhumed in Denmark, Norway and Sweden,
+and supposed by some authorities to
+antedate the oldest Egyptian jewelry.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Precious Metals</span>The article <span class="sc"><a href="/article/12-0209-gold/gold">Gold</a></span> (Vol. 12, p. 192) is a
+thorough workshop treatise, as well as a
+detailed study of existing mines and of
+the influence their
+production exerts
+upon the “price,” if
+it can be so called,
+of a metal which is its own standard of
+value. <span class="sc"><a href="/article/25-0128-s3/silver">Silver</a></span> (Vol. 25, p. 112) and
+<span class="sc"><a href="/article/21-0838-s4/platinum">Platinum</a></span> (Vol. 21, p. 805) are treated
+with similar comprehensiveness. The
+articles <span class="sc"><a href="/article/01-0746-s5/alloys">Alloys</a></span> (Vol. 1, p. 704), <span class="sc"><a href="/article/02-0822-s3/assaying">Assaying</a></span>
+(Vol. 2, p. 776), <span class="sc"><a href="/article/18-0217-s3/metal">Metal</a></span> (Vol. 18, p.
+198), <span class="sc"><a href="/article/18-0221-s2/metallography">Metallography</a></span> (Vol. 18, p. 202),
+and <span class="sc"><a href="/article/18-0222-s2/metallurgy">Metallurgy</a></span> (Vol. 18, p. 203), all by
+noted authorities, are full of information
+useful to the jeweller. <span class="sc"><a href="/article/18-0224-s2/metal-work">Metal-Work</a></span>
+(Vol. 18, p. 205), fully illustrated, incidentally
+touches upon the art of the
+silver- and gold-smith; and this branch of
+the subject is also treated in such articles
+as <span class="sc"><a href="/article/21-0820-plate/plate">Plate</a></span> (Vol. 21, p. 789), with
+over 30 typical illustrations—a most interesting
+historical account, by several
+well-known experts, of works in gold and
+silver which belong to any class other
+than those of personal ornament and
+coins; and <span class="sc"><a href="/article/08-0605-drinking-vessels/drinking_vessels">Drinking Vessels</a></span> (Vol. 8, p.
+580), illustrated, by Dr. Charles H. Read
+of the British Museum, which discusses
+gold and silver cups. Mention must also
+be made of the description of American
+work in precious metals before the time
+of Christopher Columbus, in the section
+<i>Archaeology</i> of the article <span class="sc"><a href="/article/01-0851-america/america">America</a></span> (Vol.
+1, p. 812), by the late Dr. O. T. Mason,
+of the National Museum, Washington;
+also of <span class="sc"><a href="/article/18-0338-s3/mexico">Mexico</a></span>, <i>Ancient Civilization</i>
+(Vol. 18, p. 335), by the famous ethnologists,
+Dr. E. B. Tylor of Oxford and Dr.
+Walter Lehmann, of the Royal Ethnographical
+Museum, Munich; <span class="sc"><a href="/article/09-0033-egypt/egypt">Egypt</a></span>, <i>Ancient
+Art</i> (Vol. 9, p. 73), by <a href="/contributors.html?q=William+Matthew+Flinders+Petrie">W. M. Flinders
+Petrie</a>; <span class="sc"><a href="/article/12-0489-greek-art/greek_art">Greek Art</a></span> (Vol. 12, p. 470),
+illustrated, by Dr. <a href="/contributors.html?q=Percy+Gardner">Percy Gardner</a>, of Oxford;
+<span class="sc"><a href="/article/23-0496-roman-art/roman_art">Roman Art</a></span>, <i>Work in Precious
+Metals</i> (Vol. 23, p. 483), illustrated, by
+<a href="/contributors.html?q=Henry+Stuart+Jones">H. Stuart Jones</a>, director of the British
+School at Rome; <span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span>, <i>Art, Sculpture
+and Carving</i> (Vol. 15, p. 176), by <a href="/contributors.html?q=Captain+Frank+Brinkley">Capt.
+Frank Brinkley</a>, author of <i>A History of the
+Japanese People</i>; and <span class="sc"><a href="/article/06-0179-china/china">China</a></span>, <i>Bronzes</i>
+(Vol. 6, p. 215), by <a href="/contributors.html?q=Charles+John+Holmes">C. J. Holmes</a>, formerly
+Slade professor of fine art at Oxford.</p>
+
+<p><span class="sc"><a href="/article/10-0357-filigree/filigree">Filigree</a></span> (Vol. 10, p. 343) describes
+the delicate jewel work of twisted gold
+and silver threads, and also the “granulated”
+work which consists of minute
+globules of gold soldered to form patterns
+on a metal surface. In India the filigree
+worker has retained the patterns used by
+the ancient Greeks and works in the
+same way they did. Wandering workmen
+are given so much gold, coined or
+rough. This is weighed, heated and
+beaten into wire, and worked in the
+courtyard or on the verandah of the customer’s
+house. The worker reweighs the
+complete work when finished and is paid
+at a specified rate for his labor. Repoussé
+(Vol. 23, p. 108), by <a href="/contributors.html?q=Marion+H.+Spielmann">M. H. Spielmann</a>,
+editor <i>Magazine of Art</i>; <span class="sc"><a href="/article/05-0992-chasing/chasing">Chasing</a></span>
+(Vol. 5, p. 956) and <span class="sc"><a href="/article/14-0605-s2/inlaying">Inlaying</a></span> (Vol. 14,
+p. 574) are other articles dealing with certain
+processes in jewel work. The jeweller
+also must not overlook two superb articles,
+<span class="sc"><a href="/article/18-0015-medal/medal">Medal</a></span> (Vol. 18, p. 1), illustrated,
+by <a href="/contributors.html?q=Marion+H.+Spielmann">M. H. Spielmann</a>, and <span class="sc"><a href="/article/19-0901-numismatics/numismatics">Numismatics</a></span>
+(Vol. 19, p. 869), which is by three specialists,
+and is most fully illustrated by
+designs inviting practical use. <span class="sc"><a href="/article/09-0385-enamel/enamel">Enamel</a></span>
+(Vol. 9, p. 362), illustrated, by <a href="/contributors.html?q=Alexander+Fisher">Alexander
+Fisher</a>, author of <i>The Art of Enamelling on
+Metals</i>, goes very fully and practically
+into this interesting subject, which is
+further discussed in <span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span>, <i>Cloisonné
+Enamel</i> (Vol. 15, p. 189). <span class="sc"><a href="/article/18-0915-s6/mosaic">Mosaic</a></span> (Vol.
+18, p. 883), illustrated, by <a href="/contributors.html?q=John+Henry+Middleton">Professor Middleton</a>
+and H. Stuart <a href="/contributors.html?q=Henry+Stuart+Jones">Jones</a>, deals in part
+with the ornamentation of jewelry by
+this method. In <span class="sc"><a href="/article/04-0455-brazil/brazil">Brazing</a></span> and <span class="sc"><a href="/article/04-0455-brazil/brazil">Soldering</a></span>
+(Vol. 4, p. 463) the composition of
+silver solder used for jewelry is described,
+and in <span class="sc"><a href="/article/05-0678-cement/cement">Cement</a></span> there is an account of
+<i>Jeweller’s</i> or <i>Armenian Cement</i> (Vol. 5,
+p. 659).</p>
+
+<p><span class="shoulder-heading" id="sh-5">Precious Stones</span>The article <span class="sc"><a href="/article/11-0578-gem/gem">Gem</a></span> treats the subject in
+two sections, of which the first (Vol. 11,
+p. 560), by <a href="/contributors.html?q=Frederick+William+Rudler">F. W. Rudler</a>, of the Museum
+of Practical Geology,
+London, deals with
+<i>Mineralogy</i> and <i>General
+Properties</i>. Here
+are discussed hardness, specific gravity,
+crystaline forms and cleavage, colour, refraction,
+chemical composition, etc., and
+there is an interesting section on superstitions
+in regard to gems, the medical
+and magical powers with which they
+were reputed to be endowed. These beliefs
+are very remarkable, and it has even
+been suggested by archaeologists that jewelry
+did not have its origin so much in a
+love for personal decoration, as in the
+belief that the objects used possessed
+magical virtue. The article <span class="sc"><a href="/article/18-0533-mineralogy/mineralogy">Mineralogy</a></span>
+(Vol. 18, p. 509), by <a href="/contributors.html?q=Leonard+James+Spencer">L. J. Spencer</a>, of the
+British Museum, and editor of the <i>Mineralogical
+Magazine</i>, will be found especially
+valuable for reference in the
+workshop. It gives, among other things,
+the scale of hardness, and nomenclature
+and classification of minerals. The crystal
+formation of gems as well as their optical
+properties—characteristics by which
+the genuineness of precious stones may
+be tested—are discussed and explained
+in the article <span class="sc"><a href="/article/07-0591-crystallography/crystallography">Crystallography</a></span> (Vol. 7,
+p. 569), with over 100 illustrations, also
+by <a href="/contributors.html?q=Leonard+James+Spencer">L. J. Spencer</a>. The cutting of gem
+stones is treated under <span class="sc"><a href="/article/16-0215-lapidary/lapidary">Lapidary and
+Gem Cutting</a></span> (Vol. 16, p. 195), by Dr.
+<a href="/contributors.html?q=George+Frederick+Kunz">George F. Kunz</a>, the famous gem expert
+to Tiffany &amp; Co., New York,—an article
+of uncommon historical interest and
+practical value, in which diamond cutting
+is considered at much length.</p>
+
+<p>The second section of the article <span class="sc"><a href="/article/11-0578-gem/gem">Gem</a></span>,
+<i>Gems in Art</i> (Vol. 11, p. 562), by Dr. <a href="/contributors.html?q=Alexander+Stuart+Murray">A. S.
+Murray</a>, the famous British archaeologist,
+and <a href="/contributors.html?q=Arthur+Hamilton+Smith">A. H. Smith</a>, gives an account of
+precious stones engraved with designs.
+The illustrations show more than 90 examples,
+including Cretan and Mycenaean
+intaglios, Greek, Phœnician and Etruscan
+scarabs and scarabæoids, cameos, seals,
+Oriental, Christian, and modern gems.
+This subject is further discussed in separate
+articles, such as <span class="sc"><a href="/article/24-0319-scarab/scarab">Scarab</a></span> (Vol. 24, p.
+301), by Dr. F. Ll. Griffith, the Egyptologist,
+an account of the designs which,
+originating in Egypt during the Fourth
+Dynasty, have exercised a lasting influence
+on the design and shape of gems;
+<span class="sc"><a href="/article/05-0116-cameo/cameo">Cameo</a></span> (Vol. 5, p. 104), <span class="sc"><a href="/article/14-0711-s2/intaglio">Intaglio</a></span> (Vol.
+14, p. 680), <span class="sc"><a href="/article/24-0569-seals/seals">Seals</a></span> (Vol. 24, p. 539), illustrated,
+by Sir <a href="/contributors.html?q=Sir+Edward+Maunde+Thompson">E. Maunde Thompson</a>,
+formerly principal librarian, British Museum,
+as well as in the articles on ancient
+and Oriental civilizations, already mentioned.</p>
+
+<p><span class="shoulder-heading" id="sh-6">Synthetic Stones</span>The artificial duplication of certain
+gems by chemical processes which yield
+products identical in
+composition and
+physical properties
+with the natural
+stones is a subject of growing importance
+to the jeweller, and the latest developments
+are described in <span class="sc"><a href="/article/11-0589-gem-artificial/gem__artificial">Gem, Artificial</a></span>
+(Vol. 11, p. 569), by Sir <a href="/contributors.html?q=Sir+William+Crookes">William
+Crookes</a>. This famous chemist and authority
+on precious stones does not hesitate
+to declare that although the artificial
+diamonds so far produced have been
+microscopic in size, scientists have now
+found the right method and that “there
+is no reason to doubt that, working on a
+larger scale, larger diamonds will result.”
+The artificial production of rubies, sapphires,
+Oriental emeralds, amethysts, topazes
+and zircons is also discussed. Descriptions
+of the several gem stones are
+found under their respective headings, for
+example <span class="sc"><a href="/article/08-0173-diamond/diamond">Diamond</a></span> (Vol. 8, p. 158), illustrated,
+by <a href="/contributors.html?q=Henry+Alexander+Miers">H. A. Miers</a>, principal of the
+University of London, and former editor
+of the <i>Mineralogical Magazine</i>. Here are
+given its scientific characters, its uses
+(especially for faceting softer precious
+stones), distribution, and mining, and the
+wonderful history of the most famous
+diamonds of the world. <span class="sc"><a href="/article/23-0855-ruby/ruby">Ruby</a></span> (Vol. 23,
+p. 812), the most valued of gem stones,
+is often called “Oriental ruby” to distinguish
+it from <span class="sc"><a href="/article/25-0706-s2/spinel">Spinel</a></span> (Vol. 25, p. 684),
+an aluminate stone of inferior hardness,
+density and value. It is interesting to
+note that many historic stones described
+as monster rubies were really spinels.
+The great ruby set in the Maltese Cross
+in front of the Imperial State Crown of
+England is a spinel. <span class="sc"><a href="/article/24-0215-s5/sapphire">Sapphire</a></span> (Vol. 24,
+p. 201) was known to the Greeks as “hyacinthus,”
+and the present name was formerly
+applied to lapis lazuli. <span class="sc"><a href="/article/02-0838-asteria/asteria">Asteria</a></span> or
+<span class="sc"><a href="/article/02-0837-aster/aster">Star Stone</a></span> (Vol. 2, p. 792) tells how the
+luminous star comes to be seen in sapphires,
+rubies and topazes. The name
+<span class="sc"><a href="/article/09-0355-emerald/emerald">Emerald</a></span> (Vol. 9, p. 332) is used for a
+number of stones, of which the most
+valued is not a true emerald at all; see
+<span class="sc"><a href="/article/07-0224-corundum/corundum">Corundum</a></span> (Vol. 7, p. 207). The same is
+true of the <span class="sc"><a href="/article/27-0062-s2/topaz">Topaz</a></span> (Vol. 27, p. 48), the
+more prized Oriental topaz being a yellow
+corundum, harder and denser than the
+stone from which it takes its name.
+“Scotch” or “Spanish” topazes are yellow
+or smoke-tinted quartz, or cairngorm.
+The <span class="sc"><a href="/article/01-0903-s2/amethyst">Amethyst</a></span> (Vol. 1, p. 852) is
+violet or purple quartz, and the sapphire
+of a purple colour is often called an
+Oriental amethyst. The many varieties
+of the beautiful <span class="sc"><a href="/article/28-1016-zircon/zircon">Zircon</a></span> (Vol. 28, p. 989),
+such as <span class="sc"><a href="/article/14-0036-hyacinth-plant/hyacinth__plant_">Hyacinth</a></span> (Vol. 14, p. 25) and
+<span class="sc"><a href="/article/15-0301-jargoon/jargoon">Jargoon</a></span> (Vol. 15, p. 276) are carefully
+described and distinguished. These valuable
+articles on the precious stones have
+been contributed by <a href="/contributors.html?q=Frederick+William+Rudler">F. W. Rudler</a>, of the
+Museum of Practical Geology, London.
+<span class="sc"><a href="/article/21-0038-pearl/pearl">Pearl</a></span> (Vol. 21, p. 24) discusses the results
+of the latest researches on the cause
+of pearl formation, and gives a graphic
+account of pearl-fishing.</p>
+
+<p><span class="shoulder-heading" id="sh-7">Semi-Precious Stones</span>The material in the Britannica on the
+semi-precious stones is as complete.
+There are many articles, specified in the
+list at the end of
+this chapter. <span class="sc"><a href="/article/01-0616-s3/alexandrite">Alexandrite</a></span>
+(Vol. 1, p.
+576) is remarkable
+for its property of appearing dark green
+by daylight, and red by candle-light,
+which makes it especially popular in
+Russia where green and red are the military
+colors; <span class="sc"><a href="/article/06-0336-chrysoberyl/chrysoberyl">Chrysoberyl</a></span> (Vol. 6, p.
+320), of which alexandrite is a variety;
+<span class="sc"><a href="/article/06-0336-chrysolite/chrysolite">Chrysolite</a></span> (Vol. 6, p, 320), often mistaken
+for chrysoberyl; <span class="sc"><a href="/article/21-0164-peridot/peridot">Peridot</a></span> (Vol. 21,
+p. 147), like chrysolite, a variety of olivine;
+<span class="sc"><a href="/article/03-0838-beryl/beryl">Beryl</a></span> (Vol. 3, p. 817), much prized
+by the ancients as a gem stone, and of
+which the <span class="sc"><a href="/article/09-0355-emerald/emerald">Emerald</a></span> (see above) and the
+<span class="sc"><a href="/article/02-0249-s5/aquamarine">Aquamarine</a></span> (Vol. 2, p. 237) are the
+chief “precious” varieties; <span class="sc"><a href="/article/27-0117-s3/tourmaline">Tourmaline</a></span>
+(Vol. 27, p 103), the remarkable stone of
+as much interest to the physicist as to the
+jeweller, on account of its optical and
+electrical properties; and <span class="sc"><a href="/article/23-0847-s2/rubellite">Rubellite</a></span>
+(Vol. 23, p. 804), its much prized red
+variety <span class="sc"><a href="/article/11-0488-garnet/garnet">Garnet</a></span> (Vol. 11, p. 470), together
+with <span class="sc"><a href="/article/01-0755-s2/almandine">Almandine</a></span> (Vol. 1, p. 712),
+which, when cut with a convex face is
+known as carbuncle; <span class="sc"><a href="/article/06-0392-cinnamon-stone/cinnamon-stone">Cinnamon-Stone</a></span>
+(Vol. 6, p. 376), the light red garnet, so
+easily mistaken for a variety of zircon
+(the article tells how to distinguish them);
+<span class="sc"><a href="/article/07-1003-demantoid/demantoid">Demantoid</a></span> (Vol. 7, p. 979), the green
+garnet from the Urals, and <span class="sc"><a href="/article/22-0711-pyrope/pyrope">Pyrope</a></span> (Vol.
+22, p. 695), usually known as Bohemian
+garnet; <span class="sc"><a href="/article/15-0138-jade/jade">Jade</a></span> (Vol. 15, p. 122), which occupies
+in China the highest place as a
+jewel, and whose many varieties are here
+clearly distinguished; <span class="sc"><a href="/article/15-0383-jet/jet">Jet</a></span> (Vol. 15, p.
+358); <span class="sc"><a href="/article/12-0829-s2/haematite">Haematite</a></span> (Vol. 12, p. 804); <span class="sc"><a href="/article/18-0839-moonstone/moonstone">Moonstone</a></span>
+(Vol. 18, p. 807); <span class="sc"><a href="/article/05-0556-cat-s-eye/cat_s-eye">Cat’s-Eye</a></span> (Vol.
+5, p. 537), a term applied to several distinct
+minerals of which <span class="sc"><a href="/article/07-0499-crocidolite/crocidolite">Crocidolite</a></span>
+(Vol. 7, p. 477) has recently become very
+popular; <span class="sc"><a href="/article/20-0146-s6/opal">Opal</a></span> (Vol. 20, p. 120), an article
+in which the brilliant flashes of
+colour in this stone are explained; <span class="sc"><a href="/article/22-0731-s5/quartz">Quartz</a></span>
+(Vol. 22, p. 715), with its many ornamental
+varieties such as <span class="sc"><a href="/article/01-0406-s2/agate">Agate</a></span> (Vol. 1,
+p. 368), <span class="sc"><a href="/article/01-0903-s2/amethyst">Amethyst</a></span> (Vol. 1, p. 852),
+<span class="sc"><a href="/article/03-0069-s1/aventurine">Aventurine</a></span> (Vol. 3, p. 54), <span class="sc"><a href="/article/04-0098-bloodstone/bloodstone">Bloodstone</a></span>
+(Vol. 4, p. 85), <span class="sc"><a href="/article/04-0978-s1/cairngorm">Cairngorm</a></span> (Vol.
+4, p. 952), <span class="sc"><a href="/article/05-0378-carnelian/carnelian">Carnelian</a></span> (Vol. 5, p. 365),
+<span class="sc"><a href="/article/05-0839-chalcedony/chalcedony">Chalcedony</a></span> (Vol. 5, p. 803), <span class="sc"><a href="/article/06-0336-chrysoprase/chrysoprase">Chrysoprase</a></span>
+(Vol. 6, p. 320), <span class="sc"><a href="/article/13-0244-heliotrope/heliotrope">Heliotrope</a></span> (Vol.
+13, p. 232), <span class="sc"><a href="/article/18-0667-mocha-stone/mocha_stone">Mocha Stone</a></span> (Vol. 18, p.
+637), <span class="sc"><a href="/article/20-0144-onyx/onyx">Onyx</a></span> (Vol. 20, p. 118), <span class="sc"><a href="/article/23-0455-rock-crystal/rock-crystal">Rock-Crystal</a></span>
+(Vol. 23, p. 433), <span class="sc"><a href="/article/24-0223-sard/sard">Sard</a></span> (Vol. 24,
+p. 209), and <span class="sc"><a href="/article/24-0233-sardonyx/sardonyx">Sardonyx</a></span> (Vol. 24, p. 2.18).</p>
+
+<p><span class="shoulder-heading" id="sh-8">Watches and Clocks</span>The article <span class="sc"><a href="/article/28-0379-watch/watch">Watch</a></span> (Vol. 28, p. 362),
+illustrated, by <a href="/contributors.html?q=Lord+Grimthorpe">Lord Grimthorpe</a>, the
+great authority on watches and clocks,
+and Sir H. H. Cunynghame,
+vice-president
+of the British
+Institute of Electrical
+Engineers, is full of interest. There
+is a very valuable historical account
+beginning with the invention of portable
+time pieces in the 15th century. The
+parts of a modern watch are described,
+with details as to the mainspring, different
+types of escapement, the balance-wheel
+and hair-spring, compensation adjustments
+and secondary compensation.
+Methods of correcting temperature errors
+are discussed, and a simple means for
+demagnetizing a watch which has been
+near a dynamo is given. The proper materials
+used for jewelled bearings are described
+in the articles <span class="sc"><a href="/article/08-0173-diamond/diamond">Diamond</a></span>, <span class="sc"><a href="/article/07-0224-corundum/corundum">Corundum</a></span>,
+etc. <span class="sc"><a href="/article/17-0102-lubricants/lubricants">Lubricants</a></span> (Vol. 17, p. 88)
+contains a valuable paragraph on the
+properties and preparation of the fluid
+oils used on the spindles of watches and
+clocks.</p>
+
+<p>The article <span class="sc"><a href="/article/06-0554-clock/clock">Clock</a></span> (Vol. 6, p. 536) is by
+the same distinguished authorities as
+<span class="sc"><a href="/article/28-0379-watch/watch">Watch</a></span>, with an additional section on
+<i>Decorative Aspects</i> (p. 552), by <a href="/contributors.html?q=James+George+Joseph+Penderel-Brodhurst">James
+Penderel-Brodhurst</a>. It is equivalent to
+55 pages of this Guide and is fully illustrated.
+Among the topics considered are
+the earliest clocks and their gradual improvement;
+the essential components of
+a clock; the mechanics of the pendulum;
+methods of compensation, including the
+use of the new nickel-steel alloy—described
+in the article <span class="sc"><a href="/article/14-0748-s10/invar">Invar</a></span> (Vol. 14, p.
+717)—the barometrical error, and methods
+of counteraction; suspension of pendulums;
+balance, anchor, dead, pinwheel,
+detached or free, and gravity escapements;
+the remontoire systems for
+abolishing errors in the force driving the
+escapement; testing of clocks; clock
+wheels; striking mechanism; the watchman’s
+clock, church and turret clocks,
+electrical clocks, miscellaneous clocks, including
+magical clocks and other curious
+designs. The section on <i>Decorative Aspects</i>
+tells about styles of cases and
+mountings, the origin and development
+of the “grandfather” clock, etc. In connection
+with long-period clocks, attention
+should be given to the new and ingenious,
+if not commercially practical, device invented
+by the Hon. R. J. Strutt. Electrified
+particles emitted by a radioactive
+substance separate two strips of gold leaf,
+and these, falling together after the
+charge has been conducted away upon
+contact with metal, are extended again,
+the process being constantly repeated.
+If some way could be found to utilize this
+motion to work an escapement, we
+should have a clock that would go on indefinitely,
+since 1000 years must elapse
+before even half the small amount of
+radium used has disappeared. A description
+of this so-called “radium” clock
+will be found in <span class="sc"><a href="/article/21-0197-perpetual-motion/perpetual_motion">Perpetual Motion</a></span>
+(Vol. 21, p. 181).</p>
+
+<div>
+  
+  <details class="article-list"><summary><span class="list-title">ALPHABETICAL LIST OF ARTICLES IN THE ENCYCLOPAEDIA BRITANNICA OF SPECIAL INTEREST TO MANUFACTURERS OF AND DEALERS IN JEWELRY, CLOCKS, AND WATCHES</span><span class="list-count"> (196 articles)</span></summary>
+</div>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0406-s2/agate">Agate</a></li>
+  <li class="c018"><a href="/article/01-0474-s2/aigrette">Aigrette</a></li>
+  <li class="c018"><a href="/article/01-0474-s5/aiguillette">Aiguillette</a></li>
+  <li class="c018"><a href="/article/01-0551-s8/albite">Albite</a></li>
+  <li class="c018"><a href="/article/01-0616-s3/alexandrite">Alexandrite</a></li>
+  <li class="c018"><a href="/article/01-0746-s5/alloys">Alloys</a></li>
+  <li class="c018"><a href="/article/01-0755-s2/almandine">Almandine</a></li>
+  <li class="c018"><a href="/article/01-0837-s2/amazon-stone">Amazon-stone</a></li>
+  <li class="c018"><a href="/article/01-0838-s4/amber">Amber</a></li>
+  <li class="c018">America, <i>Archaeology</i></li>
+  <li class="c018"><a href="/article/01-0903-s2/amethyst">Amethyst</a></li>
+  <li class="c018"><a href="/article/01-1007-s2/andalusite">Andalusite</a></li>
+  <li class="c018"><a href="/article/02-0058-s2/anhydrite">Anhydrite</a></li>
+  <li class="c018"><a href="/article/02-0171-s4/apatite">Apatite</a></li>
+  <li class="c018"><a href="/article/02-0211-s2/apostle_spoons">Apostle Spoons</a></li>
+  <li class="c018"><a href="/article/02-0249-s5/aquamarine">Aquamarine</a></li>
+  <li class="c018"><a href="/article/02-0267-s2/arabesque">Arabesque</a></li>
+  <li class="c018"><a href="/article/02-0744-s2/arts_and_crafts">Arts and Crafts</a></li>
+  <li class="c018"><a href="/article/02-0822-s3/assaying">Assaying</a></li>
+  <li class="c018"><a href="/article/02-0838-asteria/asteria">Asteria, or Star-stone</a></li>
+  <li class="c018"><a href="/article/03-0069-s1/aventurine">Aventurine</a></li>
+  <li class="c018"><a href="/article/03-0083-s4/axinite">Axinite</a></li>
+  <li class="c018"><a href="/article/03-0101-s8/azurite">Azurite</a></li>
+  <li class="c018"><a href="/article/03-0590-bead/bead">Bead</a></li>
+  <li class="c018"><a href="/article/03-0759-benitoite/benitoite">Benitoite</a></li>
+  <li class="c018"><a href="/article/03-0838-beryl/beryl">Beryl</a></li>
+  <li class="c018"><a href="/article/03-0839-beryllonite/beryllonite">Beryllonite</a></li>
+  <li class="c018"><a href="/article/03-0941-biddery/biddery">Biddery</a></li>
+  <li class="c018"><a href="/article/04-0098-bloodstone/bloodstone">Bloodstone</a></li>
+  <li class="c018"><a href="/article/04-0291-bort/bort">Bort</a></li>
+  <li class="c018"><a href="/article/04-0374-bracelet/bracelet">Bracelet</a></li>
+  <li class="c018"><a href="/article/04-0481-brazing-and-soldering/brazing_and_soldering">Brazing and Soldering</a></li>
+  <li class="c018">Britain, <i>Ornaments</i></li>
+  <li class="c018"><a href="/article/04-0664-s4/bronzite">Bronzite</a></li>
+  <li class="c018"><a href="/article/04-0664-s6/brooch">Brooch</a></li>
+  <li class="c018"><a href="/article/04-0978-s1/cairngorm">Cairngorm</a></li>
+  <li class="c018"><a href="/article/05-0116-cameo/cameo">Cameo</a></li>
+  <li class="c018"><a href="/article/05-0136-campani-alimenis-matteo/campani-alimenis__matteo">Campani-Alimenis, M.</a></li>
+  <li class="c018"><a href="/article/05-0320-carbonado/carbonado">Carbonado</a></li>
+  <li class="c018"><a href="/article/05-0378-carnelian/carnelian">Carnelian</a></li>
+  <li class="c018"><a href="/article/05-0556-cat-s-eye/cat_s-eye">Cat’s-eye</a></li>
+  <li class="c018"><a href="/article/05-0629-cellini-benvenuto/cellini__benvenuto">Cellini, Benvenuto</a></li>
+  <li class="c018"><a href="/article/05-0678-cement/cement">Cement</a></li>
+  <li class="c018"><a href="/article/05-0837-chain/chain">Chain</a></li>
+  <li class="c018"><a href="/article/05-0839-chalcedony/chalcedony">Chalcedony</a></li>
+  <li class="c018"><a href="/article/05-0992-chasing/chasing">Chasing</a></li>
+  <li class="c018">Chessylite</li>
+  <li class="c018">China, <i>Art</i></li>
+  <li class="c018"><a href="/article/06-0336-chrysoberyl/chrysoberyl">Chrysoberyl</a></li>
+  <li class="c018"><a href="/article/06-0336-chrysolite/chrysolite">Chrysolite</a></li>
+  <li class="c018"><a href="/article/06-0336-chrysoprase/chrysoprase">Chrysoprase</a></li>
+  <li class="c018"><a href="/article/06-0392-cinnamon-stone/cinnamon-stone">Cinnamon-stone</a></li>
+  <li class="c018"><a href="/article/06-0554-clock/clock">Clock</a></li>
+  <li class="c018"><a href="/article/06-0705-collar/collar">Collar</a></li>
+  <li class="c018"><a href="/article/06-0963-congreve-sir-william/congreve__sir_william">Congreve, Sir William</a></li>
+  <li class="c018"><a href="/article/07-0148-coral/coral">Coral</a></li>
+  <li class="c018"><a href="/article/07-0224-corundum/corundum">Corundum</a></li>
+  <li class="c018"><a href="/article/07-0241-costume/costume">Costume</a></li>
+  <li class="c018"><a href="/article/07-0433-cressent-charles/cressent__charles">Cressent, Charles</a></li>
+  <li class="c018"><a href="/article/07-0499-crocidolite/crocidolite">Crocidolite</a></li>
+  <li class="c018"><a href="/article/07-0527-cross/cross">Cross</a></li>
+  <li class="c018"><a href="/article/07-0537-crown/crown">Crown</a></li>
+  <li class="c018"><a href="/article/07-0591-crystallography/crystallography">Crystallography</a></li>
+  <li class="c018"><a href="/article/07-0702-cyanite/cyanite">Cyanite</a></li>
+  <li class="c018"><a href="/article/07-1003-demantoid/demantoid">Demantoid</a></li>
+  <li class="c018"><a href="/article/08-0171-diallage/diallage">Diallage</a></li>
+  <li class="c018"><a href="/article/08-0173-diamond/diamond">Diamond</a></li>
+  <li class="c018"><a href="/article/08-0306-dioptase/dioptase">Dioptase</a></li>
+  <li class="c018"><a href="/article/08-0605-drinking-vessels/drinking_vessels">Drinking Vessels</a></li>
+  <li class="c018"><a href="/article/08-0694-dumortierite/dumortierite">Dumortierite</a></li>
+  <li class="c018"><a href="/article/08-0825-ear-ring/ear-ring">Ear-ring</a></li>
+  <li class="c018">Egypt, <i>Ancient Art</i></li>
+  <li class="c018"><a href="/article/09-0254-electroplating/electroplating">Electroplating</a></li>
+  <li class="c018"><a href="/article/09-0355-emerald/emerald">Emerald</a></li>
+  <li class="c018"><a href="/article/09-0358-emery/emery">Emery</a></li>
+  <li class="c018"><a href="/article/09-0385-enamel/enamel">Enamel</a></li>
+  <li class="c018"><a href="/article/09-0721-s3/epidote">Epidote</a></li>
+  <li class="c018"><a href="/article/09-0910-s3/euclase">Euclase</a></li>
+  <li class="c018"><a href="/article/10-0257-felspar/felspar">Felspar</a></li>
+  <li class="c018"><a href="/article/10-0357-filigree/filigree">Filigree</a></li>
+  <li class="c018"><a href="/article/10-0390-s5/finiguerra__maso">Finiguerra, Maso</a></li>
+  <li class="c018"><a href="/article/10-0596-fluorescence/fluorescence">Fluorescence</a></li>
+  <li class="c018"><a href="/article/10-0599-fluor-spar/fluor-spar">Fluor-spar</a></li>
+  <li class="c018"><a href="/article/11-0036-s2/franklin__benjamin">Franklin, Benjamin</a></li>
+  <li class="c018"><a href="/article/11-0424-galileo-galilei/galileo_galilei">Galileo Galilei</a></li>
+  <li class="c018"><a href="/article/11-0488-garnet/garnet">Garnet</a></li>
+  <li class="c018"><a href="/article/11-0578-gem/gem">Gem</a></li>
+  <li class="c018"><a href="/article/11-0589-gem-artificial/gem__artificial">Gem, Artificial</a></li>
+  <li class="c018"><a href="/article/12-0209-gold/gold">Gold</a></li>
+  <li class="c018">Gold beating</li>
+  <li class="c018"><a href="/article/12-0289-g-thite/göthite">Göthite</a></li>
+  <li class="c018"><a href="/article/12-0308-s2/gouthière__pierre">Gouthière, Pierre</a></li>
+  <li class="c018"><a href="/article/12-0489-greek-art/greek_art">Greek Art</a></li>
+  <li class="c018"><a href="/contributors.html?q=Lord+Grimthorpe">Grimthorpe</a>, 1st Baron</li>
+  <li class="c018"><a href="/article/12-0829-s2/haematite">Haematite</a></li>
+  <li class="c018"><a href="/article/13-0465-s5/hiddenite">Hiddenite</a></li>
+  <li class="c018">Hyacinth, or Jacinth</li>
+  <li class="c018"><a href="/article/14-0212-hypersthene/hypersthene">Hypersthene</a></li>
+  <li class="c018"><a href="/article/14-0605-s2/inlaying">Inlaying</a></li>
+  <li class="c018"><a href="/article/14-0711-s2/intaglio">Intaglio</a></li>
+  <li class="c018"><a href="/article/14-0748-s10/invar">Invar</a></li>
+  <li class="c018"><a href="/article/14-0757-iolite/iolite">Iolite</a></li>
+  <li class="c018"><a href="/article/15-0108-ivory/ivory">Ivory</a></li>
+  <li class="c018"><a href="/article/15-0138-jade/jade">Jade</a></li>
+  <li class="c018">Japan, <i>Art</i></li>
+  <li class="c018"><a href="/article/15-0301-jargoon/jargoon">Jargoon</a></li>
+  <li class="c018"><a href="/article/15-0304-s3/jasper">Jasper</a></li>
+  <li class="c018"><a href="/article/15-0383-jet/jet">Jet</a></li>
+  <li class="c018"><a href="/article/15-0389-jewelry/jewelry">Jewelry</a></li>
+  <li class="c018">Knighthood and Chivalry</li>
+  <li class="c018"><a href="/article/15-0981-kunzite/kunzite">Kunzite</a></li>
+  <li class="c018"><a href="/article/16-0043-labradorite/labradorite">Labradorite</a></li>
+  <li class="c018">Lapidary and Gem Cutting</li>
+  <li class="c018"><a href="/article/16-0219-s3/lapis_lazuli">Lapis Lazuli</a></li>
+  <li class="c018"><a href="/article/16-0523-s4/leucite">Leucite</a></li>
+  <li class="c018">Line-engraving</li>
+  <li class="c018"><a href="/article/17-0102-lubricants/lubricants">Lubricants</a></li>
+  <li class="c018"><a href="/article/17-0471-malachite/malachite">Malachite</a></li>
+  <li class="c018"><a href="/article/17-0766-marot-daniel/marot__daniel">Marot, Daniel</a></li>
+  <li class="c018"><a href="/article/18-0104-meissonier-juste-aur-le/meissonier__juste_aurèle">Meissonier, J. A.</a></li>
+  <li class="c018"><a href="/article/18-0015-medal/medal">Medal</a></li>
+  <li class="c018"><a href="/article/18-0217-s3/metal">Metal</a></li>
+  <li class="c018"><a href="/article/18-0221-s2/metallography">Metallography</a></li>
+  <li class="c018"><a href="/article/18-0222-s2/metallurgy">Metallurgy</a></li>
+  <li class="c018"><a href="/article/18-0224-s2/metal-work">Metal-Work</a></li>
+  <li class="c018">Mexico, <i>Ancient Civilization</i></li>
+  <li class="c018"><a href="/article/18-0402-microcline/microcline">Microcline</a></li>
+  <li class="c018"><a href="/article/18-0528-mineral-deposits/mineral_deposits">Mineral Deposits</a></li>
+  <li class="c018"><a href="/article/18-0533-mineralogy/mineralogy">Mineralogy</a></li>
+  <li class="c018"><a href="/article/18-0547-s4/miniature">Miniature</a></li>
+  <li class="c018"><a href="/article/18-0584-mint-coin/mint__coin">Mint</a></li>
+  <li class="c018">Mocha-stone</li>
+  <li class="c018"><a href="/article/18-0761-monogram/monogram">Monogram</a></li>
+  <li class="c018"><a href="/article/18-0796-monteith/monteith">Monteith</a></li>
+  <li class="c018"><a href="/article/18-0839-moonstone/moonstone">Moonstone</a></li>
+  <li class="c018"><a href="/article/18-0861-s1/morel-ladeuil__leonard">Morel-Ladeuil, Léonard</a></li>
+  <li class="c018"><a href="/article/18-0915-s6/mosaic">Mosaic</a></li>
+  <li class="c018"><a href="/article/19-0401-nepheline/nepheline">Nepheline</a></li>
+  <li class="c018"><a href="/article/19-0697-s5/niello">Niello</a></li>
+  <li class="c018"><a href="/article/19-0901-numismatics/numismatics">Numismatics</a></li>
+  <li class="c018"><a href="/article/20-0106-s2/oligoclase">Oligoclase</a></li>
+  <li class="c018"><a href="/article/20-0113-s2/olivine">Olivine</a></li>
+  <li class="c018"><a href="/article/20-0144-onyx/onyx">Onyx</a></li>
+  <li class="c018"><a href="/article/20-0146-s6/opal">Opal</a></li>
+  <li class="c018"><a href="/article/20-0366-orthoclase/orthoclase">Orthoclase</a></li>
+  <li class="c018"><a href="/article/20-0692-palladium-image/palladium__image_">Palladium</a></li>
+  <li class="c018"><a href="/article/20-0952-s5/paste">Paste</a></li>
+  <li class="c018"><a href="/article/21-0038-pearl/pearl">Pearl</a></li>
+  <li class="c018"><a href="/article/21-0164-peridot/peridot">Peridot</a></li>
+  <li class="c018"><a href="/article/21-0197-perpetual-motion/perpetual_motion">Perpetual Motion</a></li>
+  <li class="c018"><a href="/article/21-0385-phenacite/phenacite">Phenacite</a></li>
+  <li class="c018"><a href="/article/21-0498-s2/phosphorescence">Phosphorescence</a></li>
+  <li class="c018"><a href="/article/21-0721-plagioclase/plagioclase">Plagioclase</a></li>
+  <li class="c018"><a href="/article/21-0820-plate/plate">Plate</a></li>
+  <li class="c018"><a href="/article/21-0837-plated-ware/plated_ware">Plated Ware</a></li>
+  <li class="c018"><a href="/article/21-0838-s4/platinum">Platinum</a></li>
+  <li class="c018"><a href="/article/22-0015-pollaiuolo/pollaiuolo">Pollaiuolo</a></li>
+  <li class="c018"><a href="/article/22-0291-prehnite/prehnite">Prehnite</a></li>
+  <li class="c018"><a href="/article/22-0711-pyrope/pyrope">Pyrope</a></li>
+  <li class="c018"><a href="/article/22-0712-s2/pyroxene">Pyroxene</a></li>
+  <li class="c018"><a href="/article/22-0731-s5/quartz">Quartz</a></li>
+  <li class="c018"><a href="/article/23-0049-regalia/regalia">Regalia</a></li>
+  <li class="c018"><a href="/article/23-0125-repouss/repoussé">Repoussé</a></li>
+  <li class="c018"><a href="/article/23-0366-s2/ring">Ring</a></li>
+  <li class="c018"><a href="/article/23-0455-rock-crystal/rock-crystal">Rock-crystal</a></li>
+  <li class="c018"><a href="/article/23-0496-roman-art/roman_art">Roman Art</a></li>
+  <li class="c018"><a href="/article/23-0847-s2/rubellite">Rubellite</a></li>
+  <li class="c018"><a href="/article/23-0855-ruby/ruby">Ruby</a></li>
+  <li class="c018"><a href="/article/24-0215-s5/sapphire">Sapphire</a></li>
+  <li class="c018"><a href="/article/24-0223-sard/sard">Sard</a></li>
+  <li class="c018"><a href="/article/24-0233-sardonyx/sardonyx">Sardonyx</a></li>
+  <li class="c018"><a href="/article/24-0302-scandinavian-civilization/scandinavian_civilization">Scandinavian Civilization</a></li>
+  <li class="c018"><a href="/article/24-0319-scarab/scarab">Scarab</a></li>
+  <li class="c018"><a href="/article/24-0569-seals/seals">Seals</a></li>
+  <li class="c018"><a href="/article/24-0858-sheffield-plate/sheffield_plate">Sheffield Plate</a></li>
+  <li class="c018"><a href="/article/25-0128-s3/silver">Silver</a></li>
+  <li class="c018"><a href="/article/25-0668-sphene/sphene">Sphene</a></li>
+  <li class="c018"><a href="/article/25-0706-s2/spinel">Spinel</a></li>
+  <li class="c018"><a href="/article/25-0733-s6/spodumene">Spodumene</a></li>
+  <li class="c018"><a href="/article/25-0837-s4/staurolite">Staurolite</a></li>
+  <li class="c018"><a href="/article/26-0128-sunstone/sunstone">Sunstone</a></li>
+  <li class="c018"><a href="/article/26-0471-s3/tassie__james">Tassie, James</a></li>
+  <li class="c018"><a href="/article/26-1006-tiffany-charles-lewis/tiffany__charles_lewis">Tiffany, C. L.</a></li>
+  <li class="c018"><a href="/article/26-1023-s3/time__measurement_of">Time, Measurement of</a></li>
+  <li class="c018"><a href="/article/26-1027-s2/time__standard">Time, Standard</a></li>
+  <li class="c018"><a href="/article/27-0062-s2/topaz">Topaz</a></li>
+  <li class="c018"><a href="/article/27-0117-s3/tourmaline">Tourmaline</a></li>
+  <li class="c018"><a href="/article/27-0501-turquoise/turquoise">Turquoise</a></li>
+  <li class="c018"><a href="/article/27-0947-variscite/variscite">Variscite</a></li>
+  <li class="c018"><a href="/article/27-1091-s4/vesuvianite">Vesuvianite</a></li>
+  <li class="c018"><a href="/article/28-0379-watch/watch">Watch</a></li>
+  <li class="c018"><a href="/article/28-0486-weighing-machines/weighing_machines">Weighing Machines</a></li>
+  <li class="c018"><a href="/article/28-0495-weights-and-measures/weights_and_measures">Weights and Measures</a></li>
+  <li class="c018"><a href="/article/28-0906-wyon-thomas/wyon__thomas">Wyon, Thomas</a></li>
+  <li class="c018"><a href="/article/28-1016-zircon/zircon">Zircon</a></li>
+  <li class="c018"><a href="/article/28-1027-zoisite/zoisite">Zoisite</a></li>
+</ul></details>
+
+<div>
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

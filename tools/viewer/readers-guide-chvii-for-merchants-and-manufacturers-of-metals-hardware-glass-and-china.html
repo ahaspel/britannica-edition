@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Merchants And Manufacturers Of Metals, Hardware, Glass And China &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter VII</span>For Merchants And Manufacturers Of Metals, Hardware, Glass And China</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Knowledge in “Layers”</a></li><li><a href="#sh-2">Physics and Chemistry</div> <div class="sidenote">Some of the Authorities</a></li><li><a href="#sh-3">Metals</a></li><li><a href="#sh-4">Metal-Ware</a></li><li><a href="#sh-5">Glassware</a></li><li><a href="#sh-6">Chinaware, Pottery and Porcelain</a></li><li><a href="#sh-7">Some of the Authorities</span>The departments of physics and physical chemistry are of course those in which the Britannica’s scientific contents especially interest those to whom this chapter is addressed, and the authority of the Britannica in those departments of knowledge is shown by a very striking fact. You may remember that Alfred Nobel, the great Swedish chemist, who made a fortune by the invention and manufacture of dynamite, devoted $9,000,000 to the establishment of the annual Nobel prizes, to be awarded, irrespective of nationality, for eminence in scientific research and in the cause of peace. In physics and chemistry, <i>Britannica contributors have won, in eleven years, seven of these prizes</i>, these winners being: in 1901, Prof. J. H. van’t Hoff, of the University of Berlin; in 1902, Prof. Lorentz, of the University of Leiden; in 1904, Lord Rayleigh, Chancellor of the University of Cambridge; in 1906, Sir J. J. Thomson, of the University of Cambridge; in 1909, Prof. Ostwald, of the University of Leipzig; in 1911, Prof. Van der Waals, of the University of Amsterdam. In other words, you find that the scientific committee who award the Nobel prizes select for these unique distinctions the same men whom the editor of the Britannica selected as contributors. Now apply another test, in connection with the subject matter of this chapter. What is, by general consent, the most exquisitely finished product of any of the industries under discussion in the present section? To this question there can be but one answer: Optical glass. Where is the best glass made? At the Zeiss Works in Jena, Germany. Very well, Dr. Otto Henker and Dr. Eppenstein, both of the scientific staff of the Zeiss Works, wrote the optical articles in the Britannica which deal with the lens and with aberration in lenses. You should therefore remember, in reading the Britannica, that whether you are only going as far as the uppermost layer of knowledge, or reaching down to the very foundations of science, the men whose articles you are reading command the respect that you can pay to them by giving your very closest attention. Do not imagine that because the book contains forty-four million words, it is made to be skimmed; every article in it is condensed; and you cannot derive the fullest benefit from your reading unless you feel, as you would feel if you were fortunate enough to be brought into personal contact with any of these great men, that you have a privilege of which you must make the most.</p> <p class="c007"><span class="shoulder-heading" id="sh-3">Metals</span>Other chapters of this Guide also deal in detail with the scientific side of the industries mentioned here; and in examining the groups of industrial articles, those dealing with metals claim first consideration. The article <span class="sc"><a href="/article/18-0217-s3/metal">Metal</a></span> (Vol. 18, p. 198) is devoted to classification only, and would not occupy more than ten pages of this Guide. It contains information as to the physical properties of the metals, including a table in which the specific gravity of each of 42 metals is stated, a table of comparative ductility under the hammer, for rolling and for wire drawing, a table of elasticities, and other tables showing the ratio of expansion under heat, the melting and boiling points, and the relative thermic and electric conductivity. A section is devoted to the action of chemical agents upon the simple metals.</p> <p class="c007"><span class="sc"><a href="/article/18-0222-s2/metallurgy">Metallurgy</a></span> (Vol. 18, p. 203), and <span class="sc"><a href="/article/09-0249-electrometallurgy/electrometallurgy">Electrometallurgy</a></span> (Vol. 9, p. 232), by W. G. McMillan, lecturer on metallurgy at Mason College, Birmingham, deal with all the methods of smelting ores. Your next reading should be the great article <span class="sc"><a href="/article/14-0834-s2/iron_and_steel">Iron and Steel</a></span> (Vol. 14, p. 801), by Prof. H. M. Howe, of Columbia University, containing as much matter as would fill 110 pages of this Guide. At the beginning of this article Prof. Howe disposes of the much discussed question as to the true distinction between iron and steel, as to which there has been great confusion. Before 1860, the word “steel” was never applied to a metal that could not be hardened by tempering. But when the invention of the Bessemer and open-hearth processes introduced a new class of iron, “which lacked the essential property of steel, the hardening power, yet differed from the existing forms of wrought iron in freedom from slag,” the men interested in the new product did not like to call it “wrought iron,” which is what it really is, because that name would confuse it with a lower-priced grade of metal. They ought to have coined a new word for it, but they appropriated the name of steel—so that to-day “steel” means either true steel or the low-carbon, slagless variety of malleable iron. The article is divided into 133 sections, so that to analyze its contents would swamp this chapter of the Guide, but the reader will find in it the clearest and most authoritative account of the industry which has yet been published.</p> <p class="c007">Among articles on the commercial metals are <span class="sc"><a href="/article/07-0119-copper/copper">Copper</a></span> (Vol. 7, p. 102), <span class="sc"><a href="/article/16-0334-s6/lead">Lead</a></span> (Vol. 16, p. 314), <span class="sc"><a href="/article/26-1035-tin/tin">Tin</a></span> (Vol. 26, p. 995), <span class="sc"><a href="/article/28-1008-zinc/zinc">Zinc</a></span> (Vol. 28, p. 981), <span class="sc"><a href="/article/01-0813-aluminium/aluminium">Aluminium</a></span> (Vol. 1, p. 767), <span class="sc"><a href="/article/19-0685-s6/nickel">Nickel</a></span> (Vol. 19, p. 658), <span class="sc"><a href="/article/02-0139-s5/antimony">Antimony</a></span> (Vol. 2, p. 127), and, on the precious metals, <span class="sc"><a href="/article/12-0209-gold/gold">Gold</a></span> (Vol. 12, p. 192), <span class="sc"><a href="/article/25-0128-s3/silver">Silver</a></span> (Vol. 25, p. 112), and <span class="sc"><a href="/article/21-0838-s4/platinum">Platinum</a></span> (Vol. 21, p. 805).</p> <p class="c007">The article <span class="sc"><a href="/article/01-0746-s5/alloys">Alloys</a></span>, of which Sir W. C. Roberts-Austen, long chemist of the London Mint, is the chief contributor, with its photomicrographic illustrations, contains not only an account of the alloys already generally used in the metal industries, but also practical information as to the experiments which have been made recently with some of the newly discovered rare earths. In the article <span class="sc"><a href="/article/18-0221-s2/metallography">Metallography</a></span> (Vol. 18, p. 202), by the same specialist, the microscopic examination and photography of metals and alloys is described.</p> <p class="c007">Among articles on the metallic compounds are <span class="sc"><a href="/article/04-0448-brass-alloy/brass__alloy_">Brass</a></span> (Vol. 4, p. 433), in which “Dutch metal,” “Mannheim gold,” “similor” and “pinchbeck” are described; <span class="sc"><a href="/article/04-0662-s4/bronze">Bronze</a></span> (Vol. 4, p. 639), which deals with steel bronze, phosphor bronze, and other combinations; <span class="sc"><a href="/article/11-0387-fusible-metal/fusible_metal">Fusible Metal</a></span> (Vol. 11, p. 369) is an important compound. <span class="sc"><a href="/article/21-0359-s5/pewter">Pewter</a></span> (Vol. 21, p. 338), by Malcolm Bell, author of <i>Pewter Plate</i>, etc., is of historical interest, and of value to the dealer or collector, while he who wishes to distinguish between the older and the more modern electroplated ware is referred to the article <span class="sc"><a href="/article/24-0858-sheffield-plate/sheffield_plate">Sheffield Plate</a></span> (Vol. 24, p. 824), also by Malcolm Bell. <span class="sc"><a href="/article/09-0254-electroplating/electroplating">Electroplating</a></span> (Vol. 9, p. 237) describes the art that put an end to the Sheffield plate industry. Other methods of coating metals are given under <span class="sc"><a href="/article/11-0446-s4/galvanized_iron">Galvanized Iron</a></span> (Vol. 11, p. 428), <span class="sc"><a href="/article/26-1040-tin-plate-and-terne-plate/tin-plate_and_terne-plate">Tin Plate and Terne Plate</a></span> (Vol. 26, p. 1000), and <span class="sc"><a href="/article/12-0026-gilding/gilding">Gilding</a></span> (Vol. 12, p. 13). The art of making gold-leaf is described in <span class="sc"><a href="/article/12-0219-goldbeating/goldbeating">Goldbeating</a></span> (Vol. 12, p. 202).</p> <p class="c007">In regard to manufacturing processes there are the separate articles: <span class="sc"><a href="/article/10-0684-s3/forging">Forging</a></span> (Vol. 10, p. 663), with 19 illustrations; <span class="sc"><a href="/article/10-0764-s2/founding">Founding</a></span> (Vol. 10, p. 743), with 11 illustrations; <span class="sc"><a href="/article/02-0081-s3/annealing__hardening_and_tempering">Annealing, Hardening and Tempering</a></span> (Vol. 2, p. 70), and <span class="sc"><a href="/article/04-0481-brazing-and-soldering/brazing_and_soldering">Brazing and Soldering</a></span> (Vol. 4, p. 463). These four articles are by J. G. Horner. And see <span class="sc"><a href="/article/28-0518-s7/welding">Welding</a></span> (Vol. 28, p. 500), also by Mr. Horner, with a section on <i>Electro-Welding</i>, by Elihu Thomson, inventor of the process of electric welding and expert for the General Electric Co. The article <span class="sc"><a href="/article/27-0028-s3/tool">Tool</a></span> (Vol. 27, p. 14), another of Mr. Horner’s valuable contributions, has 79 illustrations and possesses special interest for the manufacturer of metal-ware as well as the dealer in hardware.</p> <p class="c007"><span class="shoulder-heading" id="sh-4">Metal-Ware</span>Coming now to the production of metal wares, the article <span class="sc"><a href="/article/18-0224-s2/metal-work">Metal-Work</a></span> (Vol. 18, p. 205), beautifully illustrated, is the work of three noted experts. The late J. H. Middleton, Slade Professor of Fine Art, Cambridge University, writes on <i>Methods of Manipulation in Metal Work</i> and tells of the metal work of Greece, Italy, Spain, Germany, France, England, Persia and Damascus. J. S. Gardner, an expert metal worker, deals with <i>Modern Art Metal Work</i>, and J. G. Horner contributes the section on <i>Industrial Metal Working</i>, in which he deals with <i>Plater’s Work</i>, <i>Coppersmith’s Work</i>, <i>Raised Work</i>, <i>Cast Work</i>, <i>Methods of Union and Protection of Surfaces</i>. In connection with the last mentioned subject, see also <span class="sc"><a href="/article/15-0300-japanning/japanning">Japanning</a></span> (Vol. 15, p. 275), <span class="sc"><a href="/article/16-0073-s3/lacquer">Lacquer</a></span> (Vol. 16, p. 53), and <span class="sc"><a href="/article/20-0495-painter-work/painter-work">Painter-Work</a></span> (Vol. 20, p. 457). Further information about lacquering, with valuable formulas, will be found in the article <span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span> (Vol. 15, p. 188). Some of the ornamental forms of metal work are described in <span class="sc"><a href="/article/23-0125-repouss/repoussé">Repoussé</a></span> (Vol. 23, p. 108), by M. H. Spielmann, formerly editor of <i>The Magazine of Art</i>; <span class="sc"><a href="/article/14-0605-s2/inlaying">Inlaying</a></span> (Vol. 14, p. 574), and <span class="sc"><a href="/article/07-0807-damascening/damascening">Damascening</a></span> (Vol. 7, p. 783). See also <span class="sc"><a href="/article/12-0621-s6/grille">Grille</a></span> (Vol. 12, p. 596).</p> <p class="c007"><span class="sc"><a href="/article/21-0820-plate/plate">Plate</a></span> (Vol. 21, p. 789), an article by H. R. Hall, of the British Museum, H. Stuart Jones, director of the British School at Rome, and E. A. Jones, author of <i>Old English Gold Plate</i>, etc., is a concise, complete hand-book on work in silver and gold of any class other than those of personal ornaments and coins. It is profusely illustrated with plates and text-cuts, showing many exquisite models; and the reader can master the details of style in different periods and countries. The subjects of the assay of gold and silver plate and hall-marks are discussed, the former being treated more fully in <span class="sc"><a href="/article/02-0822-s3/assaying">Assaying</a></span> (Vol. 2, p. 776), by A. A. Blair, chief chemist of the U. S. Geological Survey. The article <span class="sc"><a href="/article/23-0496-roman-art/roman_art">Roman Art</a></span>, by H. Stuart Jones, has a section devoted to <i>Work in Precious Metals</i> (Vol. 23, p. 483).</p> <p class="c007"><span class="sc"><a href="/article/07-0693-cutlery/cutlery">Cutlery</a></span> (Vol. 7, p. 671) is one of the articles pertaining specifically to hardware manufacture and trade, in which general processes of manufacture are described; and of allied interest are <span class="sc"><a href="/article/15-0879-s3/knife">Knife</a></span> (Vol. 15, p. 850), <span class="sc"><a href="/article/10-0687-s2/fork">Fork</a></span> (Vol. 10, p. 666), <span class="sc"><a href="/article/25-0755-spoon/spoon">Spoon</a></span> (Vol. 25, p. 733), <span class="sc"><a href="/article/24-0425-s3/scissors">Scissors</a></span> (Vol. 24, p. 407), <span class="sc"><a href="/article/24-0847-shears/shears">Shears</a></span> (Vol. 24, p. 815), <span class="sc"><a href="/article/22-0954-razor/razor">Razor</a></span> (Vol. 22, p. 937), <span class="sc"><a href="/article/05-0836-chafing-dish/chafing-dish">Chafing-Dish</a></span> (Vol. 5, p. 800), <span class="sc"><a href="/article/19-0168-nail/nail">Nail</a></span> (Vol. 19, p. 153), <span class="sc"><a href="/article/03-0082-s10/axe">Axe</a></span> (Vol. 3, p. 67), <span class="sc"><a href="/article/12-0922-hammer/hammer">Hammer</a></span> (Vol. 12, p. 897), <span class="sc"><a href="/article/06-0263-chisel/chisel">Chisel</a></span> (Vol. 6, p. 247), <span class="sc"><a href="/article/28-0758-wire/wire">Wire</a></span> (Vol. 28, p. 738), and <span class="sc"><a href="/article/03-0401-barbed-wire/barbed_wire">Barbed Wire</a></span> (Vol. 3, p. 384). Articles describing all forms of agricultural implements will be found under their respective headings.</p> <p class="c007"><span class="shoulder-heading" id="sh-5">Glassware</span><span class="sc"><a href="/article/12-0099-s3/glass">Glass</a></span> (Vol. 12, p. 86) is most complete in its consideration of the entire subject. The introductory section by H. J. Powell, of the Whitefriars Glass Works, London, author of <i>Glass Making</i>, and W. Rosenhain, of the National Physical Laboratory, London, deals with the manufacture of optical glass, blown glass and mechanically-pressed glass. The necessary qualities of each kind are stated and the newest processes of manufacture described, with full information about materials. The second part of the article is devoted to the <i>History of Glass Manufacture</i>, by Mr. Powell and Alexander Nesbitt, who wrote the well-known <i>Introduction</i> to the South Kensington Museum Catalogue of Glass Vessels. Egyptian, Assyrian, Roman, Venetian, Bohemian and Oriental glass, as well as the modern types, are exhaustively described. The article is splendidly illustrated. <span class="sc"><a href="/article/08-0605-drinking-vessels/drinking_vessels">Drinking Vessels</a></span> (Vol. 8, p. 580), by Dr. Charles H. Read, of the British Museum, describes old forms of glass cups and goblets. It is most valuable for its information in regard to styles of different countries and periods, and the illustrations show many types.</p> <p class="c007">Stained glass is the subject of the separate article <span class="sc"><a href="/article/12-0120-s2/glass__stained">Glass, Stained</a></span> (Vol. 12, p. 105), illustrated, by the late Lewis F. Day, author of <i>Windows, a Book about Stained Glass</i>. It is both historical and descriptive in its nature, deals with painted and stained glass, contains a table of examples of important historical stained glass, and treats of the latest progress in the art, including the productions of La Farge and L. C. Tiffany in this country. The art of fitting and setting of glass is described in <span class="sc"><a href="/article/12-0133-s1/glazing">Glazing</a></span> (Vol. 12, p. 116), illustrated, by James Bartlett. Here we learn about the setting of window glass, the use of glass in decoration, systems of roof glazing and the use of wire glass.</p> <p class="c007">Full information about glass for optical purposes will be found under <span class="sc"><a href="/article/16-0441-lens/lens">Lens</a></span> (Vol. 16, p. 421), illustrated, by Dr. Otto Henker, of the Carl Zeiss Factory, Jena, Germany; <span class="sc"><a href="/article/16-0647-s2/lighthouse">Lighthouse</a></span>, <i>Optical Apparatus</i> (Vol. 16, p. 633), illustrated, by W. T. Douglass, who erected the Eddystone and Bishop Rock lighthouses, and Nicholas G. Gedye, chief engineer to the Tyne Improvement Commission; <span class="sc"><a href="/article/26-0586-telescope/telescope">Telescope</a></span>, <i>Instruments</i> (Vol. 26, p. 561), illustrated, by H. Dennis Taylor and Sir David Gill; <span class="sc"><a href="/article/21-0507-photography/photography">Photography</a></span>, <i>Photographic Objectives or Lenses</i> (Vol. 21, p. 507), illustrated, by James Waterhouse; <span class="sc"><a href="/article/25-0638-s4/spectacles">Spectacles</a></span> (Vol. 25, p. 617).</p> <p class="c007"><span class="shoulder-heading" id="sh-6">Chinaware, Pottery and Porcelain</span>To those engaged in the china ware, pottery or porcelain manufacture and trade, the great article <span class="sc"><a href="/article/05-0729-ceramics/ceramics">Ceramics</a></span> (Vol. 5, p. 703) will prove a revelation. It is the joint product of a number of experts, both practical and artistic, including William Burton, chairman, Joint Committee of Pottery Manufacturers of Great Britain, Henry R. H. Hall and Robert Lockhart Hobson, both of the British Museum, and A. Van de Put and Bernard Rackham, both of the Victoria and Albert Museum. It is 85,000 words in length and contains over a hundred beautiful illustrations, including six plates in colour. It deals fully with the artistic and economic phases of the subject, the methods of manufacture, the different varieties of ceramics, their history, decoration, etc. Japanese ceramics are treated separately in <span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span>, <i>Ceramics</i> (Vol. 15, p. 183), illustrated, by the late Capt. Frank Brinkley.</p> <p class="c007"><span class="sc"><a href="/article/06-0488-clay/clay">Clay</a></span> (Vol. 6, p. 472), by Dr. J. S. Flett, describes the occurrence, composition and properties of the various clays used in ceramics.</p> <p class="c007"><span class="sc"><a href="/article/26-0684-s4/terracotta">Terracotta</a></span> (Vol. 26, p. 653), illustrated, by William Burton and H. B. Walters, of the British Museum, deals with the artistic use to which baked clay is put, while <span class="sc"><a href="/article/26-1011-s2/tile">Tile</a></span> (Vol. 26, p. 971), illustrated, also by William Burton, has great practical value for the present-day manufacturer.</p> <p class="c007"><span class="sc"><a href="/article/15-0700-kaolin/kaolin">Kaolin</a></span> (Vol. 15, p. 672), by F. W. Rudler, of the Museum of Practical Geology, London, deals specifically with china clay and its preparation for the market. <span class="sc"><a href="/article/12-0026-gilding/gilding">Gilding</a></span> (Vol. 12, p. 13) contains material on the subject of the gilding of pottery and porcelain, and <span class="sc"><a href="/article/20-0497-s2/painting">Painting</a></span> has a section <i>Painting with Coloured Vitreous Pastes</i> (Vol. 20, p. 484), by Prof. G. B. Brown, of Edinburgh University, which describes the use of these pastes in ceramics. <span class="sc"><a href="/article/09-0385-enamel/enamel">Enamel</a></span> (Vol. 9, p. 362), illustrated, by Alexander Fisher, yields equally valuable information for those concerned with the decoration of china.</p> <p class="c007">In <span class="sc"><a href="/article/19-0030-s2/mural_decoration">Mural Decoration</a></span>, by Walter Crane and William Morris, there is a section devoted to <i>Wall-Linings of Glazed Brick or Tiles</i> (Vol. 19, p. 17). Material of great archaeological interest relating to earthenware, etc., will be found in such articles as <span class="sc"><a href="/article/01-0276-s3/aegean_civilization">Aegean Civilization</a></span> (Vol. 1, p. 245), illustrated, by D. G. Hogarth, of the Ashmolean Museum, Oxford; <span class="sc"><a href="/article/07-0438-crete/crete">Crete</a></span>, <i>Archaeology</i> (Vol. 7, p. 421), illustrated, by Arthur J. Evans, the famous Cretan explorer, and <span class="sc"><a href="/article/12-0489-greek-art/greek_art">Greek Art</a></span> (Vol. 12, p. 470), illustrated, by Percy Gardner, the classical archaeologist.</p> <p class="c007">The following is a partial list in alphabetical order of articles and subjects in this field treated in the Britannica.</p> <div> <details class="article-list"><summary><span class="list-title">ALPHABETICAL LIST OF ARTICLES AND SUBJECTS IN THE ENCYCLOPAEDIA BRITANNICA OF SPECIAL INTEREST TO THOSE IN METAL, HARDWARE, GLASS AND CHINA MANUFACTURE AND TRADE</span><span class="list-count"> (265 articles)</span></summary></a></li></ol></div>
+    <div class="body-text">
+
+
+<p>Elisée Reclus, the great French
+student of the origins of civilization,
+says, in the Britannica
+article <span class="sc"><a href="/article/10-0415-s2/fire">Fire</a></span> (Vol. 10, p. 399), that “human
+culture may be said to have begun
+with fire, of which the uses increased
+in the same ratio as culture
+itself.” The industries grouped in
+the present chapter all depend upon the
+curiously diverse effects of heat; the softening
+and tempering of metals, the hardening
+of clay and the changes by which
+sand becomes glass. It is for the reader
+himself to decide whether he wishes to
+begin his course of reading by a study of
+the article <span class="sc"><a href="/article/13-0148-s2/heat">Heat</a></span> (Vol. 13, p. 135), and
+the allied articles to which it refers, and
+thus to understand how temperature
+plays its dominant part in the most useful
+of manufacturing processes.</p>
+
+<p><span class="shoulder-heading" id="sh-1">Knowledge in “Layers”</span>It is, indeed, one of the most attractive
+features of the Britannica that it presents
+knowledge in <i>layers</i>. In text-books, the
+theoretical and practical
+aspects of an
+industry are so interwoven
+that you
+cannot separate them. But in the Britannica,
+if you desire only to examine the
+finished products of any branch of industry,
+as you might see them and hear
+them described at an exhibition or in a
+manufacturer’s sample room, you can
+turn to articles and sections of articles in
+which critical comment and elaborate illustrations
+put clearly before you the
+varieties of, for example, plated ware,
+china or glass. Proceeding to the next
+“layer,” you find technical information
+about the manufacture of these and all
+other goods; you have been permitted to
+pass from the sample room into the factory,
+which is not usually so easy of access.
+And in the scientific articles you
+arrive at the very substratum and foundation
+of knowledge; you have what the
+experts in the factory could not give you
+if they would: the clear teaching that
+only the great masters of science can
+supply.</p>
+
+<p>The manufacturer, of course, absolutely
+<i>needs</i> to know all that can be
+learned about the origin of his materials
+and the principles upon which his processes
+are based. But the dealer, in his
+turn, will be a shrewder buyer, a more
+convincing salesman and a better manager
+of the salesmen under him, if he
+knows the whole history of his wares, of
+the ingredients that enter into their composition
+and of their manufacture. Factory
+experience is hardly more universal
+among wholesale men, most of whom
+begin as clerks, than among retailers, and
+it is impossible for a business man who
+has got his foot fairly on the ladder to
+drop his work and go through an apprenticeship
+or take a thorough course at
+a technical college. If, however, he will
+for a few months devote his spare time to
+the studies he can pursue, unaided, in
+the Britannica, the insight he obtains
+will give a new value to all the knowledge
+he picks up in the course of his business.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Physics and Chemistry</div> <p><span class="shoulder-heading" id="sh-7">Some of the Authorities</span>The departments of physics and physical chemistry are of course those in which the Britannica’s scientific contents especially interest those to whom this chapter is addressed, and the authority of the Britannica in those departments of knowledge is shown by a very striking fact. You may remember that Alfred Nobel, the great Swedish chemist, who made a fortune by the invention and manufacture of dynamite, devoted $9,000,000 to the establishment of the annual Nobel prizes, to be awarded, irrespective of nationality, for eminence in scientific research and in the cause of peace. In physics and chemistry, <i>Britannica contributors have won, in eleven years, seven of these prizes</i>, these winners being: in 1901, Prof. J. H. van’t Hoff, of the University of Berlin; in 1902, Prof. Lorentz, of the University of Leiden; in 1904, Lord Rayleigh, Chancellor of the University of Cambridge; in 1906, Sir J. J. <a href="/contributors.html?q=Elihu+Thomson">Thomson</a>, of the University of Cambridge; in 1909, Prof. Ostwald, of the University of Leipzig; in 1911, Prof. Van der Waals, of the University of Amsterdam. In other words, you find that the scientific committee who award the Nobel prizes select for these unique distinctions the same men whom the editor of the Britannica selected as contributors. Now apply another test, in connection with the subject matter of this chapter. What is, by general consent, the most exquisitely finished product of any of the industries under discussion in the present section? To this question there can be but one answer: Optical glass. Where is the best glass made? At the Zeiss Works in Jena, Germany. Very well, Dr. Otto Henker and Dr. Eppenstein, both of the scientific staff of the Zeiss Works, wrote the optical articles in the Britannica which deal with the lens and with aberration in lenses. You should therefore remember, in reading the Britannica, that whether you are only going as far as the uppermost layer of knowledge, or reaching down to the very foundations of science, the men whose articles you are reading command the respect that you can pay to them by giving your very closest attention. Do not imagine that because the book contains forty-four million words, it is made to be skimmed; every article in it is condensed; and you cannot derive the fullest benefit from your reading unless you feel, as you would feel if you were fortunate enough to be brought into personal contact with any of these great men, that you have a privilege of which you must make the most.</p> <p><span class="shoulder-heading" id="sh-3">Metals</span>Other chapters of this Guide also deal in detail with the scientific side of the industries mentioned here; and in examining the groups of industrial articles, those dealing with metals claim first consideration. The article <span class="sc"><a href="/article/18-0217-s3/metal">Metal</a></span> (Vol. 18, p. 198) is devoted to classification only, and would not occupy more than ten pages of this Guide. It contains information as to the physical properties of the metals, including a table in which the specific gravity of each of 42 metals is stated, a table of comparative ductility under the hammer, for rolling and for wire drawing, a table of elasticities, and other tables showing the ratio of expansion under heat, the melting and boiling points, and the relative thermic and electric conductivity. A section is devoted to the action of chemical agents upon the simple metals.</p> <p><span class="sc"><a href="/article/18-0222-s2/metallurgy">Metallurgy</a></span> (Vol. 18, p. 203), and <span class="sc"><a href="/article/09-0249-electrometallurgy/electrometallurgy">Electrometallurgy</a></span> (Vol. 9, p. 232), by <a href="/contributors.html?q=Walter+George+McMillan">W. G. McMillan</a>, lecturer on metallurgy at Mason College, Birmingham, deal with all the methods of smelting ores. Your next reading should be the great article <span class="sc"><a href="/article/14-0834-s2/iron_and_steel">Iron and Steel</a></span> (Vol. 14, p. 801), by Prof. <a href="/contributors.html?q=John+Allen+Howe">H. M. Howe</a>, of Columbia University, containing as much matter as would fill 110 pages of this Guide. At the beginning of this article <a href="/contributors.html?q=John+Allen+Howe">Prof. Howe</a> disposes of the much discussed question as to the true distinction between iron and steel, as to which there has been great confusion. Before 1860, the word “steel” was never applied to a metal that could not be hardened by tempering. But when the invention of the Bessemer and open-hearth processes introduced a new class of iron, “which lacked the essential property of steel, the hardening power, yet differed from the existing forms of wrought iron in freedom from slag,” the men interested in the new product did not like to call it “wrought iron,” which is what it really is, because that name would confuse it with a lower-priced grade of metal. They ought to have coined a new word for it, but they appropriated the name of steel—so that to-day “steel” means either true steel or the low-carbon, slagless variety of malleable iron. The article is divided into 133 sections, so that to analyze its contents would swamp this chapter of the Guide, but the reader will find in it the clearest and most authoritative account of the industry which has yet been published.</p> <p>Among articles on the commercial metals are <span class="sc"><a href="/article/07-0119-copper/copper">Copper</a></span> (Vol. 7, p. 102), <span class="sc"><a href="/article/16-0334-s6/lead">Lead</a></span> (Vol. 16, p. 314), <span class="sc"><a href="/article/26-1035-tin/tin">Tin</a></span> (Vol. 26, p. 995), <span class="sc"><a href="/article/28-1008-zinc/zinc">Zinc</a></span> (Vol. 28, p. 981), <span class="sc"><a href="/article/01-0813-aluminium/aluminium">Aluminium</a></span> (Vol. 1, p. 767), <span class="sc"><a href="/article/19-0685-s6/nickel">Nickel</a></span> (Vol. 19, p. 658), <span class="sc"><a href="/article/02-0139-s5/antimony">Antimony</a></span> (Vol. 2, p. 127), and, on the precious metals, <span class="sc"><a href="/article/12-0209-gold/gold">Gold</a></span> (Vol. 12, p. 192), <span class="sc"><a href="/article/25-0128-s3/silver">Silver</a></span> (Vol. 25, p. 112), and <span class="sc"><a href="/article/21-0838-s4/platinum">Platinum</a></span> (Vol. 21, p. 805).</p> <p>The article <span class="sc"><a href="/article/01-0746-s5/alloys">Alloys</a></span>, of which Sir W. C. Roberts-Austen, long chemist of the London Mint, is the chief contributor, with its photomicrographic illustrations, contains not only an account of the alloys already generally used in the metal industries, but also practical information as to the experiments which have been made recently with some of the newly discovered rare earths. In the article <span class="sc"><a href="/article/18-0221-s2/metallography">Metallography</a></span> (Vol. 18, p. 202), by the same specialist, the microscopic examination and photography of metals and alloys is described.</p> <p>Among articles on the metallic compounds are <span class="sc"><a href="/article/04-0448-brass-alloy/brass__alloy_">Brass</a></span> (Vol. 4, p. 433), in which “Dutch metal,” “Mannheim gold,” “similor” and “pinchbeck” are described; <span class="sc"><a href="/article/04-0662-s4/bronze">Bronze</a></span> (Vol. 4, p. 639), which deals with steel bronze, phosphor bronze, and other combinations; <span class="sc"><a href="/article/11-0387-fusible-metal/fusible_metal">Fusible Metal</a></span> (Vol. 11, p. 369) is an important compound. <span class="sc"><a href="/article/21-0359-s5/pewter">Pewter</a></span> (Vol. 21, p. 338), by <a href="/contributors.html?q=Malcolm+Bell">Malcolm Bell</a>, author of <i>Pewter Plate</i>, etc., is of historical interest, and of value to the dealer or collector, while he who wishes to distinguish between the older and the more modern electroplated ware is referred to the article <span class="sc"><a href="/article/24-0858-sheffield-plate/sheffield_plate">Sheffield Plate</a></span> (Vol. 24, p. 824), also by <a href="/contributors.html?q=Malcolm+Bell">Malcolm Bell</a>. <span class="sc"><a href="/article/09-0254-electroplating/electroplating">Electroplating</a></span> (Vol. 9, p. 237) describes the art that put an end to the Sheffield plate industry. Other methods of coating metals are given under <span class="sc"><a href="/article/11-0446-s4/galvanized_iron">Galvanized Iron</a></span> (Vol. 11, p. 428), <span class="sc"><a href="/article/26-1040-tin-plate-and-terne-plate/tin-plate_and_terne-plate">Tin Plate and Terne Plate</a></span> (Vol. 26, p. 1000), and <span class="sc"><a href="/article/12-0026-gilding/gilding">Gilding</a></span> (Vol. 12, p. 13). The art of making gold-leaf is described in <span class="sc"><a href="/article/12-0219-goldbeating/goldbeating">Goldbeating</a></span> (Vol. 12, p. 202).</p> <p>In regard to manufacturing processes there are the separate articles: <span class="sc"><a href="/article/10-0684-s3/forging">Forging</a></span> (Vol. 10, p. 663), with 19 illustrations; <span class="sc"><a href="/article/10-0764-s2/founding">Founding</a></span> (Vol. 10, p. 743), with 11 illustrations; <span class="sc"><a href="/article/02-0081-s3/annealing__hardening_and_tempering">Annealing, Hardening and Tempering</a></span> (Vol. 2, p. 70), and <span class="sc"><a href="/article/04-0481-brazing-and-soldering/brazing_and_soldering">Brazing and Soldering</a></span> (Vol. 4, p. 463). These four articles are by <a href="/contributors.html?q=Joseph+G.+Horner">J. G. Horner</a>. And see <span class="sc"><a href="/article/28-0518-s7/welding">Welding</a></span> (Vol. 28, p. 500), also by <a href="/contributors.html?q=Joseph+G.+Horner">Mr. Horner</a>, with a section on <i>Electro-Welding</i>, by <a href="/contributors.html?q=Elihu+Thomson">Elihu Thomson</a>, inventor of the process of electric welding and expert for the General Electric Co. The article <span class="sc"><a href="/article/27-0028-s3/tool">Tool</a></span> (Vol. 27, p. 14), another of <a href="/contributors.html?q=Joseph+G.+Horner">Mr. Horner</a>’s valuable contributions, has 79 illustrations and possesses special interest for the manufacturer of metal-ware as well as the dealer in hardware.</p> <p><span class="shoulder-heading" id="sh-4">Metal-Ware</span>Coming now to the production of metal wares, the article <span class="sc"><a href="/article/18-0224-s2/metal-work">Metal-Work</a></span> (Vol. 18, p. 205), beautifully illustrated, is the work of three noted experts. The late J. H. Middleton, Slade Professor of Fine Art, Cambridge University, writes on <i>Methods of Manipulation in Metal Work</i> and tells of the metal work of Greece, Italy, Spain, Germany, France, England, Persia and Damascus. J. S. <a href="/contributors.html?q=Percy+Gardner">Gardner</a>, an expert metal worker, deals with <i>Modern Art Metal Work</i>, and <a href="/contributors.html?q=Joseph+G.+Horner">J. G. Horner</a> contributes the section on <i>Industrial Metal Working</i>, in which he deals with <i>Plater’s Work</i>, <i>Coppersmith’s Work</i>, <i>Raised Work</i>, <i>Cast Work</i>, <i>Methods of Union and Protection of Surfaces</i>. In connection with the last mentioned subject, see also <span class="sc"><a href="/article/15-0300-japanning/japanning">Japanning</a></span> (Vol. 15, p. 275), <span class="sc"><a href="/article/16-0073-s3/lacquer">Lacquer</a></span> (Vol. 16, p. 53), and <span class="sc"><a href="/article/20-0495-painter-work/painter-work">Painter-Work</a></span> (Vol. 20, p. 457). Further information about lacquering, with valuable formulas, will be found in the article <span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span> (Vol. 15, p. 188). Some of the ornamental forms of metal work are described in <span class="sc"><a href="/article/23-0125-repouss/repoussé">Repoussé</a></span> (Vol. 23, p. 108), by <a href="/contributors.html?q=Marion+H.+Spielmann">M. H. Spielmann</a>, formerly editor of <i>The Magazine of Art</i>; <span class="sc"><a href="/article/14-0605-s2/inlaying">Inlaying</a></span> (Vol. 14, p. 574), and <span class="sc"><a href="/article/07-0807-damascening/damascening">Damascening</a></span> (Vol. 7, p. 783). See also <span class="sc"><a href="/article/12-0621-s6/grille">Grille</a></span> (Vol. 12, p. 596).</p> <p><span class="sc"><a href="/article/21-0820-plate/plate">Plate</a></span> (Vol. 21, p. 789), an article by <a href="/contributors.html?q=Harry+Reginald+Holland+Hall">H. R. Hall</a>, of the British Museum, H. Stuart <a href="/contributors.html?q=Henry+Stuart+Jones">Jones</a>, director of the British School at Rome, and E. A. <a href="/contributors.html?q=Henry+Stuart+Jones">Jones</a>, author of <i>Old English Gold Plate</i>, etc., is a concise, complete hand-book on work in silver and gold of any class other than those of personal ornaments and coins. It is profusely illustrated with plates and text-cuts, showing many exquisite models; and the reader can master the details of style in different periods and countries. The subjects of the assay of gold and silver plate and hall-marks are discussed, the former being treated more fully in <span class="sc"><a href="/article/02-0822-s3/assaying">Assaying</a></span> (Vol. 2, p. 776), by <a href="/contributors.html?q=Andrew+Alexander+Blair">A. A. Blair</a>, chief chemist of the U. S. Geological Survey. The article <span class="sc"><a href="/article/23-0496-roman-art/roman_art">Roman Art</a></span>, by <a href="/contributors.html?q=Henry+Stuart+Jones">H. Stuart Jones</a>, has a section devoted to <i>Work in Precious Metals</i> (Vol. 23, p. 483).</p> <p><span class="sc"><a href="/article/07-0693-cutlery/cutlery">Cutlery</a></span> (Vol. 7, p. 671) is one of the articles pertaining specifically to hardware manufacture and trade, in which general processes of manufacture are described; and of allied interest are <span class="sc"><a href="/article/15-0879-s3/knife">Knife</a></span> (Vol. 15, p. 850), <span class="sc"><a href="/article/10-0687-s2/fork">Fork</a></span> (Vol. 10, p. 666), <span class="sc"><a href="/article/25-0755-spoon/spoon">Spoon</a></span> (Vol. 25, p. 733), <span class="sc"><a href="/article/24-0425-s3/scissors">Scissors</a></span> (Vol. 24, p. 407), <span class="sc"><a href="/article/24-0847-shears/shears">Shears</a></span> (Vol. 24, p. 815), <span class="sc"><a href="/article/22-0954-razor/razor">Razor</a></span> (Vol. 22, p. 937), <span class="sc"><a href="/article/05-0836-chafing-dish/chafing-dish">Chafing-Dish</a></span> (Vol. 5, p. 800), <span class="sc"><a href="/article/19-0168-nail/nail">Nail</a></span> (Vol. 19, p. 153), <span class="sc"><a href="/article/03-0082-s10/axe">Axe</a></span> (Vol. 3, p. 67), <span class="sc"><a href="/article/12-0922-hammer/hammer">Hammer</a></span> (Vol. 12, p. 897), <span class="sc"><a href="/article/06-0263-chisel/chisel">Chisel</a></span> (Vol. 6, p. 247), <span class="sc"><a href="/article/28-0758-wire/wire">Wire</a></span> (Vol. 28, p. 738), and <span class="sc"><a href="/article/03-0401-barbed-wire/barbed_wire">Barbed Wire</a></span> (Vol. 3, p. 384). Articles describing all forms of agricultural implements will be found under their respective headings.</p> <p><span class="shoulder-heading" id="sh-5">Glassware</span><span class="sc"><a href="/article/12-0099-s3/glass">Glass</a></span> (Vol. 12, p. 86) is most complete in its consideration of the entire subject. The introductory section by <a href="/contributors.html?q=Harry+James+Powell">H. J. Powell</a>, of the Whitefriars Glass Works, London, author of <i>Glass Making</i>, and W. Rosenhain, of the National Physical Laboratory, London, deals with the manufacture of optical glass, blown glass and mechanically-pressed glass. The necessary qualities of each kind are stated and the newest processes of manufacture described, with full information about materials. The second part of the article is devoted to the <i>History of Glass Manufacture</i>, by <a href="/contributors.html?q=Harry+James+Powell">Mr. Powell</a> and Alexander Nesbitt, who wrote the well-known <i>Introduction</i> to the South Kensington Museum Catalogue of Glass Vessels. Egyptian, Assyrian, Roman, Venetian, Bohemian and Oriental glass, as well as the modern types, are exhaustively described. The article is splendidly illustrated. <span class="sc"><a href="/article/08-0605-drinking-vessels/drinking_vessels">Drinking Vessels</a></span> (Vol. 8, p. 580), by Dr. <a href="/contributors.html?q=Charles+Hercules+Read">Charles H. Read</a>, of the British Museum, describes old forms of glass cups and goblets. It is most valuable for its information in regard to styles of different countries and periods, and the illustrations show many types.</p> <p>Stained glass is the subject of the separate article <span class="sc"><a href="/article/12-0120-s2/glass__stained">Glass, Stained</a></span> (Vol. 12, p. 105), illustrated, by the late Lewis F. Day, author of <i>Windows, a Book about Stained Glass</i>. It is both historical and descriptive in its nature, deals with painted and stained glass, contains a table of examples of important historical stained glass, and treats of the latest progress in the art, including the productions of La Farge and L. C. Tiffany in this country. The art of fitting and setting of glass is described in <span class="sc"><a href="/article/12-0133-s1/glazing">Glazing</a></span> (Vol. 12, p. 116), illustrated, by <a href="/contributors.html?q=James+Bartlett">James Bartlett</a>. Here we learn about the setting of window glass, the use of glass in decoration, systems of roof glazing and the use of wire glass.</p> <p>Full information about glass for optical purposes will be found under <span class="sc"><a href="/article/16-0441-lens/lens">Lens</a></span> (Vol. 16, p. 421), illustrated, by Dr. Otto Henker, of the Carl Zeiss Factory, Jena, Germany; <span class="sc"><a href="/article/16-0647-s2/lighthouse">Lighthouse</a></span>, <i>Optical Apparatus</i> (Vol. 16, p. 633), illustrated, by <a href="/contributors.html?q=William+Tregarthen+Douglass">W. T. Douglass</a>, who erected the Eddystone and Bishop Rock lighthouses, and Nicholas G. Gedye, chief engineer to the Tyne Improvement Commission; <span class="sc"><a href="/article/26-0586-telescope/telescope">Telescope</a></span>, <i>Instruments</i> (Vol. 26, p. 561), illustrated, by <a href="/contributors.html?q=H.+Dennis+Taylor">H. Dennis Taylor</a> and Sir David Gill; <span class="sc"><a href="/article/21-0507-photography/photography">Photography</a></span>, <i>Photographic Objectives or Lenses</i> (Vol. 21, p. 507), illustrated, by <a href="/contributors.html?q=Major-General+James+Waterhouse">James Waterhouse</a>; <span class="sc"><a href="/article/25-0638-s4/spectacles">Spectacles</a></span> (Vol. 25, p. 617).</p> <p><span class="shoulder-heading" id="sh-6">Chinaware, Pottery and Porcelain</span>To those engaged in the china ware, pottery or porcelain manufacture and trade, the great article <span class="sc"><a href="/article/05-0729-ceramics/ceramics">Ceramics</a></span> (Vol. 5, p. 703) will prove a revelation. It is the joint product of a number of experts, both practical and artistic, including <a href="/contributors.html?q=William+Burton">William Burton</a>, chairman, Joint Committee of Pottery Manufacturers of Great Britain, Henry R. <a href="/contributors.html?q=Harry+Reginald+Holland+Hall">H. Hall</a> and Robert Lockhart Hobson, both of the British Museum, and A. Van de Put and Bernard Rackham, both of the Victoria and Albert Museum. It is 85,000 words in length and contains over a hundred beautiful illustrations, including six plates in colour. It deals fully with the artistic and economic phases of the subject, the methods of manufacture, the different varieties of ceramics, their history, decoration, etc. Japanese ceramics are treated separately in <span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span>, <i>Ceramics</i> (Vol. 15, p. 183), illustrated, by the late Capt. Frank Brinkley.</p> <p><span class="sc"><a href="/article/06-0488-clay/clay">Clay</a></span> (Vol. 6, p. 472), by Dr. <a href="/contributors.html?q=John+Smith+Flett">J. S. Flett</a>, describes the occurrence, composition and properties of the various clays used in ceramics.</p> <p><span class="sc"><a href="/article/26-0684-s4/terracotta">Terracotta</a></span> (Vol. 26, p. 653), illustrated, by <a href="/contributors.html?q=William+Burton">William Burton</a> and H. B. Walters, of the British Museum, deals with the artistic use to which baked clay is put, while <span class="sc"><a href="/article/26-1011-s2/tile">Tile</a></span> (Vol. 26, p. 971), illustrated, also by <a href="/contributors.html?q=William+Burton">William Burton</a>, has great practical value for the present-day manufacturer.</p> <p><span class="sc"><a href="/article/15-0700-kaolin/kaolin">Kaolin</a></span> (Vol. 15, p. 672), by <a href="/contributors.html?q=Frederick+William+Rudler">F. W. Rudler</a>, of the Museum of Practical Geology, London, deals specifically with china clay and its preparation for the market. <span class="sc"><a href="/article/12-0026-gilding/gilding">Gilding</a></span> (Vol. 12, p. 13) contains material on the subject of the gilding of pottery and porcelain, and <span class="sc"><a href="/article/20-0497-s2/painting">Painting</a></span> has a section <i>Painting with Coloured Vitreous Pastes</i> (Vol. 20, p. 484), by Prof. <a href="/contributors.html?q=Gerard+Baldwin+Brown">G. B. Brown</a>, of Edinburgh University, which describes the use of these pastes in ceramics. <span class="sc"><a href="/article/09-0385-enamel/enamel">Enamel</a></span> (Vol. 9, p. 362), illustrated, by <a href="/contributors.html?q=Alexander+Fisher">Alexander Fisher</a>, yields equally valuable information for those concerned with the decoration of china.</p> <p>In <span class="sc"><a href="/article/19-0030-s2/mural_decoration">Mural Decoration</a></span>, by <a href="/contributors.html?q=Walter+Crane">Walter Crane</a> and William Morris, there is a section devoted to <i>Wall-Linings of Glazed Brick or Tiles</i> (Vol. 19, p. 17). Material of great archaeological interest relating to earthenware, etc., will be found in such articles as <span class="sc"><a href="/article/01-0276-s3/aegean_civilization">Aegean Civilization</a></span> (Vol. 1, p. 245), illustrated, by <a href="/contributors.html?q=David+George+Hogarth">D. G. Hogarth</a>, of the Ashmolean Museum, Oxford; <span class="sc"><a href="/article/07-0438-crete/crete">Crete</a></span>, <i>Archaeology</i> (Vol. 7, p. 421), illustrated, by <a href="/contributors.html?q=Arthur+John+Evans">Arthur J. Evans</a>, the famous Cretan explorer, and <span class="sc"><a href="/article/12-0489-greek-art/greek_art">Greek Art</a></span> (Vol. 12, p. 470), illustrated, by <a href="/contributors.html?q=Percy+Gardner">Percy Gardner</a>, the classical archaeologist.</p> <p>The following is a partial list in alphabetical order of articles and subjects in this field treated in the Britannica.</p> <div> <details class="article-list"><summary><span class="list-title">ALPHABETICAL LIST OF ARTICLES AND SUBJECTS IN THE ENCYCLOPAEDIA BRITANNICA OF SPECIAL INTEREST TO THOSE IN METAL, HARDWARE, GLASS AND CHINA MANUFACTURE AND TRADE</span><span class="list-count"> (265 articles)</span></summary></span></p>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0275-s3/adze">Adze</a></li>
+  <li class="c018"><a href="/article/01-0276-s3/aegean_civilization">Aegean Civilization</a></li>
+  <li class="c018"><a href="/article/01-0478-s3/ainmuller__maximilian_emmanuel">Ainmuller, M. E.</a></li>
+  <li class="c018">Alloy Steels</li>
+  <li class="c018"><a href="/article/01-0746-s5/alloys">Alloys</a></li>
+  <li class="c018"><a href="/article/01-0813-aluminium/aluminium">Aluminium</a></li>
+  <li class="c018"><a href="/article/01-0946-s4/amphora">Amphora</a></li>
+  <li class="c018"><a href="/article/01-1018-s3/andiron">Andiron</a></li>
+  <li class="c018"><a href="/article/02-0081-s3/annealing__hardening_and_tempering">Annealing, Hardening and Tempering</a></li>
+  <li class="c018"><a href="/article/02-0139-s5/antimony">Antimony</a></li>
+  <li class="c018"><a href="/article/02-0169-s4/anvil">Anvil</a></li>
+  <li class="c018"><a href="/article/02-0618-s4/armour_plates">Armour Plate</a></li>
+  <li class="c018"><a href="/article/02-0624-s2/arms_and_armour">Arms and Armour</a></li>
+  <li class="c018">Arretine Ware</li>
+  <li class="c018"><a href="/article/02-0822-s3/assaying">Assaying</a></li>
+  <li class="c018"><a href="/article/02-0948-s5/auger">Auger</a></li>
+  <li class="c018"><a href="/article/03-0082-s9/awl">Awl</a></li>
+  <li class="c018"><a href="/article/03-0082-s10/axe">Axe</a></li>
+  <li class="c018"><a href="/article/03-0401-barbed-wire/barbed_wire">Barbed Wire</a></li>
+  <li class="c018">Banko Ware</li>
+  <li class="c018"><a href="/article/03-0497-basin/basin">Basin</a></li>
+  <li class="c018"><a href="/article/03-0590-beaker/beaker">Beaker</a></li>
+  <li class="c018">Belleeck Ware</li>
+  <li class="c018">Bidri Work</li>
+  <li class="c018"><a href="/article/03-0972-binocular-instrument/binocular_instrument">Binocular Instrument</a></li>
+  <li class="c018"><a href="/article/03-1015-biscuit/biscuit">Biscuit</a></li>
+  <li class="c018"><a href="/article/04-0022-bismuth/bismuth">Bismuth</a></li>
+  <li class="c018">Bizen Ware</li>
+  <li class="c018">Bohemian Glass</li>
+  <li class="c018"><a href="/article/04-0324-bottle/bottle">Bottle</a></li>
+  <li class="c018">Bow Ware</li>
+  <li class="c018"><a href="/article/04-0384-bradawl/bradawl">Bradawl</a></li>
+  <li class="c018"><a href="/article/04-0448-brass-alloy/brass__alloy_">Brass</a></li>
+  <li class="c018"><a href="/article/04-0449-brasses-monumental/brasses__monumental">Brasses, Monumental</a></li>
+  <li class="c018"><a href="/article/04-0455-brazier/brazier">Brazier</a></li>
+  <li class="c018"><a href="/article/04-0481-brazing-and-soldering/brazing_and_soldering">Brazing and Soldering</a></li>
+  <li class="c018"><a href="/article/04-0662-s4/bronze">Bronze</a></li>
+  <li class="c018">Byzantine Glass</li>
+  <li class="c018"><a href="/article/04-0971-s3/caffieri__jacques">Caffieri, Jacques</a></li>
+  <li class="c018"><a href="/article/05-0192-candlestick/candlestick">Candlestick</a></li>
+  <li class="c018">Capo di Monte Ware</li>
+  <li class="c018"><a href="/article/05-0305-capronnier-jean-baptiste/capronnier__jean_baptiste">Capronnier, J. B.</a></li>
+  <li class="c018">Cast Work</li>
+  <li class="c018"><a href="/article/05-0629-cellini-benvenuto/cellini__benvenuto">Cellini, Benvenuto</a></li>
+  <li class="c018"><a href="/article/05-0729-ceramics/ceramics">Ceramics</a></li>
+  <li class="c018">Chafing Dish</li>
+  <li class="c018"><a href="/article/05-0841-chalice/chalice">Chalice</a></li>
+  <li class="c018">Chelsea Ware</li>
+  <li class="c018"><a href="/article/06-0179-china/china">China</a></li>
+  <li class="c018">China, <i>Art</i></li>
+  <li class="c018">Chinese Porcelain</li>
+  <li class="c018"><a href="/article/06-0263-chisel/chisel">Chisel</a></li>
+  <li class="c018"><a href="/article/06-0366-churn/churn">Churn</a></li>
+  <li class="c018"><a href="/article/06-0488-clay/clay">Clay</a></li>
+  <li class="c018"><a href="/article/07-0091-cookworthy-william/cookworthy__william">Cookworthy, William</a></li>
+  <li class="c018">Coperta</li>
+  <li class="c018"><a href="/article/07-0119-copper/copper">Copper</a></li>
+  <li class="c018">Coppersmith’s Work</li>
+  <li class="c018"><a href="/article/07-0438-crete/crete">Crete</a></li>
+  <li class="c018">Crown Glass</li>
+  <li class="c018"><a href="/article/07-0656-cup/cup">Cup</a></li>
+  <li class="c018"><a href="/article/07-0693-cutlery/cutlery">Cutlery</a></li>
+  <li class="c018"><a href="/article/07-0640-cultivator/cultivator">Cultivator</a></li>
+  <li class="c018"><a href="/article/07-0807-damascening/damascening">Damascening</a></li>
+  <li class="c018"><a href="/article/07-0810-damask-steel/damask_steel">Damask Steel, or Damascus Steel</a></li>
+  <li class="c018">Damascus Ware</li>
+  <li class="c018">Delft Ware</li>
+  <li class="c018"><a href="/article/07-0990-della-robbia/della_robbia">Della Robbia</a></li>
+  <li class="c018">Derby Ware</li>
+  <li class="c018"><a href="/article/08-0470-doulton-sir-henry/doulton__sir_henry">Doulton, Sir Henry</a></li>
+  <li class="c018"><a href="/article/08-0599-dresden/dresden">Dresden, or Meissen, Ware</a></li>
+  <li class="c018"><a href="/article/08-0605-drinking-vessels/drinking_vessels">Drinking Vessels</a></li>
+  <li class="c018"><a href="/article/08-0767-dwight-john/dwight__john">Dwight, John</a></li>
+  <li class="c018"><a href="/article/09-0234-electrolier/electrolier">Electrolier</a></li>
+  <li class="c018"><a href="/article/09-0254-electroplating/electroplating">Electroplating</a></li>
+  <li class="c018"><a href="/article/09-0269-electrum-electron/electrum__electron">Electrum</a></li>
+  <li class="c018">Enamel Painting</li>
+  <li class="c018">Etruscan Ware</li>
+  <li class="c018"><a href="/article/10-0138-faience/faience">Faience</a></li>
+  <li class="c018"><a href="/article/10-0264-s2/fender">Fender</a></li>
+  <li class="c018"><a href="/article/10-0353-s5/file">File</a></li>
+  <li class="c018"><a href="/article/10-0390-s5/finiguerra__maso">Finiguerra, Maso</a></li>
+  <li class="c018"><a href="/article/10-0434-s2/fireback">Fireback</a></li>
+  <li class="c018">Firing</li>
+  <li class="c018"><a href="/article/10-0435-s3/fire-irons">Fire-irons</a></li>
+  <li class="c018">Flint Glass</li>
+  <li class="c018"><a href="/article/10-0687-s2/fork">Fork</a></li>
+  <li class="c018"><a href="/article/10-0684-s3/forging">Forging</a></li>
+  <li class="c018"><a href="/article/10-0764-s2/founding">Founding</a></li>
+  <li class="c018"><a href="/article/11-0387-fusible-metal/fusible_metal">Fusible Metal</a></li>
+  <li class="c018"><a href="/article/11-0446-s4/galvanized_iron">Galvanized Iron</a></li>
+  <li class="c018">German (or Nickel) Silver</li>
+  <li class="c018"><a href="/article/12-0026-gilding/gilding">Gilding</a></li>
+  <li class="c018"><a href="/article/12-0039-s5/gimlet">Gimlet</a></li>
+  <li class="c018"><a href="/article/12-0057-s5/girandole">Girandole</a></li>
+  <li class="c018"><a href="/article/12-0099-s3/glass">Glass</a></li>
+  <li class="c018"><a href="/article/12-0099-s3/glass">Glass, Ancient</a></li>
+  <li class="c018">Glass-blowing Machine</li>
+  <li class="c018">Glass Cutting and Engraving</li>
+  <li class="c018"><a href="/article/12-0099-s3/glass">Glass, Painted</a></li>
+  <li class="c018">Glass-press</li>
+  <li class="c018"><a href="/article/12-0120-s2/glass__stained">Glass, Stained</a></li>
+  <li class="c018">Glazes</li>
+  <li class="c018"><a href="/article/12-0133-s1/glazing">Glazing</a></li>
+  <li class="c018"><a href="/article/12-0186-goblet/goblet">Goblet</a></li>
+  <li class="c018"><a href="/article/12-0209-gold/gold">Gold</a></li>
+  <li class="c018"><a href="/article/12-0217-gold-and-silver-thread/gold_and_silver_thread">Gold and Silver Thread</a></li>
+  <li class="c018"><a href="/article/12-0219-goldbeating/goldbeating">Goldbeating</a></li>
+  <li class="c018"><a href="/article/12-0298-s5/gouge">Gouge</a></li>
+  <li class="c018">Gombroon Ware</li>
+  <li class="c018"><a href="/article/12-0308-s2/gouthière__pierre">Gouthière, Pierre</a></li>
+  <li class="c018">Graffito Ware</li>
+  <li class="c018"><a href="/article/12-0395-s2/grate">Grate</a></li>
+  <li class="c018"><a href="/article/12-0489-greek-art/greek_art">Greek Art</a></li>
+  <li class="c018"><a href="/article/12-0621-s6/grille">Grille</a></li>
+  <li class="c018"><a href="/contributors.html?q=Harry+Reginald+Holland+Hall">Hall</a>-marks</li>
+  <li class="c018"><a href="/article/12-0922-hammer/hammer">Hammer</a></li>
+  <li class="c018"><a href="/article/13-0040-s4/harrow">Harrow</a></li>
+  <li class="c018"><a href="/article/13-0075-hatchet/hatchet">Hatchet</a></li>
+  <li class="c018">Henri-Deux, Oiron, or St. Porchaire Ware</li>
+  <li class="c018">Hispano-Moresque Ware</li>
+  <li class="c018">Hizen Ware</li>
+  <li class="c018"><a href="/article/13-0575-s4/hoe">Hoe</a></li>
+  <li class="c018">Horseshoes</li>
+  <li class="c018"><a href="/article/14-0596-s7/ingot">Ingot</a></li>
+  <li class="c018"><a href="/article/14-0605-s2/inlaying">Inlaying</a></li>
+  <li class="c018"><a href="/article/14-0748-s10/invar">Invar</a></li>
+  <li class="c018"><a href="/article/14-0834-s2/iron_and_steel">Iron and Steel</a></li>
+  <li class="c018">Iron Work</li>
+  <li class="c018">Izumo Ware</li>
+  <li class="c018">Japan, <i>Ceramics</i></li>
+  <li class="c018"><a href="/article/15-0300-japanning/japanning">Japanning</a></li>
+  <li class="c018"><a href="/article/15-0571-s3/jug">Jug</a></li>
+  <li class="c018"><a href="/article/15-0700-kaolin/kaolin">Kaolin</a></li>
+  <li class="c018"><a href="/article/15-0714-kashi/kashi">Kashi</a></li>
+  <li class="c018"><a href="/article/15-0826-kiln/kiln">Kiln</a></li>
+  <li class="c018">Kioto Ware</li>
+  <li class="c018"><a href="/article/15-0879-s3/knife">Knife</a></li>
+  <li class="c018">Kuang-Yao</li>
+  <li class="c018">Kuft Work</li>
+  <li class="c018">Kutani Ware</li>
+  <li class="c018"><a href="/article/16-0073-s3/lacquer">Lacquer</a></li>
+  <li class="c018"><a href="/article/16-0084-s4/la_farge__john">La Farge, John</a></li>
+  <li class="c018">Lang-Yao</li>
+  <li class="c018"><a href="/article/16-0295-s5/latten">Latten</a></li>
+  <li class="c018"><a href="/article/16-0334-s6/lead">Lead</a></li>
+  <li class="c018"><a href="/article/16-0441-lens/lens">Lens</a></li>
+  <li class="c018">Lighthouse Apparatus, Optical</li>
+  <li class="c018"><a href="/article/16-0863-s3/lock">Lock</a></li>
+  <li class="c018"><a href="/article/17-0102-lubricants/lubricants">Lubricants</a></li>
+  <li class="c018">Lustred Ware</li>
+  <li class="c018"><a href="/article/17-0466-s1/majolica">Majolica</a></li>
+  <li class="c018"><a href="/article/18-0104-meissonier-juste-aur-le/meissonier__juste_aurèle">Meissonier, J. A.</a></li>
+  <li class="c018"><a href="/article/18-0015-medal/medal">Medal</a></li>
+  <li class="c018"><a href="/article/18-0217-s3/metal">Metal</a></li>
+  <li class="c018"><a href="/article/18-0221-s2/metallography">Metallography</a></li>
+  <li class="c018"><a href="/article/18-0222-s2/metallurgy">Metallurgy</a></li>
+  <li class="c018">Metal Work</li>
+  <li class="c018">Mezza Majolica</li>
+  <li class="c018">Minoan, or Kamares, Ware</li>
+  <li class="c018"><a href="/article/18-0602-mirror/mirror">Mirror</a></li>
+  <li class="c018"><a href="/article/18-0775-monstrance/monstrance">Monstrance</a></li>
+  <li class="c018"><a href="/article/18-0861-s1/morel-ladeuil__leonard">Morel-Ladeuil, L.</a></li>
+  <li class="c018"><a href="/article/19-0030-s2/mural_decoration">Mural Decoration</a></li>
+  <li class="c018"><a href="/article/19-0168-nail/nail">Nail</a></li>
+  <li class="c018"><a href="/article/19-0356-needle/needle">Needle</a></li>
+  <li class="c018"><a href="/article/19-0685-s6/nickel">Nickel</a></li>
+  <li class="c018"><a href="/article/19-0697-s5/niello">Niello</a></li>
+  <li class="c018"><a href="/article/20-0329-ormolu/ormolu">Ormolu</a></li>
+  <li class="c018">Owari Ware</li>
+  <li class="c018"><a href="/article/20-0495-painter-work/painter-work">Painter-work</a></li>
+  <li class="c018"><a href="/article/20-0690-palissy-bernard/palissy__bernard">Palissy, Bernard</a></li>
+  <li class="c018">Palissy Ware</li>
+  <li class="c018"><a href="/article/20-0497-s2/painting">Painting</a></li>
+  <li class="c018"><a href="/article/21-0097-s5/pen">Pen</a></li>
+  <li class="c018">Persian Pottery</li>
+  <li class="c018"><a href="/article/21-0359-s5/pewter">Pewter</a></li>
+  <li class="c018"><a href="/article/16-0441-lens/lens">Photographic Objectives or Lenses</a></li>
+  <li class="c018"><a href="/article/21-0642-s2/pin">Pin</a></li>
+  <li class="c018"><a href="/article/21-0692-s3/pitcher">Pitcher</a></li>
+  <li class="c018"><a href="/article/21-0814-plaque/plaque">Plaque</a></li>
+  <li class="c018"><a href="/article/21-0820-plate/plate">Plate</a></li>
+  <li class="c018"><a href="/article/21-0837-plated-ware/plated_ware">Plated Ware</a></li>
+  <li class="c018">Plate-glass</li>
+  <li class="c018">Plater’s Work</li>
+  <li class="c018"><a href="/article/21-0838-s4/platinum">Platinum</a></li>
+  <li class="c018"><a href="/article/21-0883-s2/plough_and_ploughing">Plough</a></li>
+  <li class="c018"><a href="/article/22-0114-porcelain/porcelain">Porcelain</a></li>
+  <li class="c018">Pot-hook</li>
+  <li class="c018"><a href="/article/22-0226-potteries-the/potteries__the">Potteries, The</a></li>
+  <li class="c018">Potter’s Marks</li>
+  <li class="c018">Potter’s Wheel</li>
+  <li class="c018">Pottery</li>
+  <li class="c018">Protection of Surfaces</li>
+  <li class="c018">Raised Work</li>
+  <li class="c018"><a href="/article/22-0884-rake/rake">Rake</a></li>
+  <li class="c018"><a href="/article/22-0954-razor/razor">Razor</a></li>
+  <li class="c018">Reaper</li>
+  <li class="c018"><a href="/article/23-0125-repouss/repoussé">Repoussé</a></li>
+  <li class="c018"><a href="/article/23-0496-roman-art/roman_art">Roman Art</a></li>
+  <li class="c018">Rookwood Ware</li>
+  <li class="c018">Royal Copenhagen Ware</li>
+  <li class="c018">Royal Worcester Ware</li>
+  <li class="c018">Salt Glaze</li>
+  <li class="c018"><a href="/article/24-0116-salver/salver">Salver</a></li>
+  <li class="c018"><a href="/article/24-0132-s2/samovar">Samovar</a></li>
+  <li class="c018">Saracenic Glass</li>
+  <li class="c018">Satsuma Ware</li>
+  <li class="c018"><a href="/article/24-0272-s2/saw">Saw</a></li>
+  <li class="c018"><a href="/article/24-0425-s3/scissors">Scissors</a></li>
+  <li class="c018"><a href="/article/24-0425-s7/sconce">Sconce</a></li>
+  <li class="c018"><a href="/article/24-0497-s3/screen">Screen</a></li>
+  <li class="c018"><a href="/article/24-0497-s4/screw">Screw</a></li>
+  <li class="c018"><a href="/article/24-0555-scythe/scythe">Scythe</a></li>
+  <li class="c018">Sèvres Porcelain</li>
+  <li class="c018"><a href="/article/24-0847-shears/shears">Shears</a></li>
+  <li class="c018">Sheet Glass</li>
+  <li class="c018"><a href="/article/24-0858-sheffield-plate/sheffield_plate">Sheffield Plate</a></li>
+  <li class="c018"><a href="/article/24-1090-shovel/shovel">Shovel</a></li>
+  <li class="c018"><a href="/article/24-1100-shuttle/shuttle">Shuttle</a></li>
+  <li class="c018"><a href="/article/25-0072-s5/sieve">Sieve</a></li>
+  <li class="c018"><a href="/article/25-0128-s3/silver">Silver</a></li>
+  <li class="c018"><a href="/article/25-0289-s2/smith">Smith</a></li>
+  <li class="c018"><a href="/article/25-0374-solder/solder">Solder</a></li>
+  <li class="c018"><a href="/article/25-0546-spade/spade">Spade</a></li>
+  <li class="c018"><a href="/article/25-0638-s4/spectacles">Spectacles</a></li>
+  <li class="c018"><a href="/article/25-0730-spit/spit">Spit</a></li>
+  <li class="c018"><a href="/article/25-0755-spoon/spoon">Spoon</a></li>
+  <li class="c018"><a href="/article/25-0546-spade/spade">Spade</a></li>
+  <li class="c018">Stone Ware</li>
+  <li class="c018">Table-ware</li>
+  <li class="c018">Takatori Ware</li>
+  <li class="c018">Tanagra Figures</li>
+  <li class="c018"><a href="/article/26-0420-s1/tankard">Tankard</a></li>
+  <li class="c018"><a href="/article/26-0504-s6/tazza">Tazza</a></li>
+  <li class="c018">Telescopic Instruments</li>
+  <li class="c018"><a href="/article/26-0684-s4/terracotta">Terracotta</a></li>
+  <li class="c018">Thrasher</li>
+  <li class="c018"><a href="/article/26-1006-tiffany-charles-lewis/tiffany__charles_lewis">Tiffany, C. L.</a></li>
+  <li class="c018">Tiffany Glass</li>
+  <li class="c018"><a href="/article/26-1011-s2/tile">Tiles</a></li>
+  <li class="c018"><a href="/article/26-1035-tin/tin">Tin</a></li>
+  <li class="c018"><a href="/article/26-1039-s4/tinker">Tinker</a></li>
+  <li class="c018">Tin and Terne Plate</li>
+  <li class="c018"><a href="/article/27-0021-tongs/tongs">Tongs</a></li>
+  <li class="c018">Tool</li>
+  <li class="c018"><a href="/article/27-0064-s10/torchère">Torchère</a></li>
+  <li class="c018"><a href="/article/27-0237-s2/tray">Tray</a></li>
+  <li class="c018"><a href="/article/27-0303-tripod/tripod">Tripod</a></li>
+  <li class="c018"><a href="/article/27-0315-s2/trivet">Trivet</a></li>
+  <li class="c018">Tube-making, Glass</li>
+  <li class="c018">Turkish Pottery</li>
+  <li class="c018"><a href="/article/27-0510-tweezers/tweezers">Tweezers</a></li>
+  <li class="c018"><a href="/article/27-0331-trowel/trowel">Trowel</a></li>
+  <li class="c018">Vacuum Cleaner</li>
+  <li class="c018"><a href="/article/27-0972-vase/vase">Vase</a></li>
+  <li class="c018">Venetian Glass</li>
+  <li class="c018">Wedgewood, Josiah</li>
+  <li class="c018">Wedgewood Ware</li>
+  <li class="c018">Whitefriars Glass</li>
+  <li class="c018"><a href="/article/28-0758-wire/wire">Wire</a></li>
+  <li class="c018">Wired Glass</li>
+  <li class="c018">Yatsushiro Ware</li>
+  <li class="c018">Yi-Hsing-Yao</li>
+  <li class="c018"><a href="/article/28-1008-zinc/zinc">Zinc</a></li>
+</ul></details>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

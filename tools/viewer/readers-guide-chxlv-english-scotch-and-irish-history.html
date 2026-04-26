@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>English, Scotch And Irish History &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XLV</span>English, Scotch And Irish History</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">The British Empire</a></li><li><a href="#sh-2">Early Britain</a></li><li><a href="#sh-3">Scottish History</a></li><li><a href="#sh-4">Irish History</a></li><li><a href="#sh-5">Anglo-Saxon Period</a></li><li><a href="#sh-6">William the Conqueror<br> William Rufus<br> Henry I<br> Stephen and Matilda<br> Henry II</a></li><li><a href="#sh-7">John Henry III Edward I to III</a></li><li><a href="#sh-8">Richard II Henry IV to VI</a></li><li><a href="#sh-9">Edward IV and V<br> Richard III<br> Henry VII</a></li><li><a href="#sh-10">Henry VIII Edward VI Mary Elizabeth</a></li><li><a href="#sh-11">James I Charles I The Commonwealth Charles II James II</a></li><li><a href="#sh-12">William and Mary; Anne</a></li><li><a href="#sh-13">George I to IV William IV</a></li><li><a href="#sh-14">Victoria</a></li><li><a href="#sh-15">Edward VII George V</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">The British Empire</span>The student of English history in
+the Britannica may well begin
+with the summary view in the
+article <span class="sc"><a href="/article/04-0628-s2/british_empire">British Empire</a></span> (Vol. 4, p. 606),
+equivalent to 30 pages of this Guide, by
+<a href="/contributors.html?q=Lady+Lugard">Lady Lugard</a>, wife of the British explorer
+and colonial administrator, Sir Frederick
+<a href="/contributors.html?q=Lady+Lugard">Lugard</a>, herself an authority on colonial
+subjects and well-known as colonial
+editor of the <i>Times</i> of London. On pp.
+608–610 there is a chronological list of
+the acquisitions of the Empire, and nothing
+will surprise the reader more than
+the comparative recentness of the movement
+by which two small islands have
+expanded into an empire covering nearly
+one-fourth of the earth’s land surface.
+Except for the Channel Islands, the
+Isle of Man, and “the nominal possession
+of Newfoundland by Sir Humphrey
+Gilbert in 1583, all the territorial acquisitions
+of the Empire have been made
+in the 17th and subsequent centuries.”
+On each of the localities mentioned in
+this imposing list the reader will find
+a separate article in its proper alphabetical
+place in the Encyclopaedia Britannica
+dealing with geography, government
+and history. Here it will be
+possible only to call attention to articles
+on the more important branches of the
+subject.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Early Britain</span>On the early inhabitants of the islands
+and on British archaeology, read the
+elaborate article <span class="sc"><a href="/article/05-0636-celt-people/celt__people_">Celt</a></span> (Vol. 5, p. 611;
+equivalent to 135 pages of this Guide),
+by Prof. <a href="/contributors.html?q=William+Ridgeway">William Ridgeway</a>, Cambridge,
+author of <i>The Oldest Irish
+Epic</i>, and <a href="/contributors.html?q=Edmund+Crosby+Quiggin">E. C. Quiggin</a>,
+lecturer in Celtic, Cambridge,—with
+particularly
+full treatment of Celtic languages and
+literatures,—Gaulish, Irish, Scottish,
+Gaelic, Manx, Welsh, Breton and Cornish;
+and the article <span class="sc"><a href="/article/04-0603-britain/britain">Britain</a></span> (Vol. 4, p.
+583; equivalent to 40 pages of this Guide),
+which is illustrated by a map of Roman
+Britain and plans of Roman remains.
+The treatment of pre-Roman and Roman
+Britain is by Professor F. J. Haverfield
+of Oxford; and later Britain is described
+by <a href="/contributors.html?q=Hector+Munro+Chadwick">Hector Munro Chadwick</a>, librarian
+of Clare College, Cambridge, and author
+of <i>Studies on Anglo-Saxon Institutions</i>.</p>
+
+<p>Then read:</p>
+
+<p><span class="sc"><a href="/article/28-0274-wales/wales">Wales</a></span>, <i>History</i> (Vol. 28, pp. 261–268),
+by <a href="/contributors.html?q=Herbert+Murray+Vaughan">Herbert Murray Vaughan</a>, Keble
+College, Oxford.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Scottish History</span><span class="sc"><a href="/article/24-0430-part1/scotland">Scotland</a></span>, <i>Political History</i> (Vol. 24,
+pp. 429–457), by <a href="/contributors.html?q=Andrew+Lang">Andrew Lang</a>, author
+of <i>History of Scotland from the Roman
+Occupation</i>; and, among
+many other articles, <span class="sc"><a href="/article/24-0480-scotland-church-of/scotland__church_of">Scotland,
+Church of</a></span>, (Vol. 24,
+460), by the Rev. Dr. Allan
+Menzies, St. Mary’s College, St. Andrews,
+and such biographies as: <span class="sc"><a href="/article/01-0601-s2/alexander_iii">Malcolm
+III.</a></span> (Canmore); <span class="sc"><a href="/article/01-0601-s2/alexander_iii">Alexander I, II
+and III</a></span> (Vol. 1, p. 563); <span class="sc"><a href="/article/28-0684-s2/william_iv">William The
+Lion</a></span> (Vol. 28, p. 665); <span class="sc"><a href="/article/28-0293-wallace-sir-william/wallace__sir_william">Wallace, Sir
+William</a></span> (Vol. 28, p. 277), by <a href="/contributors.html?q=Horatio+Gordon+Hutchinson">A. F.
+Hutchinson</a>, late rector of the High
+School, Stirling; <span class="sc"><a href="/article/23-0412-robert-i/robert_i">Robert I, the Bruce</a></span>
+(Vol. 23, p. 395); <span class="sc"><a href="/article/08-0880-ecclesiastical-jurisdiction/ecclesiastical_jurisdiction">David I and II</a></span> (Vol.
+8, p. 859); <span class="sc"><a href="/article/15-0154-james-ii-of-great-britain-and-ireland/james_ii__of_great_britain_and_ireland">James I, II, III, IV and V</a></span>
+(Vol. 15, p. 139); <span class="sc"><a href="/article/17-0834-mary-queen-of-scots/mary_queen_of_scots">Mary, Queen of
+Scots</a></span> (Vol. 17, p. 817), a striking biography
+by the poet and essayist Algernon
+Charles <a href="/contributors.html?q=Algernon+Charles+Swinburne">Swinburne</a>, author of the tragedies
+<i>Chastelard</i>, <i>Bothwell</i> and <i>Mary
+Stuart</i>; <span class="sc"><a href="/article/04-0319-bothwell/bothwell">Bothwell</a></span> (Vol. 4, p. 303), by
+<a href="/contributors.html?q=Philip+Chesney+Yorke">P. C. Yorke</a>; <span class="sc"><a href="/article/23-0405-s3/rizzio">Rizzio</a></span> (Vol. 23, p. 388);
+<span class="sc"><a href="/article/07-0860-darnley-henry-stewart/darnley__henry_stewart">Darnley</a></span> (Vol. 7, p. 836), and see also
+the article <span class="sc"><a href="/article/05-0466-casket-letters/casket_letters">Casket Letters</a></span> (Vol. 5, p.
+449), an examination of the evidence in
+this mystery by <a href="/contributors.html?q=Andrew+Lang">Andrew Lang</a>; <span class="sc"><a href="/article/17-0682-s3/mar__earldom_of">Mar</a></span>
+(Vol. 17, p. 666); <span class="sc"><a href="/article/15-0912-s3/knox__john">Knox, John</a></span> (Vol. 15,
+p. 878), by Dr. <a href="/contributors.html?q=Alexander+Taylor+Innes">Alexander Taylor Innes</a>,
+author of <span class="sc"><a href="/article/15-0912-s3/knox__john">John Knox</a></span> and <i>Studies in
+Scottish History</i>; <span class="sc"><a href="/article/12-0319-gowrie/gowrie">Gowrie</a></span> (Vol. 12, p.
+301), by R. J. McNeill, late editor <i>St.
+James’s Gazette</i>; and <span class="sc"><a href="/article/15-0151-james-new-testament/james__new_testament_">James I</a></span> of England—VI
+of Scotland (Vol. 15, p. 136); and for
+the later period see <span class="sc"><a href="/article/09-0498-english-history/english_history">English History</a></span>
+to supplement <a href="/contributors.html?q=Andrew+Lang">Andrew Lang</a>’s account
+of the period since the Union under
+<span class="sc"><a href="/article/24-0430-part1/scotland">Scotland</a></span>, <i>History</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Irish History</span><span class="sc"><a href="/article/14-0774-ireland/ireland">Ireland</a></span>, <i>History</i> (Vol. 14, p. 756),
+by Prof. <a href="/contributors.html?q=Edmund+Crosby+Quiggin">E. C. Quiggin</a>, of Cambridge,
+on the early period, and Richard Bagwell,
+commissioner of national
+education for Ireland and
+author of <i>Ireland under the
+Tudors</i>, <i>Ireland under the
+Stuarts</i>, etc.; and to supplement this
+general treatment such separate articles
+as <span class="sc"><a href="/article/20-1001-s3/patrick__st">St. Patrick</a></span> (Vol. 20, p. 933) and <span class="sc"><a href="/article/06-0759-columba-saint/columba__saint">St.
+Columba</a></span> (Vol. 6, p. 737), both by Dr.
+<a href="/contributors.html?q=Edmund+Crosby+Quiggin">E. C. Quiggin</a>; <span class="sc"><a href="/article/04-0513-brendan/brendan">St. Brendan</a></span> (Vol. 4, p.
+495); <span class="sc"><a href="/article/04-0535-brian/brian">Brian</a></span> (Vol. 4, p. 515); <span class="sc"><a href="/article/04-0506-brehon-laws/brehon_laws">Brehon
+Laws</a></span> (Vol. 4, p. 488), by <a href="/contributors.html?q=Laurence+Ginnell">Laurence
+Ginnell</a>, M. P. for North Westmeath and
+author of <i>Land and Liberty</i>, etc.; <span class="sc"><a href="/article/20-0131-o-neill/o_neill">O’Neill</a></span>
+family (Vol. 20, p. 107) and <span class="sc"><a href="/article/20-0024-s3/o_donnell">O’Donnell</a></span>
+family (Vol. 20, p. 6), by R. J. McNeill;
+<span class="sc"><a href="/article/10-0457-s3/fitzgerald">Fitzgerald</a></span> family (Vol. 10, p. 441),
+by <a href="/contributors.html?q=John+Horace+Round">J. H. Round</a>, author of <i>Feudal
+England</i>, etc.; <span class="sc"><a href="/article/27-0568-s6/tyrone">Tyrone</a></span>, earls of (Vol. 27,
+p. 549); <span class="sc"><a href="/article/27-0568-s2/tyrconnell">Tyrconnell</a></span> (Vol. 27, p. 548);
+<span class="sc"><a href="/article/24-0037-s2/st_leger__sir_anthony">St. Leger, Sir Anthony</a></span> (Vol. 24, p. 23),
+by R. J. McNeill; <span class="sc"><a href="/article/08-0114-desmond/desmond">Desmond</a></span> (Vol. 8,
+p. 98); <span class="sc"><a href="/article/04-0903-butler/butler">Butler</a></span> family (Vol. 4, p. 879),
+by <a href="/contributors.html?q=Oswald+Barron">Oswald Barron</a>, editor of <i>The Ancestor</i>;
+<span class="sc"><a href="/article/08-0614-drogheda/drogheda">Drogheda</a></span> (Vol. 8, p. 587); <span class="sc"><a href="/article/21-0059-s2/peep-of-day_boys">Peep-of-day
+Boys</a></span> (Vol. 21, p. 45); <span class="sc"><a href="/article/20-0186-orangemen/orangemen">Orangemen</a></span>
+(Vol. 20, p. 160); <span class="sc"><a href="/article/10-0545-flood-henry/flood__henry">Flood, Henry</a></span> (Vol.
+10, p. 525); <span class="sc"><a href="/article/12-0396-grattan-henry/grattan__henry">Grattan, Henry</a></span> (Vol. 12,
+p. 379); <span class="sc"><a href="/article/27-0016-s3/tone__theobald_wolfe">Tone, T. Wolfe</a></span> (Vol. 27, p. 2)
+and <span class="sc"><a href="/article/09-0365-emmet-robert/emmet__robert">Emmet, Robert</a></span> and <span class="sc"><a href="/article/09-0364-emmanuel-philibert/emmanuel_philibert">Thomas A.</a></span>
+(Vol. 9, pp. 342–343), all by R. J. McNeill;
+<span class="sc"><a href="/article/19-1028-o-connell-daniel/o_connell__daniel">O’Connell, Daniel</a></span> (Vol. 19,
+p. 990), by the late William O’Connor
+Morris, author of <i>Irish History</i>, etc.;
+<span class="sc"><a href="/article/10-0266-fenians/fenians">Fenians</a></span> (Vol. 10, p. 254), by R. J.
+McNeill; <span class="sc"><a href="/article/04-0913-s3/butt__isaac">Butt, Isaac</a></span> (Vol. 4, p. 889);
+<span class="sc"><a href="/article/20-0916-parnell-charles-stewart/parnell__charles_stewart">Parnell, C. S.</a></span> (Vol. 20, p. 854), by
+<a href="/contributors.html?q=James+Richard+Thursfield">James R. Thursfield</a>, author of <i>Peel</i>, etc.;
+<span class="sc"><a href="/article/07-0894-davitt-michael/davitt__michael">Davitt, Michael</a></span> (Vol. 7, p. 870);
+<span class="sc"><a href="/article/04-0368-boycott/boycott">Boycott</a></span> (Vol. 4, p. 353); <span class="sc"><a href="/article/08-0290-dillon-john/dillon__john">Dillon, John</a></span>
+(Vol. 8, p. 273); <span class="sc"><a href="/article/21-0890-plunkett-sir-horace-curzon/plunkett__sir_horace_curzon">Plunkett, Sir Horace
+Curzon</a></span> (Vol. 21, p. 857); <span class="sc"><a href="/article/22-0985-s9/redmond__john_edward">Redmond,
+John E.</a></span> (Vol. 22, p. 968); and many
+articles on Irish towns and counties,
+and, on Home Rule and recent political
+questions, the biographies of English
+viceroys, premiers and chief secretaries,
+and the latter part of the article <span class="sc"><a href="/article/09-0498-english-history/english_history">English
+History</a></span>.</p>
+
+<h4 class="c016">ENGLISH HISTORY</h4>
+
+<p>On English history the student will
+find the Britannica particularly valuable.
+The article <span class="sc"><a href="/article/09-0498-english-history/english_history">English History</a></span> (Vol. 9,
+pp. 466–587), is itself equivalent to
+about 380 pages of this Guide, and
+carries the story through 13 centuries.
+This great article—a text-book of the
+subject in scope and power—is written
+by: Prof. C. W. C. Oman, Oxford,
+author of <i>England before the Norman
+Conquest</i>, etc., dealing with the period
+down to the time of Elizabeth; <a href="/contributors.html?q=Albert+Frederick+Pollard">Prof.
+A. F. Pollard</a>, University of London,
+assistant editor <i>Dictionary of National
+Biography</i>, for the Reformation and the
+reign of Elizabeth, 1528–1603; Samuel
+Rawson <a href="/contributors.html?q=Samuel+Rawson+Gardiner">Gardiner</a>, best known as the
+historian of the Puritan Revolution,
+who deals with the period from 1603 to
+1793; W. Alison <a href="/contributors.html?q=Rev.+Charles+Stanley+Phillips">Phillips</a>, author of
+<span class="sc">Modern Europe</span>, on the years 1793 to
+1837; and <a href="/contributors.html?q=Hugh+Chisholm">Hugh Chisholm</a>, editor-in-chief
+of the Encyclopaedia Britannica, for
+the period since the accession of Queen
+Victoria. And the article closes with a
+critical estimate of <i>Sources and Writers of
+English History</i>, by Prof. <a href="/contributors.html?q=Albert+Frederick+Pollard">Albert Frederick
+Pollard</a>, University of London.</p>
+
+<p>For the period from 600 to 1066 read:
+Part 1 of <span class="sc"><a href="/article/09-0498-english-history/english_history">English History</a></span> (Vol. 8, pp.
+466–474); and the separate articles:</p>
+
+<p><span class="shoulder-heading" id="sh-5">Anglo-Saxon Period</span>For the introduction of Christianity
+and the “Kingdoms”—<span class="sc"><a href="/article/02-0955-s2/augustine__saint">Augustine</a></span> (Vol.
+2, p. 910); <span class="sc"><a href="/article/01-0314-s4/aesthetics">Aethelberht</a></span> (Vol. 1, p. 289);
+<span class="sc"><a href="/article/09-0019-edwin/edwin">Edwin</a></span> (Vol. 9, p. 7), by <a href="/contributors.html?q=Frederick+George+Meeson+Beck">F. G. M. Beck</a>,
+of Clare College, Cambridge; <span class="sc"><a href="/article/02-0049-s2/anglo-saxons">Anglo-Saxons</a></span>
+(Vol. 2, p. 38), by <a href="/contributors.html?q=Hector+Munro+Chadwick">H. M. Chadwick</a>;
+<span class="sc"><a href="/article/04-0603-britain/britain">Britain</a></span>, <i>Anglo-Saxon</i> (Vol. 4,
+pp. 589–595) and <span class="sc"><a href="/article/02-0029-s3/angli">Angli</a></span> (Vol. 2, p. 18)
+and <span class="sc"><a href="/article/15-0636-jutes/jutes">Jutes</a></span> (Vol. 15,
+p. 609), by the same
+author; <span class="sc"><a href="/article/24-0279-s4/saxons">Saxons</a></span> (Vol.
+24, p. 264); <span class="sc"><a href="/article/19-0823-northumbria/northumbria">Northumbria</a></span>
+(Vol. 19, p. 793); <span class="sc"><a href="/article/03-0823-bernicia/bernicia">Bernicia</a></span>
+(Vol. 3, p. 802); <span class="sc"><a href="/article/07-0957-deira/deira">Deira</a></span> (Vol. 7, p. 933);
+<span class="sc"><a href="/article/08-0854-east-anglia/east_anglia">East Anglia</a></span> (Vol. 8, p. 827); <span class="sc"><a href="/article/28-0552-wessex/wessex">Wessex</a></span>
+(Vol. 28, p. 534); <span class="sc"><a href="/article/18-0170-s3/mercia">Mercia</a></span> (Vol. 18, p. 151);
+<span class="sc"><a href="/article/26-0186-s2/sussex__kingdom_of">Sussex, Kingdom</a></span> of (Vol. 26, p. 168),
+and <span class="sc"><a href="/article/15-0764-s2/kent">Kent</a></span> (Vol. 15, p. 735), <span class="sc"><a href="/article/08-0896-ecgbert-king/ecgbert__king_">Ecgbert</a></span>
+(Vol. 8, p. 869); <span class="sc"><a href="/article/01-0328-s3/æthelweard">Aethelwulf</a></span> (Vol. 1,
+p. 292).</p>
+
+<p>On the Danish invasions and the Anglo-Saxon
+period, <span class="sc"><a href="/article/28-0077-viking/viking">Viking</a></span> (Vol. 28, pp. 62–66),
+by <a href="/contributors.html?q=Charles+Francis+Keary">C. F. Keary</a>, author of <i>The Vikings in
+Western Europe</i>; <span class="sc"><a href="/article/01-0326-s3/æthelbald">Æthelbald</a></span> (Vol. 1,
+p. 289), <span class="sc"><a href="/article/01-0326-s4/æthelberht">Æthelberht</a></span> (Vol. 1, p. 289)
+and <span class="sc"><a href="/article/01-0327-s5/æthelred_i">Æthelred I</a></span> (Vol. 1, p. 290);
+<span class="sc"><a href="/article/01-0622-s3/alfred">Alfred the Great</a></span> (Vol. 1, p. 582), by
+<a href="/contributors.html?q=Rev.+Charles+Plummer">Charles Plummer</a>, biographer of Alfred;
+<span class="sc"><a href="/article/07-0827-danelagh/danelagh">Danelagh</a></span> (Vol. 7, p. 803), by Prof,
+<a href="/contributors.html?q=Allen+Mawer">Allen Mawer</a> of Armstrong College,
+Newcastle-on-Tyne; <span class="sc"><a href="/article/08-1016-edward-the-elder/edward_the_elder">Edward “the
+Elder”</a></span> (Vol. 8, p. 989), <span class="sc"><a href="/article/01-0328-s2/æthelstan">Æthelstan</a></span>
+(Vol. 1, p. 291), <span class="sc"><a href="/article/08-0975-edmund-i/edmund_i_">Edmund I</a></span> (Vol. 8, p.
+948), <span class="sc"><a href="/article/08-0960-edgar-the-theling/edgar_the_ætheling">Edgar</a></span> (Vol. 8, p. 933), all by
+<a href="/contributors.html?q=Allen+Mawer">Prof. Mawer</a>; <span class="sc"><a href="/article/08-0711-dunstan-saint/dunstan__saint">St. Dunstan</a></span> (Vol. 8, p.
+684), <span class="sc"><a href="/article/01-0327-s6/æthelred_ii">Æthelred II</a></span> “the Unready”
+(Vol. 1, p. 290), by <a href="/contributors.html?q=Rev.+Charles+Stanley+Phillips">Rev. C. Stanley
+Phillips</a>, King’s College, Cambridge;
+<span class="sc"><a href="/article/26-0243-sweyn/sweyn_i">Sweyn I</a></span> (Vol. 26, p. 224), by R. Nisbet
+<a href="/contributors.html?q=Robert+Nisbet+Bain">Bain</a> of the British Museum; <span class="sc"><a href="/article/07-0827-danegeld/danegeld">Danegeld</a></span>
+(Vol. 7, p. 803); <span class="sc"><a href="/article/05-0234-canute/canute">Canute</a></span> (Vol. 5, p. 221),
+by <a href="/contributors.html?q=Robert+Nisbet+Bain">R. Nisbet Bain</a>; <span class="sc"><a href="/article/08-0975-edmund-i/edmund_i_">Edmund</a></span> “Ironside”
+(Vol. 8, p. 948), by <a href="/contributors.html?q=Rev.+Charles+Stanley+Phillips">Rev. C. Stanley
+Phillips</a>; <span class="sc"><a href="/article/13-0024-s4/harold_i">Harold I</a></span> (Vol. 13, p. 11);
+<span class="sc"><a href="/article/12-0967-s3/hardicanute">Hardicanute</a></span> (Vol. 12, p. 942); <span class="sc"><a href="/article/08-1016-edward-the-elder/edward_the_elder">Edward</a></span>
+“the Confessor” (Vol. 8, p. 990), by
+<a href="/contributors.html?q=Rev.+Charles+Stanley+Phillips">Rev. C. Stanley Phillips</a>; <span class="sc"><a href="/article/13-0024-s5/harold_ii">Harold II</a></span>
+(Vol. 13, p. 11).</p>
+
+<p>For the Norman Conquest and the
+Norman and Angevin kings the student
+should read the second section of the
+article <span class="sc"><a href="/article/09-0498-english-history/english_history">English History</a></span> (Vol. 9, pp.
+474–486) and, at least, the following
+important articles:</p>
+
+<p><span class="shoulder-heading" id="sh-6">William the Conqueror<br> William Rufus<br> Henry I<br> Stephen and Matilda<br> Henry II</span><span class="sc">William I</span>, “The Conqueror” (Vol.
+28, p. 659), by H. W. Carless <a href="/contributors.html?q=Henry+William+Carless+Davis">Davis</a> of
+Oxford, author of <i>England under the
+Normans and Angevins</i>;
+<span class="sc"><a href="/article/13-0379-hereward/hereward">Hereward</a></span>
+(Vol. 13, p. 363),
+by <a href="/contributors.html?q=John+Horace+Round">J. H. Round</a>,
+author of <i>Feudal
+England</i>, etc.; <span class="sc"><a href="/article/10-0309-s3/feudalism">Feudalism</a></span>
+(Vol. 10, p.
+297), by Prof.
+<a href="/contributors.html?q=George+Burton+Adams">George Burton
+Adams</a>, Yale University, author of <i>Political
+History of England, 1066–1216</i>, etc.;
+<span class="sc"><a href="/article/08-0419-domesday-book/domesday_book">Domesday Book</a></span> (Vol. 8, p. 398), by
+<a href="/contributors.html?q=John+Horace+Round">J. H. Round</a>; <span class="sc"><a href="/article/28-0681-william-ii-king-of-england/william_ii___king_of_england">William II</a></span>, “Rufus”
+(Vol. 28, p. 661) and <span class="sc"><a href="/article/16-0189-s5/lanfranc">Lanfranc</a></span> (Vol. 16,
+p. 169), both by <a href="/contributors.html?q=Henry+William+Carless+Davis">H. W. Carless Davis</a>;
+<span class="sc"><a href="/article/02-0092-s5/anselm">Anselm</a></span> (Vol. 2, p. 81); <span class="sc"><a href="/article/13-0286-s3/henry_i">Henry I</a></span> (Vol.
+13, p. 279), <span class="sc"><a href="/article/25-0904-s4/stephen">Stephen</a></span> (Vol. 25, p. 881),
+<span class="sc"><a href="/article/17-0907-s5/matilda">Matilda</a></span> (Vol. 17, p. 888), <span class="sc"><a href="/article/13-0286-s4/henry_ii">Henry II</a></span>
+(Vol. 13, p. 281), <span class="sc"><a href="/article/03-0627-becket-thomas/becket__thomas">Becket, Thomas</a></span> (Vol.
+3, p. 608), <span class="sc"><a href="/article/23-0311-s3/richard_i">Richard I</a></span>, “Coeur de Lion”
+(Vol. 23, p. 294), all by <a href="/contributors.html?q=Henry+William+Carless+Davis">H. W. Carless
+Davis</a>.</p>
+
+<p><span class="shoulder-heading" id="sh-7">John Henry III Edward I to III</span>In connection with the third section
+of the article <span class="sc"><a href="/article/09-0498-english-history/english_history">English History</a></span> dealing
+with the struggle for constitutional
+liberty from 1199 to 1337 (Vol. 9, pp.
+486–501) the following
+supplementary
+articles are among
+the many to which the student should
+turn: <span class="sc"><a href="/article/15-0459-john/john">John</a></span> (Vol. 15, p. 439), and <span class="sc"><a href="/article/16-0198-s4/langton__stephen">Langton,
+Stephen</a></span> (Vol. 16, p. 178), both by
+<a href="/contributors.html?q=Henry+William+Carless+Davis">H. W. Carless Davis</a>; <span class="sc"><a href="/article/17-0329-s4/magna_carta">Magna Carta</a></span>
+(Vol. 16, p. 314), by <a href="/contributors.html?q=Arthur+William+Holland">A. W. Holland</a>,
+late scholar of St. John’s, Oxford;
+<span class="sc"><a href="/article/13-0287-s2/henry_iii">Henry III</a></span> (Vol. 13, p. 282), <span class="sc"><a href="/article/21-0092-pembroke-earls-of/pembroke__earls_of">Pembroke</a></span>
+(Vol. 21, p. 78), <span class="sc"><a href="/article/18-0811-s3/montfort__simon_de">Montfort, Simon de</a></span>
+(Vol. 18, p. 781), <span class="sc"><a href="/article/10-0022-evesham/evesham">Evesham</a></span> (Vol. 10, p.
+10); <span class="sc"><a href="/article/08-1018-edward-i/edward_i_">Edward I</a></span> (Vol. 8, p. 991–993), by
+Prof. T. F. Tout, University of Manchester,
+author of <i>Edward I</i>; <span class="sc"><a href="/article/18-0912-s4/mortmain">Mortmain</a></span>
+(Vol. 18, p. 880); <span class="sc"><a href="/article/28-0570-s2/westminster__statutes_of">Westminster, Statutes
+of</a></span> (Vol. 28, p. 551); <span class="sc"><a href="/article/08-1020-edward-ii/edward_ii_">Edward II</a></span>
+(Vol. 8, p. 993); <span class="sc"><a href="/article/16-0164-s2/lancaster__henry">Lancaster, Henry</a></span> and
+<span class="sc"><a href="/article/16-0163-lancaster-house-of/lancaster__house_of">Thomas, Earls of</a></span> (Vol. 16, pp. 144
+and 148); <span class="sc"><a href="/article/08-0116-despenser-hugh-le-1262-1326/despenser__hugh_le__1262-1326_">Despenser, Hugh Le</a></span> (Vol.
+8, p. 101); <span class="sc"><a href="/article/18-0911-s3/mortimer">Mortimer</a></span> family (Vol. 18,
+p. 879); and <span class="sc"><a href="/article/08-1021-edward-iii/edward_iii_">Edward III</a></span> (Vol. 8, p.
+994).</p>
+
+<p><span class="shoulder-heading" id="sh-8">Richard II Henry IV to VI</span>On the Hundred Years’ War (1337–1453)
+and contemporary history, see the
+section in <span class="sc"><a href="/article/09-0498-english-history/english_history">English History</a></span> (Vol. 8,
+pp. 501–516);
+the article <span class="sc"><a href="/article/13-0918-hundred-years-war/hundred_years__war">Hundred
+Years’ War</a></span> (Vol.
+13, p. 893), by <a href="/contributors.html?q=Jules+Viard">Jules
+Viard</a>, archivist of the National Archives,
+Paris; <span class="sc"><a href="/article/25-0262-sluys-battle-of/sluys__battle_of">Sluys, Battle of</a></span> (Vol. 25, p.
+246), by <a href="/contributors.html?q=David+Hannay">D. Hannay</a>, author of <i>Short
+History of the Royal Navy</i>; <span class="sc"><a href="/article/07-0409-cr-cy/crécy">Crécy</a></span> (Vol. 7,
+p. 389); <span class="sc"><a href="/article/21-0930-s3/poltiers">Poitiers, Battle of</a></span> (Vol. 21,
+p. 898); <span class="sc"><a href="/article/08-1026-edward-the-black-prince/edward__the_black_prince">Edward, The Black Prince</a></span>
+(Vol. 8, p. 999), by Prof. Tout; <span class="sc"><a href="/article/28-0892-wycliffe-john/wycliffe__john">Wycliffe</a></span>
+(Vol. 28, p. 866), by <a href="/contributors.html?q=Reginald+Lane+Poole">R. Lane Poole</a>,
+author of <i>Wycliffe and Movements for
+Reform</i>, and W. Alison <a href="/contributors.html?q=Rev.+Charles+Stanley+Phillips">Phillips</a>, author
+of <i>Modern Europe</i>, etc.; <span class="sc"><a href="/article/16-0166-s3/lancaster__john_of_gaunt">Lancaster,
+John of Gaunt, Duke of</a></span> (Vol. 16, p.
+146), by <a href="/contributors.html?q=Charles+Lethbridge+Kingsford">C. Lethbridge Kingsford</a>, biographer
+of Henry V; <span class="sc"><a href="/article/23-0312-s2/richard_ii">Richard II</a></span> (Vol.
+23, p. 295), also by <a href="/contributors.html?q=Charles+Lethbridge+Kingsford">C. L. Kingsford</a>;
+<span class="sc"><a href="/article/27-0514-tyler-wat/tyler__wat">Tyler, Wat</a></span> (Vol. 27, p. 495); <span class="sc"><a href="/article/03-0280-s3/ball__john">Ball,
+John</a></span> (Vol. 3, p. 263); <span class="sc"><a href="/article/16-0951-lollards/lollards">Lollards</a></span> (Vol.
+16, p. 929), by Dr. <a href="/contributors.html?q=Rev.+Thomas+Martin+Lindsay">T. M. Lindsay</a>,
+author of <i>History of the Reformation</i>;
+<span class="sc"><a href="/article/12-0147-s4/gloucester__thomas_of_woodstock">Gloucester, Thomas, Duke of</a></span> (Vol.
+12, p. 130); <span class="sc"><a href="/article/19-0769-norfolk-earls-and-dukes-of/norfolk__earls_and_dukes_of">Norfolk, Thomas Mowbray,
+Duke of</a></span> (Vol. 19, p. 742); <span class="sc"><a href="/article/13-0296-henry-iv-of-england/henry_iv__of_england">Henry IV</a></span>
+(Vol. 13, p. 283), by <a href="/contributors.html?q=Charles+Lethbridge+Kingsford">C. L. Kingsford</a>;
+<span class="sc"><a href="/article/12-0137-s3/glendower__owen">Glendower, Owen</a></span> (Vol. 12, p. 120);
+<span class="sc"><a href="/article/19-0820-northumberland/northumberland">Northumberland</a></span> (Vol. 19, p. 787);
+<span class="sc"><a href="/article/13-0297-henry-v-of-england/henry_v__of_england">Henry V</a></span> (Vol. 13, p. 284) and <span class="sc"><a href="/article/20-0090-s3/oldcastle__sir_john">Oldcastle,
+Sir John</a></span> (Vol. 20, p. 66), by <a href="/contributors.html?q=Charles+Lethbridge+Kingsford">C. L.
+Kingsford</a>; <span class="sc"><a href="/article/01-0413-s8/agincourt">Agincourt</a></span> (Vol. 1, p. 375);
+<span class="sc"><a href="/article/13-0298-henry-vi-of-england/henry_vi__of_england">Henry VI</a></span> (Vol. 13, p. 285) and <span class="sc"><a href="/article/12-0146-s3/gloucester__humphrey">Gloucester,
+Humphrey, Duke of</a></span> (Vol. 12,
+p. 129), both by <a href="/contributors.html?q=Charles+Lethbridge+Kingsford">C. L. Kingsford</a>; <span class="sc"><a href="/article/03-0635-bedford-earls-and-dukes-of/bedford__earls_and_dukes_of">Bedford
+John, Duke of</a></span> (Vol. 3, p. 616); <span class="sc"><a href="/article/15-0447-joan-of-arc/joan_of_arc">Joan of
+Arc</a></span> (Vol. 15, p. 520), by Prof. J. T. Shotwell
+of Columbia University and Hugh
+<a href="/contributors.html?q=Hugh+Chisholm">Chisholm</a>, editor-in-chief of the Encyclopaedia
+Britannica; <span class="sc"><a href="/article/03-0604-beaufort/beaufort">Beaufort</a></span> family
+(Vol. 3, p. 585); <span class="sc"><a href="/article/04-0953-s6/cade__john">Cade, John</a></span> (Vol. 4,
+p. 927).</p>
+
+<p><span class="shoulder-heading" id="sh-9">Edward IV and V<br> Richard III<br> Henry VII</span>On the fifth period of English history,
+read section 5, <i>The Wars of the Roses
+(1453–1497)</i> in the article <span class="sc"><a href="/article/09-0498-english-history/english_history">English
+<span class="pageno" id="Page_276">276</a></span>History</span> (Vol. 9, pp. 516–525); the separate
+article, <span class="sc"><a href="/article/23-0775-s6/roses__wars_of_the">Roses,
+Wars of the</a></span> (Vol.
+23, p. 735); and the articles:
+<span class="sc"><a href="/article/28-0951-york-house-of/york__house_of">York, House
+of</a></span> (Vol. 28, p. 924),
+and <span class="sc"><a href="/article/16-0163-lancaster-house-of/lancaster__house_of">Lancaster, House of</a></span> (Vol. 16,
+p. 143), both by <a href="/contributors.html?q=James+Gairdner">James Gairdner</a>,
+author of <i>The Houses of Lancaster and
+York</i>, etc.; <span class="sc"><a href="/article/28-0953-york-richard-duke-of/york__richard__duke_of">York, Richard, Duke of</a></span>
+(Vol. 28, p. 926), <span class="sc"><a href="/article/28-0355-warwick-richard-neville-earl-of/warwick__richard_neville__earl_of">Warwick, Richard
+Neville, Earl of</a></span> (Vol. 28, p. 339),
+<span class="sc"><a href="/article/08-1022-edward-iv/edward_iv_">Edward IV</a></span> (Vol. 8, p. 996), <span class="sc"><a href="/article/17-0719-margaret-of-anjou/margaret_of_anjou">Margaret
+of Anjou</a></span> (Vol. 17, p. 702), <span class="sc"><a href="/article/06-0443-clarence-dukes-of/clarence__dukes_of">Clarence,
+George, Duke of</a></span> (Vol. 6, p. 428),
+<span class="sc"><a href="/article/08-1023-edward-v/edward_v_">Edward V</a></span> (Vol. 8, p. 996), <span class="sc"><a href="/article/23-0313-s2/richard_iii">Richard III</a></span>
+(Vol. 23, p. 296), and <span class="sc"><a href="/article/04-0749-s2/buckingham__henry_stafford">Buckingham,
+Henry Stafford, 2nd Duke of</a></span> (Vol.
+4, p. 726), all by <a href="/contributors.html?q=Charles+Lethbridge+Kingsford">C. L. Kingsford</a>; <span class="sc"><a href="/article/13-0299-henry-vii-of-england/henry_vii__of_england">Henry
+VII</a></span> (Vol. 13, p. 286), by <a href="/contributors.html?q=James+Gairdner">James Gairdner</a>,
+author of <i>The Houses of Lancaster and
+York</i>, and biographer of Henry VII;
+<span class="sc"><a href="/article/28-0332-warbeck-perkin/warbeck__perkin">Warbeck, Perkin</a></span> (Vol. 28, p. 316).</p>
+
+<p><span class="shoulder-heading" id="sh-10">Henry VIII Edward VI Mary Elizabeth</span>The sixth section of the article <span class="sc"><a href="/article/09-0498-english-history/english_history">English
+History</a></span>, dealing with the years
+1497–1528 (Vol. 9, pp. 525–530), should
+be supplemented by
+the latter part of
+<a href="/contributors.html?q=James+Gairdner">James Gairdner</a>’s
+article on <span class="sc"><a href="/article/23-0015-s2/reflection_of_light">Henry
+VII</a></span> and by the articles:
+<span class="sc"><a href="/article/23-0017-s2/reformation__the">Reformation</a></span>
+(Vol. 23, p. 4), by Prof. <a href="/contributors.html?q=James+Harvey+Robinson">James Harvey
+Robinson</a>, Columbia University, author
+of <i>History of Western Europe</i>, etc.; <span class="sc"><a href="/article/13-0300-henry-viii-of-england/henry_viii__of_england">Henry
+VIII</a></span> (Vol. 13, p. 287) and <span class="sc"><a href="/article/10-0787-fox-richard/fox__richard">Fox, Richard</a></span>
+(Vol. 10, p. 766), both by Prof. <a href="/contributors.html?q=Albert+Frederick+Pollard">A. F
+Pollard</a>; <span class="sc"><a href="/article/28-0800-wolsey-thomas/wolsey__thomas">Wolsey, Thomas</a></span> (Vol. 28, p
+779); <span class="sc"><a href="/article/05-0548-catherine-of-aragon/catherine_of_aragon">Catherine of Aragon</a></span> (Vol. 5
+p. 529) and <span class="sc"><a href="/article/04-0172-boleyn-anne/boleyn__or_bullen___anne">Boleyn, Anne</a></span> (Vol. 4, p.
+159), by <a href="/contributors.html?q=Philip+Chesney+Yorke">P. C. Yorke</a>, Oxford; <span class="sc"><a href="/article/07-0521-cromwell-thomas/cromwell__thomas">Cromwell
+Thomas</a></span> (Vol. 7, p. 499); <span class="sc"><a href="/article/07-0395-cranmer-thomas/cranmer__thomas">Cranmer
+Thomas</a></span> (Vol. 7, p. 375); <span class="sc"><a href="/article/10-0443-fisher-john/fisher__john">Fisher, John</a></span>
+(Vol. 10, p. 427), by <a href="/contributors.html?q=Rev.+Ethelred+Leonard+Taunton">Rev. E. L. Taunton</a>,
+author of <i>The English Black Monks of
+St. Benedict</i>, etc.; <span class="sc"><a href="/article/18-0854-more-thomas/more__sir_thomas">More, Sir Thomas</a></span>
+(Vol. 18, p. 822), by <a href="/contributors.html?q=Rev.+Mark+Pattison">Mark Pattison</a>,
+late rector of Lincoln College, Oxford;
+<span class="sc"><a href="/article/13-0857-s2/howard__catherine">Howard, Catherine</a></span> (Vol. 13, p. 832);
+<span class="sc"><a href="/article/20-0923-s4/parr__catherine">Parr, Catherine</a></span> (Vol. 20, p. 861);
+<span class="sc"><a href="/article/19-0769-norfolk-earls-and-dukes-of/norfolk__earls_and_dukes_of">Norfolk, Thomas Howard, 3rd Duke
+of</a></span> (Vol. 19, p. 743); <span class="sc"><a href="/article/02-0808-s6/askew">Askew, Anne</a></span> (Vol.
+2, p. 762), by <a href="/contributors.html?q=Albert+Frederick+Pollard">A. F. Pollard</a>; <span class="sc"><a href="/article/08-1023-edward-vi/edward_vi_">Edward VI</a></span>
+(Vol. 8, p. 996); <span class="sc"><a href="/article/25-0402-somerset-edward-seymour-duke-of/somerset__edward_seymour__duke_of">Somerset, Edward
+Seymour, Duke of</a></span> (Vol. 25, p. 386);
+<span class="sc"><a href="/article/19-0818-northumberland-john-dudley-duke-of/northumberland__john_dudley__duke_of">Northumberland, John Dudley, Earl
+of Warwick, and Duke of</a></span> (Vol. 19,
+p. 788); <span class="sc"><a href="/article/12-0615-s3/grey__lady_jane">Grey, Lady Jane</a></span> (Vol. 12, p.
+590); <span class="sc"><a href="/article/17-0828-s2/mary">Mary I</a></span> (Vol. 17, p. 814) and <span class="sc"><a href="/article/11-0478-s2/gardiner__stephen">Gardiner,
+Stephen</a></span> (Vol. 11, p. 460), both
+by <a href="/contributors.html?q=James+Gairdner">James Gairdner</a>; <span class="sc"><a href="/article/28-0887-wyat-sir-thomas-poet/wyat__sir_thomas__poet_">Wyat, Sir Thomas</a></span>
+(Vol. 28, p. 862); <span class="sc"><a href="/article/21-1007-s3/pole">Pole, Cardinal</a></span> (Vol.
+21, p. 974), by <a href="/contributors.html?q=Rev.+Ethelred+Leonard+Taunton">E. L. Taunton</a>; <span class="sc"><a href="/article/23-0337-ridley-nicholas/ridley__nicholas">Ridley,
+Nicholas</a></span> (Vol. 23, p. 320); <span class="sc"><a href="/article/16-0262-s3/latimer__hugh">Latimer,
+Hugh</a></span> (Vol. 16, p. 242), by <a href="/contributors.html?q=Thomas+F.+Henderson">T. F. Henderson</a>,
+author of <i>Mary Queen of Scots and
+the Casket Letters</i>; <span class="sc"><a href="/article/09-0299-elizabeth-of-england/elizabeth_of_england">Elizabeth</a></span> (Vol. 9,
+p. 282); <span class="sc"><a href="/article/17-0834-mary-queen-of-scots/mary_queen_of_scots">Mary Queen of Scots</a></span> (Vol.
+17, p. 817), by <a href="/contributors.html?q=Algernon+Charles+Swinburne">A. C. Swinburne</a>; <span class="sc"><a href="/article/19-0769-norfolk-earls-and-dukes-of/norfolk__earls_and_dukes_of">Norfolk,
+Thomas Howard, 4th Duke of</a></span> (Vol.
+19, p. 744); <span class="sc"><a href="/article/02-0600-s1/armada__the">Armada</a></span> (Vol. 2, p. 560);
+<span class="sc"><a href="/article/13-0112-hawkins-sir-richard/hawkins__sir_richard">Hawkins, Sir Richard</a></span> (Vol. 13, p. 99);
+<span class="sc"><a href="/article/08-0496-drake-sir-francis/drake__sir_francis">Drake, Sir Francis</a></span> (Vol. 8, p. 473);
+<span class="sc"><a href="/article/22-0886-raleigh-sir-walter/raleigh__sir_walter">Raleigh, Sir Walter</a></span> (Vol. 22, p. 869);
+<span class="sc"><a href="/article/16-0410-s3/leicester__robert_dudley">Leicester, Robert Dudley, Earl of</a></span>
+(Vol. 16, p. 390); <span class="sc"><a href="/article/09-0814-s2/essex__robert_devereux">Essex, Robert
+Devereux, Earl of</a></span> (Vol. 9, p. 782);
+<span class="sc"><a href="/article/03-0152-s7/bacon__francis">Bacon, Francis</a></span> (Vol. 3, p. 135), by Prof.
+Robert Adamson of Glasgow, and J.
+Malcolm Mitchell, University of London;
+<span class="sc"><a href="/article/04-0839-s2/burghley__william_cecil">Burghley, William Cecil, Baron</a></span> (Vol.
+4, p. 816); and—for this whole period
+the article <span class="sc"><a href="/article/09-0433-england/england">England, Church of</a></span> (Vol.
+9, especially pp. 447–448), by <a href="/contributors.html?q=Rev.+William+Hunt">William
+Hunt</a>, author of <i>History of the English
+Church</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-11">James I Charles I The Commonwealth Charles II James II</span>The seventh part of the article <span class="sc"><a href="/article/09-0498-english-history/english_history">English
+History</a></span> (Vol. 9, pp. 535–542)
+deals with the <i>Stuart Monarchy, the
+Great Rebellion and
+the Restoration (1603–1689)</i>.
+From the
+great wealth of supplementary
+material
+in the Britannica on
+this interesting
+period, at least the
+following articles should be selected:
+<span class="sc"><a href="/article/25-0935-s2/stewart">Stewart</a></span> or <span class="sc"><a href="/article/12-0935-s3/handel__george_frederick">Stuart</a></span> family (Vol. 12, p.
+911); <span class="sc"><a href="/article/15-0151-james-new-testament/james__new_testament_">James I</a></span> (Vol. 15, p. 136); <span class="sc"><a href="/article/12-0748-s3/gunpowder">Gunpowder
+<span class="pageno" id="Page_277">277</a></span>Plot</span> (Vol. 12, p. 727); <span class="sc"><a href="/article/03-0917-bible-english/bible__english">Bible,
+English</a></span> (Vol. 3, p. 894); <span class="sc"><a href="/article/24-0090-s2/salisbury__robert_cecil">Salisbury,
+Robert Cecil, 1st Earl of</a></span> (Vol. 24,
+p. 76); <span class="sc"><a href="/article/04-0745-s2/buckingham__george_villiers">Buckingham, George Villiers,
+1st Duke of</a></span> (Vol. 4, p. 722); <span class="sc"><a href="/article/26-0892-thirty-years-war/thirty_years__war">Thirty
+Years’ War</a></span> (Vol. 26, p. 852); <span class="sc"><a href="/article/05-0942-charles-i/charles_i_">Charles
+I</a></span> (Vol. 5, p. 906) and <span class="sc"><a href="/article/16-0296-s7/laud__william">Laud, William</a></span>
+(Vol. 16, p. 276), both by P. Chesney
+York; <span class="sc"><a href="/article/24-1058-s4/ship-money">Ship-Money</a></span> (Vol. 24, p. 982);
+<span class="sc"><a href="/article/12-0925-s5/hampden__john">Hampden, John</a></span> (Vol. 12, p. 900); <span class="sc"><a href="/article/22-0696-s2/pym__john">Pym,
+John</a></span> (Vol. 22, p. 680) and <span class="sc"><a href="/article/25-1003-s3/strafford__earls_of">Strafford,
+Thomas Wentworth, Earl of</a></span> (Vol.
+25, p. 978), both by <a href="/contributors.html?q=Philip+Chesney+Yorke">P. C. Yorke</a>; <span class="sc"><a href="/article/12-0420-great-rebellion/great_rebellion">Great
+Rebellion</a></span> (Vol. 12, p. 403); <span class="sc"><a href="/article/07-0509-s2/cromwell__oliver">Cromwell,
+Oliver</a></span> (Vol. 7, p. 487), by <a href="/contributors.html?q=Philip+Chesney+Yorke">P. C. Yorke</a>,
+C. F. Atkinson and R. J. McNeill;
+Cromwell, Richard (Vol. 7, p. 498);
+for the military operations of the Great
+Rebellion, the articles listed under that
+heading in the chapter of this Guide
+entitled <i>For Army Officers</i>; <span class="sc"><a href="/article/18-0753-s2/monk__or_monck___george">Monk,
+George</a></span> (Vol. 18, p. 723); <span class="sc"><a href="/article/05-0948-charles-ii/charles_ii_">Charles II</a></span>,
+(Vol. 5, p. 912); <span class="sc"><a href="/article/06-0444-clarendon-edward-hyde/clarendon__edward_hyde">Clarendon, Edward
+Hyde, 1st Earl of</a></span> (Vol. 6, p. 428);
+<span class="sc"><a href="/article/04-0745-s2/buckingham__george_villiers">Buckingham, George Villiers, 2nd
+Duke of</a></span> (Vol. 4, p. 724); <span class="sc"><a href="/article/06-0516-cleveland-barbara-villiers-duchess-of/cleveland__barbara_villiers__duchess_of">Cleveland,
+Duchess of</a></span> (Vol. 6, p. 500); <span class="sc"><a href="/article/22-0145-portsmouth-louise-de-k-roualle-duchess-of/portsmouth__louise_de_kéroualle__duchess_of">Portsmouth,
+Duchess of</a></span> (Vol. 22, p. 131);
+<span class="sc"><a href="/article/12-0775-s3/gwyn__nell">Gwyn, Nell</a></span> (Vol. 12, p. 750); <span class="sc"><a href="/article/16-0299-s4/lauderdale__john_maitland">Lauderdale,
+Duke of</a></span> (Vol. 16, p. 279);
+<span class="sc"><a href="/article/24-0790-s3/shaftesbury__anthony_ashley_cooper">Shaftesbury, 1st Earl</a></span> (Vol. 24, p. 760)
+by <a href="/contributors.html?q=Osmund+Airy">Osmund Airy</a>, biographer of Charles
+II; <span class="sc"><a href="/article/08-0756-dutch-wars/dutch_wars">Dutch Wars</a></span> (Vol. 9, p. 729); <span class="sc"><a href="/article/26-0698-test-acts/test_acts">Test
+Acts</a></span> (Vol. 26, p. 665); <span class="sc"><a href="/article/15-0154-james-ii-of-great-britain-and-ireland/james_ii__of_great_britain_and_ireland">James II</a></span> (Vol. 15,
+p. 138); <span class="sc"><a href="/article/02-0521-s3/argyll__earls_and_dukes_of">Argyll, 9th Earl of</a></span> (Vol. 2,
+p. 484); <span class="sc"><a href="/article/18-0755-s3/monmouth__james_scott">Monmouth, Duke of</a></span> (Vol. 18,
+p. 725); <span class="sc"><a href="/article/27-0568-s2/tyrconnell">Tyrconnell</a></span> (Vol. 27, p. 548).</p>
+
+<p><span class="shoulder-heading" id="sh-12">William and Mary; Anne</span>On the Revolution and the age of
+Anne (1689–1714) see the article <span class="sc"><a href="/article/09-0498-english-history/english_history">English
+History</a></span> (Vol. 9, pp. 542–544),
+and <span class="sc"><a href="/article/28-0682-william-iii-king-of-england/william_iii___king_of_england">William III</a></span>.
+(Vol. 28, p. 662);
+<span class="sc"><a href="/article/17-0833-s2/mary_ii">Mary II</a></span>. (Vol. 17,
+p. 816); <span class="sc"><a href="/article/04-0875-s2/burnet__gilbert">Burnet,
+Gilbert</a></span> (Vol. 4, p.
+851); <span class="sc"><a href="/article/12-0359-s3/grand_alliance__war_of_the">Grand Alliance</a></span> (Vol. 12, p. 342),
+and for additional military articles
+the chapter <i>For Army Officers</i> in this
+Guide; <span class="sc"><a href="/article/02-0076-s2/anne">Anne</a></span> (Vol. 2, p. 65); <span class="sc"><a href="/article/17-0754-s2/marlborough__earls_and_dukes_of">Marlborough,
+1st Duke of</a></span> (Vol. 17, p. 737), by
+<a href="/contributors.html?q=William+Prideaux+Courtney">W. Prideaux Courtney</a>; <span class="sc"><a href="/article/17-0854-masham-abigail/masham__abigail">Masham, Lady</a></span>
+(Vol. 17, p. 836); <span class="sc"><a href="/article/12-0191-s7/godolphin__sidney_godolphin">Godolphin</a></span> (Vol. 12,
+p. 174); <span class="sc"><a href="/article/25-0400-somers-john-somers-baron/somers__john_somers__baron">Somers</a></span> (Vol. 25, p. 384);
+<span class="sc"><a href="/article/12-0863-s3/halifax__charles_montague">Halifax, 1st Marquess of</a></span> (Vol. 12,
+p. 839); <span class="sc"><a href="/article/20-0437-s4/oxford__robert_harley">Oxford, 1st Earl</a></span> (Vol. 20,
+p. 403); <span class="sc"><a href="/article/04-0174-bolingbroke-henry-st-john-viscount/bolingbroke__henry_st_john__viscount">Bolingbroke, Viscount</a></span> (Vol.
+4, p. 161); <span class="sc"><a href="/article/24-1092-s2/shrewsbury__earls_of">Shrewsbury, Duke of</a></span> (Vol.
+24, p. 1016).</p>
+
+<p><span class="shoulder-heading" id="sh-13">George I to IV William IV</span>The part of the article <span class="sc"><a href="/article/09-0498-english-history/english_history">English History</a></span>
+dealing with the Hanoverian Kings,
+1714–1793 (Vol. 9, pp. 544–551) and
+that on the Revolutionary
+epoch,
+the reaction and
+the triumph of reform,
+1793–1837 (pp. 551–558) are respectively
+by <a href="/contributors.html?q=Samuel+Rawson+Gardiner">S. R. Gardiner</a> and W. Alison
+<a href="/contributors.html?q=Rev.+Charles+Stanley+Phillips">Phillips</a>. They should be supplemented
+by <a href="/contributors.html?q=Samuel+Rawson+Gardiner">S. R. Gardiner</a>’s articles on the four
+Georges (Vol. 11, pp. 737–745); <span class="sc"><a href="/article/25-0535-s5/south_sea_bubble">South Sea
+Bubble</a></span> (Vol. 25, p. 515); <span class="sc"><a href="/article/25-0795-stanhope-earls/stanhope__earls">Stanhope,
+1st Earl</a></span> (Vol. 25, p. 773); <span class="sc"><a href="/article/28-0304-s4/walpole__horatio">Walpole,
+Horatio</a></span> (Vol. 28, p. 288); <span class="sc"><a href="/article/28-0608-s3/whig_and_tory">Whig and
+Tory</a></span> (Vol. 28, p. 588); <span class="sc"><a href="/article/27-0126-s6/townshend__charles">Townshend,
+Charles</a></span> (Vol. 27, p. 111); <span class="sc"><a href="/article/05-0393-caroline/caroline">Caroline</a></span>
+(Vol. 5, p. 380); <span class="sc"><a href="/article/21-0081-s2/pelham__henry">Pelham, Henry</a></span> (Vol. 21,
+p. 67); <span class="sc"><a href="/article/05-0976-charles-edward/charles_edward">Charles Edward</a></span>, “the Young
+Pretender” (Vol. 5, p. 940), by <a href="/contributors.html?q=Herbert+Murray+Vaughan">H. M.
+Vaughan</a>, author of <i>The Last of the Royal
+Stuarts</i>; <span class="sc"><a href="/article/18-0314-s2/methodism">Methodism</a></span> (Vol. 18, p. 293);
+<span class="sc"><a href="/article/28-0545-s3/wesley__john">Wesley, John</a></span> (Vol. 28, p. 527); <span class="sc"><a href="/article/19-0490-s2/newcastle__dukes_of">Newcastle,
+Thomas Pelham Holles, Duke
+of</a></span> (Vol. 19, p. 471); <span class="sc"><a href="/article/06-0014-chatham-william-pitt-1st-earl-of/chatham__william_pitt__1st_earl_of">Chatham, William
+Pitt, 1st Earl of</a></span> (Vol. 6, p. 1); <span class="sc"><a href="/article/24-0745-s4/seven_years__war">Seven
+Years’ War</a></span> (Vol. 24, p. 715) and, for
+engagements and commanders in the
+war, see the chapter in this Guide <i>For
+Army Officers</i>; <span class="sc"><a href="/article/14-0394-india/india">India</a></span>, <i>History</i> (Vol. 14,
+especially pp. 407–409); <span class="sc"><a href="/article/05-0154-canada/canada">Canada</a></span>, <i>History</i>
+(Vol. 5, especially p. 158); <span class="sc"><a href="/article/04-0901-s4/bute__john_stuart">Bute,
+3rd Earl of</a></span> (Vol. 4, p. 877); <span class="sc"><a href="/article/12-0605-s3/grenville__george">Grenville,
+George</a></span> (Vol. 12, p. 580); <span class="sc"><a href="/article/23-0456-s5/rockingham__charles_watson_wentworth">Rockingham,
+Marquess of</a></span> (Vol. 23, p. 434); <span class="sc"><a href="/article/12-0716-s3/guilford">Guilford,
+2nd Earl</a></span>, Lord North (Vol. 12,
+p. 691); <span class="sc"><a href="/article/28-0662-wilkes-john/wilkes__john">Wilkes, John</a></span> (Vol. 28, p. 642);
+<span class="sc"><a href="/article/04-0847-s6/burke__edmund">Burke, Edmund</a></span> (Vol. 4, p. 824), by
+John Morley; <span class="sc"><a href="/article/10-0782-s5/fox__charles_james">Fox, Charles James</a></span>
+(Vol. 10, p. 761); <span class="sc"><a href="/article/12-0270-gordon-lord-george/gordon__lord_george">Gordon, Lord George</a></span>
+(Vol. 12, p. 253); <span class="sc"><a href="/article/22-0132-s8/portland__earl_of">Lansdowne, Marquess
+of</a></span>, Lord Shelburne (Vol. 16, p.
+184); <span class="sc"><a href="/article/22-0133-s4/portland">Portland, 3rd Duke</a></span> (Vol. 22,
+p. 119); <span class="sc"><a href="/article/21-0696-s3/pitt__william">Pitt, William</a></span> (Vol. 21, p. 667);
+<span class="sc"><a href="/article/11-0183-french-revolutionary-wars/french_revolutionary_wars">French Revolutionary Wars</a></span> (Vol. 11,
+p. 171), <span class="sc"><a href="/article/19-0231-napoleonic-campaigns/napoleonic_campaigns">Napoleonic Campaigns</a></span> (Vol.
+19, p. 216) and, for leaders and engagements
+in these wars, in the Peninsular
+War, and in the American War for Independence,
+see the chapter in this
+Guide <i>For Army Officers</i>; <span class="sc"><a href="/article/05-0393-caroline-amelia-augusta/caroline_amelia_augusta">Caroline
+Amelia Augusta</a></span> (Vol. 5, p. 380);
+<span class="sc"><a href="/article/28-0524-s3/wellesley__richard_colley_wesley">Wellesley, Marquess</a></span> (Vol. 28, p.
+506); <span class="sc"><a href="/article/16-0993-s2/londonderry__robert_stewart">Londonderry, Marquess of</a></span>,
+Castlereagh (Vol. 16, p. 969); <span class="sc"><a href="/article/05-0199-canning-george/canning__george">Canning,
+George</a></span> (Vol. 5, p. 186); <span class="sc"><a href="/article/07-0191-corn-laws/corn_laws">Corn Laws</a></span>
+(Vol. 7, p. 174); <span class="sc"><a href="/article/06-0625-cobbett-william/cobbett__william">Cobbett, William</a></span>
+(Vol. 6, p. 606); <span class="sc"><a href="/article/28-0525-s5/wellington__arthur_wellesley">Wellington, Duke of</a></span>
+(Vol. 28, p. 507); <span class="sc"><a href="/article/28-0684-s2/william_iv">William IV.</a></span> (Vol. 28,
+p. 664); <span class="sc"><a href="/article/12-0611-s2/grey__charles_grey">Grey, 2nd Earl</a></span> (Vol. 12, p.
+586); <span class="sc"><a href="/article/04-0675-s6/brougham">Brougham, Lord</a></span> (Vol. 4, p. 652);
+<span class="sc"><a href="/article/20-0897-s2/parliament">Parliament</a></span> (Vol. 20, especially p. 843);
+<span class="sc"><a href="/article/18-0108-s4/melbourne">Melbourne, 2nd Viscount</a></span> (Vol. 18,
+p. 90); <span class="sc"><a href="/article/21-0054-s2/peel__sir_robert">Peel, Sir Robert</a></span> (Vol. 21, p. 40).</p>
+
+<p><span class="shoulder-heading" id="sh-14">Victoria</span>On the reign of Victoria the section
+of the article <span class="sc"><a href="/article/09-0498-english-history/english_history">English History</a></span> (Vol. 9,
+pp. 558–582) gives a very full treatment,
+which should be
+supplemented by the
+study of such
+articles as: <span class="sc"><a href="/article/28-0043-victoria-queen/victoria__queen">Victoria</a></span> (Vol. 28, p. 28), by
+<a href="/contributors.html?q=Hugh+Chisholm">Hugh Chisholm</a>, editor-in-chief of the
+Encyclopaedia Britannica; <span class="sc"><a href="/article/01-0533-s5/albert">Albert</a></span> (Vol.
+1, p. 495), by the same author; <span class="sc"><a href="/article/20-0705-s2/palmerston">Palmerston</a></span>
+(Vol. 20, p. 645); <span class="sc"><a href="/article/23-0906-s3/russell__john">Russell, 1st
+Earl</a></span> (Vol. 23, p. 863); <span class="sc"><a href="/article/19-0991-s3/o_brien__william_smith">O’Brien, William
+Smith</a></span> (Vol. 19, p. 953); <span class="sc"><a href="/article/05-0989-chartism/chartism">Chartism</a></span>
+(Vol. 5, p. 953); <span class="sc"><a href="/article/08-0079-derby-earls-of/derby__earls_of">Derby, 14th Earl</a></span>
+(Vol. 8, p. 66); <span class="sc"><a href="/article/07-0472-crimean-war/crimean_war">Crimean War</a></span> (Vol. 7,
+p. 450); <span class="sc"><a href="/article/01-0503-s2/_alabama__arbitration">“Alabama” Arbitration</a></span> (Vol.
+1, p. 464); <span class="sc"><a href="/article/04-0587-bright-john/bright__john">Bright, John</a></span> (Vol. 4, p. 567);
+<span class="sc"><a href="/article/06-0626-cobden-richard/cobden__richard">Cobden, Richard</a></span> (Vol. 6, p. 607);
+<span class="sc"><a href="/article/03-0582-beaconsfield-benjamin-disraeli-earl-of/beaconsfield__benjamin_disraeli__earl_of">Beaconsfield</a></span> (Vol. 3, p. 563); <span class="sc"><a href="/article/12-0079-gladstone-john-hall/gladstone__john_hall">Gladstone,
+W. E.</a></span> (Vol. 12, p. 66), by G. W.
+E. Russell, biographer of Gladstone;
+<span class="sc"><a href="/article/24-0092-s3/salisbury">Salisbury</a></span> (Vol. 24, p. 72); <span class="sc"><a href="/article/27-0201-transvaal/transvaal">Transvaal</a></span>,
+<i>History</i> (Vol. 27, p. 193); <span class="sc"><a href="/article/20-0916-parnell-charles-stewart/parnell__charles_stewart">Parnell, C. S.</a></span>
+(Vol. 20, p. 854); <span class="sc"><a href="/article/11-0260-s3/fronde__the">Gordon, C. G.</a></span> (Vol. 11,
+p. 249); <span class="sc"><a href="/article/23-0771-s2/rosebery__archibald_philip_primrose">Rosebery</a></span> (Vol. 23, p. 731);
+<span class="sc"><a href="/article/23-0271-rhodes-cecil-john/rhodes__cecil_john">Rhodes, C. J.</a></span> (Vol. 23, p. 254).</p>
+
+<p><span class="shoulder-heading" id="sh-15">Edward VII George V</span>For the years since Victoria’s death
+see the articles: <span class="sc"><a href="/article/08-1024-edward-vii/edward_vii_">Edward VII</a></span>. (Vol. 8,
+p. 997) and <span class="sc"><a href="/article/11-0765-s2/george_v">George V</a></span>. (Vol. 11, p. 745),
+and the articles on recent
+political leaders:
+<span class="sc"><a href="/article/03-0267-s4/balfour__arthur_james">Balfour</a></span> (Vol. 3, p.
+250); <span class="sc"><a href="/article/05-0855-chamberlain/chamberlain">Chamberlain</a></span>
+(Vol. 5, p. 813); <span class="sc"><a href="/article/05-0143-campbell-bannerman-sir-henry/campbell-bannerman__sir_henry">Campbell-Bannerman</a></span>
+(Vol. 5, p. 131); <span class="sc"><a href="/article/02-0815-s8/asquith__herbert_henry">Asquith</a></span> (Vol. 2, p. 769);
+and <span class="sc"><a href="/article/16-0854-s4/lloyd_george__david">Lloyd George</a></span> (Vol. 16, p. 832); and
+on the reform of the House of Lords
+<span class="sc"><a href="/article/20-0897-s2/parliament">Parliament</a></span> (Vol. 20, especially pp. 845–847)
+and <span class="sc"><a href="/article/23-0125-representation/representation">Representation</a></span> (Vol. 23, especially
+pp. 111–113).</p>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

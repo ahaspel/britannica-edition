@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Philosophy And Psychology &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter LX</span>Philosophy And Psychology</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Definitions</a></li><li><a href="#sh-2">Some Important Articles and Their Writers</div> <div class="sidenote">Metaphysics and Logic</a></li><li><a href="#sh-3">Psychology</a></li><li><a href="#sh-4">Psychical Research</a></li><li><a href="#sh-5">Classification</a></li><li><a href="#sh-6">History of Thought Personal</a></li><li><a href="#sh-7">Breaking the Ground</a></li><li><a href="#sh-8">The Socratic Schools</a></li><li><a href="#sh-9">Aristotle</a></li><li><a href="#sh-10">The Last Greek Schools</a></li><li><a href="#sh-11">Medieval Ecclesiasticism</a></li><li><a href="#sh-12">Modern Ideas</a></li><li><a href="#sh-13">Back to Dreams</a></li><li><a href="#sh-14">The Rights of Man</a></li><li><a href="#sh-15">Transcendentalism</a></li><li><a href="#sh-16">Idealism</a></li><li><a href="#sh-17">Realism</a></li><li><a href="#sh-18">Materialism</a></li><li><a href="#sh-19">The 19th Century and Beyond</a></li><li><a href="#sh-20">The Historical Clue</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">Definitions</span>Philosophers, says Plato, are
+“those who are able to grasp the
+eternal and immutable”; their pursuit
+is wisdom. The history of philosophy
+is, therefore, the history of the ideas
+which have animated successive generations
+of man; so that in the wide sense the
+investigation includes all knowledge; the
+natural as well as
+the moral sciences;
+and the Greeks, to
+whom the western world owes the direction
+of its thought, so understood it. The
+several divisions of <span class="sc"><a href="/article/21-0462-s2/philosophy">Philosophy</a></span> (Vol. 21,
+p. 440), as we reckon them, were all fused
+by Plato in a semi-religious synthesis,
+with resulting confusion. Aristotle, the
+encyclopaedist of the ancient world, saw
+that the several issues should be regarded
+as separate disciplines, and became the
+founder of the sciences of logic, psychology,
+ethics, and aesthetics. His “first
+philosophy,” or, as we should say, “first
+principles,” which stood as introductions
+to his separate special inquiries, gradually
+acquired the name metaphysics. In
+more recent times the natural sciences:
+biology, physics, chemistry, medicine,
+etc., have been regarded as outside the
+strict boundaries of the philosophic
+schools; and theology, is excluded on the
+ground that its subject matter is so extensive
+that it may be looked upon as a
+separate science. The main divisions of
+philosophy are: <span class="sc"><a href="/article/09-0733-epistemology/epistemology">Epistemology</a></span> (Vol. 9,
+p. 701), which is concerned with the nature
+and origin of knowledge, i. e., the possibility
+of knowledge in the abstract; <span class="sc"><a href="/article/18-0245-s3/metaphysics">Metaphysics</a></span>
+(Vol. 18, p. 224), the science of
+being, often called <span class="sc"><a href="/article/20-0144-ontology/ontology">Ontology</a></span> (Vol. 20,
+p. 118), dealing, that is to say, with being
+as being; and <span class="sc"><a href="/article/22-0563-psychology/psychology">Psychology</a></span> (Vol. 22, p.
+547), the science of mind, an analysis of
+what “mind” means.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Some Important Articles and Their Writers</div> <div class="sidenote">Metaphysics and Logic</span>It will be of interest to the reader if,
+at this point, we enumerate some of the
+more important articles in the Britannica
+covering this
+field with the names
+of their authors. Andrew
+Seth Pringle-Pattison,
+professor of
+logic and metaphysics in the University
+of Edinburgh, wrote the general article
+<span class="sc"><a href="/article/21-0462-s2/philosophy">Philosophy</a></span>, which is a key to the whole
+subject, as well as the articles <span class="sc"><a href="/article/19-0138-mysticism/mysticism">Mysticism</a></span>
+(Vol. 19, p. 123), <span class="sc"><a href="/article/24-0324-s4/scepticism">Scepticism</a></span> (Vol.
+24, p. 306), <span class="sc"><a href="/article/24-0364-s3/scholasticism">Scholasticism</a></span> (Vol. 24, p.
+346), <span class="sc"><a href="/article/25-0709-s4/spinoza__baruch">Spinoza</a></span> (Vol. 25, p. 687), and
+others. Of fundamental importance is
+the article <span class="sc"><a href="/article/16-0901-s4/logic">Logic</a></span> (Vol. 16, p. 879), which
+would occupy 124 pages of this Guide. It
+is divided into two parts: the first, by
+<a href="/contributors.html?q=Thomas+Case">Thomas Case</a>, president of Corpus Christi
+College, Oxford, formerly professor of
+moral and metaphysical philosophy in
+that university, treats of the science generally,
+and examines in detail the processes
+of inference. The second, by <a href="/contributors.html?q=Herbert+William+Blunt">H.
+W. Blunt</a>, of Christ
+Church, Oxford, and
+formerly fellow of All
+Soul’s, gives a brilliant
+account of the <i>history</i> of logic, that
+is, the history of the ideas which have
+been the basis of all attempts to regulate
+these processes of inference. This account
+is unique in that it is the first
+critical review of the types of logical
+theory that has been attempted. A lucid
+discussion of a most difficult subject
+is that given under <span class="sc"><a href="/article/18-0245-s3/metaphysics">Metaphysics</a></span> (Vol.
+18, p. 224); equivalent to 100 pages in
+this Guide by <a href="/contributors.html?q=Thomas+Case">Professor Case</a>, to whom,
+as one of the most distinguished of
+modern Aristotelians, the article <span class="sc"><a href="/article/02-0539-s3/aristotle">Aristotle</a></span>
+(Vol. 2, p. 501) was also assigned.
+The life and work of <span class="sc"><a href="/article/21-0841-plato/plato">Plato</a></span> are examined
+in a valuable article (Vol. 21, p. 808), the
+equivalent in length to 54 pages of
+this Guide, by the late Professor
+Lewis Campbell, of St. Andrews, one
+of the best known Platonists of the
+time.</p>
+
+<p>Henry Sturt, author of <i>Personal Idealism</i>
+and many other books, is responsible
+for brilliant discussions of <span class="sc"><a href="/article/27-0846-s3/utilitarianism">Utilitarianism</a></span>
+(Vol. 27, p. 820), <span class="sc"><a href="/article/19-0762-s7/nominalism">Nominalism</a></span> (Vol.
+19, p. 735), <span class="sc"><a href="/article/18-0280-s2/metempsychosis">Metempsychosis</a></span> (Vol. 18,
+p. 259), <span class="sc"><a href="/article/25-0545-s4/space_and_time">Space and Time</a></span> (Vol. 25, p.
+525), etc. And F. C. S. Schiller, of
+Corpus Christi College, Oxford, who,
+under the wider, and historically more
+significant title “Humanism,” has further
+developed the pragmatic philosophy of
+William James, contributed the articles
+on <span class="sc"><a href="/article/22-0260-s5/pragmatism">Pragmatism</a></span>, <span class="sc"><a href="/article/25-0656-s5/spencer__herbert">Herbert Spencer</a></span>, and
+<span class="sc"><a href="/article/22-0064-s2/pompeii">Nietzsche</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Psychology</span>The very important article on <span class="sc"><a href="/article/22-0563-psychology/psychology">Psychology</a></span>
+(Vol. 22, p. 54), equal to nearly
+200 pages of this Guide was contributed
+by <a href="/contributors.html?q=James+Ward">James Ward</a>,
+professor of mental
+philosophy, Cambridge,
+who has devoted his whole
+life to psychological research. In addition
+to <span class="sc"><a href="/article/22-0563-psychology/psychology">Psychology</a></span> he also contributed
+the articles <span class="sc"><a href="/article/13-0351-s2/herbart__johann_friedrich">Herbart</a></span> (Vol. 13,
+p. 335), and <span class="sc"><a href="/article/19-0289-s3/naturalism">Naturalism</a></span> (Vol. 19, p. 274).
+James Sully, the well-known psychologist,
+former professor of the philosophy
+of the mind and logic, at University College,
+London, contributes the article
+<span class="sc"><a href="/article/01-0314-s4/aesthetics">Aesthetics</a></span> (Vol. 1, p. 277). The article
+<span class="sc"><a href="/article/09-0840-s4/ethics">Ethics</a></span> (Vol. 8, p. 808), equivalent to
+about 100 pages of this Guide, and <span class="sc"><a href="/article/28-0668-will-philosophy/will__philosophy_">Will</a></span>
+(Vol. 28, p. 648), both of primary importance,
+were the work of the Rev. H.
+H. Williams, lecturer in philosophy, Hertford
+College, Oxford.</p>
+
+<p>Very interesting articles are <span class="sc"><a href="/article/02-0830-s2/association_of_ideas">Association
+of Ideas</a></span> (Vol. 2, p. 784), <span class="sc"><a href="/article/08-0581-dream/dream">Dream</a></span>
+(Vol. 8, p. 588), <span class="sc"><a href="/article/14-0679-s5/instinct">Instinct</a></span> (Vol. 14, p. 648)
+and, very important, <span class="sc"><a href="/article/28-0476-s3/weber_s_law">Weber’s Law</a></span> (Vol.
+28, p. 458), which expresses the relation
+between sensation and the stimulus which
+induces it.</p>
+
+<p>Of recent years the psychology of
+crowds has received a good deal of attention;
+in fact, the need of an understanding
+of the phenomena attending it is of
+increasing importance in this age of universal
+suffrage. Interesting light is
+thrown upon the subject in the articles
+<span class="sc"><a href="/article/26-0064-suggestion/suggestion">Suggestion</a></span> (Vol. 26, p. 48), by <a href="/contributors.html?q=William+McDougall">W. M.
+McDougall</a>, Wilde reader in mental philosophy
+at Oxford; <span class="sc"><a href="/article/14-0351-s2/imitation">Imitation</a></span> (Vol. 14,
+p. 332); and <span class="sc"><a href="/article/23-0078-religion/religion">Religion</a></span> (Vol. 23, p. 66).
+A line of inquiry of vital importance to
+the social body is examined in the articles
+<span class="sc"><a href="/article/07-0486-criminology/criminology">Criminology</a></span> (Vol. 7, p. 464), by
+<a href="/contributors.html?q=Francis+Llewellyn+Griffith">Major Griffith</a>, for many years H. M. Inspector
+of Prisons, in which Lombroso’s
+theory of the possession by criminals of
+special anatomical and physiological
+characteristics is criticized, and the problem
+is shown to be one of abnormal psychology;
+see also <span class="sc"><a href="/article/16-0958-s3/lombroso__cesare">Cesare Lombroso</a></span> (Vol.
+16, p. 936). For discussions of other
+forms of abnormal psychology, see the
+chapter <i>For Physicians and Surgeons</i> in
+this Guide, and in particular the article
+<span class="sc"><a href="/article/14-0628-insanity/insanity">Insanity</a></span> (Vol. 14, p. 597).</p>
+
+<p><span class="shoulder-heading" id="sh-4">Psychical Research</span>Perhaps more popular, certainly more
+sensational, than the more legitimate
+branches of psychology, is that classed
+under <span class="sc"><a href="/article/22-0560-psychical-research/psychical_research">Psychical
+Research</a></span> (Vol. 22,
+p. 544). The title
+article was written
+by <a href="/contributors.html?q=Andrew+Lang">Andrew Lang</a>, who wrote <span class="sc"><a href="/article/22-0028-poltergeist/poltergeist">Poltergeist</a></span>
+(Vol. 22, p. 14), as well as articles
+on <span class="sc"><a href="/article/24-0600-second-sight/second_sight">Second Sight</a></span> (Vol. 24, p. 570), <span class="sc"><a href="/article/02-0221-s3/apparitions">Apparitions</a></span>
+(Vol. 2, p. 209), etc. The article
+<span class="sc"><a href="/article/08-0349-divination/divination">Divination</a></span> (Vol. 8, p. 332) was
+written by <a href="/contributors.html?q=Northcote+Whitbridge+Thomas">Northcote Thomas</a>, government
+anthropologist to Southern Nigeria,
+and author of <i>Thought Transference</i> and
+other books; and Mrs. Henry Sidgwick,
+formerly principal of Newnham College,
+Cambridge, and secretary to the Society
+for Psychical Research, was responsible
+for the article <span class="sc"><a href="/article/25-0727-spiritualism/spiritualism">Spiritualism</a></span> (Vol. 25, p.
+705). Among the biographical articles in
+this section, interest will be felt in the
+biography of Daniel Dunglas <span class="sc"><a href="/article/13-0643-s2/home__john">Home</a></span>, the
+original of Robert Browning’s poem,
+“Sludge the Medium.”</p>
+
+<p><span class="shoulder-heading" id="sh-5">Classification</span>We now may classify the principal subjects
+belonging to the main divisions
+of philosophy, the sciences of epistemology,
+metaphysics, and
+psychology. The wider
+phases of thought
+roughly belonging to the division of metaphysics
+are, in their historical order:
+Platonism (see <span class="sc"><a href="/article/21-0841-plato/plato">Plato</a></span>, Vol. 21, p. 808),
+and Aristotelianism (see <span class="sc"><a href="/article/02-0539-s3/aristotle">Aristotle</a></span>, Vol.
+2, p. 501), the two great Greek systems
+of the classical period; <span class="sc"><a href="/article/19-0390-neoplatonism/neoplatonism">Neoplatonism</a></span>
+(Vol. 19, p. 372), the last school of pagan
+philosophy, which grew up mainly among
+the Greeks of Alexandria from the 3rd
+century A.D. onwards; <span class="sc"><a href="/article/24-0364-s3/scholasticism">Scholasticism</a></span>
+(Vol. 24, p. 346), which gave expression
+to the most typical products of medieval
+thought; <span class="sc"><a href="/article/14-0294-s2/idealism">Idealism</a></span> (Vol. 14, p. 281), the
+philosophy of the “absolute,” which,
+though it has given a tinge to philosophic
+thought from the days of Socrates to the
+present time, is in its self-conscious form
+a modern doctrine; <span class="sc"><a href="/article/17-0897-s3/materialism">Materialism</a></span> (Vol.
+17, p. 878), which regards all the facts of
+the universe as explainable in terms of
+matter and motion; <span class="sc"><a href="/article/22-0958-realism/realism">Realism</a></span> (Vol. 22, p.
+941), which is a sort of half-way house
+between Idealism and Materialism; <span class="sc"><a href="/article/22-0260-s5/pragmatism">Pragmatism</a></span>
+(Vol. 22, p. 246), the philosophy
+of the “real,” which expresses the reaction
+against the intellectualistic speculation
+that has characterized most of modern
+metaphysics. <span class="sc"><a href="/article/16-0901-s4/logic">Logic</a></span> (Vol. 16, p. 879),
+the art of reasoning, or, as Ueberweg expresses
+it, “the science of the regulative
+laws of thought,” clearly belongs to the
+division of epistemology. Aspects of psychology,
+since they depend essentially
+upon perceptions of the human mind in
+relation to itself or its environment, are
+<span class="sc"><a href="/article/09-0840-s4/ethics">Ethics</a></span> (Vol. 9, p. 808), or moral philosophy,
+the investigation of theories of good
+and evil; and <span class="sc"><a href="/article/01-0314-s4/aesthetics">Aesthetics</a></span> (Vol. 1, p.
+277), the philosophy or science of the
+beautiful, of taste, or of the fine arts.</p>
+
+<p><span class="shoulder-heading" id="sh-6">History of Thought Personal</span>The articles enumerated will give the
+reader a clear idea of the drift of thought
+currents throughout the course of history,
+and they will
+introduce him to the
+detailed discussions
+of the various systems
+which have
+been propounded by the little band of men
+who have contributed something vital to
+the treasury of thought. Each has been
+in and out of fashion at different times.
+In the Britannica the contributions to
+philosophic thought by the great philosophers
+are discussed in biographical articles,
+to which we now turn.</p>
+
+<p><span class="shoulder-heading" id="sh-7">Breaking the Ground</span>The father of Greek philosophy and
+indeed of European thought was <span class="sc"><a href="/article/26-0756-s2/thales_of_miletus">Thales</a></span>
+of Miletus (Vol. 26, p. 720), who founded
+the <span class="sc"><a href="/article/14-0762-ionian-school-of-philosophy/ionian_school_of_philosophy">Ionian School</a></span>
+(Vol. 14, p. 731) at
+the end of the 7th
+century B.C. He
+first, as far as we know, sought to go behind
+the infinite multiplicity of phenomena
+in the hope of finding an all embracing
+infinite unity. This unity he decided
+was water. <span class="sc"><a href="/article/13-0322-s4/heraclitus">Heraclitus</a></span> (Vol. 13, p.
+309), the “dark philosopher,” nicknamed
+from his aristocratic prejudices “he who
+rails at the people,” later selected fire.
+The never ending fight between advocates
+of the “One” and the “Many” had
+therefore begun. Sophistry (see <span class="sc"><a href="/article/25-0434-sophists/sophists">Sophists</a></span>,
+Vol. 25, p. 418) has now an unpleasant
+connotation, inherited from the
+undisciplined reasonings of the schools of
+which <span class="sc"><a href="/article/22-0479-protagoras/protagoras">Protagoras</a></span> (Vol. 22, p. 464),
+<span class="sc"><a href="/article/12-0274-gorgias/gorgias">Gorgias</a></span> (Vol. 12, p. 257), <span class="sc"><a href="/article/20-0913-s2/parmenides_of_elea">Parmenides</a></span>
+of Elea (Vol. 20, p. 851), and <span class="sc"><a href="/article/28-0997-zeno/zeno">Zeno</a></span>, also
+of Elea (Vol. 28, p. 970), were leaders.
+The “science of the regulative laws of
+thought” had not yet been developed and
+fallacies were the rule rather than the
+exception. Protagoras, the first of the
+Sophists, in his celebrated essay on
+Truth, said that “Man is the measure of
+all things, of what is, that it is, and what is
+not, that it is not.” In other words, there is
+no such thing as objective truth. After
+nineteen-hundred years we are still seeking
+the answer to Pilate’s question, “What
+is truth?” Gorgias, in his equally famous
+work on Nature or on the Nonent (notbeing)
+maintained that “(a) nothing is,
+(b) that, if anything is, it cannot be
+known, (c) that, if anything is and can
+be known, it cannot be expressed in
+speech.” The paradoxes with which
+Zeno, the pupil and friend of Parmenides,
+adorned his arguments are proverbial.
+Who has not heard of Achilles and the
+tortoise? And it is a little curious that
+in quite modern times his sophisms have,
+after centuries of scornful neglect, been
+reinstated and made the basis of a mathematical
+renaissance by the German professor
+Weierstrass, who shows that we
+live in an unchanging world, and that
+the arrow, as Zeno paradoxically contended,
+is truly at rest at every moment
+of its flight (Vol. 28, p. 971).</p>
+
+<p><span class="shoulder-heading" id="sh-8">The Socratic Schools</span>The teaching of <span class="sc"><a href="/article/25-0347-socrates/socrates">Socrates</a></span> (Vol. 25, p.
+331) was oral, and his philosophy is
+handed down to us in the refined and
+elaborated system
+which <span class="sc"><a href="/article/21-0841-plato/plato">Plato</a></span> (Vol.
+21, p. 808) developed
+in his dialogues. The
+“One” and the “Many” were united
+in the philosophy of Plato. To him
+we owe a debt which is simply incalculable,
+for, as is shown in the Britannica,
+“to whatever system of modern
+thought the student is inclined he will
+find his account in returning to this wellspring
+of European thought, in which all
+previous movements are absorbed, and
+from which all subsequent lines of reflection
+may be said to diverge.” The germs
+of all ideas, even of most Christian ones,
+are, as Jowett remarked, to be found in
+Plato. The teaching of Socrates bore
+fruit in strangely divers forms. Plato,
+his legitimate successor, and the expounder
+of his philosophy, has been referred
+to, but there were other very different
+developments. The <span class="sc"><a href="/article/07-0713-cynics/cynics">Cynics</a></span> (Vol.
+7, p. 691), of whom <span class="sc"><a href="/article/08-0298-diogenes/diogenes">Diogenes</a></span> (Vol. 8, p.
+281) is the notorious prototype, uncouthly
+preached the asceticism which
+was to become so fashionable in a later
+era; but, their central doctrine, “let man
+gain wisdom—or buy a rope,” contains
+more than a germ of truth. The <span class="sc"><a href="/article/07-0725-cyrenaics/cyrenaics">Cyrenaics</a></span>
+(Vol. 7, p. 703), under <span class="sc"><a href="/article/02-0535-s2/aristippus">Aristippus</a></span>
+(Vol. 2, p. 497), starting from the two
+Socratic principles of virtue and happiness,
+differed from the Cynics in emphasizing
+the second. The <span class="sc"><a href="/article/18-0094-megara-hyblaea/megara_hyblaea">Megarians</a></span>
+(Vol. 18, p. 77), the “friends of ideas,”
+as Plato called them, united the Socratic
+principles of virtue (as the source
+of knowledge) with the Eleatic doctrine
+(Vol. 9, p. 168) of the “One” as opposed
+to the “Many.” Their strength
+lay in the intellectual pre-eminence of
+their members, not so much in the doctrine,
+or combination of doctrines, which
+they inculcated.</p>
+
+<p><span class="shoulder-heading" id="sh-9">Aristotle</span>Plato had done much, he had laid the
+foundation of modern thought; it remained
+to classify it and to systematize
+it. This task was
+reserved for <span class="sc"><a href="/article/02-0539-s3/aristotle">Aristotle</a></span>
+(Vol. 2, p. 501),
+one of the greatest geniuses of any age.
+He invented the sciences of logic, ethics,
+aesthetics, and psychology, as separate
+sciences. He was at once a student, a
+reader, a lecturer, a writer, and a book
+collector. He was the first man whom
+we know to have collected books, and he
+was employed at one time by the kings of
+Egypt as consulting librarian. His system
+of aesthetics still remains the best
+foundation of the critic’s training. The
+fundamental difference between Aristotle
+and Plato is that Platonism is a
+philosophy of universal forms, and Aristotelianism
+one of individual substances.
+As <a href="/contributors.html?q=<a href="/contributors.html?q=Northcote+Whitbridge+Thomas">Thomas</a>+Case">Professor Case</a> puts it in the
+Britannica: “Plato makes us think
+first of the supernatural and the kingdom
+of heaven, Aristotle of the natural and the
+whole world.” His inquiries, therefore,
+pre-eminently implied that “transvaluation
+of all values,” of which Nietzsche
+was to boast more than two thousand
+years later. A contemporary of Aristotle,
+whose philosophy occupies a
+somewhat independent position, is <span class="sc"><a href="/article/09-0715-epicurus/epicurus">Epicurus</a></span>
+(Vol. 9, p. 683). His advice to a
+young disciple was to “steer clear of culture.”
+His system, in fact, led him to
+go back from words to realities in order
+to find in nature a more enduring and a
+wider foundation for ethical doctrine;
+“to give up reasonings, and get at feelings,
+to test conceptions and arguments
+by a final reference to the only touchstone
+of truth—the senses.” A famous
+Roman who subscribed to the doctrines
+of Epicurus was the poet-philosopher-scientist,
+<span class="sc"><a href="/article/17-0122-s1/lucretius">Lucretius</a></span> (Vol. 17, p. 107),
+whose theories in his poem <i>De Rerum
+Natura</i> so curiously anticipated much of
+modern physics and psychology.</p>
+
+<p><span class="shoulder-heading" id="sh-10">The Last Greek Schools</span>Two schools remain to be considered
+before the Greek philosophy can be dismissed:
+the <span class="sc"><a href="/article/25-0966-stoics/stoics">Stoics</a></span> (Vol. 25, p. 942) and
+the Neoplatonists
+(see <span class="sc"><a href="/article/19-0390-neoplatonism/neoplatonism">Neoplatonism</a></span>,
+Vol. 19, p. 372).
+The Stoics caught
+the practical spirit of the age which had
+been evoked by Aristotle and provided a
+popular philosophy to meet individual
+needs. They showed kinship with the
+Cynics, but under the inspiration of
+their founder, Zeno of Citium, they
+avoided the excesses of that school, and
+formulated a system which fired the
+imagination of the time and finally bequeathed
+to Rome the guiding principles
+which were to raise her to greatness.
+Zeno is regarded as the best exponent of
+anarchistic philosophy in ancient Greece,
+and he and his philosophers opposed the
+conception of a free community without
+government to the state-Utopia of Plato;
+see <span class="sc"><a href="/article/01-0967-anarchism/anarchism">Anarchism</a></span> (Vol. 1, p. 915). Of Neoplatonism
+Adolph Harnack says in the
+Britannica (Vol. 19, p. 372):</p>
+
+<p>Judged from the standpoint of empirical
+science, philosophy passed its meridian in
+Plato and Aristotle, declined in the postAristotelian
+systems, and set in the darkness
+of Neoplatonism. But, from the religious
+and moral point of view, it must be
+admitted that the ethical “mood” which
+Neoplatonism endeavored to create and
+maintain is the highest and purest ever
+reached by antiquity.</p>
+
+<p>The most famous exponents of this system
+were <span class="sc"><a href="/article/21-0882-s10/plotinus">Plotinus</a></span> (Vol. 21, p. 849), an
+introspective mystic, and <span class="sc"><a href="/article/22-0117-porphyry-historian/porphyry__historian_">Porphyry</a></span> (Vol.
+22, p. 103), who edited Plotinus’s works
+and wrote his biography. Neoplatonism,
+coming as it did early in our era, formed
+a link between the pagan philosophy of
+ancient Greece and Christianity.</p>
+
+<p><span class="shoulder-heading" id="sh-11">Medieval Ecclesiasticism</span>With the death of <span class="sc"><a href="/article/04-0129-boetius-anicius-manlius-severinus/boetius__or_boethius___anicius_manlius_severinus">Boetius</a></span> (Vol. 4, p.
+116), in 524 A.D.,
+and with the closing
+of the philosophical
+schools in Athens
+five years later, intellectual darkness settled
+over Europe and hung there for centuries.
+When in the Middle Ages, the
+speculative sciences once again attracted
+men’s minds, Christianity had already
+impressed its mark. <span class="sc"><a href="/article/24-0364-s3/scholasticism">Scholasticism</a></span>
+(Vol. 24, p. 346) as a system began with
+the teaching of <span class="sc"><a href="/article/09-0774-s3/erigena__johannes_scotus">Scotus Erigena</a></span> (Vol. 9,
+p. 742) at the end of the 9th century, and
+culminated three centuries later with
+<span class="sc"><a href="/article/01-0544-s2/albertus_magnus">Albertus Magnus</a></span> (Vol. 1, p. 504), with
+his greater disciple <span class="sc"><a href="/article/02-0264-s3/aquinas__thomas">Thomas Aquinas</a></span>
+(Vol. 2, p. 250), whose ideas have animated
+orthodox philosophic thought in
+the Catholic Church to this day, and with
+<span class="sc"><a href="/article/08-0913-eckhart-johannes/eckhart__johannes">Meister Eckhart</a></span> (Vol. 8, p. 886), the
+first of the great speculative mystics (see
+<span class="sc"><a href="/article/19-0138-mysticism/mysticism">Mysticism</a></span>, Vol. 19, p. 123).</p>
+
+<p><span class="shoulder-heading" id="sh-12">Modern Ideas</span>With the Reformation an assertion of
+independence made itself heard. Man’s
+relation to man assumed an importance
+comparable to that
+of his relation to
+God; and the first
+steps on the path which was to lead to the
+rationalism of the French Encyclopaedists
+and of the English Utilitarians were
+taken by Albericus <span class="sc"><a href="/article/11-0622-gentileschi-artemisia-and-orazio-de/gentileschi__artemisia_and_orazio_de_">Gentilis</a></span> (Vol. 11, p.
+603), and Hugo <span class="sc"><a href="/article/12-0646-s6/grotius__hugo">Grotius</a></span> (Vol. 12, p. 621).
+In England, <span class="sc"><a href="/article/03-0152-s7/bacon__francis">Francis Bacon</a></span> (Vol. 3,
+p. 135) was independently working out
+the same problems. In philosophy his
+position was that of a humanist. The
+remarkable success of Grotius’s treatise
+<i>De Jure Belli et Pacis</i> brought his views
+of natural right into great prominence,
+and suggested such questions as: “What
+is man’s ultimate reason for obeying laws?
+Wherein exactly does their agreement
+with his rational and social nature exist?
+How far and in what sense is his nature
+really social?” The answers which
+<span class="sc"><a href="/article/13-0561-s2/hobbes__thomas">Hobbes</a></span> (Vol. 13, p. 545), who was
+considerably influenced by Bacon, gave
+to these fundamental questions in his
+<i>Leviathan</i> marked the starting point of
+independent ethical inquiry in England.
+<span class="sni"><span class="hidev">|</span>The Utilitarians<span class="hidev">|</span></span>
+From this time on
+the drift of thought
+in England, though
+of course often profoundly affected by
+the speculations of continental philosophers,
+mainly ran in utilitarian channels;
+and the succession of ideas may be traced
+through <span class="sc"><a href="/article/16-0866-s2/locke__john">Locke</a></span> (Vol. 16, p. 844), whose
+influence on the French Encyclopaedists
+was far reaching, <span class="sc"><a href="/article/13-0901-s3/hume__alexander">Hume</a></span> (Vol. 13, p. 876),
+Jeremy <span class="sc"><a href="/article/03-0766-bentham-george/bentham__george">Bentham</a></span> (Vol. 3, p. 747) with
+his famous principle of the “greatest happiness
+for the greatest number,” J. S.
+<span class="sc"><a href="/article/18-0477-s2/mill__james">Mill</a></span> (Vol. 18, p. 454), and Herbert
+<span class="sc"><a href="/article/25-0660-s5/spencer">Spencer</a></span> (Vol. 24, p. 634), with his philosophy
+of the “unknowable.”</p>
+
+<p><span class="shoulder-heading" id="sh-13">Back to Dreams</span>Meanwhile, on the continent of Europe,
+<span class="sc"><a href="/article/07-0093-cooper-alexander/cooper__alexander">Descartes</a></span> (Vol. 7, p. 79), in the
+<i>Discourse of Method</i>, had stated his famous
+proposition “<i>Cogito,
+ergo sum</i>,” and had laid
+down those fundamental
+dogmas of logic, metaphysics, and
+physics, from which started the subsequent
+inquiries of <span class="sc"><a href="/article/16-0405-s1/leibnitz__leibniz___gottfried_wilhelm">Locke</a></span>, <span class="sc"><a href="/article/16-0405-s1/leibnitz__leibniz___gottfried_wilhelm">Leibnitz</a></span> (Vol.
+16, p. 385), and <span class="sc"><a href="/article/19-0617-s3/newton">Newton</a></span> (Vol. 19, p. 583).
+But <span class="sc"><a href="/article/05-0431-cartesianism/cartesianism">Cartesianism</a></span> (Vol. 5, p. 414), as
+Dr. Caird points out in the Britannica,
+includes not only the work of Descartes,
+but also that of <span class="sc"><a href="/article/17-0503-s5/malebranche__nicolas">Malebranche</a></span> (Vol. 17, p.
+486) and of <span class="sc"><a href="/article/25-0709-s4/spinoza__baruch">Spinoza</a></span> (Vol. 25, p. 687), who,
+from very different points of view, developed
+the Cartesian theories, the former
+saturated with the study of Augustine,
+the latter with that of Jewish philosophy.</p>
+
+<p><span class="shoulder-heading" id="sh-14">The Rights of Man</span>There follows a group of men whose
+speculations left a deep mark on the
+course of events in Europe and America:
+<span class="sc"><a href="/article/28-0215-voltaire-fran-ois-marie-arouet-de/voltaire__françois_marie_arouet_de">Voltaire</a></span> (Vol. 28,
+p. 199), <span class="sc"><a href="/article/18-0805-montesquieu/montesquieu__charles_louis_de_secondat">Montesquieu</a></span>
+(Vol. 18, p.
+775), Jean Jacques
+<span class="sc"><a href="/article/23-0814-s5/rousseau__jean_baptiste">Rousseau</a></span> (Vol. 23, p. 775), and Denis
+<span class="sc"><a href="/article/08-0221-diderot-denis/diderot__denis">Diderot</a></span> (Vol. 8, p. 204). The antiecclesiastical
+animus which informed the
+writings of the first, the <i>Esprit des Lois</i>
+of the second, the <i>Contrat Social</i> of the
+third, and the famous encyclopaedia of
+the last, had political results, but their
+influence on metaphysical inquiry was
+practically nil.</p>
+
+<p><span class="shoulder-heading" id="sh-15">Transcendentalism</span>Outstanding, of course, in the 18th
+century was the influence of Immanuel
+<span class="sc"><a href="/article/15-0690-kant-immanuel/kant__immanuel">Kant</a></span> (Vol. 15, p. 662), who summed up
+the teachings of
+Leibnitz and Hume,
+carried them to their
+logical issues, and
+immensely extended them. In fact,
+Kant and his disciple <span class="sc"><a href="/article/10-0327-s3/fichte__immanuel_hermann">Fichte</a></span> (Vol. 10, p.
+313), as <a href="/contributors.html?q=<a href="/contributors.html?q=Northcote+Whitbridge+Thomas">Thomas</a>+Case">Prof. Case</a> shows in the article
+<span class="sc"><a href="/article/18-0245-s3/metaphysics">Metaphysics</a></span> (Vol. 18, p. 231), “became
+the most potent philosophic influences on
+European thought in the 19th century,
+because their emphasis was on man.”
+They made man believe in himself and
+in his mission. They fostered liberty and
+reform, and even radicalism. They almost
+avenged man on the astronomers,
+who had shown that the world is not
+made for earth, and therefore not for
+man. Kant half asserted, and Fichte
+wholly, that Nature is man’s own construction.
+The <i>Kritik</i> and the <i>Wissenschaftslehre</i>
+belonged to the revolutionary
+epoch of the “Rights of Man,” and produced
+as great a revolution in thought as
+the French Revolution did in fact. Instead
+of the old belief that God made the
+world for man, philosophers began to
+fall into the pleasing dream “I am everything,
+and everything is I”—and even
+“I am God.” The term <span class="sc"><a href="/article/27-0187-s3/transcendentalism">Transcendentalism</a></span>
+(Vol. 27, p. 172) has been specially
+applied to the philosophy of Kant and
+his successors, which is based on the view
+that true knowledge is intuitive, or supernatural.
+The famous Transcendental
+Club founded, 1836, by <span class="sc"><a href="/article/09-0355-emerson-ralph-waldo/emerson__ralph_waldo">Emerson</a></span> (Vol.
+9, p. 332) and others in New England,
+was not “transcendental” in the Kantian
+sense; its main theme was regeneration,
+a revolt from theological formalism, and
+a wider literary outlook; see also <span class="sc"><a href="/article/04-0668-s3/brook_farm">Brook
+Farm</a></span> (Vol. 4, p. 645), <span class="sc"><a href="/article/26-0917-s2/thoreau__henry_david">Thoreau</a></span> (Vol. 26,
+p. 877), <span class="sc"><a href="/article/01-0568-s4/alcott__amos_bronson">A. Bronson Alcott</a></span> (Vol. 1, p.
+528), and <span class="sc"><a href="/article/11-0308-s3/fuller__margaret">Margaret Fuller</a></span> (Vol. 11,
+p. 295).</p>
+
+<p><span class="shoulder-heading" id="sh-16">Idealism</span><span class="sc"><a href="/article/24-0334-s7/schelling__friedrich_wilhelm_joseph_von">Schelling’s</a></span> position (Vol. 24, p. 316),
+like that of his disciple <span class="sc"><a href="/article/13-0213-s3/hegel__georg_wilhelm_friedrich">Hegel</a></span> (Vol. 13,
+p. 200), differed from the transcendentalism
+of Kant and
+Fichte in regarding
+all noumena, or
+things comprehended (Vol. 19, p. 828),
+as knowable products of universal reason—the
+Absolute Ego, and, the absolute
+being God, nature as a product of universal
+reason, “a direct manifestation
+not of man but of God.” This was the
+starting point of noumenal idealism in
+Germany, and showed a reversion to the
+wider opinions of Aristotle. Hegelianism
+in which this idealism is carried to its
+limit is professedly one of the most
+difficult of philosophies. Hegel said
+“One man has understood me and even
+he has not.” His obscurity lies in
+the manner in which, as William Wallace
+shows in his article on the philosopher
+(Vol. 13, p. 204), he “abruptly hurls us
+into worlds where old habits of thought
+fail us.” The influence of Hegel on
+English thought has been wide and
+lasting.</p>
+
+<p><span class="shoulder-heading" id="sh-17">Realism</span><span class="sc"><a href="/article/24-0390-schopenhauer/schopenhauer__arthur">Schopenhauer</a></span> (Vol. 24, p. 372) was
+essentially a realist. He led the inevitable
+reaction against the absorption of
+everything in reason which
+is the keynote of the Kantian
+system. In the very
+title of his chief work, <i>The World as
+Will and Idea</i>, he emphasizes his position
+in giving “will” equal weight with “mind”
+or “idea” (<i>Vorstellung</i>). His “Will to Live”
+embodies a wholesome practical idea.
+Eduard von <span class="sc"><a href="/article/13-0049-s3/hartmann__moritz">Hartmann</a></span> (Vol. 13, p. 36) in
+his sensational <i>Philosophy of the Unconscious</i>
+established the thesis: “When the
+greater part of the Will in existence is
+so far enlightened by reason as to perceive
+the inevitable misery of existence,
+a collective effort to will non-existence
+will be made, and the world will relapse
+into nothingness, the Unconscious into
+quiescence.” He thus goes a step further
+in pessimism than did Schopenhauer,
+and the essence of his doctrine is the will
+to non-existence—<i>not</i> to live, instead of
+a will to live. German realism is,
+however, so strongly coloured by the
+idealistic cast of the national thought
+that we have to go to France and England
+for the most thorough-going statement
+of the realist position. In France
+the eclecticism of <span class="sc"><a href="/article/07-0350-cousin-jean/cousin__jean">V. Cousin</a></span> (Vol. 7, p.
+330) marked a doctrine of comprehension
+and toleration, opposed to the
+arrogance of absolutism and to the dogmatism
+of sensationalism which were the
+tendencies of his day. In England a
+reversion to Baconian ideas produced
+the natural or intuitive realism of <span class="sc"><a href="/article/23-0068-s2/reid__thomas">Reid</a></span>
+(Vol. 23, p. 51), <span class="sc"><a href="/article/25-0936-s3/stewart__balfour">Dugald Stewart</a></span>
+(Vol. 25, p. 913), <span class="sc"><a href="/article/12-0913-s5/hamilton__sir_william">Sir William Hamilton</a></span>
+(Vol. 12, p. 888) and their followers,
+and led to the synthetic philosophy
+of <span class="sc"><a href="/article/25-0656-s5/spencer__herbert">Herbert Spencer</a></span> (Vol. 25, p.
+634).</p>
+
+<p><span class="shoulder-heading" id="sh-18">Materialism</span>The materialists go a step further than
+the realists. In its modern sense materialism
+is the view that all we know is
+body (or matter), of
+which the mind is
+an attribute or
+function. This attitude was induced
+by the rapid advances of the natural
+sciences, and by the unifying doctrine of
+gradual evolution in nature. It was
+also heralded by a remarkable growth
+in commerce, manufactures, and industrialism.
+The leaders of the movement
+were <span class="sc"><a href="/article/04-0742-s4/büchner__friedrich_karl_christian_ludwig">Büchner</a></span> (Vol. 4, p. 719) whose
+<i>Kraft und Stoff</i> became a text book of
+materialism, and <span class="sc"><a href="/article/12-0828-s2/haeckel__ernst_heinrich">Haeckel</a></span> (Vol. 12, p. 803)
+who in his <i>Riddle of the Universe</i> asserts
+that, sensations being an inherent property
+of all substance, neither mind nor
+soul can have an origin.</p>
+
+<p><span class="shoulder-heading" id="sh-19">The 19th Century and Beyond</span>In the inquiries of <span class="sc"><a href="/article/17-0037-s4/lotze__rudolf_hermann">Lotze</a></span> (Vol. 17, p. 23),
+and <span class="sc"><a href="/article/10-0243-s5/fechner__gustav_theodor">Fechner</a></span> (Vol. 10, p. 231), the latter
+an experimental psychologist, lies the
+germ of much of the
+speculative thought
+of the present day.
+Lotze, as the well-known
+psychologist
+Henry Sturt says in his article in the
+Britannica (Vol. 17, p. 25), “brought
+philosophy out of the lecture room into
+the market place of life.” He saw that
+metaphysics must be the foundation
+of psychology, and that the current
+idealist theories of the origin of knowledge
+were unsound; and he concluded that
+the union of the regions of facts, of laws,
+and of standards of values, can only
+become intelligible through the idea of
+a personal deity. Like a brilliant meteor
+<span class="sc"><a href="/article/19-0699-s7/nietzsche__friedrich_wilhelm">Nietzsche</a></span> (Vol. 19, p. 672) flashed
+across the philosophic sky. His theories
+of the super-man are known to everyone.
+His brilliant essays are all in the nature
+of prolegomena to a philosophy which,
+embodied in a master work, the “Will
+to Power,” was to contain a transvaluation
+of all existing ethical values. Unfortunately
+he did not live to complete
+the work, which remains a fragment;
+but the drift of his thought is clearly
+indicated. One other system should
+be mentioned, that of <span class="sc"><a href="/article/22-0186-s7/positivism">Positivism</a></span> (Vol.
+22, p. 172), which its founder, <span class="sc"><a href="/article/06-0838-comte-auguste/comte__auguste">Auguste
+Comte</a></span> (Vol. 6, p. 814) hoped would
+supersede every other system. Comte’s
+philosophy confines itself to the data
+of experience and declines to recognise
+a priori or metaphysical speculations.
+The system of morality which he built
+up on it, and in which God is replaced
+by Humanity, has largely failed, in spite
+of the brilliant ideas which animate it,
+because it is in many of its aspects
+retrograde. A most interesting review
+of present day tendencies in the regions
+of Metaphysics will be found at the end
+of that article, with special reference to
+the brilliant work of <span class="sc"><a href="/article/28-0881-wundt-wilhelm-max/wundt__wilhelm_max">Wundt</a></span> (see also
+Vol. 28, p. 855), who constructing his
+system on the Kantian order—sense,
+understanding, reason, exhibits most
+clearly the necessary consequence from
+psychological to metaphysical idealism.
+His philosophy is the best exposition
+of modern idealism—that we perceive
+the mental and, therefore, all we know
+and conceive is mental.</p>
+
+<p><span class="shoulder-heading" id="sh-20">The Historical Clue</span>This sketch of the course of events in
+philosophical speculation will at least
+enable the reader to follow the historical
+clue to the evolution
+of ideas. Every student
+must, in order
+to attain a true perspective,
+know the <i>genealogy</i> of the ideas
+he is studying. It will therefore be best
+that he first read the general articles
+referred to in the beginning of this
+chapter, supplementing them by the
+accounts given of the separate systems
+under the headings of their authors.</p>
+
+<p>A list of the philosophical and psychological
+articles (more than 500 in number)
+in the Britannica will be found in
+the Index (Vol. 29, p. 939) and it is not
+repeated here.</p>
+
+<div class="chapter">
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

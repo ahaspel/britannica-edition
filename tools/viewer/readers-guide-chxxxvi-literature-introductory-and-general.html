@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Literature, Introductory And General &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XXXVI</span>Literature, Introductory And General</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Contributors</a></li><li><a href="#sh-2">General Articles</a></li><li><a href="#sh-3">Periodical Publications</a></li><li><a href="#sh-4">National Literatures</a></li><li><a href="#sh-5">Bibliography</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">Contributors</span>The student of literature, like the
+student of painting, finds it as
+necessary to examine the great
+examples of the art as to study the laws
+which guide the artist, for the history of
+their development, and he will find that
+the articles which discuss literature in
+the Britannica are <i>themselves literature</i>,
+models of the form of artistic expression
+which they describe. A list of these contributors
+who deal with literary topics
+might, indeed, easily be mistaken for a
+list of such articles on the great contemporary
+writers as the student would most
+desire to read. Among these contributors
+are, for example: <a href="/contributors.html?q=Edmund+Gosse">Edmund Gosse</a>,
+Theodore <a href="/contributors.html?q=Walter+Theodore+Watts-Dunton">Watts-Dunton</a>,
+Swinburne,
+A. C. Benson, John
+Morley, Austin Dobson, Arthur Symons,
+J. Addington Symonds, Frederic Harrison,
+Walter Besant, William Sharp
+(“Fiona Macleod”), Professor George
+<a href="/contributors.html?q=George+Edward+Bateman+Saintsbury">Saintsbury</a>, Sir Arthur T. Quiller-Couch
+(“Q”), <a href="/contributors.html?q=William+Archer">William Archer</a>, Israel Gollancz,
+Robert Louis Stevenson, Andrew Lang,
+Sir Leslie Stephen, E. V. Lucas, Arthur
+Waugh, Mrs. Craigie (“John Oliver
+Hobbes”), Alice Meynell, Mrs. Humphry
+Ward, and—among American
+names,—<a href="/contributors.html?q=George+Edward+Woodberry">George E. Woodberry</a>, Henry
+Van Dyke, Edward Everett Hale, T. W.
+Higginson, Brander Matthews, W. P.
+Trent, Charles Eliot Norton, Charles
+William Eliot, George W. Cable, Lyman
+Abbott, Edmund Clarence Stedman,
+John Burroughs, Thomas Davidson, Horace
+E. Scudder, and Charles F. Richardson.</p>
+
+<p>Before discussing the articles in which
+these and many other distinguished contributors
+deal with various aspects of
+literature, attention may be directed to
+the treatment of religious literature in
+the Britannica. The Bible is the subject
+of a separate chapter in this Guide on
+<i>Bible Study</i>, to which the reader is also
+referred for the whole literature of Biblical
+criticism. Religious literature based
+upon the Bible is discussed in the articles
+<span class="sc"><a href="/article/16-0817-s2/liturgy">Liturgy</a></span> (Vol. 16, p. 795), by the Rev.
+F. E. Warren; <span class="sc"><a href="/article/24-0703-sermon/sermon">Sermon</a></span> (Vol. 24, p. 673),
+by <a href="/contributors.html?q=Edmund+Gosse">Edmund Gosse</a>, and <span class="sc"><a href="/article/14-0193-hymns/hymns">Hymns</a></span> (Vol. 14,
+p. 181), by <a href="/contributors.html?q=The+Right+Hon.+The+Earl+of+Selborne">Lord Selborne</a>, equivalent to
+35 pages of this Guide. The medieval
+miracle plays and mysteries, presenting
+incidents from Scripture, are described
+in the section on the <i>Medieval Drama</i>
+(Vol. 8, p. 497) of the article <span class="sc"><a href="/article/08-0498-drama/drama">Drama</a></span>. On
+the literature of other religions, see the
+chapter <i>For Ministers</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-2">General Articles</span>The student of literature in general
+may begin his course of reading with the
+article <span class="sc"><a href="/article/16-0805-s5/literature">Literature</a></span> (Vol. 16, p. 783), a
+concise critical summary by
+Dr. <a href="/contributors.html?q=James+Fitzmaurice-Kelly">James Fitzmaurice-Kelly</a>,
+professor of Spanish
+language and literature,
+Liverpool University, best known as the
+editor of Cervantes. Read, after the article
+<span class="sc"><a href="/article/16-0805-s5/literature">Literature</a></span>, the same contributor’s
+article <span class="sc"><a href="/article/27-0198-translation/translation">Translation</a></span> (Vol. 27, p. 183).
+The student who does not wish to approach
+literature from the philosophic
+side need not read the articles <span class="sc"><a href="/article/01-0314-s4/aesthetics">Aesthetics</a></span>
+and <span class="sc"><a href="/article/10-0369-fine-arts/fine_arts">Fine Arts</a></span>; but even such a one
+should read the article <span class="sc"><a href="/article/25-1081-style-column/style__column_">Style</a></span> (Vol. 25,
+p. 1055), by <a href="/contributors.html?q=Edmund+Gosse">Edmund Gosse</a>, essayist,
+poet, biographer and librarian of the
+House of Lords, and the article <span class="sc"><a href="/article/22-0465-prose/prose">Prose</a></span>
+(Vol. 22, p. 450), by the same contributor.</p>
+
+<p>There is a well-known and perfectly
+authentic anecdote of <a href="/contributors.html?q=Edmund+Gosse">Edmund Gosse</a>’s
+predecessor as librarian of the House of
+Lords, who was once asked in the course
+of a newspaper symposium on education,
+“What were the principal factors in your
+education?” He replied by putting second
+only to his university training “the
+articles in the Encyclopaedia Britannica
+and in the <i>Athenaeum</i> by <a href="/contributors.html?q=Walter+Theodore+Watts-Dunton">Theodore Watts-Dunton</a>.”
+Certainly the student will be
+well repaid by repeated study and analysis
+of <a href="/contributors.html?q=Walter+Theodore+Watts-Dunton">Watts-Dunton</a>’s article <span class="sc"><a href="/article/21-0910-s2/poetry">Poetry</a></span>
+(Vol. 21, p. 877; equivalent to 45 pages of
+this Guide). The same author’s articles
+<span class="sc"><a href="/article/25-0430-s5/sonnet">Sonnet</a></span> (Vol. 25, p. 414), <span class="sc"><a href="/article/02-0677-s2/arnold__matthew">Matthew Arnold</a></span>
+(Vol. 2, p. 635), and <span class="sc"><a href="/article/28-0889-wycherley-william/wycherley__william">Wycherley</a></span>
+(Vol. 28, p. 863) should be studied with
+the article <span class="sc"><a href="/article/21-0910-s2/poetry">Poetry</a></span> as supplementing his
+literary philosophy.</p>
+
+<p>The greatest of literary forms is amply
+represented by the space and the authority
+given to it in the Britannica. The article
+<span class="sc"><a href="/article/08-0498-drama/drama">Drama</a></span> (Vol. 8, p. 475; equivalent to
+225 pages of this Guide) is mainly the
+work of Prof. A. W. Ward, master of
+Peterhouse, Cambridge, editor of the
+<i>Cambridge History of English Literature</i>
+and of the <i>Cambridge Modern History</i>;
+but some parts of the article are by <a href="/contributors.html?q=William+Archer">William
+Archer</a>, the dramatic critic, and by
+Auguste Filon (“Pierre Sandrié”). This
+elaborate article should be supplemented
+by the short article <span class="sc"><a href="/article/06-0781-comedy/comedy">Comedy</a></span> (Vol. 6, p.
+759) and by the biographical and critical
+sketches of the great dramatists.</p>
+
+<p>Among the many other articles in the
+Britannica on the forms of literature are:
+<span class="sc"><a href="/article/24-0243-satire/satire">Satire</a></span> (Vol. 24, p. 228), by <a href="/contributors.html?q=Richard+Garnett">Richard
+Garnett</a>, late librarian British Museum,
+with which the student may well combine
+the articles <span class="sc"><a href="/article/13-0913-s3/humour">Humour</a></span> and <span class="sc"><a href="/article/14-0872-irony/irony">Irony</a></span>, the articles
+<span class="sc"><a href="/article/03-0281-s2/ballade">Ballade</a></span>, <span class="sc"><a href="/article/03-0281-s3/ballads">Ballads</a></span> (Lang), <span class="sc"><a href="/article/04-0756-s6/bucolics">Bucolics</a></span>,
+<span class="sc"><a href="/article/20-0958-s2/pastoral">Pastoral</a></span>, <span class="sc"><a href="/article/05-0699-cento-town/cento__town_">Cento</a></span>, <span class="sc"><a href="/article/05-0884-s2/chant_royal">Chant Royal</a></span>
+(with <a href="/contributors.html?q=Edmund+Gosse">Gosse</a>’s first English chant royal,
+“The Praise of Dionysus,” transcribed in
+full), <span class="sc"><a href="/article/08-0106-descriptive-poetry/descriptive_poetry">Descriptive Poetry</a></span>, <span class="sc"><a href="/article/09-0269-elegy/elegy">Elegy</a></span>, <span class="sc"><a href="/article/09-0713-epic-poetry/epic_poetry">Epic
+Poetry</a></span>, <span class="sc"><a href="/article/09-0737-s2/epithalamium">Epithalamium</a></span>, <span class="sc"><a href="/article/13-0401-s2/heroic_verse">Heroic Verse</a></span>,
+<span class="sc"><a href="/article/14-0304-idyl/idyl">Idyl</a></span>, <span class="sc"><a href="/article/16-0716-s2/limerick">Limerick</a></span>, <span class="sc"><a href="/article/17-0195-lyrical-poetry/lyrical_poetry">Lyrical Poetry</a></span>, <span class="sc"><a href="/article/17-0207-macaronics/macaronics">Macaronics</a></span>,
+<span class="sc"><a href="/article/19-0281-s4/national_anthems_or_hymns">National Anthems</a></span>, <span class="sc"><a href="/article/20-0019-ode/ode">Ode</a></span>, <span class="sc"><a href="/article/20-0402-ottava-rima/ottava_rima">Ottava
+Rima</a></span>, <span class="sc"><a href="/article/20-0742-pantun/pantun">Pantun</a></span>, <span class="sc"><a href="/article/23-0361-s2/rime_royal">Rime Royal</a></span>, <span class="sc"><a href="/article/23-0724-s2/rondeau">Rondeau</a></span>,
+<span class="sc"><a href="/article/23-0724-s3/rondel">Rondel</a></span>, <span class="sc"><a href="/article/24-0732-s3/sestett">Sestett</a></span>, <span class="sc"><a href="/article/24-0732-s5/sestina">Sestina</a></span>, <span class="sc"><a href="/article/25-0416-song/song">Song</a></span>,
+<span class="sc"><a href="/article/27-0302-s3/triolet">Triolet</a></span>, <span class="sc"><a href="/article/27-1068-s2/vers_de_société">Vers De Société</a></span>, <span class="sc">Vilanelle</span>,
+<span class="sc"><a href="/article/28-0126-virelay/virelay">Virelay</a></span>, and—a few of the prose forms,
+<span class="sc"><a href="/article/03-0975-biography/biography">Biography</a></span>, <span class="sc"><a href="/article/07-0039-conte/conte">Conte</a></span>, <span class="sc"><a href="/article/07-0490-criticism/criticism">Criticism</a></span>, <span class="sc"><a href="/article/09-0733-epistle/epistle">Epistle</a></span>,
+<span class="sc"><a href="/article/09-0808-essay-essayist/essay__essayist">Essay</a></span>, <span class="sc"><a href="/article/09-0930-s4/euphuism">Euphuism</a></span>, <span class="sc"><a href="/article/19-0865-novel/novel">Novel</a></span>, <span class="sc"><a href="/article/20-0715-pamphlets/pamphlets">Pamphlet</a></span>,
+<span class="sc"><a href="/article/21-0602-s5/picaresque_novel__the">Picaresque Novel</a></span>, <span class="sc"><a href="/article/23-0530-romance/romance">Romance</a></span>, <span class="sc"><a href="/article/26-0390-s4/tale">Tale</a></span>,
+<span class="sc"><a href="/article/27-0132-s2/tract">Tract</a></span>,—nearly all these being by <a href="/contributors.html?q=Edmund+Gosse">Edmund
+Gosse</a>. Two articles of the utmost
+importance are <span class="sc"><a href="/article/08-0203-dictionary/dictionary">Dictionary</a></span> and <span class="sc"><a href="/article/09-0394-encyclopaedia/encyclopaedia">Encyclopaedia</a></span>.
+Read the general article
+<span class="sc"><a href="/article/23-0250-s5/rhetoric">Rhetoric</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Periodical Publications</span>Periodical publications, especially those
+in the English and French languages, have
+contained a great part of the best literary
+criticism of miscellaneous
+essays published
+since the first
+French review appeared
+in 1665 and since the first English
+review, consisting wholly of original matter,
+was established in London in 1710.
+The latter was indebted to France not
+only for its model, but for its editor, who
+was a French Protestant refugee. Benjamin
+Franklin founded the first American
+monthly, the Philadelphian <i>General
+Magazine</i> in 1741. The article <span class="sc"><a href="/article/21-0168-periodicals/periodicals">Periodicals</a></span>
+(Vol. 21, p. 151), by <a href="/contributors.html?q=Henry+Richard+Tedder">H. R. Tedder</a>,
+librarian of the Athenaeum Club, London,
+contains separate sections on the reviews
+and magazines of <i>England</i>, the
+<i>United States</i>, <i>Canada</i>, <i>South Africa</i>, <i>West
+India and the British Crown Colonies</i>, <i>India
+and Ceylon</i>, <i>France</i>, <i>Germany</i>, <i>Austria</i>,
+<i>Switzerland</i>, <i>Italy</i>, <i>Belgium</i>, <i>Holland</i>, <i>Denmark</i>,
+<i>Norway</i>, <i>Sweden</i>, <i>Spain</i>, <i>Portugal</i>,
+<i>Greece</i>, <i>Russia</i>, <i>Bohemia</i>, <i>Hungary</i> and
+<i>Japan</i>.</p>
+
+<p><span class="sc"><a href="/article/19-0568-newspapers/newspapers">Newspapers</a></span> (Vol. 19, p. 544), equivalent
+to 140 pages of this Guide, is an article
+in which the student will find a full
+account of the most fertile, if not the
+most studied, form of modern literature
+in all parts of the world. See also the
+chapter in this Guide <i>For Journalists and
+Authors</i>.</p>
+
+<p>The reader should note that of the
+many articles on literary forms and rhetorical
+figures, only a few are given above,
+but they are listed more fully in the Index
+Volume, p. 929, where there are more
+than 350 such titles. He must remember
+also that there are more than 3,000 biographical
+and critical articles on authors
+in different languages and different periods.
+The following are “key” articles on
+national literatures:</p>
+
+<p><span class="shoulder-heading" id="sh-4">National Literatures</span><span class="sc"><a href="/article/09-0639-english-literature/english_literature">English Literature</a></span>, by <a href="/contributors.html?q=Henry+Bradley">Henry Bradley</a>,
+joint-editor of the <i>New English Dictionary</i>;
+Prof. J. M. Manly, University
+of Chicago; Prof.
+Oliver Elton, University
+of Liverpool;
+Thomas Seccombe,
+author of <i>The Age of Johnson</i>.</p>
+
+<p><span class="sc"><a href="/article/01-0882-american-literature/american_literature">American Literature</a></span>, by <a href="/contributors.html?q=George+Edward+Woodberry">G. E.
+Woodberry</a>, formerly professor in Columbia
+University.</p>
+
+<p><span class="sc"><a href="/article/11-0804-german-literature/german_literature">German Literature</a></span>, by Prof. <a href="/contributors.html?q=John+George+Robertson">J. G.
+Robertson</a>, University of London, author
+of <i>History of German Literature</i>.</p>
+
+<table class="table1">
+  <tbody><tr>
+    <td class="c022"><span class="sc"><a href="/article/08-0746-dutch-literature/dutch_literature">Dutch Literature</a></span></td>
+ <td class="blt c023 bbt" rowspan="7">by <a href="/contributors.html?q=Edmund+Gosse">Edmund Gosse</a>.</td>
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/10-0513-s3/flemish_literature">Flemish Literature</a></span></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/28-0302-walloons/walloons">Walloons</a></span>, <i>Literature</i></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/03-0687-belgium/belgium">Belgium</a></span>, <i>Literature</i></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/08-0037-denmark/denmark">Denmark</a></span>, <i>Literature</i></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/26-0206-sweden/sweden">Sweden</a></span>, <i>Literature</i></td>
+ 
+  </tr>
+  <tr>
+    <td class="c022"><span class="sc"><a href="/article/19-0829-norway/norway">Norway</a></span>, <i>Literature</i></td>
+ 
+  </tr>
+</tbody></table>
+
+<p><span class="sc"><a href="/article/14-0239-iceland/iceland">Iceland</a></span>, <i>Literature, Classic</i>, by Prof.
+Frederick York Powell of Oxford; <i>Recent</i>,
+by Sigfús Blöndal, librarian of Copenhagen
+University.</p>
+
+<p><span class="sc"><a href="/article/11-0122-s2/french_literature">French Literature</a></span>, by <a href="/contributors.html?q=George+Edward+Bateman+Saintsbury">George Saintsbury</a>.</p>
+
+<p><span class="sc"><a href="/article/22-0510-proven-al-literature/provençal_literature">Provençal Literature</a></span>, by <a href="/contributors.html?q=Paul+Meyer">Paul
+Meyer</a>, Director of the  École des Chartes,
+Paris, and <a href="/contributors.html?q=Hermann+Oelsner">Prof. Hermann Oelsner</a>, Oxford,
+author of a <i>History of Provençal
+Literature</i>.</p>
+
+<p><span class="sc"><a href="/article/02-0042-s3/anglo-norman_literature">Anglo-Norman Literature</a></span>, by Prof.
+Louis Brandin of the University of London.</p>
+
+<p><span class="sc"><a href="/article/25-0547-s3/spain">Spain</a></span>, <i>Literature</i>, by <a href="/contributors.html?q=James+Fitzmaurice-Kelly">Prof. J. Fitzmaurice-Kelly</a>
+of the University of Liverpool,
+and A. Morel-Fatio, author of
+<i>L’Espagne au XVIe et au XVIIe siècles</i>.</p>
+
+<p><span class="sc"><a href="/article/22-0148-s3/portugal">Portugal</a></span>, <i>Literature</i>, by <a href="/contributors.html?q=Edgar+Prestage">Edgar Prestage</a>,
+editor of <i>Letters of a Portuguese Nun</i>,
+etc.</p>
+
+<p><span class="sc"><a href="/article/14-0930-italian-literature/italian_literature">Italian Literature</a></span>, by Prof. <a href="/contributors.html?q=Hermann+Oelsner">Hermann
+Oelsner</a>, Oxford, and Prof. Adolfo
+Bartoli of the University of Florence, author
+of <i>Storia della letteratura Italiana</i>.</p>
+
+<p><span class="sc"><a href="/article/26-0257-switzerland/switzerland">Switzerland</a></span>, <i>Literature</i>, by Prof. <a href="/contributors.html?q=Rev.+William+Augustus+Brevoort+Coolidge">W.
+A. B. Coolidge</a>.</p>
+
+<p><span class="sc"><a href="/article/13-0919-hungary/hungary">Hungary</a></span>, <i>Literature</i>, by <a href="/contributors.html?q=Emil+Reich">Emil Reich</a>,
+author of <i>Hungarian Literature</i>, and E.
+Dundas Butler, author of <i>Hungarian
+Poems and Fables for English Readers</i>, etc.</p>
+
+<p><span class="sc"><a href="/article/21-0935-poland/poland">Poland</a></span>, <i>Literature</i>, by <a href="/contributors.html?q=William+Richard+Morfill">W. R. Morfill</a>,
+late professor of Slavonic Languages, Oxford,
+author of <i>Slavonic Literature</i>, etc.</p>
+
+<p><span class="sc"><a href="/article/23-0912-russia/russia">Russia</a></span>, <i>Literature</i>, also by <a href="/contributors.html?q=William+Richard+Morfill">Prof. Morfill</a>.</p>
+
+<p><span class="sc"><a href="/article/02-0268-s1/arabia">Arabia</a></span>, <i>Literature</i>, by the late Prof. M.
+J. de Goeje, University of Leiden, and the
+Rev. G. W. Thatcher, warden of Camden
+College, Sydney, N. S. W.</p>
+
+<p><span class="sc"><a href="/article/21-0204-persia/persia">Persia</a></span>, <i>Literature</i>, by Prof. Karl Geldner,
+Marburg University, and Prof. Hermann
+Ethé, University College, Wales.</p>
+
+<p><span class="sc"><a href="/article/06-0179-china/china">China</a></span>, <i>Literature</i>, by <a href="/contributors.html?q=Herbert+Allen+Giles">H. A. Giles</a>, professor
+of Chinese, Oxford.</p>
+
+<p><span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span>, <i>Literature</i>, by <a href="/contributors.html?q=Captain+Frank+Brinkley">Capt. Brinkley</a>.</p>
+
+<p><span class="sc"><a href="/article/13-0182-hebrew-literature/hebrew_literature">Hebrew Literature</a></span>, by <a href="/contributors.html?q=Arthur+Ernest+Cowley">Arthur Cowley</a>,
+sub-librarian of the Bodleian, Oxford.</p>
+
+<p><span class="sc">Armenian Literature</span>, by <a href="/contributors.html?q=Frederick+Cornwallis+Conybeare">F. C.
+Conybeare</a>, author of <i>The Ancient Armenian
+Texts of Aristotle</i>.</p>
+
+<p><span class="sc"><a href="/article/26-0331-syriac-literature/syriac_literature">Syriac Literature</a></span>, by <a href="/contributors.html?q=Norman+McLean">Norman
+McLean</a>, lecturer in Aramaic, Cambridge.</p>
+
+<p><span class="sc">Hindostani Literature</span>, by Sir
+<a href="/contributors.html?q=Sir+Charles+James+Lyall">Charles James Lyall</a>.</p>
+
+<p><span class="sc"><a href="/article/24-0170-sanskrit/sanskrit">Sanskrit</a></span>, <i>Literature</i>, by Prof. Julius
+Eggeling, Edinburgh.</p>
+
+<p><span class="sc"><a href="/article/06-0464-classics/classics">Classics</a></span>, by Dr. <a href="/contributors.html?q=John+Edwin+Sandys">J. E. Sandys</a>, Cambridge,
+author of <i>History of Classical
+Scholarship</i>.</p>
+
+<p><span class="sc"><a href="/article/12-0532-greek-literature/greek_literature">Greek Literature</a></span>: <i>Ancient</i>, by Sir
+<a href="/contributors.html?q=Sir+Richard+Claverhouse+Jebb">R. C. Jebb</a>, author of <i>Companion to Greek
+Studies</i>; <i>Byzantine</i>, by Prof. <a href="/contributors.html?q=Karl+Krumbacher">Karl Krumbacher</a>,
+editor of <i>Byzantinische Zeitschrift</i>
+and <i>Byzantinisches Archiv</i>; and <i>Modern</i>, by
+<a href="/contributors.html?q=James+David+Bourchier">J. D. Bourchier</a>, correspondent of <i>The
+Times</i> (London) in South-Eastern Europe.</p>
+
+<p><span class="sc"><a href="/article/16-0277-latin-literature/latin_literature">Latin Literature</a></span>, by Prof. <a href="/contributors.html?q=Augustus+Samuel+Wilkins">A. S.
+Wilkins</a>, of Owens College, Manchester,
+and Prof. R. S. Conway, of the University
+of Manchester.</p>
+
+<p><span class="sc"><a href="/article/05-0677-celt-tool/celt__tool_">Celt</a></span>, <i>Literature</i>, to which W. J.
+Gruffydd, lecturer in Celtic, University
+College, Cardiff, contributes the section
+on <i>Welsh</i> literature; and E. C. Quiggin,
+lecturer in Celtic, Cambridge, contributes
+the sections on <i>Irish</i>, <i>Manx</i>, <i>Breton</i> and
+<i>Cornish</i> literatures.</p>
+
+<p><span class="shoulder-heading" id="sh-5">Bibliography</span>This list of the literatures of many
+tongues, from each of which translations
+have added to the common stock accessible
+even to those who can read with ease
+only one language, indicates the existence
+of a bewildering mass of printed matter,
+and just as each language has its literature—using
+the word to signify output,
+so each subject upon which men write has
+its literature—using the word to signify
+material for any one branch of study.
+Bibliographies are
+the charts by which
+students are enabled
+to navigate these vast seas of knowledge.
+The articles <span class="sc"><a href="/article/03-0931-bibliography-and-bibliology/bibliography_and_bibliology">Bibliography</a></span> (Vol. 3, p.
+908), by <a href="/contributors.html?q=Alfred+William+Pollard">A. W. Pollard</a>, assistant librarian
+of the British Museum, and <span class="sc"><a href="/article/14-0392-index/index">Index</a></span> (Vol.
+14, p. 373) describe the technicalities of
+cataloguing and classifying books and
+their contents.</p>
+
+<p>The Britannica is itself the most complete
+index to the subjects treated by
+books and the most complete bibliographical
+manual for the student that
+could be imagined. The Index of 500,000
+entries (Vol. 29) shows to what class any
+one of half a million facts belongs, by referring
+to the article in which that fact is
+treated. At the end of the article a list of
+the best books on the subject shows the
+student who desires to specialize just
+where to go for further details. No less
+than 203,000 books are included in these
+lists appended to Britannica articles and
+many of them are, in themselves, substantial
+contributions to literature. The
+Shakespeare bibliography would, for example,
+fill 30 pages of the size and type
+of this Guide; the bibliography of English
+history, by <a href="/contributors.html?q=Albert+Frederick+Pollard">A. F. Pollard</a>, of the University
+of London, 13 pages, and the bibliography
+of French history, by Prof.
+Bémont of the École des Hautes Études,
+Paris, 8 pages.</p>
+
+<p>A group of articles of great interest to
+every student of literature deals with the
+methods and appliances by which writings
+are preserved and circulated. <span class="sc"><a href="/article/17-0635-manuscript/manuscript">Manuscript</a></span>
+(Vol. 17, p. 618) is by Sir <a href="/contributors.html?q=Sir+Edward+Maunde+Thompson">E.
+Maunde Thompson</a>, of the British Museum
+Library; <span class="sc"><a href="/article/04-0227-book/book">Book</a></span> (Vol. 4, p. 214);
+<span class="sc"><a href="/article/04-0235-book-collecting/book-collecting">Book-Collecting</a></span> (Vol. 4, p. 221) and
+<span class="sc"><a href="/article/14-0388-incunabula/incunabula">Incunabula</a></span> (Vol. 14, p. 369) are by <a href="/contributors.html?q=Alfred+William+Pollard">A.
+W. Pollard</a>, also of the British Museum
+Library. <span class="sc"><a href="/article/16-0565-libraries/libraries">Libraries</a></span> (Vol. 16, p. 545),
+equivalent to 100 pages of this Guide, is
+by <a href="/contributors.html?q=Henry+Richard+Tedder">H. R. Tedder</a>, librarian of the Athenaeum
+Club, London. The articles on
+printing, binding, publishing and similar
+subjects are described in the chapter of
+this Guide <i>For Printers</i>.</p>
+
+<p>With this chapter to help him the student
+will have little difficulty in devising
+his own course of reading in any one literature—starting
+with the general treatment,
+going from this to the separate
+biographies of the great authors mentioned
+in the general article, and, when
+there is in the national literature that he
+is studying some special development of
+a literary <i>genre</i>, as of the sermon in the
+17th or the satire in the 18th century,
+turning to the article in the Britannica
+dealing with this form of literature, <span class="sc"><a href="/article/24-0243-satire/satire">Satire</a></span>,
+<span class="sc"><a href="/article/24-0703-sermon/sermon">Sermon</a></span>, or whatever it may be. For
+example, what could be more illuminating
+to the student of 19th century literature
+than the following passages-disconnected
+here—from the article <span class="sc"><a href="/article/24-0243-satire/satire">Satire</a></span>?</p>
+
+<p>Goethe and Schiller, Scott and Wadsworth,
+are now at hand, and as imagination
+gains ground satire declines. Byron, who
+in the 18th century would have been the
+greatest of satirists, is hurried by the spirit
+of his age into passion and description, bequeathing,
+however, a splendid proof of the
+possibility of allying satire with sublimity
+in his <i>Vision of Judgment</i>.... Miss
+Edgeworth skirts the confines of satire, and
+Miss Austen seasons her novels with the
+most exquisite satiric traits. Washington
+Irving revives the manner of <i>The Spectator</i>,
+and Tieck brings irony and persiflage to
+the discussion of critical problems....
+In all the characteristics of his genius
+Thackeray is thoroughly English, and the
+faults and follies he chastises are those especially
+characteristic of British society. Good
+sense and the perception of the ridiculous
+are amalgamated in him; his satire is a
+thoroughly British article, a little over-solid,
+a little wanting in finish, but honest, weighty
+and durable. Posterity must go to him for
+the humours of the age of Victoria, as they
+go to Addison for those of Anne’s....
+In Heine the satiric spirit, long confined to
+established literary forms, seems to obtain
+unrestrained freedom to wander where it
+will, nor have the ancient models been followed
+since by any considerable satirist except
+the Italian Giusti. The machinery employed
+by Moore was indeed transplanted to
+America by James Russell Lowell, whose
+<i>Biglow Papers</i> represent perhaps the highest
+moral level yet attained by satire.</p>
+
+<p>In no age was the spirit of satire so generally
+diffused as in the 19th century, but
+many of its eminent writers, while bordering
+on the domains of satire, escape the definition
+of satirist. The term cannot be properly
+applied to Dickens, the keen observer
+of the oddities of human life; or to George
+Eliot, the critic of its emptiness when not
+inspired by a worthy purpose; or to Balzac,
+the painter of French society; or to Trollope,
+the mirror of the middle classes of
+England. If <i>Sartor Resartus</i> could be regarded
+as a satire, Carlyle would rank
+among the first of satirists; but the satire,
+though very obvious, rather accompanies
+than inspires the composition.</p>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

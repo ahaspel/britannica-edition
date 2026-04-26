@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>History, Introductory And General &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XLII</span>History, Introductory And General</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Authority</a></li><li><a href="#sh-2">Method of Treatment</a></li></ol></div>
+    <div class="body-text">
+
+
+<p>When you turn to the new
+Britannica to study history, you
+naturally expect to learn a great
+deal that will be new to you. But you
+can anticipate something more and better
+than that. You will find a great deal that
+is new to <i>everyone</i>, even to those who
+have been reading history for years. For
+the contributors to the work, in making a
+completely fresh survey of the whole field
+of human knowledge, were helping one
+another to obtain new light upon the
+history of even the earliest periods. As
+all the articles were completed before a
+single volume was printed, there was
+such an opportunity for comparison and
+revision as has never before existed.
+When research upon one subject had disclosed
+new evidence that was of value in
+relation to another subject, the contributors
+and editors could co-operate as
+fully as if they had all been assembled in
+a great international congress. And the
+result of this collaboration is that the
+publication of the new Britannica does
+more, at one stroke, to advance historical
+knowledge, to solve historical doubts, and
+to correct historical mistakes than is done
+by isolated historians in the course of a
+generation.</p>
+
+<p><span class="shoulder-heading" id="sh-1">Authority</span>With this idea of <i>combined</i> effort
+clearly before you, consider for a moment
+the accumulated individual authority
+of such individual
+specialists as those who
+deal with history in the
+Britannica. There are, to name only a few,
+the Germans Eduard Meyer and Schiemann
+of Berlin, Hashagen of Bonn, von
+Pastor of Innsbruck, Pauli of Göttingen,
+Keutgen of Hamburg, and Count Lützow;
+Frenchmen like Mgr. Duchesne,
+Luchaire, Valois, Anchel, Halphen, Babelon
+and Bémont; the Italians Villari,
+Barnabei and Balzani; the Canadians
+Doughty, Grant, Dionne and Wrong;
+among Americans, J. H. Robinson, W. A.
+Dunning, H. L. Osgood, C. H. Hayes, G.
+W. Botsford, and J. T. Shotwell of Columbia;
+President Emeritus Charles W.
+Eliot, and Drs. Edward Channing, F. J.
+Turner and Charles Gross of Harvard;
+Drs. A. D. Morse, R. B. Richardson and
+Preserved Smith of Amherst; Dr. T. F.
+Collier of Williams; Professors William
+Graham Sumner, G. Burton Adams and J.
+C. Schwab of Yale; Prof. Grant Showerman
+of Wisconsin; Prof. William MacDonald
+of Brown; Profs. Fleming and
+Scroggs of Louisiana; Dr. McMaster of
+Pennsylvania; Prof. I. J. Cox of Cincinnati;
+the late Alexander Johnston of
+Princeton; Prof. W. Roy Smith of Bryn
+Mawr; Henry Cabot Lodge, Carl Schurz
+and James Ford Rhodes; and—to mention
+only a few English names—S. R.
+Gardiner, Edward Freeman, Thomas
+Hodgkin, James Bryce, James Gairdner,
+J. D. Bury, C. W. C. Oman, A. F. Pollard,
+J. H. Round, H. W. C. Davis, Osmund
+Airy, G. W. Prothero, John Morley,
+Reginald Lane Poole, J. Holland
+Rose, F. J. Haverfield, W. Alison Phillips,
+Sir Donald Mackenzie Wallace, R.
+Nisbet Bain, W. Warde Fowler, J. L.
+Myres, J. S. Reid, W. J. Brodribb and
+H. F. Pelham.</p>
+
+<p>So much for the quality of the historical
+matter in the Britannica. The
+quantity is equally remarkable.</p>
+
+<p><i>If the history in the Britannica
+was printed in the usual volumes
+on heavy paper, containing
+100,000 words to a volume,
+it would fill about 70 such volumes,
+or, say, four good-sized
+shelves in an ordinary “unit”
+bookcase.</i></p>
+
+<p><span class="shoulder-heading" id="sh-2">Method of Treatment</span>Every country and every event from
+the earliest syllable of recorded time receives
+its proper treatment. Under such
+circumstances it is obvious
+that in the limits
+of this Guide it would
+not be possible to give
+outlines of courses of historical readings
+for all nations and periods. Such
+readings in history alone would more
+than fill this whole Guide. But the
+information is all in the Britannica, and
+what has been said above will give the
+reader some notion of the authority of
+the articles written by natives of nearly
+every civilized country in the world, and
+some idea of the scope of treatment. The
+character of the subject matter of history
+and the method of treatment in the Britannica
+combine to make minute outlines
+less necessary for historical study than
+for the pursuit of a course in almost any
+other subject. The Britannica, the student
+will quickly see, contains in each
+instance a “key” article on the history of
+each nation—either as a separate article,
+like <span class="sc"><a href="/article/09-0498-english-history/english_history">English History</a></span> or <span class="sc">Roman History</span>
+or as a historical section of the article
+on the country—for instance, in the
+article <span class="sc"><a href="/article/12-0443-greece/greece">Greece</a></span> there is a “sub-article,”
+so to say, on history (Vol. 12, pp. 440–470),
+and in the article <span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>
+a sub-article on American history (Vol.
+27, pp. 663–735). The student of any
+country’s history should read <i>first</i> such
+an article or sub-article, so that he will
+get a big outline view of the subject, and
+then use it as a basis or starting point for
+further reading, looking up in the Index
+volume the important topics mentioned
+in the main article. These will be:</p>
+
+<p>(1) Articles on the history of parts of
+the country he is studying—states, provinces,
+counties, kingdoms, duchies, cities
+and towns.</p>
+
+<p>(2) Biographies of rulers, statesmen,
+soldiers, reformers, etc.</p>
+
+<p>(3) Articles on wars and battles, each
+under its proper heading.</p>
+
+<p>(4) Articles on movements and changes,
+sometimes of national, sometimes of international
+importance, the Renaissance,
+political parties, economic, political and
+religious revolutions, the Crusades, etc.</p>
+
+<p>(5) Articles on churches, sects and
+denominations of historical importance
+in the country under consideration.</p>
+
+<p>But although it is impossible to give in
+this Guide complete courses of reading
+for the history of all countries, it is possible
+and desirable to give it in cases
+where it would be most useful to the
+greatest number of readers.</p>
+
+<p>The following chapter is an outline
+course of study in the <i>History of the United
+States</i>, which is given in some detail, because
+it has a peculiar interest to Americans.</p>
+
+<p>Next is given an outline of a course of
+reading in Canadian and then in English
+History, then in French History, and
+then in the History of the countries of
+the Far East, India, China and Japan.
+These will show the reader how fully and
+authoritatively the history of countries,
+whether near or distant, is given in the
+Britannica; and if he wishes to pursue his
+studies into the record of other countries,
+it is certain that with these for
+an example, and with the aid of the
+Index, he will have no trouble in so
+doing.</p>
+
+<div>
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

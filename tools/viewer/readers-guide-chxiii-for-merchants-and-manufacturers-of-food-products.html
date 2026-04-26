@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Merchants And Manufacturers Of Food Products &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XIII</span>For Merchants And Manufacturers Of Food Products</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Food Preservation</a></li><li><a href="#sh-2">Adulteration</a></li><li><a href="#sh-3">Special Foods</a></li><li><a href="#sh-4">Dairy Products</a></li><li><a href="#sh-5">Beverages, Tea and Coffee</a></li></ol></div>
+    <div class="body-text">
+
+
+<p>The manufacturer of or dealer in
+food products must of necessity be
+interested in questions of transportation
+by land and sea, of taxation, of
+agriculture, stock-raising and fishing, for
+example. For all such subjects as these
+he is referred to other chapters of this
+Guide. Here he will find only the chief
+articles on the subjects most closely related
+to the study of food products.
+But on these he may glean a wealth of
+information that will be of greatest value
+to him, and from them he can turn
+readily and with profit to a survey of the
+larger area covered by other chapters.</p>
+
+<p>As a general introduction to the subject
+the student should read <span class="sc"><a href="/article/08-0231-dietetics/dietetics">Dietetics</a></span>
+(Vol. 8, p. 214), by the late Dr. W. O.
+Atwater, who was in charge of the Nutrition
+Investigation of the U. S. Department
+of Agriculture, and R. D. Milner,
+also of that Department. This article
+deals with the composition and nutritive
+values of foods, their fuel value, quantities
+of nutriments needed, hygienic and
+pecuniary economy of foods (with tables
+showing the percentage composition of
+common food materials), conditions of
+digestibility, and other matters of equal
+importance. <span class="sc"><a href="/article/19-0958-s2/nutrition">Nutrition</a></span> (Vol. 19, p.
+920), by Prof. <a href="/contributors.html?q=Diarmid+Noel+Paton">D. N. Paton</a> and Dr. E. P.
+Cathcart, both of the University of
+Glasgow, discusses more particularly digestion
+and the utilization of the different
+food constituents.</p>
+
+<p><span class="shoulder-heading" id="sh-1">Food Preservation</span>After establishing the value and relative
+importance of the various substances
+used as food, it is of great interest to
+everyone in the business to consider the
+subject of <span class="sc"><a href="/article/10-0633-s2/food_preservation">Food Preservation</a></span> (Vol.
+10, p. 612), an article by Otto Hehner,
+formerly president of the Society of Public
+Analysts, in which there are separate
+sections on <i>Preservation by Heat</i> (which
+includes all canning
+processes); <i>by Chemicals</i>;
+<i>by Drying</i>;
+<i>by Refrigeration</i>; <i>by
+Pickling</i>. The sterilization of milk, condensed
+milk and milk powder all fall
+within the scope of this article. The
+preservation of food by cold is described
+in fuller detail in the article <span class="sc"><a href="/article/23-0043-s2/refrigerating">Refrigerating
+and Ice Making</a></span> (Vol. 23, p. 30), by
+<a href="/contributors.html?q=Thomas+Bell+Lightfoot">T. B. Lightfoot</a>, author of the standard
+technical book on that subject. Among
+the separate articles on preservative materials
+are <span class="sc"><a href="/article/28-0111-vinegar/vinegar">Vinegar</a></span> (Vol. 28, p. 96),
+<span class="sc"><a href="/article/01-0166-s8/acetic_acid____acidum_aceticum_____ch">Acetic Acid</a></span> (Vol. 1, p. 135), <span class="sc"><a href="/article/06-0413-citric-acid/citric_acid">Citric
+Acid</a></span> (Vol. 6, p. 397), <span class="sc"><a href="/article/20-0065-s3/oils">Oils</a></span> (Vol. 20, p.
+43), <span class="sc"><a href="/article/24-0101-salt/salt">Salt</a></span> (Vol. 24, p. 87), <span class="sc"><a href="/article/24-0107-saltpetre/saltpetre">Saltpetre</a></span>
+(Vol. 24, p. 93), <span class="sc"><a href="/article/26-0048-sugar/sugar">Sugar</a></span> (Vol. 26, p. 32),
+<span class="sc"><a href="/article/04-0258-borax/borax">Borax</a></span> (Vol. 4, p. 243), <span class="sc"><a href="/article/10-0688-formalin/formalin">Formalin or
+Formaldehyde</a></span> (Vol. 10, p. 667), <span class="sc"><a href="/article/03-0776-benzoic-acid/benzoic_acid">Benzoic
+Acid</a></span> (Vol. 3, p. 756), <span class="sc"><a href="/article/24-0083-s2/salicylic_acid">Salicylic
+Acid</a></span> (Vol. 24, p. 69), <span class="sc"><a href="/article/26-0077-s2/sulphur">Sulphur</a></span>, <i>Compounds</i>
+(Vol. 26, p. 63), <span class="sc"><a href="/article/01-0565-s2/alcohol">Alcohol</a></span> (Vol.
+1, p. 525).</p>
+
+<p><span class="shoulder-heading" id="sh-2">Adulteration</span>The objections to the use of some of
+these chemicals are discussed in <span class="sc"><a href="/article/01-0249-s5/adulteration">Adulteration</a></span>
+(Vol. 1, p. 218), by Otto Hehner.
+This article is about as long as 50
+pages of this Guide. There is an interesting
+historical introduction, from which
+we learn that the first legal statute in
+which the adulteration
+of food is noticed
+dates from the
+reign of King John in England (1203).
+There is an elaborate account of all the
+subsequent legislation in Great Britain,
+the United States, and Germany. The
+effects upon digestion of the chemical
+preservatives mentioned above are shown
+in the light of the very latest investigations.
+There is a section on colouring
+matter in food, with information about
+harmless and harmful dyes; and the last
+part of the article considers adulteration
+as recently applied to the more important
+articles of food, such as milk (with tests
+for borax and formaldehyde), cream,
+butter, cheese, lard, oils, flour and bread,
+sugar, marmalade and jams, tea, coffee,
+cocoa and chocolate, wine, beer, spirits,
+non-alcoholic drinks, and vinegar.</p>
+
+<p>The properties of adulterants and colouring
+matters are described in separate
+articles, such as <span class="sc"><a href="/article/12-0158-glucose/glucose">Glucose</a></span> (Vol. 12, p.
+141); <span class="sc"><a href="/article/23-1015-s2/saccharin">Saccharin</a></span> (Vol. 23, p. 970); <span class="sc"><a href="/article/20-0808-s4/paraffin">Paraffin</a></span>
+(Vol. 20, p. 752), which is sometimes
+added to coffee when it is roasted;
+<span class="sc"><a href="/article/01-0812-s5/alum">Alum</a></span> (Vol. 1, p. 766), often used with
+weak and unstable flours in bread making,
+and unwholesome, although not strictly
+speaking an adulterant; <span class="sc"><a href="/article/23-1048-s4/sago">Sago</a></span> (Vol. 23, p.
+1003) and <span class="sc"><a href="/article/02-0691-s4/arrowroot">Arrowroot</a></span> (Vol. 2, p. 649),
+which provide adulterants of cocoa;
+<span class="sc"><a href="/article/06-0144-chicory/chicory">Chicory</a></span> (Vol. 6, p. 131), which many
+consumers insist upon using in their
+coffee; <span class="sc"><a href="/article/07-0119-copper/copper">Copper</a></span>, <i>Compounds</i> (Vol. 7, p.
+109), which describes the copper salts
+used for colouring canned vegetables;
+<span class="sc"><a href="/article/01-0996-s2/anatto">Anatto</a></span> (Vol. 1, p. 943) and <span class="sc"><a href="/article/27-0493-s2/turmeric">Turmeric</a></span>
+(Vol. 27, p. 474), two harmless vegetable
+colouring matters, much employed; and
+<span class="sc"><a href="/article/02-0058-s6/aniline">Aniline</a></span> (Vol. 2, p. 47). A full list of
+the various other colouring matters will
+be found in the article <span class="sc"><a href="/article/08-0771-dyeing/dyeing">Dyeing</a></span> (Vol. 8,
+p. 744).</p>
+
+<p>Another group of articles will be found
+particularly useful in connection with the
+manufacture of certain classes of food
+products. Among these are <span class="sc"><a href="/article/10-0287-s3/fermentation">Fermentation</a></span>
+(Vol. 10, p. 275), by <a href="/contributors.html?q=Julian+Levett+Baker">J. L. Baker</a>, the
+noted English analytical and consulting
+chemist; <span class="sc"><a href="/article/11-0346-fungi/fungi">Fungi</a></span> (Vol. 11, p. 333), illustrated,
+with its information about molds;
+<span class="sc"><a href="/article/03-0173-s5/bacteriology">Bacteriology</a></span> (Vol. 3, p. 156), illustrated,
+especially for the material relating
+to the nature of toxins (p. 174)—both of
+these articles by the late Professor Ward
+of Cambridge and Professor Blackman of
+the University of Leeds; <span class="sc"><a href="/article/18-0043-medical-jurisprudence/medical_jurisprudence">Medical Jurisprudence</a></span>,
+<i>Food Poisoning</i> (Vol. 18, p.
+29), by Prof. <a href="/contributors.html?q=Henry+Harvey+Littlejohn">H. H. Littlejohn</a>, of the
+University of Edinburgh, and T. A. Ingram;
+and <span class="sc"><a href="/article/21-0926-poison/poison">Poison</a></span> (Vol. 21, p. 893), by
+the late Dr. Sir Thomas Stevenson, of
+Guy’s Hospital, London.</p>
+
+<p>The diseases of animals which affect
+meat are described in the article <span class="sc"><a href="/article/28-0017-veterinary-science/veterinary_science">Veterinary
+<span class="pageno" id="Page_65">65</a></span>Science</span> (Vol. 28, p. 2), by <a href="/contributors.html?q=George+Fleming">George
+Fleming</a>, author of <i>Animal Plagues</i>, and
+Prof. John MacQueen of the London Veterinary
+College, which contains sections
+on diseases of cattle, sheep and pigs as
+well as on the principal parasites of domestic
+animals; and there are separate articles
+on <span class="sc"><a href="/article/02-0117-s4/anthrax">Anthrax</a></span> (Vol. 2, p. 106); <span class="sc"><a href="/article/10-0638-foot-and-mouth-disease/foot-and-mouth_disease">Foot
+and Mouth Disease</a></span> (Vol. 10, p. 617),
+<span class="sc"><a href="/article/21-0871-pleuro-pneumonia/pleuro-pneumonia">Pleuro-Pneumonia</a></span>, or <span class="sc"><a href="/article/21-0870-pleurisy/pleurisy">Lung Plague</a></span>
+(Vol. 21, p. 838), and <span class="sc"><a href="/article/23-0365-rinderpest/rinderpest">Rinderpest</a></span> (Vol.
+23, p. 348).</p>
+
+<p><span class="shoulder-heading" id="sh-3">Special Foods</span>The article <span class="sc"><a href="/article/10-0569-s4/flour">Flour and Flour Manufacture</a></span>
+(Vol. 10, p. 548), by <a href="/contributors.html?q=George+Frederick+Zimmer">George F.
+Zimmer</a>, not only describes the processes
+of milling and of
+dressing and bleaching
+the flour, but
+also gives the history of milling from the
+earliest times, and deals with the special
+customs of different countries. There is
+a very full article <span class="sc"><a href="/article/04-0483-bread/bread">Bread</a></span> (Vol. 4, p. 465),
+by the same contributor. It is not generally
+known that there are in existence
+remains of cakes made by the Swiss lake-dwellers
+in the Stone Age. The author
+says that, in all probability, they were
+baked on hot stones. The machine
+bakeries of the present day are described;
+and there are sections on sanitation of
+bakehouses, quality, flavour and colour of
+flour, baking powders, methods of dough
+making (the ferment-and-dough, the
+sponge-and-dough, and other systems),
+leavened, unleavened and aerated bread,
+and the recently invented Apostolov process,
+which among other advantages, permits
+the utilization of about 87½% of
+the wheat berry in bread making. A
+complete modern bread-making plant is
+described, together with the latest types
+of machine kneaders, dough dividers and
+mixers, and baking ovens. There are
+also articles on <span class="sc"><a href="/article/03-1015-biscuit/biscuit">Biscuit</a></span> (Vol. 3, p. 992),
+<span class="sc"><a href="/article/17-0207-macaroni/macaroni">Macaroni</a></span> (Vol. 17, p. 192), <span class="sc"><a href="/article/27-1052-s4/vermicelli">Vermicelli</a></span>
+(Vol. 27, p. 1024), and <span class="sc"><a href="/article/12-0162-s1/gluten">Gluten</a></span> (Vol. 12,
+p. 145).</p>
+
+<p>The article <span class="sc"><a href="/article/25-0816-starch/starch">Starch</a></span> (Vol. 25, p. 794)
+treats of the manufacture of this most
+important alimentary substance. The
+materials from which the chief food
+starches are made are described in <span class="sc"><a href="/article/17-0464-s2/maize">Maize</a></span>
+(Vol. 7, p. 448), <span class="sc"><a href="/article/02-0691-s4/arrowroot">Arrowroot</a></span> (Vol. 2, p.
+649), with illustrations showing the appearance
+under the microscope of the
+substances which pass commercially under
+the name of arrowroot or farina;
+<span class="sc"><a href="/article/23-1048-s4/sago">Sago</a></span> (Vol. 23, p. 1003), <span class="sc"><a href="/article/26-0442-tapioca/tapioca">Tapioca</a></span> (Vol.
+26, p. 413), and <span class="sc"><a href="/article/05-0474-cassava/cassava">Cassava</a></span> (Vol. 5, p. 457).
+<span class="sc"><a href="/article/19-0975-s5/oat">Oat</a></span> (Vol. 19, p. 938) has information
+about the manufacture of oatmeal.</p>
+
+<p>The article <span class="sc"><a href="/article/26-0048-sugar/sugar">Sugar</a></span> (Vol. 26, p. 35) is by
+two practical experts, Alfred and Valentine
+W. Chapman. It deals with the
+chemistry, manufacture, history and
+statistics of this important food product
+as well as with the cultivation of the
+sugar cane and beet.</p>
+
+<p>Among articles on the products in the
+manufacture of which sugar is employed
+is <span class="sc"><a href="/article/15-0166-s2/jams_and_jellies">Jams and Jellies</a></span> (Vol. 15, p. 150), by
+Otto Hehner. The author points out
+many things of interest, for example why
+starch-glucose is an ingredient and not an
+adulterant of these products, and he shows
+the baselessness of the prejudice against
+the use of beet sugar in their manufacture.
+The manufacturer of jellies and
+preserves will find separate articles on all
+the fruits employed, and other information
+in <span class="sc"><a href="/article/11-0572-s7/gelatin">Gelatin</a></span> (Vol. 11, p. 554); in
+<span class="sc"><a href="/article/14-0828-s2/irish_moss">Irish Moss</a></span> (Vol. 14, p. 795) as to the
+properties of vegetable gelatin; and in
+<span class="sc"><a href="/article/14-0905-s2/isinglass">Isinglass</a></span> (Vol. 14, p. 872), which, besides
+its gelatinous qualities, possesses the
+property of clarifying wines, beers, and
+other liquids. <span class="sc"><a href="/article/06-0922-confectionery/confectionery">Confectionery</a></span> (Vol. 6,
+p. 898) describes an important industry—which
+until the middle of the 19th century
+was part of the druggist’s business.
+See also <span class="sc"><a href="/article/06-0275-chocolate/chocolate">Chocolate</a></span> (Vol. 6, p. 259) and
+<span class="sc"><a href="/article/15-0573-s3/jujube">Jujube</a></span> (Vol. 15, p. 546).</p>
+
+<p><span class="sc"><a href="/article/24-0101-salt/salt">Salt</a></span> (Vol. 24, p. 87) covers the manufacture
+of salt very fully. It is curious
+to note that the termination “wich” in
+English place-names points to localities
+of ancient salt manufacture, for “wich”
+is an old English word meaning saltspring.
+This article contains an interesting
+section on the <i>Ancient History and
+Religious Symbolism</i> of salt (p. 90), by the
+late Dr. William Robertson Smith. The
+preservative qualities of salt were held to
+make it a peculiarly fitting symbol of any
+enduring compact, and in more than one
+part of the world cakes of salt have been
+used as money.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Dairy Products</span>Butter and cheese manufacture fall
+under the article <span class="sc"><a href="/article/07-0759-dairy/dairy">Dairy and Dairy
+Farming</a></span> (Vol. 7, p. 737), illustrated, by
+the late Dr. William
+Fream, of Edinburgh
+University.
+There are sections
+on <i>Milk Production</i>; <i>Cheese and Cheesemaking</i>,
+including Canadian and American
+factory practice and the Babcock
+and Russell investigations in Wisconsin
+which have opened up a new field for
+commercial exploitation (the varieties of
+English, French, German, and Italian
+cheeses being also described); <i>Butter and
+Butter-making</i>, <i>Dairy Factories</i>, <i>Adulteration
+of Dairy Produce</i>; <i>The Milk Trade</i>,
+<i>American Dairying</i>, etc. <span class="sc"><a href="/article/17-0721-margarine/margarine">Margarine</a></span>,
+the “perfectly wholesome butter substitute”
+is the subject of a separate article
+(Vol. 17, p. 704).</p>
+
+<p>There is an article on <span class="sc"><a href="/article/16-0234-s4/lard">Lard</a></span> (Vol. 16, p.
+214), showing what real leaf lard is, and
+how the term is applied in commerce.
+<span class="sc"><a href="/article/20-0065-s3/oils">Oils</a></span> (Vol. 20, p. 43), by Dr. <a href="/contributors.html?q=Julius+Lewkowitsch">Julius Lewkowitsch</a>,
+author of <i>Chemical Technology
+and Analysis of Oils, Fats, and Waxes</i>,
+deals with the fixed oils and fats, and
+essential, etheral or volatile oils. Some
+of these are among the most important
+articles of food, and the oil and fat industry
+may be considered as old as the
+human race itself. The three processes
+of oil extraction are described, also refining
+and bleaching, methods of testing,
+etc. A list of all oils and fats, including
+those that are edible, is given. For the
+chief oils used as food see <span class="sc"><a href="/article/20-0109-s2/olive">Olive</a></span> (Vol. 20,
+p. 85), <span class="sc"><a href="/article/07-0272-cotton/cotton">Cotton</a></span>, <i>Cotton-seed</i> (Vol. 7, p.
+260), <span class="sc"><a href="/article/24-0731-sesame/sesame">Sesame</a></span> (Vol. 24, p. 701), <span class="sc"><a href="/article/26-0120-sunflower/sunflower">Sunflower</a></span>
+(Vol. 26, p. 102), <span class="sc"><a href="/article/22-0105-poppy-oil/poppy_oil">Poppy Oil</a></span>
+(Vol. 22, p. 91).</p>
+
+<p>Other articles on foods deal with the
+preparation for the market of such products
+as <span class="sc"><a href="/article/12-0040-s4/ginger">Ginger</a></span> (Vol. 12, p. 27), <span class="sc"><a href="/article/19-0112-mustard/mustard">Mustard</a></span>
+(Vol. 19, p. 97), <span class="sc"><a href="/article/21-0142-s4/pepper">Pepper</a></span> (Vol. 21, p.
+127), with the different varieties distinguished,
+<span class="sc"><a href="/article/05-0614-cayenne-pepper/cayenne_pepper">Cayenne Pepper</a></span> (Vol. 5, p.
+589), <span class="sc"><a href="/article/28-0111-vinegar/vinegar">Vinegar</a></span> (Vol. 28, p. 96), <span class="sc"><a href="/article/21-0641-s6/pimento">Pimento</a></span>
+(Vol. 21, p. 614), <span class="sc"><a href="/article/06-0581-cloves/cloves">Cloves</a></span> (Vol. 6, p. 562),
+<span class="sc"><a href="/article/06-0392-cinnamon/cinnamon">Cinnamon</a></span> (Vol. 6, p. 376), <span class="sc"><a href="/article/07-0671-curry/curry">Curry</a></span> (Vol.
+7, p. 649), <span class="sc"><a href="/article/05-0607-caviare/caviare">Caviare</a></span> (Vol. 5, p. 582), from
+which we learn that the finer grades
+rarely find their way out of Russia; <span class="sc"><a href="/article/15-0790-ketchup/ketchup">Ketchup</a></span>
+(Vol. 15, p. 761), <span class="sc"><a href="/article/06-0366-chutney/chutney">Chutney</a></span> (Vol. 6,
+p. 350), <span class="sc"><a href="/article/21-0610-pickle/pickle">Pickle</a></span> (Vol. 21, p. 584), <span class="sc"><a href="/article/27-0920-s4/vanilla">Vanilla</a></span>
+(Vol. 27, p. 894), <span class="sc"><a href="/article/22-0881-raisin/raisin">Raisin</a></span> (Vol. 22, p.
+864), <span class="sc"><a href="/article/07-0670-currant/currant">Currant</a></span> (Vol. 7, p. 648), <span class="sc"><a href="/article/22-0533-prune/prune">Prune</a></span>
+(Vol. 22, p. 518), <span class="sc"><a href="/article/10-0346-s2/fig">Fig</a></span> (Vol. 10, p. 332), and
+<span class="sc"><a href="/article/12-0690-guava/guava">Guava</a></span> (Vol. 12, p. 665).</p>
+
+<p><span class="shoulder-heading" id="sh-5">Beverages, Tea and Coffee</span>The same completeness is displayed in
+the Britannica articles on beverages. <span class="sc"><a href="/article/26-0505-s1/tea">Tea</a></span>
+(Vol. 26, p. 476), by <a href="/contributors.html?q=John+McEwan">John McEwan</a>, has
+an admirable historical
+introduction.
+It was not until the
+middle of the 17th
+century that the English began to use tea.
+It is a curious fact that whereas 35 years
+ago China practically supplied the world
+with tea, to-day Russia alone takes half
+of her export. The reason for this is explained.
+The characteristics of all varieties
+of tea are given and the main facts
+about the cultivation and manufacture.
+<i>Tea Adulteration</i> and <i>Effects on Health</i> are
+other sections of this valuable article.</p>
+
+<p><span class="sc"><a href="/article/06-0667-coffee/coffee">Coffee</a></span> (Vol. 6, p. 646) is treated in
+very similar fashion by <a href="/contributors.html?q=Alfred+Barton+Rendle">A. B. Rendle</a> and
+W. G. Freeman. This beverage, in spite
+of fierce religious opposition, became the
+national beverage of the Arabians, and
+finally appeared in Europe in the 17th
+century. The physiological action of
+coffee has a section all to itself. Coffee
+consumption, roasting and adulteration
+are also discussed. It is of interest to
+note that while one branch of the Anglo-Saxon
+race, namely the people of the
+United States, is near the head of the
+list of coffee consumers, others, especially
+Great Britain, Canada and Australia
+“are almost at the foot, using only about
+1 lb. of coffee per head each year.” In the
+United States “the average consumption
+per head is about 11 or 12 lbs. per
+annum.”</p>
+
+<p><span class="sc"><a href="/article/06-0649-cocoa/cocoa">Cocoa</a></span> (Vol. 6, p. 628) is an interesting
+and valuable article on “the food of the
+gods”—the great beverage and dietary
+substance which America has given the
+world. Modern lovers of chocolate as a
+beverage (which is the same as cocoa
+save that the fat has not been extracted)
+will envy the digestive powers of the
+Emperor Montezuma of Mexico who had,
+each day, 50 jars of chocolate prepared
+for his personal consumption.</p>
+
+<p><span class="sc"><a href="/article/03-0661-beer/beer">Beer</a></span> (Vol. 3, p. 642), by Dr. <a href="/contributors.html?q=Philip+Schidrowitz">Philip
+Schidrowitz</a>, member of the Institute of
+Brewery Council, confines itself to the
+history of this important beverage, the
+chemical composition of beers of different
+types, and information in regard to production
+and consumption. In <span class="sc"><a href="/article/04-0524-brewing/brewing">Brewing</a></span>
+(Vol. 4, p. 506) this same author enters
+very fully into the manufacturing operations.
+The English and foreign systems
+are described and there are many illustrations.
+It is curious to note that Pliny,
+who is the earliest writer to mention
+beer, describes it as scorned by the Romans,
+who looked upon it as only fit for
+barbarians, and he thought it a more sinful
+drink than wine. “So exquisite,” he
+says, “is the cunning of mankind in
+gratifying their vicious appetites, that
+they have invented a method to make
+water itself produce intoxication.” The
+section on <i>Brewing Chemistry</i> is very
+valuable. In connection with Brewing
+there is an article on <span class="sc"><a href="/article/17-0516-malt/malt">Malt</a></span> (Vol. 17, p.
+499), illustrated and very complete in its
+treatment, by <a href="/contributors.html?q=Arthur+Robert+Ling">Arthur R. Ling</a>, editor
+<i>Journal of the Institute of Brewing</i>, and
+one on <span class="sc"><a href="/article/13-0694-s3/hop">Hop</a></span> (Vol. 13, p. 677), by the late
+Dr. Wm. Fream. <a href="/contributors.html?q=Philip+Schidrowitz">Dr. Schidrowitz</a> also
+contributes the article <span class="sc"><a href="/article/28-0736-wine/wine">Wine</a></span> (Vol. 28, p.
+716). The art of wine-making is thoroughly
+described, and there are most interesting
+sections on the wines of France,
+Spain, Portugal, Germany, Italy, Austria-Hungary,
+United States, classifying
+the different varieties and affording a full
+survey of the industry.</p>
+
+<p><span class="sc"><a href="/article/25-0716-s2/spirits">Spirits</a></span> (Vol. 25, p. 694), illustrated,
+and also by <a href="/contributors.html?q=Philip+Schidrowitz">Dr. Schidrowitz</a>, is a general
+article covering the subject of the distillation
+of fermented saccharine and starchy
+liquids. The account is both historical
+and technical, and there are separate and
+more specific articles on <span class="sc"><a href="/article/04-0443-brandy/brandy">Brandy</a></span> (Vol. 4,
+p. 428), <span class="sc"><a href="/article/23-0868-rum/rum">Rum</a></span> (Vol. 23, p. 825), <span class="sc"><a href="/article/02-0684-s3/arrack">Arrack</a></span>
+(Vol. 2, p. 642), <span class="sc"><a href="/article/28-0611-s3/whisky">Whisky</a></span> (Vol. 28, p. 591),
+in which the difference between three
+main types—Scotch, Irish and American—is
+carefully explained; <span class="sc"><a href="/article/28-0186-vodka/vodka">Vodka</a></span> (Vol. 28,
+p. 170), <span class="sc"><a href="/article/12-0039-s7/gin">Gin</a></span> (Vol. 12, p. 26). The many
+flavoured and sweetened forms of alcohol
+are described in the article <span class="sc"><a href="/article/16-0766-liqueurs/liqueurs">Liqueurs</a></span>
+(Vol. 16, p. 744), where we also learn the
+difference between a “cordial” and a
+“liqueur.” There are separate articles on
+<span class="sc"><a href="/article/01-0106-s3/absinthe">Absinthe</a></span> (Vol. 1, p. 75), <span class="sc"><a href="/article/03-0741-benedictine/benedictine">Benedictine</a></span>
+(Vol. 3, p. 721), <span class="sc"><a href="/article/05-0990-chartreuse/chartreuse">Chartreuse</a></span> (Vol. 5, p.
+954), <span class="sc"><a href="/article/07-0658-cura-oa/curaçoa">Curaçoa</a></span> (Vol. 7, p. 636), <span class="sc"><a href="/article/15-0863-s3/kirsch">Kirsch</a></span>
+(Vol. 15, p. 834), and <span class="sc"><a href="/article/27-1057-s3/vermouth">Vermouth</a></span> (Vol.
+27, p. 1029).</p>
+
+<p><span class="sc"><a href="/article/18-0541-s2/mineral_waters">Mineral Waters</a></span> (Vol. 18, p. 517)
+classifies all the great springs according
+to their mineral constituents, and discusses
+the effects upon digestion of their
+use, and their value in medical treatment.</p>
+
+<p>The appended list includes a large
+number of articles of interest to the food
+producers, including chemical compounds
+and flavouring extracts.</p>
+
+<details class="article-list"><summary><span class="list-title">ALPHABETICAL LIST OF ARTICLES IN THE ENCYCLOPAEDIA BRITANNICA OF SPECIAL INTEREST TO THOSE ENGAGED IN THE MANUFACTURE OR SALE OF FOOD PRODUCTS</span><span class="list-count"> (296 articles)</span></summary>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0106-s3/absinthe">Absinthe</a></li>
+  <li class="c018"><a href="/article/01-0166-s8/acetic_acid____acidum_aceticum_____ch">Acetic Acid</a></li>
+  <li class="c018"><a href="/article/01-0184-s2/acorus_calamus">Acorus Calamus</a></li>
+  <li class="c018"><a href="/article/01-0249-s5/adulteration">Adulteration</a></li>
+  <li class="c018"><a href="/article/01-0294-s4/aerated_waters">Aerated Waters</a></li>
+  <li class="c018"><a href="/article/01-0565-s2/alcohol">Alcohol</a></li>
+  <li class="c018"><a href="/article/01-0571-s4/aldehydes">Aldehydes</a></li>
+  <li class="c018"><a href="/article/01-0577-s5/ale">Ale</a></li>
+  <li class="c018"><a href="/article/01-0759-s2/almond">Almond</a></li>
+  <li class="c018"><a href="/article/01-0812-s5/alum">Alum</a></li>
+  <li class="c018"><a href="/article/01-0996-s2/anatto">Anatto</a></li>
+  <li class="c018"><a href="/article/01-1002-s2/anchovy">Anchovy</a></li>
+  <li class="c018"><a href="/article/02-0017-s3/angelica">Angelica</a></li>
+  <li class="c018"><a href="/article/02-0058-s6/aniline">Aniline</a></li>
+  <li class="c018"><a href="/article/02-0066-s3/anise">Anise</a></li>
+  <li class="c018"><a href="/article/02-0117-s4/anthrax">Anthrax</a></li>
+  <li class="c018">Apple</li>
+  <li class="c018"><a href="/article/02-0242-s2/apricot">Apricot</a></li>
+  <li class="c018"><a href="/article/02-0684-s3/arrack">Arrack</a></li>
+  <li class="c018"><a href="/article/02-0691-s4/arrowroot">Arrowroot</a></li>
+  <li class="c018"><a href="/article/02-0726-s3/artichoke">Artichoke</a></li>
+  <li class="c018"><a href="/article/02-0811-s2/asparagus">Asparagus</a></li>
+  <li class="c018"><a href="/article/02-0815-s3/aspic">Aspic</a></li>
+  <li class="c018"><a href="/article/03-0081-s3/avocado_pear">Avocado Pear</a></li>
+  <li class="c018"><a href="/article/03-0173-s2/bacon">Bacon</a></li>
+  <li class="c018"><a href="/article/03-0173-s5/bacteriology">Bacteriology</a></li>
+  <li class="c018"><a href="/article/03-0208-s4/bael_fruit">Bael Fruit</a></li>
+  <li class="c018"><a href="/article/03-0323-s2/banana">Banana</a></li>
+  <li class="c018"><a href="/article/03-0371-bannock-cake/bannock__cake_">Bannock</a></li>
+  <li class="c018"><a href="/article/03-0422-barley/barley">Barley</a></li>
+  <li class="c018"><a href="/article/03-0424-barm/barm">Barm</a></li>
+  <li class="c018"><a href="/article/03-0591-bean/bean">Bean</a></li>
+  <li class="c018">Bee, <i>Bee-keeping</i></li>
+  <li class="c018"><a href="/article/03-0660-beef/beef">Beef</a></li>
+  <li class="c018"><a href="/article/03-0661-beer/beer">Beer</a></li>
+  <li class="c018"><a href="/article/03-0663-beet/beet">Beet</a></li>
+  <li class="c018"><a href="/article/03-0741-benedictine/benedictine">Benedictine</a></li>
+  <li class="c018"><a href="/article/03-0776-benzoic-acid/benzoic_acid">Benzoic Acid</a></li>
+  <li class="c018"><a href="/article/03-0954-bilberry/bilberry">Bilberry, or Whortleberry</a></li>
+  <li class="c018"><a href="/article/03-0969-biltong/biltong">Biltong</a></li>
+  <li class="c018"><a href="/article/03-0981-birch/birch">Birch</a></li>
+  <li class="c018"><a href="/article/03-1015-biscuit/biscuit">Biscuit</a></li>
+  <li class="c018"><a href="/article/04-0025-bisque/bisque">Bisque</a></li>
+  <li class="c018"><a href="/article/04-0027-bitters/bitters">Bitters</a></li>
+  <li class="c018"><a href="/article/04-0032-blackberry/blackberry">Blackberry</a></li>
+  <li class="c018"><a href="/article/04-0134-bohea/bohea">Bohea</a></li>
+  <li class="c018"><a href="/article/04-0172-boletus/boletus">Boletus</a></li>
+  <li class="c018"><a href="/article/04-0258-borax/borax">Borax</a></li>
+  <li class="c018"><a href="/article/04-0443-brandy/brandy">Brandy</a></li>
+  <li class="c018"><a href="/article/04-0481-brazil-nuts/brazil_nuts">Brazil Nut</a></li>
+  <li class="c018"><a href="/article/04-0483-bread/bread">Bread</a></li>
+  <li class="c018">Bread Fruit</li>
+  <li class="c018"><a href="/article/04-0524-brewing/brewing">Brewing</a></li>
+  <li class="c018"><a href="/article/04-0756-s5/buckwheat">Buckwheat</a></li>
+  <li class="c018"><a href="/article/04-0913-s7/butter">Butter</a></li>
+  <li class="c018"><a href="/article/04-0914-s6/butter-nut">Butter-nut</a></li>
+  <li class="c018"><a href="/article/04-0940-s5/cabbage">Cabbage</a></li>
+  <li class="c018"><a href="/article/04-0971-s2/caffeine">Caffeine</a></li>
+  <li class="c018"><a href="/article/05-0191-candle/candle">Candle</a></li>
+  <li class="c018"><a href="/article/05-0264-capers/capers">Capers</a></li>
+  <li class="c018"><a href="/article/05-0316-caraway/caraway">Caraway</a></li>
+  <li class="c018">Cardamon</li>
+  <li class="c018"><a href="/article/05-0427-carrot/carrot">Carrot</a></li>
+  <li class="c018"><a href="/article/05-0474-cassava/cassava">Cassava</a></li>
+  <li class="c018"><a href="/article/05-0475-cassia/cassia">Cassia</a></li>
+  <li class="c018"><a href="/article/05-0558-cattle/cattle">Cattle</a></li>
+  <li class="c018"><a href="/article/05-0607-caviare/caviare">Caviare</a></li>
+  <li class="c018"><a href="/article/05-0614-cayenne-pepper/cayenne_pepper">Cayenne Pepper</a></li>
+  <li class="c018"><a href="/article/05-0624-celery/celery">Celery</a></li>
+  <li class="c018">Chanterelle</li>
+  <li class="c018"><a href="/article/05-0990-chartreuse/chartreuse">Chartreuse</a></li>
+  <li class="c018"><a href="/article/05-0993-chass/chasse">Chasse</a></li>
+  <li class="c018"><a href="/article/06-0035-cheese/cheese">Cheese</a></li>
+  <li class="c018"><a href="/article/06-0097-cherry/cherry">Cherry</a></li>
+  <li class="c018"><a href="/article/06-0125-chestnut/chestnut">Chestnut</a></li>
+  <li class="c018"><a href="/article/06-0144-chicory/chicory">Chicory</a></li>
+  <li class="c018"><a href="/article/06-0269-chive/chive">Chive</a></li>
+  <li class="c018"><a href="/article/06-0275-chocolate/chocolate">Chocolate</a></li>
+  <li class="c018"><a href="/article/06-0340-chuoatty/chupatty">Chupatty</a></li>
+  <li class="c018"><a href="/article/06-0366-chutney/chutney">Chutney</a></li>
+  <li class="c018"><a href="/article/06-0378-cider/cider">Cider</a></li>
+  <li class="c018"><a href="/article/06-0392-cinnamon/cinnamon">Cinnamon</a></li>
+  <li class="c018"><a href="/article/06-0413-citric-acid/citric_acid">Citric Acid</a></li>
+  <li class="c018"><a href="/article/06-0414-citron/citron">Citron</a></li>
+  <li class="c018"><a href="/article/06-0452-claret/claret">Claret</a></li>
+  <li class="c018"><a href="/article/06-0581-cloves/cloves">Cloves</a></li>
+  <li class="c018"><a href="/article/06-0649-cocoa/cocoa">Cocoa</a></li>
+  <li class="c018"><a href="/article/06-0652-coco-nut-palm/coco-nut_palm">Coco-nut Palm</a></li>
+  <li class="c018"><a href="/article/06-0653-cod/cod">Cod</a></li>
+  <li class="c018"><a href="/article/06-0667-coffee/coffee">Coffee</a></li>
+  <li class="c018"><a href="/article/06-0922-confectionery/confectionery">Confectionery</a></li>
+  <li class="c018"><a href="/article/07-0089-cookery/cookery">Cookery</a></li>
+  <li class="c018"><a href="/article/07-0119-copper/copper">Copper</a></li>
+  <li class="c018"><a href="/article/07-0272-cotton/cotton">Cotton</a></li>
+  <li class="c018"><a href="/article/07-0376-crab/crab">Crab</a></li>
+  <li class="c018"><a href="/article/07-0385-cranberry/cranberry">Cranberry</a></li>
+  <li class="c018"><a href="/article/07-0632-cucumber/cucumber">Cucumber</a></li>
+  <li class="c018"><a href="/article/07-0658-cura-oa/curaçoa">Curaçoa</a></li>
+  <li class="c018"><a href="/article/07-0670-currant/currant">Currant</a></li>
+  <li class="c018"><a href="/article/07-0671-curry/curry">Curry</a></li>
+  <li class="c018"><a href="/article/07-0869-date-palm/date_palm">Date Palm</a></li>
+  <li class="c018"><a href="/article/08-0229-dietary/dietary">Dietary</a></li>
+  <li class="c018"><a href="/article/08-0231-dietetics/dietetics">Dietetics</a></li>
+  <li class="c018"><a href="/article/08-0771-dyeing/dyeing">Dyeing</a></li>
+  <li class="c018"><a href="/article/09-0020-eel/eel">Eel</a></li>
+  <li class="c018"><a href="/article/09-0693-enzyme/enzyme">Enzyme</a></li>
+  <li class="c018"><a href="/article/09-0827-s2/esters">Esters</a></li>
+  <li class="c018"><a href="/article/10-0099-extract/extract">Extract</a></li>
+  <li class="c018"><a href="/article/10-0268-fennel/fennel">Fennel</a></li>
+  <li class="c018"><a href="/article/10-0272-fenugreek/fenugreek">Fenugreek</a></li>
+  <li class="c018"><a href="/article/10-0287-s3/fermentation">Fermentation</a></li>
+  <li class="c018"><a href="/article/10-0346-s2/fig">Fig</a></li>
+  <li class="c018"><a href="/article/10-0445-s2/fisheries">Fisheries</a></li>
+  <li class="c018">Flour and Flour Manufacture</li>
+  <li class="c018"><a href="/article/10-0632-s3/food">Food</a></li>
+  <li class="c018"><a href="/article/10-0633-s2/food_preservation">Food Preservation</a></li>
+  <li class="c018">Foot and Mouth Disease</li>
+  <li class="c018"><a href="/article/10-0688-formalin/formalin">Formalin, or Formaldehyde</a></li>
+  <li class="c018"><a href="/article/11-0266-fructose/fructose">Fructose</a></li>
+  <li class="c018"><a href="/article/11-0267-fruit/fruit">Fruit</a></li>
+  <li class="c018"><a href="/article/11-0273-fruit-and-flower-farming/fruit_and_flower_farming">Fruit and Flower Farming</a></li>
+  <li class="c018"><a href="/article/11-0346-fungi/fungi">Fungi</a></li>
+  <li class="c018"><a href="/article/11-0370-s5/furfurane">Furfurane</a></li>
+  <li class="c018"><a href="/article/11-0486-garlic/garlic">Garlic</a></li>
+  <li class="c018"><a href="/article/11-0572-s7/gelatin">Gelatin</a></li>
+  <li class="c018"><a href="/article/11-0621-gentian/gentian">Gentian</a></li>
+  <li class="c018"><a href="/article/11-0942-ghee/ghee">Ghee</a></li>
+  <li class="c018"><a href="/article/12-0039-s7/gin">Gin</a></li>
+  <li class="c018"><a href="/article/12-0040-s4/ginger">Ginger</a></li>
+  <li class="c018"><a href="/article/12-0158-glucose/glucose">Glucose</a></li>
+  <li class="c018"><a href="/article/12-0162-s1/gluten">Gluten</a></li>
+  <li class="c018"><a href="/article/12-0260-s3/gooseberry">Gooseberry</a></li>
+  <li class="c018"><a href="/article/12-0339-s3/grain_trade">Grain Trade</a></li>
+  <li class="c018"><a href="/article/12-0650-ground-nut/ground_nut">Ground Nut</a></li>
+  <li class="c018"><a href="/article/12-0741-s5/gumbo">Gumbo</a></li>
+  <li class="c018"><a href="/article/12-0690-guava/guava">Guava</a></li>
+  <li class="c018"><a href="/article/12-0822-haddock/haddock">Haddock</a></li>
+  <li class="c018"><a href="/article/13-0406-herring/herring">Herring</a></li>
+  <li class="c018"><a href="/article/13-0533-hippocras/hippocras">Hippocras</a></li>
+  <li class="c018"><a href="/article/13-0670-s2/honey">Honey</a></li>
+  <li class="c018"><a href="/article/13-0694-s3/hop">Hop</a></li>
+  <li class="c018"><a href="/article/13-0756-horseradish/horseradish">Horseradish</a></li>
+  <li class="c018"><a href="/article/13-0873-huckleberry/huckleberry">Huckleberry</a></li>
+  <li class="c018"><a href="/article/14-0222-hyssop/hyssop">Hyssop</a></li>
+  <li class="c018">Indian Corn</li>
+  <li class="c018"><a href="/article/14-0827-s4/iris">Iris</a></li>
+  <li class="c018"><a href="/article/14-0828-s2/irish_moss">Irish Moss</a></li>
+  <li class="c018"><a href="/article/14-0905-s2/isinglass">Isinglass</a></li>
+  <li class="c018"><a href="/article/15-0166-s2/jams_and_jellies">Jams and Jellies</a></li>
+  <li class="c018"><a href="/article/15-0573-s3/jujube">Jujube</a></li>
+  <li class="c018"><a href="/article/15-0583-s7/juniper">Juniper</a></li>
+  <li class="c018"><a href="/article/15-0587-s2/junket">Junket</a></li>
+  <li class="c018"><a href="/article/15-0728-kava/kava">Kava</a></li>
+  <li class="c018"><a href="/article/15-0790-ketchup/ketchup">Ketchup</a></li>
+  <li class="c018"><a href="/article/15-0855-kipper/kipper">Kipper</a></li>
+  <li class="c018"><a href="/article/15-0863-s3/kirsch">Kirsch</a></li>
+  <li class="c018"><a href="/article/15-0954-s3/koumiss">Koumiss</a></li>
+  <li class="c018"><a href="/article/15-0990-s5/kvass">Kvass, or Kwass</a></li>
+  <li class="c018"><a href="/article/16-0076-s2/lactic_acid">Lactic Acid</a></li>
+  <li class="c018"><a href="/article/16-0234-s4/lard">Lard</a></li>
+  <li class="c018"><a href="/article/16-0433-lemon/lemon">Lemon</a></li>
+  <li class="c018"><a href="/article/16-0450-s2/lentil">Lentil</a></li>
+  <li class="c018"><a href="/article/16-0766-liqueurs/liqueurs">Liqueurs</a></li>
+  <li class="c018"><a href="/article/16-0856-loaf/loaf">Loaf</a></li>
+  <li class="c018"><a href="/article/16-0860-s3/lobster">Lobster</a></li>
+  <li class="c018"><a href="/article/17-0207-macaroni/macaroni">Macaroni</a></li>
+  <li class="c018"><a href="/article/17-0269-mackerel/mackerel">Mackerel</a></li>
+  <li class="c018"><a href="/article/17-0464-s2/maize">Maize</a></li>
+  <li class="c018"><a href="/article/17-0511-malmsey/malmsey">Malmsey</a></li>
+  <li class="c018"><a href="/article/17-0516-malt/malt">Malt</a></li>
+  <li class="c018"><a href="/article/17-0681-s1/maple">Maple</a></li>
+  <li class="c018"><a href="/article/17-0708-s3/marchpane">Marchpane</a></li>
+  <li class="c018"><a href="/article/17-0721-margarine/margarine">Margarine</a></li>
+  <li class="c018"><a href="/article/17-0761-marmalade/marmalade">Marmalade</a></li>
+  <li class="c018"><a href="/article/17-0896-s3/maté">Maté</a></li>
+  <li class="c018"><a href="/article/17-0966-s2/meal">Meal</a></li>
+  <li class="c018"><a href="/article/17-0966-mealie/mealie">Mealie</a></li>
+  <li class="c018"><a href="/article/17-0968-meat/meat">Meat</a></li>
+  <li class="c018"><a href="/article/18-0043-medical-jurisprudence/medical_jurisprudence">Medical Jurisprudence</a></li>
+  <li class="c018"><a href="/article/18-0087-medlar/medlar">Medlar</a></li>
+  <li class="c018"><a href="/article/18-0117-s1/melon">Melon</a></li>
+  <li class="c018"><a href="/article/18-0475-s2/milk">Milk</a></li>
+  <li class="c018"><a href="/article/18-0541-s2/mineral_waters">Mineral Waters</a></li>
+  <li class="c018"><a href="/article/18-0584-mint-coin/mint__coin">Mint</a></li>
+  <li class="c018"><a href="/article/18-0682-molasses/molasses">Molasses</a></li>
+  <li class="c018"><a href="/article/18-0990-mulberry/mulberry">Mulberry</a></li>
+  <li class="c018"><a href="/article/18-0996-s3/mulligatawny">Mulligatawny</a></li>
+  <li class="c018"><a href="/article/19-0085-mushroom/mushroom">Mushroom</a></li>
+  <li class="c018"><a href="/article/19-0112-mustard/mustard">Mustard</a></li>
+  <li class="c018"><a href="/article/19-0267-nasturtium/nasturtium">Nasturtium</a></li>
+  <li class="c018"><a href="/article/19-0367-negus/negus">Negus</a></li>
+  <li class="c018"><a href="/article/19-0955-nut/nut">Nut</a></li>
+  <li class="c018"><a href="/article/19-0957-nutmeg/nutmeg">Nutmeg</a></li>
+  <li class="c018"><a href="/article/19-0958-s2/nutrition">Nutrition</a></li>
+  <li class="c018"><a href="/article/19-0975-s5/oat">Oat</a></li>
+  <li class="c018"><a href="/article/20-0065-s3/oils">Oils</a></li>
+  <li class="c018">Okra</li>
+  <li class="c018"><a href="/article/20-0101-s2/oleic_acid">Oleic Acid</a></li>
+  <li class="c018"><a href="/article/20-0109-s2/olive">Olive</a></li>
+  <li class="c018"><a href="/article/20-0136-s2/onion">Onion</a></li>
+  <li class="c018"><a href="/article/20-0174-orange/orange">Orange</a></li>
+  <li class="c018"><a href="/article/20-0458-oyster/oyster">Oyster</a></li>
+  <li class="c018"><a href="/article/20-0706-palmitic-acid/palmitic_acid">Palmitic Acid</a></li>
+  <li class="c018"><a href="/article/20-0808-s4/paraffin">Paraffin</a></li>
+  <li class="c018"><a href="/article/21-0016-pea/pea">Pea</a></li>
+  <li class="c018"><a href="/article/21-0032-s2/peach">Peach</a></li>
+  <li class="c018"><a href="/article/21-0037-s3/pear">Pear</a></li>
+  <li class="c018"><a href="/article/21-0097-pemmican/pemmican">Pemmican</a></li>
+  <li class="c018"><a href="/article/21-0142-s4/pepper">Pepper</a></li>
+  <li class="c018"><a href="/article/21-0145-s3/pepsin">Pepsin</a></li>
+  <li class="c018"><a href="/article/21-0202-perry-beverage/perry__beverage_">Perry</a></li>
+  <li class="c018"><a href="/article/21-0610-pickle/pickle">Pickle</a></li>
+  <li class="c018"><a href="/article/21-0620-pig/pig">Pig</a></li>
+  <li class="c018"><a href="/article/21-0630-pilchard/pilchard">Pilchard</a></li>
+  <li class="c018"><a href="/article/21-0641-s6/pimento">Pimento</a></li>
+  <li class="c018"><a href="/article/21-0654-s2/pine-apple">Pine-apple</a></li>
+  <li class="c018">Pistachio-nut</li>
+  <li class="c018">Plants, <i>Pathology</i></li>
+  <li class="c018">Pleuro Pneumonia</li>
+  <li class="c018"><a href="/article/21-0887-s2/plum">Plum</a></li>
+  <li class="c018"><a href="/article/21-0926-poison/poison">Poison</a></li>
+  <li class="c018"><a href="/article/22-0060-s3/pomegranate">Pomegranate</a></li>
+  <li class="c018"><a href="/article/22-0105-poppy-oil/poppy_oil">Poppy Oil</a></li>
+  <li class="c018"><a href="/article/22-0214-potato/potato">Potato</a></li>
+  <li class="c018">Poultry and Poultry Farming</li>
+  <li class="c018"><a href="/article/22-0533-prune/prune">Prune</a></li>
+  <li class="c018"><a href="/article/22-0648-pudding/pudding">Pudding</a></li>
+  <li class="c018"><a href="/article/22-0651-s2/puff-ball">Puff-ball</a></li>
+  <li class="c018"><a href="/article/22-0660-pulque/pulque">Pulque</a></li>
+  <li class="c018"><a href="/article/22-0663-pumpkin/pumpkin">Pumpkin</a></li>
+  <li class="c018"><a href="/article/22-0664-s2/punch">Punch</a></li>
+  <li class="c018"><a href="/article/22-0770-s2/quince">Quince</a></li>
+  <li class="c018"><a href="/article/22-0824-radish/radish">Radish</a></li>
+  <li class="c018"><a href="/article/22-0881-raisin/raisin">Raisin</a></li>
+  <li class="c018"><a href="/article/22-0929-s6/raspberry">Raspberry</a></li>
+  <li class="c018"><a href="/article/22-0932-s3/ratafia">Ratafia</a></li>
+  <li class="c018"><a href="/article/23-0308-rice/rice">Rice</a></li>
+  <li class="c018"><a href="/article/23-0365-rinderpest/rinderpest">Rinderpest</a></li>
+  <li class="c018"><a href="/article/23-0868-rum/rum">Rum</a></li>
+  <li class="c018"><a href="/article/23-0994-rye/rye">Rye</a></li>
+  <li class="c018"><a href="/article/23-1015-s2/saccharin">Saccharin</a></li>
+  <li class="c018"><a href="/article/23-1048-s4/sago">Sago</a></li>
+  <li class="c018"><a href="/article/24-0067-sak/saké">Saké</a></li>
+  <li class="c018"><a href="/article/24-0083-s2/salicylic_acid">Salicylic Acid</a></li>
+  <li class="c018"><a href="/article/24-0096-s2/salmon__george">Salmon</a></li>
+  <li class="c018">Salsify</li>
+  <li class="c018"><a href="/article/24-0101-salt/salt">Salt</a></li>
+  <li class="c018"><a href="/article/24-0107-saltpetre/saltpetre">Saltpetre</a></li>
+  <li class="c018"><a href="/article/24-0425-s8/scone">Scone</a></li>
+  <li class="c018">Sea Kale</li>
+  <li class="c018"><a href="/article/24-0731-sesame/sesame">Sesame</a></li>
+  <li class="c018"><a href="/article/24-0788-shaddock/shaddock">Shaddock</a></li>
+  <li class="c018"><a href="/article/24-0849-sheep/sheep">Sheep</a></li>
+  <li class="c018"><a href="/article/24-0876-sherbet/sherbet">Sherbet</a></li>
+  <li class="c018"><a href="/article/24-0886-s3/sherry">Sherry</a></li>
+  <li class="c018"><a href="/article/24-1095-shrimp/shrimp">Shrimp</a></li>
+  <li class="c018"><a href="/article/25-0449-s6/sorghum">Sorghum</a></li>
+  <li class="c018"><a href="/article/25-0716-s2/spirits">Spirits</a></li>
+  <li class="c018"><a href="/article/25-0758-s6/sprat">Sprat</a></li>
+  <li class="c018"><a href="/article/25-0816-starch/starch">Starch</a></li>
+  <li class="c018"><a href="/article/25-0839-steak/steak">Steak</a></li>
+  <li class="c018"><a href="/article/25-0882-s2/stearic_acid">Stearic Acid</a></li>
+  <li class="c018"><a href="/article/25-1031-s2/strawberry">Strawberry</a></li>
+  <li class="c018"><a href="/article/25-1078-s3/sturgeon">Sturgeon</a></li>
+  <li class="c018"><a href="/article/26-0037-suet/suet">Suet</a></li>
+  <li class="c018"><a href="/article/26-0048-sugar/sugar">Sugar</a></li>
+  <li class="c018"><a href="/article/26-0077-s2/sulphur">Sulphur</a></li>
+  <li class="c018"><a href="/article/26-0120-sunflower/sunflower">Sunflower</a></li>
+  <li class="c018"><a href="/article/26-0338-syrup/syrup">Syrup</a></li>
+  <li class="c018"><a href="/article/26-0407-tamarind/tamarind">Tamarind</a></li>
+  <li class="c018"><a href="/article/26-0442-tapioca/tapioca">Tapioca</a></li>
+  <li class="c018"><a href="/article/26-0463-s2/tart">Tart</a></li>
+  <li class="c018"><a href="/article/26-0505-s1/tea">Tea</a></li>
+  <li class="c018"><a href="/article/26-0678-s4/terpenes">Terpenes</a></li>
+  <li class="c018"><a href="/article/26-0945-thyme/thyme">Thyme</a></li>
+  <li class="c018"><a href="/article/26-1103-tomato/tomato">Tomato</a></li>
+  <li class="c018"><a href="/article/27-0238-s2/treacle">Treacle</a></li>
+  <li class="c018"><a href="/article/27-0281-trichinosis/trichinosis">Trichinosis</a></li>
+  <li class="c018">Truffle</li>
+  <li class="c018"><a href="/article/27-0426-tunny/tunny">Tunny</a></li>
+  <li class="c018"><a href="/article/27-0493-s2/turmeric">Turmeric</a></li>
+  <li class="c018"><a href="/article/27-0920-s4/vanilla">Vanilla</a></li>
+  <li class="c018"><a href="/article/27-1035-venison/venison">Venison</a></li>
+  <li class="c018"><a href="/article/27-1052-s4/vermicelli">Vermicelli</a></li>
+  <li class="c018"><a href="/article/27-1057-s3/vermouth">Vermouth</a></li>
+  <li class="c018"><a href="/article/28-0017-veterinary-science/veterinary_science">Veterinary Science</a></li>
+  <li class="c018"><a href="/article/28-0107-vine/vine">Vine</a></li>
+  <li class="c018"><a href="/article/28-0111-vinegar/vinegar">Vinegar</a></li>
+  <li class="c018"><a href="/article/28-0186-vodka/vodka">Vodka</a></li>
+  <li class="c018"><a href="/article/28-0304-s3/walnut">Walnut</a></li>
+  <li class="c018"><a href="/article/28-0596-wheat/wheat">Wheat</a></li>
+  <li class="c018"><a href="/article/28-0611-s3/whisky">Whisky</a></li>
+  <li class="c018"><a href="/article/28-0736-wine/wine">Wine</a></li>
+  <li class="c018"><a href="/article/28-0755-wintergreen/wintergreen">Wintergreen</a></li>
+  <li class="c018"><a href="/article/28-0859-wormwood/wormwood">Wormwood</a></li>
+  <li class="c018"><a href="/article/28-0936-s3/yeast">Yeast</a></li>
+</ul></details>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

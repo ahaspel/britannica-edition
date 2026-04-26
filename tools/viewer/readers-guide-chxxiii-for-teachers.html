@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Teachers &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter XXIII</span>For Teachers</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">The Teacher’s “Factor of Safety”</a></li><li><a href="#sh-2">Answers to All Questions</a></li><li><a href="#sh-3">A Library of Text-Books</a></li><li><a href="#sh-4">The Theory of Education</a></li><li><a href="#sh-5">Articles on Great Schools</a></li><li><a href="#sh-6">The Study of Psychology</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">The Teacher’s “Factor of Safety”</span>Every teacher has one pupil who
+tries harder than any of the
+others to absorb knowledge, and
+yet is never content with the progress
+made, who knows how hard the
+teacher works, and yet is never satisfied
+with the teacher—and that pupil
+is the teacher’s self. For every other
+learner there is a limit to the amount
+of knowledge to be acquired, but in
+the case of the teacher a “standard” is
+supposed to indicate no more than an
+indispensable minimum. When you are
+trying to make your pupils master a
+text-book, the volume seems to contain a
+most stupendous mass of learning, and
+when one of them asks you a question
+about the subject with which the text-book
+deals, that particular point is sure
+to be one that the text-book does
+not cover. What engineers call the
+“factor of safety,” the margin by which
+the strength of materials must exceed
+the stress it is expected to encounter, is,
+for the teacher, incalculable. It is, of
+course, a favorite
+pastime of parents
+to send a child to
+school primed with
+some question “to
+ask Teacher,” selecting an enigma that
+has been for centuries a battle-ground
+for scholars or scientists. And, apart
+from these malicious pitfalls, children
+themselves seem, quite innocently, to
+hit upon questions of extraordinary
+difficulty. A rebuff, a careless response,
+or, worst of all, an ingenious evasion of
+the issue, is fatal to the teacher’s authority
+and influence. “Ask me that again,
+to-morrow morning,” is the phrase with
+which a conscientious teacher often
+meets such a contingency. And then
+how a fagged brain is tormented that
+evening, how the few books available
+(and they are likely to be a very few if
+there is no public library at hand) are
+searched in vain! That is not all. If
+it be true that the teacher is the most
+diligent, yet always the least satisfied,
+of all the teacher’s pupils, it is equally
+true that many of the most puzzling
+questions with which the teacher is confronted
+arise in the teacher’s own mind.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Answers to All Questions</span>The question-answering power of the
+Britannica is therefore of cardinal importance
+to the teacher, and is to be considered
+not only in connection with the
+use of the work for reference, but also in
+the selection of such courses of reading
+as may be expected to supply information
+of the kind that
+questions most
+often demand. And
+this question-answering
+power lies in three characteristics of
+the work, and may be measured by the
+extent to which the three are found in
+it: broad scope, unimpeachable authority
+and convenient arrangement. Its scope
+covers the whole range of human knowledge,
+everything that mankind has
+achieved, attempted, believed or studied.
+Its authority is doubly vouchsafed. The
+fact that the Britannica is published by
+the University of Cambridge (England),
+one of the world’s oldest and most famous
+seats of learning, in itself gives such a
+guarantee as no other Encyclopaedia
+has ever offered, and the assurance thus
+given may be regarded as showing,
+chiefly, that there are no errors of omission,
+for against the existence of the errors
+of commission there is a further guarantee.
+The articles are signed by 1,500 contributors,
+including the foremost specialists
+in every department of knowledge.
+Among this army of collaborators, chosen
+from twenty countries, there are no less
+than 704 members of the staffs of 146
+universities and colleges. This means
+that by means of the Britannica the
+youngest teacher in the most isolated
+village is brought into stimulating contact
+with the great leaders of the teaching
+profession. Its arrangement gives it
+the advantages of a universal library,
+providing the varied courses of reading
+outlined in this Guide, and those also
+of a work of reference which yields an
+immediate answer to every conceivable
+question. The index of 500,000 entries
+instantly leads the enquirer to any item
+of information in the 40,000 articles.
+No teacher could hope to form, in the
+course of a lifetime, a collection of separate
+books which would contain anywhere
+near as much information.</p>
+
+<p><span class="shoulder-heading" id="sh-3">A Library of Text-Books</span>In another relation, the Britannica is
+of daily service to anyone engaged in
+educational work. It has already been
+remarked that the
+teacher needs a “factor
+of safety,” a reserve
+of knowledge
+beyond that which is directly called for
+in the ordinary routine of the class room.
+But in the very course of that routine,
+there is also a need for co-ordinated
+knowledge, presented in a form available
+for use in teaching, of a more advanced
+kind than that in the text-books with
+which pupils are provided. And the
+Britannica is, in itself, a vast collection
+of text-books.</p>
+
+<p>Professor Shotwell, of Columbia University,
+recently wrote to the publishers
+a letter in which he said: “I shall use
+the articles in the Encyclopaedia Britannica
+which deal with industrial processes
+as a substitute for a text-book in one
+of my courses in Social and Industrial
+History and have especially in mind
+the splendid treatment of the cotton
+industry by Professor <a href="/contributors.html?q=Sydney+John+Chapman">S. J. Chapman</a>
+and others.” A large number of Britannica
+articles have, by permission,
+been reprinted, word for word, for use
+as text-books; and it is impossible to say
+how many have been paraphrased, and,
+in a form less clear and vivid than the
+originals, similarly employed. The writers
+of the Britannica have, among them,
+done so large a share of the world’s
+recent work in research and criticism,
+that no one who is engaged in writing
+a text-book or in preparing a course of
+lectures should fail to use the work as a
+check to test the completeness and the
+accuracy of independent investigation.</p>
+
+<p>Fortunately, the system of monthly
+payments has enabled teachers to purchase
+the Britannica to an extent which,
+in view of their limited resources, is a
+striking evidence of their earnest desire
+to perfect their professional equipment.
+In some cases two and even three
+teachers have combined their efforts in
+order that they might jointly possess
+the work. But whatever may be the
+difficulties to be overcome, it is certain
+that the Britannica is, for the teacher,
+an instrument as directly productive
+as a technical library is for a doctor or
+a lawyer.</p>
+
+<p>A professor in an eastern college
+wrote to the publishers: “It has become
+‘the collection of books’ which Carlyle
+might term ‘the true university’”; and
+the practical head of a business school in
+Pennsylvania says: “By its purchase, I
+have secured access to a university
+education.” A well known professor of
+German calls it “a <i>Hausschatz</i> of amazing
+richness and variety,” and adds: “I hope
+you will not be sued at law for an attempt
+to monopolize the market for profitable
+and entertaining literature.” The president
+of a southern university wrote: “It
+is the first book to consult, the one book
+to own, if you can own but one.” And
+a Harvard professor says: “I have been
+particularly interested in some of the
+recent phases of European history. Concerning
+some movements, about which
+it is as yet extremely difficult to find
+material in books, I have found the Encyclopaedia
+most useful.” A teacher in
+a theological seminary exclaims: “What
+a university of solid training it would
+be for a young student, if he would spend
+an hour each day reading the work,
+volume by volume, and including all
+the articles except those of a technical
+nature belonging to other departments
+than his own!”</p>
+
+<p>This is what teachers have said of the
+value to them of the Encyclopaedia
+Britannica. Specialists in school-hygiene
+and school librarians have also noted
+the advantage of the light, handy volumes
+printed on India paper—one weighs
+no more than two monthly magazines—,
+which may be easily held at the proper
+angle for eye-focus on a large page.</p>
+
+<p>The teacher will find in this Guide
+valuable suggestions about particular
+subjects which he may wish to teach or
+study,—such as history, literature, language
+and biology. In this chapter we
+suggest a general course.</p>
+
+<p><span class="shoulder-heading" id="sh-4">The Theory of Education</span>Let him begin with the article <span class="sc"><a href="/article/08-0978-education/education">Education</a></span>
+(Vol. 8, p. 951), which is the equivalent
+in length of 120 pages of the size
+and type of this Guide, and of which
+the first part is by <a href="/contributors.html?q=James+Welton">James Welton</a>, professor
+of education in the University of
+Leeds and author of <i>Logical Bases of
+Education</i>, etc., the sections on national
+systems by <a href="/contributors.html?q=George+Barnard+Milbank+Coore">G. B. M. Coore</a>, assistant
+secretary of the London Board of Education,
+and that on the United States
+by <a href="/contributors.html?q=Nicholas+Murray+Butler">Nicholas Murray Butler</a>, president of
+Columbia University.
+This valuable
+article begins with a
+discussion of the
+meaning of the term “Education,” excludes
+John Stuart Mill’s extension to
+everything which “helps to shape the
+human being,” and narrows the meaning
+to definitely personal work,—the true
+“working” definition for the practical
+teacher.</p>
+
+<p>The section on educational theory
+might equally well be styled a sketch
+of the history of education and will
+prove valuable to the teacher preparing
+for a licence-examination in this subject
+or for a normal training course. It
+discusses old Greek education with
+special attention to Spartan practice,
+Plato’s theory and Aristotle’s, and the
+gradual change from the point of view
+of the city-state to Hellenistic cosmopolitanism.
+The older Roman education,
+practical and given by father to son, is
+contrasted with the later Hellenized
+training, largely by Greek slaves, largely
+rhetorical and largely summed up in
+Quintilian’s <i>Institutio</i>. The contest between
+the pagan system and Christianity
+is shown to have culminated in monasticism;
+and barbarian inroads stifled
+classical culture until the Carolingian
+revival under Alcuin in the 8th century
+and the scholastic revival (11th to 13th
+centuries) of Abelard, Aquinas and
+Arabic workings over of Aristotle. Scholastic
+education is considered especially
+in relation to the first great European
+universities and the schools of the Dominicans,
+Franciscans and Brethren of
+the Common Life, and in contrast to
+chivalry, the education of feudalism.
+The Renaissance is treated at greater
+length, and this is followed by sections
+on the influence of the Reformation on
+education, and the consequent growth
+of Jesuit schools. The keynote of the
+story thereafter is reform,—the movement
+away from the classics, toward
+natural science, and, especially after the
+French Revolution, by means of new
+methods and theories, notably those of
+Rousseau, Pestalozzi, Froebel and Herbart.</p>
+
+<p>The remainder of the article <span class="sc"><a href="/article/08-0978-education/education">EducaTION</a></span>
+deals with national systems of
+education: French, German, Swiss, Belgian,
+Dutch, Scotch, Irish, English,
+Welsh and American, with an excellent
+bibliography. These, and other, national
+systems are also treated from
+another point of view in the articles on
+the separate countries.</p>
+
+<p><span class="shoulder-heading" id="sh-5">Articles on Great Schools</span>The article <span class="sc"><a href="/article/08-0978-education/education">Education</a></span> should naturally
+be followed by a study of the article
+<span class="sc"><a href="/article/27-0773-universities/universities">Universities</a></span> (Vol. 27, p. 748—about
+100 pages, if printed in the style of this
+Guide) by James Bass Mullinger (author
+of the <i>History of Cambridge</i>, <i>The Schools
+of Charles the Great</i>, etc.) and, for
+American universities, by <a href="/contributors.html?q=Daniel+Coit+Gilman">Daniel Coit
+Gilman</a>, late president
+of Johns Hopkins
+University; and
+by a reading of articles
+on the great universities, as for
+instance, Oxford, Cambridge, Aberdeen,
+Glasgow, St. Andrews, Dublin, Harvard,
+Yale, Columbia, Cornell, Princeton,
+Pennsylvania, Michigan, Wisconsin, California,
+Leland Stanford, Jr., etc. The
+student should then turn to the article
+<span class="sc"><a href="/article/24-0377-schools/schools">Schools</a></span> (Vol. 24, p. 359; equivalent to
+about 40 pages of this Guide) by <a href="/contributors.html?q=Arthur+Francis+Leach">Arthur
+Francis Leach</a>, author of <i>English Schools
+at the Reformation</i>, who gives a summary
+of what is known of Greek, Roman and
+English schools.</p>
+
+<p>Then,—to supplement these general
+articles,—he should read—</p>
+
+<p>On <i>Greek</i> education:</p>
+
+<p><span class="sc"><a href="/article/21-0841-plato/plato">Plato</a></span> (Vol. 21, p. 808), especially
+p. 812 (on <i>Meno</i>) and 818
+(on the <i>Republic</i>).</p>
+
+<p><span class="sc"><a href="/article/02-0539-s3/aristotle">Aristotle</a></span> (Vol. 2, p. 501).</p>
+
+<p><span class="sc"><a href="/article/25-0630-sparta/sparta">Sparta</a></span> (Vol. 25, p. 609, particularly
+p. 611).</p>
+
+<p>On <i>Roman</i> education:</p>
+
+<p><span class="sc"><a href="/article/05-0554-cato-dionysius/cato__dionysius">Cato</a></span> (Vol. 5, p. 535).</p>
+
+<p><span class="sc"><a href="/article/22-0778-s3/quintilian">Quintilian</a></span> (Vol. 22, p. 761).</p>
+
+<p>On <i>early Christian</i> education:</p>
+
+<p><span class="sc"><a href="/article/06-0503-clement-of-alexandria/clement_of_alexandria">Clement of Alexandria</a></span> (Vol.
+6, p. 487, particularly p. 488, on the
+<i>Paedagogus</i>).</p>
+
+<p><span class="sc"><a href="/article/02-0955-s2/augustine__saint">Augustine</a></span> (Vol. 2, p. 907) and
+<span class="sc"><a href="/article/15-0351-s4/jerome__st">Jerome</a></span> (Vol. 15, p. 326), with especial
+attention to their early pagan
+education and their attitude toward
+it as Christians.</p>
+
+<p><span class="sc"><a href="/article/01-0844-s4/ambrose">Ambrose</a></span> (Vol. 1, p. 798).</p>
+
+<p><span class="sc"><a href="/article/05-0262-capella-martianus-minneus-felix/capella__martianus_minneus_felix">Martianus Capella</a></span> (Vol. 5, p.
+249).</p>
+
+<p><span class="sc"><a href="/article/04-0129-boetius-anicius-manlius-severinus/boetius__or_boethius___anicius_manlius_severinus">Boetius</a></span> (Vol. 4, p. 116).</p>
+
+<p><span class="sc"><a href="/article/05-0476-cassiodorus/cassiodorus">Cassiodorus</a></span> (Vol. 5, p. 459).</p>
+
+<p><span class="sc"><a href="/article/14-0904-s3/isidore_of_alexandria">Isidore</a></span> (Vol. 14, p. 871).</p>
+
+<p><span class="sc"><a href="/article/12-0591-s2/gregory">St. Gregory</a></span> (Vol. 12, p. 566).</p>
+
+<p><span class="sc"><a href="/article/03-0634-bede/bede">Bede</a></span> (Vol. 3, p. 615).</p>
+
+<p><span class="sc"><a href="/article/18-0717-monasticism/monasticism">Monasticism</a></span> (Vol. 18, p. 687).</p>
+
+<p>On the <i>Carolingian revival</i>:</p>
+
+<p><span class="sc"><a href="/article/01-0569-s6/alcuin">Alcuin</a></span> (Vol. 1, p. 529).</p>
+
+<p><span class="sc"><a href="/article/02-0020-s3/angilbert">Angilbert</a></span> (Vol. 2, p. 9).</p>
+
+<p><span class="sc"><a href="/article/05-0927-charlemagne/charlemagne">Charlemagne</a></span> (Vol. 5, p. 891,
+especially p. 894).</p>
+
+<p><span class="sc"><a href="/article/10-0796-s4/france">France</a></span> (Vol. 10, p. 810).</p>
+
+<p>On the <i>Scholastic revival</i>:</p>
+
+<p><span class="sc"><a href="/article/24-0364-s3/scholasticism">Scholasticism</a></span> (Vol. 24, p. 346).</p>
+
+<p><span class="sc"><a href="/article/01-0071-s3/abelard__peter">Abelard</a></span> (Vol. 1, p. 40).</p>
+
+<p><span class="sc"><a href="/article/15-0476-s5/john_of_salisbury">John of Salisbury</a></span> (Vol. 15, p.
+449).</p>
+
+<p><span class="sc"><a href="/article/01-0544-s2/albertus_magnus">Albertus Magnus</a></span> (Vol 1, p.
+504).</p>
+
+<p><span class="sc"><a href="/article/12-0642-s5/grosseteste__robert">Grosseteste</a></span> (Vol. 12, p. 617).</p>
+
+<p><span class="sc"><a href="/article/02-0264-s3/aquinas__thomas">Thomas Aquinas</a></span> (Vol. 2, p. 250).</p>
+
+<p><span class="sc"><a href="/article/03-0170-s3/bacon__roger">Roger Bacon</a></span> (Vol. 3, p. 153).</p>
+
+<p>On the <i>Renaissance</i>:</p>
+
+<p><span class="sc"><a href="/article/23-0100-renaissance-the/renaissance__the">Renaissance</a></span> (Vol. 23, p. 83).</p>
+
+<p><span class="sc"><a href="/article/07-0834-dante/dante">Dante</a></span> (Vol. 7, p. 810).</p>
+
+<p><span class="sc"><a href="/article/21-0327-s2/petrarch">Petrarch</a></span> (Vol. 21, p. 310).</p>
+
+<p><span class="sc"><a href="/article/04-0114-bocage/bocage">Boccacio</a></span> (Vol. 4, p. 102).</p>
+
+<p><span class="sc"><a href="/article/06-0336-chrysoloras-manuel/chrysoloras__manuel">Manuel Chrysolaras</a></span> (Vol. 6,
+p. 320).</p>
+
+<p><span class="sc"><a href="/article/17-0641-manutius/manutius">Manutius</a></span> (Vol. 17, p. 624).</p>
+
+<p><span class="sc"><a href="/article/18-0854-more-thomas/more__sir_thomas">Thomas More</a></span> (Vol. 18, p. 822).</p>
+
+<p><span class="sc"><a href="/article/09-0759-s5/erasmus__desiderius">Erasmus</a></span> (Vol. 9, p. 727).</p>
+
+<p><span class="sc"><a href="/article/06-0702-colet-john/colet__john">John Colet</a></span> (Vol. 6, p. 681).</p>
+
+<p><span class="sc"><a href="/article/16-0723-linacre-thomas/linacre__or_lynaker___thomas">Thomas Linacre</a></span> (Vol. 16, p.
+701).</p>
+
+<p>On the <i>Reformation period and
+Counter-Reformation</i>:</p>
+
+<p><span class="sc"><a href="/article/23-0017-s2/reformation__the">Reformation</a></span> (Vol. 23, p. 4).</p>
+
+<p><span class="sc"><a href="/article/18-0105-melampus/melampus">Melancthon</a></span> (Vol. 18, p. 88).</p>
+
+<p><span class="sc"><a href="/article/17-0148-s3/luther__martin">Luther</a></span> (Vol. 17, p. 133).</p>
+
+<p><span class="sc"><a href="/article/27-0325-s1/trotzendorff__or_trocedorfius___valentin_friedland">Trotzendorff</a></span> (Vol. 27, p. 308).</p>
+
+<p><span class="sc"><a href="/article/23-0221-s3/reuchlin__johann">Reuchlin</a></span> (Vol. 23, p. 204).</p>
+
+<p><span class="sc"><a href="/article/02-0764-s3/ascham__roger">Ascham</a></span> (Vol. 2, p. 720).</p>
+
+<p><span class="sc"><a href="/article/22-0786-rabelais-fran-ois/rabelais__françois">Rabelais</a></span> (Vol. 22, p. 769).</p>
+
+<p><span class="sc"><a href="/article/15-0362-jesuits/jesuits">Jesuits</a></span> (Vol. 15, p. 337), especially
+p. 342.</p>
+
+<p><span class="sc"><a href="/article/16-0251-la-salle/la_salle">La Salle</a></span> (Vol. 16, p. 231).</p>
+
+<p>On the <i>Modern period</i>:</p>
+
+<p><span class="sc"><a href="/article/06-0781-comenius-johann-amos/comenius__or_komensky___johann_amos">Comenius</a></span> (Vol. 6, p. 759).</p>
+
+<p><span class="sc"><a href="/article/23-0814-s5/rousseau__jean_baptiste">Rousseau</a></span> (Vol. 23, p. 775).</p>
+
+<p><span class="sc"><a href="/article/28-0215-voltaire-fran-ois-marie-arouet-de/voltaire__françois_marie_arouet_de">Voltaire</a></span> (Vol. 28, p. 199).</p>
+
+<p><span class="sc"><a href="/article/21-0301-s3/pestalozzi__johann_heinrich">Pestalozzi</a></span> (Vol. 21, p. 284).</p>
+
+<p><span class="sc"><a href="/article/11-0251-s3/froebel__friedrich_wilhelm_august">Froebel</a></span> (Vol. 11, p. 238).</p>
+
+<p><span class="sc"><a href="/article/13-0351-s2/herbart__johann_friedrich">Herbart</a></span> (Vol. 13, p. 335).</p>
+
+<p><span class="sc"><a href="/article/13-0900-s2/humboldt__karl_wilhelm_von">Wilhelm Von Humboldt</a></span> (Vol.
+13, p. 875).</p>
+
+<p><span class="sc"><a href="/article/03-0704-bell-andrew/bell__andrew">Andrew Bell</a></span> (Vol. 3, p. 684).</p>
+
+<p><span class="sc"><a href="/article/16-0167-s2/lancaster__joseph">Joseph Lancaster</a></span> (Vol. 16, p.
+147).</p>
+
+<p><span class="sc"><a href="/article/10-0454-s5/fitch__john">Sir John Fitch</a></span> (Vol. 10, p.
+438).</p>
+
+<p><span class="sc"><a href="/article/04-0047-blair-james/blair__james">James Blair</a></span> (Vol. 4, p. 34).</p>
+
+<p><span class="sc"><a href="/article/11-0434-s2/gallaudet__thomas_hopkins">T. H. Gallaudet</a></span> (Vol. 11, p.
+416).</p>
+
+<p><span class="sc"><a href="/article/03-0426-barnard-lady-anne/barnard__lady_anne">F. A. P. Barnard</a></span> (Vol. 3, p.
+409).</p>
+
+<p><span class="sc"><a href="/article/03-0427-barnard-henry/barnard__henry">Henry Barnard</a></span> (Vol. 3, p. 410).</p>
+
+<p><span class="sc"><a href="/article/17-0604-s2/mann__horace">Horace Mann</a></span> (Vol. 17, p. 587).</p>
+
+<p><span class="sc"><a href="/article/13-0701-s8/hopkins__mark">Mark Hopkins</a></span> (Vol. 13, p. 684).</p>
+
+<p><span class="sc"><a href="/article/13-0034-s2/harris__william_torrey">William T. Harris</a></span> (Vol. 13, p.
+21).</p>
+
+<p><span class="sc"><a href="/article/18-0901-morrill/morrill__justin_smith">Justin S. Morrill</a></span> (Vol. 18, p.
+869).</p>
+
+<p><span class="sc"><a href="/article/03-0704-bell-alexander-melville/bell__alexander_melville">Alexander Melville Bell</a></span> (Vol.
+3, p. 684).</p>
+
+<p><span class="sc"><a href="/article/02-0632-s3/armstrong__archibald">S. C. Armstrong</a></span> (Vol. 2, p. 591).</p>
+
+<p><span class="sc"><a href="/article/28-0360-washington-booker-taliaferro/washington__booker_taliaferro">Booker T. Washington</a></span> (Vol. 28,
+p. 344).</p>
+
+<p><span class="sc"><a href="/article/06-0658-co-education/co-education">Co-Education</a></span> (Vol. 6, p. 637).</p>
+
+<p><span class="sc"><a href="/article/04-0072-blindness/blindness">Blindness</a></span> (Vol. 4, p. 66).</p>
+
+<p><span class="sc"><a href="/article/07-0904-deaf-and-dumb/deaf_and_dumb">Deaf and Dumb</a></span> (Vol. 7, p. 887).</p>
+
+<p><span class="sc"><a href="/article/14-0564-s2/infant_schools">Infant Schools</a></span> (Vol. 14, p.
+533).</p>
+
+<p><span class="sc"><a href="/article/15-0831-kindergarten/kindergarten">Kindergarten</a></span> (Vol. 15, p. 802).</p>
+
+<p><span class="sc"><a href="/article/19-0075-s3/museums_of_art">Museums of Art</a></span> (Vol. 19, p. 60).</p>
+
+<p><span class="sc"><a href="/article/19-0079-s2/museums_of_science">Museums of Science</a></span> (Vol. 19, p.
+64).</p>
+
+<p><span class="sc"><a href="/article/22-0052-polytechnic/polytechnic">Polytechnic</a></span> (Vol. 22, p. 38).</p>
+
+<p><span class="sc"><a href="/article/26-0516-technical-education/technical_education">Technical Education</a></span> (Vol. 26,
+p. 487), an elaborate article, about
+40 pages in the form of this Guide,
+by Sir <a href="/contributors.html?q=Sir+Philip+Magnus">Philip Magnus</a>, author of <i>Industrial
+Education</i>, member of the
+Royal Commission on technical instruction
+(1881–1884) and, in 1907,
+president of the education section of
+the British Association.</p>
+
+<p><span class="shoulder-heading" id="sh-6">The Study of Psychology</span>Of equal importance with this course
+on the history of education, for the student
+taking the licence-examination or
+for a teacher taking an examination
+for a higher grade licence or a principalship,
+is a course in Psychology in the
+Britannica. This will be found largely
+in the great article on <span class="sc"><a href="/article/22-0563-psychology/psychology">Psychology</a></span> (Vol.
+22, p. 547; equivalent in length to 200
+pages of this Guide) by <a href="/contributors.html?q=James+Ward">James Ward</a>.
+The systematic
+treatment of the
+subject in this article
+is particularly
+valuable to the teacher, whether the
+object desired is to review the entire
+subject, sharpening one’s impressions
+from a longer course of reading; to get a
+general grounding in the subject—for
+which a careful study of this one article
+will suffice; or to make one’s self more
+certain of his comprehension of any part
+of the subject. It is not practicable
+to give an outline of this article here,
+but a few of its special topics are listed
+below:</p>
+
+<p>General analysis of the subject</p>
+
+<ul class="index c026">
+  <li class="c018"><a href="/article/02-0928-s2/attention">Attention</a></li>
+  <li class="c018">Theory of presentations</li>
+  <li class="c018">Sensation</li>
+  <li class="c018"><a href="/article/21-0147-s3/perception">Perception</a></li>
+  <li class="c018"><a href="/article/14-0349-imagination/imagination">Imagination or Ideation</a></li>
+  <li class="c018">Mental Association</li>
+  <li class="c018">Reminiscence and Expectation</li>
+  <li class="c018">Experimental Investigations on Memory and Association</li>
+  <li class="c018">Feeling</li>
+  <li class="c018">Emotion and Emotional Action</li>
+  <li class="c018">Intellection</li>
+  <li class="c018">Self-Consciousness</li>
+  <li class="c018">Relation of Body and Mind</li>
+  <li class="c018">Comparative Psychology</li>
+</ul>
+
+<p>Besides the general article with its
+systematic summary of the subject, the
+Britannica contains many briefer articles
+on special topics, so that the teacher will
+find not only an excellent text-book of
+the subject in <a href="/contributors.html?q=James+Ward">Prof. Ward</a>’s article, but
+also an elaborate dictionary or encyclopaedia
+of psychological terms or topics.
+Among the topics treated in this “Dictionary
+of Psychology” are:</p>
+
+<ul class="index">
+  <li class="c018"><span class="sc"><a href="/article/01-0336-s4/affection">Affection</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/02-0233-s3/apperception">Apperception</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/02-0830-s2/association_of_ideas">Association of Ideas</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/02-0928-s2/attention">Attention</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/05-0527-category/category">Category</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/06-0672-cognition/cognition">Cognition</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/06-0848-concept/concept">Concept</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/06-0989-connotation/connotation">Connotation</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/07-0944-deduction/deduction">Deduction</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/07-0950-definition/definition">Definition</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/08-0060-denotation/denotation">Denotation</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/08-0581-dream/dream">Dream</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/10-0097-s4/extension">Extension</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/13-0135-hearing/hearing">Hearing</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/14-0293-idea/idea">Idea</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/14-0349-imagination/imagination">Imagination</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/14-0351-s2/imitation">Imitation</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/14-0355-s4/immortality">Immortality</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/14-0514-individualism/individualism">Individualism</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/14-0530-s8/induction">Induction</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/14-0679-s5/instinct">Instinct</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/14-0711-s3/intellect">Intellect</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/14-0748-s7/introspection">Introspection</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/14-0748-s8/intuition">Intuition</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/18-0659-mnemonics/mnemonics">Mnemonics</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/18-0941-motive/motive">Motive</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/19-0860-no-menon/noümenon">Noümenon</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/19-0986-s3/object">Object, Subject</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/20-0818-s2/parallelism__psychophysical">Parallelism</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/21-0147-s3/perception">Perception</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/21-0272-s3/personality">Personality</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/21-0386-phenomenon/phenomenon">Phenomenon</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/21-0867-pleasure/pleasure">Pleasure</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/22-0620-psychophysics/psychophysics">Psychophysics</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/22-0969-s2/recept">Recept</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/23-0075-s5/relativity_of_knowledge">Relativity</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/23-0098-s6/reminiscence">Reminiscence</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/23-0220-retro-cognition/retro-cognition">Retro-Cognition</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/24-0636-self/self">Self</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/24-0678-sensationalism/sensationalism">Sensationalism</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/25-0267-s4/smell">Smell</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/26-0064-suggestion/suggestion">Suggestion</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/26-0475-s3/taste">Taste</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/27-0107-s2/touch">Touch</a></span></li>
+  <li class="c018"><span class="sc"><a href="/article/28-0146-vision/vision">Vision</a></span></li>
+  <li class="c018"><span class="sc">Weber’s Law</span></li>
+  <li class="c018"><span class="sc"><a href="/article/28-0674-will-law/will__law_">Will</a></span></li>
+</ul>
+
+<p>Furthermore, the teacher will find the
+Britannica a valuable biographical dictionary.
+This he will already have realized,
+if he has looked up the biographical
+articles mentioned in connection with
+the history of education. The following
+is a brief outline course in psychological
+biography:</p>
+
+<ul class="index">
+  <li class="c018"><a href="/article/01-0213-s2/adamson__robert">Adamson, Robert</a></li>
+  <li class="c018"><a href="/article/02-0539-s3/aristotle">Aristotle</a></li>
+  <li class="c018"><a href="/article/03-0238-s5/bain__alexander">Bain, Alexander</a></li>
+  <li class="c018"><a href="/article/03-0264-s4/baldwin__james_mark">Baldwin, James Mark</a></li>
+  <li class="c018"><a href="/article/03-0746-beneke-friedrich-eduard/beneke__friedrich_eduard">Beneke, F. E.</a></li>
+  <li class="c018"><a href="/article/03-0799-berkeley-george/berkeley__george">Berkeley, George</a></li>
+  <li class="c018"><a href="/article/06-0524-clifford-william-kingdon/clifford__william_kingdon">Clifford, Wm. K.</a></li>
+  <li class="c018"><a href="/article/08-0017-democritus/democritus">Democritus</a></li>
+  <li class="c018"><a href="/article/09-0715-epicurus/epicurus">Epicurus</a></li>
+  <li class="c018">Fechner, G. F.</li>
+  <li class="c018"><a href="/article/11-0937-geulincx-arnold/geulincx__arnold">Geulincx, Arnold</a></li>
+  <li class="c018"><a href="/article/12-0913-s2/hamilton__william">Hamilton, William</a></li>
+  <li class="c018"><a href="/article/13-0048-s3/hartley__david">Hartley, David</a></li>
+  <li class="c018">Helmholtz, Herman von</li>
+  <li class="c018"><a href="/article/13-0351-s2/herbart__johann_friedrich">Herbart, Johann F.</a></li>
+  <li class="c018"><a href="/article/13-0561-s2/hobbes__thomas">Hobbes, Thomas</a></li>
+  <li class="c018"><a href="/article/13-0577-s2/höffding__harald">Höffding, Harold</a></li>
+  <li class="c018"><a href="/article/13-0901-s6/hume__david">Hume, David</a></li>
+  <li class="c018">Hucheson, Francis</li>
+  <li class="c018"><a href="/article/15-0160-s4/james__william">James, William</a></li>
+  <li class="c018"><a href="/article/15-0690-kant-immanuel/kant__immanuel">Kant, Immanuel</a></li>
+  <li class="c018"><a href="/article/16-0079-ladd-george-trumbull/ladd__george_trumbull">Ladd, G. T.</a></li>
+  <li class="c018"><a href="/article/16-0192-s6/lange__friedrich_albert">Lange, F. A.</a></li>
+  <li class="c018">Leibnitz, G. W.</li>
+  <li class="c018"><a href="/article/16-0540-s3/lewes__george_henry">Lewes, George Henry</a></li>
+  <li class="c018"><a href="/article/16-0866-s2/locke__john">Locke, John</a></li>
+  <li class="c018"><a href="/article/17-0037-s4/lotze__rudolf_hermann">Lotze, R. H.</a></li>
+  <li class="c018"><a href="/article/18-0477-s2/mill__james">Mill, James</a></li>
+  <li class="c018"><a href="/article/18-0478-s3/mill__john_stuart">Mill, J. S.</a></li>
+  <li class="c018"><a href="/article/18-0994-s2/müller__johannes_peter">Müller, Johannes Peter</a></li>
+  <li class="c018"><a href="/article/19-0026-s5/münsterberg__hugo">Münsterberg, Hugo</a></li>
+  <li class="c018"><a href="/article/23-0068-s2/reid__thomas">Reid, Thomas</a></li>
+  <li class="c018"><a href="/article/23-0303-s2/ribot__théodule_armand">Ribot, T. A.</a></li>
+  <li class="c018"><a href="/article/25-0656-s5/spencer__herbert">Spencer, Herbert</a></li>
+  <li class="c018"><a href="/article/26-0073-s4/sully__james">Sully, James</a></li>
+  <li class="c018"><a href="/article/28-0336-s3/ward__james">Ward, James</a></li>
+  <li class="c018"><a href="/article/28-0881-wundt-wilhelm-max/wundt__wilhelm_max">Wundt, W. M.</a></li>
+</ul>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>
