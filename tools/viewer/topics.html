@@ -17,7 +17,7 @@
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
@@ -135,6 +135,7 @@
     (function() {
       var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
       var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
       document.write('<scr' + 'ipt src="' + base + 'article-urls.js"></scr' + 'ipt>');
     })();
   </script>
@@ -143,10 +144,8 @@
 <div class="page">
   <div class="card">
     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-      <h1 style="margin: 0; font-size: 1.3rem; color: #5c4a32;"><span style="font-variant: small-caps; letter-spacing: 0.06em;">Topics</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.02em;">&mdash; 11th Edition</span></h1>
+      <h1 style="margin: 0; font-size: 1.3rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="32" height="32" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.06em;">Topics</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.02em;">&mdash; 11th Edition</span></a></h1>
       <div style="font-size: 0.9rem;">
-        <a href="/home.html" style="color: var(--link); text-decoration: none;">Home</a>
-        &nbsp;&middot;&nbsp;
         <a href="/index.html" style="color: var(--link); text-decoration: none;">Articles</a>
         &nbsp;&middot;&nbsp;
         <a href="/contributors.html" style="color: var(--link); text-decoration: none;">Contributors</a>
@@ -212,23 +211,25 @@
     return false;
   }
 
-  function renderSubsection(sub, depth) {
+  function renderSubsection(sub, depth, pathPrefix) {
     if (!hasContent(sub)) return "";
     const level = depth + 2;  // level 2 for top subs
+    const path = pathPrefix ? `${pathPrefix} > ${sub.name}` : sub.name;
     const arts = sub.articles && sub.articles.length
       ? `<ul class="article-list">${sub.articles.map(renderArticle).join("")}</ul>`
       : "";
     const kids = (sub.children || [])
-      .map(c => renderSubsection(c, depth + 1))
+      .map(c => renderSubsection(c, depth + 1, path))
       .filter(Boolean)
       .join("");
     const name = escapeHtml(sub.name);
+    const idAttr = ` id="${escapeHtml(path)}"`;
     // Level 2 stays as a plain heading — it's the primary structure
     // inside a category. Level 3+ become collapsible so deep trees
     // (Geography > Europe > Countries > Norway) stay navigable.
     if (level <= 2) {
       const headTag = `h3`;
-      return `<div class="subsection subsection-l${level}">` +
+      return `<div class="subsection subsection-l${level}"${idAttr}>` +
              `<${headTag}>${name}</${headTag}>` +
              arts + kids + `</div>`;
     }
@@ -241,7 +242,7 @@
     // Open by default for level 3 (e.g. Europe inside Geography), closed
     // for level 4+ (e.g. Countries, then Norway within Countries).
     const openAttr = level <= 3 ? " open" : "";
-    return `<details class="sub sub-l${level}"${openAttr}>` +
+    return `<details class="sub sub-l${level}"${openAttr}${idAttr}>` +
            `<summary><span class="sub-name">${name}</span>${meta}</summary>` +
            `<div class="sub-body">${arts}${kids}</div>` +
            `</details>`;
@@ -276,13 +277,13 @@
     let body;
     if (totalArts > 0) {
       body = cat.subsections
-        .map(s => renderSubsection(s, 0))
+        .map(s => renderSubsection(s, 0, cat.name))
         .filter(Boolean)
         .join("");
     } else {
       body = `<div class="empty-cat">No article entries yet — Wikisource transcription pending.</div>`;
     }
-    return `<details class="category">
+    return `<details class="category" id="${escapeHtml(cat.name)}">
       <summary>${escapeHtml(cat.name)} ${meta}</summary>
       ${body}
     </details>`;
@@ -311,11 +312,28 @@
       );
       document.getElementById("footer").textContent =
         `${totalCats} categories \u00b7 ${transcribed} transcribed \u00b7 ${allResolved}/${allArticles} article links resolved`;
+      navigateToHash();
     } catch (e) {
       document.getElementById("categories").innerHTML =
         `<div class="empty-cat">Could not load classified TOC: ${escapeHtml(e.message)}</div>`;
     }
   }
+
+  function navigateToHash() {
+    if (!location.hash) return;
+    const id = decodeURIComponent(location.hash.slice(1));
+    const el = document.getElementById(id);
+    if (!el) return;
+    // Open every ancestor <details> so the target is visible
+    let p = el.parentElement;
+    while (p) {
+      if (p.tagName === "DETAILS") p.open = true;
+      p = p.parentElement;
+    }
+    if (el.tagName === "DETAILS") el.open = true;
+    el.scrollIntoView({ behavior: "auto", block: "start" });
+  }
+  window.addEventListener("hashchange", navigateToHash);
 
   document.getElementById("expandAll").addEventListener("click", () => {
     document.querySelectorAll("details.category, details.sub").forEach(d => d.open = true);

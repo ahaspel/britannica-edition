@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mathematics &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter LII</span>Mathematics</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">History</a></li><li><a href="#sh-2">Leading Articles</a></li><li><a href="#sh-3">Leading Contributors</a></li></ol></div>
+    <div class="body-text">
+
+
+<p>There is no single book in the
+English language, save the Britannica,
+in which the whole body
+of mathematical knowledge is examined
+and classified with special reference to
+the inter-relation of its various parts
+and to the results obtained in the neighboring
+domains of physics, chemistry,
+and engineering. Text-books necessarily
+have a somewhat narrow purpose, namely
+to teach the student how to solve problems
+in a single given field; wide views
+over the surrounding country can, therefore,
+seldom be afforded. The Britannica,
+however, does for English readers,
+what the <i>Encyclopädie der Mathematischen
+Wissenchaften</i> does for German,
+and more, in that in the Britannica the
+shadowy borderlands are illuminated
+and the roads cleared which connect
+the mathematical and the experimental
+sciences. In fact if anyone possessed
+every mathematical text-book that had
+ever been published, he would still find
+the articles full of suggestion to him,
+for in them the whole subject has been
+presented, in all its complex bearings,
+logically and as a whole.</p>
+
+<p><span class="shoulder-heading" id="sh-1">History</span>It is nearly 4,000 years since a mathematician
+was last deified in the person
+of Amenophis, and as far as can be ascertained
+only one other of
+his calling ever received
+this honour, and he also
+was an Egyptian who had entered into
+his godship a full thousand years earlier
+(Vol. 9, p. 46). To the ancient Egyptians
+mathematics owes the first fragmentary
+ideas of arithmetic and mensuration,
+but little else, for despite their
+amazing mechanical achievements very
+little record of purely mathematical
+knowledge has come down from them.
+It was the Greeks, starting with Thales
+(600 B.C.), who really created the sciences
+of geometry and numbers. To
+them we owe the great abstract ideas
+which dominate the science. The Greek
+period lasted till the capture of Alexandria
+by the Mohammedans, A.D. 640,
+at which time the Arabian school took
+shape, and to it we owe the development
+of algebra (<i>al-jebr-wa’l-muqubala</i>, which
+means the transposition and removal
+[of terms of an equation]). With the
+Renaissance the centre of scientific research
+shifted to Western Europe and
+from then on the boundaries of mathematical
+knowledge were rapidly extended,
+till to-day the subject is the common
+ground on which all the physical sciences
+meet. The student is referred to the
+article <span class="sc"><a href="/article/17-0897-s5/mathematics">Mathematics</a></span> (Vol. 17, p. 878),
+by <a href="/contributors.html?q=Alfred+North+Whitehead">A. N. Whitehead</a>, fellow and senior
+lecturer in mathematics, Trinity College,
+Cambridge, for a brilliant exposition
+of the foundations of the subject.</p>
+
+<p>The professed mathematician will, of
+course, not need any set guide to his reading,
+but it may be well to point out one or
+two articles which he will find especially
+worthy of his attention.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Leading Articles</span>The article <span class="sc"><a href="/article/22-0390-probability/probability">Probability</a></span>, (Vol. 22,
+p. 376), by <a href="/contributors.html?q=Francis+Ysidro+Edgeworth">Professor Edgeworth</a>, author
+of <i>Mathematical Psychics</i>, and numerous
+papers on the calculus
+of probabilities,
+gives, to the
+best of our belief,
+the only statement of the whole problem
+in the English language. That on <span class="sc"><a href="/article/01-0660-algebraic-forms/algebraic_forms">Algebraic
+Forms</a></span> (Vol. 1, p. 620), by
+<a href="/contributors.html?q=Percy+Alexander+Macmahon">Major Macmahon</a>, former president of
+the London Mathematical Society, includes
+a number of results not previously
+published. The article <span class="sc"><a href="/article/09-0158-elasticity/elasticity">Elasticity</a></span> (Vol.
+9, p. 141), by <a href="/contributors.html?q=Augustus+Edward+Hough+Love">A. E. H. Love</a>, professor
+of natural philosophy in the University
+of Oxford, embodies the experience of
+a distinguished mathematician who has
+made this subject the object of his special
+study for years. Sir George Darwin
+(son of Charles Darwin) in the article
+<span class="sc"><a href="/article/26-0978-s2/tide">Tide</a></span> (Vol. 26, p. 938) summed up the
+results of his life’s work. The new
+electrical theory of the properties of
+<span class="sc"><a href="/article/17-0910-s3/matter">Matter</a></span> (Vol. 17, p. 891) is discussed
+by Sir <a href="/contributors.html?q=Sir+Joseph+John+Thomson">J. J. Thomson</a>, professor of physics,
+Cambridge, who has done more
+than anyone else to develop it. There
+are many other valuable articles, e.g.,
+<span class="sc"><a href="/article/11-0695-geometry/geometry">Geometry</a></span>, <i>Axioms</i> (Vol. 11, p. 730),
+and <span class="sc"><a href="/article/11-0695-geometry/geometry">Geometry</a></span>, <i>Non-Euclidean</i> (Vol.
+11, p. 724), by <a href="/contributors.html?q=Alfred+North+Whitehead">A. N. Whitehead</a>; <span class="sc"><a href="/article/27-0761-s2/units__dimensions_of">Units,
+Dimensions of</a></span> (Vol. 27, p. 736), by
+Professor <a href="/contributors.html?q=John+Ambrose+Fleming">J. A. Fleming</a>; <span class="sc"><a href="/article/09-0423-energy/energy">Energy</a></span> and
+<span class="sc"><a href="/article/09-0415-energetics/energetics">Energetics</a></span> (Vol. 9, p. 398 and p. 390),
+by Sir <a href="/contributors.html?q=Sir+Joseph+Larmor">Joseph Larmor</a>; <span class="sc"><a href="/article/12-0651-s6/groups">Groups</a></span>, by <a href="/contributors.html?q=William+Burnside">Prof.
+Burnside</a>, author of <i>Theory of Groups of
+Finite Order</i>. Articles which will be
+found highly useful to the engineer are
+<span class="sc"><a href="/article/18-0153-s4/mensuration">Mensuration</a></span> (Vol. 18, p. 134); <span class="sc"><a href="/article/08-0828-earth-figure-of-the/earth__figure_of_the">Earth,
+Figure of</a></span> (Vol. 8, p. 801); <span class="sc"><a href="/article/11-0627-geodesy/geodesy">Geodesy</a></span>
+(Vol. 11, p. 607); <span class="sc"><a href="/article/25-1033-s4/strength_of_materials">Strength of Materials</a></span>
+(Vol. 25, p. 1007).</p>
+
+<p><span class="shoulder-heading" id="sh-3">Leading Contributors</span>The mathematician will at once recognize
+the peculiar fitness of the contributors
+to deal with the subjects allotted
+to them, and this
+fitness is the more
+noticeable in the
+following list, arranged
+in alphabetical order, which
+names and briefly describes the distinguished
+mathematicians who have
+collaborated in the Britannica, and indicates
+the principal articles written by
+each.</p>
+
+<p>H. F. Baker, Fellow and Lecturer of St.
+John’s College, Cambridge. Cayley
+Lecturer in Mathematics in the University.
+Author of <i>Abel’s Theory and
+the Allied Theory</i>, etc.:</p>
+
+<p><span class="sc"><a href="/article/08-0242-differential-equation/differential_equation">Differential Equation</a></span>; <i>Function</i>,
+<i>Functions of Complex Variables</i>.</p>
+
+<p>Ludwig Boltzmann, formerly Professor
+of Theoretical Physics in the Universities
+of Munich, Vienna, and Leipzig.
+Author of <i>Lectures on the Theory of
+Gas</i>; <i>Lectures on Maxwell’s Theory of
+Electricity and Light</i>:</p>
+
+<p><span class="sc"><a href="/article/18-0668-model/model">Model</a></span>.</p>
+
+<p><a href="/contributors.html?q=William+Burnside">W. Burnside</a>, Professor of Mathematics,
+Royal Naval College, Greenwich.
+Hon. Fellow of Pembroke College,
+Cambridge. Author of the <i>Theory of
+Groups of Finite Order</i>, etc.:</p>
+
+<p><span class="sc"><a href="/article/05-0613-cayenne/cayenne">Groups, Theory of</a></span></p>
+
+<p>Arthur Cayley, formerly Professor of
+Pure Mathematics in the University
+of Cambridge. See the biographical
+article (Vol. 5, p. 589):</p>
+
+<p><span class="sc"><a href="/article/07-0675-curve/curve">Curve</a></span> (in part); <span class="sc"><a href="/article/08-0126-determinant/determinant">Determinant</a></span>;
+<span class="sc"><a href="/article/09-0741-s3/equation">Equation</a></span>; <span class="sc"><a href="/article/19-0897-s2/numbers__partition_of">Numbers, Partition
+of</a></span>; <span class="sc"><a href="/article/26-0135-surface/surface">Surface</a></span> (in part); <span class="sc"><a href="/article/11-0553-s4/gauss__karl_friedrich">Gauss, K. F.</a></span>;
+<span class="sc"><a href="/article/18-0739-monge-gaspard/monge__gaspard">Monge, G.</a></span></p>
+
+<p>George Chrystal, Professor of Mathematics
+and Dean of the Faculty of
+Arts, Edinburgh University, Hon.
+Fellow and formerly Fellow and Lecturer,
+Corpus Christi College, Cambridge:</p>
+
+<p><span class="sc"><a href="/article/21-0197-perpetual-motion/perpetual_motion">Perpetual Motion</a></span>; <span class="sc"><a href="/article/20-0940-pascal-blaise/pascal__blaise">Pascal</a></span> (in
+part); <span class="sc"><a href="/article/23-0338-riemann-georg-friedrich-bernhard/riemann__georg_friedrich_bernhard">Riemann, Georg</a></span>.</p>
+
+<p>Col. A. R. Clarke, Royal Medal of Royal
+Society 1887; in charge of trigonometrical
+operations of the Ordnance
+Survey 1854–1881:</p>
+
+<p><span class="sc"><a href="/article/08-0828-earth-figure-of-the/earth__figure_of_the">Earth, Figure of the</a></span> (in part);
+<span class="sc"><a href="/article/11-0627-geodesy/geodesy">Geodesy</a></span> (in part); <span class="sc"><a href="/article/17-0646-map/map">Map</a></span>, <i>Projections</i>
+(in part).</p>
+
+<p>Agnes Mary Clerke, Author of <i>History
+of Astronomy in the 19th Century</i>; <i>The
+System of the Stars</i>; <i>Problems in Astrophysics</i>;
+and many other astronomical
+books. See the biographical article
+(Vol. 6, p. 497):</p>
+
+<p><span class="sc"><a href="/article/02-0847-s2/astronomy">Astronomy</a></span>, <i>History</i>: <span class="sc"><a href="/article/28-1020-zodiac/zodiac">Zodiac</a></span>; <span class="sc"><a href="/article/04-0392-brahe-tycho/brahe__tycho">Brahe,
+Tycho</a></span>; <span class="sc"><a href="/article/07-0117-copernicus-nicolaus/copernicus__or_koppernigk___nicolaus">Copernicus</a></span>; <span class="sc"><a href="/article/10-0495-flamsteed-john/flamsteed__john">Flamsteed</a></span>;
+<span class="sc"><a href="/article/12-0881-s4/halley__edmund">Halley</a></span>; <span class="sc"><a href="/article/14-0033-huygens-christiaan/huygens__christiaan">Huygens</a></span>; <span class="sc"><a href="/article/15-0778-kepler-johann/kepler__johann">Kepler</a></span>, etc.</p>
+
+<p>Lt. Col. C. F. Close, head of the Geographical
+Section, British General Staff,
+formerly British Representative on
+the Nyasa-Tanganyika Boundary Commission.
+Author of <i>Text-Book of Topographical
+Surveying</i>, etc.:</p>
+
+<p><span class="sc"><a href="/article/17-0646-map/map">Maps</a></span>, <i>Projections</i> (in part).</p>
+
+<p>W. E. Dalby, Professor of Civil and Mechanical
+Engineering at the City and
+Guilds of London Institute, Central
+Technical College, South Kensington.
+Author of <i>The Balancing of Engines</i>,
+etc.:</p>
+
+<p><span class="sc"><a href="/article/17-0974-mechanics/mechanics">Mechanics</a></span>, <i>Applied</i> (in part); and
+several engineering subjects.</p>
+
+<p>Sir George H. Darwin, late Fellow of
+Trinity College, Cambridge, and Plumian
+Professor of Astronomy and
+Experimental Philosophy in the University.
+President of the British Association,
+1905. Author of <i>The Tides
+and Kindred Phenomena in the Solar
+System</i>, etc.:</p>
+
+<p><span class="sc"><a href="/article/26-0978-s2/tide">Tide</a></span>.</p>
+
+<p><a href="/contributors.html?q=Francis+Ysidro+Edgeworth">F. Y. Edgeworth</a>, Professor of Political
+Economy in the University of Oxford,
+etc. Author of <i>Mathematical Psychics</i>,
+and numerous papers on the Calculus
+of Probabilities in the <i>Philosophical
+Magazine</i>, etc.:</p>
+
+<p><span class="sc"><a href="/article/22-0390-probability/probability">Probability</a></span>.</p>
+
+<p>E. B. Elliott, Waynflete Professor of
+Pure Mathematics, and Fellow of
+Magdalen College, Oxford. Formerly
+Fellow of Queen’s College, Oxford.
+President of the London Mathematical
+Society, 1896–1898. Author of <i>Algebra
+of Quantics</i>, etc.:</p>
+
+<p><span class="sc"><a href="/article/07-0675-curve/curve">Curve</a></span>, (in part); <span class="sc"><a href="/article/11-0695-geometry/geometry">Geometry, IV</a></span>
+<i>Analytical Geometry</i>.</p>
+
+<p>C. Everitt, Magdalen College, Oxford:</p>
+
+<p><span class="sc"><a href="/article/01-0639-algebra/algebra">Algebra</a></span>, <i>History</i>: <span class="sc"><a href="/article/08-0061-density/density">Density</a></span>; <span class="sc"><a href="/article/16-0628-s5/light">Light</a></span>,
+<i>Introduction</i>, <i>History</i>, etc.</p>
+
+<p>J. A. Ewing, Director of (British) Naval
+Education. Hon. Fellow of King’s
+College, Cambridge. Formerly Professor
+of Mechanism and Applied
+Mechanics in the University of Cambridge.
+Author of the <i>Strength of Materials</i>,
+etc.:</p>
+
+<p><span class="sc"><a href="/article/25-1033-s4/strength_of_materials">Strength of Materials</a></span>, and several
+engineering subjects.</p>
+
+<p><a href="/contributors.html?q=John+Ambrose+Fleming">J. A. Fleming</a>, Pender Professor of Electrical
+Engineering in the University
+of London. Fellow of University College,
+London. Formerly Fellow of
+St. John’s College, Cambridge, and
+Lecturer on Applied Mechanics in the
+University. Author of <i>Magnets and
+Electric Currents</i>, etc.:</p>
+
+<p><span class="sc"><a href="/article/27-0763-s2/units__physical">Units, Physical</a></span>; and many articles
+on Electrical Science.</p>
+
+<p>Rev. A. H. Frost:</p>
+
+<p><span class="sc"><a href="/article/17-0325-magic-square/magic_square">Magic Square</a></span>.</p>
+
+<p>W. Garnett, Educational Adviser to the
+London County Council; formerly
+Fellow and Lecturer of St. John’s College,
+Cambridge. Principal and Professor
+of Mathematics, Durham College
+of Science. Author of <i>Elementary
+Dynamics</i>, etc.:</p>
+
+<p><span class="sc"><a href="/article/09-0423-energy/energy">Energy</a></span> (in part); <span class="sc"><a href="/article/14-0173-hydrometer/hydrometer">Hydrometer</a></span>;
+<span class="sc">Kelvin, Lord</span>.</p>
+
+<p>J. W. L. Glaisher, Fellow of Trinity College,
+Cambridge. Formerly President
+of the Cambridge Philosophical Society
+and the Royal Astronomical Society,
+Editor of <i>Messenger of Mathematics</i>
+and the <i>Quarterly Journal of Pure and
+Applied Mathematics</i>:</p>
+
+<p><span class="sc"><a href="/article/16-0890-s1/logarithm">Logarithm</a></span>; <span class="sc"><a href="/article/26-0346-s2/table__mathematical">Table, Mathematical</a></span>;
+<span class="sc"><a href="/article/16-0395-legendre-adrien-marie/legendre__adrien_marie">Legendre, A. M.</a></span>; <span class="sc"><a href="/article/19-0186-s2/napier__john">Napier, John</a></span>.</p>
+
+<p>J. H. Grace, Lecturer in Mathematics
+at Peterhouse and Pembroke College,
+Cambridge. Fellow of Peterhouse:</p>
+
+<p><span class="sc"><a href="/article/11-0695-geometry/geometry">Geometry</a></span>, <i>Line Geometry</i>.</p>
+
+<p>Sir A. G. Greenhill, formerly Professor
+of Mathematics in the Ordnance College,
+Woolwich. Author of <i>Differential
+and Integral Calculus with Applications</i>;
+<i>Hydrostatics</i>; <i>Notes on Dynamics</i>,
+etc.:</p>
+
+<p><span class="sc"><a href="/article/03-0287-ballistics/ballistics">Ballistics</a></span>; <span class="sc"><a href="/article/12-0794-s2/gyroscope_and_gyrostat">Gyroscope and Gyrostat</a></span>;
+<span class="sc"><a href="/article/14-0127-s1/hydromechanics">Hydromechanics</a></span>.</p>
+
+<p>Sir Thomas Little Heath, Assistant-Secretary
+to the Treasury, London.
+Fellow of Trinity College, Cambridge.
+Author of <i>Apollonius of Perga</i>; <i>Treatise
+on Conic Sections</i>; <i>The Thirteen Books
+of Euclid’s Elements</i>, etc.:</p>
+
+<p><span class="sc"><a href="/article/02-0104-s7/anthemius">Anthemius</a></span>; <span class="sc"><a href="/article/02-0198-s11/apollonius_of_perga">Apollonius of Perga</a></span>;
+<span class="sc"><a href="/article/02-0389-s3/archimedes">Archimedes</a></span>; <span class="sc"><a href="/article/13-0394-hero-of-alexandria/hero_of_alexandria">Hero of Alexandria</a></span>;
+<span class="sc"><a href="/article/20-0796-s2/pappus_of_alexandria">Pappus of Alexandria</a></span>; <span class="sc"><a href="/article/22-0116-s6/porism">Porism</a></span>,
+etc.</p>
+
+<p>F. R. Helmert, Professor of Geodesy in
+the University of Berlin:</p>
+
+<p><span class="sc"><a href="/article/08-0828-earth-figure-of-the/earth__figure_of_the">Earth, Figure of the</a></span> (in part);
+<span class="sc"><a href="/article/11-0627-geodesy/geodesy">Geodesy</a></span> (in part).</p>
+
+<p>O. M. F. Henrici, Professor of Mechanics
+and Mathematics in the Central
+Technical College of the City and
+Guilds of London Institute. Author
+of <i>Vectors and Rotors</i>; <i>Congruent Figures</i>,
+etc.:</p>
+
+<p><span class="sc"><a href="/article/04-0999-s2/calculating_machines">Calculating Machines</a></span>; <span class="sc"><a href="/article/11-0695-geometry/geometry">Geometry,
+I.</a></span> <i>Euclidean</i>; II. <i>Projective</i>; III.
+<i>Descriptive</i>; <span class="sc"><a href="/article/21-0274-perspective/perspective">Perspective</a></span>; <span class="sc"><a href="/article/22-0442-s3/projection">Projection</a></span>.</p>
+
+<p>E. W. Hobson, Fellow and Tutor in
+Mathematics, Christ’s College, Cambridge.
+Stokes Lecturer in Mathematics
+in the University:</p>
+
+<p><span class="sc"><a href="/article/10-0774-fourier-s-series/fourier_s_series">Fourier’s Series</a></span>; <span class="sc"><a href="/article/25-0671-s3/spherical_harmonics">Spherical Harmonics</a></span>;
+<span class="sc"><a href="/article/27-0286-s3/trigonometry">Trigonometry</a></span>.</p>
+
+<p>A. E. Jolliffe, Fellow, Tutor and Mathematical
+Lecturer, Corpus Christi College,
+Oxford. Senior Mathematical
+Scholar, 1892:</p>
+
+<p><span class="sc"><a href="/article/07-0045-continued-fractions/continued_fractions">Continued Fractions</a></span>; <span class="sc"><a href="/article/17-0937-s6/maxima_and_minima">Maxima
+and Minima</a></span>; <span class="sc"><a href="/article/24-0698-series/series">Series</a></span>.</p>
+
+<p>H. Lamb, Professor of Mathematics,
+University of Manchester, formerly
+Fellow and Assistant Tutor of Trinity
+College, Cambridge; Member of Council
+of Royal Society, 1894–1896. Royal
+Medallist, 1902. President of London
+Mathematical Society 1902–1904.
+Author of <span class="sc"><a href="/article/14-0125-s2/hydrodynamics">Hydrodynamics</a></span>, etc.:</p>
+
+<p><span class="sc"><a href="/article/08-0783-dynamics/dynamics">Dynamics</a></span>; <span class="sc"><a href="/article/12-0981-s3/harmonic_analysis">Harmonic Analysis</a></span>;
+<span class="sc"><a href="/article/17-0974-mechanics/mechanics">Mechanics, I.</a></span> <i>Theoretical</i>; <span class="sc"><a href="/article/27-0990-s7/vector_analysis">Vector
+Analysis</a></span>; <span class="sc"><a href="/article/28-0442-s4/wave">Wave</a></span>.</p>
+
+<p><a href="/contributors.html?q=Augustus+Edward+Hough+Love">A. E. H. Love</a>, Sedleian Professor of
+Natural Philosophy in the University
+of Oxford. Hon. Fellow of Queen’s
+College; formerly Fellow of St. John’s
+College, Cambridge; Secretary to the
+London Mathematical Society:</p>
+
+<p><span class="sc"><a href="/article/09-0158-elasticity/elasticity">Elasticity</a></span>; <span class="sc"><a href="/article/27-0941-s2/variations__calculus_of">Variations, Calculus
+of</a></span>; <span class="sc"><a href="/article/11-0314-s6/function">Function</a></span>, <i>Functions of
+Real Variables</i>; <span class="sc"><a href="/article/14-0566-s2/infinitesimal_calculus">Infinitesimal Calculus</a></span>.</p>
+
+<p>W. H. Macaulay, Fellow and Tutor of
+King’s College, Cambridge:</p>
+
+<p><span class="sc"><a href="/article/18-0938-s4/motion__laws_of">Motion, Laws of</a></span>.</p>
+
+<p>Major <a href="/contributors.html?q=Percy+Alexander+Macmahon">P. A. Macmahon</a>, Deputy Warden
+of the Standards, Board of Trade.
+Joint General Secretary, British Association.
+Formerly Professor of Physics,
+Ordnance College. President of
+London Mathematical Society, 1894–1896:</p>
+
+<p><span class="sc"><a href="/article/01-0660-algebraic-forms/algebraic_forms">Algebraic Forms</a></span>; <span class="sc"><a href="/article/06-0774-combinatorial-analysis/combinatorial_analysis">Combinatorial
+Analysis</a></span>; <span class="sc"><a href="/article/05-0614-cayley-arthur/cayley__arthur">Cayley, Arthur</a></span>.</p>
+
+<p>G. B. Mathews, formerly Professor of
+Mathematics, University College of
+N. Wales, sometime Fellow of St.
+John’s College, Cambridge:</p>
+
+<p><span class="sc"><a href="/article/01-0639-algebra/algebra">Algebra</a></span>, <i>Special Kinds of Algebra</i>;
+<span class="sc"><a href="/article/19-0879-s3/number">Number</a></span>.</p>
+
+<p>J. Clerk Maxwell, former Professor of
+Experimental Physics in the University
+of Cambridge. See biographical
+article (Vol. 17, p. 929):</p>
+
+<p><span class="sc"><a href="/article/05-0269-capillary-action/capillary_action">Capillary Action</a></span> (in part); <span class="sc"><a href="/article/08-0161-diagram/diagram">Diagram</a></span>.</p>
+
+<p>Simon Newcomb, former Professor of
+Mathematics and Astronomy, Johns
+Hopkins University, etc. See the biographical
+article (Vol. 19, p. 474):</p>
+
+<p><span class="sc"><a href="/article/02-0847-s2/astronomy">Astronomy</a></span>, <i>Descriptive</i>; and many
+other astronomical subjects.</p>
+
+<p>J. H. Poynting, Professor of Physics and
+Dean of the Faculty of Science in the
+University of Birmingham. Formerly
+Fellow of Trinity College, Cambridge.
+Joint-author of <i>Text-Book of Physics</i>:</p>
+
+<p><span class="sc"><a href="/article/01-0184-s7/acoustics">Acoustics</a></span>; <span class="sc"><a href="/article/12-0401-gravitation/gravitation">Gravitation</a></span> (in part);
+<span class="sc"><a href="/article/25-0453-s6/sound">Sound</a></span>.</p>
+
+<p>F. Purser, formerly Fellow of Trinity
+College, Dublin; Professor of Natural
+Philosophy in the University of Dublin;
+Member of the Royal Irish
+Academy:</p>
+
+<p><span class="sc"><a href="/article/26-0135-surface/surface">Surface</a></span> (in part).</p>
+
+<p>J. Purser, formerly Professor of Mathematics
+in Queen’s College, Belfast.
+Member of the Royal Irish Academy:</p>
+
+<p><span class="sc"><a href="/article/26-0135-surface/surface">Surface</a></span> (in part).</p>
+
+<p>W. J. M. Rankine, former Professor of
+Civil Engineering at Glasgow University.
+See the biographical article (Vol.
+22, p. 894):</p>
+
+<p><span class="sc"><a href="/article/17-0974-mechanics/mechanics">Mechanics</a></span>, <i>Applied</i> (in part).</p>
+
+<p>Hon. B. A. W. Russell, formerly Fellow
+of Trinity College, Cambridge. Author
+of <i>Foundations of Geometry</i>; <i>Principles
+of Mathematics</i>, etc.:</p>
+
+<p><span class="sc"><a href="/article/11-0695-geometry/geometry">Geometry, VI.</a></span> <i>Non-Euclidean</i> (in
+part).</p>
+
+<p>W. F. Sheppard, Senior Examiner in the
+Board of Education; formerly Fellow
+of Trinity College, Cambridge; Senior
+Wrangler, 1884:</p>
+
+<p><span class="sc"><a href="/article/01-0639-algebra/algebra">Algebra</a></span>, <i>Principles of Ordinary
+Algebra</i>; <span class="sc"><a href="/article/02-0561-s2/arithmetic">Arithmetic</a></span>; <span class="sc"><a href="/article/08-0240-differences-calculus-of/differences__calculus_of">Differences,
+Calculus of</a></span>; <span class="sc"><a href="/article/14-0737-s2/interpolation">Interpolation</a></span>;
+<span class="sc"><a href="/article/18-0153-s4/mensuration">Mensuration</a></span>.</p>
+
+<p>P. G. Tait, late professor of Natural
+Philosophy, Edinburgh University.
+Author of <i>Elementary Treatise on Quaternions</i>.
+Joint author with Lord Kelvin
+of <i>Treatise on Natural Philosophy</i>:</p>
+
+<p><span class="sc"><a href="/article/15-0905-knot/knot">Knot</a></span>; <span class="sc"><a href="/article/22-0734-s4/quaternions">Quaternions</a></span> (in part);
+<span class="sc"><a href="/article/12-0913-s5/hamilton__sir_william">Hamilton, Sir William</a></span>; <span class="sc"><a href="/article/17-0948-s2/maxwell__james_clerk">Maxwell,
+James Clerk</a></span>.</p>
+
+<p>Rev. Charles Taylor, formerly Master
+of St. John’s College, Cambridge.
+Vice-Chancellor, Cambridge University,
+1887–1888. Author of <i>Geometrical
+Conics</i>, etc.:</p>
+
+<p><span class="sc"><a href="/article/11-0694-geometrical-continuity/geometrical_continuity">Geometrical Continuity</a></span>.</p>
+
+<p>H. M. Taylor, Fellow of Trinity College,
+Cambridge; formerly Tutor and Lecturer.
+Smith’s Prizeman, 1865. Editor
+of the Pitt Press <i>Euclid</i>:</p>
+
+<p><span class="sc"><a href="/article/19-0607-s1/newton__sir_isaac">Newton, Sir Isaac</a></span>.</p>
+
+<p><a href="/contributors.html?q=Sir+Joseph+John+Thomson">Sir J. J. Thomson</a>, Cavendish Professor
+of Experimental Physics and Fellow
+of Trinity College, Cambridge. President
+of the British Association, 1909–1910.
+Author of <i>A Treatise on the
+Motion of Vortex Rings</i>; <i>Application
+of Dynamics to Physics and Chemistry</i>:</p>
+
+<p><span class="sc"><a href="/article/17-0910-s3/matter">Matter</a></span>; and several articles on
+Electrical Science.</p>
+
+<p>J. Walker, Christ Church, Oxford. Demonstrator
+in the Clarendon laboratory.
+Formerly Vice-President of the
+Physical Society. Author of <i>The Analytical
+Theory of Light</i>, etc.:</p>
+
+<p><span class="sc"><a href="/article/21-0965-polarization-of-light/polarization_of_light">Polarization of Light</a></span>; <span class="sc"><a href="/article/23-0038-s3/refraction">Refraction</a></span>,
+<i>Double Refraction</i>.</p>
+
+<p><a href="/contributors.html?q=Alfred+North+Whitehead">A. N. Whitehead</a>, Fellow and Lecturer
+in Mathematics, Trinity College, Cambridge.
+Author of <i>A Treatise on Universal
+Algebra</i>, etc.:</p>
+
+<p><span class="sc">Geometry VI.</span> <i>Non-Euclidean Geometry</i>
+(in part); <span class="sc">Geometry VII.</span>
+<i>Axioms on Geometry</i>; <span class="sc"><a href="/article/17-0897-s5/mathematics">Mathematics</a></span>.</p>
+
+<p>These are the men who are responsible
+for the mathematical sections of the
+Britannica. A fuller list of articles
+on mathematical subjects is given
+below.</p>
+
+<ul class="index">
+  <li class="c018"><a href="/article/01-0070-s5/abel__niels_henrik">Abel, Niels Henrik</a></li>
+  <li class="c018">Abscissa</li>
+  <li class="c018"><a href="/article/01-0142-s8/acceleration">Acceleration</a></li>
+  <li class="c018"><a href="/article/01-0416-s3/agnesi__maria_gaetana">Agnesi, Maria Gaetana</a></li>
+  <li class="c018">Aguillon, F. D.</li>
+  <li class="c018"><a href="/article/01-0639-algebra/algebra">Algebra</a></li>
+  <li class="c018"><a href="/article/01-0660-algebraic-forms/algebraic_forms">Algebraic Forms</a></li>
+  <li class="c018"><a href="/article/01-0713-s4/aliquot">Aliquot</a></li>
+  <li class="c018"><a href="/article/01-0733-s6/allen__john">Allen, or Alleyn T.</a></li>
+  <li class="c018"><a href="/article/01-0904-s6/amicable_numbers">Amicable Numbers</a></li>
+  <li class="c018"><a href="/article/01-1012-s3/anderson__alexander">Anderson, Alexander</a></li>
+  <li class="c018"><a href="/article/02-0025-s3/angle">Angle</a></li>
+  <li class="c018"><a href="/article/02-0104-s7/anthemius">Anthemius</a></li>
+  <li class="c018"><a href="/article/02-0198-s11/apollonius_of_perga">Apollonius of Perga</a></li>
+  <li class="c018"><a href="/article/02-0389-s3/archimedes">Archimedes</a></li>
+  <li class="c018"><a href="/article/02-0520-s5/argument">Argument</a></li>
+  <li class="c018"><a href="/article/02-0561-s2/arithmetic">Arithmetic</a></li>
+  <li class="c018"><a href="/article/03-0062-s3/autolycus_of_pitane">Autolycus of Pitane</a></li>
+  <li class="c018"><a href="/article/03-0083-s6/axis">Axis</a></li>
+  <li class="c018"><a href="/article/03-0106-s3/babbage__charles">Babbage, Charles</a></li>
+  <li class="c018"><a href="/article/03-0260-s2/baldi__bernardino">Baldi, Bernardino</a></li>
+  <li class="c018"><a href="/article/03-0287-ballistics/ballistics">Ballistics</a></li>
+  <li class="c018"><a href="/article/03-0424-barlow-peter/barlow__peter">Barlow, Peter</a></li>
+  <li class="c018"><a href="/article/03-0457-barrow-isaac/barrow__isaac">Barrow, Isaac</a></li>
+  <li class="c018"><a href="/article/03-0824-bernoulli/bernoulli">Bernoulli (family)</a></li>
+  <li class="c018"><a href="/article/03-0843-bessel-function/bessel_function">Bessel Function</a></li>
+  <li class="c018"><a href="/article/03-0974-binomial/binomial">Binomial</a></li>
+  <li class="c018"><a href="/article/03-0980-biquadratic/biquadratic">Biquadratic</a></li>
+  <li class="c018"><a href="/article/03-1015-bisectrix/bisectrix">Bisectrix</a></li>
+  <li class="c018"><a href="/article/04-0250-boole-george/boole__george">Boole, George</a></li>
+  <li class="c018"><a href="/article/04-0258-borda-jean-charles/borda__jean_charles">Borda, Jean Charles</a></li>
+  <li class="c018"><a href="/article/04-0293-boscovich-roger-joseph/boscovich__roger_joseph">Boscovich, Roger J.</a></li>
+  <li class="c018"><a href="/article/04-0331-bouguer-pierre/bouguer__pierre">Bouguer, Pierre</a></li>
+  <li class="c018"><a href="/article/04-0356-bowditch-nathaniel/bowditch__nathaniel">Bowditch, Nathaniel</a></li>
+  <li class="c018"><a href="/article/04-0381-brachistochrone/brachistochrone">Brachistochrone</a></li>
+  <li class="c018"><a href="/article/04-0586-briggsh/briggs__henry">Briggs, Henry</a></li>
+  <li class="c018"><a href="/article/04-0916-s5/buxton__jedediah">Buxton, Jedediah</a></li>
+  <li class="c018"><a href="/article/04-0999-s2/calculating_machines">Calculating Machines</a></li>
+  <li class="c018">Camus, Charles E. L.</li>
+  <li class="c018">Cardan, Girolamo</li>
+  <li class="c018"><a href="/article/05-0337-cardioid/cardioid">Cardioid</a></li>
+  <li class="c018"><a href="/article/05-0486-castel-louis-bertrand/castel__louis_bertrand">Castel, Louis Bertrand</a></li>
+  <li class="c018"><a href="/article/05-0530-catenary/catenary">Catenary</a></li>
+  <li class="c018"><a href="/article/05-0578-cauchy-augustin-louis/cauchy__augustin_louis__baron">Cauchy, A. L., baron</a></li>
+  <li class="c018"><a href="/article/05-0614-cayley-arthur/cayley__arthur">Cayley, Arthur</a></li>
+  <li class="c018"><a href="/article/05-0973-charles-jacques-alexandre-cesar/charles__jacques_alexandre_césar">Charles, J. A. C.</a></li>
+  <li class="c018"><a href="/article/06-0033-chebichev-pafnutiy-lvovich/chebichev__pafnutiy_lvovich">Chebichev, P. L.</a></li>
+  <li class="c018"><a href="/article/06-0398-circle/circle">Circle</a></li>
+  <li class="c018"><a href="/article/06-0409-cissoid/cissoid">Cissoid</a></li>
+  <li class="c018">Clairault, A. C.</li>
+  <li class="c018"><a href="/article/06-0524-clifford-william-kingdon/clifford__william_kingdon">Clifford, William K.</a></li>
+  <li class="c018"><a href="/article/06-0646-cocker-edward/cocker__edward">Cocker, Edward</a></li>
+  <li class="c018"><a href="/article/06-0681-colburn-zerah/colburn__zerah">Colburn, Z.</a></li>
+  <li class="c018"><a href="/article/06-0774-combinatorial-analysis/combinatorial_analysis">Combinatorial Analysis</a></li>
+  <li class="c018"><a href="/article/06-0850-conchoid/conchoid">Conchoid</a></li>
+  <li class="c018"><a href="/article/06-0920-cone/cone">Cone</a></li>
+  <li class="c018"><a href="/article/06-0964-conic-section/conic_section">Conic Section</a></li>
+  <li class="c018"><a href="/article/06-0989-conoid/conoid">Conoid</a></li>
+  <li class="c018"><a href="/article/07-0045-continued-fractions/continued_fractions">Continued Fractions</a></li>
+  <li class="c018"><a href="/article/07-0267-cotes-roger/cotes__roger">Cotes, Roger</a></li>
+  <li class="c018"><a href="/article/07-0427-cremona-luigi/cremona__luigi">Cremona, Luigi</a></li>
+  <li class="c018"><a href="/article/07-0628-cube/cube">Cube</a></li>
+  <li class="c018"><a href="/article/07-0675-curve/curve">Curve</a></li>
+  <li class="c018"><a href="/article/07-0707-cycloid/cycloid">Cycloid</a></li>
+  <li class="c018"><a href="/article/07-0711-cylinder/cylinder">Cylinder</a></li>
+  <li class="c018"><a href="/article/08-0019-demoivre-abraham/demoivre__abraham">Demoivre, Abraham</a></li>
+  <li class="c018"><a href="/article/08-0022-de-morgan-augustus/de_morgan__augustus">De Morgan, Augustus</a></li>
+  <li class="c018"><a href="/article/08-0126-determinant/determinant">Determinant</a></li>
+  <li class="c018"><a href="/article/08-0161-diagonal/diagonal">Diagonal</a></li>
+  <li class="c018"><a href="/article/08-0161-diagram/diagram">Diagram</a></li>
+  <li class="c018"><a href="/article/08-0172-diameter/diameter">Diameter</a></li>
+  <li class="c018"><a href="/article/08-0240-differences-calculus-of/differences__calculus_of">Differences, Calculus of</a></li>
+  <li class="c018"><a href="/article/08-0242-differential-equation/differential_equation">Differential Equation</a></li>
+  <li class="c018"><a href="/article/08-0290-dimension/dimension">Dimension</a></li>
+  <li class="c018">Diophantus of Alexandria</li>
+  <li class="c018"><a href="/article/08-0342-ditton-humphry/ditton__humphry">Ditton, Humphry</a></li>
+  <li class="c018"><a href="/article/08-0386-dodecahedron/dodecahedron">Dodecahedron</a></li>
+  <li class="c018"><a href="/article/08-0783-dynamics/dynamics">Dynamics</a></li>
+  <li class="c018"><a href="/article/08-0828-earth-figure-of-the/earth__figure_of_the">Earth, Figure of the</a></li>
+  <li class="c018"><a href="/article/09-0158-elasticity/elasticity">Elasticity</a></li>
+  <li class="c018"><a href="/article/09-0309-ellipse/ellipse">Ellipse</a></li>
+  <li class="c018"><a href="/article/09-0310-ellipsoid/ellipsoid">Ellipsoid</a></li>
+  <li class="c018"><a href="/article/09-0358-emerson-william/emerson__william">Emerson, William</a></li>
+  <li class="c018"><a href="/article/09-0415-energetics/energetics">Energetics</a></li>
+  <li class="c018"><a href="/article/09-0423-energy/energy">Energy</a></li>
+  <li class="c018"><a href="/article/09-0718-epicycloid/epicycloid">Epicycloid</a></li>
+  <li class="c018"><a href="/article/09-0741-s3/equation">Equation</a></li>
+  <li class="c018"><a href="/article/09-0911-euclid/euclid">Euclid</a></li>
+  <li class="c018"><a href="/article/09-0919-s3/euler__leonhard">Euler, Leonhard</a></li>
+  <li class="c018"><a href="/article/10-0287-fermat-pierre-de/fermat__pierre_de">Fermat, Pierre de</a></li>
+  <li class="c018"><a href="/article/10-0349-s2/figurate_numbers">Figurate Numbers</a></li>
+  <li class="c018"><a href="/article/10-0608-s6/focus">Focus</a></li>
+  <li class="c018"><a href="/article/10-0621-folium/folium">Folium</a></li>
+  <li class="c018"><a href="/article/10-0773-fourier-jean-baptiste-joseph/fourier__jean_baptiste_joseph">Fourier, J. B. J.</a></li>
+  <li class="c018"><a href="/article/10-0774-fourier-s-series/fourier_s_series">Fourier’s Series</a></li>
+  <li class="c018"><a href="/article/11-0245-s6/frisi__paolo">Frisi, Paolo</a></li>
+  <li class="c018"><a href="/article/11-0283-frustum/frustum">Frustum</a></li>
+  <li class="c018"><a href="/article/11-0314-s6/function">Function</a></li>
+  <li class="c018"><a href="/article/11-0440-galloway-thomas/galloway__thomas">Galloway, Thomas</a></li>
+  <li class="c018"><a href="/article/11-0444-galois-variste/galois__evariste">Galois, Evariste</a></li>
+  <li class="c018"><a href="/article/11-0553-s4/gauss__karl_friedrich">Gauss, Karl Friedrich</a></li>
+  <li class="c018"><a href="/article/11-0627-geodesy/geodesy">Geodesy</a></li>
+  <li class="c018"><a href="/article/11-0694-geometrical-continuity/geometrical_continuity">Geometrical Continuity</a></li>
+  <li class="c018"><a href="/article/11-0695-geometry/geometry">Geometry</a></li>
+  <li class="c018"><a href="/article/12-0169-gnomon/gnomon">Gnomon</a></li>
+  <li class="c018"><a href="/article/12-0381-graphical-methods/graphical_methods">Graphical Methods</a></li>
+  <li class="c018"><a href="/article/12-0401-gravitation/gravitation">Gravitation</a></li>
+  <li class="c018"><a href="/article/12-0439-greaves-john/greaves__john">Greaves, John</a></li>
+  <li class="c018"><a href="/article/12-0601-gregory-family/gregory__family_">Gregory (family)</a></li>
+  <li class="c018"><a href="/article/12-0602-s3/gregory__olinthus_gilbert">Gregory, Olinthus G.</a></li>
+  <li class="c018"><a href="/article/12-0651-s6/groups">Groups, Theory of</a></li>
+  <li class="c018"><a href="/article/12-0754-s3/gunter__edmund">Gunter, Edmund</a></li>
+  <li class="c018"><a href="/article/12-0794-s2/gyroscope_and_gyrostat">Gyroscope and Gyrostat</a></li>
+  <li class="c018"><a href="/article/12-0817-s2/hachette__jean_nicolas_pierre">Hachette, J. N. P.</a></li>
+  <li class="c018"><a href="/article/12-0915-hamilton-sir-william-rowan/hamilton__sir_william_rowan">Hamilton, Sir W. R.</a></li>
+  <li class="c018"><a href="/article/12-0980-s9/harmonic">Harmonic</a></li>
+  <li class="c018"><a href="/article/12-0981-s3/harmonic_analysis">Harmonic Analysis</a></li>
+  <li class="c018"><a href="/article/13-0032-harriot-thomas/harriot__thomas">Harriot, T.</a></li>
+  <li class="c018"><a href="/article/13-0394-hero-of-alexandria/hero_of_alexandria">Hero of Alexandria</a></li>
+  <li class="c018"><a href="/article/13-0574-s2/hodograph">Hodograph</a></li>
+  <li class="c018"><a href="/article/14-0027-hutton-charles/hutton__charles">Hutton, Charles</a></li>
+  <li class="c018"><a href="/article/14-0033-huygens-christiaan/huygens__christiaan">Huygens, Christiaan</a></li>
+  <li class="c018"><a href="/article/14-0125-s2/hydrodynamics">Hydrodynamics</a></li>
+  <li class="c018"><a href="/article/14-0127-s1/hydromechanics">Hydromechanics</a></li>
+  <li class="c018"><a href="/article/14-0183-hydrostatics/hydrostatics">Hydrostatics</a></li>
+  <li class="c018"><a href="/article/14-0211-hyperbola/hyperbola">Hyperbola</a></li>
+  <li class="c018"><a href="/article/14-0287-s3/icosahedron">Icosahedron</a></li>
+  <li class="c018"><a href="/article/14-0367-inaudi-jacques/inaudi__jacques">Inaudi, Jacques</a></li>
+  <li class="c018"><a href="/article/14-0565-s2/infinite">Infinite</a></li>
+  <li class="c018"><a href="/article/14-0566-s2/infinitesimal_calculus">Infinitesimal Calculus</a></li>
+  <li class="c018"><a href="/article/14-0737-s2/interpolation">Interpolation</a></li>
+  <li class="c018"><a href="/article/14-0752-s2/inversion">Inversion</a></li>
+  <li class="c018"><a href="/article/14-0754-involution/involution">Involution</a></li>
+  <li class="c018"><a href="/article/15-0107-ivory-sir-james/ivory__sir_james">Ivory, Sir James</a></li>
+  <li class="c018"><a href="/article/15-0133-s2/jacobi__karl_gustav_jacob">Jacobi, Karl G. J.</a></li>
+  <li class="c018"><a href="/article/15-0749-s3/kelvin__william_thomson">Kelvin, William Thomson, 1st baron</a></li>
+  <li class="c018"><a href="/article/15-0831-kinematics/kinematics">Kinematics</a></li>
+  <li class="c018"><a href="/article/15-0831-kinetics/kinetics">Kinetics</a></li>
+  <li class="c018"><a href="/article/15-0856-kircher-athanasius/kircher__athanasius">Kircher, Athanasius</a></li>
+  <li class="c018"><a href="/article/15-0905-knot/knot">Knot</a></li>
+  <li class="c018"><a href="/article/15-0955-kovalevsky-sophie/kovalevsky__sophie">Kovalevsky, Sophie</a></li>
+  <li class="c018"><a href="/article/16-0095-lagrange-joseph-louis/lagrange__joseph_louis">Lagrange, Joseph L.</a></li>
+  <li class="c018"><a href="/article/16-0173-landen-john/landen__john">Landen, John</a></li>
+  <li class="c018">Laplace, P. S., de</li>
+  <li class="c018"><a href="/article/16-0234-s5/lardner__dionysius">Lardner, Dionysius</a></li>
+  <li class="c018"><a href="/article/16-0395-legendre-adrien-marie/legendre__adrien_marie">Legendre, Adrien Marie</a></li>
+  <li class="c018"><a href="/article/16-0432-lemniscate/lemniscate">Lemniscate</a></li>
+  <li class="c018"><a href="/article/16-0474-leonardo-of-pisa/leonardo_of_pisa">Leonardo of Pisa</a></li>
+  <li class="c018"><a href="/article/16-0512-leslie-sir-john/leslie__sir_john">Leslie, Sir John</a></li>
+  <li class="c018"><a href="/article/16-0530-lever/lever">Lever</a></li>
+  <li class="c018"><a href="/article/16-0610-s2/lie__marius_sophus">Lie, Marius Sophus</a></li>
+  <li class="c018"><a href="/article/16-0712-lima-on/limaçon">Limaçon</a></li>
+  <li class="c018"><a href="/article/16-0742-line/line">Line</a></li>
+  <li class="c018"><a href="/article/16-0857-lobachevskiy-nicolas-ivanovich/lobachevskiy__nicolas_ivanovich">Lobachevskiy, N. I.</a></li>
+  <li class="c018"><a href="/article/16-0879-locus/locus">Locus</a></li>
+  <li class="c018"><a href="/article/16-0890-s1/logarithm">Logarithm</a></li>
+  <li class="c018"><a href="/article/16-0941-s1/logocyclic_curve__strophoid">Logocyclic Curve, Strophoid or Foliate</a></li>
+  <li class="c018"><a href="/article/17-0222-s2/maccullagh__james">MacCullagh, James</a></li>
+  <li class="c018"><a href="/article/17-0276-maclaurin-colin/maclaurin__colin">Maclaurin, Colin</a></li>
+  <li class="c018"><a href="/article/17-0325-magic-square/magic_square">Magic Square</a></li>
+  <li class="c018"><a href="/article/17-0646-map/map">Map</a></li>
+  <li class="c018"><a href="/article/17-0854-mascheroni/mascheroni__lorenzo">Mascheroni, Lorenzo</a></li>
+  <li class="c018"><a href="/article/17-0897-s5/mathematics">Mathematics</a></li>
+  <li class="c018"><a href="/article/17-0910-s3/matter">Matter</a></li>
+  <li class="c018">Maupertuis, Pierre de</li>
+  <li class="c018"><a href="/article/17-0937-s6/maxima_and_minima">Maxima and Minima</a></li>
+  <li class="c018"><a href="/article/17-0948-s2/maxwell__james_clerk">Maxwell, J. Clerk</a></li>
+  <li class="c018"><a href="/article/17-0974-mechanics/mechanics">Mechanics</a></li>
+  <li class="c018"><a href="/article/18-0153-s4/mensuration">Mensuration</a></li>
+  <li class="c018"><a href="/article/18-0193-mersenne-marin/mersenne__marin">Mersenne, Marin</a></li>
+  <li class="c018"><a href="/article/18-0739-monge-gaspard/monge__gaspard">Monge, Gaspard</a></li>
+  <li class="c018">Montucia, Jean-Étienne</li>
+  <li class="c018"><a href="/article/18-0938-s4/motion__laws_of">Motion, Laws of</a></li>
+  <li class="c018"><a href="/article/19-0053-s5/murphy__robert">Murphy, Robert</a></li>
+  <li class="c018"><a href="/article/19-0186-s2/napier__john">Napier, John</a></li>
+  <li class="c018"><a href="/article/19-0607-s1/newton__sir_isaac">Newton, Sir Isaac</a></li>
+  <li class="c018">Nicomachus of Gerasa</li>
+  <li class="c018"><a href="/article/19-0879-s3/number">Number</a></li>
+  <li class="c018"><a href="/article/19-0897-s2/numbers__partition_of">Numbers, Partition of</a></li>
+  <li class="c018"><a href="/article/19-0898-numeral/numeral">Numeral</a></li>
+  <li class="c018"><a href="/article/19-1030-s8/octahedron">Octahedron</a></li>
+  <li class="c018"><a href="/article/20-0215-s2/ordinate">Ordinate</a></li>
+  <li class="c018"><a href="/article/20-0412-oughtred-william/oughtred__william">Oughtred, William</a></li>
+  <li class="c018"><a href="/article/20-0416-oval/oval">Oval</a></li>
+  <li class="c018"><a href="/article/20-0739-pantograph/pantograph">Pantograph</a></li>
+  <li class="c018"><a href="/article/20-0796-s2/pappus_of_alexandria">Pappus of Alexandria</a></li>
+  <li class="c018">Parabola</li>
+  <li class="c018"><a href="/article/21-0034-s4/peacock__george">Peacock, George</a></li>
+  <li class="c018"><a href="/article/21-0072-s8/peirce__benjamin">Peirce, Benjamin</a></li>
+  <li class="c018"><a href="/article/21-0083-s2/pell__john">Pell, John</a></li>
+  <li class="c018"><a href="/article/21-0197-perpetual-motion/perpetual_motion">Perpetual Motion</a></li>
+  <li class="c018"><a href="/article/21-0274-perspective/perspective">Perspective</a></li>
+  <li class="c018"><a href="/article/21-0360-s4/pfaff__johann_friedrich">Pfaff, J. F.</a></li>
+  <li class="c018"><a href="/article/21-0864-playfair-john/playfair__john">Playfair, John</a></li>
+  <li class="c018"><a href="/article/21-0886-s3/plücker__julius">Plücker, Julius</a></li>
+  <li class="c018"><a href="/article/21-0925-poinsot-louis/poinsot__louis">Poinsot, Louis</a></li>
+  <li class="c018"><a href="/article/21-0929-poisson-sim-on-denis/poisson__siméon_denis">Poisson, Siméon Denis</a></li>
+  <li class="c018"><a href="/article/22-0038-s5/polygon">Polygon</a></li>
+  <li class="c018"><a href="/article/22-0041-s2/polygonal_numbers">Polygonal Numbers</a></li>
+  <li class="c018"><a href="/article/22-0041-s4/polyhedral_numbers">Polyhedral Numbers</a></li>
+  <li class="c018"><a href="/article/22-0041-s5/polyhedron">Polyhedron</a></li>
+  <li class="c018"><a href="/article/22-0073-poncelet-jean-victor/poncelet__jean_victor">Poncelet, Jean Victor</a></li>
+  <li class="c018"><a href="/article/22-0116-s6/porism">Porism</a></li>
+  <li class="c018"><a href="/article/22-0327-price-bartholomew/price__bartholomew">Price, Bartholomew</a></li>
+  <li class="c018"><a href="/article/22-0375-prism/prism">Prism</a></li>
+  <li class="c018"><a href="/article/22-0390-probability/probability">Probability</a></li>
+  <li class="c018"><a href="/article/22-0442-s3/projection">Projection</a></li>
+  <li class="c018"><a href="/article/22-0722-quadratrix/quadratrix">Quadratrix</a></li>
+  <li class="c018"><a href="/article/22-0734-s4/quaternions">Quaternions</a></li>
+  <li class="c018"><a href="/article/22-0983-s2/recorde__robert">Recorde, Robert</a></li>
+  <li class="c018">Riccati, J. F., count</li>
+  <li class="c018"><a href="/article/23-0338-riemann-georg-friedrich-bernhard/riemann__georg_friedrich_bernhard">Riemann, G. F. B.</a></li>
+  <li class="c018">Roberval, G. P. de</li>
+  <li class="c018"><a href="/article/23-0444-s1/robins__benjamin">Robins, Benjamin</a></li>
+  <li class="c018"><a href="/article/23-0811-s4/roulette">Roulette</a></li>
+  <li class="c018"><a href="/article/23-0821-s3/routh__edward_john">Routh, Edward John</a></li>
+  <li class="c018"><a href="/article/23-0907-s2/russell__john_scott">Russell, John Scott</a></li>
+  <li class="c018"><a href="/article/24-0096-s2/salmon__george">Salmon, George</a></li>
+  <li class="c018"><a href="/article/24-0252-saunderson-nicholas/saunderson__nicholas">Saunderson, N.</a></li>
+  <li class="c018">Serenus of Antissa</li>
+  <li class="c018"><a href="/article/24-0698-series/series">Series</a></li>
+  <li class="c018"><a href="/article/24-0705-serpentine-mineral/serpentine__mineral_">Serpentine</a></li>
+  <li class="c018"><a href="/article/25-0151-s5/simpson__thomas">Simpson, Thomas</a></li>
+  <li class="c018"><a href="/article/25-0153-simson-robert/simson__robert">Simson, Robert</a></li>
+  <li class="c018"><a href="/article/25-0279-s3/smith__henry_john_stephen">Smith, H. J. S.</a></li>
+  <li class="c018"><a href="/article/25-0284-s2/smith__robert">Smith, Robert</a></li>
+  <li class="c018"><a href="/article/25-0309-snell-willebrord/snell__willebrord">Snell, Willebrord</a></li>
+  <li class="c018"><a href="/article/25-0669-s3/sphere">Sphere</a></li>
+  <li class="c018"><a href="/article/25-0671-s3/spherical_harmonics">Spherical Harmonics</a></li>
+  <li class="c018"><a href="/article/25-0683-spheroid/spheroid">Spheroid</a></li>
+  <li class="c018"><a href="/article/25-0714-s3/spiral">Spiral</a></li>
+  <li class="c018"><a href="/article/25-0758-spottiswoode-william/spottiswoode__william">Spottiswoode, W.</a></li>
+  <li class="c018"><a href="/article/25-0828-s3/statics">Statics</a></li>
+  <li class="c018"><a href="/article/25-0897-steiner-jakob/steiner__jakob">Steiner, Jakob</a></li>
+  <li class="c018"><a href="/article/25-0934-s4/stevinus__simon">Stevinus, Simon</a></li>
+  <li class="c018"><a href="/article/25-0948-s3/stirling__james">Stirling, James</a></li>
+  <li class="c018"><a href="/article/25-0975-stokes-sir-george-gabriel/stokes__sir_george_gabriel">Stokes, Sir George G.</a></li>
+  <li class="c018"><a href="/article/25-1033-s4/strength_of_materials">Strength of Materials</a></li>
+  <li class="c018"><a href="/article/25-1079-sturm-jacques-charles-fran-ois/sturm__jacques_charles_françois">Sturm, J. C. F.</a></li>
+  <li class="c018"><a href="/article/26-0135-surface/surface">Surface</a></li>
+  <li class="c018"><a href="/article/26-0305-s2/sylvester__james_joseph">Sylvester, J. J.</a></li>
+  <li class="c018"><a href="/article/26-0346-s2/table__mathematical">Table, Mathematical</a></li>
+  <li class="c018"><a href="/article/26-0385-s3/tait__peter_guthrie">Tait, Peter G.</a></li>
+  <li class="c018"><a href="/article/26-0463-s3/tartaglia">Tartaglia, Niccolo</a></li>
+  <li class="c018"><a href="/article/26-0496-s3/taylor__brook">Taylor, Brook</a></li>
+  <li class="c018"><a href="/article/26-0704-s2/tetrahedron">Tetrahedron</a></li>
+  <li class="c018"><a href="/article/26-0811-s2/theodosius_of_tripolis">Theodosius of Tripolis</a></li>
+  <li class="c018"><a href="/article/26-0910-s4/thompson__thomas_peronnet">Thompson, T. P.</a></li>
+  <li class="c018"><a href="/article/26-0978-s2/tide">Tide</a></li>
+  <li class="c018"><a href="/article/26-1084-todhunter-isaac/todhunter__isaac">Todhunter, Isaac</a></li>
+  <li class="c018"><a href="/article/27-0273-triangle-music/triangle__music_">Triangle</a></li>
+  <li class="c018"><a href="/article/27-0286-s3/trigonometry">Trigonometry</a></li>
+  <li class="c018"><a href="/article/27-0307-s5/trisectrix">Trisectrix</a></li>
+  <li class="c018"><a href="/article/27-0761-s2/units__dimensions_of">Units, Dimensions of</a></li>
+  <li class="c018"><a href="/article/27-0763-s2/units__physical">Units, Physical</a></li>
+  <li class="c018"><a href="/article/27-0941-s2/variations__calculus_of">Variations, Calculus of</a></li>
+  <li class="c018"><a href="/article/27-0990-s7/vector_analysis">Vector Analysis</a></li>
+  <li class="c018"><a href="/article/27-1059-s5/vernier__pierre">Vernier, Pierre</a></li>
+  <li class="c018"><a href="/article/28-0072-vieta-fran-ois/vieta__or_viète___françois">Vieta (or Viète), F.</a></li>
+  <li class="c018"><a href="/article/28-0294-wallace-william-vincent/wallace__william_vincent">Wallace, William</a></li>
+  <li class="c018"><a href="/article/28-0300-wallis-john/wallis__john">Wallis, John</a></li>
+  <li class="c018"><a href="/article/28-0442-s4/wave">Wave</a></li>
+  <li class="c018"><a href="/article/28-0779-witch-of-agnesi/witch_of_agnesi">Witch of Agnesi</a></li>
+  <li class="c018"><a href="/article/28-1002-zero/zero">Zero</a></li>
+</ul>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

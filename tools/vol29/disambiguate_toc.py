@@ -186,6 +186,7 @@ def build_request(amb: dict, idx: int, previews: dict) -> Request:
 
 def main():
     dry_run = "--dry-run" in sys.argv
+    apply_only = "--apply-only" in sys.argv
 
     print("Loading cache and TOC...")
     cache = {}
@@ -217,61 +218,65 @@ def main():
     print(f"Already cached: {len(ambiguities) - len(to_resolve)}")
     print(f"To resolve this run: {len(to_resolve)}")
 
-    if dry_run or not to_resolve:
-        if dry_run:
-            print("[dry-run — not calling API]")
+    if dry_run:
+        print("[dry-run — not calling API, not applying cache]")
         return
 
-    print("Loading body previews...")
-    previews = _load_previews(needed_filenames)
+    if apply_only:
+        if to_resolve:
+            print(f"[apply-only — skipping {len(to_resolve)} uncached "
+                  f"ambiguities; run without --apply-only to resolve]")
+    elif to_resolve:
+        print("Loading body previews...")
+        previews = _load_previews(needed_filenames)
 
-    print(f"Building {len(to_resolve)} batch requests...")
-    requests = [
-        build_request(amb, i, previews)
-        for i, (amb, _key) in enumerate(to_resolve)
-    ]
+        print(f"Building {len(to_resolve)} batch requests...")
+        requests = [
+            build_request(amb, i, previews)
+            for i, (amb, _key) in enumerate(to_resolve)
+        ]
 
-    client = anthropic.Anthropic()
-    print("Submitting batch...")
-    batch = client.messages.batches.create(requests=requests)
-    print(f"Batch ID: {batch.id}")
-    print(f"Status: {batch.processing_status}")
+        client = anthropic.Anthropic()
+        print("Submitting batch...")
+        batch = client.messages.batches.create(requests=requests)
+        print(f"Batch ID: {batch.id}")
+        print(f"Status: {batch.processing_status}")
 
-    while True:
-        batch = client.messages.batches.retrieve(batch.id)
-        if batch.processing_status == "ended":
-            break
-        rc = batch.request_counts
-        print(f"  {batch.processing_status} "
-              f"(processing={rc.processing}, succeeded={rc.succeeded}, "
-              f"errored={rc.errored})")
-        time.sleep(30)
+        while True:
+            batch = client.messages.batches.retrieve(batch.id)
+            if batch.processing_status == "ended":
+                break
+            rc = batch.request_counts
+            print(f"  {batch.processing_status} "
+                  f"(processing={rc.processing}, succeeded={rc.succeeded}, "
+                  f"errored={rc.errored})")
+            time.sleep(30)
 
-    print(f"Batch complete. Succeeded: {batch.request_counts.succeeded}, "
-          f"Errored: {batch.request_counts.errored}")
+        print(f"Batch complete. Succeeded: {batch.request_counts.succeeded}, "
+              f"Errored: {batch.request_counts.errored}")
 
-    for result in client.messages.batches.results(batch.id):
-        idx = int(result.custom_id.split("-")[1])
-        amb, key = to_resolve[idx]
-        filename = None
-        if result.result.type == "succeeded":
-            msg = result.result.message
-            text = next(
-                (b.text for b in msg.content if b.type == "text"), "{}")
-            try:
-                parsed = json.loads(text)
-                filename = parsed.get("filename")
-                valid = {c["filename"] for c in amb["candidates"]}
-                if filename not in valid:
+        for result in client.messages.batches.results(batch.id):
+            idx = int(result.custom_id.split("-")[1])
+            amb, key = to_resolve[idx]
+            filename = None
+            if result.result.type == "succeeded":
+                msg = result.result.message
+                text = next(
+                    (b.text for b in msg.content if b.type == "text"), "{}")
+                try:
+                    parsed = json.loads(text)
+                    filename = parsed.get("filename")
+                    valid = {c["filename"] for c in amb["candidates"]}
+                    if filename not in valid:
+                        filename = None
+                except Exception:
                     filename = None
-            except Exception:
-                filename = None
-        cache[key] = filename
+            cache[key] = filename
 
-    CACHE_FILE.write_text(
-        json.dumps(cache, indent=2, ensure_ascii=False),
-        encoding="utf-8")
-    print(f"Cache written: {CACHE_FILE}")
+        CACHE_FILE.write_text(
+            json.dumps(cache, indent=2, ensure_ascii=False),
+            encoding="utf-8")
+        print(f"Cache written: {CACHE_FILE}")
 
     print("Applying to classified_toc.json...")
     updated = 0

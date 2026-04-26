@@ -9,11 +9,17 @@ import re
 import glob
 import sys
 
+sys.path.insert(0, "src")
+from britannica.cleaners.unicode import replace_print_artifacts
+
 sys.stdout.reconfigure(encoding="utf-8")
 
 
 def clean_body(body: str) -> str:
     """Clean residual markup issues from article body text."""
+    # Normalize transcription-artifact codepoints (fullwidth = + - < >,
+    # ligature glyphs ℔ ℥ ℈, dingbat ✕) to modern ASCII / Latin-1 forms.
+    body = replace_print_artifacts(body)
     # Leaked HTML table attributes (colspan, rowspan, nowrap, etc.)
     # Both pipe-delimited (|colspan="3"|) and inline (nowrap|text)
     body = re.sub(

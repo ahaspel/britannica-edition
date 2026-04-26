@@ -18,10 +18,38 @@ sys.path.insert(0, "src")
 from britannica.db.models import Contributor, ContributorInitials
 from britannica.db.session import SessionLocal
 
-_ENTRY_PATTERN = re.compile(
-    r"\{\{EB1911 contributor table/entry(.*?)\}\}",
-    flags=re.DOTALL,
+_ENTRY_START_PATTERN = re.compile(
+    r"\{\{EB1911 contributor table/entry",
 )
+
+
+def _iter_entries(text: str):
+    """Yield the inner content of each `{{EB1911 contributor table/entry
+    …}}` template, counting braces so that nested templates (like
+    `brace = {{brace2|…}}`) don't prematurely terminate the match.
+
+    The old non-greedy regex stopped at the first `}}` inside a nested
+    template, dropping every entry that used one — about 93 entries,
+    including Gertrude Bell, Hilda Murray, and others whose signatures
+    we later found in article footers but couldn't resolve.
+    """
+    for m in _ENTRY_START_PATTERN.finditer(text):
+        start = m.end()
+        depth = 1  # we've entered the outer {{
+        i = start
+        while i < len(text) - 1:
+            pair = text[i : i + 2]
+            if pair == "{{":
+                depth += 1
+                i += 2
+            elif pair == "}}":
+                depth -= 1
+                if depth == 0:
+                    yield text[start:i]
+                    break
+                i += 2
+            else:
+                i += 1
 
 
 def _parse_field(content, field_name):
@@ -114,8 +142,7 @@ def build_contributor_table():
             with open(path, encoding="utf-8") as f:
                 data = json.load(f)
             raw = data.get("raw_text", "")
-            for m in _ENTRY_PATTERN.finditer(raw):
-                content = m.group(1)
+            for content in _iter_entries(raw):
                 initials = _parse_field(content, "initials").strip()
                 if not initials or len(initials) > 20:
                     continue

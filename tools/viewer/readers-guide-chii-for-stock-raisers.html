@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Stock-Raisers &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter II</span>For Stock-Raisers</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Staying on the Land</a></li><li><a href="#sh-2">Cattle</a></li><li><a href="#sh-3">Horses and Mules</a></li><li><a href="#sh-4">Sheep and the Wool Market</a></li><li><a href="#sh-5">Pigs and Pork</a></li><li><a href="#sh-6">Diseases and Parasites of Live-stock</a></li><li><a href="#sh-7">How to “Even Up”</a></li></ol></div>
+    <div class="body-text">
+
+
+<p>Stock-raising in the United
+States was, until quite recent
+years, under the evil influence of
+the careless methods which had been
+handed down from the old days of the
+range-cattle industry. Chicago men still
+tell the story of the Chicago banker,
+afterwards Secretary of the Treasury,
+who declared, in reply to a request for a
+loan on the security of range-cattle, that
+he “would as soon lend money on a
+shoal of mackerel in the Atlantic Ocean.”
+The vague possession and the vague
+methods of breeding and marketing
+which suggested this comparison did not
+form the habits of close observation and
+incessant care which became necessary
+when land and food began to cost money.
+The lesson has been learned, and the
+present conditions of the industry are
+infinitely better for the country at large.
+It has been proved that fattening as well
+as breeding can be successfully undertaken
+in almost every part of the United
+States. Even in the North West, the
+tendency to-day is to turn from exclusive
+grain growing to a combination of cropping
+and feeding. Cattle, and also work
+horses of the right type, for which the
+demand is always greater than the supply,
+are yielding fair profits on many of
+the New England farms which had been
+neglected for years.</p>
+
+<p><span class="shoulder-heading" id="sh-1">Staying on the Land</span>One of the most encouraging features
+of the present situation is that the
+broader distribution of the live-stock
+industry encourages
+farm-bred boys to
+remain at home. It has long been a
+popular belief that the attraction of the
+cities lies largely in the facilities for
+amusement which they offer; but the best
+class of young men who have left the
+farms have done so because they did not
+believe that plowing and sowing and
+reaping gave enough scope for their intelligence
+and their initiative. When
+stock-raising is combined with tillage,
+there is not only a greater interest in
+farm life and a greater chance to make
+general knowledge effective, but there
+are also better opportunities for a young
+man to make a small venture of his own
+while he is still a farm hand. It is certainly
+true that stock-raising needs the
+young man who is determined to know
+something about everything and all there
+is to know about one thing. To him the
+articles in the Britannica which are indicated
+in this chapter should be of the
+greatest value, for they cover a broad
+range, and they are written by specialists
+of the highest authority. They do not
+profess to teach what can only be learnt
+in the course of practical experience, but
+they will make each day’s work more
+interesting and more effective.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Cattle</span>You cannot do better than to begin
+your reading with the article (Vol. 4,
+p. 337) on the family of animals to
+which cattle belong, a family so varied
+that it includes so small a creature as
+the hare, and so large a one as the
+rhinoceros. The article
+<span class="sc"><a href="/article/05-0558-cattle/cattle">Cattle</a></span> (Vol. 5, p. 359),
+by Professor Wallace and
+Dr. Fream, begins by reminding you
+that the idea of cattle owning has always
+been so closely associated with the idea
+of wealth that the two words “capital”
+and “cattle” have the same root, and
+that our word “pecuniary” is taken
+from the Latin term for cattle. This
+article, illustrated with photographs of
+the best specimens of bulls and cows of
+different breeds, deals with Shorthorns,
+Herefords, Devons, Holsteins, Dutch
+Belteds, Sussexes, Longhorns, Aberdeen-Angus,
+Red Polleds, Galloways, Highlands,
+Kerry’s, Dexters, Jerseys and
+Guernseys, and has a section on the
+rearing of calves. <span class="sc"><a href="/article/20-0432-ox/ox">Ox</a></span> (Vol. 20, p. 398)
+is chiefly about the origin of domestic
+cattle. <span class="sc"><a href="/article/01-0426-agriculture/agriculture">Agriculture</a></span> (Vol. 1, p. 388)
+contains information of a more general
+kind as to practical stock-raising. The
+best methods of mating are described
+fully in <span class="sc"><a href="/article/04-0505-breeds-and-breeding/breeds_and_breeding">Breeds</a></span> and <span class="sc"><a href="/article/04-0505-breeds-and-breeding/breeds_and_breeding">Breeding</a></span> (Vol. 4,
+p. 487), <span class="sc"><a href="/article/27-0932-variation-and-selection/variation_and_selection">Variation</a></span> and <span class="sc"><a href="/article/27-0932-variation-and-selection/variation_and_selection">Selection</a></span>
+(Vol. 27, p. 906), and <span class="sc"><a href="/article/13-0366-heredity/heredity">Heredity</a></span> (Vol.
+13, p. 350), by Dr. Chalmers Mitchell.
+<span class="sc"><a href="/article/18-0134-mendelism/mendelism">Mendelism</a></span> (Vol. 18, p. 115) will tell you
+all about the theory which is nowadays
+the great subject of discussion among experts
+in breeding. <span class="sc"><a href="/article/09-0335-embryology/embryology">Embryology</a></span> (Vol.
+9, p. 314), by Dr. <a href="/contributors.html?q=Hans+A.+E.+Driesch">Hans Driesch</a>, and
+<span class="sc"><a href="/article/23-0133-reproduction/reproduction">Reproduction</a></span> (Vol. 23, p. 116), by <a href="/contributors.html?q=Sydney+Howard+Vines">Professor
+Vines</a>, contain the results of the
+latest investigations, and the article <span class="sc"><a href="/article/24-0775-sex/sex">Sex</a></span>
+(Vol. 24, p. 747) describes the recent experiments
+undertaken with the hope that
+breeders may at some future time be
+enabled to vary at will the proportion of
+males and females. <span class="sc"><a href="/article/26-0538-telegony/telegony">Telegony</a></span> (Vol.
+26, p. 509) gives you the evidence for and
+against the belief that offspring are influenced
+by a previous mate of the dam.
+<span class="sc"><a href="/article/10-0633-s2/food_preservation">Food Preservation</a></span> (Vol. 10, p. 612)
+and <span class="sc"><a href="/article/23-0043-s2/refrigerating">Refrigerating</a></span> (Vol. 23, p. 30)
+cover the cold shipping and cold storage
+of beef. <span class="sc"><a href="/article/16-0350-s6/leather">Leather</a></span> (Vol. 16, p. 330), by
+Dr. <a href="/contributors.html?q=James+Gordon+Parker">J. G. Parker</a>, one of the foremost
+technical experts on this subject, follows
+hides through the market to their final
+distribution and industrial uses.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Horses and Mules</span>Notwithstanding the harm that trolley
+cars and automobiles and mechanically
+propelled agricultural machines have
+done to important
+branches of the horse
+business, and notwithstanding the
+competition which American exporters
+find in Europe from the Argentine
+ranches, there is still an active market
+for farm horses and for stock suited to
+trucking and light delivery work in cities.
+You no doubt find, in whatever part of
+the United States your interests lie, that
+you need to watch the market very
+closely, and that you must always be
+ready to change your plans at short
+notice. But it is to the quick-witted
+man who is always prepared to vary his
+methods that the Britannica offers the
+greatest practical services. The article
+on the horse family in general (Vol. 9,
+p. 720) is very interesting, but you will
+give more time to the elaborate article
+<span class="sc"><a href="/article/13-0729-horse/horse">Horse</a></span> (Vol. 13, p. 712), by Richard
+Lyddeker, E. D. Brickwood, Sir William
+Flower, and Professor Wallace. The illustrations
+are unusually valuable, for
+instead of following the usual custom of
+making all the photographs the same
+size, the Editors of the Britannica showed
+good sense and originality by making
+each one to scale. The breeds are separately
+described, and the sections on
+feeding and breaking are full of useful
+hints. The history of the thoroughbred
+strain is carefully traced, the pedigree of
+one famous type being shown in a table
+naming more than one hundred ancestors.
+The article <span class="sc"><a href="/article/13-0745-horse-racing/horse-racing">Horse-Racing</a></span> (Vol.
+13, p. 726), by <a href="/contributors.html?q=Alfred+Edward+Thomas+Watson">Alfred Watson</a>, shows how
+the sport has influenced breeding, and
+the description of American trotting goes
+back to the day when “Boston Blue,”
+in 1818, trotted a mile in three minutes,
+“a feat deemed impossible” at that
+period! The English race meetings, in
+which American owners and jockeys now
+play so conspicuous a part, are described
+in special sections, as well as the training
+at Newmarket. <span class="sc"><a href="/article/23-0334-s4/riding">Riding</a></span> (Vol. 23, p. 317),
+and <span class="sc"><a href="/article/08-0612-driving/driving">Driving</a></span> (Vol. 8, p. 585), are by
+practical experts, and <span class="sc"><a href="/article/27-0133-s2/traction">Traction</a></span> (Vol.
+27, p. 118) contains an interesting table
+analyzing the draft power of the horse.
+The section on Arab horses in the article
+<span class="sc"><a href="/article/02-0268-s1/arabia">Arabia</a></span> (Vol. 2, p. 261) should be read,
+for it adds to the information, in the
+articles already named, on the breed that
+has influenced every variety of horse.
+<span class="sc"><a href="/article/18-0991-mule/mule">Mule</a></span> (Vol. 18, p. 959) will tell you
+about the varieties not only in the
+United States and Mexico, but also in
+France, Spain, Portugal, Italy, Asia
+Minor, Syria, Egypt, Algeria and North
+China. The section on Hybrids (Vol.
+13, p. 713) of the article <span class="sc"><a href="/article/13-0729-horse/horse">Horse</a></span> deals
+with all the attempts that have been
+made to get a perfect type of mule by
+introducing various strains of blood.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Sheep and the Wool Market</span><span class="sc"><a href="/article/24-0849-sheep/sheep">Sheep</a></span> (Vol. 24, p. 817) contains
+separate descriptions of the 28 best
+breeds, discussing their values both for
+wool and for the
+meat trade. Breeding,
+feeding, dipping
+and lambing are fully
+treated. Sheepdogs and other breeds
+useful to the stock-raiser fall under the
+article <span class="sc"><a href="/article/08-0391-dog/dog">Dog</a></span> (Vol. 8, p. 374). <span class="sc"><a href="/article/28-0830-wool-worsted-and-woollen-manufactures/wool__worsted_and_woollen_manufactures">Wool</a></span>
+(Vol. 28, p. 805), by Professor <a href="/contributors.html?q=Aldred+Farrer+Barker">Aldred
+Barker</a>, is an article in which you will at
+once be impressed by the splendid thoroughness
+that is characteristic of the
+Britannica. It goes to the very foundation
+of the subject by giving you microscopic
+photographs, on a scale of 320 to
+1, of each of the six great varieties of
+wool, and explaining the structure of the
+fibres. The article <span class="sc"><a href="/article/10-0321-fibres/fibres">Fibres</a></span> (Vol. 10, p.
+309) will enable you to compare another
+microscopic photograph of wool fibre
+with similar pictures of silk, flax, cotton,
+jute, and other textile materials. The
+article wool deals next with wool-yolk
+and wool-fat, and then goes on to
+show why greasy wool is better than
+wool washed before shearing. Wool
+classing and sorting are next described,
+and then scouring. From this point the
+treatment of wool hardly comes within
+the jurisdiction of the sheep-man, although
+he cannot know too much about
+the qualities of the yarns obtained from
+different kinds of wool. It is interesting
+to note in this article that the first fulling
+mill in America was built at Rowley,
+Mass., in 1643, only thirty-four years
+after the first sheep was brought to
+America, and only twenty-three years
+after the Pilgrims landed on Plymouth
+Rock.</p>
+
+<p><span class="shoulder-heading" id="sh-5">Pigs and Pork</span>The article <span class="sc"><a href="/article/26-0255-swine/swine">Swine</a></span> (Vol. 26, p. 236)
+deals with the swine family in general,
+and the article <span class="sc"><a href="/article/21-0620-pig/pig">Pig</a></span> (Vol. 21, p. 594), containing
+a fine full-page
+plate, gives a
+detailed account of
+the breeds most profitable
+on the farm, including the Poland-China,
+the Berkshire, the Duroc, and
+the Chester White. Eleven breeds in
+all are particularized. The breeding and
+fattening of hogs, although it is now
+successfully followed as a distinct branch
+of the live-stock industry, must always
+remain in great part a mere branch of
+general farming; for the pig’s power of
+thriving on many kinds of food, enables
+the farmer to utilize produce that cannot
+advantageously be shipped, and to
+keep his pigs following his cattle over
+the fields. Much information will be
+found all through the article <span class="sc"><a href="/article/01-0426-agriculture/agriculture">Agriculture</a></span>
+(Vol. 1, p. 388). <span class="sc"><a href="/article/27-0281-trichinosis/trichinosis">Trichinosis</a></span>
+(Vol. 27, p. 266) deals with a disease that
+has sometimes seriously affected the pork
+market, and been made the excuse, too,
+for some very harsh restrictions on
+American exportation.</p>
+
+<p><span class="shoulder-heading" id="sh-6">Diseases and Parasites of Live-stock</span>You will find in the Britannica (Vol.
+28, p. 6) a very full and clear account of
+the diseases of all domestic animals, by
+Dr. Fleming and Professor McQueen,
+with special sections on the maladies of
+the horse, of cattle, of sheep, and of
+pigs, and on the parasites that infest
+them. <span class="sc"><a href="/article/27-0371-s2/tuberculosis">Tuberculosis</a></span>
+(Vol. 27, p.
+354) calls for special
+study, for it is a
+“disease of civilization”
+almost unknown among wild
+animals in their natural state and
+among the uncivilized races of mankind.
+The connection between the disease
+in cattle and its spread among
+human beings is fully explained in this
+article. <span class="sc"><a href="/article/21-0871-pleuro-pneumonia/pleuro-pneumonia">Pleuro Pneumonia</a></span> (Vol. 21,
+p. 838) deals with the lung disease from
+which cattle are the only sufferers,
+<span class="sc"><a href="/article/23-0365-rinderpest/rinderpest">Rinderpest</a></span> (Vol. 23, p. 348), with the
+infectious fever which affects both cattle
+and sheep, and <span class="sc"><a href="/article/02-0117-s4/anthrax">Anthrax</a></span> (Vol. 2, p. 106),
+with the terribly infectious carbuncles
+communicated from cattle and sheep to
+man by the microbes carried in wool and
+hides. <span class="sc"><a href="/article/12-0089-glanders/glanders">Glanders</a></span> (Vol. 12, p. 76) describes
+the form in which this disease of
+horses and mules afflicts human beings,
+the symptoms and course of which, in
+the animals themselves, fall under the
+subject of horse diseases (Vol. 28, p. 8).
+The microbe by which this disease is
+carried is shown in the plate facing one
+of the pages (Vol. 20, p. 770) of the
+article <span class="sc"><a href="/article/20-0826-s8/parasitic_diseases">Parasitic Diseases</a></span>. <span class="sc"><a href="/article/10-0638-foot-and-mouth-disease/foot-and-mouth_disease">Foot and
+Mouth Disease</a></span> (Vol. 10, p. 617)
+afflicts cattle, sheep, and pigs, and
+occasionally human beings.</p>
+
+<p>Among the articles on continents and
+countries which contain special information
+on stock-raising, you should not miss
+the interesting general review of the
+European live-stock industry in the
+article <span class="sc"><a href="/article/09-0939-europe/europe">Europe</a></span> (Vol. 9, p. 914), the
+section on live-stock in <span class="sc"><a href="/article/05-0154-canada/canada">Canada</a></span> (Vol. 5,
+p. 153), that in <span class="sc"><a href="/article/02-0497-s4/argentina">Argentina</a></span> (Vol. 2, p.
+465), in <span class="sc"><a href="/article/02-0991-s4/australia">Australia</a></span> (Vol. 2, p. 950),
+and in <span class="sc"><a href="/article/19-0650-new-zealand/new_zealand">New Zealand</a></span> (Vol. 19, p. 627)
+The history of stock-raising is fully
+treated at the beginning of the article
+<span class="sc"><a href="/article/01-0426-agriculture/agriculture">Agriculture</a></span> (Vol. 1, p. 388).</p>
+
+<p><span class="shoulder-heading" id="sh-7">How to “Even Up”</span>When you have read the articles mentioned
+in the three parts of this chapter
+on Farming, do not turn away with the
+idea that you have got from the
+Britannica all that
+it can give you to
+help you in your
+business. Remember
+that you have to judge men, as
+well as live-stock, in order to succeed,
+and that general knowledge is of the
+greatest use in doing that. The one
+sure sign of the kind of man you cannot
+rely upon is that he talks confidently
+about subjects of which he really knows
+little, and the more you yourself know,
+the more readily you can detect the pretentious
+people who might make you
+think too well of them.</p>
+
+<p>If you turn over the pages of this
+guide, and ask yourself, as you glance at
+the chapters, in what departments of
+general knowledge you are weakest, you
+will see what courses of reading will do
+most to make you an “evened up” man,
+without any weak threads in your intellectual
+texture. And, whatever you
+read, do not forget that the Britannica
+is a book of reference as well as for reading:
+that you are debasing your mind
+every time you leave unanswered any
+question that comes up in the course of
+the day’s work or talk, or while you are
+reading your newspaper. A vigorous
+mind wants an answer whenever it becomes
+conscious of a question or of a
+doubt, and if you fail to feed it with the
+information it asks for, it loses health.
+Now that you have the Britannica, the
+food is in the store-room, do not leave
+it there!</p>
+
+<p style="color:#6b5e4f;font-style:italic;margin-top:2em;padding-top:0.6em;">This list of related articles appears at the end of Chapter III in the original, where it's printed once for this chapter and its neighbours.</p><details class="article-list"><summary><span class="list-title">ALPHABETICAL LIST OF ARTICLES IN THE BRITANNICA ON SUBJECTS CONNECTED WITH FARMING, STOCK-RAISING AND DAIRYING</span><span class="list-count"> (753 articles)</span></summary>
+
+<div class="cross-ref">(The more important articles have already been mentioned in the preceding pages, but the following list includes many others in which valuable information will be found.)</div>
+
+<ul class="index">
+  <li class="c018"><a href="/article/01-0033-aal/aal">Aal</a></li>
+  <li class="c018"><a href="/article/01-0035-aaron-s-rod/aaron_s_rod">Aaron’s Rod</a></li>
+  <li class="c018"><a href="/article/01-0036-s4/abaca">Abaca</a></li>
+  <li class="c018"><a href="/article/01-0112-s3/abutilon">Abutilon</a></li>
+  <li class="c018"><a href="/article/01-0127-s3/acacia">Acacia</a></li>
+  <li class="c018"><a href="/article/01-0141-s4/acanthus">Acanthus</a></li>
+  <li class="c018"><a href="/article/01-0142-s6/acaulescent">Acaulescent</a></li>
+  <li class="c018"><a href="/article/01-0166-s4/acerose">Acerose</a></li>
+  <li class="c018"><a href="/article/01-0175-s4/achimenes">Achimenes</a></li>
+  <li class="c018"><a href="/article/01-0179-s3/acinus">Acinus</a></li>
+  <li class="c018"><a href="/article/01-0183-s3/acorn">Acorn</a></li>
+  <li class="c018"><a href="/article/01-0184-s2/acorus_calamus">Acorus Calamus</a></li>
+  <li class="c018"><a href="/article/01-0184-s6/acotyledones">Acotyledones</a></li>
+  <li class="c018"><a href="/article/01-0186-s7/acrogenae">Acrogenæ</a></li>
+  <li class="c018"><a href="/article/01-0243-s4/adonis">Adonis</a></li>
+  <li class="c018"><a href="/article/01-0399-s3/african_lily">African Lily</a></li>
+  <li class="c018"><a href="/article/01-0409-s5/agave">Agave</a></li>
+  <li class="c018"><a href="/article/01-0462-s2/agrimony">Agrimony</a></li>
+  <li class="c018"><a href="/article/01-0475-s8/ailanthus">Ailanthus</a></li>
+  <li class="c018"><a href="/article/01-0556-s5/alburnum">Alburnum</a></li>
+  <li class="c018"><a href="/article/01-0573-s3/alder">Alder</a></li>
+  <li class="c018"><a href="/article/01-0583-s8/aleurites">Aleurites</a></li>
+  <li class="c018"><a href="/article/01-0607-s7/alexanders">Alexanders</a></li>
+  <li class="c018"><a href="/article/01-0625-algae/algae">Algæ</a></li>
+  <li class="c018"><a href="/article/01-0696-s4/algum">Algum or Almug</a></li>
+  <li class="c018">Alismaceæa</li>
+  <li class="c018"><a href="/article/01-0729-s3/allamanda">Allamanda</a></li>
+  <li class="c018"><a href="/article/01-0737-s5/alliaria_officinalis">Alliaria Officinalis</a></li>
+  <li class="c018"><a href="/article/01-0739-s3/allium">Allium</a></li>
+  <li class="c018"><a href="/article/01-0759-s2/almond">Almond</a></li>
+  <li class="c018"><a href="/article/01-0762-s4/aloe">Aloe</a></li>
+  <li class="c018"><a href="/article/01-0823-s2/amadou">Amadou</a></li>
+  <li class="c018"><a href="/article/01-0826-s2/amanita">Amanita</a></li>
+  <li class="c018"><a href="/article/01-0826-s5/amaranth">Amaranth</a></li>
+  <li class="c018"><a href="/article/01-0827-s4/amaryllis">Amaryllis</a></li>
+  <li class="c018"><a href="/article/01-0851-s2/amentiferae">Amentiferæ</a></li>
+  <li class="c018"><a href="/article/01-0914-s2/ammoniacum">Ammoniacum</a></li>
+  <li class="c018"><a href="/article/01-0929-s4/ampelopsis">Ampelopsis</a></li>
+  <li class="c018"><a href="/article/01-0996-s2/anatto">Anatto</a></li>
+  <li class="c018"><a href="/article/02-0014-s2/anemone">Anemone</a></li>
+  <li class="c018"><a href="/article/02-0017-s3/angelica">Angelica</a></li>
+  <li class="c018"><a href="/article/02-0020-s5/angiosperms">Angiosperms</a></li>
+  <li class="c018"><a href="/article/02-0054-s2/angulate">Angulate</a></li>
+  <li class="c018">Anime</li>
+  <li class="c018"><a href="/article/02-0066-s3/anise">Anise</a></li>
+  <li class="c018">Antirrhinum</li>
+  <li class="c018"><a href="/article/02-0180-s5/apiculture">Apiculture</a></li>
+  <li class="c018"><a href="/article/02-0235-s2/apple">Apple</a></li>
+  <li class="c018"><a href="/article/02-0242-s2/apricot">Apricot</a></li>
+  <li class="c018"><a href="/article/02-0337-s2/araucaria">Araucaria</a></li>
+  <li class="c018"><a href="/article/02-0352-s4/arbor_day">Arbor Day</a></li>
+  <li class="c018"><a href="/article/02-0353-s3/arbor_vitae">Arbor Vitæ</a></li>
+  <li class="c018"><a href="/article/02-0352-s5/arboretum">Arboretum</a></li>
+  <li class="c018"><a href="/article/02-0353-s2/arboriculture">Arboriculture</a></li>
+  <li class="c018"><a href="/article/02-0388-s3/archil">Archil</a></li>
+  <li class="c018"><a href="/article/02-0536-s3/aristolochia">Aristolochia</a></li>
+  <li class="c018"><a href="/article/02-0682-s6/aroideae">Aroideæ</a></li>
+  <li class="c018"><a href="/article/02-0691-s4/arrowroot">Arrowroot</a></li>
+  <li class="c018"><a href="/article/02-0726-s3/artichoke">Artichoke</a></li>
+  <li class="c018"><a href="/article/02-0768-ascus/ascus">Ascus</a></li>
+  <li class="c018"><a href="/article/02-0768-ash/ash">Ash</a></li>
+  <li class="c018"><a href="/article/02-0811-s2/asparagus">Asparagus</a></li>
+  <li class="c018"><a href="/article/02-0812-s3/aspen">Aspen</a></li>
+  <li class="c018">Ashpodel</li>
+  <li class="c018"><a href="/article/02-0815-s4/aspidistra">Aspidistra</a></li>
+  <li class="c018"><a href="/article/02-0837-aster/aster">Aster</a></li>
+  <li class="c018"><a href="/article/02-0937-s4/aubergine">Aubergine</a></li>
+  <li class="c018"><a href="/article/02-0943-s3/aucuba">Aucuba</a></li>
+  <li class="c018"><a href="/article/02-0973-s3/auricula">Auricula</a></li>
+  <li class="c018"><a href="/article/03-0060-s8/autogamy">Autogamy</a></li>
+  <li class="c018"><a href="/article/03-0065-s2/auxanometer">Auxanometer</a></li>
+  <li class="c018"><a href="/article/03-0074-s2/averruncator">Averruncator</a></li>
+  <li class="c018"><a href="/article/03-0081-s3/avocado_pear">Avocado Pear</a></li>
+  <li class="c018"><a href="/article/03-0083-s3/axile">Axile or Axial</a></li>
+  <li class="c018"><a href="/article/03-0093-s5/azalea">Azalea</a></li>
+  <li class="c018"><a href="/article/03-0208-s4/bael_fruit">Bael Fruit</a></li>
+  <li class="c018"><a href="/article/03-0300-s6/balm">Balm</a></li>
+  <li class="c018"><a href="/article/03-0319-s4/bamboo">Bamboo</a></li>
+  <li class="c018"><a href="/article/03-0323-s2/banana">Banana</a></li>
+  <li class="c018"><a href="/article/03-0330-baneberry/baneberry">Baneberry</a></li>
+  <li class="c018"><a href="/article/03-0370-banksia/banksia">Banksia</a></li>
+  <li class="c018"><a href="/article/03-0380-baobab/baobab">Baobab</a></li>
+  <li class="c018"><a href="/article/03-0403-barberry/barberry">Barberry</a></li>
+  <li class="c018"><a href="/article/03-0422-barley/barley">Barley</a></li>
+  <li class="c018"><a href="/article/03-0580-bdellium/bdellium">Bdellium</a></li>
+  <li class="c018"><a href="/article/03-0591-bean/bean">Bean</a></li>
+  <li class="c018"><a href="/article/03-0644-bee/bee">Bee</a></li>
+  <li class="c018"><a href="/article/03-0657-beech/beech">Beech</a></li>
+  <li class="c018"><a href="/article/03-0663-beet/beet">Beet</a></li>
+  <li class="c018"><a href="/article/03-0671-begonia/begonia">Begonia</a></li>
+  <li class="c018"><a href="/article/03-0777-benzoin-resin/benzoin__resin_">Benzoin</a></li>
+  <li class="c018">Betel-nut</li>
+  <li class="c018"><a href="/article/03-0954-bilberry/bilberry">Bilberry</a></li>
+  <li class="c018"><a href="/article/03-0981-birch/birch">Birch</a></li>
+  <li class="c018">Bird’s Eye</li>
+  <li class="c018"><a href="/article/04-0032-blackberry/blackberry">Blackberry</a></li>
+  <li class="c018"><a href="/article/04-0044-bladder-wort/bladder-wort">Bladder-wort</a></li>
+  <li class="c018"><a href="/article/04-0172-boletus/boletus">Boletus</a></li>
+  <li class="c018"><a href="/article/04-0190-boll/boll">Boll</a></li>
+  <li class="c018"><a href="/article/04-0257-borage/borage">Borage</a></li>
+  <li class="c018"><a href="/article/04-0257-boraginaceae/boraginaceae">Boraginaceæ</a></li>
+  <li class="c018">Botryis</li>
+  <li class="c018"><a href="/article/04-0325-bottle-brush-plants/bottle-brush_plants">Bottle-brush plants</a></li>
+  <li class="c018"><a href="/article/04-0351-bouvardia/bouvardia">Bouvardia</a></li>
+  <li class="c018"><a href="/article/04-0367-boxwood/boxwood">Boxwood</a></li>
+  <li class="c018"><a href="/article/04-0381-bracket-fungi/bracket-fungi">Bracket-fungi</a></li>
+  <li class="c018">Bramble</li>
+  <li class="c018"><a href="/article/04-0434-bran-husk/bran__husk_">Bran</a></li>
+  <li class="c018"><a href="/article/04-0481-brazil-nuts/brazil_nuts">Brazil Nuts</a></li>
+  <li class="c018"><a href="/article/04-0481-brazil-wood/brazil_wood">Brazil Wood</a></li>
+  <li class="c018"><a href="/article/04-0492-bread-fruit/bread-fruit">Bread-fruit</a></li>
+  <li class="c018">Breed and Breeding</li>
+  <li class="c018"><a href="/article/04-0655-s2/bromeliaceae">Bromeliaceæ</a></li>
+  <li class="c018"><a href="/article/04-0669-s3/brooklime">Brooklime</a></li>
+  <li class="c018"><a href="/article/04-0672-s5/broom">Broom</a></li>
+  <li class="c018"><a href="/article/04-0673-s3/broom-rape">Broom-rape</a></li>
+  <li class="c018"><a href="/article/04-0723-s5/bryophyta">Bryophyta</a></li>
+  <li class="c018"><a href="/article/04-0743-s2/buchu">Buchu</a></li>
+  <li class="c018"><a href="/article/04-0743-s6/buck-bean">Buck-bean</a></li>
+  <li class="c018"><a href="/article/04-0756-s4/buckthorn">Buckthorn</a></li>
+  <li class="c018"><a href="/article/04-0756-s5/buckwheat">Buckwheat</a></li>
+  <li class="c018"><a href="/article/04-0818-bulrush/bulrush">Bulrush</a></li>
+  <li class="c018"><a href="/article/04-0831-s4/bur">Bur, or Burr</a></li>
+  <li class="c018"><a href="/article/04-0877-s3/burnet">Burnet</a></li>
+  <li class="c018"><a href="/article/04-0914-s2/buttercup">Buttercup</a></li>
+  <li class="c018"><a href="/article/04-0914-s6/butter-nut">Butter-nut</a></li>
+  <li class="c018"><a href="/article/04-0914-s7/butterwort">Butterwort</a></li>
+  <li class="c018"><a href="/article/04-0940-s5/cabbage">Cabbage</a></li>
+  <li class="c018"><a href="/article/04-0950-s7/cactus">Cactus</a></li>
+  <li class="c018"><a href="/article/04-0958-s5/caducous">Caducous</a></li>
+  <li class="c018"><a href="/article/04-0970-s3/caespitose">Cæspitose</a></li>
+  <li class="c018"><a href="/article/04-0990-s2/calabash">Calabash</a></li>
+  <li class="c018"><a href="/article/04-0990-s3/calabash_tree">Calabash Tree</a></li>
+  <li class="c018"><a href="/article/04-0995-s12/calceolaria">Calceolaria</a></li>
+  <li class="c018"><a href="/article/04-1031-s6/calf">Calf</a></li>
+  <li class="c018"><a href="/article/05-0115-camellia/camellia">Camellia</a></li>
+  <li class="c018"><a href="/article/05-0139-campanula/campanula">Campanula</a></li>
+  <li class="c018"><a href="/article/05-0194-candytuft/candytuft">Candytuft</a></li>
+  <li class="c018"><a href="/article/05-0194-cane/cane">Cane</a></li>
+  <li class="c018"><a href="/article/05-0202-cannon-ball-tree/cannon-ball_tree">Cannon-ball Tree</a></li>
+  <li class="c018"><a href="/article/05-0264-capers/capers">Capers</a></li>
+  <li class="c018"><a href="/article/05-0303-caprifoliaceae/caprifoliaceae">Caprifoliaceæ</a></li>
+  <li class="c018"><a href="/article/05-0306-capsule/capsule">Capsule</a></li>
+  <li class="c018"><a href="/article/05-0316-caraway/caraway">Caraway</a></li>
+  <li class="c018">Cardamon</li>
+  <li class="c018"><a href="/article/05-0337-cardoon/cardoon">Cardoon</a></li>
+  <li class="c018"><a href="/article/05-0375-carnation/carnation">Carnation</a></li>
+  <li class="c018">Carrageen</li>
+  <li class="c018"><a href="/article/05-0427-carrot/carrot">Carrot</a></li>
+  <li class="c018"><a href="/article/05-0456-caryophyllaceae/caryophyllaceae">Caryophyllaceæ</a></li>
+  <li class="c018"><a href="/article/05-0462-cashew-nut/cashew_nut">Cashew Nut</a></li>
+  <li class="c018"><a href="/article/05-0474-cassava/cassava">Cassava</a></li>
+  <li class="c018"><a href="/article/05-0475-cassia/cassia">Cassia</a></li>
+  <li class="c018"><a href="/article/05-0502-casuarina/casuarina">Casuarina</a></li>
+  <li class="c018"><a href="/article/05-0520-catalpa/catalpa">Catalpa</a></li>
+  <li class="c018"><a href="/article/05-0522-cataphyll/cataphyll">Cataphyll</a></li>
+  <li class="c018"><a href="/article/05-0534-catha/catha">Catha</a></li>
+  <li class="c018"><a href="/article/05-0558-cattle/cattle">Cattle</a></li>
+  <li class="c018"><a href="/article/05-0614-cayenne-pepper/cayenne_pepper">Cayenne Pepper</a></li>
+  <li class="c018"><a href="/article/05-0616-ceanothus/ceanothus">Ceanothus</a></li>
+  <li class="c018"><a href="/article/05-0619-cecropia/cecropia">Cecropia</a></li>
+  <li class="c018"><a href="/article/05-0619-cedar/cedar">Cedar</a></li>
+  <li class="c018"><a href="/article/05-0621-celandine/celandine">Celandine</a></li>
+  <li class="c018"><a href="/article/05-0624-celery/celery">Celery</a></li>
+  <li class="c018"><a href="/article/05-0694-centaurea/centaurea">Centaurea</a></li>
+  <li class="c018"><a href="/article/05-0694-centaury/centaury">Centaury</a></li>
+  <li class="c018"><a href="/article/05-0882-chantarelle/chantarelle">Chantarelle</a></li>
+  <li class="c018"><a href="/article/06-0093-chenopodium/chenopodium">Chenopodium</a></li>
+  <li class="c018"><a href="/article/06-0097-cherry/cherry">Cherry</a></li>
+  <li class="c018">Chestnut</li>
+  <li class="c018"><a href="/article/06-0144-chicory/chicory">Chicory</a></li>
+  <li class="c018"><a href="/article/06-0269-chive/chive">Chive</a></li>
+  <li class="c018"><a href="/article/06-0273-chlorosis/chlorosis">Chlorosis</a></li>
+  <li class="c018"><a href="/article/06-0334-chrysanthemom/chrysanthemum">Chrysanthemum</a></li>
+  <li class="c018"><a href="/article/06-0366-churn/churn">Churn</a></li>
+  <li class="c018"><a href="/article/06-0369-s3/cicely">Cicely</a></li>
+  <li class="c018"><a href="/article/06-0384-cimicifuga/cimicifuga">Cimicifuga</a></li>
+  <li class="c018"><a href="/article/06-0385-cinchona/cinchona">Cinchona</a></li>
+  <li class="c018"><a href="/article/06-0391-cineraria/cineraria">Cineraria</a></li>
+  <li class="c018"><a href="/article/06-0392-cinnamon/cinnamon">Cinnamon</a></li>
+  <li class="c018"><a href="/article/06-0414-citron/citron">Citron</a></li>
+  <li class="c018"><a href="/article/06-0494-cleavers/cleavers">Cleavers</a></li>
+  <li class="c018"><a href="/article/06-0497-clematis/clematis">Clematis</a></li>
+  <li class="c018"><a href="/article/06-0545-climbing-fern/climbing_fern">Climbing Fern</a></li>
+  <li class="c018"><a href="/article/06-0578-cloudberry/cloudberry">Cloudberry</a></li>
+  <li class="c018"><a href="/article/06-0580-clover/clover">Clover</a></li>
+  <li class="c018"><a href="/article/06-0581-cloves/cloves">Cloves</a></li>
+  <li class="c018"><a href="/article/06-0649-cocoa/cocoa">Cocoa, or Cuca</a></li>
+  <li class="c018"><a href="/article/06-0639-cocculus-indicus/cocculus_indicus">Cocculus Indicus</a></li>
+  <li class="c018"><a href="/article/06-0649-cock-s-comb/cock_s-comb">Cock’s-comb</a></li>
+  <li class="c018"><a href="/article/06-0649-cocoa/cocoa">Cocoa</a></li>
+  <li class="c018"><a href="/article/06-0652-coco-de-mer/coco_de_mer">Coco de Mer</a></li>
+  <li class="c018"><a href="/article/06-0652-coco-nut-palm/coco-nut_palm">Coco-nut Palm</a></li>
+  <li class="c018"><a href="/article/06-0656-codiaeum/codiaeum">Codiæum</a></li>
+  <li class="c018"><a href="/article/06-0667-coffee/coffee">Coffee</a></li>
+  <li class="c018"><a href="/article/06-0682-colchicum/colchicum">Colchicum</a></li>
+  <li class="c018"><a href="/article/06-0703-coleus/coleus">Coleus</a></li>
+  <li class="c018"><a href="/article/06-0708-colleter/colleter">Colleter</a></li>
+  <li class="c018"><a href="/article/06-0717-colocynth/colocynth">Colocynth</a></li>
+  <li class="c018"><a href="/article/06-0758-colt-s-foot/colt_s-foot">Colt’s-foot</a></li>
+  <li class="c018"><a href="/article/06-0762-columbine-plant/columbine__plant_">Columbine</a></li>
+  <li class="c018"><a href="/article/06-0833-compass-plant/compass_plant">Compass plant</a></li>
+  <li class="c018"><a href="/article/06-0835-compositae/compositae">Compositæ</a></li>
+  <li class="c018"><a href="/article/07-0082-convolvulaceae/convolvulaceae">Convolvulaceæ</a></li>
+  <li class="c018"><a href="/article/07-0108-copaiba/copaiba">Copaiba</a></li>
+  <li class="c018"><a href="/article/07-0109-copal/copal">Copal</a></li>
+  <li class="c018"><a href="/article/07-0128-coppice/coppice">Coppice</a></li>
+  <li class="c018"><a href="/article/07-0163-coriander/coriander">Coriander</a></li>
+  <li class="c018"><a href="/article/07-0173-cork/cork">Cork</a></li>
+  <li class="c018"><a href="/article/07-0179-corn/corn">Corn</a></li>
+  <li class="c018"><a href="/article/07-0195-corn-salad/corn-salad">Corn-salad or Lamb’s Lettuce</a></li>
+  <li class="c018"><a href="/article/07-0210-correa/correa">Correa</a></li>
+  <li class="c018"><a href="/article/07-0268-cotoneaster/cotoneaster">Cotoneaster</a></li>
+  <li class="c018"><a href="/article/07-0272-cotton/cotton">Cotton</a></li>
+  <li class="c018"><a href="/article/07-0371-cow-tree/cow-tree">Cow-tree</a></li>
+  <li class="c018"><a href="/article/07-0385-cranberry/cranberry">Cranberry</a></li>
+  <li class="c018"><a href="/article/07-0400-crassulaceae/crassulaceae">Crassulaceæ</a></li>
+  <li class="c018">Crazy Weed</li>
+  <li class="c018"><a href="/article/07-0432-cress/cress">Cress</a></li>
+  <li class="c018"><a href="/article/07-0488-crinum/crinum">Crinum</a></li>
+  <li class="c018"><a href="/article/07-0501-crocus/crocus">Crocus</a></li>
+  <li class="c018"><a href="/article/07-0535-crowberry/crowberry">Crowberry</a></li>
+  <li class="c018"><a href="/article/07-0543-cruciferae/cruciferae">Cruciferæ</a></li>
+  <li class="c018"><a href="/article/07-0588-cryptomeria/cryptomeria">Cryptomeria</a></li>
+  <li class="c018"><a href="/article/07-0632-cucumber/cucumber">Cucumber</a></li>
+  <li class="c018"><a href="/article/07-0633-cucurbitaceae/cucurbitaceae">Cucurbitaceæ</a></li>
+  <li class="c018"><a href="/article/07-0650-cumin/cumin">Cumin or Cummin</a></li>
+  <li class="c018">Cupulliferæ</li>
+  <li class="c018"><a href="/article/07-0640-cultivator/cultivator">Cultivator</a></li>
+  <li class="c018"><a href="/article/07-0670-currant/currant">Currant</a></li>
+  <li class="c018"><a href="/article/07-0689-custard-apple/custard_apple">Custard Apple</a></li>
+  <li class="c018"><a href="/article/07-0703-cyclamen/cyclamen">Cyclamen</a></li>
+  <li class="c018"><a href="/article/07-0714-cyperaceae/cyperaceae">Cyperaceæ</a></li>
+  <li class="c018"><a href="/article/07-0715-cypress/cypress">Cypress</a></li>
+  <li class="c018"><a href="/article/07-0731-cystolith/cystolith">Cystolith</a></li>
+  <li class="c018"><a href="/article/07-0750-daffodil/daffodil">Daffodil</a></li>
+  <li class="c018">Dairy &amp; Dairy Farming</li>
+  <li class="c018"><a href="/article/07-0754-dahlia/dahlia">Dahlia</a></li>
+  <li class="c018"><a href="/article/07-0783-daisy/daisy">Daisy</a></li>
+  <li class="c018"><a href="/article/07-0811-dame-s-violet/dame_s_violet">Dame’s Violet</a></li>
+  <li class="c018"><a href="/article/07-0813-dammar/dammar">Dammar</a></li>
+  <li class="c018"><a href="/article/07-0825-dandelion/dandelion">Dandelion</a></li>
+  <li class="c018"><a href="/article/07-0849-daphne-plant/daphne__plant_">Daphne</a></li>
+  <li class="c018"><a href="/article/07-0859-s2/darlingtonia">Darlingtonia</a></li>
+  <li class="c018"><a href="/article/07-0869-date-palm/date_palm">Date Palm</a></li>
+  <li class="c018"><a href="/article/07-0936-deciduous/deciduous">Deciduous</a></li>
+  <li class="c018"><a href="/article/08-0152-dewberry/dewberry">Dewberry</a></li>
+  <li class="c018"><a href="/article/08-0186-diatomaceae/diatomaceae">Diatomaceæ</a></li>
+  <li class="c018"><a href="/article/08-0202-dicotyledons/dicotyledons">Dicotyledons</a></li>
+  <li class="c018"><a href="/article/08-0217-dictyogens/dictyogens">Dictyogens</a></li>
+  <li class="c018"><a href="/article/08-0349-dividivi/dividivi">Dividivi</a></li>
+  <li class="c018"><a href="/article/08-0370-dock/dock">Dock</a></li>
+  <li class="c018"><a href="/article/08-0385-dodder/dodder">Dodder</a></li>
+  <li class="c018"><a href="/article/08-0406-dogwood/dogwood">Dogwood</a></li>
+  <li class="c018"><a href="/article/08-0486-dracaena/dracaena">Dracæna</a></li>
+  <li class="c018">Dragons Blood</li>
+  <li class="c018"><a href="/article/08-0494-drainage-of-land/drainage_of_land">Drainage</a></li>
+  <li class="c018"><a href="/article/08-0618-dropwort/dropwort">Dropwort</a></li>
+  <li class="c018"><a href="/article/08-0657-duck/duck">Duck</a></li>
+  <li class="c018"><a href="/article/08-0658-duckweed/duckweed">Duckweed</a></li>
+  <li class="c018"><a href="/article/08-0680-dulse/dulse">Dulse</a></li>
+  <li class="c018"><a href="/article/08-0719-duramen/duramen">Duramen</a></li>
+  <li class="c018"><a href="/article/08-0737-durian/durian">Durian</a></li>
+  <li class="c018"><a href="/article/08-0738-durra/durra">Durra</a></li>
+  <li class="c018"><a href="/article/08-0843-earth-nut/earth-nut">Earth-nut</a></li>
+  <li class="c018"><a href="/article/08-0852-earth-star/earth-star">Earth-star</a></li>
+  <li class="c018"><a href="/article/08-0870-ebony/ebony">Ebony</a></li>
+  <li class="c018"><a href="/article/08-0923-economic-entomology/economic_entomology">Economic Entomology</a></li>
+  <li class="c018"><a href="/article/08-0950-edelweiss/edelweiss">Edelweiss</a></li>
+  <li class="c018"><a href="/article/09-0029-eglantine/eglantine">Eglantine</a></li>
+  <li class="c018"><a href="/article/09-0183-elder-plant/elder__plant_">Elder</a></li>
+  <li class="c018">Elecampine</li>
+  <li class="c018">Elephant’s foot</li>
+  <li class="c018"><a href="/article/09-0313-elm/elm">Elm</a></li>
+  <li class="c018"><a href="/article/09-0407-endive/endive">Endive</a></li>
+  <li class="c018"><a href="/article/09-0685-s3/ensilage">Ensilage</a></li>
+  <li class="c018"><a href="/article/09-0686-s4/entada">Entada</a></li>
+  <li class="c018"><a href="/article/09-0771-ericaceae/ericaceae">Ericaceæ</a></li>
+  <li class="c018"><a href="/article/09-0804-s2/espalier">Espalier</a></li>
+  <li class="c018"><a href="/article/09-0805-esparto/esparto">Esparto</a></li>
+  <li class="c018"><a href="/article/09-0900-eucharis/eucharis">Eucharis</a></li>
+  <li class="c018">Eunonymus</li>
+  <li class="c018"><a href="/article/09-0924-s5/euphorbia">Euphorbia</a></li>
+  <li class="c018"><a href="/article/09-0924-s6/euphorbiaceae">Euphorbiaceæ</a></li>
+  <li class="c018"><a href="/article/10-0021-evergreen/evergreen">Evergreen</a></li>
+  <li class="c018"><a href="/article/10-0022-everlasting/everlasting">Everlasting</a></li>
+  <li class="c018"><a href="/article/10-0147-s2/fairy_ring">Fairy Ring</a></li>
+  <li class="c018"><a href="/article/10-0167-s4/fallow">Fallow</a></li>
+  <li class="c018"><a href="/article/10-0192-s2/farm">Farm</a></li>
+  <li class="c018"><a href="/article/10-0192-s3/farm_buildings">Farm Buildings</a></li>
+  <li class="c018"><a href="/article/10-0268-fennel/fennel">Fennel</a></li>
+  <li class="c018"><a href="/article/10-0272-fenugreek/fenugreek">Fenugreek</a></li>
+  <li class="c018"><a href="/article/10-0290-s4/fern">Fern</a></li>
+  <li class="c018"><a href="/article/10-0346-s2/fig">Fig</a></li>
+  <li class="c018"><a href="/article/10-0359-filmy-ferns/filmy_ferns">Filmy Ferns</a></li>
+  <li class="c018"><a href="/article/10-0389-finger-and-toe/finger-and-toe">Finger-and-toe</a></li>
+  <li class="c018"><a href="/article/10-0408-s3/fir">Fir</a></li>
+  <li class="c018"><a href="/article/10-0486-flail/flail">Flail</a></li>
+  <li class="c018"><a href="/article/10-0502-s8/flax">Flax</a></li>
+  <li class="c018"><a href="/article/10-0574-flower/flower">Flower</a></li>
+  <li class="c018"><a href="/article/10-0637-fool-s-parsley/fool_s_parsley">Fool’s Parsley</a></li>
+  <li class="c018"><a href="/article/10-0649-forage/forage">Forage</a></li>
+  <li class="c018">Forests &amp; Forestry</li>
+  <li class="c018"><a href="/article/10-0684-s2/forget-me-not">Forget-me-not</a></li>
+  <li class="c018"><a href="/article/10-0687-s2/fork">Fork</a></li>
+  <li class="c018"><a href="/article/10-0792-s2/foxglove">Foxglove</a></li>
+  <li class="c018"><a href="/article/11-0099-freesia/freesia">Freesia</a></li>
+  <li class="c018"><a href="/article/11-0249-fritillary/fritillary">Fritillary</a></li>
+  <li class="c018"><a href="/article/11-0254-frog-bit/frog-bit">Frog-bit</a></li>
+  <li class="c018"><a href="/article/11-0267-fruit/fruit">Fruit</a></li>
+  <li class="c018">Fruit &amp; Flower Farming</li>
+  <li class="c018"><a href="/article/11-0285-s6/fuchsia">Fuchsia</a></li>
+  <li class="c018"><a href="/article/11-0314-s3/fumitory">Fumitory</a></li>
+  <li class="c018"><a href="/article/11-0346-fungi/fungi">Fungi</a></li>
+  <li class="c018"><a href="/article/11-0359-funkia/funkia">Funkia</a></li>
+  <li class="c018"><a href="/article/11-0385-s6/furze">Furze</a></li>
+  <li class="c018"><a href="/article/11-0393-s3/fustic">Fustic</a></li>
+  <li class="c018"><a href="/article/11-0416-gale/gale">Gale</a></li>
+  <li class="c018"><a href="/article/11-0440-galls/galls">Galls</a></li>
+  <li class="c018"><a href="/article/11-0477-gardenia/gardenia">Gardenia</a></li>
+  <li class="c018"><a href="/article/11-0486-garlic/garlic">Garlic</a></li>
+  <li class="c018"><a href="/article/11-0614-s5/genista">Genista</a></li>
+  <li class="c018"><a href="/article/11-0621-gentian/gentian">Gentian</a></li>
+  <li class="c018"><a href="/article/11-0621-gentianaceae/gentianaceae">Gentianaceæ</a></li>
+  <li class="c018"><a href="/article/11-0756-s2/geoponici">Geoponici</a></li>
+  <li class="c018"><a href="/article/11-0783-s2/geraniaceae">Geraniaceæ</a></li>
+  <li class="c018"><a href="/article/11-0784-geranium/geranium">Geranium</a></li>
+  <li class="c018"><a href="/article/11-0937-geum/geum">Geum</a></li>
+  <li class="c018"><a href="/article/12-0037-gillyflower/gillyflower">Gillyflower</a></li>
+  <li class="c018"><a href="/article/12-0040-s4/ginger">Ginger</a></li>
+  <li class="c018"><a href="/article/12-0078-gladiolus/gladiolus">Gladiolus</a></li>
+  <li class="c018"><a href="/article/12-0129-s5/glasswort">Glasswort</a></li>
+  <li class="c018"><a href="/article/12-0132-s2/glaucous">Glaucous</a></li>
+  <li class="c018"><a href="/article/12-0141-s3/gloriosa">Gloriosa</a></li>
+  <li class="c018"><a href="/article/12-0155-gloxinia/gloxinia">Gloxinia</a></li>
+  <li class="c018"><a href="/article/12-0178-s4/goat">Goat</a></li>
+  <li class="c018"><a href="/article/12-0226-s4/golden_rod">Golden Rod</a></li>
+  <li class="c018"><a href="/article/12-0258-goose/goose">Goose</a></li>
+  <li class="c018"><a href="/article/12-0260-s3/gooseberry">Gooseberry</a></li>
+  <li class="c018">Goose Grass</li>
+  <li class="c018">Gorse</li>
+  <li class="c018"><a href="/article/12-0303-s2/gourd">Gourd</a></li>
+  <li class="c018"><a href="/article/12-0333-s6/graft">Graft</a></li>
+  <li class="c018"><a href="/article/12-0339-s2/grains_of_paradise">Grains of Paradise</a></li>
+  <li class="c018"><a href="/article/12-0342-s2/gram">Gram or Chick-pea</a></li>
+  <li class="c018"><a href="/article/12-0353-s2/granadilla">Granadilla</a></li>
+  <li class="c018"><a href="/article/12-0384-s4/grass_and_grassland">Grass and Grassland</a></li>
+  <li class="c018"><a href="/article/12-0395-grass-of-parnassus/grass_of_parnassus">Grass of Parnassus</a></li>
+  <li class="c018"><a href="/article/12-0386-s5/grasses">Grasses</a></li>
+  <li class="c018"><a href="/article/12-0566-s5/greenheart">Greenheart</a></li>
+  <li class="c018"><a href="/article/12-0650-ground-nut/ground_nut">Ground Nut</a></li>
+  <li class="c018"><a href="/article/12-0651-groundsel/groundsel">Groundsel</a></li>
+  <li class="c018"><a href="/article/12-0676-guano/guano">Guano</a></li>
+  <li class="c018"><a href="/article/12-0690-guava/guava">Guava</a></li>
+  <li class="c018"><a href="/article/12-0693-s4/guelder_rose">Guelder Rose</a></li>
+  <li class="c018"><a href="/article/12-0739-gulfweed/gulfweed">Gulfweed</a></li>
+  <li class="c018"><a href="/article/12-0740-s4/gum">Gum</a></li>
+  <li class="c018"><a href="/article/12-0741-s5/gumbo">Gumbo</a></li>
+  <li class="c018"><a href="/article/12-0768-s3/gutta_percha">Gutta Percha</a></li>
+  <li class="c018"><a href="/article/12-0779-gymnosperms/gymnosperms">Gymnosperms</a></li>
+  <li class="c018"><a href="/article/12-0818-hacienda/hacienda">Hacienda</a></li>
+  <li class="c018"><a href="/article/12-0818-hackberry/hackberry">Hackberry</a></li>
+  <li class="c018"><a href="/article/12-0974-s5/harebell">Harebell</a></li>
+  <li class="c018"><a href="/article/13-0040-s4/harrow">Harrow</a></li>
+  <li class="c018"><a href="/article/13-0114-s5/hawthorn">Hawthorn</a></li>
+  <li class="c018">Hay</li>
+  <li class="c018"><a href="/article/13-0130-hazel/hazel">Hazel</a></li>
+  <li class="c018"><a href="/article/13-0171-s3/heath">Heath</a></li>
+  <li class="c018"><a href="/article/13-0209-s7/hedges_and_fences">Hedges and Fences</a></li>
+  <li class="c018"><a href="/article/13-0225-heifer/heifer">Heifer</a></li>
+  <li class="c018"><a href="/article/13-0244-heliotrope/heliotrope">Heliotrope</a></li>
+  <li class="c018"><a href="/article/13-0248-s2/hellebore">Hellebore</a></li>
+  <li class="c018"><a href="/article/13-0275-s2/hemlock">Hemlock</a></li>
+  <li class="c018"><a href="/article/13-0276-s2/hemp">Hemp</a></li>
+  <li class="c018"><a href="/article/13-0278-hen/hen">Hen</a></li>
+  <li class="c018"><a href="/article/13-0278-s6/henbane">Henbane</a></li>
+  <li class="c018"><a href="/article/13-0284-henna/henna">Henna</a></li>
+  <li class="c018"><a href="/article/13-0349-s3/herb">Herb</a></li>
+  <li class="c018"><a href="/article/13-0349-s4/herbarium">Herbarium</a></li>
+  <li class="c018"><a href="/article/13-0463-s6/hickory">Hickory</a></li>
+  <li class="c018"><a href="/article/13-0532-hippeastrum/hippeastrum">Hippeastrum</a></li>
+  <li class="c018"><a href="/article/13-0575-s4/hoe">Hoe</a></li>
+  <li class="c018"><a href="/article/13-0631-s3/holly">Holly</a></li>
+  <li class="c018"><a href="/article/13-0632-hollyhock/hollyhock">Hollyhock</a></li>
+  <li class="c018"><a href="/article/13-0670-s2/honey">Honey</a></li>
+  <li class="c018"><a href="/article/13-0673-s3/honey_locust">Honey Locust</a></li>
+  <li class="c018"><a href="/article/13-0674-s2/honeysuckle">Honeysuckle</a></li>
+  <li class="c018"><a href="/article/13-0694-s3/hop">Hop</a></li>
+  <li class="c018"><a href="/article/13-0709-s5/horehound">Horehound</a></li>
+  <li class="c018"><a href="/article/13-0723-s2/hornbeam">Hornbeam</a></li>
+  <li class="c018"><a href="/article/13-0729-horse/horse">Horse</a></li>
+  <li class="c018"><a href="/article/13-0756-horseradish/horseradish">Horseradish</a></li>
+  <li class="c018"><a href="/article/13-0757-horsetail/horsetail">Horsetail</a></li>
+  <li class="c018"><a href="/article/13-0760-s6/horticulture">Horticulture</a></li>
+  <li class="c018"><a href="/article/13-0837-houseleek/houseleek">Houseleek</a></li>
+  <li class="c018"><a href="/article/13-0873-huckleberry/huckleberry">Huckleberry</a></li>
+  <li class="c018"><a href="/article/13-0917-humus/humus">Humus</a></li>
+  <li class="c018"><a href="/article/13-0982-s5/huon_pine">Huon Pine</a></li>
+  <li class="c018"><a href="/article/14-0036-hyacinth-plant/hyacinth__plant_">Hyacinth</a></li>
+  <li class="c018"><a href="/article/14-0046-hydrangea/hydrangea">Hydrangea</a></li>
+  <li class="c018">Hydrocharideæ</li>
+  <li class="c018"><a href="/article/14-0222-hyssop/hyssop">Hyssop</a></li>
+  <li class="c018"><a href="/article/14-0253-ice-plant/ice-plant">Ice-plant</a></li>
+  <li class="c018"><a href="/article/14-0253-iceland-moss/iceland_moss">Iceland Moss</a></li>
+  <li class="c018"><a href="/article/14-0301-s2/idioblast">Idioblast</a></li>
+  <li class="c018">Immortelle</li>
+  <li class="c018"><a href="/article/14-0359-impatiens/impatiens">Impatiens</a></li>
+  <li class="c018">India Hemp</li>
+  <li class="c018">Indian Corn</li>
+  <li class="c018"><a href="/article/14-0675-s2/insectivorous_plants">Insectivorous Plants</a></li>
+  <li class="c018"><a href="/article/14-0826-s3/iridaceae">Iridaceæ</a></li>
+  <li class="c018"><a href="/article/14-0827-s4/iris">Iris</a></li>
+  <li class="c018"><a href="/article/14-0828-s2/irish_moss">Irish Moss</a></li>
+  <li class="c018"><a href="/article/14-0871-s6/iron-wood">Iron-wood</a></li>
+  <li class="c018"><a href="/article/15-0116-s5/ivy">Ivy</a></li>
+  <li class="c018"><a href="/article/15-0301-jarrah-wood/jarrah_wood">Jarrah Wood</a></li>
+  <li class="c018"><a href="/article/15-0302-jasmine/jasmine">Jasmine</a></li>
+  <li class="c018"><a href="/article/15-0438-s2/jew_s_ears">Jew’s Ears</a></li>
+  <li class="c018"><a href="/article/15-0454-s3/job_s_tears">Job’s Tears</a></li>
+  <li class="c018">Judas Tree</li>
+  <li class="c018"><a href="/article/15-0573-s3/jujube">Jujube</a></li>
+  <li class="c018"><a href="/article/15-0582-juncaceae/juncaceae">Juncaceæ</a></li>
+  <li class="c018"><a href="/article/15-0583-s7/juniper">Juniper</a></li>
+  <li class="c018"><a href="/article/15-0630-s2/jute">Jute</a></li>
+  <li class="c018"><a href="/article/15-0654-kaffir-bread/kaffir_bread">Kaffir Bread</a></li>
+  <li class="c018"><a href="/article/15-0728-kauri-pine/kauri_pine">Kauri Pine</a></li>
+  <li class="c018"><a href="/article/15-0784-s2/kerguelen_s_land_cabbage">Kerguelen’s Land Cabbage</a></li>
+  <li class="c018"><a href="/article/15-0980-kumquat/kumquat">Kumquat</a></li>
+  <li class="c018"><a href="/article/16-0017-labiatae/labiatae">Labiatæ</a></li>
+  <li class="c018"><a href="/article/16-0044-s2/labrador_tea">Labrador Tea</a></li>
+  <li class="c018"><a href="/article/16-0046-laburnum/laburnum">Laburnum</a></li>
+  <li class="c018"><a href="/article/16-0049-lac/lac">Lac</a></li>
+  <li class="c018"><a href="/article/16-0068-lace-bark-tree/lace-bark_tree">Lace-bark Tree</a></li>
+  <li class="c018"><a href="/article/16-0172-s3/lancewood">Lancewood</a></li>
+  <li class="c018"><a href="/article/16-0231-s2/larch">Larch</a></li>
+  <li class="c018"><a href="/article/16-0239-larkspur/larkspur">Larkspur</a></li>
+  <li class="c018"><a href="/article/16-0295-s6/lattice_leaf_plant">Lattice Leaf Plant</a></li>
+  <li class="c018"><a href="/article/16-0303-laurel/laurel">Laurel</a></li>
+  <li class="c018">Laurustinue</li>
+  <li class="c018"><a href="/article/16-0312-s2/lavender">Lavender</a></li>
+  <li class="c018"><a href="/article/16-0342-leaf/leaf">Leaf</a></li>
+  <li class="c018"><a href="/article/16-0390-s2/leek">Leek</a></li>
+  <li class="c018"><a href="/article/16-0401-s1/leguminosae">Leguminosæ</a></li>
+  <li class="c018"><a href="/article/16-0433-lemon/lemon">Lemon</a></li>
+  <li class="c018"><a href="/article/16-0450-s2/lentil">Lentil</a></li>
+  <li class="c018"><a href="/article/16-0523-s1/lettuce">Lettuce</a></li>
+  <li class="c018"><a href="/article/16-0598-lichens/lichens">Lichens</a></li>
+  <li class="c018"><a href="/article/16-0704-s2/lilac">Lilac or Pipe Tree</a></li>
+  <li class="c018">Liliacæ</li>
+  <li class="c018"><a href="/article/16-0709-lily/lily">Lily</a></li>
+  <li class="c018"><a href="/article/16-0715-s2/lime">Lime or Linden</a></li>
+  <li class="c018"><a href="/article/16-0766-liquidambar/liquidambar">Liquidambar</a></li>
+  <li class="c018"><a href="/article/16-0805-s4/litchi">Litchi</a></li>
+  <li class="c018"><a href="/article/16-0859-lobelia/lobelia">Lobelia</a></li>
+  <li class="c018"><a href="/article/16-0878-loco-weeds/loco-weeds">Loco-weeds</a></li>
+  <li class="c018"><a href="/article/16-0879-locust/locust">Locust</a></li>
+  <li class="c018"><a href="/article/16-1014-s1/loosestrife">Loosestrife</a></li>
+  <li class="c018"><a href="/article/16-1015-s4/loquat">Loquat</a></li>
+  <li class="c018"><a href="/article/17-0036-s6/lotus">Lotus</a></li>
+  <li class="c018"><a href="/article/17-0111-s4/lucerne">Lucerne</a></li>
+  <li class="c018"><a href="/article/17-0141-s9/lupine">Lupine</a></li>
+  <li class="c018"><a href="/article/17-0168-lycopodium/lycopodium">Lycopodium</a></li>
+  <li class="c018"><a href="/article/17-0295-s3/madder">Madder</a></li>
+  <li class="c018"><a href="/article/17-0406-s2/magnolia">Magnolia</a></li>
+  <li class="c018"><a href="/article/17-0414-mahogany/mahogany">Mahogany</a></li>
+  <li class="c018"><a href="/article/17-0443-s2/maidenhair">Maidenhair</a></li>
+  <li class="c018"><a href="/article/17-0464-s2/maize">Maize</a></li>
+  <li class="c018"><a href="/article/17-0509-mallow-plant/mallow__plant_">Mallow</a></li>
+  <li class="c018">Malvaceæ</li>
+  <li class="c018"><a href="/article/17-0547-mammee-apple/mammee_apple">Mammee Apple</a></li>
+  <li class="c018"><a href="/article/17-0583-s2/mandrake">Mandrake</a></li>
+  <li class="c018"><a href="/article/17-0588-mangel-wurzel/mangel-wurzel">Mangel-wurzel</a></li>
+  <li class="c018"><a href="/article/17-0589-mango/mango">Mango</a></li>
+  <li class="c018"><a href="/article/17-0589-mangosteen/mangosteen">Mangosteen</a></li>
+  <li class="c018"><a href="/article/17-0589-mangrove/mangrove">Mangrove</a></li>
+  <li class="c018"><a href="/article/17-0597-manila-hemp/manila_hemp">Manila Hemp</a></li>
+  <li class="c018"><a href="/article/17-0604-s4/manna">Manna</a></li>
+  <li class="c018"><a href="/article/17-0627-manures/manures">Manures</a></li>
+  <li class="c018"><a href="/article/17-0681-s1/maple">Maple</a></li>
+  <li class="c018"><a href="/article/17-0702-marcescent/marcescent">Marcescent</a></li>
+  <li class="c018"><a href="/article/17-0717-mare-s-tail/mare_s-tail">Mare’s-tail</a></li>
+  <li class="c018"><a href="/article/17-0722-s5/marguerite">Marguerite</a></li>
+  <li class="c018"><a href="/article/17-0735-s4/marigold">Marigold</a></li>
+  <li class="c018"><a href="/article/17-0744-s2/marjoram">Marjoram</a></li>
+  <li class="c018"><a href="/article/17-0892-mastic/mastic">Mastic</a></li>
+  <li class="c018"><a href="/article/17-0896-s2/mate">Mate</a></li>
+  <li class="c018"><a href="/article/17-0921-mattock/mattock">Mattock</a></li>
+  <li class="c018"><a href="/article/18-0087-medlar/medlar">Medlar</a></li>
+  <li class="c018"><a href="/article/18-0117-s1/melon">Melon</a></li>
+  <li class="c018"><a href="/article/18-0187-meristem/meristem">Meristem</a></li>
+  <li class="c018"><a href="/article/18-0207-mesquite/mesquite">Mesquite</a></li>
+  <li class="c018"><a href="/article/18-0186-merino/merino">Merino</a></li>
+  <li class="c018"><a href="/article/18-0451-s3/mignonette">Mignonette</a></li>
+  <li class="c018"><a href="/article/18-0466-s4/mildew">Mildew</a></li>
+  <li class="c018"><a href="/article/18-0476-s2/milkwort">Milkwort</a></li>
+  <li class="c018"><a href="/article/18-0491-s2/millet">Millet</a></li>
+  <li class="c018"><a href="/article/18-0524-mimosa/mimosa">Mimosa</a></li>
+  <li class="c018"><a href="/article/18-0524-mimulus/mimulus">Mimulus</a></li>
+  <li class="c018"><a href="/article/18-0584-mint-coin/mint__coin">Mint</a></li>
+  <li class="c018"><a href="/article/18-0645-mistletoe/mistletoe">Mistletoe</a></li>
+  <li class="c018"><a href="/article/18-0711-moly/moly">Moly</a></li>
+  <li class="c018">Momordica</li>
+  <li class="c018"><a href="/article/18-0839-moonseed/moonseed">Moonseed</a></li>
+  <li class="c018"><a href="/article/18-0839-s5/moonwort">Moonwort</a></li>
+  <li class="c018"><a href="/article/18-0846-s3/moraceae">Moraceæ</a></li>
+  <li class="c018"><a href="/article/18-0863-moreton-bay-chestnut/moreton_bay_chestnut">Moreton Bay Chestnut</a></li>
+  <li class="c018"><a href="/article/18-0987-mucuna/mucuna">Mucuna</a></li>
+  <li class="c018"><a href="/article/18-0990-mulberry/mulberry">Mulberry</a></li>
+  <li class="c018"><a href="/article/19-0085-mushroom/mushroom">Mushroom</a></li>
+  <li class="c018"><a href="/article/19-0112-mustard/mustard">Mustard</a></li>
+  <li class="c018"><a href="/article/19-0129-s6/myrobalans">Myrobalans</a></li>
+  <li class="c018"><a href="/article/19-0129-myrrh/myrrh">Myrrh</a></li>
+  <li class="c018"><a href="/article/19-0130-s2/myrtle">Myrtle</a></li>
+  <li class="c018"><a href="/article/19-0253-s4/narcissus">Narcissus</a></li>
+  <li class="c018">Nard</li>
+  <li class="c018"><a href="/article/19-0267-nasturtium/nasturtium">Nasturtium</a></li>
+  <li class="c018"><a href="/article/19-0439-nettle/nettle">Nettle</a></li>
+  <li class="c018"><a href="/article/19-0440-nettle-tree/nettle_tree">Nettle Tree</a></li>
+  <li class="c018">New England Flax</li>
+  <li class="c018"><a href="/article/19-0712-nightshade/nightshade">Nightshade</a></li>
+  <li class="c018"><a href="/article/19-0955-nut/nut">Nut</a></li>
+  <li class="c018"><a href="/article/19-0957-nutmeg/nutmeg">Nutmeg</a></li>
+  <li class="c018"><a href="/article/19-0969-s2/oak">Oak</a></li>
+  <li class="c018"><a href="/article/19-0975-s5/oat">Oat</a></li>
+  <li class="c018">Okra</li>
+  <li class="c018"><a href="/article/20-0099-oleander/oleander">Oleander</a></li>
+  <li class="c018"><a href="/article/20-0099-oleaster/oleaster">Oleaster</a></li>
+  <li class="c018"><a href="/article/20-0109-s2/olive">Olive</a></li>
+  <li class="c018"><a href="/article/20-0128-onagraceae/onagraceae">Onagraceæ</a></li>
+  <li class="c018"><a href="/article/20-0136-s2/onion">Onion</a></li>
+  <li class="c018"><a href="/article/20-0167-orach/orach">Orach or Mountain Spinach</a></li>
+  <li class="c018"><a href="/article/20-0174-orange/orange">Orange</a></li>
+  <li class="c018"><a href="/article/20-0193-s2/orchard">Orchard</a></li>
+  <li class="c018"><a href="/article/20-0196-s4/orchids">Orchids</a></li>
+  <li class="c018"><a href="/article/20-0364-orris-root/orris-root">Orris-Root</a></li>
+  <li class="c018"><a href="/article/20-0384-osier/osier">Osier</a></li>
+  <li class="c018"><a href="/article/20-0432-ox/ox">Ox</a></li>
+  <li class="c018"><a href="/article/20-0433-oxalis/oxalis">Oxalis</a></li>
+  <li class="c018"><a href="/article/20-0485-s4/paeony">Pæony</a></li>
+  <li class="c018"><a href="/article/20-0695-palm/palm">Palm</a></li>
+  <li class="c018"><a href="/article/20-0705-s3/palmetto">Palmetto</a></li>
+  <li class="c018"><a href="/article/20-0737-pansy/pansy">Pansy or Heartsease</a></li>
+  <li class="c018"><a href="/article/20-0799-s2/papyrus">Papyrus</a></li>
+  <li class="c018">Paraguay Tea</li>
+  <li class="c018"><a href="/article/20-0930-s3/parsley">Parsley</a></li>
+  <li class="c018"><a href="/article/20-0930-s4/parsnip">Parsnip</a></li>
+  <li class="c018"><a href="/article/20-0949-s2/passionflower">Passionflower</a></li>
+  <li class="c018"><a href="/article/21-0016-pea/pea">Pea</a></li>
+  <li class="c018"><a href="/article/21-0032-s2/peach">Peach</a></li>
+  <li class="c018"><a href="/article/21-0037-s3/pear">Pear</a></li>
+  <li class="c018"><a href="/article/21-0085-pellitory/pellitory">Pellitory</a></li>
+  <li class="c018"><a href="/article/21-0131-s3/pennyroyal">Pennyroyal</a></li>
+  <li class="c018"><a href="/article/21-0139-s7/pentstemon">Pentstemon</a></li>
+  <li class="c018"><a href="/article/21-0142-s4/pepper">Pepper</a></li>
+  <li class="c018"><a href="/article/21-0143-s3/peppermint">Peppermint</a></li>
+  <li class="c018"><a href="/article/21-0145-s2/pepper_tree">Pepper Tree</a></li>
+  <li class="c018"><a href="/article/21-0269-persimmon/persimmon">Persimmon</a></li>
+  <li class="c018"><a href="/article/21-0358-petunia/petunia">Petunia</a></li>
+  <li class="c018"><a href="/article/21-0469-phlox/phlox">Phlox</a></li>
+  <li class="c018"><a href="/article/21-0493-phormium/phormium">Phormium</a></li>
+  <li class="c018"><a href="/article/21-0620-pig/pig">Pig</a></li>
+  <li class="c018"><a href="/article/21-0641-s6/pimento">Pimento</a></li>
+  <li class="c018"><a href="/article/21-0648-s7/pine">Pine</a></li>
+  <li class="c018"><a href="/article/21-0654-s2/pine-apple">Pine-apple</a></li>
+  <li class="c018"><a href="/article/21-0655-s3/pin-eyed">Pin-eyed</a></li>
+  <li class="c018"><a href="/article/21-0655-pink/pink">Pink</a></li>
+  <li class="c018"><a href="/article/21-0682-pistachio-nut/pistachio_nut">Pistachio Nut</a></li>
+  <li class="c018"><a href="/article/21-0682-pistil/pistil">Pistil</a></li>
+  <li class="c018"><a href="/article/21-0692-s4/pitcher_plants">Pitcher Plants</a></li>
+  <li class="c018"><a href="/article/21-0743-s2/plane">Plane</a></li>
+  <li class="c018"><a href="/article/21-0757-plantain/plantain">Plantain</a></li>
+  <li class="c018"><a href="/article/21-0883-s2/plough_and_ploughing">Plough and Ploughing</a></li>
+  <li class="c018"><a href="/article/21-0887-s2/plum">Plum</a></li>
+  <li class="c018"><a href="/article/21-0925-poinsettia/poinsettia">Poinsettia</a></li>
+  <li class="c018"><a href="/article/21-0932-pokeberry/pokeberry__pokeweed">Pokeberry</a></li>
+  <li class="c018"><a href="/article/22-0016-pollination/pollination">Pollination</a></li>
+  <li class="c018"><a href="/article/22-0031-polyanthus/polyanthus">Polyanthus</a></li>
+  <li class="c018"><a href="/article/22-0040-s2/polygonaceae">Polygonaceæ</a></li>
+  <li class="c018"><a href="/article/22-0052-polypodium/polypodium">Polypodium</a></li>
+  <li class="c018"><a href="/article/22-0060-s3/pomegranate">Pomegranate</a></li>
+  <li class="c018"><a href="/article/22-0074-pondweed/pondweed">Pondweed</a></li>
+  <li class="c018"><a href="/article/22-0103-s3/poplar">Poplar</a></li>
+  <li class="c018"><a href="/article/22-0105-poppy/poppy">Poppy</a></li>
+  <li class="c018"><a href="/article/22-0214-potato/potato">Potato</a></li>
+  <li class="c018"><a href="/article/22-0219-potentilla/potentilla">Potentilla</a></li>
+  <li class="c018">Poultry &amp; Poultry Farming</li>
+  <li class="c018"><a href="/article/22-0354-s2/primrose">Primrose</a></li>
+  <li class="c018"><a href="/article/22-0355-s2/primulaceae">Primulaceæ</a></li>
+  <li class="c018"><a href="/article/22-0384-privet/privet">Privet</a></li>
+  <li class="c018"><a href="/article/22-0621-pteridophyta/pteridophyta">Pteridophyta</a></li>
+  <li class="c018"><a href="/article/22-0651-s2/puff-ball">Puff-ball</a></li>
+  <li class="c018"><a href="/article/22-0663-pumpkin/pumpkin">Pumpkin</a></li>
+  <li class="c018"><a href="/article/22-0682-purslane/purslane">Purslane</a></li>
+  <li class="c018"><a href="/article/22-0705-pyrethrum/pyrethrum">Pyrethrum</a></li>
+  <li class="c018"><a href="/article/22-0770-s2/quince">Quince</a></li>
+  <li class="c018"><a href="/article/22-0824-radish/radish">Radish</a></li>
+  <li class="c018"><a href="/article/22-0889-s6/ram">Ram</a></li>
+  <li class="c018"><a href="/article/22-0892-ramie/ramie">Ramie</a></li>
+  <li class="c018"><a href="/article/22-0898-ramsons/ramsons">Ramsons</a></li>
+  <li class="c018"><a href="/article/22-0902-s3/ranch">Ranch</a></li>
+  <li class="c018">Ranunculas</li>
+  <li class="c018"><a href="/article/22-0912-s4/ranunculaceae">Ranunculaceæ</a></li>
+  <li class="c018"><a href="/article/22-0917-rape-oil/rape_oil">Rape</a></li>
+  <li class="c018"><a href="/article/22-0929-s6/raspberry">Raspberry</a></li>
+  <li class="c018"><a href="/article/22-0961-s4/reaping">Reaping</a></li>
+  <li class="c018"><a href="/article/22-0990-s6/reed">Reed</a></li>
+  <li class="c018"><a href="/article/23-0286-s3/rhododendron">Rhododendron</a></li>
+  <li class="c018"><a href="/article/23-0308-rice/rice">Rice</a></li>
+  <li class="c018"><a href="/article/23-0316-s2/richardia">Richardia</a></li>
+  <li class="c018"><a href="/article/23-0443-s3/robinia">Robinia</a></li>
+  <li class="c018"><a href="/article/23-0447-rocambole/rocambole">Rocambole</a></li>
+  <li class="c018"><a href="/article/23-0489-roller-bird/roller__bird_">Roller</a></li>
+  <li class="c018"><a href="/article/23-0748-root/root">Root</a></li>
+  <li class="c018"><a href="/article/23-0762-rosaceae/rosaceae">Rosaceæ</a></li>
+  <li class="c018"><a href="/article/23-0768-s4/rose">Rose</a></li>
+  <li class="c018"><a href="/article/23-0775-s2/rosemary">Rosemary</a></li>
+  <li class="c018"><a href="/article/23-0776-rosewood/rosewood">Rosewood</a></li>
+  <li class="c018"><a href="/article/23-0777-s3/rosin">Rosin or Colophony</a></li>
+  <li class="c018"><a href="/article/23-0832-s4/royal_fern">Royal Fern</a></li>
+  <li class="c018">Rubraceæ</li>
+  <li class="c018"><a href="/article/23-0836-s7/rubber">Rubber</a></li>
+  <li class="c018"><a href="/article/23-0857-s6/ruderal">Ruderal</a></li>
+  <li class="c018"><a href="/article/23-0861-rue/rue">Rue</a></li>
+  <li class="c018"><a href="/article/23-0900-rush/rush">Rush</a></li>
+  <li class="c018"><a href="/article/23-0994-rye/rye">Rye</a></li>
+  <li class="c018"><a href="/article/23-1009-sabicu-wood/sabicu_wood">Sabicu Wood</a></li>
+  <li class="c018"><a href="/article/23-1044-safflower/safflower">Safflower</a></li>
+  <li class="c018"><a href="/article/23-1044-s3/saffron">Saffron</a></li>
+  <li class="c018"><a href="/article/23-1048-s4/sago">Sago</a></li>
+  <li class="c018"><a href="/article/23-1055-s2/sainfoin">Sainfoin</a></li>
+  <li class="c018">St. John’s Wort</li>
+  <li class="c018"><a href="/article/24-0101-salsafy/salsafy">Salsafy or Salsify</a></li>
+  <li class="c018"><a href="/article/24-0116-s3/salvia">Salvia</a></li>
+  <li class="c018"><a href="/article/24-0215-s2/sap">Sap</a></li>
+  <li class="c018"><a href="/article/24-0215-s3/sapan_wood">Sapan Wood</a></li>
+  <li class="c018"><a href="/article/24-0222-sarcocarp/sarcocarp">Sarcocarp</a></li>
+  <li class="c018"><a href="/article/24-0235-sarmentose/sarmentose">Sarmentose</a></li>
+  <li class="c018"><a href="/article/24-0237-sarracenia/sarracenia">Sarracenia</a></li>
+  <li class="c018">Satin Wood</li>
+  <li class="c018"><a href="/article/24-0279-s2/saxifrage">Saxifrage</a></li>
+  <li class="c018"><a href="/article/24-0278-s3/saxifragaceae">Saxifragaceæ</a></li>
+  <li class="c018"><a href="/article/24-0302-scammony/scammony">Scammony</a></li>
+  <li class="c018"><a href="/article/24-0423-s5/scion">Scion</a></li>
+  <li class="c018"><a href="/article/24-0428-scorzonera/scorzonera">Scorzonera</a></li>
+  <li class="c018"><a href="/article/24-0502-screw-pine/screw-pine">Screw-pine</a></li>
+  <li class="c018"><a href="/article/24-0505-scrophulariaceae/scrophulariaceae">Scrophulariaceæ</a></li>
+  <li class="c018"><a href="/article/24-0555-scythe/scythe">Scythe</a></li>
+  <li class="c018"><a href="/article/24-0564-sea-kale/sea-kale">Sea-kale</a></li>
+  <li class="c018"><a href="/article/24-0596-s2/seawrack">Seawrack</a></li>
+  <li class="c018"><a href="/article/24-0610-sedum/sedum">Sedum</a></li>
+  <li class="c018"><a href="/article/24-0603-secund/secund">Secund</a></li>
+  <li class="c018"><a href="/article/24-0610-seed/seed">Seed</a></li>
+  <li class="c018"><a href="/article/24-0689-s5/sequoia">Sequoia</a></li>
+  <li class="c018"><a href="/article/24-0728-service-tree/service_tree">Service Tree</a></li>
+  <li class="c018"><a href="/article/24-0731-sesame/sesame">Sesame</a></li>
+  <li class="c018"><a href="/article/24-0788-shaddock/shaddock">Shaddock</a></li>
+  <li class="c018"><a href="/article/24-0830-shallot/shallot">Shallot</a></li>
+  <li class="c018"><a href="/article/24-0849-sheep/sheep">Sheep</a></li>
+  <li class="c018"><a href="/article/25-0174-sisal-hemp/sisal_hemp">Sisal Hemp</a></li>
+  <li class="c018"><a href="/article/25-0209-s3/skirret">Skirret</a></li>
+  <li class="c018"><a href="/article/25-0301-snake-root/snake-root">Snake-root</a></li>
+  <li class="c018"><a href="/article/25-0309-snapdragon/snapdragon">Snapdragon</a></li>
+  <li class="c018"><a href="/article/25-0311-snowdrop/snowdrop">Snowdrop</a></li>
+  <li class="c018"><a href="/article/25-0315-soap-bark/soap-bark">Soap-bark</a></li>
+  <li class="c018"><a href="/article/25-0361-soil/soil">Soil</a></li>
+  <li class="c018"><a href="/article/25-0372-s2/solanaceae">Solanaceæ</a></li>
+  <li class="c018"><a href="/article/25-0449-s6/sorghum">Sorghum</a></li>
+  <li class="c018"><a href="/article/25-0450-s6/sorrel">Sorrel</a></li>
+  <li class="c018"><a href="/article/25-0543-sowing/sowing">Sowing</a></li>
+  <li class="c018"><a href="/article/25-0546-spade/spade">Spade</a></li>
+  <li class="c018"><a href="/article/25-0619-spanish-broom/spanish_broom">Spanish Broom</a></li>
+  <li class="c018">Spanish Grass</li>
+  <li class="c018"><a href="/article/25-0689-s4/spikenard">Spikenard</a></li>
+  <li class="c018"><a href="/article/25-0690-s4/spinach">Spinach</a></li>
+  <li class="c018"><a href="/article/25-0763-spruce/spruce">Spruce</a></li>
+  <li class="c018"><a href="/article/25-0899-stem/stem">Stem</a></li>
+  <li class="c018"><a href="/article/25-0947-stink-wood/stink-wood">Stink-wood</a></li>
+  <li class="c018"><a href="/article/25-1031-s2/strawberry">Strawberry</a></li>
+  <li class="c018"><a href="/article/25-1067-s2/strophanthus">Strophanthus</a></li>
+  <li class="c018"><a href="/article/26-0036-sudd/sudd">Sudd</a></li>
+  <li class="c018"><a href="/article/26-0086-sumach/sumach">Sumach</a></li>
+  <li class="c018"><a href="/article/26-0119-s2/sundew">Sundew</a></li>
+  <li class="c018"><a href="/article/26-0120-sunflower/sunflower">Sunflower</a></li>
+  <li class="c018"><a href="/article/26-0121-sunn/sunn">Sunn</a></li>
+  <li class="c018">Sweet Gum</li>
+  <li class="c018"><a href="/article/26-0242-s3/sweet_potato">Sweet Potato</a></li>
+  <li class="c018"><a href="/article/26-0242-s4/sweet-sop">Sweet-sop</a></li>
+  <li class="c018"><a href="/article/26-0255-swine/swine">Swine</a></li>
+  <li class="c018">Switch-plants</li>
+  <li class="c018">Synanthry</li>
+  <li class="c018"><a href="/article/26-0399-s3/tallow_tree">Tallow Tree</a></li>
+  <li class="c018"><a href="/article/26-0407-tamarind/tamarind">Tamarind</a></li>
+  <li class="c018"><a href="/article/26-0407-tamarisk/tamarisk">Tamarisk</a></li>
+  <li class="c018"><a href="/article/26-0505-s1/tea">Tea</a></li>
+  <li class="c018"><a href="/article/26-0512-s4/teak">Teak</a></li>
+  <li class="c018"><a href="/article/26-0516-teasel/teasel">Teasel</a></li>
+  <li class="c018"><a href="/article/26-0668-s6/terebinth">Terebinth</a></li>
+  <li class="c018"><a href="/article/26-0901-s1/thistle">Thistle</a></li>
+  <li class="c018"><a href="/article/26-0919-s3/thorn">Thorn</a></li>
+  <li class="c018"><a href="/article/26-0927-s2/thrashing">Thrashing</a></li>
+  <li class="c018"><a href="/article/26-0932-thrum-eyed/thrum-eyed">Thrum-eyed</a></li>
+  <li class="c018"><a href="/article/26-0945-thyme/thyme">Thyme</a></li>
+  <li class="c018"><a href="/article/26-1008-s3/tiger-flower">Tiger-flower</a></li>
+  <li class="c018"><a href="/article/26-1075-toadstool/toadstool">Toadstool</a></li>
+  <li class="c018"><a href="/article/26-1075-tobacco/tobacco">Tobacco</a></li>
+  <li class="c018"><a href="/article/26-1103-tomato/tomato">Tomato</a></li>
+  <li class="c018"><a href="/article/27-0025-s4/tonqua_bean">Tonqua Bean</a></li>
+  <li class="c018">Toothwart</li>
+  <li class="c018"><a href="/article/27-0064-s3/topiary">Topiary</a></li>
+  <li class="c018">Traveller’s Tree</li>
+  <li class="c018"><a href="/article/27-0249-tree/tree">Tree</a></li>
+  <li class="c018"><a href="/article/27-0250-tree-fern/tree-fern">Tree-fern</a></li>
+  <li class="c018"><a href="/article/27-0331-trowel/trowel">Trowel</a></li>
+  <li class="c018"><a href="/article/27-0339-s5/truffle">Truffle</a></li>
+  <li class="c018"><a href="/article/27-0377-tuberose/tuberose">Tuberose</a></li>
+  <li class="c018"><a href="/article/27-0383-tulip/tulip">Tulip</a></li>
+  <li class="c018">Tulip Tree</li>
+  <li class="c018"><a href="/article/27-0387-tumble-weed/tumble-weed">Tumble-weed</a></li>
+  <li class="c018"><a href="/article/27-0444-s3/turkey">Turkey</a></li>
+  <li class="c018"><a href="/article/27-0493-s2/turmeric">Turmeric</a></li>
+  <li class="c018"><a href="/article/27-0499-turnip/turnip">Turnip</a></li>
+  <li class="c018">Turnsole</li>
+  <li class="c018"><a href="/article/27-0594-umbelliferae/umbelliferae">Umbelliferæ</a></li>
+  <li class="c018"><a href="/article/27-0830-urticaceae/urticaceae">Urticaceæ</a></li>
+  <li class="c018"><a href="/article/27-0920-s4/vanilla">Vanilla</a></li>
+  <li class="c018"><a href="/article/27-0995-s2/vegetable">Vegetable</a></li>
+  <li class="c018"><a href="/article/27-0995-s3/vegetable_marrow">Vegetable Marrow</a></li>
+  <li class="c018">Venus’s Fly Trap</li>
+  <li class="c018">Venus’s Looking Glass</li>
+  <li class="c018"><a href="/article/27-1043-veratrum/veratrum">Veratrum</a></li>
+  <li class="c018"><a href="/article/27-1044-s2/verbena">Verbena</a></li>
+  <li class="c018"><a href="/article/28-0016-vetch/vetch">Vetch</a></li>
+  <li class="c018"><a href="/article/28-0107-vine/vine">Vine</a></li>
+  <li class="c018"><a href="/article/28-0116-violet/violet">Violet</a></li>
+  <li class="c018"><a href="/article/28-0304-s3/walnut">Walnut</a></li>
+  <li class="c018"><a href="/article/28-0388-water-lily/water-lily">Water-lily</a></li>
+  <li class="c018"><a href="/article/28-0428-water-thyme/water-thyme">Water-thyme</a></li>
+  <li class="c018"><a href="/article/28-0448-wax-tree/wax-tree">Wax-tree</a></li>
+  <li class="c018"><a href="/article/28-0596-wheat/wheat">Wheat</a></li>
+  <li class="c018">Whin</li>
+  <li class="c018">Whortleberry</li>
+  <li class="c018"><a href="/article/28-0709-willow-herb/willow-herb">Willow</a></li>
+  <li class="c018"><a href="/article/28-0709-willow-herb/willow-herb">Willow-herb</a></li>
+  <li class="c018"><a href="/article/28-0755-wintergreen/wintergreen">Wintergreen</a></li>
+  <li class="c018">Winter’s-bark</li>
+  <li class="c018"><a href="/article/28-0776-witch-brooms/witch_brooms">Witch Brooms</a></li>
+  <li class="c018">Witch Hazel</li>
+  <li class="c018"><a href="/article/28-0788-woad/woad">Woad</a></li>
+  <li class="c018"><a href="/article/28-0859-wormwood/wormwood">Wormwood</a></li>
+  <li class="c018"><a href="/article/28-0928-yam/yam">Yam</a></li>
+  <li class="c018">Yew</li>
+  <li class="c018"><a href="/article/28-0970-yucca/yucca">Yucca</a></li>
+  <li class="c018"><a href="/article/28-1012-zinnia/zinnia">Zinnia</a></li>
+</ul></details>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

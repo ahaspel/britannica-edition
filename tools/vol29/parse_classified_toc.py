@@ -124,21 +124,35 @@ def load_meta_toc_entries() -> list[dict]:
                         name = cj
                         break
                 break
-            # Arabic: 1.
+            # Arabic: 1.  (L2 marker — but Religion/Theology p941
+            # has rows where this is co-located with an L3 marker:
+            # `| 1. || (''a'') | General | 941`.  In that case the L2
+            # has no own name; promote to the deeper level so we don't
+            # emit a phantom L2 entry named "(a)".)
             m = re.match(r"^(\d+)\.$", c)
             if m:
+                start = i + 1
                 level = 2
-                for j in range(i + 1, len(cells)):
+                if start < len(cells):
+                    nxt = cells[start]
+                    if re.match(r"^\((?:'')?[a-z](?:'')?\)$", nxt):
+                        level = 3; start += 1
+                    elif re.match(r"^\(\d+\)$", nxt):
+                        level = 4; start += 1
+                for j in range(start, len(cells)):
                     cj = cells[j].strip()
                     if cj and not re.match(r"^\d{3}$", cj):
                         name = cj
                         break
                 break
-            # Italic letter: (''a'') or (a)
+            # Italic letter: (''a'') or (a)  (L3 — peek for L4 in same row)
             m = re.match(r"^\((?:'')?([a-z])(?:'')?\)$", c)
             if m:
+                start = i + 1
                 level = 3
-                for j in range(i + 1, len(cells)):
+                if start < len(cells) and re.match(r"^\(\d+\)$", cells[start]):
+                    level = 4; start += 1
+                for j in range(start, len(cells)):
                     cj = cells[j].strip()
                     if cj and not re.match(r"^\d{3}$", cj):
                         name = cj
@@ -252,7 +266,8 @@ def load_meta_toc_categories() -> list[dict]:
 
 
 # Flat-in-meta-TOC cats with known body-page sub-headings.
-_FLAT_CAT_SUBS: dict[str, list[str]] = {
+# Each sub is either a string (leaf sub) or a dict with {name, children}.
+_FLAT_CAT_SUBS: dict[str, list] = {
     "Anthropology and Ethnology": [
         "General Subjects and Terms", "Races and Tribes, &c.", "Biographies",
     ],
@@ -262,7 +277,11 @@ _FLAT_CAT_SUBS: dict[str, list[str]] = {
     "Language and Writing": ["General", "Biographies"],
     "Mathematics": ["Pure", "Applied", "Biographies"],
     "Military and Naval": ["Subjects", "Biographies"],
-    "Philosophy and Psychology": ["Subjects", "Biographies"],
+    "Philosophy and Psychology": [
+        "General", "Subjects", "Biographies",
+        {"name": "Psychical Research and Occultism",
+         "children": ["Subjects", "Biographies"]},
+    ],
     "Sports and Pastimes": ["Subjects", "Biographies"],
 }
 
@@ -284,15 +303,24 @@ def build_toc_from_meta(meta_categories: list[dict],
         entries = by_cat.get(name, [])
         if not entries:
             hard_subs = _FLAT_CAT_SUBS.get(name, [])
-            subs = [
-                {
-                    "name": s,
-                    "printed_page": c.get("printed_page"),
+            def _make_node(spec, printed_page):
+                if isinstance(spec, str):
+                    return {
+                        "name": spec,
+                        "printed_page": printed_page,
+                        "articles": [],
+                        "children": [],
+                    }
+                return {
+                    "name": spec["name"],
+                    "printed_page": printed_page,
                     "articles": [],
-                    "children": [],
+                    "children": [
+                        _make_node(ch, printed_page)
+                        for ch in spec.get("children", [])
+                    ],
                 }
-                for s in hard_subs
-            ]
+            subs = [_make_node(s, c.get("printed_page")) for s in hard_subs]
             toc.append({"name": name, "subsections": subs})
             continue
         subsections: list[dict] = []
@@ -512,6 +540,12 @@ def walk_and_attribute(toc: list[dict],
         if ":" in line:
             x, y = line.split(":", 1)
             x, y = x.strip(), y.strip()
+            # X == cat name itself: the body uses "Cat : Sub" to re-assert
+            # the current cat at a sub transition. Just resolve Y.
+            if _normalize(x) == _normalize(cat_name):
+                y_clean = re.sub(r"\s*\(cont\.?\)\s*$", "", y,
+                                 flags=re.IGNORECASE).strip()
+                return _try_sub(cat_name, y_clean, cur)
             parent = _try_sub(cat_name, x, cur)
             if parent:
                 # Try Y as a child of parent (strip cont. and parens).
@@ -597,6 +631,16 @@ def walk_and_attribute(toc: list[dict],
         for raw_line in text.split("\n"):
             line = raw_line.strip()
             if not line or line == "<!-- vision-ocr -->":
+                continue
+
+            # Skip cross-reference annotations like `(See also …)` /
+            # `(See further under …)` / `(For X see under Y)` — these
+            # are inline notes from the printed index, not category
+            # entries. Without this guard, the article-matching
+            # `first-word` fallback strips the leading `(` via
+            # `_art_norm` and resolves `(See` → SEE article, polluting
+            # categories with bogus SEE entries.
+            if re.match(r"^\(\s*(?:see|for)\b", line, re.IGNORECASE):
                 continue
 
             # Detect ## Blackletter header.
@@ -730,8 +774,13 @@ def walk_and_attribute(toc: list[dict],
                 # First word only (biographical entries with initials):
                 # "Detaille, J. B. E." → "DETAILLE"
                 first = raw_name.split()[0].rstrip(".,;:") if raw_name else ""
-                if len(first) >= 4:
-                    match = title_lookup.get(_art_norm(first))
+                # Length check on the NORMALIZED form so a 4-char
+                # token like `(See` doesn't pass — its normalized form
+                # is `SEE` (3 chars) and would resolve to the SEE
+                # article inappropriately.
+                first_norm = _art_norm(first)
+                if len(first_norm) >= 4:
+                    match = title_lookup.get(first_norm)
 
             if match:
                 filename, display = match

@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Geography And Exploration &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter L</span>Geography And Exploration</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">A Library of Geography</a></li><li><a href="#sh-2">A Science as well as a Body of Facts</a></li><li><a href="#sh-3">What Early Writers Taught about the Earth</a></li><li><a href="#sh-4">Geography in the Middle Ages</a></li><li><a href="#sh-5">New World: New Geography</a></li><li><a href="#sh-6">Geographical Discovery</a></li><li><a href="#sh-7">The Arabs and Northmen</a></li><li><a href="#sh-8">13th Century</a></li><li><a href="#sh-9">Portuguese Explorers</a></li><li><a href="#sh-10">Columbus and America</a></li><li><a href="#sh-11">Recent American Exploration</a></li><li><a href="#sh-12">The Far East</a></li><li><a href="#sh-13">Missionaries</a></li><li><a href="#sh-14">Arctic Exploration</a></li><li><a href="#sh-15">Maps</a></li><li><a href="#sh-16">Physiographic Articles</a></li><li><a href="#sh-17">The Britannica Gazetteer</a></li><li><a href="#sh-18">The Britannica as a Guide Book</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">A Library of Geography</span>The Britannica devotes nearly one
+fourth of all its space to geographical
+subjects. You may miss the
+full significance of this statement; therefore
+let us put it differently. The matter
+in the Britannica on geography is equivalent
+to more than 100 ordinary volumes
+each containing 100,000 words, which,
+put on shelves about 5 feet long, would
+fill a section in your
+library 5 shelves
+high. But by the
+use of new India
+paper, this same material on geography,
+combined with three times as much on
+other subjects of importance, occupies
+in the Britannica less than 3 feet of
+shelf space. The unity of plan and treatment
+and the high authority of the
+Britannica in these articles are far beyond
+comparison with that you could get
+in the most wisely and carefully selected
+hundred volumes on Geography that
+would give an equivalent number of
+words.</p>
+
+<p><span class="shoulder-heading" id="sh-2">A Science as well as a Body of Facts</span>Geographical information is so useful
+that the student is likely to overlook
+the scientific importance of geography
+in itself. The articles
+in the Encyclopaedia Britannica
+described in this
+chapter, besides giving
+the fullest information on countries,
+cities, towns, rivers, mountains, etc.,
+trace the development of the science
+from its beginning; and the gradual increase
+of geographical knowledge, as
+told in the Britannica, is a story of fine
+out-of-door adventure, of just the kind
+of spirited action that has supplied the
+theme of the most popular works of
+fiction.</p>
+
+<p>This chapter will suggest an outline
+course of reading in geography, systematically
+grouping the more important
+articles in the Britannica.</p>
+
+<p>The starting point for this course of
+study is the article <span class="sc"><a href="/article/11-0639-s2/geography">Geography</a></span> (Vol. 11,
+p. 619), equivalent in length to 70 pages
+of this Guide, written by <a href="/contributors.html?q=Hugh+Robert+Mill">Hugh R. Mill</a>,
+author of <i>Hints on the Choice of Geographical
+Books</i>, etc. The story that it
+tells us is a most interesting one.</p>
+
+<p><span class="shoulder-heading" id="sh-3">What Early Writers Taught about the Earth</span>The early Greeks thought of the
+earth as a flat disk,
+circular or elliptical
+in outline; and even
+in Homeric times
+this supposition had
+“acquired a special definiteness by the
+introduction of the idea of the ocean
+river bounding the whole.” Hecataeus
+recognized two continents on the circular
+disk. Herodotus, traveler and historian
+both (see the article <span class="sc"><a href="/article/13-0397-herodotus/herodotus">Herodotus</a></span>
+Vol. 13, p. 381, by <a href="/contributors.html?q=Rev.+George+Rawlinson">George Rawlinson</a>
+and Edward M. Walker), who knew
+only the lands around the roughly elliptical
+Mediterranean Sea, was certain
+that the earth was not a circle because
+it was longer from east to west than
+from north to south, and he distinguished
+<i>three</i> continents, adding Africa
+to Europe and Asia. “The effect of
+Herodotus’s hypothesis that the Nile
+must flow from west to east before
+turning north in order to balance the
+Danube running from west to east before
+turning south lingered in the maps of
+Africa down to the time of Mungo Park.”
+Aristotle (see also the article <span class="sc"><a href="/article/02-0539-s3/aristotle">Aristotle</a></span>,
+Vol. 2, p. 501, by <a href="/contributors.html?q=Thomas+Case">Thomas Case</a>, president
+of Corpus Christi College, Oxford,
+and author of <i>Physical Realism</i>, etc.,)
+was the real founder of scientific geography.
+“He demonstrated the sphericity
+of the earth by three arguments,
+two of which are important ... only
+a sphere could always throw a circular
+shadow on the moon during an eclipse;
+and that the shifting of the horizon and
+the appearance of new constellations ...
+as one travelled from north to south,
+could only be explained on the hypothesis
+that the earth was a sphere....
+He formed a comprehensive theory of
+the variations of climate with latitude
+and season ... speculated on the differences
+in the character of races of
+mankind living in different climates,
+and correlated the political forms of
+communities with their situation on a
+seashore, or in the neighborhood of
+natural strongholds.” The article <span class="sc"><a href="/article/22-0634-s2/ptolemy">Ptolemy</a></span>
+(Vol. 22, p. 618), equivalent to 27
+pages of this Guide, by the late Sir
+Edward Herbert Bunbury, the historian
+of ancient geography, and Dr. C. R.
+<a href="/contributors.html?q=Charles+Raymond+Beazley">Beazley</a>, author of <i>The Dawn of Modern
+Geography</i>, etc., should be studied in
+conjunction with the summary, in the
+article <i>Geography</i>, of Ptolemy’s achievements.
+“He concentrated in his writings
+the final outcome of all Greek geographical
+learning,” but his great aim was to
+collect and compare all existing determinations
+of latitude and estimates of
+longitude, and to solve the problem of
+representing the curved surface of the
+earth on the flat surface of a map.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Geography in the Middle Ages</span>The science of geography was at a
+low ebb in Christendom during the
+Middle Ages, when verbal interpretation
+of the Scriptures led
+the Church to oppose
+the spherical
+theory and also the
+theory of the motion of the earth. But
+among the Arabs, geography was kept
+alive—especially by Al-Mamun (see the
+article <span class="sc"><a href="/article/17-0550-mamun/mamun">Mamun</a></span>) (Vol. 17, p. 533), who
+had Ptolemy translated into Arabic.</p>
+
+<p><span class="shoulder-heading" id="sh-5">New World: New Geography</span>The story of the great discoveries of
+the 15th and 16th
+centuries is outlined
+later in the article
+<span class="sc"><a href="/article/11-0639-s2/geography">Geography</a></span>. The
+effect on geographical theory was enormous.</p>
+
+<p>The old arguments of Aristotle and the old
+measurements of Ptolemy were used by
+Toscanelli and Columbus in urging a westward
+voyage to India; and mainly on this
+account did the crossing of the Atlantic
+rank higher in the history of scientific geography
+than the laborious feeling out of
+the coast-line of Africa. But not until the
+voyage of Magellan shook the scales from
+the eyes of Europe did modern geography
+begin to advance. Discovery had outrun
+theory; the rush of new facts made Ptolemy
+practically obsolete in a generation,
+after having been the fount and origin of
+all geography for a millennium.</p>
+
+<p>In the century and a half after the
+discovery of America important theoretical
+work was done by Peter Apian,
+Sebastian Münster, Philip Cluwer, Nathanael
+Carpenter and Bernhard Varenius,
+for which see the biographical
+articles. The next century (1650–1760)
+saw little worth mentioning in geographical
+theory or method. Then, with the
+sudden burst of activity that so often
+follows scientific hibernation, came the
+important work of Torbern Bergman,
+a Swedish chemist and a pupil of the great
+botanist Linnaeus, and the lectures
+delivered at Königsberg after 1765 by
+the German philosopher Kant. They
+both put new stress on physical geography—see
+the articles on <span class="sc"><a href="/article/03-0794-bergman-torbern-olof/bergman__torbern_olof">Bergman</a></span>
+(Vol. 3, p. 774) and <span class="sc"><a href="/article/15-0690-kant-immanuel/kant__immanuel">Kant</a></span> (Vol. 15, p.
+662). Alexander von Humboldt and
+Karl Ritter (see the articles on both)
+in the first half of the 19th century
+supported, the one the unity of nature,
+and the other the comparative method,
+thus preparing the way for Darwin’s
+evolutionary theory, which “has become
+the unifying principle in geography.”
+Since the adoption of this theory, some
+of the more important names in geographical
+theory—each the subject of an article
+in the Britannica which the student
+should read—are: Baron von Richthofen,
+Hermann Wagner, Elisée Reclus and A.
+de Lapparent.</p>
+
+<p><span class="shoulder-heading" id="sh-6">Geographical Discovery</span>Early travel and exploration is a story
+of varied interest even when we approach
+it from the only side on which we have
+material—that is
+to say “geographical
+exploration
+from the Mediterranean centre.”</p>
+
+<p>Early conquest of outlying peoples by
+the warlike kings of Egypt and Assyria
+may have momentarily increased geographical
+knowledge, but it is unimportant
+in the large story. The first
+great explorers were the earliest traders,
+the Phoenicians and their African colonists,
+the Carthaginians, who traded
+throughout the Mediterranean, possibly
+on the east coast of Africa and in the
+northern seas, and almost certainly on
+the west coast of Africa. For details
+supplementing the outline in the article
+<span class="sc"><a href="/article/11-0639-s2/geography">Geography</a></span> (p. 623, Vol. 11), see the
+articles <span class="sc"><a href="/article/21-0471-phoenicia/phoenicia">Phoenicia</a></span> (Vol. 21, pp. 454–455),
+<span class="sc"><a href="/article/25-0060-s4/sidon">Sidon</a></span>, <span class="sc"><a href="/article/27-0568-s3/tyre">Tyre</a></span>, <span class="sc"><a href="/article/20-0154-s2/ophir">Ophir</a></span>, <span class="sc"><a href="/article/05-0448-carthage-missouri/carthage__missouri_">Carthage</a></span>,
+and <span class="sc"><a href="/article/12-0947-hanno/hanno">Hanno</a></span>, the African explorer. On
+the only Greek explorer of eminence see
+the article on <span class="sc"><a href="/article/22-0719-pytheas/pytheas">Pytheas</a></span> of Marseilles
+(Vol. 22, p. 703), who, about 330 B.C.,
+explored the British coast and the Baltic,
+and may have gone as far north as Iceland.
+Alexander the Great (see the biographical
+article) and his successors explored
+the East, “thus opening direct
+intercourse between Grecian and Hindu
+civilization.”</p>
+
+<p>The Romans were poor seamen and
+accomplished little as explorers. It has
+often been pointed out that the Greeks
+spoke of the “watery ways” of the sea,
+considering it a highway, but that the
+Romans, centuries later too, called the
+sea “dissociable,” that is “preventing
+and hindering intercourse.”</p>
+
+<p><span class="shoulder-heading" id="sh-7">The Arabs and Northmen</span>The Arabs were the leading geographers
+of the Middle Ages, and among their
+great travelers on whom there are separate
+articles in the
+Britannica are <span class="sc">Masudi</span>,
+<span class="sc">Ibn Haukal</span>,
+<span class="sc"><a href="/article/14-0302-s3/idrisi">Idrisi</a></span>, and in the
+14th century <span class="sc"><a href="/article/14-0231-s6/ibn_batuta">Ibn Batuta</a></span>. In the 9th
+and 10th centuries, the Norseman Ohthere
+rounded the North Cape and saw the
+midnight sun; Iceland was colonized
+from Norway; Eric the Red discovered
+Greenland; and his son Leif Ericsson
+sailed along a part of the North American
+coast: see the articles <span class="sc"><a href="/article/14-0239-iceland/iceland">Iceland</a></span>, <span class="sc"><a href="/article/12-0567-greenland/greenland">Greenland</a></span>,
+<span class="sc"><a href="/article/28-0113-vinland/vinland">Vinland</a></span>, <span class="sc"><a href="/article/16-0416-s2/leif_ericsson">Leif Ericsson</a></span> and
+<span class="sc"><a href="/article/26-0918-s2/thorfinn_karlsefni">Thorfinn Karlsefni</a></span>.</p>
+
+<p>The crusades made Europe a little
+more familiar with the East and opened
+the way for travel and pilgrimage. In
+general see the summary <i>Results of the
+Crusades</i> (p. 546, Vol. 7) at the close
+of the article <span class="sc"><a href="/article/07-0546-crusades/crusades">Crusades</a></span>; and particularly
+see <span class="sc"><a href="/article/03-0759-benjamin-of-tudela/benjamin_of_tudela">Benjamin of Tudela</a></span> (Vol. 3,
+p. 739) for a Jewish traveler of the 12th
+century who went as far east as the
+frontiers of China.</p>
+
+<p><span class="shoulder-heading" id="sh-8">13th Century</span>Before the new age of real exploration
+began, in the 15th century, there was an
+age of travel, especially
+in Asia during the 13th
+century, which did much
+to rouse popular curiosity about the
+ends of the earth. Though these travelers
+were not scientifically trained,
+modern research shows a remarkable
+proportion of fact in their stories. The
+great names of this era: Joannes de
+Plano Carpini, a friend of St. Francis of
+Assisi and head of a Catholic mission to
+Mongolia; William of Rubruquis, a
+Fleming who went to Tartary under
+orders from Louis IX of France; Hayton,
+King of Armenia, who traveled in
+Mongolia about the middle of the century;
+Odoric, a Catholic friar of the 14th
+century; and Marco Polo,</p>
+
+<p>the first to trace a route across the whole
+longitude of Asia, naming and describing
+kingdom after kingdom which he had seen;
+the first to speak of the new and brilliant
+court which had been established at Peking;
+the first to reveal China in all its wealth and
+vastness, and to tell of the nations on its
+borders; the first to tell more of Tibet than
+its name, to speak of Burma, of Laos, of
+Siam, of Cochin-China, of Japan, of Java,
+of Sumatra and of other islands of the
+archipelago, of the Nicobar and Andaman
+Islands, of Ceylon and its sacred peak, of
+India but as a country seen and partially
+explored; the first in medieval times to give
+any distinct account of the secluded Christian
+Empire of Abyssinia, and of the semi-Christian
+island of Sokotra, and to speak,
+however dimly, of Zanzibar, and of the vast
+and distant Madagascar; whilst he carries
+us also to the remotely opposite region of
+Siberia and the Arctic shores, to speak of
+dog-sledges, white bears and reindeer-riding
+Tunguses.</p>
+
+<p>See the articles <span class="sc"><a href="/article/05-0414-carpini-joannes-de-plano/carpini__joannes_de_plano">Carpini</a></span>, <span class="sc"><a href="/article/23-0853-rubruquis-william-of/rubruquis__or_rubrouck___william_of">Rubruquis</a></span>,
+<span class="sc"><a href="/article/13-0127-hayton/hayton">Hayton</a></span>, <span class="sc"><a href="/article/20-0028-odoric/odoric">Odoric</a></span>, and <span class="sc"><a href="/article/22-0025-s2/polo">Polo</a></span>, by <a href="/contributors.html?q=Charles+Raymond+Beazley">C. R.
+Beazley</a>, author of <i>The Dawn of Modern
+Geography</i>, and Sir Henry <a href="/contributors.html?q=Colonel+Sir+Henry+Yule">Yule</a>, author
+of <i>Cathay and the Way Thither</i> and <i>The
+Book of Ser Marco Polo</i>.</p>
+
+<p>A little later were the Spaniard Ruy
+Gonzalez de Clavijo who traveled to
+Samarkand; the Italians Nicola de’Conti
+whose travels in India were written by
+Poggio Bracciolini, secretary to Pope
+Eugene IV, and Ludovico di Varthema,
+who made the pilgrimage to Mecca in
+1503. See the articles <span class="sc"><a href="/article/06-0486-clavijo-y-fajardo-jos/clavijo_y_fajardo__josé">Clavijo</a></span>, <span class="sc"><a href="/article/07-0042-conti-princes-of/conti__princes_of">Conti</a></span>,
+<span class="sc"><a href="/article/21-0923-poggio/poggio">Poggio</a></span>, himself a traveler, and <span class="sc"><a href="/article/27-0950-s3/varthema__barthema__vertomannus___c____ludovico_di">Varthema</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-9">Portuguese Explorers</span>The construction of the mariner’s
+compass gave a new impulse to navigation
+and discovery. “Portugal took
+the lead along this
+new path, and foremost
+among her pioneers
+stands Prince
+Henry the Navigator (1394–1460)....
+The great westward projection of the
+coast of Africa and the islands to the
+north-west of that continent, were the
+principal scene of the work of mariners
+sent out at his expense; but his object
+was to push onward and reach India
+from the Atlantic.” The account of
+Portuguese discoveries in the article
+<span class="sc"><a href="/article/11-0639-s2/geography">Geography</a></span> (p. 625) should be supplemented
+by the articles <span class="sc"><a href="/article/13-0309-henry-of-portugal/henry_of_portugal">Henry of Portugal</a></span>
+(Vol. 13, p. 296), by <a href="/contributors.html?q=Charles+Raymond+Beazley">C. R. Beazley</a>,
+author of <i>Prince Henry the Navigator</i> and
+<i>The Dawn of Modern Geography</i>: <span class="sc"><a href="/article/08-0188-diaz-narcisse-virgilio/diaz__narcisse_virgilio">Diogo
+Gomez</a></span> and <span class="sc"><a href="/article/08-0189-diaz-de-novaes-bartholomeu/diaz_de_novaes__bartholomeu">Bartolomeu Diaz de Novaes</a></span>
+(Vol. 8, p. 172), also by <a href="/contributors.html?q=Charles+Raymond+Beazley">C. R. Beazley</a>,
+<span class="sc">Pero de Covilham</span>, <span class="sc"><a href="/article/11-0451-s2/gama__vasco_da">Vasco da
+Gama</a></span>, <span class="sc"><a href="/article/22-0318-prester-john/prester_john">Prester John</a></span>, by Sir <a href="/contributors.html?q=Colonel+Sir+Henry+Yule">Henry
+Yule</a>, and <span class="sc"><a href="/article/21-0658-s6/pinto__fernão_mendes">Fernão Mendes Pinto</a></span>, by
+<a href="/contributors.html?q=Edgar+Prestage">Edgar Prestage</a>, lecturer in Portuguese,
+University of Manchester.</p>
+
+<p><span class="shoulder-heading" id="sh-10">Columbus and America</span>We have now come to a point in the
+story where it begins to be more familiar
+to us all. “The Portuguese, following
+the lead of Prince
+Henry, continued to
+look for the road to
+India by the Cape
+of Good Hope. The same end was
+sought by Christopher Columbus, following
+the suggestion of Toscanelli, and
+under-estimating the diameter of the
+globe, by sailing due west.” The discovery
+and early exploration of America
+are told in the following articles, selected
+from a long list—see also the chapter in
+this Guide on <i>American History</i>:—</p>
+
+<p><span class="sc"><a href="/article/06-0768-columbus-ohio/columbus__ohio_">Columbus</a></span> and <span class="sc"><a href="/article/27-1081-s2/vespucci__amerigo">Vespucci</a></span>, both by
+<a href="/contributors.html?q=Charles+Raymond+Beazley">C. R. Beazley</a>; <span class="sc"><a href="/article/21-0660-s3/pinzon">Pinzon</a></span>, dealing with the
+three members of the family; <span class="sc"><a href="/article/04-0947-s6/cabot__john">Cabot</a></span>,
+by <a href="/contributors.html?q=Henry+Percival+Biggar">H. P. Biggar</a>, author of <i>The Voyages
+of the Cabots to Greenland</i>; <span class="sc"><a href="/article/21-0719-pizarro-francisco/pizarro__francisco">Pizarro</a></span>;
+<span class="sc"><a href="/article/03-0258-s3/balboa__vasco_nuñez_de">Balboa</a></span>; <span class="sc">Cortez</span>; <span class="sc"><a href="/article/25-0451-soto/soto__ferdinando__fernando__or_hernando__de">Soto</a></span>; <span class="sc">Aviles</span>; <span class="sc"><a href="/article/05-0450-cartier-jacques/cartier__jacques">Cartier</a></span>,
+by <a href="/contributors.html?q=Henry+Percival+Biggar">H. P. Biggar</a>; <span class="sc"><a href="/article/23-0299-ribault-jean/ribault__or_ribaut___jean">Ribault</a></span>; <span class="sc"><a href="/article/12-0853-s4/hakluyt__richard">Hakluyt</a></span>,
+by <a href="/contributors.html?q=Charles+Raymond+Beazley">C. R. Beazley</a> and C. H. Coote,
+formerly of the map department, British
+Museum; and for exploration in the
+Pacific, <span class="sc"><a href="/article/17-0317-s4/magellan__ferdinand">Magellan</a></span>, by <a href="/contributors.html?q=Charles+Raymond+Beazley">C. R. Beazley</a>,
+<span class="sc"><a href="/article/08-0497-drake-nathan/drake__nathan">Drake</a></span>, <span class="sc">Thomas Cavendish</span>, <span class="sc">John
+Davis</span>, <span class="sc"><a href="/article/13-0112-hawkins-sir-richard/hawkins__sir_richard">Sir Richard Hawkins</a></span>, etc.</p>
+
+<p><span class="shoulder-heading" id="sh-11">Recent American Exploration</span>Exploration in the United States,
+particularly as connected with westward
+expansion may be studied to advantage
+in the Britannica.
+See especially the
+articles <span class="sc"><a href="/article/04-0251-boone-daniel/boone__daniel">Daniel
+Boone</a></span>, <span class="sc"><a href="/article/22-0687-s2/putnam__rufus">Rufus Putnam</a></span>,
+<span class="sc"><a href="/article/06-0458-clark-george-rogers/clark__george_rogers">George Rogers Clark</a></span>, <span class="sc">William
+Clark</span>, <span class="sc"><a href="/article/16-0543-s6/lewis__meriwether">Meriwether Lewis</a></span>, <span class="sc">Zebulon
+M. Pike</span>, <span class="sc">Stephen Austin</span>, <span class="sc"><a href="/article/28-0629-s6/whitman__marcus">Marcus
+Whitman</a></span>, <span class="sc">John C. Fremont</span>, <span class="sc">F. V.
+Hayden</span>, <span class="sc">J. W. Powell</span>, and <span class="sc">B. L. E.
+Bonneville</span>; and also the earlier part
+of the historical section in each article
+on a state of the Union.</p>
+
+<p><span class="shoulder-heading" id="sh-12">The Far East</span>In the Orient the principal explorers
+mentioned in the article <span class="sc"><a href="/article/11-0639-s2/geography">Geography</a></span> and
+treated each in a separate article are:
+the Englishmen,
+<span class="sc"><a href="/article/16-0166-s2/lancaster__sir_james">Sir James Lancaster</a></span>,
+<span class="sc"><a href="/article/07-0228-coryate-thomas/coryate__thomas">Thomas Coryate</a></span>,
+<span class="sc">Sir Anthony Shirley</span>, <span class="sc"><a href="/article/13-0356-herbert-sir-thomas/herbert__sir_thomas">Sir Thomas
+Herbert</a></span> and <span class="sc">Sir Thomas Roe</span>; the
+German <span class="sc"><a href="/article/15-0654-kaempfer-engelbrecht/kaempfer__engelbrecht">Engelbrecht Kaempfer</a></span>; and,
+among many great Dutch navigators,
+<span class="sc"><a href="/article/26-0466-s5/tasman__abel_janszoon">Abel Janszoon Tasman</a></span>. On this period
+see also <span class="sc"><a href="/article/14-0394-india/india">India</a></span> (especially pp. 404–406,
+Vol. 14); <span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span>, <i>Foreign Intercourse</i>
+(p. 224, et seqq., Vol. 15); <span class="sc"><a href="/article/28-0909-s2/xavier__francisco_de">Francisco
+de Xavier</a></span>; <span class="sc"><a href="/article/17-0482-malay-archipelago/malay_archipelago">Malay Archipelago</a></span> (p.
+469, Vol. 17); <span class="sc"><a href="/article/26-0467-s2/tasmania">Tasmania</a></span>; <span class="sc"><a href="/article/19-0506-s5/new_guinea">New Guinea</a></span>,
+etc.</p>
+
+<p><span class="shoulder-heading" id="sh-13">Missionaries</span>The geographical work of missionaries
+has been remarkable—perhaps none of it
+more so than the survey of China by
+Jesuit missionaries. “They first prepared
+a map of the country
+round Peking, which
+was submitted to
+the emperor Kang-hi, and, being satisfied
+with the accuracy of the European
+method of surveying, he resolved to have
+a survey made of the whole empire on
+the same principles. This great work
+was begun in July, 1708, and the completed
+maps were presented to the
+emperor in 1718. The records preserved
+in each city were examined, topographical
+information was diligently collected,
+and the Jesuit fathers checked their
+triangulation by meridian altitudes of
+the sun and pole star and by a system
+of remeasurements. <i>The result was a
+more accurate map of China than existed,
+at that time, of any country in Europe</i>.”</p>
+
+<p>There was some 18th century exploration
+of importance in Arabia: see the
+article <span class="sc"><a href="/article/19-0696-s2/niebuhr__karsten">Karsten Niebuhr</a></span>; in Africa:
+see the articles <span class="sc"><a href="/article/04-0699-s2/bruce__james">James Bruce</a></span>; <span class="sc"><a href="/article/16-0380-s2/ledyard__john">John
+Ledyard</a></span>, an American; and <span class="sc"><a href="/article/20-0888-s2/park__mungo">Mungo
+Park</a></span>; and in South America: see <span class="sc">C. M.
+de la Condamine</span>, <span class="sc"><a href="/article/04-0331-bouguer-pierre/bouguer__pierre">Pierre Bouguer</a></span>,
+etc. But the Pacific was the great field
+of exploration in this century and “the
+three voyages of Captain James Cook
+form an era in the history of geographical
+discovery.” See the articles <span class="sc"><a href="/article/07-0086-cook-james/cook__james">James
+Cook</a></span>, <span class="sc">Comte de La Perouse</span>, <span class="sc">Joseph-Antoine
+Bruni d’Entrecasteux</span>, <span class="sc"><a href="/article/04-0072-bligh-william/bligh__william">William
+Bligh</a></span>, <span class="sc"><a href="/article/27-0909-s2/vancouver__george">George Vancouver</a></span>, and
+local articles like <span class="sc"><a href="/article/13-0096-hawaii/hawaii">Hawaii</a></span>, <span class="sc"><a href="/article/26-0377-s7/tahiti">Tahiti</a></span>, etc.</p>
+
+<p><span class="shoulder-heading" id="sh-14">Arctic Exploration</span>The story of Polar exploration is told
+in brief in the article <span class="sc"><a href="/article/11-0639-s2/geography">Geography</a></span> (p. 629)
+but there are more detailed accounts
+in the article
+<span class="sc"><a href="/article/21-0971-s2/polar_regions">Polar Regions</a></span>, by
+<a href="/contributors.html?q=Hugh+Robert+Mill">H. R. Mill</a> and Fridtjof
+Nansen, the polar
+explorer, which is illustrated with maps
+of the North Polar and South Polar
+regions. This should be further supplemented
+by the following biographical
+sketches: <span class="sc"><a href="/article/22-0719-pytheas/pytheas">Pytheas</a></span>, <span class="sc"><a href="/article/04-0947-s6/cabot__john">Cabot</a></span>, <span class="sc"><a href="/article/07-0222-corte-real-jeronymo/corte-real__jeronymo">Corte-Real</a></span>,
+<span class="sc"><a href="/article/28-0708-willoughby/willoughby">Willoughby</a></span>, <span class="sc">Steven Borough</span>, <span class="sc"><a href="/article/11-0250-frobisher-sir-martin/frobisher__sir_martin">Frobisher</a></span>,
+<span class="sc">John Davis</span>, <span class="sc"><a href="/article/03-0414-barents-sea/barents_sea">Barents</a></span>, <span class="sc"><a href="/article/13-0875-s3/hudson">Hudson</a></span>,
+<span class="sc"><a href="/article/03-0209-s5/baffin_bay">Baffin</a></span>, <span class="sc"><a href="/article/24-0427-scoresby-william/scoresby__william">Scoresby</a></span>, <span class="sc"><a href="/article/03-0796-bering-sea-arbitration/bering_sea_arbitration">Bering</a></span>, <span class="sc"><a href="/article/07-0086-cook-james/cook__james">James Cook</a></span>,
+<span class="sc">John Franklin</span>, <span class="sc">Sir W. E. Parry</span>,
+<span class="sc"><a href="/article/23-0780-s5/ross__sir_john">Sir John Ross</a></span>, <span class="sc"><a href="/article/22-0828-rae-john/rae__john">John Rae</a></span>, <span class="sc">Sir R. J. L.
+M. McClure</span>, <span class="sc">Sir F. L. McClintock</span>,
+<span class="sc">Sir E. A. Inglefield</span>, <span class="sc">E. K. Kane</span>,
+<span class="sc">Charles Hall</span>, <span class="sc"><a href="/article/19-0767-nordenski-ld-nils-adolf-erik/nordenskiöld__nils_adolf_erik">Nordenskiöld</a></span>, <span class="sc"><a href="/article/19-0255-nares-sir-george-strong/nares__sir_george_strong">Nares</a></span>;
+<span class="sc">Sir C. R. Markham</span>, <span class="sc">DeLong</span>, <span class="sc">A. W.
+Greely</span>, <span class="sc"><a href="/article/19-0178-nansen-hans/nansen__hans">Nansen</a></span>, <span class="sc"><a href="/article/21-0044-s2/peary__robert_edwin">Peary</a></span>, etc., and on
+antarctic exploration the articles <span class="sc"><a href="/article/08-0693-dumont-d-urville-jules-s-bastien-c-sar/dumont_d_urville__jules_sébastien_césar">Dumont
+D’Urville</a></span>, <span class="sc"><a href="/article/28-0662-wilkes-charles/wilkes__charles">Charles Wilkes</a></span>, <span class="sc">Sir
+James C. Ross</span>, etc. The article <span class="sc"><a href="/article/21-0971-s2/polar_regions">Polar
+Regions</a></span> includes an elaborate account
+of the physiography of the Arctic region
+(p. 954, Vol. 21) and of the Antarctic
+(p. 969 of same Vol.), dealing with geology,
+climate, pressure, flora, fauna, people,
+ocean depths, temperature and salinity,
+and marine biological conditions, etc.</p>
+
+<p><span class="shoulder-heading" id="sh-15">Maps</span>The student of geography should read
+with great care the article <span class="sc"><a href="/article/17-0646-map/map">Map</a></span> (Vol. 17,
+p. 629), equivalent to 110 pages of this
+Guide, written by Lieut.
+Col. Charles Frederick
+Close, author of <i>Text-Book
+of Topographical Surveying</i>, Alexander
+Ross Clark, lately in charge of the trigonometrical
+operations of the British
+Ordnance Survey, and Dr. Ernest George
+Ravenstein, author of <i>A Systematic Atlas</i>,
+etc. The article has 59 illustrations and
+it deals with: classification, scale, delineation
+of ground, contours, selection
+of names and orthography; measurement
+on maps; relief maps; globe; map
+printing; history of cartography (equivalent
+to 55 pages of this Guide), with
+reproductions of many early maps;
+topographical surveys, summarizing the
+work done in different parts of the world;
+and map projections.</p>
+
+<p>The maps in the Britannica are of
+the utmost value. They include nearly
+150 full-page maps, many of them in
+colours, all prepared especially for this
+edition, and in accordance with the principles
+laid down in the article <span class="sc"><a href="/article/17-0646-map/map">Map</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-16">Physiographic Articles</span>Of articles on physiographic topics
+possibly the most important are those
+on the several continents, each accompanied
+by a map in colours from the
+great German cartographic establishment
+of Justus Perthes,
+Gotha. Of particular
+importance to
+the American reader
+are the contributions of Prof. W. M.
+Davis of Harvard on physiography
+in the articles <span class="sc"><a href="/article/01-0851-america/america">America</a></span> and <span class="sc"><a href="/article/19-0787-north-america/north_america">North
+America</a></span>, and of J. C. Branner, now
+president of Leland Stanford University,
+on <span class="sc"><a href="/article/25-0502-south-america/south_america">South America</a></span>. Then read the
+article <span class="sc"><a href="/article/19-1005-ocean-and-oceanography/ocean_and_oceanography">Ocean and Oceanography</a></span>, by
+Dr. Otto Krümmel, professor of geography
+at Kiel and author of <i>Handbuch
+der Ozeanographie</i>, and <a href="/contributors.html?q=Hugh+Robert+Mill">H. R. Mill</a>,
+editor of <i>The International Geography</i>.
+This single article is equivalent to 65
+pages of this Guide. Then study the
+articles on the different seas—for instance,
+<span class="sc"><a href="/article/02-0903-s3/atlantic_ocean">Atlantic Ocean</a></span>, by <a href="/contributors.html?q=Henry+Newton+Dickson">H. N.
+Dickson</a>, author of <i>Papers on Oceanography</i>,
+etc.; <span class="sc"><a href="/article/20-0468-s2/pacific_ocean">Pacific Ocean</a></span>, by the
+same author, with a section on its islands,
+and with a map in colours; <a href="/contributors.html?q=Henry+Newton+Dickson">Dr. Dickson</a>’s
+article on the <span class="sc"><a href="/article/18-0085-mediterranean-sea/mediterranean_sea">Mediterranean Sea</a></span>;
+the article <span class="sc"><a href="/article/12-0416-great-lakes-of-north-america-the/great_lakes_of_north_america__the">Great Lakes</a></span>, the separate
+article on each of these lakes, <span class="sc"><a href="/article/12-0438-great-salt-lake/great_salt_lake">Great
+Salt Lake</a></span>, etc., and the article <span class="sc"><a href="/article/16-0106-s2/lake">Lake</a></span>,
+by Sir <a href="/contributors.html?q=Sir+John+Murray">John Murray</a>, the famous British
+geographer, which contains statistical
+tables of the important lakes.</p>
+
+<p>Two important general articles are:
+<span class="sc"><a href="/article/06-0525-climate-and-climatology/climate_and_climatology">Climate and Climatology</a></span>, with 2
+plates, 13 figures and several tables, by
+R. DeCourcy Ward, professor of climatology,
+Harvard; and <span class="sc"><a href="/article/18-0285-s2/meteorology">Meteorology</a></span>, by
+Dr. <a href="/contributors.html?q=Cleveland+Abbe">Cleveland Abbe</a>, professor of meteorology,
+U. S. Weather Bureau. These
+articles, both by Americans, deal with
+these subjects with particular attention
+to American conditions. They should
+be supplemented by a study of the
+articles: <span class="sc"><a href="/article/25-0218-sky/sky">Sky</a></span>; <span class="sc"><a href="/article/02-0908-s3/atmospheric_electricity">Atmospheric Electricity</a></span>;
+<span class="sc"><a href="/article/06-0575-cloud/cloud">Clouds</a></span>, illustrated with remarkably fine
+pictures of the different cloud-types;
+and the separate articles on meteorological
+instruments.</p>
+
+<p><span class="shoulder-heading" id="sh-17">The Britannica Gazetteer</span>What has already been said, although
+it suggests rather than exhausts the
+subject of geography in the Britannica,
+will show that the student will find in it
+a text-book of geography
+which is unparalleled
+elsewhere
+in size, scope, authority
+and interest. Besides, the
+Britannica contains the equivalent of a
+great gazetteer and atlas. Place-names
+are so entered in the Index (Vol. 29)
+that their location on maps may be discovered
+immediately and the articles on
+towns, villages, cities, states, etc., are full
+and authoritative. The reader who turns
+to an article in the Britannica on some
+small town or city with a population
+of 5,000 or less finds there within the
+limits of a few lines of print the results
+of elaborate research and laborious
+correspondence with local authorities.
+Such articles give not merely location,
+population, railway service, commercial
+and manufacturing information, description
+of buildings, etc., but a historical
+sketch of the place, in which every date
+and detail has been verified with no sparing
+of expense or pains.</p>
+
+<p><span class="shoulder-heading" id="sh-18">The Britannica as a Guide Book</span>The Encyclopaedia Britannica is not
+merely a geographical
+text-book and
+gazetteer, however.
+It is an excellent
+guide book. The same care in details
+that makes it valuable as a gazetteer
+makes it a wonderful companion for
+the traveler, full of literary charm and
+readableness. Such articles as <span class="sc"><a href="/article/19-0618-s6/new_york">New
+York</a></span>, <span class="sc"><a href="/article/21-0388-s3/philadelphia">Philadelphia</a></span>, <span class="sc"><a href="/article/04-0311-boston-game/boston__game_">Boston</a></span>, <span class="sc"><a href="/article/24-0158-san-francisco/san_francisco">San
+Francisco</a></span> and <span class="sc">St. Louis</span> contain valuable
+sketches of the culture, literary and
+artistic, of these cities. The world’s
+“show” and vacation spots have elaborate
+treatment—for instance the English <span class="sc"><a href="/article/16-0110-lake-district/lake_district">Lake
+District</a></span>, <span class="sc"><a href="/article/23-0404-s3/riviera">Riviera</a></span>, <span class="sc"><a href="/article/05-0556-catskill/catskill">Catskills</a></span>, <span class="sc"><a href="/article/11-0768-george-lake/george__lake">Lake
+George</a></span>, <span class="sc"><a href="/article/28-0964-yosemite/yosemite">Yosemite</a></span>, <span class="sc"><a href="/article/12-0364-s3/grand_canyon">Grand Canyon</a></span>, etc.</p>
+
+<p>Besides the student can turn immediately
+in the Britannica, as he could in
+no book purely geographical, from the
+description of a locality, say Mount Vernon,
+Stockbridge, Cooperstown, Tarrytown
+or Salem, to the biographies that
+these articles make him need,—Washington,
+Jonathan Edwards, Cooper, Irving
+and Hawthorne. See the last chapter
+in this Guide for an illustration of this
+use of the Britannica.</p>
+
+<p>The following list of <i>general</i> articles on
+geography will give the reader an idea of
+the great scope of the Britannica in geographical
+literature. If this list included
+all the geographical articles in the Britannica
+it would be nearly 60 times as
+long. For a complete list classified by
+different continents and countries see the
+Index Volume, beginning on p. 895.</p>
+
+<ul class="index">
+  <li class="c018"><a href="/article/01-0400-s2/afterglow">Afterglow</a></li>
+  <li class="c018"><a href="/article/01-0474-s4/aiguille">Aiguille</a></li>
+  <li class="c018"><a href="/article/01-0764-s2/alp">Alp</a></li>
+  <li class="c018"><a href="/article/02-0013-s4/anemometer">Anemometer</a></li>
+  <li class="c018"><a href="/article/02-0100-s2/antarctic">Antarctic</a></li>
+  <li class="c018"><a href="/article/02-0104-s4/anthelion">Anthelion</a></li>
+  <li class="c018"><a href="/article/02-0136-s1/anticyclone">Anticyclone</a></li>
+  <li class="c018"><a href="/article/02-0138-s4/antilia">Antilia</a></li>
+  <li class="c018"><a href="/article/02-0145-s9/antipodes">Antipodes</a></li>
+  <li class="c018"><a href="/article/02-0160-s5/antonini_itinerarium">Antonini Itinerarium</a></li>
+  <li class="c018"><a href="/article/02-0249-s3/aquae">Aquae</a></li>
+  <li class="c018"><a href="/article/02-0390-s3/archipelago">Archipelago</a></li>
+  <li class="c018"><a href="/article/02-0484-s2/arctic">Arctic</a></li>
+  <li class="c018">Arete</li>
+  <li class="c018"><a href="/article/02-0692-s3/arroyo">Arroyo</a></li>
+  <li class="c018"><a href="/article/02-0905-s2/atlantis">Atlantis</a></li>
+  <li class="c018"><a href="/article/02-0908-s2/atmosphere">Atmosphere</a></li>
+  <li class="c018"><a href="/article/02-0918-s3/atoll">Atoll</a></li>
+  <li class="c018"><a href="/article/02-0975-s6/aurora_polaris">Aurora Polaris</a></li>
+  <li class="c018"><a href="/article/03-0066-s4/avalanche">Avalanche</a></li>
+  <li class="c018"><a href="/article/03-0228-s2/bahr">Bahr</a></li>
+  <li class="c018"><a href="/article/03-0395-bar-the/bar__the">Bar</a></li>
+  <li class="c018"><a href="/article/03-0578-bayou/bayou">Bayou</a></li>
+  <li class="c018"><a href="/article/03-0581-beach/beach">Beach</a></li>
+  <li class="c018"><a href="/article/03-0606-beaufort-scale/beaufort_scale">Beaufort Scale</a></li>
+  <li class="c018"><a href="/article/03-0736-bench-mark/bench-mark">Bench-mark</a></li>
+  <li class="c018"><a href="/article/03-0794-bergschrund/bergschrund">Bergschrund</a></li>
+  <li class="c018"><a href="/article/03-0814-berm/berm">Berm</a></li>
+  <li class="c018"><a href="/article/03-0945-bight/bight">Bight</a></li>
+  <li class="c018"><a href="/article/04-0085-blizzard/blizzard">Blizzard</a></li>
+  <li class="c018"><a href="/article/04-0131-bog/bog">Bog</a></li>
+  <li class="c018"><a href="/article/04-0256-bora/bora">Bora</a></li>
+  <li class="c018"><a href="/article/04-0262-bore/bore">Bore</a></li>
+  <li class="c018"><a href="/article/04-0455-brazil/brazil">Brazil</a></li>
+  <li class="c018"><a href="/article/04-0505-breeze/breeze">Breeze</a></li>
+  <li class="c018"><a href="/article/04-0541-brickfielder/brickfielder">Brickfielder</a></li>
+  <li class="c018"><a href="/article/04-0628-s2/british_empire">British Empire</a></li>
+  <li class="c018"><a href="/article/04-0647-s2/brocken__spectre_of_the">Brocken, Spectre of</a></li>
+  <li class="c018"><a href="/article/04-0913-s6/butte">Butte</a></li>
+  <li class="c018"><a href="/article/04-0918-s6/buys_ballot_s_law">Buys Ballot’s Law</a></li>
+  <li class="c018"><a href="/article/05-0236-canyon/canyon">Canyon</a></li>
+  <li class="c018"><a href="/article/05-0843-challenger-expedition/_challenger__expedition">“Challenger” Expedition</a></li>
+  <li class="c018"><a href="/article/05-0985-chart/chart">Chart</a></li>
+  <li class="c018"><a href="/article/06-0251-chinook/chinook">Chinook</a></li>
+  <li class="c018"><a href="/article/06-0408-cirque/cirque">Cirque</a></li>
+  <li class="c018"><a href="/article/06-0525-climate-and-climatology/climate_and_climatology">Climate and Climatology</a></li>
+  <li class="c018"><a href="/article/06-0575-cloud/cloud">Cloud</a></li>
+  <li class="c018">Cloudburst</li>
+  <li class="c018"><a href="/article/06-0618-coast/coast">Coast</a></li>
+  <li class="c018"><a href="/article/06-0678-col/col">Col</a></li>
+  <li class="c018"><a href="/article/06-0773-combe/combe">Combe</a></li>
+  <li class="c018"><a href="/article/07-0044-continent/continent">Continent</a></li>
+  <li class="c018"><a href="/article/07-0045-continental-shelf/continental_shelf">Continental Shelf</a></li>
+  <li class="c018"><a href="/article/07-0048-contour-contour-line/contour__contour-line">Contour, Contour-line</a></li>
+  <li class="c018"><a href="/article/07-0149-coral-reefs/coral-reefs">Coral-reefs</a></li>
+  <li class="c018"><a href="/article/07-0155-cordillera/cordillera">Cordillera</a></li>
+  <li class="c018"><a href="/article/07-0213-corrie/corrie">Corrie</a></li>
+  <li class="c018"><a href="/article/07-0380-crag/crag">Crag</a></li>
+  <li class="c018"><a href="/article/07-0420-creek/creek">Creek</a></li>
+  <li class="c018"><a href="/article/07-0454-crevasse/crevasse">Crevasse</a></li>
+  <li class="c018"><a href="/article/07-0635-cuesta/cuesta">Cuesta</a></li>
+  <li class="c018"><a href="/article/07-0708-cyclone/cyclone">Cyclone</a></li>
+  <li class="c018"><a href="/article/07-0791-dalle/dalle">Dalle</a></li>
+  <li class="c018"><a href="/article/07-0898-dawn/dawn">Dawn</a></li>
+  <li class="c018"><a href="/article/07-0999-delta/delta">Delta</a></li>
+  <li class="c018"><a href="/article/08-0107-desert/desert">Desert</a></li>
+  <li class="c018"><a href="/article/08-0150-dew/dew">Dew</a></li>
+  <li class="c018"><a href="/article/08-0306-dip/dip">Dip</a></li>
+  <li class="c018"><a href="/article/08-0348-divide/divide">Divide</a></li>
+  <li class="c018"><a href="/article/08-0407-doldrums/doldrums">Doldrums</a></li>
+  <li class="c018"><a href="/article/08-0435-donga/donga">Donga</a></li>
+  <li class="c018"><a href="/article/08-0483-downs/downs">Down</a></li>
+  <li class="c018"><a href="/article/08-0740-dust/dust">Dust</a></li>
+  <li class="c018"><a href="/article/08-0818-eagre/eagre">Eagre</a></li>
+  <li class="c018"><a href="/article/08-0828-earth-figure-of-the/earth__figure_of_the">Earth, Figure of the</a></li>
+  <li class="c018"><a href="/article/08-0844-earth-pillar/earth_pillar">Earth Pillar</a></li>
+  <li class="c018"><a href="/article/09-0185-el-dorado/el_dorado">El Dorado</a></li>
+  <li class="c018"><a href="/article/09-0800-esker/esker">Esker</a></li>
+  <li class="c018"><a href="/article/09-0834-estuary/estuary">Estuary</a></li>
+  <li class="c018"><a href="/article/09-0838-s3/etesian_wind">Etesian Wind</a></li>
+  <li class="c018"><a href="/article/09-0938-euroclydon/euroclydon">Euroclydon</a></li>
+  <li class="c018"><a href="/article/10-0254-fell/fell">Fell</a></li>
+  <li class="c018"><a href="/article/10-0298-s2/ferrel_s_law">Ferrel’s Law</a></li>
+  <li class="c018"><a href="/article/10-0468-s3/fjord">Fjord</a></li>
+  <li class="c018"><a href="/article/10-0544-floe/floe">Floe</a></li>
+  <li class="c018"><a href="/article/10-0546-flood-plain/flood_plain">Flood Plain</a></li>
+  <li class="c018"><a href="/article/10-0608-s7/fog">Fog</a></li>
+  <li class="c018"><a href="/article/10-0611-s5/föhn">Föhn</a></li>
+  <li class="c018"><a href="/article/11-0264-frost/frost">Frost</a></li>
+  <li class="c018"><a href="/article/11-0627-geodesy/geodesy">Geodesy</a></li>
+  <li class="c018">Geography</li>
+  <li class="c018"><a href="/article/11-0658-s2/geoid">Geoid</a></li>
+  <li class="c018"><a href="/article/11-0951-s2/giant_s_kettle">Giant’s Kettle</a></li>
+  <li class="c018"><a href="/article/12-0073-s2/glacier">Glacier</a></li>
+  <li class="c018"><a href="/article/12-0415-s3/great_circle">Great Circle</a></li>
+  <li class="c018"><a href="/article/12-0637-s2/gromatici">Gromatici</a></li>
+  <li class="c018">Ground Ice</li>
+  <li class="c018"><a href="/article/12-0739-gulf-stream/gulf_stream">Gulf Stream</a></li>
+  <li class="c018"><a href="/article/12-0818-hachure/hachure">Hachure</a></li>
+  <li class="c018"><a href="/article/12-0845-s6/hail">Hail</a></li>
+  <li class="c018"><a href="/article/12-0889-s4/halo">Halo</a></li>
+  <li class="c018"><a href="/article/12-0980-s6/harmattan">Harmattan</a></li>
+  <li class="c018"><a href="/article/13-0264-helm-wind/helm_wind">Helm Wind</a></li>
+  <li class="c018"><a href="/article/13-0483-s2/hill">Hill</a></li>
+  <li class="c018"><a href="/article/13-0744-horse-latitudes/horse_latitudes">Horse Latitudes</a></li>
+  <li class="c018"><a href="/article/13-0759-s4/horst">Horst</a></li>
+  <li class="c018"><a href="/article/13-0913-hummock/hummock">Hummock</a></li>
+  <li class="c018"><a href="/article/13-0984-s6/hurricane">Hurricane</a></li>
+  <li class="c018"><a href="/article/14-0126-s2/hydrography">Hydrography</a></li>
+  <li class="c018"><a href="/article/14-0187-hygrometer/hygrometer">Hygrometer</a></li>
+  <li class="c018"><a href="/article/14-0239-iceberg/iceberg">Iceberg</a></li>
+  <li class="c018"><a href="/article/14-0893-s6/isabnormal__or_isanomalous__lines">Isabnormal (or Isanomalous) Lines</a></li>
+  <li class="c018"><a href="/article/14-0906-island/island">Island</a></li>
+  <li class="c018"><a href="/article/14-0907-isles-of-the-blest/isles_of_the_blest">Isles of the Blest</a></li>
+  <li class="c018"><a href="/article/14-0909-isobar/isobar">Isobar</a></li>
+  <li class="c018"><a href="/article/14-0910-isoclinic-lines/isoclinic_lines">Isoclinic Lines</a></li>
+  <li class="c018"><a href="/article/14-0914-isodynamic-lines/isodynamic_lines">Isodynamic Lines</a></li>
+  <li class="c018"><a href="/article/14-0914-isogonic-lines/isogonic_lines">Isogonic Lines</a></li>
+  <li class="c018"><a href="/article/14-0917-s2/isotherm">Isotherm</a></li>
+  <li class="c018"><a href="/article/14-0919-isthmus/isthmus">Isthmus</a></li>
+  <li class="c018"><a href="/article/15-0101-itinerarium/itinerarium">Itinerarium</a></li>
+  <li class="c018"><a href="/article/15-0324-jebel/jebel">Jebel</a></li>
+  <li class="c018"><a href="/article/15-0583-s5/jungle">Jungle</a></li>
+  <li class="c018"><a href="/article/15-0672-kame/kame">Kame</a></li>
+  <li class="c018"><a href="/article/15-0799-khamsin/khamsin">Khamsin</a></li>
+  <li class="c018"><a href="/article/15-0987-kuro-siwo/kuro_siwo">Kuro Siwo</a></li>
+  <li class="c018"><a href="/article/16-0093-s2/lagoon">Lagoon</a></li>
+  <li class="c018"><a href="/article/16-0106-s2/lake">Lake</a></li>
+  <li class="c018"><a href="/article/16-0287-latitude/latitude">Latitude</a></li>
+  <li class="c018"><a href="/article/16-0519-s3/leste">Leste</a></li>
+  <li class="c018"><a href="/article/16-0525-lev-e/levée">Levée</a></li>
+  <li class="c018"><a href="/article/16-0525-s6/leveche">Leveche</a></li>
+  <li class="c018"><a href="/article/16-0695-s2/lightning">Lightning</a></li>
+  <li class="c018"><a href="/article/16-0811-lithosphere/lithosphere">Lithosphere</a></li>
+  <li class="c018"><a href="/article/16-1008-longitude/longitude">Longitude</a></li>
+  <li class="c018"><a href="/article/17-0093-s3/lowland">Lowland</a></li>
+  <li class="c018"><a href="/article/17-0094-s2/loxodrome">Loxodrome</a></li>
+  <li class="c018"><a href="/article/17-0313-s2/maelstrom">Maelstrom</a></li>
+  <li class="c018"><a href="/article/17-0313-s7/maestro">Maestro</a></li>
+  <li class="c018"><a href="/article/17-0442-maidan/maidan">Maidan</a></li>
+  <li class="c018"><a href="/article/17-0646-map/map">Map</a></li>
+  <li class="c018"><a href="/article/17-0786-s4/marsh">Marsh</a></li>
+  <li class="c018"><a href="/article/17-0886-s5/massif">Massif</a></li>
+  <li class="c018"><a href="/article/18-0185-meridian/meridian">Meridian</a></li>
+  <li class="c018"><a href="/article/18-0196-s2/mesa">Mesa</a></li>
+  <li class="c018"><a href="/article/18-0285-s2/meteorology">Meteorology</a></li>
+  <li class="c018"><a href="/article/18-0600-mirage/mirage">Mirage</a></li>
+  <li class="c018"><a href="/article/18-0646-mistral/mistral">Mistral</a></li>
+  <li class="c018"><a href="/article/18-0715-monadnock/monadnock">Monadnock</a></li>
+  <li class="c018"><a href="/article/18-0770-monsoon/monsoon">Monsoon</a></li>
+  <li class="c018"><a href="/article/18-0839-moor/moor">Moor</a></li>
+  <li class="c018"><a href="/article/18-0847-s3/moraine">Moraine</a></li>
+  <li class="c018"><a href="/article/18-0966-moulin/moulin">Moulin</a></li>
+  <li class="c018"><a href="/article/18-0969-s2/mountain">Mountain</a></li>
+  <li class="c018"><a href="/article/19-0476-n-v/névé">Névé</a></li>
+  <li class="c018"><a href="/article/19-0814-norther/norther">Norther</a></li>
+  <li class="c018"><a href="/article/19-0878-s3/nullah">Nullah</a></li>
+  <li class="c018"><a href="/article/19-0949-nunatak/nunatak">Nunatak</a></li>
+  <li class="c018"><a href="/article/19-0966-s6/nyanza">Nyanza</a></li>
+  <li class="c018"><a href="/article/19-0975-s2/oasis">Oasis</a></li>
+  <li class="c018"><a href="/article/19-1005-ocean-and-oceanography/ocean_and_oceanography">Ocean and Oceanography</a></li>
+  <li class="c018"><a href="/article/20-0154-s2/ophir">Ophir</a></li>
+  <li class="c018"><a href="/article/20-0361-orography/orography">Orography</a></li>
+  <li class="c018"><a href="/article/20-0714-pampero/pampero">Pampero</a></li>
+  <li class="c018"><a href="/article/21-0104-peninsula/peninsula">Peninsula</a></li>
+  <li class="c018"><a href="/article/21-0734-s4/plain">Plain</a></li>
+  <li class="c018"><a href="/article/21-0837-plateau/plateau">Plateau</a></li>
+  <li class="c018"><a href="/article/21-0864-playa/playa">Playa</a></li>
+  <li class="c018"><a href="/article/21-1007-s2/polder">Polder</a></li>
+  <li class="c018"><a href="/article/22-0074-pond/pond">Pond</a></li>
+  <li class="c018"><a href="/article/22-0264-prairie/prairie">Prairie</a></li>
+  <li class="c018"><a href="/article/22-0724-quagmire/quagmire">Quagmire</a></li>
+  <li class="c018"><a href="/article/22-0878-rain/rain">Rain</a></li>
+  <li class="c018"><a href="/article/22-0878-rainbow/rainbow">Rainbow</a></li>
+  <li class="c018"><a href="/article/22-0902-s5/rand">Rand</a></li>
+  <li class="c018"><a href="/article/22-0928-s2/ras">Ras</a></li>
+  <li class="c018"><a href="/article/22-0992-reef/reef">Reef</a></li>
+  <li class="c018"><a href="/article/23-0391-river/river">River</a></li>
+  <li class="c018"><a href="/article/23-0412-roaring-forties/roaring_forties">Roaring Forties</a></li>
+  <li class="c018"><a href="/article/23-1053-s2a/sahel">Sahel</a></li>
+  <li class="c018">St. Elmo’s Fire</li>
+  <li class="c018"><a href="/article/24-0234-sargasso-sea/sargasso_sea">Sargasso Sea</a></li>
+  <li class="c018"><a href="/article/24-0255-savanna/savanna">Savanna</a></li>
+  <li class="c018"><a href="/article/24-0559-sea/sea">Sea</a></li>
+  <li class="c018"><a href="/article/24-0616-s3/seiche">Seiche</a></li>
+  <li class="c018"><a href="/article/25-0150-simoom/simoom">Simoom</a></li>
+  <li class="c018"><a href="/article/25-0173-sirocco/sirocco">Sirocco</a></li>
+  <li class="c018"><a href="/article/25-0256-sleet/sleet">Sleet</a></li>
+  <li class="c018"><a href="/article/25-0311-snow/snow">Snow</a></li>
+  <li class="c018"><a href="/article/25-0312-snow-line/snow-line">Snow-Line</a></li>
+  <li class="c018"><a href="/article/25-0476-sounding/sounding">Sounding</a></li>
+  <li class="c018"><a href="/article/25-0765-s7/squall">Squall</a></li>
+  <li class="c018"><a href="/article/25-0914-s2/steppe">Steppe</a></li>
+  <li class="c018"><a href="/article/25-0995-storm/storm">Storm</a></li>
+  <li class="c018"><a href="/article/26-0036-sudd/sudd">Sudd</a></li>
+  <li class="c018"><a href="/article/26-0124-sunshine/sunshine">Sunshine</a></li>
+  <li class="c018"><a href="/article/26-0143-surge/surge">Surge</a></li>
+  <li class="c018"><a href="/article/26-0160-s3/surveying">Surveying</a></li>
+  <li class="c018"><a href="/article/26-0196-s3/swallow-hole">Swallow-hole</a></li>
+  <li class="c018"><a href="/article/26-0362-s5/tacheometry">Tacheometry</a></li>
+  <li class="c018"><a href="/article/26-0457-s5/tarn">Tarn</a></li>
+  <li class="c018"><a href="/article/26-0759-thalweg/thalweg">Thalweg</a></li>
+  <li class="c018"><a href="/article/26-0803-s2/theodolite">Theodolite</a></li>
+  <li class="c018"><a href="/article/26-0937-s3/thule">Thule</a></li>
+  <li class="c018"><a href="/article/26-0938-s6/thunder">Thunder</a></li>
+  <li class="c018"><a href="/article/26-1021-s2/timber-line">Timber-line</a></li>
+  <li class="c018"><a href="/article/27-0064-s5/topography">Topography</a></li>
+  <li class="c018"><a href="/article/27-0066-tornado/tornado">Tornado</a></li>
+  <li class="c018"><a href="/article/27-0168-s2/trade_winds">Trade Winds</a></li>
+  <li class="c018"><a href="/article/27-0393-s5/tundra">Tundra</a></li>
+  <li class="c018"><a href="/article/27-0511-s2/twilight">Twilight</a></li>
+  <li class="c018"><a href="/article/27-0527-s3/typhoon">Typhoon</a></li>
+  <li class="c018"><a href="/article/28-0237-v-shaped-depression/v-shaped_depression">V-shaped Depression</a></li>
+  <li class="c018"><a href="/article/28-0194-volcano/volcano">Volcano</a></li>
+  <li class="c018"><a href="/article/28-0244-wadi/wadi">Wadi</a></li>
+  <li class="c018"><a href="/article/28-0385-waterfall/waterfall">Waterfall</a></li>
+  <li class="c018"><a href="/article/28-0403-watershed/watershed">Watershed</a></li>
+  <li class="c018"><a href="/article/28-0403-waterspout/waterspout">Waterspout</a></li>
+  <li class="c018"><a href="/article/28-0457-weather/weather">Weather</a></li>
+  <li class="c018"><a href="/article/28-0483-wedge/wedge">Wedge</a></li>
+  <li class="c018"><a href="/article/28-0728-wind/wind">Wind</a></li>
+  <li class="c018"><a href="/article/28-0858-world/world">World</a></li>
+  <li class="c018"><a href="/article/28-1029-zone/zone">Zone</a></li>
+</ul>
+
+<div>
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

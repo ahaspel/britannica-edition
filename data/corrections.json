@@ -6,6 +6,41 @@
       "to": "The secretary had already accepted a bribe"
     }
   ],
+  "_4:682_note": "Wikisource transcription typo: '''BROWN. JOHN''' (period after BROWN) — should be a comma. Causes the boundary detector to take only 'BROWN' as the title since the period looks like sentence-end. Article is John Brown of Haddington (1722-1787), Scottish divine.",
+  "4:682": [
+    {
+      "from": "'''BROWN. JOHN''' (1722–1787)",
+      "to": "'''BROWN, JOHN''' (1722–1787)"
+    }
+  ],
+  "_18:931_note": "MOSQUE Fig. 1 wikitable mixes || and \\n| separators within rows AND has a transcription typo (width=\"40%| missing closing quote). Rewrite as a single-column legend matching Fig. 3's pattern (each entry on its own row separated by |-) so the legend extractor produces a proper LEGEND block.",
+  "18:931": [
+    {
+      "from": "{|{{Ts|ma|sm92|lh12}}\n|colspan=4|[[Image:Britannica Mosque - Amr Old Cairo plan.jpg|400px]]\n|-\n|{{Ts|ac}} colspan=4|{{sc|Fig.}} 1.—Plan of Mosque of ʽAmr, Old Cairo.\n|-\n|width=\"15%\"| ||width=\"30%\"|1, Ḳibleh.\n|width=\"10%\" align=\"right\" valign=\"top\"|5,\n|width=\"40%|Fountain for ablution.\n|-\n| ||2, Minbar.\n|align=\"right\"|6,&nbsp;6,\n|Rooms built later.\n|-\n| ||3, Tomb of ʽAmr.\n|align=\"right\"|7,\n|Minaret.\n|-\n| ||4, Dikka.\n|align=\"right\"|8,\n|Latrines.\n|}",
+      "to": "{|{{Ts|ma|sm92|lh12}}\n|[[Image:Britannica Mosque - Amr Old Cairo plan.jpg|400px]]\n|-\n|{{Ts|ac}}| {{sc|Fig.}} 1.—Plan of Mosque of ʽAmr, Old Cairo.\n|-\n| 1, Ḳibleh.\n|-\n| 2, Minbar.\n|-\n| 3, Tomb of ʽAmr.\n|-\n| 4, Dikka.\n|-\n| 5, Fountain for ablution.\n|-\n| 6, 6, Rooms built later.\n|-\n| 7, Minaret.\n|-\n| 8, Latrines.\n|}"
+    }
+  ],
+  "_2:567_note": "ARITHMETIC § 28 uses [[File:Sinnbild Autokreuzung.svg|12px]] as an inline math glyph for 'reverse multiplication'. We have no inline-image renderer; substitute the Unicode vector-cross-product character ⨯ (U+2A2F) which is visually similar and distinct from × (used elsewhere in the same paragraph for normal multiplication).",
+  "2:567": [
+    {
+      "from": "[[File:Sinnbild Autokreuzung.svg|12px]]",
+      "to": "⨯"
+    }
+  ],
+  "_27:408_note": "TUNICATA Fig. 32 has a complex outer-table containing a rowspan'd inner legend that the layout extractor can't parse — the Fig. 32 caption is lost and the inner table renders as HTMLTABLE with loose pipes. Split the outer (image+attribution+caption) from the inner legend (rewritten as a flat 2-column legend, no rowspan) so each goes through its own clean handler.",
+  "27:408": [
+    {
+      "from": "{|align=\"center\" width=\"400\"\n|[[Image:EB1911 Tunicata - Pyrosoma - arrangement of ascidiozooids.jpg|400px]]\n|-\n|{{sm|(Partly after Savigny.)}}\n|-\n|align=\"center\"|\n{{sc|Fig.}} 32.—Part of a Longitudinal Section through wall of ''Pyrosoma'',\nshowing arrangement of ascidiozooids, magnified.\n|-\n|\n{|\n|-valign=\"top\"\n|''at'',||Atrial apertures.||&emsp;||''em'',||Embryos&nbsp;in&nbsp;various&nbsp;stages.\n|-valign=\"top\"\n|''br'',||Branchial apertures.\n|\n|''t'',||Test.\n|-valign=\"top\"\n|rowspan=\"3\"|''asc'',||rowspan=\"3\"|Young ascidiozooid of a future colony produced by budding from ''cy'', cyathozooid.\n|rowspan=\"3\"|\n|''t.p'',||Processes of test.\n|-valign=\"top\"\n|''br.s'',||Branchial sac.\n|-valign=\"top\"\n|''y.as'',||Young ascidiozooid.\n|}\n|}",
+      "to": "{|align=\"center\" width=\"400\"\n|[[Image:EB1911 Tunicata - Pyrosoma - arrangement of ascidiozooids.jpg|400px]]\n|-\n|{{sm|(Partly after Savigny.)}}\n|-\n|align=\"center\"|\n{{sc|Fig.}} 32.—Part of a Longitudinal Section through wall of ''Pyrosoma'',\nshowing arrangement of ascidiozooids, magnified.\n|}\n\n{|{{Ts|ma}}\n|''at'',||Atrial apertures.\n|-valign=\"top\"\n|''br'',||Branchial apertures.\n|-valign=\"top\"\n|''asc'',||Young ascidiozooid of a future colony produced by budding from ''cy'', cyathozooid.\n|-valign=\"top\"\n|''em'',||Embryos in various stages.\n|-valign=\"top\"\n|''t'',||Test.\n|-valign=\"top\"\n|''t.p'',||Processes of test.\n|-valign=\"top\"\n|''br.s'',||Branchial sac.\n|-valign=\"top\"\n|''y.as'',||Young ascidiozooid.\n|}"
+    }
+  ],
+  "_2:579_note": "ARITHMETIC Length-units table has a transcription typo: '{{EB1911 tfrac|10' missing its closing }} before the next || cell separator, causing the cell-parsing to swallow the next cell.",
+  "2:579": [
+    {
+      "from": "| 792 || 66 || 22 || 1 || {{EB1911 tfrac|10 || {{EB1911 tfrac|80}}",
+      "to": "| 792 || 66 || 22 || 1 || {{EB1911 tfrac|10}} || {{EB1911 tfrac|80}}"
+    }
+  ],
   "_27:30_note": "TOOL page 30 is unproofed OCR (wikisource quality level 1). Figs 4-7 are on Commons? NO — Figs 4, 5, 6, 7 are NOT uploaded as individual crops (gap in the 66-image TOOL set on Commons). Instead, use the full-page DjVu raster {{raw image|...djvu/30}} once at the top of the figure region, with all four captions+legends stacked beneath it. Also fix two body-prose splits caused by image intrusion: 'straightE'/'forward' (should be 'straightforward') and 'But in all other'/'respects'. Fractions like '⅛ in.' for OCR-misread '%' glyphs. 'er' typo in 'Narrow cross-cut er cape' → 'or'.",
   "27:30": [
     {
@@ -13,7 +48,7 @@
       "to": "[[File:EB1911 - Tool - Fig 4.png|Fig. 4.—Group of Slotter Tools.]]\n\nA, Common roughing tool. B, Parting-off or grooving tool. C, Roughing or finishing tool in a holder. D, Double-edged tool for cutting opposite sides of a slot.\n\n[[File:EB1911 - Tool - Fig 5.png|Fig. 5.—Group of Tool-holders.]]\n\nA, Smith & Coventry swivelling holder. B, Holder for square steel. C, D, right- and left-hand forms of same. E, Holder for round steel. F, Holder for narrow parting-off tool."
     },
     {
-      "from": "4 .-     \n\nnl Q /\n\ngm 4 3, -\n\nQ I\n\n\", ,\n\nI C *\n\nll g|\n\n§ \u201c \n\n- FIG. 5.-Group of Tool-holders.\n\nA, Smith & Coventry swivelling holder. B, Holder for square\nsteel. C, D, right- and left-hand forms of same. E, Holder for\nround steel. F, Holder for narrow parting-off tool.\ntraverse",
+      "from": "4 .-     \n\nnl Q /\n\ngm 4 3, -\n\nQ I\n\n\", ,\n\nI C *\n\nll g|\n\n§ “ \n\n- FIG. 5.-Group of Tool-holders.\n\nA, Smith & Coventry swivelling holder. B, Holder for square\nsteel. C, D, right- and left-hand forms of same. E, Holder for\nround steel. F, Holder for narrow parting-off tool.\ntraverse",
       "to": "traverse"
     },
     {
@@ -27,6 +62,296 @@
     {
       "from": "But in all other\nmug. is  =iI.. 1IQ .II;1TI;Z§ T\n\nA  —~-~—, ..'\"'  ' 1\n\n5; \"\"\"\n\nFIG. 7.-Box Tool for Turret Lathe. (Alfred Herbert, Ltd., Coventry.)\nA, Cutting tool. B, Screw for adjusting radius of cut. C C,\nV-steadies supporting the work in opposition to A. D, Diameter\nof work. E, Body of holder. F, Stem which fits in the turret.\nrespects the two are dissimilar.",
       "to": "[[File:EB1911 - Tool - Fig 7.png|Fig. 7.—Box Tool for Turret Lathe. (Alfred Herbert, Ltd., Coventry.)]]\n\nA, Cutting tool. B, Screw for adjusting radius of cut. C C, V-steadies supporting the work in opposition to A. D, Diameter of work. E, Body of holder. F, Stem which fits in the turret.\n\nBut in all other respects the two are dissimilar."
+    }
+  ],
+  "1:543": [
+    {
+      "from": "(1808–1801)",
+      "to": "(1808–1891)"
+    }
+  ],
+  "1:693": [
+    {
+      "from": "(1884–1837)",
+      "to": "(1884–1887)"
+    }
+  ],
+  "4:151": [
+    {
+      "from": "(1434–1404)",
+      "to": "(1434–1494)"
+    }
+  ],
+  "4:839": [
+    {
+      "from": "(1521–1508)",
+      "to": "(1521–1598)"
+    }
+  ],
+  "6:643": [
+    {
+      "from": "(1805–1802)",
+      "to": "(1805–1892)"
+    }
+  ],
+  "15:165": [
+    {
+      "from": "(1479–1401)",
+      "to": "(1479–1491)"
+    }
+  ],
+  "18:678": [
+    {
+      "from": "(1892–1888)",
+      "to": "(1802–1888)"
+    }
+  ],
+  "19:685": [
+    {
+      "from": "(1826–1333)",
+      "to": "(1826–1833)"
+    }
+  ],
+  "20:862": [
+    {
+      "from": "(1729–1709)",
+      "to": "(1729–1799)"
+    }
+  ],
+  "21:169": [
+    {
+      "from": "(1789–1355)",
+      "to": "(1789–1855)"
+    }
+  ],
+  "22:158": [
+    {
+      "from": "(1505–1500)",
+      "to": "(1505–1509)"
+    }
+  ],
+  "22:198": [
+    {
+      "from": "(1892–1803)",
+      "to": "(1892–1893)"
+    }
+  ],
+  "24:373": [
+    {
+      "from": "(1240-1202)",
+      "to": "(1240-1292)"
+    }
+  ],
+  "24:849": [
+    {
+      "from": "(1863-1374)",
+      "to": "(1863-1874)"
+    }
+  ],
+  "25:569": [
+    {
+      "from": "(1387–1305)",
+      "to": "(1387–1396)"
+    }
+  ],
+  "25:607": [
+    {
+      "from": "(1816–1804)",
+      "to": "(1816–1894)"
+    }
+  ],
+  "25:660": [
+    {
+      "from": "(1835-1010)",
+      "to": "(1835-1910)"
+    }
+  ],
+  "25:797": [
+    {
+      "from": "(1840–1803)",
+      "to": "(1840–1893)"
+    }
+  ],
+  "25:1068": [
+    {
+      "from": "(1815–1005)",
+      "to": "(1815–1905)"
+    }
+  ],
+  "26:284": [
+    {
+      "from": "(1796–1349)",
+      "to": "(1796–1849)"
+    }
+  ],
+  "26:381": [
+    {
+      "from": "Thomas Hog (1628-1602)",
+      "to": "Thomas Hog (1628-1692)"
+    },
+    {
+      "from": "(1828–1803)",
+      "to": "(1828–1893)"
+    },
+    {
+      "from": ", Aube,",
+      "to": ", Aubé,"
+    },
+    {
+      "from": "Suckau and Aube.",
+      "to": "Suckau and Aubé."
+    },
+    {
+      "from": "examine*",
+      "to": "examiner"
+    }
+  ],
+  "27:888": [
+    {
+      "from": "(1817–1803)",
+      "to": "(1817–1893)"
+    }
+  ],
+  "28:347": [
+    {
+      "from": "(1856–1850)",
+      "to": "(1856–1859)"
+    }
+  ],
+  "28:862": [
+    {
+      "from": "(1590-1503)",
+      "to": "(1590-1593)"
+    }
+  ],
+  "28:944": [
+    {
+      "from": "(1485–1309)",
+      "to": "(1485–1509)"
+    }
+  ],
+  "28:1054": [
+    {
+      "from": "(1726–1708)",
+      "to": "(1726–1798)"
+    }
+  ],
+  "19:463": [
+    {
+      "from": "packets*",
+      "to": "packets"
+    }
+  ],
+  "23:887": [
+    {
+      "from": "Ioan Serban*",
+      "to": "Ioan Șerban"
+    },
+    {
+      "from": "brother Serban*",
+      "to": "brother Șerban"
+    }
+  ],
+  "24:257": [
+    {
+      "from": "investigations* In 1817",
+      "to": "investigations. In 1817"
+    }
+  ],
+  "24:353": [
+    {
+      "from": "place-names*",
+      "to": "place-names"
+    }
+  ],
+  "24:354": [
+    {
+      "from": "younger line*",
+      "to": "younger line"
+    }
+  ],
+  "24:684": [
+    {
+      "from": "spurious* Aristeas",
+      "to": "spurious. Aristeas"
+    }
+  ],
+  "24:996": [
+    {
+      "from": "waves§",
+      "to": "waves"
+    }
+  ],
+  "25:258": [
+    {
+      "from": "prevails*",
+      "to": "prevails"
+    }
+  ],
+  "25:782": [
+    {
+      "from": "The \nPrussian*",
+      "to": "The \nPrussian"
+    }
+  ],
+  "25:1015": [
+    {
+      "from": "evidence prove*",
+      "to": "evidence proves"
+    }
+  ],
+  "25:1020": [
+    {
+      "from": "of all kind*",
+      "to": "of all kinds"
+    }
+  ],
+  "25:1048": [
+    {
+      "from": "begin with* nor",
+      "to": "begin with, nor"
+    }
+  ],
+  "26:136": [
+    {
+      "from": "tangent planes*",
+      "to": "tangent planes"
+    }
+  ],
+  "26:820": [
+    {
+      "from": "A. Ritschl*",
+      "to": "A. Ritschl"
+    }
+  ],
+  "26:879": [
+    {
+      "from": "by\nnights* The",
+      "to": "by\nnights. The"
+    }
+  ],
+  "27:152": [
+    {
+      "from": "uniform\nand narrow*",
+      "to": "uniform\nand narrow"
+    }
+  ],
+  "27:894": [
+    {
+      "from": "necessary for value*",
+      "to": "necessary for value"
+    }
+  ],
+  "27:1021": [
+    {
+      "from": "been\nnominated*",
+      "to": "been\nnominated"
+    }
+  ],
+  "28:1047": [
+    {
+      "from": "receive privilege§",
+      "to": "receive privileges"
     }
   ]
 }

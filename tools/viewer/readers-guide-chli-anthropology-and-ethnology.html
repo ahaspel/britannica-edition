@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anthropology And Ethnology &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter LI</span>Anthropology And Ethnology</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Man’s Origin</a></li><li><a href="#sh-2">Races of Man</a></li><li><a href="#sh-3">Antiquity of Man</a></li><li><a href="#sh-4">Language</a></li><li><a href="#sh-5">Development of Civilization</a></li><li><a href="#sh-6">Ethnology</a></li><li><a href="#sh-7">North American Indians</a></li><li><a href="#sh-8">Central America</a></li><li><a href="#sh-9">Terminology</a></li><li><a href="#sh-10">Taboo and Totem</a></li><li><a href="#sh-11">Religion</a></li><li><a href="#sh-12">Biographical Study</a></li></ol></div>
+    <div class="body-text">
+
+
+<p>These two sciences are devoted to
+the study of mankind before written
+history began; and they have
+an interest for every reader who has
+asked, when he was a child and had a
+story told him: “What happened <i>before</i>
+that?” In the chapter in this Guide on
+<i>Language and Writing</i>, we have told the
+story of those two great inventions which
+made civilization possible. The present
+chapter is devoted to the story of man
+before writing was commonly used—that
+is, before historical documents could
+exist.</p>
+
+<p>Just as the study of children and their
+habits is something new and peculiarly
+characteristic of the last generation, so
+these sciences of anthropology and ethnology
+which deal with the childhood of
+the human race are of recent origin. But
+in comparison with child-psychology
+these two sciences are at a disadvantage
+in a very important respect: there are always
+children to be studied, but the
+childhood of the race is long past and
+remote from the student of it, save for
+the primitive tribes which can still be
+observed, and even these tribes are now
+scattered and few, and by contact with
+civilization they are rapidly losing the
+characteristics which invite scientific
+study. A hundred years ago, the opportunities
+for experiment and observation
+were far greater, but at that time savages
+were not seriously studied. There could,
+indeed, be no “science of man” before the
+evolutionary theory of Darwin, Wallace
+and Huxley had been generally accepted.
+Throughout this Guide we see how
+this theory has affected all our modern
+thought, modified our sciences, and even
+created new sciences. The Eleventh Edition
+of the Encyclopaedia Britannica
+may, indeed, be described as the authoritative
+and interesting story of the human
+activities, critically studied from the
+point of view of evolution. The trustworthy
+material is chiefly derived from
+observations in Australia, in the South
+Seas, among the North American Indians
+and among the still savage tribes of
+Africa, and from studies of the tools and
+other remains of early peoples. All broad
+conclusions must be based upon the similarity
+of customs among races widely
+separated by time and place, and upon
+the fact that some traces of such customs
+are still found among more highly civilized
+peoples.</p>
+
+<p>The first article in a course of reading
+on the “science of man” in the Britannica
+is <span class="sc"><a href="/article/02-0119-s3/anthropology">Anthropology</a></span> (Vol. 2, p. 108),
+equivalent to 40 pages in this Guide, illustrated,
+by <a href="/contributors.html?q=Edward+Burnett+Tylor">Prof. Tylor</a>, of Oxford University,
+one of the founders of the science,
+and author of <i>Researches into the Early
+History of Mankind</i>, <i>Primitive Culture</i>,
+etc.</p>
+
+<p><span class="shoulder-heading" id="sh-1">Man’s Origin</span>This great article deals first with
+“man’s place in Nature,” the most interesting
+branch of the theory of evolution.
+<a href="/contributors.html?q=Edward+Burnett+Tylor">Prof. Tylor</a> traces
+back the recognition
+of man’s structural
+similarity to the higher apes to Linnaeus
+(1735) and to the less scientific Lord
+Monboddo (1774 and 1778), whose simple
+literary style as well as his theory of
+the descent of man aroused the amusement
+and scorn of Dr. Samuel Johnson,
+who said that Monboddo was “as jealous
+of his tail as a squirrel.”</p>
+
+<p><a href="/contributors.html?q=Edward+Burnett+Tylor">Dr. Tylor</a> remarks that:</p>
+
+<p>There are few ideas more ingrained in ancient
+and low civilization than that of relationship
+by descent between the lower animals
+and man. Savage and barbaric religions
+recognize it, and the mythology of the
+world has hardly a more universal theme.
+But in educated Europe such ideas had long
+been superseded by the influence of theology
+and philosophy, with which they seemed too
+incompatible.</p>
+
+<p>But in 1843 Dr. J. C. Prichard, to whom
+<a href="/contributors.html?q=Edward+Burnett+Tylor">Tylor</a> gives the title that many would
+give to <a href="/contributors.html?q=Edward+Burnett+Tylor">Tylor</a> himself, “founder of modern
+anthropology,” insisted that</p>
+
+<p>man is but an animal ... composed
+of the same materials, and framed on the
+same principles, as the creatures which he
+has tamed to be the servile instruments of
+his will, or slays for his daily food.</p>
+
+<p><a href="/contributors.html?q=Edward+Burnett+Tylor">Dr. Tylor</a> shows how Wallace and Darwin
+established a theory of human descent,
+and sums up the similarities and
+dissimilarities in anatomical construction
+between man and the man-like apes.
+Even more interesting is what the article
+says (p. 110) about “assigning to man
+his place in nature on psychological
+grounds.”</p>
+
+<p>Huxley acknowledged an immeasurable
+and practically infinite divergence, ending
+in the present enormous psychological gulf
+between ape and man. It is difficult to account
+for this intellectual chasm as due to
+some minor structural difference....
+Beyond a doubt, man possesses, and in some
+way possesses by virtue of his superior brain,
+a power of co-ordinating the impressions of
+his senses, which enables him to understand
+the world he lives in, and by understanding
+to use, resist, and even in a measure rule it.
+No human art shows the nature of this human
+attribute more clearly than does language</p>
+
+<p>—although other animals have a sort of
+language. The article quotes Dr. A.
+Russel Wallace’s conclusion that man
+stands “apart, as not only the head and
+culminating point of the grand series of
+organic nature, but as in some degree a
+new and distinct order of being.” And
+another great anatomist, Prof. St. George
+Mivart, says “Man’s animal body must
+have had a different source from that of
+the spiritual soul which informs it, owing
+to the distinctness of the two orders to
+which these existences severally belong.”
+<a href="/contributors.html?q=Edward+Burnett+Tylor">Dr. Tylor</a>, in citing these authorities, adds
+that “man embodies an immaterial and
+immortal, spiritual principle which no
+lower creature possesses, and which
+makes the resemblance of the apes to
+him but a mocking simulance.”</p>
+
+<p>The answer to the question “How did
+man originate?” depends on the answer
+to the question “How did species originate?”
+The main points are summed up
+in the article <span class="sc"><a href="/article/02-0119-s3/anthropology">Anthropology</a></span> (on p. 112),
+which also deals with the fossil remains of
+man, especially skulls, and their bearing
+on the question. A more detailed discussion
+will be found in the articles <span class="sc"><a href="/article/10-0034-evolution/evolution">Evolution</a></span>
+(Vol. 10, p. 22) and <span class="sc"><a href="/article/25-0637-s3/species">Species</a></span> (Vol. 25,
+p. 616).</p>
+
+<p><span class="shoulder-heading" id="sh-2">Races of Man</span>The classification of man into different
+races is the topic next taken up by <a href="/contributors.html?q=Edward+Burnett+Tylor">Dr.
+Tylor</a> in the article <span class="sc"><a href="/article/02-0119-s3/anthropology">Anthropology</a></span>, and
+he deals particularly
+with classification by
+the “facial angle”
+(on which see also the article <span class="sc"><a href="/article/07-0392-craniometry/craniometry">Craniometry</a></span>,
+Vol. 7, p. 372). Different classifications
+are criticized and the article decides
+that “Huxley’s division probably
+approaches more nearly than any other
+to such a tentative classification as may
+be accepted.... He distinguishes four
+principal types of mankind, the Australioid,
+Negroid, Mongoloid and Xanthochroic
+(fair whites), adding a fifth variety,
+the Melanchroic (dark whites).”
+That races are not species, zoologically, is
+made plain by the fact that the offspring
+of parents of different races are fertile—those
+of different species being infertile.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Antiquity of Man</span>One of the questions connected with
+the origin of man is his antiquity. The
+Biblical chronology,
+as commonly reckoned
+and interpreted,
+allowed a time since
+the appearance of the original stock
+which seemed far too short for the apparent
+variation from the original species
+(see <span class="sc"><a href="/article/06-0321-chronology/chronology">Chronology</a></span>, Vol. 6, p. 305). The
+natural sciences, notably geology, have
+“made it manifest that our earth must
+have been the seat of vegetable and animal
+life for an immense period of time;
+while the first appearance of man, though
+comparatively recent, is positively so remote,
+that an estimate between twenty
+and a hundred thousand years may fairly
+be taken as a minimum.” This geological
+claim is supported by the evidence of prehistoric
+archaeology (see the article
+<span class="sc"><a href="/article/02-0359-s2/archaeology">Archaeology</a></span>, Vol. 2, p. 344). In the
+caves of France and Belgium human
+bones have been found with the remains
+of fossil species of elephant, rhinoceros,
+hyena, bear, etc., and “the co-existence
+of man with a fauna now extinct or confined
+to other districts was brought to yet
+clearer demonstration by the discovery in
+these caves of certain drawings and carvings
+of the animals done by the ancient
+inhabitants themselves, such as a group
+of reindeer on a piece of reindeer horn,
+and a sketch of a mammoth, showing the
+elephant’s long hair, on a piece of a
+mammoth’s tusk from La Madeleine.”
+See Fig. 7, Plate facing p. 118, Vol. 2; the
+figures of the reindeer and mammoth,
+hairy and with upturned tusks, in Plate
+II, article <span class="sc"><a href="/article/02-0359-s2/archaeology">Archaeology</a></span> (following p.
+348, Vol. 2); and of the reindeer in Plate
+I (Vol. 19, p. 462), and the old cave
+paintings of wild boars and bison from
+Altamira, reproduced in colour on Plate
+II, the next page. These paintings,
+marking by their technical excellence a
+high stage of art if not of civilization, are
+said by geologists to date back 50,000
+years. The student will be repaid for
+turning a moment from the article <span class="sc"><a href="/article/02-0119-s3/anthropology">Anthropology</a></span>
+and the question of the antiquity
+of man to the article <span class="sni"><span class="hidev">|</span>Cave-Dwellers<span class="hidev">|</span></span>
+<span class="sc"><a href="/article/05-0598-cave/cave">Cave</a></span> (Vol.
+5, p. 573), by the eminent
+archaeologist, W. Boyd Dawkins,
+and the author of
+<i>Cave-hunting</i> and <i>Early Man in Britain</i>.
+He reconstructs the civilization of the inhabitants
+of the pleistocene caves of the
+European continent (p. 576), describes
+the carvings and drawings of which we
+have just spoken, and says of the cave-dwellers:</p>
+
+<p>If these remains be compared with those
+of existing races, it will be found that the
+cave-men were in the same hunter stage of
+civilization as the Eskimos, and that they
+are unlike any other races of hunters. If
+they were not allied to the Eskimos by blood,
+there can be no doubt that they handed down
+to the latter their art and their manner
+of life. The bone needles, and many of
+the harpoons, as well as the flint spearheads,
+arrowheads and scrapers, are of precisely
+the same form as those now in use amongst
+the Eskimos. The artistic designs from the
+caves of France, Belgium and Switzerland,
+are identical in plan and workmanship with
+those of the Eskimos.... The reindeer,
+which they both knew, is represented in the
+same way by both. The practice of accumulating
+large quantities of the bones of animals
+round their dwelling-places, and the
+habit of splitting the bones for the sake of
+the marrow, are the same in both. The hides
+were prepared with the same sort of instruments,
+and the needles with which they were
+sewn together are of the same pattern. The
+stone lamps were used by both. In both
+there was the same disregard for sepulture.
+All these facts can hardly be mere coincidences
+caused by both peoples leading a savage
+life under similar conditions. The conclusion,
+therefore, seems inevitable that, so
+far as we have any evidence of the race to
+which the cave-dwellers belong, that evidence
+points only in the direction of the Eskimos.
+It is to a considerable extent confirmed by a
+consideration of the animals found in the
+caves. The reindeer and musk sheep afford
+food to the Eskimos now in the Arctic Circle,
+just as they afforded it to the cave-men in
+Europe; and both these animals have been
+traced by their remains from the Pyrenees
+to the north-east through Europe and Asia
+as far as the very regions in which they now
+live. The mammoth and bison also have been
+tracked by their remains in the frozen river
+gravels and morasses through Siberia as far
+as the American side of Bering Strait.
+Palaeolithic man appeared in Europe with
+the arctic mammalia, lived in Europe with
+them, and in all human probability retreated
+to the north-east along with them.</p>
+
+<p>The antiquity of man may be estimated
+also by the time it must have taken
+to deposit the soil that overlies traces of
+civilization,—for instance in Egypt where
+pottery is found 60 feet deep, while inundations
+from the Nile probably have
+not averaged more than a few inches in a
+century. “The most recent work of
+Egyptologists proves a systematic civilization
+to have existed in the valley of the
+Nile at least 6000 to 7000 years ago.”
+Similar testimony is given by examining
+the lake-dwellings of Switzerland and the
+kitchen middens of Denmark. On these
+see the articles <span class="sc"><a href="/article/16-0111-s2/lake_dwellings">Lake Dwellings</a></span> (Vol.
+16, p. 91), by <a href="/contributors.html?q=Joseph+Anderson">Joseph Anderson</a>, keeper of
+the National Museum of Antiquities,
+Edinburgh, and <span class="sc"><a href="/article/24-0866-shell-heaps/shell-heaps">Shell-heaps</a></span> (Vol. 24, p.
+832). The latter article, in a description
+of the middens of Denmark, says:</p>
+
+<p>Among the bones were those of the wild
+bull or aurochs, beaver, seal and great auk,
+all now extinct or rare in this region. Moreover,
+a striking proof of the antiquity of
+these shell-heaps is that they contain full-sized
+shells of the common oyster, which cannot
+live at present in the brackish waters
+of the Baltic except near its entrance, the
+inference being that the shores where the
+oyster at that time flourished were open to
+the salt sea.</p>
+
+<p>The article on <span class="sc"><a href="/article/16-0111-s2/lake_dwellings">Lake Dwellings</a></span> brings
+out very clearly the fact that this, like
+other early stages of development, is to
+be found at widely different periods of
+time: in Switzerland, thousands of years
+ago; in Scotland and Ireland (see also the
+article <span class="sc"><a href="/article/07-0397-crannog/crannog">Crannog</a></span>, Vol. 7, p. 377) during
+the Christian era; and in New Guinea and
+Central Africa within the last few years.
+This is in accordance with the fact that
+the human race has not “matured” with
+equal rapidity all over the earth—that
+even now one race is in infancy, another
+in childhood, another in a transition
+stage like adolescence, and another in the
+prime of civilization.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Language</span>Returning to the article <span class="sc"><a href="/article/02-0119-s3/anthropology">Anthropology</a></span>,
+the next topic treated is Language.
+The more important points on
+this subject are
+stated in another
+chapter of this part
+of the Guide, on <i>Language and Writing</i>.
+<a href="/contributors.html?q=Edward+Burnett+Tylor">Dr. Tylor</a> says:</p>
+
+<p>For all that known dialects prove to the
+contrary, on the one hand, there may have
+been one primitive language, from which the
+descendant languages have varied so widely,
+that neither their words nor their formation
+now indicate their unity in long past ages,
+while, on the other hand, the primitive
+tongues of mankind may have been numerous,
+and the extreme unlikeness of such languages
+as Basque, Chinese, Peruvian, Hottentot
+and Sanskrit may arise from absolute
+independence of origin. The language
+spoken by any tribe or nation is not of itself
+absolute evidence as to its race-affinities.
+This is clearly shown in extreme cases. Thus
+the Jews in Europe have almost lost the use
+of Hebrew, but speak as their vernacular
+the language of their adopted nation, whatever
+it may be.... In most or all nations of
+mankind, crossing or intermarriage of races
+has taken place between the conquering invader
+and the conquered native, so that the
+language spoken by the nation may represent
+the results of conquest as much or
+more than of ancestry.... On the other
+hand, the language of the warlike invader or
+peaceful immigrant may yield, in a few
+generations, to the tongue of the mass of the
+population, as the Northman’s was replaced
+by the French, and modern German gives
+way to English in the United States.</p>
+
+<p><span class="shoulder-heading" id="sh-5">Development of Civilization</span>The last general topic in the article
+<span class="sc"><a href="/article/02-0119-s3/anthropology">Anthropology</a></span> is Development of Civilization.
+In connection with it the student
+should read the
+article <span class="sc"><a href="/article/06-0419-civilization/civilization">Civilization</a></span>
+(Vol. 6, p. 403), by
+Dr. <a href="/contributors.html?q=Rev.+Henry+Herbert+Williams">H. S. Williams</a>,
+editor-in-chief of <i>The Historian’s History
+of the World</i>, and particularly the first
+part of it dealing with early times.</p>
+
+<p><span class="shoulder-heading" id="sh-6">Ethnology</span>The comparatively brief article <span class="sc"><a href="/article/09-0881-s2/ethnology">Ethnology
+and Ethnography</a></span> (Vol. 9, p.
+849) takes up the story of man’s progress
+at the point where
+<span class="sc"><a href="/article/02-0119-s3/anthropology">Anthropology</a></span>
+stops, and deals particularly
+with the division of mankind
+into separate races. Was pleistocene man
+specifically one? The evidence to supply
+an answer to this question is of three
+kinds: anatomical, physiological and cultural
+and psychical. Human bones from
+this early period “show differences so
+slight as to admit of pathological or other
+explanation,” and do not prove that there
+were separate species. The physiological
+answer, that there was only one species,
+is given and explained in the article <span class="sc"><a href="/article/02-0119-s3/anthropology">Anthropology</a></span>:
+species cannot breed with
+species, and hybrids are infertile. The
+third answer is also in the negative.
+“The works of early man everywhere present
+the most startling resemblance.”
+Dr. J. C. Prichard is quoted in the article
+as saying that</p>
+
+<p>the same inward and mental nature is to be
+recognized in all races of men. When we
+compare this fact with the observations, fully
+established, as to the specific instincts and
+separate psychical endowments of all the distinct
+tribes of sentient beings in the universe
+we are entitled to draw confidently the conclusion
+that all human races are of one
+species and one family.</p>
+
+<p>If man was specifically one, where did
+he originate and how did he spread over
+the world? “As to man’s cradle-land
+there have been many theories, but the
+weight of evidence is in favour of Indo-Malaysia.”
+The problem of distribution
+“has been met by geology, which proves
+that the earth’s surface has undergone
+great changes since man’s appearance,
+and that continents, long since submerged,
+once existed, making a complete land
+communication from Indo-Malaysia....
+Proofs no less cogent are available of the
+former existence of an Eurafrican continent,
+while the extension of Australia
+in the direction of New Guinea is more
+than probable.... The western hemisphere
+was probably connected with Europe
+and Asia, in Tertiary times.” The
+article <span class="sc"><a href="/article/09-0881-s2/ethnology">Ethnology</a></span> closes with a description
+of the four divisions of the human
+race proposed by Huxley, which have
+already been enumerated.</p>
+
+<p>Separate articles supplementing these
+two main articles, <span class="sc"><a href="/article/02-0119-s3/anthropology">Anthropology</a></span> and
+<span class="sc"><a href="/article/09-0881-s2/ethnology">Ethnology</a></span>, especially in the field of
+comparative anatomy, are: <span class="sc"><a href="/article/02-0131-s2/anthropometry">Anthropometry</a></span>
+(Vol. 2, p. 119) for physical measurements,
+including the Bertillon system
+used to identify criminals; <span class="sc"><a href="/article/04-0381-brachycephalic/brachycephalic">Brachycephalic</a></span>
+(Vol. 4, p. 366), or short-headed, a
+term applied to Indo-Chinese, Savoyards,
+Croatians, Lapps, etc.; <span class="sc"><a href="/article/08-0409-dolichocephalic/dolichocephalic">Dolichocephalic</a></span>
+(Vol. 8, p. 388), or long-headed, like
+Eskimos, negroes, etc.; <span class="sc"><a href="/article/18-0198-s4/mesocephalic">Mesocephalic</a></span>
+(Vol. 18, p. 179), for the type between the
+two; <span class="sc"><a href="/article/22-0439-prognathism/prognathism">Prognathism</a></span> (Vol. 22, p. 424), for
+jaw protrusion; <span class="sc"><a href="/article/07-0392-craniometry/craniometry">Craniometry</a></span> (Vol. 7, p.
+372) and <span class="sc"><a href="/article/05-0710-cephalic-index/cephalic_index">Cephalic Index</a></span> (Vol. 5, p.
+684), for the measurement of skulls and
+heads; <span class="sc"><a href="/article/25-0882-s3/steatopygia">Steatopygia</a></span> (Vol. 25, p. 860),
+for a peculiar heaviness of hips found in
+some negro and other savage peoples;
+<span class="sc"><a href="/article/18-0760-monogenists/monogenists">Monogenists</a></span> (Vol. 18, p. 730), on the
+theory that all men are descended from a
+common original stock; and <span class="sc"><a href="/article/22-0038-s2/polygenists">Polygenists</a></span>
+(Vol. 22, p. 24) on the opposite
+theory.</p>
+
+<p><span class="shoulder-heading" id="sh-7">North American Indians</span>One of the most elaborate ethnological
+articles in the Britannica is of particular
+interest to Americans, that on <span class="sc"><a href="/article/14-0480-indians-north-american/indians__north_american">Indians,
+North American</a></span> (Vol. 14, p. 452), by
+Dr. <a href="/contributors.html?q=Alexander+Francis+Chamberlain">A. F. Chamberlain</a>,
+professor of anthropology,
+Clark University, Worcester,
+Mass. It is equivalent to more than 100
+pages of this Guide, and there are also
+scores of brief articles on different North
+American Indian tribes. A few, only, of
+the many interesting topics treated in it
+may be mentioned:</p>
+
+<p>The name “American Indians”—due
+to the mistaken early belief that
+the New World was a part of Asia.
+“Amerind” a suggested substitute.
+Various uses of “Indian.” French
+“sauvage” the original of “Siwash.”</p>
+
+<p>Popular fallacies of the origin of the
+Indians—Welsh, “lost Ten Tribes,”
+etc.</p>
+
+<p>Linguistic stocks. Table of languages.
+General description; varied
+character; enormous compound words,
+like <i>deyeknonhsedehrihadasterasterahetakwa</i>
+for “stove-polish.” Indian literature.</p>
+
+<p>Migrations of Indian stocks. Tabular
+conspectus of 180 tribes—situation
+and population, degree of intermixture,
+condition and progress, and authorities
+on each.</p>
+
+<p>Population, physical characteristics,
+race mixture.</p>
+
+<p>Culture, arts, industries, religion,
+mythology and games.</p>
+
+<p>Social organization, contact of Indians
+and whites, Indian wars, missions,
+Indian talent and capacity, syllabaries
+invented by Indians.</p>
+
+<p>In addition to the articles on Indian
+tribes there are many on Indian notables—for
+example, <span class="sc"><a href="/article/22-0080-s2/pontiac">Pontiac</a></span>, <span class="sc"><a href="/article/26-0528-tecumseh/tecumseh">Tecumseh</a></span>,
+<span class="sc"><a href="/article/21-0410-s3/philip__king">King Philip</a></span>, <span class="sc"><a href="/article/04-0035-black-hawk/black_hawk">Black Hawk</a></span>, <span class="sc"><a href="/article/04-0446-brant-joseph/brant__joseph">Brant</a></span>, and
+<span class="sc"><a href="/article/25-0178-sitting-bull/sitting_bull">Sitting Bull</a></span>.</p>
+
+<p><span class="shoulder-heading" id="sh-8">Central America</span>Interest in the Indians of Central
+America, popularly called Aztecs, is
+rather archaeological than ethnological.
+See in the Britannica the
+article <span class="sc"><a href="/article/05-0699-central-america/central_america">Central America</a></span>
+(Vol. 5, p. 677), by Dr.
+<a href="/contributors.html?q=Walter+Lehmann">Walter Lehmann</a>, directorial
+assistant of the Royal Ethnological
+Museum, Munich; and the article <span class="sc"><a href="/article/01-0851-america/america">America</a></span>,
+<i>Ethnology and Archaeology</i> (Vol. 1,
+p. 810), by <a href="/contributors.html?q=Otis+Tufton+Mason">O. T. Mason</a>, late curator,
+Department of Anthropology, National
+Museum, Washington, dealing with the
+Indians of North, Central and South
+America in general. The other principal
+articles on races or tribes of
+unusual ethnographic importance are:</p>
+
+<p><span class="sc"><a href="/article/19-0362-negro/negro">Negro</a></span> (Vol. 14, p. 344), by <a href="/contributors.html?q=Thomas+Athol+Joyce">Thomas
+Athol Joyce</a>, assistant in the Department
+of Ethnography, British Museum,—with
+a section on the negro in the United
+States, by <a href="/contributors.html?q=Walter+Francis+Willcox">Walter F. Willcox</a>, late chief
+statistician, United States Census Bureau;
+supplemented by <span class="sc"><a href="/article/01-0358-africa/africa">Africa</a></span>, <i>Ethnology</i>
+(Vol. 1, p. 325), by Mr. <a href="/contributors.html?q=Thomas+Athol+Joyce">T. A.
+Joyce</a>, with a particularly valuable classified
+list (p. 329) of African tribal distribution,
+which may be made the basis for
+further study by reference to articles on
+the separate tribes, such as <span class="sc"><a href="/article/03-0784-berbers/berbers">Berbers</a></span>,
+<span class="sc"><a href="/article/15-0652-kabyles/kabyles">Kabyles</a></span>, <span class="sc"><a href="/article/19-0160-mzabites/mzabites">Mzabites</a></span>, <span class="sc"><a href="/article/27-0369-s2/tuareg">Tuareg</a></span>, etc.</p>
+
+<p><span class="sc"><a href="/article/22-0047-s2/polynesia">Polynesia</a></span> (Vol. 22, p. 33) for the
+Polynesian race; and also <span class="sc"><a href="/article/24-0129-s2/samoa">Samoa</a></span> (Vol.
+24, p. 115) and <span class="sc"><a href="/article/13-0096-hawaii/hawaii">Hawaii</a></span> (Vol. 13, p. 83)</p>
+
+<p><span class="sc"><a href="/article/02-0991-s4/australia">Australia</a></span>, <i>Aborigines</i> (Vol. 2, p. 954)
+and <i>Maori</i>. The following is a list in alphabetical
+order of articles on races or tribes:</p>
+
+<ul class="index">
+  <li class="c018">Ababda</li>
+  <li class="c018"><a href="/article/01-0096-s2/abipones">Abipones</a></li>
+  <li class="c018"><a href="/article/01-0097-s2/abnaki">Abnaki</a></li>
+  <li class="c018"><a href="/article/01-0098-s8/aborigines">Aborigines</a></li>
+  <li class="c018"><a href="/article/01-0176-s2/acholi">Acholi</a></li>
+  <li class="c018"><a href="/article/01-0336-s2/afars">Afars (Danakil)</a></li>
+  <li class="c018"><a href="/article/01-0400-s6/agaiambo">Agaiambo</a></li>
+  <li class="c018"><a href="/article/01-0471-s2/ahom">Ahom</a></li>
+  <li class="c018"><a href="/article/01-0472-s4/aht">Aht</a></li>
+  <li class="c018"><a href="/article/01-0472-s5/ahtena">Ahtena</a></li>
+  <li class="c018"><a href="/article/01-0477-s3/aimak">Aimak, or Eimak</a></li>
+  <li class="c018"><a href="/article/01-0479-s6/ainu">Ainu</a></li>
+  <li class="c018"><a href="/article/01-0494-s6/akka">Akka</a></li>
+  <li class="c018"><a href="/article/01-0625-s3/alfuros">Alfuros</a></li>
+  <li class="c018"><a href="/article/01-0696-s2/algonquin">Algonquin</a></li>
+  <li class="c018"><a href="/article/01-0819-s3/alur">Alur</a></li>
+  <li class="c018"><a href="/article/01-0827-s1/amarar">Amarar</a></li>
+  <li class="c018"><a href="/article/02-0132-s3/anti">Anti, or Campa</a></li>
+  <li class="c018"><a href="/article/02-0170-s9/apache">Apache</a></li>
+  <li class="c018"><a href="/article/02-0170-s10/apalachee">Apalachee</a></li>
+  <li class="c018"><a href="/article/02-0298-s6/arabs">Arabs</a></li>
+  <li class="c018"><a href="/article/02-0334-s2/arapaho">Arapaho</a></li>
+  <li class="c018"><a href="/article/02-0336-s5/araucanians">Araucanians</a></li>
+  <li class="c018"><a href="/article/02-0337-s5/arawak">Arawak</a></li>
+  <li class="c018"><a href="/article/02-0489-s5/areoi">Areoi</a></li>
+  <li class="c018"><a href="/article/02-0529-s3/arikara">Arikara, or Aricara</a></li>
+  <li class="c018"><a href="/article/02-0705-s3/artega">Artega</a></li>
+  <li class="c018"><a href="/article/02-0777-s5/ashraf">Ashraf (Shurefa)</a></li>
+  <li class="c018"><a href="/article/02-0828-s4/assiniboin">Assiniboin</a></li>
+  <li class="c018"><a href="/article/02-0874-s2/athapascan">Athapascan</a></li>
+  <li class="c018"><a href="/article/02-0926-s2/attacapa">Attacapa</a></li>
+  <li class="c018">Awadia and Fadnia</li>
+  <li class="c018"><a href="/article/03-0088-s4/aymara">Aymara</a></li>
+  <li class="c018"><a href="/article/03-0101-s2/aztecs">Aztecs</a></li>
+  <li class="c018"><a href="/article/03-0112-s2/babu">Babu</a></li>
+  <li class="c018"><a href="/article/03-0198-s3/badagas">Badagas</a></li>
+  <li class="c018">Baggára</li>
+  <li class="c018"><a href="/article/03-0243-s4/bakalai">Bakalai</a></li>
+  <li class="c018"><a href="/article/03-0246-s7/bakhtiári">Bakhtiári</a></li>
+  <li class="c018"><a href="/article/03-0248-s3/ba-kwiri">Ba-Kwiri</a></li>
+  <li class="c018"><a href="/article/03-0308-s3/ba-luba">Ba-Luba</a></li>
+  <li class="c018"><a href="/article/03-0321-s2/bambute">Bambute</a></li>
+  <li class="c018"><a href="/article/03-0324-s2/banate">Banate</a></li>
+  <li class="c018"><a href="/article/03-0333-bangash/bangash">Bangash</a></li>
+  <li class="c018"><a href="/article/03-0396-barabra/barabra">Barabra</a></li>
+  <li class="c018"><a href="/article/03-0417-bari-town/bari__town_">Bari</a></li>
+  <li class="c018"><a href="/article/03-0483-bashkirs/bashkirs">Bashkirs</a></li>
+  <li class="c018"><a href="/article/03-0502-basques/basques">Basques</a></li>
+  <li class="c018"><a href="/article/03-0546-battakhin/battakhin">Battakhin</a></li>
+  <li class="c018"><a href="/article/03-0546-battanni/battanni">Battanni</a></li>
+  <li class="c018"><a href="/article/03-0547-battas/battas">Battas</a></li>
+  <li class="c018"><a href="/article/03-0552-batwa/batwa">Batwa</a></li>
+  <li class="c018"><a href="/article/03-0580-bazigars/bazigars">Bazigars</a></li>
+  <li class="c018"><a href="/article/03-0622-bechuana/bechuana">Bechuana</a></li>
+  <li class="c018"><a href="/article/03-0641-bedouins/bedouins">Bedouins</a></li>
+  <li class="c018">Beja, or Bija</li>
+  <li class="c018"><a href="/article/03-0712-bellabella/bellabella">Bellabella</a></li>
+  <li class="c018"><a href="/article/03-0712-bellacoola/bellacoola">Bellacoola, or Bilqula</a></li>
+  <li class="c018"><a href="/article/03-0757-beni-amer/beni-amer">Beni-Amer</a></li>
+  <li class="c018"><a href="/article/03-0757-beni-israel/beni-israel">Beni-Israel</a></li>
+  <li class="c018"><a href="/article/03-0777-beothuk/beothuk">Beothuk</a></li>
+  <li class="c018"><a href="/article/03-0784-berbers/berbers">Berbers</a></li>
+  <li class="c018"><a href="/article/03-0831-bertat/bertat">Bertat</a></li>
+  <li class="c018"><a href="/article/03-0866-bhattiana/bhattiana">Bhattiana</a></li>
+  <li class="c018"><a href="/article/03-0866-bhils/bhils">Bhils, or Bheels</a></li>
+  <li class="c018"><a href="/article/03-0969-bimana/bimana">Bimana</a></li>
+  <li class="c018">Bisharin</li>
+  <li class="c018"><a href="/article/04-0034-blackfoot/blackfoot">Blackfoot</a></li>
+  <li class="c018"><a href="/article/04-0128-boer/boer">Boer</a></li>
+  <li class="c018"><a href="/article/04-0133-s3/bogos">Bogos (Bilens)</a></li>
+  <li class="c018"><a href="/article/04-0166-bois-br-l-s/bois_brûlés">Bois Brûlés</a></li>
+  <li class="c018"><a href="/article/04-0217-bongo/bongo">Bongo</a></li>
+  <li class="c018"><a href="/article/04-0319-botocudos/botocudos">Botocudos</a></li>
+  <li class="c018"><a href="/article/04-0371-bozdar/bozdar">Bozdar</a></li>
+  <li class="c018"><a href="/article/04-0405-brahui/brahui">Brahui</a></li>
+  <li class="c018"><a href="/article/04-0782-s5/bugis">Bugis</a></li>
+  <li class="c018"><a href="/article/04-0784-s2/bugti">Bugti</a></li>
+  <li class="c018"><a href="/article/04-0847-s3/buriats">Buriats</a></li>
+  <li class="c018"><a href="/article/04-0895-s2/bushmen">Bushmen</a></li>
+  <li class="c018"><a href="/article/04-0953-s5/caddo">Caddo</a></li>
+  <li class="c018"><a href="/article/04-0973-s4/cagots">Cagots</a></li>
+  <li class="c018"><a href="/article/04-0973-s6/cahita">Cahita</a></li>
+  <li class="c018"><a href="/article/04-0973-s7/cahokia">Cahokia</a></li>
+  <li class="c018"><a href="/article/04-0988-s6/cakchiquel">Cakchiquel</a></li>
+  <li class="c018"><a href="/article/04-0996-s2/calchaqui">Calchaqui</a></li>
+  <li class="c018"><a href="/article/05-0343-caribs/caribs">Caribs</a></li>
+  <li class="c018"><a href="/article/05-0463-cashibo/cashibo">Cashibo, or Carapache</a></li>
+  <li class="c018"><a href="/article/05-0524-catauxi/catauxi">Catauxi</a></li>
+  <li class="c018"><a href="/article/05-0524-catawbas/catawbas">Catawbas</a></li>
+  <li class="c018"><a href="/article/05-0677-celt-tool/celt__tool_">Celt</a></li>
+  <li class="c018"><a href="/article/05-0862-chamkanni/chamkanni">Chamkanni</a></li>
+  <li class="c018"><a href="/article/05-0876-changos/changos">Changos</a></li>
+  <li class="c018"><a href="/article/05-0985-charrua/charrua">Charrua</a></li>
+  <li class="c018"><a href="/article/06-0034-chechenzes/chechenzes">Chechenzes</a></li>
+  <li class="c018"><a href="/article/06-0036-chellian/chellian">Chellian</a></li>
+  <li class="c018"><a href="/article/06-0096-cheremisses/cheremisses">Cheremisses</a></li>
+  <li class="c018"><a href="/article/06-0097-cherokee/cherokee">Cherokee</a></li>
+  <li class="c018"><a href="/article/06-0128-cheyenne/cheyenne">Cheyenne</a></li>
+  <li class="c018"><a href="/article/06-0143-chickasaws/chickasaws">Chickasaws</a></li>
+  <li class="c018"><a href="/article/06-0178-chimesyan/chimesyan">Chimesyan</a></li>
+  <li class="c018"><a href="/article/06-0251-chinook/chinook">Chinook</a></li>
+  <li class="c018"><a href="/article/06-0255-chiquitos/chiquitos">Chiquitos</a></li>
+  <li class="c018"><a href="/article/06-0275-chocctaws/choctaws">Choctaws</a></li>
+  <li class="c018"><a href="/article/06-0283-cholones/cholones">Cholones</a></li>
+  <li class="c018"><a href="/article/06-0338-chude/chude">Chude</a></li>
+  <li class="c018"><a href="/article/06-0339-chukchi/chukchi">Chukchi</a></li>
+  <li class="c018"><a href="/article/06-0340-chuncho/chuncho">Chuncho</a></li>
+  <li class="c018"><a href="/article/06-0366-chuvashes/chuvashes">Chuvashes</a></li>
+  <li class="c018"><a href="/article/06-0396-circassia/circassia">Circassia</a></li>
+  <li class="c018"><a href="/article/06-0652-cocoma/cocoma">Cocoma, or Cucamas</a></li>
+  <li class="c018">Coeur d’Alêne</li>
+  <li class="c018"><a href="/article/06-0771-comanches/comanches">Comanches</a></li>
+  <li class="c018"><a href="/article/06-0921-s4/conestoga">Conestoga</a></li>
+  <li class="c018"><a href="/article/06-0964-conibos/conibos">Conibos</a></li>
+  <li class="c018"><a href="/article/07-0130-copts/copts">Copts</a></li>
+  <li class="c018"><a href="/article/07-0412-cree/cree">Cree</a></li>
+  <li class="c018"><a href="/article/07-0421-creek-indians/creek_indians">Creek Indians</a></li>
+  <li class="c018"><a href="/article/07-0536-crow-indians/crow_indians">Crow Indians</a></li>
+  <li class="c018"><a href="/article/07-0651-cunas/cunas">Cunas</a></li>
+  <li class="c018"><a href="/article/07-0660-curetus/curetus">Curetus</a></li>
+  <li class="c018"><a href="/article/07-0744-czech/czech">Czech</a></li>
+  <li class="c018">Dawari; or Dauri</li>
+  <li class="c018"><a href="/article/07-0975-delaware-indians/delaware_indians">Delaware Indians</a></li>
+  <li class="c018"><a href="/article/08-0293-dinka/dinka">Dinka</a></li>
+  <li class="c018"><a href="/article/08-0406-dogra/dogra">Dogra</a></li>
+  <li class="c018"><a href="/article/08-0573-dravidian/dravidian">Dravidian</a></li>
+  <li class="c018"><a href="/article/08-0641-dualla/dualla">Dualla</a></li>
+  <li class="c018"><a href="/article/08-0677-duk-duk/duk-duk">Duk-Duk</a></li>
+  <li class="c018"><a href="/article/08-0721-durani/durani">Durani</a></li>
+  <li class="c018"><a href="/article/08-0769-dyaks/dyaks">Dyaks</a></li>
+  <li class="c018"><a href="/article/09-0432-engis/engis">Engis</a></li>
+  <li class="c018"><a href="/article/09-0801-eskimo/eskimo">Eskimo</a></li>
+  <li class="c018">Ewe</li>
+  <li class="c018"><a href="/article/10-0149-s2/falashas">Falashas</a></li>
+  <li class="c018"><a href="/article/10-0181-fang/fang">Fang</a></li>
+  <li class="c018"><a href="/article/10-0183-s5/fanti">Fanti</a></li>
+  <li class="c018">Fellah</li>
+  <li class="c018"><a href="/article/10-0349-s3/fiji">Fiji</a></li>
+  <li class="c018"><a href="/article/10-0390-s3/fingo">Fingo, or Fengu</a></li>
+  <li class="c018"><a href="/article/10-0402-finno-ugrian/finno-ugrian">Finno-Ugrian</a></li>
+  <li class="c018"><a href="/article/10-0500-s4/flatheads">Flatheads</a></li>
+  <li class="c018"><a href="/article/10-0792-s3/fox_indians">Fox Indians</a></li>
+  <li class="c018"><a href="/article/11-0304-s4/fula">Fula</a></li>
+  <li class="c018"><a href="/article/11-0359-funj/funj">Funj</a></li>
+  <li class="c018"><a href="/article/11-0370-furfooz/furfooz">Furfooz</a></li>
+  <li class="c018"><a href="/article/11-0415-galchas/galchas">Galchas</a></li>
+  <li class="c018"><a href="/article/11-0431-s5/gallas">Gallas</a></li>
+  <li class="c018"><a href="/article/11-0473-gararish/gararish">Gararish</a></li>
+  <li class="c018"><a href="/article/11-0946-ghilzai/ghilzai">Ghilzai</a></li>
+  <li class="c018"><a href="/article/12-0039-s3/gilyaks">Gilyaks</a></li>
+  <li class="c018"><a href="/article/12-0050-s2/gipsies">Gipsies</a></li>
+  <li class="c018"><a href="/article/12-0230-s3/golds">Golds</a></li>
+  <li class="c018"><a href="/article/12-0247-gonaguas/gonaguas">Gonaguas</a></li>
+  <li class="c018"><a href="/article/12-0644-s3/gros_ventres">Gros Ventres</a></li>
+  <li class="c018"><a href="/article/12-0675-guanches/guanches">Guanches</a></li>
+  <li class="c018"><a href="/article/12-0676-guaranis/guaranis">Guaranis</a></li>
+  <li class="c018"><a href="/article/12-0690-guatos/guatos">Guatos</a></li>
+  <li class="c018"><a href="/article/12-0690-guatusos/guatusos">Guatusos</a></li>
+  <li class="c018"><a href="/article/12-0691-s3/guaycurus">Guaycurus</a></li>
+  <li class="c018"><a href="/article/12-0742-s4/gumus">Gumus</a></li>
+  <li class="c018"><a href="/article/12-0807-s5/hababs">Hababs</a></li>
+  <li class="c018"><a href="/article/12-0823-hadendoa/hadendoa">Hadendoa</a></li>
+  <li class="c018"><a href="/article/12-0844-s6/haida">Haida</a></li>
+  <li class="c018"><a href="/article/12-0853-s2/hakkas">Hakkas</a></li>
+  <li class="c018"><a href="/article/12-0918-hamitic-races-and-languages/hamitic_races_and_languages">Hamitic Races</a></li>
+  <li class="c018"><a href="/article/13-0030-s2/harratin">Harratin</a></li>
+  <li class="c018">Hassania</li>
+  <li class="c018"><a href="/article/13-0082-s3/hausa">Hausa</a></li>
+  <li class="c018"><a href="/article/13-0106-hawawir/hawawir">Hawawir</a></li>
+  <li class="c018"><a href="/article/13-0129-s4/hazara">Hazara</a></li>
+  <li class="c018">Heroro, or Ovaherero</li>
+  <li class="c018"><a href="/article/13-0494-hindki/hindki">Hindki</a></li>
+  <li class="c018"><a href="/article/13-0539-hipurnias/hipurnias">Hipurnias</a></li>
+  <li class="c018"><a href="/article/13-0556-hiung-nu/hiung-nu">Hiung-nu</a></li>
+  <li class="c018"><a href="/article/13-0701-s3/hopi">Hopi</a></li>
+  <li class="c018"><a href="/article/13-0824-hottentots/hottentots">Hottentots</a></li>
+  <li class="c018">Hova</li>
+  <li class="c018"><a href="/article/13-0869-s2/huambisas">Huambisas</a></li>
+  <li class="c018"><a href="/article/13-0870-s5/huastecs">Huastecs</a></li>
+  <li class="c018"><a href="/article/13-0894-s4/huichol">Huichol</a></li>
+  <li class="c018"><a href="/article/13-0984-s4/huron">Huron</a></li>
+  <li class="c018"><a href="/article/14-0480-indians-north-american/indians__north_american">Indians, North American</a></li>
+  <li class="c018"><a href="/article/14-0771-iquitos-city/iquitos__city_">Iquitos</a></li>
+  <li class="c018"><a href="/article/14-0872-iroquois/iroquois">Iroquois</a></li>
+  <li class="c018"><a href="/article/14-0886-irulas/irulas">Irulas</a></li>
+  <li class="c018"><a href="/article/15-0103-itza/itza">Itza</a></li>
+  <li class="c018"><a href="/article/15-0119-s2/ja_alin">Ja’alin</a></li>
+  <li class="c018"><a href="/article/15-0146-jakuns/jakuns">Jakuns</a></li>
+  <li class="c018">Jats</li>
+  <li class="c018"><a href="/article/15-0385-jeveros/jeveros">Jeveros</a></li>
+  <li class="c018"><a href="/article/15-0441-s2/jibitos">Jibitos</a></li>
+  <li class="c018"><a href="/article/15-0441-s4/jicarilla">Jicarilla</a></li>
+  <li class="c018"><a href="/article/15-0556-juangs/juangs">Juangs</a></li>
+  <li class="c018"><a href="/article/15-0592-s2/jur">Jur (Diur)</a></li>
+  <li class="c018"><a href="/article/15-0598-s3/juris">Juris</a></li>
+  <li class="c018"><a href="/article/15-0646-s6/kabbabish">Kabbabish</a></li>
+  <li class="c018"><a href="/article/15-0652-kabyles/kabyles">Kabyles</a></li>
+  <li class="c018"><a href="/article/15-0654-kaffirs/kaffirs">Kaffirs</a></li>
+  <li class="c018"><a href="/article/15-0664-kakar/kakar">Kakar</a></li>
+  <li class="c018"><a href="/article/15-0665-kalapuya/kalapuya">Kalapuya</a></li>
+  <li class="c018"><a href="/article/15-0669-s7/kalispel">Kalispel</a></li>
+  <li class="c018"><a href="/article/15-0669-s11/kalkas">Kalkas</a></li>
+  <li class="c018"><a href="/article/15-0674-s5/kanaka">Kanaka</a></li>
+  <li class="c018"><a href="/article/15-0700-s2/kanuri">Kanuri (Beriberi)</a></li>
+  <li class="c018"><a href="/article/15-0703-kara-kalpaks/kara-kalpaks">Kara-Kalpaks</a></li>
+  <li class="c018"><a href="/article/15-0705-karen/karen">Karen</a></li>
+  <li class="c018"><a href="/article/15-0721-s2/kashubes">Kashubes</a></li>
+  <li class="c018"><a href="/article/15-0729-kavirondo/kavirondo">Kavirondo</a></li>
+  <li class="c018"><a href="/article/15-0730-kaw/kaw">Kaw (Kansa)</a></li>
+  <li class="c018"><a href="/article/15-0731-s4/kayasth">Kayasth</a></li>
+  <li class="c018"><a href="/article/15-0800-khamtis/khamtis">Khamtis</a></li>
+  <li class="c018"><a href="/article/15-0803-khattak/khattak">Khattak</a></li>
+  <li class="c018"><a href="/article/15-0803-khazars/khazars">Khazars</a></li>
+  <li class="c018"><a href="/article/15-0806-khevsurs/khevsurs">Khevsurs</a></li>
+  <li class="c018"><a href="/article/15-0808-khonds/khonds">Khonds</a></li>
+  <li class="c018"><a href="/article/15-0812-s4/kickapoo">Kickapoo</a></li>
+  <li class="c018"><a href="/article/15-0854-kiowas/kiowas">Kiowas</a></li>
+  <li class="c018"><a href="/article/15-0856-kirghiz/kirghiz">Kirghiz</a></li>
+  <li class="c018"><a href="/article/15-0873-s5/klamath">Klamath</a></li>
+  <li class="c018"><a href="/article/15-0919-s2/koch">Koch</a></li>
+  <li class="c018"><a href="/article/15-0923-kolis/kolis">Kolis</a></li>
+  <li class="c018"><a href="/article/15-0925-kols/kols">Kols</a></li>
+  <li class="c018"><a href="/article/15-0947-korkus/korkus">Korkus</a></li>
+  <li class="c018"><a href="/article/15-0948-koryaks/koryaks">Koryaks</a></li>
+  <li class="c018"><a href="/article/15-0953-kotas/kotas">Kotas</a></li>
+  <li class="c018"><a href="/article/15-0967-krumen/krumen">Krumen</a></li>
+  <li class="c018"><a href="/article/15-0970-s3/kubus">Kubus</a></li>
+  <li class="c018"><a href="/article/15-0980-kumyks/kumyks">Kumyks</a></li>
+  <li class="c018"><a href="/article/15-0980-kunbis/kunbis">Kunbis</a></li>
+  <li class="c018"><a href="/article/15-0988-kurumbas/kurumbas">Kurumbas</a></li>
+  <li class="c018"><a href="/article/15-0988-kusan/kusan">Kusan</a></li>
+  <li class="c018"><a href="/article/15-0989-s8/kutenai">Kutenai</a></li>
+  <li class="c018"><a href="/article/15-0991-kwakiutl/kwakiutl">Kwakiutl</a></li>
+  <li class="c018"><a href="/article/16-0211-laos-people/laos__people_">Laos</a></li>
+  <li class="c018"><a href="/article/16-0252-s1/lascar">Lascar</a></li>
+  <li class="c018"><a href="/article/16-0295-s8/latuka">Latuka</a></li>
+  <li class="c018"><a href="/article/16-0394-s2/legas">Legas</a></li>
+  <li class="c018"><a href="/article/16-0484-lepcha/lepcha">Lepcha</a></li>
+  <li class="c018"><a href="/article/16-0761-lipan/lipan">Lipan</a></li>
+  <li class="c018"><a href="/article/16-0953-lolos/lolos">Lolos</a></li>
+  <li class="c018"><a href="/article/17-0299-s4/madi">Madi</a></li>
+  <li class="c018"><a href="/article/17-0410-mahar/mahar">Mahar</a></li>
+  <li class="c018"><a href="/article/17-0439-mahrattas/mahrattas">Mahrattas</a></li>
+  <li class="c018"><a href="/article/17-0467-s5/makalaka">Makalaka</a></li>
+  <li class="c018"><a href="/article/17-0467-s6/makaraka">Makaraka</a></li>
+  <li class="c018"><a href="/article/17-0492-malays/malays">Malays</a></li>
+  <li class="c018"><a href="/article/17-0575-mandan/mandan">Mandan</a></li>
+  <li class="c018"><a href="/article/17-0581-mandingo/mandingo">Mandingo</a></li>
+  <li class="c018"><a href="/article/17-0584-s4/maneteneris">Maneteneris</a></li>
+  <li class="c018"><a href="/article/17-0588-mangbettu/mangbettu">Mangbettu</a></li>
+  <li class="c018"><a href="/article/17-0643-s5/manyema">Manyema</a></li>
+  <li class="c018"><a href="/article/17-0644-s2/maori">Maori</a></li>
+  <li class="c018"><a href="/article/17-0725-marianas-tribe/marianas__tribe_">Marianas</a></li>
+  <li class="c018"><a href="/article/17-0741-s3/mariposan">Mariposan</a></li>
+  <li class="c018"><a href="/article/17-0765-maroons/maroons">Maroons</a></li>
+  <li class="c018"><a href="/article/17-0770-marri/marri">Marri</a></li>
+  <li class="c018"><a href="/article/17-0852-s2/masai">Masai</a></li>
+  <li class="c018"><a href="/article/17-0855-mashona/mashona">Mashona</a></li>
+  <li class="c018">Metabele</li>
+  <li class="c018"><a href="/article/17-0950-maya/maya">Maya</a></li>
+  <li class="c018"><a href="/article/17-0957-mayoruna/mayoruna">Mayoruna</a></li>
+  <li class="c018"><a href="/article/18-0130-menangkabos/menangkabos">Menangkabos</a></li>
+  <li class="c018"><a href="/article/18-0152-mensa-and-marea/mensa_and_marea">Mensa and Marea</a></li>
+  <li class="c018"><a href="/article/18-0196-s3/meshcheryaks">Meshcheryaks</a></li>
+  <li class="c018"><a href="/article/18-0371-s4/meyrifab">Meyrifab</a></li>
+  <li class="c018"><a href="/article/18-0375-s1/miami">Miami</a></li>
+  <li class="c018"><a href="/article/18-0375-s6/miaotsze">Miaotsze</a></li>
+  <li class="c018"><a href="/article/18-0402-micmac/micmac">Micmac</a></li>
+  <li class="c018"><a href="/article/18-0461-s5/mikirs">Mikirs</a></li>
+  <li class="c018"><a href="/article/18-0606-s2/mishmi">Mishmi (tribe)</a></li>
+  <li class="c018"><a href="/article/18-0673-modoc/modoc">Modoc</a></li>
+  <li class="c018"><a href="/article/18-0677-mohave/mohave">Mohave</a></li>
+  <li class="c018"><a href="/article/18-0677-s4/mohawk">Mohawk</a></li>
+  <li class="c018"><a href="/article/18-0677-s5/mohican__mahican">Mohican</a></li>
+  <li class="c018"><a href="/article/18-0679-mohmand/mohmand">Mohmand</a></li>
+  <li class="c018"><a href="/article/18-0717-monassir/monassir">Monassir</a></li>
+  <li class="c018"><a href="/article/18-0775-s4/montagnais">Montagnais</a></li>
+  <li class="c018"><a href="/article/18-0844-s3/moors">Moors</a></li>
+  <li class="c018"><a href="/article/18-0845-moplah/moplah">Moplah</a></li>
+  <li class="c018"><a href="/article/18-0852-mordvinians/mordvinians">Mordvinians</a></li>
+  <li class="c018"><a href="/article/18-0981-s2/moxos">Moxos</a></li>
+  <li class="c018"><a href="/article/18-0985-s6/mpongwe">Mpongwe (Pongos)</a></li>
+  <li class="c018">Mundas</li>
+  <li class="c018"><a href="/article/19-0018-s5/mundrucus">Mundrucus</a></li>
+  <li class="c018"><a href="/article/19-0042-muras/muras">Muras</a></li>
+  <li class="c018"><a href="/article/19-0058-musa-khel/musa_khel">Musa Khel</a></li>
+  <li class="c018"><a href="/article/19-0106-muskhogean-stock/muskhogean_stock">Muskhogean Stock</a></li>
+  <li class="c018"><a href="/article/19-0160-mzabites/mzabites">Mzabites, or Beni-Mzab</a></li>
+  <li class="c018"><a href="/article/19-0168-s3/nahuatlan_stock">Nahuatlan Stock</a></li>
+  <li class="c018"><a href="/article/19-0172-namasudra/namasudra">Namasudra</a></li>
+  <li class="c018"><a href="/article/19-0176-s5/nandi">Nandi</a></li>
+  <li class="c018"><a href="/article/19-0296-s2/navaho">Navaho, or Navajo</a></li>
+  <li class="c018"><a href="/article/19-0333-nayar/nayar">Nayar, or Nair</a></li>
+  <li class="c018"><a href="/article/19-0361-negritos/negritos">Negritos</a></li>
+  <li class="c018"><a href="/article/19-0362-negro/negro">Negro</a></li>
+  <li class="c018"><a href="/article/19-0660-s2/nez_percés">Nez Percés</a></li>
+  <li class="c018"><a href="/article/19-0662-s5/niam-niam">Niam-Niam</a></li>
+  <li class="c018"><a href="/article/19-0877-s4/nuer">Nuer</a></li>
+  <li class="c018"><a href="/article/20-0032-oerlams/oerlams">Oerlams</a></li>
+  <li class="c018"><a href="/article/20-0076-ojibway/ojibway">Ojibway</a></li>
+  <li class="c018"><a href="/article/20-0122-omaguas/omaguas">Omaguas</a></li>
+  <li class="c018"><a href="/article/20-0123-omahas/omahas">Omahas</a></li>
+  <li class="c018"><a href="/article/20-0130-oneida-tribe/oneida__tribe_">Oneida</a></li>
+  <li class="c018"><a href="/article/20-0136-s6/onondaga">Onondaga</a></li>
+  <li class="c018"><a href="/article/20-0147-s3/opata">Opata</a></li>
+  <li class="c018"><a href="/article/20-0170-orakzai/orakzai">Orakzai</a></li>
+  <li class="c018"><a href="/article/20-0187-s2/oraons">Oraons</a></li>
+  <li class="c018"><a href="/article/20-0393-s2/ostiaks">Ostiaks</a></li>
+  <li class="c018"><a href="/article/20-0403-ottawa/ottawa">Ottawa</a></li>
+  <li class="c018"><a href="/article/20-0797-s2/papuans">Papuans</a></li>
+  <li class="c018"><a href="/article/20-0862-pariah/pariah">Pariah (caste)</a></li>
+  <li class="c018"><a href="/article/20-0928-parsees/parsees">Parsees</a></li>
+  <li class="c018"><a href="/article/20-0975-pathan/pathan">Pathan (people)</a></li>
+  <li class="c018"><a href="/article/20-1044-s2/pawnee">Pawnee</a></li>
+  <li class="c018"><a href="/article/21-0131-s4/penobscot">Penobscot</a></li>
+  <li class="c018"><a href="/article/21-0147-s2/pequot">Pequot</a></li>
+  <li class="c018"><a href="/article/21-0302-s5/petchenegs">Petchenegs</a></li>
+  <li class="c018"><a href="/article/21-0641-s5/pima">Pima</a></li>
+  <li class="c018"><a href="/article/21-0935-polabs/polabs">Polabs</a></li>
+  <li class="c018"><a href="/article/22-0073-s3/ponca">Ponca</a></li>
+  <li class="c018"><a href="/article/22-0074-pondo/pondo">Pondo</a></li>
+  <li class="c018">Potawatami</li>
+  <li class="c018"><a href="/article/22-0236-s5/povindah">Povindah</a></li>
+  <li class="c018"><a href="/article/22-0254-s3/prabhu">Prabhu (caste)</a></li>
+  <li class="c018"><a href="/article/22-0649-pueblo-indians/pueblo_indians">Pueblo Indians</a></li>
+  <li class="c018"><a href="/article/22-0649-puelche/puelche">Puelche</a></li>
+  <li class="c018"><a href="/article/22-0693-pygmy/pygmy">Pygmy</a></li>
+  <li class="c018"><a href="/article/22-0765-quich/quiché">Quiché, or Kichés</a></li>
+  <li class="c018"><a href="/article/22-0765-s5/quichua">Quichua</a></li>
+  <li class="c018"><a href="/article/22-0882-rajput/rajput">Rajput</a></li>
+  <li class="c018"><a href="/article/23-0342-riffians/riffians">Riffians</a></li>
+  <li class="c018"><a href="/article/23-0984-s3/ruthenians">Ruthenians</a></li>
+  <li class="c018"><a href="/article/23-1053-s4/sahos">Sahos</a></li>
+  <li class="c018"><a href="/article/24-0067-sakai/sakai">Sakai</a></li>
+  <li class="c018"><a href="/article/24-0094-s4/salishan">Salishan</a></li>
+  <li class="c018"><a href="/article/24-0132-s3/samoyedes">Samoyedes</a></li>
+  <li class="c018"><a href="/article/24-0202-s4/santals">Santals</a></li>
+  <li class="c018"><a href="/article/24-0645-semang/semang">Semang</a></li>
+  <li class="c018"><a href="/article/24-0646-seminole/seminole">Seminole</a></li>
+  <li class="c018"><a href="/article/24-0667-s2/seneca">Seneca</a></li>
+  <li class="c018"><a href="/article/24-0693-s6/serers">Serers</a></li>
+  <li class="c018">Shagia</li>
+  <li class="c018"><a href="/article/24-0831-s7/shangalla">Shangalla</a></li>
+  <li class="c018"><a href="/article/24-0834-s2/shans">Shans</a></li>
+  <li class="c018"><a href="/article/24-0846-s6/shawnee">Shawnee</a></li>
+  <li class="c018"><a href="/article/24-0874-s6/sherani">Sherani, or Shirani</a></li>
+  <li class="c018"><a href="/article/24-0893-s5/shilluh">Shilluh</a></li>
+  <li class="c018"><a href="/article/24-0893-s6/shilluk">Shilluk</a></li>
+  <li class="c018"><a href="/article/24-0894-shinwari/shinwari">Shinwari</a></li>
+  <li class="c018"><a href="/article/24-1099-s5/shukria">Shukria</a></li>
+  <li class="c018"><a href="/article/25-0069-sienetjo/sienetjo">Sienetjo</a></li>
+  <li class="c018"><a href="/article/25-0100-sikh/sikh">Sikh</a></li>
+  <li class="c018"><a href="/article/25-0166-s4/sioux">Sioux</a></li>
+  <li class="c018"><a href="/article/25-0244-s2/slavs">Slavs</a></li>
+  <li class="c018"><a href="/article/25-0260-slovaks/slovaks">Slovaks</a></li>
+  <li class="c018"><a href="/article/25-0261-s2/slovenes">Slovenes</a></li>
+  <li class="c018"><a href="/article/25-0430-s2/songhoi">Songhoi</a></li>
+  <li class="c018"><a href="/article/25-0447-s2/sorbs">Sorbs</a></li>
+  <li class="c018"><a href="/article/26-0195-swahili/swahili">Swahili</a></li>
+  <li class="c018"><a href="/article/26-0338-syryenians/syryenians">Syryenians</a></li>
+  <li class="c018"><a href="/article/26-0386-s2/tajik">Tajik</a></li>
+  <li class="c018"><a href="/article/26-0387-s2/talaing">Talaing</a></li>
+  <li class="c018"><a href="/article/26-0409-tamils/tamils">Tamils</a></li>
+  <li class="c018"><a href="/article/26-0457-s2/tarkani">Tarkani</a></li>
+  <li class="c018"><a href="/article/26-0477-s4/tatars">Tatars</a></li>
+  <li class="c018"><a href="/article/26-0536-s5/tehuelche">Tehuelche</a></li>
+  <li class="c018"><a href="/article/26-0607-tembu/tembu">Tembu</a></li>
+  <li class="c018"><a href="/article/26-0952-s3/tibbu">Tibbu, or Tebu</a></li>
+  <li class="c018"><a href="/article/26-1084-s2/todas">Todas</a></li>
+  <li class="c018"><a href="/article/26-1102-toltecs/toltecs">Toltecs</a></li>
+  <li class="c018"><a href="/article/27-0315-s8/troglodytes">Troglodytes</a></li>
+  <li class="c018"><a href="/article/27-0368-s3/tshi">Tshi</a></li>
+  <li class="c018"><a href="/article/27-0369-s2/tuareg">Tuareg</a></li>
+  <li class="c018"><a href="/article/27-0382-s5/tukulor">Tukulor (Tuculers)</a></li>
+  <li class="c018"><a href="/article/27-0395-s2/tunguses">Tunguses</a></li>
+  <li class="c018"><a href="/article/27-0427-s4/tupis">Tupis</a></li>
+  <li class="c018"><a href="/article/27-0434-turi/turi">Turi</a></li>
+  <li class="c018"><a href="/article/27-0487-s2/turki">Turki</a></li>
+  <li class="c018"><a href="/article/27-0487-s3/turkoman">Turkoman</a></li>
+  <li class="c018"><a href="/article/27-0487-s5/turks">Turks</a></li>
+  <li class="c018"><a href="/article/27-0505-s2/tuscarora">Tuscarora</a></li>
+  <li class="c018"><a href="/article/27-0583-uighur/uighur">Uighur</a></li>
+  <li class="c018"><a href="/article/27-0806-s3/unyamwezi">Unyamwezi</a></li>
+  <li class="c018"><a href="/article/27-0836-s3/ustarana">Ustarana</a></li>
+  <li class="c018"><a href="/article/27-0845-ute/ute">Ute (Utah)</a></li>
+  <li class="c018"><a href="/article/27-0848-s2/utman_khel">Utman Khel</a></li>
+  <li class="c018"><a href="/article/27-0856-vaalpens/vaalpens">Vaalpens</a></li>
+  <li class="c018"><a href="/article/27-0992-veddahs/veddahs">Veddahs</a></li>
+  <li class="c018"><a href="/article/28-0239-wa/wa">Wa</a></li>
+  <li class="c018"><a href="/article/28-0638-wichita-tribe/wichita__tribe_">Wichita</a></li>
+  <li class="c018"><a href="/article/28-0788-wochua/wochua">Wochua</a></li>
+  <li class="c018"><a href="/article/28-0798-s4/wolof">Wolof (Woloff, Jolof)</a></li>
+  <li class="c018"><a href="/article/28-0887-wyandot/wyandot">Wyandot (Huron)</a></li>
+  <li class="c018"><a href="/article/28-0930-yaos/yaos">Yaos</a></li>
+  <li class="c018"><a href="/article/28-0974-yusafzai/yusafzai">Yusafzai</a></li>
+  <li class="c018"><a href="/article/28-0977-s7/zaimukht">Zaimukht</a></li>
+  <li class="c018"><a href="/article/28-0986-zaparos/zaparos">Zaparos</a></li>
+  <li class="c018">Zenaga</li>
+  <li class="c018"><a href="/article/28-0994-zenata/zenata">Zenata</a></li>
+</ul>
+
+<p><span class="shoulder-heading" id="sh-9">Terminology</span>The technical terms of nearly every
+science are words coined from Latin and
+Greek roots, so that the student of these
+languages is at an
+advantage in learning
+any science—its
+terms have some meaning to him no matter
+how strange the science itself. But in
+anthropology and ethnology we come
+across such terms as <i>taboo</i>, <i>totem</i>, <i>shaman</i>
+and <i>manitou</i>. For their comprehension
+Latin and Greek give no aid. Each of
+these terms comes into English from the
+language of a primitive people to convey
+an idea at once too primitive and too
+complex to be expressed by any English
+word or by a Greek or Latin compound.
+“Taboo” is a Malay word meaning both
+“unclean” (as that word is used in the
+Old Testament) and “sacred”; and the
+idea it conveys is characteristic of the
+religious and social system found among
+the Polynesians and nearly all other
+peoples in a comparatively low stage of
+civilization, which sets persons or things
+apart as sacred or accursed. “Totem”
+is a Chippewa (North American Indian)
+word denoting an animal, plant, or other
+object chosen as the name of a whole family
+or tribal division. The word “shaman”
+comes from the Ural-Altaic (Tungus),
+and means “medicine-man,” a combination
+of priest, magician and exorcist.
+“Manitou” is another North American
+word meaning “spirit” or “genius.”</p>
+
+<p><span class="shoulder-heading" id="sh-10">Taboo and Totem</span>The practice of taboo and totemism,
+although one word comes to us from the
+South Seas and the other from the American
+Indians, is found
+all over the less civilized
+world, and—even
+more important—it
+explains many things in the social
+and religious life of more civilized communities.
+For instance, the account by
+modern students of Greek and Roman
+religion has had to be largely rewritten
+in the light of what we have learned in
+the last two generations about taboo and
+totemism.</p>
+
+<p>The articles <span class="sc"><a href="/article/26-0358-taboo/taboo">Taboo</a></span> (Vol. 26, p. 337)
+and <span class="sc"><a href="/article/27-0093-totemism/totemism">Totemism</a></span> (Vol. 27, p. 79) are both
+by <a href="/contributors.html?q=Andrew+Lang">Andrew Lang</a>, author of <i>Custom and
+Myth</i> and other standard works on folk-lore.
+It is unnecessary to outline these
+two articles here, as the two words have
+been defined, and the importance of the
+subject suggested. The reader should
+refer to the article on <span class="sc"><a href="/article/16-0191-s2/lang__andrew">Andrew Lang</a></span> (Vol.
+16, p. 171), in which it is said that “he
+explained the irrational elements of mythology
+as survivals from earlier savagery....”
+idealized “savage animism ...
+maintained the existence of high spiritual
+ideas among savage races, and instituted
+comparisons between savage
+practices and the occult phenomena
+among civilized races.” His appreciation
+of the culture of the savage and his
+remarkably interesting style should induce
+the student to read <a href="/contributors.html?q=Andrew+Lang">Lang</a>’s other and
+related articles in the Britannica, especially:</p>
+
+<p><span class="sc"><a href="/article/10-0170-family/family">Family</a></span> (Vol. 10, p. 158), (equivalent
+to 27 pages of this Guide), dealing particularly
+with the question of marriage
+as related to totemism, and the practices
+of marrying only <i>out</i> of the tribe or
+totem, and of marrying only <i>within</i> the
+totem (see the articles <span class="sc"><a href="/article/09-0408-endogamy/endogamy">Endogamy</a></span> and
+<span class="sc"><a href="/article/10-0091-exogamy/exogamy">Exogamy</a></span>, <span class="sc"><a href="/article/17-0908-matriarchate/matriarchate">Matriarchate</a></span>, <span class="sc"><a href="/article/22-0031-polyandry/polyandry">Polyandry</a></span>,
+<span class="sc"><a href="/article/22-0037-s4/polygamy">Polygamy</a></span>, <span class="sc"><a href="/article/16-0531-s5/levirate">Levirate</a></span> and <span class="sc"><a href="/article/07-0357-couvade/couvade">Couvade</a></span>).</p>
+
+<p><span class="sc"><a href="/article/19-0172-name/name">Name</a></span> (Vol. 19, p. 157), which discusses
+the relation of the name to the totem, the
+strange primitive custom of the individual’s
+having many names and concealing
+his true name, etc.; and also the articles
+<span class="sc"><a href="/article/10-0146-s2/fairy">Fairy</a></span> (Vol. 10, p. 134) and <span class="sc"><a href="/article/19-0143-mythology/mythology">Mythology</a></span>
+(Vol. 19, p. 128).</p>
+
+<p><span class="shoulder-heading" id="sh-11">Religion</span>For special forms of superstition, read
+the articles <span class="sc"><a href="/article/17-0319-magic/magic">Magic</a></span>, <span class="sc"><a href="/article/24-0830-shamanism/shamanism">Shamanism</a></span>, <span class="sc"><a href="/article/28-0776-witchcraft/witchcraft">Witchcraft</a></span>,
+<span class="sc"><a href="/article/08-0019-demonology/demonology">Demonology</a></span> and <span class="sc"><a href="/article/17-0164-lycanthropy/lycanthropy">Lycanthropy</a></span>,
+and in the field of religion,
+<span class="sc"><a href="/article/23-0078-religion/religion">Religion</a></span>, <i>Primitive</i>
+(Vol. 23, p. 63), by R. R.
+Marett, of Oxford University, author of
+<i>The Threshold of Religion</i>, etc. This article
+puts particular stress on the importance
+of ritual in early religion. Compare
+also the matter, already mentioned, on
+religion in the article on North American
+Indians with the short articles <span class="sc"><a href="/article/17-0603-s2/manitou">Manitou</a></span>
+(Vol. 17, p. 568) and <span class="sc"><a href="/article/11-0949-s2/ghost_dance">Ghost Dance</a></span>
+(Vol. 11, p. 925). Besides, the student
+should road <span class="sc"><a href="/article/20-0199-s3/ordeal">Ordeal</a></span> (Vol. 20, p. 173),
+<span class="sc"><a href="/article/22-0270-prayer/prayer">Prayer</a></span> (Vol. 22, p. 256), <span class="sc"><a href="/article/23-0387-s3/ritual">Ritual</a></span> (Vol.
+23, p. 370), <span class="sc"><a href="/article/23-1025-sacrifice/sacrifice">Sacrifice</a></span> (Vol. 23, p. 980),
+<span class="sc"><a href="/article/02-0064-s2/animism">Animism</a></span> (Vol. 2, p. 53), on the attempt
+to explain religion as due to the fear and
+worship of ghosts—and <span class="sc"><a href="/article/10-0307-fetishism/fetishism">Fetishism</a></span> (Vol.
+10, p. 295), by <a href="/contributors.html?q=Northcote+Whitbridge+Thomas">N. W. Thomas</a>, government
+anthropologist to Southern Nigeria;
+<span class="sc"><a href="/article/01-0998-s5/ancestor-worship">Ancestor-Worship</a></span> (Vol. 1, p. 945),
+<span class="sc"><a href="/article/11-0342-s3/funeral_rites">Funeral Rites</a></span> (Vol. 11, p. 329) and
+<span class="sc"><a href="/article/22-0676-s3/purification">Purification</a></span> (Vol. 22, p. 660), all by
+Dr. <a href="/contributors.html?q=Frederick+Cornwallis+Conybeare">F. C. Conybeare</a>, author of <i>Myth,
+Magic and Morals</i>, etc.; <span class="sc"><a href="/article/27-0250-tree-worship/tree-worship">Tree-Worship</a></span>
+(Vol. 27, p. 235) and <span class="sc"><a href="/article/24-0706-s2/serpent-worship">Serpent-Worship</a></span>
+(Vol. 24, p. 676), both bearing on totemism,
+by <a href="/contributors.html?q=Stanley+Arthur+Cook">S. A. Cook</a>, author of <i>Religion of
+Ancient Palestine</i>, etc.</p>
+
+<p><span class="shoulder-heading" id="sh-12">Biographical Study</span>A course of reading on anthropology
+may well close with the study in the
+Britannica of the lives of some leaders in
+this science. The
+student will thus be
+familiarized with the
+theories of each great
+anthropologist—and will notice the manifold
+appeal of the science by seeing from
+what point each approached it—one from
+his interest in geology, another from travel,
+a third because of his studies in surgery
+or biology, another as a psychologist.</p>
+
+<ul class="index">
+  <li class="c018"><a href="/article/03-0067-s2/avebury">Avebury, 1st Baron</a></li>
+  <li class="c018"><a href="/article/03-0328-s3/bandelier__adolph_francis_alphonse">Bandelier, Adolph F. A.</a></li>
+  <li class="c018"><a href="/article/03-0517-bastian-adolf/bastian__adolf">Bastian, Adolf</a></li>
+  <li class="c018">Brasseur de Bourbourg, C. E.</li>
+  <li class="c018"><a href="/article/04-0592-s3/brinton__daniel_garrison">Brinton, D. G.</a></li>
+  <li class="c018"><a href="/article/04-0643-s6/broca__paul">Broca, Paul</a></li>
+  <li class="c018"><a href="/article/05-0553-catlin-george/catlin__george">Catlin, George</a></li>
+  <li class="c018"><a href="/article/06-0312-christy-henry/christy__henry">Christy, Henry</a></li>
+  <li class="c018"><a href="/article/07-0897-dawkins-william-boyd/dawkins__william_boyd">Dawkins, William Boyd</a></li>
+  <li class="c018"><a href="/article/08-0035-deniker-joseph/deniker__joseph">Deniker, Joseph</a></li>
+  <li class="c018"><a href="/article/10-0514-s6/fletcher__alice_cunningham">Fletcher, Alice C.</a></li>
+  <li class="c018"><a href="/article/12-0857-s4/hale__horatio">Hale, Horatio</a></li>
+  <li class="c018"><a href="/article/13-0573-s5/hodgson__brian_houghton">Hodgson, B. H.</a></li>
+  <li class="c018"><a href="/article/16-0244-lartet-edouard/lartet__edouard">Lartet, Edouard</a></li>
+  <li class="c018">M’Lennan, John F.</li>
+  <li class="c018"><a href="/article/17-0619-s4/mantegazza__paolo">Mantegazza, Paolo</a></li>
+  <li class="c018"><a href="/article/18-0866-s6/morgan__lewis_henry">Morgan, Lewis Henry</a></li>
+  <li class="c018"><a href="/article/18-0911-s2/mortillet__louis_laurent_gabriel_de">Mortillet, L. L. G. de</a></li>
+  <li class="c018"><a href="/article/22-0329-prichard-james-cowles/prichard__james_cowles">Prichard, James Cowles</a></li>
+  <li class="c018"><a href="/article/24-0377-schoolcraft-henry-rowe/schoolcraft__henry_rowe">Schoolcraft, H. R.</a></li>
+  <li class="c018"><a href="/article/27-0517-tylor-edward-burnett/tylor__edward_burnett">Tylor, Edward B.</a></li>
+  <li class="c018"><a href="/article/28-0251-wagner-rudolph/wagner__rudolph">Wagner, Rudolf</a></li>
+  <li class="c018">Waltz, Theodor</li>
+</ul>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

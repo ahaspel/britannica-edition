@@ -9,7 +9,9 @@ Usage:
         --out-dir data/qa_baseline/articles
 
 Downloads via the public britannica11.org URL; no AWS credentials
-needed. Skips files that already exist unless ``--force`` is given.
+needed. Refreshes every file on every run so the baseline always
+matches what's currently live; pass ``--keep-existing`` to skip
+files that already exist locally.
 """
 from __future__ import annotations
 
@@ -26,8 +28,8 @@ except AttributeError:
 S3_BASE = "https://britannica11.org/data/articles"
 
 
-def _fetch(filename: str, out: Path, force: bool) -> bool:
-    if out.exists() and not force:
+def _fetch(filename: str, out: Path, refresh: bool) -> bool:
+    if out.exists() and not refresh:
         return False
     url = f"{S3_BASE}/{filename}"
     req = urllib.request.Request(
@@ -47,9 +49,12 @@ def main() -> int:
                     default=Path("data/qa_baseline/articles"),
                     help="Where to save the S3 versions (default: "
                          "data/qa_baseline/articles).")
-    ap.add_argument("--force", action="store_true",
-                    help="Overwrite files that already exist locally.")
+    ap.add_argument("--keep-existing", action="store_true",
+                    help="Skip files that already exist locally instead "
+                         "of re-downloading them. Default is to refresh "
+                         "every file so the baseline matches live S3.")
     args = ap.parse_args()
+    refresh = not args.keep_existing
 
     names: list[str] = []
     for line in args.from_file.read_text(encoding="utf-8").splitlines():
@@ -66,7 +71,7 @@ def main() -> int:
     for n in names:
         out = args.out_dir / n
         try:
-            if _fetch(n, out, args.force):
+            if _fetch(n, out, refresh):
                 downloaded += 1
                 print(f"  fetched {n}")
             else:

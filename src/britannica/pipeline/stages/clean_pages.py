@@ -1,12 +1,51 @@
+import json
 import re
+from pathlib import Path
 
 from britannica.cleaners.headers_footers import strip_headers
 from britannica.cleaners.hyphenation import fix_hyphenation
 from britannica.cleaners.reflow import reflow_paragraphs
-from britannica.cleaners.unicode import normalize_unicode
+from britannica.cleaners.unicode import normalize_unicode, replace_print_artifacts
 from britannica.cleaners.whitespace import normalize_whitespace
 from britannica.db.models.source_page import SourcePage
 from britannica.db.session import SessionLocal
+
+
+_CORRECTIONS: dict | None = None
+
+
+def _load_corrections() -> dict:
+    """Load data/corrections.json once.  Single source of truth for
+    transcription-typo fixes; consumed only here, in clean_pages, so
+    that all downstream stages (detect_boundaries, transform_articles)
+    operate on already-corrected text."""
+    global _CORRECTIONS
+    if _CORRECTIONS is not None:
+        return _CORRECTIONS
+    p = Path("data/corrections.json")
+    if not p.exists():
+        _CORRECTIONS = {}
+        return _CORRECTIONS
+    with p.open(encoding="utf-8") as f:
+        _CORRECTIONS = json.load(f)
+    return _CORRECTIONS
+
+
+def _apply_corrections(text: str, volume: int) -> str:
+    """Apply per-volume corrections.json entries to `text`.  Each entry
+    is a literal `{from, to}` replacement applied via str.replace, so
+    repeat application is a no-op."""
+    corrs = _load_corrections()
+    vol_prefix = f"{volume}:"
+    for key, entries in corrs.items():
+        if not key.startswith(vol_prefix):
+            continue
+        if not isinstance(entries, list):
+            continue
+        for c in entries:
+            if isinstance(c, dict) and "from" in c and "to" in c:
+                text = text.replace(c["from"], c["to"])
+    return text
 
 # Control characters \x00-\x08 are internal fetch delimiters that should
 # have been converted to «»-style markers.  Strip any that leaked through.
@@ -329,10 +368,21 @@ def clean_pages(volume: int) -> int:
         pages = session.query(SourcePage).filter(SourcePage.volume == volume).all()
 
         for page in pages:
+            # Apply corrections.json to `wikitext` (which downstream
+            # stages read).  raw_text is the unprocessed source; the
+            # processed/normalized wikitext is what corrections.json
+            # entries are written against (table rewrites match the
+            # wikitext format, not raw_text).
+            if page.wikitext:
+                corrected_wt = _apply_corrections(page.wikitext, volume)
+                if corrected_wt != page.wikitext:
+                    page.wikitext = corrected_wt
+
             text = page.raw_text
             # Replace <score> tags before any other processing
             text = _replace_score_tags(text, volume, page.page_number)
             text = normalize_unicode(text)
+            text = replace_print_artifacts(text)
             text, _removed_headers = strip_headers(text)
             text, _hyphen_changes = fix_hyphenation(text)
             text = reflow_paragraphs(text)

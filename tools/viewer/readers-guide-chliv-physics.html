@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Physics &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter LIV</span>Physics</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Early Ideas of the World</a></li><li><a href="#sh-2">Matter</a></li><li><a href="#sh-3">Motion</a></li><li><a href="#sh-4">Historical</a></li><li><a href="#sh-5">Analysis of the Subject</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">Early Ideas of the World</span>More than two thousand years
+ago the poet Lucretius, reviewing
+the physical knowledge and theories
+of the Greeks, described, as the
+Britannica tells us, how “the world was
+formed by the conjunctions of streams of
+atoms, which condensed into the earth,
+with its attendant
+water, air, and aether,
+to form a self-contained
+whole,”
+and went on to tell how in the changes of
+infinite time all possible forms of life appeared,
+but only those fittest to survive
+persisted. Here we have an unconscious
+anticipation of the nebular hypothesis
+and the theory of natural selection, two
+of the most tremendous of modern speculations.
+Four hundred years earlier
+Democritus, the greatest of the Greek
+natural philosophers, had said: “According
+to convention there is a sweet and a
+bitter, and according to convention there
+is colour. In truth there are atoms and
+a void.” Democritus came near announcing
+the doctrines of the indestructibility
+of matter and the conservation
+of energy, yet the conventions which he
+assailed persisted for generations: colour,
+taste and other qualities of a substance
+being regarded as of its essence and as
+much realities as the substance itself.
+The theories of the Greeks in fact held
+the field for centuries, until, during the
+Renaissance, men’s minds attacked the
+secrets of nature in a more modern
+spirit. Yet, long as has been its history,
+physical science, as we know it to-day, is
+but a few years old, the result of the
+feverish activity which has been the obsession
+of the generation now passing
+(Vol. 24, p. 396).</p>
+
+<p>There are many entertaining touches
+in the historical account of the development
+of the physical sciences with which
+this section of the Britannica is enriched,
+for every branch of the subject has been
+treated from the historical point of view.
+The articles, too, have been written by
+masters who can describe clearly because
+they see clearly, and no reader, desiring a
+sound knowledge of the general principles
+on which science rests, and of the conclusions
+to which the latest investigations
+have directed scientific thought, will go
+away empty handed.</p>
+
+<p>The section of the Physical Sciences in
+the Britannica covers, of course, an enormous
+field which for general purposes
+may be conveniently divided into:—</p>
+
+  <dl class="dl_1">
+    <dt>(<i>i</i>)</dt>
+    <dd><i>Matter and Motion</i>
+    </dd>
+    <dt>(<i>ii</i>)</dt>
+    <dd><i>Sound</i>
+    </dd>
+    <dt>(<i>iii</i>)</dt>
+    <dd><i>Light</i>
+    </dd>
+    <dt>(<i>iv</i>)</dt>
+    <dd><i>Heat</i>
+    </dd>
+    <dt>(<i>v</i>)</dt>
+    <dd><i>Electricity and Magnetism</i>
+    </dd>
+    </dl>
+
+<p>As a preliminary to any one of these
+and to the whole subject the reader will
+be well advised to read the article <span class="sc"><a href="/article/24-0414-s5/science">Science</a></span>
+(Vol. 24, p. 396), by W. C. D.
+<a href="/contributors.html?q=William+Cecil+Dampier+Whetham">Whetham</a> of Trinity College, Cambridge,
+author of <i>Recent Development of
+Physical Science</i>; those on <span class="sc"><a href="/article/27-0763-s2/units__physical">Units, Physical</a></span>
+(Vol. 27, p. 738), and <span class="sc"><a href="/article/27-0761-s2/units__dimensions_of">Units, Dimensions
+of</a></span> (Vol. 27, p. 736), are also of
+fundamental importance; and those on
+<span class="sc"><a href="/article/25-0545-s4/space_and_time">Space and Time</a></span> (Vol. 25, p. 525), and
+<span class="sc"><a href="/article/26-1023-s3/time__measurement_of">Time, Measurement of</a></span> (Vol. 26, p. 983),
+may profitably be consulted.</p>
+
+<h4 class="c016">(<i>I</i>) <i>Matter and Motion</i></h4>
+
+<div class="c003"></div>
+<p><span class="shoulder-heading" id="sh-2">Matter</span>Since all physical phenomena are manifestations,
+in one form or other, of matter
+in motion, this first division of the
+subject is introductory to
+all the rest, and should
+preferably be studied first.
+The latest theories in connection with the
+properties of <span class="sc"><a href="/article/17-0910-s3/matter">Matter</a></span> (Vol. 17, p. 891)
+are discussed by Sir <a href="/contributors.html?q=Sir+Joseph+John+Thomson">J. J. Thomson</a>, professor
+of experimental physics, Cambridge
+University, who has led the way
+in the investigation of the electrical theory
+of matter. The article is directed to
+the establishment of the electronic theory,
+and in view of the vast amount of
+original work which the author has carried
+out in this field, his treatment in the
+Britannica should be welcome to all students
+of physical science. Supplementing
+this are the following: <span class="sc"><a href="/article/09-0270-element/element">Element</a></span>, by
+Wilhelm Ostwald (Nobel Prizeman in
+Chemistry, 1909), especially the concluding
+remarks (Vol. 9, p. 253); <span class="sc"><a href="/article/02-0918-s4/atom">Atom</a></span>
+(Vol. 2, p. 870); <span class="sc"><a href="/article/09-0196-electricity/electricity">Electricity</a></span>, <i>Electronic
+Theory</i> (Vol. 9, p. 192). Early hypotheses
+are described under <span class="sc"><a href="/article/24-0414-s5/science">Science</a></span> (Vol. 24, p.
+397); <span class="sc"><a href="/article/18-0683-mole/mole">Molecules</a></span> (Vol. 18, p. 654); <span class="sc"><a href="/article/01-0559-s3/alchemy">Alchemy</a></span>
+(Vol. 1, p. 521); and modern conceptions
+are discussed under <span class="sc"><a href="/article/16-0766-s5/liquid_gases">Liquid
+Gases</a></span>, <i>Cohesion</i> (Vol. 16, p. 756); and
+<span class="sc"><a href="/article/25-0641-s2/spectroscopy">Spectroscopy</a></span> (Vol. 25, p. 625). Reference
+should also be made to the articles
+<span class="sc"><a href="/article/08-0061-density/density">Density</a></span> (Vol. 8, p. 46); <span class="sc"><a href="/article/08-0272-diffusion/diffusion">Diffusion</a></span> (Vol.
+8, p. 255); and especially <span class="sc"><a href="/article/12-0401-gravitation/gravitation">Gravitation</a></span>
+(Vol. 12, p. 384), by Professor Poynting
+of the University of Birmingham, and
+<span class="sc"><a href="/article/01-0329-s3/aether">Aether</a></span> (Vol. 1, p. 292), by Sir <a href="/contributors.html?q=Sir+Joseph+Larmor">Joseph
+Larmor</a>, secretary of the Royal Society.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Motion</span>The principal articles dealing with motion
+are: <span class="sc"><a href="/article/18-0938-s4/motion__laws_of">Motion, Laws of</a></span> (Vol. 18, p.
+906), which deals mainly with Newton’s
+Laws; and <span class="sc"><a href="/article/09-0423-energy/energy">Energy</a></span> (Vol.
+9, p. 398), and <span class="sc"><a href="/article/09-0415-energetics/energetics">Energetics</a></span>
+(Vol. 9, p. 390), both by
+Sir <a href="/contributors.html?q=Sir+Joseph+Larmor">Joseph Larmor</a>. Of as great importance
+from the physical point of view are
+<span class="sc"><a href="/article/28-0442-s4/wave">Wave</a></span> (Vol. 28, p. 424), the part of the
+article <span class="sc"><a href="/article/17-0974-mechanics/mechanics">Mechanics</a></span> dealing with simple
+harmonic motion (Vol. 17, p. 975) and
+elliptic harmonic motion (p. 978), and
+<span class="sc"><a href="/article/12-0981-s3/harmonic_analysis">Harmonic Analysis</a></span> (Vol. 12, p. 956),
+all by Professor Lamb of the University
+of Manchester. Other articles which
+should be consulted are <span class="sc"><a href="/article/05-0269-capillary-action/capillary_action">Capillary Action</a></span>
+(Vol. 5, p. 256), and <span class="sc"><a href="/article/21-0197-perpetual-motion/perpetual_motion">Perpetual
+Motion</a></span> (Vol. 21, p. 180).</p>
+
+<h4 class="c016">(<i>II</i>) <i>Sound</i></h4>
+
+<p>The main article <span class="sc"><a href="/article/25-0453-s6/sound">Sound</a></span> (Vol. 25, p.
+437) is by Prof. J. H. Poynting of the
+University of Birmingham, and very
+completely covers the subject; the reader
+will, however, wish to refer to several
+other articles for supplementary information.
+Thus in the article <span class="sc"><a href="/article/13-0135-hearing/hearing">Hearing</a></span> (Vol.
+13, p. 124), the range of audibility is
+discussed (see also <span class="sc"><a href="/article/26-0465-s4/tartini__giuseppe">Tartini</a></span>, Vol. 26, p.
+436, for an account of Tartini’s tones),
+while with regard to quality of tone the
+reader will find suggestive matter under
+<span class="sc"><a href="/article/28-0117-violin/violin">Violin</a></span> (Vol. 28, p. 104). An account of
+experiments in balloons on the propagation
+of sound, will be found (Vol. 1, p.
+267) under <span class="sc"><a href="/article/01-0295-s2/aeronautics">Aeronautics</a></span>. Reference
+should also be made to the articles <span class="sc"><a href="/article/28-0442-s4/wave">Wave</a></span>
+(Vol. 28, p. 425), <span class="sc"><a href="/article/09-0158-elasticity/elasticity">Elasticity</a></span>, <i>Vibrations
+and Waves</i> (Vol. 9, p. 158), and <span class="sc"><a href="/article/12-0981-s3/harmonic_analysis">Harmonic
+Analysis</a></span> (Vol. 12, p. 956) for a
+discussion of the form of sound waves.
+For applications of the principles of sound
+production, see also the articles <span class="sc"><a href="/article/21-0489-phonograph/phonograph">Phonograph</a></span>
+(Vol. 21, p. 467), <span class="sc"><a href="/article/12-0350-gramophone/gramophone">Gramophone</a></span>
+(Vol. 12, p. 333), and especially <span class="sc"><a href="/article/25-1064-stringed-instruments/stringed_instruments">Stringed
+Instruments</a></span> (Vol. 25, p. 1038), <span class="sc"><a href="/article/28-0729-wind-instruments/wind_instruments">Wind
+Instruments</a></span> (Vol. 28, p. 709), and other
+articles on musical instruments (see the
+chapter on <i>Music</i> in this Guide). For
+accounts of the researches of <span class="sc"><a href="/article/15-0980-kundt-august-adolph-eduard-eberhard/kundt__august_adolph_eduard_eberhard">Kundt</a></span> (Vol.
+15, p. 946), <span class="sc"><a href="/article/16-0095-lagrange-joseph-louis/lagrange__joseph_louis">Lagrange</a></span> (Vol. 16, p. 75)
+and <span class="sc"><a href="/article/25-0975-stokes-sir-george-gabriel/stokes__sir_george_gabriel">Stokes</a></span> (Vol. 25, p. 951), see those
+articles.</p>
+
+<h4 class="c016">(<i>III</i>) <i>Light</i></h4>
+
+<p>The main article <span class="sc"><a href="/article/16-0628-s5/light">Light</a></span> (Vol. 16, p.
+608) is in four parts. The <i>Introductory</i>
+and <i>Historical</i> sections are by <a href="/contributors.html?q=Charles+Everitt">C. Everitt</a>;
+that on the <i>Nature</i> of Light by Professor
+Lorentz of the University of Leiden; that
+on its <i>Velocity</i> by the late Simon Newcomb,
+the eminent American astronomer.
+The different phenomena connected with
+the subject may conveniently be grouped
+and studied as follows:—</p>
+
+<p>(a) <span class="sc"><a href="/article/06-0750-colour/colour">Colour</a></span> (Vol. 6, p. 728); Intensity,
+see <span class="sc"><a href="/article/21-0551-photometry/photometry">Photometry</a></span> (Vol. 21, p. 525), a brilliant
+article by Prof. <a href="/contributors.html?q=Herbert+Hall+Turner">H. H. Turner</a>, of
+Oxford University; <span class="sc"><a href="/article/14-0339-illumination/illumination">Illumination</a></span> (Vol.
+14, p. 320).</p>
+
+<p>(b) <span class="sc"><a href="/article/23-0015-s2/reflection_of_light">Reflection of Light</a></span> (Vol. 23, p.
+2); <span class="sc"><a href="/article/01-0107-s4/absorption_of_light">Absorption</a></span> (Vol. 1, p. 76); <span class="sc"><a href="/article/23-0038-s3/refraction">Refraction</a></span>
+(Vol. 23, p. 25); <span class="sc"><a href="/article/08-0332-dispersion/dispersion">Dispersion</a></span> (Vol.
+8, p. 315); <span class="sc"><a href="/article/14-0716-s2/interference_of_light">Interference</a></span> (Vol. 14, p.
+685); <span class="sc"><a href="/article/21-0965-polarization-of-light/polarization_of_light">Polarization of Light</a></span> (Vol. 21,
+p. 932).</p>
+
+<p>(c) <span class="sc"><a href="/article/24-0788-s4/shadow">Shadow</a></span> (Vol. 24, p. 738); <span class="sc"><a href="/article/08-0255-diffraction-of-light/diffraction_of_light">Diffraction</a></span>
+(Vol. 8, p. 238); <span class="sc"><a href="/article/05-0072-calorescence/calorescence">Calorescence</a></span>
+(Vol. 5, p. 60); <span class="sc"><a href="/article/10-0596-fluorescence/fluorescence">Fluorescence</a></span> (Vol. 10,
+p. 375); <span class="sc"><a href="/article/21-0498-s2/phosphorescence">Phosphorescence</a></span> (Vol. 21, p.
+476).</p>
+
+<p>(d) <span class="sc"><a href="/article/18-0602-mirror/mirror">Mirror</a></span> (Vol. 18, p. 575); <span class="sc"><a href="/article/16-0441-lens/lens">Lens</a></span>
+(Vol. 16, p. 421); <span class="sc"><a href="/article/05-0581-caustic/caustic">Caustic</a></span> (Vol. 5, p. 558);
+<span class="sc"><a href="/article/01-0085-s2/aberration">Aberration</a></span> (Vol. 1, p. 54).</p>
+
+<p>(e) <span class="sc"><a href="/article/07-0201-corona/corona">Corona</a></span> (Vol. 7, p. 184); <span class="sc"><a href="/article/12-0889-s4/halo">Halo</a></span>
+(Vol. 12, p. 864); <span class="sc"><a href="/article/18-0600-mirage/mirage">Mirage</a></span> (Vol. 18, p.
+573); <span class="sc"><a href="/article/22-0878-rainbow/rainbow">Rainbow</a></span> (Vol. 22, p. 861); <span class="sc"><a href="/article/25-0218-sky/sky">Sky</a></span>
+(Vol. 25, p. 202); <span class="sc"><a href="/article/27-0511-s2/twilight">Twilight</a></span> (Vol. 26, p.
+492)—see also <span class="sc"><a href="/article/08-0740-dust/dust">Dust</a></span> (Vol. 8, p. 713).</p>
+
+<p>(f) <span class="sc"><a href="/article/26-0586-telescope/telescope">Telescope</a></span> (Vol. 26, p. 557); <span class="sc"><a href="/article/18-0414-s2/microscope">Microscope</a></span>
+(Vol. 18, p. 392); <span class="sc"><a href="/article/19-0986-s4/objective">Objective</a></span>
+(Vol. 19, p. 948); <span class="sc"><a href="/article/05-0116-camera-lucida/camera_lucida">Camera Lucida</a></span> (Vol.
+5, p. 104); <span class="sc"><a href="/article/05-0116-camera-obscura/camera_obscura">Camera Obscura</a></span> (Vol. 5, p.
+104); <span class="sc"><a href="/article/03-0972-binocular-instrument/binocular_instrument">Binocular Instrument</a></span> (Vol. 3,
+p. 949); <span class="sc"><a href="/article/25-0919-s2/stereoscope">Stereoscope</a></span> (Vol. 25, p. 895).</p>
+
+<p>(g) <span class="sc"><a href="/article/28-0146-vision/vision">Vision</a></span> (Vol. 28, p. 130).</p>
+
+<p>Far reaching developments are described
+in <span class="sc"><a href="/article/21-0507-photography/photography">Photography</a></span> (Vol. 21, p. 485)
+and <span class="sc"><a href="/article/25-0641-s2/spectroscopy">Spectroscopy</a></span> (Vol. 25, p. 619). In
+the former article Sir W. de W. Abney
+describes in great detail photographic
+<i>Processes</i>; Major-General Waterhouse,
+<i>Apparatus</i> and <i>Lenses</i>, while A. H. Hinton
+discusses the <i>Pictorial</i> aspect of the
+subject. There are also valuable articles
+on <span class="sc"><a href="/article/21-0549-photography-celestial/photography__celestial">Celestial Photography</a></span> (Vol. 21, p.
+523), by <a href="/contributors.html?q=Herbert+Hall+Turner">Professor Turner</a>, and on the
+<span class="sc"><a href="/article/25-0639-s2/spectroheliograph">SpectroHeliograph</a></span> (Vol. 25, p. 618), by
+the inventor, G. E. Hale, director of the
+Solar Observatory of the Carnegie Institution
+at Mount Wilson, Cal. The relation
+between magnetism and light is
+discussed in an article <span class="sc"><a href="/article/17-0403-s2/magneto-optics">Magneto-Optics</a></span>
+(Vol. 17, p. 388), by Sir <a href="/contributors.html?q=Sir+Joseph+John+Thomson">J. J. Thomson</a>.</p>
+
+<h4 class="c016">(<i>IV</i>) <i>Heat</i></h4>
+
+<p>The treatment of this subject in the
+Encyclopaedia Britannica has been generally
+organized by Prof. <a href="/contributors.html?q=Hugh+Longbourne+Callendar">H. L. Callendar</a>,
+of the Royal College of Science, London,
+who was designated by Lord Kelvin as
+his successor in this department of the
+work. In pursuing the subject the following
+order may conveniently be followed:</p>
+
+<p>(a) <span class="sc"><a href="/article/13-0148-s2/heat">Heat</a></span> (Vol. 13, p. 135), <span class="sc"><a href="/article/26-0861-thermometry/thermometry">Thermometry</a></span>
+(Vol. 26, p. 821), <span class="sc"><a href="/article/05-0072-calorimetry/calorimetry">Calorimetry</a></span>
+(Vol. 5, p. 60), and <span class="sc"><a href="/article/26-0848-s2/thermodynamics">Thermodynamics</a></span>
+(Vol. 26, p. 808), all by <a href="/contributors.html?q=Hugh+Longbourne+Callendar">Professor Callendar</a>;
+<span class="sc"><a href="/article/06-0683-colchis/colchis">Cold</a></span> (Vol. 6, p. 663).</p>
+
+<p>(b) <span class="sc"><a href="/article/06-0914-conduction-of-heat/conduction_of_heat">Conduction of Heat</a></span> (Vol. 6, p.
+890); <span class="sc"><a href="/article/22-0802-s6/radiation__theory_of">Radiation, Theory of</a></span> (Vol. 22,
+p. 785); <span class="sc"><a href="/article/22-0823-radiometer/radiometer">Radiometer</a></span> (Vol. 22, p. 806).</p>
+
+<p>(c) <span class="sc"><a href="/article/11-0387-fusion/fusion">Fusion</a></span> (Vol. 11, p. 369); <span class="sc"><a href="/article/27-0923-s5/vaporization">Vaporization</a></span>
+(Vol. 27, p. 897); <span class="sc"><a href="/article/06-0868-condensation-of-gases/condensation_of_gases">Condensation
+of Gases</a></span> (Vol. 6, p. 844); <span class="sc"><a href="/article/16-0766-s5/liquid_gases">Liquid Gases</a></span>
+(Vol. 16, p. 744); <span class="sc"><a href="/article/26-0854-thermoelectricity/thermoelectricity">Thermoelectricity</a></span>
+(Vol. 26, p. 814).</p>
+
+<h4 class="c016">(<i>V</i>) <i>Electricity and Magnetism</i></h4>
+
+<div class="c003"></div>
+<p><span class="shoulder-heading" id="sh-4">Historical</span>We are so accustomed to think of electricity
+as the peculiar possession of our
+own age (the first crude attempts at an
+electric light were only two score years ago)
+that we are apt to forget that the first
+experiments in the
+science were made at
+least 2500 years ago.
+The first effort to place it on a true
+experimental and inductive basis dates
+back more than three centuries to
+the publication of the researches
+of <span class="sc">William Gilbert</span> (see Vol. 12,
+p. 9), the most distinguished man of
+science of his time, whom Queen Elizabeth
+appointed her private physician at
+the “usual” salary of £100. A hundred
+years later, <span class="sc"><a href="/article/28-0214-volta/volta">Volta</a></span> (Vol. 28, p. 198), who
+might be called the patron saint of electricity,
+produced the first electric current
+with the pile which bears his name.
+Meanwhile <span class="sc"><a href="/article/11-0036-s2/franklin__benjamin">Benjamin Franklin</a></span> (Vol. 11,
+p. 30) had been experimenting with his
+famous kite, and <span class="sc"><a href="/article/05-0604-cavendish-george/cavendish__george">Cavendish</a></span> (Vol. 5, p.
+580) and <span class="sc"><a href="/article/07-0527-cross/cross">Coulomb</a></span> (Vol. 7, p. 508) had
+been paving the way for the startling developments
+which resulted from Volta’s
+invention. In the 19th century <span class="sc"><a href="/article/10-0185-s2/faraday__michael">Faraday</a></span>
+(Vol. 10, p. 173), <span class="sc"><a href="/article/01-0929-s5/ampère__andré_marie">Ampère</a></span> (Vol. 1, p.
+878), <span class="sc"><a href="/article/20-0056-s3/ohm__georg_simon">Ohm</a></span> (Vol. 20, p. 34), <span class="sc"><a href="/article/15-0749-s3/kelvin__william_thomson">Lord Kelvin</a></span>
+(Vol. 15, p. 721), <span class="sc"><a href="/article/17-0948-s2/maxwell__james_clerk">James Clerk Maxwell</a></span>
+(Vol. 17, p. 929) and other brilliant
+investigators in rapid succession developed
+the field, until the science and application
+of electricity have attained a
+position absolutely dominating our daily
+life.</p>
+
+<p><span class="shoulder-heading" id="sh-5">Analysis of the Subject</span>The section of the Britannica treating
+this great subject is therefore one of the
+most important in the whole work, and
+it was in the fullest recognition of the
+fact that the editor asked Prof. J. A.
+Fleming, of the University of London,
+famous for his original work in both the
+mathematical and the experimental
+branches of the science, to organize the
+sections for the new edition. The ground
+is generally covered in the four articles, on
+electricity, electrostatics, electrokinetics,
+and electromagnetism, all contributed by
+Prof. Fleming himself. The article
+<span class="sc"><a href="/article/09-0196-electricity/electricity">Electricity</a></span> (Vol. 9, p. 179) is the key
+article to the subject, and should be read
+first. The two great branches of electrical
+theory then follow: (a) <span class="sc"><a href="/article/09-0257-electrostatics/electrostatics">Electrostatics</a></span>
+(Vol. 9, p. 240), in connection
+with which the article <span class="sc"><a href="/article/09-0193-electrical-machine/electrical__or_electrostatic__machine">Electrical Machine</a></span>
+(Vol. 9, p. 176) should also be
+studied, with reference to <span class="sc"><a href="/article/09-0256-electroscope/electroscope">Electroscope</a></span>
+(Vol. 9, p. 239) and <span class="sc"><a href="/article/09-0254-electrophorus/electrophorus">Electrophorus</a></span>
+(Vol. 9, p. 237). (b) <span class="sc"><a href="/article/09-0227-electrokinetics/electrokinetics">Electrokinetics</a></span>
+(Vol. 9, p. 210) and, supplementing
+it, <span class="sc"><a href="/article/06-0879-conduction-electric/conduction__electric">Conduction, Electric</a></span> (Vol.
+6, p. 855). The latter is divided into
+three parts: (i.) <i>Conduction in Solids</i>, by
+Prof. Fleming; (ii.) <i>Conduction in Liquids</i>
+by <a href="/contributors.html?q=William+Cecil+Dampier+Whetham">W. C. D. Whetham</a>; (iii.) <i>Conduction
+in Gases</i>, by Sir <a href="/contributors.html?q=Sir+Joseph+John+Thomson">J. J. Thomson</a>. In connection
+with (ii.) should be read <span class="sc"><a href="/article/09-0234-electrolysis/electrolysis">Electrolysis</a></span>
+(Vol. 9, p. 217), by <a href="/contributors.html?q=William+Cecil+Dampier+Whetham">W. C.
+D. Whetham</a>, and with (iii.) <span class="sc"><a href="/article/23-0728-r-ntgen-rays/röntgen_rays">Röntgen
+Rays</a></span> (Vol. 23, p. 694) and <span class="sc"><a href="/article/27-0860-s5/vacuum_tube">Vacuum
+Tube</a></span> (Vol. 27, p. 834), both by Sir <a href="/contributors.html?q=Sir+Joseph+John+Thomson">J. J.
+Thomson</a>, whose article <span class="sc"><a href="/article/09-0220-electric-waves/electric_waves">Electric Waves</a></span>
+(Vol. 9, p. 203) is of fundamental importance.
+The general principles of electrical
+engineering are set out in the article
+<span class="sc"><a href="/article/09-0210-electricity-supply/electricity_supply">Electric Supply</a></span> (Vol. 9, p. 193)
+with reference to <span class="sc"><a href="/article/08-0791-dynamo/dynamo">Dynamo</a></span> (Vol. 8, p. 764);
+<span class="sc"><a href="/article/18-0942-motors-electric/motors__electric">Motors, Electric</a></span> (Vol. 18, p. 910);
+<span class="sc"><a href="/article/27-0188-transformers/transformers">Transformers</a></span> (Vol. 27, p. 173); <span class="sc"><a href="/article/01-0157-s2/accumulator">Accumulator</a></span>
+(Vol. 1, p. 126); <span class="sc"><a href="/article/22-0238-power-transmission/power_transmission">Power Transmission</a></span>,
+<i>Electric</i> (Vol. 22, p. 233); <span class="sc"><a href="/article/27-0133-s2/traction">Traction</a></span>,
+<i>Electric Traction</i> (Vol. 27, p. 120);
+<span class="sc"><a href="/article/16-0673-s2/lighting">Lighting</a></span>, <i>Electric</i> (Vol. 16, p. 659); see
+also <span class="sc"><a href="/article/09-0225-electrochemistry/electrochemistry">Electrochemistry</a></span> (Vol. 9, p. 208)
+and <span class="sc"><a href="/article/09-0249-electrometallurgy/electrometallurgy">Electrometallurgy</a></span> (Vol. 9, p.
+232); <span class="sc"><a href="/article/26-0539-telegraph/telegraph">Telegraph</a></span> (Vol. 26, p. 510); <span class="sc"><a href="/article/26-0576-telephone/telephone">Telephone</a></span>
+(Vol. 26, p. 547).</p>
+
+<p>A bridge to <span class="sc"><a href="/article/17-0336-s2/magnetism">Magnetism</a></span> (Vol. 17, p.
+321), an article by <a href="/contributors.html?q=Shelford+Bidwell">Shelford Bidwell</a>,
+former president of the Physical Society,
+is the article <span class="sc"><a href="/article/09-0243-electromagnetism/electromagnetism">Electromagnetism</a></span> (Vol.
+9, p. 226), by Prof. Fleming. This article
+leads also to the study of manifestations
+in nature of electricity and
+magnetism: see the articles <span class="sc"><a href="/article/02-0908-s3/atmospheric_electricity">Atmospheric
+Electricity</a></span> (Vol. 2, p. 860);
+<span class="sc"><a href="/article/02-0975-s6/aurora_polaris">Aurora Polaris</a></span> (Vol. 2, p. 927);
+<span class="sc"><a href="/article/08-0840-earth-currents/earth_currents">Earth Currents</a></span> (Vol. 8, p. 813); and
+<span class="sc"><a href="/article/17-0368-s2/magnetism__terrestrial">Magnetism, Terrestrial</a></span> (Vol. 17, p.
+353); and to the applications of its principles
+in the <span class="sc"><a href="/article/06-0828-compass/compass">Compass</a></span> (Vol. 6, p. 804).</p>
+
+<p>An alphabetical list of the articles in
+the Britannica on the subjects treated in
+this chapter is given below. The biographies
+of distinguished physicists, included
+in the list, are valuable as containing
+accounts of their contributions
+to science, and are full of human interest.</p>
+
+<h4 class="c016">ARTICLES ON THE PHYSICAL SCIENCES IN THE BRITANNICA, INCLUDING THOSE ON FAMOUS PHYSICISTS</h4>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0085-s2/aberration">Aberration</a></li>
+  <li class="c018"><a href="/article/01-0107-s4/absorption_of_light">Absorption of Light</a></li>
+  <li class="c018"><a href="/article/01-0157-s2/accumulator">Accumulator</a></li>
+  <li class="c018"><a href="/article/01-0176-s3/achromatism">Achromatism</a></li>
+  <li class="c018"><a href="/article/01-0184-s7/acoustics">Acoustics</a></li>
+  <li class="c018"><a href="/article/01-0185-s4/acre">Acre</a></li>
+  <li class="c018"><a href="/article/01-0188-s6/actinometer">Actinometer</a></li>
+  <li class="c018"><a href="/article/01-0223-s3/adhesion">Adhesion</a></li>
+  <li class="c018"><a href="/article/01-0293-s7/aepinus__franz_ulrich_theodor">Aepinus, F. U. T.</a></li>
+  <li class="c018"><a href="/article/01-0329-s3/aether">Aether, or Ether</a></li>
+  <li class="c018"><a href="/article/01-0413-s4/aggregation">Aggregation</a></li>
+  <li class="c018"><a href="/article/01-0418-s6/agonic_lines">Agonic Lines</a></li>
+  <li class="c018"><a href="/article/01-0576-s3/aldini__giovanni">Aldini, Giovanni</a></li>
+  <li class="c018"><a href="/article/01-0698-s2/alhazen">Alhazen</a></li>
+  <li class="c018"><a href="/article/01-0927-s3/amontons__guillaume">Amontons, Guillaume</a></li>
+  <li class="c018"><a href="/article/01-0929-s5/ampère__andré_marie">Ampère, A. M.</a></li>
+  <li class="c018"><a href="/article/01-0930-s3/amperemeter">Amperemeter or Ammeter</a></li>
+  <li class="c018"><a href="/article/01-1013-s1/anderson__john">Anderson, John</a></li>
+  <li class="c018">Angström, A. J. and K. J.</li>
+  <li class="c018"><a href="/article/02-0175-s3/aperture">Aperture</a></li>
+  <li class="c018"><a href="/article/02-0327-s4/arago__dominique_françois_jean">Arago, D. F. J.</a></li>
+  <li class="c018"><a href="/article/02-0603-s3/armature">Armature</a></li>
+  <li class="c018"><a href="/article/02-0667-s3/arnaldus_de_villa_nova">Arnaldus de Villa Nova</a></li>
+  <li class="c018"><a href="/article/02-0690-s2/arrhenius__svante_august">Arrhenius, S. A.</a></li>
+  <li class="c018"><a href="/article/02-0757-s4/as">As</a></li>
+  <li class="c018"><a href="/article/02-0908-s3/atmospheric_electricity">Atmospheric Electricity</a></li>
+  <li class="c018"><a href="/article/02-0936-s3/atwood__george">Atwood, George</a></li>
+  <li class="c018"><a href="/article/02-0969-s4/auncel">Auncel</a></li>
+  <li class="c018"><a href="/article/03-0081-s4/avogadro__amedeo">Avogadro, Amedeo</a></li>
+  <li class="c018"><a href="/article/03-0081-s6/avoirdupois">Avoirdupois</a></li>
+  <li class="c018"><a href="/article/03-0091-ayrton-william-edward/ayrton__william_edward">Ayrton, W. E.</a></li>
+  <li class="c018"><a href="/article/03-0148-s5/bache__alexander_dallas">Bache, Alexander D.</a></li>
+  <li class="c018"><a href="/article/03-0244-s3/baker__henry">Baker, Henry</a></li>
+  <li class="c018"><a href="/article/03-0251-s4/balance">Balance</a></li>
+  <li class="c018">Barleycorn</li>
+  <li class="c018"><a href="/article/03-0435-barometer/barometer">Barometer</a></li>
+  <li class="c018"><a href="/article/03-0438-barometric-light/barometric_light">Barometric Light</a></li>
+  <li class="c018"><a href="/article/03-0449-barrel/barrel">Barrel</a></li>
+  <li class="c018"><a href="/article/03-0548-battery/battery">Battery</a></li>
+  <li class="c018"><a href="/article/03-0621-beccaria-giovanni-battista/beccaria__giovanni_battista">Beccaria, G. B.</a></li>
+  <li class="c018"><a href="/article/03-0630-becquerel/becquerel">Becquerel (family)</a></li>
+  <li class="c018"><a href="/article/03-0704-bell-alexander-graham/bell__alexander_graham">Bell, A. Graham</a></li>
+  <li class="c018"><a href="/article/03-0972-binocular-instrument/binocular_instrument">Binocular Instrument</a></li>
+  <li class="c018"><a href="/article/03-0979-biot-jean-baptiste/biot__jean_baptiste">Biot, Jean Baptiste</a></li>
+  <li class="c018"><a href="/article/04-0369-boyle-robert/boyle__robert">Boyle, Robert</a></li>
+  <li class="c018"><a href="/article/04-0533-brewster-sir-david/brewster__sir_david">Brewster, Sir David</a></li>
+  <li class="c018"><a href="/article/04-0894-s5/bushel">Bushel</a></li>
+  <li class="c018"><a href="/article/04-0973-s2/cagniard_de_la_tour__charles">Cagniard de la Tour, C.</a></li>
+  <li class="c018"><a href="/article/05-0014-calibration/calibration">Calibration</a></li>
+  <li class="c018"><a href="/article/05-0072-calorescence/calorescence">Calorescence</a></li>
+  <li class="c018"><a href="/article/05-0072-calorimetry/calorimetry">Calorimetry</a></li>
+  <li class="c018"><a href="/article/05-0116-camera-lucida/camera_lucida">Camera Lucida</a></li>
+  <li class="c018"><a href="/article/05-0116-camera-obscura/camera_obscura">Camera Obscura</a></li>
+  <li class="c018"><a href="/article/05-0231-canton-john/canton__john">Canton, John</a></li>
+  <li class="c018"><a href="/article/05-0269-capillary-action/capillary_action">Capillary Action</a></li>
+  <li class="c018"><a href="/article/05-0314-carat/carat">Carat</a></li>
+  <li class="c018"><a href="/article/05-0391-carnot-sadi-nicolas-l-onhard/carnot__sadi_nicolas_léonhard">Carnot, Sadi N. L.</a></li>
+  <li class="c018"><a href="/article/05-0453-carucate/carucate">Carucate</a></li>
+  <li class="c018"><a href="/article/05-0581-caustic/caustic">Caustic</a></li>
+  <li class="c018"><a href="/article/05-0586-cavallo-tiberius/cavallo__tiberius">Cavallo, Tiberius</a></li>
+  <li class="c018"><a href="/article/06-0390-cinematograph/cinematograph">Cinematograph</a></li>
+  <li class="c018"><a href="/article/06-0479-claudet-antoine-fran-ois-jean/claudet__antoine_françois_jean">Claudet, A. F. J.</a></li>
+  <li class="c018"><a href="/article/06-0484-clausius-rudolf-julius-emmanuel/clausius__rudolf_julius_emmanuel">Clausius, Rudolf J. E.</a></li>
+  <li class="c018"><a href="/article/06-0685-cold-harbor/cold_harbor">Cold</a></li>
+  <li class="c018"><a href="/article/06-0750-colour/colour">Colour</a></li>
+  <li class="c018"><a href="/article/06-0828-compass/compass">Compass</a></li>
+  <li class="c018"><a href="/article/06-0868-condensation-of-gases/condensation_of_gases">Condensation of Gases</a></li>
+  <li class="c018"><a href="/article/06-0879-conduction-electric/conduction__electric">Conduction, Electric</a></li>
+  <li class="c018"><a href="/article/06-0914-conduction-of-heat/conduction_of_heat">Conduction of Heat</a></li>
+  <li class="c018"><a href="/article/07-0196-cornu-marie-alfred/cornu__marie_alfred">Cornu, Marie Alfred</a></li>
+  <li class="c018"><a href="/article/07-0328-coulomb/coulomb__charles_augustin">Coulomb, C. A.</a></li>
+  <li class="c018"><a href="/article/07-0666-curie-pierre/curie__pierre">Curie, Pierre</a></li>
+  <li class="c018"><a href="/article/07-0708-cyclometer/cyclometer">Cyclometer</a></li>
+  <li class="c018"><a href="/article/07-0752-daguerre-louis-jacques-mand/daguerre__louis_jacques_mandé">Daguerre, L. J. M.</a></li>
+  <li class="c018"><a href="/article/07-0793-dallmeyer-john-henry/dallmeyer__john_henry">Dallmeyer, John Henry</a></li>
+  <li class="c018"><a href="/article/07-0968-de-la-rive-auguste-arthur/de_la_rive__auguste_arthur">De la Rive, A. A.</a></li>
+  <li class="c018"><a href="/article/07-0990-della-porta-giovanni-battista/della_porta__giovanni_battista">Della Porta, G. Battista</a></li>
+  <li class="c018"><a href="/article/08-0015-demijohn/demijohn">Demijohn</a></li>
+  <li class="c018"><a href="/article/08-0061-density/density">Density</a></li>
+  <li class="c018"><a href="/article/08-0172-diamagnetism/diamagnetism">Diamagnetism</a></li>
+  <li class="c018"><a href="/article/08-0226-dielectric/dielectric">Dielectric</a></li>
+  <li class="c018"><a href="/article/08-0255-diffraction-of-light/diffraction_of_light">Diffraction of Light</a></li>
+  <li class="c018"><a href="/article/08-0272-diffusion/diffusion">Diffusion</a></li>
+  <li class="c018"><a href="/article/08-0290-dimension/dimension">Dimension</a></li>
+  <li class="c018"><a href="/article/08-0332-dispersion/dispersion">Dispersion</a></li>
+  <li class="c018">Dolland, John</li>
+  <li class="c018"><a href="/article/08-0676-duhamel-jean-baptiste/duhamel__jean_baptiste">Duhamel, J. B.</a></li>
+  <li class="c018"><a href="/article/08-0791-dynamo/dynamo">Dynamo</a></li>
+  <li class="c018"><a href="/article/08-0840-earth-currents/earth_currents">Earth Currents</a></li>
+  <li class="c018"><a href="/article/08-0973-edison-thomas-alva/edison__thomas_alva">Edison, T. A.</a></li>
+  <li class="c018"><a href="/article/09-0193-electrical-machine/electrical__or_electrostatic__machine">Electrical or Electrostatic Machine</a></li>
+  <li class="c018"><a href="/article/09-0196-electricity/electricity">Electricity</a></li>
+  <li class="c018"><a href="/article/09-0210-electricity-supply/electricity_supply">Electricity Supply</a></li>
+  <li class="c018"><a href="/article/09-0220-electric-waves/electric_waves">Electric Waves</a></li>
+  <li class="c018"><a href="/article/09-0225-electrochemistry/electrochemistry">Electrochemistry</a></li>
+  <li class="c018"><a href="/article/09-0227-electrokinetics/electrokinetics">Electrokinetics</a></li>
+  <li class="c018"><a href="/article/09-0234-electrolysis/electrolysis">Electrolysis</a></li>
+  <li class="c018"><a href="/article/09-0243-electromagnetism/electromagnetism">Electromagnetism</a></li>
+  <li class="c018"><a href="/article/09-0249-electrometallurgy/electrometallurgy">Electrometallurgy</a></li>
+  <li class="c018"><a href="/article/09-0251-electrometer/electrometer">Electrometer</a></li>
+  <li class="c018"><a href="/article/09-0254-electron/electron">Electron</a></li>
+  <li class="c018"><a href="/article/09-0254-electrophorus/electrophorus">Electrophorus</a></li>
+  <li class="c018"><a href="/article/09-0254-electroplating/electroplating">Electroplating</a></li>
+  <li class="c018"><a href="/article/09-0256-electroscope/electroscope">Electroscope</a></li>
+  <li class="c018"><a href="/article/09-0257-electrostatics/electrostatics">Electrostatics</a></li>
+  <li class="c018"><a href="/article/09-0269-electrotyping/electrotyping">Electrotyping</a></li>
+  <li class="c018"><a href="/article/09-0415-energetics/energetics">Energetics</a></li>
+  <li class="c018"><a href="/article/09-0423-energy/energy">Energy</a></li>
+  <li class="c018"><a href="/article/09-0781-s3/erman__paul">Erman, Paul</a></li>
+  <li class="c018"><a href="/article/10-0138-fahrenheit-gabriel-daniel/fahrenheit__gabriel_daniel">Fahrenheit, G. D.</a></li>
+  <li class="c018"><a href="/article/10-0213-fathom/fathom">Fathom</a></li>
+  <li class="c018"><a href="/article/10-0468-s2/fizeau__armand_hippolyte_louis">Fizeau, A. H. L.</a></li>
+  <li class="c018"><a href="/article/10-0596-fluorescence/fluorescence">Fluorescence</a></li>
+  <li class="c018"><a href="/article/10-0659-s2/forbes__james_david">Forbes, James David</a></li>
+  <li class="c018"><a href="/article/10-0689-forman-simon/forman__simon">Forman, Simon</a></li>
+  <li class="c018"><a href="/article/10-0755-foucault-jean-bernard-l-on/foucault__jean_bernard_leon">Foucault, J. B. L.</a></li>
+  <li class="c018"><a href="/article/11-0055-fraunhofer-joseph-von/fraunhofer__joseph_von">Fraunhofer, J. von</a></li>
+  <li class="c018"><a href="/article/11-0222-s6/fresnel__augustin_jean">Fresnel, Augustin J.</a></li>
+  <li class="c018"><a href="/article/11-0371-s3/furlong">Furlong</a></li>
+  <li class="c018"><a href="/article/11-0387-fusion/fusion">Fusion</a></li>
+  <li class="c018"><a href="/article/11-0393-fuze/fuze">Fuze, or Fuse</a></li>
+  <li class="c018"><a href="/article/11-0439-gallon/gallon">Gallon</a></li>
+  <li class="c018"><a href="/article/11-0446-s5/galvanometer">Galvanometer</a></li>
+  <li class="c018"><a href="/article/11-0572-s3/geissler__heinrich">Geissler, Heinrich</a></li>
+  <li class="c018"><a href="/article/11-0961-s3/gibbs__josiah_willard">Gibbs, J. W.</a></li>
+  <li class="c018"><a href="/article/12-0020-s3/gilbert__ann">Gilbert, or Gylberde, W.</a></li>
+  <li class="c018"><a href="/article/12-0086-glaisher-james/glaisher__james">Glaisher, James</a></li>
+  <li class="c018"><a href="/article/12-0329-s1/graduation">Graduation</a></li>
+  <li class="c018"><a href="/article/12-0350-gramophone/gramophone">Gramophone</a></li>
+  <li class="c018"><a href="/article/12-0401-gravitation/gravitation">Gravitation</a></li>
+  <li class="c018"><a href="/article/12-0407-gray-elisha/gray__elisha">Gray, Elisha</a></li>
+  <li class="c018"><a href="/article/12-0663-grove-sir-william-robert/grove__sir_william_robert">Grove, Sir William R.</a></li>
+  <li class="c018"><a href="/article/12-0695-s5/guericke__otto_von">Guericke, Otto von</a></li>
+  <li class="c018"><a href="/article/13-0033-s6/harris__sir_william_snow">Harris, Sir W. S.</a></li>
+  <li class="c018"><a href="/article/13-0135-hearing/hearing">Hearing</a></li>
+  <li class="c018"><a href="/article/13-0148-s2/heat">Heat</a></li>
+  <li class="c018"><a href="/article/13-0243-heliostat/heliostat">Heliostat</a></li>
+  <li class="c018"><a href="/article/13-0261-s2/helmholtz__hermann_ludwig_ferdinand_von">Helmholtz, H. L. F. von</a></li>
+  <li class="c018"><a href="/article/13-0312-henry-joseph/henry__joseph">Henry, Joseph</a></li>
+  <li class="c018"><a href="/article/13-0416-hertz-heinrich-rudolf/hertz__heinrich_rudolf">Hertz, Heinrich R.</a></li>
+  <li class="c018"><a href="/article/13-0586-hogshead/hogshead">Hogshead</a></li>
+  <li class="c018"><a href="/article/13-0687-s6/hooke__robert">Hooke, Robert</a></li>
+  <li class="c018"><a href="/article/13-0703-s2/hopkinson__john">Hopkinson, John</a></li>
+  <li class="c018"><a href="/article/13-0828-hour-glass/hour-glass">Hour-glass</a></li>
+  <li class="c018"><a href="/article/13-0884-hughes-david-edward/hughes__david_edward">Hughes, D. E.</a></li>
+  <li class="c018"><a href="/article/14-0173-hydrometer/hydrometer">Hydrometer</a></li>
+  <li class="c018"><a href="/article/14-0221-hypsometer/hypsometer">Hypsometer</a></li>
+  <li class="c018"><a href="/article/14-0223-hysteresis/hysteresis">Hysteresis</a></li>
+  <li class="c018"><a href="/article/14-0339-illumination/illumination">Illumination</a></li>
+  <li class="c018"><a href="/article/14-0372-inch/inch">Inch</a></li>
+  <li class="c018"><a href="/article/14-0373-s4/inclinometer">Inclinometer</a></li>
+  <li class="c018"><a href="/article/14-0531-s2/induction_coil">Induction Coil</a></li>
+  <li class="c018"><a href="/article/14-0716-s2/interference_of_light">Interference of Light</a></li>
+  <li class="c018"><a href="/article/15-0119-s5/jablochkov__paul">Jablochkov, Paul</a></li>
+  <li class="c018"><a href="/article/15-0550-joule-james-prescott/joule__james_prescott">Joule, J. P.</a></li>
+  <li class="c018"><a href="/article/15-0666-kaleidoscope/kaleidoscope">Kaleidoscope</a></li>
+  <li class="c018"><a href="/article/15-0723-kater-henry/kater__henry">Kater, Henry</a></li>
+  <li class="c018">Kelvin, 1st baron</li>
+  <li class="c018"><a href="/article/15-0856-kirchhoff-gustav-robert/kirchhoff__gustav_robert">Kirchhoff, G. R.</a></li>
+  <li class="c018"><a href="/article/15-0927-k-nig/könig__karl_rudolph">König, K. R.</a></li>
+  <li class="c018"><a href="/article/15-0980-kundt-august-adolph-eduard-eberhard/kundt__august_adolph_eduard_eberhard">Kundt, A. A. E. E.</a></li>
+  <li class="c018"><a href="/article/16-0127-lambert-johann-heinrich/lambert__johann_heinrich">Lambert, J. H.</a></li>
+  <li class="c018"><a href="/article/16-0196-langley-samuel-pierpont/langley__samuel_pierpont">Langley, S. P.</a></li>
+  <li class="c018"><a href="/article/16-0205-lantern/lantern">Lantern</a></li>
+  <li class="c018"><a href="/article/16-0441-lens/lens">Lens</a></li>
+  <li class="c018"><a href="/article/16-0548-leyden-jar/leyden_jar">Leyden Jar, or Condenser</a></li>
+  <li class="c018"><a href="/article/16-0606-lichtenberg-georg-christoph/lichtenberg__georg_christoph">Lichtenberg, G. C.</a></li>
+  <li class="c018"><a href="/article/16-0628-s5/light">Light</a></li>
+  <li class="c018"><a href="/article/16-0673-s2/lighting">Lighting</a></li>
+  <li class="c018"><a href="/article/16-0695-lightning-conductor/lightning_conductor">Lightning Conductor</a></li>
+  <li class="c018"><a href="/article/16-0766-s5/liquid_gases">Liquid Gases</a></li>
+  <li class="c018"><a href="/article/16-0882-s2/lodge__sir_oliver_joseph">Lodge, Sir Oliver J.</a></li>
+  <li class="c018"><a href="/article/17-0336-s2/magnetism">Magnetism</a></li>
+  <li class="c018"><a href="/article/17-0368-s2/magnetism__terrestrial">Magnetism, Terrestrial</a></li>
+  <li class="c018"><a href="/article/17-0400-magnetograph/magnetograph">Magnetograph</a></li>
+  <li class="c018"><a href="/article/17-0401-s2/magnetometer">Magnetometer</a></li>
+  <li class="c018"><a href="/article/17-0403-s2/magneto-optics">Magneto-Optics</a></li>
+  <li class="c018">Malus, E. L.</li>
+  <li class="c018"><a href="/article/17-0610-manometer/manometer">Manometer</a></li>
+  <li class="c018"><a href="/article/17-0741-s2/mariotte__edme">Mariotte, Edme</a></li>
+  <li class="c018"><a href="/article/17-0822-marum-martin-van/marum__martin_van">Marum, Martin van</a></li>
+  <li class="c018"><a href="/article/17-0910-s3/matter">Matter</a></li>
+  <li class="c018"><a href="/article/17-0914-matteucci-carlo/matteucci__carlo">Matteucci, Carlo</a></li>
+  <li class="c018"><a href="/article/17-0948-s2/maxwell__james_clerk">Maxwell, J. Clerk</a></li>
+  <li class="c018"><a href="/article/17-0952-mayer-julius-robert/mayer__julius_robert">Mayer, Julius R.</a></li>
+  <li class="c018"><a href="/article/18-0115-s2/melloni__macedonio">Melloni, Macedonio</a></li>
+  <li class="c018"><a href="/article/18-0312-s2/meter__electric">Meter, Electric</a></li>
+  <li class="c018"><a href="/article/18-0320-metric-system/metric_system">Metric System</a></li>
+  <li class="c018"><a href="/article/18-0391-s3/michell__john">Michell, John</a></li>
+  <li class="c018"><a href="/article/18-0414-s2/microscope">Microscope</a></li>
+  <li class="c018"><a href="/article/18-0602-mirror/mirror">Mirror</a></li>
+  <li class="c018"><a href="/article/18-0668-model/model">Model</a></li>
+  <li class="c018"><a href="/article/18-0684-s2/molecule">Molecule</a></li>
+  <li class="c018"><a href="/article/18-0868-morgen/morgen">Morgen</a></li>
+  <li class="c018"><a href="/article/18-0906-s4/morse__samuel_finley_breese">Morse, S. F. B.</a></li>
+  <li class="c018"><a href="/article/18-0938-s4/motion__laws_of">Motion, Laws of</a></li>
+  <li class="c018"><a href="/article/18-0942-motors-electric/motors__electric">Motors, Electric</a></li>
+  <li class="c018"><a href="/article/19-0109-s2/musschenbroek__pieter_van">Musschenbroek, P. van</a></li>
+  <li class="c018"><a href="/article/19-0354-neckam-alexander/neckam__alexander">Neckam, A.</a></li>
+  <li class="c018"><a href="/article/19-0685-s2/nicholson__william">Nicholson, W.</a></li>
+  <li class="c018"><a href="/article/19-0688-s3/nicol__william">Nicol, William</a></li>
+  <li class="c018"><a href="/article/19-0699-s3/niepce__joseph_nicéphore">Niepce, J. Nicéphore</a></li>
+  <li class="c018"><a href="/article/19-0751-s2/nobili__leopoldo">Nobili, Leopoldo</a></li>
+  <li class="c018"><a href="/article/19-0761-s7/nollet__jean_antoine">Nollet, Jean Antoine</a></li>
+  <li class="c018"><a href="/article/19-0986-s4/objective">Objective, or Object Glass</a></li>
+  <li class="c018"><a href="/article/20-0056-s3/ohm__georg_simon">Ohm, Georg Simon</a></li>
+  <li class="c018"><a href="/article/20-0056-s4/ohmmeter">Ohmmeter</a></li>
+  <li class="c018"><a href="/article/20-0114-s2/olmsted__denison">Olmsted, Denison</a></li>
+  <li class="c018"><a href="/article/20-0167-optics/optics">Optics</a></li>
+  <li class="c018"><a href="/article/20-0381-s6/oscillograph">Oscillograph</a></li>
+  <li class="c018"><a href="/article/20-0413-ounce/ounce">Ounce</a></li>
+  <li class="c018"><a href="/article/20-0794-papin-denis/papin__denis">Papin, Denis</a></li>
+  <li class="c018"><a href="/article/21-0046-peck/peck">Peck</a></li>
+  <li class="c018"><a href="/article/21-0091-s4/peltier__jean_charles_athanase">Peltier, J. C. A.</a></li>
+  <li class="c018"><a href="/article/21-0192-s4/permeability__magnetic">Permeability, Magnetic</a></li>
+  <li class="c018"><a href="/article/21-0193-s1/permeameter">Permeameter</a></li>
+  <li class="c018"><a href="/article/21-0197-perpetual-motion/perpetual_motion">Perpetual Motion</a></li>
+  <li class="c018"><a href="/article/21-0489-phonograph/phonograph">Phonograph</a></li>
+  <li class="c018"><a href="/article/21-0498-s2/phosphorescence">Phosphorescence</a></li>
+  <li class="c018">Photography</li>
+  <li class="c018"><a href="/article/21-0551-photometry/photometry">Photometry</a></li>
+  <li class="c018"><a href="/article/21-0658-pint/pint">Pint</a></li>
+  <li class="c018"><a href="/article/21-0837-plateau-joseph-antoine-ferdinand/plateau__joseph_antoine_ferdinand">Plateau, J. A. F.</a></li>
+  <li class="c018"><a href="/article/21-0901-pneumatics/pneumatics">Pneumatics</a></li>
+  <li class="c018"><a href="/article/21-0923-s2/poggendorff__johann_christian">Poggendorff, J. C.</a></li>
+  <li class="c018"><a href="/article/21-0965-polarity/polarity">Polarity</a></li>
+  <li class="c018"><a href="/article/21-0965-polarization-of-light/polarization_of_light">Polarization of Light</a></li>
+  <li class="c018"><a href="/article/22-0086-pood/pood">Pood</a></li>
+  <li class="c018"><a href="/article/22-0219-potentiometer/potentiometer">Potentiometer</a></li>
+  <li class="c018"><a href="/article/22-0235-pound/pound">Pound</a></li>
+  <li class="c018"><a href="/article/22-0238-power-transmission/power_transmission">Power Transmission</a></li>
+  <li class="c018"><a href="/article/22-0326-pr-vost-pierre/prévost__pierre">Prévost, Pierre</a></li>
+  <li class="c018"><a href="/article/22-0709-pyrometer/pyrometer">Pyrometer</a></li>
+  <li class="c018"><a href="/article/22-0802-s6/radiation__theory_of">Radiation, Theory of</a></li>
+  <li class="c018"><a href="/article/22-0823-radiometer/radiometer">Radiometer</a></li>
+  <li class="c018">Rayleigh, Lord</li>
+  <li class="c018"><a href="/article/23-0015-s2/reflection_of_light">Reflection of Light</a></li>
+  <li class="c018"><a href="/article/23-0038-s3/refraction">Refraction</a></li>
+  <li class="c018"><a href="/article/23-0459-rod/rod">Rod</a></li>
+  <li class="c018"><a href="/article/23-0728-r-ntgen-rays/röntgen_rays">Röntgen Rays</a></li>
+  <li class="c018"><a href="/article/23-0728-r-ntgen-wilhelm-konrad/röntgen__wilhelm_konrad">Röntgen, W. K.</a></li>
+  <li class="c018"><a href="/article/23-0827-s2/rowland__henry_augustus">Rowland, Henry A.</a></li>
+  <li class="c018">Rumford, Count</li>
+  <li class="c018"><a href="/article/24-0253-s2/saussure__horace_bénédict_de">Saussure, H. B. de</a></li>
+  <li class="c018"><a href="/article/24-0414-s5/science">Science</a></li>
+  <li class="c018"><a href="/article/24-0788-s4/shadow">Shadow</a></li>
+  <li class="c018"><a href="/article/25-0062-s6/siemens__ernst_werner_von">Siemens, E. Werner von</a></li>
+  <li class="c018"><a href="/article/25-0218-sky/sky">Sky</a></li>
+  <li class="c018"><a href="/article/25-0453-s6/sound">Sound</a></li>
+  <li class="c018"><a href="/article/25-0545-s4/space_and_time">Space and Time</a></li>
+  <li class="c018"><a href="/article/25-0638-s4/spectacles">Spectacles</a></li>
+  <li class="c018"><a href="/article/25-0641-s2/spectroscopy">Spectroscopy</a></li>
+  <li class="c018"><a href="/article/25-0654-speculum/speculum">Speculum</a></li>
+  <li class="c018">Spherometer</li>
+  <li class="c018"><a href="/article/25-0794-standard/standard">Standard</a></li>
+  <li class="c018"><a href="/article/25-0919-s2/stereoscope">Stereoscope</a></li>
+  <li class="c018"><a href="/article/25-0936-s3/stewart__balfour">Stewart, Balfour</a></li>
+  <li class="c018"><a href="/article/26-0101-s5/sun">Sun or Photo Copying</a></li>
+  <li class="c018"><a href="/article/26-0197-swan-sir-joseph-wilson/swan__sir_joseph_wilson">Swan, Sir Joseph W.</a></li>
+  <li class="c018"><a href="/article/26-0385-s3/tait__peter_guthrie">Tait, Peter G.</a></li>
+  <li class="c018"><a href="/article/26-0389-s3/talbot__william_henry_fox">Talbot, W. H. Fox</a></li>
+  <li class="c018"><a href="/article/26-0392-talent/talent">Talent</a></li>
+  <li class="c018"><a href="/article/26-0465-s4/tartini__giuseppe">Tartini, G.</a></li>
+  <li class="c018"><a href="/article/26-0539-telegraph/telegraph">Telegraph</a></li>
+  <li class="c018"><a href="/article/26-0576-telephone/telephone">Telephone</a></li>
+  <li class="c018"><a href="/article/26-0848-s2/thermodynamics">Thermodynamics</a></li>
+  <li class="c018"><a href="/article/26-0854-thermoelectricity/thermoelectricity">Thermoelectricity</a></li>
+  <li class="c018"><a href="/article/26-0861-thermometry/thermometry">Thermometry</a></li>
+  <li class="c018"><a href="/article/26-0914-thomson-john/thomson__john">Thomson, James</a></li>
+  <li class="c018"><a href="/article/27-0075-s9/torricelli__evangelista">Torricelli, E.</a></li>
+  <li class="c018"><a href="/article/27-0188-transformers/transformers">Transformers</a></li>
+  <li class="c018"><a href="/article/27-0342-s5/trumpet">Trumpet, Speaking and Hearing</a></li>
+  <li class="c018"><a href="/article/27-0518-tyndall-john/tyndall__john">Tyndall, John</a></li>
+  <li class="c018"><a href="/article/27-0761-s2/units__dimensions_of">Units, Dimensions of</a></li>
+  <li class="c018"><a href="/article/27-0763-s2/units__physical">Units, Physical</a></li>
+  <li class="c018"><a href="/article/27-0860-s5/vacuum_tube">Vacuum Tube</a></li>
+  <li class="c018"><a href="/article/27-0923-s5/vaporization">Vaporization</a></li>
+  <li class="c018"><a href="/article/28-0146-vision/vision">Vision</a></li>
+  <li class="c018"><a href="/article/28-0214-volta-alessandro/volta__alessandro">Volta, Alessandro</a></li>
+  <li class="c018"><a href="/article/28-0222-voltmeter/voltmeter">Voltmeter</a></li>
+  <li class="c018"><a href="/article/28-0437-wattmeter/wattmeter">Wattmeter</a></li>
+  <li class="c018"><a href="/article/28-0442-s4/wave">Wave</a></li>
+  <li class="c018"><a href="/article/28-0476-s2/weber__wilhelm_eduard">Weber, W. E.</a></li>
+  <li class="c018"><a href="/article/28-0486-weighing-machines/weighing_machines">Weighing Machines</a></li>
+  <li class="c018"><a href="/article/28-0495-weights-and-measures/weights_and_measures">Weights and Measures</a></li>
+  <li class="c018">Wheatstone’s Bridge</li>
+  <li class="c018"><a href="/article/28-0603-s4/wheatstone__sir_charles">Wheatstone, Sir Chas.</a></li>
+  <li class="c018"><a href="/article/28-0641-wiedemann-gustav-heinrich/wiedemann__gustav_heinrich">Wiedemann, G. H.</a></li>
+  <li class="c018"><a href="/article/28-0967-young-thomas/young__thomas">Young, Thomas</a></li>
+</ul>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

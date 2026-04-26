@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Astronomy &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter LIII</span>Astronomy</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">A Few Facts</a></li><li><a href="#sh-2">Life on Mars</a></li></ol></div>
+    <div class="body-text">
+
+
+<p>No greater homage has ever been
+paid to the progress of American
+science than when the planning
+and supervision of the astronomical section
+of the new Encyclopaedia Britannica
+was entrusted to the late Prof. Simon
+<a href="/contributors.html?q=Simon+Newcomb">Newcomb</a>, who was also the only American
+save Benjamin Franklin ever elected
+an associate of the French Institute. His
+death occurred some time before the
+Britannica was completed, but he had
+already finished the articles which he had
+undertaken personally to contribute, and
+read a great number of the other articles
+which had, at his suggestion, been assigned
+to eminent astronomers in various
+parts of the world. His famous hand-book,
+<i>Popular Astronomy</i>, has been translated
+into all the European languages,
+and into Japanese as well; but the unlimited
+resources in the way of collaboration
+which the editorial organization of
+the Britannica put at his disposal, enabled
+him to assemble in these volumes a
+complete body of astronomical knowledge
+which is the greatest of his educational
+achievements.</p>
+
+<p>The making of a lens for a great telescope
+is the most difficult undertaking in
+all craftsmanship, and the mounting of
+the telescope itself a triumph of mechanical
+ingenuity. Yet the stars and planets
+have been guide-posts for the shepherd
+and the sailor throughout the ages, and
+have told the farmer when to sow and
+when to reap, and, even in our day, observations
+made by an amateur, through
+a common field-glass, have in more than
+one instance yielded results of serious
+value.</p>
+
+<p><span class="shoulder-heading" id="sh-1">A Few Facts</span>Progress is from one point of view so
+slow that astronomers are now compiling
+data regarding fixed stars of which the
+motion cannot be
+deduced for centuries
+to come; yet
+some of the changes to be observed are
+so swift that solar prominences often rise
+at the rate of 350,000 miles an hour, and
+have been seen to rise to that height. The
+temperature of the sun’s envelope, 6000°
+C., greatly exceeds any that we can artificially
+create, and would convert into
+gas any substance we know; and for every
+unit of heat it sends to the earth, a hundred
+million other units, poured into
+space, are absolutely lost for any purposes
+of mechanical effect.</p>
+
+<p>Astronomy deals with objects so minute
+that even a shooting star evolving,
+as it passes through our atmosphere, so
+much light that we can trace its course
+with the naked eye, may be no larger
+than a grain of sand; deals, too, with objects
+of so shadowy a nature that the
+white clouds in our sky are, in comparison,
+solid blocks; and deals, again, with
+distances and surfaces so vast that numerical
+description fails to convey any
+impression but one of confusion.</p>
+
+<p>It is not easy to conceive, when we see
+a balloon in the air, the remainder that
+would exist if the bag, the car, and the
+cordage were all subtracted. There
+would be, until the gas mixed with the
+atmosphere, a sphere of gas. The stars,
+our sun included, seem to be masses of
+incandescent gas, possessing fairly definite
+boundaries, and not far from spherical
+in shape; the nebulae seem also to be
+masses of incandescent gas, irregular in
+form and having no clearly marked limits;
+even the nucleus of a comet is apparently
+not solid enough to be opaque;
+and as the four great planets also seem to
+be gaseous, it is probable that only the
+smaller bodies, like our earth, the moon,
+and Mars, are solid.</p>
+
+<p>To the rule that we can handle none of
+the matter that originates beyond the
+limits of our atmosphere, the meteorites
+supply an exception. Seventy years ago,
+a mass of stone, cold and invisible, flying
+through the aether of space at the rate of
+some hundred thousand miles an hour,
+entered our atmosphere, became so hot,
+as the air’s friction checked its speed,
+that bits of its surface, fused to crust,
+flicked off and floated in the air, leaving a
+shining trail; then as its speed was reduced
+to some three hundred miles an
+hour, cooled until it was no hotter than
+a laundress likes her iron to be. At Mhow,
+in India, as it made a dent in the earth,
+it killed a man—the only man known to
+history who has died so uncanny a death.
+But near Wold Cottage, in Yorkshire,
+England, thirty years before, another
+meteorite had fallen only ten yards from
+a labourer; and only thirty years ago another
+arrived on a Yorkshire railway line,
+forty yards from a gang of platelayers.
+The largest meteoric mass known weighs
+about fifty tons, but most of them seem to
+have split in the course of their journey;
+and at Hessle, a hundred thousand fragments
+spread, like grapeshot from a giant
+gun, over an area of some thirty square
+miles. See <span class="sc"><a href="/article/18-0283-s3/meteorite">Meteorite</a></span> (Vol. 18, p. 262).</p>
+
+<p><span class="shoulder-heading" id="sh-2">Life on Mars</span>Although the closest scrutiny has not
+discovered in any meteorite a shred of
+life, even the lowest, we obtain, from another
+source, and by
+a different method of
+observation, evidence—as
+yet inconclusive,—that not
+only life, but intelligent life exists beyond
+our planet. As in respect of other astronomical
+problems, the Britannica is singularly
+clear, impartial and authoritative
+in its treatment of this question. The
+article <span class="sc"><a href="/article/17-0778-s2/mars">Mars</a></span> (Vol. 17, p. 761) was written
+by <a href="/contributors.html?q=Simon+Newcomb">Professor Newcomb</a>, but Professor
+Percival Lowell contributes a summary
+of the recent investigations and deductions
+relating to Mars with which his
+name is associated. In 1877, Schiaparelli,
+adopting the old belief now abandoned
+by all astronomers, that oceans occupied
+the darker-coloured regions of Mars, observed
+dark streaks connecting these
+dark patches, and, believing them to be
+strips of water, described them by the
+Italian word “canale,” by which he
+meant channels, or natural bodies of
+water. An absurd misconception of his
+meaning gave wide currency to the idea
+that these strips were artificial <i>canals</i>, a
+manifest impossibility, as they are many
+miles in width. No canal, properly so
+called, could be so wide, and no reservoir
+could conceivably be so extensive. There
+is, in the existence of such patches,
+even if they were bodies of water, as no
+one now believes them to be, not the
+slightest indication of excavation. In
+1894, Professor Lowell, an American astronomer
+of great authority, established,
+for the special purpose of observing Mars,
+the Lowell Observatory at Flagstaff, in
+Arizona, 7,250 feet above sea level, in
+singularly clear, dry air, equipped with a
+twenty-four-inch telescope. This observatory
+unquestionably commands greater
+penetration than any other, and <a href="/contributors.html?q=Simon+Newcomb">Professor
+Newcomb</a> says that the work there upon
+Mars “has been continued with such care
+and assiduity that its results must take
+precedence of all others.” Professor
+Lowell’s first announcement that he had
+detected evidences of the existence of extensive
+artificial canals, which would of
+course absolutely prove Mars to be inhabited
+by intelligent creatures, was received
+with derision by many critics who
+jumped to the conclusion that he meant
+artificial canals many miles in width.
+Fuller statements from Professor Lowell
+showed that he believed Schiaparelli’s
+wide strips to be not water, <i>but areas of
+vegetation lying on each side of artificial
+irrigating canals of no extraordinary
+width</i>, by a network of which water is
+brought to, and distributed throughout,
+the temperate and equatorial zones of
+Mars from the extreme North and South,
+as the polar snow caps melt; and that
+this irrigation gives the rainless area a
+seasonal fertility, just as the melting of
+Abyssinian snows fecundates the distant
+valley of the lower Nile. These strips,
+according to Professor Lowell and other
+observers, are at one season of a bluish-green
+colour suggesting prosperous vegetation,
+then fade to a paler shade or in
+some places to a tawny brown. The
+strips are thousands of miles in length,
+perfectly straight. No one claims to
+have seen the artificial canals, but if there
+are areas of vegetation, they must be due
+to irrigation performed by waterways. If
+continued observations confirm the existence
+of these strips, it will become certain
+that they are not telescopic illusions, but
+the results of engineering operations on
+a scale unknown to our planet. The
+readings indicated in this chapter will
+yield a survey of this special field, as of
+all other fields of current research in
+astronomy, and give new interest to current
+investigations.</p>
+
+<p>A brief account of some of the principal
+astronomical articles is printed here in
+tabular form, and a fuller list, alphabetically
+arranged, follows this topical
+outline.</p>
+
+<table class="table4">
+<colgroup>
+<col class="colwidth50">
+<col class="colwidth50">
+</colgroup>
+  <tbody><tr>
+    <th class="c011"><i>Topics for Reading</i></th>
+    <th class="c029"><i>Article and Contributor</i></th>
+  </tr>
+  <tr>
+    <td class="c011">Early Interest in the Sky.</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Astral theology—the “assumption of a close link between the movements going on in the heavens and occurrences on the earth.” The history of astrology traced to ancient Babylonia (about 3000 B.C.).</td>
+    <td class="c029"><span class="sc"><a href="/article/02-0842-s4/astrology">Astrology</a></span> (Vol. 2, p. 795), and <span class="sc"><a href="/article/03-0129-s2/babylonian_and_assyrian_religion">Babylonian and Assyrian Religion</a></span> (Vol. 3, p. 114), by Dr. Morris Jastrow, author of <i>Religion of the Babylonians and Assyrians</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Story of the Constellations. A Map of the Heavens.</td>
+    <td class="c029"><span class="sc"><a href="/article/07-0024-constellation/constellation">Constellation</a></span>—with star-maps and tables (Vol. 7, p. 11), by <a href="/contributors.html?q=Charles+Everitt">Charles Everitt</a>, fellow Royal Astronomical Society. See also separate articles on the principal constellations and stars.</td>
+  </tr>
+  <tr>
+    <td class="c011">Development of Astronomy.</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Scientific knowledge of the ancient Chinese, Egyptians and Babylonians. Revolutionary cycle of the planets.</td>
+    <td class="c029"><span class="sc"><a href="/article/02-0847-s2/astronomy">Astronomy</a></span>, <i>History</i> (Vol. 2, p. 808), by <a href="/contributors.html?q=Miss+Agnes+Mary+Clerke">Agnes M. Clerke</a>, author of <i>A Popular History of Astronomy</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">First conception of the earth as a globe. “The harmony of the spheres.” Identification of morning and evening stars (about 520 B.C.).</td>
+    <td class="c029"><span class="sc"><a href="/article/22-0714-s3/pythagoras">Pythagoras</a></span> (Vol. 22, p. 699), by Dr. <a href="/contributors.html?q=Andrew+Seth+Pringle-Pattison">A. S. Pringle-Pattison</a>, author of <i>Man’s Place in the Cosmos</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011">The Greeks measure the earth by astronomical means (about 200 B.C.).</td>
+    <td class="c029"><span class="sc"><a href="/article/09-0765-s2/eratosthenes_of_alexandria">Eratosthenes of Alexandria</a></span> (Vol. 9, p. 733), by Sir <a href="/contributors.html?q=Sir+Thomas+Little+Heath">Thomas Little Heath</a>, author of <i>Treatise on Conic Sections</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">The first observatory.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0991-s7/observatory">Observatory</a></span> (Vol. 19, p. 954), by <a href="/contributors.html?q=John+Louis+Emil+Dreyer">J. L. E. Dreyer</a>, Director of Armagh Observatory.</td>
+  </tr>
+  <tr>
+    <td class="c011">The first systematic astronomer, Ptolemy and his System (A.D. 150).</td>
+    <td class="c029"><span class="sc"><a href="/article/22-0634-s2/ptolemy">Ptolemy</a></span>, <i>Mathematics</i> (Vol. 22, p. 620), by Prof. <a href="/contributors.html?q=George+Johnston+Allman">George J. Allman</a>, Queen’s, Galway; <span class="sc"><a href="/article/07-0117-copernicus-nicolaus/copernicus__or_koppernigk___nicolaus">Copernicus</a></span> (Vol. 7, p. 100), by <a href="/contributors.html?q=Miss+Agnes+Mary+Clerke">Agnes M. Clerke</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Revival of heliocentric theory (A.D. 1506–1512).</td>
+    <td class="c029"><span class="sc"><a href="/article/15-0778-kepler-johann/kepler__johann">Kepler, Johann</a></span> (Vol. 15, p. 749), by <a href="/contributors.html?q=Miss+Agnes+Mary+Clerke">Agnes M. Clerke</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Plan of Solar System realized. The founder of descriptive astronomy (1564–1642).</td>
+    <td class="c029"><span class="sc"><a href="/article/11-0424-galileo-galilei/galileo_galilei">Galileo Galilei</a></span> (Vol. 11, p. 406), by <a href="/contributors.html?q=Miss+Agnes+Mary+Clerke">Agnes M. Clerke</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Newton’s contributions to astronomy and astronomical physics (1585–1586).</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0607-s1/newton__sir_isaac">Newton, Sir Isaac</a></span> (Vol. 19, p. 586), by <a href="/contributors.html?q=Henry+Martyn+Taylor">Henry M. Taylor</a>, Fellow of Trinity College, Cambridge.</td>
+  </tr>
+  <tr>
+    <td class="c011">Continuation of Newton’s work.</td>
+    <td class="c029"><span class="sc"><a href="/article/09-0919-s3/euler__leonhard">Euler, Leonhard</a></span> (Vol. 9, p. 887).</td>
+  </tr>
+  <tr>
+    <td class="c011">Nebular hypothesis of Laplace (1796).</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0351-s2/nebular_theory">Nebular Theory</a></span> (Vol. 19, p. 333), by Sir <a href="/contributors.html?q=Sir+Robert+Stawell+Ball">Robert S. Ball</a>, author of <i>The Story of the Heavens</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011">The New Astronomy.</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Work of Wollaston, Fraunhofer, Kirchoff, and Rowland in spectrum analysis.</td>
+    <td class="c029"><span class="sc"><a href="/article/02-0866-s3/astrophysics">Astrophysics</a></span> (Vol. 2, p. 819), by Dr. <a href="/contributors.html?q=Simon+Newcomb">Simon Newcomb</a>, late director National Observatory, Washington.</td>
+  </tr>
+  <tr>
+    <td class="c011">Discoveries during recent eclipses. Photographing the Heavens, Star-charts, etc.</td>
+    <td class="c029"><span class="sc"><a href="/article/21-0549-photography-celestial/photography__celestial">Photography, Celestial</a></span> (Vol. 21, p. 523), by Prof. <a href="/contributors.html?q=Herbert+Hall+Turner">H. H. Turner</a>, Oxford, author of <i>Modern Astronomy</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011">Measuring light and heat from the stars,—radio-micrometer.</td>
+    <td class="c029"><span class="sc"><a href="/article/21-0551-photometry/photometry">Photometry</a></span>, <i>Celestial, or Stellar Photometry</i> (Vol. 21, p. 530), by Dr. <a href="/contributors.html?q=Herbert+Hall+Turner">H. H. Turner</a>, Oxford.</td>
+  </tr>
+  <tr>
+    <td class="c011">New method of photographing the sun and the results of this mode of study.</td>
+    <td class="c029"><span class="sc"><a href="/article/25-0639-s2/spectroheliograph">Spectroheliograph</a></span>, illustrated (Vol. 25, p. 618), by Dr. <a href="/contributors.html?q=George+Ellery+Hale">George E. Hale</a>, inventor of the spectroheliograph.</td>
+  </tr>
+  <tr>
+    <td class="c011">Principles of Astronomy.</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">How the positions and motions of the heavenly bodies are defined. System of co-ordinates.</td>
+    <td class="c029"><span class="sc"><a href="/article/02-0847-s2/astronomy">Astronomy</a></span>, <i>Spherical or Geometrical Astronomy</i> (Vol. 2, p. 801), by Dr. <a href="/contributors.html?q=Simon+Newcomb">Simon Newcomb</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Distance of sun from earth the fundamental celestial measurement.</td>
+    <td class="c029"><span class="sc"><a href="/article/20-0816-s3/parallax">Parallax</a></span> (Vol. 20, p. 760), by Dr. <a href="/contributors.html?q=Simon+Newcomb">Simon Newcomb</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Methods of determining distances of stars.</td>
+    <td class="c029"><span class="sc"><a href="/article/25-0806-star/star">Star</a></span>, <i>Distances and Parallaxes of the Stars</i> (Vol. 25, p. 789), by <a href="/contributors.html?q=Sir+Arthur+Stanley+Eddington">Arthur S. Eddington</a>, Royal Observatory, Greenwich.</td>
+  </tr>
+  <tr>
+    <td class="c011">Apparent motion of the heavenly bodies.</td>
+    <td class="c029"><span class="sc"><a href="/article/01-0085-s2/aberration">Aberration</a></span>, <i>Aberration of Light</i> (Vol. 1, p. 54), by Dr. S. Otto Eppenstein, Zeiss Optical Works, Jena, Germany.</td>
+  </tr>
+  <tr>
+    <td class="c011">Eclipses and their recurrence. List of solar eclipses. Methods of computing eclipses.</td>
+    <td class="c029"><span class="sc"><a href="/article/08-0914-eclipse/eclipse">Eclipse</a></span> (Vol. 8, p. 887), by Dr. <a href="/contributors.html?q=Simon+Newcomb">Simon Newcomb</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Diameter of earth as an astronomical unit. Determination of diameter and figure of earth.</td>
+    <td class="c029"><span class="sc"><a href="/article/08-0828-earth-figure-of-the/earth__figure_of_the">Earth, Figure of the</a></span> (Vol. 8, p. 801), by <a href="/contributors.html?q=Alexander+Ross+Clarke">Alexander R. Clarke</a>, Ordnance Survey, and Prof. F. R. Helmert, University of Berlin.</td>
+  </tr>
+  <tr>
+    <td class="c011">The Stars. The two Star-Streams. Milky Way. Distribution of stars.</td>
+    <td class="c029"><span class="sc"><a href="/article/25-0806-star/star">Star</a></span> (Vol. 25, p. 785), by <a href="/contributors.html?q=Sir+Arthur+Stanley+Eddington">Arthur S. Eddington</a>, Royal Observatory, Greenwich.</td>
+  </tr>
+  <tr>
+    <td class="c011">True nebulae. Constitution. How they differ from star-clusters.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0348-s2/nebula">Nebula</a></span>, illustrated (Vol. 19, p. 332), by <a href="/contributors.html?q=Sir+Arthur+Stanley+Eddington">Arthur S. Eddington</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Comets—origins and orbits. Physical constitution. List of periodic comets.</td>
+    <td class="c029"><span class="sc"><a href="/article/06-0781-comet/comet">Comet</a></span>, illustrated (Vol. 6, p. 759), by Dr. <a href="/contributors.html?q=Simon+Newcomb">Simon Newcomb</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Shooting Stars. History of meteoric showers.</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0281-meteor/meteor">Meteor</a></span> (Vol. 18, p. 260), by <a href="/contributors.html?q=William+Frederick+Denning">W. F. Denning</a>, formerly president, Liverpool Astronomical Society.</td>
+  </tr>
+  <tr>
+    <td class="c011">Constitution of Shooting Stars.</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0283-s3/meteorite">Meteorite</a></span> (Vol. 18, p. 262), by <a href="/contributors.html?q=Lazarus+Fletcher">Lazarus Fletcher</a>, author of <i>Introduction to the Study of Meteorites</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">General description of the Solar System.</td>
+    <td class="c029"><span class="sc"><a href="/article/25-0373-solar-system/solar_system">Solar System</a></span> (Vol. 25, p. 357), by Dr. <a href="/contributors.html?q=Simon+Newcomb">Simon Newcomb</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">The photosphere, chromosphere and corona, dimensions, temperature, and age of the sun, sun-spots.</td>
+    <td class="c029"><span class="sc"><a href="/article/26-0101-s5/sun">Sun</a></span>, illustrated (Vol. 26, p. 85), by Dr. <a href="/contributors.html?q=Ralph+Allen+Sampson">Ralph A. Sampson</a>, Astronomer Royal for Scotland.</td>
+  </tr>
+  <tr>
+    <td class="c011">The vast envelope which surrounds the sun.</td>
+    <td class="c029"><span class="sc"><a href="/article/28-1025-s2/zodiacal_light">Zodiacal Light</a></span> (Vol. 28, p. 998), by Dr. <a href="/contributors.html?q=Simon+Newcomb">Simon Newcomb</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Are Northern Lights due to emanations from the sun?</td>
+    <td class="c029"><span class="sc"><a href="/article/02-0975-s6/aurora_polaris">Aurora Polaris</a></span>, illustrated (Vol. 2, p. 934), by Dr. <a href="/contributors.html?q=Charles+Chree">Charles Chree</a>, president Physical Society of London.</td>
+  </tr>
+  <tr>
+    <td class="c011">Opaque Bodies, members of the Solar System. Their relation to each other. Their spectra, atmosphere, temperatures. First planetoid discovered (Jan. 1, 1801). Groupings of the planetoids.</td>
+    <td class="c029"><span class="sc"><a href="/article/21-0743-s3/planet">Planet</a></span>, illustrated (Vol. 21, p. 714), and <span class="sc"><a href="/article/21-0748-s2/planets__minor">Planets, Minor</a></span> (Vol. 21, p. 717), both by Dr. <a href="/contributors.html?q=Simon+Newcomb">Simon Newcomb</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">The smallest major planet. How it presents the same face always to the sun.</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0173-mercury-deity/mercury__deity_">Mercury</a></span> (Vol. 18, p. 154), by Dr. <a href="/contributors.html?q=Simon+Newcomb">Simon Newcomb</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Venus: Its peculiar rotation and cloudy atmosphere. Has Venus a satellite?</td>
+    <td class="c029"><span class="sc"><a href="/article/27-1041-venus-goddess/venus__goddess_">Venus</a></span> (Vol. 27, p. 1013), by Dr. <a href="/contributors.html?q=Simon+Newcomb">Simon Newcomb</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">The earth as a member of the solar system.</td>
+    <td class="c029"><span class="sc"><a href="/article/08-0826-earth/earth">Earth</a></span> (Vol. 8, p. 799).</td>
+  </tr>
+  <tr>
+    <td class="c011">Our nearest neighbour. Is it inhabited? Similarity of physical conditions to those of the earth.</td>
+    <td class="c029"><span class="sc"><a href="/article/17-0778-s2/mars">Mars</a></span>, illustrated (Vol. 17, p. 761), by Dr. <a href="/contributors.html?q=Simon+Newcomb">Simon Newcomb</a>, with a summary by Professor Lowell, of the observations at Flagstaff.</td>
+  </tr>
+  <tr>
+    <td class="c011">The largest planet. Its belts, spots, markings and surface. Is the great red spot a floating island?</td>
+    <td class="c029"><span class="sc"><a href="/article/15-0589-s2/jupiter">Jupiter</a></span>, illustrated (Vol. 15, p. 562), by <a href="/contributors.html?q=William+Frederick+Denning">W. F. Denning</a>, formerly president, Liverpool Astronomical Society.</td>
+  </tr>
+  <tr>
+    <td class="c011">The ringed planet. Physical constitution of rings.</td>
+    <td class="c029"><span class="sc"><a href="/article/24-0247-s2/saturn">Saturn</a></span> (Vol. 24, p. 232), by Dr. <a href="/contributors.html?q=Simon+Newcomb">Simon Newcomb</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Uranus: Its discovery, physical characteristics and satellites.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0813-s4/uranus">Uranus</a></span> (Vol. 27, p. 788), by Dr. <a href="/contributors.html?q=Simon+Newcomb">Simon Newcomb</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">The outermost known planet. Dimensions. Resemblance to Uranus.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0403-s7/neptune">Neptune</a></span> (Vol. 19, p. 385), by Dr. <a href="/contributors.html?q=Simon+Newcomb">Simon Newcomb</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Wonderful story of its discovery (1845).</td>
+    <td class="c029"><span class="sc"><a href="/article/01-0208-s2/adams__john_couch">Adams, John Couch</a></span> (Vol. 1, p. 177).<br><span class="sc"><a href="/article/16-0530-leverrier-urbain-jean-joseph/leverrier__urbain_jean_joseph">Leverrier, U. J. J.</a></span> (Vol. 16, p. 510), by <a href="/contributors.html?q=Miss+Agnes+Mary+Clerke">Agnes M. Clerke</a>, author of <i>A Popular History of Astronomy</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">The moon. Its aspects, phases and constitution. Its mountains and atmosphere.</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0832-s7/moon">Moon</a></span>, illustrated (Vol. 18, p. 802), by Dr. <a href="/contributors.html?q=Simon+Newcomb">Simon Newcomb</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Development of Practical and Observational Astronomy.</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">Current mode of star nomenclature adopted (1603). First planetary transit observed by Gassendi (1631).</td>
+    <td class="c029"><span class="sc"><a href="/article/02-0847-s2/astronomy">Astronomy</a></span>, <i>History of Astronomy</i> (Vol. 2, p. 813), by <a href="/contributors.html?q=Miss+Agnes+Mary+Clerke">Agnes M. Clerke</a>, author of <i>A Popular History of Astronomy</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Astronomical Instruments.</td>
+    <td class="c029"> </td>
+  </tr>
+  <tr>
+    <td class="c011">How co-ordinates used in astronomical research are determined.</td>
+    <td class="c029"><span class="sc"><a href="/article/02-0847-s2/astronomy">Astronomy</a></span>, <i>Practical Astronomy</i> (Vol. 2 p. 807), by Dr. <a href="/contributors.html?q=Simon+Newcomb">Simon Newcomb</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Telescope: Discovery and history. Parts and mounting. Great telescopes of the world.</td>
+    <td class="c029"><span class="sc"><a href="/article/26-0586-telescope/telescope">Telescope</a></span>, illustrated (Vol. 26, p. 557), by Sir <a href="/contributors.html?q=Sir+David+Gill">David Gill</a>, formerly Astronomer Royal at the Cape of Good Hope, and H. Dennis <a href="/contributors.html?q=Henry+Martyn+Taylor">Taylor</a>, inventor of the Cooke Photographic Lens.</td>
+  </tr>
+  <tr>
+    <td class="c011">The Transit Circle due to Tycho Brahe. Description and use.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0196-s2/transit_circle">Transit Circle</a></span>, illustrated (Vol. 27, p. 181), by <a href="/contributors.html?q=John+Louis+Emil+Dreyer">J. L. E. Dreyer</a>, Armagh Observatory, author of <i>Planetary Systems from Thales to Kepler</i>, etc.</td>
+  </tr>
+  <tr>
+    <td class="c011">Measuring machines. Importance and use in astronomy.</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0403-s4/micrometer">Micrometer</a></span>, illustrated (Vol. 18, p. 381), by Sir <a href="/contributors.html?q=Sir+David+Gill">David Gill</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Measuring the sun’s diameter.</td>
+    <td class="c029"><span class="sc"><a href="/article/13-0237-s1/heliometer">Heliometer</a></span>, illustrated (Vol. 13, p. 224), by Sir <a href="/contributors.html?q=Sir+David+Gill">David Gill</a>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Old time instruments. “Nearly every one of the modern instruments used for the observatories of practical astronomy is part of the perfected astrolabe.”</td>
+    <td class="c029"><span class="sc"><a href="/article/02-0842-s2/astrolabe">Astrolabe</a></span>, illustrated (Vol. 2, p. 795), by <a href="/contributors.html?q=Lady+Huggins">Lady Huggins</a>, author of <i>Life and Work of G. P. Mazzini</i>.</td>
+  </tr>
+  <tr>
+    <td class="c011">Complete list of observatories throughout the world, date of foundation, their equipment and their specialized work.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0991-s7/observatory">Observatory</a></span> (Vol. 19, p. 953), by <a href="/contributors.html?q=John+Louis+Emil+Dreyer">J. L. E. Dreyer</a>, director Armagh Observatory, author of <i>Planetary Systems from Thales to Kepler</i>.</td>
+  </tr>
+</tbody></table>
+
+<div>
+  
+  <details class="article-list"><summary><span class="list-title">LIST OF ARTICLES IN THE ENCYCLOPAEDIA BRITANNICA ON ASTRONOMY</span><span class="list-count"> (278 articles)</span></summary>
+</div>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0085-s2/aberration">Aberration</a></li>
+  <li class="c018"><a href="/article/01-0096-s7/ablatitious">Ablatitious</a></li>
+  <li class="c018"><a href="/article/01-0208-s2/adams__john_couch">Adams, John Couch</a></li>
+  <li class="c018"><a href="/article/01-0483-airy-sir-george-biddell/airy__sir_george_biddell">Airy, Sir George B.</a></li>
+  <li class="c018"><a href="/article/01-0531-s3/albategnius">Albategnius</a></li>
+  <li class="c018"><a href="/article/01-0532-s2/albedo">Albedo</a></li>
+  <li class="c018"><a href="/article/01-0553-s9/albumazar">Albumazar (Abu-Maaschar)</a></li>
+  <li class="c018"><a href="/article/01-0695-s3/algol">Algol</a></li>
+  <li class="c018"><a href="/article/01-0704-s2/alidade">Alidade</a></li>
+  <li class="c018"><a href="/article/01-0754-s2/almacantar">Almacantar</a></li>
+  <li class="c018"><a href="/article/01-0810-altitude/altitude">Altitude</a></li>
+  <li class="c018"><a href="/article/01-0905-s3/amici__giovanni_battista">Amici, Giovanni B.</a></li>
+  <li class="c018"><a href="/article/01-0946-s6/amplitude">Amplitude</a></li>
+  <li class="c018"><a href="/article/01-1028-s5/andromeda">Andromeda</a></li>
+  <li class="c018"><a href="/article/01-1029-s4/andronicus_of_cyrrhus">Andronicus of Cyrrhus</a></li>
+  <li class="c018"><a href="/article/02-0091-s2/anomaly">Anomaly</a></li>
+  <li class="c018"><a href="/article/02-0092-s2/ansa">Ansa</a></li>
+  <li class="c018"><a href="/article/02-0176-s2/aphelion">Aphelion</a></li>
+  <li class="c018">Apse and Apsides</li>
+  <li class="c018"><a href="/article/02-0251-s2/aquarius">Aquarius</a></li>
+  <li class="c018"><a href="/article/02-0262-s2/aquila">Aquila</a></li>
+  <li class="c018"><a href="/article/02-0484-s4/arcturus">Arcturus</a></li>
+  <li class="c018"><a href="/article/02-0494-s6/argelander__friedrich_wilhelm_august">Argelander, F. W. A.</a></li>
+  <li class="c018"><a href="/article/02-0529-s2/aries">Aries</a></li>
+  <li class="c018"><a href="/article/02-0532-s4/aristarchus">Aristarchus, of Samos</a></li>
+  <li class="c018"><a href="/article/02-0615-s5/armilla">Armilla</a></li>
+  <li class="c018"><a href="/article/02-0842-s2/astrolabe">Astrolabe</a></li>
+  <li class="c018"><a href="/article/02-0842-s4/astrology">Astrology</a></li>
+  <li class="c018"><a href="/article/02-0847-s2/astronomy">Astronomy</a></li>
+  <li class="c018"><a href="/article/02-0866-s3/astrophysics">Astrophysics</a></li>
+  <li class="c018"><a href="/article/02-0974-s2/auriga">Auriga</a></li>
+  <li class="c018"><a href="/article/03-0096-s2/azimuth">Azimuth</a></li>
+  <li class="c018"><a href="/article/03-0237-s4/bailly__jean_sylvain">Bailly, Jean S.</a></li>
+  <li class="c018"><a href="/article/03-0238-s3/baily__francis">Baily, Francis</a></li>
+  <li class="c018"><a href="/article/03-0239-s3/bainbridge__john">Bainbridge, John</a></li>
+  <li class="c018"><a href="/article/03-0843-bessel-friedrich-wilhelm/bessel__friedrich_wilhelm">Bessel, Friedrich W.</a></li>
+  <li class="c018"><a href="/article/03-0869-bianchini-francesco/bianchini__francesco">Bianchini, Francesco</a></li>
+  <li class="c018"><a href="/article/03-0971-binary-system/binary_system">Binary System</a></li>
+  <li class="c018"><a href="/article/03-0980-biquintile/biquintile">Biquintile</a></li>
+  <li class="c018"><a href="/article/04-0034-black-drop/black_drop">Black Drop</a></li>
+  <li class="c018"><a href="/article/04-0121-bode-johann-elert/bode__johann_elert">Bode, Johann Elert</a></li>
+  <li class="c018"><a href="/article/04-0253-bo-tes/boötes">Boötes</a></li>
+  <li class="c018"><a href="/article/04-0388-bradley-james/bradley__james">Bradley, James</a></li>
+  <li class="c018"><a href="/article/04-0392-brahe-tycho/brahe__tycho">Brahe, Tycho</a></li>
+  <li class="c018"><a href="/article/04-0593-s6/brisbane__sir_thomas_makdougall">Brisbane, Sir Thomas M.</a></li>
+  <li class="c018"><a href="/article/04-0708-s3/brünnow__franz_friedrich_ernst">Brünnow, F. F. E.</a></li>
+  <li class="c018"><a href="/article/05-0090-calvisius-sethus/calvisius__sethus">Calvisius, Sethus</a></li>
+  <li class="c018"><a href="/article/05-0136-campani-alimenis-matteo/campani-alimenis__matteo">Campani-Alimenis, M.</a></li>
+  <li class="c018"><a href="/article/05-0188-cancer/cancer">Cancer</a></li>
+  <li class="c018"><a href="/article/05-0195-canes-venatici/canes_venatici">Canes Venatici</a></li>
+  <li class="c018"><a href="/article/05-0195-canis-major/canis_major">Canis Major</a></li>
+  <li class="c018"><a href="/article/05-0303-capricornus/capricornus">Capricornus</a></li>
+  <li class="c018"><a href="/article/05-0425-carrington-richard-christopher/carrington__richard_christopher">Carrington, R. C.</a></li>
+  <li class="c018"><a href="/article/05-0476-cassini/cassini">Cassini (family)</a></li>
+  <li class="c018"><a href="/article/05-0477-cassiopeia/cassiopeia">Cassiopeia</a></li>
+  <li class="c018"><a href="/article/05-0634-celsius-anders/celsius__anders">Celsius, Anders</a></li>
+  <li class="c018"><a href="/article/05-0694-centaurus/centaurus">Centaurus</a></li>
+  <li class="c018"><a href="/article/05-0728-cepheus/cepheus">Cepheus</a></li>
+  <li class="c018"><a href="/article/05-0812-cetus/cetus">Cetus</a></li>
+  <li class="c018"><a href="/article/06-0314-chromosphere/chromosphere">Chromosphere</a></li>
+  <li class="c018"><a href="/article/06-0513-clerke-agnes-mary/clerke__agnes_mary">Clerke, Agnes Mary</a></li>
+  <li class="c018"><a href="/article/06-0770-colure/colure">Colure</a></li>
+  <li class="c018"><a href="/article/06-0771-coma-berenices/coma_berenices">Coma Berenices</a></li>
+  <li class="c018"><a href="/article/06-0781-comet/comet">Comet</a></li>
+  <li class="c018"><a href="/article/06-0787-comet-seeker/comet-seeker">Comet-Seeker</a></li>
+  <li class="c018"><a href="/article/06-0837-compression/compression">Compression</a></li>
+  <li class="c018"><a href="/article/06-0967-conjunction/conjunction">Conjunction</a></li>
+  <li class="c018"><a href="/article/06-0989-conon/conon">Conon</a></li>
+  <li class="c018"><a href="/article/07-0024-constellation/constellation">Constellation</a></li>
+  <li class="c018">Copernicus, Nicolaus</li>
+  <li class="c018"><a href="/article/07-0201-corona/corona">Corona</a></li>
+  <li class="c018"><a href="/article/07-0205-coronium/coronium">Coronium</a></li>
+  <li class="c018"><a href="/article/07-0231-cosmic/cosmic">Cosmic</a></li>
+  <li class="c018"><a href="/article/07-0640-culmination/culmination">Culmination</a></li>
+  <li class="c018"><a href="/article/07-0655-cunitz-maria/cunitz__maria">Cunitz, Maria</a></li>
+  <li class="c018"><a href="/article/07-0704-cycle/cycle">Cycle</a></li>
+  <li class="c018"><a href="/article/07-0711-cygnus/cygnus">Cygnus</a></li>
+  <li class="c018"><a href="/article/07-0714-cynosure/cynosure">Cynosure</a></li>
+  <li class="c018"><a href="/article/07-0938-declination/declination">Declination</a></li>
+  <li class="c018"><a href="/article/07-0944-dee-john/dee__john">Dee, John</a></li>
+  <li class="c018"><a href="/article/07-0950-deferent/deferent">Deferent</a></li>
+  <li class="c018"><a href="/article/07-0966-delambre/delambre__jean_baptiste_joseph">Delambre, J. B. J.</a></li>
+  <li class="c018"><a href="/article/07-0969-de-la-rue-warren/de_la_rue__warren">De la Rue, Warren</a></li>
+  <li class="c018"><a href="/article/07-0987-delisle-joseph-nicolas/delisle__joseph_nicolas">Delisle, Joseph N.</a></li>
+  <li class="c018"><a href="/article/07-0999-delphinus/delphinus">Delphinus</a></li>
+  <li class="c018">Dial and Dialling</li>
+  <li class="c018"><a href="/article/08-0195-dick-thomas/dick__thomas">Dick, Thomas</a></li>
+  <li class="c018"><a href="/article/08-0326-direct-motion/direct_motion">Direct Motion</a></li>
+  <li class="c018"><a href="/article/08-0342-diurnal-motion/diurnal_motion">Diurnal Motion</a></li>
+  <li class="c018"><a href="/article/08-0429-donati-giovanni-battista/donati__giovanni_battista">Donati, Giovanni B.</a></li>
+  <li class="c018"><a href="/article/08-0487-draco-statesman/draco__statesman_">Draco</a></li>
+  <li class="c018"><a href="/article/08-0717-dupuis-charles-fran-ois/dupuis__charles_françois">Dupuis, Charles F.</a></li>
+  <li class="c018"><a href="/article/08-0826-earth/earth">Earth</a></li>
+  <li class="c018"><a href="/article/08-0874-eccentric/eccentric">Eccentric</a></li>
+  <li class="c018"><a href="/article/08-0914-eclipse/eclipse">Eclipse</a></li>
+  <li class="c018"><a href="/article/08-0922-ecliptic/ecliptic">Ecliptic</a></li>
+  <li class="c018"><a href="/article/09-0032-egress/egress">Egress</a></li>
+  <li class="c018"><a href="/article/09-0310-ellipticity/ellipticity">Ellipticity</a></li>
+  <li class="c018"><a href="/article/09-0315-s3/elongation">Elongation</a></li>
+  <li class="c018"><a href="/article/09-0394-encke-johann-franz/encke__johann_franz">Encke, Johann Franz</a></li>
+  <li class="c018"><a href="/article/09-0702-ephemeris/ephemeris">Ephemeris</a></li>
+  <li class="c018"><a href="/article/09-0718-epicycle/epicycle">Epicycle</a></li>
+  <li class="c018"><a href="/article/09-0739-s3/epoch">Epoch</a></li>
+  <li class="c018"><a href="/article/09-0752-equation-of-the-centre/equation_of_the_centre">Equation of the Centre</a></li>
+  <li class="c018"><a href="/article/09-0752-equation-of-time/equation_of_time">Equation of Time</a></li>
+  <li class="c018"><a href="/article/09-0752-equator/equator">Equator</a></li>
+  <li class="c018"><a href="/article/09-0755-equinox/equinox">Equinox</a></li>
+  <li class="c018"><a href="/article/09-0765-s2/eratosthenes_of_alexandria">Eratosthenes of Alexandria</a></li>
+  <li class="c018"><a href="/article/09-0772-eridanus/eridanus">Eridanus</a></li>
+  <li class="c018"><a href="/article/09-0785-eros-god/eros__god_">Eros</a></li>
+  <li class="c018"><a href="/article/09-0821-establishment-of-a-port/establishment_of_a_port">Establishment of a Port</a></li>
+  <li class="c018"><a href="/article/10-0017-evection/evection">Evection</a></li>
+  <li class="c018"><a href="/article/10-0134-s3/facula">Facula</a></li>
+  <li class="c018"><a href="/article/10-0439-s3/firmament">Firmament</a></li>
+  <li class="c018"><a href="/article/10-0495-flamsteed-john/flamsteed__john">Flamsteed, John</a></li>
+  <li class="c018">Galileo, Galilei</li>
+  <li class="c018"><a href="/article/11-0568-s4/gegenschein">Gegenschein</a></li>
+  <li class="c018"><a href="/article/11-0592-s3/gemini">Gemini</a></li>
+  <li class="c018"><a href="/article/11-0627-geocentric/geocentric">Geocentric</a></li>
+  <li class="c018"><a href="/article/12-0301-s4/gould__benjamin_apthorp">Gould, B. A.</a></li>
+  <li class="c018"><a href="/article/12-0372-s3/grant__robert">Grant, Robert</a></li>
+  <li class="c018"><a href="/article/12-0881-s4/halley__edmund">Halley, Edmund</a></li>
+  <li class="c018"><a href="/article/12-0956-s2/hansen__peter_andreas">Hansen, Peter Andreas</a></li>
+  <li class="c018"><a href="/article/12-0956-s6/hansteen__christopher">Hansteen, Christopher</a></li>
+  <li class="c018"><a href="/article/13-0234-s2/heliacal">Heliacal</a></li>
+  <li class="c018"><a href="/article/13-0236-heliocentric/heliocentric">Heliocentric</a></li>
+  <li class="c018"><a href="/article/13-0237-s1/heliometer">Heliometer</a></li>
+  <li class="c018"><a href="/article/13-0361-hercules/hercules">Hercules</a></li>
+  <li class="c018"><a href="/article/13-0407-herschel-caroline-lucretia/herschel__caroline_lucretia">Herschel, Caroline L.</a></li>
+  <li class="c018"><a href="/article/13-0407-herschel-sir-frederick-william/herschel__sir_frederick_william">Herschel, Sir F. W.</a></li>
+  <li class="c018"><a href="/article/13-0409-herschel-sir-john-frederick-william/herschel__sir_john_frederick_william">Herschel, Sir J. F. W.</a></li>
+  <li class="c018">Hevelius, Johann</li>
+  <li class="c018"><a href="/article/13-0532-hipparchus/hipparchus">Hipparchus</a></li>
+  <li class="c018"><a href="/article/13-0709-horizon/horizon">Horizon</a></li>
+  <li class="c018"><a href="/article/13-0728-horrocks-jeremiah/horrocks__jeremiah">Horrocks, Jeremiah</a></li>
+  <li class="c018"><a href="/article/13-0828-hour-angle/hour_angle">Hour Angle</a></li>
+  <li class="c018"><a href="/article/13-0881-s6/huggins__sir_william">Huggins, Sir William</a></li>
+  <li class="c018"><a href="/article/14-0045-hydra-island/hydra__island_">Hydra</a></li>
+  <li class="c018"><a href="/article/14-0300-s2/ideler__christian_ludwig">Ideler, C. L.</a></li>
+  <li class="c018"><a href="/article/14-0355-s2/immersion">Immersion</a></li>
+  <li class="c018"><a href="/article/14-0595-inghirami/inghirami">Inghirami, G.</a></li>
+  <li class="c018"><a href="/article/14-0598-ingress/ingress">Ingress</a></li>
+  <li class="c018"><a href="/article/14-0748-s11/invariable_plane">Invariable Plane</a></li>
+  <li class="c018"><a href="/article/15-0171-s2/janssen__pierre_jules_césar">Janssen, Pierre Jules C.</a></li>
+  <li class="c018"><a href="/article/15-0589-s2/jupiter">Jupiter</a></li>
+  <li class="c018"><a href="/article/15-0778-kepler-johann/kepler__johann">Kepler, Johann</a></li>
+  <li class="c018"><a href="/article/16-0049-lacaille-nicolas-louis-de/lacaille__nicolas_louis_de">Lacaille, N. L. de</a></li>
+  <li class="c018"><a href="/article/16-0115-lalande-joseph-j-r-me-lefran-ais-de/lalande__joseph_jérôme_lefrançais_de">Lalande, J. J. L. de</a></li>
+  <li class="c018"><a href="/article/16-0151-lamont-johann-von/lamont__johann_von">Lamont, Johann von</a></li>
+  <li class="c018"><a href="/article/16-0287-latitude/latitude">Latitude</a></li>
+  <li class="c018"><a href="/article/16-0436-lemonnier-pierre-charles/lemonnier__pierre_charles">Lemonnier, Pierre C.</a></li>
+  <li class="c018"><a href="/article/16-0451-s4/leo">Leo</a></li>
+  <li class="c018"><a href="/article/16-0530-leverrier-urbain-jean-joseph/leverrier__urbain_jean_joseph">Leverrier, U. J. J.</a></li>
+  <li class="c018"><a href="/article/16-0565-libra/libra">Libra</a></li>
+  <li class="c018"><a href="/article/16-0598-libration/libration">Libration</a></li>
+  <li class="c018"><a href="/article/16-0708-lilly-william/lilly__william">Lilly, William</a></li>
+  <li class="c018"><a href="/article/16-0877-s4/lockyer__sir_joseph_norman">Lockyer, Sir J. Norman</a></li>
+  <li class="c018"><a href="/article/16-1008-longitude/longitude">Longitude</a></li>
+  <li class="c018">Longomontanus, C. S.</li>
+  <li class="c018"><a href="/article/17-0138-s3/lunation">Lunation</a></li>
+  <li class="c018"><a href="/article/17-0192-s2/lyra">Lyra</a></li>
+  <li class="c018"><a href="/article/17-0319-magellanic-clouds/magellanic_clouds">Magellanic Clouds</a></li>
+  <li class="c018"><a href="/article/17-0778-s2/mars">Mars</a></li>
+  <li class="c018"><a href="/article/17-0952-mayer-johann-tobias/mayer__johann_tobias">Mayer, Johann Tobias</a></li>
+  <li class="c018"><a href="/article/18-0173-mercury-deity/mercury__deity_">Mercury</a></li>
+  <li class="c018"><a href="/article/18-0185-meridian/meridian">Meridian</a></li>
+  <li class="c018"><a href="/article/18-0281-meteor/meteor">Meteor</a></li>
+  <li class="c018"><a href="/article/18-0320-metonic-cycle/metonic_cycle">Metonic Cycle</a></li>
+  <li class="c018"><a href="/article/18-0403-s4/micrometer">Micrometer</a></li>
+  <li class="c018">Mitcel, Ormsby M.</li>
+  <li class="c018"><a href="/article/18-0646-mitchell-maria/mitchell__maria">Mitchell, Maria</a></li>
+  <li class="c018"><a href="/article/18-0666-m-bius-august-ferdinand/möbius__august_ferdinand">Möbius, August F.</a></li>
+  <li class="c018"><a href="/article/18-0832-s7/moon">Moon</a></li>
+  <li class="c018"><a href="/article/18-0963-s6/mouchez__amédée_ernest_barthélémy">Mouchez, A. E. B.</a></li>
+  <li class="c018"><a href="/article/19-0164-nadir/nadir">Nadir</a></li>
+  <li class="c018"><a href="/article/19-0348-s2/nebula">Nebula</a></li>
+  <li class="c018"><a href="/article/19-0351-s2/nebular_theory">Nebular Theory</a></li>
+  <li class="c018"><a href="/article/19-0403-s7/neptune">Neptune</a></li>
+  <li class="c018"><a href="/article/19-0494-newcomb-simon/newcomb__simon">Newcomb, Simon</a></li>
+  <li class="c018"><a href="/article/19-0758-node/node">Node</a></li>
+  <li class="c018"><a href="/article/19-0854-nostradamus/nostradamus">Nostradamus</a></li>
+  <li class="c018"><a href="/article/19-0957-nutation/nutation">Nutation</a></li>
+  <li class="c018"><a href="/article/19-0991-s7/observatory">Observatory</a></li>
+  <li class="c018"><a href="/article/19-1005-occultation/occultation">Occultation</a></li>
+  <li class="c018"><a href="/article/20-0087-olbers-heinrich-wilhelm-matthias/olbers__heinrich_wilhelm_matthias">Olbers, Heinrich W. M.</a></li>
+  <li class="c018"><a href="/article/20-0190-orbit/orbit">Orbit</a></li>
+  <li class="c018"><a href="/article/20-0310-orion/orion">Orion</a></li>
+  <li class="c018"><a href="/article/20-0816-s3/parallax">Parallax</a></li>
+  <li class="c018"><a href="/article/21-0139-s8/penumbra">Penumbra</a></li>
+  <li class="c018"><a href="/article/21-0166-s2/perigee">Perigee</a></li>
+  <li class="c018"><a href="/article/21-0167-s2/perihelion">Perihelion</a></li>
+  <li class="c018"><a href="/article/21-0204-perseus-astronomy/perseus__astronomy_">Perseus</a></li>
+  <li class="c018"><a href="/article/21-0471-phoebe/phoebe">Phoebe</a></li>
+  <li class="c018"><a href="/article/21-0549-photography-celestial/photography__celestial">Photography, Celestial</a></li>
+  <li class="c018"><a href="/article/21-0551-photometry/photometry">Photometry, Celestial</a></li>
+  <li class="c018"><a href="/article/21-0601-piazzi-giuseppe/piazzi__giuseppe">Piazzi, Giuseppe</a></li>
+  <li class="c018"><a href="/article/21-0608-pickering-edward-charles/pickering__edward_charles">Pickering, E. C.</a></li>
+  <li class="c018"><a href="/article/21-0678-pisces/pisces">Pisces</a></li>
+  <li class="c018"><a href="/article/21-0743-s3/planet">Planet</a></li>
+  <li class="c018"><a href="/article/21-0748-s2/planets__minor">Planets, Minor</a></li>
+  <li class="c018"><a href="/article/21-0868-s5/pleiades">Pleiades</a></li>
+  <li class="c018"><a href="/article/22-0074-pond-john/pond__john">Pond, John</a></li>
+  <li class="c018"><a href="/article/22-0075-pons-jean-louis/pons__jean_louis">Pons, Jean Louis</a></li>
+  <li class="c018"><a href="/article/22-0288-s5/precession_of_the_equinoxes">Precession of the Equinoxes</a></li>
+  <li class="c018"><a href="/article/22-0352-prime-vertical/prime_vertical">Prime Vertical</a></li>
+  <li class="c018"><a href="/article/22-0383-s3/pritchard__charles">Pritchard, Charles</a></li>
+  <li class="c018"><a href="/article/22-0435-s3/proctor__richard_anthony">Proctor, Richard A.</a></li>
+  <li class="c018"><a href="/article/22-0634-s2/ptolemy">Ptolemy (Claudius)</a></li>
+  <li class="c018"><a href="/article/22-0722-quadrature/quadrature">Quadrature</a></li>
+  <li class="c018"><a href="/article/22-0761-quetelet-lambert-adolphe-jacques/quetelet__lambert_adolphe_jacques">Quetelet, L. A. Jacques</a></li>
+  <li class="c018"><a href="/article/22-0897-ramsden-jesse/ramsden__jesse">Ramsden, Jesse</a></li>
+  <li class="c018"><a href="/article/23-0056-s7/regiomontanus">Regiomontanus</a></li>
+  <li class="c018"><a href="/article/23-0066-s2/reichenbach__georg_von">Reichenbach, G. von</a></li>
+  <li class="c018"><a href="/article/23-0152-repsold-johann-georg/repsold__johann_georg">Repsold, Johann G.</a></li>
+  <li class="c018"><a href="/article/23-0220-retrograde/retrograde">Retrograde</a></li>
+  <li class="c018"><a href="/article/23-0250-s4/rheticus">Rheticus, or Rhaeticus</a></li>
+  <li class="c018"><a href="/article/23-0359-s2/right_ascension">Right Ascension</a></li>
+  <li class="c018"><a href="/article/23-0386-s3/rittenhouse__david">Rittenhouse, David</a></li>
+  <li class="c018"><a href="/article/23-0445-s4/robinson__john_thomas_romney">Robinson, J. T. R.</a></li>
+  <li class="c018"><a href="/article/23-0474-s3/roemer__ole">Roemer, Ole</a></li>
+  <li class="c018"><a href="/article/23-0785-s2/rosse__william_parsons">Rosse, William Parsons, 3rd earl of</a></li>
+  <li class="c018"><a href="/article/23-0894-r-mker-carl-ludwig-christian/rümker__carl_ludwig_christian">Rümker, C. L. C.</a></li>
+  <li class="c018"><a href="/article/23-1009-s4/sabine__sir_edward">Sabine, Sir Edward</a></li>
+  <li class="c018"><a href="/article/23-1033-s3/sacro_bosco__johannes_de">Sacro Bosco, Johannes de (John Holywood)</a></li>
+  <li class="c018"><a href="/article/23-1048-s2/sagitta">Sagitta</a></li>
+  <li class="c018"><a href="/article/23-1048-s3/sagittarius">Sagittarius</a></li>
+  <li class="c018"><a href="/article/24-0208-s2/santini__giovanni">Santini, Giovanni</a></li>
+  <li class="c018"><a href="/article/24-0242-s6/satellite">Satellite</a></li>
+  <li class="c018"><a href="/article/24-0247-s2/saturn">Saturn</a></li>
+  <li class="c018"><a href="/article/24-0340-schiaparelli-giovanni-virginio/schiaparelli__giovanni_virginio">Schiaparelli, G. V.</a></li>
+  <li class="c018"><a href="/article/24-0376-sch-nfeld-eduard/schönfeld__eduard">Schönfeld, Eduard</a></li>
+  <li class="c018"><a href="/article/24-0397-s4/schröter__johann_hieronymus">Schröter, Johann H.</a></li>
+  <li class="c018"><a href="/article/24-0401-s4/schumacher__heinrich_christian">Schumacher, H. C.</a></li>
+  <li class="c018"><a href="/article/24-0405-schwabe-samuel-heinrich/schwabe__samuel_heinrich">Schwabe, Samuel H.</a></li>
+  <li class="c018"><a href="/article/24-0427-scorpio/scorpio">Scorpio</a></li>
+  <li class="c018"><a href="/article/24-0598-s4/secchi__angelo">Secchi, Angelo</a></li>
+  <li class="c018"><a href="/article/24-0705-serpentarius/serpentarius">Serpentarius or Ophiuchus</a></li>
+  <li class="c018"><a href="/article/24-0779-sextant/sextant">Sextant</a></li>
+  <li class="c018"><a href="/article/25-0298-smyth-charles-piazzi/smyth__charles_piazzi">Smyth, Charles Piazzi</a></li>
+  <li class="c018"><a href="/article/25-0373-solar-system/solar_system">Solar System</a></li>
+  <li class="c018"><a href="/article/25-0384-solstice/solstice">Solstice</a></li>
+  <li class="c018"><a href="/article/25-0407-somerville-mary/somerville__mary">Somerville, Mary</a></li>
+  <li class="c018"><a href="/article/25-0451-sosigenes/sosigenes">Sosigenes</a></li>
+  <li class="c018"><a href="/article/25-0639-s2/spectroheliograph">Spectroheliograph</a></li>
+  <li class="c018"><a href="/article/25-0806-star/star">Star</a></li>
+  <li class="c018">Stationary</li>
+  <li class="c018"><a href="/article/25-0980-stone-edward-james/stone__edward_james">Stone, Edward Jones</a></li>
+  <li class="c018">Struve, E. G. W.</li>
+  <li class="c018"><a href="/article/26-0101-s5/sun">Sun</a></li>
+  <li class="c018"><a href="/article/26-0316-s2/synodic_period">Synodic Period</a></li>
+  <li class="c018"><a href="/article/26-0338-syzygy/syzygy">Syzygy</a></li>
+  <li class="c018">Taurus</li>
+  <li class="c018"><a href="/article/26-0586-telescope/telescope">Telescope</a></li>
+  <li class="c018"><a href="/article/26-0673-terminator/terminator">Terminator</a></li>
+  <li class="c018"><a href="/article/26-0929-s6/three_bodies__problem_of">Three Bodies, Problem</a></li>
+  <li class="c018"><a href="/article/26-0978-s2/tide">Tide</a></li>
+  <li class="c018"><a href="/article/26-1023-s3/time__measurement_of">Time, Measurement of</a></li>
+  <li class="c018"><a href="/article/26-1027-s2/time__standard">Time, Standard</a></li>
+  <li class="c018"><a href="/article/26-1055-tisserand-fran-ois-f-lix/tisserand__françois_felix">Tisserand, F. F.</a></li>
+  <li class="c018"><a href="/article/27-0196-s2/transit_circle">Transit Circle, or Meridian Circle</a></li>
+  <li class="c018"><a href="/article/27-0268-s2/trepidation">Trepidation</a></li>
+  <li class="c018"><a href="/article/27-0328-s3/troughton__edward">Troughton, Edward</a></li>
+  <li class="c018"><a href="/article/27-0592-s2/ulugh_beg__mirza_mahommed_ben_shah_rok">Ulugh Beg</a></li>
+  <li class="c018"><a href="/article/27-0595-umbra/umbra">Umbra</a></li>
+  <li class="c018"><a href="/article/27-0813-s4/uranus">Uranus</a></li>
+  <li class="c018"><a href="/article/27-0827-s2/ursa_major">Ursa Major</a></li>
+  <li class="c018"><a href="/article/27-0827-s3/ursa_minor">Ursa Minor</a></li>
+  <li class="c018"><a href="/article/27-1041-venus-planet/venus__planet_">Venus</a></li>
+  <li class="c018"><a href="/article/27-1079-s2/vertical">Vertical</a></li>
+  <li class="c018"><a href="/article/28-0142-virgo/virgo">Virgo</a></li>
+  <li class="c018"><a href="/article/28-0237-vulpecula-et-anser/vulpecula_et_anser">Vulpecula et Anser</a></li>
+  <li class="c018"><a href="/article/28-0289-walker-sears-cook/walker__sears_cook">Walker, Sears Cook</a></li>
+  <li class="c018"><a href="/article/28-0315-walther-bernhard/walther__bernhard">Walther, Bernhard</a></li>
+  <li class="c018">Zach, Baron von</li>
+  <li class="c018"><a href="/article/28-0997-zenith/zenith">Zenith</a></li>
+  <li class="c018"><a href="/article/28-1020-zodiac/zodiac">Zodiac</a></li>
+  <li class="c018"><a href="/article/28-1025-s2/zodiacal_light">Zodiacal Light</a></li>
+  <li class="c018"><a href="/article/28-1029-z-llner-johann-karl-friedrich/zöllner__johann_karl_friedrich">Zöllner, J. K. F.</a></li>
+</ul></details>
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

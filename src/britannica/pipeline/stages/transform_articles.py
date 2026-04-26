@@ -18,7 +18,7 @@ from britannica.db.models import Article, ArticleSegment, SourcePage
 from britannica.db.session import SessionLocal
 
 from britannica.cleaners.reflow import reflow_paragraphs
-from britannica.cleaners.unicode import normalize_unicode
+from britannica.cleaners.unicode import normalize_unicode, replace_print_artifacts
 from britannica.pipeline.stages.clean_pages import _replace_score_tags
 
 
@@ -900,25 +900,6 @@ def _find_matching_double_braces(text: str, start: int) -> int:
     return -1
 
 
-_CORRECTIONS = None
-
-
-def _load_corrections():
-    """Load data/corrections.json once (literal source-text fixes)."""
-    global _CORRECTIONS
-    if _CORRECTIONS is not None:
-        return _CORRECTIONS
-    from pathlib import Path
-    p = Path("data/corrections.json")
-    if not p.exists():
-        _CORRECTIONS = {}
-        return _CORRECTIONS
-    import json
-    data = json.loads(p.read_text(encoding="utf-8"))
-    _CORRECTIONS = {k: v for k, v in data.items() if not k.startswith("_")}
-    return _CORRECTIONS
-
-
 _LEGEND_CELL_RE = re.compile(
     r"^\s*([A-Za-z0-9](?:[A-Za-z0-9.,\- ]{0,20}?))"
     r"[,.]\s+(.+\S)\s*$")
@@ -1328,29 +1309,85 @@ def _legend_entries_from_paragraph(
     return _parse_legend_lines(lines_to_parse, strict=True)
 
 
+# Bare label cell (label without text in same cell): `a,` / `At,` /
+# `br.s,` / `br f,` / `g.s.`.  Up to ~12 chars; may contain dots,
+# hyphens, and a single internal space (TUNICATA Fig. 25 uses `br f,`
+# `i l,` for biological abbreviations).  Uses \w (Unicode-aware) so
+# Latin ligatures (œ, æ) and accented letters survive.  Requires a
+# trailing `,` or `.` so the label is unambiguously a legend label
+# and not just a short word in a data table cell.
+_LEGEND_LABEL_ALONE_RE = re.compile(
+    r"^\s*(\w[\w.\- ]{0,12}?)\s*[,.]\s*$")
+
+
 def _parse_table_as_legend(
     table_content: str,
 ) -> list[tuple[str, str]] | None:
     """Try to parse a `{{TABLE:…}TABLE}` body as a 2+-column legend
-    grid.  Returns entries or None."""
+    grid.  Returns entries or None.
+
+    Two layouts are recognised:
+      1. `label, text | label, text` — each cell holds one entry.
+      2. `label, | text | spacer? | label, | text` — labels and
+         text live in alternating cells, separated by empty or
+         whitespace-only spacer cells (TUNICATA Fig. 24)."""
     rows = [r for r in table_content.strip().split("\n") if r.strip()]
     if not rows:
         return None
+
+    def _strip_italic(s: str) -> str:
+        return re.sub(r"\u00ab/?[A-Z]+\u00bb", "", s).strip()
+
+    # Layout 1: each cell is `label, text`.
     entries: list[tuple[str, str]] = []
+    layout1_ok = True
     for row in rows:
         cells = [c.strip() for c in row.split(" | ")]
         if len(cells) < 2:
-            return None
+            layout1_ok = False
+            break
         for cell in cells:
-            clean = re.sub(
-                r"\u00ab/?[A-Z]+\u00bb", "", cell).strip()
+            clean = _strip_italic(cell)
             cm = _LEGEND_CELL_RE.match(clean)
             if not cm:
-                return None
+                layout1_ok = False
+                break
             label = cm.group(1).strip().rstrip(".,")
             txt = cm.group(2).strip().rstrip(".")
             if label and txt:
                 entries.append((label, txt))
+        if not layout1_ok:
+            break
+    if layout1_ok and len(entries) >= 2:
+        return entries
+
+    # Layout 2: alternating label-cell + text-cell, possibly
+    # separated by empty/whitespace-only spacer cells (em-/en-spaces).
+    entries = []
+    for row in rows:
+        cells = [c.strip() for c in row.split(" | ")]
+        meaningful = []
+        for c in cells:
+            stripped = _strip_italic(c)
+            # Treat em-space (\u2003), en-space (\u2002), nbsp
+            # (\u00a0) and regular whitespace as spacer-only.
+            collapsed = re.sub(
+                r"[\s\u2002\u2003\u00a0]+", "", stripped)
+            if collapsed:
+                meaningful.append(c)
+        if len(meaningful) < 2 or len(meaningful) % 2 != 0:
+            return None
+        for i in range(0, len(meaningful), 2):
+            label_clean = _strip_italic(meaningful[i])
+            text_clean = _strip_italic(meaningful[i + 1])
+            lm = _LEGEND_LABEL_ALONE_RE.match(label_clean)
+            if not lm:
+                return None
+            label = lm.group(1).strip().rstrip(".,")
+            txt = text_clean.strip().rstrip(".")
+            if not label or not txt:
+                return None
+            entries.append((label, txt))
     return entries if len(entries) >= 2 else None
 
 
@@ -1427,6 +1464,24 @@ def _process_figures(text: str) -> str:
     Emits a clean `{{IMG:…|caption}}` optionally followed by a single
     `{{LEGEND:…}LEGEND}`."""
     img_re = re.compile(r"\{\{IMG:[^}]+\}\}")
+    # Skip IMG markers that live inside a table-like container — those
+    # are inline icons (e.g. ABBREVIATION's per-symbol/pound glyphs in a
+    # data-table cell), not standalone figures. Walking paragraphs after
+    # them would scoop up subsequent table rows and emit a runaway
+    # LEGEND that engulfs the rest of the table.
+    skip_spans: list[tuple[int, int]] = []
+    for sm in re.finditer(
+        r"«HTMLTABLE:.*?«/HTMLTABLE»", text, re.DOTALL,
+    ):
+        skip_spans.append((sm.start(), sm.end()))
+    for sm in re.finditer(
+        r"\{\{TABLE[A-Z]?:.*?\}TABLE\}", text, re.DOTALL,
+    ):
+        skip_spans.append((sm.start(), sm.end()))
+
+    def _in_skip(p: int) -> bool:
+        return any(s <= p < e for s, e in skip_spans)
+
     out_parts: list[str] = []
     pos = 0
     for m in img_re.finditer(text):
@@ -1434,6 +1489,11 @@ def _process_figures(text: str) -> str:
             # Overlap: we already consumed this IMG as part of a
             # prior figure (shouldn't happen since IMG markers are
             # atomic, but guard anyway).
+            continue
+        if _in_skip(m.start()):
+            # Inline IMG inside a table/htmltable cell — leave as-is.
+            out_parts.append(text[pos:m.end()])
+            pos = m.end()
             continue
         out_parts.append(text[pos:m.start()])
         img_marker = m.group()
@@ -1582,21 +1642,10 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
     from britannica.pipeline.stages.elements import process_elements
     from britannica.pipeline.stages.fold_unfold import unfold_folded_rows
 
-    # Apply per-page source-text corrections (transcription typos in
-    # wikisource we don't want to edit upstream). Keys: "{vol}:{page}".
-    # Since raw_wikitext may span multiple pages (joined segments), apply
-    # corrections for ALL pages of the volume — str.replace is a no-op
-    # when the `from` text isn't present. The page_number arg is only a
-    # hint for the starting page; earlier code that relied on it missed
-    # corrections for any later page (TOOL p30 garbage in an article
-    # starting on p28).
-    _all_corrections = _load_corrections()
-    vol_prefix = f"{volume}:"
-    for key, entries in _all_corrections.items():
-        if not key.startswith(vol_prefix):
-            continue
-        for c in entries:
-            raw_wikitext = raw_wikitext.replace(c["from"], c["to"])
+    # Source-text corrections (transcription typos in wikisource) are
+    # applied once during clean_pages, mutating `wikitext` so all
+    # downstream stages — including this one — operate on already-
+    # corrected text. No repeat application needed here.
 
     # Rewrite folded wikitable rows — single physical rows holding N
     # logical rows via <br>-stacking — as N real rows, so downstream
@@ -1714,8 +1763,25 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
     text = re.sub(r'<section\s+(?:begin|end)="[^"]*"\s*/?>', "",
                   raw_wikitext, flags=re.IGNORECASE)
 
-    # Strip <noinclude> blocks (page headers, quality tags)
-    text = re.sub(r"<noinclude>.*?</noinclude>", "", text,
+    # Strip <noinclude> blocks (page headers, quality tags), but preserve
+    # any `{|` opener or `|}` closer lines inside them — EB1911 pages
+    # often put the table wrapper `{|...` in the header noinclude and
+    # `|}` in the footer noinclude so the page displays standalone.
+    # Stripping the whole block leaves the rows orphaned and the
+    # balanced-table extractor later pairs a `{|` on one page with a
+    # `|}` many pages later, swallowing all intermediate prose (this
+    # was silently eating Climate / Fauna / Population sections of
+    # UNITED STATES, THE). detect_boundaries applies the same logic at
+    # its own preprocess step; this is defence in depth.
+    def _strip_noinclude(m: re.Match) -> str:
+        block = m.group(0)
+        kept: list[str] = []
+        for om in re.finditer(r"(?:^|\n)\s*\{\|[^\n<]*", block):
+            kept.append(om.group(0).strip())
+        if re.search(r"(?:^|\n)\s*\|\}(?!\})", block):
+            kept.append("|}")
+        return ("\n" + "\n".join(kept) + "\n") if kept else ""
+    text = re.sub(r"<noinclude>.*?</noinclude>", _strip_noinclude, text,
                   flags=re.DOTALL | re.IGNORECASE)
 
     # Unclosed `{{nowrap|…` (malformed wikitext in sources like EGYPT
@@ -1805,6 +1871,7 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
 
     # Normalize
     text = normalize_unicode(text)
+    text = replace_print_artifacts(text)
     text = text.replace("\r\n", "\n").replace("\r", "\n")
 
     # Strip HTML comments (replace with space to avoid creating false paragraph breaks)
@@ -1876,6 +1943,11 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
                     if depth == 0:
                         # Replace: strip outer {{ and }}
                         content = text[idx + len(prefix):i]
+                        # Strip a leading MediaWiki positional-parameter
+                        # name (e.g. "1="). Wikitext allows the explicit
+                        # form {{center|1=payload}}; without this, the
+                        # "1=" leaks into the rendered text.
+                        content = re.sub(r"^\d+=", "", content)
                         text = text[:idx] + content + text[i+2:]
                         # Recompute math spans since offsets shifted
                         math_spans = [(m.start(), m.end()) for m in
@@ -1889,9 +1961,13 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
                 break  # unbalanced — give up
         return text
 
-    # Normalize {{center|{{sc|...}}}} to {{csc|...}} so it gets paragraph breaks
+    # Normalize {{center|{{sc|...}}}} (and {{center|1={{sc|...}}}}) to
+    # {{csc|...}} so it gets paragraph breaks. The explicit 1= form
+    # is MediaWiki's positional-parameter syntax and appears in some
+    # hand-edited articles (e.g. JEWS, MALAYS, AMERICAN WAR OF
+    # INDEPENDENCE).
     text = re.sub(
-        r"\{\{center\|\{\{sc\|([^{}]*)\}\}\}\}",
+        r"\{\{center\|(?:1=)?\{\{sc\|([^{}]*)\}\}\}\}",
         r"{{csc|\1}}", text, flags=re.IGNORECASE,
     )
 

@@ -16,7 +16,7 @@
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
@@ -40,15 +40,20 @@
     .footer { color: var(--muted); font-size: 0.85rem; margin-top: 20px;
       text-align: center; }
   </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
 </head>
 <body>
 <div class="page">
   <div class="card">
     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-      <h1 style="margin: 0; font-size: 1.3rem; color: #5c4a32;"><span style="font-variant: small-caps; letter-spacing: 0.06em;">Ancillary</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.02em;">&mdash; 11th Edition</span></h1>
+      <h1 style="margin: 0; font-size: 1.3rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="32" height="32" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.06em;">Ancillary</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.02em;">&mdash; 11th Edition</span></a></h1>
       <div style="font-size: 0.9rem;">
-        <a href="/home.html" style="color: var(--link); text-decoration: none;">Home</a>
-        &nbsp;&middot;&nbsp;
         <a href="/index.html" style="color: var(--link); text-decoration: none;">Articles</a>
         &nbsp;&middot;&nbsp;
         <a href="/contributors.html" style="color: var(--link); text-decoration: none;">Contributors</a>
@@ -129,6 +134,18 @@
         <a href="topics.html">View on Topics page &rarr;</a>
         <a href="scans.html?vol=29&amp;start=893&amp;end=894&amp;label=Editors'+Introduction&amp;back=ancillary.html">View
           source scans &rarr;</a>
+      </div>
+    </div>
+
+    <div class="item">
+      <h2>Reader's Guide to the Encyclop&aelig;dia Britannica</h2>
+      <p>A 65-chapter companion volume to the 11th edition, organised as
+        courses of reading for different occupations, fields of study, and
+        interests. Each chapter's article citations are linked to the main
+        encyclop&aelig;dia, and author mentions are linked to the
+        contributors page.</p>
+      <div class="item-links">
+        <a href="readers-guide.html">Read &rarr;</a>
       </div>
     </div>
   </div>

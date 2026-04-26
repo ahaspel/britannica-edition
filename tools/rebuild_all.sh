@@ -80,6 +80,9 @@ for vol in $VOLUMES; do
     --indir "$RUN_DIR" \
     --volume "$vol"
 
+  echo "  Cleaning pages (applies corrections.json to wikitext)..."
+  uv run britannica clean-pages "$vol"
+
   echo "  Detecting boundaries..."
   uv run britannica detect-boundaries "$vol"
 
@@ -151,6 +154,18 @@ echo
 echo "=== Phase 6b: Parsing classified TOC (vol 29 topics) [$(elapsed)] ==="
 uv run python tools/vol29/parse_classified_toc.py
 
+# --- Phase 6b2: Apply cached topic-disambiguation choices ---
+# parse_classified_toc.py picks one article per ambiguous index entry
+# (e.g. ABEL → first match), which is often wrong contextually. The
+# disambiguator (Claude Haiku, cached) chooses the right article per
+# category context (Chemistry > ABEL → Sir Frederick Augustus Abel,
+# Mathematics > ABEL → Niels Henrik Abel, etc.). --apply-only consults
+# the existing cache without API calls; run without that flag manually
+# to resolve any uncached new ambiguities.
+echo
+echo "=== Phase 6b2: Applying cached TOC disambiguations [$(elapsed)] ==="
+uv run python tools/vol29/disambiguate_toc.py --apply-only
+
 # --- Phase 6c: Detect first-content fm scan per volume ---
 echo
 echo "=== Phase 6c: Detecting fm first-content pages [$(elapsed)] ==="
@@ -161,6 +176,13 @@ echo
 echo "=== Phase 6d: Rebuilding generated site pages [$(elapsed)] ==="
 uv run python tools/viewer/build_about_page.py
 uv run python tools/viewer/build_ancillary_pages.py
+
+# --- Phase 6e: Build Reader's Guide (65 chapters + 6 part pages + TOC) ---
+# Depends on data/derived/articles/index.json (Phase 4) and
+# data/derived/articles/contributors.json (Phase 3b) for link resolution.
+echo
+echo "=== Phase 6e: Building Reader's Guide [$(elapsed)] ==="
+uv run python tools/viewer/build_readers_guide.py all > /dev/null
 
 # --- Phase 7: Deploy ---
 if [ -z "$NO_DEPLOY" ]; then
@@ -188,6 +210,7 @@ if [ -z "$NO_DEPLOY" ]; then
   aws s3 cp tools/viewer/scans.html s3://britannica11.org/scans.html
   aws s3 cp tools/viewer/search-api.js s3://britannica11.org/search-api.js
   aws s3 cp tools/viewer/article-urls.js s3://britannica11.org/article-urls.js
+  aws s3 cp tools/viewer/favicon.svg s3://britannica11.org/favicon.svg --content-type "image/svg+xml"
   aws s3 cp tools/viewer/contributors.html s3://britannica11.org/contributors.html
   aws s3 cp tools/viewer/home.html s3://britannica11.org/home.html
   aws s3 cp tools/viewer/preface.html s3://britannica11.org/preface.html
@@ -197,6 +220,16 @@ if [ -z "$NO_DEPLOY" ]; then
   aws s3 cp tools/viewer/ancillary-index-preface.html s3://britannica11.org/ancillary-index-preface.html
   aws s3 cp tools/viewer/ancillary-abbreviations.html s3://britannica11.org/ancillary-abbreviations.html
   aws s3 cp tools/viewer/about.html s3://britannica11.org/about.html
+
+  echo "  Uploading Reader's Guide (72 pages + 1 image)..."
+  for f in tools/viewer/readers-guide.html \
+           tools/viewer/readers-guide-part-*.html \
+           tools/viewer/readers-guide-ch*.html; do
+    aws s3 cp "$f" "s3://britannica11.org/$(basename "$f")" \
+      --content-type "text/html; charset=utf-8" \
+      --cache-control "public, max-age=300"
+  done
+  aws s3 cp tools/viewer/readers-guide-i_008.jpg s3://britannica11.org/readers-guide-i_008.jpg
 
   echo "  Invalidating CloudFront..."
   aws cloudfront create-invalidation --distribution-id E24BJKH0IB4I6 --paths "/*" > /dev/null

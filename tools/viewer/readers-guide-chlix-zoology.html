@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zoology &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter LIX</span>Zoology</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">General Principles</a></li><li><a href="#sh-2">Protective Modifications</a></li><li><a href="#sh-3">Intelligence of Animals</a></li><li><a href="#sh-4">Animals in Captivity</a></li><li><a href="#sh-5">Classification and Divisions</a></li><li><a href="#sh-6">Protozoa</a></li><li><a href="#sh-7">Metazoa</a></li><li><a href="#sh-8">Natural History</a></li></ol></div>
+    <div class="body-text">
+
+
+<p>At the very outset of his zoological
+studies the reader will find that
+the doctors still differ as to the
+best and most scientifically logical system
+to be employed in classification. So
+important is it that the connotation and
+denotation of every zoological designation
+should be definite, that Sir Edwin
+Ray <a href="/contributors.html?q=Sir+Edwin+Ray+Lankester">Lankester</a> devotes the title article
+<span class="sc"><a href="/article/28-1049-zoology/zoology">Zoology</a></span> (Vol. 28, p. 1022) mainly to a
+discussion of systems of classification,
+and besides there is a separate article
+<span class="sc"><a href="/article/28-1048-zoological-nomenclature/zoological_nomenclature">Zoological Nomenclature</a></span> (Vol. 28, p.
+1021) by <a href="/contributors.html?q=Peter+Chalmers+Mitchell">P. Chalmers Mitchell</a>, Secretary
+of the Zoological Society of London, university
+demonstrator in comparative
+anatomy and assistant to the Linacre
+Professor at Oxford, and adviser to the
+editor in the organization of the whole
+subject of zoology in the Britannica.</p>
+
+<p>The Britannica articles may be classified
+in three divisions: dealing with
+(i) <i>General Principles</i>, (ii) <i>Systematic</i>,
+(iii) <i>Natural History</i>.</p>
+
+<p><span class="shoulder-heading" id="sh-1">General Principles</span>The student should read at any rate
+some of the general articles mentioned in
+the chapter on <i>Biology</i>; and these will
+prepare him for the difficult questions
+involved in the articles
+<span class="sc"><a href="/article/28-1049-zoology/zoology">Zoology</a></span> and
+<span class="sc"><a href="/article/28-1048-zoological-nomenclature/zoological_nomenclature">Zoological Nomenclature</a></span>.
+Supplementary
+to these are the following:
+<span class="sc"><a href="/article/02-0059-s2/animal">Animal</a></span> (Vol. 2, p. 48), in connection
+with which should be read the
+article <span class="sc"><a href="/article/22-0491-protista/protista">Protista</a></span> (Vol. 22, p. 476)
+where the borderland between the animal
+and vegetable kingdoms is further discussed,
+and the very valuable article
+<span class="sc"><a href="/article/22-0494-protozoa/protozoa">Protozoa</a></span> (Vol. 22, p. 479) in which
+E. A. Minchin, professor of protozoology
+in the University of London, discusses
+the minute animal organisms, which in
+the last decade have proved immensely
+important in the study of parasitic diseases.
+In <span class="sc"><a href="/article/16-0244-larval-forms/larval_forms">Larval Forms</a></span> (Vol. 16, p.
+224), and <span class="sc"><a href="/article/18-0242-s2/metamorphosis">Metamorphosis</a></span> (Vol. 18,
+p. 221) Prof. Adam Sedgwick, of the
+Imperial College of Science and Technology
+in London, discusses the early
+history of larvae and their change from
+larval to adult growth. The articles
+<span class="sc"><a href="/article/18-0236-metamerism/metamerism">Metamerism</a></span> (Vol. 18, p. 215), by Sir
+<a href="/contributors.html?q=Sir+Edwin+Ray+Lankester">Edwin Ray Lankester</a>, and <i>Regeneration
+of Lost Parts</i> (Vol. 23, p. 36),
+by <a href="/contributors.html?q=Peter+Chalmers+Mitchell">P. Chalmers Mitchell</a>, discuss the
+capacity for repeating parts (as in the
+case of the common earth worm) and for
+the formation of new parts to take the
+place of those lost by accident or injury.
+The article <span class="sc"><a href="/article/18-0770-monster/monster">Monster</a></span> (Vol. 18, p. 740)
+by Dr. Charles Creighton will be found
+very suggestive.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Protective Modifications</span>The eyes of most of us are shut to
+the wonders of the animal kingdom.
+We know by hearsay that the colouring
+of an animal or insect, brilliant and
+startling though it
+often be, is designed
+by nature for protection
+by enabling
+it to assimilate itself to that of its surroundings.
+But how many of us have
+taken the trouble to verify this? The
+articles <span class="sc"><a href="/article/06-0753-colours-of-animals/colours_of_animals">Colours of Animals</a></span>, <i>Bionomics</i>
+(Vol. 6, p. 731), by Prof. Poulton of
+Oxford, and <span class="sc"><a href="/article/18-0519-mimicry/mimicry">Mimicry</a></span> (Vol. 18, p. 495),
+by <a href="/contributors.html?q=Reginald+Innes+Pocock">R. I. Pocock</a>, superintendent of the
+Zoological Gardens in London, will suggest
+to the reader many objects for
+observation. Especially interesting in
+the former article is the section on the
+use of colour for warning and signaling.
+In connection with these articles, those
+on <span class="sc"><a href="/article/09-0025-egg/egg">Egg</a></span> (Vol. 9, p. 13) and <span class="sc"><a href="/article/10-0236-feather/feather">Feather</a></span>
+(Vol. 10, p. 224), by <a href="/contributors.html?q=William+Plane+Pycraft">W. P. Pycraft</a>, of
+the British Museum, may be read, and
+<span class="sc"><a href="/article/19-0693-nidification/nidification">Nidification</a></span> (Vol. 19, p. 666), by Prof.
+Alfred Newton of Cambridge University,
+and <a href="/contributors.html?q=Hans+Friedrich+Gadow">Hans Gadow</a>, Strickland curator
+and lecturer on zoology in the University
+of Cambridge; especially those sections
+concerned with the precautions
+taken by the birds for protection and
+concealment. A very fascinating subject
+is discussed in the articles dealing
+with the distribution and movements of
+animal life. These are <span class="sc"><a href="/article/28-1029-zoological-distribution/zoological_distribution">Zoological Distribution</a></span>
+(Vol. 28, p. 1002), by the
+well-known zoologist Richard Lydekker;
+<span class="sc"><a href="/article/18-0451-s6/migration">Migration</a></span> (Vol. 18, p. 433), by <a href="/contributors.html?q=Hans+Friedrich+Gadow">Hans
+Gadow</a>; and <span class="sc"><a href="/article/21-0751-plankton/plankton">Plankton</a></span> (Vol. 21, p. 720),
+by <a href="/contributors.html?q=George+Herbert+Fowler">G. H. Fowler</a> of University College,
+London. Reference to these articles
+has already been made in the chapter
+on <i>Biology</i>. Closely connected with
+them is the article on <span class="sc"><a href="/article/20-0631-palaeontology/palaeontology">Palaeontology</a></span>
+(Vol. 20, p. 579), by Prof. <a href="/contributors.html?q=Henry+Fairfield+Osborn">H. F. Osborn</a>,
+Columbia University and American Museum
+of Natural History, in which the
+distribution of prehistoric life is discussed;
+and, as will be seen from the list below,
+all the principal species now only found
+in fossil remains are described in separate
+articles.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Intelligence of Animals</span>The editor succeeded in getting the
+psychologist, Prof. C. Lloyd Morgan,
+of the University of Bristol, who has
+made a specialty of
+this particular subject,
+to write extremely
+illuminating
+articles on <span class="sc"><a href="/article/14-0679-s5/instinct">Instinct</a></span> and on <span class="sc"><a href="/article/14-0711-s4/intelligence_in_animals">Intelligence
+in Animals</a></span> (Vol. 14, pp. 648 and
+680). Interesting as throwing a side
+light on either the instinct or intelligence
+of birds, is the section on their song in
+the article <span class="sc"><a href="/article/25-0416-song/song">Song</a></span> (Vol. 25, p. 413). It is
+hardly possible to look through any of
+these articles, or those on mimicry and
+colour, above alluded to, without coming
+across some striking and interesting fact,
+as for instance, the sudden change from
+a divine melody to an anxious croak in
+the utterance of the male nightingale as
+soon as the brood is hatched. These articles
+will be read for their great interest by
+many who do not intend systematically
+to pursue the subject of Zoology.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Animals in Captivity</span>The housing of animals in captivity is
+discussed in the articles <span class="sc"><a href="/article/02-0249-s8/aquarium">Aquarium</a></span> (Vol.
+2, p. 237), by Professor <a href="/contributors.html?q=George+Herbert+Fowler">G. H. Fowler</a>,
+University College,
+London; <span class="sc"><a href="/article/03-0075-s2/aviary">Aviary</a></span>
+(Vol. 3, p. 60), by
+<a href="/contributors.html?q=David+Seth-Smith">D. Seth-Smith</a>, curator
+of birds to the Zoological Society
+of London; and <span class="sc"><a href="/article/28-1045-zoological-gardens/zoological_gardens">Zoological Gardens</a></span>
+(Vol. 28, p. 1018), by <a href="/contributors.html?q=Peter+Chalmers+Mitchell">P. Chalmers Mitchell</a>.
+The first two contain some very
+useful hints for the care of small aquaria
+and aviaries; and young people who like
+to have aquaria at home, and are often
+disappointed by their failure to keep
+alive some of their specimens, especially
+larval and other surface-swimming animals,
+will find one of their difficulties
+solved. These surface-swimming animals
+die of exhaustion from their unaided
+efforts to keep off the bottom, lacking
+the support given in their surroundings
+by the natural flow of the water, native
+tides, and surface currents. The article
+describes a very simple arrangement by
+which this motion of the water can be
+simulated.</p>
+
+<p>Other articles which will be found
+very interesting are those on <span class="sc"><a href="/article/13-0457-hibernation/hibernation">Hibernation</a></span>
+(Vol. 13, p. 441) and on <span class="sc"><a href="/article/14-0378-s3/incubation">Incubation
+and Incubators</a></span> (Vol. 14, p. 359).
+In the latter many will be surprised to
+note that incubators have been in use
+in Egypt from time immemorial under
+the name <span class="sc">Mamal</span>. In one district of
+Egypt alone 90,000,000 eggs are annually
+hatched out in these old time incubators,
+of which the secret has been handed
+down, jealously guarded, from father
+to son. In the article <span class="sc"><a href="/article/26-0493-taxidermy/taxidermy">Taxidermy</a></span> (Vol.
+26, p. 464), Montagu Browne, a practical
+taxidermist, deals with the artistic
+as well as the technical aspects of the craft.</p>
+
+<p><span class="shoulder-heading" id="sh-5">Classification and Divisions</span>Turning to the articles of the chief
+divisions of the animal kingdom, the most
+useful arrangement will be to enumerate
+them in their order.
+As has been already
+said, zoologists do
+not yet agree as to
+the best system of classification; the one
+which is given in the Britannica is that
+upon which the very eminent zoologists
+who have contributed the special articles,
+agree as being the most suitable. There
+are two main grades. The <span class="sc"><a href="/article/22-0494-protozoa/protozoa">Protozoa</a></span>
+(Vol. 22, p. 479) contain the animalcules,
+mainly microscopic. These are
+the most elementary forms of life and
+consist of single cells. The other and
+more important grade is that of the
+<span class="sc">Metazoa</span>, which are built up of many cells.</p>
+
+<p><span class="shoulder-heading" id="sh-6">Protozoa</span>The main subdivisions (called phyla)
+of the Protozoa are: phylum i. <span class="sc"><a href="/article/24-0222-sarcodina/sarcodina">Sarcodina</a></span>
+(Vol. 24, p. 208); phylum ii. <span class="sc"><a href="/article/17-0892-mastigophora/mastigophora">Mastigophora</a></span>
+(Vol. 17, p.
+873); phylum iii.
+<span class="sc"><a href="/article/25-0756-sporozoa/sporozoa">Sporozoa</a></span> (Vol. 25,
+p. 734); phylum iv. <span class="sc"><a href="/article/14-0588-infusoria/infusoria">Infusoria</a></span> (Vol. 14,
+557).</p>
+
+<p><span class="shoulder-heading" id="sh-7">Metazoa</span>Coming next, the Metazoa in their
+order are, as follows: phylum i. Porifera
+(see <span class="sc"><a href="/article/25-0737-sponges/sponges">Sponges</a></span>, Vol. 25, p. 715); phylum ii.
+<span class="sc"><a href="/article/14-0147-hydromedusae/hydromedusae">Hydromedusae</a></span> or
+<span class="sc"><a href="/article/14-0183-hydrozoa/hydrozoa">Hydrozoa</a></span> (Vol. 14,
+pp. 135 and 171)
+which include aquatic animals of the
+coral kind; phylum iii. <span class="sc"><a href="/article/24-0548-scutari-albania/scutari__albania_">Scyphomedusa</a></span>
+(Vol. 24, p. 519) which include groups of
+shell fish; phylum iv. <span class="sc"><a href="/article/02-0108-s4/anthozoa">Anthozoa</a></span> (Vol. 2,
+p. 97) with the corals; phylum v. <span class="sc"><a href="/article/07-0614-ctenophora/ctenophora">Ctenophora</a></span>
+(Vol. 7, p. 592) including the
+jelly fish; phylum vi. <span class="sc"><a href="/article/21-0859-platyelmia/platyelmia">Platyelmia</a></span> (Vol.
+21, p. 826) a group of animals in which
+creeping first became habitual; phylum
+vii. Nematoidea (see <span class="sc"><a href="/article/19-0377-nematoda/nematoda">Nematoda</a></span>, Vol.
+19, p. 359) which include certain kinds
+of worms; phylum viii. <span class="sc"><a href="/article/05-0824-chaeroneia/chaeroneia">Chaetognatha</a></span>
+(Vol. 5, p. 789) an isolated class of
+transparent pelagic organisms; phylum
+ix. <span class="sc"><a href="/article/19-0381-nemertina/nemertina">Nemertina</a></span> (Vol. 19, p.
+363) worm families; phylum x. <span class="sc"><a href="/article/18-0699-mollusca/mollusca">Mollusca</a></span>
+(Vol. 2, p. 669) shell-bearing
+animals.</p>
+
+<p>Phylum xi. <span class="sc"><a href="/article/02-0232-s2/appendiculata">Appendiculata</a></span> (Vol. 2,
+p. 220) which include the sub-phyla
+<span class="sc"><a href="/article/23-0799-rotifera/rotifera">Rotifera</a></span> (Vol. 23, p. 759), <span class="sc"><a href="/article/05-0825-chaetopoda/chaetopoda">Chaetopoda</a></span>
+(Vol. 5, p. 789), and <span class="sc"><a href="/article/02-0715-arthropoda/arthropoda">Arthropoda</a></span> (Vol.
+2, p. 673), the sub-phylum which comprises
+practically the whole insect family.
+Important articles on animals in this
+class are: <span class="sc"><a href="/article/13-0434-hexapoda/hexapoda">Hexapoda</a></span> (Vol. 13, p. 418)
+which include the wasp, beetle, and other
+families; the <span class="sc"><a href="/article/07-0574-s5/crustacea">Crustacea</a></span> (Vol. 7, p. 552)
+which cover a field wide enough to
+embrace species as different outwardly
+as lobsters, wood-lice, and minute water
+fleas; and <span class="sc"><a href="/article/02-0302-s5/arachnida">Arachnida</a></span> (Vol. 2, p. 287)
+the spider family. Phylum xii. <span class="sc"><a href="/article/08-0898-echinoderma/echinoderma">Echinoderma</a></span>
+(Vol. 8, p. 871) with all the sea-urchins
+and star fish.</p>
+
+<p>Phylum xiii. <span class="sc"><a href="/article/27-1075-vertebrata/vertebrata">Vertebrata</a></span> (Vol. 27,
+p. 1047) to which man belongs as an
+order of a sub-class of a class of a sub-phylum.
+The most important sub-phylum
+of the Vertebrata is the Craniata
+(see Vol. 27, p. 1048). The sub-phyla
+<span class="sc"><a href="/article/13-0270-hemichorda/hemichorda">Hemichorda</a></span> (Vol. 13, p. 257), Urochorda
+(see <span class="sc"><a href="/article/27-0396-tunicata/tunicata">Tunicata</a></span>, Vol. 27, p. 379), and
+Cephalochorda (see <span class="sc"><a href="/article/01-0937-s4/amphioxus">Amphioxus</a></span>, Vol.
+1, p. 886) deal with the lower orders of
+Vertebrata. The sub-phylum Craniata
+comprises the following classes: class i.
+Pisces, see <span class="sc"><a href="/article/14-0255-ichthyology/ichthyology">Ichthyology</a></span> (Vol. 14, p.
+243) with the fishes; class ii. <span class="sc"><a href="/article/03-0538-batrachia/batrachia">Batrachia</a></span>
+(Vol. 3, p. 521), with the frog tribe;
+class iii. Reptilia (see <span class="sc"><a href="/article/23-0153-reptiles/reptiles">Reptiles</a></span>, Vol. 23,
+p. 136); and in close connection with
+this—class iv. Aves (see <span class="sc"><a href="/article/03-0982-bird/bird">Bird</a></span>, Vol. 3,
+p. 959, and <span class="sc"><a href="/article/20-0333-ornithology/ornithology">Ornithology</a></span>, Vol. 20, p.
+299); class v. <span class="sc"><a href="/article/17-0537-s1/mammalia">Mammalia</a></span> (Vol. 17, p. 520)
+to which man belongs.</p>
+
+<p>Phylum xiv. <span class="sc"><a href="/article/18-0206-mesozoa/mesozoa">Mesozoa</a></span> (Vol. 18, p. 187)
+minute parasitic animals intermediate
+between the Protozoa and the Metazoa.
+Phylum xv. <span class="sc"><a href="/article/22-0056-polyzoa/polyzoa">Polyzoa</a></span> (Vol. 22, p. 42)
+aquatic animals forming colonies by
+budding. Phylum xvi. <span class="sc"><a href="/article/01-0140-s4/acanthocephala">Acanthocephala</a></span>
+(Vol. 1, p. 109) including the parasitic
+worms. Phylum xvii. <span class="sc"><a href="/article/28-1049-zoology/zoology">Podaxonia</a></span>
+(Vol. 28, p. 1023), and phylum xviii.
+<span class="sc"><a href="/article/11-0544-gastrotricha/gastrotricha">Gastrotricha</a></span> (Vol. 11, p. 526) minute
+animals living at the bottom of ponds
+and marshes.</p>
+
+<p><span class="shoulder-heading" id="sh-8">Natural History</span>This is an outline of the main division
+of the animal kingdom in their order as
+now classified. The subject of zoology
+is so vast that the student will probably
+confine himself to one branch of the
+subject, perhaps to one small fraction
+of a division, of
+which he proposes to
+investigate the complete
+natural history.
+As will be seen from the list below,
+which is classified, the Britannica offers
+an immense amount of material bearing
+on the subject. But of course the study
+of any one sub-class needs a general
+knowledge of the foundations of zoological
+science, so that some acquaintance
+with the principles on which the animal
+world is classified is indispensable. As
+in Botany, it will be easy to see from
+the article on any individual animal to
+which family it belongs so that the young
+student can work back from the particular
+to the general and find out the whole
+relationship of the subject in which he
+is interested by reference to the “systematic”
+article.</p>
+
+<details class="article-list"><summary><span class="list-title">LIST OF ARTICLES IN THE ENCYCLOPAEDIA BRITANNICA ON ZOOLOGY</span><span class="list-count"> (52 articles)</span></summary>
+
+<div class="cross-ref">(For biographies of Zoologists, see the end of the chapter on Biology)</div>
+
+<h4 class="c016"> <b><a href="/article/28-1049-zoology/zoology">Zoology: General</a></b></h4>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0098-s4/abomasum">Abomasum</a></li>
+  <li class="c018"><a href="/article/01-0166-s7/acetabulum">Acetabulum</a></li>
+  <li class="c018"><a href="/article/02-0059-s2/animal">Animal</a></li>
+  <li class="c018"><a href="/article/02-0249-s8/aquarium">Aquarium</a></li>
+  <li class="c018"><a href="/article/03-0075-s2/aviary">Aviary</a></li>
+  <li class="c018"><a href="/article/03-0590-beak/beak">Beak</a></li>
+  <li class="c018"><a href="/article/04-0505-breeds-and-breeding/breeds_and_breeding">Breeds and Breeding</a></li>
+  <li class="c018"><a href="/article/05-0314-carapace/carapace">Carapace</a></li>
+  <li class="c018"><a href="/article/06-0753-colours-of-animals/colours_of_animals">Colours of Animals</a></li>
+  <li class="c018"><a href="/article/06-0827-comparative-anatomy/comparative_anatomy">Comparative Anatomy</a></li>
+  <li class="c018"><a href="/article/06-0850-conch/conch">Conch</a></li>
+  <li class="c018"><a href="/article/07-0055-contractile-vacuole/contractile_vacuole">Contractile Vacuole</a></li>
+  <li class="c018"><a href="/article/07-0430-crepuscular/crepuscular">Crepuscular</a></li>
+  <li class="c018"><a href="/article/08-0152-dew-claw/dew-claw">Dew-claw</a></li>
+  <li class="c018"><a href="/article/08-0155-dewlap/dewlap">Dewlap</a></li>
+  <li class="c018"><a href="/article/08-0457-dorsiventral/dorsiventral">Dorsiventral</a></li>
+  <li class="c018"><a href="/article/08-0585-dredge/dredge">Dredge</a></li>
+  <li class="c018"><a href="/article/09-0025-egg/egg">Egg</a></li>
+  <li class="c018"><a href="/article/10-0236-feather/feather">Feather</a></li>
+  <li class="c018"><a href="/article/12-0663-s5/grub">Grub</a></li>
+  <li class="c018"><a href="/article/13-0363-herd/herd">Herd</a></li>
+  <li class="c018"><a href="/article/13-0457-hibernation/hibernation">Hibernation</a></li>
+  <li class="c018">Incubation and Incubators</li>
+  <li class="c018"><a href="/article/14-0679-s5/instinct">Instinct</a></li>
+  <li class="c018"><a href="/article/14-0711-s4/intelligence_in_animals">Intelligence in Animals</a></li>
+  <li class="c018"><a href="/article/15-0712-s4/karyogamy">Karyogamy</a></li>
+  <li class="c018"><a href="/article/16-0244-larval-forms/larval_forms">Larval Forms</a></li>
+  <li class="c018"><a href="/article/18-0093-meganucleus/meganucleus">Meganucleus</a></li>
+  <li class="c018"><a href="/article/18-0122-s5/membranelle">Membranelle</a></li>
+  <li class="c018"><a href="/article/18-0236-metamerism/metamerism">Metamerism</a></li>
+  <li class="c018"><a href="/article/18-0242-s2/metamorphosis">Metamorphosis</a></li>
+  <li class="c018"><a href="/article/18-0413-micronucleus/micronucleus">Micronucleus</a></li>
+  <li class="c018"><a href="/article/18-0451-s6/migration">Migration</a></li>
+  <li class="c018"><a href="/article/18-0519-mimicry/mimicry">Mimicry</a></li>
+  <li class="c018"><a href="/article/18-0752-s3/mongrel">Mongrel</a></li>
+  <li class="c018"><a href="/article/18-0770-monster/monster">Monster</a></li>
+  <li class="c018"><a href="/article/18-0967-s3/moult">Moult</a></li>
+  <li class="c018"><a href="/article/19-0424-s2/nest">Nest</a></li>
+  <li class="c018"><a href="/article/19-0693-nidification/nidification">Nidification</a></li>
+  <li class="c018"><a href="/article/21-0751-plankton/plankton">Plankton</a></li>
+  <li class="c018"><a href="/article/22-0422-proboscis/proboscis">Proboscis</a></li>
+  <li class="c018"><a href="/article/22-0695-pylome/pylome">Pylome</a></li>
+  <li class="c018"><a href="/article/22-0767-quill/quill">Quill</a></li>
+  <li class="c018"><a href="/article/23-0049-regeneration-of-lost-parts/regeneration_of_lost_parts">Regeneration of Lost Parts</a></li>
+  <li class="c018"><a href="/article/24-0775-sex/sex">Sex</a></li>
+  <li class="c018"><a href="/article/25-0416-song/song">Song (of Birds)</a></li>
+  <li class="c018"><a href="/article/26-0493-taxidermy/taxidermy">Taxidermy</a></li>
+  <li class="c018"><a href="/article/27-1053-s3/vermin">Vermin</a></li>
+  <li class="c018"><a href="/article/28-1049-zoology/zoology">Zoology</a></li>
+  <li class="c018"><a href="/article/28-1029-zoological-distribution/zoological_distribution">Zoological Distribution</a></li>
+  <li class="c018"><a href="/article/28-1045-zoological-gardens/zoological_gardens">Zoological Gardens</a></li>
+  <li class="c018"><a href="/article/28-1048-zoological-nomenclature/zoological_nomenclature">Zoological Nomenclature</a></li>
+</ul></details>
+
+<h4 class="c016"><b><a href="/article/28-1049-zoology/zoology">Zoology, Systematic</a></b>: Invertebrata</h4>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0140-s4/acanthocephala">Acanthocephala</a></li>
+  <li class="c018"><a href="/article/01-0179-s2/acineta">Acineta</a></li>
+  <li class="c018"><a href="/article/01-0189-s2/actinozoa">Actinozoa</a></li>
+  <li class="c018"><a href="/article/01-0625-algae/algae">Algae</a></li>
+  <li class="c018"><a href="/article/01-0926-s3/amoeba">Amoeba</a></li>
+  <li class="c018"><a href="/article/02-0083-s3/annelida">Annelida</a></li>
+  <li class="c018"><a href="/article/02-0108-s4/anthozoa">Anthozoa</a></li>
+  <li class="c018"><a href="/article/02-0232-s2/appendiculata">Appendiculata</a></li>
+  <li class="c018"><a href="/article/02-0244-s5/aptera">Aptera</a></li>
+  <li class="c018"><a href="/article/02-0302-s5/arachnida">Arachnida</a></li>
+  <li class="c018"><a href="/article/02-0357-s3/arcella">Arcella</a></li>
+  <li class="c018"><a href="/article/02-0715-arthropoda/arthropoda">Arthropoda</a></li>
+  <li class="c018"><a href="/article/02-0727-s2/articulata">Articulata</a></li>
+  <li class="c018">Aspirotrochaceae</li>
+  <li class="c018"><a href="/article/04-0375-brachiopoda/brachiopoda">Brachiopoda</a></li>
+  <li class="c018"><a href="/article/05-0151-campodea/campodea">Campodea</a></li>
+  <li class="c018"><a href="/article/05-0711-cephalopoda/cephalopoda">Cephalopoda</a></li>
+  <li class="c018">Chaetognatha</li>
+  <li class="c018"><a href="/article/05-0825-chaetopoda/chaetopoda">Chaetopoda</a></li>
+  <li class="c018"><a href="/article/06-0381-ciliata/ciliata">Ciliata</a></li>
+  <li class="c018"><a href="/article/06-0634-coccidia/coccidia">Coccidia</a></li>
+  <li class="c018"><a href="/article/06-0661-coelentera/coelentera">Coelentera</a></li>
+  <li class="c018"><a href="/article/06-0687-coleoptera/coleoptera">Coleoptera</a></li>
+  <li class="c018"><a href="/article/07-0574-s5/crustacea">Crustacea</a></li>
+  <li class="c018"><a href="/article/07-0614-ctenophora/ctenophora">Ctenophora</a></li>
+  <li class="c018"><a href="/article/07-0730-cystoflagellata/cystoflagellata">Cystoflagellata</a></li>
+  <li class="c018"><a href="/article/08-0033-dendrocometes/dendrocometes">Dendrocometes</a></li>
+  <li class="c018"><a href="/article/08-0114-desmoscolecida/desmoscolecida">Desmoscolecida</a></li>
+  <li class="c018"><a href="/article/08-0255-difflugia/difflugia">Difflugia</a></li>
+  <li class="c018"><a href="/article/08-0294-dinoflagellata/dinoflagellata">Dinoflagellata</a></li>
+  <li class="c018"><a href="/article/08-0324-diptera/diptera">Diptera</a></li>
+  <li class="c018"><a href="/article/08-0898-echinoderma/echinoderma">Echinoderma</a></li>
+  <li class="c018"><a href="/article/08-0909-echiuroidea/echiuroidea">Echiuroidea</a></li>
+  <li class="c018"><a href="/article/08-0937-ectospora/ectospora">Ectospora</a></li>
+  <li class="c018"><a href="/article/09-0408-endospora/endospora">Endospora</a></li>
+  <li class="c018"><a href="/article/09-0688-s2/entomostraca">Entomostraca</a></li>
+  <li class="c018"><a href="/article/09-0735-s3/epistylis">Epistylis</a></li>
+  <li class="c018"><a href="/article/10-0360-s2/filosa">Filosa</a></li>
+  <li class="c018"><a href="/article/10-0482-flagellata-part1/flagellata__part1_">Flagellata</a></li>
+  <li class="c018"><a href="/article/10-0649-foraminifera/foraminifera">Foraminifera</a></li>
+  <li class="c018"><a href="/article/11-0524-gastropoda/gastropoda">Gastropoda</a></li>
+  <li class="c018"><a href="/article/11-0544-gastrotricha/gastrotricha">Gastrotricha</a></li>
+  <li class="c018"><a href="/article/11-0782-s5/gephyrea">Gephyrea</a></li>
+  <li class="c018"><a href="/article/12-0140-s5/globigerina">Globigerina</a></li>
+  <li class="c018"><a href="/article/12-0165-s7/gnathopoda">Gnathopoda</a></li>
+  <li class="c018"><a href="/article/12-0580-gregarines/gregarines">Gregarines</a></li>
+  <li class="c018"><a href="/article/12-0789-gymnostomaceae/gymnostomaceae">Gymnostomaceae</a></li>
+  <li class="c018"><a href="/article/12-0831-haemosporidia/haemosporidia">Haemosporidia</a></li>
+  <li class="c018"><a href="/article/12-0958-haplodrili/haplodrili">Haplodrili</a></li>
+  <li class="c018"><a href="/article/13-0245-heliozoa/heliozoa">Heliozoa</a></li>
+  <li class="c018"><a href="/article/13-0271-hemiptera/hemiptera">Hemiptera</a></li>
+  <li class="c018"><a href="/article/13-0431-s4/heterokaryota">Heterokaryota</a></li>
+  <li class="c018"><a href="/article/13-0434-hexapoda/hexapoda">Hexapoda</a></li>
+  <li class="c018"><a href="/article/14-0147-hydromedusae/hydromedusae">Hydromedusae</a></li>
+  <li class="c018"><a href="/article/14-0183-hydrozoa/hydrozoa">Hydrozoa</a></li>
+  <li class="c018"><a href="/article/14-0189-s2/hymenoptera">Hymenoptera</a></li>
+  <li class="c018">Infusoria</li>
+  <li class="c018"><a href="/article/15-0852-kinorhyncha/kinorhyncha">Kinorhyncha</a></li>
+  <li class="c018"><a href="/article/16-0048-labyrinthulidea/labyrinthulidea">Labyrinthulidea</a></li>
+  <li class="c018"><a href="/article/16-0132-lamellibranchia/lamellibranchia">Lamellibranchia</a></li>
+  <li class="c018"><a href="/article/16-0484-lepidoptera-part1/lepidoptera__part1_">Lepidoptera</a></li>
+  <li class="c018"><a href="/article/17-0473-malacostraca/malacostraca">Malacostraca</a></li>
+  <li class="c018"><a href="/article/17-0892-mastigophora/mastigophora">Mastigophora</a></li>
+  <li class="c018"><a href="/article/18-0088-s3/medusa">Medusa</a></li>
+  <li class="c018"><a href="/article/18-0206-mesozoa/mesozoa">Mesozoa</a></li>
+  <li class="c018"><a href="/article/18-0699-mollusca/mollusca">Mollusca</a></li>
+  <li class="c018"><a href="/article/18-0705-molluscoida/molluscoida">Molluscoida</a></li>
+  <li class="c018"><a href="/article/19-0120-mycetozoa/mycetozoa">Mycetozoa</a></li>
+  <li class="c018"><a href="/article/19-0128-myonemes/myonemes">Myonemes</a></li>
+  <li class="c018"><a href="/article/19-0129-myriapoda/myriapoda">Myriapoda</a></li>
+  <li class="c018"><a href="/article/19-0159-myzostomida/myzostomida">Myzostomida</a></li>
+  <li class="c018"><a href="/article/19-0377-nematoda/nematoda">Nematoda</a></li>
+  <li class="c018"><a href="/article/19-0380-nematomorpha/nematomorpha">Nematomorpha</a></li>
+  <li class="c018"><a href="/article/19-0381-nemertina/nemertina">Nemertina</a></li>
+  <li class="c018"><a href="/article/19-0458-neuroptera/neuroptera">Neuroptera</a></li>
+  <li class="c018"><a href="/article/19-0949-nummulite/nummulite__nummulites">Nummulite</a></li>
+  <li class="c018"><a href="/article/20-0147-s2/opalina">Opalina</a></li>
+  <li class="c018"><a href="/article/20-0373-orthoptera/orthoptera">Orthoptera</a></li>
+  <li class="c018"><a href="/article/20-0821-s3/paramecium">Paramecium</a></li>
+  <li class="c018"><a href="/article/21-0051-pedipalpi-text/pedipalpi__text_">Pedipalpi</a></li>
+  <li class="c018"><a href="/article/21-0085-pelomyxa/pelomyxa">Pelomyxa</a></li>
+  <li class="c018"><a href="/article/21-0137-pentastomida/pentastomida">Pentastomida</a></li>
+  <li class="c018"><a href="/article/21-0180-peripatus/peripatus">Peripatus</a></li>
+  <li class="c018"><a href="/article/21-0186-perissodactyla/perissodactyla">Perissodactyla</a></li>
+  <li class="c018"><a href="/article/21-0494-phoronidea/phoronidea">Phoronidea</a></li>
+  <li class="c018"><a href="/article/21-0736-planarians/planarians">Planarians</a></li>
+  <li class="c018"><a href="/article/21-0859-platyelmia/platyelmia">Platyelmia</a></li>
+  <li class="c018"><a href="/article/22-0051-polyp/polyp">Polyp</a></li>
+  <li class="c018"><a href="/article/22-0056-polyzoa/polyzoa">Polyzoa</a></li>
+  <li class="c018"><a href="/article/22-0327-priapuloidea/priapuloidea">Priapuloidea</a></li>
+  <li class="c018"><a href="/article/22-0486-proteomyxa/proteomyxa">Proteomyxa</a></li>
+  <li class="c018"><a href="/article/22-0491-protista/protista">Protista</a></li>
+  <li class="c018"><a href="/article/22-0491-protogenes-genus/protogenes__genus_">Protogenes</a></li>
+  <li class="c018"><a href="/article/22-0491-protomyxa/protomyxa">Protomyxa</a></li>
+  <li class="c018"><a href="/article/22-0494-protozoa/protozoa">Protozoa</a></li>
+  <li class="c018"><a href="/article/22-0558-pseudopod/pseudopod">Pseudopod</a></li>
+  <li class="c018"><a href="/article/22-0692-pycnogonida/pycnogonida">Pycnogonida, or Pantopoda</a></li>
+  <li class="c018"><a href="/article/22-0802-s4/radiata">Radiata</a></li>
+  <li class="c018"><a href="/article/22-0819-radiolaria/radiolaria">Radiolaria</a></li>
+  <li class="c018"><a href="/article/23-0262-rhizopoda/rhizopoda">Rhizopoda</a></li>
+  <li class="c018"><a href="/article/23-0799-rotifera/rotifera">Rotifera</a></li>
+  <li class="c018"><a href="/article/24-0222-sarcodina/sarcodina">Sarcodina</a></li>
+  <li class="c018"><a href="/article/24-0317-scaphopoda/scaphopoda">Scaphopoda</a></li>
+  <li class="c018"><a href="/article/24-0549-scyphomedusae/scyphomedusae">Scyphomedusae</a></li>
+  <li class="c018"><a href="/article/25-0167-sipunculoidea/sipunculoidea">Sipunculoidea</a></li>
+  <li class="c018"><a href="/article/25-0737-sponges/sponges">Sponges</a></li>
+  <li class="c018"><a href="/article/25-0756-sporozoa/sporozoa">Sporozoa</a></li>
+  <li class="c018"><a href="/article/25-0903-s4/stentor">Stentor</a></li>
+  <li class="c018"><a href="/article/26-0945-thyrostraca/thyrostraca">Thyrostraca</a></li>
+  <li class="c018"><a href="/article/26-0947-thysanoptera/thysanoptera">Thysanoptera</a></li>
+  <li class="c018"><a href="/article/26-0949-thysanura/thysanura">Thysanura</a></li>
+  <li class="c018"><a href="/article/27-0255-trematodes/trematodes">Trematodes</a></li>
+  <li class="c018"><a href="/article/27-0357-s4/trypanosomes">Trypanosomes</a></li>
+  <li class="c018"><a href="/article/27-0903-vampyrella/vampyrella">Vampyrella</a></li>
+  <li class="c018"><a href="/article/28-0229-vorticella/vorticella">Vorticella</a></li>
+</ul>
+
+<h4 class="c016"><b><a href="/article/28-1049-zoology/zoology">Zoology, Systematic</a></b>: Vertebrata</h4>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0934-s2/amphibia">Amphibia</a></li>
+  <li class="c018"><a href="/article/02-0740-s2/artiodactyla">Artiodactyla</a></li>
+  <li class="c018"><a href="/article/01-0937-s4/amphioxus">Amphioxus</a></li>
+  <li class="c018"><a href="/article/03-0254-s2/balanoglossus">Balanoglossus</a></li>
+  <li class="c018"><a href="/article/03-0538-batrachia/batrachia">Batrachia</a></li>
+  <li class="c018"><a href="/article/04-0352-bovidae/bovidae">Bovidae</a></li>
+  <li class="c018"><a href="/article/04-0958-s6/caecilia">Caecilia</a></li>
+  <li class="c018"><a href="/article/05-0379-carnivora/carnivora">Carnivora</a></li>
+  <li class="c018"><a href="/article/05-0804-cetacea/cetacea">Cetacea</a></li>
+  <li class="c018"><a href="/article/05-0835-chaetosomatida/chaetosomatida">Chaetosomatida</a></li>
+  <li class="c018"><a href="/article/06-0255-chiroptera/chiroptera">Chiroptera</a></li>
+  <li class="c018"><a href="/article/07-0708-cyclostomata/cyclostomata">Cyclostomata, or Marsipobranchii</a></li>
+  <li class="c018"><a href="/article/07-0717-cyprinodonts/cyprinodonts">Cyprinodonts</a></li>
+  <li class="c018"><a href="/article/08-0951-edentata/edentata">Edentata</a></li>
+  <li class="c018"><a href="/article/09-0752-equidae/equidae">Equidae</a></li>
+  <li class="c018"><a href="/article/13-0270-hemichorda/hemichorda">Hemichorda</a></li>
+  <li class="c018"><a href="/article/14-0221-hyracoidea/hyracoidea">Hyracoidea</a></li>
+  <li class="c018"><a href="/article/14-0669-insectivora/insectivora">Insectivora</a></li>
+  <li class="c018"><a href="/article/17-0795-marsupialia/marsupialia">Marsupialia</a></li>
+  <li class="c018"><a href="/article/18-0760-monodelphia/monodelphia">Monodelphia</a></li>
+  <li class="c018"><a href="/article/18-0764-monotremata/monotremata">Monotremata</a></li>
+  <li class="c018"><a href="/article/21-0047-pecora/pecora">Pecora</a></li>
+  <li class="c018"><a href="/article/22-0419-proboscidea/proboscidea">Proboscidea</a></li>
+  <li class="c018"><a href="/article/22-0630-pterobranchia/pterobranchia">Pterobranchia</a></li>
+  <li class="c018"><a href="/article/22-0934-s3/ratitae">Ratitae</a></li>
+  <li class="c018"><a href="/article/23-0459-rodentia/rodentia">Rodentia</a></li>
+  <li class="c018"><a href="/article/23-0894-ruminantia/ruminantia">Ruminantia</a></li>
+  <li class="c018"><a href="/article/24-0096-salmon-and-salmonidae/salmon_and_salmonidae">Salmon and Salmonidae</a></li>
+  <li class="c018"><a href="/article/24-0252-s6/sauropsida">Sauropsida</a></li>
+  <li class="c018"><a href="/article/24-0624-selachians/selachians">Selachians, or Elasmobranchii</a></li>
+  <li class="c018"><a href="/article/26-0067-suina/suina">Suina</a></li>
+  <li class="c018"><a href="/article/26-0446-tardigrada/tardigrada">Tardigrada</a></li>
+  <li class="c018"><a href="/article/26-0571-s3/teleostomes">Teleostomes</a></li>
+  <li class="c018"><a href="/article/27-0396-tunicata/tunicata">Tunicata</a></li>
+  <li class="c018"><a href="/article/27-0515-tylopoda/tylopoda">Tylopoda</a></li>
+  <li class="c018"><a href="/article/27-0600-ungulata/ungulata">Ungulata</a></li>
+  <li class="c018"><a href="/article/27-1075-vertebrata/vertebrata">Vertebrata</a></li>
+</ul>
+
+<h4 class="c016"><b><a href="/article/28-1049-zoology/zoology">Zoology, Natural History</a></b>: Mammals</h4>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0034-aard-vark/aard-vark">Aard-vark</a></li>
+  <li class="c018"><a href="/article/01-0034-aard-wolf/aard-wolf">Aard-wolf</a></li>
+  <li class="c018"><a href="/article/01-0214-s6/addax">Addax</a></li>
+  <li class="c018"><a href="/article/01-0419-s10/agouti">Agouti</a></li>
+  <li class="c018"><a href="/article/01-0764-s3/alpaca">Alpaca</a></li>
+  <li class="c018">Ant-eater</li>
+  <li class="c018"><a href="/article/02-0100-s7/antelope">Antelope</a></li>
+  <li class="c018"><a href="/article/02-0119-s2/anthropoid_apes">Anthropoid Apes</a></li>
+  <li class="c018">Aona</li>
+  <li class="c018"><a href="/article/02-0172-s3/ape">Ape</a></li>
+  <li class="c018"><a href="/article/02-0494-s2/argali">Argali</a></li>
+  <li class="c018"><a href="/article/02-0600-s2/armadillo">Armadillo</a></li>
+  <li class="c018"><a href="/article/02-0816-s2/ass">Ass</a></li>
+  <li class="c018"><a href="/article/02-0974-s5/aurochs">Aurochs</a></li>
+  <li class="c018"><a href="/article/03-0066-s3/avahi">Avahi</a></li>
+  <li class="c018"><a href="/article/03-0086-s5/aye-aye">Aye-aye</a></li>
+  <li class="c018"><a href="/article/03-0111-s3/babirusa">Babirusa</a></li>
+  <li class="c018"><a href="/article/03-0111-s4/baboon">Baboon</a></li>
+  <li class="c018"><a href="/article/03-0205-s5/badger">Badger</a></li>
+  <li class="c018"><a href="/article/03-0329-bandicoot/bandicoot">Bandicoot</a></li>
+  <li class="c018"><a href="/article/03-0329-bandicoot-rat/bandicoot-rat">Bandicoot-rat</a></li>
+  <li class="c018"><a href="/article/03-0373-bantin/bantin">Bantin</a></li>
+  <li class="c018"><a href="/article/03-0400-barbary-ape/barbary_ape">Barbary Ape</a></li>
+  <li class="c018"><a href="/article/03-0523-bat/bat">Bat</a></li>
+  <li class="c018"><a href="/article/03-0592-bear/bear">Bear</a></li>
+  <li class="c018"><a href="/article/03-0619-beaver/beaver">Beaver</a></li>
+  <li class="c018"><a href="/article/03-0732-beluga/beluga">Beluga</a></li>
+  <li class="c018"><a href="/article/03-0865-bharal/bharal">Bharal</a></li>
+  <li class="c018"><a href="/article/03-0975-binturong/binturong">Binturong</a></li>
+  <li class="c018"><a href="/article/04-0024-bison/bison">Bison</a></li>
+  <li class="c018"><a href="/article/04-0032-black-ape/black_ape">Black Ape</a></li>
+  <li class="c018"><a href="/article/04-0033-black-buck/black_buck">Black Buck</a></li>
+  <li class="c018"><a href="/article/04-0107-boar/boar">Boar</a></li>
+  <li class="c018"><a href="/article/04-0217-bongo/bongo">Bongo</a></li>
+  <li class="c018"><a href="/article/04-0325-bottlenose-whale/bottlenose_whale">Bottlenose Whale</a></li>
+  <li class="c018"><a href="/article/04-0659-s3/bronco">Bronco</a></li>
+  <li class="c018"><a href="/article/04-0743-s5/buck">Buck</a></li>
+  <li class="c018"><a href="/article/04-0777-s3/buffalo">Buffalo</a></li>
+  <li class="c018"><a href="/article/04-0894-s4/bushbuck">Bushbuck</a></li>
+  <li class="c018"><a href="/article/04-0975-s4/ca_ing_whale">Ca’ing Whale</a></li>
+  <li class="c018"><a href="/article/04-1031-s6/calf">Calf</a></li>
+  <li class="c018"><a href="/article/05-0114-camel/camel">Camel</a></li>
+  <li class="c018"><a href="/article/05-0308-capuchin-monkey/capuchin_monkey">Capuchin Monkey</a></li>
+  <li class="c018"><a href="/article/05-0309-capybara/capybara">Capybara</a></li>
+  <li class="c018"><a href="/article/05-0310-caracal-animal/caracal__animal_">Caracal</a></li>
+  <li class="c018"><a href="/article/05-0504-cat/cat">Cat</a></li>
+  <li class="c018"><a href="/article/05-0523-catarrhine-ape/catarrhine_ape">Catarrhine Ape</a></li>
+  <li class="c018"><a href="/article/05-0558-cattle/cattle">Cattle</a></li>
+  <li class="c018"><a href="/article/05-0611-cavy/cavy">Cavy</a></li>
+  <li class="c018"><a href="/article/05-0822-chacma/chacma">Chacma</a></li>
+  <li class="c018"><a href="/article/05-0862-chamois/chamois">Chamois</a></li>
+  <li class="c018"><a href="/article/06-0035-cheeta/cheeta">Cheeta</a></li>
+  <li class="c018"><a href="/article/06-0128-chevrotain/chevrotain">Chevrotain</a></li>
+  <li class="c018"><a href="/article/06-0179-chimpanzee/chimpanzee">Chimpanzee</a></li>
+  <li class="c018"><a href="/article/06-0248-chinchilla/chinchilla">Chinchilla</a></li>
+  <li class="c018"><a href="/article/06-0263-chiru/chiru">Chiru</a></li>
+  <li class="c018"><a href="/article/06-0418-s5/civet">Civet</a></li>
+  <li class="c018"><a href="/article/06-0578-clouded-leopard/clouded_leopard">Clouded Leopard</a></li>
+  <li class="c018"><a href="/article/06-0622-coati/coati">Coati</a></li>
+  <li class="c018"><a href="/article/06-0759-colugo/colugo">Colugo</a></li>
+  <li class="c018"><a href="/article/07-0375-coyote/coyote">Coyote</a></li>
+  <li class="c018"><a href="/article/07-0375-coypu/coypu">Coypu</a></li>
+  <li class="c018"><a href="/article/07-0869-dasyure/dasyure">Dasyure</a></li>
+  <li class="c018"><a href="/article/07-0946-s2/deer">Deer</a></li>
+  <li class="c018"><a href="/article/08-0182-diana-monkey/diana_monkey">Diana Monkey</a></li>
+  <li class="c018"><a href="/article/08-0293-dingo/dingo">Dingo</a></li>
+  <li class="c018"><a href="/article/08-0391-dog/dog">Dog</a></li>
+  <li class="c018"><a href="/article/08-0415-dolphin/dolphin">Dolphin</a></li>
+  <li class="c018"><a href="/article/08-0450-dormouse/dormouse">Dormouse</a></li>
+  <li class="c018"><a href="/article/08-0471-douroucouli/douroucouli">Douroucouli</a></li>
+  <li class="c018"><a href="/article/08-0616-dromedary/dromedary">Dromedary</a></li>
+  <li class="c018"><a href="/article/08-0674-dugong/dugong">Dugong</a></li>
+  <li class="c018"><a href="/article/08-0676-duiker/duiker">Duiker</a></li>
+  <li class="c018"><a href="/article/08-0898-echidna/echidna">Echidna</a></li>
+  <li class="c018"><a href="/article/09-0158-eland/eland">Eland</a></li>
+  <li class="c018"><a href="/article/09-0276-elephant/elephant">Elephant</a></li>
+  <li class="c018"><a href="/article/09-0305-elk/elk">Elk</a></li>
+  <li class="c018"><a href="/article/09-0782-ermine/ermine">Ermine</a></li>
+  <li class="c018"><a href="/article/10-0113-s2/eyra">Eyra</a></li>
+  <li class="c018"><a href="/article/10-0167-s5/fallow-deer">Fallow-deer</a></li>
+  <li class="c018"><a href="/article/10-0299-s3/ferret">Ferret</a></li>
+  <li class="c018"><a href="/article/10-0341-s3/field-mouse">Field-mouse</a></li>
+  <li class="c018"><a href="/article/10-0352-s2/filander">Filander</a></li>
+  <li class="c018"><a href="/article/10-0607-s2/flying-fox">Flying-fox</a></li>
+  <li class="c018">Flying Squirrel</li>
+  <li class="c018"><a href="/article/10-0780-s4/foussa">Foussa</a></li>
+  <li class="c018"><a href="/article/10-0789-s4/fox">Fox</a></li>
+  <li class="c018"><a href="/article/11-0409-galago/galago">Galago</a></li>
+  <li class="c018"><a href="/article/11-0418-s2/galeopithecus">Galeopithecus</a></li>
+  <li class="c018"><a href="/article/11-0552-gaur-city/gaur__city_">Gaur</a></li>
+  <li class="c018"><a href="/article/11-0560-gayal/gayal">Gayal</a></li>
+  <li class="c018"><a href="/article/11-0572-s41/gelada">Gelada</a></li>
+  <li class="c018"><a href="/article/11-0606-genet/genet">Genet</a></li>
+  <li class="c018"><a href="/article/11-0788-s2/gerbil">Gerbil</a></li>
+  <li class="c018"><a href="/article/11-0788-s3/gerenuk">Gerenuk</a></li>
+  <li class="c018"><a href="/article/11-0960-s2/gibbon">Gibbon</a></li>
+  <li class="c018"><a href="/article/12-0056-s2/giraffe">Giraffe</a></li>
+  <li class="c018"><a href="/article/12-0162-s2/glutton">Glutton, or Wolverine</a></li>
+  <li class="c018"><a href="/article/12-0176-gnu/gnu">Gnu</a></li>
+  <li class="c018"><a href="/article/12-0178-s4/goat">Goat</a></li>
+  <li class="c018"><a href="/article/12-0262-s3/gopher">Gopher</a></li>
+  <li class="c018"><a href="/article/12-0263-s2/goral">Goral</a></li>
+  <li class="c018"><a href="/article/12-0274-s8/gorilla">Gorilla</a></li>
+  <li class="c018"><a href="/article/12-0573-green-monkey/green_monkey">Green Monkey</a></li>
+  <li class="c018"><a href="/article/12-0633-s3/grison">Grison</a></li>
+  <li class="c018"><a href="/article/12-0635-s3/grivet">Grivet</a></li>
+  <li class="c018"><a href="/article/12-0640-groove-toothed-squirrel/groove-toothed_squirrel">Groove-toothed Squirrel</a></li>
+  <li class="c018"><a href="/article/12-0651-ground-squirrel/ground-squirrel">Ground-squirrel</a></li>
+  <li class="c018"><a href="/article/12-0674-s3/guanaco">Guanaco</a></li>
+  <li class="c018"><a href="/article/12-0695-s1/guenon">Guenon</a></li>
+  <li class="c018"><a href="/article/12-0695-s3/guereza">Guereza</a></li>
+  <li class="c018"><a href="/article/12-0932-hamster/hamster">Hamster</a></li>
+  <li class="c018"><a href="/article/12-0974-s2/hare">Hare</a></li>
+  <li class="c018"><a href="/article/13-0045-s2/hartebeest">Hartebeest</a></li>
+  <li class="c018"><a href="/article/13-0209-s6/hedgehog">Hedgehog</a></li>
+  <li class="c018"><a href="/article/13-0225-heifer/heifer">Heifer</a></li>
+  <li class="c018"><a href="/article/13-0402-s3/heron">Heron</a></li>
+  <li class="c018"><a href="/article/13-0494-hind/hind">Hind</a></li>
+  <li class="c018"><a href="/article/13-0538-s3/hippopotamus">Hippopotamus</a></li>
+  <li class="c018"><a href="/article/13-0729-horse/horse">Horse</a></li>
+  <li class="c018"><a href="/article/13-0828-hound/hound">Hound</a></li>
+  <li class="c018"><a href="/article/13-0865-howler/howler">Howler</a></li>
+  <li class="c018">Humpback-whale</li>
+  <li class="c018"><a href="/article/13-0974-hunting-dog/hunting_dog">Hunting Dog</a></li>
+  <li class="c018"><a href="/article/14-0185-hyena/hyena">Hyena</a></li>
+  <li class="c018"><a href="/article/14-0229-s2/ibex">Ibex</a></li>
+  <li class="c018"><a href="/article/14-0254-ichneumon/ichneumon">Ichneumon</a></li>
+  <li class="c018"><a href="/article/14-0530-indri/indri">Indri</a></li>
+  <li class="c018"><a href="/article/15-0123-s2/jackal">Jackal</a></li>
+  <li class="c018"><a href="/article/15-0141-jaguar/jaguar">Jaguar</a></li>
+  <li class="c018"><a href="/article/15-0141-jaguarondi/jaguarondi">Jaguarondi</a></li>
+  <li class="c018"><a href="/article/15-0346-jennet/jennet">Jennet</a></li>
+  <li class="c018"><a href="/article/15-0347-jerboa/jerboa">Jerboa</a></li>
+  <li class="c018"><a href="/article/15-0581-jumping-hare/jumping-hare">Jumping-hare</a></li>
+  <li class="c018"><a href="/article/15-0581-jumping-mouse/jumping-mouse">Jumping-mouse</a></li>
+  <li class="c018"><a href="/article/15-0581-jumping-shrew/jumping-shrew">Jumping-shrew</a></li>
+  <li class="c018"><a href="/article/15-0677-s4/kangaroo">Kangaroo</a></li>
+  <li class="c018"><a href="/article/15-0679-kangaroo-rat/kangaroo-rat">Kangaroo-rat</a></li>
+  <li class="c018"><a href="/article/15-0851-kinkajou/kinkajou">Kinkajou</a></li>
+  <li class="c018"><a href="/article/15-0869-s2/kit-fox">Kit-fox</a></li>
+  <li class="c018"><a href="/article/15-0876-klipspringer/klipspringer">Klipspringer</a></li>
+  <li class="c018"><a href="/article/15-0918-koala/koala">Koala</a></li>
+  <li class="c018"><a href="/article/15-0971-kudu/kudu">Kudu</a></li>
+  <li class="c018"><a href="/article/16-0201-langur/langur">Langur</a></li>
+  <li class="c018">Lemming</li>
+  <li class="c018"><a href="/article/16-0436-lemur/lemur">Lemur</a></li>
+  <li class="c018"><a href="/article/16-0476-s2/leopard">Leopard</a></li>
+  <li class="c018"><a href="/article/16-0756-linsang/linsang">Linsang</a></li>
+  <li class="c018"><a href="/article/16-0759-lion/lion">Lion</a></li>
+  <li class="c018"><a href="/article/16-0849-s4/llama">Llama</a></li>
+  <li class="c018"><a href="/article/17-0022-loris/loris">Loris</a></li>
+  <li class="c018"><a href="/article/17-0187-s4/lynx">Lynx</a></li>
+  <li class="c018"><a href="/article/17-0207-macaque/macaque">Macaque</a></li>
+  <li class="c018"><a href="/article/17-0283-s4/macrauchenia">Macrauchenia</a></li>
+  <li class="c018"><a href="/article/17-0537-s1/mammalia">Mammalia</a></li>
+  <li class="c018"><a href="/article/17-0558-manati/manati">Manati</a></li>
+  <li class="c018"><a href="/article/17-0583-s3/mandrill">Mandrill</a></li>
+  <li class="c018"><a href="/article/17-0585-s5/mangabey">Mangabey</a></li>
+  <li class="c018"><a href="/article/17-0627-manul/manul">Manul</a></li>
+  <li class="c018"><a href="/article/17-0715-s2/mare">Mare</a></li>
+  <li class="c018"><a href="/article/17-0752-s6/markhor">Markhor</a></li>
+  <li class="c018"><a href="/article/17-0762-marmoset/marmoset">Marmoset</a></li>
+  <li class="c018"><a href="/article/17-0763-marmot/marmot">Marmot</a></li>
+  <li class="c018"><a href="/article/17-0790-marshbuck/marshbuck">Marshbuck</a></li>
+  <li class="c018"><a href="/article/17-0801-marsupial-mole/marsupial_mole">Marsupial Mole</a></li>
+  <li class="c018"><a href="/article/17-0802-s2/marten">Marten</a></li>
+  <li class="c018"><a href="/article/18-0186-merino/merino">Merino</a></li>
+  <li class="c018"><a href="/article/18-0571-mink/mink">Mink</a></li>
+  <li class="c018"><a href="/article/18-0683-mole/mole">Mole</a></li>
+  <li class="c018"><a href="/article/18-0690-mole-rat/mole-rat">Mole-rat</a></li>
+  <li class="c018"><a href="/article/18-0690-mole-shrew/mole-shrew">Mole-shrew</a></li>
+  <li class="c018"><a href="/article/18-0716-mona-monkey/mona_monkey">Mona Monkey</a></li>
+  <li class="c018"><a href="/article/18-0754-monkey/monkey">Monkey</a></li>
+  <li class="c018"><a href="/article/18-0845-s2/moose">Moose</a></li>
+  <li class="c018"><a href="/article/18-0964-mouflon/mouflon">Mouflon</a></li>
+  <li class="c018"><a href="/article/18-0975-mouse/mouse">Mouse</a></li>
+  <li class="c018"><a href="/article/18-0991-mule/mule">Mule</a></li>
+  <li class="c018"><a href="/article/19-0027-muntjac/muntjac">Muntjac</a></li>
+  <li class="c018"><a href="/article/19-0105-s3/musk-deer">Musk-deer</a></li>
+  <li class="c018"><a href="/article/19-0106-musk-ox/musk-ox">Musk-ox</a></li>
+  <li class="c018"><a href="/article/19-0107-musk-rat/musk-rat">Musk-rat</a></li>
+  <li class="c018"><a href="/article/19-0108-musk-shrew/musk-shrew">Musk-shrew</a></li>
+  <li class="c018"><a href="/article/19-0112-s4/mustang">Mustang</a></li>
+  <li class="c018"><a href="/article/19-0728-s2/nilgai">Nilgai</a></li>
+  <li class="c018"><a href="/article/19-1026-s5/ocelot">Ocelot</a></li>
+  <li class="c018"><a href="/article/19-1031-octodon/octodon">Octodon</a></li>
+  <li class="c018"><a href="/article/20-0076-okapi/okapi">Okapi</a></li>
+  <li class="c018"><a href="/article/20-0165-opossum/opossum">Opossum</a></li>
+  <li class="c018"><a href="/article/20-0186-orang-utan/orang-utan">Orang-utan</a></li>
+  <li class="c018"><a href="/article/20-0303-s4/oribi">Oribi</a></li>
+  <li class="c018"><a href="/article/20-0377-s2/oryx">Oryx</a></li>
+  <li class="c018"><a href="/article/20-0405-otter/otter">Otter</a></li>
+  <li class="c018"><a href="/article/20-0432-ox/ox">Ox</a></li>
+  <li class="c018"><a href="/article/20-0465-paca/paca">Paca</a></li>
+  <li class="c018"><a href="/article/20-0691-palla/palla">Palla</a></li>
+  <li class="c018"><a href="/article/20-0699-palm-civet/palm-civet">Palm-civet</a></li>
+  <li class="c018"><a href="/article/20-0731-s2/panda">Panda</a></li>
+  <li class="c018"><a href="/article/20-0733-pangolin/pangolin">Pangolin</a></li>
+  <li class="c018"><a href="/article/20-0739-panther/panther">Panther</a></li>
+  <li class="c018"><a href="/article/20-0862-pariah-dog/pariah_dog">Pariah Dog</a></li>
+  <li class="c018"><a href="/article/20-0964-s5/patas_monkey">Patas Monkey</a></li>
+  <li class="c018"><a href="/article/21-0046-peccary/peccary">Peccary</a></li>
+  <li class="c018"><a href="/article/21-0152-s4/père_david_s_deer">Père David’s Deer</a></li>
+  <li class="c018"><a href="/article/21-0364-phalanger/phalanger">Phalanger</a></li>
+  <li class="c018"><a href="/article/21-0601-pica-bird/pica__bird_">Pica</a></li>
+  <li class="c018"><a href="/article/21-0620-pig/pig">Pig</a></li>
+  <li class="c018"><a href="/article/21-0694-s6/pithecanthropus_erectus">Pithecanthropus Erectus</a></li>
+  <li class="c018"><a href="/article/21-0860-platypus/platypus">Platypus</a></li>
+  <li class="c018"><a href="/article/21-0894-s3/pluto_monkey">Pluto Monkey</a></li>
+  <li class="c018"><a href="/article/21-0905-pocket-gopher/pocket-gopher">Pocket-gopher</a></li>
+  <li class="c018"><a href="/article/21-0905-pocket-mouse/pocket-mouse">Pocket-mouse</a></li>
+  <li class="c018"><a href="/article/21-1012-polecat/polecat">Polecat</a></li>
+  <li class="c018"><a href="/article/22-0086-pony/pony">Pony</a></li>
+  <li class="c018"><a href="/article/22-0115-s2/porcupine">Porcupine</a></li>
+  <li class="c018"><a href="/article/22-0119-porpoise/porpoise">Porpoise</a></li>
+  <li class="c018"><a href="/article/22-0223-potoroo/potoroo">Potoroo</a></li>
+  <li class="c018"><a href="/article/22-0226-potto/potto">Potto</a></li>
+  <li class="c018">Pouched-mouse</li>
+  <li class="c018"><a href="/article/22-0265-prairie-marmot/prairie-marmot">Prairie-marmot</a></li>
+  <li class="c018"><a href="/article/22-0338-primates/primates">Primates</a></li>
+  <li class="c018"><a href="/article/22-0422-proboscis-monkey/proboscis-monkey">Proboscis-monkey</a></li>
+  <li class="c018"><a href="/article/22-0452-prongbuck/prongbuck">Prongbuck</a></li>
+  <li class="c018"><a href="/article/22-0660-puma/puma">Puma</a></li>
+  <li class="c018"><a href="/article/22-0724-quagga/quagga">Quagga</a></li>
+  <li class="c018"><a href="/article/22-0784-rabbit-text/rabbit__text_">Rabbit</a></li>
+  <li class="c018"><a href="/article/22-0791-s3/raccoon">Raccoon</a></li>
+  <li class="c018"><a href="/article/22-0791-s4/raccoon-dog">Raccoon-dog</a></li>
+  <li class="c018"><a href="/article/22-0889-s6/ram">Ram</a></li>
+  <li class="c018"><a href="/article/22-0932-s2/rat">Rat</a></li>
+  <li class="c018"><a href="/article/22-0932-s6/ratel">Ratel</a></li>
+  <li class="c018"><a href="/article/22-0991-s2/reedbuck">Reedbuck</a></li>
+  <li class="c018"><a href="/article/23-0072-s5/reindeer">Reindeer</a></li>
+  <li class="c018"><a href="/article/23-0260-rhinoceros/rhinoceros">Rhinoceros</a></li>
+  <li class="c018"><a href="/article/23-0297-rhytina/rhytina">Rhytina</a></li>
+  <li class="c018"><a href="/article/23-0402-river-hog/river-hog">River-hog</a></li>
+  <li class="c018">Rocky-Mountain Goat</li>
+  <li class="c018"><a href="/article/23-0472-s5/roebuck__john">Roebuck</a></li>
+  <li class="c018"><a href="/article/23-0759-rorqual/rorqual">Rorqual</a></li>
+  <li class="c018"><a href="/article/23-1011-sable-antelope/sable_antelope">Sable Antelope</a></li>
+  <li class="c018"><a href="/article/23-1053-saiga/saiga">Saiga</a></li>
+  <li class="c018"><a href="/article/24-0068-s3/saki">Saki</a></li>
+  <li class="c018"><a href="/article/24-0564-s3/seal">Seal</a></li>
+  <li class="c018"><a href="/article/24-0704-serow/serow">Serow</a></li>
+  <li class="c018"><a href="/article/24-0714-serval/serval">Serval</a></li>
+  <li class="c018"><a href="/article/24-0849-sheep/sheep">Sheep</a></li>
+  <li class="c018"><a href="/article/24-1091-shrew/shrew">Shrew</a></li>
+  <li class="c018"><a href="/article/25-0073-sifaka/sifaka">Sifaka</a></li>
+  <li class="c018"><a href="/article/25-0170-sirenia/sirenia">Sirenia</a></li>
+  <li class="c018"><a href="/article/25-0218-skunk/skunk">Skunk</a></li>
+  <li class="c018"><a href="/article/25-0260-s4/sloth">Sloth</a></li>
+  <li class="c018"><a href="/article/25-0312-snow-leopard/snow-leopard">Snow-leopard</a></li>
+  <li class="c018"><a href="/article/25-0479-souslik/souslik">Souslik</a></li>
+  <li class="c018"><a href="/article/25-0666-sperm-whale/sperm-whale">Sperm-whale</a></li>
+  <li class="c018"><a href="/article/25-0685-spider-monkey/spider-monkey">Spider-monkey</a></li>
+  <li class="c018"><a href="/article/25-0713-s2/spiny_squirrel">Spiny Squirrel</a></li>
+  <li class="c018"><a href="/article/25-0760-springbuck/springbuck">Springbuck</a></li>
+  <li class="c018"><a href="/article/25-0769-squirrel/squirrel">Squirrel</a></li>
+  <li class="c018"><a href="/article/25-0770-squirrel-monkey/squirrel_monkey">Squirrel Monkey</a></li>
+  <li class="c018"><a href="/article/25-0821-s2/star-nosed_mole">Star-nosed Mole</a></li>
+  <li class="c018"><a href="/article/26-0154-suricate/suricate">Suricate</a></li>
+  <li class="c018"><a href="/article/26-0255-swine/swine">Swine</a></li>
+  <li class="c018"><a href="/article/26-0379-s2/tahr">Tahr</a></li>
+  <li class="c018"><a href="/article/26-0386-s4/takin">Takin</a></li>
+  <li class="c018"><a href="/article/26-0442-tapir/tapir">Tapir</a></li>
+  <li class="c018"><a href="/article/26-0462-s3/tarsier">Tarsier</a></li>
+  <li class="c018"><a href="/article/26-0665-s2/tenrec">Tenrec</a></li>
+  <li class="c018"><a href="/article/26-0945-thylacine/thylacine">Thylacine</a></li>
+  <li class="c018"><a href="/article/26-1007-tiger/tiger">Tiger</a></li>
+  <li class="c018"><a href="/article/26-1008-s2/tiger-cat">Tiger-cat</a></li>
+  <li class="c018"><a href="/article/26-1021-s3/timber-wolf">Timber-Wolf</a></li>
+  <li class="c018"><a href="/article/27-0250-tree-kangaroo/tree_kangaroo">Tree Kangaroo</a></li>
+  <li class="c018"><a href="/article/27-0250-tree-shrew/tree-shrew">Tree-shrew</a></li>
+  <li class="c018"><a href="/article/27-0573-udad/udad">Udad, Aoudad, or Audad</a></li>
+  <li class="c018"><a href="/article/27-0572-s2/uakari">Uakari</a></li>
+  <li class="c018"><a href="/article/27-0902-s4/vampire">Vampire</a></li>
+  <li class="c018"><a href="/article/27-1079-s6/vervet">Vervet</a></li>
+  <li class="c018"><a href="/article/28-0062-vicug-a/vicugña">Vicugña</a></li>
+  <li class="c018"><a href="/article/28-0143-viscacha/viscacha">Viscacha</a></li>
+  <li class="c018"><a href="/article/28-0208-vole/vole">Vole</a></li>
+  <li class="c018"><a href="/article/28-0291-wallaby/wallaby">Wallaby</a></li>
+  <li class="c018"><a href="/article/28-0307-s3/walrus">Walrus</a></li>
+  <li class="c018"><a href="/article/28-0317-waltzing-mouse/waltzing_mouse">Waltzing Mouse</a></li>
+  <li class="c018"><a href="/article/28-0319-wanderu/wanderu">Wanderu</a></li>
+  <li class="c018"><a href="/article/28-0352-wart-hog/wart-hog">Wart-hog</a></li>
+  <li class="c018"><a href="/article/28-0384-waterbuck/waterbuck">Waterbuck</a></li>
+  <li class="c018"><a href="/article/28-0385-water-deer/water-deer">Water-deer</a></li>
+  <li class="c018"><a href="/article/28-0401-water-opossum/water-opossum">Water-opossum</a></li>
+  <li class="c018"><a href="/article/28-0456-weasel/weasel">Weasel</a></li>
+  <li class="c018"><a href="/article/28-0588-whale/whale">Whale</a></li>
+  <li class="c018"><a href="/article/28-0793-wolf/wolf">Wolf</a></li>
+  <li class="c018"><a href="/article/28-0802-wombat-part1/wombat__part1_">Wombat</a></li>
+  <li class="c018"><a href="/article/28-0925-yak/yak">Yak</a></li>
+  <li class="c018"><a href="/article/28-0989-zebra/zebra">Zebra</a></li>
+</ul>
+
+<h4 class="c016"><b><a href="/article/28-1049-zoology/zoology">Zoology, Natural History</a></b>: Birds</h4>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0531-s4/albatross">Albatross</a></li>
+  <li class="c018"><a href="/article/02-0964-s4/auk">Auk</a></li>
+  <li class="c018"><a href="/article/03-0620-beccafico/beccafico">Beccafico</a></li>
+  <li class="c018"><a href="/article/03-0982-bird/bird">Bird</a></li>
+  <li class="c018"><a href="/article/03-1001-birds-of-paradise/birds_of_paradise">Birds of Paradise</a></li>
+  <li class="c018"><a href="/article/04-0027-bittern-bird/bittern__bird_">Bittern</a></li>
+  <li class="c018"><a href="/article/04-0032-blackbird/blackbird">Blackbird</a></li>
+  <li class="c018"><a href="/article/04-0033-blackcock/blackcock">Blackcock</a></li>
+  <li class="c018"><a href="/article/04-0813-s2/bullfinch">Bullfinch</a></li>
+  <li class="c018"><a href="/article/04-0825-s4/bunting">Bunting</a></li>
+  <li class="c018"><a href="/article/04-0899-s6/bustard">Bustard</a></li>
+  <li class="c018"><a href="/article/04-0919-s3/buzzard">Buzzard</a></li>
+  <li class="c018"><a href="/article/05-0185-canary/canary">Canary</a></li>
+  <li class="c018"><a href="/article/05-0263-capercally/capercally">Capercally</a></li>
+  <li class="c018"><a href="/article/05-0480-cassowary/cassowary">Cassowary</a></li>
+  <li class="c018"><a href="/article/05-0836-chaffinch/chaffinch">Chaffinch</a></li>
+  <li class="c018"><a href="/article/06-0643-cockatoo/cockatoo">Cockatoo</a></li>
+  <li class="c018"><a href="/article/06-0649-cock-of-the-rock/cock-of-the-rock">Cock-of-the-Rock</a></li>
+  <li class="c018"><a href="/article/06-0876-condor/condor">Condor</a></li>
+  <li class="c018"><a href="/article/07-0107-coot/coot">Coot</a></li>
+  <li class="c018"><a href="/article/07-0178-cormorant/cormorant">Cormorant</a></li>
+  <li class="c018"><a href="/article/07-0387-crane/crane">Crane</a></li>
+  <li class="c018"><a href="/article/07-0531-crossbill/crossbill">Crossbill</a></li>
+  <li class="c018"><a href="/article/07-0534-crow/crow">Crow</a></li>
+  <li class="c018"><a href="/article/07-0630-cuckoo/cuckoo">Cuckoo</a></li>
+  <li class="c018"><a href="/article/07-0658-curassow/curassow">Curassow</a></li>
+  <li class="c018"><a href="/article/07-0666-curlew/curlew">Curlew</a></li>
+  <li class="c018"><a href="/article/08-0343-diver/diver">Diver</a></li>
+  <li class="c018"><a href="/article/08-0387-dodo/dodo">Dodo</a></li>
+  <li class="c018"><a href="/article/08-0474-dove-bird/dove__bird_">Dove</a></li>
+  <li class="c018"><a href="/article/08-0657-duck/duck">Duck</a></li>
+  <li class="c018"><a href="/article/08-0816-eagle/eagle">Eagle</a></li>
+  <li class="c018"><a href="/article/09-0149-eider-duck/eider__duck_">Eider</a></li>
+  <li class="c018"><a href="/article/09-0359-emeu/emeu">Emeu</a></li>
+  <li class="c018"><a href="/article/10-0150-s4/falcon">Falcon</a></li>
+  <li class="c018"><a href="/article/10-0338-s2/fieldfare">Fieldfare</a></li>
+  <li class="c018"><a href="/article/10-0366-finch/finch">Finch</a></li>
+  <li class="c018"><a href="/article/10-0493-s3/flamingo">Flamingo</a></li>
+  <li class="c018"><a href="/article/10-0605-s3/flycatcher">Flycatcher</a></li>
+  <li class="c018"><a href="/article/10-0781-s2/fowl">Fowl</a></li>
+  <li class="c018"><a href="/article/11-0244-s2/frigate-bird">Frigate-bird</a></li>
+  <li class="c018"><a href="/article/11-0312-fulmar/fulmar">Fulmar</a></li>
+  <li class="c018"><a href="/article/11-0402-s3/gadwall">Gadwall</a></li>
+  <li class="c018"><a href="/article/11-0471-gannet/gannet">Gannet</a></li>
+  <li class="c018"><a href="/article/11-0481-s2/gare-fowl">Gare-fowl</a></li>
+  <li class="c018"><a href="/article/11-0483-garganey/garganey">Garganey</a></li>
+  <li class="c018"><a href="/article/12-0180-s2/goatsucker">Goatsucker</a></li>
+  <li class="c018"><a href="/article/12-0196-godwit/godwit">Godwit</a></li>
+  <li class="c018"><a href="/article/12-0226-golden-eye/golden-eye">Golden-eye</a></li>
+  <li class="c018"><a href="/article/12-0227-goldfinch/goldfinch">Goldfinch</a></li>
+  <li class="c018"><a href="/article/12-0258-goose/goose">Goose</a></li>
+  <li class="c018"><a href="/article/12-0281-gos-hawk/gos-hawk">Gos-hawk</a></li>
+  <li class="c018"><a href="/article/12-0328-grackle/grackle">Grackle</a></li>
+  <li class="c018"><a href="/article/12-0440-s2/grebe">Grebe</a></li>
+  <li class="c018"><a href="/article/12-0566-s3/greenfinch">Greenfinch</a></li>
+  <li class="c018"><a href="/article/12-0577-s4/greenshank">Greenshank</a></li>
+  <li class="c018"><a href="/article/12-0641-grosbeak/grosbeak">Grosbeak</a></li>
+  <li class="c018"><a href="/article/12-0661-grouse/grouse">Grouse</a></li>
+  <li class="c018"><a href="/article/12-0668-s2/guacharo">Guacharo</a></li>
+  <li class="c018"><a href="/article/12-0673-guan/guan">Guan</a></li>
+  <li class="c018"><a href="/article/12-0719-guillemot/guillemot">Guillemot</a></li>
+  <li class="c018"><a href="/article/12-0722-s3/guinea_fowl">Guinea Fowl</a></li>
+  <li class="c018"><a href="/article/12-0739-gull/gull">Gull</a></li>
+  <li class="c018"><a href="/article/13-0029-s2/harpy">Harpy</a></li>
+  <li class="c018"><a href="/article/13-0030-s3/harrier">Harrier or Hen Harrier</a></li>
+  <li class="c018"><a href="/article/13-0107-hawfinch/hawfinch">Hawfinch</a></li>
+  <li class="c018"><a href="/article/13-0107-hawk/hawk">Hawk</a></li>
+  <li class="c018"><a href="/article/13-0278-hen/hen">Hen</a></li>
+  <li class="c018"><a href="/article/13-0402-s3/heron">Heron</a></li>
+  <li class="c018"><a href="/article/13-0557-s3/hoactzin">Hoactzin, or Hoatzin</a></li>
+  <li class="c018"><a href="/article/13-0672-s3/honey-eater">Honey-eater</a></li>
+  <li class="c018"><a href="/article/13-0673-s2/honey-guide">Honey-guide</a></li>
+  <li class="c018"><a href="/article/13-0693-s2/hoopoe">Hoopoe</a></li>
+  <li class="c018"><a href="/article/13-0723-s3/hornbill">Hornbill</a></li>
+  <li class="c018"><a href="/article/13-0910-s3/humming-bird">Humming-bird</a></li>
+  <li class="c018"><a href="/article/14-0230-ibis/ibis">Ibis</a></li>
+  <li class="c018"><a href="/article/14-0287-s4/icterus">Icterus</a></li>
+  <li class="c018"><a href="/article/15-0119-s4/jabiru">Jabiru</a></li>
+  <li class="c018"><a href="/article/15-0121-jacamar/jacamar">Jacamar</a></li>
+  <li class="c018">Jacaná</li>
+  <li class="c018"><a href="/article/15-0123-jackdaw/jackdaw">Jackdaw</a></li>
+  <li class="c018"><a href="/article/15-0321-jay/jay">Jay</a></li>
+  <li class="c018"><a href="/article/15-0663-s6/kakapo">Kakapo</a></li>
+  <li class="c018"><a href="/article/15-0789-kestrel/kestrel">Kestrel</a></li>
+  <li class="c018"><a href="/article/15-0824-killdeer/killdeer">Killdeer</a></li>
+  <li class="c018"><a href="/article/15-0835-king-bird/king-bird">King-bird</a></li>
+  <li class="c018"><a href="/article/15-0837-kingfisher/kingfisher">Kingfisher</a></li>
+  <li class="c018"><a href="/article/15-0838-kinglet/kinglet">Kinglet</a></li>
+  <li class="c018"><a href="/article/15-0867-kite/kite">Kite</a></li>
+  <li class="c018"><a href="/article/15-0870-s6/kiwi">Kiwi, or Kiwi-Kiwi</a></li>
+  <li class="c018"><a href="/article/15-0905-knot/knot">Knot</a></li>
+  <li class="c018">Lammergeyer</li>
+  <li class="c018"><a href="/article/16-0227-lapwing/lapwing">Lapwing</a></li>
+  <li class="c018"><a href="/article/16-0237-lark/lark">Lark</a></li>
+  <li class="c018"><a href="/article/16-0756-linnet/linnet">Linnet</a></li>
+  <li class="c018"><a href="/article/16-1013-s3/loom">Loom, or Loon</a></li>
+  <li class="c018"><a href="/article/17-0026-lory/lory">Lory</a></li>
+  <li class="c018"><a href="/article/17-0085-love-bird/love-bird">Love-bird</a></li>
+  <li class="c018"><a href="/article/17-0194-lyre-bird/lyre-bird">Lyre-bird</a></li>
+  <li class="c018"><a href="/article/17-0211-s2/macaw">Macaw</a></li>
+  <li class="c018"><a href="/article/17-0408-s2/magpie">Magpie</a></li>
+  <li class="c018"><a href="/article/17-0507-mallemuck/mallemuck">Mallemuck</a></li>
+  <li class="c018"><a href="/article/17-0556-manakin/manakin">Manakin</a></li>
+  <li class="c018"><a href="/article/17-0625-manucode/manucode">Manucode</a></li>
+  <li class="c018"><a href="/article/17-0809-s5/martin">Martin</a></li>
+  <li class="c018"><a href="/article/18-0093-megapode/megapode">Megapode</a></li>
+  <li class="c018"><a href="/article/18-0182-merganser/merganser">Merganser</a></li>
+  <li class="c018"><a href="/article/18-0337-mew/mew">Mew</a></li>
+  <li class="c018">Moa</li>
+  <li class="c018"><a href="/article/18-0667-mocking-bird/mocking-bird">Mocking-bird</a></li>
+  <li class="c018"><a href="/article/18-0844-moor-hen/moor-hen">Moor-hen</a></li>
+  <li class="c018"><a href="/article/18-0869-morillon/morillon">Morillon</a></li>
+  <li class="c018"><a href="/article/18-0942-motmot/motmot">Motmot</a></li>
+  <li class="c018"><a href="/article/18-0976-mouse-bird/mouse-bird">Mouse-bird</a></li>
+  <li class="c018"><a href="/article/19-0424-s4/nestor">Nestor</a></li>
+  <li class="c018"><a href="/article/19-0712-nightingale/nightingale">Nightingale</a></li>
+  <li class="c018"><a href="/article/19-0758-noddy/noddy">Noddy</a></li>
+  <li class="c018"><a href="/article/19-0765-nonpareil/nonpareil">Nonpareil</a></li>
+  <li class="c018"><a href="/article/19-0957-nutcracker/nutcracker">Nutcracker</a></li>
+  <li class="c018"><a href="/article/19-0957-nuthatch/nuthatch">Nuthatch</a></li>
+  <li class="c018"><a href="/article/19-1032-ocydrome/ocydrome">Ocydrome</a></li>
+  <li class="c018"><a href="/article/20-0310-oriole/oriole">Oriole</a></li>
+  <li class="c018"><a href="/article/20-0333-ornithology/ornithology">Ornithology</a></li>
+  <li class="c018"><a href="/article/20-0373-orthonyx/orthonyx">Orthonyx</a></li>
+  <li class="c018"><a href="/article/20-0375-ortolan/ortolan">Ortolan</a></li>
+  <li class="c018"><a href="/article/20-0387-osprey/osprey">Osprey</a></li>
+  <li class="c018"><a href="/article/20-0395-ostrich/ostrich">Ostrich</a></li>
+  <li class="c018"><a href="/article/20-0414-ousel/ousel">Ousel, or Ouzel</a></li>
+  <li class="c018"><a href="/article/20-0430-owl/owl">Owl</a></li>
+  <li class="c018"><a href="/article/20-0462-oyster-catcher/oyster-catcher">Oyster-catcher</a></li>
+  <li class="c018"><a href="/article/20-0925-parrot/parrot">Parrot</a></li>
+  <li class="c018"><a href="/article/20-0938-partridge/partridge">Partridge</a></li>
+  <li class="c018"><a href="/article/21-0036-peacock/peacock">Peacock</a></li>
+  <li class="c018"><a href="/article/21-0082-s2/pelican">Pelican</a></li>
+  <li class="c018"><a href="/article/21-0102-s6/penguin">Penguin</a></li>
+  <li class="c018"><a href="/article/21-0332-petrel/petrel">Petrel</a></li>
+  <li class="c018"><a href="/article/21-0381-pheasant/pheasant">Pheasant</a></li>
+  <li class="c018"><a href="/article/21-0601-pica-bird/pica__bird_">Pica</a></li>
+  <li class="c018"><a href="/article/21-0622-pigeon/pigeon">Pigeon</a></li>
+  <li class="c018"><a href="/article/21-0664-pipit/pipit">Pipit</a></li>
+  <li class="c018"><a href="/article/21-0706-pitta-text/pitta__text_">Pitta</a></li>
+  <li class="c018"><a href="/article/21-0885-plover/plover">Plover</a></li>
+  <li class="c018"><a href="/article/21-0905-pochard/pochard">Pochard, Pockard, or Poker</a></li>
+  <li class="c018"><a href="/article/22-0268-pratincole/pratincole">Pratincole</a></li>
+  <li class="c018"><a href="/article/22-0620-ptarmigan/ptarmigan">Ptarmigan</a></li>
+  <li class="c018"><a href="/article/22-0651-s3/puff-bird">Puff-bird</a></li>
+  <li class="c018"><a href="/article/22-0652-s2/puffin">Puffin</a></li>
+  <li class="c018"><a href="/article/22-0724-quail/quail">Quail</a></li>
+  <li class="c018">Quezal, or Quesal</li>
+  <li class="c018"><a href="/article/22-0835-s4/rail">Rail</a></li>
+  <li class="c018"><a href="/article/22-0939-raven/raven">Raven</a></li>
+  <li class="c018"><a href="/article/22-0954-razorbill/razorbill">Razorbill</a></li>
+  <li class="c018"><a href="/article/22-0984-redbreast/redbreast">Redbreast, or Robin</a></li>
+  <li class="c018"><a href="/article/22-0988-redshank/redshank">Redshank</a></li>
+  <li class="c018"><a href="/article/22-0988-redstart/redstart">Redstart</a></li>
+  <li class="c018"><a href="/article/22-0989-redwing/redwing">Redwing</a></li>
+  <li class="c018"><a href="/article/23-0248-rhea-bird/rhea__bird_">Rhea</a></li>
+  <li class="c018"><a href="/article/23-0353-rifleman-bird/rifleman-bird">Rifleman-bird</a></li>
+  <li class="c018"><a href="/article/23-0489-roller-bird/roller__bird_">Roller</a></li>
+  <li class="c018"><a href="/article/23-0741-rook/rook">Rook</a></li>
+  <li class="c018"><a href="/article/23-0861-ruff/ruff">Ruff</a></li>
+  <li class="c018"><a href="/article/24-0153-sand-grouse/sand-grouse">Sand-grouse</a></li>
+  <li class="c018"><a href="/article/24-0154-sandpiper/sandpiper">Sandpiper</a></li>
+  <li class="c018"><a href="/article/24-0323-scaup/scaup">Scaup</a></li>
+  <li class="c018"><a href="/article/24-0429-scoter/scoter">Scoter</a></li>
+  <li class="c018"><a href="/article/24-0497-s2/screamer">Screamer</a></li>
+  <li class="c018"><a href="/article/24-0506-scrub-bird/scrub-bird">Scrub-bird</a></li>
+  <li class="c018"><a href="/article/24-0601-secretary-bird/secretary-bird">Secretary-bird</a></li>
+  <li class="c018"><a href="/article/24-0697-seriema/seriema">Seriema, or Cariama</a></li>
+  <li class="c018"><a href="/article/24-0847-shearwater/shearwater">Shearwater</a></li>
+  <li class="c018"><a href="/article/24-0847-sheathbill/sheathbill">Sheathbill</a></li>
+  <li class="c018"><a href="/article/24-0860-sheld-drake/sheld-drake">Sheld-drake</a></li>
+  <li class="c018"><a href="/article/24-1070-shoe-bill-text/shoe-bill__text_">Shoe-bill</a></li>
+  <li class="c018"><a href="/article/24-1090-shoveler/shoveler">Shoveler</a></li>
+  <li class="c018"><a href="/article/24-1095-shrike/shrike">Shrike</a></li>
+  <li class="c018"><a href="/article/25-0174-siskin/siskin">Siskin</a></li>
+  <li class="c018"><a href="/article/25-0203-skimmer/skimmer">Skimmer</a></li>
+  <li class="c018"><a href="/article/25-0211-skua/skua">Skua</a></li>
+  <li class="c018"><a href="/article/25-0300-snake-bird/snake-bird">Snake-bird</a></li>
+  <li class="c018"><a href="/article/25-0309-snipe/snipe">Snipe</a></li>
+  <li class="c018"><a href="/article/25-0630-sparrow/sparrow">Sparrow</a></li>
+  <li class="c018"><a href="/article/25-0755-spoonbill/spoonbill">Spoonbill</a></li>
+  <li class="c018"><a href="/article/25-0820-s4/starling">Starling</a></li>
+  <li class="c018"><a href="/article/25-0946-stilt/stilt">Stilt, or Long-legged Plover</a></li>
+  <li class="c018"><a href="/article/25-0994-stork/stork">Stork</a></li>
+  <li class="c018"><a href="/article/26-0064-sugar-bird/sugar-bird">Sugar-bird</a></li>
+  <li class="c018"><a href="/article/26-0109-sun-bird/sun-bird">Sun-bird</a></li>
+  <li class="c018"><a href="/article/26-0110-sun-bittern/sun-bittern">Sun-bittern</a></li>
+  <li class="c018"><a href="/article/26-0196-swallow/swallow">Swallow</a></li>
+  <li class="c018"><a href="/article/26-0197-swan/swan">Swan</a></li>
+  <li class="c018"><a href="/article/26-0250-swift/swift">Swift</a></li>
+  <li class="c018">Tanager-bird</li>
+  <li class="c018"><a href="/article/26-0423-tapaculo/tapaculo">Tapaculo</a></li>
+  <li class="c018"><a href="/article/26-0515-teal/teal">Teal</a></li>
+  <li class="c018"><a href="/article/26-0676-tern/tern">Tern</a></li>
+  <li class="c018"><a href="/article/26-0932-thrush/thrush">Thrush</a></li>
+  <li class="c018"><a href="/article/26-1037-tinamou/tinamou">Tinamou</a></li>
+  <li class="c018"><a href="/article/26-1070-titmouse/titmouse">Titmouse</a></li>
+  <li class="c018"><a href="/article/26-1085-tody/tody">Tody</a></li>
+  <li class="c018"><a href="/article/27-0106-s5/toucan">Toucan</a></li>
+  <li class="c018"><a href="/article/27-0116-touracou/touracou">Touracou</a></li>
+  <li class="c018"><a href="/article/27-0249-tree-creeper/tree-creeper">Tree-creeper</a></li>
+  <li class="c018">Trogan</li>
+  <li class="c018"><a href="/article/27-0323-tropic-bird/tropic-bird">Tropic-bird</a></li>
+  <li class="c018"><a href="/article/27-0345-trumpeter/trumpeter">Trumpeter</a></li>
+  <li class="c018"><a href="/article/27-0444-s3/turkey">Turkey</a></li>
+  <li class="c018"><a href="/article/27-0499-turnstone/turnstone">Turnstone</a></li>
+  <li class="c018"><a href="/article/28-0237-vulture/vulture">Vulture</a></li>
+  <li class="c018"><a href="/article/28-0261-wagtail/wagtail">Wagtail</a></li>
+  <li class="c018"><a href="/article/28-0333-warbler/warbler">Warbler</a></li>
+  <li class="c018"><a href="/article/28-0448-waxwing/waxwing">Waxwing</a></li>
+  <li class="c018"><a href="/article/28-0457-weaver-bird/weaver-bird">Weaver-bird</a></li>
+  <li class="c018"><a href="/article/28-0602-wheatear/wheatear">Wheatear</a></li>
+  <li class="c018"><a href="/article/28-0628-whitethroat/whitethroat">Whitethroat</a></li>
+  <li class="c018"><a href="/article/28-0645-wigeon/wigeon">Wigeon, or Widgeon</a></li>
+  <li class="c018"><a href="/article/28-0822-woodchuck/woodchuck">Woodchuck</a></li>
+  <li class="c018"><a href="/article/28-0822-woodcock/woodcock">Woodcock</a></li>
+  <li class="c018"><a href="/article/28-0827-woodpecker/woodpecker">Woodpecker</a></li>
+  <li class="c018"><a href="/article/28-0870-wren/wren">Wren</a></li>
+  <li class="c018"><a href="/article/28-0880-wry-neck/wry-neck">Wry-neck</a></li>
+  <li class="c018"><a href="/article/28-1071-zosterops/zosterops">Zosterops</a></li>
+</ul>
+
+<h4 class="c016"><b><a href="/article/28-1049-zoology/zoology">Zoology, Natural History</a></b>: Reptiles</h4>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0215-s2/adder">Adder</a></li>
+  <li class="c018"><a href="/article/01-0738-s4/alligator">Alligator</a></li>
+  <li class="c018"><a href="/article/01-0822-s4/alytes">Alytes</a></li>
+  <li class="c018"><a href="/article/01-0942-s4/amphisbaena">Amphisbaena</a></li>
+  <li class="c018"><a href="/article/01-0959-s4/anaconda">Anaconda</a></li>
+  <li class="c018"><a href="/article/02-0810-s6/asp">Asp</a></li>
+  <li class="c018"><a href="/article/03-0496-basilisk/basilisk">Basilisk</a></li>
+  <li class="c018"><a href="/article/04-0107-boa/boa">Boa</a></li>
+  <li class="c018"><a href="/article/05-0859-chameleon/chameleon">Chameleon</a></li>
+  <li class="c018"><a href="/article/06-0632-cobra/cobra">Cobra</a></li>
+  <li class="c018"><a href="/article/06-0643-cockatrice/cockatrice">Cockatrice</a></li>
+  <li class="c018"><a href="/article/07-0500-crocodile/crocodile">Crocodile</a></li>
+  <li class="c018"><a href="/article/07-0586-cryptobranchus/cryptobranchus">Cryptobranchus</a></li>
+  <li class="c018"><a href="/article/08-0489-dragon/dragon">Dragon</a></li>
+  <li class="c018"><a href="/article/11-0564-gecko/gecko">Gecko</a></li>
+  <li class="c018"><a href="/article/14-0308-iguana/iguana">Iguana</a></li>
+  <li class="c018"><a href="/article/16-0845-s2/lizard">Lizard</a></li>
+  <li class="c018"><a href="/article/22-0490-proteus-amphibian/proteus__amphibian_">Proteus</a></li>
+  <li class="c018"><a href="/article/22-0720-python/python">Python</a></li>
+  <li class="c018"><a href="/article/22-0936-rattlesnake/rattlesnake">Rattlesnake</a></li>
+  <li class="c018"><a href="/article/23-0153-reptiles/reptiles">Reptiles</a></li>
+  <li class="c018"><a href="/article/24-0590-sea-serpent/sea-serpent">Sea-serpent</a></li>
+  <li class="c018"><a href="/article/25-0301-snakes/snakes">Snakes</a></li>
+  <li class="c018"><a href="/article/25-0669-s2/sphenodon">Sphenodon</a></li>
+  <li class="c018"><a href="/article/27-0080-s2/tortoise">Tortoise</a></li>
+  <li class="c018"><a href="/article/28-0123-viper/viper">Viper</a></li>
+</ul>
+
+<h4 class="c016"><b><a href="/article/28-1049-zoology/zoology">Zoology, Natural History</a></b>: Fishes</h4>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-1002-s2/anchovy">Anchovy</a></li>
+  <li class="c018"><a href="/article/02-0026-s2/angler">Angler</a></li>
+  <li class="c018"><a href="/article/03-0402-barbel/barbel">Barbel</a></li>
+  <li class="c018"><a href="/article/03-0732-beluga/beluga">Beluga</a></li>
+  <li class="c018"><a href="/article/04-0026-bitterling/bitterling">Bitterling</a></li>
+  <li class="c018"><a href="/article/04-0068-bleak/bleak">Bleak</a></li>
+  <li class="c018"><a href="/article/04-0499-bream/bream">Bream</a></li>
+  <li class="c018"><a href="/article/04-0591-s5/brill">Brill</a></li>
+  <li class="c018"><a href="/article/04-0832-s2/burbot">Burbot</a></li>
+  <li class="c018"><a href="/article/05-0395-carp/carp">Carp</a></li>
+  <li class="c018"><a href="/article/05-0531-cat-fish/cat-fish">Cat-fish</a></li>
+  <li class="c018"><a href="/article/05-0891-char/char">Char</a></li>
+  <li class="c018"><a href="/article/06-0338-chub/chub">Chub</a></li>
+  <li class="c018"><a href="/article/06-0376-s3/cichlid">Cichlid</a></li>
+  <li class="c018"><a href="/article/06-0612-coal-fish/coal-fish">Coal-fish</a></li>
+  <li class="c018"><a href="/article/06-0653-cod/cod">Cod</a></li>
+  <li class="c018"><a href="/article/07-0748-dace/dace">Dace, Dare, or Dart</a></li>
+  <li class="c018"><a href="/article/08-0401-dog-fish/dog-fish">Dog-fish</a></li>
+  <li class="c018"><a href="/article/08-0458-dory/dory">Dory, or John Dory</a></li>
+  <li class="c018"><a href="/article/09-0020-eel/eel">Eel</a></li>
+  <li class="c018"><a href="/article/09-0196-electric-eel/electric_eel">Electric Eel</a></li>
+  <li class="c018">File-fish and Trigger Fish</li>
+  <li class="c018"><a href="/article/10-0500-s3/flat-fish">Flat-fish</a></li>
+  <li class="c018"><a href="/article/10-0569-flounder/flounder">Flounder</a></li>
+  <li class="c018"><a href="/article/10-0595-s7/fluke">Fluke</a></li>
+  <li class="c018"><a href="/article/10-0606-flying-fish/flying-fish">Flying-fish</a></li>
+  <li class="c018"><a href="/article/11-0483-gar-fish/gar-fish">Gar-fish</a></li>
+  <li class="c018"><a href="/article/12-0140-s3/globe-fish">Globe-fish</a></li>
+  <li class="c018"><a href="/article/12-0186-goby/goby">Goby</a></li>
+  <li class="c018"><a href="/article/12-0228-s2/goldfish">Goldfish</a></li>
+  <li class="c018"><a href="/article/12-0263-s3/goramy">Goramy, or Gouramy</a></li>
+  <li class="c018"><a href="/article/12-0351-grampus/grampus">Grampus</a></li>
+  <li class="c018"><a href="/article/12-0412-grayling/grayling">Grayling</a></li>
+  <li class="c018"><a href="/article/12-0692-s7/gudgeon">Gudgeon</a></li>
+  <li class="c018"><a href="/article/12-0757-s3/gurnard">Gurnard</a></li>
+  <li class="c018"><a href="/article/12-0775-s4/gwyniad">Gwyniad</a></li>
+  <li class="c018"><a href="/article/12-0822-haddock/haddock">Haddock</a></li>
+  <li class="c018"><a href="/article/12-0839-s6/hag-fish">Hag-fish</a></li>
+  <li class="c018"><a href="/article/12-0849-hair-tail/hair-tail">Hair-tail</a></li>
+  <li class="c018"><a href="/article/12-0853-s1/hake">Hake</a></li>
+  <li class="c018"><a href="/article/12-0862-halibut/halibut">Halibut</a></li>
+  <li class="c018"><a href="/article/12-0923-hammer-kop/hammer-kop">Hammer-Kop, or Hammerhead</a></li>
+  <li class="c018"><a href="/article/13-0406-herring/herring">Herring</a></li>
+  <li class="c018">Horse Mackerel</li>
+  <li class="c018"><a href="/article/14-0255-ichthyology/ichthyology">Ichthyology</a></li>
+  <li class="c018"><a href="/article/15-0855-kipper/kipper">Kipper</a></li>
+  <li class="c018"><a href="/article/16-0154-lamprey/lamprey">Lamprey</a></li>
+  <li class="c018"><a href="/article/16-0750-s2/ling">Ling</a></li>
+  <li class="c018"><a href="/article/16-0856-loach/loach">Loach</a></li>
+  <li class="c018"><a href="/article/17-0137-lump-sucker/lump-sucker">Lump-sucker</a></li>
+  <li class="c018"><a href="/article/17-0269-mackerel/mackerel">Mackerel</a></li>
+  <li class="c018"><a href="/article/17-0442-mahseer/mahseer">Mahseer, or Mahaseer</a></li>
+  <li class="c018"><a href="/article/18-0148-s4/menhaden">Menhaden</a></li>
+  <li class="c018"><a href="/article/18-0490-miller-s-thumb/miller_s_thumb">Miller’s Thumb</a></li>
+  <li class="c018"><a href="/article/18-0581-minnow/minnow">Minnow</a></li>
+  <li class="c018"><a href="/article/18-0880-mormyr/mormyr">Mormyr</a></li>
+  <li class="c018"><a href="/article/18-0996-mullet/mullet">Mullet</a></li>
+  <li class="c018"><a href="/article/19-0029-muraena/muraena">Muraena</a></li>
+  <li class="c018"><a href="/article/19-0057-murray-cod/murray_cod">Murray Cod</a></li>
+  <li class="c018"><a href="/article/19-0258-s6/narwhal">Narwhal</a></li>
+  <li class="c018"><a href="/article/20-0146-s5/opah">Opah</a></li>
+  <li class="c018"><a href="/article/20-0924-s4/parr">Parr</a></li>
+  <li class="c018"><a href="/article/20-0926-parrot-fishes/parrot-fishes">Parrot-fishes</a></li>
+  <li class="c018"><a href="/article/21-0148-s4/perch">Perch</a></li>
+  <li class="c018"><a href="/article/21-0629-s2/pike-perch">Pike</a></li>
+  <li class="c018"><a href="/article/21-0629-s2/pike-perch">Pike-perch</a></li>
+  <li class="c018"><a href="/article/21-0630-pilchard/pilchard">Pilchard</a></li>
+  <li class="c018"><a href="/article/21-0641-s2/pilot-fish">Pilot-fish</a></li>
+  <li class="c018"><a href="/article/21-0663-s3/pipe-fishes">Pipe-fishes</a></li>
+  <li class="c018"><a href="/article/21-0734-plaice/plaice">Plaice</a></li>
+  <li class="c018"><a href="/article/22-0015-pollack/pollack">Pollack</a></li>
+  <li class="c018"><a href="/article/22-0015-pollan/pollan">Pollan</a></li>
+  <li class="c018"><a href="/article/22-0236-pout/pout">Pout</a></li>
+  <li class="c018"><a href="/article/22-0947-s3/ray">Ray</a></li>
+  <li class="c018"><a href="/article/23-0299-ribbon-fishes/ribbon-fishes">Ribbon-fishes</a></li>
+  <li class="c018"><a href="/article/23-0405-roach/roach">Roach</a></li>
+  <li class="c018"><a href="/article/23-0856-rudd/rudd">Rudd, or Red-eye</a></li>
+  <li class="c018"><a href="/article/24-0096-s2/salmon__george">Salmon</a></li>
+  <li class="c018"><a href="/article/24-0151-sand-eel/sand-eel">Sand-Eel</a></li>
+  <li class="c018"><a href="/article/24-0563-s6/sea-horse">Sea-horse</a></li>
+  <li class="c018"><a href="/article/24-0595-s2/sea-wolf">Sea-wolf</a></li>
+  <li class="c018"><a href="/article/24-0787-shad/shad">Shad</a></li>
+  <li class="c018"><a href="/article/24-0837-s3/shark">Shark</a></li>
+  <li class="c018"><a href="/article/24-0856-sheepshead/sheepshead">Sheepshead</a></li>
+  <li class="c018"><a href="/article/25-0133-silverfish/silverfish">Silverfish</a></li>
+  <li class="c018"><a href="/article/25-0269-smelt/smelt">Smelt</a></li>
+  <li class="c018"><a href="/article/25-0374-sole/sole">Sole</a></li>
+  <li class="c018"><a href="/article/25-0758-s6/sprat">Sprat</a></li>
+  <li class="c018"><a href="/article/25-0940-stickleback/stickleback">Stickleback</a></li>
+  <li class="c018"><a href="/article/25-1078-s3/sturgeon">Sturgeon</a></li>
+  <li class="c018">Sun-fish</li>
+  <li class="c018">Sword-fish</li>
+  <li class="c018"><a href="/article/26-0644-s2/tench">Tench</a></li>
+  <li class="c018"><a href="/article/27-0329-trout/trout">Trout</a></li>
+  <li class="c018"><a href="/article/27-0426-tunny/tunny">Tunny</a></li>
+  <li class="c018"><a href="/article/27-0428-s7/turbot">Turbot</a></li>
+  <li class="c018"><a href="/article/27-1008-s4/vendace">Vendace</a></li>
+  <li class="c018"><a href="/article/28-0485-weever/weever">Weever</a></li>
+  <li class="c018"><a href="/article/28-0622-s6/whitebait">Whitebait</a></li>
+  <li class="c018"><a href="/article/28-0624-s2/whitefish">Whitefish</a></li>
+  <li class="c018"><a href="/article/28-0629-s4/whiting">Whiting</a></li>
+  <li class="c018"><a href="/article/28-0865-wrasse/wrasse">Wrasse</a></li>
+</ul>
+
+<div>
+  
+  <h4 class="c016"><b><a href="/article/28-1049-zoology/zoology">Zoology, Natural History</a></b>: Batrachians</h4>
+</div>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/03-0083-10/axolotl">Axolotl</a></li>
+  <li class="c018"><a href="/article/03-0538-batrachia/batrachia">Batrachia</a></li>
+  <li class="c018"><a href="/article/11-0253-frog/frog">Frog</a></li>
+  <li class="c018"><a href="/article/19-0605-newt/newt">Newt</a></li>
+  <li class="c018"><a href="/article/24-0072-salamander/salamander">Salamander</a></li>
+  <li class="c018"><a href="/article/25-0170-siren/siren">Siren</a></li>
+  <li class="c018"><a href="/article/26-0154-surinam-toad/surinam_toad">Surinam Toad</a></li>
+  <li class="c018"><a href="/article/26-0374-tadpole/tadpole">Tadpole</a></li>
+  <li class="c018"><a href="/article/26-1075-toad/toad">Toad</a></li>
+  <li class="c018"><a href="/article/27-0250-tree-frog/tree_frog">Tree Frog</a></li>
+</ul>
+
+<h4 class="c016"><b><a href="/article/28-1049-zoology/zoology">Zoology, Natural History</a></b>: Insects</h4>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0142-s3/acarus">Acarus</a></li>
+  <li class="c018"><a href="/article/01-0573-s4/alder-fly">Alder-fly</a></li>
+  <li class="c018"><a href="/article/02-0096-s4/ant">Ant</a></li>
+  <li class="c018">Ant Lion</li>
+  <li class="c018"><a href="/article/02-0176-s4/aphides">Aphides</a></li>
+  <li class="c018"><a href="/article/03-0644-bee/bee">Bee</a></li>
+  <li class="c018"><a href="/article/03-0670-beetle/beetle">Beetle</a></li>
+  <li class="c018"><a href="/article/03-1001-bird-louse/bird-louse">Bird-louse</a></li>
+  <li class="c018"><a href="/article/04-0781-s3/bug">Bug</a></li>
+  <li class="c018">Butterfly and Moth</li>
+  <li class="c018">Caddis-fly and Caddis-worm</li>
+  <li class="c018"><a href="/article/05-0531-caterpillar/caterpillar">Caterpillar</a></li>
+  <li class="c018"><a href="/article/05-0835-chafer/chafer">Chafer</a></li>
+  <li class="c018"><a href="/article/06-0369-s2/cicada">Cicada</a></li>
+  <li class="c018"><a href="/article/06-0642-cochineal/cochineal">Cochineal</a></li>
+  <li class="c018"><a href="/article/06-0649-cockroach/cockroach">Cockroach</a></li>
+  <li class="c018"><a href="/article/07-0457-cricket-game/cricket__game_">Cricket</a></li>
+  <li class="c018"><a href="/article/07-0632-cuckoo-spit/cuckoo-spit">Cuckoo-spit</a></li>
+  <li class="c018"><a href="/article/07-0925-death-watch/death-watch">Death-watch</a></li>
+  <li class="c018"><a href="/article/08-0491-dragon-fly/dragon-fly">Dragon-fly</a></li>
+  <li class="c018"><a href="/article/08-0852-earwig/earwig">Earwig</a></li>
+  <li class="c018"><a href="/article/09-0687-s2/entomology">Entomology</a></li>
+  <li class="c018"><a href="/article/10-0434-s3/fire_brat">Fire Brat</a></li>
+  <li class="c018">Fire-fly</li>
+  <li class="c018"><a href="/article/10-0509-s2/flea">Flea</a></li>
+  <li class="c018"><a href="/article/10-0605-s2/fly">Fly</a></li>
+  <li class="c018"><a href="/article/12-0155-glow-worm/glow-worm">Glow-worm</a></li>
+  <li class="c018"><a href="/article/12-0165-s6/gnat">Gnat</a></li>
+  <li class="c018"><a href="/article/12-0394-grasshopper/grasshopper">Grasshopper</a></li>
+  <li class="c018"><a href="/article/12-0650-ground-pearl/ground-pearl">Ground-pearl</a></li>
+  <li class="c018"><a href="/article/13-0054-s2/harvest-bug">Harvest-bug</a></li>
+  <li class="c018"><a href="/article/13-0054-s3/harvester">Harvester</a></li>
+  <li class="c018"><a href="/article/13-0271-hemimerus/hemimerus">Hemimerus</a></li>
+  <li class="c018"><a href="/article/14-0254-ichneumon-fly/ichneumon-fly">Ichneumon-fly</a></li>
+  <li class="c018"><a href="/article/14-0669-insect/insect">Insect</a></li>
+  <li class="c018"><a href="/article/15-0725-s6/katydid">Katydid</a></li>
+  <li class="c018"><a href="/article/16-0068-lacewing-fly/lacewing-fly">Lacewing-fly</a></li>
+  <li class="c018"><a href="/article/16-0207-s2/lantern-fly">Lantern-fly</a></li>
+  <li class="c018"><a href="/article/16-0349-leaf-insect/leaf-insect">Leaf-insect</a></li>
+  <li class="c018"><a href="/article/16-0879-locust/locust">Locust</a></li>
+  <li class="c018"><a href="/article/17-0081-s2/louse">Louse</a></li>
+  <li class="c018"><a href="/article/17-0623-s2/mantis">Mantis</a></li>
+  <li class="c018"><a href="/article/17-0623-s4/mantis-fly">Mantis-fly</a></li>
+  <li class="c018"><a href="/article/17-0953-may-fly/may-fly">May-fly, or Ephemeridae</a></li>
+  <li class="c018"><a href="/article/18-0933-s2/mosquito">Mosquito</a></li>
+  <li class="c018"><a href="/article/18-0937-s4/moth">Moth</a></li>
+  <li class="c018"><a href="/article/20-0701-palmer/palmer">Palmer</a></li>
+  <li class="c018"><a href="/article/21-0573-s2/phylloxera">Phylloxera</a></li>
+  <li class="c018"><a href="/article/24-0272-s4/saw-fly">Saw-fly</a></li>
+  <li class="c018">Scale-insect</li>
+  <li class="c018"><a href="/article/24-0428-scorpion-fly/scorpion-fly">Scorpion-fly</a></li>
+  <li class="c018"><a href="/article/25-0301-snake-fly/snake-fly">Snake-fly</a></li>
+  <li class="c018"><a href="/article/25-0763-springtail/springtail">Springtail</a></li>
+  <li class="c018"><a href="/article/25-0940-stick-insect/stick-insect">Stick-insect</a></li>
+  <li class="c018"><a href="/article/25-0984-s3/stone-fly">Stone-fly</a></li>
+  <li class="c018"><a href="/article/26-0445-tarantula/tarantula">Tarantula</a></li>
+  <li class="c018"><a href="/article/26-0674-termite/termite">Termite</a></li>
+  <li class="c018"><a href="/article/26-0976-s3/ticks">Ticks</a></li>
+  <li class="c018"><a href="/article/27-0367-s3/tsetse-fly">Tsetse-fly</a></li>
+  <li class="c018"><a href="/article/28-0375-wasp/wasp">Wasp</a></li>
+  <li class="c018"><a href="/article/28-0384-water-boatman/water-boatman">Water-boatman</a></li>
+  <li class="c018"><a href="/article/28-0403-water-scorpion/water-scorpion">Water-scorpion</a></li>
+  <li class="c018"><a href="/article/28-0485-weevil/weevil">Weevil</a></li>
+  <li class="c018"><a href="/article/28-0759-wireworm/wireworm">Wireworm</a></li>
+</ul>
+
+<h4 class="c016"><b><a href="/article/28-1049-zoology/zoology">Zoology, Natural History</a></b>: Other Invertebrata</h4>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0037-s6/abalone">Abalone</a></li>
+  <li class="c018"><a href="/article/02-0838-asterid/asterid">Asterid</a></li>
+  <li class="c018"><a href="/article/03-0426-barnacle/barnacle">Barnacle</a></li>
+  <li class="c018"><a href="/article/03-0621-b-che-de-mer/bêche-de-mer">Bêche-de-Mer, or Trepang</a></li>
+  <li class="c018"><a href="/article/04-0248-book-scorpion/book-scorpion">Book-scorpion</a></li>
+  <li class="c018"><a href="/article/05-0694-centipede/centipede">Centipede</a></li>
+  <li class="c018"><a href="/article/06-0263-chiton/chiton">Chiton</a></li>
+  <li class="c018"><a href="/article/06-0648-s5/cockle">Cockle</a></li>
+  <li class="c018"><a href="/article/07-0371-cowry/cowry">Cowry</a></li>
+  <li class="c018"><a href="/article/07-0376-crab/crab">Crab</a></li>
+  <li class="c018"><a href="/article/07-0407-crayfish/crayfish">Crayfish</a></li>
+  <li class="c018">Cuttle Fish</li>
+  <li class="c018"><a href="/article/08-0852-earthworm/earthworm">Earthworm</a></li>
+  <li class="c018"><a href="/article/15-0836-king-crab/king-crab">King-crab</a></li>
+  <li class="c018"><a href="/article/16-0385-s2/leech">Leech</a></li>
+  <li class="c018"><a href="/article/16-0860-s3/lobster">Lobster</a></li>
+  <li class="c018"><a href="/article/18-0492-millipede/millipede">Millipede</a></li>
+  <li class="c018"><a href="/article/18-0647-mite/mite">Mite</a></li>
+  <li class="c018"><a href="/article/19-0109-mussel/mussel">Mussel</a></li>
+  <li class="c018"><a href="/article/19-0294-nautilus/nautilus">Nautilus</a></li>
+  <li class="c018"><a href="/article/19-1031-octopus/octopus">Octopus</a></li>
+  <li class="c018"><a href="/article/20-0458-oyster/oyster">Oyster</a></li>
+  <li class="c018"><a href="/article/22-0269-prawn/prawn">Prawn</a></li>
+  <li class="c018"><a href="/article/24-0427-scorpion/scorpion">Scorpion</a></li>
+  <li class="c018"><a href="/article/24-0594-sea-urchin/sea-urchin">Sea-urchin</a></li>
+  <li class="c018"><a href="/article/24-1095-shrimp/shrimp">Shrimp</a></li>
+  <li class="c018"><a href="/article/25-0299-s6/snail">Snail</a></li>
+  <li class="c018"><a href="/article/25-0685-spiders/spiders">Spider</a></li>
+  <li class="c018"><a href="/article/25-0818-s2/starfish">Starfish</a></li>
+  <li class="c018"><a href="/article/26-0436-tapeworms/tapeworms">Tapeworms</a></li>
+  <li class="c018"><a href="/article/26-0668-s7/teredo">Teredo</a></li>
+  <li class="c018">Water-flea</li>
+  <li class="c018"><a href="/article/28-0827-wood-louse/wood-louse">Wood-louse</a></li>
+  <li class="c018"><a href="/article/28-0858-worm/worm">Worm</a></li>
+</ul>
+
+<h4 class="c016"> <b><a href="/article/28-1049-zoology/zoology">Zoology, Palaeontology</a></b></h4>
+
+<ul class="index c003">
+  <li class="c018"><a href="/article/01-0841-s5/amblypoda">Amblypoda</a></li>
+  <li class="c018">Anclyopoda</li>
+  <li class="c018"><a href="/article/02-0117-s2/anthracotherium">Anthracotherium</a></li>
+  <li class="c018"><a href="/article/02-0375-s2/archaeopteryx">Archaeopteryx</a></li>
+  <li class="c018">Arsinoïtherium</li>
+  <li class="c018"><a href="/article/07-0428-creodonta/creodonta">Creodonta</a></li>
+  <li class="c018"><a href="/article/08-0295-dinotherium/dinotherium">Dinotherium</a></li>
+  <li class="c018"><a href="/article/08-0311-diplodocus/diplodocus">Diplodocus</a></li>
+  <li class="c018"><a href="/article/08-0640-dryopithecus/dryopithecus">Dryopithecus</a></li>
+  <li class="c018"><a href="/article/11-0472-ganodonta/ganodonta">Ganodonta</a></li>
+  <li class="c018"><a href="/article/12-0164-s6/glyptodon">Glyptodon</a></li>
+  <li class="c018"><a href="/article/12-0382-s2/graptolites">Graptolites</a></li>
+  <li class="c018"><a href="/article/14-0282-ichthyosaurus-text/ichthyosaurus__text_">Ichthyosaurus</a></li>
+  <li class="c018"><a href="/article/14-0309-s2/iguanodon">Iguanodon</a></li>
+  <li class="c018"><a href="/article/16-0813-litopterna/litopterna">Litopterna</a></li>
+  <li class="c018"><a href="/article/17-0247-machaerodus/machaerodus">Machaerodus</a></li>
+  <li class="c018"><a href="/article/17-0547-mammoth/mammoth">Mammoth</a></li>
+  <li class="c018"><a href="/article/17-0892-mastodon/mastodon">Mastodon</a></li>
+  <li class="c018"><a href="/article/18-0095-megatherium/megatherium">Megatherium</a></li>
+  <li class="c018"><a href="/article/18-0998-multituberculata/multituberculata">Multituberculata</a></li>
+  <li class="c018"><a href="/article/19-0127-mylodon/mylodon">Mylodon</a></li>
+  <li class="c018"><a href="/article/20-0027-s4/odontornithes">Odontornithes</a></li>
+  <li class="c018"><a href="/article/20-0287-s2/oreodon">Oreodon</a></li>
+  <li class="c018">Ostracoderms, or Ostracophores</li>
+  <li class="c018"><a href="/article/20-0631-palaeontology/palaeontology">Palaeontology</a></li>
+  <li class="c018"><a href="/article/20-0647-palaeospondylus/palaeospondylus">Palaeospondylus</a></li>
+  <li class="c018"><a href="/article/20-0648-palaeotherium/palaeotherium">Palaeotherium</a></li>
+  <li class="c018"><a href="/article/21-0385-phenacodus/phenacodus">Phenacodus</a></li>
+  <li class="c018">Phorohacos</li>
+  <li class="c018"><a href="/article/21-0869-s3/plesiosaurus">Plesiosaurus</a></li>
+  <li class="c018"><a href="/article/22-0632-pterodactyles/pterodactyles">Pterodactyles</a></li>
+  <li class="c018">Sparassodonta</li>
+  <li class="c018"><a href="/article/26-1016-tillodontia/tillodontia">Tillodontia</a></li>
+  <li class="c018"><a href="/article/26-1058-titanotheriidae/titanotheriidae">Titanotheriidae</a></li>
+  <li class="c018"><a href="/article/27-0128-toxodontia/toxodontia">Toxodontia</a></li>
+  <li class="c018"><a href="/article/27-0297-trilobites/trilobites">Trilobites</a></li>
+</ul>
+
+<div>
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

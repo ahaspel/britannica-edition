@@ -135,7 +135,7 @@ def _page_template(title: str, back_label: str, back_href: str,
     * {{ box-sizing: border-box; }}
     body {{
       margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.7;
@@ -162,6 +162,13 @@ def _page_template(title: str, back_label: str, back_href: str,
     .footer {{ color: var(--muted); font-size: 0.85rem; margin-top: 20px;
       text-align: center; }}
   </style>
+  <script>
+    (function() {{
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    }})();
+  </script>
 </head>
 <body>
 <div class="page">

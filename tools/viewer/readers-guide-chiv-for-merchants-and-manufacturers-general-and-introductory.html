@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For Merchants And Manufacturers: General And Introductory &mdash; Reader's Guide &mdash; Encyclop&aelig;dia Britannica, 11th Edition</title>
+  <style>
+    :root {
+      --bg: #f5f1eb; --panel: #fdfcf9; --text: #2c2416;
+      --muted: #6b5e4f; --border: #d4cab8; --link: #7b3f00;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      background: var(--bg); color: var(--text); line-height: 1.7;
+    }
+    .page { max-width: 960px; margin: 0 auto; padding: 24px; }
+    .card {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px;
+    }
+    h1 {
+      margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416;
+    }
+    h1 .chap-num { display: block; font-size: 0.6em; color: var(--muted);
+      font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
+    h4 { font-size: 1rem; font-variant: small-caps;
+      letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline;
+      background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
+    /* Layout copied verbatim from viewer.html's .body-text pattern. */
+    .body-text {
+      font-size: 1.08rem;
+      margin-right: 160px;
+      position: relative;
+    }
+    .body-text p {
+      text-indent: 1.5em;
+      margin: 0 0 0.5em 0;
+      position: relative;
+    }
+    .body-text p:first-of-type { text-indent: 0; }
+    .shoulder-heading {
+      position: absolute;
+      right: -170px;
+      width: 150px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      text-align: left;
+      text-indent: 0;
+      scroll-margin-top: 20px;
+    }
+    @media (max-width: 900px) {
+      .body-text { margin-right: 0; }
+      .shoulder-heading {
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }
+    }
+    .toc {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px;
+      margin: 0 0 20px; font-size: 0.9rem;
+    }
+    .toc h3 {
+      margin: 0 0 8px; font-size: 0.95rem;
+      color: var(--muted); font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .toc ol {
+      margin: 0; padding-left: 20px;
+      columns: 2; column-gap: 24px;
+    }
+    .toc li { margin-bottom: 3px; }
+    .toc a { color: var(--text); font-size: 0.88rem; }
+    .sc { font-variant: small-caps; }
+    ul.index {
+      columns: 3; column-gap: 32px; padding-left: 1.4em;
+      font-size: 0.92rem; line-height: 1.5;
+    }
+    ul.index li { margin-bottom: 2px; break-inside: avoid; }
+    details.article-list {
+      margin: 1.5em 0; border: 1px solid var(--border);
+      border-radius: 2px; background: #faf6ed;
+    }
+    details.article-list > summary {
+      cursor: pointer; padding: 12px 18px; list-style: none;
+      user-select: none; display: flex; align-items: baseline;
+      gap: 0.6em; font-family: Georgia, serif;
+    }
+    details.article-list > summary::-webkit-details-marker { display: none; }
+    details.article-list > summary::before {
+      content: "▸"; display: inline-block; color: var(--muted);
+      font-size: 0.9em; transition: transform 0.15s ease;
+    }
+    details.article-list[open] > summary::before { transform: rotate(90deg); }
+    details.article-list > summary:hover { background: rgba(139, 115, 85, 0.05); }
+    details.article-list .list-title {
+      font-variant: small-caps; letter-spacing: 0.04em;
+      color: #5c4a32; font-size: 0.95rem;
+    }
+    details.article-list .list-count {
+      color: var(--muted); font-size: 0.85rem; font-style: italic;
+    }
+    details.article-list > ul.index,
+    details.article-list > div,
+    details.article-list > p {
+      padding: 0 18px 16px;
+    }
+    .cross-ref {
+      font-style: italic; color: var(--muted); text-align: center;
+      margin: 0.8em 0 1.2em; font-size: 0.95rem;
+    }
+    .body-text img {
+      display: block; max-width: min(100%, 560px); height: auto;
+      margin: 1.2em auto; border: 1px solid var(--border);
+      background: #fdfcf9; padding: 6px;
+    }
+    .figcenter { text-align: center; margin: 1.2em 0; }
+    .header-divider {
+      text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
+    }
+  </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.html">Articles</a>
+      </div>
+    </div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
+    <h1><span class="chap-num">Chapter IV</span>For Merchants And Manufacturers: General And Introductory</h1>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Technical Education for Manufacturer and Merchant</a></li><li><a href="#sh-2">Practical Economics for Practical Men</a></li><li><a href="#sh-3">Imports and Exports</a></li><li><a href="#sh-4">Manufacturing and Consuming Nations</a></li><li><a href="#sh-5">Mill Labour</a></li></ol></div>
+    <div class="body-text">
+
+
+<div class="c002"></div>
+<p><span class="shoulder-heading" id="sh-1">Technical Education for Manufacturer and Merchant</span>The article on <span class="sc"><a href="/article/26-0516-technical-education/technical_education">Technical Education</a></span>
+in the new (Eleventh) Edition
+of the Encyclopædia Britannica
+(Vol. 26, p.
+487), written by
+<a href="/contributors.html?q=Sir+Philip+Magnus">Philip Magnus</a>, one
+of the greatest educational
+authorities
+in the world, says
+that:</p>
+
+<p>“The widespread appreciation of
+the advantages of the higher education
+among all classes of the American
+people, and the general recognition
+among manufacturers, engineers
+and employers of labour, of the value
+to them in their own work, of the
+services of college-trained men, has
+largely helped to increase the number
+of students in attendance at the universities
+and technical institutions.”</p>
+
+<p>A still broader truth is that the men
+who have learned to think clearly, by
+whatever study or <i>reading</i> they may
+have developed that power, possess the
+greatest of all advantages. As the
+Britannica article on <span class="sc"><a href="/article/08-0978-education/education">Education</a></span> indicates,
+the true value of education (not
+simply school education, but all education)
+lies as much in the influence which
+intelligently directed study exerts upon
+the mind as in the immediate usefulness
+of the information acquired, and the
+articles in the Britannica not only supply
+the most recent and authoritative information,
+but are so logically arranged,
+one dove-tailing into another, that they
+give the reader precisely that <i>orderly</i>
+view of knowledge which is the foundation
+of all mental training.</p>
+
+<p>Since all of the series of chapters
+which immediately follow and which are
+intended for merchants and manufacturers,
+deal with commerce and manufactures,
+it will be for the reader’s convenience
+to begin by dealing with those
+two subjects in general. But certain
+branches of industrial and manufacturing
+knowledge are dealt with in special
+chapters. The articles on banking and
+finance are described fully in this
+Guide in the chapter <i>For Bankers and
+Financiers</i>, those on insurance in the
+chapter <i>For Insurance Men</i>, and those
+on law in the chapter <i>For Lawyers</i>.
+Three of the legal articles should, however,
+be mentioned here, as they are
+on especially important subjects: <span class="sc"><a href="/article/24-0077-sale-of-goods/sale_of_goods">Sale
+of Goods</a></span> (Vol. 24, p. 63), <span class="sc"><a href="/article/06-0819-company/company">Company</a></span>
+(Vol. 6, p. 795), which deals with the
+laws in various countries regulating
+corporations, and <span class="sc"><a href="/article/09-0379-employers-liability/employers__liability">Employers’ Liability</a></span>
+(Vol. 9, p. 356), on this topic so important
+in modern industrial law and in
+the relations between capital and labour.</p>
+
+<p><span class="shoulder-heading" id="sh-2">Practical Economics for Practical Men</span>The broad questions of commercial
+and industrial policy are discussed in
+<span class="sc"><a href="/article/08-0926-economics/economics">Economics</a></span> (Vol. 8, p. 899), by <a href="/contributors.html?q=William+Albert+Samuel+Hewins">Prof.
+Hewins</a>; <span class="sc"><a href="/article/06-0790-commerce/commerce">Commerce</a></span> (Vol. 6, p. 766);
+<span class="sc"><a href="/article/27-0351-s2/trusts">Trusts</a></span> (Vol. 27, p.
+334); <span class="sc"><a href="/article/18-0763-monopoly/monopoly">Monopoly</a></span>
+(Vol. 18, p. 733),
+and <span class="sc"><a href="/article/27-0150-s2/trade_organization">Trade Organization</a></span>
+(Vol. 27, p.
+335), which describes commercial associations
+in the United States, the work
+of the consular service, and the organizations
+in Germany, France, Great
+Britain and other countries. <span class="sc"><a href="/article/04-0239-book-keeping/book-keeping">Book-keeping</a></span>
+(Vol. 4, p. 225), with its
+up-to-date account of modern accounting
+methods, card ledgers and loose
+leaf systems; <span class="sc"><a href="/article/01-0266-s7/advertisement">Advertisement</a></span> (Vol.
+1, p. 235), and <span class="sc"><a href="/article/18-0167-s5/mercantile__or_commercial__agencies">Mercantile Agencies</a></span>
+(Vol. 18, p. 148) may be named as
+specimens of the many practical articles
+on business methods which need not
+all be enumerated here.</p>
+
+<p><span class="shoulder-heading" id="sh-3">Imports and Exports</span>Much of what you read and hear
+about the tariff systems of the United
+States and various other countries and
+about their influence
+upon trade is so
+vague and confusing
+that you will be
+delighted with the group of clear,
+common-sense articles in the Britannica.
+<span class="sc"><a href="/article/26-0451-s3/tariff">Tariff</a></span> (Vol. 26, p. 422) is by one of the
+most famous American economists, Prof.
+Taussig of Harvard, and is a very full
+and fair discussion of the points in controversy.
+<span class="sc"><a href="/article/22-0479-protection/protection">Protection</a></span> (Vol. 22, p. 464)
+is by Prof. James of the University of
+Illinois, and <span class="sc"><a href="/article/11-0100-s6/free_trade">Free Trade</a></span> (Vol. 11, p. 89)
+by William Cunningham. You should
+read with care <span class="sc"><a href="/article/07-0691-customs-duties/customs_duties">Customs Duties</a></span> (Vol.
+7, p. 669); <span class="sc"><a href="/article/11-0097-s3/free_ports">Free Ports</a></span> (Vol. 11, p. 88),
+and <span class="sc"><a href="/article/04-0339-bounty/bounty">Bounty</a></span> (Vol. 4, p. 324). <span class="sc"><a href="/article/03-0252-s3/balance_of_trade">Balance
+of Trade</a></span> (Vol. 3, p. 235) and <span class="sc"><a href="/article/26-0487-taxation/taxation">Taxation</a></span>
+(Vol. 26, p. 458) are both by Sir <a href="/contributors.html?q=Sir+Robert+Giffen">Robert
+Giffen</a>. <span class="sc"><a href="/article/10-0062-exchange/exchange">Exchange</a></span> (Vol. 10, p. 50), by
+<a href="/contributors.html?q=Ernest+Maes+Harvey">E. M. Harvey</a>, a partner in one of the
+largest firms of bullion brokers in the
+world, deals with the movement of
+gold. <span class="sc"><a href="/article/06-0795-commercial-treaties/commercial_treaties">Commercial Treaties</a></span> (Vol.
+6, p. 771) is by Sir <a href="/contributors.html?q=Sir+Charles+Malcolm+Kennedy">C. M. Kennedy</a>.
+Freights are discussed in <span class="sc"><a href="/article/01-0339-s2/affreightment">Affreightment</a></span>
+(Vol. 1, p. 302) by Sir <a href="/contributors.html?q=Sir+Joseph+Walton">Joseph
+Walton</a>. <span class="sc"><a href="/article/16-0614-s4/lien">Lien</a></span> (Vol. 16, p. 594), with its
+section on “Stoppage in transitu,” is by
+<a href="/contributors.html?q=Francis+William+Raikes">F. W. Raikes</a>; <span class="sc"><a href="/article/24-0113-salvage/salvage">Salvage</a></span> (Vol. 24, p. 97),
+by <a href="/contributors.html?q=Thomas+Gilbert+Carver">T. G. Carver</a>, and <span class="sc"><a href="/article/04-0085-blockade/blockade">Blockade</a></span> (Vol.
+4, p. 72), by Sir <a href="/contributors.html?q=Sir+Thomas+Barclay">Thomas Barclay</a>, the
+great international lawyer in Paris.
+Marine insurance, indemnity, Lloyds,
+and other insurance subjects fall
+under the chapter of this Guide
+<i>For Insurance Men</i> to which you
+should refer. Cargo-carrying and merchant
+shipping are further covered by
+<span class="sc"><a href="/article/24-1059-s2/shipping">Shipping</a></span> (Vol. 24, p. 983). This article
+is by <a href="/contributors.html?q=Douglas+Owen">Douglas Owen</a>, honorary secretary
+and treasurer of the Society of National
+Research, and author of <i>Ports and
+Docks</i>; it contains information about
+the great freight carrying lines of the
+world that can be found in no other
+book. Railroad freighting is covered
+by the article <span class="sc"><a href="/article/22-0836-railways/railways">Railways</a></span> (Vol. 22, p.
+819), in which there is a special
+section (p. 854b) on the new models of
+American freight cars.</p>
+
+<p><span class="shoulder-heading" id="sh-4">Manufacturing and Consuming Nations</span>In the article <span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, which
+contains more matter than a whole book
+of ordinary size and more information
+than a dozen ordinary
+books, the sections
+(Vol. 27, p.
+639) on manufactures
+and on foreign
+and domestic commerce, are by <a href="/contributors.html?q=Francis+Samuel+Philbrick">F. S.
+Philbrick</a>, Ph.D. <i>The internal commerce
+of the United States, as this article
+states, is in itself greater than the total
+international commerce of the world</i>, and
+is so far from exhausting the country’s
+power of production and consumption,
+that even when coastwise traffic is disregarded,
+New York is the most active
+port in the world. A section (Vol.
+9, p. 916) of the article <span class="sc"><a href="/article/09-0939-europe/europe">Europe</a></span> deals
+with European commerce in general.
+The articles on the great manufacturing
+towns of Europe contain much information
+as to industries. Great
+Britain’s industries are dealt with
+in the article <span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United Kingdom</a></span> (Vol.
+27, p. 691). The industries of England
+alone are separately treated in a section
+(Vol. 9, p. 426) of the article <span class="sc"><a href="/article/09-0433-england/england">England</a></span>.
+Germany’s industries are the subject of
+sections (Vol. 11, p. 811) of the article
+<span class="sc"><a href="/article/11-0825-germany/germany">Germany</a></span>; and it is interesting to note
+that although Germany has outranked
+France in cotton manufactures since
+Mülhausen, Colmar and other important
+milling centres of Alsace became
+German, France has retorted by
+overtaking and passing Germany in the
+production of linen. The sections (Vol.
+10, p. 785) on foreign commerce in the
+article <span class="sc"><a href="/article/10-0796-s4/france">France</a></span> show her position as in
+the main a self-supporting country,
+though only a fourth of the cargoes
+loaded and discharged in French
+ports are carried under the French
+flag. It would be a waste of space
+to enumerate here the articles on
+Belgium, Switzerland, Italy and other
+countries, which you will consult in
+relation to those of their exports
+in which you are especially interested;
+but you should not overlook the article
+on Japan. The Britannica has done
+commerce a great service in giving to the
+world at last a good account of this
+extraordinary country.</p>
+
+<p>The body of the article <span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span> (Vol.
+15, p. 156) is by <a href="/contributors.html?q=Captain+Frank+Brinkley">Capt. Brinkley</a>, long
+editor of the Japan <i>Mail</i>, whose
+opportunities of seeing Japanese life
+from the inside have been greater
+than those of any other foreign observer.
+Baron Dairoku Kikuchi, President
+of the Imperial University of
+Kyoto, a statesman of great experience
+and authority, contributes to the article
+a section (Vol. 15, p. 273) dealing with
+Japan’s international position. His remarks
+upon the commercial morality of
+the Japanese are so ingenuous and so
+candid that an extract from them cannot
+be omitted:</p>
+
+<p>Now when foreign trade was first opened,
+it was naturally not firms with long-established
+credit and methods that first ventured upon the
+new field of business—some few that did failed
+owing to their want of experience—it was rather
+enterprising and adventurous spirits with little
+capital or credit who eagerly flocked to the
+newly opened ports to try their fortune. It was
+not to be expected that all or most of those
+should be very scrupulous in their dealings with
+the foreigners; the majority of those adventurers
+failed, while a few of the abler men, generally
+those who believed in and practised honesty as
+the best policy, succeeded and came to occupy an
+honourable position as business men.... Commerce
+and trade are now regarded as highly
+honourable professions, merchants and business
+men occupy the highest social positions, several
+of them having been lately raised to the peerage,
+and are as honourable a set of men as can be met
+anywhere. It is, however, to be regretted that
+in introducing Western business methods, it has
+not been quite possible to exclude some of their
+evils, such as promotion of swindling companies,
+tampering with members of legislature, and so
+forth.</p>
+
+<p>The account (Vol. 15, p. 201) by Capt.
+<a href="/contributors.html?q=Captain+Frank+Brinkley">Brinkley</a> of the curious system of creating
+branches of Japanese business
+houses is another part of this article
+which should not be overlooked.</p>
+
+<p><span class="shoulder-heading" id="sh-5">Mill Labour</span>The proportion of labour cost to the
+total cost of production is in most
+industries so great that you cannot study
+too carefully every
+aspect of the labour
+question. The chief
+articles are <span class="sc"><a href="/article/16-0021-s3/labour_legislation">Labour
+Legislation</a></span> (Vol. 16, p. 7), jointly written
+by the late Dr. Carroll D. Wright,
+the great American authority on the
+subject, and Miss A. M. Anderson,
+Principal Lady Inspector of Factories to
+the British government; <span class="sc"><a href="/article/27-0150-s2/trade_organization">Trades Union</a></span>
+(Vol. 27, p. 140); <span class="sc"><a href="/article/25-1050-strikes-and-lock-outs/strikes_and_lock-outs">Strikes and Lockouts</a></span>
+(Vol. 25, p. 1024); <span class="sc"><a href="/article/28-0245-wages/wages">Wages</a></span> (Vol. 28, p.
+229), by Prof. <a href="/contributors.html?q=Joseph+Shield+Nicholson">J. S. Nicholson</a>; <span class="sc"><a href="/article/22-0438-s6/profit-sharing">Profit
+Sharing</a></span> (Vol. 22, p. 423), by <a href="/contributors.html?q=Aneurin+Williams">Aneurin
+Williams</a> and <span class="sc"><a href="/article/02-0240-s2/apprenticeship">Apprenticeship</a></span> (Vol. 2,
+p. 228), by <a href="/contributors.html?q=Jacob+Samuel+Ballin">J. S. Ballin</a>. The article
+<span class="sc"><a href="/article/09-0379-employers-liability/employers__liability">Employers’ Liability</a></span> (Vol. 9, p. 356),
+has already been mentioned.</p>
+
+<div>
+  
+  
+    </div>
+  </div>
+</div>
+</body>
+</html>

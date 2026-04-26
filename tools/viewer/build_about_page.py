@@ -205,6 +205,10 @@ def _render(text, lookup, reverse):
             "Topic Index",
             '<a href="topics.html">Topic Index</a>'
         )
+        raw = raw.replace(
+            "Reader's Guide",
+            '<a href="readers-guide.html">Reader\'s Guide</a>'
+        )
 
         # Signature formatting
         raw = re.sub(r"^::", "&emsp;&emsp;", raw)
@@ -254,7 +258,7 @@ PAGE_TEMPLATE = """\
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.7;
@@ -287,7 +291,7 @@ PAGE_TEMPLATE = """\
       position: absolute;
       right: -170px;
       width: 150px;
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
       font-size: 0.65rem;
       font-style: italic;
       color: #8b7355;
@@ -336,15 +340,20 @@ PAGE_TEMPLATE = """\
       user-select: none;
     }
   </style>
+  <script>
+    (function() {
+      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      var base = isLocal ? "/tools/viewer/" : "/";
+      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+    })();
+  </script>
 </head>
 <body>
 <div class="page">
   <div class="card">
     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><span style="font-variant: small-caps; letter-spacing: 0.04em;">About</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></h1>
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">About</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
       <div style="font-size: 0.9rem;">
-        <a href="/home.html">Home</a>
-        &nbsp;&middot;&nbsp;
         <a href="/index.html">Articles</a>
         &nbsp;&middot;&nbsp;
         <a href="/contributors.html">Contributors</a>
