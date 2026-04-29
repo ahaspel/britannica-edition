@@ -63,23 +63,30 @@ _CELL_ATTR = re.compile(
 )
 
 
-_FN_OPEN = "\u00abFN:"
 _FN_CLOSE = "\u00ab/FN\u00bb"
+# Match either ``«FN:`` (unnamed) or ``«FN[NAME]:`` (named, used by
+# the Wikisource ``<ref name=X>`` / ``<ref name=X/>`` shared-anchor
+# scheme).
+_FN_OPEN_RE = re.compile(r"\u00abFN(?:\[[^\]]+\])?:")
 
 
 def _fix_unclosed_footnotes(text: str) -> str:
-    """Close any «FN: markers that lack a matching «/FN».
+    """Close any «FN: / «FN[NAME]: markers that lack a matching «/FN».
 
     These typically occur when a footnote in the original wiki markup
     spans across a table boundary created during fetch processing.
     We close the footnote at the next table boundary, paragraph break,
     or end of text.
     """
+    def _next_open(s: str, start: int) -> tuple[int, int]:
+        m = _FN_OPEN_RE.search(s, start)
+        return (m.start(), m.end()) if m else (-1, -1)
+
     result = []
     pos = 0
     depth = 0
     while pos < len(text):
-        fn_open = text.find(_FN_OPEN, pos)
+        fn_open, fn_open_end = _next_open(text, pos)
         fn_close = text.find(_FN_CLOSE, pos)
 
         if depth == 0:
@@ -87,9 +94,8 @@ def _fix_unclosed_footnotes(text: str) -> str:
             if fn_open == -1:
                 result.append(text[pos:])
                 break
-            result.append(text[pos:fn_open])
-            result.append(_FN_OPEN)
-            pos = fn_open + len(_FN_OPEN)
+            result.append(text[pos:fn_open_end])
+            pos = fn_open_end
             depth = 1
         else:
             # Inside a footnote — find close or a boundary that forces close
@@ -115,8 +121,8 @@ def _fix_unclosed_footnotes(text: str) -> str:
                     # Nested open — close current before opening new
                     result.append(text[pos:fn_open])
                     result.append(_FN_CLOSE)
-                    result.append(_FN_OPEN)
-                    pos = fn_open + len(_FN_OPEN)
+                    result.append(text[fn_open:fn_open_end])
+                    pos = fn_open_end
                 else:
                     # End of text — force close
                     result.append(text[pos:])

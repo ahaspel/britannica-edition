@@ -882,9 +882,14 @@
   <script>
     const app = document.getElementById("app");
 
-    function toggleFnPopup(event, num) {
+    function toggleFnPopup(event, popupId) {
       event.stopPropagation();
-      const popup = document.getElementById('fnpop-' + num);
+      // Accept either a bare number (legacy: ``fnpop-${num}``) or the
+      // unique popup ID emitted by ``renderFnMarker`` for shared-name
+      // ref reuses (``fnpop-${num}-${instance}``). Numeric form keeps
+      // existing call paths working.
+      const id = (typeof popupId === "number") ? ('fnpop-' + popupId) : popupId;
+      const popup = document.getElementById(id);
       if (!popup) return;
       const wasVisible = popup.classList.contains('visible');
       // Close all open popups
@@ -1021,6 +1026,32 @@
     }
 
     let footnoteCounter = 0;
+    // Named refs (`«FN[NAME]:body«/FN»`) share a footnote number across
+    // all anchors with the same name, matching Wikisource convention
+    // (one entry in the footer list, N superscripts in body text).
+    // The first anchor per name uses unsuffixed IDs; reuses get a
+    // ``-${instance}`` suffix so each anchor's popup is independently
+    // addressable. The back-link from the footer list keeps targeting
+    // the unsuffixed (first) anchor.
+    const namedFnNumbers = new Map();
+    let fnAnchorInstance = 0;
+    function renderFnMarker(name, content) {
+      let num, refId, popupId;
+      if (name && namedFnNumbers.has(name)) {
+        num = namedFnNumbers.get(name);
+        fnAnchorInstance++;
+        refId = `fnref-${num}-${fnAnchorInstance}`;
+        popupId = `fnpop-${num}-${fnAnchorInstance}`;
+      } else {
+        footnoteCounter++;
+        num = footnoteCounter;
+        if (name) namedFnNumbers.set(name, num);
+        collectedFootnotes.push({ num, text: content });
+        refId = `fnref-${num}`;
+        popupId = `fnpop-${num}`;
+      }
+      return `<sup class="footnote-ref" id="${refId}"><a onclick="toggleFnPopup(event,'${popupId}');return false;" href="#">${num}</a><span class="fn-popup" id="${popupId}"><span class="fn-popup-num">${num}.</span>${formatFootnoteText(content)}</span></sup>`;
+    }
     let currentVolume = "?";
     // Base scan URL for the current article — populated by
     // renderArticle(). Page-marker <a> tags append ``&pinit=<page>``
@@ -1091,11 +1122,8 @@
 
     function formatCell(text) {
       let h = escapeHtml(text);
-      h = h.replace(/\u00abFN:(.*?)\u00ab\/FN\u00bb/gs, (match, content) => {
-        footnoteCounter++;
-        collectedFootnotes.push({ num: footnoteCounter, text: content });
-        return `<sup class="footnote-ref" id="fnref-${footnoteCounter}"><a onclick="toggleFnPopup(event,${footnoteCounter});return false;" href="#">${footnoteCounter}</a><span class="fn-popup" id="fnpop-${footnoteCounter}"><span class="fn-popup-num">${footnoteCounter}.</span>${formatFootnoteText(content)}</span></sup>`;
-      });
+      h = h.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
+                    (match, name, content) => renderFnMarker(name, content));
       h = h.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
       h = h.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
       h = h.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
@@ -1212,11 +1240,11 @@
       if (scSectionMatch && !p.includes("{{IMG:") && !p.includes("{{TABLE:")) {
         const prefix = scSectionMatch[1] ? scSectionMatch[1] + " " : "";
         const rawText = (prefix + scSectionMatch[2]).trim();
-        const text = rawText.replace(/\u00abFN:.*?\u00ab\/FN\u00bb/gs, "").trim();
+        const text = rawText.replace(/\u00abFN(?:\[[^\]]+\])?:.*?\u00ab\/FN\u00bb/gs, "").trim();
         const isExcluded = /^(?:(?:References|Authorities|Bibliography|See also)\b|Fig\.)/i.test(text);
         // Skip if a SEC marker already emitted a heading for the same
         // section name (stripped of leading Roman numeral prefix).
-        const nameOnly = scSectionMatch[2].replace(/\u00abFN:.*?\u00ab\/FN\u00bb/gs, "").trim();
+        const nameOnly = scSectionMatch[2].replace(/\u00abFN(?:\[[^\]]+\])?:.*?\u00ab\/FN\u00bb/gs, "").trim();
         const nameKey = sectionKey(nameOnly);
         const isDup = emittedSectionKeys.has(nameKey);
         if (!isExcluded && !isDup) {
@@ -1561,11 +1589,8 @@
         const lines = content.split("\n").filter(l => l.trim());
         return `<span class="inline-verse">${lines.join("<br>")}</span>`;
       });
-      html = html.replace(/\u00abFN:(.*?)\u00ab\/FN\u00bb/gs, (match, content) => {
-        footnoteCounter++;
-        collectedFootnotes.push({ num: footnoteCounter, text: content });
-        return `<sup class="footnote-ref" id="fnref-${footnoteCounter}"><a onclick="toggleFnPopup(event,${footnoteCounter});return false;" href="#">${footnoteCounter}</a><span class="fn-popup" id="fnpop-${footnoteCounter}"><span class="fn-popup-num">${footnoteCounter}.</span>${formatFootnoteText(content)}</span></sup>`;
-      });
+      html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
+                          (match, name, content) => renderFnMarker(name, content));
       // Mid-paragraph figures (sentinelled by the merge pass above).
       // Render with ``float:right`` so surrounding prose wraps around
       // the figure instead of being split into a truncated pre-<p>
@@ -1812,7 +1837,7 @@
                </div>`
             : ""}
           ${(() => {
-            footnoteCounter = 0; collectedFootnotes = []; linkedTargets = new Set(); sectionCounter = 0; collectedSections = []; emittedSectionKeys = new Set(); currentSectionKey = ""; wideTableCounter = 0; for (const k in wideTableSources) delete wideTableSources[k];
+            footnoteCounter = 0; namedFnNumbers.clear(); fnAnchorInstance = 0; collectedFootnotes = []; linkedTargets = new Set(); sectionCounter = 0; collectedSections = []; emittedSectionKeys = new Set(); currentSectionKey = ""; wideTableCounter = 0; for (const k in wideTableSources) delete wideTableSources[k];
 
             // Page markers (\x01PAGE:N\x01) are embedded directly in the
             // body text by the transform stage.  If none are present

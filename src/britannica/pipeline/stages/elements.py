@@ -336,9 +336,10 @@ def _process_element(element_type: str, raw: str,
     if element_type == "MATH":
         result = _process_math(inner)
     elif element_type == "REF_SELF":
-        result = ""  # Self-closing ref (back-reference) — strip it
+        result = _process_ref_self(raw, context.get("ref_bodies"))
     elif element_type == "REF":
-        result = _process_ref(inner, text_transform)
+        result = _process_ref(raw, inner, text_transform,
+                              context.get("ref_bodies"))
     elif element_type == "IMAGE":
         result = _process_image(inner, text_transform)
     elif element_type == "IMAGE_FLOAT":
@@ -2488,13 +2489,92 @@ def _process_complex_table(inner: str, text_transform) -> str:
     return "".join(parts)
 
 
-def _process_ref(inner: str, text_transform) -> str:
-    """Convert ref content to «FN:...«/FN» with clean text."""
-    # Transform internal wiki markup (bold, italic, links)
+_REF_NAME_ATTR_RE = re.compile(r'\bname\s*=\s*"?([^"\s/>]+)"?', re.IGNORECASE)
+_REF_FOLLOW_ATTR_RE = re.compile(r'\bfollow\s*=\s*"?([^"\s/>]+)"?', re.IGNORECASE)
+_REF_OPEN_RE = re.compile(r"<ref(?:\s+([^>/]*?))?\s*/?>", re.IGNORECASE)
+
+
+def _ref_attrs(raw: str) -> tuple[str | None, str | None]:
+    """Return (name, follow) parsed from a ``<ref ...>`` opener; either may be None."""
+    m = _REF_OPEN_RE.match(raw)
+    if not m or not m.group(1):
+        return None, None
+    attrs = m.group(1)
+    nm = _REF_NAME_ATTR_RE.search(attrs)
+    fl = _REF_FOLLOW_ATTR_RE.search(attrs)
+    return (nm.group(1) if nm else None,
+            fl.group(1) if fl else None)
+
+
+def _process_ref_self(raw: str, ref_bodies):
+    """Render ``<ref name=X/>`` self-closing reuse as a FN anchor.
+
+    The body comes from the article-level ref-name registry built by
+    ``_resolve_ref_bodies`` (folds in any ``<ref follow=X>body</ref>``
+    continuation appearing elsewhere in the same article). Anchors
+    that don't resolve drop silently.
+
+    Emits ``«FN[NAME]:…«/FN»`` so the viewer can group all anchors for
+    NAME under a single footnote number (Wikisource convention: one
+    note in the footer list, N superscripts in the body).
+    """
+    name, _ = _ref_attrs(raw)
+    if name and ref_bodies and name in ref_bodies:
+        return f"«FN[{name}]:{ref_bodies[name]}«/FN»"
+    return ""
+
+
+def _resolve_ref_bodies(registry, text_transform):
+    """Pre-scan REF entries to build name -> resolved-body map.
+
+    Combines bodies from ``<ref name=X>body</ref>`` definitions and
+    ``<ref follow=X>body</ref>`` continuations in document order so
+    forward-reference-style articles (MOLECULE p684 has ``<ref
+    name=X/>`` plus a later ``<ref follow=X>body</ref>``) resolve
+    the anchor to the continuation's body.
+    """
+    parts = {}
+    for _key, (etype, raw) in registry.elements.items():
+        if etype != "REF":
+            continue
+        name, follow = _ref_attrs(raw)
+        body = re.sub(r"<ref(?:\s[^>]*)?>|</ref>", "", raw,
+                      flags=re.IGNORECASE | re.DOTALL).strip()
+        if not body:
+            continue
+        target = follow or name
+        if not target:
+            continue
+        parts.setdefault(target, []).append(body)
+    resolved = {}
+    for nm, bodies in parts.items():
+        joined = " ".join(bodies)
+        joined = text_transform(joined)
+        resolved[nm] = _clean_text(joined)
+    return resolved
+
+
+def _process_ref(raw, inner, text_transform, ref_bodies=None):
+    """Convert ``<ref ...>body</ref>`` to a FN anchor with clean text.
+
+    ``<ref follow=NAME>body</ref>`` continuations emit nothing at the
+    call site; their body is folded into ``ref_bodies[NAME]`` by the
+    pre-scan in ``process_elements``. ``<ref name=NAME>body</ref>``
+    emits an anchor whose text is the resolved body for NAME (so an
+    earlier ``<ref name=NAME/>`` reuse and any later ``follow=NAME``
+    continuation are merged into one footnote). Plain ``<ref>``
+    without name/follow keeps the legacy single-body behavior.
+    """
+    name, follow = _ref_attrs(raw)
+    if follow:
+        return ""
+    if name and ref_bodies and name in ref_bodies:
+        return f"«FN[{name}]:{ref_bodies[name]}«/FN»"
     content = text_transform(inner)
-    # Clean to plain text — footnotes should have no formatting markers
     content = _clean_text(content)
-    return f"\u00abFN:{content}\u00ab/FN\u00bb"
+    if name:
+        return f"«FN[{name}]:{content}«/FN»"
+    return f"«FN:{content}«/FN»"
 
 
 def _process_image(inner: str, text_transform) -> str:
@@ -2645,9 +2725,19 @@ def _process_chart2(raw: str, context: dict) -> str:
 
 
 def _process_poem(inner: str, text_transform) -> str:
-    """Convert poem content to {{VERSE:...}VERSE}."""
+    """Convert poem content to {{VERSE:...}VERSE}.
+
+    Wrap with paragraph breaks: <poem> blocks are virtually always
+    block-level in EB1911 (block-quoted verse, classical citation,
+    inscription). Without the ``\\n\\n`` boundaries the surrounding
+    prose paragraph absorbs the marker and the viewer's paragraph-
+    level VERSE handler (``^{{VERSE:…}VERSE}$``) misses, falling
+    back to the inline-VERSE handler which renders the whole verse
+    as a continuation of the prose line (MOLECULE p684's Lucretius
+    quote was the canonical case).
+    """
     content = text_transform(inner)
-    return "{{VERSE:" + content + "}VERSE}"
+    return "\n\n{{VERSE:" + content + "}VERSE}\n\n"
 
 
 def _process_table(inner: str, text_transform,
@@ -3331,6 +3421,17 @@ def process_elements(text: str, text_transform, context: dict) -> str:
 
     # Transform the body text (everything between elements)
     extracted = text_transform(extracted)
+
+    # Build an article-wide registry of named-ref bodies so
+    # ``<ref name=X/>`` self-closing reuses (and ``<ref name=X>body…``
+    # definitions whose body comes via a later ``<ref follow=X>…``
+    # continuation) resolve to the merged body. Required by MOLECULE
+    # p684 where ``Atom<ref name=654f1/>`` is the anchor and the body
+    # arrives only via ``<ref follow=654f1>…</ref>`` two paragraphs
+    # later. Threaded into ``context`` so ``_process_element`` can
+    # forward it to ``_process_ref`` / ``_process_ref_self``.
+    context = dict(context)
+    context["ref_bodies"] = _resolve_ref_bodies(registry, text_transform)
 
     # Process each element (recursion handles nesting)
     processed_map = {}

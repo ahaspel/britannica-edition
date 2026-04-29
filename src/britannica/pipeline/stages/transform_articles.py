@@ -283,6 +283,22 @@ def _unwrap_content_templates(text: str) -> str:
                   r"\1\t\2", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{ne\|\|([^{}]*(?:\{\{[^{}]*\}\}[^{}]*)*)\}\}",
                   r"\1", text, flags=re.IGNORECASE)
+    # Body-context running-header rows: {{rh|LEFT|MIDDLE|RIGHT}} —
+    # 3-column layout used to label equation rows in math articles
+    # (MOLECULE p.688: ``{{rh|(ii)|<eq chain>|}}``). Same template name
+    # as the page-heading rh consumed in detect_boundaries; body-
+    # context occurrences fall through to here. Tab-join non-empty
+    # slots, matching the {{ne}} convention. Without this, the row's
+    # entire middle arg (the equation chain) is eaten by the catch-all
+    # template stripper because the outer ``{{rh|...|...|...}}`` has
+    # too many pipes to satisfy ``[^{}|]*``-arg patterns.
+    def _rh_body(m: re.Match) -> str:
+        slots = [m.group(1).strip(), m.group(2).strip(), m.group(3).strip()]
+        return "\t".join(s for s in slots if s)
+    text = re.sub(
+        r"\{\{rh\|([^{}|]*)\|([^{}|]*(?:\{\{[^{}]*\}\}[^{}|]*)*)\|([^{}]*)\}\}",
+        _rh_body, text, flags=re.IGNORECASE,
+    )
     # Hanging indent → unwrap to content
     text = re.sub(r"\{\{hanging indent\|([^{}]*(?:\{\{[^{}]*\}\}[^{}]*)*)\}\}",
                   r"\1", text, flags=re.IGNORECASE)

@@ -302,8 +302,9 @@
             return `<span class="shoulder-heading" id="${id}">${cleanText}</span>`;
           });
 
-          // Footnotes
-          h = h.replace(/\u00abFN:(.*?)\u00ab\/FN\u00bb/gs, (match, content) => {
+          // Footnotes (preface has no named refs in current corpus,
+          // but accept the named ``\u00abFN[NAME]:`` form for future-proofing).
+          h = h.replace(/\u00abFN(?:\[[^\]]+\])?:(.*?)\u00ab\/FN\u00bb/gs, (match, content) => {
             footnoteCounter++;
             collectedFootnotes.push({ num: footnoteCounter, text: content });
             return `<sup class="footnote-ref"><a href="#fn-${footnoteCounter}">${footnoteCounter}</a></sup>`;

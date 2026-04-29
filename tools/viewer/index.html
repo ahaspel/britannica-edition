@@ -413,7 +413,7 @@
       h = h.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
       h = h.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
       h = h.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span style="font-variant:small-caps">$1</span>');
-      h = h.replace(/\u00abFN:.*?\u00ab\/FN\u00bb/gs, "");
+      h = h.replace(/\u00abFN(?:\[[^\]]+\])?:.*?\u00ab\/FN\u00bb/gs, "");
       h = h.replace(/\u00ab\/?[A-Z]+\u00bb/g, "");
       return h;
     }
@@ -587,7 +587,7 @@
     // ── Full-text search ──
     function ftCleanMarkup(s) {
       let h = s.replace(/\x01PAGE:\d+\x01/g, "");
-      h = h.replace(/\u00abFN:.*?\u00ab\/FN\u00bb/gs, "");
+      h = h.replace(/\u00abFN(?:\[[^\]]+\])?:.*?\u00ab\/FN\u00bb/gs, "");
       h = h.replace(/\u00abLN:[^|]*\|(?:[^|«]*\|)?([^«]*)\u00ab\/LN\u00bb/g, "$1");
       h = h.replace(/\u00ab\/?[A-Z]+\u00bb/g, "");
       return h;

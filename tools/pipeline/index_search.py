@@ -89,7 +89,8 @@ def main():
         # Build search document — strip internal markers before indexing
         body = article.get("body", "")
         body = re.sub(r"\x01PAGE:\d+\x01", " ", body)
-        body = re.sub(r"\u00abFN:.*?\u00ab/FN\u00bb", " ", body, flags=re.DOTALL)
+        body = re.sub(r"\u00abFN(?:\[[^\]]+\])?:.*?\u00ab/FN\u00bb", " ", body,
+                      flags=re.DOTALL)
         body = re.sub(r"\u00abLN:[^«]*\u00ab/LN\u00bb", " ", body)
         body = re.sub(r"\u00abMATH:.*?\u00ab/MATH\u00bb", " ", body, flags=re.DOTALL)
         # Strip image/table/verse markers — these aren't searchable text
