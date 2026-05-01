@@ -202,6 +202,7 @@ if [ -z "$NO_DEPLOY" ]; then
   aws s3 cp data/derived/scan_map.json s3://britannica11.org/data/scan_map.json
   aws s3 cp data/derived/classified_toc.json s3://britannica11.org/data/classified_toc.json
   aws s3 cp data/derived/fm_first_content.json s3://britannica11.org/data/fm_first_content.json
+  aws s3 cp data/derived/volumes.json s3://britannica11.org/data/volumes.json
 
   echo "  Uploading viewer..."
   aws s3 cp tools/viewer/viewer.html s3://britannica11.org/viewer.html

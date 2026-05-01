@@ -65,8 +65,11 @@
   // errors by editing the map, not the viewer.
   const params = new URLSearchParams(location.search);
   const vol = parseInt(params.get("vol")) || 1;
-  const startLeaf = parseInt(params.get("start")) || 1;
-  const endLeaf = parseInt(params.get("end")) || startLeaf;
+  // startLeaf is mutable: after the printed-pages map loads we
+  // advance it past leading null leaves (cover, blanks) so the user
+  // can't scroll backward off the labeled range.
+  let startLeaf = parseInt(params.get("start")) || 1;
+  let endLeaf = parseInt(params.get("end")) || startLeaf;
   const label = params.get("label") || "Pages";
   const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
 
@@ -183,22 +186,29 @@
   });
 
   loadPrintedPages().then(() => {
+    // Constrain start/end past leading and trailing null leaves
+    // (cover, blanks, post-text fly-leaves) so the navigation range
+    // contains only labeled pages.  Front-matter view should start
+    // on "fm 1" and end on the last labeled fm page; volume-scans
+    // view inherits the same protection at the trailing end.
+    while (startLeaf < endLeaf && labelForLeaf(startLeaf) === null) {
+      startLeaf += 1;
+    }
+    while (endLeaf > startLeaf && labelForLeaf(endLeaf) === null) {
+      endLeaf -= 1;
+    }
+    if (currentLeaf < startLeaf) currentLeaf = startLeaf;
+    if (currentLeaf > endLeaf) currentLeaf = endLeaf;
     updateSubtitle();
     if (initPrinted > 0) {
       document.getElementById("jumpInput").value = String(initPrinted);
       jumpToPrinted();
       document.getElementById("jumpInput").value = "";
     } else {
-      // Auto-advance past leading nulls (cover / blanks) so users
-      // land on the first labeled page in the requested range.  The
-      // explicit null entries in the map drive this — no hard-coded
-      // skip logic in the viewer.
-      while (currentLeaf < endLeaf && labelForLeaf(currentLeaf) === null) {
-        currentLeaf += 1;
-      }
       render();
     }
   });
 </script>
+<script data-goatcounter="https://britannica11.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

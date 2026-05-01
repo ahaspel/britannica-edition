@@ -186,6 +186,7 @@ def _page_template(title: str, back_label: str, back_href: str,
     Transcribed from the original 1911 text.
   </div>
 </div>
+<script data-goatcounter="https://britannica11.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>"""
 

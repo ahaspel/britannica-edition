@@ -24,6 +24,16 @@ from britannica.db.session import SessionLocal
 SCAN_DIR = Path("data/derived/scans")
 
 
+def _max_extracted_leaf(vol: int) -> int:
+    """The highest leaf number we've extracted from the IA JP2 zip for
+    this volume.  Used to extend the dense leaf map past the last
+    article page so back-matter leaves render as explicit `null` in
+    the scan viewer instead of falling off the end of the map."""
+    leaves = [int(p.stem.split("leaf")[-1])
+              for p in SCAN_DIR.glob(f"vol{vol:02d}_leaf*.jpg")]
+    return max(leaves) if leaves else 0
+
+
 def _fm01_leaf(vol: int) -> int | None:
     """Find the leaf whose scan image matches ``vol{VV}_fm01.jpg``.
 
@@ -43,12 +53,17 @@ def _fm01_leaf(vol: int) -> int | None:
     return None
 
 RAW_DIR = Path("data/raw/wikisource")
+IA_DIR = Path("data/raw/ia_scans")
 OCR_FILE = Path("data/derived/ocr_page_numbers.json")
 FM_FIRST_CONTENT_FILE = Path("data/derived/fm_first_content.json")
 OUT_WS = Path("data/derived/printed_pages.json")
 OUT_LEAF = Path("data/derived/printed_pages_leaf.json")
-SCAN_MAP = Path("data/derived/scan_map.json")
-OUT_SCAN_MAP = SCAN_MAP  # densified scan_map is written back in-place
+SCAN_MAP = Path("data/derived/scan_map.json")  # READ-ONLY input now.
+# scan_map.json used to be written back here -- "densified" by
+# cross-referencing two heuristic page-number sources.  The densification
+# was the source of the April 2026 corruption: writing a derived value
+# back into its own input compounded errors across rebuilds.  This script
+# never writes scan_map.json now; it only reads it for ws->leaf bridge.
 
 LEAF_OFFSET = {
     1: 7, 2: 7, 3: 9, 4: 9, 5: 12, 6: 12, 7: 7, 8: 7,
@@ -79,6 +94,10 @@ VOL_RANGE: dict[int, tuple[int, int, int, int]] = {
     17: (21, 1, 1058, 1020),
     18: (19, 1, 1018, 968),
     19: (21, 1, 1062, 996),
+    # Bengal/10689.10192 IA scan: last numbered leaf is 1044 (= printed
+    # 980, the volume's last page).  Leaves 1045-1048 are blank verso
+    # plus post-text fly-leaves; those file slots in the JP2 zip exist
+    # but the pages aren't part of the book's running pagination.
     20: (19, 1, 1044, 980),
     21: (21, 1, 1034, 984),
     22: (21, 1, 1002, 976),
@@ -166,6 +185,12 @@ UNNUMBERED_LEAVES: dict[int, list[int]] = {
     # number the interpolation guessed for it. The remaining leaves
     # in each gap are left to the algorithm; add more here as errors
     # surface.
+    # vol 20 Bengal scan: leaf 18 is a black/blank leaf between the
+    # last fm content (leaf 17 = "fm 10") and the first article (leaf
+    # 19 = ODE).  Leaves 1045-1048 are post-content fly-leaves (the
+    # volume ends at leaf 1044 = printed 980, then blank verso + back
+    # matter).
+    20: [18, 1045, 1046, 1047, 1048],
     # SHIPBUILDING (vol 24) confirmed unnumbered leaves:
     24: [1045, 1049, 1052, 1055, 1061, 1062],
     # Note: leaves 1056-1058 between 1054 (968) and 1059 (969) are
@@ -181,7 +206,7 @@ _HEADING_RE = re.compile(
     re.IGNORECASE,
 )
 
-_RH_RE = re.compile(r"\{\{rh\s*\|", re.IGNORECASE)
+_RH_RE = re.compile(r"\{\{(?:rh|RunningHeader)\s*\|", re.IGNORECASE)
 
 
 _SPACING_TEMPLATE_RE = re.compile(
@@ -292,6 +317,153 @@ def _harvest_headings(vol: int, all_ws: list[int]) -> dict[int, int]:
         if printed is not None:
             result[ws] = printed
     return result
+
+
+# ─── Source 1b: archive.org hocr (leaf -> printed) ──────────────────────────
+
+
+def _ia_identifier(vol: int) -> str:
+    """Return the IA item identifier for the JP2 zip whose leaves we
+    extracted.  Vol 20 uses the DLI Bengal copy which has no IA hocr;
+    callers must handle vol 20 separately."""
+    if vol in (3, 5, 6, 7, 8, 9, 11, 12, 13):
+        return f"encyclopaediabrit{vol:02d}chisrich"
+    if vol == 20:
+        return "10689.10192"  # DLI Bengal — no _page_numbers.json
+    return f"encyclopaediabri{vol:02d}chisrich"
+
+
+def _ia_confident_pins(vol: int) -> dict[int, int]:
+    """leaf -> printed for every leaf IA actually OCR'd (confidence
+    is non-None).  IA's hocr also linearly interpolates page numbers
+    between OCR'd anchors and writes the result with confidence=None;
+    those entries silently bridge over plates and must NOT be promoted
+    to pins.  Returns empty dict if the file is missing (vol 20)."""
+    f = IA_DIR / f"{_ia_identifier(vol)}_page_numbers.json"
+    if not f.exists():
+        return {}
+    d = json.loads(f.read_text(encoding="utf-8"))
+    out: dict[int, int] = {}
+    for entry in d.get("pages", []):
+        if entry.get("confidence") is None:
+            continue
+        pn = (entry.get("pageNumber") or "").strip()
+        if pn.isdigit():
+            out[int(entry["leafNum"])] = int(pn)
+    return out
+
+
+def _build_leaf_map_ia(vol: int) -> dict[int, int]:
+    """Build the article-body leaf->printed map for vol from:
+        - VOL_RANGE anchors (start + end)
+        - IA hocr confidence-gated readings (in-volume pins)
+        - +1 walk between adjacent pins (numbered first, plates trail)
+        - TRUSTED_RUNS overrides (user-verified leaf->printed runs)
+        - UNNUMBERED_LEAVES drops (user-confirmed plate leaves)
+
+    Caller must NOT use this for vol 20 (which lacks IA hocr).
+    """
+    if vol not in VOL_RANGE:
+        return {}
+    F, P_F, L, P_L = VOL_RANGE[vol]
+    pins: dict[int, int] = {F: P_F, L: P_L}
+    for leaf, printed in _ia_confident_pins(vol).items():
+        if F < leaf < L and P_F < printed < P_L:
+            pins.setdefault(leaf, printed)
+
+    # +1 rule: each accepted pin must advance printed by at least 1 and
+    # at most leaf-step from the previous accepted pin.  This drops
+    # IA-OCR misreads (zero or negative steps, or gigantic forward
+    # leaps that imply impossibly many numbered leaves in a small gap).
+    sorted_pins = sorted(pins.items())
+    cleaned = [sorted_pins[0]]
+    for la, pa in sorted_pins[1:]:
+        prev_l, prev_p = cleaned[-1]
+        if not (1 <= pa - prev_p <= la - prev_l):
+            continue
+        cleaned.append((la, pa))
+
+    # Walk: between adjacent pins, fill numbered values first then
+    # trailing plates.  In a sub-gap of size d_leaf with d_printed-1
+    # numbered values to insert, leaves [la+1 .. la+d_printed-1] take
+    # consecutive +1 numbers and leaves [la+d_printed .. lb-1] are null.
+    leaf_map: dict[int, int] = {}
+    for (la, pa), (lb, pb) in zip(cleaned, cleaned[1:]):
+        leaf_map[la] = pa
+        d_leaf = lb - la
+        d_printed = pb - pa
+        if d_leaf - d_printed < 0:
+            continue  # impossible -- guarded by the +1 cleanup, but safe
+        gap = list(range(la + 1, lb))
+        for i, leaf in enumerate(gap):
+            if i < d_printed - 1:
+                leaf_map[leaf] = pa + i + 1
+    leaf_map[L] = P_L
+
+    # TRUSTED_RUNS: user-verified leaf->printed runs win over the walk.
+    for la, pa, lb, pb in TRUSTED_RUNS.get(vol, []):
+        for leaf in range(la, lb + 1):
+            leaf_map[leaf] = pa + (leaf - la)
+
+    # UNNUMBERED_LEAVES: user-confirmed plate leaves get dropped.
+    for leaf in UNNUMBERED_LEAVES.get(vol, []):
+        leaf_map.pop(leaf, None)
+
+    return leaf_map
+
+
+def _reject_heading_typos(headings: dict[int, int]) -> dict[int, int]:
+    """Drop heading values whose ws-printed offset disagrees by more
+    than 2 with all of the four nearest heading-bearing neighbours.
+
+    Catches transcriber typos like vol 17 ws 385 (rh reads 354 between
+    369 and 371 — true value is 370).  Without this filter, a single
+    typo poisons combined_ws for that ws, then poisons the derived
+    scan_map (ws 385 cross-references to whichever leaf actually shows
+    printed 354 — a totally different leaf elsewhere in the volume)."""
+    sorted_items = sorted(headings.items())
+    clean: dict[int, int] = {}
+    for i, (ws, printed) in enumerate(sorted_items):
+        off = ws - printed
+        neighbour_offs: list[int] = []
+        for j in range(max(0, i - 2), min(len(sorted_items), i + 3)):
+            if j == i:
+                continue
+            nws, npr = sorted_items[j]
+            neighbour_offs.append(nws - npr)
+        if neighbour_offs and not any(abs(off - n) <= 2 for n in neighbour_offs):
+            continue  # outlier — drop
+        clean[ws] = printed
+    return clean
+
+
+def _first_article_ws(all_ws: list[int],
+                      ws_from_heading: dict[int, int]) -> int | None:
+    """Locate the first article ws page from heading data.
+
+    Printed page 1 never prints its running-header number (it's
+    implicit), so it never appears in ws_from_heading. We anchor on
+    the smallest printed value that DOES carry a heading and walk
+    back through ``all_ws`` by ``printed - 1`` steps.
+
+    The previous heuristic (VOL_RANGE first_leaf − LEAF_OFFSET)
+    misplaces the anchor when a volume's title page is interleaved
+    with the first article on a single ws page (vols 19, 25): leaf
+    arithmetic puts the pin on the front-matter ws (page xiii / xiv),
+    not on the article ws.  Walking back through the actual ws
+    sequence in the corpus is robust to those leaf-vs-ws shears."""
+    if not ws_from_heading:
+        return None
+    sorted_all_ws = sorted(all_ws)
+    sorted_headings = sorted(ws_from_heading.items())
+    anchor_ws, anchor_printed = sorted_headings[0]
+    if anchor_printed < 1 or anchor_ws not in sorted_all_ws:
+        return None
+    idx = sorted_all_ws.index(anchor_ws)
+    back = anchor_printed - 1
+    if back < 0 or idx - back < 0:
+        return None
+    return sorted_all_ws[idx - back]
 
 
 # ─── Source 2: OCR + monotonic-anchor algorithm (leaf space) ─────────────────
@@ -571,8 +743,10 @@ def main() -> None:
         if not all_ws:
             continue
 
-        # 1. Primary source: headings (source of truth).
-        ws_from_heading = _harvest_headings(vol, all_ws)
+        # 1. Primary source: headings (source of truth, after typo
+        # rejection — neighbour-offset disagreement catches transcriber
+        # mistakes like vol 17 ws 385 reading 354 between 369 and 371).
+        ws_from_heading = _reject_heading_typos(_harvest_headings(vol, all_ws))
 
         # Translate heading ws→printed to leaf→printed for use as
         # anchors in the monotonic walk.
@@ -596,6 +770,25 @@ def main() -> None:
         ws_to_leaf: dict[int, int] = {}
         for ws_s, leaf in vol_sm.items():
             ws_to_leaf[int(ws_s)] = int(leaf)
+        # Drop stale front-matter ws→leaf entries that point at the
+        # first-article leaf or beyond.  The pre-rewrite scan_map used
+        # ``ws + LEAF_OFFSET`` as a fallback for missing entries, which
+        # mapped front-matter ws (vol 19 ws 14, vol 25 ws 13) onto the
+        # leaf where the first article actually starts.  Once those
+        # entries are in scan_map they survive every rebuild because
+        # densification only adds, never removes — and they keep
+        # producing ghost ``front-matter ws → printed 1`` rows in
+        # printed_pages.json.  We can identify them precisely: any ws
+        # before the heading-anchored first-article ws whose recorded
+        # leaf is ≥ VOL_RANGE's first article leaf is a stale fallback.
+        first_article_ws_anchor = _first_article_ws(all_ws, ws_from_heading)
+        if first_article_ws_anchor is not None and vol in VOL_RANGE:
+            article_first_leaf = VOL_RANGE[vol][0]
+            stale = [w for w, lf in ws_to_leaf.items()
+                     if w < first_article_ws_anchor
+                     and lf >= article_first_leaf]
+            for w in stale:
+                ws_to_leaf.pop(w, None)
         leaf_to_ws: dict[int, int] = {leaf: ws for ws, leaf in ws_to_leaf.items()}
 
         # Build ws-space anchors (no leaf detour — keeps things clean
@@ -605,10 +798,16 @@ def main() -> None:
         # heading, interpolate between consecutive heading-having
         # neighbors using the monotonic-offset rule.
         ws_anchors: list[tuple[int, int]] = list(ws_from_heading.items())
-        # Add VOL_RANGE endpoints translated into ws via scan_map
+        # Add VOL_RANGE endpoints translated into ws.  First-article ws
+        # comes from heading-anchored back-walk (robust to title-page
+        # interleaving); last-article ws falls back to leaf arithmetic
+        # since the last leaf typically carries an Arabic heading.
+        first_article_ws_anchor = _first_article_ws(all_ws, ws_from_heading)
         if vol in VOL_RANGE:
             fl, fp, ll, lp = VOL_RANGE[vol]
-            ws_first = leaf_to_ws.get(fl, fl - offset)
+            ws_first = (first_article_ws_anchor
+                        if first_article_ws_anchor is not None
+                        else leaf_to_ws.get(fl, fl - offset))
             ws_last = leaf_to_ws.get(ll, ll - offset)
             ws_anchors.append((ws_first, fp))
             ws_anchors.append((ws_last, lp))
@@ -637,12 +836,23 @@ def main() -> None:
         # Translate ws_combined through scan_map for any additional
         # heading-derived leaf entries the OCR walk missed.  Headings
         # are the ground truth for numbered pages that actually carry
-        # a running header number.
+        # a running header number — but scan_map (ws → leaf) is only
+        # truth as far as the IA copy we extracted matches the IA copy
+        # Wikisource transcribed from.  When they diverge (vol 20:
+        # Bengal IA scan vs univ-derived Wikisource transcription)
+        # leaf_from_ocr is the correct authority for leaf → printed,
+        # so don't let the ws→leaf overlay clobber a conflicting OCR
+        # reading.  The densified scan_map at the end of this volume
+        # will re-derive the ws→leaf entries from the OCR-anchored
+        # combined_leaf.
         leaf_from_algo: dict[int, int] = dict(leaf_from_ocr)
         for ws, printed in ws_combined.items():
             leaf = ws_to_leaf.get(ws)
             if leaf is None:
                 continue
+            ocr_printed = leaf_from_ocr.get(leaf)
+            if ocr_printed is not None and ocr_printed != printed:
+                continue  # OCR-on-actual-scan wins over ws→leaf overlay
             leaf_from_algo[leaf] = printed
 
         # Translate leaf results back to ws.
@@ -652,9 +862,15 @@ def main() -> None:
             if ws is not None:
                 ws_from_algo[ws] = printed
 
-        # Combined ws -> printed: headings win (they are truth),
-        # algorithm fills ws pages without headings.
-        combined_ws: dict[int, int] = {**ws_from_algo, **ws_from_heading}
+        # Combined ws -> printed: headings win (they are truth);
+        # ws-space linear interpolation fills heading-less gaps.  No
+        # scan_map round-trip — ws_from_algo would re-introduce noise
+        # from OCR-via-scan_map back-translation for the rare non-
+        # heading ws pages, and we don't need it: linear interp covers
+        # the gaps cleanly when neighbour offsets agree.
+        combined_ws: dict[int, int] = {
+            **ws_from_interp, **ws_from_heading,
+        }
 
         # First-article pin in ws space: the first article page never
         # prints its running-header number (it's implicit), so heading
@@ -663,43 +879,51 @@ def main() -> None:
         # "printed" value, which cascades through article page_start /
         # page_end and makes every subsequent page number read wrong.
         if vol in VOL_RANGE:
-            fl = VOL_RANGE[vol][0]
             fp = VOL_RANGE[vol][1]
-            first_article_ws = leaf_to_ws.get(fl, fl - offset)
-            combined_ws.setdefault(first_article_ws, fp)
+            anchor_ws = (first_article_ws_anchor
+                         if first_article_ws_anchor is not None
+                         else leaf_to_ws.get(VOL_RANGE[vol][0],
+                                             VOL_RANGE[vol][0] - offset))
+            combined_ws.setdefault(anchor_ws, fp)
 
-        # Combined leaf -> printed: algorithm output is already based
-        # on heading anchors, so this is self-consistent.
-        combined_leaf: dict[int, int] = dict(leaf_from_algo)
-        for ws, printed in ws_from_heading.items():
-            leaf = ws_to_leaf.get(ws)
-            if leaf is None:
-                continue  # no scan_map entry — don't fall back
-            combined_leaf[leaf] = printed
+        # Combined leaf -> printed.
+        # For vols 1-19, 21-28: use the IA-hocr-driven builder, which
+        # consumes archive.org's confidence-gated leaf->printed readings
+        # and walks +1 between them anchored on VOL_RANGE.  Plates in
+        # the IA scan land naturally in the gaps between OCR'd anchors.
+        # For vol 20: the Bengal copy ships no IA hocr, so we fall back
+        # to the original OCR + heading + TRUSTED_RUNS reconstruction
+        # below (which is what was working for vol 20 before the
+        # April 22 corruption).
+        if vol == 20:
+            combined_leaf: dict[int, int] = dict(leaf_from_algo)
+            for ws, printed in ws_from_heading.items():
+                leaf = ws_to_leaf.get(ws)
+                if leaf is None:
+                    continue
+                ocr_printed = leaf_from_ocr.get(leaf)
+                if ocr_printed is not None and ocr_printed != printed:
+                    continue
+                combined_leaf[leaf] = printed
+            for la, pa, lb, pb in TRUSTED_RUNS.get(vol, []):
+                for leaf in range(la, lb + 1):
+                    combined_leaf[leaf] = pa + (leaf - la)
+            for leaf in UNNUMBERED_LEAVES.get(vol, []):
+                combined_leaf.pop(leaf, None)
+        else:
+            combined_leaf = _build_leaf_map_ia(vol)
 
-        # Apply TRUSTED_RUNS as direct leaf→printed overrides.  These
-        # are user-confirmed ground-truth anchors: they win over any
-        # derived value.  Useful when scan_map has no entry for the
-        # leaf (so nothing reaps it via ws-space) or has a wrong
-        # entry (so a bogus page number landed there).
-        for la, pa, lb, pb in TRUSTED_RUNS.get(vol, []):
-            for leaf in range(la, lb + 1):
-                combined_leaf[leaf] = pa + (leaf - la)
-
-        # Remove confirmed-unnumbered leaves. These are the authoritative
-        # "leaf is plate/blank, don't guess a printed number" overrides.
-        for leaf in UNNUMBERED_LEAVES.get(vol, []):
-            combined_leaf.pop(leaf, None)
-
-        # Densify scan_map (ws→leaf) by cross-referencing printed
-        # numbers.  For any ws whose printed page is known and whose
-        # printed value appears in combined_leaf, derive ws→leaf via
-        # the common printed number.  This fills the holes scan_map
-        # has at plates/blanks that no Css-image-crop reference
-        # covered — without it the viewer's `ws + LEAF_OFFSET` fallback
-        # lands on wildly wrong leaves inside articles with heavy
-        # plate clusters (SHIPBUILDING grew from offset 10 to 18
-        # across its plate section).
+        # Rebuild scan_map (ws→leaf) by cross-referencing printed
+        # numbers.  combined_leaf is now the authoritative leaf →
+        # printed map (TRUSTED_RUNS + heading + OCR).  For each ws
+        # with a known printed value, look up the leaf that holds
+        # that printed value.  This OVERRIDES stale on-disk entries
+        # from the old offset=0 fallback (vol 20: scan_map had ws X
+        # → leaf X throughout, but the IA Bengal copy's plate layout
+        # means ws 100 actually lives on leaf 99, ws 101 on leaf 100,
+        # etc. — TRUSTED_RUNS encode the correct offsets per region).
+        # Falls back to the existing on-disk entry only when no leaf
+        # carries the matching printed value.
         printed_to_leaf: dict[int, int] = {}
         for leaf, printed in combined_leaf.items():
             # Keep the smallest leaf for a given printed number so
@@ -707,13 +931,22 @@ def main() -> None:
             # produce ambiguous reverse lookups.
             if printed not in printed_to_leaf or leaf < printed_to_leaf[printed]:
                 printed_to_leaf[printed] = leaf
-        ws_to_leaf_dense: dict[int, int] = dict(ws_to_leaf)
+        ws_to_leaf_dense: dict[int, int] = {}
         for ws, printed in combined_ws.items():
-            if ws in ws_to_leaf_dense:
-                continue
             leaf = printed_to_leaf.get(printed)
             if leaf is not None:
                 ws_to_leaf_dense[ws] = leaf
+            elif ws in ws_to_leaf:
+                ws_to_leaf_dense[ws] = ws_to_leaf[ws]
+        # Stale on-disk entries for ws values not in our actual data
+        # (e.g. corrupted scan_map left ws 1040+ for vol 17 even though
+        # wiki only has ws 1-1039) used to be preserved by a fallback
+        # loop here.  That loop carried April 2026 corruption forward
+        # across rebuilds.  We now drop any ws not in all_ws — the new
+        # scan_map only contains ws values we actually have.
+        all_ws_set = set(all_ws)
+        ws_to_leaf_dense = {ws: leaf for ws, leaf in ws_to_leaf_dense.items()
+                            if ws in all_ws_set}
 
         ws_result[str(vol)] = {str(k): v for k, v in combined_ws.items() if v >= 1}
 
@@ -727,12 +960,18 @@ def main() -> None:
         # be ambiguous; null is explicit.
         leaf_entries: dict[int, int | str | None] = {}
         if vol in VOL_RANGE:
-            first_article_leaf, first_printed, last_leaf, _ = VOL_RANGE[vol]
+            first_article_leaf, first_printed, last_article_leaf, _ = VOL_RANGE[vol]
         else:
             first_article_leaf, first_printed = 1, 1
-            last_leaf = max(
+            last_article_leaf = max(
                 [*combined_leaf.keys(), *ws_to_leaf_dense.values(), 1]
             )
+        # Extend the dense map past the last article leaf to cover any
+        # back-matter leaves the IA scan has (post-content fly-leaves,
+        # blanks, plates).  Each gets explicit null so the scan viewer
+        # shows "(unnumbered)" rather than running off the end of the
+        # map.
+        last_leaf = max(last_article_leaf, _max_extracted_leaf(vol))
         # The first article page never prints a running-header page
         # number — the number is implicit. Pin it to first_printed
         # so the scan viewer labels it correctly without requiring a
@@ -752,12 +991,20 @@ def main() -> None:
             first_content_leaf = fm01_leaf + (fm_idx - 1)
         else:
             first_content_leaf = 1
+        unnumbered_set = set(UNNUMBERED_LEAVES.get(vol, []))
+        fm_serial = 0
         for leaf in range(1, last_leaf + 1):
             if leaf < first_article_leaf:
-                if leaf < first_content_leaf:
+                if leaf < first_content_leaf or leaf in unnumbered_set:
                     leaf_entries[leaf] = None
                 else:
-                    leaf_entries[leaf] = f"fm {leaf - first_content_leaf + 1}"
+                    fm_serial += 1
+                    leaf_entries[leaf] = f"fm {fm_serial}"
+            elif leaf > last_article_leaf:
+                # Back matter -- always null (unnumbered).
+                leaf_entries[leaf] = None
+            elif leaf in unnumbered_set:
+                leaf_entries[leaf] = None
             else:
                 v = combined_leaf.get(leaf)
                 leaf_entries[leaf] = v if (v is not None and v >= 1) else None
@@ -776,13 +1023,20 @@ def main() -> None:
 
     OUT_WS.write_text(json.dumps(ws_result, indent=2), encoding="utf-8")
     OUT_LEAF.write_text(json.dumps(leaf_result, indent=2), encoding="utf-8")
-    OUT_SCAN_MAP.write_text(json.dumps(scan_result, indent=2), encoding="utf-8")
+    # scan_map.json is now written as a one-shot derivation downstream
+    # of the authoritative leaf map (IA hocr + anchors for 27 volumes,
+    # TRUSTED_RUNS for vol 20).  Unlike the April 2026 "densification"
+    # that read its own output back as input, this derivation has no
+    # feedback path: ws->leaf is computed by cross-referencing two
+    # already-finalised maps (combined_leaf and combined_ws).  Even if
+    # the inputs change between rebuilds, the output is deterministic.
+    SCAN_MAP.write_text(json.dumps(scan_result, indent=2), encoding="utf-8")
     total_ws = sum(len(v) for v in ws_result.values())
     total_leaf = sum(len(v) for v in leaf_result.values())
     total_scan = sum(len(v) for v in scan_result.values())
     print(f"\nWrote {total_ws} ws mappings -> {OUT_WS}")
     print(f"Wrote {total_leaf} leaf mappings -> {OUT_LEAF}")
-    print(f"Wrote {total_scan} ws->leaf mappings -> {OUT_SCAN_MAP}")
+    print(f"Wrote {total_scan} ws->leaf mappings -> {SCAN_MAP}")
 
 
 if __name__ == "__main__":

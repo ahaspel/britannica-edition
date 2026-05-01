@@ -89,8 +89,68 @@ def _convert_links(text: str) -> str:
         display = positional[0] if positional else target
         return f"{_LNK}{target}|{display}{_LNK}"
     text = re.sub(
-        r"\{\{(?:1911link|11link)\|([^{}]+)\}\}",
+        r"\{\{(?:1911link|11link|EB1911\s+link)\|([^{}]+)\}\}",
         _link11, text, flags=re.IGNORECASE,
+    )
+
+    # 9th-edition + Catholic-Encyclopedia references.  Many subjects
+    # have an 11th-edition counterpart (Atom, Diffusion, Ether…); some
+    # don't (Attraction).  Emit a soft-link marker that export resolves
+    # to a real link when an 11th-edition article exists, falling back
+    # to plain display text otherwise — never a search-link, since we
+    # know the source template points at a different work.
+    #
+    # Three argument conventions are in use:
+    #   {{EB9link|Target[|Display]}}                — target first
+    #   {{EB9 Intra-Article Link|Target[|section]}} — target first; arg2 is a
+    #                                                 section name, not display
+    #   {{EB9 article link|Display|Target}}         — display first, target second
+    #                                                 (parallel to {{EB1911 article link}})
+    #   {{CE article link|Display|Target}}          — same as EB9 article link
+    # Section qualifiers like "(2.)" are stripped from the target for
+    # matching ({{EB9link|Ether (2.)|Ether}} → target "Ether").
+    def _soft_link(target: str, display: str) -> str:
+        target = re.sub(r"\s*\([^)]*\)\s*$", "", target).strip() or target
+        return f"«EB9:{target}|{display}«/EB9»"
+
+    def _eb9link(m):  # target-first
+        positional = [p.strip() for p in m.group(1).split("|")
+                      if p.strip() and "=" not in p]
+        if not positional:
+            return ""
+        target = positional[0]
+        display = positional[1] if len(positional) > 1 else target
+        return _soft_link(target, display)
+    text = re.sub(
+        r"\{\{EB9link\|([^{}]+)\}\}",
+        _eb9link, text, flags=re.IGNORECASE,
+    )
+
+    def _eb9_intra(m):  # target-first; arg2 is a section, not display
+        positional = [p.strip() for p in m.group(1).split("|")
+                      if p.strip() and "=" not in p]
+        if not positional:
+            return ""
+        target = positional[0]
+        return _soft_link(target, target)
+    text = re.sub(
+        r"\{\{EB9\s+intra[- ]article\s+link\|([^{}]+)\}\}",
+        _eb9_intra, text, flags=re.IGNORECASE,
+    )
+
+    def _article_link_soft(m):  # display-first, target-second
+        positional = [p.strip() for p in m.group(1).split("|")
+                      if p.strip() and "=" not in p]
+        if not positional:
+            return ""
+        if len(positional) >= 2:
+            display, target = positional[0], positional[1]
+        else:
+            display = target = positional[0]
+        return _soft_link(target, display)
+    text = re.sub(
+        r"\{\{(?:EB9|CE)\s+article\s+link\|([^{}]+)\}\}",
+        _article_link_soft, text, flags=re.IGNORECASE,
     )
 
     # {{EB1911 lkpl|...}} and {{DNB lkpl|...}}

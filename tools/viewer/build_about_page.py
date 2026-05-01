@@ -41,6 +41,7 @@ ARTICLE_OVERRIDES = {
 CONTRIBUTOR_OVERRIDES = {
     "Sir Leslie": "STEPHEN, SIR LESLIE",
     "Lyman Abbott": "ABBOTT, LYMAN",
+    "James Clerk Maxwell": "MAXWELL, JAMES CLERK",
 }
 
 
@@ -372,6 +373,7 @@ PAGE_TEMPLATE = """\
     </div>
   </div>
 </div>
+<script data-goatcounter="https://britannica11.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>"""
 
