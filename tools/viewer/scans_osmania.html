@@ -52,8 +52,8 @@
   <button id="lastBtn" onclick="goTo(endLeaf)">&raquo;</button>
   <span class="jump">
     <label for="jumpInput">Go to page</label>
-    <input id="jumpInput" type="text" inputmode="numeric" autocomplete="off"
-           onkeydown="if(event.key==='Enter')jumpToPrinted()" />
+    <input id="jumpInput" type="text" inputmode="numeric" autocomplete="off" />
+    <button id="jumpBtn" onclick="jumpToPrinted()">Go</button>
   </span>
 </div>
 <div class="scan-container" id="scanContainer"></div>
@@ -119,7 +119,7 @@
     const padVol = String(vol).padStart(2, "0");
     const padLeaf = String(leaf).padStart(4, "0");
     const name = `vol${padVol}_leaf${padLeaf}.jpg`;
-    return IS_LOCAL ? `/data/derived/scans/${name}` : `/data/scans/${name}`;
+    return IS_LOCAL ? `/data/derived/scans_osmania/${name}` : `/data/scans_osmania/${name}`;
   }
 
   function render() {

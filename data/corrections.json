@@ -1,5 +1,89 @@
 {
   "_doc": "Targeted text corrections applied to raw wikisource text during transform. Keys are 'vol:page' (zero-padded vol, ws page number). Each entry is a list of {from, to} replacements applied literally to raw_text before any other processing. Use sparingly — for transcription typos only, not for rendering issues.",
+  "_2:6_note": "Vol 2 contributor table mistypes Grant Showerman's signature initials as 'G. Sh.' All other volumes (07, 12, 18, 26) and vol 29's Index of Contributors use 'G. Sn.' — the canonical signature. Without this fix the contributor-table builder creates a phantom 'G. Sh.' Contributor record with no articles attached.",
+  "2:6": [
+    {
+      "from": "| initials     = G. Sh.",
+      "to": "| initials     = G. Sn."
+    }
+  ],
+  "_6:680_note": "Vol 6 page 680 article footer (one of the LOUIS XIV-era articles) signs James Thomson Shotwell as 'J. T. S.' (no asterisk).  His canonical signature throughout the corpus is 'J. T. S.*' (per all 12 per-volume contributor tables, all 13 other body-footer signatures, and vol 29's Index of Contributors).  Without this fix the bare '(J. T. S.)' has no matching ContributorInitials row and Shotwell loses attribution for this article.",
+  "6:680": [
+    {
+      "from": "{{EB1911 footer initials|James Thomson Shotwell|J. T. S.}}",
+      "to": "{{EB1911 footer initials|James Thomson Shotwell|J. T. S.*}}"
+    }
+  ],
+  "_8:12_note": "Vol 8 contributor table mistypes Thomas Frederick Tout's signature initials as 'T. F. T' (missing trailing period). Without the period, the contributor record's initials key doesn't match the body footers' '(T. F. T.)' signatures, so EDWARD I, EDWARD II, EDWARD III, and EDWARD THE BLACK PRINCE all silently lose Tout's author attribution. Vol 29's Index of Contributors confirms the canonical signature is 'T. F. T.' with period.",
+  "8:12": [
+    {
+      "from": "| initials     = T. F. T\n | name         = [[Author:Thomas Frederick Tout",
+      "to": "| initials     = T. F. T.\n | name         = [[Author:Thomas Frederick Tout"
+    }
+  ],
+  "_9:11_note": "Vol 9 contributor table mistypes William Bacher's signature initials as 'W. B*.' (asterisk in wrong position). All other volumes (01, 11, 13, 15, 22, 24) and vol 29's Index of Contributors use the canonical 'W. Ba.' (subscript-a form). Without this fix the asterisk-normalization rule '*.' → '.*' would collapse W. B*. into W. B.* (William Burton's signature) — distinct people accidentally merged.",
+  "9:11": [
+    {
+      "from": "| initials     = W. B*.\n | name         = [[Author:William Bacher",
+      "to": "| initials     = W. Ba.\n | name         = [[Author:William Bacher"
+    }
+  ],
+  "_12:734_note": "Vol 12 page 734 GUIZOT, FRANÇOIS PIERRE GUILLAUME footer is co-authored by Henry Reeve and James Thomson Shotwell, but Shotwell's secondary-author signature is typed bare 'J. T. S.' (asterisk dropped).  Same fix as vol 6:680 — Shotwell's canonical signature is 'J. T. S.*' and the bare form has no matching ContributorInitials row.",
+  "12:734": [
+    {
+      "from": "name2=James Thomson Shotwell|initials2=J. T. S.}}",
+      "to": "name2=James Thomson Shotwell|initials2=J. T. S.*}}"
+    }
+  ],
+  "_12:7_note": "Vol 12 contributor table mistypes Ernest Charles François Babelon's signature initials as 'E. B.' (missing asterisk).  All other volumes that list him (01:25, 05:5, 16:7, 27:7) and vol 29's Index of Contributors use the canonical 'E. B.*' — the asterisked form distinguishes him from Edward Breck, who owns the un-asterisked 'E. B.' per vol 29.  Without this fix the build script's name-based merge attaches both initials forms to Babelon (since vol 12 entry's name field links to Author:Ernest Charles François Babelon), leaving 'E. B.' permanently bound to Babelon and the Group-Y pair re-key in the linker unable to free 'E. B.' for Breck.  Confirmed via the entry's description field (Collège de France, Bibliothèque Nationale, etc.) and subject1=Hadrumetum — unambiguously Babelon's Roman-archaeology bio.",
+  "12:7": [
+    {
+      "from": "| initials     = E. B.\n | name         = [[Author:Ernest Charles François Babelon",
+      "to": "| initials     = E. B.*\n | name         = [[Author:Ernest Charles François Babelon"
+    }
+  ],
+  "_17:10_note": "Vol 17 contributor table lists John Theodore Merz at 'J. T. M.' (no asterisk) — same key James Tayler Milton uses in vol 04:10.  This is a print-level ambiguity: the original print never disambiguates the two J. T. M. contributors.  We assign asterisk to Merz (alphabetically first per the Babelon/Breck convention; see project_vol29_contributor_integration.md) so vol 04:10's Milton retains the un-asterisked 'J. T. M.' and Merz claims 'J. T. M.*'.  This is editorial, not a transcription typo — the print agrees with the wikitext.  Pair with the vol 17:40 LOTZE-footer correction so Merz's body-footer signature also resolves.",
+  "17:10": [
+    {
+      "from": "| initials     = J. T. M.\n | name         = [[Author:John Theodore Merz",
+      "to": "| initials     = J. T. M.*\n | name         = [[Author:John Theodore Merz"
+    }
+  ],
+  "_17:40_note": "Vol 17 page 40 LOTZE article footer co-authors John Theodore Merz and Henry Sturt; Merz's signature is plain 'J. T. M.' (matching the print's print-level ambiguity with James Tayler Milton).  Pair with the vol 17:10 front-matter correction — once Merz owns 'J. T. M.*' in the contributor table, this footer must use the asterisked form to bind correctly.  Sturt's 'H. St.' is unaffected.",
+  "17:40": [
+    {
+      "from": "{{EB1911 footer initials|John Theodore Merz|J. T. M.|name2=Henry Sturt|initials2=H. St.}}",
+      "to": "{{EB1911 footer initials|John Theodore Merz|J. T. M.*|name2=Henry Sturt|initials2=H. St.}}"
+    }
+  ],
+  "_20:13_note": "Vol 20 contributor table writes John Charles Van Dyke's signature with lowercase 'van' in both the initials (J. C. van D.) and the Author-link slug — disagreeing with vol 14's canonical capital-V form (J. C. Van D., Author:John Charles Van Dyke).  Net effect: build_contributor_table.py creates two distinct Contributor records for one person; vol 14's contribution (INNESS, GEORGE) goes to one record, vol 20's (PAINTING, U.S.) to the other.  Capital V is the standard reference form for the American art historian (1856-1932).",
+  "20:13": [
+    {
+      "from": "| initials     = J. C. van D.\n | name         = [[Author:John Charles van Dyke|John Charles van Dyke]]",
+      "to": "| initials     = J. C. Van D.\n | name         = [[Author:John Charles Van Dyke|John Charles Van Dyke]]"
+    }
+  ],
+  "_20:569_note": "Vol 20 page 569 PAINTING article footer uses lowercase initials (J. C. van D.) inconsistent with the canonical J. C. Van D. used in vol 14's footers and matching vol 14's Author-link slug.  Same single-record vs duplicate-records issue as vol 20:13.",
+  "20:569": [
+    {
+      "from": "{{EB1911 footer initials|John Charles Van Dyke|J. C. van D.}}",
+      "to": "{{EB1911 footer initials|John Charles Van Dyke|J. C. Van D.}}"
+    }
+  ],
+  "_21:7_note": "Vol 21 contributor table mistypes Rev. Ethelred Luke Taunton's signature initials as 'E. Tu.'  All other volumes (02, 03, 05, 07, 10, 15, 17, 27) use 'E. Tn.' — the correct signature per article footers and the vol 29 Index of Contributors. Without this fix the contributor-table builder creates a phantom 'E. Tu.' Contributor record with no articles attached.",
+  "_27:10_note": "Vol 27 contributor table mistypes Rev. John Punnett Peters' signature initials as 'J. P. P.' — the entry is otherwise unambiguously Peters (description names Episcopal Cathedral / Hebrew at Penn / Nippur Expedition; subject1 = Ur). All other volumes (01, 03, 04, 07, 09, 13, 14, 15, 19, 26) use 'J. P. Pe.' for Peters, also confirmed by vol 29's Index of Contributors. The bug then compounds in build_contributor_table.py: the J. P. P. initials group accumulates this 1 Peters entry alongside 6 legitimate John Percival Postgate entries (vols 15, 16, 17, 21, 22, 26); the 'longest canonical name wins' heuristic picks 'Rev. John Punnett Peters' over 'John Percival Postgate'; both J. P. P. and J. P. Pe. groups then merge under Peters; Postgate vanishes from the DB entirely; and Postgate's articles (Juvenal, Latin Literature, Lucan, Phaedrus, Propertius, Textual Criticism, Tibullus) get wrongly credited to Peters.",
+  "27:10": [
+    {
+      "from": "| initials     = J. P. P.\n | name         = [[Author:John Punnett Peters",
+      "to": "| initials     = J. P. Pe.\n | name         = [[Author:John Punnett Peters"
+    }
+  ],
+  "21:7": [
+    {
+      "from": "| initials     = E. Tu.",
+      "to": "| initials     = E. Tn."
+    }
+  ],
   "26:244": [
     {
       "from": "The secretary y had already accepted a bribe",
@@ -104,6 +188,13 @@
     {
       "from": "(1892–1888)",
       "to": "(1802–1888)"
+    }
+  ],
+  "_18:302_note": "METEOROLOGY equation (1) was transcribed as italic text `''pv''=RT` instead of `<math>pv = RT</math>`. The {{ne}} numbered-equation handler correctly renders math content as a labeled display equation with the (N) at the right margin, but italic-text content falls through to inline rendering and the label sticks to the formula. Rewrite to a real math block.",
+  "18:302": [
+    {
+      "from": "{{ne||''pv''＝RT|(1)}}",
+      "to": "{{ne||<math>pv = \\mathrm{RT}</math>|(1)}}"
     }
   ],
   "19:685": [

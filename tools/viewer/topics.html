@@ -86,15 +86,19 @@
       padding: 2px 8px 6px;
       border-left: 1px dotted var(--border); background: rgba(123, 63, 0, 0.06); }
     .nav-arrow {
-      position: fixed; right: 8px; width: 32px; height: 32px;
-      display: flex; align-items: center; justify-content: center;
-      background: var(--panel); border: 1px solid var(--border);
-      color: var(--muted); cursor: pointer; font-size: 0.9rem;
-      border-radius: 50%; user-select: none; line-height: 1;
-      z-index: 100;
+      position: fixed;
+      right: 8px;
+      top: 50%;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      z-index: 50;
+      color: #8b7355;
+      padding: 4px;
+      line-height: 1;
     }
-    .nav-arrow:hover { color: #5c4a32; background: var(--resolved-bg); }
-    .nav-arrow { top: 50%; }
+    .nav-arrow:hover { color: #5c4a32; }
     /* Multi-column layout so long alphabetical lists (like the
        original printed TOC) read naturally. CSS columns keep items
        in alphabetical order column-by-column automatically. */
@@ -152,12 +156,6 @@
         &nbsp;&middot;&nbsp;
         <a href="/ancillary.html" style="color: var(--link); text-decoration: none;">Ancillary</a>
       </div>
-    </div>
-    <div class="source-note">
-      Categories are defined by the original 1911 edition's "Classified Table of Contents"
-      (vol.&nbsp;29, leaves&nbsp;893&ndash;961). The editors' introduction begins on
-      leaves&nbsp;893&ndash;894, the meta-TOC summary on leaves&nbsp;895&ndash;896, and
-      the body pages run from leaf&nbsp;897 onward.
     </div>
     <div class="source-scans-link" style="margin:0.5em 0;">
       <a class="nav-link"

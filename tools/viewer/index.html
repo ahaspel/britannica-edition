@@ -301,10 +301,6 @@
       </div>
       <div id="stats" class="stats">Loading...</div>
 
-      <div class="search-modes">
-        <label><input type="radio" name="mode" value="fulltext" checked /> <span>Articles</span></label>
-        <label><input type="radio" name="mode" value="contributors" /> <span>Contributors</span></label>
-      </div>
       <div class="search-form" style="align-items: center; flex-wrap: wrap;">
         <div style="position: relative; flex: 1 1 200px; min-width: 0; max-width: 480px;">
           <input id="search" class="search-box" type="text" placeholder="Search articles..." autofocus autocomplete="off" style="width: 100%; box-sizing: border-box;" />
@@ -423,7 +419,7 @@
     }
 
     function getMode() {
-      return document.querySelector('input[name="mode"]:checked').value;
+      return "fulltext";
     }
 
     function pageRange(a) {
@@ -981,18 +977,6 @@
     }
 
     updateHint();
-    document.querySelectorAll('input[name="mode"]').forEach(r =>
-      r.addEventListener("change", () => {
-        updateHint();
-        // Clear prior results when switching modes — user searches
-        // fresh in the new mode.
-        hideAllResults();
-        document.getElementById("search-typeahead").style.display = "none";
-        searchInput.value = "";
-        setResultCount(0);
-        searchInput.focus();
-      })
-    );
 
     searchBtn.addEventListener("click", doSearch);
     // ── Live typeahead on the main search box ──
@@ -1230,16 +1214,11 @@
         volBar.appendChild(btn);
       }
 
-      // Handle URL parameters (e.g., ?mode=contributors&q=John+Bury)
+      // Handle URL ?q= for direct article search
       const params = new URLSearchParams(window.location.search);
-      const urlMode = params.get("mode");
       const urlQuery = params.get("q");
-      if (urlMode) {
-        const radio = document.querySelector(`input[name="mode"][value="${urlMode}"]`);
-        if (radio) { radio.checked = true; updateHint(); }
-      }
-      if (urlQuery || urlMode === "contributors") {
-        searchInput.value = urlQuery || "";
+      if (urlQuery) {
+        searchInput.value = urlQuery;
         doSearch();
       }
     }).catch(err => {

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vol 20 plate browser</title>
+  <style>
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      background: #f5f1eb;
+      color: #2c2416;
+      margin: 0;
+      padding: 16px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      font-variant: small-caps;
+      letter-spacing: 0.06em;
+    }
+    .controls {
+      margin-bottom: 12px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+    .controls input[type="number"] {
+      width: 80px;
+      padding: 3px 5px;
+      font-family: inherit;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 8px;
+    }
+    .cell {
+      background: #fdfcf9;
+      border: 1px solid #d4cab8;
+      border-radius: 2px;
+      padding: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+    }
+    .cell:hover { border-color: #5c4a32; }
+    .cell .label {
+      font-size: 0.78rem;
+      margin: 4px 0 0;
+      text-align: center;
+      line-height: 1.3;
+    }
+    .cell .leaf-num { font-weight: bold; }
+    .cell .printed { color: #6b5e4f; }
+    .cell.unnumbered { background: #efe6d4; }
+    .cell.unnumbered .printed { font-style: italic; color: #a8956c; }
+    .cell img {
+      width: 100%;
+      height: auto;
+      display: block;
+      max-height: 240px;
+      object-fit: contain;
+      background: #fff;
+      border: 1px solid #e6dec9;
+    }
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(44, 36, 22, 0.9);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .modal.open { display: flex; }
+    .modal img {
+      max-width: 100%;
+      max-height: 100%;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+    }
+    .modal .info {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      color: #fdfcf9;
+      font-size: 1rem;
+    }
+    .modal .close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: #fdfcf9;
+      font-size: 1.5rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Vol 20 plate browser</h1>
+  <div class="controls">
+    <span>Article leaves: 21 to 1060.  Cells highlighted in beige are currently unnumbered.</span>
+    <label>Jump to leaf: <input id="jumpLeaf" type="number" min="21" max="1060" /></label>
+    <span id="status"></span>
+  </div>
+  <div class="grid" id="grid"></div>
+  <div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
+    <button class="close" onclick="closeModal()">×</button>
+    <div class="info" id="modalInfo"></div>
+    <img id="modalImg" />
+  </div>
+
+  <script>
+    const FIRST_LEAF = 21;
+    const LAST_LEAF = 1060;
+    const VOL = 20;
+
+    const CACHE_BUST = Date.now();
+    function leafFile(leaf) {
+      return `/data/derived/scans/vol20_leaf${String(leaf).padStart(4, "0")}.jpg?t=${CACHE_BUST}`;
+    }
+
+    async function loadMap() {
+      const r = await fetch("/data/derived/printed_pages_leaf.json?t=" + Date.now());
+      const d = await r.json();
+      return d[String(VOL)] || {};
+    }
+
+    function labelFor(leaf, leafMap) {
+      const v = leafMap[String(leaf)];
+      if (v === undefined || v === null) return "(unnumbered)";
+      if (typeof v === "number") return `p. ${v}`;
+      return String(v);
+    }
+
+    function render(leafMap) {
+      const grid = document.getElementById("grid");
+      const cells = [];
+      for (let leaf = FIRST_LEAF; leaf <= LAST_LEAF; leaf++) {
+        const v = leafMap[String(leaf)];
+        const isUnnumbered = (v === undefined || v === null);
+        const cell = document.createElement("div");
+        cell.className = "cell" + (isUnnumbered ? " unnumbered" : "");
+        cell.id = `cell-${leaf}`;
+        cell.onclick = () => openModal(leaf, leafMap);
+        const img = document.createElement("img");
+        img.loading = "lazy";
+        img.src = leafFile(leaf);
+        img.alt = `leaf ${leaf}`;
+        const label = document.createElement("div");
+        label.className = "label";
+        label.innerHTML = `<span class="leaf-num">leaf ${leaf}</span><br><span class="printed">${labelFor(leaf, leafMap)}</span>`;
+        cell.appendChild(img);
+        cell.appendChild(label);
+        grid.appendChild(cell);
+      }
+      document.getElementById("status").textContent = `${LAST_LEAF - FIRST_LEAF + 1} leaves loaded`;
+    }
+
+    function openModal(leaf, leafMap) {
+      const modal = document.getElementById("modal");
+      const img = document.getElementById("modalImg");
+      const info = document.getElementById("modalInfo");
+      img.src = leafFile(leaf);
+      info.innerHTML = `<strong>leaf ${leaf}</strong> &nbsp;|&nbsp; ${labelFor(leaf, leafMap)}`;
+      modal.classList.add("open");
+    }
+
+    function closeModal() {
+      document.getElementById("modal").classList.remove("open");
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeModal();
+    });
+
+    document.getElementById("jumpLeaf").addEventListener("change", (e) => {
+      const n = parseInt(e.target.value);
+      if (n >= FIRST_LEAF && n <= LAST_LEAF) {
+        const cell = document.getElementById(`cell-${n}`);
+        if (cell) cell.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
+
+    loadMap().then(render);
+  </script>
+</body>
+</html>

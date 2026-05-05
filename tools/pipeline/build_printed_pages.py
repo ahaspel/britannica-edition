@@ -94,11 +94,14 @@ VOL_RANGE: dict[int, tuple[int, int, int, int]] = {
     17: (21, 1, 1058, 1020),
     18: (19, 1, 1018, 968),
     19: (21, 1, 1062, 996),
-    # Bengal/10689.10192 IA scan: last numbered leaf is 1044 (= printed
-    # 980, the volume's last page).  Leaves 1045-1048 are blank verso
-    # plus post-text fly-leaves; those file slots in the JP2 zip exist
-    # but the pages aren't part of the book's running pagination.
-    20: (19, 1, 1044, 980),
+    # Vol 20 was swapped from Bengal (DLI 10689.10192) to Osmania
+    # (DLI 2015.85243) — better quality, in-order pages, but missing
+    # the last 4 article pages.  Osmania articles run leaf 21 → page 1
+    # (ODE) through leaf 1044 → page 976 (PAWTUCKET).  Leaves
+    # 1045-1056 are Osmania back matter (unnumbered).  Leaves
+    # 1057-1060 are spliced from Bengal originals 1041-1044, carrying
+    # the missing pages 977-980 (PAXO through PAYMENT OF MEMBERS).
+    20: (21, 1, 1060, 980),
     21: (21, 1, 1034, 984),
     22: (21, 1, 1002, 976),
     23: (21, 1, 1088, 1024),
@@ -107,6 +110,14 @@ VOL_RANGE: dict[int, tuple[int, int, int, int]] = {
     26: (21, 1, 1118, 1064),
     27: (21, 1, 1110, 1064),
     28: (21, 1, 1106, 1064),
+    # Vol 29 = Index + Classified Table of Contents (page numbers run
+    # continuously from page 1 to 947).  IA-hocr last confident reading
+    # is leaf 953 → 939; leaves 954-961 carry the rest of the TOC
+    # (numbered, but IA didn't OCR them — fill via +1 walk to the
+    # user-confirmed end leaf 961 → 947).  Leaves 962+ are the
+    # Contributors list and back matter, surfaced elsewhere on the
+    # site, so left unnumbered here.
+    29: (15, 1, 961, 947),
 }
 
 # Verified-by-user internal anchor runs (LEAF space).
@@ -128,17 +139,15 @@ TRUSTED_RUNS: dict[int, list[tuple[int, int, int, int]]] = {
         (538, 504, 538, 504),
         (800, 752, 800, 752),
     ],
+    # Vol 20: Osmania scan + Bengal splice for pp. 977-980.
+    # Anchors are scan-verified leaf→page pairs.  The gap-fill walks
+    # +1 between them and places (Δleaf − Δprinted) plate slots at
+    # the end of each gap.  Total: 48 plates across the volume.
     20: [
-        (19, 1, 44, 26),
-        (48, 27, 79, 58),
-        (82, 59, 137, 114),
-        (140, 115, 219, 194),
-        (517, 471, 517, 471),
-        (540, 492, 540, 492),
-        (824, 770, 824, 770),
-        (858, 800, 858, 800),
-        (980, 920, 980, 920),
-        (998, 934, 998, 934),
+        # Vol 20: pure +1 walk from leaf 21 = page 1 to leaf 1060,
+        # skipping pages on UNNUMBERED_LEAVES.  No splice, no end
+        # anchor — whatever the walk produces is the answer.
+        (21, 1, 21, 1),
     ],
     23: [
         (46, 26, 46, 26),
@@ -176,6 +185,15 @@ TRUSTED_RUNS: dict[int, list[tuple[int, int, int, int]]] = {
 # numbers where "fm 1" should appear.
 FIRST_FM_CONTENT_LEAF: dict[int, int] = {
     24: 7,  # leaves 5, 6 are blanks that is_blank() missed
+    20: 9,  # Osmania scan: actual numbered fm content (Roman vii-xviii) starts here
+}
+
+
+# Override the starting fm label index per volume.  Default is 1 ("fm 1");
+# vol 20 has 12 fm pages that print Roman vii-xviii on the page itself,
+# so we label them "fm 7" through "fm 18" to match the printed numerals.
+FM_LABEL_START: dict[int, int] = {
+    20: 7,
 }
 
 
@@ -185,12 +203,37 @@ UNNUMBERED_LEAVES: dict[int, list[int]] = {
     # number the interpolation guessed for it. The remaining leaves
     # in each gap are left to the algorithm; add more here as errors
     # surface.
-    # vol 20 Bengal scan: leaf 18 is a black/blank leaf between the
-    # last fm content (leaf 17 = "fm 10") and the first article (leaf
-    # 19 = ODE).  Leaves 1045-1048 are post-content fly-leaves (the
-    # volume ends at leaf 1044 = printed 980, then blank verso + back
-    # matter).
-    20: [18, 1045, 1046, 1047, 1048],
+    # vol 20 (Osmania scan): user-supplied complete list of unnumbered
+    # leaves.  Leaf 20 is the black before the first article; leaves
+    # 1045-1056 sit between Osmania's last article (leaf 1044 = p. 976)
+    # and the Bengal-spliced tail (leaves 1057-1060 = pp. 977-980).
+    20: [
+        20,
+        47, 48, 49,
+        82, 83,
+        140, 141,
+        222, 223,
+        250, 251,
+        260, 261,
+        276, 277,
+        472, 473, 474,
+        500, 501, 502, 503,           # leaf 504 = spliced Bengal p462
+        507, 508,
+        511, 512,
+        517, 518,
+        525, 526,
+        577, 578,
+        633, 634,
+        639, 640,
+        827, 828,
+        833, 834,
+        865, 866,
+        981, 982,
+        985, 986,
+        989, 990,
+        # Trailing unnumbered between Osmania's last article and the splice.
+        1045, 1046, 1047, 1048, 1049, 1050, 1051, 1052, 1053, 1054, 1055, 1056,
+    ],
     # SHIPBUILDING (vol 24) confirmed unnumbered leaves:
     24: [1045, 1049, 1052, 1055, 1061, 1062],
     # Note: leaves 1056-1058 between 1054 (968) and 1059 (969) are
@@ -734,13 +777,51 @@ def main() -> None:
     leaf_result: dict[str, dict[str, int]] = {}
     scan_result: dict[str, dict[str, int]] = {}
 
-    for vol in range(1, 29):
+    for vol in range(1, 30):
         all_ws = [
             r[0] for r in s.query(SourcePage.page_number)
             .filter(SourcePage.volume == vol)
             .order_by(SourcePage.page_number).all()
         ]
         if not all_ws:
+            # No Wikisource source pages for this volume — true for vol
+            # 29 (the Index, transcribed via the classified-TOC parser
+            # rather than imported as articles).  Build leaf→printed/fm
+            # straight from VOL_RANGE + IA hocr; there is no ws side
+            # and no scan_map for these volumes.
+            if vol not in VOL_RANGE:
+                continue
+            combined_leaf = _build_leaf_map_ia(vol)
+            first_article_leaf, first_printed, last_article_leaf, _ = VOL_RANGE[vol]
+            last_leaf = max(last_article_leaf, _max_extracted_leaf(vol))
+            combined_leaf.setdefault(first_article_leaf, first_printed)
+            fm_idx = fm_first_content.get(str(vol))
+            fm01_leaf = _fm01_leaf(vol)
+            if vol in FIRST_FM_CONTENT_LEAF:
+                first_content_leaf = FIRST_FM_CONTENT_LEAF[vol]
+            elif fm_idx is not None and fm01_leaf is not None:
+                first_content_leaf = fm01_leaf + (fm_idx - 1)
+            else:
+                first_content_leaf = 1
+            unnumbered_set = set(UNNUMBERED_LEAVES.get(vol, []))
+            fm_serial = FM_LABEL_START.get(vol, 1) - 1
+            leaf_entries: dict[int, int | str | None] = {}
+            for leaf in range(1, last_leaf + 1):
+                if leaf < first_article_leaf:
+                    if leaf < first_content_leaf or leaf in unnumbered_set:
+                        leaf_entries[leaf] = None
+                    else:
+                        fm_serial += 1
+                        leaf_entries[leaf] = f"fm {fm_serial}"
+                elif leaf > last_article_leaf:
+                    leaf_entries[leaf] = None
+                elif leaf in unnumbered_set:
+                    leaf_entries[leaf] = None
+                else:
+                    v = combined_leaf.get(leaf)
+                    leaf_entries[leaf] = v if (v is not None and v >= 1) else None
+            leaf_result[str(vol)] = {str(k): v for k, v in sorted(leaf_entries.items())}
+            print(f"  Vol {vol:2d}:  leaf-only ({sum(1 for v in leaf_entries.values() if isinstance(v, int))} numbered; index volume)")
             continue
 
         # 1. Primary source: headings (source of truth, after typo
@@ -896,15 +977,20 @@ def main() -> None:
         # below (which is what was working for vol 20 before the
         # April 22 corruption).
         if vol == 20:
-            combined_leaf: dict[int, int] = dict(leaf_from_algo)
-            for ws, printed in ws_from_heading.items():
-                leaf = ws_to_leaf.get(ws)
-                if leaf is None:
+            # Vol 20 (Osmania scan): straight +1 walk from leaf 21 =
+            # page 1, skipping pages on every UNNUMBERED_LEAVES entry.
+            # User-supplied plate list is the sole authority.  TRUSTED_RUNS
+            # then overrides any ranges (e.g. the Bengal splice for
+            # pp. 977-980 at leaves 1057-1060).
+            combined_leaf: dict[int, int] = {}
+            unnumbered_set = set(UNNUMBERED_LEAVES.get(vol, []))
+            F, P_F, L, _ = VOL_RANGE[vol]
+            page = P_F - 1
+            for leaf in range(F, L + 1):
+                if leaf in unnumbered_set:
                     continue
-                ocr_printed = leaf_from_ocr.get(leaf)
-                if ocr_printed is not None and ocr_printed != printed:
-                    continue
-                combined_leaf[leaf] = printed
+                page += 1
+                combined_leaf[leaf] = page
             for la, pa, lb, pb in TRUSTED_RUNS.get(vol, []):
                 for leaf in range(la, lb + 1):
                     combined_leaf[leaf] = pa + (leaf - la)
@@ -992,7 +1078,7 @@ def main() -> None:
         else:
             first_content_leaf = 1
         unnumbered_set = set(UNNUMBERED_LEAVES.get(vol, []))
-        fm_serial = 0
+        fm_serial = FM_LABEL_START.get(vol, 1) - 1
         for leaf in range(1, last_leaf + 1):
             if leaf < first_article_leaf:
                 if leaf < first_content_leaf or leaf in unnumbered_set:

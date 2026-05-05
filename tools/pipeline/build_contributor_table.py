@@ -17,10 +17,50 @@ sys.path.insert(0, "src")
 
 from britannica.db.models import Contributor, ContributorInitials
 from britannica.db.session import SessionLocal
+from britannica.pipeline.stages.extract_contributors import _normalize_initials
 
 _ENTRY_START_PATTERN = re.compile(
     r"\{\{EB1911 contributor table/entry",
 )
+
+_CORRECTIONS: dict | None = None
+
+
+def _load_corrections() -> dict:
+    """Load `data/corrections.json` once.  This is the same file
+    consumed by `clean_pages.py` for article-body fixes; we apply it
+    here too so transcription typos in front-matter contributor
+    tables (e.g. vol 27's `J. P. P.` for Peters when print says
+    `J. P. Pe.`) are respected when building the master contributor
+    table.  Without this hook, body-pipeline corrections work but
+    contributor-table corrections silently no-op."""
+    global _CORRECTIONS
+    if _CORRECTIONS is not None:
+        return _CORRECTIONS
+    p = Path("data/corrections.json")
+    if not p.exists():
+        _CORRECTIONS = {}
+        return _CORRECTIONS
+    with p.open(encoding="utf-8") as f:
+        _CORRECTIONS = json.load(f)
+    return _CORRECTIONS
+
+
+def _apply_corrections(text: str, volume: int) -> str:
+    """Apply per-volume `corrections.json` entries to `text`.  Mirrors
+    `clean_pages._apply_corrections` so the same fix file drives both
+    pipelines."""
+    corrs = _load_corrections()
+    vol_prefix = f"{volume}:"
+    for key, entries in corrs.items():
+        if not key.startswith(vol_prefix):
+            continue
+        if not isinstance(entries, list):
+            continue
+        for c in entries:
+            if isinstance(c, dict) and "from" in c and "to" in c:
+                text = text.replace(c["from"], c["to"])
+    return text
 
 
 def _iter_entries(text: str):
@@ -138,12 +178,24 @@ def build_contributor_table():
     for vol_dir in sorted(raw_dir.iterdir()):
         if not vol_dir.is_dir():
             continue
+        try:
+            volume = int(vol_dir.name.split("_", 1)[1])
+        except (IndexError, ValueError):
+            continue
         for path in sorted(vol_dir.glob("*.json")):
             with open(path, encoding="utf-8") as f:
                 data = json.load(f)
-            raw = data.get("raw_text", "")
+            raw = _apply_corrections(data.get("raw_text", ""), volume)
             for content in _iter_entries(raw):
-                initials = _parse_field(content, "initials").strip()
+                # Normalize before the length filter — entries whose
+                # raw initials field uses HTML-entity spacing (e.g.
+                # vol 6's `J.&thinsp;D.&thinsp;v.&thinsp;d.&thinsp;W.`
+                # for Van Der Waals) blow well past 20 chars in raw
+                # form, but normalize cleanly to short canonical
+                # signatures.  The same normalizer used at lookup
+                # time is applied here so storage and lookup share
+                # one canonical form.
+                initials = _normalize_initials(_parse_field(content, "initials"))
                 if not initials or len(initials) > 20:
                     continue
                 raw_name = _parse_field(content, "name")

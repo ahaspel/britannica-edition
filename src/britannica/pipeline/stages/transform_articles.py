@@ -338,11 +338,29 @@ def _unwrap_content_templates(text: str) -> str:
     # Blackletter → Unicode Mathematical Fraktur
     text = re.sub(r"\{\{[Bb]lackletter\|([^{}]*)\}\}",
                   lambda m: _to_fraktur(m.group(1)), text)
-    # Numbered equations: {{ne||equation|(N)}} → equation  (N)
+    # Numbered equations: {{ne||content|(N)}} → an «EQN»-marked
+    # labeled display block.  The viewer renders the content (which
+    # may be a `<math>` block OR italic-text like `''pv''=RT`) as a
+    # centred display equation with the label `(N)` floated to the
+    # right margin.  Wrap with `\n\n` so the equation always sits on
+    # its own paragraph — `{{ne}}` typically appears on a single
+    # source line between prose sentences (one `\n` either side),
+    # which reflow_paragraphs would otherwise glue back into prose.
+    def _ne_labeled(m: re.Match) -> str:
+        content = m.group(1).strip()
+        raw_label = m.group(2).strip()
+        # Source convention is `(N)` — strip the parens so the label
+        # marker holds just the content, mirroring the MATH_PARA_RE
+        # capture style used for multi-row rowspan systems.  Trailing
+        # spacing entities (`&ensp;`, `&nbsp;`) are dropped.
+        paren = re.match(r"\(([^()]+)\)", raw_label)
+        label = (paren.group(1) if paren else raw_label).strip()
+        return f"\n\n«EQN:{label}»{content}«/EQN»\n\n"
+
     text = re.sub(r"\{\{ne\|\|([^{}|]*(?:\{\{[^{}]*\}\}[^{}|]*)*)\|([^{}]*)\}\}",
-                  r"\1\t\2", text, flags=re.IGNORECASE)
+                  _ne_labeled, text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{ne\|\|([^{}]*(?:\{\{[^{}]*\}\}[^{}]*)*)\}\}",
-                  r"\1", text, flags=re.IGNORECASE)
+                  r"\n\n\1\n\n", text, flags=re.IGNORECASE)
     # Body-context running-header rows: {{rh|LEFT|MIDDLE|RIGHT}} —
     # 3-column layout used to label equation rows in math articles
     # (MOLECULE p.688: ``{{rh|(ii)|<eq chain>|}}``). Same template name

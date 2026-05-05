@@ -498,6 +498,7 @@ def _classify_table(raw: str, inner: str, inner_registry: ElementRegistry | None
     Returns one of:
         EQUATION_LAYOUT — math alignment (mostly MATH placeholders or spacer-heavy)
         LAYOUT_WRAPPER  — image+caption wrapper or nested table wrapper
+        PLATE_LAYOUT    — `summary="Illustration"` multi-image grid (plate)
         COMPLEX_HTML    — tables with rowspan that need HTML passthrough
         DATA_TABLE      — regular data tables (default)
     """
@@ -520,6 +521,15 @@ def _classify_table(raw: str, inner: str, inner_registry: ElementRegistry | None
         # NOT `{{brace2|...}}` (decorative bracket, not a poem layout).
         if re.search(r"\{\{brace(?:\s*\||\s*\})", raw, re.IGNORECASE):
             return "DATA_TABLE"
+        # Exception: math-dominant equation layouts that use rowspan
+        # only on layout-only cells (decorative `{{brace2}}` brackets,
+        # equation-number labels like `(6)`). Every actual equation row
+        # holds a single <math> cell; the spans belong to the brace and
+        # the (N) label that visually group the system. METEOROLOGY's
+        # Navier-Stokes hydrodynamics block is the canonical case —
+        # routing to COMPLEX_HTML renders it as a malformed data table.
+        if _is_math_dominant_layout(raw, inner_registry):
+            return "EQUATION_LAYOUT"
         return "COMPLEX_HTML"
     # Tables with data signals (border/rules/class) AND {{Ts}} templates
     # need COMPLEX_HTML processing — the template markup creates extra
@@ -700,7 +710,40 @@ def _process_math_layout_table(raw: str) -> str:
         lines = [" & ".join(row) for row in rows]
         latex = ("\\begin{vmatrix}\n" + " \\\\\n".join(lines)
                  + "\n\\end{vmatrix}")
-    return f"\u00abMATH:{latex}\u00ab/MATH\u00bb"
+    return f"\n\n\u00abMATH:{latex}\u00ab/MATH\u00bb\n\n"
+
+
+def _is_math_dominant_layout(
+    raw: str, inner_registry: ElementRegistry | None
+) -> bool:
+    """Detect equation-system tables whose only non-math content is
+    decorative brace / equation-number cells with rowspan/colspan.
+
+    The rowspan-first guard in `_classify_table` defends against
+    `{{Ts}}`-induced phantom-cell misclassification of real data tables;
+    this exception lets through tables that are unambiguously math
+    layouts: ≥75% of registered child elements are MATH placeholders,
+    no other element type contributes content (no IMAGE, REF, TABLE,
+    POEM children), and no header (`!`) row.
+    """
+    if inner_registry is None:
+        return False
+    elements = list(inner_registry.elements.values())
+    if not elements:
+        return False
+    math_ct = sum(1 for t, _ in elements if t == "MATH")
+    if math_ct < 2 or math_ct < len(elements) * 0.75:
+        return False
+    # Disqualifying child types — a real data table that happens to
+    # have a few <math> cells (chemistry / physics tables) usually
+    # also carries images, refs, or nested tables.
+    for t, _ in elements:
+        if t in {"IMAGE", "IMAGE_FLOAT", "REF", "TABLE", "HTML_TABLE",
+                 "POEM"}:
+            return False
+    if re.search(r"^\s*!", raw, re.MULTILINE):
+        return False
+    return True
 
 
 def _is_equation_layout(inner: str, inner_registry: ElementRegistry | None) -> bool:
@@ -778,7 +821,11 @@ def _process_equation_layout(inner: str, text_transform) -> str:
         content = [c for c in cells if c.strip()]
         if content:
             lines.append(" ".join(content))
-    return "\n\n".join(lines) if lines else ""
+    # Wrap with paragraph boundaries so each row reaches the viewer as
+    # its own paragraph — otherwise leading/trailing prose in the
+    # surrounding sentence glues to the first/last equation and kills
+    # display-mode rendering (METEOROLOGY Margules energy equations).
+    return ("\n\n" + "\n\n".join(lines) + "\n\n") if lines else ""
 
 
 def _is_layout_wrapper(raw: str, inner: str, inner_registry: ElementRegistry | None) -> bool:
@@ -2340,7 +2387,8 @@ def _process_compound_table(raw: str, text_transform) -> str:
     if not html_rows:
         return ""
 
-    return "\u00abHTMLTABLE:<table>" + "".join(html_rows) + "</table>\u00ab/HTMLTABLE\u00bb"
+    return ("\n\n\u00abHTMLTABLE:<table>" + "".join(html_rows)
+            + "</table>\u00ab/HTMLTABLE\u00bb\n\n")
 
 
 def _process_complex_table(inner: str, text_transform) -> str:
@@ -3134,44 +3182,56 @@ def _unwrap_html_illustration(
     """
     rows = re.findall(r"<tr[^>]*>(.*?)</tr>", inner, re.DOTALL | re.IGNORECASE)
 
-    image_cells: list[str] = []    # cell text containing an IMAGE placeholder
-    caption_parts: list[str] = []  # plain-text caption cells
+    # Per-row breakdown.  Each row's cells are split into image cells
+    # (those containing an IMAGE placeholder) and caption cells (text-
+    # only).  We keep the row structure so the multi-column case (DOG
+    # breeds: row of 3 images, then row of 3 captions, all in one
+    # `summary="Illustration"` table) can pair each image with its own
+    # column's caption rather than collapsing every caption into one
+    # detached paragraph.
+    def _process_cell(cell: str) -> str:
+        c = re.sub(r"<[^>]+>", " ", cell)
+        c = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}", "", c)
+        c = re.sub(r"\s+", " ", c).strip()
+        if not c:
+            return ""
+        if _PH in c:
+            ph_re = re.compile(
+                re.escape(_PH) + r"[^" + re.escape(_PH) + r"]+"
+                + re.escape(_PH))
+            out = []
+            last = 0
+            for m in ph_re.finditer(c):
+                if m.start() > last:
+                    chunk = c[last:m.start()]
+                    out.append(text_transform(chunk) if chunk.strip() else chunk)
+                out.append(m.group(0))
+                last = m.end()
+            if last < len(c):
+                tail = c[last:]
+                out.append(text_transform(tail) if tail.strip() else tail)
+            return "".join(out)
+        return text_transform(c)
+
+    rows_breakdown: list[tuple[list[str], list[str]]] = []
+    image_cells: list[str] = []
+    caption_parts: list[str] = []
     for row in rows:
         cells = re.findall(
             r"<t[dh][^>]*>(.*?)</t[dh]>", row, re.DOTALL | re.IGNORECASE)
+        row_images: list[str] = []
+        row_captions: list[str] = []
         for cell in cells:
-            c = re.sub(r"<[^>]+>", " ", cell)
-            c = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}", "", c)
-            c = re.sub(r"\s+", " ", c).strip()
-            if not c:
+            processed = _process_cell(cell)
+            if not processed:
                 continue
-            if _PH in c:
-                # Cell contains a placeholder (image). Transform any
-                # surrounding text (entity decoding, bold/italic) but
-                # preserve the placeholder verbatim for substitution.
-                ph_re = re.compile(
-                    re.escape(_PH) + r"[^" + re.escape(_PH) + r"]+"
-                    + re.escape(_PH))
-                out = []
-                last = 0
-                for m in ph_re.finditer(c):
-                    if m.start() > last:
-                        chunk = c[last:m.start()]
-                        if chunk.strip():
-                            out.append(text_transform(chunk))
-                        else:
-                            out.append(chunk)
-                    out.append(m.group(0))
-                    last = m.end()
-                if last < len(c):
-                    tail = c[last:]
-                    if tail.strip():
-                        out.append(text_transform(tail))
-                    else:
-                        out.append(tail)
-                image_cells.append("".join(out))
+            if _PH in processed:
+                row_images.append(processed)
+                image_cells.append(processed)
             else:
-                caption_parts.append(text_transform(c))
+                row_captions.append(processed)
+                caption_parts.append(processed)
+        rows_breakdown.append((row_images, row_captions))
 
     caption_text = " ".join(p for p in caption_parts if p).strip()
 
@@ -3190,6 +3250,16 @@ def _unwrap_html_illustration(
                     else:
                         new_raw = img_raw
                     return _process_image_from_raw(new_raw, text_transform)
+
+    # Multi-image case falls through to the paragraph-style fallback
+    # below.  Plate-shaped multi-image illustration tables are detected
+    # earlier in the pipeline (clean_pages._extract_illustration_plates,
+    # operating on page.wikitext where `summary="Illustration"` is
+    # still visible) and converted to `{{PLATE:…}PLATE}` markers
+    # before this stage runs — so by the time _unwrap_html_illustration
+    # sees them they're already PLATE markers, not multi-image tables.
+    # The branch handled below is the residual: HTML-form illustration
+    # tables that the wikitext-level detector missed.
 
     # Fallback: paragraph-style (images as placeholders, captions below)
     parts: list[str] = list(image_cells)
@@ -3293,9 +3363,9 @@ def _process_html_table(
                     attrs += f' colspan="{colspan}"'
                 cells_html.append(f"<{tag}{attrs}>{content}</{tag}>")
             html_rows.append("<tr>" + "".join(cells_html) + "</tr>")
-        return ("\u00abHTMLTABLE:<table>" +
+        return ("\n\n\u00abHTMLTABLE:<table>" +
                 "".join(html_rows) +
-                "</table>\u00ab/HTMLTABLE\u00bb")
+                "</table>\u00ab/HTMLTABLE\u00bb\n\n")
 
     # Verse-only layout: a single-row, single-cell <table> whose
     # entire content is a <poem> placeholder is an editor's centering

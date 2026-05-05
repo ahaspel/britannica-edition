@@ -27,13 +27,28 @@ def main():
     print("\nBuilding contributor table from front matter...")
     import subprocess
     subprocess.run(
-        ["uv", "run", "python", "tools/build_contributor_table.py"],
+        ["uv", "run", "python", "tools/pipeline/build_contributor_table.py"],
+        check=True,
+    )
+
+    # Step 2b: Apply vol 29 linker — adds contributors that vol 29's
+    # master Index of Contributors lists but the per-volume tables
+    # don't (bucket A), and resolves paired re-keys / duplicate-
+    # initials false-positives detected against the freshly-built
+    # contributor table.  Conservative-by-default: NEEDS_REVIEW
+    # items are listed but not auto-applied.  Must run AFTER step 2
+    # (so the linker sees the post-corrections.json contributor
+    # table) and BEFORE step 3 (so extract-contributors picks up the
+    # new ContributorInitials rows).
+    print("\nApplying vol 29 contributor linker...")
+    subprocess.run(
+        ["uv", "run", "python",
+         "tools/pipeline/link_vol29_contributors.py", "--apply"],
         check=True,
     )
 
     # Step 3: Re-link article footers
     print("\nRe-linking article footers...")
-    import subprocess
     for vol in range(1, 29):
         result = subprocess.run(
             ["uv", "run", "britannica", "extract-contributors", str(vol)],

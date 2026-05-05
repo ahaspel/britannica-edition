@@ -203,7 +203,7 @@ def build_prefatory_note():
         title="Prefatory Note",
         back_label="Ancillary",
         back_href="ancillary.html",
-        scan_href="scans.html?vol=1&start=6&end=9&prefix=page&label=Prefatory+Note&back=ancillary.html",
+        scan_href="scans.html?vol=1&start=7&end=10&prefix=page&label=Prefatory+Note&back=ancillary.html",
         body_html=html,
     )
     out = VIEWER_DIR / "ancillary-prefatory-note.html"
@@ -223,7 +223,7 @@ def build_editorial_introduction():
         title="Editorial Introduction",
         back_label="Ancillary",
         back_href="ancillary.html",
-        scan_href="scans.html?vol=1&start=10&end=23&prefix=page&label=Editorial+Introduction&back=ancillary.html",
+        scan_href="scans.html?vol=1&start=11&end=24&prefix=page&label=Editorial+Introduction&back=ancillary.html",
         body_html=html,
     )
     out = VIEWER_DIR / "ancillary-editorial-introduction.html"
