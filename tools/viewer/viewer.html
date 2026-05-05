@@ -2008,31 +2008,7 @@
         const lines = content.split("\n").filter(l => l.trim());
         return `<span class="inline-verse">${lines.join("<br>")}</span>`;
       });
-      // Inline plate references — `{{PLATEREF:roman}}` is emitted by
-      // the pipeline's extract_plates stage at the position where a
-      // multi-image illustration table was extracted into a sibling
-      // plate sub-article.  Render as a parenthesised "see Plate N"
-      // link, using `currentPlates` (set on article load) to find the
-      // target plate's filename.  If `currentPlates` is short of N
-      // (rare; would mean the export's plate-finding logic missed
-      // this plate), fall back to plain text — better than a broken
-      // link.
-      html = html.replace(/\{\{PLATEREF:([ivxlcdm]+|\d+)\}\}/g, (_m, ord) => {
-        const ROMAN_LO = ["", "i", "ii", "iii", "iv", "v", "vi", "vii",
-          "viii", "ix", "x", "xi", "xii", "xiii", "xiv", "xv", "xvi",
-          "xvii", "xviii", "xix", "xx"];
-        const ROMAN_UP = ROMAN_LO.map(s => s.toUpperCase());
-        const idx = ROMAN_LO.indexOf(ord.toLowerCase());
-        const n = idx > 0 ? idx : (parseInt(ord, 10) || 0);
-        const label = ROMAN_UP[n] || String(n);
-        const plate = currentPlates[n - 1];
-        if (!plate || !plate.filename) {
-          return `<span class="plate-ref">(see Plate ${label})</span>`;
-        }
-        const href = articleUrl(plate.filename);
-        return `<span class="plate-ref">(see <a href="${href}">Plate ${label}</a>)</span>`;
-      });
-      html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
+html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
                           (match, name, content) => renderFnMarker(name, content));
       // Mid-paragraph figures (sentinelled by the merge pass above).
       // Render with ``float:right`` so surrounding prose wraps around
@@ -2301,26 +2277,6 @@
             markedBody = markedBody.replace(
               /(\{\{IMG:[^}]*\}\})(?!\n\n)/g, "$1\n\n");
 
-            // Number {{PLATEREF}} markers (each one is replaced by the
-            // pipeline's extract_plates stage where a {{PLATE:…}PLATE}}
-            // sentinel was extracted into a sibling plate sub-article).
-            // The pipeline emits bare {{PLATEREF}}; the viewer numbers
-            // occurrences in document order so renumbering is automatic.
-            //
-            // Translate to {{PLATEREF:i}}, {{PLATEREF:ii}}, … so the
-            // per-paragraph renderer can look the ordinal up against
-            // article.plates without recounting state across paragraphs.
-            {
-              const ROMAN_LO = ["", "i", "ii", "iii", "iv", "v", "vi",
-                "vii", "viii", "ix", "x", "xi", "xii", "xiii", "xiv",
-                "xv", "xvi", "xvii", "xviii", "xix", "xx"];
-              let plateOrd = 0;
-              markedBody = markedBody.replace(/\{\{PLATEREF\}\}/g, () => {
-                plateOrd++;
-                const r = ROMAN_LO[plateOrd] || String(plateOrd);
-                return `{{PLATEREF:${r}}}`;
-              });
-            }
 
             // Merge shoulder heading paragraphs with surrounding text.
             // A shoulder heading sits in the margin mid-sentence, so it
