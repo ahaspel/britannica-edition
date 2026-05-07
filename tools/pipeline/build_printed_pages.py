@@ -80,7 +80,14 @@ VOL_RANGE: dict[int, tuple[int, int, int, int]] = {
     3: (21, 1, 1026, 992),
     4: (23, 1, 1048, 1004),
     5: (21, 1, 1024, 964),
-    6: (23, 1, 1030, 992),
+    # Vol 6: the IA scan (encyclopaediabrit06chisrich) is missing
+    # printed pages 791-792 (end of COMMUNISM).  We splice page-image
+    # thumbnails for those two pages from the Wikisource djvu
+    # (Encyclopedia_Britannica_1911_Complete) at leaves 829 and 830,
+    # then renumber the original IA leaves 829-1039 to 831-1041 so
+    # the leaf-to-printed sequence runs contiguously.  Last article
+    # leaf is now 1032 (was 1030 in the un-spliced numbering).
+    6: (23, 1, 1032, 992),
     7: (21, 1, 1016, 984),
     8: (21, 1, 1034, 1000),
     9: (21, 1, 1020, 960),
@@ -94,14 +101,19 @@ VOL_RANGE: dict[int, tuple[int, int, int, int]] = {
     17: (21, 1, 1058, 1020),
     18: (19, 1, 1018, 968),
     19: (21, 1, 1062, 996),
-    # Vol 20 was swapped from Bengal (DLI 10689.10192) to Osmania
-    # (DLI 2015.85243) — better quality, in-order pages, but missing
-    # the last 4 article pages.  Osmania articles run leaf 21 → page 1
-    # (ODE) through leaf 1044 → page 976 (PAWTUCKET).  Leaves
-    # 1045-1056 are Osmania back matter (unnumbered).  Leaves
-    # 1057-1060 are spliced from Bengal originals 1041-1044, carrying
-    # the missing pages 977-980 (PAXO through PAYMENT OF MEMBERS).
-    20: (21, 1, 1060, 980),
+    # Vol 20 source-scan history: started on Bengal (DLI 10689.10192),
+    # swapped to Osmania (DLI 2015.85243) for better quality, then
+    # in 2026-05 swapped to wikisource ``EB1911 - Volume 20.djvu``
+    # for further quality gains.  Pages 977-980 were originally
+    # Bengal-spliced at leaves 1057-1060 (Osmania's own 977-980 at
+    # leaves 1045-1048 were marked unnumbered to defer to Bengal),
+    # but the WS swap made all four pages WS-quality and the
+    # Bengal-spliced tail redundant.  We now canonicalise on the
+    # natural Osmania positions: leaves 1045-1048 = pp. 977-980, and
+    # the volume ends there.  The trailing leaves 1049-1060 (the
+    # blank gap + the former Bengal splice) have been deleted from
+    # disk.
+    20: (21, 1, 1048, 980),
     21: (21, 1, 1034, 984),
     22: (21, 1, 1002, 976),
     23: (21, 1, 1088, 1024),
@@ -126,6 +138,13 @@ TRUSTED_RUNS: dict[int, list[tuple[int, int, int, int]]] = {
         (21, 1, 24, 4),
         (29, 5, 128, 104),
     ],
+    # Vol 6: spliced Wikisource page images for leaves 829, 830
+    # (printed 791, 792 — missing from the IA scan).  Anchor those
+    # two leaves so the +1 walk between (828, 790) and the next
+    # confident IA pin doesn't silently re-assign 791, 792 to leaves
+    # that are now 793-onward content.  Pair with VOL_RANGE[6] end
+    # at leaf 1032 and the +2 hocr-leaf offset in _ia_confident_pins.
+    6: [(829, 791, 830, 792)],
     8: [(207, 183, 207, 183)],
     10: [(637, 603, 637, 603)],
     14: [(303, 281, 303, 281)],
@@ -139,14 +158,12 @@ TRUSTED_RUNS: dict[int, list[tuple[int, int, int, int]]] = {
         (538, 504, 538, 504),
         (800, 752, 800, 752),
     ],
-    # Vol 20: Osmania scan + Bengal splice for pp. 977-980.
-    # Anchors are scan-verified leaf→page pairs.  The gap-fill walks
-    # +1 between them and places (Δleaf − Δprinted) plate slots at
-    # the end of each gap.  Total: 48 plates across the volume.
+    # Vol 20: pure +1 walk from leaf 21 = page 1 to leaf 1048 = page
+    # 980, skipping pages on UNNUMBERED_LEAVES.  Pages 977-980 used to
+    # be Bengal-spliced at leaves 1057-1060; the 2026-05 wikisource
+    # swap made the Osmania positions (leaves 1045-1048) usable so the
+    # splice was retired and the volume now ends naturally at 1048.
     20: [
-        # Vol 20: pure +1 walk from leaf 21 = page 1 to leaf 1060,
-        # skipping pages on UNNUMBERED_LEAVES.  No splice, no end
-        # anchor — whatever the walk produces is the answer.
         (21, 1, 21, 1),
     ],
     23: [
@@ -186,6 +203,7 @@ TRUSTED_RUNS: dict[int, list[tuple[int, int, int, int]]] = {
 FIRST_FM_CONTENT_LEAF: dict[int, int] = {
     24: 7,  # leaves 5, 6 are blanks that is_blank() missed
     20: 9,  # Osmania scan: actual numbered fm content (Roman vii-xviii) starts here
+    28: 5,  # leaves 3, 4 are blanks before the print's "iii" starting page
 }
 
 
@@ -194,6 +212,7 @@ FIRST_FM_CONTENT_LEAF: dict[int, int] = {
 # so we label them "fm 7" through "fm 18" to match the printed numerals.
 FM_LABEL_START: dict[int, int] = {
     20: 7,
+    28: 3,  # print numbers its fm pages iii-xvii (Roman); we match
 }
 
 
@@ -203,10 +222,45 @@ UNNUMBERED_LEAVES: dict[int, list[int]] = {
     # number the interpolation guessed for it. The remaining leaves
     # in each gap are left to the algorithm; add more here as errors
     # surface.
-    # vol 20 (Osmania scan): user-supplied complete list of unnumbered
-    # leaves.  Leaf 20 is the black before the first article; leaves
-    # 1045-1056 sit between Osmania's last article (leaf 1044 = p. 976)
-    # and the Bengal-spliced tail (leaves 1057-1060 = pp. 977-980).
+    # Vol 4: fm 12 is a blank between the last front-matter content
+    # (fm 11 / leaf 21) and the first article (leaf 23).
+    4: [22],
+    # Vol 5: fm 14 is a blank between the last front-matter content
+    # (fm 13 / leaf 19) and the first article (leaf 21).
+    5: [20],
+    # Vol 6: fm scans 14-16 are blanks between the last front-matter
+    # content (Editorial Preface end at fm 13 / leaf 19) and the first
+    # article (CHÂTELET at leaf 23).  Without this drop, the fm-label
+    # walk would tag them as fm 14, fm 15, fm 16 and the front-matter
+    # scan-view range would extend three leaves past where it should.
+    6: [20, 21, 22],
+    # Vol 7: fm 14 is a blank between the last front-matter content
+    # (fm 13 / leaf 19) and the first article (leaf 21).
+    7: [20],
+    # Vol 12: fm 14 is a blank between the last front-matter content
+    # (fm 13 / leaf 19) and the first article (leaf 21).
+    12: [20],
+    # Vol 13: fm 14 is a blank between the last front-matter content
+    # (fm 13 / leaf 19) and the first article (leaf 21).
+    13: [20],
+    # Vol 15: fm 14 is a blank between the last front-matter content
+    # (fm 13 / leaf 19) and the first article (leaf 21).
+    15: [20],
+    # Vol 23: fm 14 is a blank between the last front-matter content
+    # (fm 13 / leaf 19) and the first article (leaf 21).
+    23: [20],
+    # Vol 28: leaf 20 is a blank between fm 17 / leaf 19 and the first
+    # article (leaf 21).  Pair with FIRST_FM_CONTENT_LEAF[28] = 5
+    # (drop leading blank leaves 3, 4) and FM_LABEL_START[28] = 3
+    # (print numbers its fm pages starting at iii).
+    28: [20],
+    # vol 20 (wikisource scan): leaf 20 is the blank before the first
+    # article; the rest are interior plate / blank gaps.  Leaves
+    # 1045-1048 carry the printed pp. 977-980 (formerly Osmania-only
+    # at low quality, now wikisource-quality after the 2026-05 swap),
+    # so they are NOT unnumbered.  The volume ends at leaf 1048; the
+    # former trailing leaves 1049-1060 (blanks + Bengal splice) have
+    # been deleted from disk.
     20: [
         20,
         47, 48, 49,
@@ -217,7 +271,7 @@ UNNUMBERED_LEAVES: dict[int, list[int]] = {
         260, 261,
         276, 277,
         472, 473, 474,
-        500, 501, 502, 503,           # leaf 504 = spliced Bengal p462
+        500, 501, 502, 503,           # leaf 504 = wikisource p462
         507, 508,
         511, 512,
         517, 518,
@@ -231,8 +285,6 @@ UNNUMBERED_LEAVES: dict[int, list[int]] = {
         981, 982,
         985, 986,
         989, 990,
-        # Trailing unnumbered between Osmania's last article and the splice.
-        1045, 1046, 1047, 1048, 1049, 1050, 1051, 1052, 1053, 1054, 1055, 1056,
     ],
     # SHIPBUILDING (vol 24) confirmed unnumbered leaves:
     24: [1045, 1049, 1052, 1055, 1061, 1062],
@@ -245,8 +297,7 @@ UNNUMBERED_LEAVES: dict[int, list[int]] = {
 # ─── Source 1: Wikisource Page Heading extraction ────────────────────────────
 
 _HEADING_RE = re.compile(
-    r"\{\{EB1911 Page Heading\|([^|]*)\|[^|]*\|[^|]*\|([^|}]*)\}?\}?",
-    re.IGNORECASE,
+    r"\{\{EB1911 Page Heading\s*\|", re.IGNORECASE,
 )
 
 _RH_RE = re.compile(r"\{\{(?:rh|RunningHeader)\s*\|", re.IGNORECASE)
@@ -258,33 +309,52 @@ _SPACING_TEMPLATE_RE = re.compile(
 )
 
 
-def _int_in_range(val: str) -> int | None:
-    """Find the first plausible page number (1–1200) in ``val``.
+def _int_in_range(val: str, strip_nested: bool = False,
+                  max_page: int = 1200) -> int | None:
+    """Find the first plausible page number (1..``max_page``) in ``val``.
 
-    Strip spacing templates first — ``{{em|4}}`` is "4 em-spaces", not
-    a page number; it sits in the outer rh cell of plates alongside
-    ``Plate II.`` style labels.  Without this guard the rh parser
-    treats 4 as the page number for the plate leaf."""
+    Strips spacing templates (``{{em|N}}`` etc.) unconditionally —
+    their numeric arg is the spacing magnitude, never a page number.
+
+    ``strip_nested=True`` strips all other nested templates as well.
+    Use this for ``{{EB1911 Page Heading}}`` cells, where formatting
+    templates like ``{{x-smaller|ITALY 1793–97]}}`` carry article-
+    section labels (and digit fragments like ``1793``/``97``) that
+    aren't page numbers.  Leave it False for ``{{rh|…}}`` cells,
+    where the page number is often wrapped in ``{{x-larger|N}}`` —
+    stripping there would lose the number.
+
+    ``max_page`` lets callers pass the volume's actual last printed
+    page (``VOL_RANGE[vol][3]``) so out-of-range values like the
+    year ``1087`` in vol 20 PAPACY's running header subhead
+    ``"ORIGINS TO 1087]"`` are rejected rather than mistaken for a
+    page number."""
     val = _SPACING_TEMPLATE_RE.sub("", val)
+    if strip_nested:
+        while True:
+            new = re.sub(r"\{\{[^{}]*\}\}", "", val)
+            if new == val:
+                break
+            val = new
     for m in re.finditer(r"\b(\d{1,4})\b", val):
         n = int(m.group(1))
-        if 1 <= n <= 1200:
+        if 1 <= n <= max_page:
             return n
     return None
 
 
-def _rh_cells(raw_text: str) -> list[str] | None:
-    """Parse ``{{rh|A|B|C}}`` with brace-depth awareness.
-
-    Unlike EB1911 Page Heading (plain-text cells), rh cells commonly
-    contain nested templates like ``{{x-larger|949}}`` that a simple
-    ``[^|]*`` regex would eat past.  Walk the string tracking brace
-    depth and split on top-level ``|``.
+def _template_cells(raw_text: str, opener_re: re.Pattern) -> list[str] | None:
+    """Parse a template like ``{{name|A|B|C}}`` with brace-depth
+    awareness.  Both ``{{rh|…}}`` and ``{{EB1911 Page Heading|…}}``
+    can carry nested templates whose own ``|`` separators a naive
+    ``[^|]*`` regex would split on incorrectly (vol 2 ws 131:
+    ``{{EB1911 Page Heading|{{em|2.4}}|Anthropometry||119}}``).
+    Walk the string tracking brace depth and split on top-level ``|``.
     """
-    m = _RH_RE.search(raw_text[:600])
+    m = opener_re.search(raw_text[:600])
     if not m:
         return None
-    i = m.end()  # position right after the opening pipe of ``{{rh|``
+    i = m.end()
     cells: list[str] = []
     cur: list[str] = []
     depth = 1
@@ -310,22 +380,77 @@ def _rh_cells(raw_text: str) -> list[str] | None:
     return None
 
 
-def _printed_from_rh(raw_text: str) -> int | None:
+def _printed_from_rh(raw_text: str, max_page: int = 1200) -> int | None:
     """Extract the printed page number from ``{{rh|L|C|R}}`` by
     checking the LEFT and RIGHT cells (verso / recto — numbers
     alternate between them).  Skip the center cell, which holds the
-    article subject, not the page number."""
-    cells = _rh_cells(raw_text)
+    article subject, not the page number.
+
+    Prefers cells whose content (after stripping formatting templates)
+    contains no alphabetic characters — i.e. cells that look like a
+    page number, not a subhead.  Vol 20 PAPACY recto pages put a
+    section label in the left cell (``ORIGINS TO 1087]``,
+    ``1087–1305]``) and the actual page number in the right cell;
+    without this preference the parser would pick the year as a
+    page number."""
+    cells = _template_cells(raw_text, _RH_RE)
     if not cells or len(cells) < 3:
         return None
-    for val in (cells[0], cells[-1]):
-        n = _int_in_range(val)
+    side_cells = (cells[0], cells[-1])
+    # First pass: cells with no alphabetic chars (after unwrapping
+    # single-arg formatting templates like ``{{x-larger|N}}``, spacing
+    # templates, and HTML entities).  These are the page-number-shaped
+    # cells.  HTML entities (``&emsp;``, ``&nbsp;``, etc.) need
+    # stripping because their entity-name letters would otherwise
+    # trigger the alpha check — vol 9 ws 502
+    # ``{{x-larger|470&emsp; }}`` is the canonical case.
+    for val in side_cells:
+        bare = re.sub(r"\{\{[^{}|]+\|([^{}]*)\}\}", r"\1", val)
+        bare = _SPACING_TEMPLATE_RE.sub("", bare)
+        bare = re.sub(r"&[a-z]+;|&#\d+;", "", bare, flags=re.IGNORECASE)
+        if not re.search(r"[A-Za-z]", bare):
+            n = _int_in_range(val, max_page=max_page)
+            if n is not None:
+                return n
+    # Fallback: any side cell, any in-range integer.
+    for val in side_cells:
+        n = _int_in_range(val, max_page=max_page)
         if n is not None:
             return n
     return None
 
 
-def _printed_from_heading(raw_text: str) -> int | None:
+def _printed_from_eb1911_heading(raw_text: str,
+                                 max_page: int = 1200) -> int | None:
+    """Extract the printed page number from
+    ``{{EB1911 Page Heading|L|TITLE|TITLE2|R}}`` by checking the LEFT
+    and RIGHT (4th-arg) cells.  Cells can carry nested templates
+    (vol 2 ws 131: ``|{{em|2.4}}|...``), so the splitter must be
+    brace-aware — a naive ``[^|]*`` regex stops at the inner template's
+    ``|`` and reads garbage.
+
+    Page numbers in EB1911 Page Heading are always bare integers (or
+    wrapped only in spacing templates).  Title-side cells carry
+    formatting templates like ``{{x-smaller|ITALY 1793–97]}}`` whose
+    digit fragments look like page numbers.  We strip nested templates
+    inside number-side cells so those fragments don't leak through."""
+    cells = _template_cells(raw_text, _HEADING_RE)
+    if not cells:
+        return None
+    side_cells = [cells[0]]
+    if len(cells) >= 4:
+        side_cells.append(cells[3])
+    elif len(cells) >= 2:
+        side_cells.append(cells[-1])
+    for val in side_cells:
+        n = _int_in_range(val, strip_nested=True, max_page=max_page)
+        if n is not None:
+            return n
+    return None
+
+
+def _printed_from_heading(raw_text: str,
+                          max_page: int = 1200) -> int | None:
     """Extract printed page number from any supported heading template
     (``{{EB1911 Page Heading|…}}`` primary, ``{{rh|…}}`` fallback).
     A large share of volumes use ``{{rh|…}}`` exclusively — without
@@ -334,19 +459,21 @@ def _printed_from_heading(raw_text: str) -> int | None:
     SHIPBUILDING, vol 24)."""
     if not raw_text:
         return None
-    head = raw_text[:600]
-    m = _HEADING_RE.search(head)
-    if m:
-        for val in (m.group(1), m.group(2)):
-            n = _int_in_range(val)
-            if n is not None:
-                return n
-    return _printed_from_rh(head)
+    n = _printed_from_eb1911_heading(raw_text, max_page=max_page)
+    if n is not None:
+        return n
+    return _printed_from_rh(raw_text, max_page=max_page)
 
 
 def _harvest_headings(vol: int, all_ws: list[int]) -> dict[int, int]:
     """Scan every ws page's raw wikitext for a heading-embedded printed page."""
     vol_dir = RAW_DIR / f"vol_{vol:02d}"
+    # Cap accepted page numbers at the volume's actual last printed page
+    # (with a small headroom for OCR slop).  The default 1200 was loose
+    # enough that vol 20 PAPACY recto pages misread the year ``1087``
+    # in the running header subhead as a page number.
+    vol_range = VOL_RANGE.get(vol)
+    max_page = (vol_range[3] + 5) if vol_range else 1200
     result: dict[int, int] = {}
     for ws in all_ws:
         f = vol_dir / f"vol{vol:02d}-page{ws:04d}.json"
@@ -356,7 +483,8 @@ def _harvest_headings(vol: int, all_ws: list[int]) -> dict[int, int]:
             d = json.loads(f.read_text(encoding="utf-8"))
         except Exception:
             continue
-        printed = _printed_from_heading(d.get("raw_text", ""))
+        printed = _printed_from_heading(d.get("raw_text", ""),
+                                        max_page=max_page)
         if printed is not None:
             result[ws] = printed
     return result
@@ -392,7 +520,15 @@ def _ia_confident_pins(vol: int) -> dict[int, int]:
             continue
         pn = (entry.get("pageNumber") or "").strip()
         if pn.isdigit():
-            out[int(entry["leafNum"])] = int(pn)
+            leaf = int(entry["leafNum"])
+            # Vol 6 splice: 2 Wikisource leaves inserted at our
+            # leaves 829-830 for the IA-missing pp. 791-792.  The IA
+            # hocr is for the un-spliced sequence, so its leaf
+            # numbers >= 829 sit 2 leaves before our spliced
+            # numbering — shift them.
+            if vol == 6 and leaf >= 829:
+                leaf += 2
+            out[leaf] = int(pn)
     return out
 
 
@@ -977,11 +1113,14 @@ def main() -> None:
         # below (which is what was working for vol 20 before the
         # April 22 corruption).
         if vol == 20:
-            # Vol 20 (Osmania scan): straight +1 walk from leaf 21 =
-            # page 1, skipping pages on every UNNUMBERED_LEAVES entry.
-            # User-supplied plate list is the sole authority.  TRUSTED_RUNS
-            # then overrides any ranges (e.g. the Bengal splice for
-            # pp. 977-980 at leaves 1057-1060).
+            # Vol 20 (Osmania backbone, wikisource scans for the printed
+            # range, no IA hocr): straight +1 walk from leaf 21 = page
+            # 1 to leaf 1048 = page 980, skipping pages on every
+            # UNNUMBERED_LEAVES entry.  User-supplied plate list is the
+            # sole authority.  TRUSTED_RUNS overrides any ranges; the
+            # former Bengal splice for pp. 977-980 at leaves 1057-1060
+            # was retired in 2026-05 when the wikisource swap promoted
+            # the Osmania-positioned leaves 1045-1048 to canonical.
             combined_leaf: dict[int, int] = {}
             unnumbered_set = set(UNNUMBERED_LEAVES.get(vol, []))
             F, P_F, L, _ = VOL_RANGE[vol]
@@ -1022,8 +1161,16 @@ def main() -> None:
             leaf = printed_to_leaf.get(printed)
             if leaf is not None:
                 ws_to_leaf_dense[ws] = leaf
-            elif ws in ws_to_leaf:
-                ws_to_leaf_dense[ws] = ws_to_leaf[ws]
+            # else: the printed page exists in Wikisource transcription
+            # but no leaf in the IA scan carries that printed number.
+            # Vol 6 ws 815 → printed 791: pp. 791-792 are missing from
+            # the IA scan (end of COMMUNISM article), and falling back
+            # to the stale on-disk scan_map entry would route every
+            # "view source scan" link for that printed page to the
+            # wrong leaf (791 → 829 = print 793 in the IA copy).  We
+            # leave ws unmapped instead, so the viewer surfaces "scan
+            # not available" rather than silently showing the wrong
+            # printed page.
         # Stale on-disk entries for ws values not in our actual data
         # (e.g. corrupted scan_map left ws 1040+ for vol 17 even though
         # wiki only has ws 1-1039) used to be preserved by a fallback

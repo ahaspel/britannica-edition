@@ -45,8 +45,8 @@
   "_17:10_note": "Vol 17 contributor table lists John Theodore Merz at 'J. T. M.' (no asterisk) — same key James Tayler Milton uses in vol 04:10.  This is a print-level ambiguity: the original print never disambiguates the two J. T. M. contributors.  We assign asterisk to Merz (alphabetically first per the Babelon/Breck convention; see project_vol29_contributor_integration.md) so vol 04:10's Milton retains the un-asterisked 'J. T. M.' and Merz claims 'J. T. M.*'.  This is editorial, not a transcription typo — the print agrees with the wikitext.  Pair with the vol 17:40 LOTZE-footer correction so Merz's body-footer signature also resolves.",
   "17:10": [
     {
-      "from": "| initials     = J. T. M.\n | name         = [[Author:John Theodore Merz",
-      "to": "| initials     = J. T. M.*\n | name         = [[Author:John Theodore Merz"
+      "from": " | initials    = J. T. M.\n | name        = [[Author:John Theodore Merz",
+      "to": " | initials    = J. T. M.*\n | name        = [[Author:John Theodore Merz"
     }
   ],
   "_17:40_note": "Vol 17 page 40 LOTZE article footer co-authors John Theodore Merz and Henry Sturt; Merz's signature is plain 'J. T. M.' (matching the print's print-level ambiguity with James Tayler Milton).  Pair with the vol 17:10 front-matter correction — once Merz owns 'J. T. M.*' in the contributor table, this footer must use the asterisked form to bind correctly.  Sturt's 'H. St.' is unaffected.",
@@ -54,6 +54,20 @@
     {
       "from": "{{EB1911 footer initials|John Theodore Merz|J. T. M.|name2=Henry Sturt|initials2=H. St.}}",
       "to": "{{EB1911 footer initials|John Theodore Merz|J. T. M.*|name2=Henry Sturt|initials2=H. St.}}"
+    }
+  ],
+  "_4:162_note": "Vol 4 page 162 BOILER Fig. 17 caption transcribes 'Bobcock & Wilcox' — a typo for the correct 'Babcock & Wilcox' (the firm's name appears correctly elsewhere in the same article).  Source-text typo, not a rendering issue.",
+  "4:162": [
+    {
+      "from": "Bobcock & Wilcox",
+      "to": "Babcock & Wilcox"
+    }
+  ],
+  "_26:1093_note": "Vol 26 page 1093 section s3 transcribes the article heading as '''LEO TOLSTOY''' — given-name-first.  The print original (and the page running-header template `{{x-larger|{{uc|TOLL—TOLSTOY, L.}}}}` on the same page) uses surname-first 'TOLSTOY, LEO', the EB1911 convention for biographical articles.  Without this fix our boundary detector picks up 'LEO TOLSTOY' as the title; the article then loses its match against vol 29's Index entry 'Tolstoy, Leo' (Charles Theodore Hagberg Wright), leaving Hagberg Wright orphaned.",
+  "26:1093": [
+    {
+      "from": "'''LEO TOLSTOY'''",
+      "to": "'''TOLSTOY, LEO'''"
     }
   ],
   "_20:13_note": "Vol 20 contributor table writes John Charles Van Dyke's signature with lowercase 'van' in both the initials (J. C. van D.) and the Author-link slug — disagreeing with vol 14's canonical capital-V form (J. C. Van D., Author:John Charles Van Dyke).  Net effect: build_contributor_table.py creates two distinct Contributor records for one person; vol 14's contribution (INNESS, GEORGE) goes to one record, vol 20's (PAINTING, U.S.) to the other.  Capital V is the standard reference form for the American art historian (1856-1932).",

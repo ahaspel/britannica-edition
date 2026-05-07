@@ -6,6 +6,7 @@ from urllib.parse import quote
 
 from britannica.db.models import Article, ArticleImage, ArticleSegment, SourcePage
 from britannica.db.session import SessionLocal
+from britannica.parsers import img_float as _img_float_parser
 
 
 _IMAGE_PATTERN = re.compile(
@@ -69,21 +70,13 @@ def _parse_image_ref(ref: str) -> dict:
 
 def _parse_img_float(body: str) -> dict | None:
     """Parse an {{img float|...}} template body into filename + caption."""
-    file_m = re.search(r"\|file=([^|}\n]+)", "|" + body, re.IGNORECASE)
-    if not file_m:
+    parsed = _img_float_parser.parse(body)
+    if parsed is None:
         return None
-    filename = file_m.group(1).strip()
-    # cap= value may contain nested templates up to 2 levels deep:
-    # cap={{EB1911 Fine Print|{{sc|Fig.}} 15.—Flanged Girder.}}
-    cap_m = re.search(
-        r"\|cap=((?:[^|{}]|\{\{(?:[^{}]|\{\{[^{}]*\}\})*\}\})+)",
-        "|" + body, re.IGNORECASE,
-    )
-    caption = cap_m.group(1).strip() if cap_m else None
     return {
-        "filename": filename,
-        "caption": caption,
-        "commons_url": _commons_url(filename),
+        "filename": parsed.filename,
+        "caption": parsed.caption or None,
+        "commons_url": _commons_url(parsed.filename),
     }
 
 

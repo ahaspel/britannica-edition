@@ -1712,9 +1712,9 @@
         const parts = rawLines.map(line => {
           const s = line.trim();
           if (s.startsWith("### ")) {
-            return `<h5 class="legend-subhead">${escapeHtml(s.slice(4))}</h5>`;
+            return `<h5 class="legend-subhead">${formatCell(s.slice(4))}</h5>`;
           }
-          return `<div class="legend-entry">${escapeHtml(s)}</div>`;
+          return `<div class="legend-entry">${formatCell(s)}</div>`;
         });
         return `<aside class="figure-legend">${parts.join("")}</aside>`;
       }

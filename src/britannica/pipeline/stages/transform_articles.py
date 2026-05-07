@@ -695,6 +695,429 @@ def _transform_body_text(text: str) -> str:
     return text
 
 
+def _split_inline_cells(s: str) -> list[str]:
+    """Split a wiki-table cell line on top-level ``||`` separators.
+
+    MediaWiki accepts two cell delimiters within a row:
+      • ``\\n|`` — one cell per line.
+      • ``||``  — multiple cells on one line.
+
+    The split must be aware of ``[[…]]`` link brackets and ``{{…}}``
+    template braces so that ``[[Image:X|center|500px|]]`` doesn't get
+    chopped at the ``||`` that's actually inside the link's pipe-
+    parameter list (well, the link uses single pipes — but we still
+    have to mind the brackets in case future markup nests ``||``).
+    """
+    parts: list[str] = []
+    cur: list[str] = []
+    depth_brace = 0
+    depth_bracket = 0
+    i = 0
+    while i < len(s):
+        if s[i] == "{" and i + 1 < len(s) and s[i + 1] == "{":
+            depth_brace += 1
+            cur.append("{{")
+            i += 2
+            continue
+        if s[i] == "}" and i + 1 < len(s) and s[i + 1] == "}":
+            depth_brace -= 1
+            cur.append("}}")
+            i += 2
+            continue
+        if s[i] == "[" and i + 1 < len(s) and s[i + 1] == "[":
+            depth_bracket += 1
+            cur.append("[[")
+            i += 2
+            continue
+        if s[i] == "]" and i + 1 < len(s) and s[i + 1] == "]":
+            depth_bracket -= 1
+            cur.append("]]")
+            i += 2
+            continue
+        if (s[i] == "|" and i + 1 < len(s) and s[i + 1] == "|"
+                and depth_brace == 0 and depth_bracket == 0):
+            parts.append("".join(cur))
+            cur = []
+            i += 2
+            continue
+        cur.append(s[i])
+        i += 1
+    parts.append("".join(cur))
+    return parts
+
+
+def _split_table_cell(part: str) -> str:
+    """Strip a table cell's leading style/attribute segment.
+
+    Wiki cell syntax: ``| style="…" | content`` — the first unbracketed
+    ``|`` after the cell-start marker separates attributes from content.
+    Templates and image-links contain their own ``|`` characters which
+    must be ignored.
+    """
+    depth = 0
+    for i, c in enumerate(part):
+        if c in "[{":
+            depth += 1
+        elif c in "]}":
+            depth -= 1
+        elif c == "|" and depth == 0:
+            return part[i + 1:]
+    return part
+
+
+def _clean_grid_caption(text: str) -> str:
+    """Reduce a plate-grid caption cell to its core breed/figure label.
+
+    Cells often carry an attribution wrapped in ``{{smaller|''…''}}``
+    followed by ``<br />`` and the actual caption.  Drop the attribution
+    and keep the trailing label.
+    """
+    # If a <br /> separates an attribution from a label, keep the label.
+    parts = re.split(r"<br\s*/?>", text, flags=re.IGNORECASE)
+    if len(parts) > 1:
+        # Last non-empty part is the label
+        for p in reversed(parts):
+            if p.strip():
+                text = p
+                break
+    # Unwrap formatting templates
+    for _ in range(3):
+        new = re.sub(
+            r"\{\{\s*(?:sc|small-caps|smaller|small|c|center|big|nowrap)"
+            r"\s*\|([^{}]*)\}\}",
+            r"\1", text, flags=re.IGNORECASE,
+        )
+        if new == text:
+            break
+        text = new
+    text = re.sub(r"\{\{[^{}]*\}\}", "", text)
+    text = re.sub(r"'''|''", "", text)
+    text = re.sub(r"<[^>]+>", "", text)
+    text = re.sub(r"\s+", " ", text).strip()
+    return text.rstrip(",.|;")
+
+
+_GRID_TABLE_RE = re.compile(r"\{\|[^\n]*\n(.*?)\n\|\}", re.DOTALL)
+
+
+def _parse_cell_attrs(part: str) -> tuple[dict, str]:
+    """Strip a wiki-cell's leading ``style|attrs`` segment, returning
+    ``(attrs_dict, content)``.  Tracks brace/bracket depth so ``|``
+    inside templates and image-links isn't mistaken for the
+    attrs-vs-content separator."""
+    depth = 0
+    for i, c in enumerate(part):
+        if c in "[{":
+            depth += 1
+        elif c in "]}":
+            depth -= 1
+        elif c == "|" and depth == 0:
+            attrs_str = part[:i]
+            content = part[i + 1:]
+            attrs: dict = {}
+            cm = re.search(r'colspan\s*=\s*"?(\d+)"?', attrs_str)
+            if cm:
+                attrs["colspan"] = cm.group(1)
+            return attrs, content.strip()
+    return {}, part.strip()
+
+
+def _wiki_table_cells(body: str):
+    """Yield ``(cell_content, attrs_dict)`` for each cell in a wiki
+    table body, in document order.  Handles both ``\\n|`` (one cell
+    per line) and ``||`` (inline) cell separators."""
+    rows = re.split(r"\n\|-+[^\n]*", body)
+    for row in rows:
+        cell_segments = re.split(r"\n\|(?!\})", "\n" + row)
+        for seg in cell_segments:
+            if not seg.strip():
+                continue
+            for inline in _split_inline_cells(seg):
+                if not inline.strip():
+                    continue
+                attrs, content = _parse_cell_attrs(inline)
+                if content:
+                    yield content, attrs
+
+
+def _html_table_cells(body: str):
+    """Yield ``(cell_content, attrs_dict)`` for each ``<td>`` cell in
+    an HTML table body, in document order."""
+    for cm in re.finditer(
+        r"<td\b([^>]*)>(.*?)</td>",
+        body, re.DOTALL | re.IGNORECASE,
+    ):
+        attrs_str = cm.group(1)
+        content = cm.group(2).strip()
+        attrs: dict = {}
+        am = re.search(r'colspan\s*=\s*"?(\d+)"?', attrs_str)
+        if am:
+            attrs["colspan"] = am.group(1)
+        yield content, attrs
+
+
+def _extract_pairs_from_cells(
+    cells_iter,
+) -> tuple[list[tuple[str, str]], list[tuple[str, str | None]]]:
+    """Walk plate-table cells in order; classify each as an image
+    cell, caption-only cell, or collective legend cell, then return
+    image+caption pairs and legend tuples.
+
+    The unifying observation: once a page is known to be a plate,
+    every table cell is one of {image, caption-of-an-image, collective
+    legend, spacer}.  Images may be paired with captions in three
+    ways — row-of-images + row-of-captions (DOG), one-image-and-
+    caption-per-cell (SHAKESPEARE Plate II inline), or multiple
+    image+caption pairs within a single cell (AEGEAN Plate I bottom
+    half).  All three reduce to the same algorithm:
+
+      • Inside each cell, pair every image with the caption text that
+        immediately follows it (up to the next image or the end of
+        the cell).
+      • Cells with no images become caption-only entries; the next
+        unmatched image takes the next caption-only entry in order.
+      • Cells with ``colspan>1`` and no image are collective legends.
+    """
+    images: list[tuple[str, str]] = []
+    captions: list[str] = []
+    legends: list[tuple[str, str | None]] = []
+
+    img_link_re = re.compile(
+        r"\[\[(?:File|Image):([^|\]]+)[^\]]*\]\]",
+        re.IGNORECASE,
+    )
+
+    for cell, attrs in cells_iter:
+        img_matches = list(img_link_re.finditer(cell))
+        if img_matches:
+            for i, m in enumerate(img_matches):
+                filename = m.group(1).strip()
+                cap_start = m.end()
+                cap_end = (
+                    img_matches[i + 1].start()
+                    if i + 1 < len(img_matches)
+                    else len(cell)
+                )
+                inline = _clean_html_caption(cell[cap_start:cap_end])
+                if inline and re.search(r"[A-Za-z]{3,}", inline):
+                    # Drop leading "1. " or "Fig. 4.—" prefix the
+                    # in-print numbering carries; the rendered figure
+                    # already conveys ordering.
+                    inline = re.sub(r"^\d+\.\s*", "", inline)
+                    inline = re.sub(
+                        r"^(?:&mdash;|&ndash;|[—–\-])\s*",
+                        "", inline,
+                    )
+                    inline = re.sub(
+                        r"^Fig\.\s*\d+\.?\s*"
+                        r"(?:&mdash;|&ndash;|[—–\-])\s*",
+                        "", inline, flags=re.IGNORECASE,
+                    )
+                    images.append((filename, inline))
+                else:
+                    images.append((filename, ""))
+            continue
+        text = _clean_html_caption(cell)
+        if not text or not re.search(r"[A-Za-z]{4,}", text):
+            continue
+        try:
+            colspan = int(attrs.get("colspan", "1"))
+        except ValueError:
+            colspan = 1
+        if colspan > 1:
+            legend, credit = _split_legend_and_credit(cell)
+            if legend and re.search(r"[A-Za-z]{3,}", legend):
+                legends.append((legend, credit))
+            continue
+        captions.append(text)
+
+    pairs: list[tuple[str, str]] = []
+    cap_idx = 0
+    for filename, inline in images:
+        if inline:
+            pairs.append((filename, inline))
+        elif cap_idx < len(captions):
+            pairs.append((filename, captions[cap_idx]))
+            cap_idx += 1
+        else:
+            pairs.append((filename, ""))
+    return pairs, legends
+
+
+def _split_legend_and_credit(cell_text: str) -> tuple[str, str | None]:
+    """Split a plate-legend cell into ``(legend, credit)``.
+
+    Wikisource transcribers typically place a ``{{smaller|''…''}}`` photo
+    credit in the same cell as the collective legend, separated by
+    ``<br />`` or ``{{dhr|…}}``.  Pull the credit out first, then
+    clean the remainder as the legend.
+    """
+    credit: str | None = None
+    m = re.search(
+        r"\{\{smaller\|([^{}]*(?:\{\{[^{}]*\}\}[^{}]*)*)\}\}",
+        cell_text, re.IGNORECASE,
+    )
+    if m:
+        credit_text = m.group(1)
+        credit_text = re.sub(r"'''|''", "", credit_text).strip(" ()")
+        if credit_text:
+            credit = credit_text
+        cell_text = cell_text.replace(m.group(0), "")
+    legend = _clean_grid_caption(cell_text)
+    return legend, credit
+
+
+_TOP_LEGEND_RE = re.compile(
+    r"\{\{(?:c|center)\|([^{}]*(?:\{\{[^{}]*\}\}[^{}]*)*)\}\}",
+    re.IGNORECASE,
+)
+
+
+def _extract_top_legends(
+    text: str,
+) -> tuple[list[tuple[str, str | None]], list[tuple[str, str]], str]:
+    """Extract ``{{c|…}}``/``{{center|…}}`` blocks that sit *outside* any
+    wikitable, classifying each as either:
+
+      • A **collective legend** (text only): "PORTRAITS OF SHAKESPEARE",
+        "PAINTING".  Returned as ``(legend, credit)``.
+      • A **centered image group** (contains ``[[Image:]]``/``[[File:]]``
+        links): vol05 CATTLE plates wrap their entire layout in one
+        ``{{center|…}}``; vol11/14 wrap a single image.  Routed through
+        the unified cell walker to extract image+caption pairs.
+
+    Returns ``(legends, image_pairs, modified_text)``.  Inside-table
+    ``{{center|…}}`` hits are skipped via masking so per-image captions
+    stay in place for downstream logic.
+    """
+    legends: list[tuple[str, str | None]] = []
+    image_pairs: list[tuple[str, str]] = []
+    masked = re.sub(r"\{\|.*?\|\}", "", text, flags=re.DOTALL)
+    out_text = text
+    for m in _TOP_LEGEND_RE.finditer(masked):
+        content = m.group(1)
+        if re.search(r"\[\[(?:File|Image):", content, re.IGNORECASE):
+            pairs, _ = _extract_pairs_from_cells([(content, {})])
+            if pairs:
+                image_pairs.extend(pairs)
+                out_text = out_text.replace(m.group(0), "", 1)
+            continue
+        legend, credit = _split_legend_and_credit(content)
+        if not legend or not re.search(r"[A-Za-z]{3,}", legend):
+            continue
+        if re.match(r"^\d+\.\s", legend):
+            continue
+        legends.append((legend, credit))
+        out_text = out_text.replace(m.group(0), "", 1)
+    return legends, image_pairs, out_text
+
+
+def _extract_plate_grid_pairs(
+    text: str,
+) -> tuple[list[tuple[str, str]], list[tuple[str, str | None]], str]:
+    """Extract image+caption pairs and collective legends from plate-grid
+    wikitables; return the text with those tables removed.
+
+    Delegates to :func:`_extract_pairs_from_cells` after iterating
+    cells via :func:`_wiki_table_cells`."""
+    pairs: list[tuple[str, str]] = []
+    legends: list[tuple[str, str | None]] = []
+
+    def replace(m: re.Match) -> str:
+        body = m.group(1)
+        local_pairs, local_legends = _extract_pairs_from_cells(
+            _wiki_table_cells(body)
+        )
+        if local_pairs or local_legends:
+            pairs.extend(local_pairs)
+            legends.extend(local_legends)
+            return ""
+        return m.group(0)
+
+    new_text = _GRID_TABLE_RE.sub(replace, text)
+    return pairs, legends, new_text
+
+
+_HTML_TABLE_RE = re.compile(
+    r"<table\b[^>]*>(.*?)</table>", re.DOTALL | re.IGNORECASE,
+)
+_HTML_TD_RE = re.compile(
+    r"<td\b[^>]*>(.*?)</td>", re.DOTALL | re.IGNORECASE,
+)
+
+
+def _clean_html_caption(text: str) -> str:
+    """Clean an HTML-table plate caption cell, joining ``<br>``-separated
+    lines into a single string.
+
+    ``_clean_grid_caption`` keeps only the *last* ``<br>``-segment (the
+    breed name in DOG plates).  HTML plates put multi-line captions in a
+    single cell — every line is part of the caption — so they all
+    have to be preserved.
+    """
+    text = re.sub(r"<br\s*/?>", " ", text, flags=re.IGNORECASE)
+    for _ in range(8):
+        # Round 1: unwrap known formatting templates (single arg).
+        new = re.sub(
+            r"\{\{\s*(?:sc|small-caps|smaller|small|c|center|big|nowrap|lh)"
+            r"\s*\|([^{}]*)\}\}",
+            r"\1", text, flags=re.IGNORECASE,
+        )
+        # Round 2: for any remaining innermost template, keep its
+        # last pipe-separated argument (the convention in MediaWiki
+        # display templates: the rendered text is the final arg).
+        new = re.sub(
+            r"\{\{[^{}]*\|([^{}|]*)\}\}",
+            r"\1", new,
+        )
+        if new == text:
+            break
+        text = new
+    text = re.sub(r"\{\{[^{}]*\}\}", "", text)
+    text = re.sub(r"'''|''", "", text)
+    text = re.sub(r"<[^>]+>", "", text)
+    # Defensive: any wiki-table markers that survived the upstream
+    # extractors don't belong in a caption.  Without this, the rare
+    # case where outer-table walking went sideways shows up to the
+    # reader as ``{| width="100%"`` literal text inside a caption.
+    text = re.sub(r"\{\|[^\n]*", "", text)
+    text = re.sub(r"\|\}", "", text)
+    text = re.sub(r"&mdash;", "—", text)
+    text = re.sub(r"&ndash;", "–", text)
+    text = re.sub(r"&nbsp;|&emsp;|&ensp;|&thinsp;", " ", text)
+    # Numeric entities collapse to a placeholder space rather than the
+    # actual codepoint — they're decorative spacing in plate cells, never
+    # caption content.
+    text = re.sub(r"&#\d+;", " ", text)
+    text = re.sub(r"\s+", " ", text).strip()
+    return text.rstrip(",.|;")
+
+
+def _extract_html_grid_pairs(
+    text: str,
+) -> tuple[list[tuple[str, str]], str]:
+    """Extract image+caption pairs from HTML ``<table>`` plate layouts
+    and return the text with those tables removed.
+
+    Delegates to :func:`_extract_pairs_from_cells` after iterating
+    cells via :func:`_html_table_cells`.
+    """
+    pairs: list[tuple[str, str]] = []
+
+    def replace(m: re.Match) -> str:
+        body = m.group(1)
+        local_pairs, _ = _extract_pairs_from_cells(
+            _html_table_cells(body)
+        )
+        if local_pairs:
+            pairs.extend(local_pairs)
+            return ""
+        return m.group(0)
+
+    new_text = _HTML_TABLE_RE.sub(replace, text)
+    return pairs, new_text
+
+
 def _transform_plate(raw_wikitext: str) -> str:
     """Transform a plate page: extract images and numbered captions, pair them.
 
@@ -707,10 +1130,31 @@ def _transform_plate(raw_wikitext: str) -> str:
     text = re.sub(r'<section[^>]+>', "", text, flags=re.IGNORECASE)
     text = re.sub(r"<!--.*?-->", "", text, flags=re.DOTALL)
 
-    # Extract all images
+    # Pull out collective legends + any centered image-group blocks
+    # from outside-table {{c|…}}/{{center|…}} markup.  Top legends
+    # (SHAKESPEARE, AMPHITHEATRE) become heading-text; image-group
+    # blocks (vol05 CATTLE plates, vol11/14 single-image plates) feed
+    # back as image+caption pairs.
+    top_legends, top_pairs, text = _extract_top_legends(text)
+
+    # Peel off plate-grid tables (image-row + caption-row).  Returns
+    # any colspan-row legends (bottom form: DOG) alongside the pairs.
+    wiki_pairs, bottom_legends, text = _extract_plate_grid_pairs(text)
+
+    # HTML <table> plates (SHAKESPEARE Plate I, GLASS Plate II): walk
+    # <td> cells in order, classify, pair positionally.
+    html_pairs, text = _extract_html_grid_pairs(text)
+
+    grid_pairs = top_pairs + wiki_pairs + html_pairs
+    grid_imgs = {fn for fn, _ in grid_pairs}
+    legends = top_legends + bottom_legends
+
+    # Extract any remaining (non-grid) images
     images = []
     for m in re.finditer(r"\[\[(?:File|Image):([^|\]]+)", text, re.IGNORECASE):
-        images.append(m.group(1).strip())
+        fn = m.group(1).strip()
+        if fn not in grid_imgs:
+            images.append(fn)
 
     # Extract all numbered captions.
     # Formats: "N. ALL CAPS CAPTION" or "Fig. N.—Mixed case description"
@@ -751,36 +1195,6 @@ def _transform_plate(raw_wikitext: str) -> str:
         cap = re.sub(r"\s+", " ", cap).strip()
         if len(cap) >= 3 and num not in captions:
             captions[num] = f"Fig. {num}. {cap}"
-
-    # Extract title lines (plate title, e.g. "EARLY EGYPTIAN ART")
-    # Skip lines inside table cells (<td>, |) and avoid duplicates
-    title_seen = set()
-    title_lines = []
-    in_table = False
-    for line in text.split("\n"):
-        stripped = line.strip()
-        if not stripped:
-            continue
-        if stripped.startswith("<table") or stripped.startswith("{|"):
-            in_table = True
-            continue
-        if stripped.startswith("</table") or stripped.startswith("|}"):
-            in_table = False
-            continue
-        if in_table:
-            continue
-        if stripped.startswith("[[") or stripped.startswith("{{"):
-            continue
-        if stripped.startswith("|") or stripped.startswith("<tr") or stripped.startswith("<td"):
-            continue
-        clean = re.sub(r"\{\{[^{}]*\}\}", "", stripped)
-        clean = re.sub(r"'''|''", "", clean)
-        clean = re.sub(r"<[^>]+>", "", clean)
-        clean = clean.strip()
-        if clean and len(clean) > 2 and not re.match(r"^\d+\.", clean):
-            if (clean.isupper() or clean.startswith("Plate")) and clean not in title_seen:
-                title_seen.add(clean)
-                title_lines.append(clean)
 
     # Pair images with captions by keyword matching
     sorted_caps = sorted(captions.items())
@@ -828,10 +1242,20 @@ def _transform_plate(raw_wikitext: str) -> str:
         if i not in used_images:
             paired.append(f"{{{{IMG:{img}}}}}")
 
-    # Assemble: title + paired images
+    # Assemble: legends (with italic credits) → grid pairs → numbered-
+    # caption paired images → unmatched images.  Legend text is already
+    # ALL-CAPS and stands out as a heading; credit lines render in
+    # italics via the «I»…«/I» marker the viewer already understands.
     result_parts = []
-    for t in title_lines:
-        result_parts.append(t)
+    for legend, credit in legends:
+        result_parts.append(legend)
+        if credit:
+            result_parts.append(f"«I»{credit}«/I»")
+    for fn, cap in grid_pairs:
+        if cap:
+            result_parts.append(f"{{{{IMG:{fn}|{cap}}}}}")
+        else:
+            result_parts.append(f"{{{{IMG:{fn}}}}}")
     result_parts.extend(paired)
 
     return "\n\n".join(result_parts)
@@ -1151,6 +1575,25 @@ def _promote_paragraph_legends(text: str) -> str:
         entries = _parse_legend_lines(lines_to_parse)
         if entries is None:
             continue
+        # If the IMG already carries a caption AND the candidate
+        # parses as a single entry whose "Label. text" matches that
+        # caption, skip promotion AND drop the redundant candidate.
+        # Vol 4 BOILER Fig. 16: source has
+        # `[[File:…|491px]]<br />{{EB1911 Fine Print|Fig. 16.—Yarrow…}}`
+        # — the image-extract regex already lifts the Fine-Print line
+        # into the IMG caption; promoting it again as LEGEND made the
+        # caption render twice.
+        if len(entries) == 1:
+            img_cap_match = re.match(
+                r"\{\{IMG:[^|}]+\|([^}]*)\}\}", m.group(0))
+            if img_cap_match:
+                img_cap = img_cap_match.group(1).strip().rstrip(".,")
+                legend_text = (
+                    f"{entries[0][0]}. {entries[0][1]}"
+                ).strip().rstrip(".,")
+                if img_cap == legend_text:
+                    pos = block_end
+                    continue
         legend = "\n".join(f"{lbl}. {t}." for lbl, t in entries)
         out_parts.append(f"\n\n{{{{LEGEND:{legend}}}LEGEND}}\n\n")
         pos = block_end

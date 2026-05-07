@@ -15,6 +15,8 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, field
 
+from britannica.parsers import img_float as _img_float_parser
+
 
 # Placeholder uses \x03 (ETX) which is stripped by clean_pages anyway,
 # so any leaked placeholders won't survive to export.
@@ -2666,20 +2668,22 @@ def _process_image_float(inner: str, text_transform) -> str:
 
     Inner is the content between {{ and }}, e.g.:
     'img float |file=Foo.jpg |cap=A caption |width=240px'
+    or the BOILER multi-line form with whitespace around equals:
+    '''img float
+     | file = Foo.jpg
+     | cap = {{sc|Fig.}} 4.—…
+     | width = 200px'''
     """
-    file_m = re.search(r"\|file=([^|]+)", inner)
-    cap_m = re.search(r"\|cap=((?:[^|{}]|\{\{[^{}]*\}\})+)", inner)
-    if not file_m:
+    parsed = _img_float_parser.parse(inner)
+    if parsed is None:
         return ""
-    filename = file_m.group(1).strip()
-    caption = ""
-    if cap_m:
-        caption = cap_m.group(1).strip()
+    caption = parsed.caption
+    if caption:
         caption = text_transform(caption)
         caption = _clean_text(caption)
     if caption:
-        return f"{{{{IMG:{filename}|{caption}}}}}"
-    return f"{{{{IMG:{filename}}}}}"
+        return f"{{{{IMG:{parsed.filename}|{caption}}}}}"
+    return f"{{{{IMG:{parsed.filename}}}}}"
 
 
 _CSS_CROP_RE = re.compile(
@@ -3251,7 +3255,46 @@ def _unwrap_html_illustration(
                         new_raw = img_raw
                     return _process_image_from_raw(new_raw, text_transform)
 
-    # Multi-image case falls through to the paragraph-style fallback
+    # Multi-image figure-grid: image-row + caption-row + optional
+    # shared-caption row.  BOILER Fig 17 (vol 4 ws 162) is the canonical
+    # in-article case: 2 images side-by-side with per-column sub-captions
+    # and a colspan="2" row carrying the shared figure caption.  Without
+    # this branch the fallback below concatenates every caption into one
+    # paragraph, losing the per-image pairing.
+    if len(image_cells) > 1 and inner_registry is not None:
+        for i in range(len(rows_breakdown) - 1):
+            img_row, img_caps = rows_breakdown[i]
+            next_imgs, cap_row = rows_breakdown[i + 1]
+            if (img_row and not img_caps
+                    and cap_row and not next_imgs
+                    and len(img_row) == len(cap_row)):
+                out: list[str] = []
+                for img_cell, cap in zip(img_row, cap_row):
+                    m = re.search(
+                        re.escape(_PH) + r"ELEM:\d+" + re.escape(_PH),
+                        img_cell)
+                    if m and m.group(0) in inner_registry.elements:
+                        img_type, img_raw = inner_registry.elements[m.group(0)]
+                        if img_type == "IMAGE":
+                            new_raw = img_raw + "\n\n" + cap if cap else img_raw
+                            out.append(
+                                _process_image_from_raw(new_raw, text_transform))
+                            continue
+                    out.append(img_cell + ("\n\n" + cap if cap else ""))
+                # Remaining caption rows (typically a colspan shared
+                # caption) become a LEGEND block under the figure group.
+                shared_caps: list[str] = []
+                for j in range(len(rows_breakdown)):
+                    if j in (i, i + 1):
+                        continue
+                    _, more_caps = rows_breakdown[j]
+                    shared_caps.extend(c for c in more_caps if c)
+                if shared_caps:
+                    shared = " ".join(shared_caps)
+                    out.append(f"{{{{LEGEND:{shared}}}LEGEND}}")
+                return "\n\n".join(out)
+
+    # Otherwise multi-image falls through to the paragraph-style fallback
     # below.  Plate-shaped multi-image illustration tables are detected
     # earlier in the pipeline (clean_pages._extract_illustration_plates,
     # operating on page.wikitext where `summary="Illustration"` is

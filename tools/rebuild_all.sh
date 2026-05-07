@@ -65,6 +65,18 @@ echo
 echo "=== Phase 1b: Building contributor table [$(elapsed)] ==="
 uv run python tools/pipeline/build_contributor_table.py
 
+# --- Phase 1c: Apply vol 29 contributor linker ---
+# Adds contributors that vol 29's master Index lists but per-volume
+# tables don't, plus paired re-keys / duplicate-initials resolutions.
+# Must run AFTER 1b (so the linker sees the post-corrections.json
+# contributor table) and BEFORE Phase 2's extract-contributors (so
+# the per-volume footer matcher sees the new ContributorInitials
+# rows).  Conservative: NEEDS_REVIEW items are reported but not
+# auto-applied.
+echo
+echo "=== Phase 1c: Applying vol 29 contributor linker [$(elapsed)] ==="
+uv run python tools/pipeline/link_vol29_contributors.py --apply
+
 # --- Phase 2: Per-volume pipeline ---
 echo
 echo "=== Phase 2: Running pipeline for each volume ==="
@@ -118,6 +130,17 @@ uv run britannica resolve-xrefs-all
 echo
 echo "=== Phase 3b: Linking contributors from front matter [$(elapsed)] ==="
 uv run python tools/pipeline/link_contributors_from_frontmatter.py
+
+# --- Phase 3b2: Link vol 29 master-Index article attributions ---
+# Per-volume front matter doesn't list vol-29-only contributors (the
+# Phase 1c INSERTs), and many of their attributed articles have no
+# `(initials)` footer signature — so without this step they ship as
+# orphans (no ArticleContributor rows) and get filtered out of
+# contributors.json.  Must run AFTER Phase 3b so we only fill
+# contributors who are still genuinely orphaned.
+echo
+echo "=== Phase 3b2: Linking vol 29 article attributions [$(elapsed)] ==="
+uv run python tools/pipeline/link_vol29_articles.py --apply
 
 
 # --- Phase 3c: Rebuild printed-page mapping (ws→printed / leaf→printed) ---

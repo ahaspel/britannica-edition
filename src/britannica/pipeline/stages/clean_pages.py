@@ -9,6 +9,7 @@ from britannica.cleaners.unicode import normalize_unicode, replace_print_artifac
 from britannica.cleaners.whitespace import normalize_whitespace
 from britannica.db.models.source_page import SourcePage
 from britannica.db.session import SessionLocal
+from britannica.parsers import img_float as _img_float_parser
 
 
 _CORRECTIONS: dict | None = None
@@ -338,16 +339,12 @@ def _replace_score_tags(text: str, volume: int, page_number: int) -> str:
 def _convert_img_float(text: str) -> str:
     """Convert leaked 'img float|file=...|cap=...' to {{IMG:...}} markers."""
     def _replace(m):
-        s = m.group(0)
-        file_m = re.search(r"\|file=([^|]+)", s)
-        cap_m = re.search(r"\|cap=([^|]+)", s)
-        if not file_m:
+        parsed = _img_float_parser.parse(m.group(0))
+        if parsed is None:
             return ""  # can't salvage without a filename
-        filename = file_m.group(1).strip()
-        caption = cap_m.group(1).strip() if cap_m else ""
-        if caption:
-            return f"{{{{IMG:{filename}|{caption}}}}}"
-        return f"{{{{IMG:{filename}}}}}"
+        if parsed.caption:
+            return f"{{{{IMG:{parsed.filename}|{parsed.caption}}}}}"
+        return f"{{{{IMG:{parsed.filename}}}}}"
     return re.sub(
         r"[Ii]mg float\s*\|[^\n]*",
         _replace, text,
