@@ -215,9 +215,24 @@ if [ -z "$NO_DEPLOY" ]; then
   echo "  Uploading articles to S3..."
   aws s3 sync "$EXPORT_DIR" s3://britannica11.org/data/articles/ --delete
 
-  # Images and scans are static assets — upload separately with:
-  #   aws s3 sync data/derived/images/ s3://britannica11.org/data/images/ --size-only
-  #   aws s3 sync data/derived/scans/ s3://britannica11.org/data/scans/ --size-only
+  # Images and scans are static assets.  Always upload with a sensible
+  # Cache-Control so a re-uploaded scan (splice, vol-20 quality swap)
+  # actually reaches users in their normal browser windows on the next
+  # page load.  Without this header browsers fall back to heuristic
+  # freshness and serve the OLD bytes for hours after a CloudFront
+  # invalidation has already refreshed the CDN.
+  echo "  Uploading images to S3..."
+  # Don't pass --content-type for the images dir — files are mixed
+  # jpg/png/gif and the sync command would force one type for all.
+  # aws s3 sync auto-detects content-type from extension by default.
+  aws s3 sync data/derived/images/ s3://britannica11.org/data/images/ \
+    --size-only \
+    --cache-control "public, max-age=300, must-revalidate"
+  echo "  Uploading scans to S3..."
+  aws s3 sync data/derived/scans/ s3://britannica11.org/data/scans/ \
+    --size-only \
+    --cache-control "public, max-age=300, must-revalidate" \
+    --content-type "image/jpeg"
 
   echo "  Uploading derived JSON (printed pages, scan map, classified TOC)..."
   aws s3 cp data/derived/printed_pages.json s3://britannica11.org/data/printed_pages.json

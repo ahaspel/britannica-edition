@@ -2678,7 +2678,8 @@ def transform_articles(volume: int) -> int:
             if is_plate:
                 # Plates are single pages — process directly
                 raw = segments[0][0].segment_text if segments else ""
-                article.body = _transform_plate(raw) if raw else ""
+                from britannica.parsers.plate import parse_plate
+                article.body = parse_plate(raw) if raw else ""
             else:
                 # Join raw segments with page markers, then transform once.
                 raw_parts = []

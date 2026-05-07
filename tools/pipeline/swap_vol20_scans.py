@@ -18,6 +18,19 @@ Rate-limiting: 3 s between requests; on HTTP 429 sleep 6 min and retry
 (per the wikisource-rate memory entry — ~450 at 3 s delay, 6-min
 cooldown works).
 
+After running, sync to S3 with::
+
+    aws s3 sync data/derived/scans/ s3://britannica11.org/data/scans/ \\
+      --size-only \\
+      --cache-control "public, max-age=300, must-revalidate" \\
+      --content-type "image/jpeg" \\
+      --exclude '*' --include 'vol20_*'
+
+The Cache-Control header is essential — without it browsers fall back
+to heuristic freshness and serve OLD scan bytes for hours after a
+CloudFront invalidation, leaving an "incognito-only" UX for ordinary
+users.
+
 Usage::
 
     nohup uv run python tools/pipeline/swap_vol20_scans.py \\
