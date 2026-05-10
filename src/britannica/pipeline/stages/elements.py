@@ -109,6 +109,179 @@ _EXTRACTORS = [
 ]
 
 
+_PAGE_MARKER_PREFIX_RE = re.compile(r"^\x01PAGE:\d+\x01")
+
+
+def _strip_page_marker_prefix(line: str) -> str:
+    """Drop a leading `\\x01PAGE:N\\x01` marker so detection sees the
+    visible content.  Lists that span a page boundary start a new line
+    with the marker glued to the next item: `\\x01PAGE:191\\x01::Gospel
+    of Nicodemus.` is visually `::Gospel of Nicodemus.` and must be
+    recognized as a `:`-indented list line."""
+    return _PAGE_MARKER_PREFIX_RE.sub("", line)
+
+
+def _outline_indent_depth(line: str) -> int | None:
+    """Compute the visual-indent depth of `line`, or None if no indent
+    marker is present.
+
+    Recognized markers:
+      • Leading `:`-prefix block (depth = colon count)
+      • `{{em|N}}` template (depth = ceil(N))
+      • Bare `{{em}}` / `{{gap}}` template (depth = 1)
+      • Leading `&emsp;` / `&nbsp;` / `&ensp;` / `&thinsp;` entity run
+        (depth = number of entities)
+    """
+    line = _strip_page_marker_prefix(line)
+    m = re.match(r"^(:+)", line)
+    if m:
+        return len(m.group(1))
+    m = re.match(r"^\s*\{\{em\|([0-9.]+)\}\}", line)
+    if m:
+        try:
+            return max(1, int(float(m.group(1))))
+        except ValueError:
+            return 1
+    if re.match(r"^\s*\{\{(?:em|gap)\}\}", line):
+        return 1
+    m = re.match(r"^\s*((?:&(?:emsp|nbsp|ensp|thinsp);)+)", line)
+    if m:
+        return len(re.findall(r"&[a-z]+;", m.group(1)))
+    return None
+
+
+def _outline_is_bare_emphasis(line: str) -> bool:
+    """A standalone bold / italic / sc line acts as a top-level
+    hierarchy label (depth 0) within an outline — e.g. ARACHNIDA's
+    ``''Grade A. ANOMOMERISTICA.''`` which sits between `::`-indented
+    Sub-Class lines."""
+    s = _strip_page_marker_prefix(line).strip()
+    if not s:
+        return False
+    return bool(
+        re.fullmatch(r"'''[^\n]+'''[.,]?", s)
+        or re.fullmatch(r"''[^\n]+''[.,]?", s)
+        or re.fullmatch(r"\{\{sc\|[^{}]+\}\}[.,]?", s, re.IGNORECASE)
+    )
+
+
+# Range-style header: `N–M.—TITLE.<br />` (GEM plate captions, similar
+# numbered-section openers).  Acts as a top-level label (depth 0) for
+# the indented numbered items that follow.  Required to be SHORT and
+# end with `<br />` so prose paragraphs that happen to start with
+# `1–5.` don't false-match.
+_OUTLINE_RANGE_HEADER_RE = re.compile(
+    r"^\d+\s*[–—\-]\s*\d+\s*\.\s*[—–\-]+\s*[A-Z][^<\n]{0,80}<br\s*/?>\s*$",
+    re.IGNORECASE,
+)
+
+
+def _outline_is_list_shaped(line: str) -> bool:
+    if _outline_indent_depth(line) is not None:
+        return True
+    if _outline_is_bare_emphasis(line):
+        return True
+    if _OUTLINE_RANGE_HEADER_RE.match(_strip_page_marker_prefix(line).strip()):
+        return True
+    return False
+
+
+def _extract_outlines(
+    text: str,
+    registry: ElementRegistry,
+    *,
+    require_emphasis: bool = True,
+) -> str:
+    """Find runs of visually-indented hierarchical content and replace
+    each with an OUTLINE placeholder.
+
+    Detection signal:
+      • 4+ consecutive non-empty lines, each carrying a visual-indent
+        marker (`:`-prefix, `{{em|N}}` / `{{gap}}` template, or
+        leading `&emsp;`/`&nbsp;` entity run) OR being a bare-emphasis
+        hierarchy label (`'''Foo.'''`, `''Bar.''`, `{{sc|Baz.}}`)
+      • 2+ DISTINCT indent depths in the run (it's hierarchical, not
+        a flat list — a flat list renders fine as a table or `<ol>`)
+      • at least one bold/italic/sc emphasis token in the run
+        (skipped when ``require_emphasis=False`` — used by the plate
+        outline detector, where the IMG + numbered list shape is
+        already specific enough on its own)
+
+    `<poem>` / `<math>` / `<ref>` content is already placeholdered by
+    the time this runs, so verse stanzas with `{{em|N}}` indent and
+    multi-line math expressions don't trigger detection.
+
+    Captures: ARACHNIDA Tabular Classification, ZOOLOGY taxonomies
+    (~10 pages in vol 28), botanical/lichen taxonomies, BIBLE Apocrypha
+    listing, SANSKRIT phonology, EYE disease classification, etc. —
+    ~30 pages corpus-wide.
+    """
+    lines = text.split("\n")
+    out: list[str] = []
+    i = 0
+    while i < len(lines):
+        if not _outline_is_list_shaped(lines[i]):
+            out.append(lines[i])
+            i += 1
+            continue
+
+        block_start = i
+        block_lines: list[str] = []
+        depths: set[int] = set()
+        has_emphasis = False
+        while i < len(lines):
+            line = lines[i]
+            if _outline_is_list_shaped(line):
+                d = _outline_indent_depth(line)
+                if d is None:
+                    # Bare-emphasis line — top-level (depth 0).
+                    depths.add(0)
+                else:
+                    depths.add(d)
+                block_lines.append(line)
+                _ll = line.lower()
+                if (
+                    "'''" in line or "''" in line
+                    or "{{sc|" in _ll or "{{csc|" in _ll
+                    or "{{asc|" in _ll or "{{small-caps|" in _ll
+                    or "{{uc|" in _ll or "{{lc|" in _ll
+                    or "<i>" in _ll or "<b>" in _ll or "<em>" in _ll
+                ):
+                    has_emphasis = True
+                i += 1
+                continue
+            stripped = line.rstrip()
+            if not stripped:
+                # Blank line: continue if the next non-blank rejoins.
+                j = i + 1
+                while j < len(lines) and not lines[j].rstrip():
+                    j += 1
+                if j < len(lines) and _outline_is_list_shaped(lines[j]):
+                    block_lines.extend(lines[i:j])
+                    i = j
+                    continue
+                break
+            break
+
+        non_empty = [ln for ln in block_lines if ln.strip()]
+        if (
+            len(non_empty) >= 4
+            and len(depths) >= 2
+            and (has_emphasis or not require_emphasis)
+        ):
+            block_text = "\n".join(block_lines).rstrip()
+            placeholder = registry.add("OUTLINE", block_text)
+            out.append(placeholder)
+        else:
+            out.extend(block_lines)
+            if i == block_start:
+                if not block_lines:
+                    out.append(lines[i])
+                    i += 1
+
+    return "\n".join(out)
+
+
 def _is_compound_table(table_text: str) -> bool:
     """Detect data tables with nested sub-tables in cells.
 
@@ -232,10 +405,16 @@ _CHART2_RE = re.compile(
 )
 
 
-def extract(text: str) -> tuple[str, ElementRegistry]:
+def extract(
+    text: str, _outline_pass: bool = True,
+) -> tuple[str, ElementRegistry]:
     """Extract all embedded elements from text, outermost first.
 
     Returns the text with placeholders and a registry of extracted elements.
+
+    `_outline_pass` is set to False on recursive calls (when processing
+    an OUTLINE element's own inner content), to prevent the outline
+    detector from re-finding itself and recursing forever.
     """
     registry = ElementRegistry()
 
@@ -246,8 +425,33 @@ def extract(text: str) -> tuple[str, ElementRegistry]:
     # Wiki tables first (outermost) — balanced matching handles nesting
     text = _extract_balanced_tables(text, registry)
 
-    # Then all other elements (refs, images, poems, math, etc.)
+    # POEM placeholdered before outline detection so verse stanzas
+    # with `{{em|N}}` indent (CHANT ROYAL etc.) don't false-trigger
+    # as taxonomic outlines.  Also REF and MATH out of the way for
+    # the same reason — multi-line equations / footnote bodies can
+    # contain indented continuation lines.
+    _PRE_OUTLINE_TYPES = {"POEM", "REF", "REF_SELF", "MATH"}
     for element_type, pattern, _flags in _EXTRACTORS:
+        if element_type not in _PRE_OUTLINE_TYPES:
+            continue
+        text = pattern.sub(
+            lambda m, et=element_type: registry.add(et, m.group(0)),
+            text,
+        )
+
+    # Hierarchical taxonomic / genealogical / classificatory outlines
+    # — `:`-indented prose, `{{em|N}}` typesetter indent, etc.
+    # ARACHNIDA Tabular Classification, ZOOLOGY taxonomies, GEM plate
+    # captions, ~30+ pages corpus-wide.  Run BEFORE the IMAGE
+    # extractor so a plate-caption outline (numbered items beneath
+    # `[[File:…]]`) isn't consumed as the image's inline caption.
+    if _outline_pass:
+        text = _extract_outlines(text, registry)
+
+    # Remaining elements (images, html-tables, hieroglyph, image-float)
+    for element_type, pattern, _flags in _EXTRACTORS:
+        if element_type in _PRE_OUTLINE_TYPES:
+            continue
         text = pattern.sub(
             lambda m, et=element_type: registry.add(et, m.group(0)),
             text,
@@ -289,6 +493,10 @@ def _strip_delimiters(element_type: str, raw: str) -> str:
         s = re.sub(r"^<table\b[^>]*>", "", raw, flags=re.IGNORECASE)
         s = re.sub(r"</table>\s*$", "", s, flags=re.IGNORECASE)
         return s
+    elif element_type == "OUTLINE":
+        # OUTLINE has no outer delimiter — the raw IS the indented
+        # lines. Pass through.
+        return raw
     elif element_type == "HIEROGLYPH":
         s = re.sub(r"^\{\{hieroglyph\||\}\}$", "", raw, flags=re.IGNORECASE)
         s = re.sub(r"^<hiero>|</hiero>$", "", s, flags=re.IGNORECASE)
@@ -323,9 +531,11 @@ def _process_element(element_type: str, raw: str,
         return _process_compound_table(raw, text_transform)
 
     # Strip outer delimiters to get the element's inner content,
-    # then recursively extract and process any child elements.
+    # then recursively extract and process any child elements.  Skip
+    # the outline-extraction pass when processing an OUTLINE — its
+    # raw content is already the body of one.
     inner = _strip_delimiters(element_type, raw)
-    inner, inner_registry = extract(inner)
+    inner, inner_registry = extract(inner, _outline_pass=(element_type != "OUTLINE"))
 
     # Process children but DON'T reinsert yet — keep placeholders
     # so the parent processor sees opaque markers, not expanded content.
@@ -364,6 +574,8 @@ def _process_element(element_type: str, raw: str,
             result = _process_table(inner, text_transform, inner_registry)
     elif element_type == "HTML_TABLE":
         result = _process_html_table(raw, inner, text_transform, inner_registry)
+    elif element_type == "OUTLINE":
+        result = _process_outline(inner, text_transform)
     else:
         result = inner
 
@@ -530,7 +742,7 @@ def _classify_table(raw: str, inner: str, inner_registry: ElementRegistry | None
         # the (N) label that visually group the system. METEOROLOGY's
         # Navier-Stokes hydrodynamics block is the canonical case —
         # routing to COMPLEX_HTML renders it as a malformed data table.
-        if _is_math_dominant_layout(raw, inner_registry):
+        if _is_math_dominant_layout(raw, inner, inner_registry):
             return "EQUATION_LAYOUT"
         return "COMPLEX_HTML"
     # Tables with data signals (border/rules/class) AND {{Ts}} templates
@@ -716,7 +928,7 @@ def _process_math_layout_table(raw: str) -> str:
 
 
 def _is_math_dominant_layout(
-    raw: str, inner_registry: ElementRegistry | None
+    raw: str, inner: str, inner_registry: ElementRegistry | None
 ) -> bool:
     """Detect equation-system tables whose only non-math content is
     decorative brace / equation-number cells with rowspan/colspan.
@@ -726,7 +938,12 @@ def _is_math_dominant_layout(
     this exception lets through tables that are unambiguously math
     layouts: ≥75% of registered child elements are MATH placeholders,
     no other element type contributes content (no IMAGE, REF, TABLE,
-    POEM children), and no header (`!`) row.
+    POEM children), no header (`!`) row, no explicit data-table class
+    (wikitable / tablecolhd / border) on the `{|` header, and ≤1 plain
+    cell with substantive alphabetic prose (≥3 letters).  Tables like
+    BARTON BEDS / PONTOON have decorative `\\Big\\}` MATH brackets but
+    the bulk of their cells are plain-text data — those must NOT be
+    treated as math layouts even though every registered child is MATH.
     """
     if inner_registry is None:
         return False
@@ -745,22 +962,81 @@ def _is_math_dominant_layout(
             return False
     if re.search(r"^\s*!", raw, re.MULTILINE):
         return False
+    # Explicit data-table class / border / rules in the {| header is a
+    # definitive signal — never treat such a table as math layout.
+    header = raw.split("\n", 1)[0]
+    if (re.search(r'border\s*=\s*"?[1-9]', header, re.IGNORECASE)
+            or re.search(r'rules\s*=', header, re.IGNORECASE)
+            or re.search(r'class\s*=\s*"?[^"\s]*'
+                         r'(?:wikitable|tablecolhd|border)',
+                         header, re.IGNORECASE)):
+        return False
+    # Substantive-prose check: count non-MATH cells (cells with no
+    # placeholder) that carry ≥3 alphabetic characters after styling
+    # is stripped.  ≥2 such cells means the MATH children are
+    # decorative bracket symbols, not the table's main payload.
+    prose_cells = 0
+    _ATTR_ONLY = re.compile(
+        r"^(?:colspan|rowspan|width|style|align|valign|class|"
+        r"cellpadding|nowrap|border|bgcolor|height)\s*=",
+        re.IGNORECASE,
+    )
+    for raw_row in re.split(r"\|-[^\n]*", inner):
+        protected = re.sub(r"\{\{[^}]*\}\}",
+                           lambda m: m.group(0).replace("|", "\x04"),
+                           raw_row)
+        protected = re.sub(re.escape(_PH) + r"[^" + re.escape(_PH) + r"]+"
+                           + re.escape(_PH),
+                           lambda m: m.group(0).replace("|", "\x04"),
+                           protected)
+        for cell in re.findall(r"\|([^|\n]*)", protected):
+            s = cell.replace("\x04", "|").strip()
+            if not s or s in ("}", "{|"):
+                continue
+            if _PH in s:
+                continue
+            if _ATTR_ONLY.match(s):
+                continue
+            stripped = re.sub(r"\{\{[^{}]*\}\}", "", s)
+            stripped = re.sub(r"<[^>]+>", "", stripped)
+            stripped = re.sub(r"&[a-zA-Z]+;", "", stripped)
+            if len(re.sub(r"[^A-Za-z]", "", stripped)) >= 3:
+                prose_cells += 1
+                if prose_cells >= 2:
+                    return False
     return True
 
 
 def _is_equation_layout(inner: str, inner_registry: ElementRegistry | None) -> bool:
     """Detect wiki tables used for equation alignment, not data display.
 
-    Two signatures:
+    Three signatures:
       1. Mostly MATH placeholders (from <math> tags in cells)
-      2. Mostly empty spacer cells without cell-level align attributes
+      2. ``{{sfrac}}`` template + ``(N)`` numeric label cell — equation
+         systems written with `{{sfrac}}` instead of `<math>` (ORDNANCE
+         p244 shrinkage equations).  At least one row must combine the
+         two markers; the (N) label is the distinctive equation-number
+         signature that data tables don't use.
+      3. Mostly empty spacer cells without cell-level align attributes
     """
     # Check 1: majority MATH placeholders
     if _PH in inner and inner_registry:
         math_ct = sum(1 for _, (t, _) in inner_registry.elements.items() if t == "MATH")
         if math_ct >= 2 and math_ct >= len(inner_registry.elements) * 0.5:
             return True
-    # Check 2: spacer-heavy alignment (>50% empty cells).
+    # Check 2: sfrac-template equations with parenthesized numeric labels.
+    # Walk row-by-row looking for the combination `{{sfrac|…}}` content
+    # AND a final `|(N)` or `|(N).` cell.  Any row matching is enough —
+    # data tables that happen to contain a sfrac fraction don't also
+    # carry equation-number labels.
+    if re.search(r"\{\{sfrac\|", inner, re.IGNORECASE):
+        for row in re.split(r"\|-[^\n]*", inner):
+            has_sfrac = bool(re.search(r"\{\{sfrac\|", row, re.IGNORECASE))
+            has_eqn_label = bool(re.search(r"\|\s*\(\d+[a-z]?\)\.?\s*$",
+                                           row, re.MULTILINE))
+            if has_sfrac and has_eqn_label:
+                return True
+    # Check 3: spacer-heavy alignment (>50% empty cells).
     # Data tables use cell-level align/valign attributes; equation layout never does.
     if re.search(r'\balign\s*=', inner, re.IGNORECASE):
         return False
@@ -811,7 +1087,12 @@ def _process_equation_layout(inner: str, text_transform) -> str:
             s = c.strip()
             if s in ("}", "{|"):
                 continue
-            if s and _ATTR.match(s):
+            # Strip cell-styling templates before the attribute test so
+            # cells like `{{Ts|ac}} colspan=2` are recognized as
+            # attribute-only rather than rendered with `colspan=2`
+            # surviving into prose output.
+            test = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*", "", s).strip()
+            if not test or _ATTR.match(test):
                 continue
             cells.append(text_transform(s) if s else " ")
         return cells
@@ -1055,7 +1336,33 @@ def _parse_inline_legend_cell(
 
 
 _MULTICOL_FULL_ENTRY_RE = re.compile(
-    r"^\s*([A-Za-z0-9]+(?:\s*,\s*[A-Za-z0-9]+)*)\.\s+(.+\S)\s*$")
+    # Label: one or more alphanumeric tokens, optionally with `to`-range
+    # form (`VIII to XIII`) for ARACHNIDA Fig. 7 / Fig. 32 cells, then
+    # comma-or-period separator + text.  Originally period-only; the
+    # comma form covers ARACHNIDA Fig. 1 (`LAP, Left anterior process.`)
+    # and similar plates throughout the corpus.
+    r"^\s*"
+    r"([A-Za-z0-9]+(?:\s+to\s+[A-Za-z0-9]+)?"
+    r"(?:\s*,\s*[A-Za-z0-9]+(?:\s+to\s+[A-Za-z0-9]+)?)*)"
+    r"[.,]\s+(.+\S)\s*$")
+# Same shape but with an italic-wrapped label.  ARACHNIDA Fig. 31
+# uses ``''d'', Chelicera. || ''ad'', Muscle…`` — every cell is a
+# complete (italic-label, text) entry instead of an alternating
+# label/text pair.
+_MULTICOL_FULL_ENTRY_ITALIC_RE = re.compile(
+    # Italic label optionally with a superscript/subscript suffix
+    # (HTML `<sup>1</sup>` form or Unicode `¹`/`₁` after
+    # `_convert_inline_sub_sup` runs).  Also accepts an `X to Y`
+    # range form (ARACHNIDA Fig. 32 `''br''¹ to ''br''⁵, Branchial
+    # appendages…`).
+    r"^\s*("
+    r"«I»[^«]+«/I»"
+    r"(?:<su[bp]>[^<]+</su[bp]>|[¹²³⁰-₉]+)?"
+    r"(?:\s+to\s+«I»[^«]+«/I»"
+    r"(?:<su[bp]>[^<]+</su[bp]>|[¹²³⁰-₉]+)?)?"
+    r")"
+    r"\s*[.,]\s+(.+\S)\s*$"
+)
 
 # Strict validator for a parsed legend label — rejects "Steiner," and
 # similar chemist-name false positives while accepting "A", "P₁",
@@ -1097,6 +1404,10 @@ _LIGATURE_FOLD = {
 def _ascii_fold_label(label: str) -> str:
     """Fold a label to plain ASCII for regex-shape validation.
 
+    * Bold/italic/small-caps markers (`«I»`, `«/I»`, etc.) → dropped
+      so italic-wrapped labels (ARACHNIDA Fig. 31 `«I»d«/I»`) reach
+      the validators as bare letters instead of failing on the leading
+      `«` character.
     * Unicode Mathematical Italic letters (𝑎–𝑧, 𝐴–𝑍, ℎ) → ASCII
       (MUSCULAR SYSTEM Fig. 9)
     * Unicode superscript digits (⁰¹²³⁴⁵⁶⁷⁸⁹) → ASCII digits
@@ -1104,8 +1415,15 @@ def _ascii_fold_label(label: str) -> str:
     * Unicode subscript digits (₀₁₂…) → ASCII digits
     * Prime family (′ ″ ‴ ‵ etc.) → dropped (HYDROMEDUSAE Fig. 26
       `a′, g″, k′`)
+    * Greek letters (α-ω, Α-Ω) → ASCII placeholder letters so legend
+      labels using Greek symbols (ANATOMY Muscular Plate Fig. 1/2)
+      pass the legend-label shape validator.
 
     The display form stays intact — only the validator sees the fold."""
+    label = re.sub(r"«/?(?:B|I|SC)»", "", label)
+    # `<sup>1</sup>` / `<sub>1</sub>` HTML markup → bare text
+    # (ARACHNIDA Fig. 31 `''stig''<sup>1</sup>` → "stig1").
+    label = re.sub(r"</?su[bp]>", "", label, flags=re.IGNORECASE)
     out = []
     for ch in label:
         cp = ord(ch)
@@ -1123,6 +1441,13 @@ def _ascii_fold_label(label: str) -> str:
             continue
         elif cp in _LIGATURE_FOLD:
             out.append(_LIGATURE_FOLD[cp])
+        elif 0x03B1 <= cp <= 0x03C9:
+            # Lowercase Greek alphabet (α=0x03B1 … ω=0x03C9).
+            # Map to ASCII a..x cyclically — we only care about
+            # alpha-shape validity, not faithful transliteration.
+            out.append(chr(ord('a') + (cp - 0x03B1) % 24))
+        elif 0x0391 <= cp <= 0x03A9:
+            out.append(chr(ord('A') + (cp - 0x0391) % 24))
         else:
             out.append(ch)
     # Strip trailing whitespace so labels like `m, r ′` (which folds
@@ -1254,6 +1579,21 @@ def _parse_multicol_legend_row(
             if m:
                 out.append((m.group(1), m.group(2).rstrip(". ")))
         return out
+    # Italic-label full-entry-per-cell (ARACHNIDA Figs 31/32, ECHINODERMA
+    # plate 1).  Each cell carries `''label'', text.` rather than the
+    # alternating `''label''||text` shape \u2014 without this branch the
+    # cells get merged into garbage pairs and the legend rows leak as
+    # plain prose with `||` separators showing through.
+    if first_is_italic and _MULTICOL_FULL_ENTRY_ITALIC_RE.match(transformed[0]):
+        for t in transformed:
+            m = _MULTICOL_FULL_ENTRY_ITALIC_RE.match(t)
+            if m:
+                # group(1) already includes the \u00abI\u00bb\u2026\u00ab/I\u00bb wrapper plus
+                # optional `<sup>\u2026</sup>` / `<sub>\u2026</sub>` suffix.
+                label = m.group(1).strip()
+                text_part = _clean_legend_text(m.group(2)).rstrip(". ")
+                out.append((label, text_part))
+        return out
     # Alternating-pair.  Labels may terminate with `.` OR `,`
     # (HYDROMEDUSAE Fig. 30 uses `''ex'',||Ex-umbral ectoderm.`);
     # strip both trailing punctuations.
@@ -1287,8 +1627,8 @@ def _extract_poem_legend(
     # matches `\n\s*\|-+` which misses a `|-` at position 0). Without
     # this, entry 1 parses as label `-valign="top"`, fails legend
     # validation, and the whole Shape B path falls through.
-    body = re.sub(r"^\s*\|-+[^\n]*\n", "", body)
-    cells = re.split(r"\n\s*\|-+[^\n]*\n", body)
+    body = re.sub(r"^(?:\s*\|-+[^\n]*\n)+", "", body)
+    cells = re.split(r"\n(?:\s*\|-+[^\n]*\n)+", body)
 
     # --- Shape A: poems + csc subheadings ---
     poem_lines: list[str] = []
@@ -1491,6 +1831,24 @@ def _extract_caption_from_colspan_row(
     if m:
         body = body[m.end():]
     body = body.strip()
+    # Multi-cell caption rows: a single image can have its caption
+    # split across multiple `||`-separated cells (ANATOMY Muscular
+    # Plate row carries `Fig. 1.|| colspan=2 |Fig. 2.` for one image
+    # showing both figures).  Strip cell-attribute prefix from each
+    # piece and join with a space so the inter-cell `||` and trailing
+    # `colspan=N|` don't leak into the rendered caption.
+    if "||" in body:
+        pieces: list[str] = []
+        for part in body.split("||"):
+            part = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*", "", part).strip()
+            part = re.sub(r"^\s*\|\s*", "", part)
+            am = _CELL_ATTR_PREFIX_RE.match(part)
+            if am:
+                part = part[am.end():]
+            part = part.strip()
+            if part:
+                pieces.append(part)
+        body = " ".join(pieces)
     # Split out in-cell attribution preceding the Fig. caption.
     attribution = None
     if not _looks_like_caption(body):
@@ -1672,7 +2030,12 @@ def _try_image_layout_subclass(
                      if t == "POEM"]
         if table_phs or poem_phs:
             return None
-        rows_local = re.split(r"\n\s*\|-+[^\n]*\n", inner)
+        # Consume runs of consecutive `|-` row separators in one match.
+        # Source occasionally has stray `|-\n|-\n` doubles (ARACHNIDA
+        # Fig 1) which the original `\n\s*\|-+[^\n]*\n` only consumes
+        # once, leaking the second `|-` as a spurious "-" cell into the
+        # next row.
+        rows_local = re.split(r"\n(?:\s*\|-+[^\n]*\n)+", inner)
         # Per-image row positions
         img_row_of: dict[str, int] = {}
         for ph in image_phs:
@@ -1788,8 +2151,10 @@ def _try_image_layout_subclass(
     table_phs = [k for k, (t, _) in inner_registry.elements.items()
                  if t == "TABLE"]
 
-    # Split into rows on `|-`
-    rows = re.split(r"\n\s*\|-+[^\n]*\n", inner)
+    # Split into rows on `|-`.  Consume consecutive `|-` separators
+    # in one match (see ARACHNIDA Fig 1 source: stray `|-\n|-\n`
+    # before the legend).
+    rows = re.split(r"\n(?:\s*\|-+[^\n]*\n)+", inner)
 
     # Locate the row containing the image placeholder and the row
     # containing the caption (typically colspan=N … Fig. …).
@@ -2479,6 +2844,45 @@ def _process_complex_table(inner: str, text_transform) -> str:
                     attrs += f' rowspan="{rs.group(1)}"'
                 if cs:
                     attrs += f' colspan="{cs.group(1)}"'
+                # Propagate horizontal/vertical alignment from
+                # ``{{Ts|ar}}``/``ac``/``al`` style tokens or HTML
+                # ``align=`` / ``valign=`` attributes to inline CSS so
+                # the rendered table preserves the source's column
+                # alignment.  Without this, ``<td colspan="2">824,000
+                # </td>`` summation rows (BRITISH EMPIRE Africa /
+                # Australasia / Summary tables) default-left-align and
+                # detach from the value column above them.
+                ts_tokens: set[str] = set()
+                for ts in re.findall(r"\{\{[Tt]s\|([^{}]*)\}\}", attr_part):
+                    for tok in ts.split("|"):
+                        ts_tokens.add(tok.strip().lower())
+                styles: list[str] = []
+                if ("ar" in ts_tokens
+                        or re.search(r'align\s*=\s*"?right"?',
+                                     attr_part, re.IGNORECASE)):
+                    styles.append("text-align:right")
+                elif ("ac" in ts_tokens
+                        or re.search(r'align\s*=\s*"?center"?',
+                                     attr_part, re.IGNORECASE)):
+                    styles.append("text-align:center")
+                elif ("al" in ts_tokens
+                        or re.search(r'align\s*=\s*"?left"?',
+                                     attr_part, re.IGNORECASE)):
+                    styles.append("text-align:left")
+                if ("vtp" in ts_tokens
+                        or re.search(r'valign\s*=\s*"?top"?',
+                                     attr_part, re.IGNORECASE)):
+                    styles.append("vertical-align:top")
+                elif ("vtm" in ts_tokens
+                        or re.search(r'valign\s*=\s*"?middle"?',
+                                     attr_part, re.IGNORECASE)):
+                    styles.append("vertical-align:middle")
+                elif ("vtb" in ts_tokens
+                        or re.search(r'valign\s*=\s*"?bottom"?',
+                                     attr_part, re.IGNORECASE)):
+                    styles.append("vertical-align:bottom")
+                if styles:
+                    attrs += f' style="{";".join(styles)}"'
 
                 # Clean content
                 # Convert [[Image:...|params]] to {{IMG:filename}}
@@ -2627,6 +3031,78 @@ def _process_ref(raw, inner, text_transform, ref_bodies=None):
     return f"«FN:{content}«/FN»"
 
 
+def _process_outline(inner: str, text_transform) -> str:
+    """Convert a `:`-indented outline block into an OUTLINE marker.
+
+    Output format:
+        «OUTLINE:
+        N|content
+        N|content
+        …
+        «/OUTLINE»
+
+    where ``N`` is the source indent depth (number of leading `:` —
+    bare emphasis lines get depth 0).  Content has been run through
+    ``text_transform`` so inline markers (italic/bold/sc/footnotes,
+    links) are converted.  Viewer.html maps the marker to a nested
+    ``<ul>`` keyed on indent depth (densely re-ranked so 0/2/3/4/6/8
+    source depths become 0/1/2/3/4/5 nesting levels).
+    """
+    items: list[tuple[int, str]] = []
+    for raw_line in inner.split("\n"):
+        line = raw_line.rstrip()
+        if not line:
+            continue
+        # Lift any leading `\x01PAGE:N\x01` marker so it survives in
+        # the rendered item (page-break visual is preserved) but
+        # doesn't interfere with indent-prefix stripping.
+        page_marker = ""
+        pm = _PAGE_MARKER_PREFIX_RE.match(line)
+        if pm:
+            page_marker = pm.group(0)
+            line = line[pm.end():]
+        depth = _outline_indent_depth(line)
+        if depth is None:
+            # Bare-emphasis line (top-level hierarchy label).
+            depth = 0
+            content = line.strip()
+        else:
+            # Strip the indent marker(s) from the content.
+            content = re.sub(r"^:+", "", line)
+            content = re.sub(
+                r"^\s*(?:\{\{em\|[0-9.]+\}\}|\{\{(?:em|gap)\}\})\s*",
+                "", content,
+            )
+            content = re.sub(
+                r"^\s*(?:&(?:emsp|nbsp|ensp|thinsp);)+\s*",
+                "", content,
+            )
+            content = content.lstrip()
+        # Strip trailing `<br>` line-end (typesetter break, not
+        # visible content) — applies to both branches.
+        content = re.sub(r"<br\s*/?>\s*$", "", content, flags=re.IGNORECASE)
+        content = content.rstrip()
+        content = page_marker + content
+        if not content:
+            continue
+        # Run content through the inline-marker transform so italic /
+        # bold / sc / fn / link templates become «I»…«/I» / «B»… etc.
+        # Don't run `_clean_text` — that would strip the markers we
+        # want the viewer to convert to <i>/<b>/<span class="sc">.
+        rendered = text_transform(content).strip()
+        if not rendered:
+            continue
+        # Collapse trailing `\n` and inner whitespace runs.
+        rendered = re.sub(r"\s+", " ", rendered)
+        items.append((depth, rendered))
+
+    if not items:
+        return ""
+
+    body = "\n".join(f"{d}|{c}" for d, c in items)
+    return f"\n\n«OUTLINE:\n{body}\n«/OUTLINE»\n\n"
+
+
 def _process_image(inner: str, text_transform) -> str:
     """Convert image content (already stripped of [[File:...]]) to {{IMG:filename|clean caption}}."""
     # Check for external caption (from plate pages: image + caption on next line)
@@ -2737,7 +3213,19 @@ def _process_djvu_crop(raw: str, text_transform, context: dict) -> str:
     caption_text = re.sub(r"^\{\|[^\n]*\n?", "", caption_text)
     caption_text = re.sub(r"\n?\|\}\s*$", "", caption_text)
     caption_text = re.sub(r"^\|[\-\+].*$", "", caption_text, flags=re.MULTILINE)
-    caption_text = re.sub(r"^\|(?:colspan[^|]*\|)?", "", caption_text, flags=re.MULTILINE)
+    # Strip cell-attribute prefix on each cell line: any leading run of
+    # `attr=value` pairs (quoted or unquoted) followed by the cell-content
+    # pipe.  ALPHABET uses `|rowspan=4|`, BANTU `|colspan=2|`, plate pages
+    # `|align="center" valign="top"|`.  The previous pattern handled only
+    # `colspan=...` — broader leak surface than expected.
+    caption_text = re.sub(
+        r'^\|\s*(?:(?:align|valign|colspan|rowspan|width|style|class|'
+        r'cellpadding|cellspacing|bgcolor|border|nowrap|height|id|scope)'
+        r'\s*=\s*(?:"[^"]*"|\S+)\s*)+\|\s*',
+        "", caption_text, flags=re.MULTILINE,
+    )
+    # Plain `|` cell-opener (no attrs) — strip the leading pipe.
+    caption_text = re.sub(r"^\|\s*", "", caption_text, flags=re.MULTILINE)
     caption_text = re.sub(r"^\!", "", caption_text, flags=re.MULTILINE)
     # Collapse to single line
     caption_text = re.sub(r"\s*<br\s*/?>", " ", caption_text, flags=re.IGNORECASE)
@@ -2813,30 +3301,56 @@ def _process_table(inner: str, text_transform,
 
     def _extract_cells(row_text):
         """Extract data cells from a row, stripping attributes, processing each."""
-        # Strip cell-styling templates ({{Ts|...}} / {{ts|...}}) — these are
-        # cell attributes, not content.  Leaving them in would produce
-        # phantom cells once their internal `|` is re-protected.
-        row_text = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*", "", row_text)
-        # Protect {{...}} and placeholders from pipe-splitting
-        protected = re.sub(r"\{\{[^}]*\}\}", lambda m: m.group(0).replace("|", "\x04"), row_text)
-        protected = re.sub(re.escape(_PH) + r"[^" + re.escape(_PH) + r"]+" + re.escape(_PH),
-                           lambda m: m.group(0).replace("|", "\x04"), protected)
+        # Protect {{...}} and placeholders from pipe-splitting (this
+        # also protects pipes inside {{Ts|...}} cell-styling templates,
+        # so the template's internal `|` doesn't get interpreted as a
+        # cell boundary).
+        protected = re.sub(r"\{\{[^}]*\}\}",
+                           lambda m: m.group(0).replace("|", "\x04"),
+                           row_text)
+        protected = re.sub(re.escape(_PH) + r"[^" + re.escape(_PH) + r"]+"
+                           + re.escape(_PH),
+                           lambda m: m.group(0).replace("|", "\x04"),
+                           protected)
 
         # Normalize `||` (MediaWiki same-line cell shorthand) to `\n|`
         # so it's treated as a single cell separator, not two.
         protected = protected.replace("||", "\n|")
 
-        # Split cells on `|` at line starts.
-        raw_cells = re.findall(r"\|([^|\n]*)", protected)
-        raw_cells = [c.replace("\x04", "|") for c in raw_cells]
+        # Split cells on `|` at LINE STARTS only — a mid-line `|` is
+        # the cell's internal attribute/content separator (`|attrs|
+        # content`), NOT a cell boundary.  The older ``\|([^|\n]*)``
+        # regex split on every `|` and produced phantom empty cells in
+        # rows like ``| ||{{Ts|ar}} | text`` (BRITISH EMPIRE Eastern
+        # Colonies summation rows): the source intent was one empty
+        # cell + one right-aligned cell, not three cells.
+        raw_cells = re.findall(r"(?:^|\n)\|([^\n]*)", protected)
 
         cells = []
         for c in raw_cells:
-            s = c.strip()
-            if s in ("}", "{|"):
+            # Operate on the PROTECTED form (with `\x04` standing in
+            # for pipes inside `{{...}}` templates) so the rpartition
+            # below splits only on real cell attr/content separators,
+            # never on a pipe that lives inside ``{{em|3}}`` etc.
+            s_prot = c.strip()
+            if s_prot.replace("\x04", "|") in ("}", "{|"):
                 continue
+            # Within-cell attribute/content split: the LAST `|` in a
+            # cell (outside templates) separates attribute prefix from
+            # content (``attrs|content``).  Treat the prefix as
+            # attributes only if it actually looks like one (Ts-styling
+            # template or standard table-attribute keyword).
+            if "|" in s_prot:
+                attr_part, _, content = s_prot.rpartition("|")
+                attr_check = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*", "",
+                                    attr_part.replace("\x04", "|")).strip()
+                if not attr_check or _ATTR.match(attr_check):
+                    s_prot = content
+            s = s_prot.replace("\x04", "|").strip()
             if s and _ATTR.match(s):
                 continue
+            # Drop any remaining {{Ts|...}} cell-styling templates.
+            s = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*", "", s).strip()
             # Process cell content through text_transform (empty → " ")
             cells.append(text_transform(s) if s else " ")
         return cells

@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,12 +160,12 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter IV</span>For Merchants And Manufacturers: General And Introductory</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Technical Education for Manufacturer and Merchant</a></li><li><a href="#sh-2">Practical Economics for Practical Men</a></li><li><a href="#sh-3">Imports and Exports</a></li><li><a href="#sh-4">Manufacturing and Consuming Nations</a></li><li><a href="#sh-5">Mill Labour</a></li></ol></div>
+    <div class="chap-subtitle">Technical Education for Manufacturer and Merchant</div>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-practical-economics-for-practical-men">Practical Economics for Practical Men</a></li><li><a href="#section-imports-and-exports">Imports and Exports</a></li><li><a href="#section-manufacturing-and-consuming-nations">Manufacturing and Consuming Nations</a></li><li><a href="#section-mill-labour">Mill Labour</a></li></ol></div>
     <div class="body-text">
 
 
-<div class="c002"></div>
-<p><span class="shoulder-heading" id="sh-1">Technical Education for Manufacturer and Merchant</span>The article on <span class="sc"><a href="/article/26-0516-technical-education/technical_education">Technical Education</a></span>
+<p>The article on <span class="sc"><a href="/article/26-0516-technical-education/technical_education">Technical Education</a></span>
 in the new (Eleventh) Edition
 of the Encyclopædia Britannica
 (Vol. 26, p.
@@ -224,7 +234,7 @@ corporations, and <span class="sc"><a href="/article/09-0379-employers-liability
 in modern industrial law and in
 the relations between capital and labour.</p>
 
-<p><span class="shoulder-heading" id="sh-2">Practical Economics for Practical Men</span>The broad questions of commercial
+<p><span class="shoulder-heading" id="section-practical-economics-for-practical-men">Practical Economics for Practical Men</span>The broad questions of commercial
 and industrial policy are discussed in
 <span class="sc"><a href="/article/08-0926-economics/economics">Economics</a></span> (Vol. 8, p. 899), by <a href="/contributors.html?q=William+Albert+Samuel+Hewins">Prof.
 Hewins</a>; <span class="sc"><a href="/article/06-0790-commerce/commerce">Commerce</a></span> (Vol. 6, p. 766);
@@ -248,7 +258,7 @@ specimens of the many practical articles
 on business methods which need not
 all be enumerated here.</p>
 
-<p><span class="shoulder-heading" id="sh-3">Imports and Exports</span>Much of what you read and hear
+<p><span class="shoulder-heading" id="section-imports-and-exports">Imports and Exports</span>Much of what you read and hear
 about the tariff systems of the United
 States and various other countries and
 about their influence
@@ -303,7 +313,7 @@ by the article <span class="sc"><a href="/article/22-0836-railways/railways">Rai
 section (p. 854b) on the new models of
 American freight cars.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Manufacturing and Consuming Nations</span>In the article <span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, which
+<p><span class="shoulder-heading" id="section-manufacturing-and-consuming-nations">Manufacturing and Consuming Nations</span>In the article <span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, which
 contains more matter than a whole book
 of ordinary size and more information
 than a dozen ordinary
@@ -409,7 +419,7 @@ branches of Japanese business
 houses is another part of this article
 which should not be overlooked.</p>
 
-<p><span class="shoulder-heading" id="sh-5">Mill Labour</span>The proportion of labour cost to the
+<p><span class="shoulder-heading" id="section-mill-labour">Mill Labour</span>The proportion of labour cost to the
 total cost of production is in most
 industries so great that you cannot study
 too carefully every

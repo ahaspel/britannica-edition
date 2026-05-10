@@ -87,12 +87,28 @@ def _clean_caption_markup(text: str) -> str:
     WEIGHING MACHINES / SEWING MACHINES figures: {{sc|…}}, {{smaller|…}},
     {{c|…}}, <br/>, alignment attributes like `align="center"|`.
     """
-    # Drop leading wikitable cell attributes: `align="..." width="..." |`
+    # Drop leading wikitable cell attributes: `align="..." width="..." |`.
+    # Both quoted (`align="center"`) and unquoted (`rowspan=4`) values
+    # are accepted.  Also handles a nested-table opener ``{|...attrs...``
+    # — when the post-image line is actually the header of an inner
+    # layout table, we want to strip the attrs and leave the (likely
+    # empty) remainder for the attribute-fragment guard below.
     text = re.sub(
-        r'^(?:(?:align|style|width|valign|class|colspan|rowspan|id|scope)'
-        r'\s*=\s*"[^"]*"\s*)+\|\s*',
+        r'^\{?\|?(?:(?:align|style|width|valign|class|colspan|rowspan|'
+        r'id|scope|cellpadding|cellspacing|bgcolor|border|nowrap|height)'
+        r'\s*=\s*(?:"[^"]*"|\S+)\s*)+\|?\s*',
         "", text,
     )
+    # Reject captions that, after stripping, contain only attribute
+    # fragments (`width="80%" cellpadding="0" ...` from a nested-table
+    # header).  These are leakage, not real caption text — return empty
+    # so the caller can fall through to a more accurate caption source.
+    attr_only_check = re.sub(
+        r'(?:[a-z]+\s*=\s*(?:"[^"]*"|\S+)\s*)+',
+        '', text, flags=re.IGNORECASE,
+    ).strip(' .|{}|"\'')
+    if not attr_only_check:
+        return ""
     # Strip common wrapper templates, keeping inner text. `Fs` has a
     # `|percent|text` signature — keep only the text.
     for _ in range(5):

@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,7 +160,8 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter XIII</span>For Merchants And Manufacturers Of Food Products</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Food Preservation</a></li><li><a href="#sh-2">Adulteration</a></li><li><a href="#sh-3">Special Foods</a></li><li><a href="#sh-4">Dairy Products</a></li><li><a href="#sh-5">Beverages, Tea and Coffee</a></li></ol></div>
+
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-food-preservation">Food Preservation</a></li><li><a href="#section-adulteration">Adulteration</a></li><li><a href="#section-special-foods">Special Foods</a></li><li><a href="#section-dairy-products">Dairy Products</a></li><li><a href="#section-beverages-tea-and-coffee">Beverages, Tea and Coffee</a></li></ol></div>
     <div class="body-text">
 
 
@@ -191,7 +202,7 @@ Glasgow, discusses more particularly digestion
 and the utilization of the different
 food constituents.</p>
 
-<p><span class="shoulder-heading" id="sh-1">Food Preservation</span>After establishing the value and relative
+<p><span class="shoulder-heading" id="section-food-preservation">Food Preservation</span>After establishing the value and relative
 importance of the various substances
 used as food, it is of great interest to
 everyone in the business to consider the
@@ -225,7 +236,7 @@ Acid</a></span> (Vol. 24, p. 69), <span class="sc"><a href="/article/26-0077-s2/
 (Vol. 26, p. 63), <span class="sc"><a href="/article/01-0565-s2/alcohol">Alcohol</a></span> (Vol.
 1, p. 525).</p>
 
-<p><span class="shoulder-heading" id="sh-2">Adulteration</span>The objections to the use of some of
+<p><span class="shoulder-heading" id="section-adulteration">Adulteration</span>The objections to the use of some of
 these chemicals are discussed in <span class="sc"><a href="/article/01-0249-s5/adulteration">Adulteration</a></span>
 (Vol. 1, p. 218), by Otto Hehner.
 This article is about as long as 50
@@ -315,7 +326,7 @@ and Mouth Disease</a></span> (Vol. 10, p. 617),
 (Vol. 21, p. 838), and <span class="sc"><a href="/article/23-0365-rinderpest/rinderpest">Rinderpest</a></span> (Vol.
 23, p. 348).</p>
 
-<p><span class="shoulder-heading" id="sh-3">Special Foods</span>The article <span class="sc"><a href="/article/10-0569-s4/flour">Flour and Flour Manufacture</a></span>
+<p><span class="shoulder-heading" id="section-special-foods">Special Foods</span>The article <span class="sc"><a href="/article/10-0569-s4/flour">Flour and Flour Manufacture</a></span>
 (Vol. 10, p. 548), by <a href="/contributors.html?q=George+Frederick+Zimmer">George F.
 Zimmer</a>, not only describes the processes
 of milling and of
@@ -415,7 +426,7 @@ enduring compact, and in more than one
 part of the world cakes of salt have been
 used as money.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Dairy Products</span>Butter and cheese manufacture fall
+<p><span class="shoulder-heading" id="section-dairy-products">Dairy Products</span>Butter and cheese manufacture fall
 under the article <span class="sc"><a href="/article/07-0759-dairy/dairy">Dairy and Dairy
 Farming</a></span> (Vol. 7, p. 737), illustrated, by
 the late Dr. William
@@ -478,7 +489,7 @@ p. 350), <span class="sc"><a href="/article/21-0610-pickle/pickle">Pickle</a></s
 (Vol. 22, p. 518), <span class="sc"><a href="/article/10-0346-s2/fig">Fig</a></span> (Vol. 10, p. 332), and
 <span class="sc"><a href="/article/12-0690-guava/guava">Guava</a></span> (Vol. 12, p. 665).</p>
 
-<p><span class="shoulder-heading" id="sh-5">Beverages, Tea and Coffee</span>The same completeness is displayed in
+<p><span class="shoulder-heading" id="section-beverages-tea-and-coffee">Beverages, Tea and Coffee</span>The same completeness is displayed in
 the Britannica articles on beverages. <span class="sc"><a href="/article/26-0505-s1/tea">Tea</a></span>
 (Vol. 26, p. 476), by <a href="/contributors.html?q=John+McEwan">John McEwan</a>, has
 an admirable historical

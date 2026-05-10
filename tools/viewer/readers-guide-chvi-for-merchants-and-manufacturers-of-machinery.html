@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,12 +160,12 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter VI</span>For Merchants And Manufacturers Of Machinery</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">A Change in Public Opinion</a></li><li><a href="#sh-2">Influence of Automobiles</a></li><li><a href="#sh-3">Manufacturing Methods</a></li><li><a href="#sh-4">Engines and Motors</a></li><li><a href="#sh-5">Machinery for Special Purposes</a></li></ol></div>
+    <div class="chap-subtitle">A Change in Public Opinion</div>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-influence-of-automobiles">Influence of Automobiles</a></li><li><a href="#section-manufacturing-methods">Manufacturing Methods</a></li><li><a href="#section-engines-and-motors">Engines and Motors</a></li><li><a href="#section-machinery-for-special-purposes">Machinery for Special Purposes</a></li></ol></div>
     <div class="body-text">
 
 
-<div class="c002"></div>
-<p><span class="shoulder-heading" id="sh-1">A Change in Public Opinion</span>An appreciation of the science
+<p>An appreciation of the science
 of mechanical engineering is so
 indispensable to the manufacture
 and sale of machinery that the
@@ -228,7 +238,7 @@ dailies seem unable to deal with any
 news that has to do with machinery without
 making ridiculous blunders.</p>
 
-<p><span class="shoulder-heading" id="sh-2">Influence of Automobiles</span>Fortunately, the automobile is beginning
+<p><span class="shoulder-heading" id="section-influence-of-automobiles">Influence of Automobiles</span>Fortunately, the automobile is beginning
 to stimulate interest in practical mechanics,
 for no one can attempt to drive
 his own car, or even
@@ -295,7 +305,7 @@ table of energy used in electric welding is
 added. See also <span class="sc"><a href="/article/04-0481-brazing-and-soldering/brazing_and_soldering">Brazing and Soldering</a></span>
 (Vol. 4, p. 463).</p>
 
-<p><span class="shoulder-heading" id="sh-3">Manufacturing Methods</span>The designer of machinery will find
+<p><span class="shoulder-heading" id="section-manufacturing-methods">Manufacturing Methods</span>The designer of machinery will find
 much practical information in <span class="sc"><a href="/article/08-0575-drawing/drawing">Drawing</a></span>,
 <i>Drawing Office Work</i> (Vol. 8, p. 556), and
 <span class="sc"><a href="/article/26-0111-sun-copying/sun_copying">Sun-Copying</a></span> (Vol.
@@ -344,7 +354,7 @@ and delicacy, made him famous the
 world over. See also <span class="sc"><a href="/article/12-0329-s1/graduation">Graduation</a></span> (Vol.
 12, p. 312).</p>
 
-<p><span class="shoulder-heading" id="sh-4">Engines and Motors</span>The articles on the prime-movers are
+<p><span class="shoulder-heading" id="section-engines-and-motors">Engines and Motors</span>The articles on the prime-movers are
 an important and noteworthy part of the
 new Britannica. Professor Ewing, of
 Cambridge University, contributes <span class="sc"><a href="/article/01-0481-s8/air-engine">Air
@@ -385,7 +395,7 @@ of the principle in 1831. Dr. Louis Bell,
 of the General Electric Co., writes on
 <span class="sc"><a href="/article/18-0942-motors-electric/motors__electric">Motors, Electric</a></span> (Vol. 18, p. 910).</p>
 
-<p><span class="shoulder-heading" id="sh-5">Machinery for Special Purposes</span>In hundreds of articles on manufacturing
+<p><span class="shoulder-heading" id="section-machinery-for-special-purposes">Machinery for Special Purposes</span>In hundreds of articles on manufacturing
 and manufactured products there are
 excellent descriptions of the machinery
 employed. <span class="sc"><a href="/article/07-0321-cotton-spinning-machinery/cotton-spinning_machinery">Cotton-Spinning Machinery</a></span>
@@ -423,7 +433,7 @@ with pictures of the most modern
 type of machinery for the manufacture of
 fibre and wire ropes. The various machines
 and apparatus for sugar making
-are carefully described in <span class="sc"><a href="/article/26-0048-sugar/sugar">Sugar</a></span>, <i>Sugar
+are carefully described in <span class="sc"><a href="/article/26-0048-sugar/sugar#section-sugar-manufacture">Sugar</a></span>, <i>Sugar
 Manufacture</i> (Vol. 26, p. 35). For milling
 machinery see <span class="sc"><a href="/article/10-0569-s4/flour">Flour and Flour
 Manufacture</a></span> (Vol. 10, p. 548), by
@@ -455,12 +465,12 @@ Operations</i> (Vol. 4, p. 506), illustrated;
 <span class="sc"><a href="/article/03-0725-bellows-and-blowing-machines/bellows_and_blowing_machines">Bellows and Blowing Machines</a></span>
 (Vol. 3, p. 705), illustrated; <span class="sc"><a href="/article/21-0642-s2/pin">Pin</a></span> (Vol.
 21, p. 615); <span class="sc"><a href="/article/19-0356-needle/needle">Needle</a></span>
-(Vol. 19, p. 338); <span class="sc"><a href="/article/27-0528-typography/typography">Typography</a></span>,
+(Vol. 19, p. 338); <span class="sc"><a href="/article/27-0528-typography/typography#section-ii-modern-practical-typography">Typography</a></span>,
 <i>Modern
 Practical Typography</i>
 (Vol. 27, p. 542),
 illustrated; <span class="sc"><a href="/article/22-0364-printing/printing">Printing</a></span> (Vol. 22, p. 350),
-illustrated; <span class="sc"><a href="/article/04-0230-bookbinding/bookbinding">Bookbinding</a></span>, <i>Modern Methods</i>
+illustrated; <span class="sc"><a href="/article/04-0230-bookbinding/bookbinding#section-modern-methods">Bookbinding</a></span>, <i>Modern Methods</i>
 (Vol. 4, p. 218), illustrated; <span class="sc"><a href="/article/26-0728-textile-printing/textile-printing">Textile
 Printing</a></span> (Vol. 26, p. 694); <span class="sc"><a href="/article/01-0716-s4/alkali_manufacture">Alkali
 Manufacture</a></span> (Vol. 1, p. 674), illustrated;
@@ -468,12 +478,12 @@ Manufacture</a></span> (Vol. 1, p. 674), illustrated;
 (Vol. 23, p. 30); <span class="sc"><a href="/article/25-0112-s2/silk">Silk</a></span>, <i>Silk Manufacture</i>
 (Vol. 25, p. 102); <span class="sc"><a href="/article/16-0051-lace/lace">Lace</a></span>, <i>Machine-made
 Lace</i> (Vol. 16, p. 44), illustrated;
-<span class="sc"><a href="/article/05-0405-carpet/carpet">Carpet</a></span>, <i>Modern Machinery</i> (Vol. 5, p.
+<span class="sc"><a href="/article/05-0405-carpet/carpet#section-modern-machinery">Carpet</a></span>, <i>Modern Machinery</i> (Vol. 5, p.
 396); <span class="sc"><a href="/article/16-0350-s6/leather">Leather</a></span> (Vol. 16, p. 330), illustrated;
 <span class="sc"><a href="/article/03-0936-bicycle/bicycle">Bicycle</a></span> (Vol. 3, p. 913), illustrated;
 <span class="sc"><a href="/article/27-0520-s2/typewriter">Typewriter</a></span> (Vol. 27, p. 501), illustrated;
 <span class="sc"><a href="/article/08-0585-dredge/dredge">Dredge and Dredging</a></span> (Vol.
-8, p. 562), illustrated; and <span class="sc"><a href="/article/20-0781-s4/paper">Paper</a></span>, <i>Paper
+8, p. 562), illustrated; and <span class="sc"><a href="/article/20-0781-s4/paper#section-paper-manufacture">Paper</a></span>, <i>Paper
 Manufacture</i> (Vol. 20, p. 727), illustrated.</p>
 
 <p>Biographies of many inventors, designers

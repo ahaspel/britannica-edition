@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,12 +160,12 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter V</span>For Merchants And Manufacturers Of Textiles</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Practical Men Among the Contributors</a></li><li><a href="#sh-2">Textile Fibres and their Treatment</a></li><li><a href="#sh-3">Cotton and Cotton Fabrics</a></li><li><a href="#sh-4">Wool, Linen and Silk</a></li><li><a href="#sh-5">Textile Merchandise</a></li><li><a href="#sh-6">The Seventy Articles on Special Fabrics</a></li><li><a href="#sh-7">Inventors of Textile Machinery and Great Textile Merchants</a></li></ol></div>
+    <div class="chap-subtitle">Practical Men Among the Contributors</div>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-textile-fibres-and-their-treatment">Textile Fibres and their Treatment</a></li><li><a href="#section-cotton-and-cotton-fabrics">Cotton and Cotton Fabrics</a></li><li><a href="#section-wool-linen-and-silk">Wool, Linen and Silk</a></li><li><a href="#section-textile-merchandise">Textile Merchandise</a></li><li><a href="#section-the-seventy-articles-on-special-fabrics">The Seventy Articles on Special Fabrics</a></li><li><a href="#section-inventors-of-textile-machinery-and-great-textile-merchants">Inventors of Textile Machinery and Great Textile Merchants</a></li></ol></div>
     <div class="body-text">
 
 
-<div class="c002"></div>
-<p><span class="shoulder-heading" id="sh-1">Practical Men Among the Contributors</span>The Course of Reading outlined
+<p>The Course of Reading outlined
 in this chapter will help anyone
 who has to do with the making
 or with the buying and selling of
@@ -206,7 +216,7 @@ markets of all countries—a statement
 which it would certainly not be safe to
 make about any other book.</p>
 
-<p><span class="shoulder-heading" id="sh-2">Textile Fibres and their Treatment</span>The article <span class="sc"><a href="/article/10-0319-s2/fezzan">Fibers</a></span> (Vol. 10, p. 309), by
+<p><span class="shoulder-heading" id="section-textile-fibres-and-their-treatment">Textile Fibres and their Treatment</span>The article <span class="sc"><a href="/article/10-0319-s2/fezzan">Fibers</a></span> (Vol. 10, p. 309), by
 <a href="/contributors.html?q=C.+F.+Cross">C. F. Cross</a>, whose name has been much
 before the public in connection with the
 recent scientific investigation
@@ -283,7 +293,7 @@ made use of engraved wood-blocks many
 centuries before any kind of printing was
 known in Europe.”</p>
 
-<p><span class="shoulder-heading" id="sh-3">Cotton and Cotton Fabrics</span>The elaborate article <span class="sc"><a href="/article/07-0272-cotton/cotton">Cotton</a></span> (Vol.
+<p><span class="shoulder-heading" id="section-cotton-and-cotton-fabrics">Cotton and Cotton Fabrics</span>The elaborate article <span class="sc"><a href="/article/07-0272-cotton/cotton">Cotton</a></span> (Vol.
 7, p. 256) begins by discussing the peculiar
 twist of the hairs on the cotton
 seed which by facilitating
@@ -340,7 +350,7 @@ full-page plates and other illustrations.
 <span class="sc"><a href="/article/18-0169-s4/mercerizing">Mercerizing</a></span> (Vol. 18, p. 150) is another
 important article.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Wool, Linen and Silk</span><span class="sc"><a href="/article/28-0830-wool-worsted-and-woollen-manufactures/wool__worsted_and_woollen_manufactures">Wool, Worsted and Woollen Manufactures</a></span>
+<p><span class="shoulder-heading" id="section-wool-linen-and-silk">Wool, Linen and Silk</span><span class="sc"><a href="/article/28-0830-wool-worsted-and-woollen-manufactures/wool__worsted_and_woollen_manufactures">Wool, Worsted and Woollen Manufactures</a></span>
 (Vol. 28, p. 805) is by Prof.
 <a href="/contributors.html?q=Aldred+Farrer+Barker">Aldred F. Barker</a>. The development in
 wool production of
@@ -494,7 +504,7 @@ which is used in some cheap fabrics as
 described (Vol. 5, p. 609) in the article
 <span class="sc"><a href="/article/05-0631-cellulose/cellulose">Cellulose</a></span> already mentioned.</p>
 
-<p><span class="shoulder-heading" id="sh-5">Textile Merchandise</span>The many varieties of woven cloths
+<p><span class="shoulder-heading" id="section-textile-merchandise">Textile Merchandise</span>The many varieties of woven cloths
 are described in the articles already mentioned
 in the manufacture of cotton,
 linen, wool, and silk,
@@ -563,7 +573,7 @@ to the articles <span class="sc"><a href="/article/03-0217-s4/bagging">Bagging</
 canvas, and <span class="sc"><a href="/article/26-0459-tarpaulin/tarpaulin">Tarpaulin</a></span> (Vol. 26, p. 430)
 deals with waterproof covers.</p>
 
-<p><span class="shoulder-heading" id="sh-6">The Seventy Articles on Special Fabrics</span>It is unnecessary to describe one by
+<p><span class="shoulder-heading" id="section-the-seventy-articles-on-special-fabrics">The Seventy Articles on Special Fabrics</span>It is unnecessary to describe one by
 one the seventy articles on other fabrics
 and tissues, ranging through the alphabet
 from Alpaca to
@@ -598,7 +608,7 @@ Liturgical vestments are dealt with in
 series of articles such as <span class="sc"><a href="/article/07-0798-dalmatic/dalmatic">Dalmatic</a></span> (Vol.
 7, p. 776) and <span class="sc"><a href="/article/01-0519-s1/alb">Alb</a></span> (Vol. 1, p. 497).</p>
 
-<p><span class="shoulder-heading" id="sh-7">Inventors of Textile Machinery and Great Textile Merchants</span>Among the biographies which are of
+<p><span class="shoulder-heading" id="section-inventors-of-textile-machinery-and-great-textile-merchants">Inventors of Textile Machinery and Great Textile Merchants</span>Among the biographies which are of
 interest in connection with textiles are
 those of <span class="sc"><a href="/article/02-0596-s4/arkwright__sir_richard">Arkwright, Richard</a></span> (Vol. 2,
 p. 556), the barber who invented the

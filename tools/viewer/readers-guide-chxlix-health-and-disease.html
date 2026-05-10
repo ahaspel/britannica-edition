@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,7 +160,8 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter XLIX</span>Health And Disease</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Right and Wrong Way to Read</a></li><li><a href="#sh-2">The Danger of “Doctoring” Yourself</a></li><li><a href="#sh-3">The Kind of Knowledge You Need</a></li><li><a href="#sh-4">Eating and Drinking</a></li><li><a href="#sh-5">Hurtful Foods</a></li><li><a href="#sh-6">Sleep and the Want of it</a></li><li><a href="#sh-7">The Right Kind of Air</a></li><li><a href="#sh-8">General Hygiene</a></li><li><a href="#sh-9">Various Diseases</a></li><li><a href="#sh-10">Parts of the Body</a></li><li><a href="#sh-11">More Advanced Study</a></li></ol></div>
+
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-right-and-wrong-way-to-read">Right and Wrong Way to Read</a></li><li><a href="#section-the-danger-of-doctoring-yourself">The Danger of “Doctoring” Yourself</a></li><li><a href="#section-the-kind-of-knowledge-you-need">The Kind of Knowledge You Need</a></li><li><a href="#section-eating-and-drinking">Eating and Drinking</a></li><li><a href="#section-hurtful-foods">Hurtful Foods</a></li><li><a href="#section-sleep-and-the-want-of-it">Sleep and the Want of it</a></li><li><a href="#section-the-right-kind-of-air">The Right Kind of Air</a></li><li><a href="#section-general-hygiene">General Hygiene</a></li><li><a href="#section-various-diseases">Various Diseases</a></li><li><a href="#section-parts-of-the-body">Parts of the Body</a></li><li><a href="#section-more-advanced-study">More Advanced Study</a></li></ol></div>
     <div class="body-text">
 
 
@@ -178,7 +189,7 @@ taken care not to be too technical either
 in their point of view or in the language
 they use.</p>
 
-<p><span class="shoulder-heading" id="sh-1">Right and Wrong Way to Read</span>In this present chapter of the Reader’s
+<p><span class="shoulder-heading" id="section-right-and-wrong-way-to-read">Right and Wrong Way to Read</span>In this present chapter of the Reader’s
 Guide, the subject of health and disease
 is treated just as the Guide treats any
 other department of
@@ -203,7 +214,7 @@ medicine they see advertised, and who
 long to try every newly discovered serum
 that the newspapers tell them about.</p>
 
-<p><span class="shoulder-heading" id="sh-2">The Danger of “Doctoring” Yourself</span>Again, you may be told that if you try
+<p><span class="shoulder-heading" id="section-the-danger-of-doctoring-yourself">The Danger of “Doctoring” Yourself</span>Again, you may be told that if you try
 to learn something about health and disease,
 you will be tempted to think you
 know as much as the
@@ -254,7 +265,7 @@ do not have a private doctor with you at
 all hours to watch the food put on your
 plate and to ventilate your room.</p>
 
-<p><span class="shoulder-heading" id="sh-3">The Kind of Knowledge You Need</span>The average watch is better treated
+<p><span class="shoulder-heading" id="section-the-kind-of-knowledge-you-need">The Kind of Knowledge You Need</span>The average watch is better treated
 than the average human body, and when
 the average body goes wrong, through the
 average man’s
@@ -276,7 +287,7 @@ read the first group of articles mentioned
 in this chapter—those which have to do
 with the healthy routine of life.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Eating and Drinking</span>You will find the best introduction to
+<p><span class="shoulder-heading" id="section-eating-and-drinking">Eating and Drinking</span>You will find the best introduction to
 the subject of diet in general in a section
 (Vol. 26, p. 799) of the article <span class="sc"><a href="/article/26-0833-therapeutics/therapeutics">Therapeutics</a></span>,
 by Sir <a href="/contributors.html?q=Sir+Thomas+Lauder+Brunton">Lauder
@@ -345,7 +356,7 @@ American springs it is curious to see that
 nearly all of them lie in the Appalachian
 Mountain chain.</p>
 
-<p><span class="shoulder-heading" id="sh-5">Hurtful Foods</span><span class="sc"><a href="/article/27-0995-s5/vegetarianism">Vegetarianism</a></span> (Vol. 27, p. 967), by
+<p><span class="shoulder-heading" id="section-hurtful-foods">Hurtful Foods</span><span class="sc"><a href="/article/27-0995-s5/vegetarianism">Vegetarianism</a></span> (Vol. 27, p. 967), by
 Dr. <a href="/contributors.html?q=Josiah+Oldfield">Josiah Oldfield</a>, describes the various
 systems of diet which reject flesh, the
 most extreme of which exclude everything
@@ -419,7 +430,7 @@ and is treated in great detail in the article
 <span class="sc"><a href="/article/14-0542-infancy/infancy">Infancy</a></span> (Vol. 14, p. 513), by Dr. <a href="/contributors.html?q=Harriet+L.+Hennessy">Harriet
 Hennessy</a>.</p>
 
-<p><span class="shoulder-heading" id="sh-6">Sleep and the Want of it</span><span class="sc"><a href="/article/25-0254-sleep/sleep">Sleep</a></span> (Vol. 25, p. 238), by <a href="/contributors.html?q=John+Gray+McKendrick">Prof. McKendrick</a>,
+<p><span class="shoulder-heading" id="section-sleep-and-the-want-of-it">Sleep and the Want of it</span><span class="sc"><a href="/article/25-0254-sleep/sleep">Sleep</a></span> (Vol. 25, p. 238), by <a href="/contributors.html?q=John+Gray+McKendrick">Prof. McKendrick</a>,
 is an elaborate study of the
 curious changes in the action of the brain
 and other organs
@@ -445,7 +456,7 @@ drugs to produce sleep; and in <span class="sc"><a href="/article/14-0213-hypnot
 the treatment frequently used for sleeplessness
 and other nervous disorders.</p>
 
-<p><span class="shoulder-heading" id="sh-7">The Right Kind of Air</span>The effect of climates upon health is
+<p><span class="shoulder-heading" id="section-the-right-kind-of-air">The Right Kind of Air</span>The effect of climates upon health is
 the subject of a special section (Vol. 6, p.
 526) of the article <span class="sc"><a href="/article/27-1035-s4/venn__henry">Climate</a></span>. <span class="sc"><a href="/article/27-1036-s3/ventilation">Ventilation</a></span>
 (Vol. 27, p.
@@ -466,7 +477,7 @@ Lockport, N. Y., where buildings anywhere
 within three miles of the central
 plant are heated at a very moderate cost.</p>
 
-<p><span class="shoulder-heading" id="sh-8">General Hygiene</span><span class="sc"><a href="/article/03-0531-baths/baths">Baths</a></span> (Vol. 3, p. 514), and <span class="sc"><a href="/article/14-0177-s2/hydropathy">Hydropathy</a></span>
+<p><span class="shoulder-heading" id="section-general-hygiene">General Hygiene</span><span class="sc"><a href="/article/03-0531-baths/baths">Baths</a></span> (Vol. 3, p. 514), and <span class="sc"><a href="/article/14-0177-s2/hydropathy">Hydropathy</a></span>
 (Vol. 14, p. 165), and <span class="sc"><a href="/article/03-0301-s5/balneotherapeutics">Balneotherapeutics</a></span>
 (Vol. 3, p. 284) describe
 all the bathing treatments
@@ -492,7 +503,7 @@ The proper care of the hair is indicated in
 the article <span class="sc"><a href="/article/03-0260-s5/baldness">Baldness</a></span> (Vol. 3, p. 243),
 where prescriptions for lotions are given.</p>
 
-<p><span class="shoulder-heading" id="sh-9">Various Diseases</span>The articles already named cover very
+<p><span class="shoulder-heading" id="section-various-diseases">Various Diseases</span>The articles already named cover very
 fully the application of medical science
 to the ordinary routine of life, and will
 help you to regulate
@@ -522,7 +533,7 @@ better, and worry less, if you have read
 an article, which describes the usual
 course of the disease.</p>
 
-<p><span class="shoulder-heading" id="sh-10">Parts of the Body</span>Again, you may have a special reason
+<p><span class="shoulder-heading" id="section-parts-of-the-body">Parts of the Body</span>Again, you may have a special reason
 for wishing to learn all you can about
 some one part of the body: the eye, the
 ear, or the heart. There
@@ -548,7 +559,7 @@ section on <i>Modern Progress</i> reviews all
 that has been accomplished within recent
 years.</p>
 
-<p><span class="shoulder-heading" id="sh-11">More Advanced Study</span>Beginning with the six articles just
+<p><span class="shoulder-heading" id="section-more-advanced-study">More Advanced Study</span>Beginning with the six articles just
 mentioned, and then taking the more detailed
 articles in the groups into which
 their subjects divide

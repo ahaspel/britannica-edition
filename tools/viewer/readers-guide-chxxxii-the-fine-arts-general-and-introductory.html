@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,7 +160,8 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter XXXII</span>The Fine Arts: General And Introductory</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Theory of Art</a></li><li><a href="#sh-2">Fine Arts</a></li></ol></div>
+
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-theory-of-art">Theory of Art</a></li><li><a href="#section-fine-arts">Fine Arts</a></li></ol></div>
     <div class="body-text">
 
 
@@ -162,7 +173,7 @@ great range and of the utmost interest
 and value—whether he wishes to study
 theory, practice or history.</p>
 
-<p><span class="shoulder-heading" id="sh-1">Theory of Art</span>Of course no adequate treatment of
+<p><span class="shoulder-heading" id="section-theory-of-art">Theory of Art</span>Of course no adequate treatment of
 the arts, or of any one of them, could
 logically, much less advantageously, separate
 theory, practice and
@@ -271,7 +282,7 @@ sculpture and painting by themselves, or
 with their subordinate and decorative
 branches.</p>
 
-<p><span class="shoulder-heading" id="sh-2">Fine Arts</span>The article <span class="sc"><a href="/article/10-0369-fine-arts/fine_arts">Fine Arts</a></span> (Vol. 10, p. 355;
+<p><span class="shoulder-heading" id="section-fine-arts">Fine Arts</span>The article <span class="sc"><a href="/article/10-0369-fine-arts/fine_arts">Fine Arts</a></span> (Vol. 10, p. 355;
 equivalent to 70 pages of this Guide)
 is divided into the following parts:
 <i>General Definition</i>, with

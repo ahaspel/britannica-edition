@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,7 +160,8 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter XXXIX</span>German Literature</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Old High German</a></li><li><a href="#sh-2">Middle Period</a></li><li><a href="#sh-3">14th and 15th Centuries</a></li><li><a href="#sh-4">Renaissance</a></li><li><a href="#sh-5">Classical Period</a></li><li><a href="#sh-6">Sturm und Drang</a></li><li><a href="#sh-7">Romanticism</a></li><li><a href="#sh-8">1832–1870</a></li><li><a href="#sh-9">Since 1870</a></li></ol></div>
+
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-old-high-german">Old High German</a></li><li><a href="#section-middle-period">Middle Period</a></li><li><a href="#section-14th-and-15th-centuries">14th and 15th Centuries</a></li><li><a href="#section-renaissance">Renaissance</a></li><li><a href="#section-classical-period">Classical Period</a></li><li><a href="#section-sturm-und-drang">Sturm und Drang</a></li><li><a href="#section-romanticism">Romanticism</a></li><li><a href="#section-1832-1870">1832–1870</a></li><li><a href="#section-since-1870">Since 1870</a></li></ol></div>
     <div class="body-text">
 
 
@@ -168,7 +179,7 @@ should first peruse the correspondingly
 numbered section in the article <span class="sc"><a href="/article/11-0804-german-literature/german_literature">German
 Literature</a></span>.</p>
 
-<p><span class="shoulder-heading" id="sh-1">Old High German</span>I. <i>The Old High
+<p><span class="shoulder-heading" id="section-old-high-german">Old High German</span>I. <i>The Old High
 German Period, 750–1050</i>:—the
 articles
 <span class="sc"><a href="/article/27-0584-s6/ulfilas">Ulfilas</a></span> (Vol. 27, p.
@@ -183,7 +194,7 @@ W. Ward—and see Prof. Ward on the
 medieval drama in the article <span class="sc"><a href="/article/08-0498-drama/drama">Drama</a></span>
 (Vol. 8, especially p. 497).</p>
 
-<p><span class="shoulder-heading" id="sh-2">Middle Period</span>II. <i>The Middle High German Period,
+<p><span class="shoulder-heading" id="section-middle-period">Middle Period</span>II. <i>The Middle High German Period,
 1050–1350</i>:—the articles <span class="sc"><a href="/article/23-0530-romance/romance">Romance</a></span> (Vol.
 23, p. 500), by <a href="/contributors.html?q=George+Edward+Bateman+Saintsbury">George Saintsbury</a>; <span class="sc"><a href="/article/28-0314-waltharius/waltharius">Waltharius</a></span>
 (Vol. 28, p. 298),
@@ -208,7 +219,7 @@ von der Vogelweide</a></span> (Vol. 28, p. 299),
 (Vol. 11, p. 94), <span class="sc"><a href="/article/06-0993-conrad-of-w-rzburg/conrad_of_würzburg">Conrad of Würzburg</a></span>
 (Vol. 6, p. 968).</p>
 
-<p><span class="shoulder-heading" id="sh-3">14th and 15th Centuries</span>III. <i>The Transition Period, 1350–1600</i>:—the
+<p><span class="shoulder-heading" id="section-14th-and-15th-centuries">14th and 15th Centuries</span>III. <i>The Transition Period, 1350–1600</i>:—the
 articles <span class="sc"><a href="/article/11-0054-s5/frauenlob">Frauenlob</a></span> (Vol. 11, p.
 42), <span class="sc"><a href="/article/23-0243-s2/reynard_the_fox">Reynard the
 Fox</a></span> (Vol. 23, p. 226),
@@ -236,7 +247,7 @@ History of the Reformation</i>; <span class="sc"><a href="/article/01-0544-s3/al
 (Vol. 28, p. 619), <span class="sc"><a href="/article/03-0089-ayrer-jakob/ayrer__jakob">Ayrer</a></span> (Vol. 3, p. 74),
 <span class="sc"><a href="/article/10-0222-s3/faust">Faust</a></span> (Vol. 10, p. 210).</p>
 
-<p><span class="shoulder-heading" id="sh-4">Renaissance</span>IV. <i>The Renaissance, 1600–1740</i>:—the
+<p><span class="shoulder-heading" id="section-renaissance">Renaissance</span>IV. <i>The Renaissance, 1600–1740</i>:—the
 articles <span class="sc"><a href="/article/11-0789-s3/gerhardt__paul">Paul Gerhardt</a></span> (Vol. 11, p. 768),
 <span class="sc"><a href="/article/04-0126-boehme-jakob/boehme__or_behmen___jakob">Jakob Boehme</a></span> (Vol. 4, p. 113), <span class="sc"><a href="/article/28-0482-s4/weckherlin__georg_rudolf">Georg
 Rudolf Weckherlin</a></span>
@@ -263,7 +274,7 @@ Brockes</a></span> (Vol. 4, p. 624), and, the dictator
 of the pseudo-classic age, <span class="sc"><a href="/article/12-0296-s4/gottsched__johann_christoph">Gottsched</a></span>
 (Vol. 12, p. 279).</p>
 
-<p><span class="shoulder-heading" id="sh-5">Classical Period</span>V. <i>The Classical Period of Modern German
+<p><span class="shoulder-heading" id="section-classical-period">Classical Period</span>V. <i>The Classical Period of Modern German
 Literature, 1740–1832</i>:—the articles
 <span class="sc"><a href="/article/04-0124-bodmer-johann-jakob/bodmer__johann_jakob">J. J. Bodmer</a></span> (Vol. 4, p.
 111), <span class="sc"><a href="/article/11-0576-gellert/gellert">Gellert</a></span> (Vol. 11,
@@ -293,7 +304,7 @@ M. Mitchell, <span class="sc"><a href="/article/18-0139-mendelssohn-moses/mendel
 3, p. 461), <span class="sc"><a href="/article/21-0301-s3/pestalozzi__johann_heinrich">Pestalozzi</a></span> (Vol. 21, p. 284),
 <span class="sc"><a href="/article/12-0894-s3/hamann__johann_georg">Hamann</a></span> (Vol. 12, p. 869).</p>
 
-<p><span class="shoulder-heading" id="sh-6">Sturm und Drang</span>On the <i>Sturm und Drang</i> period, the articles
+<p><span class="shoulder-heading" id="section-sturm-und-drang">Sturm und Drang</span>On the <i>Sturm und Drang</i> period, the articles
 <span class="sc"><a href="/article/13-0363-herder-johann-gottfried-von/herder__johann_gottfried_von">Herder</a></span> (Vol. 13, p. 347), the <span class="sc"><a href="/article/25-0975-stokes-sir-george-gabriel/stokes__sir_george_gabriel">Stolbergs</a></span>
 (Vol. 25, p. 953), <span class="sc"><a href="/article/28-0231-voss-richard/voss__richard">J. H. Voss</a></span>
 (Vol. 28, p. 215), <span class="sc"><a href="/article/13-0637-s2/hölty__ludwig_heinrich_christoph">Hölty</a></span> (Vol. 13,
@@ -331,7 +342,7 @@ Henry Sayce</a>; the dramatist <span class="sc"><a href="/article/15-0953-kotzeb
 “Jean Paul” (Vol. 23, p. 313); and the
 poet <span class="sc"><a href="/article/17-0920-s2/matthisson__friedrich_von">Matthisson</a></span> (Vol. 17, p. 901).</p>
 
-<p><span class="shoulder-heading" id="sh-7">Romanticism</span>On the romantic school: the articles
+<p><span class="shoulder-heading" id="section-romanticism">Romanticism</span>On the romantic school: the articles
 on the founders, <span class="sc"><a href="/article/24-0346-s5/schlegel__august_wilhelm_von">August Wilhelm
 Schlegel</a></span> and <span class="sc"><a href="/article/24-0346-s5/schlegel__august_wilhelm_von">Friedrich Schlegel</a></span>
 (Vol. 24, p. 328 and
@@ -364,7 +375,7 @@ for liberty; and, of the Swabian school,
 <span class="sc"><a href="/article/18-0869-m-rike-eduard-friedrich/mörike__eduard_friedrich">Mörike</a></span> (Vol. 18, p. 837); and the philosopher
 <span class="sc"><a href="/article/24-0334-s7/schelling__friedrich_wilhelm_joseph_von">Schelling</a></span> (Vol. 24, p. 316).</p>
 
-<p><span class="shoulder-heading" id="sh-8">1832–1870</span>VI. <i>Literature since Goethe, 1832 onwards</i>:—Read
+<p><span class="shoulder-heading" id="section-1832-1870">1832–1870</span>VI. <i>Literature since Goethe, 1832 onwards</i>:—Read
 <span class="sc"><a href="/article/13-0213-s3/hegel__georg_wilhelm_friedrich">G. W. F. Hegel</a></span> (Vol. 13,
 p. 200, by the late Prof. William Wallace
 of Oxford and Prof. J. H.
@@ -433,7 +444,7 @@ School, <span class="sc"><a href="/article/04-0122-bodenstedt-friedrich-martin-v
 Platt-Deutsch poet <span class="sc"><a href="/article/12-0646-s3/groth__klaus">Klaus Groth</a></span> (Vol.
 12, p. 621).</p>
 
-<p><span class="shoulder-heading" id="sh-9">Since 1870</span>On the period since 1870, see the articles
+<p><span class="shoulder-heading" id="section-since-1870">Since 1870</span>On the period since 1870, see the articles
 <span class="sc"><a href="/article/16-0255-s3/lassalle__ferdinand">Lassalle</a></span> (Vol. 16, p. 235, by <a href="/contributors.html?q=Thomas+Kirkup">Thomas
 Kirkup</a>, author of <i>An Inquiry
 into Socialism</i>) and

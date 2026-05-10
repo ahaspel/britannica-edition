@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,7 +160,8 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter LXV</span>For Women</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Women Contributors</a></li><li><a href="#sh-2">Woman’s Advance</a></li><li><a href="#sh-3">The Legal Status of American Women</a></li><li><a href="#sh-4">Home Making</a></li><li><a href="#sh-5">Domestic Science</a></li><li><a href="#sh-6">Cookery</a></li><li><a href="#sh-7">Costume and Ornament</a></li><li><a href="#sh-8">Biographical Study</a></li></ol></div>
+
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-women-contributors">Women Contributors</a></li><li><a href="#section-woman-s-advance">Woman’s Advance</a></li><li><a href="#section-the-legal-status-of-american-women">The Legal Status of American Women</a></li><li><a href="#section-home-making">Home Making</a></li><li><a href="#section-domestic-science">Domestic Science</a></li><li><a href="#section-cookery">Cookery</a></li><li><a href="#section-costume-and-ornament">Costume and Ornament</a></li><li><a href="#section-biographical-study">Biographical Study</a></li></ol></div>
     <div class="body-text">
 
 
@@ -181,7 +192,7 @@ the home, which in all ages and all countries
 have been considered to be the
 special province of women.</p>
 
-<p><span class="shoulder-heading" id="sh-1">Women Contributors</span>If the question of women’s ability to
+<p><span class="shoulder-heading" id="section-women-contributors">Women Contributors</span>If the question of women’s ability to
 do a full share of the world’s work any
 longer admitted of argument, there would
 be no more vivid
@@ -246,7 +257,7 @@ wrote:</p>
     <td class="c029"><span class="sc">Alexander the Great</span>, <i>Legends</i>; <span class="sc"><a href="/article/04-0969-s2/caesar__sir_julius">Caesar</a></span>, <i>Medieval Legends</i>; <span class="sc"><a href="/article/05-0927-charlemagne/charlemagne">Charlemagne</a></span>, <i>Legends</i>; <span class="sc"><a href="/article/28-0126-virgil/virgil">Virgil</a></span>, <i>the Virgil Legend</i>; etc.</td>
   </tr>
   <tr>
-    <td class="c011"><a href="/contributors.html?q=Agnes+Muriel+Clay++%28Mrs+Edward+Wilde%29">Agnes Muriel Clay</a> (Joint Editor of <i>Sources of Roman History</i>).</td>
+    <td class="c011"><a href="/contributors.html?q=Agnes+Muriel+Clay+%28Mrs+Edward+Wilde%29">Agnes Muriel Clay</a> (Joint Editor of <i>Sources of Roman History</i>).</td>
     <td class="c029"><span class="sc"><a href="/article/01-0421-s2/agrarian_laws">Agrarian Laws</a></span> (in part); <span class="sc"><a href="/article/05-0709-centumviri/centumviri">Centumviri</a></span>; <span class="sc"><a href="/article/07-0660-curia/curia">Curia</a></span>; <span class="sc"><a href="/article/07-0941-decurio/decurio">Decurio</a></span>; <span class="sc"><a href="/article/19-0021-s2/municipium">Municipium</a></span>; <span class="sc"><a href="/article/20-1003-s5/patron_and_client">Patron and Client</a></span> (in part); <span class="sc"><a href="/article/24-0664-senate/senate">Senate</a></span>.</td>
   </tr>
   <tr>
@@ -254,7 +265,7 @@ wrote:</p>
     <td class="c029"><span class="sc"><a href="/article/02-0847-s2/astronomy">Astronomy</a></span>, <i>History</i>; <span class="sc"><a href="/article/04-0392-brahe-tycho/brahe__tycho">Brahe, Tycho</a></span>; <span class="sc"><a href="/article/07-0117-copernicus-nicolaus/copernicus__or_koppernigk___nicolaus">Copernicus</a></span>; <span class="sc"><a href="/article/10-0495-flamsteed-john/flamsteed__john">Flamsteed</a></span>; <span class="sc"><a href="/article/12-0881-s4/halley__edmund">Halley</a></span>; <span class="sc"><a href="/article/14-0033-huygens-christiaan/huygens__christiaan">Huygens</a></span>; <span class="sc"><a href="/article/15-0778-kepler-johann/kepler__johann">Kepler</a></span>; <span class="sc"><a href="/article/28-1020-zodiac/zodiac">Zodiac</a></span>; etc.</td>
   </tr>
   <tr>
-    <td class="c011"><a href="/contributors.html?q=Mrs+Craigie+%28%E2%80%9CJohn+Oliver+Hobbes%E2%80%9D%29">Mrs. Craigie</a> (“John Oliver <a href="/contributors.html?q=Mrs+Craigie+%28%E2%80%9CJohn+Oliver+Hobbes%E2%80%9D%29">Hobbes”)</a> (Author of <i>The School for Saints</i>, etc.).</td>
+    <td class="c011"><a href="/contributors.html?q=Mrs+Craigie+%28%22John+Oliver+Hobbes%22%29">Mrs. Craigie</a> (“John Oliver Hobbes”) (Author of <i>The School for Saints</i>, etc.).</td>
     <td class="c029"><span class="sc">George Eliot.</span></td>
   </tr>
   <tr>
@@ -275,7 +286,7 @@ wrote:</p>
   </tr>
   <tr>
     <td class="c011"><a href="/contributors.html?q=Harriet+L.+Hennessy">Dr. Harriet L. Hennessy</a>, L.R.C.S.I.</td>
-    <td class="c029"><span class="sc"><a href="/article/12-0789-gynaecology/gynaecology">Gynaecology</a></span>; <span class="sc"><a href="/article/14-0542-infancy/infancy">Infancy</a></span>; <span class="sc"><a href="/article/14-0746-intestinal-obstruction/intestinal_obstruction">Intestinal Obstruction</a></span>; <span class="sc"><a href="/article/18-0041-medical-education/medical_education">Medical Education</a></span>, <i>U. S. A.</i> (in part); <span class="sc"><a href="/article/23-0201-s2/respiratory_system">Respiratory System</a></span>, <i>Pathology</i> (in part); <span class="sc"><a href="/article/27-0371-s2/tuberculosis">Tuberculosis</a></span>, etc.</td>
+    <td class="c029"><span class="sc"><a href="/article/12-0789-gynaecology/gynaecology">Gynaecology</a></span>; <span class="sc"><a href="/article/14-0542-infancy/infancy">Infancy</a></span>; <span class="sc"><a href="/article/14-0746-intestinal-obstruction/intestinal_obstruction">Intestinal Obstruction</a></span>; <span class="sc"><a href="/article/18-0041-medical-education/medical_education">Medical Education</a></span>, <i>U. S. A.</i> (in part); <span class="sc"><a href="/article/23-0201-s2/respiratory_system#section-4-pathology-of-the-respiratory-system">Respiratory System</a></span>, <i>Pathology</i> (in part); <span class="sc"><a href="/article/27-0371-s2/tuberculosis">Tuberculosis</a></span>, etc.</td>
   </tr>
   <tr>
     <td class="c011"><a href="/contributors.html?q=Lady+Huggins">Lady Huggins</a> (Author, with Sir William <a href="/contributors.html?q=Lady+Huggins">Huggins</a>, of <i>Atlas of Representative Stellar Spectra</i>, etc.).</td>
@@ -286,7 +297,7 @@ wrote:</p>
     <td class="c029"><span class="sc"><a href="/article/04-0628-s2/british_empire">British Empire</a></span>; <span class="sc"><a href="/article/03-0553-bauchi/bauchi">Bauchi</a></span>; <span class="sc"><a href="/article/04-0280-bornu/bornu">Bornu</a></span>; <span class="sc"><a href="/article/15-0680-kano/kano">Kano</a></span>; <span class="sc"><a href="/article/15-0722-katagum/katagum">Katagum</a></span>; <span class="sc"><a href="/article/19-0265-nassarawa/nassarawa">Nassarawa</a></span>; <span class="sc"><a href="/article/19-0704-s2/nigeria">Nigeria</a></span>; <span class="sc"><a href="/article/23-0275-rhodes/rhodes">Rhodes</a></span>, <span class="sc"><a href="/article/05-0618-cecil/cecil">Cecil</a></span>; <span class="sc"><a href="/article/25-0369-s3/sokoto">Sokoto</a></span>; <span class="sc"><a href="/article/28-0987-zaria/zaria">Zaria</a></span>.</td>
   </tr>
   <tr>
-    <td class="c011"><a href="/contributors.html?q=Kate+A.+Meakin++%28Mrs+Budgett+Meakin%29">Kate A. Meakin</a></td>
+    <td class="c011"><a href="/contributors.html?q=Kate+A.+Meakin+%28Mrs+Budgett+Meakin%29">Kate A. Meakin</a></td>
     <td class="c029"><span class="sc"><a href="/article/18-0882-s3/morocco">Morocco</a></span> (in part); <span class="sc"><a href="/article/26-0705-s2/tetuan">Tetuan</a></span>; <span class="sc"><a href="/article/26-0179-s3/sus">Sus</a></span>.</td>
   </tr>
   <tr>
@@ -298,7 +309,7 @@ wrote:</p>
     <td class="c029"><span class="sc"><a href="/article/09-0619-s2/english_language">English Language</a></span> (in part).</td>
   </tr>
   <tr>
-    <td class="c011"><a href="/contributors.html?q=Elizabeth+O%E2%80%99Neill">Mrs. H. O. O’Neill</a> (Formerly Fellow of Manchester University).</td>
+    <td class="c011">Mrs. H. O. O’Neill (Formerly Fellow of Manchester University).</td>
     <td class="c029"><span class="sc"><a href="/article/21-0047-peckham-john/peckham__john">Peckham, John</a></span>; <span class="sc"><a href="/article/22-0280-prebendary/prebendary">Prebendary</a></span>; <span class="sc"><a href="/article/22-0292-prelate/prelate">Prelate</a></span>; <span class="sc"><a href="/article/22-0373-prior/prior">Prior</a></span>; <span class="sc"><a href="/article/22-0437-s4/procurator">Procurator</a></span>; <span class="sc"><a href="/article/28-0033-vicar/vicar">Vicar</a></span>.</td>
   </tr>
   <tr>
@@ -311,7 +322,7 @@ wrote:</p>
   </tr>
   <tr>
     <td class="c011"><a href="/contributors.html?q=Bertha+Surtees+Phillpotts">Bertha S. Phillpotts</a> (Formerly Librarian of Girton College, Cambridge).</td>
-    <td class="c029"><span class="sc"><a href="/article/11-0825-germany/germany">Germany</a></span>, <i>Archaeology</i>; <span class="sc"><a href="/article/19-0829-norway/norway">Norway</a></span>, <i>Early History</i>; <span class="sc"><a href="/article/24-0302-scandinavian-civilization/scandinavian_civilization">Scandinavian Civilization</a></span>.</td>
+    <td class="c029"><span class="sc"><a href="/article/11-0825-germany/germany#section-archaeology">Germany</a></span>, <i>Archaeology</i>; <span class="sc"><a href="/article/19-0829-norway/norway">Norway</a></span>, <i>Early History</i>; <span class="sc"><a href="/article/24-0302-scandinavian-civilization/scandinavian_civilization">Scandinavian Civilization</a></span>.</td>
   </tr>
   <tr>
     <td class="c011"><a href="/contributors.html?q=Miss+Kathleen+Schlesinger">Kathleen Schlesinger</a> (Author of <i>The Instruments of the Orchestra</i>, etc.).</td>
@@ -357,7 +368,7 @@ sociology, musical instruments, education,
 the Bible and ecclesiastical history,
 and philosophy.</p>
 
-<p><span class="shoulder-heading" id="sh-2">Woman’s Advance</span>It may be noted as indicating the
+<p><span class="shoulder-heading" id="section-woman-s-advance">Woman’s Advance</span>It may be noted as indicating the
 advance of women during the last century
 and a half that in the first edition of the
 Encyclopaedia Britannica, which was
@@ -445,7 +456,7 @@ could only obtain it for her husband’s
 adultery if coupled with some other
 cause, such as cruelty or desertion.”</p>
 
-<p><span class="shoulder-heading" id="sh-3">The Legal Status of American Women</span>In the United States the legal and
+<p><span class="shoulder-heading" id="section-the-legal-status-of-american-women">The Legal Status of American Women</span>In the United States the legal and
 political status of woman varies largely
 with the laws of the different states.
 For example, as is well known, in certain
@@ -534,7 +545,7 @@ for the United States, which tells in the
 most practical fashion what to do each
 month in the garden.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Home Making</span>For the transformation of a house,
+<p><span class="shoulder-heading" id="section-home-making">Home Making</span>For the transformation of a house,
 well-situated, well-built, well-furnished,
 well-decorated into a home,—for <i>home-making</i>,—any
 course
@@ -554,7 +565,7 @@ an intellectual achievement—and even
 a Guide to readings in the Britannica
 cannot give an exact formula for it.</p>
 
-<p><span class="shoulder-heading" id="sh-5">Domestic Science</span>But there is a science whose field is
+<p><span class="shoulder-heading" id="section-domestic-science">Domestic Science</span>But there is a science whose field is
 the home and whose formulas are definite,
 and this “domestic science” may be
 learned from the
@@ -660,7 +671,7 @@ work, internal secretions, pancreas.</p>
 <p>Excretion—urea, ammonia, sulphur,
 phosphorus, etc.</p>
 
-<p><span class="shoulder-heading" id="sh-6">Cookery</span>There is much very practical information
+<p><span class="shoulder-heading" id="section-cookery">Cookery</span>There is much very practical information
 for the housewife in the article
 <span class="sc"><a href="/article/07-0089-cookery/cookery">Cookery</a></span> (Vol. 7, p. 74), besides the interesting
 historical sketch. Cookery,
@@ -835,7 +846,7 @@ the principal articles on foods and beverages:</p>
   <li class="c018"><a href="/article/28-0936-s3/yeast">Yeast</a></li>
 </ul>
 
-<p><span class="shoulder-heading" id="sh-7">Costume and Ornament</span>Turning sharply from the useful to
+<p><span class="shoulder-heading" id="section-costume-and-ornament">Costume and Ornament</span>Turning sharply from the useful to
 the ornamental—from the kitchen to
 the boudoir—the woman who uses the
 Britannica will find
@@ -1014,7 +1025,7 @@ costume and similar topics:</p>
   <li class="c018"><a href="/article/28-0644-wig/wig">Wig</a></li>
 </ul>
 
-<p><span class="shoulder-heading" id="sh-8">Biographical Study</span>A study of the lives of great women
+<p><span class="shoulder-heading" id="section-biographical-study">Biographical Study</span>A study of the lives of great women
 will interest any one, and if this study
 is pursued by means of the Britannica
 the reader will have
@@ -1076,7 +1087,7 @@ from Literature, the Arts and Science:—</p>
   <li class="c018">Agreda, Abbess of</li>
   <li class="c018"><a href="/article/01-0465-s1/agrippina">Agrippina</a></li>
   <li class="c018">d’Aiguillon, Duchesse</li>
-  <li class="c018"><a href="/article/01-0529-s4/albany">Albany, Louise, countess of</a></li>
+  <li class="c018"><a href="/article/01-0529-s3/albany">Albany, Louise, countess of</a></li>
   <li class="c018">Alice, Princess</li>
   <li class="c018"><a href="/article/01-0823-s6/amalasuntha">Amalasuntha</a></li>
   <li class="c018">Anna Amalia of Saxe-Weimar</li>
@@ -1214,7 +1225,7 @@ from Literature, the Arts and Science:—</p>
   <li class="c018"><a href="/article/21-0411-s2/philippa_of_hainaut">Philippa of Hainaut</a></li>
   <li class="c018"><a href="/article/21-0571-phryne/phryne">Phryne</a></li>
   <li class="c018">Pompadour, Marquise de</li>
-  <li class="c018"><a href="/article/22-0147-s2/portsmouth">Portsmouth, Duchess of</a></li>
+  <li class="c018"><a href="/article/22-0147-s3/portsmouth">Portsmouth, Duchess of</a></li>
   <li class="c018">Prie, Marquise de</li>
   <li class="c018"><a href="/article/22-0801-s6/radegunda__st">Radegunda, St.</a></li>
   <li class="c018"><a href="/article/23-0309-s3/rich__penelope">Rich, Penelope</a></li>
@@ -1300,7 +1311,7 @@ separate articles in the Encyclopaedia Britannica.</p>
   <li class="c018"><a href="/article/07-0271-cottin-marie/cottin__marie">Cottin, Marie</a></li>
   <li class="c018"><a href="/article/07-0368-cowley-hannah/cowley__hannah">Cowley, Hannah</a></li>
   <li class="c018"><a href="/article/07-0380-craddock/craddock__charles_egbert">Craddock, Charles Egbert</a></li>
-  <li class="c018">Craigie, Pearl (“John Oliver <a href="/contributors.html?q=Mrs+Craigie+%28%E2%80%9CJohn+Oliver+Hobbes%E2%80%9D%29">Hobbes”)</a></li>
+  <li class="c018">Craigie, Pearl (“John Oliver Hobbes”)</li>
   <li class="c018"><a href="/article/07-0382-craik-dinah-maria/craik__dinah_maria">Craik, Dinah Maria</a></li>
   <li class="c018"><a href="/article/07-0403-craven-pauline-marie-armande-aglae/craven__pauline_marie_armande_aglaé">Craven, Pauline</a></li>
   <li class="c018"><a href="/article/07-0850-d-arblay-frances/d_arblay__frances">D’Arblay, Frances</a></li>
@@ -1505,7 +1516,7 @@ long one. A partial list in alphabetical order follows:</p>
   <li class="c018"><a href="/article/25-0052-siddons-sarah/siddons__sarah">Siddons, Sarah</a></li>
   <li class="c018"><a href="/article/25-0289-s5/smithson__henrietta_constance">Smithson, Henrietta C.</a></li>
   <li class="c018"><a href="/article/25-0924-s2/sterling__antoinette">Sterling, Antoinette</a></li>
-  <li class="c018"><a href="/article/25-0925-s3/sterling">Sterling, Fanny</a></li>
+  <li class="c018"><a href="/article/25-0925-s2/sterling">Sterling, Fanny</a></li>
   <li class="c018"><a href="/article/26-0377-s5/taglioni__maria">Taglioni</a></li>
   <li class="c018"><a href="/article/26-0620-tempest-marie/tempest__marie">Tempest, Marie</a></li>
   <li class="c018"><a href="/article/26-0693-terry-ellen-alicia/terry__ellen_alicia">Terry, Ellen</a></li>

@@ -40,6 +40,7 @@ import unicodedata
 from collections import defaultdict
 from dataclasses import dataclass, field
 
+from britannica.contributors.aliases import canonical_name
 from britannica.contributors.vol29_index import Vol29Entry
 from britannica.db.models import ArticleContributor, Contributor, ContributorInitials
 from britannica.pipeline.stages.extract_contributors import _normalize_initials
@@ -87,9 +88,15 @@ def fold_name(s: str) -> str:
     """Normalise a contributor name for comparison: drop credentials,
     parenthetical qualifiers, accents, honorifics, punctuation, and
     case.  Result is a whitespace-separated lowercase token sequence
-    suitable for set-equality and subset comparisons."""
+    suitable for set-equality and subset comparisons.
+
+    Applies `canonical_name()` first so explicit variant→canonical
+    mappings from `data/contributor_aliases.json` (Edgcumbe→Edgecumbe,
+    Hendricus→Henricus, etc.) collapse the spelling-drift cases that
+    pure NFKD+honorific stripping can't handle."""
     if not s:
         return ""
+    s = canonical_name(s)
     s = re.sub(r"\s*\([^)]*\)", " ", s)
     s = s.split(",", 1)[0]
     s = "".join(
@@ -496,7 +503,7 @@ def apply_action(session, action: Action) -> None:
     e = action.entry
     if action.kind == INSERT:
         c = Contributor(
-            full_name=e.full_name,
+            full_name=canonical_name(e.full_name),
             credentials=e.credentials or None,
             description=None,
         )

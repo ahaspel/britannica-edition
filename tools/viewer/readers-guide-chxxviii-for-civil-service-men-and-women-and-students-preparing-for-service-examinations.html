@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,7 +160,8 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter XXVIII</span>For Civil Service Men And Women And Students Preparing For Service Examinations</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">International Comparisons</a></li><li><a href="#sh-2">Civil Service in the United States</a></li><li><a href="#sh-3">“General Information” Papers</a></li></ol></div>
+
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-international-comparisons">International Comparisons</a></li><li><a href="#section-civil-service-in-the-united-states">Civil Service in the United States</a></li><li><a href="#section-general-information-papers">“General Information” Papers</a></li></ol></div>
     <div class="body-text">
 
 
@@ -184,7 +195,7 @@ immigration; legislation and the administration
 of justice; foreign relations
 and the expansion of the United States.</p>
 
-<p><span class="shoulder-heading" id="sh-1">International Comparisons</span>The present chapter, in order that
+<p><span class="shoulder-heading" id="section-international-comparisons">International Comparisons</span>The present chapter, in order that
 repetition may be avoided, deals only
 with the aspects of federal, state and
 municipal government which are most
@@ -243,7 +254,7 @@ any one serving 10 years and less than
 11, and an additional sixtieth for each
 year’s service more than ten.</p>
 
-<p><span class="shoulder-heading" id="sh-2">Civil Service in the United States</span>In the same article there is an historical
+<p><span class="shoulder-heading" id="section-civil-service-in-the-united-states">Civil Service in the United States</span>In the same article there is an historical
 treatment of civil service in the United
 States and of its gradual reform and extension
 since 1883.
@@ -284,7 +295,7 @@ articles,—in addition to the material
 on state and city systems in the articles
 already mentioned.</p>
 
-<p><span class="shoulder-heading" id="sh-3">“General Information” Papers</span>The wide-awake student who has
+<p><span class="shoulder-heading" id="section-general-information-papers">“General Information” Papers</span>The wide-awake student who has
 read this far in this chapter and has
 referred to the articles mentioned in
 the Britannica, will

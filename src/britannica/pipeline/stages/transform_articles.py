@@ -17,6 +17,7 @@ import re
 from britannica.db.models import Article, ArticleSegment, SourcePage
 from britannica.db.session import SessionLocal
 
+from britannica.cleaners.hyphenation import fix_hyphenation
 from britannica.cleaners.reflow import reflow_paragraphs
 from britannica.cleaners.unicode import normalize_unicode, replace_print_artifacts
 from britannica.pipeline.stages.clean_pages import _replace_score_tags
@@ -355,6 +356,16 @@ def _unwrap_content_templates(text: str) -> str:
         # spacing entities (`&ensp;`, `&nbsp;`) are dropped.
         paren = re.match(r"\(([^()]+)\)", raw_label)
         label = (paren.group(1) if paren else raw_label).strip()
+        # Strip wikitext italic markers (``''``) from labels.  The label
+        # is emitted as ``«EQN:LABEL»content«/EQN»``; if the italic
+        # span survives to the later italic-conversion pass, ``''a''``
+        # becomes ``«I»a«/I»`` and the EQN open-marker's trailing ``»``
+        # collides with the italic ``»`` of the label.  Viewer parses
+        # the label up to the first ``»``, splitting ``10«I»a«/I»`` into
+        # label=``10«I`` and stranding ``a«/I»`` onto the content.
+        # ORDNANCE p244 (10''a''): canonical form for equation labels
+        # is plain text — italic styling on a label is decorative noise.
+        label = label.replace("''", "")
         return f"\n\n«EQN:{label}»{content}«/EQN»\n\n"
 
     text = re.sub(r"\{\{ne\|\|([^{}|]*(?:\{\{[^{}]*\}\}[^{}|]*)*)\|([^{}]*)\}\}",
@@ -659,6 +670,13 @@ def _finalize_markers(text: str) -> str:
         lambda m: f"\u00abLN:{m.group(1)}|{m.group(2)}\u00ab/LN\u00bb",
         text,
     )
+    # Strip any orphan _LNK (\x06) placeholders that didn't pair up.
+    # Quality-report sweep 2026-05-08 found these in MENSURATION
+    # vol 18 and ZOOLOGY vol 28 \u2014 single unclosed `\x06` chars that
+    # leaked from malformed link markup in the source.  Stripping
+    # late so the regex above gets first crack at any well-formed
+    # marker.
+    text = text.replace(_LNK, "")
     return text
 
 
@@ -1517,6 +1535,15 @@ def _match_legend_line(line: str, *, strict: bool = False) -> tuple[str, str] | 
     text = m.group(3).strip().rstrip(".")
     if not label or not text:
         return None
+    # Reject lowercase ``fig`` as a legend label.  Real figure-legend
+    # labels are short symbols (A, B, i, ii, α) — never the word ``fig``.
+    # Lowercase ``fig.`` only appears in body prose as in-text references
+    # (``see fig. 78``).  When such a sentence sits next to a figure,
+    # ``_legend_entries_from_paragraph`` would otherwise parse it as a
+    # legend entry and the surrounding prose paragraph gets wrapped as a
+    # gigantic ``{{LEGEND:…}LEGEND}`` block (ORDNANCE p257 Fig 78).
+    if label.lower() == "fig":
+        return None
     return label, text
 
 
@@ -2323,49 +2350,73 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
 
     # Unclosed `{{nowrap|…` (malformed wikitext in sources like EGYPT
     # vol 9 p76) confuses cell parsing because its inner `|` leaks as
-    # a cell separator. Scan for each `{{nowrap|` opener; if it has no
-    # matching `}}`, strip just the opener. Balanced cases (including
-    # nested templates) are left alone for _unwrap_balanced to handle.
-    def _strip_unclosed_nowrap(text):
+    # a cell separator. Scan for each opener; if it has no matching
+    # `}}`, strip just the opener. Balanced cases (including nested
+    # templates) are left alone for _unwrap_balanced to handle.
+    #
+    # Generalized to also handle `ppoem`, `right`, `float right`,
+    # `fine block`, `anchor` — quality-report sweep 2026-05-08
+    # surfaced unclosed openers of these in HOOD, TANCRED, THEODORE
+    # OF MOPSUESTIA, SARAVIA, ST LOUIS articles.  Adding each to the
+    # opener list here strips the orphan markup so it doesn't render
+    # as raw wikitext in prose.
+    _UNCLOSED_TEMPLATES = (
+        "nowrap", "ppoem", "right", "float right", "fine block",
+        "anchor",
+    )
+
+    def _strip_unclosed_templates(text):
         out = []
         i = 0
         low = text.lower()
-        while i < len(text):
-            if low[i:i+9] == "{{nowrap|" or (
-                    low[i:i+8] == "{{nowrap" and i+8 < len(text)
-                    and low[i+8] in " \t" and "|" in text[i+8:i+30]):
-                # Find matching }} by depth counting from this opener.
-                depth = 1
-                j = i + 2
-                matched = False
-                while j < len(text) - 1:
-                    if text[j:j+2] == "{{":
-                        depth += 1
-                        j += 2
-                    elif text[j:j+2] == "}}":
-                        depth -= 1
-                        j += 2
-                        if depth == 0:
-                            matched = True
-                            break
-                    else:
-                        j += 1
-                if matched:
-                    # Balanced — leave untouched.
-                    out.append(text[i:j])
-                    i = j
-                else:
-                    # Unclosed — strip opener up through first `|`.
-                    pipe_idx = text.find("|", i)
-                    if pipe_idx >= 0:
-                        i = pipe_idx + 1  # skip `{{nowrap|`
-                    else:
-                        i += 2  # just drop the `{{`
-            else:
+        n = len(text)
+        while i < n:
+            # Try each opener.
+            matched_opener = None
+            for name in _UNCLOSED_TEMPLATES:
+                opener_with_pipe = "{{" + name + "|"
+                opener_with_space = "{{" + name + " "
+                if low[i:i + len(opener_with_pipe)] == opener_with_pipe:
+                    matched_opener = opener_with_pipe
+                    break
+                # Allow whitespace between name and pipe ("{{right |..."),
+                # but only if a pipe follows shortly.
+                if low[i:i + len(opener_with_space)] == opener_with_space:
+                    pipe_idx = text.find("|", i + len(opener_with_space))
+                    if 0 <= pipe_idx <= i + len(opener_with_space) + 20:
+                        matched_opener = text[i:pipe_idx]
+                        break
+            if matched_opener is None:
                 out.append(text[i])
                 i += 1
+                continue
+            # Find matching }} by depth counting.
+            depth = 1
+            j = i + 2
+            matched_close = False
+            while j < n - 1:
+                if text[j:j+2] == "{{":
+                    depth += 1
+                    j += 2
+                elif text[j:j+2] == "}}":
+                    depth -= 1
+                    j += 2
+                    if depth == 0:
+                        matched_close = True
+                        break
+                else:
+                    j += 1
+            if matched_close:
+                out.append(text[i:j])
+                i = j
+            else:
+                pipe_idx = text.find("|", i)
+                if pipe_idx >= 0:
+                    i = pipe_idx + 1
+                else:
+                    i += 2
         return "".join(out)
-    text = _strip_unclosed_nowrap(text)
+    text = _strip_unclosed_templates(text)
 
     # Replace <score> tags (static lookup, must happen before extraction)
     text = _replace_score_tags(text, volume, page_number)
@@ -2545,6 +2596,12 @@ def _transform_text_v2(raw_wikitext: str, volume: int, page_number: int) -> str:
     # one clean `{{IMG:…|caption}}` + optional `{{LEGEND:…}LEGEND}`.
     # Replaces the previous zoo of container-specific promoters.
     text = _process_figures(text)
+
+    # Rejoin words split by line-break hyphenation (`trans- \nlation` →
+    # `translation`).  Must run before reflow_paragraphs, which would
+    # otherwise convert the line break to a space and freeze the broken
+    # form in place.
+    text, _ = fix_hyphenation(text)
 
     # Reflow paragraphs — join lines that were hard-wrapped in the source
     text = reflow_paragraphs(text)

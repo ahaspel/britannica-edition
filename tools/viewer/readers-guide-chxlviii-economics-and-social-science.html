@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,7 +160,8 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter XLVIII</span>Economics And Social Science</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Great Economists</a></li><li><a href="#sh-2">Economic Theory</a></li><li><a href="#sh-3">Anarchism, Socialism, etc.</a></li><li><a href="#sh-4">Tariffs, Trusts, etc.</a></li><li><a href="#sh-5">Labour and Wages</a></li><li><a href="#sh-6">Statistics, Population, etc.</a></li><li><a href="#sh-7">Social Legislation</a></li><li><a href="#sh-8">Social Welfare</a></li><li><a href="#sh-9">Charity</a></li><li><a href="#sh-10">Prisons</a></li><li><a href="#sh-11">Insane</a></li><li><a href="#sh-12">Deaf and Blind</a></li><li><a href="#sh-13">Biographies</a></li></ol></div>
+
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-great-economists">Great Economists</a></li><li><a href="#section-economic-theory">Economic Theory</a></li><li><a href="#section-anarchism-socialism-etc">Anarchism, Socialism, etc.</a></li><li><a href="#section-tariffs-trusts-etc">Tariffs, Trusts, etc.</a></li><li><a href="#section-labour-and-wages">Labour and Wages</a></li><li><a href="#section-statistics-population-etc">Statistics, Population, etc.</a></li><li><a href="#section-social-legislation">Social Legislation</a></li><li><a href="#section-social-welfare">Social Welfare</a></li><li><a href="#section-charity">Charity</a></li><li><a href="#section-prisons">Prisons</a></li><li><a href="#section-insane">Insane</a></li><li><a href="#section-deaf-and-blind">Deaf and Blind</a></li><li><a href="#section-biographies">Biographies</a></li></ol></div>
     <div class="body-text">
 
 
@@ -175,7 +186,7 @@ p. 899), by <a href="/contributors.html?q=William+Albert+Samuel+Hewins">W. A. S.
 director of the London School of Economics,
 secretary of the tariff commission.</p>
 
-<p><span class="shoulder-heading" id="sh-1">Great Economists</span>For the history of economic theory in
+<p><span class="shoulder-heading" id="section-great-economists">Great Economists</span>For the history of economic theory in
 biographies of great economists, see
 <span class="sc"><a href="/article/04-0122-bodin-jean/bodin__jean">Jean Bodin</a></span>; <span class="sc"><a href="/article/19-0015-mun-thomas/mun__thomas">Thomas Mun</a></span>; <span class="sc"><a href="/article/13-0561-s2/hobbes__thomas">Hobbes</a></span>;
 <span class="sc"><a href="/article/21-0357-petty-sir-william/petty__sir_william">Sir William Petty</a></span>;
@@ -221,7 +232,7 @@ Bemis</span>; and <span class="sc">E. R. A. Seligman</span>.</p>
 <p>For the chief branches of economic
 theory read:</p>
 
-<p><span class="shoulder-heading" id="sh-2">Economic Theory</span><span class="sc"><a href="/article/27-0893-s3/value">Value</a></span> (Vol. 27, p. 867) by Dr. <a href="/contributors.html?q=Joseph+Shield+Nicholson">J. S.
+<p><span class="shoulder-heading" id="section-economic-theory">Economic Theory</span><span class="sc"><a href="/article/27-0893-s3/value">Value</a></span> (Vol. 27, p. 867) by Dr. <a href="/contributors.html?q=Joseph+Shield+Nicholson">J. S.
 Nicholson</a>, professor of political economy,
 Edinburgh University, author of <i>Principles
 of Political
@@ -307,7 +318,7 @@ author of <i>Public Finance</i>, etc.</p>
 <p>On “Ideal” social systems, see these
 four groups of articles:</p>
 
-<p><span class="shoulder-heading" id="sh-3">Anarchism, Socialism, etc.</span><span class="sc"><a href="/article/01-0967-anarchism/anarchism">Anarchism</a></span> (Vol. 1, p. 914), by <a href="/contributors.html?q=Prince+Peter+Alexeivitch+Kropotkin">Prince
+<p><span class="shoulder-heading" id="section-anarchism-socialism-etc">Anarchism, Socialism, etc.</span><span class="sc"><a href="/article/01-0967-anarchism/anarchism">Anarchism</a></span> (Vol. 1, p. 914), by <a href="/contributors.html?q=Prince+Peter+Alexeivitch+Kropotkin">Prince
 Kropotkin</a>, author of <i>Modern Science
 and Anarchism</i>, and a contributor to the
 Britannica on Russian
@@ -388,7 +399,7 @@ movement away from Marx; <span class="sc"><a href="/article/23-0459-rodbertus-ka
 Burns</a></span>; and local articles, especially
 <span class="sc"><a href="/article/19-0650-new-zealand/new_zealand">New Zealand</a></span> and <span class="sc"><a href="/article/10-0397-finland/finland">Finland</a></span>.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Tariffs, Trusts, etc.</span>Among the more interesting general
+<p><span class="shoulder-heading" id="section-tariffs-trusts-etc">Tariffs, Trusts, etc.</span>Among the more interesting general
 economic topics are tariffs and trusts,
 matters of constant and great importance
 both in politics and
@@ -432,11 +443,11 @@ by the late Professor Charles Gross of
 Harvard University, and for American
 Trust Legislation, by the articles <span class="sc"><a href="/article/14-0742-interstate-commerce/interstate_commerce">Interstate
 Commerce</a></span> (Vol. 14, p. 711) and
-<span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>History</i> (Vol. 27), especially
+<span class="sc"><a href="/article/27-0635-united-states-the/united_states__the#section-x-history">United States</a></span>, <i>History</i> (Vol. 27), especially
 pages 725–726, 729, 734. See also
 under separate state headings.</p>
 
-<p><span class="shoulder-heading" id="sh-5">Labour and Wages</span>The article on Gilds just referred to
+<p><span class="shoulder-heading" id="section-labour-and-wages">Labour and Wages</span>The article on Gilds just referred to
 will serve as an introduction to the
 subject of labour and labour organizations.
 The most important
@@ -453,7 +464,7 @@ labour legislation see the special article
 and the sections on legislation and miscellaneous
 laws in separate state articles.</p>
 
-<p><span class="shoulder-heading" id="sh-6">Statistics, Population, etc.</span>One of the great branches of economics
+<p><span class="shoulder-heading" id="section-statistics-population-etc">Statistics, Population, etc.</span>One of the great branches of economics
 is the study of statistics. Advisedly
 we say “<i>study</i> of statistics” and in the
 Britannica the student
@@ -523,7 +534,7 @@ find a summary of local divorce laws.</p>
 of population are <span class="sc"><a href="/article/14-0545-s1/infanticide">Infanticide</a></span>, <span class="sc"><a href="/article/14-0314-illegitimacy/illegitimacy">Illegitimacy</a></span>,
 <span class="sc"><a href="/article/16-0398-legitimacy/legitimacy">Legitimacy</a></span> and <span class="sc">Legitimation</span>.</p>
 
-<p><span class="shoulder-heading" id="sh-7">Social Legislation</span>In the chapter in this Guide on <i>Questions
+<p><span class="shoulder-heading" id="section-social-legislation">Social Legislation</span>In the chapter in this Guide on <i>Questions
 of the Day</i> attention is called to the
 increasing tendency of the state to
 control and regulate
@@ -574,7 +585,7 @@ model towns, etc. See also the article
 American model towns, <span class="sc"><a href="/article/13-0700-s3/hopedale">Hopedale</a></span>, <span class="sc"><a href="/article/22-0660-pullman/pullman">Pullman</a></span>,
 etc.</p>
 
-<p><span class="shoulder-heading" id="sh-8">Social Welfare</span>Many movements for social welfare
+<p><span class="shoulder-heading" id="section-social-welfare">Social Welfare</span>Many movements for social welfare
 are of a very different character and are
 based on an entirely different principle
 from that of repressive
@@ -591,7 +602,7 @@ long and laborious effort succeeded in
 reforming in this field abuses which had
 flourished under government care.</p>
 
-<p><span class="shoulder-heading" id="sh-9">Charity</span>Of prime importance to the student
+<p><span class="shoulder-heading" id="section-charity">Charity</span>Of prime importance to the student
 is the elaborate article on <span class="sc"><a href="/article/05-0896-charity-and-charities/charity_and_charities">Charity and
 Charities</a></span> (Vol. 5, p. 860), by Dr.
 <a href="/contributors.html?q=Charles+Stewart+Loch">Charles Stewart Loch</a>, secretary
@@ -675,7 +686,7 @@ British system, and Dr. T. A. Ingram’s
 articles <span class="sc"><a href="/article/27-0597-unemployment/unemployment">Unemployment</a></span> (Vol. 27, p. 578)
 and <span class="sc"><a href="/article/27-0863-vagrancy/vagrancy">Vagrancy</a></span> (Vol. 27, p. 837).</p>
 
-<p><span class="shoulder-heading" id="sh-10">Prisons</span>One of the earliest and most important
+<p><span class="shoulder-heading" id="section-prisons">Prisons</span>One of the earliest and most important
 definite charitable movements was prison
 reform. On this subject see in the
 Britannica the articles,—all
@@ -691,7 +702,7 @@ a means of protecting society, and
 the better methods of defense and of
 police.</p>
 
-<p><span class="shoulder-heading" id="sh-11">Insane</span>On the treatment of the insane and
+<p><span class="shoulder-heading" id="section-insane">Insane</span>On the treatment of the insane and
 feeble-minded, on the gradual assumption
 of responsibility for them by governments,
 and on the transition
@@ -704,7 +715,7 @@ professor of psychiatry, Columbia
 University, author of <i>Mental Diseases</i>,
 etc.</p>
 
-<p><span class="shoulder-heading" id="sh-12">Deaf and Blind</span>As great as the change in treatment
+<p><span class="shoulder-heading" id="section-deaf-and-blind">Deaf and Blind</span>As great as the change in treatment
 of the insane has been that in the treatment
 of the deaf and blind. On this
 subject read the
@@ -726,7 +737,7 @@ the articles on <span class="sc"><a href="/article/11-0434-s2/gallaudet__thomas_
 <span class="sc"><a href="/article/13-0861-howe-richard-howe-earl/howe__richard_howe__earl">S. G. Howe</a></span> (Vol. 13, p. 837), the educator
 of the blind.</p>
 
-<p><span class="shoulder-heading" id="sh-13">Biographies</span>The following list, arranged for the
+<p><span class="shoulder-heading" id="section-biographies">Biographies</span>The following list, arranged for the
 most part in chronological order, gives
 some of the names of reformers and
 philanthropists

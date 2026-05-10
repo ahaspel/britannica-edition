@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,7 +160,8 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter XXV</span>For Physicians, Surgeons And Dentists</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">The Encyclopaedic Method</a></li><li><a href="#sh-2">Scope of the Medical Section</a></li><li><a href="#sh-3">Anatomy, Embryology, and Physiology</a></li><li><a href="#sh-4">Articles on Pathology</a></li><li><a href="#sh-5">Therapeutics</a></li><li><a href="#sh-6">Surgery</a></li><li><a href="#sh-7">Medical Biographies</a></li><li><a href="#sh-8">The Allied Sciences</a></li></ol></div>
+
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-the-encyclopaedic-method">The Encyclopaedic Method</a></li><li><a href="#section-scope-of-the-medical-section">Scope of the Medical Section</a></li><li><a href="#section-anatomy-embryology-and-physiology">Anatomy, Embryology, and Physiology</a></li><li><a href="#section-articles-on-pathology">Articles on Pathology</a></li><li><a href="#section-therapeutics">Therapeutics</a></li><li><a href="#section-surgery">Surgery</a></li><li><a href="#section-medical-biographies">Medical Biographies</a></li><li><a href="#section-the-allied-sciences">The Allied Sciences</a></li></ol></div>
     <div class="body-text">
 
 
@@ -197,7 +208,7 @@ possesses, nor yet, for example, to
 include a pharmacopoeia in a book used
 by the general public.</p>
 
-<p><span class="shoulder-heading" id="sh-1">The Encyclopaedic Method</span>On the other hand, no professional
+<p><span class="shoulder-heading" id="section-the-encyclopaedic-method">The Encyclopaedic Method</span>On the other hand, no professional
 man restricts himself a day longer than
 he must to the bare modicum of medical
 literature with which
@@ -279,7 +290,7 @@ but gives him, and the members of his
 family, the use of <i>the only complete library
 of general information</i>.</p>
 
-<p><span class="shoulder-heading" id="sh-2">Scope of the Medical Section</span>Specifically, the medical and surgical
+<p><span class="shoulder-heading" id="section-scope-of-the-medical-section">Scope of the Medical Section</span>Specifically, the medical and surgical
 section of the Britannica comprises
 3 general articles, constituting
 broad systematic surveys of the various
@@ -338,7 +349,7 @@ furnishing data on the educational qualifications
 necessary to the practice of
 medicine in Europe and America.</p>
 
-<p><span class="shoulder-heading" id="sh-3">Anatomy, Embryology, and Physiology</span><a href="/contributors.html?q=Sir+Frederick+Gymer+Parsons">Dr. Frederick G. Parsons</a>, vice-president
+<p><span class="shoulder-heading" id="section-anatomy-embryology-and-physiology">Anatomy, Embryology, and Physiology</span><a href="/contributors.html?q=Sir+Frederick+Gymer+Parsons">Dr. Frederick G. Parsons</a>, vice-president
 of the Anatomical Society of Great
 Britain and Ireland,
 lecturer on Anatomy
@@ -400,7 +411,7 @@ London Hospital, Dr. P. Chalmers <a href="/contributors.html?q=Peter+Chalmers+Mi
 and Dr. T. G. Brodie of the University
 of Toronto.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Articles on Pathology</span>Drs. D. J. Hamilton and Richard Muir
+<p><span class="shoulder-heading" id="section-articles-on-pathology">Articles on Pathology</span>Drs. D. J. Hamilton and Richard Muir
 are the authors of a brilliant summary of
 the whole subject of <span class="sc"><a href="/article/20-0975-pathology/pathology">Pathology</a></span> (Vol. 20,
 p. 913) with over 50
@@ -445,7 +456,7 @@ Treatment</i> of the insane; <span class="sc"><a href="/article/19-0447-neuropat
 by Dr. <a href="/contributors.html?q=Frederick+Walker+Mott">F. W. Mott</a>, the distinguished
 pathologist to the London County Asylums,
 and editor of the <i>Archives of
-Neurology</i>; <span class="sc"><a href="/article/23-0201-s2/respiratory_system">Respiratory System</a></span>, <i>Pathology</i>
+Neurology</i>; <span class="sc"><a href="/article/23-0201-s2/respiratory_system#section-4-pathology-of-the-respiratory-system">Respiratory System</a></span>, <i>Pathology</i>
 (Vol. 23, p. 195), by Dr. <a href="/contributors.html?q=Thomas+Harris">Thomas
 Harris</a>, author of numerous articles on
 this subject, and Dr. H. L. Hennessy;
@@ -459,7 +470,7 @@ surgeon oculist to his Majesty George V;
 <span class="sc"><a href="/article/28-0146-vision/vision">Vision</a></span>, <i>Errors of Refraction and Accommodation</i>
 (Vol. 28, p. 142), by Dr. Ernest
 Clark of the Central London Ophthalmic
-Hospital; <span class="sc"><a href="/article/08-0818-ear/ear">Ear</a></span>, <i>Diseases of</i> (Vol. 8, p.
+Hospital; <span class="sc"><a href="/article/08-0818-ear/ear#section-diseases-of-the-ear">Ear</a></span>, <i>Diseases of</i> (Vol. 8, p.
 794), by Dr. <a href="/contributors.html?q=Edward+Cresswell+Baber">E. C. Baber</a>, late senior
 surgeon, Brighton and Sussex Throat
 and Ear Hospital.</p>
@@ -483,7 +494,7 @@ tubercular diseases, serum treatment
 and its latest developments, vaccine
 therapy, etc.</p>
 
-<p><span class="shoulder-heading" id="sh-5">Therapeutics</span>The general article <span class="sc"><a href="/article/26-0833-therapeutics/therapeutics">Therapeutics</a></span>
+<p><span class="shoulder-heading" id="section-therapeutics">Therapeutics</span>The general article <span class="sc"><a href="/article/26-0833-therapeutics/therapeutics">Therapeutics</a></span>
 (Vol. 26, p. 793), by Dr. <a href="/contributors.html?q=Sir+Thomas+Lauder+Brunton">Sir Lauder
 Brunton</a>, consulting physician to St.
 Bartholomew’s Hospital,
@@ -525,7 +536,7 @@ separate articles on drugs and on materials
 from which the principal drugs are
 obtained.</p>
 
-<p><span class="shoulder-heading" id="sh-6">Surgery</span>Dr. Charles Creighton of King’s College,
+<p><span class="shoulder-heading" id="section-surgery">Surgery</span>Dr. Charles Creighton of King’s College,
 Cambridge, writes on the history
 of <span class="sc"><a href="/article/26-0143-surgery/surgery">Surgery</a></span> (Vol. 26, p. 125) and the
 famous English Surgeon,
@@ -563,7 +574,7 @@ anaesthetics at St. Thomas’s Hospital,
 London, on <span class="sc"><a href="/article/01-0960-s6/anaesthesia">Anaesthesia and Anaesthetics</a></span>
 (Vol. 1, p. 907).</p>
 
-<p><span class="shoulder-heading" id="sh-7">Medical Biographies</span>A most interesting, unusual and instructive
+<p><span class="shoulder-heading" id="section-medical-biographies">Medical Biographies</span>A most interesting, unusual and instructive
 course of reading on the history
 and development of medicine may
 be based on the
@@ -579,7 +590,7 @@ as we now understand it,” both
 date from him. For information about
 the theory that disease originated from
 an irregular or inharmonious motion of the
-body corpuscles we turn to <span class="sc"><a href="/article/02-0766-s6/asclepiades">Asclepiades</a></span>
+body corpuscles we turn to <span class="sc"><a href="/article/02-0766-s7/asclepiades">Asclepiades</a></span>
 (Vol. 2, p. 722). An account of the man
 “out of whom the greater part of medicine
 has flowed” is found in <span class="sc"><a href="/article/11-0416-s3/galen__christoph_bernhard">Galen</a></span> (Vol.
@@ -612,7 +623,7 @@ chemist <span class="sc"><a href="/article/20-0954-pasteur-louis/pasteur__louis"
 (Vol. 16, p. 777) and <span class="sc"><a href="/article/28-0125-virchow/virchow__rudolf">Virchow, Rudolf</a></span>
 (Vol. 28, p. 110).</p>
 
-<p><span class="shoulder-heading" id="sh-8">The Allied Sciences</span>It has already been noted that the
+<p><span class="shoulder-heading" id="section-the-allied-sciences">The Allied Sciences</span>It has already been noted that the
 Britannica will prove an invaluable help
 to medical specialists in fields of knowledge
 other than their
@@ -683,7 +694,7 @@ Healing</a></span> (Vol. 10, p. 135); <span class="sc"><a href="/article/26-0064
 534), by Professor Macalister of Cambridge;
 <span class="sc"><a href="/article/26-0608-s5/temperance">Temperance</a></span> (Vol. 26, p. 578), by
 Dr. <a href="/contributors.html?q=Arthur+Shadwell">Arthur Shadwell</a>; <span class="sc"><a href="/article/18-0414-s2/microscope">Microscope</a></span> (Vol.
-18, p. 392); <span class="sc"><a href="/article/04-0072-blindness/blindness">Blindness</a></span>, <i>Causes and Prevention</i>
+18, p. 392); <span class="sc"><a href="/article/04-0072-blindness/blindness#section-causes-and-prevention">Blindness</a></span>, <i>Causes and Prevention</i>
 (Vol. 4, p. 60), by Sir Francis J.
 Cambell, principal Royal Normal College
 for the Blind, London; <span class="sc"><a href="/article/07-0904-deaf-and-dumb/deaf_and_dumb">Deaf and Dumb</a></span>
@@ -800,7 +811,7 @@ make use of the Britannica.</p>
   <li class="c018"><a href="/article/02-0757-s2/arytenoid">Arytenoid</a></li>
   <li class="c018"><a href="/article/02-0757-s6/asafetida">Asafetida</a></li>
   <li class="c018"><a href="/article/02-0766-s5/ascites">Ascites</a></li>
-  <li class="c018"><a href="/article/02-0766-s6/asclepiades">Asclepiades</a></li>
+  <li class="c018"><a href="/article/02-0766-s7/asclepiades">Asclepiades</a></li>
   <li class="c018">Aselli, or Asselio, Gasparo</li>
   <li class="c018"><a href="/article/02-0815-s2/asphyxia">Asphyxia</a></li>
   <li class="c018"><a href="/article/02-0838-asthma/asthma">Asthma</a></li>

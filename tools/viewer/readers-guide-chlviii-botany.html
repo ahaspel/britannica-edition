@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,7 +160,8 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter LVIII</span>Botany</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">General Principles</a></li><li><a href="#sh-2">Divisions and Classification</a></li><li><a href="#sh-3">Angiosperms: Dicotyledons</a></li><li><a href="#sh-4">Angiosperms: Monocotyledons</a></li><li><a href="#sh-5">Other Divisions</a></li><li><a href="#sh-6">Natural History</a></li></ol></div>
+
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-general-principles">General Principles</a></li><li><a href="#section-divisions-and-classification">Divisions and Classification</a></li><li><a href="#section-angiosperms-dicotyledons">Angiosperms: Dicotyledons</a></li><li><a href="#section-angiosperms-monocotyledons">Angiosperms: Monocotyledons</a></li><li><a href="#section-other-divisions">Other Divisions</a></li><li><a href="#section-natural-history">Natural History</a></li></ol></div>
     <div class="body-text">
 
 
@@ -194,7 +205,7 @@ on “systematic” botany treating of the
 various families of plants; (iii.) articles
 describing members of their families.</p>
 
-<p><span class="shoulder-heading" id="sh-1">General Principles</span>Following the most convenient and at
+<p><span class="shoulder-heading" id="section-general-principles">General Principles</span>Following the most convenient and at
 the same time the most logical course,
 the article <span class="sc"><a href="/article/04-0314-botany/botany">Botany</a></span> (Vol. 4, p. 299) gives
 a key to the treatment
@@ -257,7 +268,7 @@ refer to the general principles of the science
 will be found enumerated at the
 end of this chapter.</p>
 
-<p><span class="shoulder-heading" id="sh-2">Divisions and Classification</span>The student must, of course, make
+<p><span class="shoulder-heading" id="section-divisions-and-classification">Divisions and Classification</span>The student must, of course, make
 himself familiar with the primary divisions
 of the vegetable kingdom. These
 are considered in order
@@ -267,7 +278,7 @@ most important is
 that of the Angiosperms. They will be
 treated first.</p>
 
-<p><span class="shoulder-heading" id="sh-3">Angiosperms: Dicotyledons</span>The division <span class="sc"><a href="/article/02-0020-s5/angiosperms">Angiosperms</a></span> (Vol. 2, p.
+<p><span class="shoulder-heading" id="section-angiosperms-dicotyledons">Angiosperms: Dicotyledons</span>The division <span class="sc"><a href="/article/02-0020-s5/angiosperms">Angiosperms</a></span> (Vol. 2, p.
 9) includes all those flowering plants
 whose seeds are enclosed in capsules.
 This division is again
@@ -347,7 +358,7 @@ belong ivy, carrot, hemlock, celery, caraway,
 parsley. <span class="sc"><a href="/article/27-0830-urticaceae/urticaceae">Urticaceae</a></span> (Vol. 27, p.
 805), which include the nettle tribes.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Angiosperms: Monocotyledons</span>The Monocotyledons include the <span class="sc"><a href="/article/01-0713-s6/alismaceae">Alismaceae</a></span>
+<p><span class="shoulder-heading" id="section-angiosperms-monocotyledons">Angiosperms: Monocotyledons</span>The Monocotyledons include the <span class="sc"><a href="/article/01-0713-s6/alismaceae">Alismaceae</a></span>
 (Vol. 1, p. 671), to which belong
 the arrow-head, the water plantain, the
 butomus (so called
@@ -370,7 +381,7 @@ family; and the <span class="sc"><a href="/article/16-0705-s2/liliaceae">Liliace
 683), which include asparagus, hyacinth,
 star of Bethlehem, fritillary, bluebell, etc.</p>
 
-<p><span class="shoulder-heading" id="sh-5">Other Divisions</span>Another big division is that of the
+<p><span class="shoulder-heading" id="section-other-divisions">Other Divisions</span>Another big division is that of the
 <span class="sc"><a href="/article/12-0779-gymnosperms/gymnosperms">Gymnosperms</a></span> (Vol. 12, p. 754). These
 have naked seed pods; that is to say, the
 seeds are not enclosed
@@ -442,7 +453,7 @@ in botany, will contain much that is already
 known to the student who wishes
 to pursue the subject systematically.</p>
 
-<p><span class="shoulder-heading" id="sh-6">Natural History</span>In the Britannica from the various
+<p><span class="shoulder-heading" id="section-natural-history">Natural History</span>In the Britannica from the various
 articles concerning the natural history of
 individual plants it is easy to trace back
 to what family and
@@ -627,7 +638,7 @@ will be found are given.</p>
   <li class="c018"><a href="/article/01-0141-s4/acanthus">Acanthus</a></li>
   <li class="c018"><a href="/article/01-0175-s4/achimenes">Achimenes</a></li>
   <li class="c018"><a href="/article/01-0184-s2/acorus_calamus">Acorus Calamus</a></li>
-  <li class="c018"><a href="/article/01-0243-s5/adonis">Adonis</a></li>
+  <li class="c018"><a href="/article/01-0243-s4/adonis">Adonis</a></li>
   <li class="c018"><a href="/article/01-0399-s3/african_lily">African Lily</a></li>
   <li class="c018"><a href="/article/01-0409-s5/agave">Agave</a></li>
   <li class="c018"><a href="/article/01-0462-s2/agrimony">Agrimony</a></li>
@@ -942,7 +953,7 @@ will be found are given.</p>
   <li class="c018"><a href="/article/16-0303-laurel/laurel">Laurel</a></li>
   <li class="c018"><a href="/article/16-0308-s2/laurustinus">Laurustinus</a></li>
   <li class="c018"><a href="/article/16-0312-s2/lavender">Lavender</a></li>
-  <li class="c018"><a href="/article/16-0390-s2/leek">Leek</a></li>
+  <li class="c018"><a href="/article/16-0390-s3/leek">Leek</a></li>
   <li class="c018"><a href="/article/16-0433-lemon/lemon">Lemon</a></li>
   <li class="c018"><a href="/article/16-0450-s2/lentil">Lentil</a></li>
   <li class="c018"><a href="/article/16-0523-s1/lettuce">Lettuce</a></li>

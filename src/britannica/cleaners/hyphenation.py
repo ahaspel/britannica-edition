@@ -10,5 +10,5 @@ def fix_hyphenation(text: str) -> tuple[str, list[tuple[str, str]]]:
         changes.append((before, after))
         return after
 
-    new_text = re.sub(r"(\w+)-\n(\w+)", repl, text)
+    new_text = re.sub(r"(\w+)-[ \t]*\n[ \t]*(\w+)", repl, text)
     return new_text, changes

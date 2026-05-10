@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,7 +160,8 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter LI</span>Anthropology And Ethnology</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Man’s Origin</a></li><li><a href="#sh-2">Races of Man</a></li><li><a href="#sh-3">Antiquity of Man</a></li><li><a href="#sh-4">Language</a></li><li><a href="#sh-5">Development of Civilization</a></li><li><a href="#sh-6">Ethnology</a></li><li><a href="#sh-7">North American Indians</a></li><li><a href="#sh-8">Central America</a></li><li><a href="#sh-9">Terminology</a></li><li><a href="#sh-10">Taboo and Totem</a></li><li><a href="#sh-11">Religion</a></li><li><a href="#sh-12">Biographical Study</a></li></ol></div>
+
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-man-s-origin">Man’s Origin</a></li><li><a href="#section-races-of-man">Races of Man</a></li><li><a href="#section-antiquity-of-man">Antiquity of Man</a></li><li><a href="#section-language">Language</a></li><li><a href="#section-development-of-civilization">Development of Civilization</a></li><li><a href="#section-ethnology">Ethnology</a></li><li><a href="#section-north-american-indians">North American Indians</a></li><li><a href="#section-central-america">Central America</a></li><li><a href="#section-terminology">Terminology</a></li><li><a href="#section-taboo-and-totem">Taboo and Totem</a></li><li><a href="#section-religion">Religion</a></li><li><a href="#section-biographical-study">Biographical Study</a></li></ol></div>
     <div class="body-text">
 
 
@@ -225,7 +236,7 @@ and author of <i>Researches into the Early
 History of Mankind</i>, <i>Primitive Culture</i>,
 etc.</p>
 
-<p><span class="shoulder-heading" id="sh-1">Man’s Origin</span>This great article deals first with
+<p><span class="shoulder-heading" id="section-man-s-origin">Man’s Origin</span>This great article deals first with
 “man’s place in Nature,” the most interesting
 branch of the theory of evolution.
 <a href="/contributors.html?q=Edward+Burnett+Tylor">Prof. Tylor</a> traces
@@ -321,7 +332,7 @@ will be found in the articles <span class="sc"><a href="/article/10-0034-evoluti
 (Vol. 10, p. 22) and <span class="sc"><a href="/article/25-0637-s3/species">Species</a></span> (Vol. 25,
 p. 616).</p>
 
-<p><span class="shoulder-heading" id="sh-2">Races of Man</span>The classification of man into different
+<p><span class="shoulder-heading" id="section-races-of-man">Races of Man</span>The classification of man into different
 races is the topic next taken up by <a href="/contributors.html?q=Edward+Burnett+Tylor">Dr.
 Tylor</a> in the article <span class="sc"><a href="/article/02-0119-s3/anthropology">Anthropology</a></span>, and
 he deals particularly
@@ -343,7 +354,7 @@ made plain by the fact that the offspring
 of parents of different races are fertile—those
 of different species being infertile.</p>
 
-<p><span class="shoulder-heading" id="sh-3">Antiquity of Man</span>One of the questions connected with
+<p><span class="shoulder-heading" id="section-antiquity-of-man">Antiquity of Man</span>One of the questions connected with
 the origin of man is his antiquity. The
 Biblical chronology,
 as commonly reckoned
@@ -508,7 +519,7 @@ in childhood, another in a transition
 stage like adolescence, and another in the
 prime of civilization.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Language</span>Returning to the article <span class="sc"><a href="/article/02-0119-s3/anthropology">Anthropology</a></span>,
+<p><span class="shoulder-heading" id="section-language">Language</span>Returning to the article <span class="sc"><a href="/article/02-0119-s3/anthropology">Anthropology</a></span>,
 the next topic treated is Language.
 The more important points on
 this subject are
@@ -549,7 +560,7 @@ population, as the Northman’s was replaced
 by the French, and modern German gives
 way to English in the United States.</p>
 
-<p><span class="shoulder-heading" id="sh-5">Development of Civilization</span>The last general topic in the article
+<p><span class="shoulder-heading" id="section-development-of-civilization">Development of Civilization</span>The last general topic in the article
 <span class="sc"><a href="/article/02-0119-s3/anthropology">Anthropology</a></span> is Development of Civilization.
 In connection with it the student
 should read the
@@ -560,7 +571,7 @@ editor-in-chief of <i>The Historian’s History
 of the World</i>, and particularly the first
 part of it dealing with early times.</p>
 
-<p><span class="shoulder-heading" id="sh-6">Ethnology</span>The comparatively brief article <span class="sc"><a href="/article/09-0881-s2/ethnology">Ethnology
+<p><span class="shoulder-heading" id="section-ethnology">Ethnology</span>The comparatively brief article <span class="sc"><a href="/article/09-0881-s2/ethnology">Ethnology
 and Ethnography</a></span> (Vol. 9, p.
 849) takes up the story of man’s progress
 at the point where
@@ -646,7 +657,7 @@ common original stock; and <span class="sc"><a href="/article/22-0038-s2/polygen
 (Vol. 22, p. 24) on the opposite
 theory.</p>
 
-<p><span class="shoulder-heading" id="sh-7">North American Indians</span>One of the most elaborate ethnological
+<p><span class="shoulder-heading" id="section-north-american-indians">North American Indians</span>One of the most elaborate ethnological
 articles in the Britannica is of particular
 interest to Americans, that on <span class="sc"><a href="/article/14-0480-indians-north-american/indians__north_american">Indians,
 North American</a></span> (Vol. 14, p. 452), by
@@ -700,7 +711,7 @@ example, <span class="sc"><a href="/article/22-0080-s2/pontiac">Pontiac</a></spa
 <span class="sc"><a href="/article/21-0410-s3/philip__king">King Philip</a></span>, <span class="sc"><a href="/article/04-0035-black-hawk/black_hawk">Black Hawk</a></span>, <span class="sc"><a href="/article/04-0446-brant-joseph/brant__joseph">Brant</a></span>, and
 <span class="sc"><a href="/article/25-0178-sitting-bull/sitting_bull">Sitting Bull</a></span>.</p>
 
-<p><span class="shoulder-heading" id="sh-8">Central America</span>Interest in the Indians of Central
+<p><span class="shoulder-heading" id="section-central-america">Central America</span>Interest in the Indians of Central
 America, popularly called Aztecs, is
 rather archaeological than ethnological.
 See in the Britannica the
@@ -724,7 +735,7 @@ of Ethnography, British Museum,—with
 a section on the negro in the United
 States, by <a href="/contributors.html?q=Walter+Francis+Willcox">Walter F. Willcox</a>, late chief
 statistician, United States Census Bureau;
-supplemented by <span class="sc"><a href="/article/01-0358-africa/africa">Africa</a></span>, <i>Ethnology</i>
+supplemented by <span class="sc"><a href="/article/01-0358-africa/africa#section-iii-ethnology">Africa</a></span>, <i>Ethnology</i>
 (Vol. 1, p. 325), by Mr. <a href="/contributors.html?q=Thomas+Athol+Joyce">T. A.
 Joyce</a>, with a particularly valuable classified
 list (p. 329) of African tribal distribution,
@@ -737,7 +748,7 @@ the separate tribes, such as <span class="sc"><a href="/article/03-0784-berbers/
 Polynesian race; and also <span class="sc"><a href="/article/24-0129-s2/samoa">Samoa</a></span> (Vol.
 24, p. 115) and <span class="sc"><a href="/article/13-0096-hawaii/hawaii">Hawaii</a></span> (Vol. 13, p. 83)</p>
 
-<p><span class="sc"><a href="/article/02-0991-s4/australia">Australia</a></span>, <i>Aborigines</i> (Vol. 2, p. 954)
+<p><span class="sc"><a href="/article/02-0991-s4/australia#section-aborigines">Australia</a></span>, <i>Aborigines</i> (Vol. 2, p. 954)
 and <i>Maori</i>. The following is a list in alphabetical
 order of articles on races or tribes:</p>
 
@@ -922,7 +933,7 @@ order of articles on races or tribes:</p>
   <li class="c018"><a href="/article/13-0869-s2/huambisas">Huambisas</a></li>
   <li class="c018"><a href="/article/13-0870-s5/huastecs">Huastecs</a></li>
   <li class="c018"><a href="/article/13-0894-s4/huichol">Huichol</a></li>
-  <li class="c018"><a href="/article/13-0984-s5/huron">Huron</a></li>
+  <li class="c018"><a href="/article/13-0984-s4/huron">Huron</a></li>
   <li class="c018"><a href="/article/14-0480-indians-north-american/indians__north_american">Indians, North American</a></li>
   <li class="c018"><a href="/article/14-0771-iquitos-city/iquitos__city_">Iquitos</a></li>
   <li class="c018"><a href="/article/14-0872-iroquois/iroquois">Iroquois</a></li>
@@ -1007,7 +1018,7 @@ order of articles on races or tribes:</p>
   <li class="c018"><a href="/article/18-0152-mensa-and-marea/mensa_and_marea">Mensa and Marea</a></li>
   <li class="c018"><a href="/article/18-0196-s3/meshcheryaks">Meshcheryaks</a></li>
   <li class="c018"><a href="/article/18-0371-s4/meyrifab">Meyrifab</a></li>
-  <li class="c018"><a href="/article/18-0375-s2/miami">Miami</a></li>
+  <li class="c018"><a href="/article/18-0375-s1/miami">Miami</a></li>
   <li class="c018"><a href="/article/18-0375-s6/miaotsze">Miaotsze</a></li>
   <li class="c018"><a href="/article/18-0402-micmac/micmac">Micmac</a></li>
   <li class="c018"><a href="/article/18-0461-s5/mikirs">Mikirs</a></li>
@@ -1143,7 +1154,7 @@ order of articles on races or tribes:</p>
   <li class="c018"><a href="/article/28-0994-zenata/zenata">Zenata</a></li>
 </ul>
 
-<p><span class="shoulder-heading" id="sh-9">Terminology</span>The technical terms of nearly every
+<p><span class="shoulder-heading" id="section-terminology">Terminology</span>The technical terms of nearly every
 science are words coined from Latin and
 Greek roots, so that the student of these
 languages is at an
@@ -1179,7 +1190,7 @@ of priest, magician and exorcist.
 “Manitou” is another North American
 word meaning “spirit” or “genius.”</p>
 
-<p><span class="shoulder-heading" id="sh-10">Taboo and Totem</span>The practice of taboo and totemism,
+<p><span class="shoulder-heading" id="section-taboo-and-totem">Taboo and Totem</span>The practice of taboo and totemism,
 although one word comes to us from the
 South Seas and the other from the American
 Indians, is found
@@ -1236,11 +1247,11 @@ his true name, etc.; and also the articles
 <span class="sc"><a href="/article/10-0146-s2/fairy">Fairy</a></span> (Vol. 10, p. 134) and <span class="sc"><a href="/article/19-0143-mythology/mythology">Mythology</a></span>
 (Vol. 19, p. 128).</p>
 
-<p><span class="shoulder-heading" id="sh-11">Religion</span>For special forms of superstition, read
+<p><span class="shoulder-heading" id="section-religion">Religion</span>For special forms of superstition, read
 the articles <span class="sc"><a href="/article/17-0319-magic/magic">Magic</a></span>, <span class="sc"><a href="/article/24-0830-shamanism/shamanism">Shamanism</a></span>, <span class="sc"><a href="/article/28-0776-witchcraft/witchcraft">Witchcraft</a></span>,
 <span class="sc"><a href="/article/08-0019-demonology/demonology">Demonology</a></span> and <span class="sc"><a href="/article/17-0164-lycanthropy/lycanthropy">Lycanthropy</a></span>,
 and in the field of religion,
-<span class="sc"><a href="/article/23-0078-religion/religion">Religion</a></span>, <i>Primitive</i>
+<span class="sc"><a href="/article/23-0078-religion/religion#section-i-a-i-primitive-religion">Religion</a></span>, <i>Primitive</i>
 (Vol. 23, p. 63), by <a href="/contributors.html?q=Robert+Ranulph+Marett">R. R.
 Marett</a>, of Oxford University, author of
 <i>The Threshold of Religion</i>, etc. This article
@@ -1269,7 +1280,7 @@ Magic and Morals</i>, etc.; <span class="sc"><a href="/article/27-0250-tree-wors
 by <a href="/contributors.html?q=Stanley+Arthur+Cook">S. A. Cook</a>, author of <i>Religion of
 Ancient Palestine</i>, etc.</p>
 
-<p><span class="shoulder-heading" id="sh-12">Biographical Study</span>A course of reading on anthropology
+<p><span class="shoulder-heading" id="section-biographical-study">Biographical Study</span>A course of reading on anthropology
 may well close with the study in the
 Britannica of the lives of some leaders in
 this science. The

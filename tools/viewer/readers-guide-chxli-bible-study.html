@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,7 +160,8 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter XLI</span>Bible Study</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">The Bible as a Focus of Thought</a></li><li><a href="#sh-2">Preliminaries</a></li><li><a href="#sh-3">Hebrew Religion</a></li><li><a href="#sh-4">Biblical History</a></li><li><a href="#sh-5">The Article Bible</a></li><li><a href="#sh-6">Inspiration</a></li><li><a href="#sh-7">The Hexateuch</a></li><li><a href="#sh-8">The Prophets</a></li><li><a href="#sh-9">Minor Prophets</a></li><li><a href="#sh-10">Psalms</a></li><li><a href="#sh-11">Wisdom Literature</a></li><li><a href="#sh-12">Other Old Testament Books</a></li><li><a href="#sh-13">Apocrypha</a></li><li><a href="#sh-14">New Testament</a></li><li><a href="#sh-15">The Gospels</a></li><li><a href="#sh-16">Acts</a></li><li><a href="#sh-17">St. Paul</a></li><li><a href="#sh-18">The Pauline Epistles</a></li><li><a href="#sh-19">The Other Epistles</a></li><li><a href="#sh-20">Johannine Writings</a></li><li><a href="#sh-21">Apocryphal Literature</a></li><li><a href="#sh-22">A Biblical Encyclopaedia</a></li></ol></div>
+
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-the-bible-as-a-focus-of-thought">The Bible as a Focus of Thought</a></li><li><a href="#section-preliminaries">Preliminaries</a></li><li><a href="#section-hebrew-religion">Hebrew Religion</a></li><li><a href="#section-biblical-history">Biblical History</a></li><li><a href="#section-the-article-bible">The Article Bible</a></li><li><a href="#section-inspiration">Inspiration</a></li><li><a href="#section-the-hexateuch">The Hexateuch</a></li><li><a href="#section-the-prophets">The Prophets</a></li><li><a href="#section-minor-prophets">Minor Prophets</a></li><li><a href="#section-psalms">Psalms</a></li><li><a href="#section-wisdom-literature">Wisdom Literature</a></li><li><a href="#section-other-old-testament-books">Other Old Testament Books</a></li><li><a href="#section-apocrypha">Apocrypha</a></li><li><a href="#section-new-testament">New Testament</a></li><li><a href="#section-the-gospels">The Gospels</a></li><li><a href="#section-acts">Acts</a></li><li><a href="#section-st-paul">St. Paul</a></li><li><a href="#section-the-pauline-epistles">The Pauline Epistles</a></li><li><a href="#section-the-other-epistles">The Other Epistles</a></li><li><a href="#section-johannine-writings">Johannine Writings</a></li><li><a href="#section-apocryphal-literature">Apocryphal Literature</a></li><li><a href="#section-a-biblical-encyclopaedia">A Biblical Encyclopaedia</a></li></ol></div>
     <div class="body-text">
 
 
@@ -173,7 +184,7 @@ while the work on the Revised Version
 took eleven years for the New Testament
 and fourteen for the Old Testament.</p>
 
-<p><span class="shoulder-heading" id="sh-1">The Bible as a Focus of Thought</span>It is equally true that all the time
+<p><span class="shoulder-heading" id="section-the-bible-as-a-focus-of-thought">The Bible as a Focus of Thought</span>It is equally true that all the time
 which learned men have given to translating
 and elucidating the text seems
 nothing when it is
@@ -214,7 +225,7 @@ be well to consider three topics: Hebrew
 Literature, Hebrew Religion and Biblical
 History.</p>
 
-<p><span class="shoulder-heading" id="sh-2">Preliminaries</span><span class="sc"><a href="/article/13-0182-hebrew-literature/hebrew_literature">Hebrew Literature</a></span> (Vol. 13, p.
+<p><span class="shoulder-heading" id="section-preliminaries">Preliminaries</span><span class="sc"><a href="/article/13-0182-hebrew-literature/hebrew_literature">Hebrew Literature</a></span> (Vol. 13, p.
 169), by Dr. <a href="/contributors.html?q=Arthur+Ernest+Cowley">Arthur Cowley</a>, of the
 Bodleian Library, Oxford, points out
 that the term “Hebrew
@@ -258,9 +269,9 @@ lecturer in Aramaic at Oxford.</p>
 of Oriental Literature,
 Cambridge.</p>
 
-<p><span class="shoulder-heading" id="sh-3">Hebrew Religion</span>Quite as important is the article <span class="sc"><a href="/article/13-0189-hebrew-religion/hebrew_religion">Hebrew
+<p><span class="shoulder-heading" id="section-hebrew-religion">Hebrew Religion</span>Quite as important is the article <span class="sc"><a href="/article/13-0189-hebrew-religion/hebrew_religion">Hebrew
 Religion</a></span> (Vol. 13, p. 176), by
-the Rev. Dr. Owen <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Charles</a> Whitehouse
+the Rev. <a href="/contributors.html?q=Rev.+Owen+<a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Charles</a>+Whitehouse">Dr. Owen <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Charles</a> Whitehouse</a>
 of Christ’s and Cheshunt
 Colleges, Cambridge.
 His treatment
@@ -281,7 +292,7 @@ royalty. Blood-offerings and magic
 charms against demons and jinns may
 be assumed as belonging to the early
 Hebrew religion as to the later Arabian
-period before Mahomet. Dr. Whitehouse
+period before Mahomet. <a href="/contributors.html?q=Rev.+Owen+<a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Charles</a>+Whitehouse">Dr. Whitehouse</a>
 thinks that there is little or no
 trace of totemism but possibly some of
 ancestor-worship in the Jews’ religion.</p>
@@ -311,7 +322,7 @@ Exploration Fund.</p>
 the Jewish Theological Seminary of
 New York City.</p>
 
-<p><span class="sc"><a href="/article/21-0138-pentecost/pentecost">Pentecost</a></span>, by Dr. O. C. Whitehouse.</p>
+<p><span class="sc"><a href="/article/21-0138-pentecost/pentecost">Pentecost</a></span>, by Dr. <a href="/contributors.html?q=Rev.+Owen+Charles+Whitehouse">O. C. Whitehouse</a>.</p>
 
 <p><span class="sc"><a href="/article/02-0587-s3/ark">Ark</a></span>, by <a href="/contributors.html?q=Stanley+Arthur+Cook">Stanley Arthur Cook</a>.</p>
 
@@ -324,7 +335,7 @@ Hebrew and Semitic languages, Edinburgh.</p>
 <p><span class="sc"><a href="/article/27-0822-s3/urim_and_thummim">Urim and Thummim</a></span>, by <a href="/contributors.html?q=Rev.+George+Herbert+Box">G. H. Box</a>.</p>
 
 <p><span class="sc"><a href="/article/22-0456-prophet/prophet">Prophet</a></span>, by <a href="/contributors.html?q=W.+Browning+Smith">W. Robertson Smith</a>,
-Owen <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Charles</a> Whitehouse, Adolf Harnack
+<a href="/contributors.html?q=Rev.+Owen+<a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Charles</a>+Whitehouse">Owen <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Charles</a> Whitehouse</a>, Adolf Harnack
 of Berlin, and Professor A. C. McGiffert
 of Union Theological Seminary,
 New York.</p>
@@ -333,7 +344,7 @@ New York.</p>
 of history of religion, Harvard.</p>
 
 <p><span class="sc"><a href="/article/18-0210-s2/messiah">Messiah</a></span>, by <a href="/contributors.html?q=W.+Browning+Smith">W. Robertson Smith</a> and
-O. C. Whitehouse.</p>
+<a href="/contributors.html?q=Rev.+Owen+<a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Charles</a>+Whitehouse">O. C. Whitehouse</a>.</p>
 
 <p><span class="sc"><a href="/article/09-0792-eschatology/eschatology">Eschatology</a></span>, by Dr. <a href="/contributors.html?q=Rev.+Alfred+Ernest+Garvie">A. E. Garvie</a>,
 principal of New College, Hampstead.</p>
@@ -342,7 +353,7 @@ principal of New College, Hampstead.</p>
 professor of Old Testament Exegesis in
 New and Hackney Colleges, London.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Biblical History</span>The third topic is history and for
+<p><span class="shoulder-heading" id="section-biblical-history">Biblical History</span>The third topic is history and for
 this the student should read the article
 <span class="sc"><a href="/article/15-0398-jews/jews">Jews</a></span> (Vol. 15, p. 371), especially the
 part on <i>Old Testament History</i>,
@@ -360,7 +371,7 @@ Oxford; <span class="sc"><a href="/article/13-0550-hittites/hittites">Hittites</
 keeper of the Ashmolean Museum,
 Oxford.</p>
 
-<p><span class="shoulder-heading" id="sh-5">The Article Bible</span>But of course the central article for the
+<p><span class="shoulder-heading" id="section-the-article-bible">The Article Bible</span>But of course the central article for the
 Bible student is the article <span class="sc"><a href="/article/03-0870-bible/bible">Bible</a></span> (Vol.
 3, p. 849), which is divided into two
 main parts—<i>Old
@@ -415,7 +426,7 @@ superintendent of the British and Foreign
 Bible Society, will also be of value
 to the student.</p>
 
-<p><span class="shoulder-heading" id="sh-6">Inspiration</span>One other general article should be
+<p><span class="shoulder-heading" id="section-inspiration">Inspiration</span>One other general article should be
 studied before the articles on different
 books of the Bible are taken up. This is—<span class="sc"><a href="/article/14-0676-s2/inspiration">Inspiration</a></span>
 (Vol. 14, p. 645), by Dr.
@@ -437,7 +448,7 @@ the remaining contents of Scripture;</p>
 <p>(4) Vital inspiration, emphasizing religious
 and moral life.</p>
 
-<p><span class="shoulder-heading" id="sh-7">The Hexateuch</span>A course of study in the books of the
+<p><span class="shoulder-heading" id="section-the-hexateuch">The Hexateuch</span>A course of study in the books of the
 Bible may well start with the outline
 in the article <span class="sc"><a href="/article/03-0870-bible/bible">Bible</a></span>,
 especially pages 851–854
@@ -530,7 +541,7 @@ by Dr. <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Robert Henry Cha
 in Biblical studies, Oxford. See also
 <span class="sc"><a href="/article/26-0312-s4/synagogue">Synagogue</a></span>.</p>
 
-<p><span class="shoulder-heading" id="sh-8">The Prophets</span>For the prophetical books the article
+<p><span class="shoulder-heading" id="section-the-prophets">The Prophets</span>For the prophetical books the article
 <span class="sc"><a href="/article/22-0456-prophet/prophet">Prophet</a></span> as an
 introduction, and
 then:</p>
@@ -557,7 +568,7 @@ Harvard University; and the articles
 <span class="sc"><a href="/article/28-0991-zedekiah/zedekiah">Zedekiah</a></span>, and, for certain literary
 forms, <span class="sc"><a href="/article/01-0731-s4/allegory">Allegory</a></span> and <span class="sc"><a href="/article/20-0803-s2/parable">Parable</a></span>.</p>
 
-<p><span class="shoulder-heading" id="sh-9">Minor Prophets</span>The Minor Prophets: see Vol. 3, p.
+<p><span class="shoulder-heading" id="section-minor-prophets">Minor Prophets</span>The Minor Prophets: see Vol. 3, p.
 853; Vol. 22, p.
 443; Vol. 13, p.
 183.</p>
@@ -609,7 +620,7 @@ professor at Göttingen, and H. W.
 <p><span class="sc"><a href="/article/17-0470-malachi/malachi">Malachi</a></span>, by <a href="/contributors.html?q=W.+Browning+Smith">W. Robertson Smith</a> and
 <a href="/contributors.html?q=Rev.+Henry+Wheeler+Robinson">H. W. Robinson</a>.</p>
 
-<p><span class="shoulder-heading" id="sh-10">Psalms</span><span class="sc"><a href="/article/22-0550-s4/psalm">Psalms</a></span> is by <a href="/contributors.html?q=W.+Browning+Smith">W. Robertson Smith</a> and
+<p><span class="shoulder-heading" id="section-psalms">Psalms</span><span class="sc"><a href="/article/22-0550-s4/psalm">Psalms</a></span> is by <a href="/contributors.html?q=W.+Browning+Smith">W. Robertson Smith</a> and
 Dr. Robert Hatch Kennett, Canon of
 Ely and professor of Hebrew,
 Cambridge; read the articles
@@ -626,7 +637,7 @@ and 145, and the article <span class="sc"><a href="/article/01-0187-s4/acrostic"
 also <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">R. H. Charles</a>’s article on the apocryphal
 book, <span class="sc"><a href="/article/25-0381-solomon-psalms-of/solomon__psalms_of">Solomon, Psalms of</a></span>.</p>
 
-<p><span class="shoulder-heading" id="sh-11">Wisdom Literature</span>The student should read the article
+<p><span class="shoulder-heading" id="section-wisdom-literature">Wisdom Literature</span>The student should read the article
 <span class="sc"><a href="/article/28-0771-wisdom-literature/wisdom_literature">Wisdom Literature</a></span>, by Prof. C. H.
 <a href="/contributors.html?q=Crawford+Howell+Toy">Toy</a> of Harvard as an
 introduction to <span class="sc"><a href="/article/22-0521-s3/proverb">Proverbs</a></span>,
@@ -662,7 +673,7 @@ articles <span class="sc"><a href="/article/21-0300-pessimism/pessimism">Pessimi
 <p><span class="sc"><a href="/article/05-0226-canticles/canticles">Canticles</a></span>, by <a href="/contributors.html?q=W.+Browning+Smith">W. Robertson Smith</a>
 and <a href="/contributors.html?q=Rev.+Henry+Wheeler+Robinson">H. W. Robinson</a>.</p>
 
-<p><span class="shoulder-heading" id="sh-12">Other Old Testament Books</span><span class="sc"><a href="/article/09-0828-s2/esther">Esther</a></span>, by <a href="/contributors.html?q=Rev.+Thomas+Kelly+Cheyne">T. K. Cheyne</a> and, on the
+<p><span class="shoulder-heading" id="section-other-old-testament-books">Other Old Testament Books</span><span class="sc"><a href="/article/09-0828-s2/esther">Esther</a></span>, by <a href="/contributors.html?q=Rev.+Thomas+Kelly+Cheyne">T. K. Cheyne</a> and, on the
 “additions,” Dr.
 Robert Henry
 <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Charles</a>, Grinfield
@@ -688,7 +699,7 @@ Languages</a></span> for the Aramaic of chapters
 <span class="sc"><a href="/article/03-0731-belshazzar/belshazzar">Belshazzar</a></span>; <span class="sc"><a href="/article/02-0181-s5/apocalyptic_literature">Apocalyptic Literature</a></span>
 (for chapters 7–12).</p>
 
-<p><span class="shoulder-heading" id="sh-13">Apocrypha</span>Before passing to the New Testament
+<p><span class="shoulder-heading" id="section-apocrypha">Apocrypha</span>Before passing to the New Testament
 the student should read the article <span class="sc"><a href="/article/02-0187-s3/apocryphal_literature">Apocryphal
 Literature</a></span>, by <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Robert Henry
 Charles</a>; and the articles
@@ -707,7 +718,7 @@ Prayer of</a></span>, by <a href="/contributors.html?q=Rev.+Robert+Henry+Charles
 <span class="sc"><a href="/article/17-0557-s5/manasseh">Manasseh</a></span>; and <span class="sc"><a href="/article/28-0770-wisdom-book-of/wisdom__book_of">Wisdom, Book of</a></span>, by
 <a href="/contributors.html?q=Crawford+Howell+Toy">C. H. Toy</a>.</p>
 
-<p><span class="shoulder-heading" id="sh-14">New Testament</span>The general articles preliminary to a
+<p><span class="shoulder-heading" id="section-new-testament">New Testament</span>The general articles preliminary to a
 study of the New Testament are:—besides
 the part of the article <span class="sc"><a href="/article/03-0870-bible/bible">Bible</a></span> dealing
 with New Testament,
@@ -716,7 +727,7 @@ Text, Chronology,
 etc.—the following:</p>
 
 <p><span class="sc"><a href="/article/18-0210-s2/messiah">Messiah</a></span>, by <a href="/contributors.html?q=W.+Browning+Smith">W. Robertson Smith</a> and
-Dr. Owen <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Charles</a> Whitehouse, lecturer
+<a href="/contributors.html?q=Rev.+Owen+<a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Charles</a>+Whitehouse">Dr. Owen <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Charles</a> Whitehouse</a>, lecturer
 in Hebrew, Cheshunt College, Cambridge.</p>
 
 <p><span class="sc"><a href="/article/15-0373-jesus-christ/jesus_christ">Jesus Christ</a></span>, by the Very Rev. Dr.
@@ -736,7 +747,7 @@ absolutely. Here, as in studying
 the Old Testament, a rearrangement
 may be worth while for topical study.</p>
 
-<p><span class="shoulder-heading" id="sh-15">The Gospels</span>But first the student should read the
+<p><span class="shoulder-heading" id="section-the-gospels">The Gospels</span>But first the student should read the
 article <span class="sc"><a href="/article/12-0282-s7/gospel">Gospel</a></span>, by the Rev. Dr. Vincent
 Henry <a href="/contributors.html?q=Rev.+Vincent+Henry+Stanton">Stanton</a>, professor of divinity,
 Cambridge, and author
@@ -844,7 +855,7 @@ consist in “the relief of need, the removal
 of suffering, the recovery of health and
 strength.”</p>
 
-<p><span class="shoulder-heading" id="sh-16">Acts</span>The article <span class="sc"><a href="/article/01-0192-s4/acts_of_the_apostles">Acts of the Apostles</a></span>, by
+<p><span class="shoulder-heading" id="section-acts">Acts</span>The article <span class="sc"><a href="/article/01-0192-s4/acts_of_the_apostles">Acts of the Apostles</a></span>, by
 Dr. <a href="/contributors.html?q=James+Bartlett">J. Vernon Bartlett</a>, should be supplemented
 by referring again to the article
 <span class="sc"><a href="/article/17-0132-s6/luke">Luke</a></span>, and the student
@@ -874,7 +885,7 @@ Gift of</a></span>; <span class="sc"><a href="/article/01-0966-s14/ananias">Anan
 <span class="sc"><a href="/article/07-0164-corinth/corinth">Corinth</a></span>, <span class="sc"><a href="/article/02-0262-s2/aquila">Aquila</a></span>, <span class="sc"><a href="/article/02-0201-s2/apollos">Apollos</a></span>, <span class="sc"><a href="/article/09-0704-ephesus/ephesus">Ephesus</a></span>,
 <span class="sc"><a href="/article/10-0250-s7/felix">Felix</a></span>, <span class="sc"><a href="/article/01-0966-s14/ananias">Ananias</a></span>, <span class="sc"><a href="/article/01-0462-s4/agrippa">Agrippa</a></span>.</p>
 
-<p><span class="shoulder-heading" id="sh-17">St. Paul</span>For a study of the book of Acts, which
+<p><span class="shoulder-heading" id="section-st-paul">St. Paul</span>For a study of the book of Acts, which
 was probably written before any one of
 the Gospels, one will
 need constantly to
@@ -919,7 +930,7 @@ the article <span class="sc"><a href="/article/12-0169-gnosticism/gnosticism">Gn
 Bousset</a>, professor of New Testament
 exegesis, Göttingen.</p>
 
-<p><span class="shoulder-heading" id="sh-18">The Pauline Epistles</span>In general on the Pauline epistles the
+<p><span class="shoulder-heading" id="section-the-pauline-epistles">The Pauline Epistles</span>In general on the Pauline epistles the
 student should not only read this article
 <span class="sc"><a href="/article/20-1006-s3/paul">Paul</a></span>, but should turn again to the treatment
 of New Testament
@@ -1022,7 +1033,7 @@ Day of Atonement</span>, <span class="sc"><a href="/article/02-0015-s8/angel">An
 <span class="sc"><a href="/article/22-0330-priest/priest">Priest</a></span>, <span class="sc"><a href="/article/01-0035-aaron/aaron">Aaron</a></span>, <span class="sc"><a href="/article/18-0111-s3/melchizedek">Melchizedek</a></span>, <span class="sc"><a href="/article/23-1025-sacrifice/sacrifice">Sacrifice</a></span>,
 <span class="sc"><a href="/article/18-0210-s2/messiah">Messiah</a></span>.</p>
 
-<p><span class="shoulder-heading" id="sh-19">The Other Epistles</span>Before turning to the articles on the
+<p><span class="shoulder-heading" id="section-the-other-epistles">The Other Epistles</span>Before turning to the articles on the
 other books of the New Testament, let
 the student read a part of the article
 <span class="sc"><a href="/article/26-0812-s4/theology">Theology</a></span>, by the
@@ -1097,7 +1108,7 @@ grouped, besides the fourth gospel, the
 three epistles of John and the Revelation.
 On these see:</p>
 
-<p><span class="shoulder-heading" id="sh-20">Johannine Writings</span><span class="sc"><a href="/article/15-0477-s3/john__the_epistles_of">John, The Epistles of</a></span>, by <a href="/contributors.html?q=Rev.+James+Moffatt">Dr.
+<p><span class="shoulder-heading" id="section-johannine-writings">Johannine Writings</span><span class="sc"><a href="/article/15-0477-s3/john__the_epistles_of">John, The Epistles of</a></span>, by <a href="/contributors.html?q=Rev.+James+Moffatt">Dr.
 Moffatt</a>, and the article on St. John in
 regard to authorship,
 which may more
@@ -1129,7 +1140,7 @@ been “the beast that was and is not, ...
 himself also an eighth” (see footnote on
 p. 220, Vol. 23).</p>
 
-<p><span class="shoulder-heading" id="sh-21">Apocryphal Literature</span>As an epilogue the student should read
+<p><span class="shoulder-heading" id="section-apocryphal-literature">Apocryphal Literature</span>As an epilogue the student should read
 the articles <span class="sc"><a href="/article/02-0187-s3/apocryphal_literature">Apocryphal Literature</a></span>,
 both of the Old and New Testament periods,
 by <a href="/contributors.html?q=Rev.+Robert+Henry+Charles">Dr. Charles</a>
@@ -1139,7 +1150,7 @@ McGiffert of Union
 Theological Seminary, New York City,
 of the article <span class="sc"><a href="/article/06-0346-church-history/church_history">Church History</a></span>.</p>
 
-<p><span class="shoulder-heading" id="sh-22">A Biblical Encyclopaedia</span>The study outline sketched in this
+<p><span class="shoulder-heading" id="section-a-biblical-encyclopaedia">A Biblical Encyclopaedia</span>The study outline sketched in this
 chapter will give the student some idea
 of the possibilities of the Britannica in
 helping him. The

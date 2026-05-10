@@ -1,0 +1,23 @@
+{
+  "_doc": "Variant→canonical contributor-name mappings to deduplicate at extract time. Loaded by britannica.contributors.aliases.canonical_name(). Curly-quote vs straight-quote variants are handled automatically by Unicode normalization (NFKC + smart-quote folding) and DON'T need explicit entries here. Use this file only for variants where the names differ in spelling, punctuation other than quotes, honorific prefix, or word substitution. Keys are canonical forms; values list the known variants.",
+  "aliases": {
+    "Viscount St. Cyres": [
+      "Viscount St Cyres"
+    ],
+    "Rev. Owen Charles Whitehouse": [
+      "Owen Charles Whitehouse"
+    ],
+    "Sir Charles Norton Edgecumbe Eliot": [
+      "Sir Charles Norton Edgcumbe Eliot"
+    ],
+    "Rev. George Edmundson": [
+      "George Edmundson"
+    ],
+    "Jacobus Henricus Van't Hoff": [
+      "Jacobus Hendricus van't Hoff"
+    ],
+    "J. A. M'Naught": [
+      "J. A McNaught"
+    ]
+  }
+}

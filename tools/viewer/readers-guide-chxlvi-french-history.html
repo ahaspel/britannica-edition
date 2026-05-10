@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,7 +160,8 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter XLVI</span>French History</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Early History of France</a></li><li><a href="#sh-2">Medieval France</a></li><li><a href="#sh-3">16th Century</a></li><li><a href="#sh-4">The Bourbons</a></li><li><a href="#sh-5">The Revolution</a></li><li><a href="#sh-6">The First Empire</a></li><li><a href="#sh-7">The Kingdom Again</a></li><li><a href="#sh-8">The Second Empire</a></li><li><a href="#sh-9">Modern Times</a></li></ol></div>
+
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-early-history-of-france">Early History of France</a></li><li><a href="#section-medieval-france">Medieval France</a></li><li><a href="#section-16th-century">16th Century</a></li><li><a href="#section-the-bourbons">The Bourbons</a></li><li><a href="#section-the-revolution">The Revolution</a></li><li><a href="#section-the-first-empire">The First Empire</a></li><li><a href="#section-the-kingdom-again">The Kingdom Again</a></li><li><a href="#section-the-second-empire">The Second Empire</a></li><li><a href="#section-modern-times">Modern Times</a></li></ol></div>
     <div class="body-text">
 
 
@@ -176,7 +187,7 @@ Paris.</p>
 
 <p>Supplementing this main treatment, see:</p>
 
-<p><span class="shoulder-heading" id="sh-1">Early History of France</span>On prehistoric and Roman France,
+<p><span class="shoulder-heading" id="section-early-history-of-france">Early History of France</span>On prehistoric and Roman France,
 <span class="sc"><a href="/article/11-0550-s5/gaul">Gaul</a></span> (Vol. 11, p. 533), by Prof. <a href="/contributors.html?q=Francis+John+Haverfield">F. J.
 Haverfield</a>, Oxford, the well-known authority
 on Roman
@@ -209,7 +220,7 @@ Poupardin</a>, secretary of the  École des
 Charles; <span class="sc"><a href="/article/17-0032-s3/lothair">Lothair</a></span> (Vol. 17, p. 18); <span class="sc"><a href="/article/04-0708-s6/bruno">Bruno</a></span>;
 <span class="sc"><a href="/article/17-0049-s2/louis_v">Louis V</a></span>.</p>
 
-<p><span class="shoulder-heading" id="sh-2">Medieval France</span>For the Capetian period, the articles <span class="sc"><a href="/article/05-0264-capet/capet">Capet</a></span>
+<p><span class="shoulder-heading" id="section-medieval-france">Medieval France</span>For the Capetian period, the articles <span class="sc"><a href="/article/05-0264-capet/capet">Capet</a></span>
 (Vol. 5, p. 251); <span class="sc"><a href="/article/23-0416-s5/robert">Robert</a></span> “the Strong”
 (Vol. 23, p. 402); <span class="sc"><a href="/article/13-0882-s3/hugh">Hugh</a></span> “the Great”
 (Vol. 13, p. 857);
@@ -259,7 +270,7 @@ XI</a></span>; <span class="sc"><a href="/article/05-0967-charles-xiv/charles_xi
 France (Vol. 2, p. 70); <span class="sc"><a href="/article/02-0076-s2/anne">Anne</a></span> of Brittany
 (Vol. 2, p. 69).</p>
 
-<p><span class="shoulder-heading" id="sh-3">16th Century</span>For the years, 1498–1589, and the Orleans
+<p><span class="shoulder-heading" id="section-16th-century">16th Century</span>For the years, 1498–1589, and the Orleans
 dynasty, <span class="sc"><a href="/article/17-0055-s2/louis_xii">Louis XII</a></span> and <span class="sc"><a href="/article/01-0843-s2/amboise">Amboise</a></span>,
 by <a href="/contributors.html?q=Jules+Isaac">Prof. Jules Isaac</a> of the Lyons Lycée;
 <span class="sc"><a href="/article/17-0828-s2/mary">Mary</a></span> (Vol. 17, p.
@@ -278,7 +289,7 @@ p. 803); <span class="sc"><a href="/article/18-0816-montluc-blaise-de-lassaran-m
 André</a></span>; <span class="sc">St. Bartholomew</span>; <span class="sc"><a href="/article/13-0287-s2/henry_iii">Henry
 III</a></span>.</p>
 
-<p><span class="shoulder-heading" id="sh-4">The Bourbons</span>For the Bourbon kings, beginning
+<p><span class="shoulder-heading" id="section-the-bourbons">The Bourbons</span>For the Bourbon kings, beginning
 1589—<span class="sc"><a href="/article/04-0340-bourbon/bourbon">Bourbon</a></span> (with genealogical chart);
 <span class="sc"><a href="/article/19-0179-nantes/nantes">Henry IV</a></span>; Duke of <span class="sc"><a href="/article/19-0179-nantes/nantes">Mayenne</a></span>; <span class="sc"><a href="/article/19-0180-s2/nantes__edict_of">Edict
 of Nantes</a></span> (Vol. 19,
@@ -319,7 +330,7 @@ Officers</i>; <span class="sc"><a href="/article/05-1002-ch-teauroux/chateauroux
 Barry</a></span>; <span class="sc"><a href="/article/02-0494-s9/argenson">Comte d’ Argenson</a></span> (Vol. 2, p.
 459), <span class="sc"><a href="/article/06-0277-choiseul-cesar-duc-de/choiseul__cesar__duc_de">Choiseul</a></span>; <span class="sc"><a href="/article/17-0925-s2/maupeou__rené_nicolas_charles_augustin">Maupeou</a></span>; <span class="sc"><a href="/article/01-0474-s7/aiguillon__marie_madeleine_de_wignerod_du_pont_de_courlay">Aiguillon</a></span>.</p>
 
-<p><span class="shoulder-heading" id="sh-5">The Revolution</span>On the Revolution and the period immediately
+<p><span class="shoulder-heading" id="section-the-revolution">The Revolution</span>On the Revolution and the period immediately
 before it, the articles <span class="sc"><a href="/article/17-0058-s2/louis_xvi">Louis
 XVI</a></span>, by <a href="/contributors.html?q=Robert+Anchel">Robert Anchel</a>, archivist to the
 Department de l’Eure;
@@ -343,7 +354,7 @@ leaders in these wars the articles mentioned
 under this head in the chapter in
 this Guide <i>For Army Officers</i>.</p>
 
-<p><span class="shoulder-heading" id="sh-6">The First Empire</span>On the Napoleonic period, the articles
+<p><span class="shoulder-heading" id="section-the-first-empire">The First Empire</span>On the Napoleonic period, the articles
 by <a href="/contributors.html?q=John+Holland+Rose">J. Holland Rose</a>, author of <i>Napoleonic
 Studies</i>, etc., on <span class="sc"><a href="/article/19-0231-napoleon/napoleon">Napoleon</a></span> (Vol. 19, p.
 190)—equivalent to
@@ -358,7 +369,7 @@ and the articles listed under these
 two heads in the chapter in this Guide
 <i>For Army Officers</i>.</p>
 
-<p><span class="shoulder-heading" id="sh-7">The Kingdom Again</span>On the Bourbon restoration, <span class="sc"><a href="/article/17-0061-s2/louis_xviii">Louis
+<p><span class="shoulder-heading" id="section-the-kingdom-again">The Kingdom Again</span>On the Bourbon restoration, <span class="sc"><a href="/article/17-0061-s2/louis_xviii">Louis
 XVIII</a></span>; <span class="sc"><a href="/article/23-0317-s3/richardson__samuel">Decazes</a></span>; Duc de <span class="sc"><a href="/article/23-0319-s2/richelieu__armand_emmanuel_sophie_septe-manie_du_plessis">Richelieu</a></span>
 (Vol. 23, p. 302);
 Duc de <span class="sc"><a href="/article/03-0830-berry/berry">Berry</a></span>; <span class="sc"><a href="/article/05-0956-charles-vii/charles_vii_">Villèle</a></span>;
@@ -374,7 +385,7 @@ Périer</span>; <span class="sc">Lafitte</span>; <span class="sc"><a href="/arti
 L’Eure</a></span>; <span class="sc"><a href="/article/03-0830-berryer-antoine-pierre/berryer__antoine_pierre">Berryer</a></span>; <span class="sc"><a href="/article/24-0059-s5/saint-simon__claude_de_rouvroy">Saint-Simon</a></span>; <span class="sc"><a href="/article/10-0773-fourier-jean-baptiste-joseph/fourier__jean_baptiste_joseph">Fourier</a></span>;
 <span class="sc"><a href="/article/16-0144-lamennais-hugues-f-licit-robert-de/lamennais__hugues_félicité_robert_de">Lamennais</a></span>; <span class="sc"><a href="/article/04-0052-blanc-louis/blanc__louis">Louis Blanc</a></span>; <span class="sc"><a href="/article/18-0683-mol-mathieu/molé__mathieu">Molé</a></span>.</p>
 
-<p><span class="shoulder-heading" id="sh-8">The Second Empire</span>On the revolution of 1848 and the
+<p><span class="shoulder-heading" id="section-the-second-empire">The Second Empire</span>On the revolution of 1848 and the
 second Empire, besides most of the articles
 in the preceding paragraph, <span class="sc"><a href="/article/19-0226-napoleon-iii/napoleon_iii_">Napoleon
 III</a></span>, by <a href="/contributors.html?q=Albert+Thomas">Albert
@@ -390,7 +401,7 @@ the chapter in this Guide <i>For Army Officers</i>;
 <span class="sc"><a href="/article/17-0942-s2/maximilian_ii">Eugènie</a></span>; <span class="sc"><a href="/article/17-0943-s2/maximilian">Maximilian</a></span> of Mexico (Vol.
 17, p. 924).</p>
 
-<p><span class="shoulder-heading" id="sh-9">Modern Times</span>On the Third Republic, 1870 and the
+<p><span class="shoulder-heading" id="section-modern-times">Modern Times</span>On the Third Republic, 1870 and the
 following years, the story in Vol. 10, pp.
 873–904 (equivalent
 to 100 pages of this

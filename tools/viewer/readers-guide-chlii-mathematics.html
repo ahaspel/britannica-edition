@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,7 +160,8 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter LII</span>Mathematics</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">History</a></li><li><a href="#sh-2">Leading Articles</a></li><li><a href="#sh-3">Leading Contributors</a></li></ol></div>
+
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-history">History</a></li><li><a href="#section-leading-articles">Leading Articles</a></li><li><a href="#section-leading-contributors">Leading Contributors</a></li></ol></div>
     <div class="body-text">
 
 
@@ -183,7 +194,7 @@ for in them the whole subject has been
 presented, in all its complex bearings,
 logically and as a whole.</p>
 
-<p><span class="shoulder-heading" id="sh-1">History</span>It is nearly 4,000 years since a mathematician
+<p><span class="shoulder-heading" id="section-history">History</span>It is nearly 4,000 years since a mathematician
 was last deified in the person
 of Amenophis, and as far as can be ascertained
 only one other of
@@ -229,7 +240,7 @@ but it may be well to point out one or
 two articles which he will find especially
 worthy of his attention.</p>
 
-<p><span class="shoulder-heading" id="sh-2">Leading Articles</span>The article <span class="sc"><a href="/article/22-0390-probability/probability">Probability</a></span>, (Vol. 22,
+<p><span class="shoulder-heading" id="section-leading-articles">Leading Articles</span>The article <span class="sc"><a href="/article/22-0390-probability/probability">Probability</a></span>, (Vol. 22,
 p. 376), by <a href="/contributors.html?q=Francis+Ysidro+Edgeworth">Professor Edgeworth</a>, author
 of <i>Mathematical Psychics</i>, and numerous
 papers on the calculus
@@ -258,7 +269,7 @@ by Sir <a href="/contributors.html?q=Sir+Joseph+John+Thomson">J. J. Thomson</a>,
 Cambridge, who has done more
 than anyone else to develop it. There
 are many other valuable articles, e.g.,
-<span class="sc"><a href="/article/11-0695-geometry/geometry">Geometry</a></span>, <i>Axioms</i> (Vol. 11, p. 730),
+<span class="sc"><a href="/article/11-0695-geometry/geometry#section-axioms">Geometry</a></span>, <i>Axioms</i> (Vol. 11, p. 730),
 and <span class="sc"><a href="/article/11-0695-geometry/geometry">Geometry</a></span>, <i>Non-Euclidean</i> (Vol.
 11, p. 724), by <a href="/contributors.html?q=Alfred+North+Whitehead">A. N. Whitehead</a>; <span class="sc"><a href="/article/27-0761-s2/units__dimensions_of">Units,
 Dimensions of</a></span> (Vol. 27, p. 736), by
@@ -273,7 +284,7 @@ Figure of</a></span> (Vol. 8, p. 801); <span class="sc"><a href="/article/11-062
 (Vol. 11, p. 607); <span class="sc"><a href="/article/25-1033-s4/strength_of_materials">Strength of Materials</a></span>
 (Vol. 25, p. 1007).</p>
 
-<p><span class="shoulder-heading" id="sh-3">Leading Contributors</span>The mathematician will at once recognize
+<p><span class="shoulder-heading" id="section-leading-contributors">Leading Contributors</span>The mathematician will at once recognize
 the peculiar fitness of the contributors
 to deal with the subjects allotted
 to them, and this
@@ -338,7 +349,7 @@ operations of the Ordnance
 Survey 1854–1881:</p>
 
 <p><span class="sc"><a href="/article/08-0828-earth-figure-of-the/earth__figure_of_the">Earth, Figure of the</a></span> (in part);
-<span class="sc"><a href="/article/11-0627-geodesy/geodesy">Geodesy</a></span> (in part); <span class="sc"><a href="/article/17-0646-map/map">Map</a></span>, <i>Projections</i>
+<span class="sc"><a href="/article/11-0627-geodesy/geodesy">Geodesy</a></span> (in part); <span class="sc"><a href="/article/17-0646-map/map#section-map-projections">Map</a></span>, <i>Projections</i>
 (in part).</p>
 
 <p>Agnes Mary Clerke, Author of <i>History
@@ -359,7 +370,7 @@ the Nyasa-Tanganyika Boundary Commission.
 Author of <i>Text-Book of Topographical
 Surveying</i>, etc.:</p>
 
-<p><span class="sc"><a href="/article/17-0646-map/map">Maps</a></span>, <i>Projections</i> (in part).</p>
+<p><span class="sc"><a href="/article/17-0646-map/map#section-map-projections">Maps</a></span>, <i>Projections</i> (in part).</p>
 
 <p>W. E. Dalby, Professor of Civil and Mechanical
 Engineering at the City and
@@ -368,7 +379,7 @@ Technical College, South Kensington.
 Author of <i>The Balancing of Engines</i>,
 etc.:</p>
 
-<p><span class="sc"><a href="/article/17-0974-mechanics/mechanics">Mechanics</a></span>, <i>Applied</i> (in part); and
+<p><span class="sc"><a href="/article/17-0974-mechanics/mechanics#section-applied">Mechanics</a></span>, <i>Applied</i> (in part); and
 several engineering subjects.</p>
 
 <p>Sir George H. Darwin, late Fellow of
@@ -399,12 +410,12 @@ President of the London Mathematical
 Society, 1896–1898. Author of <i>Algebra
 of Quantics</i>, etc.:</p>
 
-<p><span class="sc"><a href="/article/07-0675-curve/curve">Curve</a></span>, (in part); <span class="sc"><a href="/article/11-0695-geometry/geometry">Geometry, IV</a></span>
+<p><span class="sc"><a href="/article/07-0675-curve/curve">Curve</a></span>, (in part); <span class="sc"><a href="/article/11-0695-geometry/geometry#section-iv-analytical-geometry">Geometry, IV</a></span>
 <i>Analytical Geometry</i>.</p>
 
 <p>C. Everitt, Magdalen College, Oxford:</p>
 
-<p><span class="sc"><a href="/article/01-0639-algebra/algebra">Algebra</a></span>, <i>History</i>: <span class="sc"><a href="/article/08-0061-density/density">Density</a></span>; <span class="sc"><a href="/article/16-0628-s5/light">Light</a></span>,
+<p><span class="sc"><a href="/article/01-0639-algebra/algebra#section-c-history">Algebra</a></span>, <i>History</i>: <span class="sc"><a href="/article/08-0061-density/density">Density</a></span>; <span class="sc"><a href="/article/16-0628-s5/light">Light</a></span>,
 <i>Introduction</i>, <i>History</i>, etc.</p>
 
 <p>J. A. Ewing, Director of (British) Naval
@@ -460,7 +471,7 @@ Applied Mathematics</i>:</p>
 at Peterhouse and Pembroke College,
 Cambridge. Fellow of Peterhouse:</p>
 
-<p><span class="sc"><a href="/article/11-0695-geometry/geometry">Geometry</a></span>, <i>Line Geometry</i>.</p>
+<p><span class="sc"><a href="/article/11-0695-geometry/geometry#section-v-line-geometry">Geometry</a></span>, <i>Line Geometry</i>.</p>
 
 <p>Sir A. G. Greenhill, formerly Professor
 of Mathematics in the Ordnance College,
@@ -527,7 +538,7 @@ Mathematical Society 1902–1904.
 Author of <span class="sc"><a href="/article/14-0125-s2/hydrodynamics">Hydrodynamics</a></span>, etc.:</p>
 
 <p><span class="sc"><a href="/article/08-0783-dynamics/dynamics">Dynamics</a></span>; <span class="sc"><a href="/article/12-0981-s3/harmonic_analysis">Harmonic Analysis</a></span>;
-<span class="sc"><a href="/article/17-0974-mechanics/mechanics">Mechanics, I.</a></span> <i>Theoretical</i>; <span class="sc"><a href="/article/27-0990-s7/vector_analysis">Vector
+<span class="sc"><a href="/article/17-0974-mechanics/mechanics#section-1-theoretical-mechanics">Mechanics, I.</a></span> <i>Theoretical</i>; <span class="sc"><a href="/article/27-0990-s7/vector_analysis">Vector
 Analysis</a></span>; <span class="sc"><a href="/article/28-0442-s4/wave">Wave</a></span>.</p>
 
 <p><a href="/contributors.html?q=Augustus+Edward+Hough+Love">A. E. H. Love</a>, Sedleian Professor of
@@ -538,7 +549,7 @@ College, Cambridge; Secretary to the
 London Mathematical Society:</p>
 
 <p><span class="sc"><a href="/article/09-0158-elasticity/elasticity">Elasticity</a></span>; <span class="sc"><a href="/article/27-0941-s2/variations__calculus_of">Variations, Calculus
-of</a></span>; <span class="sc"><a href="/article/11-0314-s6/function">Function</a></span>, <i>Functions of
+of</a></span>; <span class="sc"><a href="/article/11-0314-s6/function#section-i-functions-of-real-variables">Function</a></span>, <i>Functions of
 Real Variables</i>; <span class="sc"><a href="/article/14-0566-s2/infinitesimal_calculus">Infinitesimal Calculus</a></span>.</p>
 
 <p>W. H. Macaulay, Fellow and Tutor of
@@ -561,7 +572,7 @@ Mathematics, University College of
 N. Wales, sometime Fellow of St.
 John’s College, Cambridge:</p>
 
-<p><span class="sc"><a href="/article/01-0639-algebra/algebra">Algebra</a></span>, <i>Special Kinds of Algebra</i>;
+<p><span class="sc"><a href="/article/01-0639-algebra/algebra#section-b-special-kinds-of-algebra">Algebra</a></span>, <i>Special Kinds of Algebra</i>;
 <span class="sc"><a href="/article/19-0879-s3/number">Number</a></span>.</p>
 
 <p>J. Clerk Maxwell, former Professor of
@@ -576,7 +587,7 @@ Mathematics and Astronomy, Johns
 Hopkins University, etc. See the biographical
 article (Vol. 19, p. 474):</p>
 
-<p><span class="sc"><a href="/article/02-0847-s2/astronomy">Astronomy</a></span>, <i>Descriptive</i>; and many
+<p><span class="sc"><a href="/article/02-0847-s2/astronomy#section-descriptive-and-practical-astronomy-bayer-gassendi-horrocks-huygens-gascoigne-hevelius">Astronomy</a></span>, <i>Descriptive</i>; and many
 other astronomical subjects.</p>
 
 <p>J. H. Poynting, Professor of Physics and
@@ -607,7 +618,7 @@ Civil Engineering at Glasgow University.
 See the biographical article (Vol.
 22, p. 894):</p>
 
-<p><span class="sc"><a href="/article/17-0974-mechanics/mechanics">Mechanics</a></span>, <i>Applied</i> (in part).</p>
+<p><span class="sc"><a href="/article/17-0974-mechanics/mechanics#section-applied">Mechanics</a></span>, <i>Applied</i> (in part).</p>
 
 <p>Hon. B. A. W. Russell, formerly Fellow
 of Trinity College, Cambridge. Author
@@ -622,7 +633,7 @@ Board of Education; formerly Fellow
 of Trinity College, Cambridge; Senior
 Wrangler, 1884:</p>
 
-<p><span class="sc"><a href="/article/01-0639-algebra/algebra">Algebra</a></span>, <i>Principles of Ordinary
+<p><span class="sc"><a href="/article/01-0639-algebra/algebra#section-a-principles-of-ordinary-algebra">Algebra</a></span>, <i>Principles of Ordinary
 Algebra</i>; <span class="sc"><a href="/article/02-0561-s2/arithmetic">Arithmetic</a></span>; <span class="sc"><a href="/article/08-0240-differences-calculus-of/differences__calculus_of">Differences,
 Calculus of</a></span>; <span class="sc"><a href="/article/14-0737-s2/interpolation">Interpolation</a></span>;
 <span class="sc"><a href="/article/18-0153-s4/mensuration">Mensuration</a></span>.</p>
@@ -669,7 +680,7 @@ Formerly Vice-President of the
 Physical Society. Author of <i>The Analytical
 Theory of Light</i>, etc.:</p>
 
-<p><span class="sc"><a href="/article/21-0965-polarization-of-light/polarization_of_light">Polarization of Light</a></span>; <span class="sc"><a href="/article/23-0038-s3/refraction">Refraction</a></span>,
+<p><span class="sc"><a href="/article/21-0965-polarization-of-light/polarization_of_light">Polarization of Light</a></span>; <span class="sc"><a href="/article/23-0038-s3/refraction#section-ii-double-refraction">Refraction</a></span>,
 <i>Double Refraction</i>.</p>
 
 <p><a href="/contributors.html?q=Alfred+North+Whitehead">A. N. Whitehead</a>, Fellow and Lecturer

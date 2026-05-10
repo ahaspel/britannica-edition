@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,7 +160,8 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter XXX</span>For Naval Officers</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Three Other Relevant Chapters</a></li><li><a href="#sh-2">The Key Article</a></li><li><a href="#sh-3">Naval Administration</a></li><li><a href="#sh-4">Policy, Strategy, Tactics</a></li><li><a href="#sh-5">Special Historical Articles</a></li><li><a href="#sh-6">Armaments</a></li></ol></div>
+
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-three-other-relevant-chapters">Three Other Relevant Chapters</a></li><li><a href="#section-the-key-article">The Key Article</a></li><li><a href="#section-naval-administration">Naval Administration</a></li><li><a href="#section-policy-strategy-tactics">Policy, Strategy, Tactics</a></li><li><a href="#section-special-historical-articles">Special Historical Articles</a></li><li><a href="#section-armaments">Armaments</a></li></ol></div>
     <div class="body-text">
 
 
@@ -174,7 +185,7 @@ and of mechanical engineering; but his
 reading upon these topics naturally divides
 itself into these four parts.</p>
 
-<p><span class="shoulder-heading" id="sh-1">Three Other Relevant Chapters</span>Inasmuch as army officers, even when
+<p><span class="shoulder-heading" id="section-three-other-relevant-chapters">Three Other Relevant Chapters</span>Inasmuch as army officers, even when
 they are at sea, are passengers, and, save
 in relation to the discipline of their troops,
 have nothing to do
@@ -224,7 +235,7 @@ this present chapter, in which the naval
 officer will find no repetition of their
 contents.</p>
 
-<p><span class="shoulder-heading" id="sh-2">The Key Article</span>The article to which he will naturally
+<p><span class="shoulder-heading" id="section-the-key-article">The Key Article</span>The article to which he will naturally
 first turn is <span class="sc"><a href="/article/19-0314-s5/navy">Navy and Navies</a></span> (Vol. 19,
 p. 299), by <a href="/contributors.html?q=David+Hannay">David Hannay</a>,
 author of <i>A Short History
@@ -319,7 +330,7 @@ still an unknown factor.</p>
 
 <p><i>Bibliography</i>.</p>
 
-<p><span class="shoulder-heading" id="sh-3">Naval Administration</span>The first part of this article <span class="sc"><a href="/article/01-0225-s8/admiral">Navy and
+<p><span class="shoulder-heading" id="section-naval-administration">Naval Administration</span>The first part of this article <span class="sc"><a href="/article/01-0225-s8/admiral">Navy and
 Navies</a></span> should be supplemented by the
 article <span class="sc"><a href="/article/01-0226-s2/admiralty_administration">Admiralty Administration</a></span> (Vol.
 1, p. 195), by <a href="/contributors.html?q=Admiral+Sir+Richard+Vesey+Hamilton">Admiral
@@ -357,7 +368,7 @@ articles as <span class="sc"><a href="/article/24-0590-search/search">Search</a>
 Sir <a href="/contributors.html?q=Sir+Thomas+Barclay">Thomas Barclay</a>, and <span class="sc"><a href="/article/24-0565-sea-laws/sea_laws">Sea Laws</a></span> (Vol.
 24, p. 535), by Sir <a href="/contributors.html?q=Sir+Travers+Twiss">Travers Twiss</a>.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Policy, Strategy, Tactics</span>It has already been noticed that the
+<p><span class="shoulder-heading" id="section-policy-strategy-tactics">Policy, Strategy, Tactics</span>It has already been noticed that the
 closing part of the article <span class="sc">Navy and
 Navies</span> dealt with strategy and tactics in
 a general way. This subject
@@ -481,7 +492,7 @@ over-sea expeditions at will.
 Seeking the enemy’s fleet. Temporary
 command in smaller operations.</p>
 
-<p><span class="shoulder-heading" id="sh-5">Special Historical Articles</span>As for the army officer, so the Britannica
+<p><span class="shoulder-heading" id="section-special-historical-articles">Special Historical Articles</span>As for the army officer, so the Britannica
 has for the naval officer many separate
 articles on wars, campaigns, battles,
 generals, commanders. The following
@@ -608,7 +619,7 @@ Cervera y Topete Cervera</i>).</p>
 <p><i>Russo-Japanese War</i> (and <i>Togo</i>,
 <i>Dogger Bank</i>, <i>Tsushima</i>).</p>
 
-<p><span class="shoulder-heading" id="sh-6">Armaments</span>The subject of <i>armaments</i> is treated in
+<p><span class="shoulder-heading" id="section-armaments">Armaments</span>The subject of <i>armaments</i> is treated in
 the articles <span class="sc"><a href="/article/24-0894-s8/ship">Ship</a></span> and <span class="sc"><a href="/article/24-0984-s2/shipbuilding">Shipbuilding</a></span> (see
 chapter <i>For Marine Transportation Men</i>),
 <span class="sc"><a href="/article/02-0618-s4/armour_plates">Armour Plates</a></span>, with illustrations, by

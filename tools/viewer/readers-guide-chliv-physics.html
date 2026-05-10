@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,12 +160,12 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter LIV</span>Physics</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Early Ideas of the World</a></li><li><a href="#sh-2">Matter</a></li><li><a href="#sh-3">Motion</a></li><li><a href="#sh-4">Historical</a></li><li><a href="#sh-5">Analysis of the Subject</a></li></ol></div>
+    <div class="chap-subtitle">Early Ideas of the World</div>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-matter">Matter</a></li><li><a href="#section-motion">Motion</a></li><li><a href="#section-historical">Historical</a></li><li><a href="#section-analysis-of-the-subject">Analysis of the Subject</a></li></ol></div>
     <div class="body-text">
 
 
-<div class="c002"></div>
-<p><span class="shoulder-heading" id="sh-1">Early Ideas of the World</span>More than two thousand years
+<p>More than two thousand years
 ago the poet Lucretius, reviewing
 the physical knowledge and theories
 of the Greeks, described, as the
@@ -253,7 +263,7 @@ may profitably be consulted.</p>
 <h4 class="c016">(<i>I</i>) <i>Matter and Motion</i></h4>
 
 <div class="c003"></div>
-<p><span class="shoulder-heading" id="sh-2">Matter</span>Since all physical phenomena are manifestations,
+<p><span class="shoulder-heading" id="section-matter">Matter</span>Since all physical phenomena are manifestations,
 in one form or other, of matter
 in motion, this first division of the
 subject is introductory to
@@ -292,7 +302,7 @@ of the University of Birmingham, and
 <span class="sc"><a href="/article/01-0329-s3/aether">Aether</a></span> (Vol. 1, p. 292), by Sir <a href="/contributors.html?q=Sir+Joseph+Larmor">Joseph
 Larmor</a>, secretary of the Royal Society.</p>
 
-<p><span class="shoulder-heading" id="sh-3">Motion</span>The principal articles dealing with motion
+<p><span class="shoulder-heading" id="section-motion">Motion</span>The principal articles dealing with motion
 are: <span class="sc"><a href="/article/18-0938-s4/motion__laws_of">Motion, Laws of</a></span> (Vol. 18, p.
 906), which deals mainly with Newton’s
 Laws; and <span class="sc"><a href="/article/09-0423-energy/energy">Energy</a></span> (Vol.
@@ -447,7 +457,7 @@ of Gases</a></span> (Vol. 6, p. 844); <span class="sc"><a href="/article/16-0766
 <h4 class="c016">(<i>V</i>) <i>Electricity and Magnetism</i></h4>
 
 <div class="c003"></div>
-<p><span class="shoulder-heading" id="sh-4">Historical</span>We are so accustomed to think of electricity
+<p><span class="shoulder-heading" id="section-historical">Historical</span>We are so accustomed to think of electricity
 as the peculiar possession of our
 own age (the first crude attempts at an
 electric light were only two score years ago)
@@ -485,7 +495,7 @@ of electricity have attained a
 position absolutely dominating our daily
 life.</p>
 
-<p><span class="shoulder-heading" id="sh-5">Analysis of the Subject</span>The section of the Britannica treating
+<p><span class="shoulder-heading" id="section-analysis-of-the-subject">Analysis of the Subject</span>The section of the Britannica treating
 this great subject is therefore one of the
 most important in the whole work, and
 it was in the fullest recognition of the
@@ -529,7 +539,7 @@ engineering are set out in the article
 with reference to <span class="sc"><a href="/article/08-0791-dynamo/dynamo">Dynamo</a></span> (Vol. 8, p. 764);
 <span class="sc"><a href="/article/18-0942-motors-electric/motors__electric">Motors, Electric</a></span> (Vol. 18, p. 910);
 <span class="sc"><a href="/article/27-0188-transformers/transformers">Transformers</a></span> (Vol. 27, p. 173); <span class="sc"><a href="/article/01-0157-s2/accumulator">Accumulator</a></span>
-(Vol. 1, p. 126); <span class="sc"><a href="/article/22-0238-power-transmission/power_transmission">Power Transmission</a></span>,
+(Vol. 1, p. 126); <span class="sc"><a href="/article/22-0238-power-transmission/power_transmission#section-electrical">Power Transmission</a></span>,
 <i>Electric</i> (Vol. 22, p. 233); <span class="sc"><a href="/article/27-0133-s2/traction">Traction</a></span>,
 <i>Electric Traction</i> (Vol. 27, p. 120);
 <span class="sc"><a href="/article/16-0673-s2/lighting">Lighting</a></span>, <i>Electric</i> (Vol. 16, p. 659); see

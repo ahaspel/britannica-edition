@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,7 +160,8 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter X</span>For Jewellers, Clock And Watch Makers And Merchants</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Specimens Reproduced</a></li><li><a href="#sh-2">The “Personal Art” Movement</a></li><li><a href="#sh-3">Rings for Love and Murder</a></li><li><a href="#sh-4">Precious Metals</a></li><li><a href="#sh-5">Precious Stones</a></li><li><a href="#sh-6">Synthetic Stones</a></li><li><a href="#sh-7">Semi-Precious Stones</a></li><li><a href="#sh-8">Watches and Clocks</a></li></ol></div>
+
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-specimens-reproduced">Specimens Reproduced</a></li><li><a href="#section-the-personal-art-movement">The “Personal Art” Movement</a></li><li><a href="#section-rings-for-love-and-murder">Rings for Love and Murder</a></li><li><a href="#section-precious-metals">Precious Metals</a></li><li><a href="#section-precious-stones">Precious Stones</a></li><li><a href="#section-synthetic-stones">Synthetic Stones</a></li><li><a href="#section-semi-precious-stones">Semi-Precious Stones</a></li><li><a href="#section-watches-and-clocks">Watches and Clocks</a></li></ol></div>
     <div class="body-text">
 
 
@@ -187,7 +198,7 @@ the marriage ring and all the uses, described
 in the Britannica, of jewels as
 religious symbols.</p>
 
-<p><span class="shoulder-heading" id="sh-1">Specimens Reproduced</span>The article <span class="sc"><a href="/article/15-0389-jewelry/jewelry">Jewelry</a></span> (Vol. 15, p. 364),
+<p><span class="shoulder-heading" id="section-specimens-reproduced">Specimens Reproduced</span>The article <span class="sc"><a href="/article/15-0389-jewelry/jewelry">Jewelry</a></span> (Vol. 15, p. 364),
 by <a href="/contributors.html?q=Arthur+Hamilton+Smith">A. H. Smith</a>, the official in charge of
 the great jewel collection in the British
 Museum, contains
@@ -237,7 +248,7 @@ chasing or by the addition of filigree work,
 or when the surfaces are left absolutely
 plain but polished and highly finished</i>.</p>
 
-<p><span class="shoulder-heading" id="sh-2">The “Personal Art” Movement</span>The second of these three classes includes
+<p><span class="shoulder-heading" id="section-the-personal-art-movement">The “Personal Art” Movement</span>The second of these three classes includes
 the work which has completely
 revolutionized the theory of design, so
 far as the best class of trade is concerned,
@@ -274,7 +285,7 @@ Assyrian, Mycenean, Greek, Etruscan,
 Roman, Merovingian, Oriental and
 Renaissance.</p>
 
-<p><span class="shoulder-heading" id="sh-3">Rings for Love and Murder</span><span class="sc"><a href="/article/23-0366-s2/ring">Ring</a></span> (Vol. 23, p. 349), of which <a href="/contributors.html?q=John+Henry+Middleton">Prof.
+<p><span class="shoulder-heading" id="section-rings-for-love-and-murder">Rings for Love and Murder</span><span class="sc"><a href="/article/23-0366-s2/ring">Ring</a></span> (Vol. 23, p. 349), of which <a href="/contributors.html?q=John+Henry+Middleton">Prof.
 Middleton</a>, long art director of the South
 Kensington Museum, is the chief contributor,
 is another copiously illustrated
@@ -349,7 +360,7 @@ exhumed in Denmark, Norway and Sweden,
 and supposed by some authorities to
 antedate the oldest Egyptian jewelry.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Precious Metals</span>The article <span class="sc"><a href="/article/12-0209-gold/gold">Gold</a></span> (Vol. 12, p. 192) is a
+<p><span class="shoulder-heading" id="section-precious-metals">Precious Metals</span>The article <span class="sc"><a href="/article/12-0209-gold/gold">Gold</a></span> (Vol. 12, p. 192) is a
 thorough workshop treatise, as well as a
 detailed study of existing mines and of
 the influence their
@@ -447,7 +458,7 @@ and in <span class="sc"><a href="/article/05-0678-cement/cement">Cement</a></spa
 <i>Jeweller’s</i> or <i>Armenian Cement</i> (Vol. 5,
 p. 659).</p>
 
-<p><span class="shoulder-heading" id="sh-5">Precious Stones</span>The article <span class="sc"><a href="/article/11-0578-gem/gem">Gem</a></span> treats the subject in
+<p><span class="shoulder-heading" id="section-precious-stones">Precious Stones</span>The article <span class="sc"><a href="/article/11-0578-gem/gem">Gem</a></span> treats the subject in
 two sections, of which the first (Vol. 11,
 p. 560), by <a href="/contributors.html?q=Frederick+William+Rudler">F. W. Rudler</a>, of the Museum
 of Practical Geology,
@@ -489,7 +500,7 @@ of uncommon historical interest and
 practical value, in which diamond cutting
 is considered at much length.</p>
 
-<p>The second section of the article <span class="sc"><a href="/article/11-0578-gem/gem">Gem</a></span>,
+<p>The second section of the article <span class="sc"><a href="/article/11-0578-gem/gem#section-2-gems-in-art">Gem</a></span>,
 <i>Gems in Art</i> (Vol. 11, p. 562), by Dr. <a href="/contributors.html?q=Alexander+Stuart+Murray">A. S.
 Murray</a>, the famous British archaeologist,
 and <a href="/contributors.html?q=Arthur+Hamilton+Smith">A. H. Smith</a>, gives an account of
@@ -513,7 +524,7 @@ formerly principal librarian, British Museum,
 as well as in the articles on ancient
 and Oriental civilizations, already mentioned.</p>
 
-<p><span class="shoulder-heading" id="sh-6">Synthetic Stones</span>The artificial duplication of certain
+<p><span class="shoulder-heading" id="section-synthetic-stones">Synthetic Stones</span>The artificial duplication of certain
 gems by chemical processes which yield
 products identical in
 composition and
@@ -587,7 +598,7 @@ of the latest researches on the cause
 of pearl formation, and gives a graphic
 account of pearl-fishing.</p>
 
-<p><span class="shoulder-heading" id="sh-7">Semi-Precious Stones</span>The material in the Britannica on the
+<p><span class="shoulder-heading" id="section-semi-precious-stones">Semi-Precious Stones</span>The material in the Britannica on the
 semi-precious stones is as complete.
 There are many articles, specified in the
 list at the end of
@@ -648,7 +659,7 @@ p. 368), <span class="sc"><a href="/article/01-0903-s2/amethyst">Amethyst</a></s
 (Vol. 23, p. 433), <span class="sc"><a href="/article/24-0223-sard/sard">Sard</a></span> (Vol. 24,
 p. 209), and <span class="sc"><a href="/article/24-0233-sardonyx/sardonyx">Sardonyx</a></span> (Vol. 24, p. 2.18).</p>
 
-<p><span class="shoulder-heading" id="sh-8">Watches and Clocks</span>The article <span class="sc"><a href="/article/28-0379-watch/watch">Watch</a></span> (Vol. 28, p. 362),
+<p><span class="shoulder-heading" id="section-watches-and-clocks">Watches and Clocks</span>The article <span class="sc"><a href="/article/28-0379-watch/watch">Watch</a></span> (Vol. 28, p. 362),
 illustrated, by <a href="/contributors.html?q=Lord+Grimthorpe">Lord Grimthorpe</a>, the
 great authority on watches and clocks,
 and Sir H. H. Cunynghame,

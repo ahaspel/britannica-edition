@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,12 +160,12 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter XXVII</span>For Bankers And Financiers</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Social History</a></li><li><a href="#sh-2">International Finance</a></li><li><a href="#sh-3">Early Economics</a></li><li><a href="#sh-4">Taxation and Tariff</a></li><li><a href="#sh-5">Private Finance</a></li><li><a href="#sh-6">Currency</a></li><li><a href="#sh-7">Banking</a></li><li><a href="#sh-8">Lives of Financiers</a></li></ol></div>
+    <div class="chap-subtitle">Social History</div>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-international-finance">International Finance</a></li><li><a href="#section-early-economics">Early Economics</a></li><li><a href="#section-taxation-and-tariff">Taxation and Tariff</a></li><li><a href="#section-private-finance">Private Finance</a></li><li><a href="#section-currency">Currency</a></li><li><a href="#section-banking">Banking</a></li><li><a href="#section-lives-of-financiers">Lives of Financiers</a></li></ol></div>
     <div class="body-text">
 
 
-<div class="c002"></div>
-<p><span class="shoulder-heading" id="sh-1">Social History</span>Of all classes of business men,
+<p>Of all classes of business men,
 bankers and financiers study most
 closely the general tendencies of
 public opinion and the general course of
@@ -184,7 +194,7 @@ international wars. For the latter always
 arrest for the moment, even if they
 ultimately further, the progress of civilization.</p>
 
-<p><span class="shoulder-heading" id="sh-2">International Finance</span>The new Britannica has been called
+<p><span class="shoulder-heading" id="section-international-finance">International Finance</span>The new Britannica has been called
 “the most comprehensive of all surveys
 of past and present civilization,” and its
 treatment of finance and commerce possesses
@@ -268,7 +278,7 @@ word “economy” has thus become broader,
 as the word “usury” has become narrower,
 in significance.</p>
 
-<p><span class="shoulder-heading" id="sh-3">Early Economics</span>It is curious to see how one page after
+<p><span class="shoulder-heading" id="section-early-economics">Early Economics</span>It is curious to see how one page after
 another of the historical section of this
 article describes theories of finance which
 are to-day propounded by popular
@@ -338,7 +348,7 @@ slowly adopted it is true, and by the gradual
 change from private to public control
 of water supply, lighting and transportation.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Taxation and Tariff</span>The articles <span class="sc"><a href="/article/26-0487-taxation/taxation">Taxation</a></span>, <span class="sc"><a href="/article/19-0281-s5/national_debt">National
+<p><span class="shoulder-heading" id="section-taxation-and-tariff">Taxation and Tariff</span>The articles <span class="sc"><a href="/article/26-0487-taxation/taxation">Taxation</a></span>, <span class="sc"><a href="/article/19-0281-s5/national_debt">National
 Debt</a></span> and <span class="sc"><a href="/article/26-0451-s3/tariff">Tariff</a></span> should be read after
 this article on public finance. <span class="sc"><a href="/article/26-0487-taxation/taxation">Taxation</a></span>
 (Vol. 26, p. 458;
@@ -390,7 +400,7 @@ reader should study the articles <span class="sc"><a href="/article/10-0066-s2/e
 (Vol. 10, p. 54) and <span class="sc"><a href="/article/27-0243-treasury/treasury">Treasury</a></span>
 (Vol. 27, p. 228).</p>
 
-<p><span class="shoulder-heading" id="sh-5">Private Finance</span>For what may be called <i>private</i> finance,
+<p><span class="shoulder-heading" id="section-private-finance">Private Finance</span>For what may be called <i>private</i> finance,
 the student should turn first to the article
 <span class="sc"><a href="/article/03-0351-banks-and-banking/banks_and_banking">Banks and Banking</a></span> (Vol. 3, p. 334;
 equivalent to nearly 60
@@ -408,7 +418,7 @@ section of the article <span class="sc"><a href="/article/15-0122-jack/jack">Uni
 article <span class="sc"><a href="/article/15-0123-s4/jackson__andrew">Andrew Jackson</a></span> (Vol. 15, p. 107)
 by Prof. W. G. Sumner of Yale.</p>
 
-<p><span class="shoulder-heading" id="sh-6">Currency</span>Next in his course of reading, he should
+<p><span class="shoulder-heading" id="section-currency">Currency</span>Next in his course of reading, he should
 study the article <span class="sc"><a href="/article/18-0724-money-part-1/money_part_1">Money</a></span> (Vol. 18, p.
 694; equivalent to 45 pages in this Guide),
 by <a href="/contributors.html?q=Charles+Francis+Bastable">C. F. Bastable</a>.
@@ -458,7 +468,7 @@ when depreciation forced the Republic’s
 coinage out of use and ‘American’ coin
 was made legal tender.”</p>
 
-<p><span class="shoulder-heading" id="sh-7">Banking</span>For information as to the methods of
+<p><span class="shoulder-heading" id="section-banking">Banking</span>For information as to the methods of
 financial business the reader should study
 the articles <span class="sc"><a href="/article/24-0258-savings-banks/savings_banks">Savings Banks</a></span> (Vol. 24, p.
 243) by Sir <a href="/contributors.html?q=Sir+George+Christopher+Trout+Bartley">G. C. T. Bartley</a>,
@@ -497,7 +507,7 @@ deposit guaranty fund.</p>
 <p>For insurance see the chapter in this
 Guide <i>For Insurance Men</i>.</p>
 
-<p><span class="shoulder-heading" id="sh-8">Lives of Financiers</span>In financial biography, as in history,
+<p><span class="shoulder-heading" id="section-lives-of-financiers">Lives of Financiers</span>In financial biography, as in history,
 theory and practice, the Britannica is
 valuable because of its full, clear and
 authoritative
@@ -800,7 +810,7 @@ Mayo-Smith and A. T. Hadley.</p>
   <li class="c018"><a href="/article/25-0781-stag/stag">Stag</a></li>
   <li class="c018"><a href="/article/25-0793-s2/stamp">Stamp</a></li>
   <li class="c018"><a href="/article/25-0794-standards-department/standards_department">Standards Department</a></li>
-  <li class="c018"><a href="/article/25-0925-s3/sterling">Sterling</a></li>
+  <li class="c018"><a href="/article/25-0925-s2/sterling">Sterling</a></li>
   <li class="c018"><a href="/article/25-0928-s2/steuart__sir_james_denham">Steuart, Sir J. D.</a></li>
   <li class="c018"><a href="/article/25-0936-s2/stewart__alexander_turney">Stewart, A. T.</a></li>
   <li class="c018">Stock Exchange</li>

@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,7 +160,8 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter XXVI</span>For Lawyers</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">The Volumes as Used by Lawyers</a></li><li><a href="#sh-2">American Law</a></li><li><a href="#sh-3">State Statutes</a></li><li><a href="#sh-4">Biographies of Lawyers</a></li><li><a href="#sh-5">Some Legal Systems</a></li></ol></div>
+
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-the-volumes-as-used-by-lawyers">The Volumes as Used by Lawyers</a></li><li><a href="#section-american-law">American Law</a></li><li><a href="#section-state-statutes">State Statutes</a></li><li><a href="#section-biographies-of-lawyers">Biographies of Lawyers</a></li><li><a href="#section-some-legal-systems">Some Legal Systems</a></li></ol></div>
     <div class="body-text">
 
 
@@ -192,7 +203,7 @@ client’s good faith. They show the lawyer
 what he has to hope or to dread from
 expert evidence.</p>
 
-<p><span class="shoulder-heading" id="sh-1">The Volumes as Used by Lawyers</span>In a mining town in Alaska, where the
+<p><span class="shoulder-heading" id="section-the-volumes-as-used-by-lawyers">The Volumes as Used by Lawyers</span>In a mining town in Alaska, where the
 workmen were mostly Servians, a lawyer
 recently had an unusual case. The Servians
 had a church,
@@ -242,7 +253,7 @@ legal.</p>
 the law student will find much valuable
 information.</p>
 
-<p><span class="shoulder-heading" id="sh-2">American Law</span>He should read the stimulating and
+<p><span class="shoulder-heading" id="section-american-law">American Law</span>He should read the stimulating and
 suggestive article on <span class="sc"><a href="/article/01-0879-american-law/american_law">American Law</a></span> (Vol.
 1, p. 828), by <a href="/contributors.html?q=Hon.+Simeon+Eben+Baldwin">Simeon E. Baldwin</a>, governor
 of Connecticut,
@@ -319,7 +330,7 @@ the United States and of the states (Vol.
 27, p. 646—an article which would fill
 about 50 pages of this Guide).</p>
 
-<p><span class="shoulder-heading" id="sh-3">State Statutes</span>(b) more particularly, under the articles
+<p><span class="shoulder-heading" id="section-state-statutes">State Statutes</span>(b) more particularly, under the articles
 on the separate states (as well as on
 Alaska, Hawaii, Philippines and Porto
 Rico), by the description of the state or
@@ -388,7 +399,7 @@ to</a></span>, etc.</p>
 American law in hundreds of articles on
 legal topics—for list see below.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Biographies of Lawyers</span>The following list of American jurists
+<p><span class="shoulder-heading" id="section-biographies-of-lawyers">Biographies of Lawyers</span>The following list of American jurists
 does not include all American lawyers
 about whom there are separate articles
 in the Britannica, but
@@ -518,7 +529,7 @@ is not treated with proper fullness so that
 the practical as well as the theoretical is
 considered.</p>
 
-<p><span class="shoulder-heading" id="sh-5">Some Legal Systems</span>Slightly remoter systems are the subjects
+<p><span class="shoulder-heading" id="section-some-legal-systems">Some Legal Systems</span>Slightly remoter systems are the subjects
 of separate articles: <span class="sc"><a href="/article/24-0082-s4/salic_law">Salic Law</a></span>, by
 Professor Pfister of the Sorbonne; <span class="sc"><a href="/article/04-0506-brehon-laws/brehon_laws">Brehon
 Laws</a></span>, by <a href="/contributors.html?q=Laurence+Ginnell">Lawrence
@@ -1293,7 +1304,7 @@ legal department of the work.</p>
   <li class="c018"><a href="/article/20-0105-oligarchy/oligarchy">Oligarchy</a></li>
   <li class="c018"><a href="/article/20-0199-s3/ordeal">Ordeal</a></li>
   <li class="c018"><a href="/article/20-0213-s2/order_in_council">Order in Council</a></li>
-  <li class="c018"><a href="/article/20-0214-s2/ordinance">Ordinance</a></li>
+  <li class="c018"><a href="/article/20-0214-s3/ordinance">Ordinance</a></li>
   <li class="c018"><a href="/article/20-0214-s5/ordinary">Ordinary</a></li>
   <li class="c018"><a href="/article/20-0307-original-package/original_package">Original Package</a></li>
   <li class="c018">Ouster</li>

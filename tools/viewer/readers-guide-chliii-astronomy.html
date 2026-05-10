@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,7 +160,8 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter LIII</span>Astronomy</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">A Few Facts</a></li><li><a href="#sh-2">Life on Mars</a></li></ol></div>
+
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-a-few-facts">A Few Facts</a></li><li><a href="#section-life-on-mars">Life on Mars</a></li></ol></div>
     <div class="body-text">
 
 
@@ -196,7 +207,7 @@ a common field-glass, have in more than
 one instance yielded results of serious
 value.</p>
 
-<p><span class="shoulder-heading" id="sh-1">A Few Facts</span>Progress is from one point of view so
+<p><span class="shoulder-heading" id="section-a-few-facts">A Few Facts</span>Progress is from one point of view so
 slow that astronomers are now compiling
 data regarding fixed stars of which the
 motion cannot be
@@ -279,7 +290,7 @@ spread, like grapeshot from a giant
 gun, over an area of some thirty square
 miles. See <span class="sc"><a href="/article/18-0283-s3/meteorite">Meteorite</a></span> (Vol. 18, p. 262).</p>
 
-<p><span class="shoulder-heading" id="sh-2">Life on Mars</span>Although the closest scrutiny has not
+<p><span class="shoulder-heading" id="section-life-on-mars">Life on Mars</span>Although the closest scrutiny has not
 discovered in any meteorite a shred of
 life, even the lowest, we obtain, from another
 source, and by
@@ -457,7 +468,7 @@ outline.</p>
   </tr>
   <tr>
     <td class="c011">Measuring light and heat from the stars,—radio-micrometer.</td>
-    <td class="c029"><span class="sc"><a href="/article/21-0551-photometry/photometry">Photometry</a></span>, <i>Celestial, or Stellar Photometry</i> (Vol. 21, p. 530), by Dr. <a href="/contributors.html?q=Herbert+Hall+Turner">H. H. Turner</a>, Oxford.</td>
+    <td class="c029"><span class="sc"><a href="/article/21-0551-photometry/photometry#section-celestial-or-stellar-photometry">Photometry</a></span>, <i>Celestial, or Stellar Photometry</i> (Vol. 21, p. 530), by Dr. <a href="/contributors.html?q=Herbert+Hall+Turner">H. H. Turner</a>, Oxford.</td>
   </tr>
   <tr>
     <td class="c011">New method of photographing the sun and the results of this mode of study.</td>
@@ -481,7 +492,7 @@ outline.</p>
   </tr>
   <tr>
     <td class="c011">Apparent motion of the heavenly bodies.</td>
-    <td class="c029"><span class="sc"><a href="/article/01-0085-s2/aberration">Aberration</a></span>, <i>Aberration of Light</i> (Vol. 1, p. 54), by Dr. S. Otto Eppenstein, Zeiss Optical Works, Jena, Germany.</td>
+    <td class="c029"><span class="sc"><a href="/article/01-0085-s2/aberration#section-i-aberration-of-light">Aberration</a></span>, <i>Aberration of Light</i> (Vol. 1, p. 54), by Dr. S. Otto Eppenstein, Zeiss Optical Works, Jena, Germany.</td>
   </tr>
   <tr>
     <td class="c011">Eclipses and their recurrence. List of solar eclipses. Methods of computing eclipses.</td>
@@ -585,7 +596,7 @@ outline.</p>
   </tr>
   <tr>
     <td class="c011">How co-ordinates used in astronomical research are determined.</td>
-    <td class="c029"><span class="sc"><a href="/article/02-0847-s2/astronomy">Astronomy</a></span>, <i>Practical Astronomy</i> (Vol. 2 p. 807), by Dr. <a href="/contributors.html?q=Simon+Newcomb">Simon Newcomb</a>.</td>
+    <td class="c029"><span class="sc"><a href="/article/02-0847-s2/astronomy#section-descriptive-and-practical-astronomy-bayer-gassendi-horrocks-huygens-gascoigne-hevelius">Astronomy</a></span>, <i>Practical Astronomy</i> (Vol. 2 p. 807), by Dr. <a href="/contributors.html?q=Simon+Newcomb">Simon Newcomb</a>.</td>
   </tr>
   <tr>
     <td class="c011">Telescope: Discovery and history. Parts and mounting. Great telescopes of the world.</td>
@@ -643,7 +654,7 @@ outline.</p>
   <li class="c018"><a href="/article/02-0484-s4/arcturus">Arcturus</a></li>
   <li class="c018"><a href="/article/02-0494-s6/argelander__friedrich_wilhelm_august">Argelander, F. W. A.</a></li>
   <li class="c018"><a href="/article/02-0529-s2/aries">Aries</a></li>
-  <li class="c018"><a href="/article/02-0532-s3/aristarchus">Aristarchus, of Samos</a></li>
+  <li class="c018"><a href="/article/02-0532-s4/aristarchus">Aristarchus, of Samos</a></li>
   <li class="c018"><a href="/article/02-0615-s5/armilla">Armilla</a></li>
   <li class="c018"><a href="/article/02-0842-s2/astrolabe">Astrolabe</a></li>
   <li class="c018"><a href="/article/02-0842-s4/astrology">Astrology</a></li>
@@ -819,7 +830,7 @@ outline.</p>
   <li class="c018"><a href="/article/21-0678-pisces/pisces">Pisces</a></li>
   <li class="c018"><a href="/article/21-0743-s3/planet">Planet</a></li>
   <li class="c018"><a href="/article/21-0748-s2/planets__minor">Planets, Minor</a></li>
-  <li class="c018"><a href="/article/21-0868-s5/pleiades">Pleiades</a></li>
+  <li class="c018"><a href="/article/21-0868-s6/pleiades">Pleiades</a></li>
   <li class="c018"><a href="/article/22-0074-pond-john/pond__john">Pond, John</a></li>
   <li class="c018"><a href="/article/22-0075-pons-jean-louis/pons__jean_louis">Pons, Jean Louis</a></li>
   <li class="c018"><a href="/article/22-0288-s5/precession_of_the_equinoxes">Precession of the Equinoxes</a></li>

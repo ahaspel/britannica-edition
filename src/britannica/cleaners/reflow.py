@@ -18,6 +18,7 @@ def reflow_paragraphs(text: str) -> str:
     text = re.sub(r"\{\{VERSE:.*?\}VERSE\}", _protect_newlines, text, flags=re.DOTALL)
     text = re.sub(r"\{\{LEGEND:.*?\}LEGEND\}", _protect_newlines, text, flags=re.DOTALL)
     text = re.sub(r"\u00abPRE:.*?\u00ab/PRE\u00bb", _protect_newlines, text, flags=re.DOTALL)
+    text = re.sub(r"\u00abOUTLINE:.*?\u00ab/OUTLINE\u00bb", _protect_newlines, text, flags=re.DOTALL)
 
     paragraphs = re.split(r"\n\n+", text)
 
@@ -25,7 +26,7 @@ def reflow_paragraphs(text: str) -> str:
     for para in paragraphs:
         # Don't reflow table blocks, image markers, or preformatted blocks
         if para.strip().startswith(("{{TABLE", "{{IMG:", "{{VERSE:",
-                                     "{{LEGEND:", "\u00abPRE:")):
+                                     "{{LEGEND:", "\u00abPRE:", "\u00abOUTLINE:")):
             result.append(para.strip())
             continue
 
@@ -62,6 +63,12 @@ def reflow_paragraphs(text: str) -> str:
     )
     text = re.sub(
         r"\u00abPRE:.*?\u00ab/PRE\u00bb",
+        lambda m: m.group(0).replace("\x02", "\n"),
+        text,
+        flags=re.DOTALL,
+    )
+    text = re.sub(
+        r"\u00abOUTLINE:.*?\u00ab/OUTLINE\u00bb",
         lambda m: m.group(0).replace("\x02", "\n"),
         text,
         flags=re.DOTALL,

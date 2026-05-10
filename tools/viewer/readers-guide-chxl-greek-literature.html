@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,7 +160,8 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter XL</span>Greek Literature</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">The Main Article</a></li><li><a href="#sh-2">Epic</a></li><li><a href="#sh-3">Elegy</a></li><li><a href="#sh-4">Lyric Poetry</a></li><li><a href="#sh-5">Attic Literature</div> <div class="sidenote">Comedy</a></li><li><a href="#sh-6">History</a></li><li><a href="#sh-7">Oratory</a></li><li><a href="#sh-8">Decadence</a></li></ol></div>
+
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-the-main-article">The Main Article</a></li><li><a href="#section-epic">Epic</a></li><li><a href="#section-elegy">Elegy</a></li><li><a href="#section-lyric-poetry">Lyric Poetry</a></li><li><a href="#section-attic-literature">Attic Literature</a></li><li><a href="#section-comedy">Comedy</a></li><li><a href="#section-history">History</a></li><li><a href="#section-oratory">Oratory</a></li><li><a href="#section-decadence">Decadence</a></li></ol></div>
     <div class="body-text">
 
 
@@ -171,7 +182,7 @@ each department there is a long succession
 of illustrative names. Roughly speaking, all
 subsequent literature is imitative.</p>
 
-<p><span class="shoulder-heading" id="sh-1">The Main Article</span>This testimony to the importance of
+<p><span class="shoulder-heading" id="section-the-main-article">The Main Article</span>This testimony to the importance of
 Greek literature is all the more weighty
 as coming from one whose own field of
 criticism is in Romantic literature. The
@@ -221,7 +232,7 @@ and philosophical prose; and <i>Decadence</i>—Alexandrian,
 300–146 B.C., and Greco-Roman,
 146 B.C.–529 A.D.</p>
 
-<p><span class="shoulder-heading" id="sh-2">Epic</span>In the first of these periods the student
+<p><span class="shoulder-heading" id="section-epic">Epic</span>In the first of these periods the student
 should supplement <a href="/contributors.html?q=Sir+Richard+Claverhouse+Jebb">Professor Jebb</a>’s treatment
 in the article <span class="sc"><a href="/article/12-0532-greek-literature/greek_literature">Greek Literature</a></span>
 by the following articles:
@@ -233,7 +244,7 @@ Guide), by the late Prof. David Binning
 Monro of Oriel College, Oxford, editor of
 Homer and author of <i>Grammar of the
 Homeric Dialect</i>,—and on the “Homeric
-question” see also the articles <span class="sc"><a href="/article/02-0532-s3/aristarchus">Aristarchus</a></span>
+question” see also the articles <span class="sc"><a href="/article/02-0532-s4/aristarchus">Aristarchus</a></span>
 and <span class="sc"><a href="/article/13-0422-s5/hesilrige__or_heselrig___sir_arthur">F. A. Wolf</a></span>; <span class="sc"><a href="/article/13-0423-s3/hesiod">Hesiod</a></span> (Vol.
 13, p. 407), by <a href="/contributors.html?q=Rev.+James+Davies">James Davies</a>, formerly
 head master Ludlow Grammar School,
@@ -243,7 +254,7 @@ St. John’s, Cambridge; <span class="sc"><a href="/article/07-0704-cycle/cycle"
 cyclic poets, <span class="sc"><a href="/article/25-0821-s6/stasinus">Stasinus</a></span>, <span class="sc"><a href="/article/02-0484-s3/arctinus">Arctinus</a></span>, <span class="sc"><a href="/article/16-0509-lesches/lesches">Lesches</a></span>,
 and <span class="sc"><a href="/article/07-0429-creophylus/creophylus">Creophylus</a></span>.</p>
 
-<p><span class="shoulder-heading" id="sh-3">Elegy</span>For the elegy see <a href="/contributors.html?q=Edmund+Gosse">Edmund Gosse</a>’s article
+<p><span class="shoulder-heading" id="section-elegy">Elegy</span>For the elegy see <a href="/contributors.html?q=Edmund+Gosse">Edmund Gosse</a>’s article
 <span class="sc"><a href="/article/09-0269-elegy/elegy">Elegy</a></span>; and on the Greek elegists,
 the articles <span class="sc"><a href="/article/05-0069-callinus/callinus">Callinus</a></span> and <span class="sc"><a href="/article/27-0570-s3/tyrtaeus">Tyrtæus</a></span> for
 martial poetry, <span class="sc"><a href="/article/18-0524-mimnermus/mimnermus">Mimnermus</a></span> for melancholy
@@ -258,7 +269,7 @@ time of the drama see: <span class="sc"><a href="/article/14-0225-iambic/iambic"
 <span class="sc">Simonides of Amorgos</span>, and
 <span class="sc"><a href="/article/13-0538-hipponax/hipponax">Hipponax</a></span>.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Lyric Poetry</span>The third poetic form of the period,
+<p><span class="shoulder-heading" id="section-lyric-poetry">Lyric Poetry</span>The third poetic form of the period,
 one which unfortunately has come down
 to us only in tantalizingly brief fragments—comparable
 to the
@@ -296,7 +307,7 @@ a valuable fragment was found in
 1903 in what seems to be the oldest papyrus
 in existence.</p>
 
-<p><span class="shoulder-heading" id="sh-5">Attic Literature</div> <div class="sidenote">Comedy</span>The Attic period has two important developments—the
+<p><span class="shoulder-heading" id="section-attic-literature">Attic Literature</span><span class="shoulder-heading" id="section-comedy">Comedy</span>The Attic period has two important developments—the
 drama, tragic and comic,
 and the beginnings of a Greek prose.
 For the drama read the part of Prof.
@@ -344,7 +355,7 @@ the last few years; <span class="sc"><a href="/article/08-0307-diphilus/diphilus
 of Carystus, <span class="sc"><a href="/article/22-0186-posidippus/posidippus">Posidippus</a></span>, <span class="sc"><a href="/article/23-0262-rhinthon/rhinthon">Rhinthon</a></span>
 and <span class="sc"><a href="/article/25-0451-sotades/sotades">Sotades</a></span>.</p>
 
-<p><span class="shoulder-heading" id="sh-6">History</span>The prose of the Attic period we may
+<p><span class="shoulder-heading" id="section-history">History</span>The prose of the Attic period we may
 divide roughly into history, oratory and
 philosophy. On the historians
 read <span class="sc"><a href="/article/16-0941-s2/logographi">Logographi</a></span>,
@@ -366,7 +377,7 @@ by <a href="/contributors.html?q=Rev.+Edward+Mewburn+Walker">E. M. Walker</a> an
 <span class="sc"><a href="/article/07-0616-ctesias/ctesias">Ctesias</a></span>, <span class="sc"><a href="/article/21-0426-philistus/philistus">Philistus</a></span>, <span class="sc"><a href="/article/26-0827-theopompus/theopompus">Theopompus</a></span>, and
 <span class="sc"><a href="/article/26-1017-timaeus/timaeus">Timaeus</a></span>.</p>
 
-<p><span class="shoulder-heading" id="sh-7">Oratory</span>On Attic orators read <span class="sc"><a href="/article/01-1018-s5/andocides">Andocides</a></span>,
+<p><span class="shoulder-heading" id="section-oratory">Oratory</span>On Attic orators read <span class="sc"><a href="/article/01-1018-s5/andocides">Andocides</a></span>,
 <span class="sc"><a href="/article/17-0197-s3/lysias">Lysias</a></span>, <span class="sc"><a href="/article/14-0910-isocrates/isocrates">Isocrates</a></span>, <span class="sc"><a href="/article/14-0893-s7/isaeus">Isaeus</a></span>, <span class="sc"><a href="/article/02-0145-s7/antiphon">Antiphon</a></span>,
 <span class="sc"><a href="/article/08-0024-demosthenes/demosthenes">Demosthenes</a></span>, <span class="sc"><a href="/article/01-0308-aeschines-greek-statesman/aeschines__greek_statesman_">Aeschines</a></span>, <span class="sc"><a href="/article/14-0212-s2/hypereides">Hypereides</a></span>,—most
 of these articles
@@ -385,7 +396,7 @@ writer on Greek philosophy, and <span class="sc"><a href="/article/23-0250-s5/rh
 (Vol. 23, p. 233), by Sir <a href="/contributors.html?q=Sir+Richard+Claverhouse+Jebb">R. C. Jebb</a>.</p>
 
 <p>On Greek philosophical writing see the
-articles <span class="sc"><a href="/article/21-0386-pherecydes-of-leros/pherecydes_of_leros">Pherecydes</a></span> of Syros, <span class="sc"><a href="/article/01-0997-s5/anaximenes">Anaximenes</a></span>
+articles <span class="sc"><a href="/article/21-0386-pherecydes-of-leros/pherecydes_of_leros">Pherecydes</a></span> of Syros, <span class="sc"><a href="/article/01-0997-s4/anaximenes">Anaximenes</a></span>
 of Miletus, <span class="sc"><a href="/article/01-0997-s3/anaximander">Anaximander</a></span>, and
 the names great not only in Greek
 thought and literature but in the world’s—<span class="sc"><a href="/article/21-0841-plato/plato">Plato</a></span>
@@ -399,7 +410,7 @@ author of <i>Physical Realism</i>, etc.
 For a fuller guide to Greek philosophy
 see the chapter in this Guide on <i>Philosophy</i>.</p>
 
-<p><span class="shoulder-heading" id="sh-8">Decadence</span>The third period of classical Greek literature
+<p><span class="shoulder-heading" id="section-decadence">Decadence</span>The third period of classical Greek literature
 was one of Greek thought in unGreek
 surroundings—see the article <span class="sc"><a href="/article/13-0249-hellenism/hellenism">Hellenism</a></span>,
 by <a href="/contributors.html?q=Edwyn+Robert+Bevan">E. R. Bevan</a>, author of
@@ -412,7 +423,7 @@ under the Ptolemies—see the article
 part of it dealing with <i>Literature</i> (Vol. 1,
 p. 573). On the writers of the Alexandrian
 period see: for poetry, <span class="sc"><a href="/article/21-0396-philetas/philetas">Philetas</a></span>,
-<span class="sc"><a href="/article/13-0387-hermesianax/hermesianax">Hermesianax</a></span>, <span class="sc"><a href="/article/02-0766-s6/asclepiades">Asclepiades</a></span> of Samos,
+<span class="sc"><a href="/article/13-0387-hermesianax/hermesianax">Hermesianax</a></span>, <span class="sc"><a href="/article/02-0766-s7/asclepiades">Asclepiades</a></span> of Samos,
 and the comic poets <span class="sc"><a href="/article/25-0451-sotades/sotades">Sotades</a></span> and <span class="sc"><a href="/article/23-0262-rhinthon/rhinthon">Rhinthon</a></span>,
 already mentioned; <span class="sc"><a href="/article/13-0396-s2/herodas">Herodas</a></span>, by
 <a href="/contributors.html?q=Walter+George+Headlam+%281866%E2%80%931908%29">W. G. Headlam</a>, editor of Herodas; the
@@ -424,10 +435,10 @@ who influenced Catullus as much as
 Theocritus did the young Virgil; the
 didactic poet <span class="sc"><a href="/article/02-0336-s2/aratus">Aratus</a></span>, whom Cicero
 translated into Latin and whom Virgil
-imitated in his <i>Georgics</i>; the epic <span class="sc"><a href="/article/02-0198-s8/apollonius">Apollonius</a></span>
+imitated in his <i>Georgics</i>; the epic <span class="sc"><a href="/article/02-0198-s7/apollonius">Apollonius</a></span>
 of Rhodes, and the late tragedian
 <span class="sc"><a href="/article/17-0168-lycophron/lycophron">Lycophron</a></span>; and for prose the critic
-<span class="sc"><a href="/article/02-0532-s3/aristarchus">Aristarchus</a></span>.</p>
+<span class="sc"><a href="/article/02-0532-s4/aristarchus">Aristarchus</a></span>.</p>
 
 <p>In the Greco-Roman period, following
 the Alexandrian the principal articles for

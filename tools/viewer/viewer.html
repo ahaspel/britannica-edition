@@ -951,6 +951,40 @@
       margin-top: 10px;
     }
 
+    /* Hierarchical taxonomic / classificatory outline (ARACHNIDA
+       Tabular Classification, ZOOLOGY taxonomies, &c.).  Plain
+       <ul>/<li> with reduced bullet weight; CSS controls the indent. */
+    ul.outline,
+    ul.outline ul {
+      list-style-type: none;
+      padding-left: 1.6em;
+      margin: 0.2em 0;
+    }
+    ul.outline {
+      margin: 1em 0;
+      padding-left: 0;
+    }
+    ul.outline li {
+      margin: 0.15em 0;
+    }
+    /* Plate-caption variant: smaller, italic, compressed — used for
+       single-image plates whose source numbered-caption block becomes
+       an OUTLINE rather than an inline IMG caption (GEMS PLATE I/II). */
+    ul.outline.plate-outline,
+    ul.outline.plate-outline ul {
+      font-size: 0.85em;
+      font-style: italic;
+      line-height: 1.25;
+      padding-left: 1.2em;
+    }
+    ul.outline.plate-outline {
+      padding-left: 0;
+      margin: 0.5em 0 1.2em 0;
+    }
+    ul.outline.plate-outline li {
+      margin: 0;
+    }
+
     .contributors {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       font-size: 0.95rem;
@@ -1347,14 +1381,183 @@
     // marker, «SC»I.—Foo«/SC» major-section pattern). Used to
     // suppress duplicate top-level emissions for the same name.
     let emittedSectionKeys = new Set();
-    // Tracks only the MOST RECENT top-level section key so a shoulder
-    // heading sitting in that section's margin (e.g. ALGAE's
-    // «SH»Polymorphism.«/SH» inside the Polymorphism section) can be
-    // suppressed — it's a margin pointer to the containing section,
-    // not a real subsection. Unrelated SHs (e.g. "Fuji." inside
-    // JAPAN's "Geography" section) have different keys and stay.
-    let currentSectionKey = "";
+    let emittedSectionIds = new Set();
+    // Pre-pass result: paragraph-index → section info.  Populated once
+    // per article by detectSections() and consulted by renderParagraph
+    // when emitting heading paragraphs.
+    let sectionByIndex = new Map();
+    // Pre-computed shoulder-heading metadata, in document order.
+    // Each `«SH»…«/SH»` marker in the article body produces one entry
+    // (id, display, isPointer); the SH replace step at render time
+    // consumes them in order via shoulderCursor.  Pre-computing lets
+    // SH anchors be slug-stable across rebuilds the same way SEC/SC
+    // anchors are.
+    let shoulderQueue = [];
+    let shoulderCursor = 0;
 
+    // Reserve a unique heading id derived from `slug`, falling back to
+    // `fallback` when slug is empty. If the chosen id is already in
+    // use within this article, append `-2`, `-3`, … Two distinct
+    // headings whose titles differ only in punctuation collapse to the
+    // same slug; suffixing keeps each anchor reachable.
+    function reserveSectionId(slug, fallback) {
+      let id = slug ? `section-${slug}` : fallback;
+      if (!emittedSectionIds.has(id)) {
+        emittedSectionIds.add(id);
+        return id;
+      }
+      for (let n = 2; ; n++) {
+        const candidate = `${id}-${n}`;
+        if (!emittedSectionIds.has(candidate)) {
+          emittedSectionIds.add(candidate);
+          return candidate;
+        }
+      }
+    }
+
+    // One-pass section detection. Walks article paragraphs, identifies
+    // every paragraph that's a top-level section heading via either
+    // raw-source signal:
+    //   • «SEC:name«/SEC»  pipeline-emitted absorbed-subsection marker
+    //   • «SC»...«/SC»     small-caps heading (with optional outer
+    //                      Roman prefix and optional inline body tail)
+    // Assigns a stable slug-derived id, dedupes cross-signal duplicates
+    // (an earlier SEC for "Cyanophyceae" suppresses a later SC for the
+    // same section), and records each in `collectedSections` (TOC
+    // source).  Returns Map<paraIdx, info>; renderParagraph consults
+    // this map and emits the <h3> when the index matches.
+    function detectSections(paragraphs) {
+      const byIndex = new Map();
+      // Reset section state up front; same article is never detected
+      // twice in one render pass.
+      emittedSectionKeys = new Set();
+      emittedSectionIds = new Set();
+      collectedSections = [];
+      sectionCounter = 0;
+      shoulderQueue = [];
+      shoulderCursor = 0;
+
+      const SEC_RE = /^«SEC:([^«]+)«\/SEC»$/;
+      // Two paragraph shapes captured by the SC regex:
+      //   • Standalone heading paragraph (group 4 = "")
+      //   • Heading + inline body in same paragraph (group 4 = body)
+      // Optional Roman prefix may sit OUTSIDE «SC» (group 1) or INSIDE
+      // (group 3).
+      const SC_RE = /^(?:([IVXLCA-Z]+\.)[\s—]*)?«SC»(([IVXLCA-Z]+[.—]\s*)?.*?)«\/SC»[.:]?—?(.*)$/s;
+      const SH_RE = /«SH»(.*?)«\/SH»/gs;
+      const FN_RE = /«FN(?:\[[^\]]+\])?:.*?«\/FN»/gs;
+      const ROMAN_PREFIX_RE = /^[IVXLCA-Z]+\.[\s—]*/;
+      const EXCLUDED_RE = /^(?:(?:References|Authorities|Bibliography|See also)\b|Fig\.)/i;
+      // A standalone SC paragraph immediately followed by an extracted
+      // table marker is a table caption (LIGHTHOUSE "Table II.",
+      // UNITED STATES "West Central Massachusetts"), not a section
+      // heading.  Python mirror: _TABLE_MARKER_PREFIX_RE in
+      // src/britannica/export/sections.py.
+      const TABLE_MARKER_PREFIX_RE = /^(?:\{\{TABLE:|«HTMLTABLE:)/;
+
+      // Latest top-level heading we've identified — used to flag SH
+      // margin pointers (a SH whose dehyphenated text matches the
+      // containing section's name is the margin label for that
+      // section, not a real subsection, so it's omitted from the TOC).
+      let activeSectionKey = "";
+
+      // Detect a SEC- or SC-shape heading on paragraph p.  Returns the
+      // info object (and pushes it into byIndex/collectedSections,
+      // updates activeSectionKey) or null when p isn't a heading.
+      function detectHeading(p, i, paragraphs) {
+        let m = p.match(SEC_RE);
+        if (m) {
+          const name = displaySectionName(m[1].trim());
+          const key = sectionKey(name);
+          if (emittedSectionKeys.has(key)) return null;
+          const slug = sectionSlug(name);
+          sectionCounter++;
+          const id = reserveSectionId(slug, `section-${sectionCounter}`);
+          emittedSectionKeys.add(key);
+          collectedSections.push({ id, title: name, level: 1 });
+          const info = { kind: "sec", id, slug, title: name, nameKey: key };
+          byIndex.set(i, info);
+          activeSectionKey = key;
+          return info;
+        }
+        if (p.includes("{{IMG:") || p.includes("{{TABLE:")) return null;
+        m = p.match(SC_RE);
+        if (!m) return null;
+        const outerRoman = m[1];
+        const inner = m[2].trim();
+        const innerRoman = m[3];
+        const tail = (m[4] || "").trim();
+        // For the with-inline-body shape, require a Roman prefix and
+        // limit the SC inner content to <60 chars.  Without those
+        // gates an inline «SC» label embedded in prose ("century «SC»
+        // A.D.«/SC» …") would render as a heading.  Standalone shape
+        // (whole paragraph = SC) is signal-strong enough on its own.
+        const hasNumeral = outerRoman || (innerRoman && innerRoman.length > 0);
+        const passesShapeGate = tail ? (hasNumeral && inner.length < 60) : true;
+        if (!passesShapeGate) return null;
+        // Standalone SC followed by a table marker = table caption.
+        if (!tail && paragraphs && TABLE_MARKER_PREFIX_RE.test(paragraphs[i + 1] || "")) {
+          return null;
+        }
+        // Stitch heading title with em-dash separator (matches EB1911
+        // typography "I.—Geography").  Keep the raw form (with «FN»
+        // markers intact) for heading rendering, but strip FN content
+        // out of the slug + TOC title — otherwise an SC heading
+        // wrapping a footnote (ARACHNIDA "Tabular Classification«FN:
+        // …Pocock…«/FN» of the Arachnida") yields a 1000-char slug of
+        // footnote text and a TOC entry full of noise.
+        const rawTitle = outerRoman ? `${outerRoman}—${inner}` : inner;
+        const title = rawTitle.replace(FN_RE, "").trim();
+        if (EXCLUDED_RE.test(title)) return null;
+        // Dedup key strips Roman prefix + FN markers so SEC:Foo
+        // dedupes a later SC:I. Foo (and vice versa).
+        const nameOnly = inner.replace(FN_RE, "").replace(ROMAN_PREFIX_RE, "").trim();
+        const key = sectionKey(nameOnly);
+        if (emittedSectionKeys.has(key)) return null;
+        const slug = sectionSlug(title);
+        sectionCounter++;
+        const id = reserveSectionId(slug, `section-${sectionCounter}`);
+        emittedSectionKeys.add(key);
+        collectedSections.push({ id, title, level: 1 });
+        const info = { kind: "sc", id, slug, title, rawTitle, nameKey: key, tail };
+        byIndex.set(i, info);
+        activeSectionKey = key;
+        return info;
+      }
+
+      // Queue SH markers found in `text` (in the order they appear).
+      // Margin pointers — SH whose dehyphenated text matches the most
+      // recent top-level heading — get an id but aren't added to the
+      // TOC, mirroring the previous render-time behavior.
+      function scanShoulders(text) {
+        let shMatch;
+        SH_RE.lastIndex = 0;
+        while ((shMatch = SH_RE.exec(text)) !== null) {
+          const display = dehyphenateShoulder(shMatch[1].trim());
+          const isPointer = activeSectionKey && sectionKey(display) === activeSectionKey;
+          const slug = sectionSlug(display);
+          sectionCounter++;
+          const id = reserveSectionId(slug, `section-${sectionCounter}`);
+          if (!isPointer) {
+            collectedSections.push({ id, title: display, level: 2 });
+          }
+          shoulderQueue.push({ id, display, isPointer });
+        }
+      }
+
+      for (let i = 0; i < paragraphs.length; i++) {
+        const p = paragraphs[i];
+        // Detect heading first so activeSectionKey reflects this
+        // paragraph's heading (if any) before SHs in the same
+        // paragraph are evaluated for margin-pointer status.
+        detectHeading(p, i, paragraphs);
+        // Scan for SH markers regardless — they can appear in heading
+        // titles, inline-body tails, or plain prose paragraphs.
+        scanShoulders(p);
+      }
+
+      return byIndex;
+    }
     // Normalize a section name for dup-detection: lowercase,
     // alphanumerics only (so "Poly-morphism." matches "Polymorphism").
     function sectionKey(name) {
@@ -1503,7 +1706,24 @@
     //   [3] the equation content
     const EQN_PARA_RE = /^\s*((?:\x01PAGE:\d+\x01\s*)*)«EQN:([^»]*)»([\s\S]*?)«\/EQN»\s*$/;
 
-    function renderParagraph(p) {
+    function renderParagraph(p, nextPara, sectionInfo) {
+      // If this paragraph was tagged as a section heading by the
+      // pre-pass (detectSections), emit the <h3> with its pre-assigned
+      // stable id and skip the rest of the rendering pipeline.
+      if (sectionInfo) {
+        const { id, slug, title, rawTitle, kind, tail } = sectionInfo;
+        if (kind === "sec") {
+          return `<h3 class="section-heading" id="${id}" data-slug="${slug}">${escapeHtml(title)}</h3>`;
+        }
+        // SC: render the *raw* title (with «FN»/«I» markers intact)
+        // through this same function so footnotes become superscript
+        // links and italics render correctly.  The TOC-side `title` is
+        // FN-stripped for clean URLs and TOC display.
+        const headingHtml = renderParagraph(rawTitle || title);
+        const bodyHtml = tail ? renderParagraph(tail) : "";
+        return `<h3 class="section-heading" id="${id}" data-slug="${slug}">${headingHtml}</h3>${bodyHtml}`;
+      }
+
       // Numbered display-math block (single equation OR an equation
       // system bundled at the merge phase).  Format:
       //   \u00abEQNGROUP\u00bb<row1>\n<row2>\n\u2026\u00ab/EQNGROUP\u00bb
@@ -1586,23 +1806,9 @@
       // Single \u00abEQN:\u2026\u00ab/EQN\u00bb paragraphs are wrapped into \u00abEQNGROUP\u00bb
       // by the merge phase above so they share the multi-row
       // renderer and pick up any bare-MATH continuation rows.
-      // Absorbed-subsection heading: \u00abSEC:Cyanophyceae\u00ab/SEC\u00bb
-      // Emitted by boundary detection when a <section begin="X"/> is
-      // folded into the open article. Render as a navigable h3 so
-      // the section is visible AND targetable by xrefs.
-      const secMatch = p.match(/^\u00abSEC:([^\u00ab]+)\u00ab\/SEC\u00bb$/);
-      if (secMatch) {
-        const rawName = secMatch[1].trim();
-        const name = displaySectionName(rawName);
-        const slug = sectionSlug(name);
-        const id = `section-${slug}`;
-        sectionCounter++;
-        collectedSections.push({ id, title: name, level: 1 });
-        const key = sectionKey(name);
-        emittedSectionKeys.add(key);
-        currentSectionKey = key;
-        return `<h3 class="section-heading" id="${id}" data-slug="${slug}">${escapeHtml(name)}</h3>`;
-      }
+      // Section-heading detection (SEC marker + standalone/with-body
+      // SC variants) is handled by the detectSections pre-pass \u2014 see
+      // the early-return guard at the top of this function.
       const imgMatch = p.match(/^\{\{IMG:([^|}]+)(?:\|([^}]*))?\}\}$/);
       if (imgMatch) {
         const filename = imgMatch[1];
@@ -1613,32 +1819,40 @@
           ${caption ? `<figcaption>${escapeHtml(caption)}</figcaption>` : ""}
         </figure>`;
       }
-      // Render standalone small-caps paragraphs as section headings
-      // (e.g. «SC»II.—The People«/SC» in multi-section articles like JAPAN)
-      const scSectionMatch = p.match(/^(?:([IVXLCA-Z]+\.)\s*)?\u00abSC\u00bb(([IVXLCA-Z]+[.—]\s*)?.*?)\u00ab\/SC\u00bb$/s);
-      if (scSectionMatch && !p.includes("{{IMG:") && !p.includes("{{TABLE:")) {
-        const prefix = scSectionMatch[1] ? scSectionMatch[1] + " " : "";
-        const rawText = (prefix + scSectionMatch[2]).trim();
-        const text = rawText.replace(/\u00abFN(?:\[[^\]]+\])?:.*?\u00ab\/FN\u00bb/gs, "").trim();
-        const isExcluded = /^(?:(?:References|Authorities|Bibliography|See also)\b|Fig\.)/i.test(text);
-        // Skip if a SEC marker already emitted a heading for the same
-        // section name (stripped of leading Roman numeral prefix).
-        const nameOnly = scSectionMatch[2].replace(/\u00abFN(?:\[[^\]]+\])?:.*?\u00ab\/FN\u00bb/gs, "").trim();
-        const nameKey = sectionKey(nameOnly);
-        const isDup = emittedSectionKeys.has(nameKey);
-        if (!isExcluded && !isDup) {
-          sectionCounter++;
-          const sectionId = `section-${sectionCounter}`;
-          const slug = text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-          collectedSections.push({ id: sectionId, title: text, level: 1 });
-          emittedSectionKeys.add(nameKey);
-          currentSectionKey = nameKey;
-          const headingHtml = renderParagraph(rawText);
-          return `<h3 class="section-heading" id="${sectionId}" data-slug="${slug}">${headingHtml}</h3>`;
-        }
-        // Excluded (Fig., Bibliography, etc.) or duplicate — fall through.
-      }
       // Render preformatted blocks (structural chemical formulas)
+      // Hierarchical taxonomic / classificatory outline.  Pipeline
+      // emits as `\u00abOUTLINE:\nN|content\nN|content\n\u2026\u00ab/OUTLINE\u00bb` where
+      // N is the source indent depth (number of leading `:` characters
+      // on the source line).  Render as a nested <ul>, mapping the
+      // sparse source depths (typically 0, 2, 3, 4, 6, 8) onto dense
+      // nesting levels (0, 1, 2, 3, 4, 5).
+      const outlineMatch = p.match(/^\u00ab(PLATE_)?OUTLINE:([\s\S]*)\u00ab\/(?:PLATE_)?OUTLINE\u00bb$/);
+      if (outlineMatch) {
+        const isPlate = !!outlineMatch[1];
+        const rawLines = outlineMatch[2].split("\n").filter(l => l.length > 0);
+        const items = [];
+        for (const ln of rawLines) {
+          const m = ln.match(/^(\d+)\|(.*)$/);
+          if (m) items.push({ depth: parseInt(m[1], 10), content: m[2] });
+        }
+        if (items.length) {
+          // Densify depths: rank distinct values so 0/2/3/4 \u2192 0/1/2/3.
+          const distinct = [...new Set(items.map(it => it.depth))].sort((a,b)=>a-b);
+          const rank = new Map(distinct.map((d, i) => [d, i]));
+          const rootClass = isPlate ? "outline plate-outline" : "outline";
+          const out = [`<ul class="${rootClass}">`];
+          let cur = 0;
+          for (const it of items) {
+            const lvl = rank.get(it.depth);
+            while (cur < lvl) { out.push("<ul>"); cur++; }
+            while (cur > lvl) { out.push("</ul>"); cur--; }
+            out.push(`<li>${renderParagraph(it.content)}</li>`);
+          }
+          while (cur > 0) { out.push("</ul>"); cur--; }
+          out.push("</ul>");
+          return out.join("");
+        }
+      }
       const preMatch = p.match(/^\u00abPRE:([\s\S]*)\u00ab\/PRE\u00bb$/);
       if (preMatch) {
         let preContent = escapeHtml(preMatch[1]);
@@ -1893,50 +2107,6 @@
         return `<table class="data-table">${tableRows}</table>`;
       }
 
-      // Detect major section headings. Three positional variants:
-      //   «SC»I.—Geography«/SC»                    (Roman inside SC)
-      //   VI.—«SC»Industries and Commerce«/SC»     (Roman outside, em-dash between)
-      //   I.  «SC»Physical Geography«/SC»          (Roman outside, spaces only)
-      // Must have a numeral/letter prefix to distinguish from inline «SC» labels.
-      const sectionMatch = p.match(/^(?:([IVXLCA-Z]+\.)[\s\u2014]*)?\u00abSC\u00bb(([IVXLCA-Z]+[.—]\s*)?.*?)\u00ab\/SC\u00bb[.:]?\u2014?(.*)$/s);
-      const hasNumeral = sectionMatch && (sectionMatch[1] || (sectionMatch[3] && sectionMatch[3].length > 0));
-      if (sectionMatch && hasNumeral && sectionMatch[2].length < 60 && !p.includes("{{IMG:") && !p.includes("{{TABLE:")) {
-        // Preserve the source Roman prefix in the rendered title. When
-        // the prefix appeared OUTSIDE the «SC» span (group 1), stitch
-        // it back onto the inner name so both positional variants read
-        // "II.—Geology" in the TOC.
-        const inner = sectionMatch[2].trim();
-        const sectionTitle = sectionMatch[1]
-          ? `${sectionMatch[1]}—${inner}`
-          : inner;
-        const isExcluded2 = /^(?:(?:References|Authorities|Bibliography|See also)\b|Fig\.)/i.test(sectionTitle);
-        // Dup against an earlier SEC marker on the same section name
-        // (ALGAE "I. «SC»Cyanophyceae«/SC».—…" after SEC:Cyanophyceae).
-        // Dedup compares the bare name, so strip any Roman prefix first.
-        const nameOnly2 = inner
-          .replace(/^[IVXLCA-Z]+\.[\s\u2014]*/, "")
-          .trim();
-        const isDup2 = emittedSectionKeys.has(sectionKey(nameOnly2));
-        if (!isExcluded2 && !isDup2) {
-          sectionCounter++;
-          const sectionId = `section-${sectionCounter}`;
-          collectedSections.push({ id: sectionId, title: sectionTitle, level: 1 });
-          const k = sectionKey(sectionTitle);
-          emittedSectionKeys.add(k);
-          currentSectionKey = k;
-
-          // The tail captured AFTER \u00ab/SC\u00bb (group 4) is the section's
-          // body content. Using `p.indexOf("\u2014")` instead would
-          // start from the em-dash between the outer Roman prefix and
-          // \u00abSC\u00bb, re-rendering the \u00abSC\u00bbTitle\u00ab/SC\u00bb itself as a duplicate
-          // "Climate" below the "III.\u2014Climate" heading.
-          const sectionBody = (sectionMatch[4] || "").trim();
-          const bodyHtml = sectionBody ? renderParagraph(sectionBody) : "";
-
-          return `<h3 class="section-heading" id="${sectionId}">${escapeHtml(sectionTitle)}</h3>${bodyHtml}`;
-        }
-        // Excluded — fall through to normal paragraph rendering
-      }
 
       // Replace inline table markers (single-row tables embedded in text)
       let html = escapeHtml(p);
@@ -2064,25 +2234,13 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
       html = html.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
       html = html.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
       html = html.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
-      html = html.replace(/\u00abSH\u00bb(.*?)\u00ab\/SH\u00bb/gs, (match, text) => {
-        sectionCounter++;
-        const sectionId = `section-${sectionCounter}`;
-        // Paragraph html was escapeHtml'd at entry, so captured text
-        // contains entities like `&#39;`. Unescape first so `display` is
-        // clean text — escapeHtml below + TOC re-escape will add it back.
-        // De-hyphenate source line-wrap artifacts: "Poly-morphism." →
-        // "Polymorphism." Displayed in margin AND used for comparison.
-        const display = dehyphenateShoulder(unescapeHtml(text.trim()));
-        // Suppress only when this SH is the margin pointer for its
-        // CONTAINING section (same name as the most recent top-level
-        // heading, e.g. «SH»Polymorphism.«/SH» inside the Polymorphism
-        // SEC section). SHs with different names are real subsections
-        // and stay — e.g. "Fuji." inside JAPAN's "Geography" section.
-        const isMarginPointer = currentSectionKey && sectionKey(display) === currentSectionKey;
-        if (!isMarginPointer) {
-          collectedSections.push({ id: sectionId, title: display, level: 2 });
-        }
-        return `<span class="shoulder-heading" id="${sectionId}">${escapeHtml(display)}</span>`;
+      // Shoulder headings — id, display text, and margin-pointer
+      // status were assigned by the detectSections pre-pass and
+      // queued in document order.  Consume one entry per match.
+      html = html.replace(/\u00abSH\u00bb(.*?)\u00ab\/SH\u00bb/gs, () => {
+        const info = shoulderQueue[shoulderCursor++];
+        if (!info) return "";
+        return `<span class="shoulder-heading" id="${info.id}">${escapeHtml(info.display)}</span>`;
       });
       // Detect if this paragraph is a single standalone equation (one math block, no other text)
       const mathCount = (html.match(/\u00abMATH:/g) || []).length;
@@ -2256,7 +2414,7 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
                </div>`
             : ""}
           ${(() => {
-            footnoteCounter = 0; namedFnNumbers.clear(); fnAnchorInstance = 0; collectedFootnotes = []; linkedTargets = new Set(); sectionCounter = 0; collectedSections = []; emittedSectionKeys = new Set(); currentSectionKey = ""; wideTableCounter = 0; for (const k in wideTableSources) delete wideTableSources[k];
+            footnoteCounter = 0; namedFnNumbers.clear(); fnAnchorInstance = 0; collectedFootnotes = []; linkedTargets = new Set(); sectionCounter = 0; collectedSections = []; emittedSectionKeys = new Set(); emittedSectionIds = new Set(); sectionByIndex = new Map(); shoulderQueue = []; shoulderCursor = 0; wideTableCounter = 0; for (const k in wideTableSources) delete wideTableSources[k];
 
             // Page markers (\x01PAGE:N\x01) are embedded directly in the
             // body text by the transform stage.  If none are present
@@ -2293,7 +2451,7 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
             // BEFORE the IMG doesn't end in a strong terminator
             // (``.``, ``!``, ``?``) followed by a capitalized
             // continuation, treat as mid-paragraph.
-            const NON_TEXT_PREFIX = /^(?:\{\{(?:TABLE|LEGEND|IMG|VERSE)|\u00abHTMLTABLE|\u00abSEC:|\u00abSH\u00bb|\u00abPRE:)/;
+            const NON_TEXT_PREFIX = /^(?:\{\{(?:TABLE|LEGEND|IMG|VERSE)|\u00abHTMLTABLE|\u00abSEC:|\u00abSH\u00bb|\u00abPRE:|\u00abOUTLINE:|\u00abPLATE_OUTLINE:)/;
             const IMG_ONLY = /^\s*(?:\x01PAGE:\d+\x01\s*)*\{\{IMG:[^|}]+(?:\|[^}]*)?\}\}\s*$/;
             const stripMarginMarkers = s => s
               .replace(/\x01PAGE:\d+\x01/g, "")
@@ -2466,7 +2624,8 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
               }
               i++;
             }
-            const bodyHtml = mergedParas.map((p, idx) => renderParagraph(p, mergedParas[idx + 1])).join("");
+            sectionByIndex = detectSections(mergedParas);
+            const bodyHtml = mergedParas.map((p, idx) => renderParagraph(p, mergedParas[idx + 1], sectionByIndex.get(idx))).join("");
             const level1 = collectedSections.filter(s => s.level === 1);
             const level2 = collectedSections.filter(s => s.level === 2);
             let tocHtml = "";

@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,12 +160,12 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter XIX</span>For Marine Transportation Men</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Problems of the Near Future</a></li><li><a href="#sh-2">Technical Subjects</a></li><li><a href="#sh-3">An Outline of Sea Trade</a></li><li><a href="#sh-4">Story of the Ship</a></li><li><a href="#sh-5">Mast and Sail</a></li><li><a href="#sh-6">Iron Hulls</a></li><li><a href="#sh-7">Early Steamships</a></li><li><a href="#sh-8">History of Shipping</a></li><li><a href="#sh-9">Instructions for the Ship-Builder</a></li><li><a href="#sh-10">A Dictionary of Ships and Shipping</a></li></ol></div>
+    <div class="chap-subtitle">Problems of the Near Future</div>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-technical-subjects">Technical Subjects</a></li><li><a href="#section-an-outline-of-sea-trade">An Outline of Sea Trade</a></li><li><a href="#section-story-of-the-ship">Story of the Ship</a></li><li><a href="#section-mast-and-sail">Mast and Sail</a></li><li><a href="#section-iron-hulls">Iron Hulls</a></li><li><a href="#section-early-steamships">Early Steamships</a></li><li><a href="#section-history-of-shipping">History of Shipping</a></li><li><a href="#section-instructions-for-the-ship-builder">Instructions for the Ship-Builder</a></li><li><a href="#section-a-dictionary-of-ships-and-shipping">A Dictionary of Ships and Shipping</a></li></ol></div>
     <div class="body-text">
 
 
-<div class="c002"></div>
-<p><span class="shoulder-heading" id="sh-1">Problems of the Near Future</span>The immediate future of marine
+<p>The immediate future of marine
 commerce cannot fail to be very
 greatly affected by changed conditions.
 No one believes that England,
@@ -187,7 +197,7 @@ so long as it is sea-borne, in its
 effects upon transatlantic freights, may
 become aerial instead of marine.</p>
 
-<p><span class="shoulder-heading" id="sh-2">Technical Subjects</span>Confronted by the approach of a period
+<p><span class="shoulder-heading" id="section-technical-subjects">Technical Subjects</span>Confronted by the approach of a period
 so full of changes, the uttermost alertness
 of outlook is merely elementary prudence
 on the part of everyone engaged in the
@@ -238,7 +248,7 @@ you need to be forewarned and forearmed,
 prepared to keep what you have
 or get what you want.</p>
 
-<p><span class="shoulder-heading" id="sh-3">An Outline of Sea Trade</span>A course of reading should always
+<p><span class="shoulder-heading" id="section-an-outline-of-sea-trade">An Outline of Sea Trade</span>A course of reading should always
 begin with the study of general principles,
 in order that in your subsequent and
 more detailed examination of the field,
@@ -322,7 +332,7 @@ text-book or a work of reference for the
 ship builder, the marine engineer or the
 student of shipping.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Story of the Ship</span>Taking the articles separately, the
+<p><span class="shoulder-heading" id="section-story-of-the-ship">Story of the Ship</span>Taking the articles separately, the
 article <span class="sc"><a href="/article/24-0894-s8/ship">Ship</a></span> begins with a section of
 nearly 10,000 words on the early development
 of ships. It suggests
@@ -390,7 +400,7 @@ set up on dry land they manned a fleet
 which was launched in sixty days from
 the time that the trees were felled.</p>
 
-<p><span class="shoulder-heading" id="sh-5">Mast and Sail</span>Passing quickly over the remainder of
+<p><span class="shoulder-heading" id="section-mast-and-sail">Mast and Sail</span>Passing quickly over the remainder of
 the earlier period, which the reader will
 find treated in full in the article <span class="sc"><a href="/article/24-0894-s8/ship">Ship</a></span>,
 he should notice that
@@ -455,7 +465,7 @@ America which maintain speeds of 25 and
 with about 12 knots before the introduction
 of steam.</p>
 
-<p><span class="shoulder-heading" id="sh-6">Iron Hulls</span>The introduction of iron for wood
+<p><span class="shoulder-heading" id="section-iron-hulls">Iron Hulls</span>The introduction of iron for wood
 began about the same time as the substitution
 of steam for sails, and there was
 even more prejudice
@@ -500,7 +510,7 @@ of the 19th century—or even earlier—which
 were still in commission at the beginning
 of the 20th century.</p>
 
-<p><span class="shoulder-heading" id="sh-7">Early Steamships</span>Full details are given in regard to the
+<p><span class="shoulder-heading" id="section-early-steamships">Early Steamships</span>Full details are given in regard to the
 first ships used for canal and river navigation
 in Great Britain and the United
 States; the comparatively rapid adoption
@@ -597,7 +607,7 @@ of Holland and Nordenfeldt;
 the Goubet System in France;
 Submarines in different navies.</p>
 
-<p><span class="shoulder-heading" id="sh-8">History of Shipping</span>The article <span class="sc"><a href="/article/24-1059-s2/shipping">Shipping</a></span> (Vol. 24, p. 983)
+<p><span class="shoulder-heading" id="section-history-of-shipping">History of Shipping</span>The article <span class="sc"><a href="/article/24-1059-s2/shipping">Shipping</a></span> (Vol. 24, p. 983)
 is devoted to the history and practice
 of maritime transportation. It outlines
 the early period of
@@ -661,7 +671,7 @@ tonnage.</p>
 <p>Special passenger transport: tourists,
 emigrants, etc.</p>
 
-<p><span class="shoulder-heading" id="sh-9">Instructions for the Ship-Builder</span>The third of the main articles is
+<p><span class="shoulder-heading" id="section-instructions-for-the-ship-builder">Instructions for the Ship-Builder</span>The third of the main articles is
 <span class="sc"><a href="/article/24-0984-s2/shipbuilding">Shipbuilding</a></span> (Vol.
 24, p. 922) by Sir
 <a href="/contributors.html?q=Sir+Philip+Watts">Philip Watts</a>. The
@@ -774,7 +784,7 @@ liner; Differences between
 war and merchant ships; Auxiliary
 Machinery.</p>
 
-<p><span class="shoulder-heading" id="sh-10">A Dictionary of Ships and Shipping</span>The student should read the article
+<p><span class="shoulder-heading" id="section-a-dictionary-of-ships-and-shipping">A Dictionary of Ships and Shipping</span>The student should read the article
 <span class="sc"><a href="/article/19-0314-s5/navy">Navy and Navies</a></span> (Vol. 19, p. 299) and
 refer to the Chapter <i>For Naval Officers</i>.</p>
 

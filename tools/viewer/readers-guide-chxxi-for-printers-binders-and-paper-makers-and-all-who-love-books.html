@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,12 +160,12 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter XXI</span>For Printers, Binders And Paper-Makers And All Who Love Books</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">From Manuscript to Book</div> <div class="sidenote">Supply and Demand Interacting</a></li><li><a href="#sh-2">History of Paper</a></li><li><a href="#sh-3">Paper Manufacture</a></li><li><a href="#sh-4">India Paper</a></li><li><a href="#sh-5">Ink</a></li><li><a href="#sh-6">Printing</a></li><li><a href="#sh-7">Practical Typography</a></li><li><a href="#sh-8">Press-Work</a></li><li><a href="#sh-9">Modern Presses</a></li><li><a href="#sh-10">Proof-Reading</a></li><li><a href="#sh-11">Bookbinding</a></li><li><a href="#sh-12">Publishing and Book-Selling</a></li><li><a href="#sh-13">Historical and Miscellaneous Articles</a></li></ol></div>
+    <div class="chap-subtitle">From Manuscript to Book</div>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-supply-and-demand-interacting">Supply and Demand Interacting</a></li><li><a href="#section-history-of-paper">History of Paper</a></li><li><a href="#section-paper-manufacture">Paper Manufacture</a></li><li><a href="#section-india-paper">India Paper</a></li><li><a href="#section-ink">Ink</a></li><li><a href="#section-printing">Printing</a></li><li><a href="#section-practical-typography">Practical Typography</a></li><li><a href="#section-press-work">Press-Work</a></li><li><a href="#section-modern-presses">Modern Presses</a></li><li><a href="#section-proof-reading">Proof-Reading</a></li><li><a href="#section-bookbinding">Bookbinding</a></li><li><a href="#section-publishing-and-book-selling">Publishing and Book-Selling</a></li><li><a href="#section-historical-and-miscellaneous-articles">Historical and Miscellaneous Articles</a></li></ol></div>
     <div class="body-text">
 
 
-<div class="c002"></div>
-<p><span class="shoulder-heading" id="sh-1">From Manuscript to Book</div> <div class="sidenote">Supply and Demand Interacting</span>“An author, even an immortal
+<p><span class="shoulder-heading" id="section-supply-and-demand-interacting">Supply and Demand Interacting</span>“An author, even an immortal
 genius, is, from the economic
 point of view, a producer of
 raw material,” says the Britannica article
@@ -258,7 +268,7 @@ director of the British Museum;
 of <i>The Art of Making Paper</i>; and <i>India
 Paper</i>, by <a href="/contributors.html?q=William+Edward+Garrett+Fisher">W. E. Garrett Fisher</a>.</p>
 
-<p><span class="shoulder-heading" id="sh-2">History of Paper</span>The history of paper, like that of so
+<p><span class="shoulder-heading" id="section-history-of-paper">History of Paper</span>The history of paper, like that of so
 many other great inventions, dates back
 to an early period in China; and, as is
 the case with almost
@@ -299,7 +309,7 @@ of vellum, so that the material might be
 used again, can sometimes be chemically
 restored and deciphered.</p>
 
-<p><span class="shoulder-heading" id="sh-3">Paper Manufacture</span>In taking up the study of paper manufacture,
+<p><span class="shoulder-heading" id="section-paper-manufacture">Paper Manufacture</span>In taking up the study of paper manufacture,
 the first article to be read is
 <span class="sc"><a href="/article/10-0321-fibres/fibres">Fibres</a></span> by <a href="/contributors.html?q=C.+F.+Cross">C. F. Cross</a>, the well-known
 analytical and consulting
@@ -369,7 +379,7 @@ table), standards of quality, the paper
 trade, and a list of the best books on
 paper.</p>
 
-<p><span class="shoulder-heading" id="sh-4">India Paper</span>The article <span class="sc"><a href="/article/20-0781-s4/paper">Paper</a></span> closes with a brief
+<p><span class="shoulder-heading" id="section-india-paper">India Paper</span>The article <span class="sc"><a href="/article/20-0781-s4/paper">Paper</a></span> closes with a brief
 history and description of India paper,
 which is of particular interest because
 of the adoption and
@@ -443,7 +453,7 @@ in regard to paper the student of the
 manufacture of books must know something
 about ink.</p>
 
-<p><span class="shoulder-heading" id="sh-5">Ink</span>The necessary information he will find
+<p><span class="shoulder-heading" id="section-ink">Ink</span>The necessary information he will find
 in the article <span class="sc"><a href="/article/14-0602-s2/ink">Ink</a></span> (Vol. 14, p. 571) with
 special descriptions of writing inks,
 tannin inks, China or Indian
@@ -459,7 +469,7 @@ is a subject which in the Britannica
 takes much more ink and paper than the
 subject of ink or of paper.</p>
 
-<p><span class="shoulder-heading" id="sh-6">Printing</span>This topic is treated in two main
+<p><span class="shoulder-heading" id="section-printing">Printing</span>This topic is treated in two main
 articles: one dealing with type and the
 other with presses. The former, <span class="sc"><a href="/article/27-0528-typography/typography">Typography</a></span>
 (Vol. 27, p.
@@ -521,7 +531,7 @@ Runic, Gothic, Scandinavian, Anglo-Saxon,
 Irish, Music, Characters for the
 Blind, Initials, Ornaments and Flowers.</p>
 
-<p><span class="shoulder-heading" id="sh-7">Practical Typography</span>The second part of the article <span class="sc"><a href="/article/27-0528-typography/typography">Typography</a></span>,
+<p><span class="shoulder-heading" id="section-practical-typography">Practical Typography</span>The second part of the article <span class="sc"><a href="/article/27-0528-typography/typography">Typography</a></span>,
 on <i>Modern Practical Typography</i>,
 will be of more value,
 probably, to most
@@ -622,7 +632,7 @@ information in the biographical
 sketch of Senefelder, its
 inventor.</p>
 
-<p><span class="shoulder-heading" id="sh-8">Press-Work</span>The article <span class="sc"><a href="/article/22-0364-printing/printing">Printing</a></span> (Vol. 22, p. 350)
+<p><span class="shoulder-heading" id="section-press-work">Press-Work</span>The article <span class="sc"><a href="/article/22-0364-printing/printing">Printing</a></span> (Vol. 22, p. 350)
 deals entirely with the subject of press-work,
 thus using printing in the narrower
 and more correct
@@ -665,7 +675,7 @@ which closes with the story of Bullock’s
 machine (1865) for printing from a continuous
 web of paper.</p>
 
-<p><span class="shoulder-heading" id="sh-9">Modern Presses</span>The closing section of the article on
+<p><span class="shoulder-heading" id="section-modern-presses">Modern Presses</span>The closing section of the article on
 printing is devoted to a description
 of modern presses.
 It opens with a list of the
@@ -731,7 +741,7 @@ with cross references to the article
 <span class="sc"><a href="/article/22-0429-process-law/process__law_">Process</a></span>; and a paragraph on the management
 of a printing house.</p>
 
-<p><span class="shoulder-heading" id="sh-10">Proof-Reading</span>From this closing paragraph and the
+<p><span class="shoulder-heading" id="section-proof-reading">Proof-Reading</span>From this closing paragraph and the
 article on <span class="sc"><a href="/article/22-0364-printing/printing">Printing</a></span>, the student is referred
 to the article <span class="sc"><a href="/article/22-0453-proof-reading/proof-reading">Proof-Reading</a></span>
 (Vol. 22, p. 438)
@@ -747,7 +757,7 @@ the other articles on the subject of book-making,
 is written by eminent practical
 authorities on the subject.</p>
 
-<p><span class="shoulder-heading" id="sh-11">Bookbinding</span>The same is true of the article <span class="sc"><a href="/article/04-0230-bookbinding/bookbinding">Bookbinding</a></span>
+<p><span class="shoulder-heading" id="section-bookbinding">Bookbinding</span>The same is true of the article <span class="sc"><a href="/article/04-0230-bookbinding/bookbinding">Bookbinding</a></span>
 (Vol. 4, p. 216), which naturally
 follows in a systematic course of
 study. This is by
@@ -787,7 +797,7 @@ up by <a href="/contributors.html?q=James+Gordon+Parker">Dr. Parker</a>, the gre
 in the world on tanning, curing and
 dyeing leather for book-bindings.</p>
 
-<p><span class="shoulder-heading" id="sh-12">Publishing and Book-Selling</span>The last stages in getting the author’s
+<p><span class="shoulder-heading" id="section-publishing-and-book-selling">Publishing and Book-Selling</span>The last stages in getting the author’s
 raw material “from him to the ultimate
 consumer” are those in which the publisher
 and bookseller
@@ -828,7 +838,7 @@ effect on the British market of the introduction
 of American books and of
 American book-selling methods.</p>
 
-<p><span class="shoulder-heading" id="sh-13">Historical and Miscellaneous Articles</span>Among other articles of interest to the
+<p><span class="shoulder-heading" id="section-historical-and-miscellaneous-articles">Historical and Miscellaneous Articles</span>Among other articles of interest to the
 manufacturer of books are the following:
 <span class="sc"><a href="/article/04-0227-book/book">Book</a></span> (Vol. 4, p. 214)
 by <a href="/contributors.html?q=Alfred+William+Pollard">Alfred William

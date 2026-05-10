@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,7 +160,8 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter LIX</span>Zoology</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">General Principles</a></li><li><a href="#sh-2">Protective Modifications</a></li><li><a href="#sh-3">Intelligence of Animals</a></li><li><a href="#sh-4">Animals in Captivity</a></li><li><a href="#sh-5">Classification and Divisions</a></li><li><a href="#sh-6">Protozoa</a></li><li><a href="#sh-7">Metazoa</a></li><li><a href="#sh-8">Natural History</a></li></ol></div>
+
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-general-principles">General Principles</a></li><li><a href="#section-protective-modifications">Protective Modifications</a></li><li><a href="#section-intelligence-of-animals">Intelligence of Animals</a></li><li><a href="#section-animals-in-captivity">Animals in Captivity</a></li><li><a href="#section-classification-and-divisions">Classification and Divisions</a></li><li><a href="#section-protozoa">Protozoa</a></li><li><a href="#section-metazoa">Metazoa</a></li><li><a href="#section-natural-history">Natural History</a></li></ol></div>
     <div class="body-text">
 
 
@@ -180,7 +191,7 @@ in three divisions: dealing with
 (i) <i>General Principles</i>, (ii) <i>Systematic</i>,
 (iii) <i>Natural History</i>.</p>
 
-<p><span class="shoulder-heading" id="sh-1">General Principles</span>The student should read at any rate
+<p><span class="shoulder-heading" id="section-general-principles">General Principles</span>The student should read at any rate
 some of the general articles mentioned in
 the chapter on <i>Biology</i>; and these will
 prepare him for the difficult questions
@@ -220,7 +231,7 @@ The article <span class="sc"><a href="/article/18-0770-monster/monster">Monster<
 by Dr. Charles Creighton will be found
 very suggestive.</p>
 
-<p><span class="shoulder-heading" id="sh-2">Protective Modifications</span>The eyes of most of us are shut to
+<p><span class="shoulder-heading" id="section-protective-modifications">Protective Modifications</span>The eyes of most of us are shut to
 the wonders of the animal kingdom.
 We know by hearsay that the colouring
 of an animal or insect, brilliant and
@@ -231,7 +242,7 @@ by enabling
 it to assimilate itself to that of its surroundings.
 But how many of us have
 taken the trouble to verify this? The
-articles <span class="sc"><a href="/article/06-0753-colours-of-animals/colours_of_animals">Colours of Animals</a></span>, <i>Bionomics</i>
+articles <span class="sc"><a href="/article/06-0753-colours-of-animals/colours_of_animals#section-1-bionomics">Colours of Animals</a></span>, <i>Bionomics</i>
 (Vol. 6, p. 731), by Prof. Poulton of
 Oxford, and <span class="sc"><a href="/article/18-0519-mimicry/mimicry">Mimicry</a></span> (Vol. 18, p. 495),
 by <a href="/contributors.html?q=Reginald+Innes+Pocock">R. I. Pocock</a>, superintendent of the
@@ -273,7 +284,7 @@ all the principal species now only found
 in fossil remains are described in separate
 articles.</p>
 
-<p><span class="shoulder-heading" id="sh-3">Intelligence of Animals</span>The editor succeeded in getting the
+<p><span class="shoulder-heading" id="section-intelligence-of-animals">Intelligence of Animals</span>The editor succeeded in getting the
 psychologist, Prof. C. Lloyd Morgan,
 of the University of Bristol, who has
 made a specialty of
@@ -298,7 +309,7 @@ will be read for their great interest by
 many who do not intend systematically
 to pursue the subject of Zoology.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Animals in Captivity</span>The housing of animals in captivity is
+<p><span class="shoulder-heading" id="section-animals-in-captivity">Animals in Captivity</span>The housing of animals in captivity is
 discussed in the articles <span class="sc"><a href="/article/02-0249-s8/aquarium">Aquarium</a></span> (Vol.
 2, p. 237), by Professor <a href="/contributors.html?q=George+Herbert+Fowler">G. H. Fowler</a>,
 University College,
@@ -343,7 +354,7 @@ to son. In the article <span class="sc"><a href="/article/26-0493-taxidermy/taxi
 taxidermist, deals with the artistic
 as well as the technical aspects of the craft.</p>
 
-<p><span class="shoulder-heading" id="sh-5">Classification and Divisions</span>Turning to the articles of the chief
+<p><span class="shoulder-heading" id="section-classification-and-divisions">Classification and Divisions</span>Turning to the articles of the chief
 divisions of the animal kingdom, the most
 useful arrangement will be to enumerate
 them in their order.
@@ -363,7 +374,7 @@ consist of single cells. The other and
 more important grade is that of the
 <span class="sc">Metazoa</span>, which are built up of many cells.</p>
 
-<p><span class="shoulder-heading" id="sh-6">Protozoa</span>The main subdivisions (called phyla)
+<p><span class="shoulder-heading" id="section-protozoa">Protozoa</span>The main subdivisions (called phyla)
 of the Protozoa are: phylum i. <span class="sc"><a href="/article/24-0222-sarcodina/sarcodina">Sarcodina</a></span>
 (Vol. 24, p. 208); phylum ii. <span class="sc"><a href="/article/17-0892-mastigophora/mastigophora">Mastigophora</a></span>
 (Vol. 17, p.
@@ -372,7 +383,7 @@ of the Protozoa are: phylum i. <span class="sc"><a href="/article/24-0222-sarcod
 p. 734); phylum iv. <span class="sc"><a href="/article/14-0588-infusoria/infusoria">Infusoria</a></span> (Vol. 14,
 557).</p>
 
-<p><span class="shoulder-heading" id="sh-7">Metazoa</span>Coming next, the Metazoa in their
+<p><span class="shoulder-heading" id="section-metazoa">Metazoa</span>Coming next, the Metazoa in their
 order are, as follows: phylum i. Porifera
 (see <span class="sc"><a href="/article/25-0737-sponges/sponges">Sponges</a></span>, Vol. 25, p. 715); phylum ii.
 <span class="sc"><a href="/article/14-0147-hydromedusae/hydromedusae">Hydromedusae</a></span> or
@@ -450,7 +461,7 @@ worms. Phylum xvii. <span class="sc"><a href="/article/28-1049-zoology/zoology">
 animals living at the bottom of ponds
 and marshes.</p>
 
-<p><span class="shoulder-heading" id="sh-8">Natural History</span>This is an outline of the main division
+<p><span class="shoulder-heading" id="section-natural-history">Natural History</span>This is an outline of the main division
 of the animal kingdom in their order as
 now classified. The subject of zoology
 is so vast that the student will probably
@@ -722,7 +733,7 @@ article.</p>
   <li class="c018"><a href="/article/03-0086-s5/aye-aye">Aye-aye</a></li>
   <li class="c018"><a href="/article/03-0111-s3/babirusa">Babirusa</a></li>
   <li class="c018"><a href="/article/03-0111-s4/baboon">Baboon</a></li>
-  <li class="c018"><a href="/article/03-0205-s4/badger">Badger</a></li>
+  <li class="c018"><a href="/article/03-0205-s5/badger">Badger</a></li>
   <li class="c018"><a href="/article/03-0329-bandicoot/bandicoot">Bandicoot</a></li>
   <li class="c018"><a href="/article/03-0329-bandicoot-rat/bandicoot-rat">Bandicoot-rat</a></li>
   <li class="c018"><a href="/article/03-0373-bantin/bantin">Bantin</a></li>
@@ -1359,7 +1370,7 @@ article.</p>
   <li class="c018"><a href="/article/28-0485-weever/weever">Weever</a></li>
   <li class="c018"><a href="/article/28-0622-s6/whitebait">Whitebait</a></li>
   <li class="c018"><a href="/article/28-0624-s2/whitefish">Whitefish</a></li>
-  <li class="c018"><a href="/article/28-0629-s4/whiting">Whiting</a></li>
+  <li class="c018"><a href="/article/28-0629-s3/whiting">Whiting</a></li>
   <li class="c018"><a href="/article/28-0865-wrasse/wrasse">Wrasse</a></li>
 </ul>
 

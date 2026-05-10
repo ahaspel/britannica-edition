@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,12 +160,12 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter XXXV</span>Language And Writing</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Evolution</a></li><li><a href="#sh-2">Philology</a></li><li><a href="#sh-3">Indo-European Languages</a></li><li><a href="#sh-4">Romance Languages</a></li><li><a href="#sh-5">Teutonic Languages</a></li><li><a href="#sh-6">Persia and India</a></li><li><a href="#sh-7">Semitic</a></li><li><a href="#sh-8">Hamitic</a></li><li><a href="#sh-9">Other Tongues</a></li><li><a href="#sh-10">Alphabet</a></li><li><a href="#sh-11">Artificial Languages</a></li><li><a href="#sh-12">Writing</a></li><li><a href="#sh-13">Text Criticism</a></li></ol></div>
+    <div class="chap-subtitle">Evolution</div>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-philology">Philology</a></li><li><a href="#section-indo-european-languages">Indo-European Languages</a></li><li><a href="#section-romance-languages">Romance Languages</a></li><li><a href="#section-teutonic-languages">Teutonic Languages</a></li><li><a href="#section-persia-and-india">Persia and India</a></li><li><a href="#section-semitic">Semitic</a></li><li><a href="#section-hamitic">Hamitic</a></li><li><a href="#section-other-tongues">Other Tongues</a></li><li><a href="#section-alphabet">Alphabet</a></li><li><a href="#section-artificial-languages">Artificial Languages</a></li><li><a href="#section-writing">Writing</a></li><li><a href="#section-text-criticism">Text Criticism</a></li></ol></div>
     <div class="body-text">
 
 
-<div class="c002"></div>
-<p><span class="shoulder-heading" id="sh-1">Evolution</span>One of the most interesting subjects
+<p>One of the most interesting subjects
 of scientific study developed
 during the last century is that of
 primitive culture and the gradual advancement
@@ -256,7 +266,7 @@ reader, while the articles are invaluable
 to the specialist in linguistic
 study.</p>
 
-<p><span class="shoulder-heading" id="sh-2">Philology</span>The starting point for a course of reading
+<p><span class="shoulder-heading" id="section-philology">Philology</span>The starting point for a course of reading
 is the article <span class="sc"><a href="/article/21-0436-philology/philology">Philology</a></span> (Vol. 21, p.
 414; equivalent to 80 pages in this Guide),
 of which the first
@@ -391,7 +401,7 @@ types: isolating (Chinese); agglutinative
 (Indo-European); or—a more elaborate
 classification:</p>
 
-<p><span class="shoulder-heading" id="sh-3">Indo-European Languages</span>Indo-European: on which see part II
+<p><span class="shoulder-heading" id="section-indo-european-languages">Indo-European Languages</span>Indo-European: on which see part II
 of the article <span class="sc"><a href="/article/21-0436-philology/philology">Philology</a></span> and the article
 <span class="sc"><a href="/article/14-0523-indo-european-languages/indo-european_languages">Indo-European Languages</a></span> (Vol. 14, p.
 495; equivalent to
@@ -427,8 +437,8 @@ critique of the style and vocabulary of the
 great Roman authors and a comparison
 (p. 253) of Latin and Greek prose. And
 see the articles on the dialects of ancient
-Italy: <span class="sc"><a href="/article/15-0014-italy/italy">Italy</a></span>, <i>Ancient Languages and
-People</i>; <span class="sc"><a href="/article/09-0886-etruria/etruria">Etruria</a></span>, <i>Language</i>; <span class="sc"><a href="/article/16-0702-s3/liguria">Liguria</a></span>,
+Italy: <span class="sc"><a href="/article/15-0014-italy/italy#section-a-ancient-languages-and-peoples">Italy</a></span>, <i>Ancient Languages and
+People</i>; <span class="sc"><a href="/article/09-0886-etruria/etruria#section-language">Etruria</a></span>, <i>Language</i>; <span class="sc"><a href="/article/16-0702-s3/liguria">Liguria</a></span>,
 <i>Philology</i>; <span class="sc"><a href="/article/25-0051-s4/siculi">Siculi</a></span>; <span class="sc"><a href="/article/22-0064-s2/pompeii">Pompeii</a></span>, <i>Oscan Inscriptions</i>;
 <span class="sc"><a href="/article/23-1010-s2/sabini">Sabini</a></span>; <span class="sc"><a href="/article/10-0160-s2/falisci">Falisci</a></span>; <span class="sc"><a href="/article/28-0213-volsci/volsci">Volsci</a></span>; <span class="sc"><a href="/article/20-0378-osca-lingua/osca_lingua">Osca
 Lingua</a></span>; <span class="sc"><a href="/article/14-0310-s2/iguvium">Iguvium</a></span>; <span class="sc">Brutii</span>; <span class="sc"><a href="/article/27-0595-umbria/umbria">Umbria</a></span>; <span class="sc"><a href="/article/21-0607-picenum/picenum">Picenum</a></span>;
@@ -439,7 +449,7 @@ revision of all that is known than there
 is in <a href="/contributors.html?q=Robert+Seymour+Conway">Prof. Conway</a>’s books, in the works
 of C. D. Buck, or in other authorities.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Romance Languages</span>For the descendants of Latin, the article
+<p><span class="shoulder-heading" id="section-romance-languages">Romance Languages</span>For the descendants of Latin, the article
 <span class="sc"><a href="/article/23-0534-romance-languages/romance_languages">Romance Languages</a></span> (Vol. 23, p.
 504), by Dr. Wilhelm <a href="/contributors.html?q=Paul+Meyer">Meyer</a>-Lübke, Professor
 of romance
@@ -476,7 +486,7 @@ and the Portuguese.</p>
 
 <p><span class="sc"><a href="/article/23-0868-rumania/rumania">Rumania</a></span>: <i>Language</i> (Vol. 23, p. 843).</p>
 
-<p><span class="shoulder-heading" id="sh-5">Teutonic Languages</span>The general articles <span class="sc"><a href="/article/24-0309-scandinavian-languages/scandinavian_languages">Scandinavian
+<p><span class="shoulder-heading" id="section-teutonic-languages">Teutonic Languages</span>The general articles <span class="sc"><a href="/article/24-0309-scandinavian-languages/scandinavian_languages">Scandinavian
 Languages</a></span> (Vol. 24, p. 291), by Dr.
 Adolf Noreen, professor in the University
 of Upsala, with
@@ -511,7 +521,7 @@ and old, high and low German.</p>
 
 <p>For Indo-Iranian languages, see:</p>
 
-<p><span class="shoulder-heading" id="sh-6">Persia and India</span><span class="sc"><a href="/article/21-0204-persia/persia">Persia</a></span>: <i>Language and Literature</i> (Vol.
+<p><span class="shoulder-heading" id="section-persia-and-india">Persia and India</span><span class="sc"><a href="/article/21-0204-persia/persia">Persia</a></span>: <i>Language and Literature</i> (Vol.
 21, p. 246), by Dr. <a href="/contributors.html?q=Karl+Hermann+Eth%C3%A9">Hermann Ethé</a>, professor
 of Oriental languages, University
 College, Wales, dealing
@@ -559,7 +569,7 @@ by <a href="/contributors.html?q=James+David+Bourchier">J. D. Bourchier</a>, cor
 <i>The Times</i> (London) in South-eastern
 Europe.</p>
 
-<p><span class="shoulder-heading" id="sh-7">Semitic</span>The material on the Semitic group is
+<p><span class="shoulder-heading" id="section-semitic">Semitic</span>The material on the Semitic group is
 principally in the article
 <span class="sc"><a href="/article/24-0647-semitic-languages/semitic_languages">Semitic Languages</a></span> (Vol.
 24, p. 617), by Theodor
@@ -591,7 +601,7 @@ Harari and Gurague.</p>
 (Vol. 26, p. 309), by <a href="/contributors.html?q=Norman+McLean">Norman McLean</a>,
 lecturer in Aramaic, Cambridge.</p>
 
-<p><span class="shoulder-heading" id="sh-8">Hamitic</span>The article <span class="sc"><a href="/article/12-0918-hamitic-races-and-languages/hamitic_races_and_languages">Hamitic Languages</a></span> (Vol.
+<p><span class="shoulder-heading" id="section-hamitic">Hamitic</span>The article <span class="sc"><a href="/article/12-0918-hamitic-races-and-languages/hamitic_races_and_languages">Hamitic Languages</a></span> (Vol.
 12, p. 893) is by Dr. W. Max Müller,
 professor in the Reformed Episcopal
 Seminary, Philadelphia. See
@@ -606,15 +616,15 @@ of Arabic, Oxford; <span class="sc"><a href="/article/03-0784-berber/berber">Ber
 (Vol. 15, p. 625) for the Libyan group
 of the Hamitic languages.</p>
 
-<p><span class="shoulder-heading" id="sh-9">Other Tongues</span>On the mono-syllabic languages see
-<span class="sc"><a href="/article/06-0179-china/china">China</a></span>, <i>Language</i> (Vol. 6, p. 216),
+<p><span class="shoulder-heading" id="section-other-tongues">Other Tongues</span>On the mono-syllabic languages see
+<span class="sc"><a href="/article/06-0179-china/china#section-vii-the-chinese-language">China</a></span>, <i>Language</i> (Vol. 6, p. 216),
 by Dr. <a href="/contributors.html?q=Herbert+Allen+Giles">H. A. Giles</a>, professor
 of Chinese, Cambridge,
 and Lionel Giles,
 assistant Oriental Department,
 British Museum;</p>
 
-<p><span class="sc"><a href="/article/15-0172-japan/japan">Japan</a></span>, <i>Language</i> (Vol. 15, p. 167),
+<p><span class="sc"><a href="/article/15-0172-japan/japan#section-iii-language-and-literature">Japan</a></span>, <i>Language</i> (Vol. 15, p. 167),
 by <a href="/contributors.html?q=Captain+Frank+Brinkley">Captain Frank Brinkley</a>, late editor
 of the Japan <i>Mail</i>; and</p>
 
@@ -645,7 +655,7 @@ Africa see the article <span class="sc"><a href="/article/26-0409-tamils/tamils"
 secretary of the Royal Asiatic Society.</p>
 
 <p>For languages of Malay-Polynesia and
-other Oceanic peoples see <span class="sc"><a href="/article/17-0492-malays/malays">Malays</a></span>,
+other Oceanic peoples see <span class="sc"><a href="/article/17-0492-malays/malays#section-malay-language-and-literature">Malays</a></span>,
 <i>Language</i> (Vol. 17, p. 477), by Sir <a href="/contributors.html?q=Sir+Hugh+Charles+Clifford">Hugh
 Charles Clifford</a>, colonial secretary of
 Ceylon, and joint-author of <i>A Dictionary
@@ -679,7 +689,7 @@ Vol. 14), by Dr. <a href="/contributors.html?q=Alexander+Francis+Chamberlain">A.
 professor of anthropology, Clark University,
 Worcester, Massachusetts.</p>
 
-<p><span class="shoulder-heading" id="sh-10">Alphabet</span>This list of articles will serve the student
+<p><span class="shoulder-heading" id="section-alphabet">Alphabet</span>This list of articles will serve the student
 as a guide for the purely linguistic
 articles. Besides the general treatment
 in the article <span class="sc"><a href="/article/21-0436-philology/philology">Philology</a></span> from which
@@ -716,7 +726,7 @@ nasalized spirants play an important
 part in the so-called Yankee pronunciation
 of Americans.”</p>
 
-<p><span class="shoulder-heading" id="sh-11">Artificial Languages</span>From alphabets the student may well
+<p><span class="shoulder-heading" id="section-artificial-languages">Artificial Languages</span>From alphabets the student may well
 turn to ideal languages in the article
 <span class="sc"><a href="/article/27-0771-universal-languages/universal_languages">Universal Languages</a></span> (Vol. 27, p. 746),
 by Professor <a href="/contributors.html?q=Henry+Sweet">Henry
@@ -736,7 +746,7 @@ language is possible. See also <a href="/contributors.html?q=Henry+Sweet">Prof.
 Sweet</a>’s separate articles <span class="sc"><a href="/article/28-0194-volap-k/volapük">Volapük</a></span> (Vol.
 28, p. 178) and <span class="sc"><a href="/article/09-0805-esperanto/esperanto">Esperanto</a></span> (Vol. 9, p. 773).</p>
 
-<p><span class="shoulder-heading" id="sh-12">Writing</span>The article <span class="sc"><a href="/article/28-0878-writing/writing">Writing</a></span> (Vol. 28, p. 852)
+<p><span class="shoulder-heading" id="section-writing">Writing</span>The article <span class="sc"><a href="/article/28-0878-writing/writing">Writing</a></span> (Vol. 28, p. 852)
 deals, chiefly from the anthropological
 standpoint, with primitive attempts to
 record ideas in an intelligible
@@ -817,7 +827,7 @@ inks. See, also, <span class="sc">Illuminated Manuscripts</span>,
 articles mentioned in the chapter in this
 Guide <i>For Printers</i>.</p>
 
-<p><span class="shoulder-heading" id="sh-13">Text Criticism</span>The student of language and literature
+<p><span class="shoulder-heading" id="section-text-criticism">Text Criticism</span>The student of language and literature
 and of writing will also find much valuable
 information in the article <span class="sc"><a href="/article/26-0744-textual-criticism/textual_criticism">Textual
 Criticism</a></span> (Vol. 26, p. 708),
@@ -1016,7 +1026,7 @@ philologists:</p>
   <li class="c018"><a href="/article/24-0489-s3/scott__robert">Scott, Robert</a></li>
   <li class="c018"><a href="/article/24-0644-sellar-william-young/sellar__william_young">Sellar, W. Y.</a></li>
   <li class="c018"><a href="/article/25-0184-skeat-walter-william/skeat__walter_william">Skeat, W. W.</a></li>
-  <li class="c018"><a href="/article/26-0498-s3/taylor__isaac">Taylor, Isaac</a></li>
+  <li class="c018"><a href="/article/26-0498-s2/taylor__isaac">Taylor, Isaac</a></li>
   <li class="c018"><a href="/article/26-0643-ten-brink-bernhard-egidius-konrad/ten_brink__bernhard_egidius_konrad">Ten Brink, B. E. K.</a></li>
   <li class="c018"><a href="/article/26-0705-s5/teuffel__wilhelm_siegmund">Teuffel, W. S.</a></li>
   <li class="c018"><a href="/article/26-0921-thorpe-benjamin/thorpe__benjamin">Thorpe, Benjamin</a></li>

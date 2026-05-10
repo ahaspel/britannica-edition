@@ -162,6 +162,13 @@
       "to": "[[File:EB1911 - Tool - Fig 7.png|Fig. 7.—Box Tool for Turret Lathe. (Alfred Herbert, Ltd., Coventry.)]]\n\nA, Cutting tool. B, Screw for adjusting radius of cut. C C, V-steadies supporting the work in opposition to A. D, Diameter of work. E, Body of holder. F, Stem which fits in the turret.\n\nBut in all other respects the two are dissimilar."
     }
   ],
+  "_26:428_note": "Vol 26 page 428 TAPESTRY plate page contains a transcription typo in a Ts styling template: `{{ts|p0}|ac}} colspan=\"3\"|` — the close brace is misplaced (a stray `}` after p0, breaking the template into `{{ts|p0}` plus orphan `|ac}}`). Should be `{{ts|p0|ac}}` (single Ts template with two style classes). Without the fix the malformed template + bare `colspan=\"3\"|` leaks into the rendered body. Single occurrence corpus-wide.",
+  "26:428": [
+    {
+      "from": "{{ts|p0}|ac}} colspan=\"3\"|",
+      "to": "{{ts|p0|ac}} colspan=\"3\"|"
+    }
+  ],
   "1:543": [
     {
       "from": "(1808–1801)",
@@ -457,6 +464,13 @@
     {
       "from": "receive privilege§",
       "to": "receive privileges"
+    }
+  ],
+  "_11:582_note": "GEMS PLATE II — the printed page has a centered credit beneath the plate (\"All the above are in the British Museum, unless otherwise stated.\") that the Wikisource transcription omitted. PLATE I has its analogous credit; restore PLATE II's so the two plates render consistently and the gem attributions are accurate.",
+  "11:582": [
+    {
+      "from": "{{em|3}}76. Athena, from Townley Bust by Marchant.\n{{EB1911 fine print/e}}</td></tr></table>",
+      "to": "{{em|3}}76. Athena, from Townley Bust by Marchant.\n{{EB1911 fine print/e}}</td></tr></table>\n<div align=center>All the above are in the British Museum, unless otherwise stated.</div>"
     }
   ]
 }

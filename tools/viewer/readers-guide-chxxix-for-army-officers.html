@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,12 +160,12 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter XXIX</span>For Army Officers</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">A New Departure</a></li><li><a href="#sh-2">Army</a></li><li><a href="#sh-3">Theory and Practice</a></li><li><a href="#sh-4">Arms of Service</a></li><li><a href="#sh-5">Strategy and Tactics</a></li><li><a href="#sh-6">Military History and Criticism</a></li><li><a href="#sh-7">A Military Encyclopaedia</a></li></ol></div>
+    <div class="chap-subtitle">A New Departure</div>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-army">Army</a></li><li><a href="#section-theory-and-practice">Theory and Practice</a></li><li><a href="#section-arms-of-service">Arms of Service</a></li><li><a href="#section-strategy-and-tactics">Strategy and Tactics</a></li><li><a href="#section-military-history-and-criticism">Military History and Criticism</a></li><li><a href="#section-a-military-encyclopaedia">A Military Encyclopaedia</a></li></ol></div>
     <div class="body-text">
 
 
-<div class="c002"></div>
-<p><span class="shoulder-heading" id="sh-1">A New Departure</span>It is often said of an article in the
+<p>It is often said of an article in the
 Britannica that it is “<i>the last word</i> on
 the subject,” so thoroughly has the
 authority of the book been recognized.
@@ -208,7 +218,7 @@ Jackson and the American Civil War</i>,
 and Col. F. N. <a href="/contributors.html?q=Colonel+Frederic+Natusch+Maude">Maude</a>, lecturer in military
 history, University of Manchester.</p>
 
-<p><span class="shoulder-heading" id="sh-2">Army</span>The best starting point for a study of
+<p><span class="shoulder-heading" id="section-army">Army</span>The best starting point for a study of
 military affairs in the Britannica
 is the article <span class="sc"><a href="/article/02-0634-s2/army">Army</a></span>
 (Vol. 2, p. 592; equivalent
@@ -335,7 +345,7 @@ Armies.</p>
 
 <p><i>Bibliography</i> (2000 words)</p>
 
-<p><span class="shoulder-heading" id="sh-3">Theory and Practice</span>Next in order the student should turn
+<p><span class="shoulder-heading" id="section-theory-and-practice">Theory and Practice</span>Next in order the student should turn
 to the article <span class="sc"><a href="/article/28-0321-war/war">War</a></span> (Vol. 28, p. 305;
 equivalent to 40 pages of this Guide), by
 Col. G. F. R. Henderson,
@@ -378,7 +388,7 @@ lines of operation; amphibious power;
 value of unprofessional troops and the
 need of professional leaders.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Arms of Service</span>In the articles <span class="sc"><a href="/article/14-0546-s2/infantry">Infantry</a></span> (Vol. 14, p.
+<p><span class="shoulder-heading" id="section-arms-of-service">Arms of Service</span>In the articles <span class="sc"><a href="/article/14-0546-s2/infantry">Infantry</a></span> (Vol. 14, p.
 517; 2 plates; equivalent to 35 pages of
 this Guide) and <span class="sc"><a href="/article/02-0727-s4/artillery">Artillery</a></span> (Vol. 2, p.
 685; 2 plates; equivalent to 30 pages of
@@ -413,7 +423,7 @@ covered by the articles <span class="sc">Army Signalling</span>,
 balloons is very fully shown in the articles
 <span class="sc"><a href="/article/10-0520-s2/flight">Flight</a></span> and <span class="sc"><a href="/article/01-0295-s2/aeronautics">Aeronautics</a></span>.</p>
 
-<p><span class="shoulder-heading" id="sh-5">Strategy and Tactics</span>Before taking up a systematic course
+<p><span class="shoulder-heading" id="section-strategy-and-tactics">Strategy and Tactics</span>Before taking up a systematic course
 in military history, there are two general
 articles that the military student should
 read: <span class="sc"><a href="/article/26-0368-s4/tactics">Tactics</a></span> (Vol.
@@ -477,7 +487,7 @@ and discussion of the following terms:
 <i>Base</i>; <i>Line of Communication</i>; <i>Line of
 Operations</i>; <i>Exterior Lines</i>; <i>Obstacles</i>.</p>
 
-<p><span class="shoulder-heading" id="sh-6">Military History and Criticism</span>For a reasoned history of warfare
+<p><span class="shoulder-heading" id="section-military-history-and-criticism">Military History and Criticism</span>For a reasoned history of warfare
 in more detail than has been given in
 the general articles
 already alluded to,
@@ -817,7 +827,7 @@ DeWet</i>; <i>Louis Botha</i>.</p>
 <i>Kuroki</i>; <i>Kuropatkin</i>; <i>Inouye</i>;
 <i>Oku</i>; <i>Nozu</i>; <i>Oyama</i>.</p>
 
-<p><span class="shoulder-heading" id="sh-7">A Military Encyclopaedia</span>The military student will see from
+<p><span class="shoulder-heading" id="section-a-military-encyclopaedia">A Military Encyclopaedia</span>The military student will see from
 what has already been said that the Britannica
 is not merely a general work of
 reference but a valuable
@@ -869,7 +879,7 @@ the Index volume.</p>
   <li class="c018"><a href="/article/01-0869-american-civil-war/american_civil_war">American Civil War</a></li>
   <li class="c018"><a href="/article/01-0898-american-war-of-1812/american_war_of_1812">American War of 1812</a></li>
   <li class="c018"><a href="/article/01-0893-american-war-of-independence/american_war_of_independence">American War of Independence</a></li>
-  <li class="c018"><a href="/article/01-0904-s3/amherst">Amherst</a></li>
+  <li class="c018"><a href="/article/01-0904-s2/amherst">Amherst</a></li>
   <li class="c018"><a href="/article/01-1013-s3/anderson__richard_henry">Anderson, R. H.</a></li>
   <li class="c018"><a href="/article/02-0028-s2/anglesey">Anglesey</a></li>
   <li class="c018"><a href="/article/02-0136-s3/antietam">Antietam</a></li>
@@ -1172,7 +1182,7 @@ the Index volume.</p>
   <li class="c018">Frederick William of Brandenburg</li>
   <li class="c018"><a href="/article/11-0080-s3/fredericksburg">Fredericksburg, Va.</a></li>
   <li class="c018"><a href="/article/11-0104-s5/freiburg_im_breisgau">Freiburg im Breisgau</a></li>
-  <li class="c018"><a href="/article/11-0110-s5/fremont">Fremont, J. C.</a></li>
+  <li class="c018"><a href="/article/11-0110-s3/fremont">Fremont, J. C.</a></li>
   <li class="c018"><a href="/article/11-0183-french-revolutionary-wars/french_revolutionary_wars">French Revolutionary Wars</a></li>
   <li class="c018"><a href="/article/11-0224-s5/freycinet__louis_claude_desaulses_de">Freycinet</a></li>
   <li class="c018"><a href="/article/11-0228-friedland-austria/friedland__austria_">Friedland</a></li>
@@ -1191,7 +1201,7 @@ the Index volume.</p>
   <li class="c018"><a href="/article/11-0552-s3/gauntlet">Gauntlet</a></li>
   <li class="c018"><a href="/article/11-0597-general/general">General</a></li>
   <li class="c018">George II of England</li>
-  <li class="c018"><a href="/article/11-0785-s2/gerard">Gerard</a></li>
+  <li class="c018"><a href="/article/11-0785-s3/gerard">Gerard</a></li>
   <li class="c018"><a href="/article/11-0825-germantown/germantown">Germantown</a></li>
   <li class="c018"><a href="/article/11-0935-s5/gettysburg">Gettysburg</a></li>
   <li class="c018"><a href="/article/12-0040-s3/gingall">Gingall or Jingal</a></li>

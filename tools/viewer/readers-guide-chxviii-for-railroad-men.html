@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,7 +160,8 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter XVIII</span>For Railroad Men</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Six Classes of Articles</a></li><li><a href="#sh-2">Technical Authorities</a></li><li><a href="#sh-3">The Key Article</a></li><li><a href="#sh-4">Other Major Articles</a></li><li><a href="#sh-5">Legislation</a></li><li><a href="#sh-6">Biographies</a></li></ol></div>
+
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-six-classes-of-articles">Six Classes of Articles</a></li><li><a href="#section-technical-authorities">Technical Authorities</a></li><li><a href="#section-the-key-article">The Key Article</a></li><li><a href="#section-other-major-articles">Other Major Articles</a></li><li><a href="#section-legislation">Legislation</a></li><li><a href="#section-biographies">Biographies</a></li></ol></div>
     <div class="body-text">
 
 
@@ -177,7 +188,7 @@ and the passes over which lines have
 been carried wholly or largely in the
 open.</p>
 
-<p><span class="shoulder-heading" id="sh-1">Six Classes of Articles</span>2. The articles on separate countries,
+<p><span class="shoulder-heading" id="section-six-classes-of-articles">Six Classes of Articles</span>2. The articles on separate countries,
 on the individual states of the Union, and
 on colonies contain detailed accounts of
 the railway systems.
@@ -230,7 +241,7 @@ the foremost authorities on the subject
 both in the Old World and in the New,
 including:</p>
 
-<p><span class="shoulder-heading" id="sh-2">Technical Authorities</span><span class="sc"><a href="/article/12-0823-hadley-arthur-twining/hadley__arthur_twining">Arthur Twining Hadley</a></span>, president
+<p><span class="shoulder-heading" id="section-technical-authorities">Technical Authorities</span><span class="sc"><a href="/article/12-0823-hadley-arthur-twining/hadley__arthur_twining">Arthur Twining Hadley</a></span>, president
 of Yale University, and author of
 <i>Railroad Transportation</i>.</p>
 
@@ -278,7 +289,7 @@ of the British Electric Traction Co.,
 Ltd., author of <i>Manual of Electrical
 Undertakings</i>.</p>
 
-<p><span class="shoulder-heading" id="sh-3">The Key Article</span>The article opens with an introductory
+<p><span class="shoulder-heading" id="section-the-key-article">The Key Article</span>The article opens with an introductory
 historical summary which describes the
 use of railways or tramways before the
 invention of the steam locomotive
@@ -364,7 +375,7 @@ the New York Rapid Transit Commission.</p>
 <p>(5) <span class="sc">Light Railways</span> for rural and interurban
 service and portable railways.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Other Major Articles</span>The next article to be read is <i>Tramway</i>
+<p><span class="shoulder-heading" id="section-other-major-articles">Other Major Articles</span>The next article to be read is <i>Tramway</i>
 (Vol. 27, p. 159), dealing with the earliest
 railways used in coal mines, American
 and English, without locomotive power;
@@ -420,7 +431,7 @@ of this Guide), by <a href="/contributors.html?q=Braman+Blanchard+Adams">B. B. A
 the London <i>Times</i> Engineering Supplement;
 and <span class="sc"><a href="/article/04-0428-brake/brake">Brake</a></span> (Vol. 4, p. 414).</p>
 
-<p><span class="shoulder-heading" id="sh-5">Legislation</span>On the history of railroading and on
+<p><span class="shoulder-heading" id="section-legislation">Legislation</span>On the history of railroading and on
 statistics there is much information in
 the Britannica in local articles. It has
 already been remarked
@@ -454,7 +465,7 @@ radical rate legislation and on physical
 valuation for <i>ad valorem</i> tax of railways
 (Vol. 28, p. 744).</p>
 
-<p><span class="shoulder-heading" id="sh-6">Biographies</span>The biographical articles in the new
+<p><span class="shoulder-heading" id="section-biographies">Biographies</span>The biographical articles in the new
 Britannica also have much important information
 for the student of railways.</p>
 

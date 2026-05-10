@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,7 +160,8 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter XLIII</span>American History</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Battles and Campaigns</a></li><li><a href="#sh-2">Union Generals</a></li><li><a href="#sh-3">Confederate Generals</a></li></ol></div>
+
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-battles-and-campaigns">Battles and Campaigns</a></li><li><a href="#section-union-generals">Union Generals</a></li><li><a href="#section-confederate-generals">Confederate Generals</a></li></ol></div>
     <div class="body-text">
 
 
@@ -263,7 +274,7 @@ the names of the contributors.</p>
   </tr>
   <tr>
     <td class="c011">The splendid past of Central America. What was accomplished during the 500 years of Mayan culture. An interesting calendar.</td>
-    <td class="c029"><span class="sc"><a href="/article/05-0699-central-america/central_america">Central America</a></span>, <i>Archaeology of</i> (Vol. 5, p. 677), by Dr. <a href="/contributors.html?q=Walter+Lehmann">Walter Lehmann</a>, Royal Ethnographical Museum, Munich.</td>
+    <td class="c029"><span class="sc"><a href="/article/05-0699-central-america/central_america#section-archaeology-of-central-america">Central America</a></span>, <i>Archaeology of</i> (Vol. 5, p. 677), by Dr. <a href="/contributors.html?q=Walter+Lehmann">Walter Lehmann</a>, Royal Ethnographical Museum, Munich.</td>
   </tr>
   <tr>
     <td class="c011"><i>First Voyages of Discovery.</i></td>
@@ -335,7 +346,7 @@ the names of the contributors.</p>
   </tr>
   <tr>
     <td class="c011"> </td>
-    <td class="c029"><span class="sc"><a href="/article/05-0154-canada/canada">Canada</a></span>, <i>History</i> (Vol. 5, p. 156), by <a href="/contributors.html?q=George+McKinnon+Wrong">Dr. George McKinnon Wrong</a>, University of Toronto.</td>
+    <td class="c029"><span class="sc"><a href="/article/05-0154-canada/canada#section-history">Canada</a></span>, <i>History</i> (Vol. 5, p. 156), by <a href="/contributors.html?q=George+McKinnon+Wrong">Dr. George McKinnon Wrong</a>, University of Toronto.</td>
   </tr>
   <tr>
     <td class="c011">Foundation of Quebec (1608). Discovery of Lake Champlain (1609). Champlain assists Algonquins and Hurons against the Iroquois. The beginning of the murderous conflicts between the French and the Iroquois.</td>
@@ -351,7 +362,7 @@ the names of the contributors.</p>
   </tr>
   <tr>
     <td class="c011">The first English colony (1583) unsuccessful.</td>
-    <td class="c029"><span class="sc"><a href="/article/19-0498-s2/newfoundland">Newfoundland</a></span>, <i>History</i> (Vol. 19, p. 482), by <a href="/contributors.html?q=Beckles+Willson">Beckles Willson</a>, author of <i>The Romance of Canada</i>, etc.</td>
+    <td class="c029"><span class="sc"><a href="/article/19-0498-s2/newfoundland#section-recent-history">Newfoundland</a></span>, <i>History</i> (Vol. 19, p. 482), by <a href="/contributors.html?q=Beckles+Willson">Beckles Willson</a>, author of <i>The Romance of Canada</i>, etc.</td>
   </tr>
   <tr>
     <td class="c011">The persistent efforts of Raleigh (1584–1587). First English child born in America (Aug. 15, 1587).</td>
@@ -379,7 +390,7 @@ the names of the contributors.</p>
   </tr>
   <tr>
     <td class="c011">The Thirteen Original Colonies, their Founders and Leaders, and their early Struggles.</td>
-    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>History</i> (Vol. 27, p. 663), by Dr. Herbert L. Osgood, professor of history, Columbia University, author of <i>The American Colonies in the 17th Century</i>, etc.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the#section-x-history">United States</a></span>, <i>History</i> (Vol. 27, p. 663), by Dr. Herbert L. Osgood, professor of history, Columbia University, author of <i>The American Colonies in the 17th Century</i>, etc.</td>
   </tr>
   <tr>
     <td class="c011">Virginia.</td>
@@ -559,7 +570,7 @@ the names of the contributors.</p>
   </tr>
   <tr>
     <td class="c011"> </td>
-    <td class="c029"><span class="sc"><a href="/article/01-0529-s4/albany">Albany</a></span> (Vol. 1, p. 490).</td>
+    <td class="c029"><span class="sc"><a href="/article/01-0529-s3/albany">Albany</a></span> (Vol. 1, p. 490).</td>
   </tr>
   <tr>
     <td class="c011"> </td>
@@ -655,11 +666,11 @@ the names of the contributors.</p>
   </tr>
   <tr>
     <td class="c011">Struggle of the British and the French in America. Pressure of British on the French “paper barriers.” Old-World quarrel carried into the New World.</td>
-    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>History</i>, The Struggle with the French (1690–1760) (Vol. 27, p. 670), by Prof. H. L. Osgood, Columbia University.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the#section-x-history">United States</a></span>, <i>History</i>, The Struggle with the French (1690–1760) (Vol. 27, p. 670), by Prof. H. L. Osgood, Columbia University.</td>
   </tr>
   <tr>
     <td class="c011"> </td>
-    <td class="c029"><span class="sc"><a href="/article/05-0154-canada/canada">Canada</a></span>, <i>History</i> (Vol. 5, p. 156), by Prof. <a href="/contributors.html?q=George+McKinnon+Wrong">G. M. Wrong</a>, author of <i>A Canadian Manor and Its Seigneurs</i>, etc.</td>
+    <td class="c029"><span class="sc"><a href="/article/05-0154-canada/canada#section-history">Canada</a></span>, <i>History</i> (Vol. 5, p. 156), by Prof. <a href="/contributors.html?q=George+McKinnon+Wrong">G. M. Wrong</a>, author of <i>A Canadian Manor and Its Seigneurs</i>, etc.</td>
   </tr>
   <tr>
     <td class="c011">Capture of Louisburg, 1745.</td>
@@ -667,7 +678,7 @@ the names of the contributors.</p>
   </tr>
   <tr>
     <td class="c011">Albany Congress of 1754.</td>
-    <td class="c029"><span class="sc"><a href="/article/01-0529-s4/albany">Albany</a></span>, N. Y. (Vol. 1, p. 490).</td>
+    <td class="c029"><span class="sc"><a href="/article/01-0529-s3/albany">Albany</a></span>, N. Y. (Vol. 1, p. 490).</td>
   </tr>
   <tr>
     <td class="c011">The Continental Contest of which the French and Indian Wars were a part.</td>
@@ -743,7 +754,7 @@ the names of the contributors.</p>
   </tr>
   <tr>
     <td class="c011">(1763–1783).</td>
-    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>History</i> (Vol. 27, p. 672), by Prof. H. L. Osgood, Columbia University.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the#section-x-history">United States</a></span>, <i>History</i> (Vol. 27, p. 672), by Prof. H. L. Osgood, Columbia University.</td>
   </tr>
   <tr>
     <td class="c011">Immediate Causes:</td>
@@ -1275,7 +1286,7 @@ the names of the contributors.</p>
   </tr>
   <tr>
     <td class="c011">First attempts at Confederation (1776–1789). Article of Confederation (1777–1781).</td>
-    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>History</i> (Vol. 27, p. 681), by Prof. H. L. Osgood, Columbia University.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the#section-x-history">United States</a></span>, <i>History</i> (Vol. 27, p. 681), by Prof. H. L. Osgood, Columbia University.</td>
   </tr>
   <tr>
     <td class="c011">Difficulties of ratification.</td>
@@ -1303,7 +1314,7 @@ the names of the contributors.</p>
   </tr>
   <tr>
     <td class="c011">Struggle for National Government.<br>The Critical Period.<br>Government found impossible under the articles (1783–1789).</td>
-    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>History</i> (Vol. 27, p. 684), by Dr. <a href="/contributors.html?q=Alexander+Johnston">Alexander Johnston</a>, late professor of history, Princeton University, and <a href="/contributors.html?q=Charles+Crawford+Whinery">C. C. Whinery</a>, assistant editor, Encyclopaedia Britannica.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the#section-x-history">United States</a></span>, <i>History</i> (Vol. 27, p. 684), by Dr. <a href="/contributors.html?q=Alexander+Johnston">Alexander Johnston</a>, late professor of history, Princeton University, and <a href="/contributors.html?q=Charles+Crawford+Whinery">C. C. Whinery</a>, assistant editor, Encyclopaedia Britannica.</td>
   </tr>
   <tr>
     <td class="c011">Territorial cessions and government. Ordinance of 1787.</td>
@@ -1379,7 +1390,7 @@ the names of the contributors.</p>
   </tr>
   <tr>
     <td class="c011">The form of Government established by the Constitution.</td>
-    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>Constitution and Government</i> (Vol. 27, p. 646), by Hon. <a href="/contributors.html?q=Edmund+Janes+James">James</a> Bryce, British Ambassador at Washington, and author of <i>The American Commonwealth</i>.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the#section-vii-constitution-and-government">United States</a></span>, <i>Constitution and Government</i> (Vol. 27, p. 646), by Hon. <a href="/contributors.html?q=Edmund+Janes+James">James</a> Bryce, British Ambassador at Washington, and author of <i>The American Commonwealth</i>.</td>
   </tr>
   <tr>
     <td class="c011">Washington as President (1789–1797).</td>
@@ -1387,7 +1398,7 @@ the names of the contributors.</p>
   </tr>
   <tr>
     <td class="c011">Development of Democracy (1789–1801).</td>
-    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>History</i> (Vol. 27, p. 688), by Prof. <a href="/contributors.html?q=Alexander+Johnston">Alexander Johnston</a> and <a href="/contributors.html?q=Charles+Crawford+Whinery">C. C. Whinery</a>.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the#section-x-history">United States</a></span>, <i>History</i> (Vol. 27, p. 688), by Prof. <a href="/contributors.html?q=Alexander+Johnston">Alexander Johnston</a> and <a href="/contributors.html?q=Charles+Crawford+Whinery">C. C. Whinery</a>.</td>
   </tr>
   <tr>
     <td class="c011">Constitution finally ratified by all the States.</td>
@@ -1463,7 +1474,7 @@ the names of the contributors.</p>
   </tr>
   <tr>
     <td class="c011"><i>Democracy and Nationality</i> (1801–1829).</td>
-    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>History</i> (Vol. 27, p. 692), by Prof. <a href="/contributors.html?q=Alexander+Johnston">Alexander Johnston</a> and <a href="/contributors.html?q=Charles+Crawford+Whinery">C. C. Whinery</a>.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the#section-x-history">United States</a></span>, <i>History</i> (Vol. 27, p. 692), by Prof. <a href="/contributors.html?q=Alexander+Johnston">Alexander Johnston</a> and <a href="/contributors.html?q=Charles+Crawford+Whinery">C. C. Whinery</a>.</td>
   </tr>
   <tr>
     <td class="c011">Election of Jefferson (1800). The Democratic Party called by Jefferson the Republican Party, later and officially the Democratic-Republican, and later still simply the Democratic Party.</td>
@@ -1655,7 +1666,7 @@ the names of the contributors.</p>
   </tr>
   <tr>
     <td class="c011">Bank of the United States (1816).</td>
-    <td class="c029"><span class="sc"><a href="/article/03-0351-banks-and-banking/banks_and_banking">Banks and Banking</a></span>, <i>United States</i> (Vol. 3, p. 345), by <a href="/contributors.html?q=Charles+Arthur+Conant">Charles A. Conant</a>, author of <i>The History of Modern Banks</i>.</td>
+    <td class="c029"><span class="sc"><a href="/article/03-0351-banks-and-banking/banks_and_banking#section-united-states">Banks and Banking</a></span>, <i>United States</i> (Vol. 3, p. 345), by <a href="/contributors.html?q=Charles+Arthur+Conant">Charles A. Conant</a>, author of <i>The History of Modern Banks</i>.</td>
   </tr>
   <tr>
     <td class="c011">Tariff revision (1816–1828).</td>
@@ -1747,7 +1758,7 @@ the names of the contributors.</p>
   </tr>
   <tr>
     <td class="c011"><i>Industrial Development and Sectional Divergence.</i></td>
-    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>History</i> (Vol. 27, p. 697), by Prof. <a href="/contributors.html?q=Alexander+Johnston">Alexander Johnston</a> and <a href="/contributors.html?q=Charles+Crawford+Whinery">C. C. Whinery</a>.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the#section-x-history">United States</a></span>, <i>History</i> (Vol. 27, p. 697), by Prof. <a href="/contributors.html?q=Alexander+Johnston">Alexander Johnston</a> and <a href="/contributors.html?q=Charles+Crawford+Whinery">C. C. Whinery</a>.</td>
   </tr>
   <tr>
     <td class="c011"><i>Tendencies to Disunion</i> (1829–1851).</td>
@@ -1767,7 +1778,7 @@ the names of the contributors.</p>
   </tr>
   <tr>
     <td class="c011">Jackson and the Bank.</td>
-    <td class="c029"><span class="sc"><a href="/article/03-0351-banks-and-banking/banks_and_banking">Banks and Banking</a></span>, <i>United States</i> (Vol. 3, p. 346), by <a href="/contributors.html?q=Charles+Arthur+Conant">C. A. Conant</a>, author of <i>History of Modern Banks of Issue</i>.</td>
+    <td class="c029"><span class="sc"><a href="/article/03-0351-banks-and-banking/banks_and_banking#section-united-states">Banks and Banking</a></span>, <i>United States</i> (Vol. 3, p. 346), by <a href="/contributors.html?q=Charles+Arthur+Conant">C. A. Conant</a>, author of <i>History of Modern Banks of Issue</i>.</td>
   </tr>
   <tr>
     <td class="c011">The new school of leaders.</td>
@@ -1831,7 +1842,7 @@ the names of the contributors.</p>
   </tr>
   <tr>
     <td class="c011">Beginning of abolitionist movement (1831). The “Liberator.”</td>
-    <td class="c029"><span class="sc"><a href="/article/25-0232-s6/slavery">Slavery</a></span>, <i>United States</i> (Vol. 25, p. 225), by Dr. <a href="/contributors.html?q=John+Kells+Ingram">J. K. Ingram</a>.</td>
+    <td class="c029"><span class="sc"><a href="/article/25-0232-s6/slavery#section-united-states">Slavery</a></span>, <i>United States</i> (Vol. 25, p. 225), by Dr. <a href="/contributors.html?q=John+Kells+Ingram">J. K. Ingram</a>.</td>
   </tr>
   <tr>
     <td class="c011">Foundation of American Anti-Slavery Society (1831). Its leaders.</td>
@@ -1899,11 +1910,11 @@ the names of the contributors.</p>
   </tr>
   <tr>
     <td class="c011"> </td>
-    <td class="c029"><span class="sc"><a href="/article/24-0198-s3/santa_ana">Santa-Ana</a></span> (Vol. 24, p. 184).</td>
+    <td class="c029"><span class="sc"><a href="/article/24-0198-s2/santa_ana">Santa-Ana</a></span> (Vol. 24, p. 184).</td>
   </tr>
   <tr>
     <td class="c011"> </td>
-    <td class="c029"><span class="sc"><a href="/article/18-0338-s3/mexico">Mexico</a></span>, <i>History</i> (Vol. 18, p. 340).</td>
+    <td class="c029"><span class="sc"><a href="/article/18-0338-s3/mexico#section-history">Mexico</a></span>, <i>History</i> (Vol. 18, p. 340).</td>
   </tr>
   <tr>
     <td class="c011"> </td>
@@ -2075,7 +2086,7 @@ the names of the contributors.</p>
   </tr>
   <tr>
     <td class="c011"><i>Secession</i> (1860–1861).</td>
-    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>History</i> (Vol. 27, p. 707), by the late <a href="/contributors.html?q=Alexander+Johnston">Prof. Alexander Johnston</a> of Princeton and <a href="/contributors.html?q=Charles+Crawford+Whinery">C. C. Whinery</a>.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the#section-x-history">United States</a></span>, <i>History</i> (Vol. 27, p. 707), by the late <a href="/contributors.html?q=Alexander+Johnston">Prof. Alexander Johnston</a> of Princeton and <a href="/contributors.html?q=Charles+Crawford+Whinery">C. C. Whinery</a>.</td>
   </tr>
   <tr>
     <td class="c011"> </td>
@@ -2143,7 +2154,7 @@ the names of the contributors.</p>
   </tr>
 </tbody></table>
 
-<p><span class="shoulder-heading" id="sh-1">Battles and Campaigns</span>The main article <span class="sc"><a href="/article/01-0869-american-civil-war/american_civil_war">American Civil War</a></span>
+<p><span class="shoulder-heading" id="section-battles-and-campaigns">Battles and Campaigns</span>The main article <span class="sc"><a href="/article/01-0869-american-civil-war/american_civil_war">American Civil War</a></span>
 (Vol. 1, p. 818), by Capt. Charles F.
 <a href="/contributors.html?q=Charles+Francis+Atkinson">Atkinson</a>, author of <i>The Wilderness and
 Cold Harbour</i>, is richly supplemented with
@@ -2198,7 +2209,7 @@ with two maps, by <a href="/contributors.html?q=Major+George+William+Redway">Maj
 Court House</a></span> (Vol. 2, p. 226);
 <span class="sc"><a href="/article/23-0325-richmond-yorkshire/richmond__yorkshire_">Richmond</a></span>, Va. (Vol. 23, p. 311).</p>
 
-<p><span class="shoulder-heading" id="sh-2">Union Generals</span>On the leaders on both sides see the
+<p><span class="shoulder-heading" id="section-union-generals">Union Generals</span>On the leaders on both sides see the
 biographical articles: <span class="sc"><a href="/article/17-0216-s3/mcclellan__george_brinton">McClellan</a></span>,
 <span class="sc"><a href="/article/17-0216-s3/mcclellan__george_brinton">George Brinton</a></span> (Vol. 17, p. 201);
 <span class="sc"><a href="/article/12-0879-s3/halleck__henry_wager">Halleck, Henry Wager</a></span>
@@ -2276,7 +2287,7 @@ David Dixon</a></span> (Vol. 22, p. 113);
 <span class="sc"><a href="/article/07-0689-cushing-william-barker/cushing__william_barker">Cushing, William Barker</a></span> (Vol. 7, p.
 667).</p>
 
-<p><span class="shoulder-heading" id="sh-3">Confederate Generals</span>And, for Confederate leaders: <span class="sc"><a href="/article/16-0382-s4/lee__robert_edward">Lee,
+<p><span class="shoulder-heading" id="section-confederate-generals">Confederate Generals</span>And, for Confederate leaders: <span class="sc"><a href="/article/16-0382-s4/lee__robert_edward">Lee,
 Robert Edward</a></span> (Vol. 16, p. 362); <span class="sc"><a href="/article/15-0126-s6/jackson__thomas_jonathan">Jackson,
 Thomas Jonathan, “Stonewall”</a></span>
 (Vol. 15, p. 110);
@@ -2345,7 +2356,7 @@ John Singleton</a></span> (Vol. 18, p. 890);
   </tr>
   <tr>
     <td class="c011">Establishment of National Banking System (1862–1865).</td>
-    <td class="c029"><span class="sc"><a href="/article/03-0351-banks-and-banking/banks_and_banking">Banks and Banking</a></span>, <i>United States</i> (Vol. 3, p. 347), by <a href="/contributors.html?q=Charles+Arthur+Conant">Charles A. Conant</a>, author of <i>Banks of Issue</i>.</td>
+    <td class="c029"><span class="sc"><a href="/article/03-0351-banks-and-banking/banks_and_banking#section-united-states">Banks and Banking</a></span>, <i>United States</i> (Vol. 3, p. 347), by <a href="/contributors.html?q=Charles+Arthur+Conant">Charles A. Conant</a>, author of <i>Banks of Issue</i>.</td>
   </tr>
   <tr>
     <td class="c011">Emancipation (1863).</td>
@@ -2397,7 +2408,7 @@ John Singleton</a></span> (Vol. 18, p. 890);
   </tr>
   <tr>
     <td class="c011"><i>The Reconstruction Period.</i></td>
-    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>History</i> (Vol. 27, p. 711), by Dr. Frederick J. Turner, professor of history, Harvard University.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the#section-x-history">United States</a></span>, <i>History</i> (Vol. 27, p. 711), by Dr. Frederick J. Turner, professor of history, Harvard University.</td>
   </tr>
   <tr>
     <td class="c011">Organizing the negroes into a political party.</td>
@@ -2413,7 +2424,7 @@ John Singleton</a></span> (Vol. 18, p. 890);
   </tr>
   <tr>
     <td class="c011">Thirteenth, Fourteenth and Fifteenth Amendments.</td>
-    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>Constitution and Government</i> (Vol. 27, pp. 647, 658, etc.), by <a href="/contributors.html?q=Edmund+Janes+James">James</a> Bryce, author of <i>The American Commonwealth</i>.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the#section-vii-constitution-and-government">United States</a></span>, <i>Constitution and Government</i> (Vol. 27, pp. 647, 658, etc.), by <a href="/contributors.html?q=Edmund+Janes+James">James</a> Bryce, author of <i>The American Commonwealth</i>.</td>
   </tr>
   <tr>
     <td class="c011">Character of Reconstruction Government.</td>
@@ -2549,7 +2560,7 @@ John Singleton</a></span> (Vol. 18, p. 890);
   </tr>
   <tr>
     <td class="c011">Labor combinations, social unrest.</td>
-    <td class="c029"><span class="sc"><a href="/article/27-0155-s2/trade_unions">Trade Unions</a></span>, <i>United States</i> (Vol. 27, p. 150), by Carroll D. Wright, late U. S. Commissioner of Labor.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0155-s2/trade_unions#section-iv-united-states">Trade Unions</a></span>, <i>United States</i> (Vol. 27, p. 150), by Carroll D. Wright, late U. S. Commissioner of Labor.</td>
   </tr>
   <tr>
     <td class="c011"> </td>
@@ -2597,7 +2608,7 @@ John Singleton</a></span> (Vol. 18, p. 890);
   </tr>
   <tr>
     <td class="c011">Beginning of restriction of Negro suffrage (1890), and adoption of grandfather clauses in constitutions of Southern states.</td>
-    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>Constitution and Government</i> (Vol. 27, p. 647), by Hon. <a href="/contributors.html?q=Edmund+Janes+James">James</a> Bryce. Sections on <i>Government</i> of articles <span class="sc"><a href="/article/18-0626-mississippi/mississippi">Mississippi</a></span>, <span class="sc"><a href="/article/28-0132-virginia/virginia">Virginia</a></span>, <span class="sc"><a href="/article/19-0799-north-carolina/north_carolina">North Carolina</a></span>, <span class="sc"><a href="/article/11-0779-georgia/georgia">Georgia</a></span>, <span class="sc"><a href="/article/01-0497-s1/alabama">Alabama</a></span>, <span class="sc"><a href="/article/17-0067-louisiana/louisiana">Louisiana</a></span> and <span class="sc"><a href="/article/20-0079-oklahoma/oklahoma">Oklahoma</a></span>.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the#section-vii-constitution-and-government">United States</a></span>, <i>Constitution and Government</i> (Vol. 27, p. 647), by Hon. <a href="/contributors.html?q=Edmund+Janes+James">James</a> Bryce. Sections on <i>Government</i> of articles <span class="sc"><a href="/article/18-0626-mississippi/mississippi">Mississippi</a></span>, <span class="sc"><a href="/article/28-0132-virginia/virginia">Virginia</a></span>, <span class="sc"><a href="/article/19-0799-north-carolina/north_carolina">North Carolina</a></span>, <span class="sc"><a href="/article/11-0779-georgia/georgia">Georgia</a></span>, <span class="sc"><a href="/article/01-0497-s1/alabama">Alabama</a></span>, <span class="sc"><a href="/article/17-0067-louisiana/louisiana">Louisiana</a></span> and <span class="sc"><a href="/article/20-0079-oklahoma/oklahoma">Oklahoma</a></span>.</td>
   </tr>
   <tr>
     <td class="c011">The campaign of 1892.</td>
@@ -2677,7 +2688,7 @@ John Singleton</a></span> (Vol. 18, p. 890);
   </tr>
   <tr>
     <td class="c011"> </td>
-    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the">United States</a></span>, <i>Constitution and Government</i> (Vol. 27, p. 651), by Hon. <a href="/contributors.html?q=Edmund+Janes+James">James</a> Bryce, author of <i>The American Commonwealth</i>.</td>
+    <td class="c029"><span class="sc"><a href="/article/27-0635-united-states-the/united_states__the#section-vii-constitution-and-government">United States</a></span>, <i>Constitution and Government</i> (Vol. 27, p. 651), by Hon. <a href="/contributors.html?q=Edmund+Janes+James">James</a> Bryce, author of <i>The American Commonwealth</i>.</td>
   </tr>
   <tr>
     <td class="c011">Discovery of gold in Alaska.</td>
@@ -2685,7 +2696,7 @@ John Singleton</a></span> (Vol. 18, p. 890);
   </tr>
   <tr>
     <td class="c011">Conservation of National Resources, a new policy.</td>
-    <td class="c029"><span class="sc"><a href="/article/10-0666-forests-and-forestry/forests_and_forestry">Forest and Forestry</a></span>, <i>United States</i> (Vol. 10, p. 651), by <a href="/contributors.html?q=Gifford+Pinchot">Gifford Pinchot</a>, formerly chief of the Forestry Service, U. S. Department of Agriculture.</td>
+    <td class="c029"><span class="sc"><a href="/article/10-0666-forests-and-forestry/forests_and_forestry#section-united-states">Forest and Forestry</a></span>, <i>United States</i> (Vol. 10, p. 651), by <a href="/contributors.html?q=Gifford+Pinchot">Gifford Pinchot</a>, formerly chief of the Forestry Service, U. S. Department of Agriculture.</td>
   </tr>
   <tr>
     <td class="c011">Assassination of McKinley. The Roosevelt Administration (1901–1909).</td>

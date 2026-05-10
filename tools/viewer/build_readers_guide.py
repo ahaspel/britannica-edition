@@ -27,7 +27,79 @@ from britannica.xrefs.scoring import find_fuzzy_match
 
 SOURCE_HTML = Path("data/raw/readers_guide/source.html")
 INDEX_JSON = Path("data/derived/articles/index.json")
+ARTICLES_DIR = Path("data/derived/articles")
 CONTRIBUTORS_JSON = Path("data/derived/articles/contributors.json")
+
+
+# Lazy cache of article sections: filename -> list of {title, slug, ...}
+# Populated on first lookup; one disk read per article that gets a
+# subsection reference in the Reader's Guide.
+_SECTIONS_CACHE: dict[str, list[dict]] = {}
+
+
+def _normalize_for_match(text: str) -> str:
+    """Lowercase, alphanumerics only — collapses punctuation/spacing
+    so 'History of Astronomy' matches 'historyofastronomy'.  Mirrors
+    `sectionKey` in viewer.html and `_section_key` in
+    britannica.export.sections."""
+    return re.sub(r"[^a-z0-9]+", "", text.lower())
+
+
+def _load_sections(filename: str) -> list[dict]:
+    """Return the section list for an article, or [] if no entry."""
+    if filename in _SECTIONS_CACHE:
+        return _SECTIONS_CACHE[filename]
+    path = ARTICLES_DIR / filename
+    sections: list[dict] = []
+    if path.is_file():
+        try:
+            doc = json.loads(path.read_text(encoding="utf-8"))
+            sections = doc.get("sections") or []
+        except (OSError, ValueError):
+            sections = []
+    _SECTIONS_CACHE[filename] = sections
+    return sections
+
+
+def _resolve_subsection_slug(filename: str, subsection: str) -> str | None:
+    """Find the slug whose section title matches ``subsection`` for the
+    article in ``filename``.  Returns the slug on a single best match,
+    or None on miss/ambiguity (skip rather than emit a wrong link).
+    """
+    sections = _load_sections(filename)
+    if not sections:
+        return None
+    norm = _normalize_for_match(subsection)
+    if not norm:
+        return None
+    # Exact match wins. Then prefer Roman-prefixed full titles whose
+    # post-prefix portion equals norm (e.g. 'history' → 'i-history').
+    # Fall back to substring match.
+    exact = []
+    prefix_strip = []
+    contained = []
+    for sec in sections:
+        title_norm = _normalize_for_match(sec.get("title", ""))
+        if not title_norm:
+            continue
+        if title_norm == norm:
+            exact.append(sec)
+            continue
+        # Strip leading Roman numeral block from the section title and
+        # compare again (matches "History" against "I. History").
+        stripped = re.sub(r"^[ivxlcdm]+", "", title_norm)
+        if stripped == norm:
+            prefix_strip.append(sec)
+            continue
+        if norm in title_norm:
+            contained.append(sec)
+    for bucket in (exact, prefix_strip, contained):
+        if len(bucket) == 1:
+            return bucket[0].get("slug") or None
+        if len(bucket) > 1:
+            # Ambiguous — skip rather than guess.
+            return None
+    return None
 OUT_DIR = Path("tools/viewer")
 
 # --- Title → URL map -------------------------------------------------
@@ -549,6 +621,29 @@ def transform_content(
     missed = 0
     missed_titles: set[str] = set()
     toc_entries: list[tuple[str, str]] = []
+    # Per-chapter set of already-used sidenote anchor ids; ``_reserve_id``
+    # appends ``-2``, ``-3`` on slug collisions so each anchor stays
+    # reachable. Slug-derived ids stay stable across regenerations
+    # (adding a new sidenote no longer renumbers the others, so existing
+    # bookmarks survive).
+    used_ids: set[str] = set()
+
+    def _slug(text: str) -> str:
+        s = re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
+        return s
+
+    def _reserve_id(text: str, fallback: str) -> str:
+        slug = _slug(text)
+        base = f"section-{slug}" if slug else fallback
+        if base not in used_ids:
+            used_ids.add(base)
+            return base
+        n = 2
+        while f"{base}-{n}" in used_ids:
+            n += 1
+        cand = f"{base}-{n}"
+        used_ids.add(cand)
+        return cand
 
     # Splice in cross-referenced article lists before article resolution,
     # so their <li class="c018"> entries also get linked.
@@ -680,31 +775,52 @@ def transform_content(
     # viewer's pattern (viewer.html): <p> is the positioning context,
     # so the shoulder floats in the margin next to the paragraph it
     # annotates.
-    def repl_sidenote_merge(m: re.Match[str]) -> str:
-        text = re.sub(r"\s+", " ", m.group(1)).strip()
+    #
+    # Multiple consecutive sidenotes (chxxi has `<div class="sidenote">
+    # From Manuscript to Book</div> <div class="sidenote">Supply and
+    # Demand Interacting</div>` annotating the same opening paragraph)
+    # need to all merge into the next <p>'s start, each as its own
+    # span/TOC entry.  Match the WHOLE run + following <p> in one shot;
+    # parse individual sidenotes inside the callback.  The inner
+    # `((?:(?!</div>).)*)` is bounded so a nested `</div>` can't
+    # consume across multiple sidenotes the way `(.*?)` did.
+    # _SIDENOTE_NC: non-capturing variant for use inside the outer
+    # `((?:…)+)` run — its body would otherwise become a numbered
+    # group and shift the `<p attrs>` group index.  _SIDENOTE keeps a
+    # capturing group for the per-sidenote pass.
+    _SIDENOTE = r'<div class="sidenote">((?:(?!</div>).)*)</div>'
+    _SIDENOTE_NC = r'<div class="sidenote">(?:(?!</div>).)*</div>'
+
+    def repl_sidenote_run(m: re.Match[str]) -> str:
+        run = m.group(1)
         p_attrs = m.group(2)
-        anchor_id = f"sh-{len(toc_entries) + 1}"
-        toc_entries.append((anchor_id, text))
-        return (
-            f'<p{p_attrs}>'
-            f'<span class="shoulder-heading" id="{anchor_id}">{text}</span>'
-        )
+        spans: list[str] = []
+        for sm in re.finditer(_SIDENOTE, run, flags=re.DOTALL):
+            text = re.sub(r"\s+", " ", sm.group(1)).strip()
+            if not text:
+                continue
+            anchor_id = _reserve_id(text, f"sh-{len(toc_entries) + 1}")
+            toc_entries.append((anchor_id, text))
+            spans.append(
+                f'<span class="shoulder-heading" id="{anchor_id}">{text}</span>'
+            )
+        return f"<p{p_attrs}>" + "".join(spans)
 
     html = re.sub(
-        r'<div class="sidenote">(.*?)</div>\s*<p([^>]*)>',
-        repl_sidenote_merge,
+        rf'((?:{_SIDENOTE_NC}\s*)+)<p([^>]*)>',
+        repl_sidenote_run,
         html,
         flags=re.DOTALL,
     )
     # Any sidenote that wasn't followed by a <p> stays as its own block.
     def repl_sidenote_fallback(m: re.Match[str]) -> str:
         text = re.sub(r"\s+", " ", m.group(1)).strip()
-        anchor_id = f"sh-{len(toc_entries) + 1}"
+        anchor_id = _reserve_id(text, f"sh-{len(toc_entries) + 1}")
         toc_entries.append((anchor_id, text))
         return f'<p><span class="shoulder-heading" id="{anchor_id}">{text}</span></p>'
 
     html = re.sub(
-        r'<div class="sidenote">(.*?)</div>',
+        _SIDENOTE,
         repl_sidenote_fallback,
         html,
         flags=re.DOTALL,
@@ -725,6 +841,72 @@ def transform_content(
     # Drop drop-cap span wrapping — original drop-cap-by-span is fragile
     html = re.sub(r"<p><p>", "<p>", html)
 
+    # Deep-section link-up.  The Reader's Guide frequently cites a
+    # specific subsection of an article — "ASTRONOMY, History of
+    # Astronomy", "GEOMETRY, Axioms".  Source markup is
+    # `<a href="/article/…">Title</a></span>, <i>Subsection</i>`; the
+    # link points at the article top by default.  Look up the
+    # article's `sections` list (emitted by article_json.py from the
+    # same detect_sections pass that the viewer uses) and rewrite
+    # matching links to include `#section-<slug>` so the click lands
+    # on the cited subsection.  Skip on ambiguous matches (false
+    # deep-links are worse than no deep-link) and ones with no match.
+    deep_linked = 0
+    deep_skipped = 0
+
+    # Build a reverse index from stable_id to filename so we don't have
+    # to parse `<a href>` URLs back to filenames each time.
+    stable_to_filename: dict[str, str] = {}
+    for fn in title_map.values():
+        # Filename shape: `{stable_id}-{TITLE}.json`; stable_id can
+        # contain hyphens, but TITLE is uppercase + underscore, so the
+        # last `-` before `_…` segments separates them.  Cheaper:
+        # match `{NN-NNNN(?:-...)?}` prefix where the suffix is the
+        # title.  Full stable_id matches the URL form `/article/<id>/`.
+        m_stable = re.match(r"^([0-9]{2}-[0-9]{4}(?:-[a-zA-Z0-9-]+?)?)-[A-Z0-9_]+\.json$", fn)
+        if m_stable:
+            stable_to_filename.setdefault(m_stable.group(1), fn)
+
+    def _deep_link(m: re.Match[str]) -> str:
+        nonlocal deep_linked, deep_skipped
+        href = m.group(1)
+        link_text = m.group(2)
+        wrapper_close = m.group(3)  # </span> or </b>
+        sep = m.group(4)
+        subsection_html = m.group(5)
+        # Strip any nested tags inside the italic (rare; source mostly
+        # has plain text there).
+        subsection = re.sub(r"<[^>]+>", "", subsection_html)
+        subsection = subsection.replace("&amp;", "&").replace("&mdash;", "—")
+        subsection = re.sub(r"\s+", " ", subsection).strip()
+        url_match = re.match(r"^/article/([^/]+)/", href)
+        if not url_match:
+            deep_skipped += 1
+            return m.group(0)
+        stable = url_match.group(1)
+        filename = stable_to_filename.get(stable)
+        if not filename:
+            deep_skipped += 1
+            return m.group(0)
+        slug = _resolve_subsection_slug(filename, subsection)
+        if not slug:
+            deep_skipped += 1
+            return m.group(0)
+        deep_linked += 1
+        return (
+            f'<a href="{href}#section-{slug}">{link_text}</a>'
+            f'{wrapper_close}{sep}<i>{subsection_html}</i>'
+        )
+
+    # Match `<a href="/article/…">Title</a></span>, <i>Subsection</i>`
+    # and the `</b>` variant.  The wrapper close is captured in group 3
+    # and re-emitted unchanged so non-subsection links go untouched.
+    html = re.sub(
+        r'<a href="(/article/[^"]+)">([^<]+)</a>(</span>|</b>)(,?\s*)<i>([^<]+)</i>',
+        _deep_link,
+        html,
+    )
+
     # Contributor link-ups (pass by-author citations through the DB)
     contrib_linked = 0
     if contributor_resolver is not None:
@@ -733,7 +915,8 @@ def transform_content(
     print(
         f"  resolved {linked} refs, unresolved {missed} "
         f"({len(missed_titles)} unique); "
-        f"{contrib_linked} contributor citations linked",
+        f"{contrib_linked} contributor citations linked; "
+        f"{deep_linked} subsection deep-links ({deep_skipped} skipped)",
         file=sys.stderr,
     )
     if missed_titles and len(missed_titles) <= 30:
@@ -774,6 +957,16 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }}
     h4 {{ font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }}
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {{
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }}
     a {{ color: var(--link); text-decoration: none; }}
     a:hover {{ text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }}
@@ -896,6 +1089,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter {chap_num}</span>{title}</h1>
+{subtitle_html}
 {toc_html}
     <div class="body-text">
 {body_html}
@@ -1242,6 +1436,29 @@ def build_chapter(
     # lands at the start of our extracted content and would otherwise
     # close the .body-text wrapper prematurely.
     inner = re.sub(r"^\s*</div>", "", inner, count=1)
+
+    # Chapter subtitle: many chapters open with a sidenote that's
+    # really a chapter subtitle, not a section header for the first
+    # paragraph.  Source pattern after stripping the leading </div>:
+    #   \n\n<div class="c002"></div>\n<div class="sidenote">SUBTITLE</div>
+    # Promote it to a `.chap-subtitle` rendered under the h1, and
+    # remove from `inner` so it doesn't become a TOC entry / margin
+    # shoulder-heading.  Found in 15 chapters (IV/V/VI/XI/XII/XVII/
+    # XIX/XX/XXI/XXII/XXIII/XXXV/LX/LXI/LXIV).
+    subtitle_html = ""
+    sub_m = re.match(
+        r'\s*<div class="c002"></div>\s*'
+        r'<div class="sidenote">((?:(?!</div>).)*)</div>',
+        inner, flags=re.DOTALL,
+    )
+    if sub_m:
+        sub_text = re.sub(r"\s+", " ", sub_m.group(1)).strip()
+        if sub_text:
+            subtitle_html = (
+                f'    <div class="chap-subtitle">{sub_text}</div>'
+            )
+        inner = inner[sub_m.end():]
+
     transformed, toc_entries = transform_content(
         inner, title_map, chapter_lists, contributor_resolver, by_volume,
     )
@@ -1261,6 +1478,7 @@ def build_chapter(
     out = PAGE_TEMPLATE.format(
         title=pretty_title,
         chap_num=roman,
+        subtitle_html=subtitle_html,
         toc_html=toc_html,
         body_html=transformed,
     )

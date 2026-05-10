@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,7 +160,8 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter LXVI</span>Recreation And Vacation</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Recreative Reading about Recreation</a></li><li><a href="#sh-2">Along the Hudson</a></li><li><a href="#sh-3">Sleepy Hollow</a></li><li><a href="#sh-4">Great Barrington</a></li><li><a href="#sh-5">Stockbridge</a></li><li><a href="#sh-6">Lenox</a></li><li><a href="#sh-7">Pittsfield</a></li><li><a href="#sh-8">Williamstown</a></li><li><a href="#sh-9">Bennington</a></li><li><a href="#sh-10">Hanover</a></li><li><a href="#sh-11">Dartmouth College</a></li><li><a href="#sh-12">The White Mountains</a></li><li><a href="#sh-13">Automobiles</a></li><li><a href="#sh-14">Athletics</a></li><li><a href="#sh-15">Hunting</a></li><li><a href="#sh-16">Fishing</a></li><li><a href="#sh-17">Taxidermy</a></li><li><a href="#sh-18">Sailing and Boating</a></li><li><a href="#sh-19">Mountaineering</a></li><li><a href="#sh-20">Winter Sports</a></li><li><a href="#sh-21">Driving, Riding and Polo</a></li><li><a href="#sh-22">Gardening</a></li><li><a href="#sh-23">Needlework, etc.</a></li><li><a href="#sh-24">Dancing, the Stage, etc.</a></li></ol></div>
+
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-recreative-reading-about-recreation">Recreative Reading about Recreation</a></li><li><a href="#section-along-the-hudson">Along the Hudson</a></li><li><a href="#section-sleepy-hollow">Sleepy Hollow</a></li><li><a href="#section-great-barrington">Great Barrington</a></li><li><a href="#section-stockbridge">Stockbridge</a></li><li><a href="#section-lenox">Lenox</a></li><li><a href="#section-pittsfield">Pittsfield</a></li><li><a href="#section-williamstown">Williamstown</a></li><li><a href="#section-bennington">Bennington</a></li><li><a href="#section-hanover">Hanover</a></li><li><a href="#section-dartmouth-college">Dartmouth College</a></li><li><a href="#section-the-white-mountains">The White Mountains</a></li><li><a href="#section-automobiles">Automobiles</a></li><li><a href="#section-athletics">Athletics</a></li><li><a href="#section-hunting">Hunting</a></li><li><a href="#section-fishing">Fishing</a></li><li><a href="#section-taxidermy">Taxidermy</a></li><li><a href="#section-sailing-and-boating">Sailing and Boating</a></li><li><a href="#section-mountaineering">Mountaineering</a></li><li><a href="#section-winter-sports">Winter Sports</a></li><li><a href="#section-driving-riding-and-polo">Driving, Riding and Polo</a></li><li><a href="#section-gardening">Gardening</a></li><li><a href="#section-needlework-etc">Needlework, etc.</a></li><li><a href="#section-dancing-the-stage-etc">Dancing, the Stage, etc.</a></li></ol></div>
     <div class="body-text">
 
 
@@ -166,7 +177,7 @@ smoothly, one of the first questions he
 has to answer is about the amount and
 form of recreation he takes.</p>
 
-<p><span class="shoulder-heading" id="sh-1">Recreative Reading about Recreation</span>An important branch of the art of
+<p><span class="shoulder-heading" id="section-recreative-reading-about-recreation">Recreative Reading about Recreation</span>An important branch of the art of
 playing is to learn the value of reading
 about play. The more a man knows
 about any form of
@@ -280,7 +291,7 @@ in this connection.</i></p>
 
 <p><i>A Specimen Tour from New York to the White Mountains</i></p>
 
-<p><span class="shoulder-heading" id="sh-2">Along the Hudson</span>Leaving New York by Broadway,
+<p><span class="shoulder-heading" id="section-along-the-hudson">Along the Hudson</span>Leaving New York by Broadway,
 your first point is <span class="sc"><a href="/article/28-0949-s4/yonkers">Yonkers</a></span> (Vol. 28, p.
 922), where, as the Britannica tells
 you, stands “one of the best examples
@@ -338,7 +349,7 @@ by the British troops of the
 posts they still held in the United
 States.”</p>
 
-<p><span class="shoulder-heading" id="sh-3">Sleepy Hollow</span>In <span class="sc"><a href="/article/26-0462-s2/tarrytown">Tarrytown</a></span>, as the article under
+<p><span class="shoulder-heading" id="section-sleepy-hollow">Sleepy Hollow</span>In <span class="sc"><a href="/article/26-0462-s2/tarrytown">Tarrytown</a></span>, as the article under
 that title (Vol. 26, p. 433) recounts,
 Washington Irving, who made the legends
 of the Hudson immortal, built
@@ -412,7 +423,7 @@ elevation, intersected and broken
 by deep valleys. Scores of charming
 lakes lie in the hollows.”</p>
 
-<p><span class="shoulder-heading" id="sh-4">Great Barrington</span><span class="sc"><a href="/article/12-0414-s3/great_barrington">Great Barrington</a></span> (Vol. 12, p.
+<p><span class="shoulder-heading" id="section-great-barrington">Great Barrington</span><span class="sc"><a href="/article/12-0414-s3/great_barrington">Great Barrington</a></span> (Vol. 12, p.
 397) “was a centre of disaffection
 during Shays’s Rebellion,” an episode
 for which you may
@@ -440,7 +451,7 @@ of a stronger national government.”
 of America,” practiced law at
 Great Barrington for nine years.</p>
 
-<p><span class="shoulder-heading" id="sh-5">Stockbridge</span>Leaving Great Barrington, you cross
+<p><span class="shoulder-heading" id="section-stockbridge">Stockbridge</span>Leaving Great Barrington, you cross
 Monument Mountain (1710 feet) on
 your way to <span class="sc"><a href="/article/25-0953-stockbridge/stockbridge">Stockbridge</a></span> (Vol. 25, p.
 929) with its famous
@@ -494,7 +505,7 @@ Mountain, just outside the village, is
 the curious Ice Glen, with caverns ice-lined
 even in midsummer.</p>
 
-<p><span class="shoulder-heading" id="sh-6">Lenox</span>On the road from Stockbridge to
+<p><span class="shoulder-heading" id="section-lenox">Lenox</span>On the road from Stockbridge to
 Lenox you pass the beautiful lake
 called the Stockbridge Bowl, on the
 shore of which <span class="sc"><a href="/article/13-0115-s2/hawthorne__nathaniel">Nathaniel Hawthorne</a></span>,
@@ -562,7 +573,7 @@ to the law; and he subsequently
 became one of the political leaders of
 the Confederacy.</p>
 
-<p><span class="shoulder-heading" id="sh-7">Pittsfield</span><span class="sc"><a href="/article/21-0711-s2/pittsfield">Pittsfield</a></span> (Vol. 21, p. 682) is both
+<p><span class="shoulder-heading" id="section-pittsfield">Pittsfield</span><span class="sc"><a href="/article/21-0711-s2/pittsfield">Pittsfield</a></span> (Vol. 21, p. 682) is both
 a popular resort and a prosperous manufacturing
 town, with ample water
 power supplied by
@@ -610,7 +621,7 @@ employment of compressed air had
 in furthering its use for the noisy
 “gun” tools now so familiar.</p>
 
-<p><span class="shoulder-heading" id="sh-8">Williamstown</span><span class="sc"><a href="/article/28-0705-williamstown-australia/williamstown__australia_">Williamstown</a></span> (Vol. 28, p. 685),
+<p><span class="shoulder-heading" id="section-williamstown">Williamstown</span><span class="sc"><a href="/article/28-0705-williamstown-australia/williamstown__australia_">Williamstown</a></span> (Vol. 28, p. 685),
 the last town in Massachusetts on your
 route, is the seat of Williams College;
 and the “Haystack
@@ -631,7 +642,7 @@ summary of the early disputes over
 state boundaries in this part of New
 England.</p>
 
-<p><span class="shoulder-heading" id="sh-9">Bennington</span><span class="sc"><a href="/article/03-0763-bennington/bennington">Bennington</a></span> (Vol. 3, p. 743) lies
+<p><span class="shoulder-heading" id="section-bennington">Bennington</span><span class="sc"><a href="/article/03-0763-bennington/bennington">Bennington</a></span> (Vol. 3, p. 743) lies
 at the foot of the Green Mountains,
 near Mt. Anthony (2345 feet). “The
 Bennington Battle
@@ -667,7 +678,7 @@ Mountain Boys” and of <span class="sc"><a href="/article/28-0343-warner-seth/w
 (Vol. 28, p. 327), who subsequently
 became their colonel.</p>
 
-<p><span class="shoulder-heading" id="sh-10">Hanover</span>On leaving Bennington you can
+<p><span class="shoulder-heading" id="section-hanover">Hanover</span>On leaving Bennington you can
 choose any one of several routes to
 bring you over to the Connecticut
 River, but, whichever you take, you
@@ -677,7 +688,7 @@ have gone from New York through
 Waterbury, Springfield and Greenfield
 if you had not included the Berkshires
 in your itinerary) when
-you reach <span class="sc"><a href="/article/12-0952-s2/hanover">Hanover, N.
+you reach <span class="sc"><a href="/article/12-0952-s3/hanover">Hanover, N.
 H.</a></span> (Vol. 12, p. 927).
 Here, “ranges of rugged hills, broken
 by deep, narrow gorges and by the
@@ -702,7 +713,7 @@ in England, and afterwards
 in all parts of Europe, of the Howe
 system of training.</p>
 
-<p><span class="shoulder-heading" id="sh-11">Dartmouth College</span>The attractions which Hanover owes
+<p><span class="shoulder-heading" id="section-dartmouth-college">Dartmouth College</span>The attractions which Hanover owes
 to its picturesque site are enhanced by
 the fine buildings and the notably beautiful
 campus of <span class="sc"><a href="/article/07-0862-dartmouth-college/dartmouth_college">Dartmouth College</a></span>
@@ -748,7 +759,7 @@ White Mountain region, which the Britannica
 (Vol. 19, p. 490) describes in
 part as follows:</p>
 
-<p><span class="shoulder-heading" id="sh-12">The White Mountains</span>“The White Mountains, a continuation
+<p><span class="shoulder-heading" id="section-the-white-mountains">The White Mountains</span>“The White Mountains, a continuation
 of the Appalachian system, rise very
 abruptly in several short ranges and in
 outlying mountain
@@ -854,7 +865,7 @@ whose historical and literary
 associations are fully described in the
 Britannica.</p>
 
-<p><span class="shoulder-heading" id="sh-13">Automobiles</span>The article <span class="sc"><a href="/article/18-0946-s2/motor_vehicles">Motor Vehicles</a></span> (Vol. 18,
+<p><span class="shoulder-heading" id="section-automobiles">Automobiles</span>The article <span class="sc"><a href="/article/18-0946-s2/motor_vehicles">Motor Vehicles</a></span> (Vol. 18,
 p. 914), with 37 illustrations, is by the
 late C. S. Rolls, the famous builder and
 driver of motor cars,
@@ -1331,7 +1342,7 @@ are <span class="sc"><a href="/article/10-0259-s7/fencing">Fencing</a></span>, <
 Fives</a></span>, <span class="sc"><a href="/article/23-0489-roller-skating/roller-skating">Roller-Skating</a></span>, <span class="sc"><a href="/article/25-0765-s6/squails">Squails</a></span>, <span class="sc"><a href="/article/24-1099-s4/shuffle-board">Shuffle-Board</a></span>,
 <span class="sc"><a href="/article/27-0228-trapeze/trapeze">Trapeze</a></span>, <span class="sc"><a href="/article/28-0870-wrestling/wrestling">Wrestling</a></span>.</p>
 
-<p><span class="shoulder-heading" id="sh-14">Athletics</span>The distinction between games and
+<p><span class="shoulder-heading" id="section-athletics">Athletics</span>The distinction between games and
 athletic sports is an arbitrary one, and the
 articles on athletics have been included
 in the list of those
@@ -1367,7 +1378,7 @@ p. 899); <span class="sc"><a href="/article/04-0943-s2/caber_tossing">Caber-Toss
 <span class="sc"><a href="/article/08-0329-discus/discus">Discus</a></span> (Vol. 8, p. 312); and <span class="sc"><a href="/article/27-0382-s2/tug-of-war">Tug-of-War</a></span>
 (Vol. 27, p. 365).</p>
 
-<p><span class="shoulder-heading" id="sh-15">Hunting</span>The reader interested in hunting will
+<p><span class="shoulder-heading" id="section-hunting">Hunting</span>The reader interested in hunting will
 turn first to the articles on sporting
 weapons. <span class="sc"><a href="/article/12-0742-s6/gun">Gun</a></span> (Vol. 12, p. 717), by <a href="/contributors.html?q=William+Henry">Sir
 Henry</a> Seton Karr,
@@ -1433,7 +1444,7 @@ forms of the chase are dealt with in
 (Vol. 19, p. 141), by <a href="/contributors.html?q=Lieut.-Colonel+Emilius+C.+Delm%C3%A9+Radcliffe">Lieut.-Col. Delmé
 Radcliffe</a>.</p>
 
-<p><span class="shoulder-heading" id="sh-16">Fishing</span>The key article on line fishing is <span class="sc"><a href="/article/02-0032-s2/angling">Angling</a></span>
+<p><span class="shoulder-heading" id="section-fishing">Fishing</span>The key article on line fishing is <span class="sc"><a href="/article/02-0032-s2/angling">Angling</a></span>
 (Vol. 2, p. 21), in length equivalent
 to 35 pages of this Guide. It begins with
 a most interesting
@@ -1471,7 +1482,7 @@ with the industry rather than with sport,
 but it contains much information about
 sea fish which will be of use to the sea-angler.</p>
 
-<p><span class="shoulder-heading" id="sh-17">Taxidermy</span>A thoroughly practical article is <span class="sc"><a href="/article/26-0493-taxidermy/taxidermy">Taxidermy</a></span>
+<p><span class="shoulder-heading" id="section-taxidermy">Taxidermy</span>A thoroughly practical article is <span class="sc"><a href="/article/26-0493-taxidermy/taxidermy">Taxidermy</a></span>
 (Vol. 26, p. 464), by Montague
 Browne, author of a manual of the art.
 His book and Dr.
@@ -1494,7 +1505,7 @@ and the placing of specimens in
 natural surroundings, with panoramic
 back-grounds, top- and side-lighting, etc.</p>
 
-<p><span class="shoulder-heading" id="sh-18">Sailing and Boating</span>On sailing, boating and kindred subjects
+<p><span class="shoulder-heading" id="section-sailing-and-boating">Sailing and Boating</span>On sailing, boating and kindred subjects
 the reader should first consult the
 article <span class="sc"><a href="/article/28-0917-yachting/yachting">Yachting</a></span> (Vol. 28, p. 890),
 equivalent to 26
@@ -1584,7 +1595,7 @@ Library, and <span class="sc"><a href="/article/08-0619-drowning-and-life-saving
 Saving</a></span> (Vol. 8, p. 592) are of practical
 value.</p>
 
-<p><span class="shoulder-heading" id="sh-19">Mountaineering</span>The article <span class="sc"><a href="/article/18-0969-s5/mountaineering">Mountaineering</a></span> (Vol.
+<p><span class="shoulder-heading" id="section-mountaineering">Mountaineering</span>The article <span class="sc"><a href="/article/18-0969-s5/mountaineering">Mountaineering</a></span> (Vol.
 18, p. 937) is by Sir <a href="/contributors.html?q=Sir+W.+Martin+Conway">W. Martin Conway</a>,
 famous for his ascent to a height of
 23,000 feet in the
@@ -1628,7 +1639,7 @@ the Adirondacks, the Catskills and White
 Mountains will be found under the
 obvious titles.</p>
 
-<p><span class="shoulder-heading" id="sh-20">Winter Sports</span><span class="sc"><a href="/article/25-0182-skating/skating">Skating</a></span> (Vol. 25, p. 166) deals with
+<p><span class="shoulder-heading" id="section-winter-sports">Winter Sports</span><span class="sc"><a href="/article/25-0182-skating/skating">Skating</a></span> (Vol. 25, p. 166) deals with
 both speed skating and figure skating,
 and tells of the exploits at Newburgh,
 N. Y., of Charles
@@ -1655,7 +1666,7 @@ winter sports are <span class="sc"><a href="/article/22-0308-prescott-william-hi
 p. 296), <span class="sc"><a href="/article/06-0622-coasting/coasting">Coasting</a></span> (Vol. 6, p. 603) and
 <span class="sc"><a href="/article/26-1082-s2/tobogganing">Tobogganing</a></span> (Vol. 26, p. 1042).</p>
 
-<p><span class="shoulder-heading" id="sh-21">Driving, Riding and Polo</span>For information in regard to sports
+<p><span class="shoulder-heading" id="section-driving-riding-and-polo">Driving, Riding and Polo</span>For information in regard to sports
 connected with the horse the reader
 should first study the article <span class="sc"><a href="/article/13-0729-horse/horse">Horse</a></span> and
 particularly that part
@@ -1712,7 +1723,7 @@ and elsewhere. The coaching horn or
 treated under <span class="sc"><a href="/article/13-0713-s3/horn">Horn</a></span> (Vol. 13, p. 697) by
 <a href="/contributors.html?q=Miss+Kathleen+Schlesinger">Kathleen Schlesinger</a>, the great authority
 on musical instruments. <span class="sc"><a href="/article/05-0418-carriage/carriage">Carriage</a></span> (Vol.
-5, p. 401), by <a href="/contributors.html?q=J.+A+McNaught">J. A. McNaught</a>, notes
+5, p. 401), by J. A. McNaught, notes
 that, although the buggy and rockaway
 are the characteristic pleasure vehicles of
 this country, the heavier dog-cart and
@@ -1735,7 +1746,7 @@ and its development is traced, and there
 is a section on the polo pony and the
 much discussed systems of measurement.</p>
 
-<p><span class="shoulder-heading" id="sh-22">Gardening</span>Out-door recreation in the garden may
+<p><span class="shoulder-heading" id="section-gardening">Gardening</span>Out-door recreation in the garden may
 be fully studied in the article <span class="sc"><a href="/article/13-0760-s6/horticulture">Horticulture</a></span>
 (Vol. 13, p. 741), which is a
 book in itself, for
@@ -2096,7 +2107,7 @@ Britannica, are:</p>
   <li class="c018"><a href="/article/28-0613-s1/whist">Whist</a></li>
 </ul>
 
-<p><span class="shoulder-heading" id="sh-23">Needlework, etc.</span>Needlework as treated in the Britannica
+<p><span class="shoulder-heading" id="section-needlework-etc">Needlework, etc.</span>Needlework as treated in the Britannica
 has one element of peculiar value
 and novelty. In this
 department, as
@@ -2156,7 +2167,7 @@ early embroidery. There are also articles
 on Tapestry, Needlework, Knitting,
 Yarn, etc.</p>
 
-<p><span class="shoulder-heading" id="sh-24">Dancing, the Stage, etc.</span>On dancing and the stage there is
+<p><span class="shoulder-heading" id="section-dancing-the-stage-etc">Dancing, the Stage, etc.</span>On dancing and the stage there is
 much of interest in the Britannica. The
 article on the <span class="sc"><a href="/article/07-0818-dance/dance">Dance</a></span> (Vol. 7, p. 794)
 distinguishes dancing as an expression

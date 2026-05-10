@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,12 +160,12 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter LVI</span>Geology</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">The Province Geology or Sermons in Stones</a></li><li><a href="#sh-2">Age of the Earth</a></li><li><a href="#sh-3">Geological Formations</a></li><li><a href="#sh-4">The Study of Life</a></li><li><a href="#sh-5">Structure</a></li><li><a href="#sh-6">Distribution</a></li><li><a href="#sh-7">Physiology</a></li><li><a href="#sh-8">Evolution</a></li></ol></div>
+    <div class="chap-subtitle">The Province Geology or Sermons in Stones</div>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-age-of-the-earth">Age of the Earth</a></li><li><a href="#section-geological-formations">Geological Formations</a></li><li><a href="#section-the-study-of-life">The Study of Life</a></li><li><a href="#section-structure">Structure</a></li><li><a href="#section-distribution">Distribution</a></li><li><a href="#section-physiology">Physiology</a></li><li><a href="#section-evolution">Evolution</a></li></ol></div>
     <div class="body-text">
 
 
-<div class="c002"></div>
-<p><span class="shoulder-heading" id="sh-1">The Province Geology or Sermons in Stones</span>Shakespeare tells us that “there
+<p>Shakespeare tells us that “there
 are sermons in stones.” No science,
 except possibly astronomy, appeals
 more to the imagination or carries one
@@ -232,7 +242,7 @@ science</i>;</p>
   <li class="c018"><i>Physiographical Geology</i>.</li>
 </ul>
 
-<p><span class="shoulder-heading" id="sh-2">Age of the Earth</span>While the student will doubtless be
+<p><span class="shoulder-heading" id="section-age-of-the-earth">Age of the Earth</span>While the student will doubtless be
 interested equally in each of these departments,
 the general reader will be
 especially interested in the
@@ -261,7 +271,7 @@ be less, and it may possibly have been
 much more than one hundred millions
 of years.”</p>
 
-<p><span class="shoulder-heading" id="sh-3">Geological Formations</span>The general reader will find of interest,
+<p><span class="shoulder-heading" id="section-geological-formations">Geological Formations</span>The general reader will find of interest,
 too, the table (Vol. 11, p. 670) representing
 the geological record or order
 of succession of the
@@ -1117,7 +1127,7 @@ Encyclopaedia Britannica:</p>
   <li class="c018"><a href="/article/25-0165-sinter/sinter">Sinter</a></li>
   <li class="c018"><a href="/article/25-0226-s2/slate">Slate</a></li>
   <li class="c018"><a href="/article/25-0265-smaltite/smaltite">Smaltite</a></li>
-  <li class="c018"><a href="/article/25-0286-s5/smith__william">Smith, William</a></li>
+  <li class="c018"><a href="/article/25-0286-s3/smith__william">Smith, William</a></li>
   <li class="c018"><a href="/article/25-0289-s6/smithson__james">Smithson, James</a></li>
   <li class="c018"><a href="/article/25-0299-s2/smyth__sir_warington_wilkinson">Smyth, Sir W. W.</a></li>
   <li class="c018"><a href="/article/25-0355-sodalite/sodalite">Sodalite</a></li>
@@ -1261,7 +1271,7 @@ or at least supplement, his studies,
 by reading the main general articles included
 below.</p>
 
-<p><span class="shoulder-heading" id="sh-4">The Study of Life</span>The guiding article <span class="sc"><a href="/article/03-0977-biology/biology">Biology</a></span> (Vol. 3, p.
+<p><span class="shoulder-heading" id="section-the-study-of-life">The Study of Life</span>The guiding article <span class="sc"><a href="/article/03-0977-biology/biology">Biology</a></span> (Vol. 3, p.
 954), which should be read first, serves
 as a key to the discussion of the biological
 sciences. It is not
@@ -1284,7 +1294,7 @@ theory of spontaneous generation is examined
 and found wanting, or at best
 unproved.</p>
 
-<p><span class="shoulder-heading" id="sh-5">Structure</span>Living matter may be regarded under
+<p><span class="shoulder-heading" id="section-structure">Structure</span>Living matter may be regarded under
 four aspects: structure, distribution, physiology,
 evolution. For the first, the article
 <span class="sc"><a href="/article/18-0895-s2/morphology">Morphology</a></span>
@@ -1300,7 +1310,7 @@ sections of the articles <span class="sc"><a href="/article/21-0758-plantin-chri
 21, p. 728) and <span class="sc"><a href="/article/28-1049-zoology/zoology">Zoology</a></span> (Vol. 28, p.
 1022).</p>
 
-<p><span class="shoulder-heading" id="sh-6">Distribution</span>A most fascinating branch is that
+<p><span class="shoulder-heading" id="section-distribution">Distribution</span>A most fascinating branch is that
 which is concerned with the where and
 when of the existence of organisms. The
 articles in the Britannica
@@ -1322,7 +1332,7 @@ service for plant life in the article <span class="sc"><a href="/article/20-0574
 (Vol. 20, p. 524). The distribution
 of present types is discussed
 under <span class="sc"><a href="/article/28-1029-zoological-distribution/zoological_distribution">Zoological Distribution</a></span> (Vol.
-28, p. 1002), <span class="sc"><a href="/article/21-0759-plants/plants">Plants</a></span>, <i>Distribution</i> (Vol.
+28, p. 1002), <span class="sc"><a href="/article/21-0759-plants/plants#section-distribution-of-plants">Plants</a></span>, <i>Distribution</i> (Vol.
 21, p. 777), and <span class="sc"><a href="/article/21-0751-plankton/plankton">Plankton</a></span> (Vol. 21, p.
 720), in which Prof. G. H. Fowler of
 University College, London, describes a
@@ -1333,17 +1343,17 @@ sea life. See also <span class="sc"><a href="/article/01-0145-s10/acclimatizatio
 Frank Finn, of the Indian Museum of
 Calcutta.</p>
 
-<p><span class="shoulder-heading" id="sh-7">Physiology</span>The properties, processes, and functions
+<p><span class="shoulder-heading" id="section-physiology">Physiology</span>The properties, processes, and functions
 of living things fall in the province
 of <span class="sc"><a href="/article/21-0580-physiology/physiology">Physiology</a></span> (Vol. 21, p. 554), and kindred
 articles; among
 the latter the following
 may profitably
 be consulted: <span class="sc"><a href="/article/02-0059-s3/animal_heat">Animal Heat</a></span> (Vol. 2, p.
-48), and <span class="sc"><a href="/article/21-0759-plants/plants">Plants</a></span>, <i>Physiology</i> (Vol. 21, p.
+48), and <span class="sc"><a href="/article/21-0759-plants/plants#section-physiology-of-plants">Plants</a></span>, <i>Physiology</i> (Vol. 21, p.
 744).</p>
 
-<p><span class="shoulder-heading" id="sh-8">Evolution</span>The gradual development of species is
+<p><span class="shoulder-heading" id="section-evolution">Evolution</span>The gradual development of species is
 considered in a number of valuable articles
 such as <span class="sc"><a href="/article/10-0034-evolution/evolution">Evolution</a></span> (Vol. 10, p. 22),
 <span class="sc"><a href="/article/13-0366-heredity/heredity">Heredity</a></span> (Vol. 13,
@@ -1425,7 +1435,7 @@ and an alphabetical list of the principal articles follows.</p>
   <li class="c018"><a href="/article/01-0781-alpini-prospero/alpini__prospero">Alpini, Prospero</a></li>
   <li class="c018"><a href="/article/01-0801-alston-charles/alston__charles">Alston, Charles</a></li>
   <li class="c018"><a href="/article/01-0847-s2/ambrosini__bartolomeo">Ambrosini, Bartolomeo</a></li>
-  <li class="c018"><a href="/article/01-1012-s6/anderson__james">Anderson, James</a></li>
+  <li class="c018"><a href="/article/01-1012-s7/anderson__james">Anderson, James</a></li>
   <li class="c018"><a href="/article/02-0688-s3/arrenotokous__arrenotoky">Arrenotokous, A.</a></li>
   <li class="c018"><a href="/article/02-0705-s2/artedi__peter">Artedi, Peter</a></li>
   <li class="c018"><a href="/article/02-0944-s5/audebert__jean_baptiste">Audebert, J. B.</a></li>

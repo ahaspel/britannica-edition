@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,7 +160,8 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter I</span>For Farmers</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Scope of the Articles</a></li><li><a href="#sh-2">Soil and Subsoil</a></li><li><a href="#sh-3">Sunlight and Shade, Heat and Cold, Water Enough—and Not too Much</a></li><li><a href="#sh-4">Drainage and Irrigation</a></li><li><a href="#sh-5">Farm Buildings and Fences</a></li><li><a href="#sh-6">Agricultural Machines</a></li><li><a href="#sh-7">Farm Finance</a></li><li><a href="#sh-8">Plants and Crops</a></li><li><a href="#sh-9">Wheat</a></li><li><a href="#sh-10">Fruit and Flower Growing</a></li><li><a href="#sh-11">Poultry and Bees</a></li><li><a href="#sh-12">The History of Farming</a></li></ol></div>
+
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-scope-of-the-articles">Scope of the Articles</a></li><li><a href="#section-soil-and-subsoil">Soil and Subsoil</a></li><li><a href="#section-sunlight-and-shade-heat-and-cold-water-enough-and-not-too-much">Sunlight and Shade, Heat and Cold, Water Enough—and Not too Much</a></li><li><a href="#section-drainage-and-irrigation">Drainage and Irrigation</a></li><li><a href="#section-farm-buildings-and-fences">Farm Buildings and Fences</a></li><li><a href="#section-agricultural-machines">Agricultural Machines</a></li><li><a href="#section-farm-finance">Farm Finance</a></li><li><a href="#section-plants-and-crops">Plants and Crops</a></li><li><a href="#section-wheat">Wheat</a></li><li><a href="#section-fruit-and-flower-growing">Fruit and Flower Growing</a></li><li><a href="#section-poultry-and-bees">Poultry and Bees</a></li><li><a href="#section-the-history-of-farming">The History of Farming</a></li></ol></div>
     <div class="body-text">
 
 
@@ -245,7 +256,7 @@ will give the farmer new advantages,
 no matter how much practical experience
 and special training he has had.</p>
 
-<p><span class="shoulder-heading" id="sh-1">Scope of the Articles</span>There are in the Encyclopædia Britannica
+<p><span class="shoulder-heading" id="section-scope-of-the-articles">Scope of the Articles</span>There are in the Encyclopædia Britannica
 1,186 articles dealing with animal
 and vegetable life; and among the 11,341
 geographical articles
@@ -294,7 +305,7 @@ parts of the Britannica than in that article</i>,
 so that the chapter does not attempt to
 tell the whole story.</p>
 
-<p><span class="shoulder-heading" id="sh-2">Soil and Subsoil</span>The first thing a farmer has to deal
+<p><span class="shoulder-heading" id="section-soil-and-subsoil">Soil and Subsoil</span>The first thing a farmer has to deal
 with is the ground from which his crops
 are to come. The whole surface of the
 earth was originally hard
@@ -354,7 +365,7 @@ article <span class="sc"><a href="/article/03-0173-s5/bacteriology">Bacteriology
 by Professor Marshall Ward, Professor
 Blackman, and Professor Muir.</p>
 
-<p><span class="shoulder-heading" id="sh-3">Sunlight and Shade, Heat and Cold, Water Enough—and Not too Much</span>The action of light, the supply of
+<p><span class="shoulder-heading" id="section-sunlight-and-shade-heat-and-cold-water-enough-and-not-too-much">Sunlight and Shade, Heat and Cold, Water Enough—and Not too Much</span>The action of light, the supply of
 which is just as necessary in causing
 growth as the warmth the sun gives, and
 the action of water and of heat and
@@ -390,7 +401,7 @@ where the diagram showing variations of
 temperature at different depths in the
 soil should be carefully studied.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Drainage and Irrigation</span>The brackish water that troubles
+<p><span class="shoulder-heading" id="section-drainage-and-irrigation">Drainage and Irrigation</span>The brackish water that troubles
 farmers near tidal creeks, the alkali
 water that often occurs West of the
 Mississippi, and the stagnant water that
@@ -430,7 +441,7 @@ and lakes, and the article <span class="sc"><a href="/article/16-0106-s2/lake">L
 16, p. 86) is also of interest in connection
 with irrigation.</p>
 
-<p><span class="shoulder-heading" id="sh-5">Farm Buildings and Fences</span>When the farmer, who has to be
+<p><span class="shoulder-heading" id="section-farm-buildings-and-fences">Farm Buildings and Fences</span>When the farmer, who has to be
 everything by turns, has been an engineer
 long enough to get the water off his
 farm or on his farm—and perhaps he
@@ -461,7 +472,7 @@ field fencing, of late increasing in favor,
 is also dealt with, is another practical
 article.</p>
 
-<p><span class="shoulder-heading" id="sh-6">Agricultural Machines</span>Advertisers no doubt supply you with
+<p><span class="shoulder-heading" id="section-agricultural-machines">Agricultural Machines</span>Advertisers no doubt supply you with
 more literature about farm machinery
 than you find time to read, but that
 makes it all the more
@@ -488,7 +499,7 @@ importance.</p>
 required in general farming fall under
 Chapter II of this Guide.</p>
 
-<p><span class="shoulder-heading" id="sh-7">Farm Finance</span>You cannot read the articles already
+<p><span class="shoulder-heading" id="section-farm-finance">Farm Finance</span>You cannot read the articles already
 mentioned, and consider all that has to
 be done in merely getting a farm ready
 to be worked, without
@@ -552,7 +563,7 @@ systems are also discussed in the Britannica,
 but the German plan is that which
 offers the best example to America.</p>
 
-<p><span class="shoulder-heading" id="sh-8">Plants and Crops</span>This course of reading has now covered
+<p><span class="shoulder-heading" id="section-plants-and-crops">Plants and Crops</span>This course of reading has now covered
 the conditions and the material required
 for farming, and it is time to get down
 to something that
@@ -635,7 +646,7 @@ concerned, and in any case you ought to
 read <span class="sc"><a href="/article/12-0384-s4/grass_and_grassland">Grass and Grassland</a></span> (Vol. 12,
 p. 367), and <span class="sc"><a href="/article/12-0386-s5/grasses">Grasses</a></span> (Vol. 12, p. 369).</p>
 
-<p><span class="shoulder-heading" id="sh-9">Wheat</span>The article <span class="sc"><a href="/article/28-0596-wheat/wheat">Wheat</a></span> (Vol. 28, p. 576)
+<p><span class="shoulder-heading" id="section-wheat">Wheat</span>The article <span class="sc"><a href="/article/28-0596-wheat/wheat">Wheat</a></span> (Vol. 28, p. 576)
 deals with one of the chief products of
 “the greatest cereal producing region of
 the world.” It begins
@@ -689,7 +700,7 @@ The special features of tropical farming
 are described in the articles on tropical
 crops.</p>
 
-<p><span class="shoulder-heading" id="sh-10">Fruit and Flower Growing</span>The article <span class="sc"><a href="/article/11-0273-fruit-and-flower-farming/fruit_and_flower_farming">Fruit and Flower Farming</a></span>
+<p><span class="shoulder-heading" id="section-fruit-and-flower-growing">Fruit and Flower Growing</span>The article <span class="sc"><a href="/article/11-0273-fruit-and-flower-farming/fruit_and_flower_farming">Fruit and Flower Farming</a></span>
 (Vol. 11, p. 260) covers fruit culture
 in general, and, in the section of it which
 deals with the United
@@ -728,7 +739,7 @@ the many articles on individual flower
 plants listed at the end of Part 3 of this
 chapter you can make your own choice.</p>
 
-<p><span class="shoulder-heading" id="sh-11">Poultry and Bees</span>Poultry and their rearing are dealt
+<p><span class="shoulder-heading" id="section-poultry-and-bees">Poultry and Bees</span>Poultry and their rearing are dealt
 with in the articles <span class="sc"><a href="/article/22-0227-poultry-and-poultry-farming/poultry_and_poultry-farming">Poultry and Poultry
 Farming</a></span> (Vol. 22, p. 213), <span class="sc"><a href="/article/10-0781-s2/fowl">Fowl</a></span>
 (Vol. 10, p. 760),
@@ -771,7 +782,7 @@ on learned societies have an extensive
 section (Vol. 25, p. 317) on the agricultural
 societies of all countries.</p>
 
-<p><span class="shoulder-heading" id="sh-12">The History of Farming</span>Agricultural history is, naturally, based
+<p><span class="shoulder-heading" id="section-the-history-of-farming">The History of Farming</span>Agricultural history is, naturally, based
 upon the history of vegetable life, and
 the fossil plants described in the article
 <span class="sc"><a href="/article/20-0573-s4/palaemon__quintus_remmius">Palæobotany</a></span> (Vol.
@@ -888,7 +899,7 @@ confidence.</p>
   <li class="c018"><a href="/article/01-0184-s2/acorus_calamus">Acorus Calamus</a></li>
   <li class="c018"><a href="/article/01-0184-s6/acotyledones">Acotyledones</a></li>
   <li class="c018"><a href="/article/01-0186-s7/acrogenae">Acrogenæ</a></li>
-  <li class="c018"><a href="/article/01-0243-s5/adonis">Adonis</a></li>
+  <li class="c018"><a href="/article/01-0243-s4/adonis">Adonis</a></li>
   <li class="c018"><a href="/article/01-0399-s3/african_lily">African Lily</a></li>
   <li class="c018"><a href="/article/01-0409-s5/agave">Agave</a></li>
   <li class="c018"><a href="/article/01-0462-s2/agrimony">Agrimony</a></li>
@@ -1315,7 +1326,7 @@ confidence.</p>
   <li class="c018">Laurustinue</li>
   <li class="c018"><a href="/article/16-0312-s2/lavender">Lavender</a></li>
   <li class="c018"><a href="/article/16-0342-leaf/leaf">Leaf</a></li>
-  <li class="c018"><a href="/article/16-0390-s2/leek">Leek</a></li>
+  <li class="c018"><a href="/article/16-0390-s3/leek">Leek</a></li>
   <li class="c018"><a href="/article/16-0401-s1/leguminosae">Leguminosæ</a></li>
   <li class="c018"><a href="/article/16-0433-lemon/lemon">Lemon</a></li>
   <li class="c018"><a href="/article/16-0450-s2/lentil">Lentil</a></li>

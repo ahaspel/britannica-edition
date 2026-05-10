@@ -15,6 +15,7 @@ from pathlib import Path
 
 sys.path.insert(0, "src")
 
+from britannica.contributors.aliases import canonical_name
 from britannica.db.models import Contributor, ContributorInitials
 from britannica.db.session import SessionLocal
 from britannica.pipeline.stages.extract_contributors import _normalize_initials
@@ -135,6 +136,11 @@ def _clean_name(raw_name):
     if credentials and not re.search(r"[A-Z]\.", credentials):
         base_name = name.strip().rstrip(".")
         credentials = ""
+    # Canonicalize: applies Unicode normalization (curly→straight quotes,
+    # NFKC) AND data/contributor_aliases.json variant→canonical lookup.
+    # Without this, multi-source name variants (vol 29 Index vs per-volume
+    # front matter) become separate Contributor rows for the same person.
+    base_name = canonical_name(base_name)
     return base_name, credentials
 
 
@@ -142,9 +148,26 @@ def _clean_description(raw_desc):
     """Clean description text."""
     import html as html_mod
     desc = raw_desc
-    # Handle article link templates (closed and unclosed, all variants)
-    desc = re.sub(r"\{\{EB1911 (?:article link|lkpl)\|([^}|]+)(?:\|[^}]*)?\}\}", r"\1", desc, flags=re.IGNORECASE)
-    desc = re.sub(r"\{\{EB1911 (?:article link|lkpl)\|([^}|]+)(?:\|[^}|]*)*$", r"\1", desc, flags=re.IGNORECASE)
+    # Preserve article-link templates as `«BIOLINK:target|display«/BIOLINK»`
+    # markers (unique sentinel so the wikilink + template strippers below
+    # don't touch them).  `_resolve_bio_articles` at export time parses
+    # the marker to resolve peerage-style cases (St. Cyres → Iddesleigh)
+    # where simple surname-inversion can't find the biographical article.
+    # The viewer hides the description's "See the biographical article…"
+    # sentence entirely and renders a real link from `bio_article_filename`.
+    desc = re.sub(
+        r"\{\{EB1911 (?:article link|lkpl)\|([^}|]+)\|([^}]+)\}\}",
+        r"«BIOLINK:\1|\2«/BIOLINK»", desc, flags=re.IGNORECASE,
+    )
+    desc = re.sub(
+        r"\{\{EB1911 (?:article link|lkpl)\|([^}|]+)\}\}",
+        r"«BIOLINK:\1|\1«/BIOLINK»", desc, flags=re.IGNORECASE,
+    )
+    # Unclosed variants — best-effort target capture.
+    desc = re.sub(
+        r"\{\{EB1911 (?:article link|lkpl)\|([^}|]+)(?:\|[^}|]*)*$",
+        r"«BIOLINK:\1|\1«/BIOLINK»", desc, flags=re.IGNORECASE,
+    )
     # Strip wiki links (including long 1911 Encyclopædia paths, closed and unclosed)
     desc = re.sub(r"\[\[[^\]|]+\|([^\]]+)\]\]", r"\1", desc)
     desc = re.sub(r"\[\[([^\]]+)\]\]", r"\1", desc)

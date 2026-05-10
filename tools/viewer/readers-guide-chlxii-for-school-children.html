@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,12 +160,12 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter LXII</span>For School-Children</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Importance of Correct First Impressions</a></li><li><a href="#sh-2">The Britannica Interesting to Children</a></li><li><a href="#sh-3">Heroes and Heroines of History, Romance and Adventure</div> <div class="sidenote">The Romance of the Middle Ages</div> <div class="sidenote">Heroes of Later Times</div> <div class="sidenote">Famous Women of History</a></li><li><a href="#sh-4">Readings in Natural History</a></li><li><a href="#sh-5">The Habits and Doings of Clever Animals</a></li><li><a href="#sh-6">Knowledge about Plants and Animals</a></li><li><a href="#sh-7">Marvelous Machines</a></li><li><a href="#sh-8">Electrical Apparatus</a></li><li><a href="#sh-9">Industrial Processes</a></li><li><a href="#sh-10">Explorers’ Voyages and Journeys</a></li><li><a href="#sh-11">Modern Exploration</a></li><li><a href="#sh-12">A Complete History of the World</a></li><li><a href="#sh-13">Physical Geography made Interesting</a></li><li><a href="#sh-14">Readings in Astronomy</a></li><li><a href="#sh-15">Games and Pastimes</a></li><li><a href="#sh-16">Diverting and Profitable Occupations</a></li><li><a href="#sh-17">Reading for Girls</a></li><li><a href="#sh-18">The Romance of the Middle Ages</a></li><li><a href="#sh-19">Heroes of Later Times</a></li></ol></div>
+    <div class="chap-subtitle">Importance of Correct First Impressions</div>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-the-britannica-interesting-to-children">The Britannica Interesting to Children</a></li><li><a href="#section-heroes-and-heroines-of-history-romance-and-adventure">Heroes and Heroines of History, Romance and Adventure</a></li><li><a href="#section-the-romance-of-the-middle-ages">The Romance of the Middle Ages</a></li><li><a href="#section-heroes-of-later-times">Heroes of Later Times</a></li><li><a href="#section-famous-women-of-history">Famous Women of History</a></li><li><a href="#section-readings-in-natural-history">Readings in Natural History</a></li><li><a href="#section-the-habits-and-doings-of-clever-animals">The Habits and Doings of Clever Animals</a></li><li><a href="#section-knowledge-about-plants-and-animals">Knowledge about Plants and Animals</a></li><li><a href="#section-marvelous-machines">Marvelous Machines</a></li><li><a href="#section-electrical-apparatus">Electrical Apparatus</a></li><li><a href="#section-industrial-processes">Industrial Processes</a></li><li><a href="#section-explorers-voyages-and-journeys">Explorers’ Voyages and Journeys</a></li><li><a href="#section-modern-exploration">Modern Exploration</a></li><li><a href="#section-a-complete-history-of-the-world">A Complete History of the World</a></li><li><a href="#section-physical-geography-made-interesting">Physical Geography made Interesting</a></li><li><a href="#section-readings-in-astronomy">Readings in Astronomy</a></li><li><a href="#section-games-and-pastimes">Games and Pastimes</a></li><li><a href="#section-diverting-and-profitable-occupations">Diverting and Profitable Occupations</a></li><li><a href="#section-reading-for-girls">Reading for Girls</a></li></ol></div>
     <div class="body-text">
 
 
-<div class="c002"></div>
-<p><span class="shoulder-heading" id="sh-1">Importance of Correct First Impressions</span>When a stick of hot glass is drawn
+<p>When a stick of hot glass is drawn
 out, no matter how far it is
 stretched, the slender stick retains
 the original shape of the piece—square,
@@ -202,7 +212,7 @@ help from you, at the beginning, they
 will soon learn to use the Britannica
 for themselves.</p>
 
-<p><span class="shoulder-heading" id="sh-2">The Britannica Interesting to Children</span>The love of reading is quickly developed
+<p><span class="shoulder-heading" id="section-the-britannica-interesting-to-children">The Britannica Interesting to Children</span>The love of reading is quickly developed
 in children. Some are attracted to
 history, to the lives of great men, to
 exploration and to
@@ -238,7 +248,7 @@ E. Watts</a>, the well-known translator of
 <i>Don Quixote</i>. <span class="sc"><a href="/article/23-0486-s2/roland__legend_of">Roland, Legend of</a></span> (Vol.
 23, p. 464), tells another stirring story.</p>
 
-<p><span class="shoulder-heading" id="sh-3">Heroes and Heroines of History, Romance and Adventure</div> <p><span class="shoulder-heading" id="sh-18">The Romance of the Middle Ages</span></p> <p><span class="shoulder-heading" id="sh-19">Heroes of Later Times</span></p> <div class="sidenote">Famous Women of History</span>Of peculiar interest to children are
+<p><span class="shoulder-heading" id="section-heroes-and-heroines-of-history-romance-and-adventure">Heroes and Heroines of History, Romance and Adventure</span><span class="shoulder-heading" id="section-the-romance-of-the-middle-ages">The Romance of the Middle Ages</span><span class="shoulder-heading" id="section-heroes-of-later-times">Heroes of Later Times</span><span class="shoulder-heading" id="section-famous-women-of-history">Famous Women of History</span>Of peculiar interest to children are
 such articles as <i>Cyrus (The Great)</i>,
 (Vol. 7, p. 706), by Dr. <a href="/contributors.html?q=Eduard+Meyer">Eduard Meyer</a>,
 professor of ancient
@@ -348,7 +358,7 @@ make the articles especially appropriate
 for children, and will establish a taste
 for this kind of reading in later years.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Readings in Natural History</span>Many children show a bent for knowledge
+<p><span class="shoulder-heading" id="section-readings-in-natural-history">Readings in Natural History</span>Many children show a bent for knowledge
 of the world of nature, and to
 them the new Britannica will prove a
 faithful, constant
@@ -401,7 +411,7 @@ entertaining articles by noted naturalists,
 in the pages of the Britannica, is of the
 most reliable and accurate character.</p>
 
-<p><span class="shoulder-heading" id="sh-5">The Habits and Doings of Clever Animals</span>Nothing, for instance, could be more
+<p><span class="shoulder-heading" id="section-the-habits-and-doings-of-clever-animals">The Habits and Doings of Clever Animals</span>Nothing, for instance, could be more
 absorbing to the average school-child
 than the article <span class="sc"><a href="/article/02-0096-s4/ant">Ant</a></span> (Vol. 2, p. 85), by
 Prof. George H. Carpenter
@@ -447,7 +457,7 @@ tells how animals protect themselves
 from their enemies by resemblance to
 other animals or objects.</p>
 
-<p><span class="shoulder-heading" id="sh-6">Knowledge about Plants and Animals</span>Space will not permit further specific
+<p><span class="shoulder-heading" id="section-knowledge-about-plants-and-animals">Knowledge about Plants and Animals</span>Space will not permit further specific
 mention. The life-story of the entire
 animal kingdom, detailed information
 about plants and
@@ -463,7 +473,7 @@ to give the work its unique position as
 the greatest source of authoritative and
 easily comprehended knowledge.</p>
 
-<p><span class="shoulder-heading" id="sh-7">Marvelous Machines</span>Children delight in machinery and
+<p><span class="shoulder-heading" id="section-marvelous-machines">Marvelous Machines</span>Children delight in machinery and
 what it accomplishes, and the Britannica
 tells about this with great thoroughness
 in its complete section
@@ -483,7 +493,7 @@ p. 378) also by <a href="/contributors.html?q=Edmund+Knecht">Professor Knecht</a
 Worsted and Woollen Manufactures</a></span>
 (Vol. 28, p. 805), by <a href="/contributors.html?q=Aldred+Farrer+Barker">Aldred F. Barker</a>,
 professor of textile industries, Bradford
-Technical College; <span class="sc"><a href="/article/27-0528-typography/typography">Typography</a></span>, <i>Modern
+Technical College; <span class="sc"><a href="/article/27-0528-typography/typography#section-ii-modern-practical-typography">Typography</a></span>, <i>Modern
 Practical Typography</i> (Vol. 27, p.
 542), by <a href="/contributors.html?q=John+Southward">John Southward</a>, author of
 <i>Practical Printing</i>, and <a href="/contributors.html?q=Hugh+Munro+Ross">H. M. Ross</a>;
@@ -525,7 +535,7 @@ good history of the railway by <a href="/contributors.html?q=Hugh+Munro+Ross">H.
 Ross</a>, editor of <i>The Times Engineering
 Supplement</i>, and others.</p>
 
-<p><span class="shoulder-heading" id="sh-8">Electrical Apparatus</span>The remarkable attraction possessed
+<p><span class="shoulder-heading" id="section-electrical-apparatus">Electrical Apparatus</span>The remarkable attraction possessed
 by electrical apparatus for many boys
 will doubtless send them to such articles
 as <span class="sc"><a href="/article/08-0791-dynamo/dynamo">Dynamo</a></span> (Vol. 8,
@@ -544,7 +554,7 @@ practical information, and will be of inestimable
 help to any boy who wishes to
 experiment for himself.</p>
 
-<p><span class="shoulder-heading" id="sh-9">Industrial Processes</span>Many industrial processes, while not
+<p><span class="shoulder-heading" id="section-industrial-processes">Industrial Processes</span>Many industrial processes, while not
 employing complicated machinery, nevertheless
 possess much interest, both
 from an historical
@@ -581,7 +591,7 @@ studies will be continued throughout the
 course of his life, in his business and in
 his general reading.</p>
 
-<p><span class="shoulder-heading" id="sh-10">Explorers’ Voyages and Journeys</span>Children love to read adventures of
+<p><span class="shoulder-heading" id="section-explorers-voyages-and-journeys">Explorers’ Voyages and Journeys</span>Children love to read adventures of
 explorers in forcing their way to unknown
 lands. The impression they make is
 much clearer when
@@ -606,7 +616,7 @@ and successive ones in sight one from the
 other; so that there is no going astray, no
 uncertain wandering. A reader—young
 or old—with taste for exploration and
-adventure may turn first to <span class="sc"><a href="/article/11-0639-s2/geography">Geography</a></span>,
+adventure may turn first to <span class="sc"><a href="/article/11-0639-s2/geography#section-progress-of-geographical-discovery">Geography</a></span>,
 <i>Progress of Geographical Discovery</i> (Vol.
 11, p. 623), by Dr. <a href="/contributors.html?q=Hugh+Robert+Mill">H. R. Mill</a>, editor of
 <i>The International Geography.</i> This article
@@ -691,14 +701,14 @@ who united against Spain in the 17th
 century, and <span class="sc"><a href="/article/07-0086-cook-james/cook__james">Cook, James</a></span> (Vol. 7, p.
 71), by <a href="/contributors.html?q=Charles+Raymond+Beazley">Professor Beazley</a>.</p>
 
-<p><span class="shoulder-heading" id="sh-11">Modern Exploration</span>The story of geographical discovery
+<p><span class="shoulder-heading" id="section-modern-exploration">Modern Exploration</span>The story of geographical discovery
 and exploration is continued in such articles
 as <span class="sc"><a href="/article/01-0851-america/america">America</a></span>, <i>General Historical
 Sketch</i> (Vol. 1, p. 806), by <a href="/contributors.html?q=David+Hannay">David Hannay</a>;
 <span class="sc"><a href="/article/01-0358-africa/africa">Africa</a></span>, <i>History: Exploration and Survey
 since 1875</i> (Vol. 1, pp. 331 and 352), by <a href="/contributors.html?q=Frank+R.+Cana">F.
 R. Cana</a>, author of <i>South Africa from the
-Great Trek to the Union</i>; <span class="sc"><a href="/article/02-0778-s4/asia">Asia</a></span>, <i>Exploration</i>
+Great Trek to the Union</i>; <span class="sc"><a href="/article/02-0778-s4/asia#section-exploration">Asia</a></span>, <i>Exploration</i>
 (Vol. 2, p. 738), by <a href="/contributors.html?q=Colonel+Sir+Thomas+Hungerford+Holdich">Col. Sir Thomas
 H. Holdich</a>, formerly superintendent of
 the Frontier Surveys of India; <span class="sc"><a href="/article/02-0991-s4/australia">Australia</a></span>,
@@ -730,7 +740,7 @@ Fridtjof</a></span> (Vol. 19, p. 162); <span class="sc"><a href="/article/21-004
 Robert Edwin</a></span> (Vol. 21, p. 30). See the
 chapter on <i>Geography</i> in this Guide.</p>
 
-<p><span class="shoulder-heading" id="sh-12">A Complete History of the World</span>A strong taste for history is often found
+<p><span class="shoulder-heading" id="section-a-complete-history-of-the-world">A Complete History of the World</span>A strong taste for history is often found
 in children, and the new Britannica is,
 among other things, a complete history
 of the world, by the
@@ -770,8 +780,8 @@ it serves to bring the child into close,
 sympathetic touch with the truths of
 science.</p>
 
-<p><span class="shoulder-heading" id="sh-13">Physical Geography made Interesting</span>The principles of physical geography
-are clearly explained in <span class="sc"><a href="/article/11-0639-s2/geography">Geography</a></span>,
+<p><span class="shoulder-heading" id="section-physical-geography-made-interesting">Physical Geography made Interesting</span>The principles of physical geography
+are clearly explained in <span class="sc"><a href="/article/11-0639-s2/geography#section-the-principles-of-geography">Geography</a></span>,
 <i>Principles of</i> (Vol. 11, p. 630), by Dr. <a href="/contributors.html?q=Hugh+Robert+Mill">H.
 R. Mill</a>; and when
 these are learned
@@ -844,7 +854,7 @@ Britannica to which the classified list in
 the Index Volume (Vol. 29, p. 888) is the
 key.</p>
 
-<p><span class="shoulder-heading" id="sh-14">Readings in Astronomy</span>In the preceding chapter are mentioned
+<p><span class="shoulder-heading" id="section-readings-in-astronomy">Readings in Astronomy</span>In the preceding chapter are mentioned
 a few articles which will serve
 for the beginning
 of an acquaintance
@@ -872,7 +882,7 @@ Applied Optics</i>, and Sir David Gill, formerly
 astronomer royal at the Cape of
 Good Hope.</p>
 
-<p><span class="shoulder-heading" id="sh-15">Games and Pastimes</span>In the preceding chapter a few articles
+<p><span class="shoulder-heading" id="section-games-and-pastimes">Games and Pastimes</span>In the preceding chapter a few articles
 on games were mentioned as being
 useful to parents helping very
 young children to
@@ -891,14 +901,14 @@ Hutchinson</a>, golf champion and author of
 23, p. 783), by <a href="/contributors.html?q=Charles+Murray+Pitman">C. M. Pitman</a>, formerly
 stroke of the Oxford University Eight;
 <span class="sc"><a href="/article/18-0670-model-yachting/model-yachting">Model-Yachting</a></span> (Vol. 18, p. 640);
-<span class="sc"><a href="/article/02-0032-s2/angling">Angling</a></span>, <i>Methods and Practice</i> (Vol. 2,
+<span class="sc"><a href="/article/02-0032-s2/angling#section-methods-and-practice">Angling</a></span>, <i>Methods and Practice</i> (Vol. 2,
 p. 24); <span class="sc"><a href="/article/07-0457-cricket-insect/cricket__insect_">Cricket</a></span> (Vol. 7, p. 435); <span class="sc"><a href="/article/02-0383-s8/archery">Archery</a></span>,
 <i>Pastime of</i> (Vol. 2, p. 364), by the
 late W. J. Ford. A long list of indoor and
 out-door games will be found in the
 classified subject-list (Vol. 29, p. 946).</p>
 
-<p><span class="shoulder-heading" id="sh-16">Diverting and Profitable Occupations</span>The aptitude of children for diverting
+<p><span class="shoulder-heading" id="section-diverting-and-profitable-occupations">Diverting and Profitable Occupations</span>The aptitude of children for diverting
 and often profitable occupations is admirably
 fostered by the new Britannica
 through many of its very practical articles.
@@ -925,7 +935,7 @@ in articles by experts, so that the Britannica
 is a complete guide to the use of
 every kind of tool.</p>
 
-<p><span class="shoulder-heading" id="sh-17">Reading for Girls</span>In the field of girls’ occupations there
+<p><span class="shoulder-heading" id="section-reading-for-girls">Reading for Girls</span>In the field of girls’ occupations there
 is in the Britannica
 much material that
 serves to give knowledge

@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,12 +160,12 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter XLIV</span>Canadian History</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">“Young” Rivers and Lakes</a></li><li><a href="#sh-2">Exploration and Settlement</a></li><li><a href="#sh-3">The War Periods</a></li><li><a href="#sh-4">Federation and Since</a></li></ol></div>
+    <div class="chap-subtitle">“Young” Rivers and Lakes</div>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-exploration-and-settlement">Exploration and Settlement</a></li><li><a href="#section-the-war-periods">The War Periods</a></li><li><a href="#section-federation-and-since">Federation and Since</a></li></ol></div>
     <div class="body-text">
 
 
-<div class="c002"></div>
-<p><span class="shoulder-heading" id="sh-1">“Young” Rivers and Lakes</span>All the world thinks of Canada as
+<p>All the world thinks of Canada as
 the youngest of countries, for the
 extraordinary rapidity with which
 her western territory has been developed
@@ -220,7 +230,7 @@ Western Sea</i>, and French-Canadian by
 <a href="/contributors.html?q=William+Wood">William Wood</a>, author of <i>The Fight for
 Canada</i>.</p>
 
-<p><span class="shoulder-heading" id="sh-2">Exploration and Settlement</span>On the early history of Canada the student
+<p><span class="shoulder-heading" id="section-exploration-and-settlement">Exploration and Settlement</span>On the early history of Canada the student
 should compare what is given in
 this Guide on the early history of America
 in general and especially
@@ -248,7 +258,7 @@ Scotia</a></span>, <i>History</i>; <span class="sc">Seven Years’ War</span>
 (Vol. 24, especially page 722); <span class="sc"><a href="/article/22-0740-s6/quebec">Quebec</a></span>;
 <span class="sc"><a href="/article/18-0791-s5/montcalm_de_saint_véran__louis_joseph">Montcalm</a></span> and <span class="sc"><a href="/article/28-0794-wolfe-james/wolfe__james">Wolfe</a></span>.</p>
 
-<p><span class="shoulder-heading" id="sh-3">The War Periods</span>The close of the Seven Years’ War saw
+<p><span class="shoulder-heading" id="section-the-war-periods">The War Periods</span>The close of the Seven Years’ War saw
 New France ceded to Great Britain. On
 English rule down to Canadian Federation,
 the student should consult the following
@@ -285,7 +295,7 @@ and, for Irish-American outrages
 on the Canadian border, the article
 <span class="sc"><a href="/article/10-0266-fenians/fenians">Fenians</a></span>.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Federation and Since</span>On the period since federation (1867),
+<p><span class="shoulder-heading" id="section-federation-and-since">Federation and Since</span>On the period since federation (1867),
 see the article <span class="sc"><a href="/article/10-0245-s3/federal_government">Federal Government</a></span>
 (Vol. 10, p. 233) for a general description
 of this form of administration;

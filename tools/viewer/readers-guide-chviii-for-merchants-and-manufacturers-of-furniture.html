@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,12 +160,12 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter VIII</span>For Merchants And Manufacturers Of Furniture</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">Art and Industry</a></li><li><a href="#sh-2">Form and Embellishment</a></li><li><a href="#sh-3">Related Subjects</a></li><li><a href="#sh-4">“Art Nouveau” School</a></li><li><a href="#sh-5">Beds</a></li><li><a href="#sh-6">Chests and Chairs</a></li><li><a href="#sh-7">Bookcases and Desks</a></li><li><a href="#sh-8">Technical Articles</a></li><li><a href="#sh-9">Decoration and Ornament</div> <div class="sidenote">Biographical Articles</a></li></ol></div>
+    <div class="chap-subtitle">Art and Industry</div>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-form-and-embellishment">Form and Embellishment</a></li><li><a href="#section-related-subjects">Related Subjects</a></li><li><a href="#section-art-nouveau-school">“Art Nouveau” School</a></li><li><a href="#section-beds">Beds</a></li><li><a href="#section-chests-and-chairs">Chests and Chairs</a></li><li><a href="#section-bookcases-and-desks">Bookcases and Desks</a></li><li><a href="#section-technical-articles">Technical Articles</a></li><li><a href="#section-decoration-and-ornament">Decoration and Ornament</a></li><li><a href="#section-biographical-articles">Biographical Articles</a></li></ol></div>
     <div class="body-text">
 
 
-<div class="c002"></div>
-<p><span class="shoulder-heading" id="sh-1">Art and Industry</span>When you think of your home,
+<p>When you think of your home,
 making a picture in your mind
 of the familiar surroundings associated
 in your memory with your
@@ -193,7 +203,7 @@ might be just as useful in a less pleasing
 guise, but you would not feel the same
 affection for the book.</p>
 
-<p><span class="shoulder-heading" id="sh-2">Form and Embellishment</span>To satisfy the spirit of home-love and
+<p><span class="shoulder-heading" id="section-form-and-embellishment">Form and Embellishment</span>To satisfy the spirit of home-love and
 house-pride in the making of furniture is
 an art, and the idea that furniture can
 only be artistic when it is made by hand,
@@ -239,7 +249,7 @@ given pleasure to tens of thousands for
 every one whose home was enriched by
 the original products.</p>
 
-<p><span class="shoulder-heading" id="sh-3">Related Subjects</span>We have, then, in the furniture business,
+<p><span class="shoulder-heading" id="section-related-subjects">Related Subjects</span>We have, then, in the furniture business,
 the combination of an art with an
 industry of the most practical and useful
 kind, and this art is one which does more
@@ -266,7 +276,7 @@ of the articles dealing specifically with
 furniture will at any rate serve his primary
 purpose.</p>
 
-<p><span class="shoulder-heading" id="sh-4">“Art Nouveau” School</span>The keystone article <span class="sc"><a href="/article/11-0376-s3/furniture">Furniture</a></span> (Vol.
+<p><span class="shoulder-heading" id="section-art-nouveau-school">“Art Nouveau” School</span>The keystone article <span class="sc"><a href="/article/11-0376-s3/furniture">Furniture</a></span> (Vol.
 11, p. 363) is by <a href="/contributors.html?q=James+George+Joseph+Penderel-Brodhurst">James Penderel-Brodhurst</a>,
 one of the greatest of living authorities,
 to whom many of the subsidiary
@@ -314,7 +324,7 @@ wood, which was so long neglected, is the
 most effective that can be employed at
 moderate cost.</p>
 
-<p><span class="shoulder-heading" id="sh-5">Beds</span>The oldest and most indispensable of
+<p><span class="shoulder-heading" id="section-beds">Beds</span>The oldest and most indispensable of
 all furnishings is treated in the article
 <span class="sc"><a href="/article/03-0631-bed-furniture/bed__furniture_">Bed</a></span> (Vol. 3, p. 612). The Egyptians had
 high bedsteads to which
@@ -357,7 +367,7 @@ his royal successors, of a sovereign remaining
 in bed while he received the
 visits of his ministers and courtiers.</p>
 
-<p><span class="shoulder-heading" id="sh-6">Chests and Chairs</span>The chair, to us the commonest of objects,
+<p><span class="shoulder-heading" id="section-chests-and-chairs">Chests and Chairs</span>The chair, to us the commonest of objects,
 did not come into general use until,
 as the articles <span class="sc"><a href="/article/03-0735-bench/bench">Bench</a></span> (Vol. 3, p. 715) and
 <span class="sc"><a href="/article/25-0993-s2/stool">Stool</a></span> (Vol. 25, p.
@@ -395,7 +405,7 @@ as an office convenience of modern
 origin, has a pedigree of no less than four
 centuries.</p>
 
-<p><span class="shoulder-heading" id="sh-7">Bookcases and Desks</span>It would seem that the old English
+<p><span class="shoulder-heading" id="section-bookcases-and-desks">Bookcases and Desks</span>It would seem that the old English
 makers of furniture went somewhat
 astray when they gave themselves the
 general designation, still surviving, of
@@ -442,7 +452,7 @@ p. 577), <span class="sc"><a href="/article/06-0035-cheffonier/cheffonier">Cheff
 <span class="sc"><a href="/article/07-0380-cradle/cradle">Cradle</a></span> (Vol. 7, p. 360), <span class="sc"><a href="/article/04-0780-s3/buffet">Buffet</a></span> (Vol. 4,
 p. 757), and <span class="sc"><a href="/article/18-0602-mirror/mirror">Mirror</a></span> (Vol. 18, p. 575).</p>
 
-<p><span class="shoulder-heading" id="sh-8">Technical Articles</span>Of the more technical articles <span class="sc"><a href="/article/26-1018-timber/timber">Timber</a></span>
+<p><span class="shoulder-heading" id="section-technical-articles">Technical Articles</span>Of the more technical articles <span class="sc"><a href="/article/26-1018-timber/timber">Timber</a></span>
 (Vol. 26, p. 978) shows the comparative
 advantages of all the varieties of wood
 used for furniture;
@@ -477,7 +487,7 @@ p. 102); <span class="sc"><a href="/article/21-0890-plush/plush">Plush</a></span
 676), by <a href="/contributors.html?q=John+Smith+Flett">J. S. Flett</a>; <span class="sc"><a href="/article/20-0144-onyx/onyx">Onyx</a></span> (Vol. 20, p.
 118); and <span class="sc"><a href="/article/01-0505-alabaster/alabaster">Alabaster</a></span> (Vol. 1, p. 466).</p>
 
-<p><span class="shoulder-heading" id="sh-9">Decoration and Ornament</div> <div class="sidenote">Biographical Articles</span>Although wood, ivory, precious stones,
+<p><span class="shoulder-heading" id="section-decoration-and-ornament">Decoration and Ornament</span><span class="shoulder-heading" id="section-biographical-articles">Biographical Articles</span>Although wood, ivory, precious stones,
 bronze, silver and gold have been used
 from antiquity for the decorations of
 furniture, the modern

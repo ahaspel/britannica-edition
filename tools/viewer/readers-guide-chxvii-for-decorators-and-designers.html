@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,12 +160,12 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter XVII</span>For Decorators And Designers</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">All the Arts in One</a></li><li><a href="#sh-2">The Influence of Architecture</a></li><li><a href="#sh-3">Design and Mural Painting</a></li><li><a href="#sh-4">The Wall and the Floor</a></li><li><a href="#sh-5">Furniture</a></li><li><a href="#sh-6">Textile Fabrics</a></li><li><a href="#sh-7">Arts and Crafts</a></li><li><a href="#sh-8">Portable Ornaments</a></li><li><a href="#sh-9">Biographies</a></li></ol></div>
+    <div class="chap-subtitle">All the Arts in One</div>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-the-influence-of-architecture">The Influence of Architecture</a></li><li><a href="#section-design-and-mural-painting">Design and Mural Painting</a></li><li><a href="#section-the-wall-and-the-floor">The Wall and the Floor</a></li><li><a href="#section-furniture">Furniture</a></li><li><a href="#section-textile-fabrics">Textile Fabrics</a></li><li><a href="#section-arts-and-crafts">Arts and Crafts</a></li><li><a href="#section-portable-ornaments">Portable Ornaments</a></li><li><a href="#section-biographies">Biographies</a></li></ol></div>
     <div class="body-text">
 
 
-<div class="c002"></div>
-<p><span class="shoulder-heading" id="sh-1">All the Arts in One</span>The decorator and designer is a
+<p>The decorator and designer is a
 specialist in his purposes rather
 than in his methods, and his taste
 and judgment must be based upon a wide
@@ -222,7 +232,7 @@ and decorator, no matter how
 many technical books his working library
 may contain.</p>
 
-<p><span class="shoulder-heading" id="sh-2">The Influence of Architecture</span>Since harmony of proportion, the essence
+<p><span class="shoulder-heading" id="section-the-influence-of-architecture">The Influence of Architecture</span>Since harmony of proportion, the essence
 of architecture, is also the primary
 law of interior decoration, the reader of
 the present chapter
@@ -262,7 +272,7 @@ architecture are <span class="sc"><a href="/article/20-0201-s2/order">Order</a><
 13, p. 810), with its exquisite full page
 plates.</p>
 
-<p><span class="shoulder-heading" id="sh-3">Design and Mural Painting</span>The article <span class="sc"><a href="/article/08-0110-design/design">Design</a></span> (Vol. 8, p. 95), by
+<p><span class="shoulder-heading" id="section-design-and-mural-painting">Design and Mural Painting</span>The article <span class="sc"><a href="/article/08-0110-design/design">Design</a></span> (Vol. 8, p. 95), by
 <a href="/contributors.html?q=W.+R.+Lethaby">W. R. Lethaby</a>, principal of the Central
 School of Arts and Crafts, London, contains
 a passage which
@@ -334,7 +344,7 @@ of these articles are richly illustrated.
 See further, the chapters on <i>Fine Arts</i>,
 <i>Painting</i> and <i>Sculpture</i>.</p>
 
-<p><span class="shoulder-heading" id="sh-4">The Wall and the Floor</span><span class="sc"><a href="/article/28-0295-wall-coverings/wall-coverings">Wall-Coverings</a></span> (Vol. 28, p. 279), by
+<p><span class="shoulder-heading" id="section-the-wall-and-the-floor">The Wall and the Floor</span><span class="sc"><a href="/article/28-0295-wall-coverings/wall-coverings">Wall-Coverings</a></span> (Vol. 28, p. 279), by
 <a href="/contributors.html?q=James+Bartlett">James Bartlett</a>, of Kings College, London,
 deals with the subject in its practical
 relation to
@@ -373,7 +383,7 @@ are the articles <span class="sc"><a href="/article/10-0547-floor/floor">Floor-C
 carpets and rugs as designed and manufactured
 in Europe and Oriental countries.</p>
 
-<p><span class="shoulder-heading" id="sh-5">Furniture</span>The next group of topics begins with
+<p><span class="shoulder-heading" id="section-furniture">Furniture</span>The next group of topics begins with
 the article <span class="sc"><a href="/article/11-0376-s3/furniture">Furniture</a></span> (Vol. 11, p. 363)
 with 36 illustrations by <a href="/contributors.html?q=James+George+Joseph+Penderel-Brodhurst">J. G. Penderel-Brodhurst</a>.
 The
@@ -401,7 +411,7 @@ and the reader should consult the chapter
 in this Guide <i>For the Manufacturer of
 Furniture</i>.</p>
 
-<p><span class="shoulder-heading" id="sh-6">Textile Fabrics</span>The decorator and designer must be
+<p><span class="shoulder-heading" id="section-textile-fabrics">Textile Fabrics</span>The decorator and designer must be
 familiar with all manner of fabrics, and
 the Britannica contains an immense
 fund of information
@@ -507,7 +517,7 @@ gimp used in connection with varieties
 of weaving, embroidery and twisting and
 with plaiting or lace-work.</p>
 
-<p><span class="shoulder-heading" id="sh-7">Arts and Crafts</span>Before taking up the specific objects
+<p><span class="shoulder-heading" id="section-arts-and-crafts">Arts and Crafts</span>Before taking up the specific objects
 of art used in interior decoration and
 furnishing, attention must be called to
 the many articles of
@@ -560,12 +570,12 @@ Dr. Charles H. Read of the British
 Museum, <span class="sc"><a href="/article/01-0276-s3/aegean_civilization">Aegean Civilization</a></span> (Vol. 1,
 p. 245) by <a href="/contributors.html?q=David+George+Hogarth">D. G. Hogarth</a>, the explorer,
 <span class="sc"><a href="/article/24-0302-scandinavian-civilization/scandinavian_civilization">Scandinavian Civilization</a></span> (Vol. 24, p.
-287), and <span class="sc"><a href="/article/01-0851-america/america">America</a></span>, <i>Archaeology</i> (Vol. 1,
+287), and <span class="sc"><a href="/article/01-0851-america/america#section-archaeology">America</a></span>, <i>Archaeology</i> (Vol. 1,
 p. 810) by the late O. T. Mason, of the
 National Museum, Washington. These
 articles are beautifully illustrated.</p>
 
-<p><span class="shoulder-heading" id="sh-8">Portable Ornaments</span>Some of the articles on art objects
+<p><span class="shoulder-heading" id="section-portable-ornaments">Portable Ornaments</span>Some of the articles on art objects
 have already been mentioned; in addition
 to them there is <span class="sc"><a href="/article/05-0729-ceramics/ceramics">Ceramics</a></span> (Vol. 5,
 p. 703), equivalent
@@ -638,7 +648,7 @@ will be referred to constantly by all who
 are interested in Oriental handiwork
 and design.</p>
 
-<p><span class="shoulder-heading" id="sh-9">Biographies</span>A great number of the biographies in
+<p><span class="shoulder-heading" id="section-biographies">Biographies</span>A great number of the biographies in
 the Britannica will possess much interest
 for the decorator and designer. Some
 of the noteworthy

@@ -28,6 +28,16 @@
       font-variant: normal; letter-spacing: 0.2em; margin-bottom: 6px; }
     h4 { font-size: 1rem; font-variant: small-caps;
       letter-spacing: 0.04em; color: #5c4a32; margin-top: 2em; }
+    /* Chapter subtitle: the first sidenote in a chapter is really a
+       chapter subtitle, not a section header.  Render under the
+       chapter title, before the TOC, in muted italic. */
+    .chap-subtitle {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 1em 0;
+      letter-spacing: 0.01em;
+    }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline;
       background: rgba(139, 115, 85, 0.08); border-radius: 2px; }
@@ -150,12 +160,12 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <h1><span class="chap-num">Chapter XII</span>For Merchants And Manufacturers Of Chemicals And Drugs</h1>
-<div class="toc"><h3>Contents</h3><ol><li><a href="#sh-1">A Factor in All Industries</a></li><li><a href="#sh-2">Articles on Chemicals</a></li><li><a href="#sh-3">Manufacture of Chemicals</a></li><li><a href="#sh-4">Drugs, Origin and Manufacture</a></li><li><a href="#sh-5">Biographies of Eminent Scientists</a></li></ol></div>
+    <div class="chap-subtitle">A Factor in All Industries</div>
+<div class="toc"><h3>Contents</h3><ol><li><a href="#section-articles-on-chemicals">Articles on Chemicals</a></li><li><a href="#section-manufacture-of-chemicals">Manufacture of Chemicals</a></li><li><a href="#section-drugs-origin-and-manufacture">Drugs, Origin and Manufacture</a></li><li><a href="#section-biographies-of-eminent-scientists">Biographies of Eminent Scientists</a></li></ol></div>
     <div class="body-text">
 
 
-<div class="c002"></div>
-<p><span class="shoulder-heading" id="sh-1">A Factor in All Industries</span>The chemical and drug industry is
+<p>The chemical and drug industry is
 not only in itself an enormous
 business, but it supplies essential
 materials for almost every branch of
@@ -205,7 +215,7 @@ the aid of other chapters in the Guide, the
 reader who desires to go further will easily
 find his way.</p>
 
-<p><span class="shoulder-heading" id="sh-2">Articles on Chemicals</span>The article <span class="sc"><a href="/article/06-0046-chemistry/chemistry">Chemistry</a></span> (Vol. 6, p. 33),
+<p><span class="shoulder-heading" id="section-articles-on-chemicals">Articles on Chemicals</span>The article <span class="sc"><a href="/article/06-0046-chemistry/chemistry">Chemistry</a></span> (Vol. 6, p. 33),
 equivalent to 135 pages of this Guide,
 is divided into 6
 sections. The first,
@@ -248,7 +258,7 @@ Edinburgh University. For further details
 see the chapter on <span class="sc"><a href="/article/06-0046-chemistry/chemistry">Chemistry</a></span> in
 this Guide.</p>
 
-<p><span class="shoulder-heading" id="sh-3">Manufacture of Chemicals</span>It is possible here to mention only a
+<p><span class="shoulder-heading" id="section-manufacture-of-chemicals">Manufacture of Chemicals</span>It is possible here to mention only a
 small amount of the material dealing with
 the manufacture of chemicals. At the
 end of this chapter
@@ -298,7 +308,7 @@ properties, reactions and manufacture of
 the most important of all chemicals, including
 the more modern contact processes.</p>
 
-<p><span class="shoulder-heading" id="sh-4">Drugs, Origin and Manufacture</span>As a key to the subject of the origin
+<p><span class="shoulder-heading" id="section-drugs-origin-and-manufacture">Drugs, Origin and Manufacture</span>As a key to the subject of the origin
 and manufacture of drugs, the article
 <span class="sc"><a href="/article/21-0368-pharmacology/pharmacology">Pharmacology</a></span> (Vol. 21, p. 347), by Dr.
 Ralph Stockman,
@@ -383,7 +393,7 @@ Moss</i> (Vol. 14, p. 241), <span class="sc"><a href="/article/06-0385-cinchona/
 <span class="sc"><a href="/article/19-0112-mustard/mustard">Mustard</a></span> (Vol. 19, p. 97), <span class="sc"><a href="/article/21-0143-s3/peppermint">Peppermint</a></span>
 (Vol. 21, p. 128), etc.</p>
 
-<p><span class="shoulder-heading" id="sh-5">Biographies of Eminent Scientists</span>The scientific biographies include not a
+<p><span class="shoulder-heading" id="section-biographies-of-eminent-scientists">Biographies of Eminent Scientists</span>The scientific biographies include not a
 few subjects which will be of interest,
 owing to familiarity with the names, to
 those engaged in the
