@@ -8,6 +8,8 @@ import re
 import sys
 import requests
 
+from britannica.markers import strip_page_markers
+
 MEILI_URL = os.environ.get("MEILI_URL", "http://localhost:7700")
 MEILI_KEY = os.environ.get("MEILI_MASTER_KEY", "britannica-dev-key")
 INDEX_NAME = "articles"
@@ -88,7 +90,7 @@ def main():
 
         # Build search document — strip internal markers before indexing
         body = article.get("body", "")
-        body = re.sub(r"\x01PAGE:\d+\x01", " ", body)
+        body = strip_page_markers(body, replacement=" ")
         body = re.sub(r"\u00abFN(?:\[[^\]]+\])?:.*?\u00ab/FN\u00bb", " ", body,
                       flags=re.DOTALL)
         body = re.sub(r"\u00abLN:[^«]*\u00ab/LN\u00bb", " ", body)

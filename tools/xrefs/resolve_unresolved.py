@@ -127,15 +127,7 @@ requiring judgment.  Apply that judgment.
   null."""
 
 
-def _clean_excerpt(text: str, max_chars: int) -> str:
-    text = re.sub(r"\x01PAGE:\d+\x01", "", text)
-    text = re.sub(r"«LN:[^|]*\|([^«]*)«/LN»", r"\1", text)
-    text = re.sub(r"«[^»]*»", "", text)
-    text = re.sub(r"\{\{IMG:[^}]*\}\}", "", text)
-    text = re.sub(r"\{\{LEGEND:[\s\S]*?\}LEGEND\}", "", text)
-    text = re.sub(r"\{\{TABLE[A-Z]?:[\s\S]*?\}TABLE\}", "", text)
-    text = re.sub(r"\s+", " ", text).strip()
-    return text[:max_chars]
+from britannica.xrefs.llm_excerpt import clean_excerpt as _clean_excerpt  # noqa: E402
 
 
 def _context_around(body: str, surface_text: str) -> str:
