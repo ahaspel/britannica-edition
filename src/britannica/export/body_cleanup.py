@@ -49,6 +49,14 @@ def clean_body(body: str) -> str:
         "| ", body, flags=re.IGNORECASE,
     )
 
+    # MediaWiki image size param (`x90px`) that the image extractor
+    # stored as a "caption" and the export-stage _patch_img then wrote
+    # into the body as `{{IMG:fn|x90px}}`.  Only ever fires on the
+    # post-_patch_img body, never on raw article.body — the producer
+    # fix lives in _sanitize_caption / extract_images, and this pass
+    # goes once that's done.
+    body = re.sub(r"(\{\{IMG:[^|}]+)\|x\d+px\}\}", r"\1}}", body)
+
     # Bare wiki table markup that escaped extraction.
     body = re.sub(r"\{\|[^\n]*\n?", "", body)
     body = re.sub(r"^\|-[a-z].*$", "", body, flags=re.MULTILINE | re.IGNORECASE)
