@@ -17,6 +17,23 @@ from __future__ import annotations
 
 import re
 
+
+def _table_row_cells(row: str) -> list[str]:
+    """Split a ``{{TABLE:}`` row into stripped cells.
+
+    ``_process_table`` joins cells with ``" | "`` and renders an empty
+    cell as ``" "`` — so an empty cell shows up as ``|   |`` (three
+    spaces).  If a later pass collapses that to ``| |`` (one space),
+    ``split(" | ")`` would read the second ``|`` as cell content rather
+    than a separator; re-expanding any collapsed empty-cell gap first
+    keeps the split robust.  No-op on ``_process_table``'s raw output
+    (it never emits ``| |``); marker-internal pipes (``«LN:a|b«/LN»``
+    etc.) have no space around them so they're untouched.
+    """
+    row = re.sub(r"\| (?=\|)", "|  ", row)
+    return [c.strip() for c in row.split(" | ")]
+
+
 def _clean_loose_caption(text: str) -> str:
     """Strip wiki/HTML markup from a loose caption block extracted
     from `{{c|…}}` or a wikitable row."""
@@ -604,7 +621,7 @@ def _parse_table_as_legend(
     entries: list[tuple[str, str]] = []
     layout1_ok = True
     for row in rows:
-        cells = [c.strip() for c in row.split(" | ")]
+        cells = _table_row_cells(row)
         if len(cells) < 2:
             layout1_ok = False
             break
@@ -627,7 +644,7 @@ def _parse_table_as_legend(
     # separated by empty/whitespace-only spacer cells (em-/en-spaces).
     entries = []
     for row in rows:
-        cells = [c.strip() for c in row.split(" | ")]
+        cells = _table_row_cells(row)
         meaningful = []
         for c in cells:
             stripped = _strip_italic(c)
@@ -838,7 +855,7 @@ def _promote_legend_tables(text: str) -> str:
             return m.group(0)
         entries: list[tuple[str, str]] = []
         for row in rows_text:
-            cells = [c.strip() for c in row.split(" | ")]
+            cells = _table_row_cells(row)
             if len(cells) < 2:
                 return m.group(0)
             for cell in cells:

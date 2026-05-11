@@ -96,23 +96,12 @@ def clean_body(body: str) -> str:
         parts[i] = parts[i].replace("}}", "")
     body = "".join(parts)
 
-    # Normalize pipe separators inside TABLE blocks: ensure space around |
-    def _normalize_table_pipes(m):
-        content = m.group(1)
-        # Ensure space before and after each | separator
-        content = re.sub(r"(?<! )\|", " |", content)
-        content = re.sub(r"\|(?! )", "| ", content)
-        # Clean up any triple+ spaces
-        content = re.sub(r"  +", " ", content)
-        return "{{TABLE:" + content + "}TABLE}"
-    body = re.sub(r"\{\{TABLE:(.*?)\}TABLE\}", _normalize_table_pipes, body, flags=re.DOTALL)
-
-    # Collapse blank lines inside TABLE blocks (rows separated by blanks are still one table)
-    def _collapse_table_blanks(m):
-        content = m.group(1)
-        content = re.sub(r"\n\s*\n", "\n", content)
-        return "{{TABLE:" + content + "}TABLE}"
-    body = re.sub(r"\{\{TABLE:(.*?)\}TABLE\}", _collapse_table_blanks, body, flags=re.DOTALL)
+    # (Table-pipe normalization and blank-row collapse for {{TABLE:}
+    # blocks used to live here; the table renderer — _emit_table_marker
+    # in elements/_tables.py — now emits canonical form directly, so
+    # these passes were redundant.  Header tables {{TABLEH:} were never
+    # covered here anyway (the old \{\{TABLE:(.*?)\}TABLE\} regex didn't
+    # match {{TABLEH:}); normalizing those too is a burndown item.)
 
     # Wrap orphaned pipe-delimited data runs in TABLE markers.
     # These are tabular lines (3+ pipes) not already inside a TABLE block.
