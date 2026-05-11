@@ -9,6 +9,7 @@ from britannica.cleaners.unicode import normalize_unicode, replace_print_artifac
 from britannica.cleaners.whitespace import normalize_whitespace
 from britannica.db.models.source_page import SourcePage
 from britannica.db.session import SessionLocal
+from britannica.image_assets import SCORE_IMAGES, SCORE_TAG
 from britannica.parsers import img_float as _img_float_parser
 
 
@@ -273,33 +274,13 @@ def _clean_plate_layout(text: str) -> str:
     return result
 
 
-# Static mapping of <score> tags to pre-rendered Wikimedia images.
-# Key: (volume, page_number, occurrence_index)
-# Value: URL of the rendered PNG on upload.wikimedia.org
-_SCORE_IMAGES = {
-    (3, 221, 0): "https://upload.wikimedia.org/score/h/z/hzcdxxolvqb8f88rf1kv99xpbkz4fhl/hzcdxxol.png",
-    (3, 221, 1): "https://upload.wikimedia.org/score/8/m/8muj660hon0gdc23klev5oueja71g2e/8muj660h.png",
-    (3, 221, 2): "https://upload.wikimedia.org/score/l/e/le30qszwd023fbi5l5p72zzgp0qif4z/le30qszw.png",
-    (3, 221, 3): "https://upload.wikimedia.org/score/t/a/ta4vp64mow2a4xgtut6yrr587tjqvwq/ta4vp64m.png",
-    (3, 971, 0): "https://upload.wikimedia.org/score/l/e/lexak41zsl71g5wdztqfen2titdlq9w/lexak41z.png",
-    (3, 972, 0): "https://upload.wikimedia.org/score/c/6/c6ls5kqiltjw1nu8qc0qh3r85v60gdx/c6ls5kqi.png",
-    (6, 415, 0): "https://upload.wikimedia.org/score/9/i/9iavthct92fgw9tjxwi3s57m4yb9fw0/9iavthct.png",
-    (6, 416, 0): "https://upload.wikimedia.org/score/i/y/iy808fgeauppb3nth1mdmfhjgi6rpy3/iy808fge.png",
-    (6, 416, 1): "https://upload.wikimedia.org/score/5/y/5ytbiminte2jgttcfyl2swwg254v2i0/5ytbimin.png",
-    (6, 416, 2): "https://upload.wikimedia.org/score/a/o/ao59rovwbfgbmxdrbumkluxcgxg7qoj/ao59rovw.png",
-    (6, 416, 3): "https://upload.wikimedia.org/score/7/y/7yn0x3i1tb37t4fg4v68yj3n4pnh1vi/7yn0x3i1.png",
-}
-
-_SCORE_TAG = re.compile(r"<score[^>]*>.*?</score>", re.DOTALL)
-
-
 def _replace_score_tags(text: str, volume: int, page_number: int) -> str:
     """Replace <score> tags with {{IMG:url|Musical notation}} markers.
 
     In article-as-unit processing, text contains \x01PAGE:N\x01 markers.
     Each score tag is looked up by its page number and index within that page.
     """
-    matches = list(_SCORE_TAG.finditer(text))
+    matches = list(SCORE_TAG.finditer(text))
     if not matches:
         return text
 
@@ -323,7 +304,7 @@ def _replace_score_tags(text: str, volume: int, page_number: int) -> str:
         # Count how many scores on this page come before this one
         idx = sum(1 for j, m2 in enumerate(matches)
                   if j < i and _page_for_pos(m2.start()) == pg)
-        url = _SCORE_IMAGES.get((volume, pg, idx))
+        url = SCORE_IMAGES.get((volume, pg, idx))
         if url:
             # Use a pre-rendered marker that won't be re-extracted as an image.
             # The viewer handles {{IMG:...}} at render time; using the full URL

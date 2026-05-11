@@ -56,13 +56,13 @@ def _name_tokens(name: str) -> frozenset[str]:
     return frozenset(t for t in toks if t not in drop and len(t) > 1)
 
 
-def _normalize_initials(s: str) -> str:
+def _ws_normalize_initials(s: str) -> str:
     """Normalize whitespace; preserve `*`/`.`/case (vol 29 uses these
     distinctions intentionally)."""
     return re.sub(r"\s+", " ", s.strip())
 
 
-def _normalize_title(t: str) -> str:
+def _normalize_vol29_title(t: str) -> str:
     """Strip vol-29-style parentheticals and uppercase for matching.
 
     Vol 29 article cells carry editorial qualifiers like
@@ -83,7 +83,7 @@ def _build_title_map(session) -> dict[str, list[Article]]:
     out: dict[str, list[Article]] = {}
     for a in session.query(Article).filter(
             Article.article_type != "plate"):
-        key = _normalize_title(a.title)
+        key = _normalize_vol29_title(a.title)
         out.setdefault(key, []).append(a)
     return out
 
@@ -109,7 +109,7 @@ def _find_contributor(
 
     Returns None if no resolution is unambiguous.
     """
-    init_key = _normalize_initials(entry.initials)
+    init_key = _ws_normalize_initials(entry.initials)
     candidates_by_init = by_initials.get(init_key, [])
     target = _name_tokens(entry.full_name)
     if candidates_by_init:
@@ -165,7 +165,7 @@ def link_vol29_articles(apply_mode: bool = False) -> None:
         for ci in session.query(ContributorInitials).all():
             c = by_id.get(ci.contributor_id)
             if c is not None:
-                by_initials.setdefault(_normalize_initials(ci.initials),
+                by_initials.setdefault(_ws_normalize_initials(ci.initials),
                                        []).append(c)
 
         created = 0
@@ -183,7 +183,7 @@ def link_vol29_articles(apply_mode: bool = False) -> None:
             if c.id in linked_ids:
                 continue  # has at least one footer- or fm-bound row
             for article_title in entry.articles:
-                key = _normalize_title(article_title)
+                key = _normalize_vol29_title(article_title)
                 articles = title_map.get(key, [])
                 if not articles and "," in key:
                     # Vol 29 cells often qualify a title with a section
