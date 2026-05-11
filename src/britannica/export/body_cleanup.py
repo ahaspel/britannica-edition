@@ -7,6 +7,19 @@ blank-line collapse, etc.  They depend only on the single article's
 body, so they run as the last transformation in ``export_articles_to_json``
 (``tools/pipeline/postprocess.py`` re-exports ``clean_body`` as a
 standalone safety-net script for already-written JSON files).
+
+History / direction: this pass used to have ~15 sub-passes.  An audit
+(``tools/_scratch/_audit_clean_body.py``) over the corpus found 9 of
+them fired on *zero* articles — the transform/elements refactor through
+Step 2 eliminated everything they targeted — so they were deleted.
+What remains is being migrated to its producers (HTML-attr stripping
+into the table/HTML-table/IMG-caption code; ``replace_print_artifacts``
+and the blank-line collapse into transform), after which ``clean_body``
+goes away entirely.  Until then, the surviving passes are: codepoint
+normalization, leaked-HTML-attr stripping (still has a known
+false-match bug on words like "Classics" — burndown), bare-wiki-table
+removal (can eat prose glued onto a malformed ``{|`` opener — burndown),
+orphan pipe-row scrubbing/wrapping, and blank-line collapse.
 """
 
 from __future__ import annotations
@@ -21,52 +34,28 @@ def clean_body(body: str) -> str:
     # Normalize transcription-artifact codepoints (fullwidth = + - < >,
     # ligature glyphs ℔ ℥ ℈, dingbat ✕) to modern ASCII / Latin-1 forms.
     body = replace_print_artifacts(body)
-    # Leaked HTML table attributes (colspan, rowspan, nowrap, etc.)
-    # Both pipe-delimited (|colspan="3"|) and inline (nowrap|text)
+
+    # Leaked HTML table attributes (colspan, rowspan, style, etc.) —
+    # both pipe-delimited (|colspan="3"|) and inside IMG captions.
+    # The "\s*=" is load-bearing: without it, the bare keyword "class"
+    # matches the word "Classics", "width"/"border"/"height"/"style"/
+    # "align" match any word with that prefix, and the [^|\n]*\| then
+    # eats real content up to the next pipe (e.g. it ate every
+    # "Class N." in the ZOOLOGY taxonomy and mangled EDUCATION's
+    # «LN:Classics|…»).  HTML attributes always have "="; words don't.
     body = re.sub(
         r"\|\s*(?:colspan|rowspan|style|align|valign|width|class|bgcolor|"
-        r"cellpadding|cellspacing|border|height)[^|\n]*\|",
+        r"cellpadding|cellspacing|border|height)\s*=[^|\n]*\|",
         "| ", body, flags=re.IGNORECASE,
     )
-    # Inline nowrap (nowrap|text or nowrap\n)
-    body = re.sub(r"nowrap\|", "", body)
-    body = re.sub(r"nowrap\n", "\n", body)
 
-    # Garbled table attributes embedded in text
-    body = re.sub(r"(?:wisth|wdith|width)\s*=\s*\d+\|", "", body)
-
-    # Strip width directives masquerading as image captions (x125px, x310px)
-    body = re.sub(r"(\{\{IMG:[^|}]+)\|x\d+px\}\}", r"\1}}", body)
-
-    # Leaked image layout directives: img float|..., figure|image=..., FI|file=...
-    body = re.sub(
-        r"(?:img float|figure|FI)\s*\|[^\n]*(?:\|file\s*=[^\n]+)?",
-        "", body, flags=re.IGNORECASE,
-    )
-    # Leaked image alignment prefixes (right|, left|, center|) at line starts
-    body = re.sub(r"^(?:right|left|center)\|", "", body, flags=re.MULTILINE | re.IGNORECASE)
-
-    # Table attributes leaked inside {{TABLE:...}TABLE} markers
-    body = re.sub(
-        r"\{\{TABLE:(?:cellspacing|cellpadding|rules|border)[^}]*\}TABLE\}",
-        "", body,
-    )
-    # Clean {ts|... and similar leaked table style prefixes inside TABLE
-    body = re.sub(r"\{\{TABLE:\{[^}]*\}\}TABLE\}", "", body)
-    # Strip leading attribute lines (title="...", class="...", etc.) from TABLE content
-    body = re.sub(
-        r"(\{\{TABLE:)\s*(?:title|class|style|align|rules|cellspacing|cellpadding|border|width)="
-        r"[^\n]*\n",
-        r"\1", body, flags=re.IGNORECASE,
-    )
-
-    # Bare wiki table markup
+    # Bare wiki table markup that escaped extraction.
     body = re.sub(r"\{\|[^\n]*\n?", "", body)
     body = re.sub(r"^\|-[a-z].*$", "", body, flags=re.MULTILINE | re.IGNORECASE)
     body = re.sub(r"^\|\}\s*$", "", body, flags=re.MULTILINE)
 
-    # Stray pipe separators outside tables
-    # Preserve pipes inside {{TABLE:...}TABLE} and {{VERSE:...}VERSE} blocks
+    # Stray pipe separators outside tables.  Preserve pipes inside
+    # {{TABLE:...}TABLE} and {{VERSE:...}VERSE} blocks.
     parts = re.split(
         r"(\{\{TABLE.*?\}TABLE\}|\{\{VERSE:.*?\}VERSE\})",
         body, flags=re.DOTALL,
@@ -78,33 +67,7 @@ def clean_body(body: str) -> str:
         parts[i] = re.sub(r"^\|[\s|]*$", "", parts[i], flags=re.MULTILINE)
     body = "".join(parts)
 
-    # Bare HTML tags (not inside markers)
-    body = re.sub(
-        r"</?(?:s|small|big|center|div|span|font)\b[^>]*>",
-        "", body, flags=re.IGNORECASE,
-    )
-
-    # Stray [[ ]] wikilink brackets
-    body = re.sub(r"\[\[(?:Author|Category|File|Image):[^\]]*\]\]", "", body)
-
-    # Stray close braces not part of a marker
-    parts = re.split(
-        r"(\{\{(?:TABLE|IMG|VERSE|FN).*?\}(?:TABLE|VERSE)\}|\}\})",
-        body, flags=re.DOTALL,
-    )
-    for i in range(0, len(parts), 2):
-        parts[i] = parts[i].replace("}}", "")
-    body = "".join(parts)
-
-    # (Table-pipe normalization and blank-row collapse for {{TABLE:}
-    # blocks used to live here; the table renderer — _emit_table_marker
-    # in elements/_tables.py — now emits canonical form directly, so
-    # these passes were redundant.  Header tables {{TABLEH:} were never
-    # covered here anyway (the old \{\{TABLE:(.*?)\}TABLE\} regex didn't
-    # match {{TABLEH:}); normalizing those too is a burndown item.)
-
     # Wrap orphaned pipe-delimited data runs in TABLE markers.
-    # These are tabular lines (3+ pipes) not already inside a TABLE block.
     parts = re.split(
         r"(\{\{TABLE.*?\}TABLE\}|\{\{VERSE:.*?\}VERSE\})",
         body, flags=re.DOTALL,
