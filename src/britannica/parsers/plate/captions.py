@@ -314,6 +314,22 @@ def _strip_caption_markup(text: str) -> str:
         r'\|\s*',
         "", text,
     )
+    # …and cell-attribute strings that leaked *mid-text* — when a
+    # walker glues a ``|attrs|content`` cell onto a preceding caption
+    # without splitting on the ``|`` (GLASS PLATE II: ``…Jackson in
+    # 1870. align="center" valign="top" Fig. 12.…``; ROPE PLATE legends
+    # ``- style="font-size: 90%"``; PROCESS spacer cells
+    # ``style="height: 0px; width: 40px"``).  The ``=`` is required so
+    # prose words ("align the figures", "Art Nouveau style", "the width
+    # of the river") aren't touched — same lesson as clean_body's
+    # leaked_html_table_attrs.
+    text = re.sub(
+        r'\b(?:align|valign|width|height|colspan|rowspan|style|class|'
+        r'id|scope|bgcolor|cellpadding|cellspacing|border)'
+        r'\s*=\s*'
+        r'(?:"[^"]*"|\'[^\']*\'|[^\s|]+)',
+        "", text, flags=re.IGNORECASE,
+    )
     # Defensive — caption text never contains pipes (wiki cell
     # separator) or stray braces (template-close fragments).  Without
     # this strip, emitting ``{{IMG:fn|cap}}`` breaks the marker syntax

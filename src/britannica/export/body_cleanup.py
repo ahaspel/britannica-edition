@@ -9,17 +9,23 @@ body, so they run as the last transformation in ``export_articles_to_json``
 standalone safety-net script for already-written JSON files).
 
 History / direction: this pass used to have ~15 sub-passes.  An audit
-(``tools/_scratch/_audit_clean_body.py``) over the corpus found 9 of
-them fired on *zero* articles — the transform/elements refactor through
-Step 2 eliminated everything they targeted — so they were deleted.
-What remains is being migrated to its producers (HTML-attr stripping
-into the table/HTML-table/IMG-caption code; ``replace_print_artifacts``
-and the blank-line collapse into transform), after which ``clean_body``
-goes away entirely.  Until then, the surviving passes are: codepoint
-normalization, leaked-HTML-attr stripping (still has a known
-false-match bug on words like "Classics" — burndown), bare-wiki-table
-removal (can eat prose glued onto a malformed ``{|`` opener — burndown),
-orphan pipe-row scrubbing/wrapping, and blank-line collapse.
+(``tools/_scratch/_audit_clean_body.py``) plus a ``--full`` corpus run
+found 8 fired on zero articles (the transform/elements refactor through
+Step 2 eliminated everything they targeted) and were deleted; one more
+(``img_widthpx_caption``) was moved to its producer
+(``_sanitize_caption`` in ``article_json.py`` now rejects ``x90px``
+"captions").  What's left is being migrated to its producers the same
+way — leaked-HTML-attr stripping into the table/HTML-table/IMG-caption
+code, bare-wiki-table removal into transform's noinclude handling,
+orphan-pipe scrubbing into the table/plate extractors — after which
+``replace_print_artifacts`` and the blank-line collapse move into
+transform and ``clean_body`` goes away.  Surviving passes: codepoint
+normalization; leaked-HTML-attr stripping (the ``\\s*=`` is load-bearing
+— without it ``class`` matches "Classics", ``width``/``height``/etc.
+match any word with that prefix, eating real content); bare-wiki-table
+removal (can still eat prose glued onto a malformed ``{|`` opener — the
+JESUS CHRIST noinclude-layout-table case); orphan pipe-row
+scrubbing/wrapping; blank-line collapse.
 """
 
 from __future__ import annotations
@@ -48,14 +54,6 @@ def clean_body(body: str) -> str:
         r"cellpadding|cellspacing|border|height)\s*=[^|\n]*\|",
         "| ", body, flags=re.IGNORECASE,
     )
-
-    # MediaWiki image size param (`x90px`) that the image extractor
-    # stored as a "caption" and the export-stage _patch_img then wrote
-    # into the body as `{{IMG:fn|x90px}}`.  Only ever fires on the
-    # post-_patch_img body, never on raw article.body — the producer
-    # fix lives in _sanitize_caption / extract_images, and this pass
-    # goes once that's done.
-    body = re.sub(r"(\{\{IMG:[^|}]+)\|x\d+px\}\}", r"\1}}", body)
 
     # Bare wiki table markup that escaped extraction.
     body = re.sub(r"\{\|[^\n]*\n?", "", body)

@@ -17,6 +17,8 @@ from __future__ import annotations
 
 import re
 
+from britannica.pipeline.stages.elements._text import clean_caption
+
 
 def _table_row_cells(row: str) -> list[str]:
     """Split a ``{{TABLE:}`` row into stripped cells.
@@ -35,28 +37,15 @@ def _table_row_cells(row: str) -> list[str]:
 
 
 def _clean_loose_caption(text: str) -> str:
-    """Strip wiki/HTML markup from a loose caption block extracted
-    from `{{c|…}}` or a wikitable row."""
-    # Unwrap pipe-separated templates iteratively (innermost first).
-    for _ in range(5):
-        new = re.sub(
-            r"\{\{\s*(?:sc|smaller|small|c|center|big|bold|italic|nowrap|fs)"
-            r"\s*\|(?:[^{}|]*\|)?([^{}]*)\}\}",
-            r"\1", text, flags=re.IGNORECASE,
-        )
-        if new == text:
-            break
-        text = new
-    # Strip <br/>
-    text = re.sub(r"<br\s*/?>", " ", text, flags=re.IGNORECASE)
-    # Strip stray HTML tags
-    text = re.sub(r"<[^>]+>", "", text)
-    # Collapse whitespace and trim trailing punctuation
-    text = re.sub(r"\s+", " ", text).strip()
-    # Drop attribution-prefixed captions: when the text before "Fig. N."
-    # ends in a sentence-ending punctuation, treat that as a separate
-    # source-attribution line and trim it. Catches "From the Notice
-    # issued by the Board. Fig. 13.—..." → "Fig. 13.—...".
+    """Produce clean caption text from a loose caption block extracted
+    from ``{{c|…}}`` or a wikitable row.
+
+    Markup-stripping is the shared ``clean_caption`` (templates,
+    entities, cell-attrs, stray pipes/braces, unclosed openers); on top
+    of that, this drops a leading source-attribution clause when a
+    ``Fig. N.`` follows it ("From the Notice issued by the Board.
+    Fig. 13.—…" → "Fig. 13.—…")."""
+    text = clean_caption(text)
     m = re.search(r"((?:Fig|Plate)\.?\s*\d+)", text, re.IGNORECASE)
     if m and m.start() > 0:
         prefix = text[:m.start()].rstrip()
@@ -831,7 +820,11 @@ def _append_attr_to_img(img_block: str, attribution: str) -> str:
         return img_block
     filename = m.group(1)
     caption = m.group(2) or ""
-    if attribution in caption:
+    # `attribution` is captured straight off body text that may not have
+    # been through the body-text transform — clean it the same way every
+    # caption is (templates, entities, cell-attrs, stray pipes/braces).
+    attribution = clean_caption(attribution)
+    if not attribution or attribution in caption:
         return img_block
     if attribution.startswith("(") and attribution.endswith(")"):
         new_caption = (f"{caption.rstrip()} {attribution}"
