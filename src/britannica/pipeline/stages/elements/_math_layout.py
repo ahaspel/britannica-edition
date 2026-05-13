@@ -16,6 +16,10 @@ from __future__ import annotations
 import re
 
 from britannica.pipeline.stages.elements._registry import ElementRegistry, _PH
+from britannica.pipeline.stages.elements._tables import (
+    _CELL_ATTR_RE,
+    parse_wiki_table,
+)
 
 
 _MATH_CELL_RE = re.compile(
@@ -133,32 +137,20 @@ def _math_cell_to_latex(content: str) -> str:
 def _process_math_layout_table(raw: str) -> str:
     """Emit a math-layout wikitable as a KaTeX math block.
 
-    Equation system (rows share ``=`` column): ``\\begin{aligned}…\\end{aligned}``.
-    Otherwise (matrix/determinant): ``\\begin{vmatrix}…\\end{vmatrix}``.
+    Table parsing is shared with the other wiki-table paths
+    (``parse_wiki_table``); the math-layout specialisation is
+    ``_math_cell_to_latex`` per cell + ``\\begin{aligned}`` /
+    ``\\begin{vmatrix}`` wrapping depending on whether the rows are
+    equations (share an ``=`` column) or a matrix/determinant grid.
     """
-    inner = re.sub(r"^\{\|[^\n]*\n?", "", raw)
-    inner = re.sub(r"\n?\|\}\s*$", "", inner)
-    raw_rows = re.split(r"^\|-[^\n]*$", inner, flags=re.MULTILINE)
+    _, parsed_rows = parse_wiki_table(raw)
     rows: list[list[str]] = []
-    for raw_row in raw_rows:
-        row_cells: list[str] = []
-        for line in raw_row.split("\n"):
-            s = line.strip()
-            if not s or s.startswith("|+") or s == "|}":
-                continue
-            if not s.startswith("|"):
-                continue
-            body = s[1:]
-            body = re.sub(r"\{\{[^}]*\}\}",
-                          lambda m: m.group(0).replace("|", "\x04"), body)
-            for chunk in body.split("||"):
-                if "|" in chunk:
-                    _, _, content = chunk.rpartition("|")
-                else:
-                    content = chunk
-                content = content.replace("\x04", "|").strip()
-                if content:
-                    row_cells.append(_math_cell_to_latex(content))
+    for parsed_row in parsed_rows:
+        row_cells = [
+            _math_cell_to_latex(content)
+            for _sep, _attr, content in parsed_row
+            if content
+        ]
         if row_cells:
             rows.append(row_cells)
     if not rows:
@@ -319,46 +311,33 @@ def _is_equation_layout(inner: str, inner_registry: ElementRegistry | None) -> b
 
 
 def _process_equation_layout(inner: str, text_transform) -> str:
-    """Process an equation-layout table: join each row's content cells into one line.
+    """Process an equation-layout table: join each row's content cells
+    into one line, then emit each row as its own paragraph.
 
-    These are wiki tables used for visual alignment of equations,
-    not for tabular data.  Each row becomes a single text line.
+    These are wiki tables used for visual alignment of equations, not
+    for tabular data.  Table parsing is shared with the other wiki-
+    table paths (``parse_wiki_table``); the equation-layout
+    specialisation is the post-processing: one line per row, then
+    ``\\n\\n``-paragraph wrap so each equation reaches the viewer as
+    its own paragraph (otherwise leading/trailing prose glues to the
+    first/last equation and kills display-mode rendering —
+    METEOROLOGY Margules energy equations).
     """
-    inner = re.sub(r"<br\s*/?>", " ", inner, flags=re.IGNORECASE)
-    _ATTR = re.compile(
-        r"^(?:colspan|rowspan|width|style|align|valign|class|"
-        r"cellpadding|nowrap|border|bgcolor|height)[\s=|]", re.IGNORECASE)
-
-    def _extract_cells(row_text):
-        protected = re.sub(r"\{\{[^}]*\}\}", lambda m: m.group(0).replace("|", "\x04"), row_text)
-        protected = re.sub(re.escape(_PH) + r"[^" + re.escape(_PH) + r"]+" + re.escape(_PH),
-                           lambda m: m.group(0).replace("|", "\x04"), protected)
-        raw_cells = re.findall(r"\|([^|\n]*)", protected)
-        raw_cells = [c.replace("\x04", "|") for c in raw_cells]
-        cells = []
-        for c in raw_cells:
-            s = c.strip()
-            if s in ("}", "{|"):
+    _, parsed_rows = parse_wiki_table(inner)
+    lines: list[str] = []
+    for parsed_row in parsed_rows:
+        cells: list[str] = []
+        for _sep, _attr, content in parsed_row:
+            if not content or content in ("}", "{|"):
                 continue
-            # Strip cell-styling templates before the attribute test so
-            # cells like `{{Ts|ac}} colspan=2` are recognized as
-            # attribute-only rather than rendered with `colspan=2`
-            # surviving into prose output.
-            test = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*", "", s).strip()
-            if not test or _ATTR.match(test):
+            # Cells whose content is itself a bare attribute keyword
+            # (no `|attr|content` separator in source) are malformed —
+            # drop rather than render the keyword as prose.
+            stripped = re.sub(
+                r"\{\{[Tt]s\|[^{}]*\}\}\s*", "", content).strip()
+            if not stripped or _CELL_ATTR_RE.match(stripped):
                 continue
-            cells.append(text_transform(s) if s else " ")
-        return cells
-
-    raw_rows = re.split(r"\|-[^\n]*", inner)
-    lines = []
-    for raw_row in raw_rows:
-        cells = _extract_cells(raw_row)
-        content = [c for c in cells if c.strip()]
-        if content:
-            lines.append(" ".join(content))
-    # Wrap with paragraph boundaries so each row reaches the viewer as
-    # its own paragraph — otherwise leading/trailing prose in the
-    # surrounding sentence glues to the first/last equation and kills
-    # display-mode rendering (METEOROLOGY Margules energy equations).
+            cells.append(text_transform(stripped))
+        if cells:
+            lines.append(" ".join(cells))
     return ("\n\n" + "\n\n".join(lines) + "\n\n") if lines else ""

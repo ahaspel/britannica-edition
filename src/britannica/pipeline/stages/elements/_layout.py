@@ -802,15 +802,14 @@ def _try_image_layout_subclass(
         # 3-4).  Per-cell captions may be separated by `||` (cells on
         # one line) OR `\n|` (cells on separate lines).
         def _split_row_cells(row_text: str) -> list[str]:
-            """Split a wikitable row into per-cell strings.  Handles both
-            same-line `||` and multi-line `\\n|` separators, strips cell
-            attribute prefixes."""
-            # Normalise multi-line cells to same-line form.
-            unified = re.sub(r"\n\s*\|", "||", row_text.strip())
-            unified = unified.lstrip("|")
-            cells = unified.split("||")
-            cells = [_strip_cell_attributes(c).strip() for c in cells]
-            return [c for c in cells if c]
+            """Per-cell content strings, using the shared `split_wiki_row`
+            (handles `||` / `\\n|` separators, pipe-protection, attr/
+            content split)."""
+            return [
+                content
+                for _sep, _attr, content in split_wiki_row(row_text)
+                if content
+            ]
 
         unique_rows = set(img_row_of.values())
         if (len(unique_rows) == 1 and len(img_row_of) == len(image_phs)):
@@ -868,7 +867,24 @@ def _try_image_layout_subclass(
                         return "\n\n" + "\n\n".join(parts_out) + "\n\n"
 
         # Vertical variant (MUSCULAR SYSTEM Figs 7-8): each image has
-        # its OWN attribution + caption rows beneath.
+        # its OWN attribution + caption rows beneath.  Required: each
+        # image points to a DISTINCT caption row.  If all images share
+        # one caption row, this is a multi-row image *grid* + colspan
+        # caption (FRUIT: Figs 1-3 on row 0, Figs 4-5 on row 1, one
+        # colspan=3 caption row).  In that case the per-image
+        # attribution scan would pick up other rows' image cells as
+        # "attribution" and leak their `|class="center"|` cell-attrs
+        # into the caption — bail out so the generic unwrap handles
+        # it as individual image cells + a sibling caption paragraph.
+        cap_rows_per_image: set[int | None] = set()
+        for ph in image_phs:
+            img_row = img_row_of.get(ph)
+            if img_row is None:
+                continue
+            cap_rows_per_image.add(
+                _find_caption_row_idx(rows_local, img_row, text_transform))
+        if len(cap_rows_per_image) <= 1:
+            return None
         parts_out: list[str] = []
         for ph in image_phs:
             filename = _image_ph_filename(ph, inner_registry)
@@ -1275,7 +1291,20 @@ def _unwrap_layout_table(inner: str, text_transform,
             # and (rarely) lowercase `[[image:…]]` (ABBEY vol 1 p. 44).
             fname_m = re.match(
                 r"\[\[(?:File|Image):([^\]|]+)", eraw, re.IGNORECASE)
-            if fname_m:
+            # If the IMAGE element's raw extends *beyond* the file
+            # link (it captured a following `{{sc|Fig}}. N.—…` caption
+            # block at element-extraction time — ROOFS Fig. 4 with
+            # three caption segments a/b/c separated by `<br>`), the
+            # image already has a rich multi-segment caption.  Don't
+            # let bundling overwrite that with the in-cell text that
+            # happens to come after; let the placeholder substitute
+            # normally and the bundled text become a trailing sibling
+            # paragraph.
+            link_only = bool(re.match(
+                r"\[\[(?:File|Image):[^\]]+\]\]\s*$",
+                eraw.strip(), re.IGNORECASE | re.DOTALL,
+            ))
+            if fname_m and link_only:
                 filename = fname_m.group(1).strip()
                 caption_idx = next(
                     (i for i in text_indices if i > img_idx), None)
