@@ -55,8 +55,14 @@ def clean_body(body: str) -> str:
         "| ", body, flags=re.IGNORECASE,
     )
 
-    # Bare wiki table markup that escaped extraction.
-    body = re.sub(r"\{\|[^\n]*\n?", "", body)
+    # Bare wiki table markup that escaped extraction.  Line-anchor the
+    # `{|` opener: in wikitext `{|` only opens a table at column 0, so a
+    # real leaked opener is at a line start — a mid-line `{|` is always
+    # LaTeX inside a «MATH:…« block (`\frac{|\partial f}`) or similar,
+    # and the old un-anchored `\{\|[^\n]*\n?` ate from there to end of
+    # line, swallowing the rest of the «MATH:» block (INFINITESIMAL
+    # CALCULUS §40).
+    body = re.sub(r"(?m)^\s*\{\|[^\n]*\n?", "", body)
     body = re.sub(r"^\|-[a-z].*$", "", body, flags=re.MULTILINE | re.IGNORECASE)
     body = re.sub(r"^\|\}\s*$", "", body, flags=re.MULTILINE)
 

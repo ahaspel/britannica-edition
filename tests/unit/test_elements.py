@@ -212,6 +212,48 @@ class TestTableProcessing:
         assert "{{IMG:Foo.jpg" in result
 
 
+class TestChemistryLayout:
+    """A {|\u2026|} laid out as a 2-D chemical-reaction scheme (atom-label
+    cells, \u27e8/\u27e9 bracket images, rowspan brackets) is detected and
+    rendered through the chemistry path \u2014 a structure-preserving \u00abCHEM:\u2026\u00bb
+    block \u2014 not flattened to {{TABLE:\u2026}TABLE} by _process_table."""
+
+    def test_fulminic_acid_competing_formulae(self):
+        # FULMINIC ACID's table of the four competing structural
+        # formulae (Steiner / Divers / Scholl / Nef), with a rowspan=2
+        # \u3008 bracket grouping {C:N\u00b7OH ; N:CH ; CH:N\u00b7O}.
+        table = (
+            '{|style="line-height:100%; margin:auto"\n'
+            '|C : N\u00b7OH||rowspan=2| O[[File:Langle.svg|10px]]'
+            '||N : CH ||CH : N\u00b7O|| rowspan=2| C : N\u00b7OH.\n'
+            '|-\n'
+            '|C : N\u00b7OH, ||N : \u010a\u00b7OH, ||\u010aH : N\u00b7O, \n'
+            '|- align=center\n'
+            '|Steiner, || colspan=2|Divers, ||Scholl, ||Nef.\n'
+            '|}'
+        )
+        result = process_elements(table, _identity_transform, ElementContext())
+        # Its own marker \u2014 not the flattened {{TABLE:}} path.
+        assert "\u00abCHEM:" in result
+        assert "{{TABLE:" not in result
+        # 2-D structure preserved: the rowspan bracket survives.
+        assert 'rowspan="2"' in result
+        # Cell content survives intact.
+        assert "C : N\u00b7OH" in result
+        assert "Steiner" in result and "Nef" in result
+        # The \u3008 valence-bracket image is carried through (rendering it as
+        # a \u27e8 glyph is still a TODO; for now it's the {{IMG:Langle.svg}}
+        # marker).
+        assert "Langle" in result
+
+    def test_plain_table_unaffected(self):
+        # A normal data table with NO angle-bracket image is untouched.
+        table = '{|\n|A\n|B\n|-\n|C\n|D\n|}'
+        result = process_elements(table, _identity_transform, ElementContext())
+        assert "\u00abCHEM:" not in result
+        assert "{{TABLE" in result
+
+
 class TestCleanText:
     def test_strips_bold(self):
         assert _clean_text("\u00abB\u00bbhello\u00ab/B\u00bb") == "hello"

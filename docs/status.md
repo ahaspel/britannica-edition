@@ -1,8 +1,18 @@
 # Britannica Edition – Project Status
 
-## Current focus (2026-04-14): Vol 29 Classified TOC refinement
+## Current focus (2026-05-12): caption-boundary consolidation
 
-The Topics page (`/topics.html`) was overhauled to use a **category-bounded OCR architecture**. Per-page OCR was abandoned because multi-category pages (e.g. ws 902 holds both Education and Engineering, ws 945 holds Literature + Math + Medical) interleave content unrecoverably when read column-by-column. The new approach:
+After the big `transform_articles` refactor (extract-process-reassemble), the project has been in a post-refactor bug-burndown phase. State as of now:
+
+- **`clean_body` burndown (mostly done):** `clean_body` cut from ~15 passes to 6; `word_count`/`sections` now computed from the *cleaned* body; the `clean_caption` consolidation (canonical caption-cleanup in `elements/_text.py`) is wired into the image + table-around-image paths; INFINITESIMAL CALCULUS's ~5000 missing words restored (a LaTeX `{|` inside `<math>` was being misread as a wiki-table opener — masked in `_extract_balanced_tables`); `bare_wiki_table` line-anchored; FN-as-caption preserved (unwrap to content); `verify_refactor.py --full` built as the shadow-verification harness ("fix a producer + delete the matching `clean_body` patch").
+- **Chemistry-reaction layouts (skeleton landed):** `{|…|}` tables with `[[File:Langle*.svg]]` valence brackets are detected (`_is_chemistry_layout`) and emitted as `«CHEM:<table>…</table>«/CHEM»` markers (~33 articles). `quality_report.py` treats `«CHEM:` like `«HTMLTABLE:`. **Viewer rendering of `«CHEM:` as a CSS grid is still TODO** (Langle/Rangle → ⟨/⟩, `||`→bond-lines, `⟶`→arrows).
+- **Plate detection restructured into two passes** (`detect_boundaries.py`, 2026-05-12): PASS 1 `_split_out_plates` lifts every plate page out *statelessly* — a `{{sc|Plate N.}}`/`{{uc|Plate N.}}` label *anywhere* on the page is the authoritative signal (`_heading_names_plate` or `_plate_label_from_content`); the `_is_plate_page` image-heavy heuristic is the fallback for the ~20 label-less inserts. PASS 2 = the unchanged article state machine over the plate-free pages, so it never reasons about plates. Net: **328 → 398 plate articles** (the new ones were previously absorbed into neighbouring articles as raw `||`-junk — ROUND TOWERS, TRIUMPHAL ARCH, VAULT, EGYPT×3, TAPESTRY×3, ROBES×3, ROOF, INDIA×2, WOOL, PALAEONTOLOGY p639 now render via `parse_plate`), plus ~89 plate-title fixes (`REGALIA`→`REGALIA, PLATE I` etc.), 36,663 articles unchanged. ~210 net lines of the old tangled plate-handling in `detect_boundaries.py` deleted.
+
+**Next:** caption-boundary consolidation — `britannica/captions.py` with a canonical `clean_caption` + caption-shape regexes + credit predicate, shared by `parsers/plate/` and `legend_promote.py`; tighten `legend_promote`'s shape gates and the IMAGE-extractor's ext-caption regex so prose stops getting wrapped as LEGEND (fixes AFGHANISTAN's run-on caption, INFINITESIMAL CALCULUS §17/§36/§38). Then: chemistry viewer rendering; `clean_body` Phase C/D (move remaining real-leak handling to producers, delete `clean_body`).
+
+## Topics page (Vol 29 Classified TOC)
+
+The Topics page (`/topics.html`) uses a **category-bounded OCR architecture**. Per-page OCR was abandoned because multi-category pages (e.g. ws 902 holds both Education and Engineering, ws 945 holds Literature + Math + Medical) interleave content unrecoverably when read column-by-column. The approach:
 
 1. `tools/ocr_vol29_classified.py` — finds every Blackletter cat-header across all body pages (wikitext `{{bl|X}}` markers + low-res OCR + meta-TOC fallback), bounds each category by (start_page, y) → (next_cat_start_page, y), crops each bounded region, 3x-upscales + sharpens + PSM 6 OCRs each crop. Output: one text file per cat in `data/derived/cat_ocr/<slug>.txt` and aggregated `vol29_ocr_by_cat.json`. Per-cat caching — re-run one cat with `--only='Mathematics'`, force all with `--force`.
 2. `tools/parse_classified_toc.py` — two-phase walker: Phase A processes wikitext ws-by-ws (cat transitions via `{{bl|X}}`), Phase B processes each cat's per-cat OCR text with `cur_cat` fixed. No cross-cat contamination in Phase B. Match passes: start-anchored → long-title substring → rapidfuzz partial-ratio fuzzy (cutoff 92, limit 2). Output: one file per cat in `data/derived/cat_toc/<slug>.json` and aggregated `classified_toc.json`.
@@ -60,7 +70,7 @@ Resolved xrefs are embedded as direct links at export time: the export stage rew
 ### Stack
 
 - Python (3.12), SQLAlchemy, Typer, Postgres, Meilisearch, KaTeX
-- pytest (119 tests passing)
+- pytest (265 tests passing)
 
 ## Pipeline Stages
 
@@ -104,14 +114,14 @@ Resolved xrefs are embedded as direct links at export time: the export stage rew
 - **contributors.html** — sorted by surname, credentials, descriptions, full article lists
 - **preface.html** — Hugh Chisholm's 1910 editorial preface with drop caps and shoulder headings
 
-## Current State (2026-04-08)
+## Current State (2026-05-12)
 
-- **Site live at britannica11.org**
+- **Site live at britannica11.org** (last *deploy* predates the recent burndown — these rebuilds have been `--no-deploy`)
 - **28 volumes processed** (vol 29 is end matter, excluded)
-- **36,701 articles** in database
-- **25,211 cross-references resolved (89%)**
-- **3,133 unresolved xrefs** (mostly portal links and literary work references)
-- **1,505 unique contributors** from front matter (1,412 linked to articles, 1,030 with credentials, 167 with bio article links)
+- **37,061 entries** in database: 36,663 articles + 398 plate inserts (`tools/rebuild_all.sh --no-deploy`, 2026-05-12, ~124 min)
+- **31,953 cross-references resolved (86%)**
+- **5,130 unresolved xrefs** (mostly portal links and literary work references)
+- **~1,500 unique contributors** from front matter (most linked to articles)
 - **Contributor system**: master table from front matter, `contributor_initials` alias table, footer matching + front matter subject fallback
 - **Architecture: extract-process-reassemble** — `elements.py` + `_transform_text_v2`
 - **Raw wikitext backed up** to `s3://britannica11.org/raw/` (28 zips, 139 MB)
@@ -152,7 +162,14 @@ Single command: `./tools/rebuild_all.sh` — cleans everything (DB, exports, S3)
 
 ## Known Issues (remaining)
 
-### File-Level (2026-04-07 build)
+### File-Level (2026-05-12 rebuild)
+- unhandled_marker_in_htmltable: 16 (▲1 — needs a look; likely a `«CHEM:` block or HTMLTABLE with an unstripped marker)
+- stray_close_braces: 9, stray_braces: 7 (math braces vs templates — QUATERNIONS/WAVE/VALUE; templates with open parens — TANCRED/THEODORE; editor typos — ST LOUIS)
+- pipe_leak: 2, leaked_html_attr: 1 (JESUS CHRIST — `{|cellpadding="5" rules="cols"` prefix on the *restored* Gospel paragraph; proper fix is noinclude-layout-table handling in transform), html_tag: 1 (POST vol 22 — pre-existing malformed `«HTMLTABLE:`)
+
+**Landed since 2026-04-17:** the entire "Queued for next rebuild" backlog below (the 2026-04-17 / 2026-04-20 / 2026-05-03 / 2026-05-08 / 2026-05-09 entries) is in the `b7f6t90jz` (2026-05-12, ~130 min) and/or the 2026-05-12 (~124 min) rebuilds. Also landed: the `transform_articles` extract-process-reassemble refactor; the `clean_body` burndown (15→6 passes, word_count/sections from cleaned body, `clean_caption` consolidation, INFINITESIMAL CALCULUS math-mask fix, FN-as-caption); the chemistry-layout skeleton (`«CHEM:` markers, viewer rendering still TODO); the plate-detection two-pass restructure (328→398 plates, `_split_out_plates` stateless PASS 1 + plate-free article state machine). `parse_plate` (the 4-stage plate parser) is done and live. *Open follow-up:* `parse_plate` doesn't pick up `[[Image:…]]<br>{{smaller|caption}}`-after-image captions (ROBES PLATE II's 6 robe images come out uncaptioned — better than the old `||`-junk, but a caption-consolidation item).
+
+### File-Level (historical — 2026-04-07 build, for reference)
 - stray_close_braces: 58 (mostly false positives from LaTeX braces in MATH blocks)
 - pipe_leak: 30, html_tag: 28, stray_wiki_italic: 15 (increased from layout table unwrapping exposing previously hidden markup)
 - stray_braces: 14, leaked_html_attr: 8, stray_control_x06: 4, stray_control_x03: 1

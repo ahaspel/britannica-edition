@@ -17,7 +17,7 @@ from __future__ import annotations
 
 import re
 
-from britannica.pipeline.stages.elements._text import clean_caption
+from britannica.captions import clean_caption
 
 
 def _table_row_cells(row: str) -> list[str]:
@@ -555,34 +555,94 @@ def _is_attribution_paragraph(para: str) -> bool:
     return bool(_ATTRIBUTION_START_RE.match(para))
 
 
-def _legend_entries_from_paragraph(
-    para: str,
-) -> list[tuple[str, str]] | None:
-    """Parse a body paragraph as a legend — either a single-entry
-    paragraph, a multi-line paragraph with one entry per line, or a
-    single line packing multiple entries separated by sentence
-    boundaries.  Uses STRICT label-matching so body prose that
-    starts with an English article (`a drilling machine…`) doesn't
-    get mistaken for a label + text.  Returns None if the paragraph
-    doesn't parse as a legend."""
-    # First try: a single entry (strict mode).
-    if len(para) <= 400:
-        single = _match_legend_line(para, strict=True)
-        if single:
-            return [single]
-    # Multi-line: split into lines, optionally re-split each for
-    # packed multi-entry lines.  Still strict.
-    lines_to_parse: list[str] = []
+# A loose-laid-out figure legend in EB1911 wikitext (one not contained
+# in a ``{| |}`` table or a ``<poem>`` block, which are delimited
+# structurally) marks each entry's *label* in italics —
+# ``''A'', Tool which would burnish only.`` (TOOL Fig. 2), surviving
+# transform as a leading ``«I»A«/I»,`` (or ``«SC»``/``«B»`` for sc/bold
+# labels).  A numbered *body section* — ``14. It is important to
+# distinguish between two types of strain…`` (ELASTICITY) — has a
+# *bare* label.  That italic-vs-bare distinction is the raw-structural
+# signal that tells a legend from a body paragraph, so this path
+# requires it; without it, the figure walker stops (the paragraph is
+# body prose).  Entries inside a ``<poem>``/``{| |}`` are handled by
+# ``_parse_verse_as_legend`` / ``_parse_table_as_legend`` and don't
+# need this — the container is the delimiter there.
+_LOOSE_LEGEND_LABEL_RE = re.compile(
+    r"«(?:I|SC|B)»\s*"
+    r"[A-Za-z0-9][A-Za-z0-9.\-]{0,3}\s*"
+    r"[,.]?\s*«/(?:I|SC|B)»"
+    r"[,.]?\s+\S"
+)
+
+
+# Bare numeric legend labels go 1–~50 (floor plans, multi-part figures);
+# a larger number is a section number, not a figure-part label.
+_BARE_NUM_LABEL_MAX = 99
+
+
+def _split_para_into_legend_lines(para: str) -> list[str]:
+    out: list[str] = []
     for line in para.split("\n"):
         line = line.strip()
         if not line:
             continue
         chunks = _split_multi_entry_line(line)
         if len(chunks) >= 2:
-            lines_to_parse.extend(chunks)
+            out.extend(chunks)
         else:
-            lines_to_parse.append(line)
-    return _parse_legend_lines(lines_to_parse, strict=True)
+            out.append(line)
+    return out
+
+
+def _legend_entries_from_paragraph(
+    para: str,
+) -> list[tuple[str, str]] | None:
+    """Parse a loosely-laid-out figure legend — ``«I»LABEL«/I», text``
+    entries written as plain paragraphs after an image (TOOL Figs 2-3),
+    one per paragraph/line or several packed on a line.  Returns None if
+    the paragraph isn't a legend.
+
+    Two tiers, mirroring the plate-classification approach:
+
+    * **Italic label = the reliable raw signal.**  EB1911 sets each
+      loose-text legend entry's *label* in italics — ``''A'', text`` —
+      surviving transform as a leading ``«I»A«/I»,`` (or ``«SC»``/``«B»``
+      for sc / bold labels).  A numbered *body section* — ``14. It is
+      important to distinguish between two types of strain…`` — has a
+      *bare* label.  When the italic mark is present we trust it: a
+      single short entry or a multi-entry list, no further questions.
+    * **No italic label → last-resort heuristic.**  A *single* bare
+      "entry" here is a body section / a body sentence whose first word
+      ("Thus.", "viz.", "AB.", a citation initial "J.", a genus
+      abbreviation "S.") got mis-read as a label — reject it.  Only a
+      *list* — ≥2 entries with **distinct, valid short labels** (single
+      ASCII letter, roman numeral, number ≤ 99, or 1–3-char code —
+      never a 4-digit year, never repeated) — is accepted (ROLLING-MILL
+      ``A. Box Pass. B, Gothic Pass. …``, SKULL ``Fr. Frontal bone. Mx,
+      Superior maxilla. …``)."""
+    italic = bool(_LOOSE_LEGEND_LABEL_RE.match(para))
+
+    multi = _parse_legend_lines(_split_para_into_legend_lines(para),
+                                strict=True)
+    if multi is not None:                              # ≥2 parsed entries
+        if not italic:
+            labels = [lbl for lbl, _ in multi]
+            if len(set(labels)) != len(labels):        # repeated labels
+                return None                            # (Fam. 9. … Fam. 10. …)
+            for lbl in labels:
+                if lbl.isdigit() and (
+                        len(lbl) >= 4 or int(lbl) > _BARE_NUM_LABEL_MAX):
+                    return None                        # year / section number
+        return multi
+
+    # Fewer than two parsed entries — only credible as a legend when
+    # the (single) label is italicised.
+    if italic and len(para) <= 400:
+        single = _match_legend_line(para, strict=True)
+        if single:
+            return [single]
+    return None
 
 
 _LEGEND_LABEL_ALONE_RE = re.compile(
