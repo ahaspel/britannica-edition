@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import re
 
+from britannica.captions import clean_caption
 from britannica.parsers.plate.models import CaptionFrag, ImageRef
 
 _FORMATTING_TEMPLATE_RE = re.compile(
@@ -238,108 +239,19 @@ def _is_credit(text: str) -> bool:
 
 
 def _strip_caption_markup(text: str) -> str:
-    """Clean a caption text fragment of markup that doesn't belong in
-    the rendered caption."""
-    # Decode HTML entities common in EB1911 plates.
-    text = re.sub(r"&mdash;", "—", text)
-    text = re.sub(r"&ndash;", "–", text)
-    text = re.sub(r"&nbsp;|&emsp;|&ensp;|&thinsp;", " ", text)
-    # ``&shy;`` (soft hyphen) and ``&zwj;``/``&zwnj;`` (zero-width
-    # joiners) are invisible word-break / glyph-shaping hints used in
-    # the source for line-wrapping — they have no place in flat
-    # caption text.  REGALIA Plate I's plate-wide credit had ``repro
-    # &shy;duced`` and ``pos&shy;session`` — without this strip they
-    # leaked verbatim into the LEGEND.
-    text = re.sub(r"&shy;|&zwj;|&zwnj;", "", text)
-    text = re.sub(r"&amp;", "&", text)
-    text = re.sub(r"&#\d+;", " ", text)
-    # Style-only templates: drop ENTIRE template incl. arguments.  The
-    # arguments are CSS-style tokens, not renderable text.  Without
-    # this, ``{{ts|mc|fs085|lh110}}`` would unwrap to its last arg
-    # ``lh110`` (via the multi-arg unwrap below) and leak a layout
-    # token into the caption / bookend.  The list is closed and small;
-    # add new entries only when a new style-only template name is
-    # observed in the corpus.
-    text = re.sub(
-        r"\{\{\s*(?:ts|tspy|dhr|gap|nop|clear|float\s+left|float\s+right)"
-        r"(?:\s*\|[^{}]*)?\s*\}\}",
-        "",
-        text,
-        flags=re.IGNORECASE,
-    )
-    # Unwrap formatting templates iteratively (keep inner text).
-    for _ in range(8):
-        before = text
-        # Single-arg formatting templates.
-        text = re.sub(
-            r"\{\{\s*(?:sc|small-caps|smaller|small|c|center|big|bold|"
-            r"italic|nowrap|fs|lh|x-larger|x-smaller|larger|"
-            r"EB1911 Fine Print|float\s+left|float\s+right)\s*\|"
-            r"([^{}]*)\}\}",
-            r"\1", text, flags=re.IGNORECASE,
-        )
-        # Multi-arg pipe templates: keep last arg.
-        text = re.sub(
-            r"\{\{[^{}|]+\|[^{}]*\|([^{}|]*)\}\}",
-            r"\1", text,
-        )
-        # Two-arg pipe templates: keep last arg (handles ``{{Fs|85|text}}``).
-        text = re.sub(
-            r"\{\{[^{}|]+\|([^{}]*)\}\}",
-            r"\1", text,
-        )
-        if text == before:
-            break
-    # Strip remaining bare templates.
-    text = re.sub(r"\{\{[^{}]*\}\}", "", text)
-    # Strip wiki bold/italic markers.
-    text = re.sub(r"'''|''", "", text)
-    # Strip wiki-table markers (defensive — these never belong in a caption).
-    text = re.sub(r"\{\|[^\n]*", "", text)
-    text = re.sub(r"\|\}", "", text)
-    # Strip HTML tags.
-    text = re.sub(r"<br\s*/?>", " ", text, flags=re.IGNORECASE)
-    text = re.sub(r"<[^>]+>", "", text)
-    # Strip wiki cell-attribute prefixes left by upstream walking.
-    # Wiki cell syntax is ``|<attrs>|<content>`` where attr values may
-    # be quoted (``align="right"``) or unquoted (``style=text-align:right``,
-    # ``colspan=2``).  The unquoted form is what leaked through before
-    # this regex was extended to accept it.
-    text = re.sub(
-        r'^(?:(?:align|valign|width|height|colspan|rowspan|style|class|'
-        r'id|scope|bgcolor|cellpadding|cellspacing)'
-        r'\s*=\s*'
-        r'(?:"[^"]*"|\'[^\']*\'|[^\s|]+)'
-        r'\s*)+'
-        r'\|\s*',
-        "", text,
-    )
-    # …and cell-attribute strings that leaked *mid-text* — when a
-    # walker glues a ``|attrs|content`` cell onto a preceding caption
-    # without splitting on the ``|`` (GLASS PLATE II: ``…Jackson in
-    # 1870. align="center" valign="top" Fig. 12.…``; ROPE PLATE legends
-    # ``- style="font-size: 90%"``; PROCESS spacer cells
-    # ``style="height: 0px; width: 40px"``).  The ``=`` is required so
-    # prose words ("align the figures", "Art Nouveau style", "the width
-    # of the river") aren't touched — same lesson as clean_body's
-    # leaked_html_table_attrs.
-    text = re.sub(
-        r'\b(?:align|valign|width|height|colspan|rowspan|style|class|'
-        r'id|scope|bgcolor|cellpadding|cellspacing|border)'
-        r'\s*=\s*'
-        r'(?:"[^"]*"|\'[^\']*\'|[^\s|]+)',
-        "", text, flags=re.IGNORECASE,
-    )
-    # Defensive — caption text never contains pipes (wiki cell
-    # separator) or stray braces (template-close fragments).  Without
-    # this strip, emitting ``{{IMG:fn|cap}}`` breaks the marker syntax
-    # when cap contains ``|`` or ``}}``: the AERONAUTICS rh-template
-    # closing braces leak through and make the marker swallow
-    # subsequent IMG markers in the body.
-    text = re.sub(r"[|{}]", " ", text)
-    # Normalize whitespace.
-    text = re.sub(r"\s+", " ", text).strip()
-    return text.rstrip(",.|; ")
+    """Clean a caption / bookend text fragment of leaked markup.
+
+    Delegates to the canonical ``britannica.captions.clean_caption`` —
+    template unwrapping (formatting templates → argument; ``{{uc|…}}`` /
+    ``{{lc|…}}`` → case-folded argument; style-only templates → dropped;
+    unclosed ``{{name|`` openers → stripped), HTML entities/tags,
+    wiki-table markers, cell-attribute strings (leading prefix and
+    mid-text), internal `«…»` markers, raw wikilinks, and any stray
+    pipe/brace.  Differs from the old plate-local version only in NOT
+    stripping trailing punctuation — a plate caption legitimately ends
+    "Fig. 1." / "…Order of the Thistle." (``plate_baseline.json``
+    re-snapshotted when this changed)."""
+    return clean_caption(text)
 
 
 def _roman_to_int(s: str) -> int | None:

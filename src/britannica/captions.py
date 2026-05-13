@@ -32,13 +32,27 @@ _STYLE_ONLY_TEMPLATE_RE = re.compile(
     r"(?:\s*\|[^{}]*)?\s*\}\}",
     re.IGNORECASE,
 )
-# Formatting templates whose argument *is* the text to keep.
+# Formatting templates whose argument *is* the text to keep.  ``uc`` /
+# ``lc`` are handled separately — their argument is *case-folded*, not
+# just kept (see ``_UC_TEMPLATE_RE`` / ``_LC_TEMPLATE_RE``).
 _FMT_TEMPLATE_RE = re.compile(
     r"\{\{\s*(?:sc|small-caps|smaller|small|c|center|left|right|big|bold|"
     r"italic|nowrap|fs|lh|csc|x-larger|x-smaller|larger|block\s+center|"
-    r"EB1911\s+Fine\s+Print|EB1911\s+article\s+link|uc|lc)\s*\|([^{}]*)\}\}",
+    r"EB1911\s+Fine\s+Print|EB1911\s+article\s+link)\s*\|([^{}]*)\}\}",
     re.IGNORECASE,
 )
+# ``{{uc|TEXT}}`` / ``{{lc|TEXT}}`` — Wikisource renders the argument
+# upper- / lower-cased (REGALIA plate captions use ``{{uc|…}}`` heavily).
+_UC_TEMPLATE_RE = re.compile(r"\{\{\s*uc\s*\|([^{}]*)\}\}", re.IGNORECASE)
+_LC_TEMPLATE_RE = re.compile(r"\{\{\s*lc\s*\|([^{}]*)\}\}", re.IGNORECASE)
+# Raw wikilinks — caption fragments fed here straight from wikitext (the
+# plate parser, the image-element extractor) carry these.  A nested
+# ``[[File:…]]`` / ``[[Image:…]]`` in a caption is junk → drop whole; an
+# ordinary ``[[target|display]]`` / ``[[target]]`` → keep display text.
+_RAW_FILE_LINK_RE = re.compile(r"\[\[\s*(?:File|Image)\s*:[^\[\]]*\]\]",
+                               re.IGNORECASE)
+_RAW_PIPED_LINK_RE = re.compile(r"\[\[[^\[\]|]*\|([^\[\]]+)\]\]")
+_RAW_BARE_LINK_RE = re.compile(r"\[\[([^\[\]]+)\]\]")
 # An *unclosed* `{{name|` opener (malformed source / a caption truncated
 # mid-template by an upstream walker — AMICE's `({{left|Redrawn from
 # Braun…)` has `{{left|` with no matching `}}`).  Strip just the opener,
@@ -66,6 +80,28 @@ _CELL_ATTR_PREFIX_RE = re.compile(
 _HTML_ENTITY_RE = re.compile(r"&#?\w+;")
 
 
+def strip_cell_attrs(text: str) -> str:
+    """Strip wiki cell-attribute syntax (``|colspan="2"|``,
+    ``|style="…"|``, ``align=right`` mid-text, etc.) and stray
+    ``|`` / ``{`` / ``}`` punctuation from caption-shaped text.
+
+    Unlike :func:`clean_caption`, this preserves inline markup markers
+    (``«I»``, ``«B»``, ``«SC»``, ``«LN»``, ``«FN»``) so the caller can
+    keep typographical formatting in the rendered output — required for
+    HTMLTABLE ``<caption>`` text where small-caps / italics should
+    render (ACCUMULATOR's ``«SC»Table I.«/SC»``, ALPACA's
+    ``«I»Alpaca«/I»``-titled wool table).  When the caller also wants
+    markers unwrapped (plate captions, in-body legends), use
+    ``clean_caption`` directly."""
+    if not text:
+        return text
+    text = _CELL_ATTR_PREFIX_RE.sub("", text)
+    text = _CELL_ATTR_RE.sub("", text)
+    text = re.sub(r"[|{}]", " ", text)
+    text = re.sub(r"\s+", " ", text).strip()
+    return text
+
+
 def clean_caption(text: str) -> str:
     """Produce clean, plain caption / legend text from a fragment that
     may carry leaked markup of any kind.
@@ -86,11 +122,16 @@ def clean_caption(text: str) -> str:
     text = re.sub(r"&shy;|&zwj;|&zwnj;", "", text)
     text = text.replace("&amp;", "&").replace("&#39;", "'")
     text = _HTML_ENTITY_RE.sub(" ", text)
-    # Existing internal markers (post-transform captions carry these).
+    # Internal markers (post-transform captions carry these).
     text = re.sub(r"«LN:[^|]*\|([^«]*)«/LN»", r"\1", text)
     text = re.sub(r"«B»(.*?)«/B»", r"\1", text)
     text = re.sub(r"«I»(.*?)«/I»", r"\1", text)
     text = re.sub(r"«SC»(.*?)«/SC»", r"\1", text)
+    # Raw wikilinks (pre-transform captions — plate parser, image
+    # extractor).  Drop nested file links; keep wikilink display text.
+    text = _RAW_FILE_LINK_RE.sub("", text)
+    text = _RAW_PIPED_LINK_RE.sub(r"\1", text)
+    text = _RAW_BARE_LINK_RE.sub(r"\1", text)
     # A footnote in caption position is almost always a <ref> the
     # transcriber put in the caption slot ([[Image:tbl.png|<ref>Dimensions
     # in English feet.</ref>|800px]] — AGRIGENTUM), or a figure-
@@ -102,11 +143,14 @@ def clean_caption(text: str) -> str:
     text = re.sub(r"«FN(?:\[[^\]]*\])?:([\s\S]*?)«/FN»", r" \1 ", text)
     text = re.sub(r"«FN(?:\[[^\]]*\])?:([\s\S]*)$", r" \1", text)
     text = re.sub(r"«/?[A-Z]+»", "", text)
-    # Style-only templates → drop whole; formatting templates → unwrap to
-    # their argument; iterate until stable so nesting unwinds.
+    # Style-only templates → drop whole; case-folding templates → fold
+    # the argument; formatting templates → unwrap to the argument;
+    # iterate until stable so nesting unwinds.
     for _ in range(8):
         before = text
         text = _STYLE_ONLY_TEMPLATE_RE.sub("", text)
+        text = _UC_TEMPLATE_RE.sub(lambda m: m.group(1).upper(), text)
+        text = _LC_TEMPLATE_RE.sub(lambda m: m.group(1).lower(), text)
         text = _FMT_TEMPLATE_RE.sub(r"\1", text)
         # Generic: multi-arg → last arg; two-arg → last arg.
         text = re.sub(r"\{\{[^{}|]+\|[^{}]*\|([^{}|]*)\}\}", r"\1", text)

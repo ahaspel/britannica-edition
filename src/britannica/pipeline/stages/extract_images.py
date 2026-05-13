@@ -4,6 +4,7 @@ import hashlib
 from pathlib import Path
 from urllib.parse import quote
 
+from britannica.captions import clean_caption
 from britannica.db.models import Article, ArticleImage, ArticleSegment, SourcePage
 from britannica.db.session import SessionLocal
 from britannica.parsers import img_float as _img_float_parser
@@ -81,68 +82,15 @@ def _parse_img_float(body: str) -> dict | None:
 
 
 def _clean_caption_markup(text: str) -> str:
-    """Strip wiki/HTML noise from an extracted caption string.
+    """Strip wiki/HTML noise from an extracted (raw-wikitext) caption.
 
-    Handles the caption-wrapper templates and tags that appear around
-    WEIGHING MACHINES / SEWING MACHINES figures: {{sc|…}}, {{smaller|…}},
-    {{c|…}}, <br/>, alignment attributes like `align="center"|`.
-    """
-    # Drop leading wikitable cell attributes: `align="..." width="..." |`.
-    # Both quoted (`align="center"`) and unquoted (`rowspan=4`) values
-    # are accepted.  Also handles a nested-table opener ``{|...attrs...``
-    # — when the post-image line is actually the header of an inner
-    # layout table, we want to strip the attrs and leave the (likely
-    # empty) remainder for the attribute-fragment guard below.
-    text = re.sub(
-        r'^\{?\|?(?:(?:align|style|width|valign|class|colspan|rowspan|'
-        r'id|scope|cellpadding|cellspacing|bgcolor|border|nowrap|height)'
-        r'\s*=\s*(?:"[^"]*"|\S+)\s*)+\|?\s*',
-        "", text,
-    )
-    # Reject captions that, after stripping, contain only attribute
-    # fragments (`width="80%" cellpadding="0" ...` from a nested-table
-    # header).  These are leakage, not real caption text — return empty
-    # so the caller can fall through to a more accurate caption source.
-    attr_only_check = re.sub(
-        r'(?:[a-z]+\s*=\s*(?:"[^"]*"|\S+)\s*)+',
-        '', text, flags=re.IGNORECASE,
-    ).strip(' .|{}|"\'')
-    if not attr_only_check:
-        return ""
-    # Strip common wrapper templates, keeping inner text. `Fs` has a
-    # `|percent|text` signature — keep only the text.
-    for _ in range(5):
-        text = re.sub(r"\{\{\s*(?:sc|smaller|c|center|small|big|bold|italic|nowrap)\s*\|([^{}]*)\}\}",
-                      r"\1", text, flags=re.IGNORECASE)
-        # ``{{uc|TEXT}}`` uppercases TEXT in Wikisource rendering —
-        # preserve that when unwrapping (REGALIA plate captions use
-        # it extensively).
-        text = re.sub(r"\{\{\s*uc\s*\|([^{}]*)\}\}",
-                      lambda m: m.group(1).upper(),
-                      text, flags=re.IGNORECASE)
-        text = re.sub(r"\{\{\s*fs\s*\|[^{}|]*\|([^{}]*)\}\}",
-                      r"\1", text, flags=re.IGNORECASE)
-    # Unwrap any other pipe-separated template — keep the last arg
-    # (usually the display text, e.g. `{{EB1911 article link|Foo}}` → Foo).
-    for _ in range(3):
-        text = re.sub(r"\{\{[^{}|]+\|([^{}]*)\}\}", r"\1",
-                      text, flags=re.IGNORECASE)
-    # Any remaining bare template (no pipe) — drop entirely.
-    text = re.sub(r"\{\{[^{}]*\}\}", "", text)
-    # Strip <br/> and remaining inline HTML tags
-    text = re.sub(r"<br\s*/?>", " ", text, flags=re.IGNORECASE)
-    text = re.sub(r"<[^>]+>", "", text)
-    # Strip wikilinks [[X|Y]] → Y, [[X]] → X
-    text = re.sub(r"\[\[[^\]|]*\|([^\]]+)\]\]", r"\1", text)
-    text = re.sub(r"\[\[([^\]]+)\]\]", r"\1", text)
-    # Strip stray braces, pipes, and table-row markers
-    text = re.sub(r"\{\{+|\}\}+|\|\}|\{\|", "", text)
-    # Collapse whitespace
-    text = re.sub(r"\s+", " ", text).strip()
-    # Drop source-attribution prefixes like "From Airy, ..." preceding
-    # the actual caption (usually separated from the caption by <br/>).
-    # Heuristic: if the caption contains "Fig." after another sentence,
-    # trim the prefix up through the last period before "Fig.".
+    Markup-stripping is the canonical ``britannica.captions.clean_caption``
+    (templates incl. ``{{uc|…}}`` case-fold, HTML entities/tags,
+    wiki-table markers, cell-attribute strings, raw wikilinks, stray
+    pipes/braces); on top of that this drops a leading source-attribution
+    clause when a ``Fig. N`` / ``Plate N`` follows it ("From Airy, …
+    Fig. 5.—…" → "Fig. 5.—…")."""
+    text = clean_caption(text)
     m = re.search(r"((?:Fig|Plate)\.?\s*[\dIVX]+)", text, re.IGNORECASE)
     if m and m.start() > 40:
         text = text[m.start():].strip()

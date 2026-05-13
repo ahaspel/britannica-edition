@@ -19,6 +19,7 @@ from __future__ import annotations
 import re
 
 from britannica.pipeline.stages.elements._registry import ElementRegistry, _PH
+from britannica.pipeline.stages.elements._tables import split_wiki_row
 from britannica.pipeline.stages.elements._text import _clean_text
 
 def _is_layout_wrapper(raw: str, inner: str, inner_registry: ElementRegistry | None) -> bool:
@@ -1189,85 +1190,61 @@ def _unwrap_layout_table(inner: str, text_transform,
         return subclassed
 
     inner = re.sub(r"<br\s*/?>", " ", inner, flags=re.IGNORECASE)
-    _ATTR = re.compile(
-        r"^(?:colspan|rowspan|width|style|align|valign|class|"
-        r"cellpadding|nowrap|border|bgcolor|height)[\s=|]",
-        re.IGNORECASE,
-    )
 
     raw_rows = re.split(r"\|-[^\n]*", inner)
     parts = []
     for raw_row in raw_rows:
-        # Collect all content: cell text, standalone placeholders,
-        # and any text not inside cell markup
-        row_content = []
+        # Collect all content: standalone placeholders (child elements
+        # appearing in the row without a leading `|`) AND attribute-
+        # stripped cell content via the shared row splitter.
+        row_content: list[str] = []
 
-        # Protect placeholders and templates from pipe splitting
-        protected = re.sub(r"\{\{[^}]*\}\}", lambda m: m.group(0).replace("|", "\x04"), raw_row)
-        protected = re.sub(re.escape(_PH) + r"[^" + re.escape(_PH) + r"]+" + re.escape(_PH),
-                           lambda m: m.group(0).replace("|", "\x04"), protected)
+        # Pre-pass: pick up standalone placeholder lines.  A layout-
+        # wrapper sometimes holds a child element (image, nested table)
+        # on its own line without the surrounding `|` cell syntax —
+        # those would never match `split_wiki_row`'s `^|` extraction,
+        # so we grab them here first.
+        for ln in raw_row.split("\n"):
+            stripped = ln.strip()
+            if _PH in stripped and stripped.startswith(_PH):
+                row_content.append(stripped)
 
-        for line in protected.split("\n"):
-            line = line.strip()
-            if not line:
+        for sep, attr_part, content in split_wiki_row(raw_row):
+            if not content:
                 continue
-            # Standalone placeholder (child element on its own line)
-            if _PH in line and line.replace("\x04", "|").strip().startswith(_PH):
-                row_content.append(line.replace("\x04", "|").strip())
-                continue
-            # Cell content after |
-            if line.startswith("|"):
-                cell = line[1:].replace("\x04", "|").strip()
-                if not cell or cell in ("}", "{|"):
-                    continue
-                # Strip {{Ts|...}} styling and split attr|content
-                cell = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*", "", cell)
-                if _ATTR.match(cell):
-                    parts_after = cell.split("|", 1)
-                    if len(parts_after) > 1:
-                        cell = parts_after[1].strip()
-                    else:
-                        continue
-                # Also split on remaining attr|content boundary
-                elif "|" in cell:
-                    before, _, after = cell.partition("|")
-                    # If before is empty or only whitespace/templates, take after
-                    stripped_before = re.sub(r"\{\{[^{}]*\}\}", "", before).strip()
-                    if not stripped_before:
-                        cell = after.strip()
-                if cell:
-                    row_content.append(cell)
+            # Drop leftover {{Ts|…}} cell-styling templates (same logic
+            # as `_process_table`'s `_extract_cells`).
+            content = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*", "", content).strip()
+            if content:
+                row_content.append(content)
 
         for c in row_content:
-            # Placeholders (child elements) must pass through untouched,
-            # but any surrounding text in the cell still needs
-            # text_transform (entities, italic/bold, etc). Split on
-            # placeholder boundaries, transform the text chunks only,
-            # then rejoin.
+            # Placeholders (child elements) must pass through untouched.
+            # Push each placeholder AND each non-empty surrounding text
+            # chunk as a SEPARATE `parts` entry — this is what lets the
+            # image+caption bundling below fire when source put the
+            # image and its caption in the *same* cell separated by
+            # `<br>` (ABERRATION ``|[[File:…|Fig. 2]]<br>{{csc|Fig.
+            # 2.}}|``: continuation merge produces one cell containing
+            # placeholder+caption-text, and emitting them joined would
+            # bypass the bundling and leak ``«SC»Fig. 2.«/SC»`` as
+            # duplicate text after the figure).
             if _PH in c:
                 ph_re = re.compile(
                     re.escape(_PH) + r"[^" + re.escape(_PH) + r"]+"
                     + re.escape(_PH))
-                out = []
                 last = 0
                 for m in ph_re.finditer(c):
                     if m.start() > last:
                         chunk = c[last:m.start()]
                         if chunk.strip():
-                            out.append(text_transform(chunk))
-                        else:
-                            out.append(chunk)
-                    out.append(m.group(0))
+                            parts.append(text_transform(chunk).strip())
+                    parts.append(m.group(0))
                     last = m.end()
                 if last < len(c):
                     tail = c[last:]
                     if tail.strip():
-                        out.append(text_transform(tail))
-                    else:
-                        out.append(tail)
-                joined = "".join(out).strip()
-                if joined:
-                    parts.append(joined)
+                        parts.append(text_transform(tail).strip())
             else:
                 content = text_transform(c)
                 if content.strip():

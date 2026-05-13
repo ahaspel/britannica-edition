@@ -186,6 +186,25 @@ _LEGEND_CELL_RE = re.compile(
 
 _PARA_LEGEND_LABEL_ONE = r"[A-Za-z0-9][A-Za-z0-9.\-]{0,3}"
 
+# A *typographically distinguished* label, used in the boundary lookahead
+# inside `_split_multi_entry_line`.  EB1911 typesets figure-legend labels
+# distinctly from body text: italicised (`''a''` → «I»a«/I» here), small
+# caps, bold, OR bare uppercase letters / digits.  A bare lowercase token
+# (`but`, `and`, `or`, `long`) appearing after `; ` or `. ` is body prose,
+# not a label — BATRACHIA / HITTITES / OIL ENGINE / PIANOFORTE all fooled
+# the old permissive `_label_ahead` because their connectives match the
+# 1-4 char alnum label shape.  Restricting bare labels to uppercase/digit
+# keeps every legitimate recovery (SHIP A-H, VISION A/SC/S, AMANITA A/B,
+# BROOM 1/2, PEPPERMINT/TUMOUR/KINORHYNCHA/REPTILES all-italic) and
+# rejects all observed regressions.
+_TYPED_LEGEND_LABEL = (
+    r"(?:"
+    r"«(?:I|SC|B)»[A-Za-z0-9][A-Za-z0-9.\-]{0,3}«/(?:I|SC|B)»"
+    r"|"
+    r"[A-Z0-9][A-Z0-9.\-]{0,3}"
+    r")"
+)
+
 def _build_legend_line_re(strict: bool) -> re.Pattern:
     # Single-label separator: `[,.]` required in strict, `[,.]?` in
     # permissive mode.
@@ -357,11 +376,37 @@ def _split_multi_entry_line(line: str) -> list[str]:
     into per-entry chunks using the sentence boundary immediately
     preceding the next label shape.  Labels may be wrapped in
     italic markers (`«I»A«/I», text`) — TOOL Figs 9-10.  Single-entry
-    lines return the line unchanged."""
+    lines return the line unchanged.
+
+    Also splits a literal ``||`` cell grid left over from a loose-laid-out
+    wikitable that was unwrapped (not rendered as a table) before reaching
+    the figure walker (AMANITA ``A, ||the young plant. ||g,||the gills.``,
+    BEE Fig. 6 ``A. Abdomen ... || i. Intestine.``), and on ``; LABEL,``
+    semicolon boundaries (SHIP Fig. 126 ``C. dynamo and motor; D,
+    water-tight compartments;``).  When ``||`` cells alternate
+    bare-label / text \u2014 an inline two-column legend grid \u2014 each label
+    cell is merged with the text cell that follows it; otherwise each
+    cell is one entry, re-split recursively in case it packs several."""
+    if "||" in line:
+        cells = [c.strip() for c in re.split(r"\s*\|\|\s*", line) if c.strip()]
+        if len(cells) >= 2:
+            # Alternating label-cell / text-cell grid?  Then every even
+            # cell is a bare short label (`A,` / `g,` / `1.` / `\u00abI\u00bbp\u00ab/I\u00bb,`).
+            if len(cells) % 2 == 0 and all(
+                _LEGEND_LABEL_ALONE_RE.match(_strip_inline_italic(c))
+                for c in cells[0::2]
+            ):
+                cells = [f"{cells[i]} {cells[i + 1]}"
+                         for i in range(0, len(cells), 2)]
+            out: list[str] = []
+            for cell in cells:
+                out.extend(_split_multi_entry_line(cell))
+            return out
+
+    _label_ahead = r"(?=" + _TYPED_LEGEND_LABEL + r"[,.]\s+)"
     split_re = re.compile(
-        r"(?<=\.)\s+(?=(?:\u00abI\u00bb)?"
-        + _PARA_LEGEND_LABEL_ONE +
-        r"(?:\u00ab/I\u00bb)?[,.]\s+)")
+        r"(?<=\.)\s+" + _label_ahead       # `. ` sentence boundary (kept)
+        + r"|\s*;\s+" + _label_ahead)      # `; ` semicolon boundary (dropped)
     parts = split_re.split(line)
     return [p.strip() for p in parts if p.strip()]
 

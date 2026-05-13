@@ -32,6 +32,7 @@ from __future__ import annotations
 
 import re
 
+from britannica.cleaners.unicode import replace_print_artifacts
 from britannica.parsers import img_float as _img_float_parser
 from britannica.parsers.plate.bookends import (
     _strip_bookend_markup,
@@ -193,4 +194,11 @@ def parse_plate(raw: str) -> str:
         parts.append(f"{{{{LEGEND:{legend}}}LEGEND}}")
     if footer:
         parts.append(footer)
-    return "\n\n".join(parts)
+    text = "\n\n".join(parts)
+    # Normalize codepoints (fullwidth `=` `+` `-`, ligature glyphs like
+    # `℔` `℥`) and collapse excessive blank lines at the plate's exit
+    # point — `_transform_text_v2` does the same for non-plate
+    # articles, so `clean_body` doesn't need to repeat it.
+    text = replace_print_artifacts(text)
+    text = re.sub(r"\n{3,}", "\n\n", text)
+    return text
