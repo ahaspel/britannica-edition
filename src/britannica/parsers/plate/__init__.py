@@ -198,7 +198,7 @@ def parse_plate(raw: str) -> str:
     # Normalize codepoints (fullwidth `=` `+` `-`, ligature glyphs like
     # `℔` `℥`) and collapse excessive blank lines at the plate's exit
     # point — `_transform_text_v2` does the same for non-plate
-    # articles, so `clean_body` doesn't need to repeat it.
+    # articles, so each path produces its body cleanly in isolation.
     text = replace_print_artifacts(text)
     text = re.sub(r"\n{3,}", "\n\n", text)
     return text

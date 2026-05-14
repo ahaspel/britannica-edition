@@ -167,11 +167,6 @@ echo
 echo "=== Phase 5: Exporting front matter [$(elapsed)] ==="
 uv run python tools/pipeline/export_front_matter.py
 
-# --- Phase 6: Post-processing cleanup ---
-echo
-echo "=== Phase 6: Post-processing exported articles [$(elapsed)] ==="
-uv run python tools/pipeline/postprocess.py
-
 # --- Phase 6b: Build classified TOC (topics page data) ---
 echo
 echo "=== Phase 6b: Parsing classified TOC (vol 29 topics) [$(elapsed)] ==="

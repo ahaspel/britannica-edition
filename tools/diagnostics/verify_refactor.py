@@ -25,8 +25,7 @@ There is also a *full-pipeline* shadow (``--full``): for every article it
 recomputes the body via ``_shadow_transform`` and feeds that body into
 ``export_articles_to_json`` (via its ``body_override`` seam), then diffs
 the resulting JSON against ``data/derived/articles/``.  This is the check
-to use for burndown work that fixes a leak at its producer *and* removes
-the corresponding ``clean_body`` patch in the same change: the transform
+to use for burndown work that fixes a leak at its producer: the transform
 output legitimately changes, but the shipped JSON should stay
 byte-identical — which the plain ``--transform-only`` / ``--export-only``
 runs can't confirm because the DB still holds the pre-change body.
@@ -66,9 +65,9 @@ from britannica.export.article_json import export_articles_to_json
 from britannica.parsers.plate import parse_plate
 from britannica.pipeline.stages.transform_articles import _transform_text_v2
 
-# Note: clean_body (formerly the standalone postprocess.py pass) now runs
-# inside export_articles_to_json, so the export shadow output already
-# matches what ships — no extra postprocess step needed here.
+# Note: there is no longer any body-cleanup pass — each producer
+# (transform/parse_plate) emits its body cleanly in isolation, so the
+# export shadow output already matches what ships.
 
 
 ARTICLES_DIR = Path("data/derived/articles")

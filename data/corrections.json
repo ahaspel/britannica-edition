@@ -199,6 +199,24 @@
       "to": "(1805–1892)"
     }
   ],
+  "_14:738_note": "INTERPOLATION uses wiki `|width=5%|(N).` cells for equation-number annotations IMMEDIATELY after an HTML `</table>`, with no `|-` row separator between them. Without the row separator the outer wiki table's parser doesn't recognise the wiki cell as a new row, and the `|width=5%|(N).` leaks into body text as literal characters. Insert `|-` rows so each equation-number cell sits in its own row of the outer wiki table.",
+  "14:738": [
+    {
+      "from": "</table>\n|width=5%|(4).",
+      "to": "</table>\n|-\n|width=5%|(4)."
+    },
+    {
+      "from": "</table>\n|width=5%|(5).",
+      "to": "</table>\n|-\n|width=5%|(5)."
+    }
+  ],
+  "_14:739_note": "Same INTERPOLATION pattern as 14:738 — equation-number wiki cell directly after `</table>` needs a `|-` row separator.",
+  "14:739": [
+    {
+      "from": "</table>\n|width=5%|&ensp; (9).",
+      "to": "</table>\n|-\n|width=5%|&ensp; (9)."
+    }
+  ],
   "15:165": [
     {
       "from": "(1479–1401)",
