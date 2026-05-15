@@ -404,9 +404,18 @@ def _split_multi_entry_line(line: str) -> list[str]:
             return out
 
     _label_ahead = r"(?=" + _TYPED_LEGEND_LABEL + r"[,.]\s+)"
+    # Don't split when the period that terminates the prior sentence
+    # belongs to ``fig.`` / ``Fig.`` / ``figs.`` etc. — the number that
+    # follows is a figure reference (``…in fig. 3.``), not the label of
+    # a new legend entry.  Without this, body paragraphs that name
+    # a figure get carved into pseudo-entries (DIFFERENCES § 3 /
+    # ELASTICITY § 14 / IRON AND STEEL § 85 …).
+    _not_fig_ref = (
+        r"(?<!\bfig\.)(?<!\bFig\.)(?<!\bFIG\.)"
+        r"(?<!\bfigs\.)(?<!\bFigs\.)(?<!\bFIGS\.)")
     split_re = re.compile(
-        r"(?<=\.)\s+" + _label_ahead       # `. ` sentence boundary (kept)
-        + r"|\s*;\s+" + _label_ahead)      # `; ` semicolon boundary (dropped)
+        _not_fig_ref + r"(?<=\.)\s+" + _label_ahead  # `. ` sentence boundary (kept)
+        + r"|\s*;\s+" + _label_ahead)                # `; ` semicolon boundary (dropped)
     parts = split_re.split(line)
     return [p.strip() for p in parts if p.strip()]
 
@@ -626,7 +635,22 @@ _LOOSE_LEGEND_LABEL_RE = re.compile(
 _BARE_NUM_LABEL_MAX = 99
 
 
+# Heal ``fig.\nN`` line splits before splitting paragraphs into legend
+# lines.  Body paragraphs in numbered articles (ELASTICITY § 14, DENSITY
+# § 1, DIFFERENCES § 3, IRON AND STEEL § 85, …) frequently contain
+# ``…shown in fig.\n3.…`` where wikisource pagination inserted the
+# newline right between ``fig.`` and the figure number.  Without this
+# heal, ``_split_para_into_legend_lines`` produces two lines that *look*
+# like a numbered list (``3. …`` and ``N. …``), and the no-italic
+# fallback in ``_legend_entries_from_paragraph`` accepts the body
+# paragraph as a 2-entry legend.  The healed paragraph reads exactly the
+# same way (``…shown in fig. 3.…``) and no longer trips the fallback.
+_FIG_NEWLINE_SPLIT_RE = re.compile(
+    r"\b((?:Figs?|FIGS?|figs?)\.)\s*\n\s*(?=\d)")
+
+
 def _split_para_into_legend_lines(para: str) -> list[str]:
+    para = _FIG_NEWLINE_SPLIT_RE.sub(r"\1 ", para)
     out: list[str] = []
     for line in para.split("\n"):
         line = line.strip()
@@ -661,21 +685,26 @@ def _legend_entries_from_paragraph(
       "entry" here is a body section / a body sentence whose first word
       ("Thus.", "viz.", "AB.", a citation initial "J.", a genus
       abbreviation "S.") got mis-read as a label — reject it.  Only a
-      *list* — ≥2 entries with **distinct, valid short labels** (single
-      ASCII letter, roman numeral, number ≤ 99, or 1–3-char code —
-      never a 4-digit year, never repeated) — is accepted (ROLLING-MILL
-      ``A. Box Pass. B, Gothic Pass. …``, SKULL ``Fr. Frontal bone. Mx,
-      Superior maxilla. …``)."""
+      *list* — ≥2 entries with valid short labels (single ASCII letter,
+      roman numeral, number ≤ 99, or 1–3-char code — never a 4-digit
+      year) — is accepted (ROLLING-MILL ``A. Box Pass. B, Gothic
+      Pass. …``, SKULL ``Fr. Frontal bone. Mx, Superior maxilla. …``).
+
+    Note: the no-italic fallback previously also rejected legends with
+    *repeated* labels as a defense against apparent-composite legends
+    that the column-major layout-unwrap bug used to create (LARVAL
+    FORMS Fig 5/6, FUNGI Fig 12/13, etc.).  With the disentangle fix
+    in ``_try_image_layout_subclass`` the producer no longer emits
+    those, so the defense is gone — letting the rare genuine repeated-
+    label legends (LARVAL FORMS Fig 13's ``1. 2. 3. …`` composite,
+    WILLOW's size-spec lines) come through."""
     italic = bool(_LOOSE_LEGEND_LABEL_RE.match(para))
 
     multi = _parse_legend_lines(_split_para_into_legend_lines(para),
                                 strict=True)
     if multi is not None:                              # ≥2 parsed entries
         if not italic:
-            labels = [lbl for lbl, _ in multi]
-            if len(set(labels)) != len(labels):        # repeated labels
-                return None                            # (Fam. 9. … Fam. 10. …)
-            for lbl in labels:
+            for lbl, _ in multi:
                 if lbl.isdigit() and (
                         len(lbl) >= 4 or int(lbl) > _BARE_NUM_LABEL_MAX):
                     return None                        # year / section number

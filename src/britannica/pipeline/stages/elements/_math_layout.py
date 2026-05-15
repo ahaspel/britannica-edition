@@ -1,14 +1,44 @@
 """Math / equation layout detection and rendering.
 
 Wiki tables that are spatial math layouts (equation systems,
-determinants, matrices) rather than tabular data.  Detection and
-rendering live here; classification dispatch is in __init__.
+determinants, matrices) rather than tabular data.
+
+A math-layout table is one where the wiki ``{|…|}`` exists for visual
+positioning of math content, not to express tabular structure.  The
+math content arrives in one of three encodings:
+
+* **tokens** — cells contain raw math tokens (italicised letters,
+  subscripts, operators).  Pre-LaTeX-style transcription as seen on
+  ALGEBRAIC FORMS.  Rendered as KaTeX ``\\begin{aligned}`` /
+  ``\\begin{vmatrix}``.
+* **math_blocks** — cells contain ``<math>…</math>`` elements (which
+  reach this stage as registered MATH placeholders).  Pure LaTeX
+  transcription as seen on DIFFERENCES, CALCULUS OF.  Rendered as
+  one paragraph per row, each holding the math placeholder.
+* **html_wrapper** — wikitable wraps an inner HTML ``<table>`` whose
+  content is the actual math layout (poems of equations,
+  rowspan-based fractions, ``{{Polytonic|…}}`` templates).  The outer
+  wikitable's only job is positioning the math block alongside an
+  equation-number cell.  Seen on INTERPOLATION p738/p739 and
+  HYDRAULICS p120.  Rendered as paragraphs, letting the inner
+  HTML_TABLE handle the math.
+
+The three encodings share a structural signature: the wiki table has
+no data-table markers (``class=wikitable``, ``border=N``, ``rules=``,
+``<ref>``), and its rows are math content in some form.  Detection
+and dispatch are unified in :func:`_math_table_kind` /
+:func:`_process_math_table_layout`; legacy split detectors and
+handlers (``_is_math_layout`` / ``_is_equation_layout`` /
+``_process_math_layout_table`` / ``_process_equation_layout``) are
+kept as thin wrappers for incoming callers.
 
 Public entry points:
-- ``_is_math_layout`` / ``_is_math_dominant_layout`` / ``_is_equation_layout``
-  — predicates consumed by ``_classify_table``
-- ``_process_math_layout_table`` / ``_process_equation_layout``
-  — renderers dispatched from ``_process_element``
+- ``_math_table_kind`` — return one of "tokens", "math_blocks",
+  "html_wrapper", or None.  Consumed by ``_classify_table``.
+- ``_process_math_table_layout`` — unified renderer, dispatched from
+  ``_process_element``.
+- ``_is_math_dominant_layout`` — separate predicate for the rowspan
+  exception in ``_classify_table``; unchanged.
 """
 
 from __future__ import annotations
@@ -169,6 +199,13 @@ def _process_math_layout_table(raw: str) -> str:
         lines = [" & ".join(row) for row in rows]
         latex = ("\\begin{vmatrix}\n" + " \\\\\n".join(lines)
                  + "\n\\end{vmatrix}")
+    from britannica.math_widths import scale_hint
+    # Canonicalise whitespace so the hash matches `_process_math`'s
+    # form and the offline width cache.
+    latex = re.sub(r"\s+", " ", latex).strip()
+    hint = scale_hint(latex)
+    if hint:
+        return f"\n\n«MATH[{hint}]:{latex}«/MATH»\n\n"
     return f"\n\n«MATH:{latex}«/MATH»\n\n"
 
 
@@ -341,3 +378,143 @@ def _process_equation_layout(inner: str, text_transform) -> str:
         if cells:
             lines.append(" ".join(cells))
     return ("\n\n" + "\n\n".join(lines) + "\n\n") if lines else ""
+
+
+# ── Unified math-table-layout detector + dispatch ────────────────────────
+
+# Math-content signals inside an HTML <table> child.  When the outer
+# wikitable's role is just positioning, the inner HTML table holds the
+# real math (poem of equations, rowspan fractions, Greek templates).
+_HTML_MATH_SIGNALS = re.compile(
+    r"<math|\\frac|\\sum|\\int|\\partial|\\sqrt|"
+    r"\{\{Polytonic\||\{\{sfrac\||\{\{brace2\||"
+    r"<su[pb]\s*>",
+    re.IGNORECASE,
+)
+
+
+def _math_table_kind(
+    raw: str, inner: str, inner_registry: ElementRegistry | None
+) -> str | None:
+    """Classify a wikitable as a math layout, returning the encoding
+    or None.
+
+    Encodings (the same shape, three transcription styles):
+      - ``"tokens"``     — cells hold raw math tokens.
+      - ``"math_blocks"`` — cells hold ``<math>`` placeholders.
+      - ``"html_wrapper"`` — wikitable wraps an HTML ``<table>`` whose
+                             content is the math (Type C).
+
+    Shared disqualifiers (any of these → not a math layout):
+      * ``class=wikitable`` / ``class=tablecolhd`` / ``class=…border``
+      * ``border=N≥1`` on the header
+      * ``rules=`` styling
+      * ``<ref>`` footnotes
+    """
+    header = raw.split("\n", 1)[0]
+    if re.search(r'class\s*=\s*"?[^"\s]*(?:wikitable|tablecolhd|border)',
+                 header, re.IGNORECASE):
+        return None
+    if re.search(r'border\s*=\s*"?[1-9]|rules\s*=',
+                 header, re.IGNORECASE):
+        return None
+    if re.search(r"<ref[\s>]", raw, re.IGNORECASE):
+        return None
+
+    # math_blocks: majority MATH placeholders (was _is_equation_layout
+    # check 1).
+    if _PH in inner and inner_registry:
+        math_ct = sum(1 for _, (t, _) in inner_registry.elements.items()
+                       if t == "MATH")
+        if math_ct >= 2 and math_ct >= len(inner_registry.elements) * 0.5:
+            return "math_blocks"
+
+    # html_wrapper: a single HTML_TABLE child whose raw content carries
+    # math signals.  The outer wikitable is just positioning around
+    # that HTML table (and an equation-number cell, typically).
+    if inner_registry:
+        for _ph, (etype, eraw) in inner_registry.elements.items():
+            if etype != "HTML_TABLE":
+                continue
+            if _HTML_MATH_SIGNALS.search(eraw):
+                return "html_wrapper"
+
+    # tokens: every cell matches the math-token regex, ≥2 cells have
+    # strong math signal (was _is_math_layout).
+    cells = _parse_math_layout_cells(inner)
+    if cells is not None and len(cells) >= 2:
+        if (all(len(c) <= 250 for c in cells)
+                and all(_MATH_CELL_RE.match(c) for c in cells)):
+            strong = sum(
+                1 for c in cells
+                if re.search(r"<su[pb]>", c)
+                or re.search(r"[+\-−=＝×÷]\s*(?:''|[0-9(])", c))
+            if strong >= 2:
+                return "tokens"
+
+    # Falling-back legacy checks from _is_equation_layout: sfrac+(N)
+    # equation-number combo, spacer-heavy alignment.  Kept as part of
+    # the unified detector so existing routes don't regress.
+    if re.search(r"\{\{sfrac\|", inner, re.IGNORECASE):
+        for row in re.split(r"\|-[^\n]*", inner):
+            has_sfrac = bool(re.search(
+                r"\{\{sfrac\|", row, re.IGNORECASE))
+            has_eqn_label = bool(re.search(
+                r"\|\s*\(\d+[a-z]?\)\.?\s*$", row, re.MULTILINE))
+            if has_sfrac and has_eqn_label:
+                return "math_blocks"
+    if not re.search(r"\balign\s*=", inner, re.IGNORECASE):
+        raw_rows = re.split(r"\|-[^\n]*", inner)
+        total_cells = 0
+        empty_cells = 0
+        for raw_row in raw_rows:
+            protected = re.sub(
+                r"\{\{[^}]*\}\}",
+                lambda m: m.group(0).replace("|", "\x04"), raw_row)
+            protected = re.sub(
+                re.escape(_PH) + r"[^" + re.escape(_PH) + r"]+" + re.escape(_PH),
+                lambda m: m.group(0).replace("|", "\x04"), protected)
+            for c in re.findall(r"\|([^|\n]*)", protected):
+                s = c.replace("\x04", "|").strip()
+                if s in ("}", "{|"):
+                    continue
+                if s and re.match(
+                    r"^(?:colspan|rowspan|width|style|align|valign|"
+                    r"class|cellpadding|nowrap|border|bgcolor|height)"
+                    r"[\s=|]", s, re.IGNORECASE):
+                    continue
+                total_cells += 1
+                if not s:
+                    empty_cells += 1
+        if total_cells >= 4 and empty_cells > total_cells * 0.5:
+            return "math_blocks"
+
+    return None
+
+
+def _process_math_table_layout(
+    raw: str, inner: str, inner_registry: ElementRegistry | None,
+    text_transform,
+) -> str:
+    """Render a math-layout wikitable.
+
+    Dispatches on encoding:
+
+    * ``tokens``     → KaTeX ``\\begin{aligned}`` / ``\\begin{vmatrix}``
+                       via :func:`_process_math_layout_table`.
+    * ``math_blocks`` → row-per-paragraph emission via
+                        :func:`_process_equation_layout` — the math
+                        placeholders in each cell get substituted by
+                        the parent.
+    * ``html_wrapper`` → identical to ``math_blocks`` — the cell-per-
+                         paragraph emission lets the inner HTML_TABLE
+                         placeholder substitute through to the viewer
+                         as-is, with the equation-number cell emitted
+                         as an adjacent paragraph.
+    """
+    kind = _math_table_kind(raw, inner, inner_registry)
+    if kind == "tokens":
+        return _process_math_layout_table(raw)
+    if kind in ("math_blocks", "html_wrapper"):
+        return _process_equation_layout(inner, text_transform)
+    return ""  # unreachable when dispatched from _classify_table

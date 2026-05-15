@@ -24,6 +24,11 @@ _FORMATTING_TEMPLATE_RE = re.compile(
     r"big|bold|nowrap|"
     r"x-larger|x-smaller|larger|fs|lh|"
     r"EB1911\s+(?:Fine\s+Print|article\s+link)|"
+    r"fine\s+block|"  # ROBES PLATE III's long descriptive caption sits
+                      # inside `{{Fine block|{{smaller|…}}}}`.  Without
+                      # this the caption stays wrapped and the
+                      # uppercase-letter lookahead in line_re fails on
+                      # `{`, so only the row-4 credit is picked up.
     r"float\s+left|float\s+right|right|left)"
     r"\s*\|"
     # Optional first arg (CSS value like ``88%`` or ``85``) followed
@@ -129,7 +134,19 @@ def _normalize_for_capture(text: str, image_spans: list[tuple[int, int]]) -> str
                 break
             if not in_image_span(idx):
                 prev_char = current[idx - 1] if idx > 0 else ""
-                is_wrap = prev_char.isalnum() or prev_char in _wrap_chars
+                next_char = (current[idx + len(br_tag)]
+                             if idx + len(br_tag) < len(current) else "")
+                # Source-side soft-wrap signals: alphanumeric/`-,;` before
+                # the tag, OR a lowercase letter immediately after.  The
+                # next-char rule catches ROBES PLATE IV's `{{smaller|Lord
+                # Chief Justice of England in full <br />robes, scarlet…}}`
+                # where the wrap sits in mid-phrase but the byte BEFORE
+                # `<br />` is a trailing space (not alphanumeric).
+                is_wrap = (
+                    prev_char.isalnum()
+                    or prev_char in _wrap_chars
+                    or (next_char.isalpha() and next_char.islower())
+                )
                 if is_wrap:
                     for i in range(len(br_tag)):
                         out[idx + i] = " "
@@ -201,6 +218,15 @@ def _normalize_for_capture(text: str, image_spans: list[tuple[int, int]]) -> str
                 # clipped at the first ``\n`` by line_re's
                 # newline-excluding charclass.
                 inner = inner.replace("\n", " ")
+                # Same logic for ``<br>`` inside a template body — the
+                # editor used it for visual word-wrap of a long caption
+                # (ROBES PLATE IV's ``{{smaller|Judge of the Supreme
+                # Court of the <br />United States of America.}}``).
+                # Outside-template ``<br>`` is a logical boundary and
+                # stays untouched; the wrap-vs-boundary heuristic above
+                # handles that case.
+                inner = re.sub(
+                    r"<br\s*/?>", " ", inner, flags=re.IGNORECASE)
                 full_len = m.end() - m.start()
                 pad = " " * (full_len - len(inner))
                 replacement = inner + pad
@@ -360,9 +386,13 @@ def _find_bare_descriptive_captions(
             # Lenient predicate for cell content next to an image cell.
             # The structural position (caption-shaped cell adjacent to
             # an image-shaped cell) is what makes it a caption — case
-            # is irrelevant.
+            # is irrelevant.  No upper length bound: a plate page is
+            # caption-only by construction (bookends aside), so there's
+            # no "unrelated body prose" that a bound would defend
+            # against.  ROBES PLATE III has a single ~735-char
+            # descriptive caption that was being clipped at 400.
             cleaned_check = _strip_caption_markup(content)
-            if not cleaned_check or len(cleaned_check) < 4 or len(cleaned_check) > 400:
+            if not cleaned_check or len(cleaned_check) < 4:
                 return
             if not re.search(r"[A-Za-z]", cleaned_check):
                 return
@@ -486,11 +516,14 @@ def _find_bare_descriptive_captions(
         r"(?:(?<=<br>)|(?<=<br/>)|(?<=<br />)|(?:^|\n)\s*)"
         r"([A-Z][^<\n|{}]{3,})"
         # Acceptable terminators: HTML break, newline, ``{{nop}}``,
-        # end-of-string, OR ``}}`` (close of an unstripped wrapper —
+        # end-of-string, ``}}`` (close of an unstripped wrapper —
         # Theatre PLATE II's ``{{block center|…CAPTION.}}`` couldn't
         # be unwrapped because it spanned an image link, so the
-        # caption ends at the wrapper's own ``}}``).
-        r"(?=\s*(?:<br|\n|\{\{nop|\}\}|$))",
+        # caption ends at the wrapper's own ``}}``), OR a wiki cell
+        # separator ``|`` / ``||`` (ROBES PLATE V's three-per-row image
+        # cells are ``[Img]<br />{{smaller|D.C.L., Oxford.}} ||`` — the
+        # caption ends right before the inline cell separator).
+        r"(?=\s*(?:<br|\n|\{\{nop|\}\}|\||$))",
     )
 
     def is_image_adjacent(start: int) -> bool:
@@ -500,7 +533,14 @@ def _find_bare_descriptive_captions(
         )
         if nearest_end < 0 or start - nearest_end > 400:
             return False
-        return bool(re.fullmatch(r"\s*", normalized[nearest_end:start]))
+        # The bytes between the image's end and the candidate caption
+        # are typically `<br>`/`<br />` tags plus whitespace — the
+        # canonical EB1911 form for "image, then caption underneath in
+        # the same cell" (ROBES PLATE II's `[[Image:...]]<br />{{smaller|
+        # The Most Ancient Order of the Thistle.}}`).  Allow these as
+        # connective tissue; require nothing else.
+        between = normalized[nearest_end:start]
+        return bool(re.fullmatch(r"(?:\s|<br\s*/?>)*", between))
 
     for m in line_re.finditer(normalized):
         cap_start = m.start(1)

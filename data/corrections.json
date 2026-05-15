@@ -484,6 +484,13 @@
       "to": "receive privileges"
     }
   ],
+  "_28:510_note": "Vol 28 page 510 WEIGHTS AND MEASURES has `{{ditto|{India: }}` on the Bombay and Madras `Guz` rows — a stray `{` in the ditto template's content arg. Pipeline can't unwrap because the regex excludes braces in content. Source-side fix: drop the stray brace.",
+  "28:510": [
+    {
+      "from": "{{ditto|{India: }}",
+      "to": "{{ditto|India: }}"
+    }
+  ],
   "_11:582_note": "GEMS PLATE II — the printed page has a centered credit beneath the plate (\"All the above are in the British Museum, unless otherwise stated.\") that the Wikisource transcription omitted. PLATE I has its analogous credit; restore PLATE II's so the two plates render consistently and the gem attributions are accurate.",
   "11:582": [
     {

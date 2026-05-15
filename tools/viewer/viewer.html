@@ -167,13 +167,85 @@
 
     .body-text .katex-display {
       text-indent: 0;
-      /* Wide determinants and aligned-equation blocks in ALGEBRAIC
-         FORMS and similar heavy-math articles exceed the reading
-         column.  Let them scroll horizontally rather than clip or
-         spill into adjacent columns. */
-      overflow-x: auto;
-      overflow-y: hidden;
-      padding-bottom: 0.25em;  /* room for the scrollbar */
+      max-width: 100%;
+      /* Clipping as a safety net for any equation that escaped the
+         build-time width measurement (new LaTeX added since the last
+         `measure_math_widths.py` run).  Normal display math fits at
+         natural size; wide math is pre-scaled via `«MATH[fs=N]:`
+         hints (see `britannica.math_widths`); really wide math uses
+         the pop-out link (see `renderMathPopout`).  This `overflow:
+         hidden` only matters for the uncached-residual case. */
+      overflow: hidden;
+    }
+    /* Tier 2: scaled math.  `«MATH[fs=N]:` wraps the KaTeX render in
+       a span with `font-size: N%`.  KaTeX em-based widths resolve to
+       the smaller base so the math is rendered at the smaller size
+       from initial paint (no thrash). */
+    .math-scaled {
+      display: inline-block;
+    }
+    /* Tier 3: popout link for math too wide to scale into the
+       column.  Renders as an italic anchor; click opens the popout
+       modal which renders at viewport-fitting font-size. */
+    .math-popout-link {
+      font-style: italic;
+      color: #6b5a3f;
+      text-decoration: underline dotted;
+      cursor: zoom-in;
+      font-size: 0.92em;
+    }
+    .math-popout-link:hover {
+      color: #2c2416;
+      background: #ebe4d6;
+    }
+    .math-popout-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 16, 10, 0.6);
+      z-index: 9100;
+      padding: 2em;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .math-popout-panel {
+      position: relative;
+      max-width: calc(100vw - 4em);
+      max-height: calc(100vh - 4em);
+      background: var(--panel);
+      border: 1px solid #c4b49a;
+      border-radius: 4px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+      padding: 2em 2.5em 1.5em;
+      overflow: auto;
+    }
+    .math-popout-close {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      font: inherit;
+      font-size: 1.1rem;
+      line-height: 1;
+      color: #8b7355;
+      background: transparent;
+      border: none;
+      padding: 4px 8px;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    .math-popout-close:hover { background: #ddd4c4; color: #3a2f20; }
+    .math-popout-host .katex-display {
+      overflow: visible;
+      margin: 0;
+    }
+    /* KaTeX auto-numbers rows of `\begin{align}` with CSS counters
+       — that's a KaTeX-rendering convention, not anything in the
+       1911 source.  No EB1911 article uses explicit `\tag{}`, so
+       suppressing the auto-numbering entirely is the right call. */
+    .katex .eqn-num,
+    .katex .mml-eqn-num {
+      display: none !important;
     }
 
     /* Numbered display equation(s).  Three-column grid: a flexible
@@ -186,22 +258,29 @@
        align-items: center on the grid puts the label at the
        vertical centre of the row stack, matching the original
        publication's rowspan-spanning label placement. */
+    /* Math-system layout — flex with reserved label space so wide
+       math can never overlap the (N) label.  The math-rows column
+       claims the remaining space (flex:1 with min-width:0 so it can
+       shrink below its content's natural width) and clips overflow;
+       scaleDisplayMath() shrinks the math via zoom on top to make
+       the full formula visible at smaller size.  Earlier grid layout
+       (`minmax(0,1fr) auto minmax(0,1fr)`) let the auto math column
+       eat the 1fr label gutter when math was wider than the line. */
     .body-text .math-system {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      display: flex;
       align-items: center;
-      column-gap: 0.5em;
+      gap: 0.5em;
       margin: 1em 0;
       text-indent: 0;
     }
     .body-text .math-system-rows {
-      grid-column: 2;
+      flex: 1 1 0;
+      min-width: 0;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       gap: 0.4em;
       align-items: center;
-      min-width: 0;
-      max-width: 100%;
     }
     .body-text .math-system-rows .math-system-row {
       text-indent: 0;
@@ -215,8 +294,7 @@
       margin: 0;
     }
     .body-text .math-system-label {
-      grid-column: 3;
-      justify-self: end;
+      flex: 0 0 auto;
       text-align: right;
       white-space: nowrap;
     }
@@ -351,6 +429,58 @@
       margin: 1em 0;
       font-size: 0.93rem;
       border: 1px solid #c4b49a;
+    }
+
+    /* Chemistry-layout tables: spatial diagrams of 2-D reaction
+       schemes (FULMINIC ACID, POLYMETHYLENES, …).  Strip the data-
+       table chrome — no borders, no full-width stretch — and centre
+       the grid like a math display.  Cells flow on a single text
+       baseline so the angle-bracket valence glyphs (⟨ / ⟩) sit
+       inline with atom labels and arrows. */
+    .chem-grid {
+      margin: 1em auto;
+      border-collapse: collapse;
+      border: none;
+      font-size: 0.95rem;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+    .chem-grid td, .chem-grid th {
+      border: none;
+      padding: 0.1em 0.3em;
+      vertical-align: middle;
+      text-align: center;
+      white-space: nowrap;
+    }
+    /* Internal-line variants of the valence chevron.  The Python
+       emitter turns LangleIT.svg / RangleIT.svg into
+       <span class="chem-bracket-it">❮</span> (or ❯), and the IB
+       variant into <span class="chem-bracket-ib">…</span>.  The
+       horizontal bar is drawn as a ::before pseudo-element so the
+       glyph itself doesn't have to be a different Unicode point
+       (none exists for these). */
+    .chem-bracket-it, .chem-bracket-ib {
+      display: inline-block;
+      position: relative;
+      line-height: 1;
+      padding: 0 1px;
+    }
+    .chem-bracket-it::before {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      border-top: 1px solid currentColor;
+    }
+    .chem-bracket-ib::after {
+      content: "";
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      border-bottom: 1px solid currentColor;
     }
 
     /* Wide data tables: shown inline but horizontally scrollable, with an
@@ -498,10 +628,7 @@
 
     .verse {
       font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
-      font-style: italic;
       margin: 1em 2em;
-      padding-left: 1em;
-      border-left: 2px solid #8b7355;
       line-height: 1.6;
     }
 
@@ -921,13 +1048,9 @@
     .figure-legend {
       margin: -0.6em auto 1.4em;
       max-width: 640px;
-      padding: 10px 18px;
       font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
       font-size: 0.82rem;
-      color: var(--muted);
       line-height: 1.45;
-      border-left: 2px solid var(--border);
-      background: rgba(245, 241, 235, 0.35);
       column-count: 2;
       column-gap: 24px;
     }
@@ -938,7 +1061,6 @@
       font-size: 0.85rem;
       font-variant: small-caps;
       letter-spacing: 0.04em;
-      color: var(--text);
       margin: 0 0 4px;
       break-after: avoid-column;
     }
@@ -1108,6 +1230,80 @@
       });
       document.body.appendChild(modal);
     }
+
+    // Math too wide to scale into the column at any usable font-size
+    // (~6 markers corpus-wide; ALGEBRAIC FORMS big determinants,
+    // NUMBER, RAILWAYS, DIFFERENCES — see
+    // `tools/diagnostics/measure_math_widths.py`).  Render a compact
+    // clickable placeholder in the body; the click opens a modal
+    // that re-renders the math at a font-size that fits the viewport
+    // (no scrollbar inside the modal — the math is scaled to fit).
+    //
+    // Each placeholder gets a unique id so the click handler can
+    // recover the LaTeX without serialising it into HTML attributes.
+    const _MATH_POPOUT_LATEX = {};
+    let _mathPopoutCounter = 0;
+    function renderMathPopout(latex) {
+      const id = "mp-" + (_mathPopoutCounter++);
+      _MATH_POPOUT_LATEX[id] = latex;
+      return (
+        `<a class="math-popout-link" data-mp="${id}" `
+        + `onclick="openMathPopout('${id}');return false;" href="#">`
+        + `[equation ⤢ click to view]</a>`
+      );
+    }
+
+    function openMathPopout(id) {
+      const latex = _MATH_POPOUT_LATEX[id];
+      if (!latex) return;
+      const modal = document.createElement("div");
+      modal.className = "math-popout-modal";
+      const panel = document.createElement("div");
+      panel.className = "math-popout-panel";
+      const closeBtn = document.createElement("button");
+      closeBtn.className = "math-popout-close";
+      closeBtn.title = "Close (Esc)";
+      closeBtn.textContent = "✕";
+      panel.appendChild(closeBtn);
+      const host = document.createElement("div");
+      host.className = "math-popout-host";
+      panel.appendChild(host);
+      modal.appendChild(panel);
+      const close = () => modal.remove();
+      closeBtn.onclick = close;
+      modal.addEventListener("click", (e) => { if (e.target === modal) close(); });
+      document.addEventListener("keydown", function escOnce(e) {
+        if (e.key === "Escape") { close(); document.removeEventListener("keydown", escOnce); }
+      });
+      document.body.appendChild(modal);
+      // Render at NATURAL size.  The math is unscalable — the whole
+      // reason we routed to popout is that shrinking it produces
+      // illegible glyphs.  Let the panel scroll horizontally if the
+      // expression is wider than the viewport.  Trades the article-
+      // column scrollbar (forbidden) for a modal scrollbar (clearly
+      // a separate view, like the wide-table popout).
+      if (typeof katex === "undefined") {
+        host.textContent = latex;
+        return;
+      }
+      host.style.fontSize = "100%";
+      try {
+        host.innerHTML = katex.renderToString(latex, {
+          throwOnError: false, displayMode: true,
+        });
+      } catch (e) {
+        host.textContent = latex;
+      }
+    }
+
+    // Wide display-math: clipped at column boundary by CSS
+    // (`.body-text .katex-display { overflow: hidden }` and
+    // `.math-system-rows { overflow: hidden }`).  We exhausted every
+    // CSS-based scaling option to do better — see memory
+    // `project_wide_math_dead_end.md`.  Pipeline-side LaTeX
+    // rewriting (splitting `\begin{align}` rows at `&=` boundaries)
+    // is the proposed real fix; not done yet.
+    function scaleDisplayMath() { /* no-op */ }
 
     function escapeHtml(value) {
       return String(value ?? "")
@@ -1372,7 +1568,6 @@
     })();
     let unproofedPages = {};
     let collectedFootnotes = [];
-    let linkedTargets = new Set();
     let sectionCounter = 0;
     let collectedSections = [];
     let wideTableCounter = 0;
@@ -1622,7 +1817,9 @@
         return rendered || match;
       });
       // LaTeX math in cells — render inline with KaTeX.
-      h = h.replace(/\u00abMATH:(.*?)\u00ab\/MATH\u00bb/gs, (_m, latex) => {
+      // Cell math is always inline (no displayMode) \u2014 scale hints
+      // don't apply here.  Strip the optional `[hint]` if present.
+      h = h.replace(/\u00abMATH(?:\[[^\]]*\])?:(.*?)\u00ab\/MATH\u00bb/gs, (_m, latex) => {
         const tmp = document.createElement("textarea");
         tmp.innerHTML = latex;
         const raw = tmp.value.replace(/\\mbox\b/g, "\\text");
@@ -1662,16 +1859,24 @@
     // to leaving the markers visible).
     const HTMLTABLE_OPEN = "\u00abHTMLTABLE:";
     const HTMLTABLE_CLOSE = "\u00ab/HTMLTABLE\u00bb";
-    function findHtmlTableEnd(str, start) {
+    // Chemistry-layout marker \u2014 same wire format as HTMLTABLE (content
+    // is an HTML <table>) but a distinct class so the viewer drops the
+    // data-table chrome (borders, padding) for the 2-D chemical-
+    // reaction schemes that classify as CHEMISTRY_LAYOUT (FULMINIC
+    // ACID, POLYMETHYLENES, PURIN, INDAZOLES, \u2026).  Emit side:
+    // _process_chemistry_layout in _tables.py.
+    const CHEM_OPEN = "\u00abCHEM:";
+    const CHEM_CLOSE = "\u00ab/CHEM\u00bb";
+    function findMarkerEnd(str, start, openMarker, closeMarker) {
       let depth = 1;
-      let i = start + HTMLTABLE_OPEN.length;
+      let i = start + openMarker.length;
       while (i < str.length) {
-        if (str.startsWith(HTMLTABLE_OPEN, i)) {
+        if (str.startsWith(openMarker, i)) {
           depth++;
-          i += HTMLTABLE_OPEN.length;
-        } else if (str.startsWith(HTMLTABLE_CLOSE, i)) {
+          i += openMarker.length;
+        } else if (str.startsWith(closeMarker, i)) {
           depth--;
-          i += HTMLTABLE_CLOSE.length;
+          i += closeMarker.length;
           if (depth === 0) return i;
         } else {
           i++;
@@ -1679,11 +1884,20 @@
       }
       return -1;
     }
+    function findHtmlTableEnd(str, start) {
+      return findMarkerEnd(str, start, HTMLTABLE_OPEN, HTMLTABLE_CLOSE);
+    }
+    function findChemEnd(str, start) {
+      return findMarkerEnd(str, start, CHEM_OPEN, CHEM_CLOSE);
+    }
     // Strip every ``«HTMLTABLE:``/``«/HTMLTABLE»`` marker in ``s`` —
     // used on the inside of a balanced block so nested tables render
     // as plain nested ``<table>`` elements.
     function stripHtmlTableMarkers(s) {
       return s.split(HTMLTABLE_OPEN).join("").split(HTMLTABLE_CLOSE).join("");
+    }
+    function stripChemMarkers(s) {
+      return s.split(CHEM_OPEN).join("").split(CHEM_CLOSE).join("");
     }
 
     // Math-only paragraph: optional leading PAGE markers, one MATH
@@ -1693,7 +1907,7 @@
     //   [2] the «MATH:…«/MATH» marker
     //   [3] the label content WITHOUT parens (e.g. "6", "2a"),
     //       undefined when the equation is unlabeled.
-    const MATH_PARA_RE = /^\s*((?:\x01PAGE:\d+\x01\s*)*)(«MATH:[\s\S]*?«\/MATH»)\s*[.,;:]?\s*(?:\(([^)]+)\)\s*)?\s*[.,;:]?\s*$/s;
+    const MATH_PARA_RE = /^\s*((?:\x01PAGE:\d+\x01\s*)*)(«MATH(?:\[[^\]]*\])?:[\s\S]*?«\/MATH»)\s*[.,;:]?\s*(?:\(([^)]+)\)\s*)?\s*[.,;:]?\s*$/s;
     const EQNGROUP_OPEN = "«EQNGROUP»";
     const EQNGROUP_CLOSE = "«/EQNGROUP»";
     // Single labeled equation block, emitted by the {{ne}} template
@@ -1740,16 +1954,29 @@
         // Render a LaTeX string as KaTeX displayMode with the same
         // entity decoding and whitespace normalisation as the prose
         // math path uses below.
-        const renderDisplayMath = (latex) => {
+        const renderDisplayMath = (latex, hint) => {
           const tmp = document.createElement("textarea");
           tmp.innerHTML = latex;
           const raw = tmp.value
             .replace(/\\mbox\b/g, "\\text")
             .replace(/[\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u00a0\u200b]/g, " ");
+          if (hint === "popout") {
+            return renderMathPopout(raw);
+          }
+          let fsPct = null;
+          if (hint) {
+            const m = hint.match(/^fs=(\d+)$/);
+            if (m) fsPct = parseInt(m[1], 10);
+          }
           try {
-            return (typeof katex !== "undefined")
-              ? katex.renderToString(raw, { throwOnError: false, displayMode: true })
-              : `<code class="math-fallback">${escapeHtml(raw)}</code>`;
+            if (typeof katex === "undefined") {
+              return `<code class="math-fallback">${escapeHtml(raw)}</code>`;
+            }
+            const result = katex.renderToString(raw, { throwOnError: false, displayMode: true });
+            if (fsPct && fsPct > 0 && fsPct < 100) {
+              return `<span class="math-scaled" style="font-size: ${fsPct}%;">${result}</span>`;
+            }
+            return result;
           } catch (e) {
             return `<code class="math-fallback">${escapeHtml(raw)}</code>`;
           }
@@ -1775,25 +2002,29 @@
             labelText = em[2];
             const pageMarkers = em[1] || "";
             const content = em[3].trim();
-            const mathOnly = content.match(/^\u00abMATH:([\s\S]*?)\u00ab\/MATH\u00bb\s*[.,;:]?\s*$/);
+            const mathOnly = content.match(/^\u00abMATH(?:\[([^\]]*)\])?:([\s\S]*?)\u00ab\/MATH\u00bb\s*[.,;:]?\s*$/);
             const contentHtml = mathOnly
-              ? renderDisplayMath(mathOnly[1])
+              ? renderDisplayMath(mathOnly[2], mathOnly[1])
               : formatCell(content);
             rowHtmls.push(
               `<div class="math-system-row">${renderPageMarkers(pageMarkers)}${contentHtml}</div>`);
             continue;
           }
-          // MATH row: bare \u00abMATH:eq\u00ab/MATH\u00bb, optionally with `(label)`
-          // appended (the wikitable rowspan-label path).
+          // MATH row: bare \u00abMATH:eq\u00ab/MATH\u00bb (with optional `[hint]`
+          // attribute), optionally with `(label)` appended (the
+          // wikitable rowspan-label path).
           const rm = row.match(MATH_PARA_RE);
           if (!rm) continue;
           if (rm[3] !== undefined) labelText = rm[3];
           const pageMarkers = rm[1] || "";
-          const latex = rm[2].substring(
-            "\u00abMATH:".length,
-            rm[2].length - "\u00ab/MATH\u00bb".length);
+          // Parse `[hint]` and extract pure latex
+          const marker = rm[2];
+          const hintMatch = marker.match(/^\u00abMATH(?:\[([^\]]*)\])?:([\s\S]*?)\u00ab\/MATH\u00bb$/);
+          const hint = hintMatch ? hintMatch[1] : null;
+          const latex = hintMatch ? hintMatch[2] : marker.substring(
+            "\u00abMATH:".length, marker.length - "\u00ab/MATH\u00bb".length);
           rowHtmls.push(
-            `<div class="math-system-row">${renderPageMarkers(pageMarkers)}${renderDisplayMath(latex)}</div>`);
+            `<div class="math-system-row">${renderPageMarkers(pageMarkers)}${renderDisplayMath(latex, hint)}</div>`);
         }
         const labelHtml = labelText
           ? `<div class="math-system-label">(${escapeHtml(labelText)})</div>`
@@ -1935,8 +2166,12 @@
       // Render complex HTML tables (rowspan/colspan preserved).
       // Use balanced-match so an HTMLTABLE whose cell contains another
       // HTMLTABLE (e.g. INTERPOLATION's Everett-formula layout table)
-      // doesn't stop at the inner ``«/HTMLTABLE»``.
+      // doesn't stop at the inner ``«/HTMLTABLE»``.  ``«CHEM:`` is
+      // the same wire format as HTMLTABLE; render through the same
+      // pipeline but tag the outer ``<table>`` with ``chem-grid`` so
+      // CSS can drop borders/padding for chemistry layouts.
       let htmlTableHit = null;
+      let isChem = false;
       if (p.startsWith(HTMLTABLE_OPEN)) {
         const end = findHtmlTableEnd(p, 0);
         if (end !== -1) {
@@ -1946,14 +2181,26 @@
             inner: p.substring(HTMLTABLE_OPEN.length, end - HTMLTABLE_CLOSE.length),
           };
         }
+      } else if (p.startsWith(CHEM_OPEN)) {
+        const end = findChemEnd(p, 0);
+        if (end !== -1) {
+          isChem = true;
+          htmlTableHit = {
+            block: p.substring(0, end),
+            trailing: p.substring(end).trim(),
+            inner: p.substring(CHEM_OPEN.length, end - CHEM_CLOSE.length),
+          };
+        }
       }
       if (htmlTableHit) {
         const tableBlock = htmlTableHit.block;
         const trailing = htmlTableHit.trailing;
-        // Strip any nested HTMLTABLE markers so nested tables render
-        // as native nested ``<table>`` elements.
-        const inner = stripHtmlTableMarkers(htmlTableHit.inner);
-        let t = inner.replace("<table>", '<table class="data-table">');
+        // Strip any nested HTMLTABLE/CHEM markers so nested tables
+        // render as native nested ``<table>`` elements.
+        const inner = stripChemMarkers(
+          stripHtmlTableMarkers(htmlTableHit.inner));
+        const outerClass = isChem ? "chem-grid" : "data-table";
+        let t = inner.replace("<table>", `<table class="${outerClass}">`);
         // Process <caption> contents through formatCell so internal
         // markers (italic, small-caps, links) render as HTML rather
         // than leaking their «…» form.
@@ -1979,7 +2226,7 @@
         let maxCols = 0;
         {
           const doc = new DOMParser().parseFromString(t, "text/html");
-          const outer = doc.querySelector("table.data-table") || doc.querySelector("table");
+          const outer = doc.querySelector(`table.${outerClass}`) || doc.querySelector("table");
           if (outer) {
             // Walk all descendants of a cell and format its text
             // nodes through formatCell. Nested tables get the same
@@ -2243,28 +2490,54 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
         return `<span class="shoulder-heading" id="${info.id}">${escapeHtml(info.display)}</span>`;
       });
       // Detect if this paragraph is a single standalone equation (one math block, no other text)
-      const mathCount = (html.match(/\u00abMATH:/g) || []).length;
-      const mathOnly = mathCount === 1 && /^\s*(<a class="page-marker[^"]*"[^>]*>[^<]*<\/a>)?\s*\u00abMATH:.*?\u00ab\/MATH\u00bb[,.\s;:]*$/s.test(html);
-      // Render math markers with KaTeX
-      html = html.replace(/\u00abMATH:(.*?)\u00ab\/MATH\u00bb/gs, (match, latex) => {
-        // Undo HTML escaping so KaTeX sees real LaTeX (& not &amp;, etc.)
-        // Also convert \mbox to \text (KaTeX doesn't support \mbox)
-        const tmp = document.createElement("textarea");
-        tmp.innerHTML = latex;
-        const raw = tmp.value.replace(/\\mbox\b/g, "\\text")
-          .replace(/[\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u00A0\u200B]/g, " ")
-          .replace(/\\overset\{([^}]*)\}\s*\\underset\{([^}]*)\}\s*\{\\Sigma\s*/g, "\\sum_{$2}^{$1}{");
-        const isDisplay = /\\begin\{/.test(raw) || mathOnly;
-        try {
-          if (typeof katex !== "undefined") {
-            const result = katex.renderToString(raw, { throwOnError: false, displayMode: isDisplay });
-            return result;
+      const mathCount = (html.match(/\u00abMATH(?:\[[^\]]*\])?:/g) || []).length;
+      const mathOnly = mathCount === 1 && /^\s*(<a class="page-marker[^"]*"[^>]*>[^<]*<\/a>)?\s*\u00abMATH(?:\[[^\]]*\])?:.*?\u00ab\/MATH\u00bb[,.\s;:]*$/s.test(html);
+      // Render math markers with KaTeX.  An optional `[hint]` after
+      // MATH carries a rendering directive baked at build time:
+      //   `fs=N`   render at font-size N%  (Tier 2: in-column scaling)
+      //   `popout` render compact placeholder + click-to-modal
+      //            (Tier 3: math too wide to fit even at min scale)
+      // See `britannica.math_widths` and
+      // `tools/diagnostics/measure_math_widths.py` for how hints are
+      // produced.
+      html = html.replace(
+        /\u00abMATH(?:\[([^\]]*)\])?:(.*?)\u00ab\/MATH\u00bb/gs,
+        (match, hint, latex) => {
+          // Undo HTML escaping so KaTeX sees real LaTeX (& not &amp;, etc.)
+          // Also convert \mbox to \text (KaTeX doesn't support \mbox)
+          const tmp = document.createElement("textarea");
+          tmp.innerHTML = latex;
+          const raw = tmp.value.replace(/\\mbox\b/g, "\\text")
+            .replace(/[\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u00A0\u200B]/g, " ")
+            .replace(/\\overset\{([^}]*)\}\s*\\underset\{([^}]*)\}\s*\{\\Sigma\s*/g, "\\sum_{$2}^{$1}{");
+          const isDisplay = /\\begin\{/.test(raw) || mathOnly;
+          if (hint === "popout") {
+            return renderMathPopout(raw);
           }
-        } catch(e) {
-          console.warn("KaTeX error:", e.message, "LaTeX:", raw.substring(0, 80));
-        }
-        return `<code class="math-fallback">${escapeHtml(raw)}</code>`;
-      });
+          let fsPct = null;
+          if (hint) {
+            const m = hint.match(/^fs=(\d+)$/);
+            if (m) fsPct = parseInt(m[1], 10);
+          }
+          try {
+            if (typeof katex !== "undefined") {
+              const result = katex.renderToString(raw, { throwOnError: false, displayMode: isDisplay });
+              if (fsPct && fsPct > 0 && fsPct < 100) {
+                // Wrap in a smaller-font-size container so KaTeX's
+                // em-based widths resolve to the smaller base.  This
+                // is exact for fs \u2265 75%; below that KaTeX clamps
+                // minimum element size, but the offline measurement
+                // already picked an fs that fits the column for this
+                // specific equation.
+                return `<span class="math-scaled" style="font-size: ${fsPct}%;">${result}</span>`;
+              }
+              return result;
+            }
+          } catch(e) {
+            console.warn("KaTeX error:", e.message, "LaTeX:", raw.substring(0, 80));
+          }
+          return `<code class="math-fallback">${escapeHtml(raw)}</code>`;
+        });
       // Render hieroglyphs
       html = html.replace(/\[hieroglyph:\s*([^\]]+)\]/g, (match, codes) => {
         const rendered = codes.trim().split(/[:\s\-]+/).map(code => {
@@ -2276,16 +2549,17 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
         }).join("");
         return rendered || match;
       });
-      // Replace link markers — only first mention becomes a hyperlink
-      // 3-part resolved: «LN:filename|target|display«/LN»  2-part unresolved: «LN:target|display«/LN»
+      // Replace link markers.  Every mention of an explicitly-xreffed
+      // target gets linkified — the source `{{EB1911 article link|…}}`
+      // template is deliberate per occurrence (ALDEHYDES has two
+      // "Formalin" refs; dropping the second left "see Formalin." as
+      // bare text).  3-part resolved: «LN:filename|target|display«/LN»
+      // 2-part unresolved: «LN:target|display«/LN»
       html = html.replace(/\u00abLN:([^|]*)\|([^|«]*?)(?:\|([^«]*))?\u00ab\/LN\u00bb/g, (match, g1, g2, g3) => {
         const hasFile = g3 !== undefined;
         const target = hasFile ? g2 : g1;
         const display = hasFile ? g3 : g2;
         const filename = hasFile ? g1 : null;
-        const key = target.toLowerCase();
-        if (linkedTargets.has(key)) return display;
-        linkedTargets.add(key);
         const href = filename ? articleUrl(filename) : `/search.html?q=${encodeURIComponent(target)}`;
         return `<a href="${href}" class="article-link" title="${target}">${display}</a>`;
       });
@@ -2414,7 +2688,7 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
                </div>`
             : ""}
           ${(() => {
-            footnoteCounter = 0; namedFnNumbers.clear(); fnAnchorInstance = 0; collectedFootnotes = []; linkedTargets = new Set(); sectionCounter = 0; collectedSections = []; emittedSectionKeys = new Set(); emittedSectionIds = new Set(); sectionByIndex = new Map(); shoulderQueue = []; shoulderCursor = 0; wideTableCounter = 0; for (const k in wideTableSources) delete wideTableSources[k];
+            footnoteCounter = 0; namedFnNumbers.clear(); fnAnchorInstance = 0; collectedFootnotes = []; sectionCounter = 0; collectedSections = []; emittedSectionKeys = new Set(); emittedSectionIds = new Set(); sectionByIndex = new Map(); shoulderQueue = []; shoulderCursor = 0; wideTableCounter = 0; for (const k in wideTableSources) delete wideTableSources[k];
 
             // Page markers (\x01PAGE:N\x01) are embedded directly in the
             // body text by the transform stage.  If none are present

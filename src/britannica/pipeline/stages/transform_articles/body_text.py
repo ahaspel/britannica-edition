@@ -221,6 +221,17 @@ def _unwrap_content_templates(text: str) -> str:
     text = re.sub(r"\{\{nowrap\s*\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{smaller\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{larger\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    # `{{Fs|<size>|<content>}}` — Wikisource font-size template, used
+    # to size individual math operators (∫, (, ), {, }, etc.) in
+    # table cells (HYDROMECHANICS vol 14 p138/139).  Strip the
+    # wrapper, keep content.  Content can be a literal `{` or `}`
+    # (math grouping brace), so `[^}]*` rather than `[^{}]*` — the
+    # regex still stops at the first `}}` because of the literal
+    # `\}\}` close requirement.
+    text = re.sub(
+        r"\{\{Fs\|[^{}|]+\|([^}]*)\}\}",
+        r"\1", text, flags=re.IGNORECASE,
+    )
     # Drop initial (decorative large first letter) → just the letter
     text = re.sub(r"\{\{[Dd]rop ?initial\|([^{}|]*)[^{}]*\}\}", r"\1", text)
     # Abbreviation/tooltip → first arg (display text). The first arg

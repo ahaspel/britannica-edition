@@ -162,6 +162,27 @@ for vol in $VOLUMES; do
   uv run britannica export-articles "$vol"
 done
 
+# --- Phase 4b: Measure math widths (refresh scale-hint cache) ---
+# Renders every unique display-mode `«MATH:` marker in the exported
+# corpus through KaTeX in a headless browser and records the smallest
+# font-size that fits the body-text column.  Cached at
+# data/derived/math_widths.json (hash-keyed) — only NEW LaTeX gets
+# re-measured.  See tools/diagnostics/measure_math_widths.py.
+echo
+echo "=== Phase 4b: Measuring math widths [$(elapsed)] ==="
+uv run python tools/diagnostics/measure_math_widths.py
+
+# --- Phase 4c: Annotate math markers with refreshed hints ---
+# Walks every article JSON and rewrites `«MATH:` markers with the
+# `[fs=N]` / `[popout]` annotation drawn from the just-refreshed
+# cache.  Pure text transform — no re-rendering required.  Lets the
+# rebuild emerge with every math marker correctly hinted, even
+# though Phase 4's export ran with a (potentially) stale cache for
+# newly added or changed LaTeX.
+echo
+echo "=== Phase 4c: Annotating math markers [$(elapsed)] ==="
+uv run python tools/pipeline/annotate_math_markers.py
+
 # --- Phase 5: Export front matter ---
 echo
 echo "=== Phase 5: Exporting front matter [$(elapsed)] ==="

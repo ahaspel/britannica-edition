@@ -774,20 +774,37 @@ def _try_image_layout_subclass(
     if not image_phs:
         return None
 
-    # Multi-image layout: outer table wraps 2+ images.
+    # Multi-image layout: outer table wraps 2+ images.  Disentangle
+    # into per-image figures rather than treating "multi-image" as a
+    # distinct shape — each image is its own figure (caption,
+    # attribution, optional poem-legend) that just happens to share
+    # the same outer wikitable.  The shared table encodes parallel
+    # content either column-major (side-by-side: all images in the
+    # same row, caption/attribution/poem cells stacked beneath in the
+    # matching column — BEE Figs 18/19, LARVAL FORMS Figs 5/6, FUNGI
+    # Figs 12/13, WEAVING Figs 19/20, METAMORPHOSIS Figs 4/5) or row-
+    # major (vertical stack: each image in its own row, caption /
+    # attribution / poem rows immediately follow — MUSCULAR SYSTEM
+    # Figs 7/8, GYMNOSPERMS Macrozamia/Ginkgo).
     if len(image_phs) >= 2:
         table_phs = [k for k, (t, _) in inner_registry.elements.items()
                      if t == "TABLE"]
         poem_phs = [k for k, (t, _) in inner_registry.elements.items()
                      if t == "POEM"]
-        if table_phs or poem_phs:
-            return None
+        if table_phs:
+            return None  # nested layout table — let generic unwrap handle
         # Consume runs of consecutive `|-` row separators in one match.
         # Source occasionally has stray `|-\n|-\n` doubles (ARACHNIDA
-        # Fig 1) which the original `\n\s*\|-+[^\n]*\n` only consumes
-        # once, leaking the second `|-` as a spurious "-" cell into the
-        # next row.
-        rows_local = re.split(r"\n(?:\s*\|-+[^\n]*\n)+", inner)
+        # Fig 1) which a one-shot `\n\s*\|-+[^\n]*\n` only consumes
+        # once, leaking the second `|-` as a spurious "-" cell.  Also
+        # strip any leading `|-` row marker — LEAF Figs 5/6's source
+        # opens the table with ``|-valign="bottom"`` before any cells,
+        # which otherwise leaks into row-0's first cell and shifts the
+        # column-index mapping by one (so the caption-row columns no
+        # longer line up with the image-row columns).
+        inner_stripped = re.sub(r"^\s*\|-+[^\n]*\n", "", inner)
+        rows_local = re.split(
+            r"\n(?:\s*\|-+[^\n]*\n)+", inner_stripped)
         # Per-image row positions
         img_row_of: dict[str, int] = {}
         for ph in image_phs:
@@ -796,118 +813,156 @@ def _try_image_layout_subclass(
                     img_row_of[ph] = i
                     break
 
-        # Side-by-side variant: all images on the SAME row.  The
-        # caption row may be img_row+1 (WEAVING Figs 19/20, 11/12) or
-        # further down with an attribution row between (POLYZOA Figs
-        # 3-4).  Per-cell captions may be separated by `||` (cells on
-        # one line) OR `\n|` (cells on separate lines).
-        def _split_row_cells(row_text: str) -> list[str]:
-            """Per-cell content strings, using the shared `split_wiki_row`
-            (handles `||` / `\\n|` separators, pipe-protection, attr/
-            content split)."""
-            return [
-                content
-                for _sep, _attr, content in split_wiki_row(row_text)
-                if content
-            ]
+        # A `Fig. N.` marker inside a cell, possibly wrapped in
+        # ``{{sc|…}}`` / ``{{csc|…}}``.  Used to split cells that hold
+        # an attribution above the caption (FUNGI Fig 12's cell:
+        # ``{{smaller block/s}}From Strasburger's…{{smaller block/e}}
+        # {{sc|Fig. 12.}}—…``).
+        _CELL_FIG_MARKER_RE = re.compile(
+            r"\{\{(?:sc|csc|SC)\|\s*(?:Fig|Plate)s?\.?"
+            r"|\b(?:Fig|Plate)s?\.?\s*\d"
+        )
 
-        unique_rows = set(img_row_of.values())
-        if (len(unique_rows) == 1 and len(img_row_of) == len(image_phs)):
-            img_row = next(iter(unique_rows))
-            # Find the caption row — first row after img_row whose
-            # cells start with `Fig. N.—` / `Plate N.—`.
-            cap_row_idx = None
-            for i in range(img_row + 1, len(rows_local)):
-                if re.search(
-                    r"(?:\{\{sc\||\{\{csc\||{\{SC\||{\{sm\|)?\s*"
-                    r"(?:Fig|Plate)s?\.?\s*\}?\}?\s*\d",
-                    rows_local[i],
-                ):
-                    cap_row_idx = i
-                    break
-            # Attribution row(s): rows strictly between img_row and
-            # cap_row that contain side-by-side `(After …)` / `From …`
-            # style cells matched 1:1 with images.
-            attr_pieces: list[str] = []
-            if cap_row_idx is not None:
-                attr_row_idx = None
-                for i in range(img_row + 1, cap_row_idx):
-                    if rows_local[i].strip():
-                        attr_row_idx = i
-                        break
-                if attr_row_idx is not None:
-                    cells = _split_row_cells(rows_local[attr_row_idx])
-                    if len(cells) == len(image_phs):
-                        attr_pieces = cells
-            if cap_row_idx is not None:
-                pieces = _split_row_cells(rows_local[cap_row_idx])
-                if len(pieces) == len(image_phs):
-                    row_text = rows_local[img_row]
-                    ordered_phs = sorted(
-                        image_phs,
-                        key=lambda p: row_text.find(p))
-                    parts_out = []
-                    for idx, (ph, piece) in enumerate(
-                            zip(ordered_phs, pieces)):
-                        fn = _image_ph_filename(ph, inner_registry)
-                        if not fn:
-                            continue
-                        cap = _clean_text(text_transform(piece))
-                        if cap and idx < len(attr_pieces) and attr_pieces[idx]:
-                            attr_clean = _clean_text(
-                                text_transform(attr_pieces[idx]))
-                            if attr_clean:
-                                cap = _append_attribution(cap, attr_clean)
-                        if cap:
-                            parts_out.append(
-                                f"{{{{IMG:{fn}|{cap}}}}}")
+        def _classify_cells(
+            cells_text: list[str], image_ph: str
+        ) -> tuple[list[str], list[str], list[str]]:
+            """Process a list of cell content strings belonging to one
+            image; return (caption_parts, attribution_parts,
+            legend_lines).  ``split_wiki_row`` collapses newlines inside
+            a cell to spaces, so a cell that originally held both an
+            attribution and a caption (FUNGI Fig 12) arrives as one
+            string.  Use the ``Fig. N.`` marker as the split boundary:
+            text before the marker is attribution, text from the marker
+            onward is the caption."""
+            caption_parts: list[str] = []
+            attribution_parts: list[str] = []
+            legend_lines: list[str] = []
+            for content in cells_text:
+                if not content.strip():
+                    continue
+                if image_ph in content:
+                    continue  # skip the image cell itself
+                # Pull poem placeholders out of the cell → legend.
+                cell_text = content
+                for poem_ph in poem_phs:
+                    if poem_ph in cell_text:
+                        poem_raw = inner_registry.elements[poem_ph][1]
+                        _emit_legend_chunk(
+                            poem_raw, text_transform, legend_lines)
+                        cell_text = cell_text.replace(poem_ph, "")
+                # Split at the first Fig./Plate marker.  Before =
+                # attribution (or other non-caption text); from the
+                # marker on = caption.
+                marker = _CELL_FIG_MARKER_RE.search(cell_text)
+                if marker:
+                    before = cell_text[:marker.start()].strip()
+                    after = cell_text[marker.start():].strip()
+                    if before:
+                        c = _clean_text(text_transform(before))
+                        if c:
+                            attribution_parts.append(c)
+                    if after:
+                        c = _clean_text(text_transform(after))
+                        if c:
+                            caption_parts.append(c)
+                else:
+                    c = _clean_text(text_transform(cell_text))
+                    if c:
+                        if _looks_like_caption(c):
+                            caption_parts.append(c)
                         else:
-                            parts_out.append(f"{{{{IMG:{fn}}}}}")
-                    if parts_out:
-                        return "\n\n" + "\n\n".join(parts_out) + "\n\n"
+                            attribution_parts.append(c)
+            return caption_parts, attribution_parts, legend_lines
 
-        # Vertical variant (MUSCULAR SYSTEM Figs 7-8): each image has
-        # its OWN attribution + caption rows beneath.  Required: each
-        # image points to a DISTINCT caption row.  If all images share
-        # one caption row, this is a multi-row image *grid* + colspan
-        # caption (FRUIT: Figs 1-3 on row 0, Figs 4-5 on row 1, one
-        # colspan=3 caption row).  In that case the per-image
-        # attribution scan would pick up other rows' image cells as
-        # "attribution" and leak their `|class="center"|` cell-attrs
-        # into the caption — bail out so the generic unwrap handles
-        # it as individual image cells + a sibling caption paragraph.
-        cap_rows_per_image: set[int | None] = set()
+        def _emit_image(image_ph: str, cells_text: list[str]) -> list[str]:
+            fn = _image_ph_filename(image_ph, inner_registry)
+            if not fn:
+                return []
+            cap_parts, attr_parts, legend_lines = _classify_cells(
+                cells_text, image_ph)
+            cap = " ".join(cap_parts).strip()
+            for attr in attr_parts:
+                cap = _append_attribution(cap, attr) if cap else attr
+            out = [
+                f"{{{{IMG:{fn}|{cap}}}}}" if cap
+                else f"{{{{IMG:{fn}}}}}"
+            ]
+            if legend_lines:
+                out.append(
+                    "{{LEGEND:" + "\n".join(legend_lines) + "}LEGEND}")
+            return out
+
+        # Unified disentangle: group images by the row they live in.
+        # Each group is processed as a self-contained mini-figure-set
+        # whose "content rows" run from the group's image-row + 1 up
+        # to the next group's image-row (or the end of the table).
+        # The slicing strategy is determined per-group:
+        #
+        # * one image in the group → vertical: concatenate all cells
+        #   in the content rows as that image's content.
+        # * multiple images in the group → side-by-side: column-slice
+        #   the content rows by each image's column index in the
+        #   image-row.
+        #
+        # This handles:
+        # * pure side-by-side (BEE, FUNGI, LARVAL FORMS Fig 5/6,
+        #   WEAVING, METAMORPHOSIS) — one group, multi-image
+        # * pure vertical (MUSCULAR SYSTEM, GYMNOSPERMS Macrozamia/
+        #   Ginkgo) — N groups, each single-image
+        # * N×M image grids with per-row caption rows (LEAF Figs 36-41,
+        #   Figs 42-45) — N groups, each multi-image
+        # in a single pass.
+        groups: dict[int, list[str]] = {}
         for ph in image_phs:
-            img_row = img_row_of.get(ph)
-            if img_row is None:
-                continue
-            cap_rows_per_image.add(
-                _find_caption_row_idx(rows_local, img_row, text_transform))
-        if len(cap_rows_per_image) <= 1:
-            return None
+            groups.setdefault(img_row_of[ph], []).append(ph)
+        sorted_group_rows = sorted(groups.keys())
+
         parts_out: list[str] = []
-        for ph in image_phs:
-            filename = _image_ph_filename(ph, inner_registry)
-            if not filename:
-                continue
-            img_row = img_row_of.get(ph)
-            if img_row is None:
-                continue
-            cap_row = _find_caption_row_idx(
-                rows_local, img_row, text_transform)
-            caption = None
-            if cap_row is not None:
-                caption = _extract_caption_from_colspan_row(
-                    rows_local[cap_row], text_transform)
-                attr = _collect_attribution_rows(
-                    rows_local, img_row, cap_row, text_transform)
-                if caption and attr:
-                    caption = _append_attribution(caption, attr)
-            if caption:
-                parts_out.append(f"{{{{IMG:{filename}|{caption}}}}}")
+        ok = True
+        for i, img_row_idx in enumerate(sorted_group_rows):
+            phs_in_group = groups[img_row_idx]
+            next_row = (sorted_group_rows[i + 1]
+                        if i + 1 < len(sorted_group_rows)
+                        else len(rows_local))
+            content_rows = list(range(img_row_idx + 1, next_row))
+
+            if len(phs_in_group) == 1:
+                # Vertical slice: all content cells in content_rows
+                # belong to this image.
+                ph = phs_in_group[0]
+                cells_text: list[str] = []
+                for r_idx in content_rows:
+                    for _sep, _attr, content in split_wiki_row(
+                            rows_local[r_idx]):
+                        if content.strip():
+                            cells_text.append(content)
+                parts_out.extend(_emit_image(ph, cells_text))
             else:
-                parts_out.append(f"{{{{IMG:{filename}}}}}")
-        if parts_out:
+                # Side-by-side slice: each image owns the cells at
+                # its column index in every content row.
+                img_row_cells = list(split_wiki_row(
+                    rows_local[img_row_idx]))
+                image_col_of: dict[str, int] = {}
+                for col_idx, (_sep, _attr, content) in enumerate(
+                        img_row_cells):
+                    for ph in phs_in_group:
+                        if ph in content:
+                            image_col_of[ph] = col_idx
+                if len(image_col_of) != len(phs_in_group):
+                    ok = False
+                    break
+                for ph in sorted(phs_in_group,
+                                 key=lambda p: image_col_of[p]):
+                    col_idx = image_col_of[ph]
+                    col_cells = []
+                    for r_idx in content_rows:
+                        cells = list(split_wiki_row(rows_local[r_idx]))
+                        if col_idx < len(cells):
+                            _sep, _attr, cell_content = cells[col_idx]
+                            col_cells.append(cell_content)
+                    parts_out.extend(_emit_image(ph, col_cells))
+
+        if ok and parts_out:
             return "\n\n" + "\n\n".join(parts_out) + "\n\n"
         return None
 
@@ -1220,10 +1275,12 @@ def _unwrap_layout_table(inner: str, text_transform,
         # on its own line without the surrounding `|` cell syntax —
         # those would never match `split_wiki_row`'s `^|` extraction,
         # so we grab them here first.
+        pre_pass_phs: set[str] = set()
         for ln in raw_row.split("\n"):
             stripped = ln.strip()
             if _PH in stripped and stripped.startswith(_PH):
                 row_content.append(stripped)
+                pre_pass_phs.add(stripped)
 
         for sep, attr_part, content in split_wiki_row(raw_row):
             if not content:
@@ -1231,8 +1288,18 @@ def _unwrap_layout_table(inner: str, text_transform,
             # Drop leftover {{Ts|…}} cell-styling templates (same logic
             # as `_process_table`'s `_extract_cells`).
             content = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*", "", content).strip()
-            if content:
-                row_content.append(content)
+            if not content:
+                continue
+            # ``split_wiki_row`` walks `\n|` as cell separators, which
+            # picks up the same standalone-placeholder lines the
+            # pre-pass already captured (LEAF Figs 3-4: the outer
+            # wrapper's cells each contain a single nested-table
+            # placeholder on its own line).  Skip the duplicate so
+            # downstream substitution doesn't emit the child element's
+            # processed output twice.
+            if content in pre_pass_phs:
+                continue
+            row_content.append(content)
 
         for c in row_content:
             # Placeholders (child elements) must pass through untouched.
@@ -1455,14 +1522,19 @@ _CELL_ATTR_PREFIX_RE = re.compile(
 )
 
 _FIG_CAPTION_START_RE = re.compile(
-    # Accepts leading italic `''`, smallcaps `{{sc|`, or bare `Fig.` /
-    # `Plate.` text.  HYDROMEDUSAE sources use all three variants.
-    r"^\s*(?:''|\{\{\s*sc\s*\|\s*)*(?:Fig|Plate)s?\.?",
+    # Accepts leading italic `''`, smallcaps `{{sc|` / `{{csc|`, or
+    # bare `Fig.` / `Plate.` text.  HYDROMEDUSAE sources use ``{{sc|``
+    # variants; DIFFERENCES Fig 1's source uses ``{{csc|`` (centred
+    # smallcaps) for the caption row — without `csc` in the prefix the
+    # row failed _looks_like_caption, fell to the inline-search path,
+    # and the ``{{csc|`` opener got captured as "attribution" and
+    # folded into the IMG caption as a stray ``(.)``.
+    r"^\s*(?:''|\{\{\s*(?:sc|csc)\s*\|\s*)*(?:Fig|Plate)s?\.?",
     re.IGNORECASE,
 )
 
 _FIG_CAPTION_INLINE_RE = re.compile(
-    r"(?:''|\{\{\s*sc\s*\|\s*)*"
+    r"(?:''|\{\{\s*(?:sc|csc)\s*\|\s*)*"
     r"(?:Fig|Plate)s?[\s.}]{1,10}\d",
     re.IGNORECASE,
 )
