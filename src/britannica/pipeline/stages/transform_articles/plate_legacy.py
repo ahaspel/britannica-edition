@@ -117,7 +117,7 @@ def _clean_grid_caption(text: str) -> str:
             break
         text = new
     text = re.sub(r"\{\{[^{}]*\}\}", "", text)
-    text = re.sub(r"'''|''", "", text)
+    text = re.sub(r'«/?[BI]»', '', text)
     text = re.sub(r"<[^>]+>", "", text)
     text = re.sub(r"\s+", " ", text).strip()
     return text.rstrip(",.|;")
@@ -284,7 +284,7 @@ def _split_legend_and_credit(cell_text: str) -> tuple[str, str | None]:
     )
     if m:
         credit_text = m.group(1)
-        credit_text = re.sub(r"'''|''", "", credit_text).strip(" ()")
+        credit_text = re.sub(r'«/?[BI]»', '', credit_text).strip(" ()")
         if credit_text:
             credit = credit_text
         cell_text = cell_text.replace(m.group(0), "")
@@ -397,7 +397,7 @@ def _clean_html_caption(text: str) -> str:
             break
         text = new
     text = re.sub(r"\{\{[^{}]*\}\}", "", text)
-    text = re.sub(r"'''|''", "", text)
+    text = re.sub(r'«/?[BI]»', '', text)
     text = re.sub(r"<[^>]+>", "", text)
     # Defensive: any wiki-table markers that survived the upstream
     # extractors don't belong in a caption.  Without this, the rare
@@ -511,7 +511,7 @@ def _transform_plate(raw_wikitext: str) -> str:
         # Clean wiki markup from caption — unwrap templates that wrap text
         cap = re.sub(r"\{\{(?:uc|sc|nowrap|lang\|[^{}]*)\|([^{}]*)\}\}", r"\1", cap, flags=re.IGNORECASE)
         cap = re.sub(r"\{\{[^{}]*\}\}", "", cap)
-        cap = re.sub(r"'''|''", "", cap)
+        cap = re.sub(r'«/?[BI]»', '', cap)
         cap = re.sub(r"&amp;", "&", cap)
         cap = re.sub(r"\|\}", "", cap)  # stray table close
         cap = re.sub(r"\}\}+", "", cap)  # stray closing braces

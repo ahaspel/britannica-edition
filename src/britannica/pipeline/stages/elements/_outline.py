@@ -64,9 +64,17 @@ def _outline_is_bare_emphasis(line: str) -> bool:
     s = _strip_page_marker_prefix(line).strip()
     if not s:
         return False
+    # Accept both raw wikitext `'''…'''` / `''…''` and the post-
+    # clean_pages marker forms `«B»…«/B»` / `«I»…«/I»`.  By the time
+    # outlines are extracted, the source has been through
+    # `_convert_quote_runs` so the marker forms are what we see in
+    # practice; the raw forms are kept for safety / tests that bypass
+    # clean_pages.
     return bool(
         re.fullmatch(r"'''[^\n]+'''[.,]?", s)
         or re.fullmatch(r"''[^\n]+''[.,]?", s)
+        or re.fullmatch(r"«B»[^«\n]+«/B»[.,]?", s)
+        or re.fullmatch(r"«I»[^«\n]+«/I»[.,]?", s)
         or re.fullmatch(r"\{\{sc\|[^{}]+\}\}[.,]?", s, re.IGNORECASE)
     )
 
@@ -148,6 +156,7 @@ def _extract_outlines(
                 _ll = line.lower()
                 if (
                     "'''" in line or "''" in line
+                    or "«B»" in line or "«I»" in line
                     or "{{sc|" in _ll or "{{csc|" in _ll
                     or "{{asc|" in _ll or "{{small-caps|" in _ll
                     or "{{uc|" in _ll or "{{lc|" in _ll

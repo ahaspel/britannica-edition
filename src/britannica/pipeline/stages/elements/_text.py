@@ -84,8 +84,10 @@ def _clean_text(text: str) -> str:
     # Decode common HTML entities
     text = text.replace("&#8193;", "").replace("&nbsp;", " ")
     text = text.replace("&#39;", "'").replace("&amp;", "&")
-    # Strip wiki bold/italic markers
-    text = text.replace("'''", "").replace("''", "")
+    # Strip bold/italic markers (clean_pages converts source `'''/''`
+    # to «B»/«I» markers upstream)
+    text = (text.replace("«B»", "").replace("«/B»", "")
+                .replace("«I»", "").replace("«/I»", ""))
     # Collapse whitespace
     text = re.sub(r"\s+", " ", text).strip()
     return text

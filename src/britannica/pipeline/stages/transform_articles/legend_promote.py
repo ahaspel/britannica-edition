@@ -740,32 +740,68 @@ def _parse_table_as_legend(
     def _strip_italic(s: str) -> str:
         return re.sub(r"\u00ab/?[A-Z]+\u00bb", "", s).strip()
 
-    # Layout 1: each cell is `label, text`.
-    entries: list[tuple[str, str]] = []
-    layout1_ok = True
-    for row in rows:
-        cells = _table_row_cells(row)
-        if len(cells) < 2:
-            layout1_ok = False
-            break
-        for cell in cells:
-            clean = _strip_italic(cell)
-            cm = _LEGEND_CELL_RE.match(clean)
-            if not cm:
+    # Layout 1: each cell is `label, text`.  Entries may span multiple
+    # rows in the same column — a cell that doesn't start with a label
+    # is a continuation of the previous entry in its column.  Entries
+    # are collected per-column then concatenated column-major so the
+    # final reading order matches the print layout (top-to-bottom of
+    # column 1, then column 2, …) — ARACHNIDA Fig 14 is the canonical
+    # case.  Pure single-row legends (WEAVING Fig 26) are a degenerate
+    # case where no continuations exist.
+    n_cols = len(_table_row_cells(rows[0])) if rows else 0
+    if n_cols >= 2:
+        columns: list[list[tuple[str, str]]] = [[] for _ in range(n_cols)]
+        layout1_ok = True
+        for row in rows:
+            cells = _table_row_cells(row)
+            # Allow a short trailing row (final blank cell stripped by
+            # the table closer): pad to n_cols with empty cells.
+            if len(cells) < n_cols:
+                cells = cells + [""] * (n_cols - len(cells))
+            elif len(cells) > n_cols:
                 layout1_ok = False
                 break
-            label = cm.group(1).strip().rstrip(".,")
-            txt = cm.group(2).strip().rstrip(".")
-            if label and txt:
-                entries.append((label, txt))
-        if not layout1_ok:
-            break
-    if layout1_ok and len(entries) >= 2:
-        return entries
+            for c_idx, cell in enumerate(cells):
+                stripped = cell.strip()
+                if not stripped:
+                    continue
+                clean = _strip_italic(cell)
+                # A trailing `|` is the closer of a row that ended `| `
+                # in source — the trailing space gets stripped earlier
+                # so `_table_row_cells` doesn't split the empty cell
+                # off, and the pipe rides into col-0 cell text.  Drop
+                # it before parsing.
+                clean = re.sub(r"\s*\|\s*$", "", clean).strip()
+                cm = _LEGEND_CELL_RE.match(clean)
+                if cm:
+                    label = cm.group(1).strip().rstrip(".,")
+                    txt = cm.group(2).strip().rstrip(".")
+                    if label and txt:
+                        columns[c_idx].append((label, txt))
+                else:
+                    # Continuation row — append to the previous entry
+                    # in the same column.  No prior entry means this
+                    # column starts with a non-label cell, which isn't
+                    # the legend shape we're looking for.
+                    if not columns[c_idx]:
+                        layout1_ok = False
+                        break
+                    prev_lbl, prev_txt = columns[c_idx][-1]
+                    cont = clean.rstrip(".").strip()
+                    columns[c_idx][-1] = (
+                        prev_lbl,
+                        f"{prev_txt} {cont}".strip(),
+                    )
+            if not layout1_ok:
+                break
+        if layout1_ok:
+            entries = [e for col in columns for e in col]
+            if len(entries) >= 2:
+                return entries
 
     # Layout 2: alternating label-cell + text-cell, possibly
     # separated by empty/whitespace-only spacer cells (em-/en-spaces).
-    entries = []
+    entries: list[tuple[str, str]] = []
     for row in rows:
         cells = _table_row_cells(row)
         meaningful = []
@@ -820,6 +856,17 @@ def _classify_figure_paragraph(
     for marker in _FIGURE_BOUNDARY_MARKERS:
         if para.startswith(marker):
             return "boundary", None
+
+    # Pre-existing LEGEND block — the layout-unwrap subclass already
+    # promoted the legend for this figure (MULTICOL_LEGEND case in
+    # `elements/_layout.py`).  Emit "preserve" so the walker keeps
+    # scanning forward (to fold a trailing attribution into the IMG
+    # caption — e.g. ARACHNIDA Fig 65's "(Original drawing by …)")
+    # AND keeps the existing LEGEND verbatim in the output.  Without
+    # this the walker either stops at the LEGEND (no attribution
+    # fold) or eats it as a "skip" (LEGEND lost from output).
+    if re.match(r"\{\{LEGEND:[\s\S]*\}LEGEND\}\s*$", para):
+        return "preserve", para
 
     # VERSE block: legend-shaped?
     verse_m = re.match(r"\{\{VERSE:([\s\S]*)\}VERSE\}\s*$", para)
@@ -902,6 +949,7 @@ def _process_figures(text: str) -> str:
         scan = m.end()
         attributions: list[str] = []
         entries: list[tuple[str, str]] = []
+        preserved: list[str] = []  # paragraphs to re-emit verbatim
         boundary = scan
         for p_start, p_end, para in _paragraphs_starting_at(text, scan):
             cls, payload = _classify_figure_paragraph(para)
@@ -912,12 +960,16 @@ def _process_figures(text: str) -> str:
                 attributions.append(payload)  # type: ignore[arg-type]
             elif cls == "legend":
                 entries.extend(payload)  # type: ignore[arg-type]
+            elif cls == "preserve":
+                preserved.append(payload)  # type: ignore[arg-type]
             boundary = p_end
         # Build the updated IMG marker with any attribution folded in
         updated_img = img_marker
         for attr in attributions:
             updated_img = _append_attr_to_img(updated_img, attr)
         out_parts.append(updated_img)
+        for prev in preserved:
+            out_parts.append(f"\n\n{prev}")
         if entries:
             legend = "\n".join(f"{lbl}. {t}." for lbl, t in entries)
             out_parts.append(f"\n\n{{{{LEGEND:{legend}}}LEGEND}}")

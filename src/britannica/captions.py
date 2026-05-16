@@ -159,7 +159,7 @@ def clean_caption(text: str) -> str:
             break
     text = re.sub(r"\{\{[^{}]*\}\}", "", text)        # remaining bare templates
     text = _UNCLOSED_TMPL_OPEN_RE.sub("", text)       # unclosed `{{left|` etc.
-    text = re.sub(r"'''|''", "", text)                # wiki bold/italic
+    text = re.sub(r"«/?[BI]»", "", text)              # bold/italic markers
     text = re.sub(r"\{\|[^\n]*", "", text)            # wiki-table open + attrs
     text = re.sub(r"\|\}", "", text)                  # wiki-table close
     text = re.sub(r"(?m)^\|-.*$", "", text)           # wiki-table row separator

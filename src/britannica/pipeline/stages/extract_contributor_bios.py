@@ -30,7 +30,8 @@ def _parse_entry(content: str) -> dict[str, str]:
         # Clean wiki markup
         value = re.sub(r"\[\[[^\]|]+\|([^\]]+)\]\]", r"\1", value)
         value = re.sub(r"\[\[([^\]]+)\]\]", r"\1", value)
-        value = value.replace("'''", "").replace("''", "")
+        value = (value.replace("«B»", "").replace("«/B»", "")
+                      .replace("«I»", "").replace("«/I»", ""))
         # Iteratively strip templates (handles nesting)
         prev = None
         while value != prev:

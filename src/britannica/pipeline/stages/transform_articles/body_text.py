@@ -170,7 +170,9 @@ def _convert_links(text: str) -> str:
         # Unwrap templates in display text
         display = re.sub(r"\{\{sc\|([^{}]*)\}\}", r"\1", display, flags=re.IGNORECASE)
         display = re.sub(r"\{\{[^{}|]*\|([^{}]*)\}\}", r"\1", display)
-        display = display.replace("'''", "").replace("''", "")
+        display = (display
+                   .replace("«B»", "").replace("«/B»", "")
+                   .replace("«I»", "").replace("«/I»", ""))
         # Interwiki/Author/Portal → display text only
         if re.match(r"(?i)^(Author|wikt|wiktionary|s|w|d|wikipedia|Portal|Page|File|1911):", target):
             return display
@@ -500,7 +502,9 @@ def _convert_shoulder_headings(text: str) -> str:
                     # Strip inner templates, bold/italic, and line breaks
                     heading_text = re.sub(r"<br\s*/?>", " ", heading_text, flags=re.IGNORECASE)
                     heading_text = re.sub(r"\{\{[^{}]*\|([^{}]*)\}\}", r"\1", heading_text)
-                    heading_text = heading_text.replace("'''", "").replace("''", "")
+                    heading_text = (heading_text
+                                    .replace("«B»", "").replace("«/B»", "")
+                                    .replace("«I»", "").replace("«/I»", ""))
                     # Rejoin hyphenated words split across lines
                     heading_text = re.sub(r"(\w)- (\w)", r"\1\2", heading_text)
                     # Collapse em-spaces and extra whitespace
@@ -547,8 +551,9 @@ def _convert_sub_sup(text: str) -> str:
     _SUP = str.maketrans("0123456789+-=()", "⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾")
 
     def _strip_wiki_format(s):
-        """Strip '''/'' wiki formatting from sub/sup content."""
-        return s.replace("'''", "").replace("''", "")
+        """Strip bold/italic markers from sub/sup content."""
+        return (s.replace("«B»", "").replace("«/B»", "")
+                 .replace("«I»", "").replace("«/I»", ""))
 
     def _sub_repl(m):
         return _strip_wiki_format(m.group(1)).translate(_SUB)
@@ -561,43 +566,6 @@ def _convert_sub_sup(text: str) -> str:
     return text
 
 
-def _convert_bold_italic(text: str) -> str:
-    """'''bold''' → «B»bold«/B», ''italic'' → «I»italic«/I»."""
-    # Normalize malformed quote runs in math/notation contexts:
-    # `'''x''` (3 open, 2 close) and `''x'''` (2 open, 3 close) are
-    # typos common in EB1911 math sections (SHIPBUILDING p993's
-    # `moderate amount '''w'' tons`) — the author meant italic on a
-    # single-letter variable but the run count got unbalanced. Without
-    # normalization the extra `'` cascades into the next italic pair,
-    # inverting open/close markers through the rest of the article.
-    #
-    # The pattern: a 3-quote run bordering a short (≤5 char) token and
-    # matched on the other side by a 2-quote run — almost certainly
-    # italic intent. We normalize both sides to `''`.
-    text = re.sub(
-        r"(?<!')'{3}([^'\s]{1,5})'{2}(?!')",
-        r"''\1''",
-        text,
-    )
-    text = re.sub(
-        r"(?<!')'{2}([^'\s]{1,5})'{3}(?!')",
-        r"''\1''",
-        text,
-    )
-
-    # Bold-italic (5 quotes) first
-    text = re.sub(r"'''''(.*?)'''''",
-                  lambda m: f"{_FMT}B{_FMT}I{m.group(1)}{_FMT}/I{_FMT}/B",
-                  text, flags=re.DOTALL)
-    # Normalize 4 quotes to 3
-    text = text.replace("''''", "'''")
-    # Bold (3 quotes)
-    text = re.sub(r"'''(.*?)'''", f"{_FMT}B\\1{_FMT}/B", text, flags=re.DOTALL)
-    # Italic (2 quotes)
-    text = re.sub(r"''(.*?)''", f"{_FMT}I\\1{_FMT}/I", text, flags=re.DOTALL)
-    # Strip any residual '' markers
-    text = text.replace("''", "")
-    return text
 
 
 def _strip_templates(text: str) -> str:
@@ -693,12 +661,24 @@ def _transform_body_text(text: str) -> str:
     text = re.sub(r"^[:;]+\s*", "", text, flags=re.MULTILINE)
     text = _convert_hieroglyphs(text)
     text = _convert_links(text)
-    text = _unwrap_content_templates(text)
-    text = _convert_small_caps(text)
-    text = _convert_shoulder_headings(text)
-    text = _unwrap_layout_templates(text)
+    # Template unwrap is a fixed-point loop: nested patterns like
+    # `{{nowrap|1{{EB1911 tfrac|2}} m.}}` need the inner template
+    # resolved before the outer regex (which excludes nested braces)
+    # can match.  Without iteration the outer survives to the catch-all
+    # stripper, which deletes the whole template including its content.
+    # Bound is generous; real-world EB1911 wikitext rarely nests >2 deep.
+    for _ in range(8):
+        before = text
+        text = _unwrap_content_templates(text)
+        text = _convert_small_caps(text)
+        text = _convert_shoulder_headings(text)
+        text = _unwrap_layout_templates(text)
+        if text == before:
+            break
     text = _convert_sub_sup(text)
-    text = _convert_bold_italic(text)
+    # Bold/italic markers already present from clean_pages's
+    # `_convert_quote_runs` (the canonical MediaWiki-aware conversion).
+    # No quote-run conversion is needed here.
     text = _strip_templates(text)
     text = _strip_html(text)
     text = _decode_entities(text)

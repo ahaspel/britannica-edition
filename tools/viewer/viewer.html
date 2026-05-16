@@ -198,6 +198,18 @@
       color: #2c2416;
       background: #ebe4d6;
     }
+    /* Standalone display-math context: render the popout link as a
+       block element in the math column position, so it occupies the
+       same visual slot the equation would have — centred, with
+       display-math margins — rather than sitting inline within the
+       surrounding prose paragraph.  An adjacent label (handled by
+       the EQNGROUP renderer) still goes in the right-margin label
+       column. */
+    .math-popout-link.popout-display {
+      display: block;
+      text-align: center;
+      margin: 1em 0;
+    }
     .math-popout-modal {
       position: fixed;
       inset: 0;
@@ -1243,11 +1255,14 @@
     // recover the LaTeX without serialising it into HTML attributes.
     const _MATH_POPOUT_LATEX = {};
     let _mathPopoutCounter = 0;
-    function renderMathPopout(latex) {
+    function renderMathPopout(latex, isDisplay) {
       const id = "mp-" + (_mathPopoutCounter++);
       _MATH_POPOUT_LATEX[id] = latex;
+      const cls = isDisplay
+        ? "math-popout-link popout-display"
+        : "math-popout-link";
       return (
-        `<a class="math-popout-link" data-mp="${id}" `
+        `<a class="${cls}" data-mp="${id}" `
         + `onclick="openMathPopout('${id}');return false;" href="#">`
         + `[equation ⤢ click to view]</a>`
       );
@@ -1312,6 +1327,22 @@
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#39;");
+    }
+
+    // Render an article title for display.  Titles may carry inline
+    // formatting markers from the pipeline: `«B»…«/B»` (bold, mixed
+    // bold/plain in multi-part bio titles), `«I»…«/I»` (italic — for
+    // foreign-language alternates), `«SC»…«/SC»` (small-caps —
+    // converted from `{{small-caps|…}}` and renders as small-caps
+    // with drop-cap on the first letter).  Use everywhere we display
+    // a title: H1, TOC, parent-plate link, search results, etc.
+    function renderTitleMarkers(value) {
+      let h = escapeHtml(value);
+      h = h.replace(/«B»([\s\S]*?)«\/B»/g, "<b>$1</b>");
+      h = h.replace(/«I»([\s\S]*?)«\/I»/g, "<i>$1</i>");
+      h = h.replace(/«SC»([\s\S]*?)«\/SC»/g,
+                    '<span class="small-caps">$1</span>');
+      return h;
     }
 
     // Reverse of escapeHtml. Used when we need to pass captured text
@@ -1961,7 +1992,9 @@
             .replace(/\\mbox\b/g, "\\text")
             .replace(/[\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u00a0\u200b]/g, " ");
           if (hint === "popout") {
-            return renderMathPopout(raw);
+            // EQNGROUP rows are always display-math context — the
+            // popout link belongs in the math column, not inline.
+            return renderMathPopout(raw, true);
           }
           let fsPct = null;
           if (hint) {
@@ -2512,7 +2545,11 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
             .replace(/\\overset\{([^}]*)\}\s*\\underset\{([^}]*)\}\s*\{\\Sigma\s*/g, "\\sum_{$2}^{$1}{");
           const isDisplay = /\\begin\{/.test(raw) || mathOnly;
           if (hint === "popout") {
-            return renderMathPopout(raw);
+            // Pass display flag so a standalone display-math popout
+            // renders as a block-centred placeholder where the
+            // equation would have been, rather than inline within
+            // the surrounding prose paragraph.
+            return renderMathPopout(raw, isDisplay);
           }
           let fsPct = null;
           if (hint) {
@@ -2644,14 +2681,31 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
       app.innerHTML = `
         <div class="card">
           <h1>${(() => {
-            const t = escapeHtml(article.title || "Untitled");
-            return `<span style="font-size:1.6em; line-height:1; vertical-align:baseline;">${t[0]}</span>${t.slice(1)}`;
+            // Plain title for drop-cap (first letter sized up).  Render
+            // the rest with formatting markers converted to HTML so
+            // multi-bold / small-caps titles like AGRICOLA preserve
+            // their typography from the source.
+            const plain = (article.title || "Untitled").replace(
+              /«\/?(?:B|I|SC)»/g, "");
+            const rendered = renderTitleMarkers(article.title || "Untitled");
+            const firstLetter = escapeHtml(plain.charAt(0));
+            // Trim the drop-cap's letter from the rendered title.  We
+            // walk through `rendered` skipping HTML tags until we've
+            // consumed one visible character.
+            let stripped = rendered;
+            let consumed = false;
+            stripped = stripped.replace(/^(<[^>]+>)*(.)/, (m, tags, ch) => {
+              consumed = true;
+              return tags || "";
+            });
+            const tail = consumed ? stripped : rendered.slice(1);
+            return `<span style="font-size:1.6em; line-height:1; vertical-align:baseline;">${firstLetter}</span>${tail}`;
           })()}</h1>
           <div style="font-size: 0.85rem; color: #6b5e4f; font-style: italic; margin-bottom: 6px;">
             <a href="${scanUrl(article)}" style="color: #6b5e4f;">vol. ${escapeHtml(article.volume ?? "?")}, ${article.page_start !== article.page_end ? `pp. ${escapeHtml(article.page_start ?? "")}–${escapeHtml(article.page_end ?? "")}` : `p. ${escapeHtml(article.page_start ?? "")}`}</a>
             ${article.word_count ? `&middot; ${article.word_count.toLocaleString()} words` : ""}
           </div>
-          ${article.parent_article ? `<div style="margin-bottom: 8px; font-size: 0.95rem;">Plate for <a href="${articleUrl(article.parent_article.filename)}">${escapeHtml(article.parent_article.title)}</a></div>` : ""}
+          ${article.parent_article ? `<div style="margin-bottom: 8px; font-size: 0.95rem;">Plate for <a href="${articleUrl(article.parent_article.filename)}">${renderTitleMarkers(article.parent_article.title)}</a></div>` : ""}
           ${contributors.length ? `<div class="contributors">By ${contributors.map(c => `<a href="/contributors.html?q=${encodeURIComponent(c.full_name)}" style="color: var(--muted);">${escapeHtml(c.full_name)}</a> <span style="color: var(--muted); font-size: 0.85em;">(${escapeHtml(c.initials)})</span>`).join(", ")}</div>` : ""}
           ${(() => {
             const topics = topicMap && article.filename

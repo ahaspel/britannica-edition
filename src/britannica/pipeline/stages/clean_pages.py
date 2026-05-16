@@ -2,6 +2,8 @@ import json
 import re
 from pathlib import Path
 
+import mwparserfromhell as _mwp
+
 from britannica.cleaners.headers_footers import strip_headers
 from britannica.cleaners.hyphenation import fix_hyphenation
 from britannica.cleaners.reflow import reflow_paragraphs
@@ -11,6 +13,136 @@ from britannica.db.models.source_page import SourcePage
 from britannica.db.session import SessionLocal
 from britannica.image_assets import SCORE_IMAGES, SCORE_TAG
 from britannica.parsers import img_float as _img_float_parser
+
+
+_QUOTE_RUN_HINT = re.compile(
+    r"''|<[bi][>\s/]|\{\{bold\|", re.IGNORECASE)
+
+
+def _convert_quote_runs(text: str) -> str:
+    """Convert MediaWiki bold/italic quote-run markup to internal markers.
+
+    Line-scoped, matching MediaWiki's ``doQuotes`` algorithm: the PHP
+    source literally splits its input on ``\\n`` and runs the bold /
+    italic pair-matcher per line.  We do the same — split on ``\\n``,
+    feed each line to ``mwparserfromhell`` independently, replace
+    italic / bold ``Tag`` nodes with ``«I»…«/I»`` / ``«B»…«/B»`` in
+    place, join.
+
+    Line-scoping prevents the cascade bug where one unbalanced
+    ``'''`` (typically a transcription typo like ``''The Fishmongers'''``
+    on vol 28 p403) pairs with the opening ``'''`` of a later heading
+    and inverts every quote-run between them — eating articles like
+    WATER-SCORPION, WATERSHED, WATERSPOUT, WHEAT.  In MediaWiki those
+    typos render the affected line ugly but don't spill onto adjacent
+    lines; we now match that behavior.
+
+    Within a single line we use mwparserfromhell's AST in place: each
+    italic / bold ``Tag`` node is replaced with marker text.
+    Templates, wikilinks, wiki-tables, refs, math, HTML tags etc. are
+    left untouched.  In-place mutation (vs. recursive node
+    reconstruction) preserves wiki-table syntax — the previous
+    walker-based version round-tripped ``{|…|}`` to
+    ``<table>…</table>``, killing the ``\\n\\n`` boundary that
+    detect_boundaries needs before each subsequent bold heading.
+
+    Runs once per page in ``clean_pages`` so every downstream stage
+    sees ``«B»``/``«I»`` instead of ``'''``/``''``.
+
+    Replaces the previous regex-based ``_convert_bold_italic`` in
+    ``body_text.py`` which couldn't handle:
+      * 4-quote / 5-quote runs per MediaWiki's algorithm
+      * Quote-runs inside templates / wikilinks / refs
+      * The ``'''X''. (''Y''). ''Z'''`` mismatch pattern (ARACHNIDA
+        Sub-Class II)
+      * HTML ``<b>``/``<i>`` tags (which never had ``'''`` to match against)
+    """
+    # Mask <ref>...</ref> blocks before line-splitting.  Some refs
+    # contain multi-line disambiguation notes embedded INSIDE a bold
+    # heading (e.g. vol 20 ODO OF BAYEUX:
+    #   '''ODO<ref>{multi-line note}</ref> OF BAYEUX'''
+    # ).  Without masking, the line-splitter chops the bold span
+    # across newlines inside the ref, leaving each line with an
+    # unbalanced `'''` so the conversion gives up.  Masking collapses
+    # the ref to a single token, line-scoping operates on a ref-free
+    # version, then we restore.
+    _refs: list[str] = []
+
+    def _mask(m: re.Match) -> str:
+        _refs.append(m.group(0))
+        return f"«REFMASK:{len(_refs)-1}»"
+
+    masked = re.sub(r"<ref[^/>]*>[\s\S]*?</ref>", _mask, text)
+
+    out = []
+    for line in masked.split("\n"):
+        # Cheap optimization: most lines have no quote-runs.  Skip
+        # the parse + filter cycle for those.
+        if not _QUOTE_RUN_HINT.search(line):
+            out.append(line)
+            continue
+        out.append(_convert_quote_runs_line(line))
+    converted = "\n".join(out)
+
+    # Restore the masked refs.
+    if _refs:
+        converted = re.sub(
+            r"«REFMASK:(\d+)»",
+            lambda m: _refs[int(m.group(1))],
+            converted,
+        )
+    return converted
+
+
+def _convert_quote_runs_line(line: str) -> str:
+    """Convert italic/bold tags in a SINGLE line of wikitext.
+
+    Quote-run pairing is therefore line-scoped: a stray ``'`` at the
+    end of one line cannot pair with markup on a later line.  Also
+    converts ``{{bold|X}}`` template (used by ~7 articles in EB1911
+    including SPARKS, JARED vol 25 p629) to the same ``«B»…«/B»``
+    marker as wikitext / HTML bold.
+    """
+    parsed = _mwp.parse(line)
+    # First pass: convert any `{{bold|X}}` templates to the same
+    # `«B»X«/B»` form so the rest of the rule treats them uniformly
+    # with `'''X'''` and `<b>X</b>`.
+    for tpl in parsed.filter_templates(recursive=True):
+        if str(tpl.name).strip().lower() == "bold" and tpl.params:
+            inner = str(tpl.params[0].value)
+            try:
+                parsed.replace(tpl, f"«B»{inner}«/B»")
+            except ValueError:
+                continue
+    # Iterate to fixed-point: replacing a tag changes the tree, so a
+    # newly-exposed inner tag (e.g. italic inside what was a bold
+    # span) needs another pass.  In practice MediaWiki bold/italic
+    # don't nest, so one pass is almost always enough — but the
+    # loop is cheap insurance.
+    while True:
+        tags = [t for t in parsed.filter_tags(recursive=True)
+                if str(t.tag).lower() in ("i", "b")]
+        if not tags:
+            break
+        for tag in tags:
+            tag_str = str(tag.tag).lower()
+            # ``tag.contents`` is a Wikicode whose ``str()`` emits
+            # the original wikitext slice intact — including any
+            # nested templates, wikilinks, etc.
+            inner = str(tag.contents)
+            if tag_str == "i":
+                replacement = f"«I»{inner}«/I»"
+            else:
+                replacement = f"«B»{inner}«/B»"
+            try:
+                parsed.replace(tag, replacement)
+            except ValueError:
+                # Tag may have already been removed by a previous
+                # replacement in this iteration (rare; happens when
+                # the same Tag object appears under multiple parents
+                # via aliasing).  Skip and continue.
+                continue
+    return str(parsed)
 
 
 _CORRECTIONS: dict | None = None
@@ -358,9 +490,11 @@ def clean_pages(volume: int) -> int:
             # entries are written against (table rewrites match the
             # wikitext format, not raw_text).
             if page.wikitext:
-                corrected_wt = _apply_corrections(page.wikitext, volume)
-                if corrected_wt != page.wikitext:
-                    page.wikitext = corrected_wt
+                page.wikitext = _apply_corrections(page.wikitext, volume)
+                # Convert MediaWiki bold/italic quote runs to internal
+                # markers.  All downstream stages see «B»/«I» instead
+                # of '''/''.  See `_convert_quote_runs` docstring.
+                page.wikitext = _convert_quote_runs(page.wikitext)
 
             text = page.raw_text
             # Replace <score> tags before any other processing

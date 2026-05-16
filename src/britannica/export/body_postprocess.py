@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import re
 
-from britannica.markers import strip_page_markers
+from britannica.markers import strip_page_markers, strip_title_markers
 
 
 def _strip_redundant_title(body: str, title: str) -> str:
@@ -26,7 +26,12 @@ def _strip_redundant_title(body: str, title: str) -> str:
     page_prefix = page_m.group(0) if page_m else ""
     rest = body[len(page_prefix):]
 
-    title_key = re.sub(r"\s+", " ", title.strip().rstrip(",.;:")).upper()
+    # Titles may carry `«B»`/`«I»`/`«SC»` formatting markers; strip
+    # them for content comparison against the body's bold text.
+    title_key = re.sub(
+        r"\s+", " ",
+        strip_title_markers(title).strip().rstrip(",.;:"),
+    ).upper()
     bold_re = re.compile(
         r"^«B»([^«]+)«/B»"
         r"([\s,.\-–— ]*(?:\([^)]*\)|\[[^\]]*\])"

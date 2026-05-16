@@ -293,6 +293,132 @@ def _strip_cell_attributes(cell: str) -> str:
     return cell
 
 
+def _split_multicol_row_cells(
+    row_text: str, text_transform
+) -> list[str]:
+    """Split a `||`-separated wikitable row into transformed cells,
+    handling `\\n|`-as-cell-separator normalisation, attribute stripping,
+    and the `text_transform` pass.  Shared between the single-row
+    parser (full-entry-per-cell / alternating-pair) and the cross-row
+    column-major parser (for multi-row legend entries).
+
+    Preserves *internal* empty cells (an empty col-0 with content in
+    col-1 is a real shape, e.g. ARACHNIDA Fig 65's `| || D. Chelicera.
+    ||` last row) but trims leading/trailing structural-artifact
+    empties from the row-marker `|` and trailing `||`.
+    """
+    normalised = re.sub(r"\n\s*\|(?![-}|])", "||", row_text)
+    pieces = normalised.replace("||", "\x01").split("\x01")
+    # Strip the single leading row-start `|` from the first piece
+    # only — internal `|` belongs to cell content (none, normally).
+    if pieces:
+        pieces[0] = pieces[0].lstrip("|")
+    pieces = [p.strip() for p in pieces]
+    # Drop trailing empty piece (artifact of a trailing `||` or final
+    # `\n`-cell-separator).  Keep internal empties — they're real
+    # empty cells whose column position matters.
+    while pieces and not pieces[-1]:
+        pieces.pop()
+    pieces = [_strip_cell_attributes(p).strip() for p in pieces]
+    return [text_transform(p) for p in pieces]
+
+
+def _parse_multicol_legend_rows_column_major(
+    rows: list[str], text_transform
+) -> list[tuple[str, str]] | None:
+    """Parse N rows of `||`-separated cells as column-major legend
+    entries with multi-row continuation support.
+
+    Each row produces N cells, one per column.  Within a column,
+    cells in successive rows compose entries: a cell that matches
+    a full-entry label-shape starts a NEW entry; a cell that doesn't
+    is treated as a CONTINUATION of the previous entry in the same
+    column (joined with a space).  Entries are returned column-major
+    so the reading order matches the print layout (top-to-bottom of
+    column 1, then column 2, …).
+
+    Canonical case: ARACHNIDA Fig 7 (Limulus dorsal-surface diagram)
+    where each column has 3–4 entries spread across 9 rows of cells.
+
+    Returns None when:
+      - rows don't form a uniform column grid,
+      - the first cell in a column is a continuation (no prior entry
+        to attach to), or
+      - the resulting entries fail the legend-label shape check.
+    """
+    row_cells: list[list[str]] = []
+    n_cols: int | None = None
+    for row in rows:
+        cells = _split_multicol_row_cells(row, text_transform)
+        if not cells:
+            continue
+        if n_cols is None:
+            n_cols = len(cells)
+        if len(cells) < n_cols:
+            # Short row — likely a `colspan=N` annotation or note
+            # appended inside the legend wikitable (ARACHNIDA Fig 47
+            # has `|colspan=2|[Observe the powerful gnathobases…]`
+            # as the final row).  Stop legend processing here so
+            # the note doesn't get absorbed as a continuation of
+            # the previous column's entry.  Anything after this row
+            # is left to fall through into the surrounding layout
+            # unwrap as separate paragraphs.
+            break
+        elif len(cells) > n_cols:
+            return None
+        row_cells.append(cells)
+
+    if not row_cells or n_cols is None or n_cols < 2:
+        return None
+
+    def _label_shape_real(label_text: str, cell_orig: str) -> bool:
+        """Reject plain-lowercase pseudo-labels from `_MULTICOL_FULL_
+        ENTRY_RE` matches — `mesosoma, each with a movable` parses as
+        label=`mesosoma`, text=`each with a movable`, but `mesosoma`
+        is a continuation word, not a real legend label.  Real labels
+        are italic in source, contain uppercase or digits, or are
+        short Roman / abbreviation forms.
+        """
+        if cell_orig.lstrip().startswith("«I»"):
+            return True
+        return bool(re.search(r"[A-Z0-9]", label_text))
+
+    columns: list[list[tuple[str, str]]] = [[] for _ in range(n_cols)]
+    for cells in row_cells:
+        for c_idx, cell in enumerate(cells):
+            cell_stripped = cell.strip()
+            if not cell_stripped:
+                continue
+            first_is_italic = cell_stripped.startswith("«I»")
+            if first_is_italic:
+                m = _MULTICOL_FULL_ENTRY_ITALIC_RE.match(cell_stripped)
+                if m:
+                    label = m.group(1).strip()
+                    txt = _clean_legend_text(m.group(2)).rstrip(". ")
+                    columns[c_idx].append((label, txt))
+                    continue
+            cleaned = _clean_legend_text(cell_stripped)
+            m = _MULTICOL_FULL_ENTRY_RE.match(cleaned)
+            if m and _label_shape_real(m.group(1), cell_stripped):
+                label = m.group(1)
+                txt = m.group(2).rstrip(". ")
+                columns[c_idx].append((label, txt))
+                continue
+            # Continuation: append to the previous entry in this
+            # column.  No prior entry → the column starts with a
+            # non-label cell, which isn't a legend shape.
+            if not columns[c_idx]:
+                return None
+            prev_label, prev_text = columns[c_idx][-1]
+            cont = cleaned.rstrip(". ").strip()
+            if cont:
+                columns[c_idx][-1] = (
+                    prev_label, f"{prev_text} {cont}".strip())
+
+    entries = [e for col in columns for e in col]
+    return entries if entries else None
+
+
 def _parse_multicol_legend_row(
     row_text: str, text_transform
 ) -> list[tuple[str, str]]:
@@ -1118,6 +1244,14 @@ def _try_image_layout_subclass(
     #    2. At least one legend row must contain `||`.
     #    3. At least 2 (label,text) entries must parse.
     #    4. Every label must match the strict legend-label shape.
+    #
+    #    Two parser passes: the column-major pass handles multi-row
+    #    entries (cells in successive rows that continue a previous
+    #    entry, e.g. ARACHNIDA Fig 7 where each legend entry spans
+    #    2-5 cells down one column).  If that fails (or yields a
+    #    non-legend label shape), fall back to the per-row parser
+    #    which handles full-entry-per-cell and alternating-pair
+    #    layouts (single-row entries only).
     if fig_cap_idx is not None:
         legend_rows = rows[fig_cap_idx + 1:]
         has_multicol_marker = any("||" in r for r in legend_rows)
@@ -1125,17 +1259,36 @@ def _try_image_layout_subclass(
             caption = _extract_caption_from_colspan_row(
                 rows[fig_cap_idx], text_transform)
             if caption:
-                entries: list[tuple[str, str]] = []
-                for r in legend_rows:
-                    entries.extend(
-                        _parse_multicol_legend_row(r, text_transform))
-                if (len(entries) >= 2
+                col_major_entries = (
+                    _parse_multicol_legend_rows_column_major(
+                        legend_rows, text_transform))
+                used_column_major = bool(
+                    col_major_entries
+                    and len(col_major_entries) >= 2
+                    and _entries_look_like_legend(col_major_entries))
+                if used_column_major:
+                    entries = col_major_entries
+                else:
+                    entries = []
+                    for r in legend_rows:
+                        entries.extend(
+                            _parse_multicol_legend_row(r, text_transform))
+                if (entries
+                        and len(entries) >= 2
                         and _entries_look_like_legend(entries)):
                     img_marker = f"{{{{IMG:{filename}|{caption}}}}}"
+                    # Column-major output already reflects the print
+                    # reading order — top-to-bottom of column 1, then
+                    # column 2.  Preserve that.  Per-row entries
+                    # (full-entry-per-cell, alternating-pair) come out
+                    # row-major in source order — keep the legacy
+                    # alphabetic sort there, which is what the rest of
+                    # the corpus has been validated against.
                     legend_block = (
                         "{{LEGEND:" +
                         _format_legend_entries(
-                            entries, sort_alphabetic=True) +
+                            entries,
+                            sort_alphabetic=not used_column_major) +
                         "}LEGEND}")
                     return f"\n\n{img_marker}\n\n{legend_block}\n\n"
 

@@ -154,6 +154,17 @@ echo
 echo "=== Phase 3c: Rebuilding printed-page mapping [$(elapsed)] ==="
 uv run python tools/pipeline/build_printed_pages.py
 
+# --- Phase 3d: Snapshot article index for cross-rebuild diff ---
+# `data/derived/article_index.tsv` is a TSV (vol, page_start,
+# page_end, article_type, title) sorted by (volume, page_start,
+# title).  Commit it to git after each rebuild and `git log -p` on
+# it shows article-list churn between rebuilds — catches "we lost N
+# articles" regressions like the 2026-05-16 missing-33 incident
+# where we had no way to identify which articles disappeared.
+echo
+echo "=== Phase 3d: Snapshot article index [$(elapsed)] ==="
+uv run python tools/diagnostics/snapshot_article_index.py
+
 # --- Phase 4: Re-export (xref targets now resolved cross-volume) ---
 echo
 echo "=== Phase 4: Re-exporting all volumes (with resolved xrefs) [$(elapsed)] ==="

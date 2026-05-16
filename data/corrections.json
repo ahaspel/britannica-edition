@@ -348,6 +348,20 @@
       "to": "(1856–1859)"
     }
   ],
+  "_28:403_note": "Vol 28 p403 (printed p386) reference to 'Lyon v. The Fishmongers' Company' transcribes the genitive apostrophe inside the italic span as a third straight apostrophe, producing '''The Fishmongers''''.  MediaWiki parses three apostrophes as bold-toggle, which on Wikisource itself just renders the line oddly but in our converter prior to line-scoping the dangling marker cascaded through the rest of the page and ate WATER-SCORPION, WATERSHED, WATERSPOUT, and WHEAT.  Line-scoping (2026-05-16) already contains the damage to the line; this correction additionally fixes the typo by closing italic and using U+2019 for the genitive so the line renders cleanly.",
+  "28:403": [
+    {
+      "from": "''The Fishmongers'''",
+      "to": "''The Fishmongers''’"
+    }
+  ],
+  "_28:269_note": "Vol 28 p269 (printed p253) bold heading transcribes Pierre Waldeck-Rousseau's surname as 'WALDECK-ROUSSSAU' with three S's.  The page-heading running header on the same page has the correct two-S 'WALDECK-ROUSSEAU', confirming the bold heading is a typo.  Without this fix the article title carries the misspelling.",
+  "28:269": [
+    {
+      "from": "'''WALDECK-ROUSSSAU,",
+      "to": "'''WALDECK-ROUSSEAU,"
+    }
+  ],
   "28:862": [
     {
       "from": "(1590-1503)",
