@@ -92,8 +92,8 @@ for vol in $VOLUMES; do
     --indir "$RUN_DIR" \
     --volume "$vol"
 
-  echo "  Cleaning pages (applies corrections.json to wikitext)..."
-  uv run britannica clean-pages "$vol"
+  echo "  Preparing wikitext (corrections.json + quote-run conversion)..."
+  uv run britannica prepare-wikitext "$vol"
 
   echo "  Detecting boundaries..."
   uv run britannica detect-boundaries "$vol"
@@ -194,11 +194,6 @@ echo
 echo "=== Phase 4c: Annotating math markers [$(elapsed)] ==="
 uv run python tools/pipeline/annotate_math_markers.py
 
-# --- Phase 5: Export front matter ---
-echo
-echo "=== Phase 5: Exporting front matter [$(elapsed)] ==="
-uv run python tools/pipeline/export_front_matter.py
-
 # --- Phase 6b: Build classified TOC (topics page data) ---
 echo
 echo "=== Phase 6b: Parsing classified TOC (vol 29 topics) [$(elapsed)] ==="
@@ -221,11 +216,18 @@ echo
 echo "=== Phase 6c: Detecting fm first-content pages [$(elapsed)] ==="
 uv run python tools/diagnostics/detect_fm_blank_pages.py
 
-# --- Phase 6d: Rebuild generated site pages (article IDs change) ---
+# --- Phase 6d: Rebuild generated site pages ---
+# All four ancillary pages auto-rebuild from source: about.html
+# (editor's intro from docs/about.txt — user-editable, changes most
+# often), and the three frozen-content pages preface.html /
+# ancillary-prefatory-note.html / ancillary-index-preface.html /
+# ancillary-abbreviations.html (1910 print transcriptions via
+# corrections.json + raw wikitext / vol29_ancillary.json).
 echo
 echo "=== Phase 6d: Rebuilding generated site pages [$(elapsed)] ==="
 uv run python tools/viewer/build_about_page.py
 uv run python tools/viewer/build_ancillary_pages.py
+uv run python tools/viewer/build_preface.py
 
 # --- Phase 6e: Build Reader's Guide (65 chapters + 6 part pages + TOC) ---
 # Depends on data/derived/articles/index.json (Phase 4) and
@@ -243,6 +245,18 @@ uv run python tools/viewer/build_readers_guide.py all > /dev/null
 echo
 echo "=== Phase 6f: Pre-deploy quality report (no gate) [$(elapsed)] ==="
 uv run python tools/diagnostics/quality_report.py
+
+# --- Phase 6g: Pre-deploy contributor-dedup gate ---
+# Produces a candidate list at sim ≥ 0.85 and aborts (via set -e) if
+# anything isn't already covered by data/contributor_aliases.json's
+# `aliases` (will collapse on the NEXT rebuild) or explicitly listed
+# in its `distinct` section (acknowledged-different people).  Real
+# dupes must be added to one or the other before deploy.
+echo
+echo "=== Phase 6g: Contributor-dedup gate [$(elapsed)] ==="
+uv run python tools/db/dedup_contributors.py \
+  --report data/derived/quality_reports/dedup_candidates.json
+uv run python tools/diagnostics/check_dedup_candidates.py
 
 # --- Phase 7: Deploy ---
 if [ -z "$NO_DEPLOY" ]; then

@@ -1,14 +1,14 @@
 """Tests for section-based article boundary detection."""
 from britannica.pipeline.stages.detect_boundaries import _parse_page_by_sections
-from britannica.pipeline.stages.clean_pages import _convert_quote_runs
+from britannica.pipeline.stages.prepare_wikitext import _convert_quote_runs
 
 
 def _clean(wikitext: str) -> str:
-    """Apply the same quote-run conversion that ``clean_pages`` applies
-    to source pages, so test inputs match the shape ``detect_boundaries``
-    sees in production (raw ``'''X'''`` → marker ``«B»X«/B»``).  Tests
-    stay readable in source-wikitext form while exercising the real
-    cleaning path."""
+    """Apply the same quote-run conversion that ``prepare_wikitext``
+    applies to source pages, so test inputs match the shape
+    ``detect_boundaries`` sees in production (raw ``'''X'''`` →
+    marker ``«B»X«/B»``).  Tests stay readable in source-wikitext form
+    while exercising the real cleaning path."""
     return _convert_quote_runs(wikitext)
 
 

@@ -11,13 +11,13 @@ This is intentionally narrow:
 * No boundary / xref / contributor / image re-detection — those depend
   on volume-scope passes that don't change with transform-code edits.
   If you change ``corrections.json``, image extraction, contributor
-  linking, etc., use ``tools/pipeline/reprocess_article.py`` (which
+  linking, etc., use ``tools/pipeline/rebuild_volume.py`` (which
   rebuilds the volume properly).
 * No index rebuild — the viewer's article list already knows about
   this article; only its body changes.
 
 For changes that DO affect boundaries / xrefs / images / contributors,
-fall back to ``reprocess_article.py`` (~2min per volume) or a full
+fall back to ``rebuild_volume.py`` (~2min per volume) or a full
 rebuild.
 
 Usage::

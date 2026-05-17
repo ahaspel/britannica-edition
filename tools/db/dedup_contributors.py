@@ -28,10 +28,12 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 from collections import defaultdict
 from difflib import SequenceMatcher
+from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")
 
@@ -181,10 +183,19 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--apply", action="store_true",
                     help="actually perform the merges (default: dry-run)")
-    ap.add_argument("--threshold", type=float, default=0.92,
+    ap.add_argument("--threshold", type=float, default=0.85,
                     help="signature-similarity threshold for dupe "
-                         "candidates (default 0.92)")
+                         "candidates (default 0.85 — low enough to surface "
+                         "name-drift dupes like 'Lawrence F. Abbott' vs "
+                         "'Laurence Abbott'; false positives at this level "
+                         "go in aliases.json's `distinct` list)")
+    ap.add_argument("--report", type=str, default=None,
+                    help="write candidate pairs as JSON to this path "
+                         "instead of merging or printing.  Used by the "
+                         "pre-deploy dedup gate.")
     args = ap.parse_args()
+    if args.apply and args.report:
+        ap.error("--apply and --report are mutually exclusive")
 
     s = SessionLocal()
     try:
@@ -225,6 +236,34 @@ def main() -> int:
                     if sim >= args.threshold:
                         pairs.append((sim, a.id, b.id))
         pairs.sort(key=lambda t: -t[0])
+
+        if args.report:
+            # Machine-readable output for the pre-deploy gate.  Emit
+            # every candidate with its similarity score and article
+            # counts so the gate (and the human reviewing) can decide.
+            records = []
+            for sim, a_id, b_id in pairs:
+                records.append({
+                    "sim": round(sim, 4),
+                    "a_id": a_id,
+                    "a_name": contribs[a_id].full_name,
+                    "a_articles": articles_count.get(a_id, 0),
+                    "b_id": b_id,
+                    "b_name": contribs[b_id].full_name,
+                    "b_articles": articles_count.get(b_id, 0),
+                })
+            out_path = Path(args.report)
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+            out_path.write_text(
+                json.dumps({
+                    "threshold": args.threshold,
+                    "total_contributors": len(contribs_list),
+                    "candidates": records,
+                }, ensure_ascii=False, indent=2),
+                encoding="utf-8",
+            )
+            print(f"Wrote {len(records)} candidate(s) to {out_path}")
+            return 0
 
         print(f"Total contributors: {len(contribs_list)}")
         print(f"Candidate dupe pairs (sim ≥ {args.threshold}): {len(pairs)}")

@@ -511,5 +511,19 @@
       "from": "{{em|3}}76. Athena, from Townley Bust by Marchant.\n{{EB1911 fine print/e}}</td></tr></table>",
       "to": "{{em|3}}76. Athena, from Townley Bust by Marchant.\n{{EB1911 fine print/e}}</td></tr></table>\n<div align=center>All the above are in the British Museum, unless otherwise stated.</div>"
     }
+  ],
+  "_3:221_note": "BAG-PIPE vol 3 p221 has an orphan `|}` (stray wiki-table close) on its own line between the {{img float}} for Bag-pipe music 5.png and the continuation 'the chaunter.' There's no matching `{|` open — Wikisource transcription typo. Without this fix the stray `|}` leaks into the rendered body.",
+  "3:221": [
+    {
+      "from": "{{img float |file=Bag-pipe music 5.png |width=130px}}\n|}the chaunter.",
+      "to": "{{img float |file=Bag-pipe music 5.png |width=130px}}\nthe chaunter."
+    }
+  ],
+  "_1:10_note": "Editorial Preface (vol 1 print p. xi / leaf 10) — the Wikisource transcription drops the opening clause of the first sentence. Per the print scan the paragraph reads 'In the Prefatory Note the history of the production of the successive editions of the Encyclopædia Britannica has been briefly told; and elsewhere in these volumes, under the heading of Encyclopædia…' but Wikisource starts at 'Elsewhere in these volumes…' with the drop-cap on E. Patch restores the missing clause and moves the drop-cap to 'I' of 'In'. Used by tools/viewer/build_preface.py via britannica.corrections.apply_corrections.",
+  "1:10": [
+    {
+      "from": "{{nodent|{{dropinitial|E|4em}}{{larger|LSEWHERE}} in these volumes, under the heading of",
+      "to": "{{nodent|{{dropinitial|I|4em}}{{larger|n}} the Prefatory Note the history of the production of the successive editions of the ''Encyclopædia Britannica'' has been briefly told; and elsewhere in these volumes, under the heading of"
+    }
   ]
 }

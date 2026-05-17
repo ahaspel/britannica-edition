@@ -11,7 +11,7 @@ from britannica.db.base import Base
 from britannica.db.models import Article, ArticleSegment, SourcePage  # noqa: F401
 from britannica.pipeline.stages import detect_boundaries as detect_boundaries_stage
 from britannica.pipeline.stages import transform_articles as transform_articles_stage
-from britannica.pipeline.stages.clean_pages import _convert_quote_runs
+from britannica.pipeline.stages.prepare_wikitext import _convert_quote_runs
 
 FIXTURE_DIR = Path(__file__).parent.parent / "fixtures" / "regression"
 
@@ -38,7 +38,7 @@ def _seed_pages(session_factory, pages_data: list[dict], volume: int):
     """Insert page data matching the real import pipeline.
 
     The real importer stores cleaned_preview as raw_text, raw wikitext
-    as wikitext.  Production then runs clean_pages which converts
+    as wikitext.  Production then runs prepare_wikitext which converts
     wikitext quote-runs (``'''X'''`` / ``''X''``) to internal markers
     (``«B»X«/B»`` / ``«I»X«/I»``).  Tests must apply that conversion
     so detect_boundaries sees the same shape it does in production.
@@ -53,7 +53,6 @@ def _seed_pages(session_factory, pages_data: list[dict], volume: int):
                 volume=volume,
                 page_number=p["page_number"],
                 raw_text=p["cleaned_preview"],
-                cleaned_text=None,
                 wikitext=wikitext,
             ))
         session.commit()

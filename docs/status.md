@@ -73,17 +73,138 @@ chemistry layout), not a stale fixture.
   export time in Python, emitted alongside plain `title` in the article
   JSON.  Single chokepoint (Python), every JS surface drops `title_html`
   into innerHTML.  No marker contamination, no per-surface helpers.
-- **Wire `dedup_contributors.py --apply` into `rebuild_all.sh`** as a phase
-  (probably 3b3) so duplicate-contributor regressions can't ship silently.
+- **Contributor-dedup gate — LANDED 2026-05-17.** Shipped as a gate, not
+  a fixer (per `[[feedback_db_writes_evaporate]]`).  `dedup_contributors.py`
+  gains a `--report` mode (threshold default 0.85, JSON output);
+  `aliases.json` gains a `distinct` list for acknowledged-different
+  people; `tools/diagnostics/check_dedup_candidates.py` is a new
+  pre-deploy gate that filters the report against `aliases` + `distinct`
+  and exits 1 on any unreviewed candidate.  Wired as Phase 6g in
+  `rebuild_all.sh`.  Current state: 11 raw candidates → 3 covered by
+  aliases (collapse on next rebuild) + 8 in distinct → 0 unreviewed.
 - **Pre-deploy quality gate** with hard thresholds + a title-shape check
   (`«` in any title → abort) + a (vol, page)-level pair diff against
   baseline.  Currently the quality report runs pre-deploy but doesn't
   block; harden it into a gate.
 - **Architectural cleanup**:
-  - Split `clean_pages` into `clean_for_articles` (the `page.wikitext`
-    path consumed by the main pipeline) and `clean_for_front_matter`
-    (the `page.cleaned_text` path consumed by `export_front_matter.py`).
-    One function doing two unrelated jobs.
+  - **`clean_pages` → `prepare_wikitext` rename — LANDED 2026-05-17.**
+    The module/function name `clean_pages` was a holdover from when
+    the stage did 13 different cleanup ops; after today's tightening
+    it does exactly two things — `apply_corrections` + quote-run
+    conversion — and "cleans" nothing in any general sense.  Renamed
+    file `src/britannica/pipeline/stages/clean_pages.py` →
+    `prepare_wikitext.py`, function `clean_pages(volume)` →
+    `prepare_wikitext(volume)`, CLI command `britannica clean-pages`
+    → `britannica prepare-wikitext`.  Updated all imports (CLI,
+    transform_articles comments, body_text comments, corrections
+    module docstring, img_float docstring, reprocess_article), all
+    11 test files that imported `_convert_quote_runs`, renamed
+    integration-test file `test_page_cleanup_pipeline.py` →
+    `test_prepare_wikitext.py`, and updated the two active shell
+    scripts (`tools/rebuild_all.sh`, `tools/db/rebuild_volume.sh`).
+    Tests: 286 passing, same 8 pre-existing reds.  Disposable
+    `tools/_scratch/*.sh` left untouched.  Earlier LANDED entries
+    in this file still reference `clean_pages` to describe the
+    pre-rename state accurately.
+  - **SCORE → content-addressable element — LANDED 2026-05-17.**
+    `<score>` handling lived as a pre-extraction pass in
+    `clean_pages.py` (then briefly in `elements/_score.py`) because
+    `SCORE_IMAGES` was keyed by `(volume, page, occurrence_index)` —
+    treating SCORE as a positional element.  But the upstream Commons
+    URL is a content-hash of the LilyPond source, not position-based;
+    the keying was an implementation choice, not an architectural
+    necessity.  Rekeyed all 11 entries by whitespace-normalized
+    LilyPond content; `_leaf._process_score` now does a single dict
+    lookup like `_process_math` and is reached as a normal post-extract
+    element handler.  Deleted: `elements/_score.py`,
+    `_replace_score_tags` entirely (it was the pre-extraction pass),
+    `SCORE_TAG` regex from `image_assets.py`, the pre-extract
+    registration in `_ELEMENT_HANDLERS`, the call site in
+    `transform_articles/__init__.py:497`.  Smoke-tested: all 8 score
+    tags across vol 3 p221 + vol 6 p416 resolve to their original
+    URLs.  Tests: 286 passing, same 8 pre-existing reds.
+  - **Editorial Preface → source-regenerated static HTML, full
+    ancillary decoupling — LANDED 2026-05-17.**  New build script
+    `tools/viewer/build_preface.py` reads vol 1 ws pages 10-23
+    `raw_text` (not `cleaned_preview` — see below), applies
+    `corrections.json`, converts wikitext to static HTML, writes
+    `tools/viewer/preface.html`.  Joins all four ancillary builders
+    in Phase 6d of `rebuild_all.sh` (`build_about_page.py`,
+    `build_ancillary_pages.py`, `build_preface.py`).  Mirrors the
+    article pipeline's marker semantics so output matches what the
+    JS renderer would have produced if its input were correct.
+
+    **Bugs fixed vs the old `export_front_matter.py` → JS path:**
+    * **Wrong content range.**  The old export read pp.6-23 corpus-
+      wide and glued the Prefatory Note (pp.6-9) onto the Editorial
+      Introduction (pp.10-23).  Production has been showing both
+      stuck together for the entire site's history.  New build reads
+      pp.10-23 only; Prefatory Note stays in
+      `ancillary-prefatory-note.html`.
+    * **Missing opening sentence.**  The print's first paragraph
+      begins "In the Prefatory Note the history of the production
+      of the successive editions of the Encyclopædia Britannica has
+      been briefly told; and elsewhere in these volumes…" but the
+      Wikisource transcription drops this clause and starts at
+      "Elsewhere…".  Confirmed against live Wikisource — same gap
+      there.  Patched via `corrections.json` `"1:10"` (adds the
+      missing clause, rebases the drop-cap from "E" to "I").
+    * **Lost footnotes.**  The old path read `cleaned_preview`
+      which captured only some `<ref>…</ref>` tags.  Building from
+      `raw_text` keeps both footnotes intact.  Wired the same
+      `id="fnref-N"` / `scrollIntoView` back-navigation the article
+      viewer uses so footnote-list clicks return to the in-body
+      anchor.
+    * **Bold-italic shoulders.**  The old `cleaned_preview` stripped
+      `'''` bold markers from SH content (italic-only via CSS); the
+      raw-text build was emitting `<b>` inside `<span class=
+      "shoulder-heading">`.  Now strips B markers to match.
+    * **Lost spaces, mid-word soft hyphens, em-space entities,
+      double periods, SH-broken paragraph flow** — each fixed; mirror
+      the JS / fetch-pipeline transformations precisely (HTML space
+      entities → space; `<br>` → space; `- ` removal joins
+      soft-hyphenated words; SH content in margin via paragraph-
+      merge so prose flows continuously around it).
+    * **Wikilinks rendered.**  `[[w:X|Y]]` → Wikipedia anchor,
+      `[[Author:X|Y]]` → `/contributors.html?q=Y`.  Production's
+      `cleaned_preview` stripped these to plain text; restored as
+      proper clickable links.
+
+    **Decoupling work:**
+    Deleted `tools/pipeline/export_front_matter.py`,
+    `clean_for_front_matter`, the `clean_pages` compatibility
+    orchestrator, the `cleaned_text` column from `SourcePage`, the
+    Phase 5 export step from `rebuild_all.sh`, the dead
+    `dedication.body` export, `cleaned_text=None` initialisers in
+    the CLI / importer / test conftest, and the obsolete
+    `test_page_cleanup_pipeline` assertions (replaced with a
+    quote-run-conversion check on `wikitext`).  `clean_pages.py` is
+    now ~180 lines doing one job: typo corrections + quote-run
+    conversion on `page.wikitext`.  Tests: 286 passing, same 8
+    pre-existing reds.  Production stays broken until the new
+    `preface.html` is uploaded on the next deploy.  Follow-up: drop
+    orphan `cleaned_text` column from local DB with
+    `ALTER TABLE source_pages DROP COLUMN cleaned_text;` when
+    convenient.
+  - **`clean_pages` split — LANDED 2026-05-17.**  Replaced the 539-line
+    catch-all with two narrow public entries.  `clean_for_articles`
+    (~10 lines) does only typo corrections + quote-run conversion on
+    `page.wikitext`.  `clean_for_front_matter` (~14 lines) does the
+    six prose-cleanup ops (unicode, print artifacts, headers,
+    hyphenation, reflow, whitespace) on `page.cleaned_text` consumed
+    by `export_front_matter.py`.  `clean_pages` is now a compatibility
+    orchestrator calling both.  Deleted ~280 lines of article-shaped
+    catch-alls from the front-matter path (`_clean_plate_layout`,
+    `_convert_img_float`, `_clean_leaked_table_markup`,
+    `_fix_unclosed_footnotes`, `_fix_unclosed_tables`, plus
+    stray-control-char / residual-`''` substitutions).  Audit verified
+    these produced IDENTICAL output on the 19 pages
+    `export_front_matter.py` actually consumes (Vol 1 pp.5-23 —
+    dedication + editorial preface) — they were dead weight running
+    against article-pipeline data the front-matter export never reads.
+    Tests: 286 passing (same 8 pre-existing reds).  Idempotency check
+    on Vol 1: 1028/1029 pages byte-identical when rerun (the 1 diff
+    is a pre-existing quirk in `_convert_quote_runs`).
   - Decompose `detect_boundaries.py` (~900 lines): letter-article handler,
     bold extractor, glue check, fallback path → each its own module
     with focused tests.
@@ -105,6 +226,19 @@ chemistry layout), not a stale fixture.
   regex + brace-aware helper.  Validated 26/26 on corpus (one per
   letter A–Z), zero false positives.  See
   `tools/_scratch/verify_letter_articles_simplified.py`.
+
+- **Missing-image audit honest + djvu refs normalized — LANDED 2026-05-17**.
+  `find_missing_images.py` reported 14 misses but 10 were `EB1911 -
+  Volume N.djvu/NNN` page-leaf refs whose canonical local form
+  (`djvu_volNN_pagePPPP.jpg`) was already on disk — the audit just
+  didn't apply the djvu normalization that `transform_articles` does
+  to article bodies.  Two fixes: audit imports `_normalize_djvu_page_refs`
+  before checking on-disk (14 → 4); `extract_images.py::_parse_image_ref`
+  and `_parse_img_float` normalize before storing so `images[*].filename`
+  matches what's on disk and what body markers already say.  Remaining
+  4 were genuine Commons files never fetched on the last
+  `download_images.py` run; all 4 downloaded locally (will reach S3 on
+  next deploy).  Audit now reports 0.
 
 ---
 
@@ -135,10 +269,13 @@ chemistry layout), not a stale fixture.
       standard 2-col legend; needs its own detector that walks `{{Hi}}`
       templates as legend entries.
     * **Side-by-side image cells losing caption + legend** (ARACHNIDA Figs
-      57–58) — two figures laid out in a 2-column wikitable, each cell
-      containing `[[File:…]]` + caption + `<br>`-stacked legend; pipeline
-      lifts the IMG markers but drops the cell text.  Distinct extraction-
-      time issue.
+      57–58, BAG-PIPE vol 3 p221) — two figures laid out in a 2-column
+      wikitable, each cell containing `[[File:…]]` (or `<score>`) +
+      caption + `<br>`-stacked legend; pipeline lifts the IMG markers
+      but drops the cell text and leaks the TABLE marker.  Sackpfeife /
+      Bock / Schäferpfeife / Hümmelchen image labels lost, and the
+      chalumeau-scores table renders as raw `{{TABLE:…}TABLE}` text.
+      Distinct extraction-time issue.
 - **Fig 7 editorial note in trailing PRE** — a wikitable that follows the
   figure containing an editorial annotation `[According to the system…]`
   classifies as PRE; the figure walker doesn't recurse into PRE for an
@@ -287,8 +424,10 @@ math measurement).  pytest (265 tests).
 
 - `tools/rebuild_all.sh` — full corpus rebuild + deploy (`--no-deploy` for
   local-only).  ~2 hours.
-- `tools/pipeline/rebuild_article.py <vol> <TITLE>` — single-article rebuild
-  for fast iteration.
+- `tools/pipeline/rebuild_volume.py <vol> <TITLE>` — rebuild a volume
+  targeted at one article.  Fast (in-process) by default; `--full`
+  wipes source + re-imports + runs all stages; `--deploy` uploads
+  the article JSON to S3.
 - `tools/render_article.py <TITLE>` — re-render one article from existing DB
   state (~3 s).  Fastest iteration loop.
 - `tools/diagnostics/quality_report.py` — body-wide metrics (run before every

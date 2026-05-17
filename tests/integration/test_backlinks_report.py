@@ -2,7 +2,7 @@ from britannica.db.models import SourcePage
 from britannica.pipeline.stages import detect_boundaries as detect_boundaries_stage
 from britannica.pipeline.stages import extract_xrefs as extract_xrefs_stage
 from britannica.pipeline.stages import resolve_xrefs as resolve_xrefs_stage
-from britannica.pipeline.stages.clean_pages import _convert_quote_runs as _clean
+from britannica.pipeline.stages.prepare_wikitext import _convert_quote_runs as _clean
 from britannica.review import reports as reports_module
 
 

@@ -676,7 +676,7 @@ def _transform_body_text(text: str) -> str:
         if text == before:
             break
     text = _convert_sub_sup(text)
-    # Bold/italic markers already present from clean_pages's
+    # Bold/italic markers already present from prepare_wikitext's
     # `_convert_quote_runs` (the canonical MediaWiki-aware conversion).
     # No quote-run conversion is needed here.
     text = _strip_templates(text)
