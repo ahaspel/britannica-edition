@@ -32,8 +32,12 @@ def test_extract_heading_empty():
 
 
 def test_extract_heading_strips_bold_markers():
+    """``_extract_heading`` operates on cleaned wikitext (post
+    ``_convert_quote_runs``), so bold arrives as ``«B»…«/B»`` markers,
+    not raw ``'''…'''``.  Heading detection should strip these markers
+    to recover the plain title."""
     title, remainder = _extract_heading(
-        "'''ABACUS''', a device."
+        "«B»ABACUS«/B», a device."
     )
     assert title == "ABACUS"
 

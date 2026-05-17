@@ -1,111 +1,110 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-05-16.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-05-17.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
 ---
 
-## Current focus (2026-05-16)
+## Current focus (2026-05-17) — Phase A recovery shipped
 
-**Article detection overhaul** — replaced the uppercase-run title-extraction
-regex with a bold-delimited rule that captures the full multi-bold title from
-the first `«B»` to the last `«/B»` belonging to it.  Surface improvements
-corpus-wide: full names where baseline truncated to surname only (AARSSENS, or
-Aarssen, FRANCIS VAN), accented characters preserved (BARÈRE, GRÉTRY),
-typography preserved (`«SC»`/`«I»`/`«B»` markers kept in title for viewer
-rendering).  Pattern-1 cleanup: NITRIC ACID-class titles shorten to just the
-bold-delimited heading; the parenthetical etymology falls into the body
-naturally.
+The 2026-05-16 V2 deploy shipped marker-contaminated titles (`«B»X«/B»` in
+the `title` field) plus a separately-broken xref resolver and contributor
+linker — both downstream consequences of the same root cause.  Today's
+Phase A recovery reverts the title contract and ships clean.
 
-**24 letter articles recovered** (A through Z; baseline had only 15 of them).
-Source uses six different drop-cap template shapes (`{{dropinitial|X}}`,
-`{{di|X}}`, `{{Serif|{{di|X|5em}}}}`, `{{di|{{serif|J}}|4em}}`,
-`{{dropinitial|'''{{serif|K}}'''|6em}}`, bold-wrapped `«B»{{di|T}}«/B»`); the
-new `_detect_letter_article` special handler identifies them by drop-cap
-template at section start plus letter-article body keywords ("letter",
-"alphabet", "phoenician", etc.).
+**Root cause:** an in-session edit to `_clean_extracted_title` kept the
+`«B»/«I»/«SC»` formatting markers in the returned title so the viewer's
+H1 could render typography.  Eight surfaces read `title` as plain text
+(volume index, search, xref resolver, contributor linker, Meilisearch,
+Reader's Guide, topics page, URL-slug builder); only the H1 was patched.
+Every other surface either rendered raw `«B»` characters or failed
+string-equality matching.  Net result: ~98% of titles displayed garbage
+in the volume index, ~89% of cross-references unresolved (28,613 lost),
+~70 contributors orphaned.
 
-**Multi-page article splits fixed** — AIR-ENGINE (481-483), AIRY (483-485),
-ALECSANDRI (578-579), ALSTRÖMER (801-802) were each being split into two
-articles by a fallback that fired on continuation pages whose `<section
-begin="X">` name matched the article but had no bold heading.  Removed the
-fallback; bold heading is now a strict requirement for a new article (except
-for letter articles via the special handler).
+**Phase A fixes shipped today:**
+- `detect_boundaries.py::_clean_extracted_title` — strips `«B»/«I»/«SC»`
+  markers, returns plain title.  Single chokepoint.
+- `detect_boundaries.py` multi-line bold extension — when first content
+  line ends with `«/B»` and the next starts with `«B»`, the extractor
+  joins them.  Fixes ROBESPIERRE, MAXIMILIEN FRANÇOIS MARIE ISIDORE DE
+  (title's bold span spans two physical lines in source).
+- `clean_pages.py::_convert_quote_runs` — applies quote-run conversion
+  inside `<ref>...</ref>` blocks before masking, so italics in citations
+  (`''Ency. Bib.''`) get marked correctly.  `stray_wiki_italic` 2,159 → 15.
+- `tools/rebuild_all.sh` — quality report moved to Phase 6f (pre-deploy)
+  for visibility.  Gate-style blocking deferred to a follow-up.
+- 6 corrupted quality-report baselines deleted from
+  `data/derived/quality_reports/` (post-stacked-DB-rebuild artifacts).
+- `data/contributor_aliases.json` — three pairs added so `_clean_name`
+  collapses them on next rebuild: Lawrence F. Abbott / Laurence Abbott
+  (the one visible-on-page dup), H. Hamilton Fyfe / Hamilton Fyfe,
+  Ralph Stockman Tarr / Ralph Stockman.  Only Abbott is currently
+  visible (the others have one empty side).
 
-**Body-rendering fixes (deploy regressions from 2026-05-16 V2):**
-- Line-scoped quote-run conversion prevents one-line typos (`''The
-  Fishmongers'''` on vol 28 p403) from cascading through the rest of the page
-  and eating downstream articles.  Recovered WATER-SCORPION, WATERSHED,
-  WATERSPOUT, WHEAT, plus ~35 other articles V2 dropped.
-- Fixed-point template-unwrap loop in `body_text.py` resolves nested
-  `{{nowrap|N{{tfrac|M}}}}` patterns without losing the content or leaving
-  stray `}}` (~166 stray-close-brace regressions cleared).
-- `<ref>` masking before line-split — multi-line footnotes inside bold
-  headings (ODO OF BAYEUX) no longer break quote-run conversion.
-- HTML comment peeling in section first-line detection (MARRYAT vol 17 p776).
-- `{{bold|…}}` template handling (SPARKS, JARED vol 25 p629 and 6 others).
-- Bracket-balance: titles like `«B»MARS, MLLE«/B» [«B»ANNE … BOUTET«/B»]`
-  now include the closing `]` (ALBERT, AMYNTAS II have same pattern).
-- detect-boundaries body-slice uses a non-destructive `first_line` rather
-  than the template-stripped `clean_first`, preserving nested templates in
-  body content.
-
-**Corrections.json entries:**
-- `28:403` — Fishmongers' Company genitive apostrophe (line-scoping makes
-  this safe but the fix renders the line cleanly).
-- `28:269` — Waldeck-Rousseau surname misspelled `WALDECK-ROUSSSAU` (3 S's)
-  in the bold heading.
-
-**Article-list verification:** row-by-row diff against
-`article_index_baseline_full.tsv` shows 27 truly-new articles in current
-(real wins) and 13 unmatched-baseline entries that are all matcher artifacts
-(accent / curly-apostrophe differences, name-order, etc.) — zero real losses.
-Net article delta vs baseline: +14 across 28 vols.
-
-Next: full rebuild + deploy in progress (`tools/rebuild_all.sh`).
-
----
-
-## Queued for next rebuild
-
-### Math infrastructure (this session)
-- `src/britannica/math_widths.py` (new) — `scale_hint` lookup, fs=80 floor.
-- `tools/diagnostics/measure_math_widths.py` (new) — KaTeX width measurement.
-  Cache: `data/derived/math_widths.json`.
-- `tools/pipeline/annotate_math_markers.py` (new) — post-export re-annotation.
-- `_process_math` (`elements/_leaf.py`) and `_math_layout.py` — whitespace
-  canonicalisation + `scale_hint` bake.
-- `tools/viewer/viewer.html` — `«MATH[hint]:` parser, fs=N scaling, popout
-  link + natural-size scrollable modal.
-- `tools/rebuild_all.sh` — new Phase 4b (measure) + Phase 4c (annotate).
-
-### Quality / regression fixes (this session)
-- `transform_articles/__init__.py` — JESUS CHRIST layout-strip refined with
-  `\n(?!\s*\|)` lookahead (preserves real data tables in BEAUFORT, PROBABILITY,
-  ROME, ROOT, TROCHAIC, TURKEY, ZEUXIS); `{{word-spacing|N|…}}` strip before
-  `unfold_folded_rows` (FISHERIES).
-- `transform_articles/body_text.py` — `{{Fs|N|…}}` template strip (HYDROMECHANICS).
-- `elements/_tables.py` + `elements/__init__.py` — inline nested `{{TABLE:}TABLE}`
-  inside HTMLTABLE blocks (ORNITHOLOGY-style).
-- `data/corrections.json` — WEIGHTS AND MEASURES `{{ditto|{India:` entry.
-- `tools/diagnostics/quality_report.py` — improved marker stripping, added
-  HTMLTABLE/CHEM/PRE to known markers.
-
-### Prior session work also queued
-- Chemistry rendering: `_process_chemistry_layout` self-contained parser
-  (FULMINIC ACID, ALDEHYDES, SUGAR verified).
-- ROBES PLATE captions: `parsers/plate/captions.py::is_image_adjacent` allows
-  `<br>` between image and caption.
-- JESUS CHRIST page-layout wrapper strip (`_strip_page_layout_noinclude_wrappers`).
-- Viewer LN dedup removed — every `{{EB1911 article link|…}}` linkifies.
+**Tests recovered:** the 2026-05-16 boundary rewrite broke 24 unit tests
+(fixtures fed raw `'''X'''` to `detect_boundaries`, which now consumes
+cleaned `«B»X«/B»`).  Plus 9 regression/integration tests in the same
+fixture-shape family.  All 33 updated to call the real
+`_convert_quote_runs` before passing to the boundary parser.  Test
+suite is back to being a real signal: 286 passing, 8 remaining red —
+each one a documented production bug (image-legend extraction +
+chemistry layout), not a stale fixture.
 
 ---
 
 ## Last full rebuild
 
-**2026-05-14 — deployed to britannica11.org.**  Snapshot: 36,663 articles + 398
-plate inserts = 37,061 entries; 31,953 (86%) cross-references resolved.
+**2026-05-17 — Phase A recovery deployed to britannica11.org.**
+- 36,671 articles (+8 vs 2026-05-14 baseline)
+- 31,815 xrefs resolved (vs 31,954 baseline — close to parity)
+- 5,219 xrefs unresolved (vs 5,131 baseline)
+- 0 titles contain `«B»/«I»/«SC»` in the JSON `title` field
+- stray_wiki_italic: 15 (was 2,159 yesterday, 2 on 2026-05-14)
+- stray_close_braces: 9 (unchanged from baseline)
+- 1,501 contributors created, ~48 unlinked after Phase 3b → ~7 after Phase 3b2
+
+---
+
+## Queued (next session)
+
+- **Phase B**: restore H1 typography via a `title_html` field rendered at
+  export time in Python, emitted alongside plain `title` in the article
+  JSON.  Single chokepoint (Python), every JS surface drops `title_html`
+  into innerHTML.  No marker contamination, no per-surface helpers.
+- **Wire `dedup_contributors.py --apply` into `rebuild_all.sh`** as a phase
+  (probably 3b3) so duplicate-contributor regressions can't ship silently.
+- **Pre-deploy quality gate** with hard thresholds + a title-shape check
+  (`«` in any title → abort) + a (vol, page)-level pair diff against
+  baseline.  Currently the quality report runs pre-deploy but doesn't
+  block; harden it into a gate.
+- **Architectural cleanup**:
+  - Split `clean_pages` into `clean_for_articles` (the `page.wikitext`
+    path consumed by the main pipeline) and `clean_for_front_matter`
+    (the `page.cleaned_text` path consumed by `export_front_matter.py`).
+    One function doing two unrelated jobs.
+  - Decompose `detect_boundaries.py` (~900 lines): letter-article handler,
+    bold extractor, glue check, fallback path → each its own module
+    with focused tests.
+- **Inline images rendered as block** — corpus-wide bug.  Source has
+  `[[File:foo.svg|14px]]` mid-prose (letter articles use these for
+  variant glyphs of A/B/C in Phoenician, Greek, Latin scripts; ARENIG
+  GROUP and similar use them for taxonomic ornament).  Pipeline strips
+  the size hint (`_image.py:34` skips `\d+px` parts) and wraps the
+  resulting `{{IMG:fn}}` with `\n\n`, turning inline images into
+  standalone block-level images at default size.  Fix is multi-file:
+  preserve size in `_process_image` (and the ~10 other IMG-emit sites
+  in `_layout.py`/`_tables.py`/etc.); extend marker schema to
+  `{{IMG[size=14px]:fn|caption}}` mirroring `«MATH[fs=N]:`; stop the
+  `\n\n` framing for inline images; teach the viewer to render the
+  size-hinted form inline.
+
+- **Letter-article simplification — LANDED 2026-05-17**.  Replaced
+  ~70 lines of brace-walker + body-keyword check with ~25 lines of
+  regex + brace-aware helper.  Validated 26/26 on corpus (one per
+  letter A–Z), zero false positives.  See
+  `tools/_scratch/verify_letter_articles_simplified.py`.
 
 ---
 
@@ -168,24 +167,25 @@ plate inserts = 37,061 entries; 31,953 (86%) cross-references resolved.
   the join.  Sample: ARACHNIDA Figs 13, 63, 74.  Narrow extraction-time
   fix: normalise `.(` → `. (` when assembling the caption (in
   `clean_caption` or the caption-build path of the layout subclasses).
-- **Italic-marker inversion** — paragraphs render with close-italic *before*
-  open-italic on substrings that should be italic, implying italic state
-  has been flipped "on" by an unclosed `''` somewhere earlier.  A single
-  upstream defect cascades through every subsequent balanced italic pair
-  in the same section — many visible instances, one underlying cause per
-  cascade.  Visible at multiple points in ARACHNIDA (Sub-order/Families
-  lists, Architarbus, Tyroglyphidae→Eriophyidae block).  Class is
-  `stray_wiki_italic`; the 5-quote bold-italic handler in
-  `_convert_bold_italic` likely misses some edge case.  Post-rebuild
-  quality report will quantify; pre-existing class, not a new regression.
-- **13 missing image files on disk** (`tools/diagnostics/find_missing_images.py`)
-  — ALPHABET plate, CASTLE Fig 9, RIGGING, several `.djvu/NNN` refs.
-- **Small residual quality counters** (2026-05-12 baseline, may shift):
-  `unhandled_marker_in_htmltable` ≈ 16 (driven to 0 by this session's HTMLTABLE
-  marker work; verify post-rebuild); `stray_close_braces` 9 / `stray_braces` 7
-  (math-vs-template collisions); `html_tag` 1 (POST vol 22).
-- **Lower priority:** ~93 unlinked contributors; ~3,633 unproofread Wikisource
-  pages; Meilisearch port 7700 open to all (should be CloudFront-only).
+- **Italic-marker inversion (residual)** — pre-existing class.  Post-Phase-A
+  `stray_wiki_italic` counter is at 15 (vs baseline 2 on 2026-05-14, and a
+  catastrophic 2,159 on the broken 2026-05-16 V2 deploy).  Ref-internal
+  italics fixed today; the remaining 15 are the unfixed pre-existing edge
+  cases in the 5-quote bold-italic handler.
+- **8 unit-test failures** = 8 documented production bugs:
+  - 7× `test_image_layout_unwrap.py` — the legend-extraction sub-patterns
+    listed above (rowspan, prime marks, hanging-indent `{{Hi}}`,
+    side-by-side image cells, sponges/hydromedusae figures).
+  - 1× `test_elements.py::test_fulminic_acid_competing_formulae` —
+    chemistry-layout doesn't emit `«CHEM:` marker for the
+    competing-formulae 2-D table shape.
+- **Contributor duplicates (1 visible, 2 invisible)** — Abbott pair
+  visible on contributors page; Fyfe + Stockman pairs have one orphan side
+  filtered out of the contributors page.  All three queued for merge via
+  `data/contributor_aliases.json` on next rebuild.
+- **Lower priority:** ~7 unlinked contributors after Phase 3b2 (down from
+  ~88 in yesterday's broken deploy); ~3,633 unproofread Wikisource pages;
+  Meilisearch port 7700 open to all (should be CloudFront-only).
 
 See `docs/reports/` for historical audit snapshots.
 

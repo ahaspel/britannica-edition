@@ -8,6 +8,9 @@ from britannica.captions import clean_caption
 from britannica.db.models import Article, ArticleImage, ArticleSegment, SourcePage
 from britannica.db.session import SessionLocal
 from britannica.parsers import img_float as _img_float_parser
+from britannica.pipeline.stages.transform_articles.djvu_refs import (
+    _normalize_djvu_page_refs,
+)
 
 
 _IMAGE_PATTERN = re.compile(
@@ -42,9 +45,14 @@ def _commons_url(filename: str) -> str:
 
 
 def _parse_image_ref(ref: str) -> dict:
-    """Parse a [[File:...]] reference into filename, caption, etc."""
+    """Parse a [[File:...]] reference into filename, caption, etc.
+
+    DjVu page-leaf refs (`EB1911 - Volume N.djvu/PPPP`) are rewritten to
+    the canonical local filename `djvu_volNN_pagePPPP.jpg` so the stored
+    record matches the rendered file produced by `download_djvu_crops.py`
+    and the body marker emitted by `transform_articles`."""
     parts = [p.strip() for p in ref.split("|")]
-    filename = parts[0]
+    filename = _normalize_djvu_page_refs(parts[0])
 
     # Last part is caption if it's not a size/position keyword
     caption = None
@@ -74,10 +82,11 @@ def _parse_img_float(body: str) -> dict | None:
     parsed = _img_float_parser.parse(body)
     if parsed is None:
         return None
+    filename = _normalize_djvu_page_refs(parsed.filename)
     return {
-        "filename": parsed.filename,
+        "filename": filename,
         "caption": parsed.caption or None,
-        "commons_url": _commons_url(parsed.filename),
+        "commons_url": _commons_url(filename),
     }
 
 

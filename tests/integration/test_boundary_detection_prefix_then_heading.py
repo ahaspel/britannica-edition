@@ -1,5 +1,6 @@
 from britannica.db.models import Article, ArticleSegment, SourcePage
 from britannica.pipeline.stages import detect_boundaries as detect_boundaries_stage
+from britannica.pipeline.stages.clean_pages import _convert_quote_runs as _clean
 
 
 def test_detect_boundaries_handles_continuation_then_new_heading_same_page(
@@ -17,14 +18,14 @@ def test_detect_boundaries_handles_continuation_then_new_heading_same_page(
                     volume=1,
                     page_number=1,
                     raw_text="unused",
-                    wikitext='<section begin="Abalone" />\'\'\'ABALONE,\'\'\' A type of shellfish.',
+                    wikitext=_clean('<section begin="Abalone" />\'\'\'ABALONE,\'\'\' A type of shellfish.'),
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
                     page_number=2,
                     raw_text="unused",
-                    wikitext=(
+                    wikitext=_clean(
                         "Continuation of the abalone article on the next page.\n\n"
                         '<section begin="Abandon" />\'\'\'ABANDON,\'\'\'\n'
                         "To relinquish, desert, or give up."

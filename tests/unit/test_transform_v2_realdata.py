@@ -20,8 +20,15 @@ def _load_page(vol, page):
 
 
 def _transform(raw, volume=1, page_number=1):
+    """Apply the full production path for a single page: first
+    ``_convert_quote_runs`` (run by ``clean_pages`` in production),
+    then ``_transform_text_v2`` (run by ``transform_articles``).
+    Without the quote-run conversion, raw ``''italic''`` markers
+    survive to the transform output because transform doesn't do
+    that conversion itself — it expects ``«I»…«/I»`` already."""
+    from britannica.pipeline.stages.clean_pages import _convert_quote_runs
     from britannica.pipeline.stages.transform_articles import _transform_text_v2
-    return _transform_text_v2(raw, volume, page_number)
+    return _transform_text_v2(_convert_quote_runs(raw), volume, page_number)
 
 
 # ── Element Types ──────────────────────────────────────────────────────

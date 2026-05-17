@@ -69,7 +69,20 @@ def _convert_quote_runs(text: str) -> str:
     _refs: list[str] = []
 
     def _mask(m: re.Match) -> str:
-        _refs.append(m.group(0))
+        # Convert quote-runs INSIDE the ref before masking, so italics
+        # like `''Ency. Bib.''` in citations become `«I»Ency. Bib.«/I»`
+        # at the same time as italics in the main prose.  Without this,
+        # ref-internal italics never see the converter (they sit
+        # behind the mask) and emerge as stray `''…''` in the final
+        # body — visible as ~2,000 stray_wiki_italic flags.
+        ref_text = m.group(0)
+        converted_lines = []
+        for line in ref_text.split("\n"):
+            if _QUOTE_RUN_HINT.search(line):
+                converted_lines.append(_convert_quote_runs_line(line))
+            else:
+                converted_lines.append(line)
+        _refs.append("\n".join(converted_lines))
         return f"«REFMASK:{len(_refs)-1}»"
 
     masked = re.sub(r"<ref[^/>]*>[\s\S]*?</ref>", _mask, text)

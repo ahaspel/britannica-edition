@@ -2,6 +2,7 @@ from britannica.db.models import SourcePage
 from britannica.pipeline.stages import detect_boundaries as detect_boundaries_stage
 from britannica.pipeline.stages import extract_xrefs as extract_xrefs_stage
 from britannica.pipeline.stages import resolve_xrefs as resolve_xrefs_stage
+from britannica.pipeline.stages.clean_pages import _convert_quote_runs as _clean
 from britannica.review import reports as reports_module
 
 
@@ -23,14 +24,14 @@ def test_unresolved_xref_report_groups_by_article(
                     volume=1,
                     page_number=1,
                     raw_text="unused",
-                    wikitext='<section begin="Abacus" />\'\'\'ABACUS,\'\'\' A calculating device. See also CALCULATION.',
+                    wikitext=_clean('<section begin="Abacus" />\'\'\'ABACUS,\'\'\' A calculating device. See also CALCULATION.'),
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
                     page_number=2,
                     raw_text="unused",
-                    wikitext='<section begin="Abandon" />\'\'\'ABANDON,\'\'\' To relinquish. See ABANDONMENT.',
+                    wikitext=_clean('<section begin="Abandon" />\'\'\'ABANDON,\'\'\' To relinquish. See ABANDONMENT.'),
                 ),
                 # Only CALCULATION exists, so ABANDONMENT should remain unresolved
                 SourcePage(
@@ -38,7 +39,7 @@ def test_unresolved_xref_report_groups_by_article(
                     volume=1,
                     page_number=3,
                     raw_text="unused",
-                    wikitext='<section begin="Calculation" />\'\'\'CALCULATION,\'\'\' The process of computing.',
+                    wikitext=_clean('<section begin="Calculation" />\'\'\'CALCULATION,\'\'\' The process of computing.'),
                 ),
             ]
         )

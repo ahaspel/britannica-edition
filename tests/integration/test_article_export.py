@@ -4,6 +4,7 @@ from britannica.db.models import SourcePage
 from britannica.export import article_json as article_json_module
 from britannica.pipeline.stages import detect_boundaries as detect_boundaries_stage
 from britannica.pipeline.stages import extract_xrefs as extract_xrefs_stage
+from britannica.pipeline.stages.clean_pages import _convert_quote_runs
 
 
 def test_export_articles_to_json_writes_article_files(
@@ -15,6 +16,9 @@ def test_export_articles_to_json_writes_article_files(
     monkeypatch.setattr(extract_xrefs_stage, "SessionLocal", test_session_local)
     monkeypatch.setattr(article_json_module, "SessionLocal", test_session_local)
 
+    # detect_boundaries operates on cleaned wikitext (post `clean_pages`'s
+    # `_convert_quote_runs`), so seed the same shape — `'''X'''` already
+    # converted to `«B»X«/B»` — that the real pipeline hands it.
     session = test_session_local()
     try:
         session.add_all(
@@ -24,14 +28,20 @@ def test_export_articles_to_json_writes_article_files(
                     volume=1,
                     page_number=1,
                     raw_text="unused",
-                    wikitext='<section begin="Abacus" />\'\'\'ABACUS,\'\'\' A calculating device. See also CALCULATION.',
+                    wikitext=_convert_quote_runs(
+                        '<section begin="Abacus" />\'\'\'ABACUS,\'\'\' '
+                        'A calculating device. See also CALCULATION.'
+                    ),
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
                     page_number=2,
                     raw_text="unused",
-                    wikitext='<section begin="Calculation" />\'\'\'CALCULATION,\'\'\' The process of computing.',
+                    wikitext=_convert_quote_runs(
+                        '<section begin="Calculation" />\'\'\'CALCULATION,\'\'\' '
+                        'The process of computing.'
+                    ),
                 ),
             ]
         )

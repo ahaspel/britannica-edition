@@ -14,16 +14,23 @@ from britannica.pipeline.stages.detect_boundaries import (
     _parse_page_by_sections,
     _split_on_bold_headings,
 )
+from britannica.pipeline.stages.clean_pages import _convert_quote_runs
 
 RAW_DIR = Path("data/raw/wikisource")
 
 
 def _detect_page(vol: int, page: int):
-    """Run boundary detection on a single raw page, return ParsedPage."""
+    """Run boundary detection on a single raw page, return ParsedPage.
+
+    Production runs ``clean_pages`` (which calls ``_convert_quote_runs``)
+    before ``detect_boundaries``, so the boundary detector sees raw
+    ``'''X'''`` already converted to ``«B»X«/B»``.  Tests must mirror
+    that pipeline order to exercise real behavior."""
     path = RAW_DIR / f"vol_{vol:02d}" / f"vol{vol:02d}-page{page:04d}.json"
     with open(path, encoding="utf-8") as f:
         data = json.load(f)
     text = _preprocess_wikitext(data["raw_text"])
+    text = _convert_quote_runs(text)
     parsed = _parse_page_by_sections(text)
     if parsed is None:
         parsed = _split_on_bold_headings(text)
@@ -117,6 +124,7 @@ class TestNoFalseSplits:
             with open(path, encoding="utf-8") as f:
                 data = json.load(f)
             text = _preprocess_wikitext(data["raw_text"])
+            text = _convert_quote_runs(text)
             parsed = _parse_page_by_sections(text)
             if parsed is None:
                 parsed = _split_on_bold_headings(text)

@@ -11,6 +11,7 @@ continuations rather than creating duplicate articles.
 """
 from britannica.db.models import Article, SourcePage
 from britannica.pipeline.stages import detect_boundaries as detect_boundaries_stage
+from britannica.pipeline.stages.clean_pages import _convert_quote_runs as _clean
 
 
 def test_huss_continuation_across_pages(
@@ -63,19 +64,19 @@ def test_huss_continuation_across_pages(
         session.add_all([
             SourcePage(
                 source_name="wikisource", volume=14, page_number=16,
-                raw_text="unused", wikitext=page_16,
+                raw_text="unused", wikitext=_clean(page_16),
             ),
             SourcePage(
                 source_name="wikisource", volume=14, page_number=17,
-                raw_text="unused", wikitext=page_17,
+                raw_text="unused", wikitext=_clean(page_17),
             ),
             SourcePage(
                 source_name="wikisource", volume=14, page_number=18,
-                raw_text="unused", wikitext=page_18,
+                raw_text="unused", wikitext=_clean(page_18),
             ),
             SourcePage(
                 source_name="wikisource", volume=14, page_number=19,
-                raw_text="unused", wikitext=page_19,
+                raw_text="unused", wikitext=_clean(page_19),
             ),
         ])
         session.commit()

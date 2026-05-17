@@ -32,6 +32,10 @@ import re
 import sys
 from collections import defaultdict
 
+from britannica.pipeline.stages.transform_articles.djvu_refs import (
+    _normalize_djvu_page_refs,
+)
+
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                               errors="replace")
 
@@ -44,8 +48,12 @@ IMG_MARKER_RE = re.compile(r"\{\{IMG:([^|}]+)(?:\|[^}]*)?\}\}")
 def disk_name(filename: str) -> str:
     """Translate a Commons-style filename to its local on-disk filename.
     Mirrors the sanitization done by download_images.py and the viewer's
-    commonsUrl() so the audit sees the same files the runtime does."""
-    name = filename.replace(" ", "_")
+    commonsUrl() so the audit sees the same files the runtime does.
+    Also applies the djvu page-ref normalization done by transform_articles
+    so `{{raw image|EB1911 - Volume 20.djvu/472}}` resolves to the
+    `djvu_vol20_page0472.jpg` file written by download_djvu_crops.py."""
+    name = _normalize_djvu_page_refs(filename)
+    name = name.replace(" ", "_")
     for ch in '"<>|?*':
         name = name.replace(ch, "_")
     if name.lower().endswith(".svg"):

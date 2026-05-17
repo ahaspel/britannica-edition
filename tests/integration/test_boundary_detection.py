@@ -1,5 +1,6 @@
 from britannica.db.models import Article, ArticleSegment, SourcePage
 from britannica.pipeline.stages import detect_boundaries as detect_boundaries_stage
+from britannica.pipeline.stages.clean_pages import _convert_quote_runs as _clean
 
 
 def test_detect_boundaries_with_section_markers(
@@ -17,7 +18,7 @@ def test_detect_boundaries_with_section_markers(
                     volume=1,
                     page_number=1,
                     raw_text="unused",
-                    wikitext=(
+                    wikitext=_clean(
                         '<section begin="Abacus" />\'\'\'ABACUS,\'\'\'\n'
                         "The encyclopaedia entry begins here.\n\n"
                         '<section begin="Abalone" />\'\'\'ABALONE,\'\'\'\n'
@@ -29,14 +30,14 @@ def test_detect_boundaries_with_section_markers(
                     volume=1,
                     page_number=2,
                     raw_text="unused",
-                    wikitext="Continuation of the abalone article on the next page.",
+                    wikitext=_clean("Continuation of the abalone article on the next page."),
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
                     page_number=3,
                     raw_text="unused",
-                    wikitext='<section begin="Abandon" />\'\'\'ABANDON,\'\'\' To relinquish, desert, or give up.',
+                    wikitext=_clean('<section begin="Abandon" />\'\'\'ABANDON,\'\'\' To relinquish, desert, or give up.'),
                 ),
             ]
         )
@@ -95,21 +96,21 @@ def test_detect_boundaries_continuation_without_sections(
                     volume=1,
                     page_number=1,
                     raw_text="unused",
-                    wikitext='<section begin="Abalone" />\'\'\'ABALONE,\'\'\' A type of shellfish.',
+                    wikitext=_clean('<section begin="Abalone" />\'\'\'ABALONE,\'\'\' A type of shellfish.'),
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
                     page_number=2,
                     raw_text="unused",
-                    wikitext="Continuation text with no section markers.",
+                    wikitext=_clean("Continuation text with no section markers."),
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
                     page_number=3,
                     raw_text="unused",
-                    wikitext='<section begin="Abandon" />\'\'\'ABANDON,\'\'\' To relinquish.',
+                    wikitext=_clean('<section begin="Abandon" />\'\'\'ABANDON,\'\'\' To relinquish.'),
                 ),
             ]
         )
@@ -149,21 +150,21 @@ def test_named_section_without_bold_is_continuation(
                     volume=1,
                     page_number=1,
                     raw_text="unused",
-                    wikitext='<section begin="Huss" />\'\'\'HUSS,\'\'\' John (c. 1373-1415), Bohemian reformer.',
+                    wikitext=_clean('<section begin="Huss" />\'\'\'HUSS,\'\'\' John (c. 1373-1415), Bohemian reformer.'),
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
                     page_number=2,
                     raw_text="unused",
-                    wikitext='<section begin="Huss, John" />spiritual teaching that influenced later movements.',
+                    wikitext=_clean('<section begin="Huss, John" />spiritual teaching that influenced later movements.'),
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
                     page_number=3,
                     raw_text="unused",
-                    wikitext='<section begin="Hussar" />\'\'\'HUSSAR,\'\'\' a light cavalry soldier.',
+                    wikitext=_clean('<section begin="Hussar" />\'\'\'HUSSAR,\'\'\' a light cavalry soldier.'),
                 ),
             ]
         )

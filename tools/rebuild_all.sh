@@ -234,6 +234,16 @@ echo
 echo "=== Phase 6e: Building Reader's Guide [$(elapsed)] ==="
 uv run python tools/viewer/build_readers_guide.py all > /dev/null
 
+# --- Phase 6f: Pre-deploy quality report (visibility only) ---
+# Runs the report before deploy so we can see the numbers in the log,
+# but does NOT block the deploy — the site is currently broken, so
+# even a regressing rebuild is an improvement.  Gate-style blocking
+# (xref/stray_italic thresholds, title-shape check, pair-diff vs
+# baseline) goes in once we're back to healthy.
+echo
+echo "=== Phase 6f: Pre-deploy quality report (no gate) [$(elapsed)] ==="
+uv run python tools/diagnostics/quality_report.py
+
 # --- Phase 7: Deploy ---
 if [ -z "$NO_DEPLOY" ]; then
   echo
@@ -312,10 +322,9 @@ else
   echo "=== Skipping deploy (--no-deploy) ==="
 fi
 
-# --- Phase 8: Quality analytics ---
-echo
-echo "=== Phase 8: Running quality report [$(elapsed)] ==="
-uv run python tools/diagnostics/quality_report.py
+# --- Phase 8: (quality report now in Phase 6f, pre-deploy) ---
+# Left intentionally blank — gate moved to before Phase 7 so regressions
+# halt the rebuild instead of shipping.
 
 # --- Phase 9: Deploy preflight ---
 # After deploy, verify every asset referenced by the viewer HTML is
