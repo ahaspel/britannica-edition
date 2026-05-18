@@ -1,12 +1,17 @@
-"""Tests for the extract-process-reassemble element pipeline."""
+"""Tests for the walk-classify-produce element pipeline."""
 import re
 
 from britannica.pipeline.stages.elements import (
     ElementContext,
-    extract,
     process_elements,
     _clean_text,
 )
+from britannica.pipeline.stages.elements._shapes import (
+    SHAPE_BRACE_PIPE,
+    SHAPE_DOUBLE_BRACKET,
+    SHAPE_HTML_TAG,
+)
+from britannica.pipeline.stages.elements._walker import walk
 
 
 def _identity_transform(text: str) -> str:
@@ -20,60 +25,63 @@ def _bold_transform(text: str) -> str:
 
 
 class TestExtraction:
-    """Elements are extracted and replaced with placeholders."""
+    """Elements are extracted by the walker and replaced with placeholders."""
 
     def test_extract_ref(self):
         text = "before <ref>footnote text</ref> after"
-        extracted, reg = extract(text)
+        extracted, extracts = walk(text)
         assert "<ref>" not in extracted
-        assert len(reg.elements) == 1
-        assert "footnote text" in list(reg.elements.values())[0][1]
+        assert len(extracts) == 1
+        _ph, _shape, raw = extracts[0]
+        assert "footnote text" in raw
 
     def test_extract_table(self):
         text = "before\n{|\n|cell\n|}\nafter"
-        extracted, reg = extract(text)
+        extracted, extracts = walk(text)
         assert "{|" not in extracted
-        assert len(reg.elements) == 1
-        etype, raw = list(reg.elements.values())[0]
-        assert etype == "TABLE"
+        assert len(extracts) == 1
+        _ph, shape, _raw = extracts[0]
+        assert shape == SHAPE_BRACE_PIPE
 
     def test_extract_image(self):
         text = "text [[File:Foo.jpg|thumb|A caption]] more"
-        extracted, reg = extract(text)
+        extracted, extracts = walk(text)
         assert "[[File:" not in extracted
-        assert len(reg.elements) == 1
+        assert len(extracts) == 1
+        _ph, shape, _raw = extracts[0]
+        assert shape == SHAPE_DOUBLE_BRACKET
 
     def test_extract_score(self):
         text = "music <score>{ \\new Staff }</score> here"
-        extracted, reg = extract(text)
+        extracted, _extracts = walk(text)
         assert "<score>" not in extracted
 
     def test_extract_math(self):
         text = "formula <math>x^2</math> end"
-        extracted, reg = extract(text)
+        extracted, _extracts = walk(text)
         assert "<math>" not in extracted
 
     def test_extract_poem(self):
         text = "verse <poem>line one\nline two</poem> end"
-        extracted, reg = extract(text)
+        extracted, _extracts = walk(text)
         assert "<poem>" not in extracted
 
     def test_nested_ref_in_table(self):
-        """Extracting table first captures the ref inside it."""
+        """Outer-first walking: the table is extracted as a single
+        unit and the ref stays inside its raw bytes — found later
+        by the classifier when it recurses into the table's inner."""
         text = "{|\n|cell <ref>note</ref>\n|}"
-        extracted, reg = extract(text)
-        # Table is extracted (outermost)
-        assert len(reg.elements) == 1
-        etype, raw = list(reg.elements.values())[0]
-        assert etype == "TABLE"
-        # The ref is still inside the table's raw content
-        assert "<ref>" in raw
+        extracted, extracts = walk(text)
+        assert len(extracts) == 1
+        _ph, shape, raw = extracts[0]
+        assert shape == SHAPE_BRACE_PIPE
+        assert "<ref>" in raw  # ref still inside the table's bytes
 
     def test_preserves_surrounding_text(self):
         text = "Hello <ref>note</ref> world"
-        extracted, reg = extract(text)
-        key = list(reg.elements.keys())[0]
-        assert extracted == f"Hello {key} world"
+        extracted, extracts = walk(text)
+        ph = extracts[0][0]
+        assert extracted == f"Hello {ph} world"
 
 
 class TestProcessing:

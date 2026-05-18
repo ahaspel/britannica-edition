@@ -113,7 +113,7 @@ def _is_layout_wrapper(raw: str, inner: str, inner_registry: ElementRegistry | N
         non_ph = re.sub(r'[="]+', "", non_ph)
         non_ph = re.sub(r"\s+", " ", non_ph).strip()
         # If remaining text is short relative to number of images, it's a layout table
-        n_images = sum(1 for _, (t, _) in inner_registry.elements.items() if t == "IMAGE")
+        n_images = sum(1 for label in inner_registry.labels.values() if label == "IMAGE")
         if len(non_ph) < n_images * 300:
             return True
     return False
@@ -639,11 +639,11 @@ def _image_ph_filename(
     ph_id: str, inner_registry: ElementRegistry
 ) -> str | None:
     """Look up the filename for an IMAGE element placeholder."""
-    info = inner_registry.elements.get(ph_id)
-    if not info or info[0] != "IMAGE":
+    if inner_registry.labels.get(ph_id) != "IMAGE":
         return None
+    raw = inner_registry.elements[ph_id][1]
     m = re.match(r"\[\[(?:File|Image):([^\]|]+)",
-                 info[1], re.IGNORECASE)
+                 raw, re.IGNORECASE)
     return m.group(1).strip() if m else None
 
 
@@ -895,8 +895,8 @@ def _try_image_layout_subclass(
     on match, or None to fall through to the generic unwrapper."""
     if not inner_registry:
         return None
-    image_phs = [k for k, (t, _) in inner_registry.elements.items()
-                 if t == "IMAGE"]
+    image_phs = [k for k, label in inner_registry.labels.items()
+                 if label == "IMAGE"]
     if not image_phs:
         return None
 
@@ -915,8 +915,8 @@ def _try_image_layout_subclass(
     if len(image_phs) >= 2:
         table_phs = [k for k, (t, _) in inner_registry.elements.items()
                      if t == "TABLE"]
-        poem_phs = [k for k, (t, _) in inner_registry.elements.items()
-                     if t == "POEM"]
+        poem_phs = [k for k, label in inner_registry.labels.items()
+                     if label == "POEM"]
         if table_phs:
             return None  # nested layout table — let generic unwrap handle
         # Consume runs of consecutive `|-` row separators in one match.
@@ -1115,8 +1115,8 @@ def _try_image_layout_subclass(
     if img_row_idx is None:
         return None
 
-    poem_phs = [k for k, (t, _) in inner_registry.elements.items()
-                 if t == "POEM"]
+    poem_phs = [k for k, label in inner_registry.labels.items()
+                 if label == "POEM"]
 
     # Locate the caption row.  `fig_cap_idx` is set only when we find
     # a row that actually begins with `Fig. N.—` / `Plate N.—` —
@@ -1148,9 +1148,10 @@ def _try_image_layout_subclass(
                 # but we support them by also scanning the raw inner
                 # text between poem placeholders.
                 legend_lines: list[str] = []
-                for ph, (et, eraw) in inner_registry.elements.items():
-                    if et != "POEM":
+                for ph, label in inner_registry.labels.items():
+                    if label != "POEM":
                         continue
+                    eraw = inner_registry.elements[ph][1]
                     # Extract poem body, apply _emit_legend_chunk so
                     # it goes through the same entry-pattern matcher
                     # as the other legend handlers.
@@ -1496,7 +1497,7 @@ def _unwrap_layout_table(inner: str, text_transform,
         image_indices = [
             i for i, p in enumerate(parts)
             if ph_re.fullmatch(p.strip())
-            and inner_registry.elements.get(p.strip(), ("",))[0] == "IMAGE"
+            and inner_registry.labels.get(p.strip()) == "IMAGE"
         ]
         text_indices = [
             i for i, p in enumerate(parts)
@@ -1591,8 +1592,8 @@ def _unwrap_layout_table(inner: str, text_transform,
     if (
         len(parts) == 1 and inner_registry is not None
         and parts[0].strip() in {
-            k for k, (t, _) in inner_registry.elements.items()
-            if t == "POEM"
+            k for k, label in inner_registry.labels.items()
+            if label == "POEM"
         }
     ):
         return "\n\n" + parts[0] + "\n\n"

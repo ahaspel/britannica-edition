@@ -303,8 +303,8 @@ def _is_equation_layout(inner: str, inner_registry: ElementRegistry | None) -> b
     """
     # Check 1: majority MATH placeholders
     if _PH in inner and inner_registry:
-        math_ct = sum(1 for _, (t, _) in inner_registry.elements.items() if t == "MATH")
-        if math_ct >= 2 and math_ct >= len(inner_registry.elements) * 0.5:
+        math_ct = sum(1 for lbl in inner_registry.labels.values() if lbl == "MATH")
+        if math_ct >= 2 and math_ct >= len(inner_registry.labels) * 0.5:
             return True
     # Check 2: sfrac-template equations with parenthesized numeric labels.
     # Walk row-by-row looking for the combination `{{sfrac|…}}` content
@@ -424,18 +424,19 @@ def _math_table_kind(
     # math_blocks: majority MATH placeholders (was _is_equation_layout
     # check 1).
     if _PH in inner and inner_registry:
-        math_ct = sum(1 for _, (t, _) in inner_registry.elements.items()
-                       if t == "MATH")
-        if math_ct >= 2 and math_ct >= len(inner_registry.elements) * 0.5:
+        math_ct = sum(1 for lbl in inner_registry.labels.values()
+                       if lbl == "MATH")
+        if math_ct >= 2 and math_ct >= len(inner_registry.labels) * 0.5:
             return "math_blocks"
 
     # html_wrapper: a single HTML_TABLE child whose raw content carries
     # math signals.  The outer wikitable is just positioning around
     # that HTML table (and an equation-number cell, typically).
     if inner_registry:
-        for _ph, (etype, eraw) in inner_registry.elements.items():
-            if etype != "HTML_TABLE":
+        for ph, label in inner_registry.labels.items():
+            if label != "HTML_TABLE":
                 continue
+            eraw = inner_registry.elements[ph][1]
             if _HTML_MATH_SIGNALS.search(eraw):
                 return "html_wrapper"
 
