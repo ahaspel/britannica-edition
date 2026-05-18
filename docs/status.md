@@ -73,6 +73,26 @@ chemistry layout), not a stale fixture.
   export time in Python, emitted alongside plain `title` in the article
   JSON.  Single chokepoint (Python), every JS surface drops `title_html`
   into innerHTML.  No marker contamination, no per-surface helpers.
+- **Wikilink-attribution footer shape** — defer.  THUCYDIDES (vol 26
+  p893) and ~160 other articles credit their authors as
+  `{{right|([[Author:Richard Claverhouse Jebb|R. C. J.]]; [[Author:John Malcolm Mitchell|J. M. M.]])}}`
+  instead of the canonical `{{EB1911 footer initials|Name|Init|…}}`
+  template (8,225 corpus-wide).  Two consumers both miss the wikilink
+  shape:
+    1. `extract_contributors.py::_FOOTER_PATTERN` regex matches only
+       the canonical template, so wikilink-credited articles end up
+       with `contributors: []`.
+    2. The producer that strips the credit line from body text uses
+       the same template assumption, so the rendered articles carry
+       a stray `(R. C. J.; J. M. M.)` tail in body prose.
+  Structural fix: teach both consumers a SECOND attribution pattern
+  matching `{{right|\\(?(\\[\\[Author:Name|Init\\]\\];?\\s*)+\\)?}}`,
+  with the wikilink's pre-`|` half giving the canonical name (no
+  alias-table lookup needed — the wikitext already has the full
+  name).  ~160 articles gain their contributors AND lose their stray
+  footer-line tail in one fix.  Per `[[feedback_data_contract_audit]]`:
+  both consumers must learn the new shape together, never one without
+  the other.
 - **Captioned-figure producer bug — Phase 1** — defer until after the
   next clean rebuild.  Producer-bug pool = STRANDED + BLOCK_LAYOUT +
   float-wrapped refs = **2,226 corpus-wide**.  Adjacency audit

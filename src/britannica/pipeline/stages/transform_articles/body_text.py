@@ -12,6 +12,22 @@ from __future__ import annotations
 
 import re
 
+from britannica.markers import RENDERED_MARKER_OPENS
+
+
+# Negative-lookahead alternation built from the shared marker list in
+# `markers.py`.  The strip regex matches any `{{…}}` template-style
+# block UNLESS it opens with one of the rendered-marker prefixes (IMG,
+# IMG-INLINE, TABLE, TABLEH, LEGEND, VERSE), in which case it's left
+# alone for the viewer.  Strip `{{` from each entry — the regex
+# already anchors there.
+_MARKER_OPEN_NAMES = "|".join(
+    re.escape(o[2:]) for o in RENDERED_MARKER_OPENS
+)
+_STRIP_TEMPLATES_RE = re.compile(
+    rf"\{{\{{(?!{_MARKER_OPEN_NAMES})[^{{}}]*\}}\}}"
+)
+
 
 # Internal control-character markers used to protect already-converted
 # spans during subsequent transforms.  Each is a 1-byte sentinel.
@@ -574,7 +590,7 @@ def _strip_templates(text: str) -> str:
     prev = None
     while prev != text:
         prev = text
-        text = re.sub(r"\{\{(?!IMG:|IMG-INLINE:|TABLE|VERSE:)[^{}]*\}\}", "", text)
+        text = _STRIP_TEMPLATES_RE.sub("", text)
     # Note: unclosed-opener stripping is handled targeted per-template
     # (see `_strip_unclosed_nowrap` in _transform_text_v2). A blanket
     # `{{name|` strip here is unsafe — it drops openers of balanced
