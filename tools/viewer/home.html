@@ -60,8 +60,16 @@
       padding: 14px 24px;
       font-size: 0.95rem;
       display: flex;
-      justify-content: center;
+      align-items: center;
       gap: 28px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      flex: 1;
+      justify-content: center;
+      padding-left: 280px; /* visual balance: offsets the search form on the right so links stay centered */
     }
 
     nav a {
@@ -73,6 +81,65 @@
       text-decoration: underline;
       background: rgba(139, 115, 85, 0.08);
       border-radius: 2px;
+    }
+
+    .nav-search {
+      margin: 0;
+      flex: 0 0 auto;
+      position: relative;
+      width: 260px;
+    }
+
+    .nav-search input {
+      width: 100%;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      background: var(--panel);
+      color: var(--text);
+      box-sizing: border-box;
+    }
+
+    .nav-search input:focus {
+      outline: 1px solid var(--link);
+      outline-offset: 1px;
+    }
+
+    #search-typeahead {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 360px;
+      max-width: 90vw;
+      margin: 4px 0 0;
+      padding: 0;
+      list-style: none;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 0 0 6px 6px;
+      max-height: 70vh;
+      overflow-y: auto;
+      z-index: 100;
+      font-size: 0.9rem;
+      text-align: left;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+
+    #search-typeahead mark {
+      background: #ffe033;
+      padding: 0 2px;
+      border-radius: 2px;
+      color: inherit;
+    }
+
+    @media (max-width: 720px) {
+      nav { flex-wrap: wrap; gap: 14px; }
+      .nav-links { padding-left: 0; }
+      .nav-search { width: 100%; }
+      #search-typeahead { right: auto; left: 0; width: 100%; }
     }
 
     .hero {
@@ -124,24 +191,33 @@
       font-size: 0.82rem;
       font-style: italic;
       color: var(--muted);
-      margin-top: 8px;
       text-align: center;
     }
+
   </style>
   <script>
     (function() {
       var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
       var base = isLocal ? "/tools/viewer/" : "/";
       document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
+      document.write('<scr' + 'ipt src="' + base + 'article-urls.js"></scr' + 'ipt>');
+      document.write('<scr' + 'ipt src="' + base + 'search-api.js"></scr' + 'ipt>');
+      document.write('<scr' + 'ipt src="' + base + 'typeahead.js"></scr' + 'ipt>');
     })();
   </script>
 </head>
 <body>
   <nav>
-    <a href="index.html">Articles</a>
-    <a href="contributors.html">Contributors</a>
-    <a href="topics.html">Topics</a>
-    <a href="ancillary.html">Ancillary</a>
+    <div class="nav-links">
+      <a href="index.html">Articles</a>
+      <a href="contributors.html">Contributors</a>
+      <a href="topics.html">Topics</a>
+      <a href="ancillary.html">Ancillary</a>
+    </div>
+    <form action="index.html" method="get" class="nav-search" role="search">
+      <input id="search" type="text" name="q" placeholder="Search articles&hellip;" autocomplete="off" />
+      <ul id="search-typeahead"></ul>
+    </form>
   </nav>
 
   <div class="hero">
@@ -153,11 +229,24 @@
   </div>
   <script>
     const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-    const base = IS_LOCAL ? "/data/derived/articles" : "/data/articles";
-    fetch(`${base}/index.json`).then(r => r.json()).then(data => {
+    const DATA_BASE = IS_LOCAL ? "/data/derived/articles" : "/data/articles";
+
+    let articles = [];
+
+    fetch(`${DATA_BASE}/index.json`).then(r => r.json()).then(data => {
+      articles = data;
       const count = data.filter(a => (a.article_type || "article") === "article").length;
       document.getElementById("caption").textContent =
         `${count.toLocaleString()} articles across 28 volumes \u2014 fully searchable, cross-referenced, and annotated`;
+    });
+
+    // Same typeahead behaviour as the index.html main search.  Enter
+    // without a selection lets the form submit naturally to
+    // index.html?q=\u2026 for the full results experience.
+    initTypeahead({
+      inputEl: document.getElementById("search"),
+      dropdownEl: document.getElementById("search-typeahead"),
+      getArticles: () => articles,
     });
   </script>
 <script data-goatcounter="https://britannica11.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>

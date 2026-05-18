@@ -73,6 +73,103 @@ chemistry layout), not a stale fixture.
   export time in Python, emitted alongside plain `title` in the article
   JSON.  Single chokepoint (Python), every JS surface drops `title_html`
   into innerHTML.  No marker contamination, no per-surface helpers.
+- **Captioned-figure producer bug — Phase 1** — defer until after the
+  next clean rebuild.  Producer-bug pool = STRANDED + BLOCK_LAYOUT +
+  float-wrapped refs = **2,226 corpus-wide**.  Adjacency audit
+  (`tools/_scratch/audit_caption_patterns.py`) classified the pool by
+  position of the nearest caption-shape text (`Fig./Plate/{{sc|Fig}}`):
+
+  | Bucket | Refs | % | Notes |
+  |---|---:|---:|---|
+  | **GLUED_BR**    | 580 | 26% | `<br>`-glued caption directly after the ref |
+  | **PARA_AFTER**  | 158 |  7% | Caption in next paragraph (existing EXTCAP path broken on template-wrapper closers) |
+  | **PARA_BEFORE** | 160 |  7% | Caption on line(s) BEFORE the file ref |
+  | ELSEWHERE       | 605 | 27% | Caption within 400 chars but not adjacent — mostly figure + wikitable-with-caption-header-row pattern |
+  | NONE            | 723 | 33% | No caption-shape detected — mostly maps, chem-formula-as-content, article-start figures |
+
+  **Phase 1 scope:** the first three buckets, 898 refs (40% of pool).
+  Extend the IMAGE element's EXTCAP intake to:
+    1. Accept `<br>`-glued captions directly after the file ref
+       (GLUED_BR).
+    2. Fix the existing PARA_AFTER intake so a caption wrapped in a
+       template with trailing `}}` (outer-wrapper closer) doesn't
+       trip the match regex.
+    3. Accept captions on the line(s) immediately before the file ref
+       (PARA_BEFORE — new direction).
+  Wrapper templates to consume (small fixed set): `{{sc|Fig.}}`,
+  `{{Fs|…|…}}`, `{{Fine block|…}}`, `{{EB1911 Fine Print|…}}`,
+  `{{center|…}}` / `{{c|…}}`, bare prose `Fig. N.—…`.
+
+  **Phase 2 (separate work):** ELSEWHERE bucket = 605 refs of
+  figure-then-wikitable-caption-row patterns.  Either teach the
+  wikitable extractor to bind its `|+` row as caption for an adjacent
+  preceding figure, or teach IMAGE to look ahead into the next
+  wikitable.  Own audit first.
+
+  **Phase 3 (defer indefinitely):** NONE residual = 723 refs.  Mostly
+  legitimately captionless.  Article-title-as-caption for maps is a
+  separate design question, not a producer fix.
+
+  Per `[[feedback_diagnostic_first_recipe]]`: pre-fix HTML snapshot
+  of ~50 known-captioned-figure articles (ACCUMULATOR, BREWING,
+  ORDNANCE, STEAM ENGINE, FLUTE, OBOE, CATACOMB, BRACHIOPODA, BOOK
+  BINDING, …) BEFORE any code change.  Post-fix diff should show
+  changes only on refs the audit classified into one of the three
+  Phase 1 buckets; anything else changing is a regression.
+- **Fast-mode rebuild_volume actually fast** — defer until after the
+  next clean rebuild.  Current "fast" mode (vol 1) takes 174s vs
+  production full mode at 180-240s — savings is only ~30s, so fast
+  mode doesn't deserve its name.  Two structural fixes land it in a
+  meaningfully different speed class:
+  1. **UPDATE articles in-place** instead of DELETE+INSERT.  Same
+     article rows, new body field.  Saves ~26s of DB wipe overhead.
+     Cleanest match for the fast-mode use case (iterating on
+     transform/export code without disturbing detected articles).
+  2. **Parallelize transform_articles and export_articles_to_json**
+     across CPU cores.  Both are per-article-independent.  Saves
+     ~80-100s combined (transform 75s → ~10s, export 52s → ~6s on 8
+     cores).  Same parallelization helps full mode (classify, xref,
+     image, contributor stages all per-article-independent too).
+  Combined effect: fast mode ~30-40s, full mode ~60-90s.  The
+  "30-90s per volume" claim in `rebuild_volume.py`'s docstring then
+  becomes honest.  (Skipping boundary detection on a heuristic was
+  considered and rejected — too magical.)
+- **rebuild_all.sh viewer-deploy enumeration** — defer.  The deploy
+  phase has ~25 individual `aws s3 cp tools/viewer/FOO.html s3://…/FOO.html`
+  lines; each new viewer file requires editing the list, and the list
+  will silently drift from the actual `tools/viewer/` directory.
+  Already caused a near-miss this session — `typeahead.js` would have
+  404'd in prod if I hadn't noticed before the deploy phase ran.  Same
+  catch-all-by-enumeration anti-pattern; structural fix is a single
+  `aws s3 sync tools/viewer/ s3://britannica11.org/` with appropriate
+  `--exclude` patterns (mirrors the `data/articles` sync a few lines
+  above).  Per `[[feedback_dont_grow_catchalls]]`.
+- **Shared viewer page shell** — defer.  Every viewer HTML page
+  (`home.html`, `index.html`, `viewer.html`, `contributors.html`,
+  `topics.html`, `ancillary.html`, and friends) duplicates its
+  `<head>`, the `:root` CSS variable palette, the nav bar, and the
+  script-loader IIFE that pulls in `article-urls.js` /
+  `search-api.js` / `typeahead.js`.  Every color tweak or nav link
+  addition touches N files; drift surfaces as inconsistent styling
+  and the kind of "this works on index but not home" bugs the
+  typeahead extraction surfaced.  Structural fix: a shared shell —
+  either a tiny build-time partial included by every viewer page,
+  or a runtime `viewer-shell.js` that injects `<head>` content +
+  nav + script tags at load time.  Same anti-pattern as the
+  typeahead duplication we just collapsed; same recipe applies.
+  Per `[[feedback_dont_grow_catchalls]]`, treat each "add this
+  small thing to all N files" diff as a smell.
+- **`_transform_text_v2` decomposition** — defer until after the next
+  clean rebuild.  Same catch-all anti-pattern as the old `clean_body` /
+  `clean_pages`, just at a lower level: ~430 lines of template-name-
+  specific preprocessing piled before `process_elements`, plus the
+  `_strip_templates` allowlist regex (`IMG:|IMG-INLINE:|TABLE|VERSE:`)
+  that grows every time we add a marker.  Recipe: name each pre-pass
+  for the structural thing it does (`promote_inline_glyphs` is the
+  shape), push template-specific knowledge into the element that owns
+  it, drive `_strip_templates`'s catch-all to zero.  See
+  `[[feedback_no_catchall_cleanup]]` and
+  `[[feedback_dont_grow_catchalls]]`.
 - **Contributor-dedup gate — LANDED 2026-05-17.** Shipped as a gate, not
   a fixer (per `[[feedback_db_writes_evaporate]]`).  `dedup_contributors.py`
   gains a `--report` mode (threshold default 0.85, JSON output);
@@ -87,6 +184,51 @@ chemistry layout), not a stale fixture.
   baseline.  Currently the quality report runs pre-deploy but doesn't
   block; harden it into a gate.
 - **Architectural cleanup**:
+  - **Inline-image rendering — LANDED 2026-05-17.**  Source convention
+    `[[File:X|14px]]` mid-prose was rendering as a 600px-cap block
+    figure, breaking ~337 corpus refs (Hebrew/Phoenician alphabet
+    glyphs in vol 1 p774, the article on the letter A's 5 ornamental
+    initials, similar inline glyphs scattered across letter articles
+    and tag/ornament references).  New
+    `elements/_inline_glyphs.py::promote_inline_glyphs` runs as a
+    pre-pass to element extraction in `_transform_text_v2` and rewrites
+    only the INLINE_GLYPH bucket — refs with no caption, no layout
+    keyword, outside any wikitable, and in prose-line context — to a
+    new `{{IMG-INLINE:filename|size}}` marker.  The other ~10,000 file
+    refs (CAPTIONED 569, BLOCK_LAYOUT 2,631, TABLE_FIGURE 5,431,
+    STRANDED 1,128, CHEM_BRACKET 210) continue through their existing
+    paths unchanged.  Viewer renders the new marker as a true inline
+    `<img>` with `vertical-align:middle` and the source-specified size
+    (`Npx`, `xHpx`, `WxHpx`, or 1.2em default).  Routing buckets were
+    established by exhaustive corpus audit in
+    `tools/_scratch/audit_image_routing.py`.  Catch-all template
+    stripper in `body_text.py::_strip_templates` allowlist updated to
+    pass `IMG-INLINE:` alongside the existing `IMG:`, `TABLE`,
+    `VERSE:`.
+  - **8 pre-existing test failures resolved — LANDED 2026-05-17.**  All
+    were test-harness bugs, not production bugs.  7 of 8
+    (`test_image_layout_unwrap.py::test_*`) called `_transform_text_v2`
+    directly on raw wikitext, but production runs `_convert_quote_runs`
+    upstream in `prepare_wikitext` first.  Without that pre-pass,
+    `'''italic'''` markers stay raw and the legend extractor's
+    `_MULTICOL_FULL_ENTRY_ITALIC_RE` regex (which keys on `«I»…«/I»`)
+    silently fails — producing the wrong test fixture output even
+    though the underlying production articles
+    (SPONGES/HYDROMEDUSAE/Abbey) render correctly.  Fix: 12-line
+    wrapper in the test file that mirrors the production call shape
+    (`_convert_quote_runs` → `_transform_text_v2`).  Zero production
+    code changes.  The 8th (`test_fulminic_acid_competing_formulae`)
+    was a stale assertion: the test expected `"Langle"` filename
+    string preserved, but the chemistry processor has been correctly
+    rendering it as the `❮` Unicode glyph for some time — assertion
+    updated to match.  Tests: 294 passing, **0 red**.  Diagnosis
+    process followed `[[feedback_verify_the_counter]]`: an earlier
+    "fix" that mutated `_clean_legend_text` to strip `''` and HTML
+    `<i>` tags appeared to fix 6 tests, but verification against
+    production showed the affected articles already rendered
+    correctly — the change was a test-side mirage with regression
+    risk to the working mass.  Reverted, then dug deeper to find the
+    real cause (the test harness, not production).
   - **`clean_pages` → `prepare_wikitext` rename — LANDED 2026-05-17.**
     The module/function name `clean_pages` was a holdover from when
     the stage did 13 different cleanup ops; after today's tightening

@@ -300,6 +300,7 @@ if [ -z "$NO_DEPLOY" ]; then
   aws s3 cp tools/viewer/scans.html s3://britannica11.org/scans.html
   aws s3 cp tools/viewer/search-api.js s3://britannica11.org/search-api.js
   aws s3 cp tools/viewer/article-urls.js s3://britannica11.org/article-urls.js
+  aws s3 cp tools/viewer/typeahead.js s3://britannica11.org/typeahead.js
   aws s3 cp tools/viewer/favicon.svg s3://britannica11.org/favicon.svg --content-type "image/svg+xml"
   aws s3 cp tools/viewer/contributors.html s3://britannica11.org/contributors.html
   aws s3 cp tools/viewer/home.html s3://britannica11.org/home.html

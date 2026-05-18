@@ -574,7 +574,7 @@ def _strip_templates(text: str) -> str:
     prev = None
     while prev != text:
         prev = text
-        text = re.sub(r"\{\{(?!IMG:|TABLE|VERSE:)[^{}]*\}\}", "", text)
+        text = re.sub(r"\{\{(?!IMG:|IMG-INLINE:|TABLE|VERSE:)[^{}]*\}\}", "", text)
     # Note: unclosed-opener stripping is handled targeted per-template
     # (see `_strip_unclosed_nowrap` in _transform_text_v2). A blanket
     # `{{name|` strip here is unsafe — it drops openers of balanced

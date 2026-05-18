@@ -37,27 +37,24 @@ def _transform(raw, volume=1, page_number=1):
 class TestRealImages:
     """[[File:...]] images from real pages."""
 
-    def test_file_image_produces_img_marker(self):
-        """Vol 1 p774 has [[File:]] images."""
+    def test_file_image_produces_inline_marker(self):
+        """Vol 1 p774 has alphabet-glyph `[[File:\u2026|14px]]` refs sitting
+        mid-prose between italic transliterations.  These are INLINE_GLYPH
+        bucket \u2014 promoted to `{{IMG-INLINE:\u2026}}` so the viewer renders them
+        inline at source size, not as block figures."""
         raw = _load_page(1, 774)
         result = _transform(raw)
-        assert "{{IMG:" in result, "No IMG marker produced"
+        assert "{{IMG-INLINE:" in result, "No IMG-INLINE marker produced"
 
-    def test_img_marker_has_filename(self):
+    def test_inline_marker_has_filename_and_size(self):
         raw = _load_page(1, 774)
         result = _transform(raw)
-        m = re.search(r"\{\{IMG:([^|}]+)", result)
-        assert m, "No IMG filename"
+        m = re.search(r"\{\{IMG-INLINE:([^|}]+)(?:\|([^}]+))?\}\}", result)
+        assert m, "No IMG-INLINE marker found"
         assert m.group(1).endswith((".jpg", ".png", ".gif", ".svg")), \
             f"Filename doesn't look like image: {m.group(1)}"
-
-    def test_img_caption_is_plain_text(self):
-        """Image captions should have no formatting markers or HTML."""
-        raw = _load_page(1, 774)
-        result = _transform(raw)
-        for cap in re.findall(r"\{\{IMG:[^|]+\|([^}]+)\}\}", result):
-            assert "\u00ab" not in cap, f"Marker in caption: {cap}"
-            assert "<" not in cap, f"HTML in caption: {cap}"
+        assert m.group(2) == "14px", \
+            f"Expected 14px size hint, got: {m.group(2)!r}"
 
 
 class TestRealImageFloat:

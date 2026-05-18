@@ -241,10 +241,11 @@ class TestChemistryLayout:
         # Cell content survives intact.
         assert "C : N\u00b7OH" in result
         assert "Steiner" in result and "Nef" in result
-        # The \u3008 valence-bracket image is carried through (rendering it as
-        # a \u27e8 glyph is still a TODO; for now it's the {{IMG:Langle.svg}}
-        # marker).
-        assert "Langle" in result
+        # The angle-bracket image is rendered as the Unicode glyph
+        # \u276e (U+276E) by the specialized CHEM processor.  Earlier this
+        # was a `{{IMG:Langle.svg}}` marker (with a TODO to glyph-ify
+        # it); the glyph rendering has since landed.
+        assert "\u276e" in result
 
     def test_plain_table_unaffected(self):
         # A normal data table with NO angle-bracket image is untouched.

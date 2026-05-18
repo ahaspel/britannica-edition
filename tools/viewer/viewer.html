@@ -1416,6 +1416,28 @@
       return `/data/images/${encodeURIComponent(name)}`;
     }
 
+    // Render an `{{IMG-INLINE:fn|size}}` marker as an inline `<img>`.
+    // `size` follows the MediaWiki convention:
+    //   `Npx`     → width:N, height auto
+    //   `xHpx`    → height:H, width auto
+    //   `WxHpx`   → bounding box; max-width:W, max-height:H, aspect preserved
+    //   (empty)   → line-height fallback for tiny glyphs
+    // Glyph SVGs go through commonsUrl() which routes to .svg.png
+    // raster on S3 / local derived images.
+    function renderInlineGlyph(filename, size) {
+      const url = commonsUrl(filename);
+      let style = "";
+      const s = (size || "").trim().toLowerCase();
+      const wh = s.match(/^(\d+)x(\d+)px$/);
+      const w  = s.match(/^(\d+)px$/);
+      const h  = s.match(/^x(\d+)px$/);
+      if (wh) style = `max-width:${wh[1]}px;max-height:${wh[2]}px;width:auto;height:auto;`;
+      else if (w) style = `width:${w[1]}px;height:auto;`;
+      else if (h) style = `height:${h[1]}px;width:auto;`;
+      else style = "height:1.2em;width:auto;";
+      return `<img src="${url}" alt="${escapeHtml(filename)}" class="inline-glyph" loading="lazy" style="${style}vertical-align:middle;" />`;
+    }
+
     let footnoteCounter = 0;
     // Named refs (`«FN[NAME]:body«/FN»`) share a footnote number across
     // all anchors with the same name, matching Wikisource convention
@@ -1837,6 +1859,8 @@
         const url = filename.startsWith("http") ? filename : commonsUrl(filename);
         return `<img src="${url}" alt="${escapeHtml(caption || filename)}" class="cell-image" loading="lazy" style="max-height:60px;" />`;
       });
+      h = h.replace(/\{\{IMG-INLINE:([^|}]+)(?:\|([^}]*))?\}\}/g,
+                    (match, filename, size) => renderInlineGlyph(filename, size));
       h = h.replace(/\[hieroglyph:\s*([^\]]+)\]/g, (match, codes) => {
         const rendered = codes.trim().split(/[:\s\-]+/).map(code => {
           code = code.replace(/\\/g, "");
@@ -2493,6 +2517,9 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
       // surrounding paragraph was run through escapeHtml(), which would
       // otherwise double-encode entities like `'` → `&#39;` → `%26%2339%3B`
       // and produce a 403 on S3.
+      html = html.replace(/\{\{IMG-INLINE:([^|}]+)(?:\|([^}]*))?\}\}/g,
+                          (match, filename, size) =>
+                            renderInlineGlyph(unescapeHtml(filename), size));
       html = html.replace(/\{\{IMG:([^|}]+)(?:\|([^}]*))?\}\}/g, (match, filename, caption) => {
         const url = commonsUrl(unescapeHtml(filename));
         // Large-format figures — Perthes country maps, Emery-Walker
