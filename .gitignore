@@ -15,8 +15,8 @@ venv/
 
 # Environment
 .env
-./claude/
-webserver.pid
+.claude/
+.webserver.pid
 restore.bat
 
 # Temporary tests and docs
