@@ -1411,6 +1411,162 @@ _ATTRIBUTION_BEFORE_CAPTION_RE = re.compile(
 )
 
 
+# Shared figure pipeline — every figure producer (CAPTIONED_FIGURE,
+# CAPTIONED_FIGURE_GRID, FIGURE_GROUP, and the multi-image path inside
+# the catch-all) routes its per-image text cells through these.  The
+# canonical output is identical regardless of source shape: extract
+# routes each cell into (caption, attribution, legend); assemble emits
+# `{{IMG:fn|caption (attribution)}}` plus an optional separate
+# `{{LEGEND:…}LEGEND}` block.
+
+_CELL_FIG_MARKER_RE = re.compile(
+    r"\{\{(?:sc|csc|SC)\|\s*(?:Fig|Plate)s?\.?"
+    r"|\b(?:Fig|Plate)s?\.?\s*\d"
+)
+
+
+def _unwrap_cell_wrappers(text: str) -> str:
+    """Unwrap purely positional/styling wrappers around figure-cell
+    text so a downstream Fig-marker split doesn't slice through a
+    balanced template:
+
+      * ``{{center|X}}`` / ``{{c|X}}`` → ``X``
+      * ``{{Fs|N%|X}}`` → ``X``
+      * ``<span style="…">X</span>`` / ``<div …>X</div>`` → ``X``
+
+    Handles nested templates by balanced-brace matching for the
+    outer wrapper (``{{center|{{sc|Fig}}. 10.—…}}`` — the simple
+    `[^{}]*` regex can't cross the inner ``{{sc|…}}``).  Iterates to
+    a fixpoint.  Italic / small-caps / `{{hi|…}}` wrappers are
+    intentionally preserved — they carry caption-semantic content.
+    """
+    def _strip_outer_braced_wrapper(s: str) -> str:
+        stripped = s.strip()
+        for prefix_re, _ in (
+            (r"^\{\{\s*(?:center|c|Center)\s*\|", "center-like"),
+            (r"^\{\{\s*Fs\s*\|[^{}|]*\|", "Fs-with-size"),
+        ):
+            m = re.match(prefix_re, stripped, flags=re.IGNORECASE)
+            if not m:
+                continue
+            start = m.end()
+            depth = 1
+            i = start
+            while i < len(stripped) - 1:
+                if stripped[i] == "{" and stripped[i + 1] == "{":
+                    depth += 1
+                    i += 2
+                    continue
+                if stripped[i] == "}" and stripped[i + 1] == "}":
+                    depth -= 1
+                    if depth == 0:
+                        inner = stripped[start:i]
+                        tail = stripped[i + 2:]
+                        return (inner + tail).strip()
+                    i += 2
+                    continue
+                i += 1
+        return s
+
+    prev = None
+    while text != prev:
+        prev = text
+        text = re.sub(
+            r"<(span|div)\b[^>]*>(.*?)</\1>", r"\2",
+            text, flags=re.IGNORECASE | re.DOTALL)
+        text = _strip_outer_braced_wrapper(text)
+    return text
+
+
+def _extract_figure_components(
+    cells_text: list[str],
+    inner_registry: ElementRegistry,
+    text_transform,
+    skip_ph: str | None = None,
+) -> tuple[list[str], list[str], list[str]]:
+    """For one image's worth of text cells, return
+    ``(caption_parts, attribution_parts, legend_lines)``.
+
+    * If ``skip_ph`` is the image's own placeholder and a cell contains
+      it (in-cell caption shape — ORDNANCE Fig 54, STEAM_ENGINE Fig 10),
+      the placeholder is stripped and the remainder is processed as
+      that image's caption material.  Empty remainders are skipped.
+    * Embedded POEM placeholders contribute legend entries.
+    * A Fig./Plate marker inside a cell splits it: text before becomes
+      attribution, text from the marker onward becomes caption.
+    * Cells without a marker are classified by `_looks_like_caption`.
+    """
+    poem_phs = [k for k, label in inner_registry.labels.items()
+                if label == "POEM"]
+    caption_parts: list[str] = []
+    attribution_parts: list[str] = []
+    legend_lines: list[str] = []
+    for content in cells_text:
+        if not content.strip():
+            continue
+        if skip_ph and skip_ph in content:
+            content = content.replace(skip_ph, "").strip()
+            if not content:
+                continue
+        content = _unwrap_cell_wrappers(content).strip()
+        if not content:
+            continue
+        cell_text = content
+        for poem_ph in poem_phs:
+            if poem_ph in cell_text:
+                poem_raw = inner_registry.elements[poem_ph][1]
+                _emit_legend_chunk(
+                    poem_raw, text_transform, legend_lines)
+                cell_text = cell_text.replace(poem_ph, "")
+        marker = _CELL_FIG_MARKER_RE.search(cell_text)
+        if marker:
+            before = cell_text[:marker.start()].strip()
+            after = cell_text[marker.start():].strip()
+            if before:
+                c = _clean_text(text_transform(before))
+                if c:
+                    attribution_parts.append(c)
+            if after:
+                c = _clean_text(text_transform(after))
+                if c:
+                    caption_parts.append(c)
+        else:
+            c = _clean_text(text_transform(cell_text))
+            if c:
+                if _looks_like_caption(c):
+                    caption_parts.append(c)
+                else:
+                    attribution_parts.append(c)
+    return caption_parts, attribution_parts, legend_lines
+
+
+def _assemble_figure_parts(
+    filename: str,
+    caption_parts: list[str],
+    attribution_parts: list[str],
+    legend_lines: list[str],
+) -> list[str]:
+    """Return the canonical figure marker(s) for one image.
+
+    Returns a list of one or two marker strings: the ``{{IMG:…}}``
+    marker (with caption + parenthesized attribution baked in), and —
+    only if legend content exists — a separate ``{{LEGEND:…}LEGEND}``
+    marker.  Callers are responsible for `\\n\\n` flanking when joining
+    multiple figures together.
+    """
+    cap = " ".join(caption_parts).strip()
+    for attr in attribution_parts:
+        cap = _append_attribution(cap, attr) if cap else attr
+    out = [
+        f"{{{{IMG:{filename}|{cap}}}}}" if cap
+        else f"{{{{IMG:{filename}}}}}"
+    ]
+    if legend_lines:
+        out.append(
+            "{{LEGEND:" + "\n".join(legend_lines) + "}LEGEND}")
+    return out
+
+
 def _process_captioned_figure(
     raw: str,
     inner: str,
@@ -1420,144 +1576,405 @@ def _process_captioned_figure(
     """Focused producer for `CAPTIONED_FIGURE` — single-image figure
     layout.
 
-    The classifier predicate guarantees:
+    Classifier predicate guarantees:
       * Exactly 1 IMAGE child in `inner_registry`.
-      * That image sits in row 0, alone in its cell.
-      * Wikitable header carries no data-table signal.
+      * That image sits in row 0, alone in its cell among the images
+        (no parallel images — that's `CAPTIONED_FIGURE_GRID`).
+      * No POEM or nested-wikitable children.
+      * No data-table header signal.
 
-    Strategy:
+    Iteration strategy: treat every non-empty cell across all rows as
+    a text unit for this single image, then route through the shared
+    `_extract_figure_components` + `_assemble_figure_parts`.  Source
+    shape variations — in-cell `<br>`-separated caption (ORDNANCE
+    Fig 54, STEAM_ENGINE Fig 10), attribution-before-Fig
+    (HYDROMEDUSAE Fig 71), `{{Fs|N%|…}}` styling wrappers (ARACHNIDA
+    Fig 33, BAG-PIPE Fig 1) — all collapse to the same canonical
+    figure marker because partition + assemble are shared with every
+    other figure producer.
 
-      1. Get the image filename from the IMAGE child's raw bytes.
-      2. For trailing rows (row 1+), gather their text content as
-         the caption body.
-      3. If the trailing rows contain a legend-shaped run (≥2
-         consecutive `LABEL. text` entries, optionally split into
-         `||`-separated label/text columns), emit those entries as
-         a separate `{{LEGEND:…}LEGEND}` block and leave non-legend
-         trailing rows as the caption.
-      4. Emit `{{IMG:filename|caption}}` (and the LEGEND block if
-         present, separated by a blank line so the viewer renders
-         them as adjacent figure + legend).
-
-    Complex shapes — nested wikitables in caption position, `<poem>`
-    blocks as legend cells, in-cell `<br>`-separated multi-segment
-    captions, image-raw with baked caption — fall back to
-    `_unwrap_layout_table` to preserve today's behaviour while we
-    iterate on the focused logic.
+    No fall-back to the catch-all: cases outside the predicate's
+    guarantees get their own labels and producers.
     """
     if inner_registry is None:
-        return _unwrap_layout_table(inner, text_transform, inner_registry)
-
+        return ""
     image_phs = [ph for ph, lbl in inner_registry.labels.items()
                  if lbl == "IMAGE"]
-    if len(image_phs) != 1:
-        return _unwrap_layout_table(inner, text_transform, inner_registry)
+    if not image_phs:
+        return ""
     image_ph = image_phs[0]
+    filename = _image_ph_filename(image_ph, inner_registry)
+    if not filename:
+        return ""
 
-    eraw = inner_registry.elements[image_ph][1]
-    # If the image's raw already contains a caption (e.g.
-    # `[[File:Foo.jpg|thumb|Fig. N — caption text]]`), defer to the
-    # legacy producer — it has the rich-caption handling for
-    # multi-segment baked captions (ROOFS Fig. 4 style).
-    link_only = bool(re.match(
-        r"\[\[(?:File|Image):[^\]]+\]\]\s*$",
-        eraw.strip(), re.IGNORECASE | re.DOTALL,
-    ))
-    if not link_only:
-        return _unwrap_layout_table(inner, text_transform, inner_registry)
+    # Collect text units: every non-empty cell across all rows.  `<br>`
+    # → space first so an in-cell multi-segment caption arrives as a
+    # single string per cell.  `{{Ts|…}}` is styling-only — strip it.
+    cleaned = re.sub(r"<br\s*/?>", " ", inner, flags=re.IGNORECASE)
+    rows = re.split(r"\|-[^\n]*", cleaned)
+    cells_text: list[str] = []
+    for row in rows:
+        for _sep, _attr, content in split_wiki_row(row):
+            if not content.strip():
+                continue
+            content = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*", "",
+                              content).strip()
+            if not content:
+                continue
+            cells_text.append(content)
 
-    fname_m = re.match(
-        r"\[\[(?:File|Image):([^\]|]+)", eraw, re.IGNORECASE)
-    if not fname_m:
-        return _unwrap_layout_table(inner, text_transform, inner_registry)
-    filename = fname_m.group(1).strip()
+    cap_parts, attr_parts, legend = _extract_figure_components(
+        cells_text, inner_registry, text_transform, skip_ph=image_ph)
 
-    # Nested wikitables / `<poem>` cells need the existing layout
-    # heuristics (NESTED_LEGEND, POEM_LEGEND paths in
-    # `_try_image_layout_subclass`).  Fall back.
-    for child_ph, label in inner_registry.labels.items():
-        if child_ph == image_ph:
-            continue
-        if label in {"POEM"} or label in TABLE_LABELS:
-            return _unwrap_layout_table(inner, text_transform, inner_registry)
+    parts = _assemble_figure_parts(
+        filename, cap_parts, attr_parts, legend)
+    return "\n\n" + "\n\n".join(parts) + "\n\n"
 
-    # Parse rows.  The classifier predicate guarantees the image is
-    # in row 0, alone in its cell; trailing rows beneath carry the
-    # caption and possibly attribution / legend material.
+
+def _process_captioned_figure_inline(
+    raw: str,
+    inner: str,
+    text_transform,
+    inner_registry: ElementRegistry | None,
+) -> str:
+    """Focused producer for `CAPTIONED_FIGURE_INLINE` — single-image
+    figure where the caption rides in the image's own cell.
+
+    The classifier predicate guarantees a single IMAGE child, no
+    POEM / nested-table siblings, and substantive text in the image
+    row beyond the placeholder.  The cell looks like:
+
+        ``[[File:Foo.png|…]]<br>{{sc|Fig. N.}}—caption text``
+
+    optionally wrapped in ``{{center|…}}`` or
+    ``<span style="…">…</span>``.
+
+    Iteration: walk all cells, treat the image-bearing cell with the
+    placeholder stripped as caption material; route through the
+    shared component extractor + assembler.
+    """
+    if inner_registry is None:
+        return ""
+    image_phs = [ph for ph, lbl in inner_registry.labels.items()
+                 if lbl == "IMAGE"]
+    if not image_phs:
+        return ""
+    image_ph = image_phs[0]
+    filename = _image_ph_filename(image_ph, inner_registry)
+    if not filename:
+        return ""
+
+    cleaned = re.sub(r"<br\s*/?>", " ", inner, flags=re.IGNORECASE)
+    rows = re.split(r"\|-[^\n]*", cleaned)
+    cells_text: list[str] = []
+    for row in rows:
+        for _sep, _attr, content in split_wiki_row(row):
+            if not content.strip():
+                continue
+            content = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*", "",
+                              content).strip()
+            if not content:
+                continue
+            cells_text.append(content)
+
+    cap_parts, attr_parts, legend = _extract_figure_components(
+        cells_text, inner_registry, text_transform, skip_ph=image_ph)
+
+    parts = _assemble_figure_parts(
+        filename, cap_parts, attr_parts, legend)
+    return "\n\n" + "\n\n".join(parts) + "\n\n"
+
+
+# Legend-cell shape detection — used inside `_process_legended_figure`
+# to partition rows into "legend rows" and "caption/attribution rows."
+# Mirrors the predicate-time regexes in `__init__.py` but operates on
+# one row's text rather than the whole inner.
+
+_LEGEND_ROW_MULTICOL_RE = re.compile(
+    r"^\s*\|"
+    r"(?:\s*(?:&emsp;|&nbsp;|&ensp;|&thinsp;))*\s*"
+    r"(?:«I»[A-Za-z][A-Za-z0-9]{0,5}«/I»|[A-Za-z][A-Za-z0-9]{0,5})"
+    r"\s*[.,]"
+    r"(?:\s+[A-Za-z][^|\n]*)?"
+    r"\s*\|\|"
+)
+
+_LEGEND_ROW_PROSE_RE = re.compile(
+    r"(?:^|\n)\s*"
+    r"(?:«I»[A-Za-z][A-Za-z0-9]{0,5}«/I»|[A-Za-z][A-Za-z0-9]{0,5})"
+    r"\s*[.,]\s+[A-Z‘“a-z]"
+)
+
+
+def _row_is_legend(row: str) -> bool:
+    """True if ``row`` looks like a legend row (multicol or prose)."""
+    if _LEGEND_ROW_MULTICOL_RE.search(row):
+        return True
+    if len(_LEGEND_ROW_PROSE_RE.findall(row)) >= 2:
+        return True
+    return False
+
+
+def _chop_legend_entries(
+    text: str, delimiter: str, text_transform,
+) -> list[tuple[str, str]]:
+    """Split ``text`` by ``delimiter`` and parse into legend (label,
+    text) entries.
+
+    Auto-detects the chunk shape from the first non-empty chunk:
+
+    * Label-only (e.g. ``"A."`` or ``"«I»a«/I»"``) → alternating-pair
+      mode: take chunks in pairs as (label, text).  Used for multicol
+      rows like ``|A.||Gateway.||F.||Tomb of St Hugh.``.
+    * Full-entry (e.g. ``"A. Gateway."`` / ``"«I»oc«/I», Lateral
+      eyes."``) → each chunk is one complete entry.  Used for full-
+      entry multicol rows (ARACHNIDA Fig 7) and prose cells with
+      newline/semicolon-separated entries (HYDROMEDUSAE Fig 1).
+
+    ``delimiter`` is either ``"||"`` (multicol row) or a single-char
+    newline-like splitter (``"\\n"``).  The rest of the producer
+    treats the returned entries identically regardless of how they
+    were chopped.
+    """
+    pieces = [p.strip() for p in text.split(delimiter)]
+    pieces = [p.lstrip("|").strip() for p in pieces if p]
+    if not pieces:
+        return []
+    pieces = [_strip_cell_attributes(p).strip() for p in pieces]
+    pieces = [p for p in pieces if p]
+    if not pieces:
+        return []
+    transformed = [text_transform(p) for p in pieces]
+
+    first = _clean_legend_text(transformed[0])
+    first_is_italic = transformed[0].strip().startswith("«I»")
+
+    # Full-entry shape: first chunk parses as a complete `label, text`.
+    full_match = (
+        (first_is_italic and _MULTICOL_FULL_ENTRY_ITALIC_RE.match(
+            transformed[0]))
+        or _MULTICOL_FULL_ENTRY_RE.match(first)
+    )
+    if full_match:
+        out: list[tuple[str, str]] = []
+        for t in transformed:
+            cell = t if t.strip().startswith("«I»") else _clean_legend_text(t)
+            m = (_MULTICOL_FULL_ENTRY_ITALIC_RE.match(cell)
+                 if cell.strip().startswith("«I»")
+                 else _MULTICOL_FULL_ENTRY_RE.match(_clean_legend_text(t)))
+            if m:
+                out.append(
+                    (m.group(1).strip(), m.group(2).rstrip(". ").strip()))
+        return out
+
+    # Alternating-pair shape: even-indexed chunks are labels,
+    # odd-indexed are texts.  Strip the abbreviation punctuation
+    # from the label but keep text punctuation intact.
+    out = []
+    for i in range(0, len(transformed) - 1, 2):
+        lbl = _clean_legend_text(transformed[i]).rstrip(".,")
+        text = _clean_legend_text(transformed[i + 1])
+        if lbl and text:
+            out.append((lbl, text))
+    return out
+
+
+def _process_legended_figure(
+    raw: str,
+    inner: str,
+    text_transform,
+    inner_registry: ElementRegistry | None,
+) -> str:
+    """Focused producer for `LEGENDED_FIGURE` — single-image figure
+    whose legend is encoded in regular cells (NOT in a POEM or
+    nested-wikitable child; those go to `LEGENDED_FIGURE_CHILD`).
+
+    Three legend-cell sub-shapes are unified through
+    `_chop_legend_entries`:
+
+      * Multicol-alternating (ABBEY Fig 5): `|A.||Gateway.||F.||…`
+        — `||` delimiter, label-only first chunk → alternating pairs.
+      * Multicol-full-entry (ARACHNIDA Fig 7):
+        `|«I»oc«/I», Lateral eyes.||VIII, The six…` — `||` delimiter,
+        full-entry first chunk → each chunk is one entry.
+      * Prose-cell (HYDROMEDUSAE Fig 1): one cell with line-separated
+        `«I»a«/I», Hydranth;` entries — `\\n` delimiter, full-entry.
+
+    The producer routes each detected legend region through the same
+    chop helper with the appropriate delimiter; the rest of the
+    producer treats the resulting entries identically.
+    """
+    if inner_registry is None:
+        return ""
+    image_phs = [ph for ph, lbl in inner_registry.labels.items()
+                 if lbl == "IMAGE"]
+    if not image_phs:
+        return ""
+    image_ph = image_phs[0]
+    filename = _image_ph_filename(image_ph, inner_registry)
+    if not filename:
+        return ""
+
     cleaned = re.sub(r"<br\s*/?>", " ", inner, flags=re.IGNORECASE)
     rows = re.split(r"\|-[^\n]*", cleaned)
 
-    # In-cell caption case: the image's own row contains substantive
-    # text beyond the placeholder (separated by `<br>`, `<span>`,
-    # etc., as in ORDNANCE Fig 54).  Legacy `_unwrap_layout_table`
-    # handles this via the IMG_SIMPLE_CAPTION subclass; we defer
-    # rather than parse it ourselves.  Detection: strip the image
-    # placeholder + HTML tags + templates + structural punctuation
-    # from the image row, anything left is substantive text.
-    image_row = next((r for r in rows if image_ph in r), "")
-    leftover = image_row.replace(image_ph, "")
-    leftover = re.sub(r"<[^>]+>", " ", leftover)
-    # Iteratively strip nested templates (caption templates can wrap
-    # multiple levels deep — `{{center|{{Fs85|…}}}}` etc.).
-    while "{{" in leftover:
-        new = re.sub(r"\{\{[^{}]*\}\}", " ", leftover)
-        if new == leftover:
-            break
-        leftover = new
-    leftover = re.sub(r"[|=]", " ", leftover)
-    leftover = re.sub(r"\s+", " ", leftover).strip()
-    if leftover:
-        return _unwrap_layout_table(inner, text_transform, inner_registry)
+    legend_lines: list[str] = []
+    text_cells: list[str] = []
 
-    trailing_rows: list[str] = [
-        r for r in rows if image_ph not in r and r.strip()
-    ]
-
-    # Narrow path: ZERO or ONE trailing row.  Zero → image with no
-    # caption.  One → all that row's cells become the caption text.
-    # Anything more (≥2 trailing rows) likely carries legend /
-    # attribution structure that the legacy unwrap_layout_table
-    # interprets specifically, so we defer to it for now.
-    if len(trailing_rows) > 1:
-        return _unwrap_layout_table(inner, text_transform, inner_registry)
-
-    if not trailing_rows:
-        return f"{{{{IMG:{filename}}}}}"
-
-    # Single trailing row — gather its cells as the caption.
-    cells: list[str] = []
-    for _sep, _attr, content in split_wiki_row(trailing_rows[0]):
-        if not content:
+    # Phase 1: multicol legend rows.  A multicol BLOCK starts when a
+    # row matches the strict label-shape regex; subsequent rows that
+    # contain `||` (continuation rows whose leading cell is mid-
+    # entry text, no label-shape) belong to the same block.  The
+    # block ends at the first non-`||` row.  This catches ARACHNIDA
+    # Fig 7's column-major shape where 9 rows hold 4 column entries
+    # via cross-row continuation.
+    multicol_rows: list[str] = []
+    other_rows: list[str] = []
+    in_block = False
+    for row in rows:
+        if not row.strip():
             continue
-        content = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*", "",
-                          content).strip()
-        if not content or _PH in content:
+        if _LEGEND_ROW_MULTICOL_RE.search(row):
+            multicol_rows.append(row)
+            in_block = True
+        elif in_block and "||" in row:
+            multicol_rows.append(row)
+        else:
+            in_block = False
+            other_rows.append(row)
+    if multicol_rows:
+        # Two multicol sub-shapes share the iteration ("walk rows,
+        # collect entries column-major"), but differ in cell parsing:
+        #
+        # * Full-entry-per-cell with cross-row continuation
+        #   (ARACHNIDA Fig 7): an entry can span 3-4 rows of the
+        #   same column.  Handled by `_parse_multicol_legend_rows_
+        #   column_major` which tracks per-column continuation.
+        # * Alternating-pair (ABBEY Fig 5): each row has N/2 (label,
+        #   text) pairs, transpose for column-major reading order.
+        #   Chop each row, transpose ourselves.
+        #
+        # Column-major parser returns None on the alternating-pair
+        # shape (first cell is label-only, no text), giving us a
+        # clean fallback signal.
+        col_pairs = _parse_multicol_legend_rows_column_major(
+            multicol_rows, text_transform)
+        if col_pairs:
+            legend_lines.extend(
+                f"{lbl}. {text}" for lbl, text in col_pairs)
+        else:
+            pairs_per_row = [
+                _chop_legend_entries(r, "||", text_transform)
+                for r in multicol_rows
+            ]
+            max_cols = max((len(p) for p in pairs_per_row), default=0)
+            for col in range(max_cols):
+                for row_pairs in pairs_per_row:
+                    if col < len(row_pairs):
+                        lbl, text = row_pairs[col]
+                        legend_lines.append(f"{lbl}. {text}")
+
+    # Phase 2: prose-cell legends and caption/attribution cells.
+    for row in other_rows:
+        for _sep, _attr, content in split_wiki_row(row):
+            if not content.strip():
+                continue
+            content = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*", "",
+                              content).strip()
+            if not content:
+                continue
+            # A cell with ≥3 line-shaped `LABEL.text` entries is the
+            # prose-cell legend shape — chop by newline.
+            if len(_LEGEND_ROW_PROSE_RE.findall(content)) >= 3:
+                pairs = _chop_legend_entries(
+                    content, "\n", text_transform)
+                legend_lines.extend(f"{lbl}. {text}" for lbl, text in pairs)
+                continue
+            text_cells.append(content)
+
+    cap_parts, attr_parts, _extra_legend = _extract_figure_components(
+        text_cells, inner_registry, text_transform, skip_ph=image_ph)
+    if _extra_legend:
+        legend_lines.extend(_extra_legend)
+
+    parts = _assemble_figure_parts(
+        filename, cap_parts, attr_parts, legend_lines)
+    return "\n\n" + "\n\n".join(parts) + "\n\n"
+
+
+def _process_legended_figure_child(
+    raw: str,
+    inner: str,
+    text_transform,
+    inner_registry: ElementRegistry | None,
+) -> str:
+    """Focused producer for `LEGENDED_FIGURE_CHILD` — single-image
+    figure whose legend lives in a POEM placeholder or a nested
+    wikitable child.
+
+    Iteration strategy:
+
+      1. Find image filename from the IMAGE child.
+      2. For every non-image child placeholder: harvest legend lines
+         from its raw via the appropriate parser
+         (`_emit_legend_chunk` for POEM, `_extract_poem_legend` for
+         a nested TABLE).  Excise the placeholder from any cell that
+         contained it.
+      3. Run `_extract_figure_components` on the remaining cells →
+         caption + attribution.
+      4. Hand to the shared `_assemble_figure_parts`.
+    """
+    if inner_registry is None:
+        return ""
+    image_phs = [ph for ph, lbl in inner_registry.labels.items()
+                 if lbl == "IMAGE"]
+    if not image_phs:
+        return ""
+    image_ph = image_phs[0]
+    filename = _image_ph_filename(image_ph, inner_registry)
+    if not filename:
+        return ""
+
+    cleaned = re.sub(r"<br\s*/?>", " ", inner, flags=re.IGNORECASE)
+    rows = re.split(r"\|-[^\n]*", cleaned)
+
+    legend_lines: list[str] = []
+    text_cells: list[str] = []
+    for row in rows:
+        if not row.strip():
             continue
-        # Attribution-before-caption pattern: cell contains
-        # `From X` / `After X` / etc. ahead of a Fig./Plate. marker.
-        # Legacy `_unwrap_layout_table` detects the attribution +
-        # reorders it parenthesized after the caption; we don't
-        # replicate that here, so fall back.  HYDROMEDUSAE Fig 71
-        # has it as plain prose; ARACHNIDA Fig 33 / Fig 48 wrap it
-        # inside a `{{Fs|N%|From X}}` styling template.
-        if _ATTRIBUTION_BEFORE_CAPTION_RE.search(content):
-            return _unwrap_layout_table(inner, text_transform, inner_registry)
-        cells.append(content)
+        for _sep, _attr, content in split_wiki_row(row):
+            if not content.strip():
+                continue
+            content = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*", "",
+                              content).strip()
+            if not content:
+                continue
+            for ph, lbl in list(inner_registry.labels.items()):
+                if ph not in content or ph == image_ph:
+                    continue
+                if lbl == "POEM":
+                    poem_raw = inner_registry.elements[ph][1]
+                    _emit_legend_chunk(
+                        poem_raw, text_transform, legend_lines)
+                    content = content.replace(ph, "")
+                elif lbl in TABLE_LABELS:
+                    sub_raw = inner_registry.elements[ph][1]
+                    legend_lines.extend(_extract_poem_legend(
+                        sub_raw, text_transform))
+                    content = content.replace(ph, "")
+            content = content.strip()
+            if content:
+                text_cells.append(content)
 
-    if not cells:
-        return f"\n\n{{{{IMG:{filename}}}}}\n\n"
+    cap_parts, attr_parts, _extra_legend = _extract_figure_components(
+        text_cells, inner_registry, text_transform, skip_ph=image_ph)
+    if _extra_legend:
+        legend_lines.extend(_extra_legend)
 
-    combined = " ".join(cells).strip()
-    combined = text_transform(combined)
-    combined = _clean_text(combined)
-    # Always flank with `\n\n`.  Figures are paragraph-level
-    # elements; the legacy producer's context-sensitive flanking
-    # (sometimes `\n\n` flanks, sometimes the IMG inlines with
-    # surrounding prose depending on which subclass path fires)
-    # is accidental complexity from the catch-all dispatch.
-    if combined:
-        return f"\n\n{{{{IMG:{filename}|{combined}}}}}\n\n"
-    return f"\n\n{{{{IMG:{filename}}}}}\n\n"
+    parts = _assemble_figure_parts(
+        filename, cap_parts, attr_parts, legend_lines)
+    return "\n\n" + "\n\n".join(parts) + "\n\n"
 
 
 def _unwrap_layout_table(inner: str, text_transform,
