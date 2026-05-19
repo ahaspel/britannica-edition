@@ -16,10 +16,15 @@ venv/
 # Environment
 .env
 
+# Temporary tests and docs
+tools/_scratch/
+docs/reports/
+
 # Data
 data/raw/
 data/staging/
 data/derived/
+data/baselines/
 
 # OS / editor
 .DS_Store
