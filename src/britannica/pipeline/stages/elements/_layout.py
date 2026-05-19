@@ -1977,6 +1977,123 @@ def _process_legended_figure_child(
     return "\n\n" + "\n\n".join(parts) + "\n\n"
 
 
+def _process_simple_plate(
+    raw: str,
+    inner: str,
+    text_transform,
+    inner_registry: ElementRegistry | None,
+) -> str:
+    """Focused producer for `SIMPLE_PLATE` — multi-image plate
+    layouts that don't fit the simple side-by-side grid shape.
+
+    The classifier predicate guarantees ≥2 IMAGE children and no
+    data-table header signal.  Images may be arranged:
+
+      * Vertical-stack: each image alone in its own row, caption
+        rows immediately following until the next image-row
+        (BIRD, AMPHITHEATRE PLATE I, MUSCULAR SYSTEM Figs 7/8).
+      * Parallel-row multi-row: 2+ images in a header row, caption
+        rows below split by column index (SHIP PLATE X, LEAF
+        Figs 36-41).
+      * Mixed: a sequence of image-rows where each row is itself a
+        side-by-side or single-image group; content rows between
+        image-rows belong to the group above.
+
+    Iteration:
+      1. Locate each image's row.  Group images by row.
+      2. Each group "owns" the content rows up to the next group.
+      3. Single-image group → vertical slice (all content cells).
+         Multi-image group → column-slice each image owns the cells
+         at its column index in subsequent rows.
+      4. Per image: hand the owned cells to shared
+         `_extract_figure_components` + `_assemble_figure_parts`.
+    """
+    if inner_registry is None:
+        return ""
+    image_phs = [ph for ph, lbl in inner_registry.labels.items()
+                 if lbl == "IMAGE"]
+    if len(image_phs) < 2:
+        return ""
+
+    cleaned = re.sub(r"<br\s*/?>", " ", inner, flags=re.IGNORECASE)
+    # Strip leading row-separator if any, then split on `\n|-` runs.
+    inner_stripped = re.sub(r"^\s*\|-+[^\n]*\n", "", cleaned)
+    rows = re.split(r"\n(?:\s*\|-+[^\n]*\n)+", inner_stripped)
+
+    # Per-image row index.
+    img_row_of: dict[str, int] = {}
+    for ph in image_phs:
+        for i, r in enumerate(rows):
+            if ph in r:
+                img_row_of[ph] = i
+                break
+    if len(img_row_of) != len(image_phs):
+        return ""  # malformed — let LAYOUT_WRAPPER fall-through handle
+
+    # Group images by their row index.
+    groups: dict[int, list[str]] = {}
+    for ph in image_phs:
+        groups.setdefault(img_row_of[ph], []).append(ph)
+    sorted_group_rows = sorted(groups.keys())
+
+    output_parts: list[str] = []
+    for i, img_row_idx in enumerate(sorted_group_rows):
+        phs_in_group = groups[img_row_idx]
+        next_row = (sorted_group_rows[i + 1]
+                    if i + 1 < len(sorted_group_rows)
+                    else len(rows))
+        content_rows = list(range(img_row_idx + 1, next_row))
+
+        if len(phs_in_group) == 1:
+            # Vertical slice: all content cells belong to this image.
+            ph = phs_in_group[0]
+            filename = _image_ph_filename(ph, inner_registry)
+            if not filename:
+                continue
+            cells_text: list[str] = []
+            for r_idx in content_rows:
+                for _sep, _attr, content in split_wiki_row(rows[r_idx]):
+                    if content.strip():
+                        cells_text.append(content)
+            cap, attr, legend = _extract_figure_components(
+                cells_text, inner_registry, text_transform, skip_ph=ph)
+            output_parts.extend(_assemble_figure_parts(
+                filename, cap, attr, legend))
+        else:
+            # Column slice: each image owns the cells at its column
+            # index in subsequent rows.
+            img_row_cells = list(split_wiki_row(rows[img_row_idx]))
+            image_col_of: dict[str, int] = {}
+            for col_idx, (_sep, _attr, content) in enumerate(
+                    img_row_cells):
+                for ph in phs_in_group:
+                    if ph in content:
+                        image_col_of[ph] = col_idx
+            if len(image_col_of) != len(phs_in_group):
+                continue  # malformed group — skip
+            for ph in sorted(phs_in_group,
+                              key=lambda p: image_col_of[p]):
+                filename = _image_ph_filename(ph, inner_registry)
+                if not filename:
+                    continue
+                col_idx = image_col_of[ph]
+                col_cells: list[str] = []
+                for r_idx in content_rows:
+                    cells = list(split_wiki_row(rows[r_idx]))
+                    if col_idx < len(cells):
+                        _sep, _attr, cell_content = cells[col_idx]
+                        col_cells.append(cell_content)
+                cap, attr, legend = _extract_figure_components(
+                    col_cells, inner_registry, text_transform,
+                    skip_ph=ph)
+                output_parts.extend(_assemble_figure_parts(
+                    filename, cap, attr, legend))
+
+    if not output_parts:
+        return ""
+    return "\n\n" + "\n\n".join(output_parts) + "\n\n"
+
+
 def _unwrap_layout_table(inner: str, text_transform,
                          inner_registry: ElementRegistry | None = None) -> str:
     """Unwrap a layout table to sequential content.

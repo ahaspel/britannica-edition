@@ -1,12 +1,117 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-05-17.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-05-19.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
 ---
 
-## Current focus (2026-05-17) — Phase A recovery shipped
+## Current focus (2026-05-19) — Figure-shape redistribution + contributor signal
+
+**Figure pipeline rewritten as focused producers**.  The 1700-line
+`_unwrap_layout_table` catch-all has been dissolved into 6 focused
+producers, each owning one structural shape and dispatching to a
+shared assembler.  The architectural principle: classification is
+the work — once the right shape gets the right label, producer
+bodies become ~50 lines of orchestration over shared helpers.
+
+**Labels added this session** (`pipeline/stages/elements/`):
+- `CAPTIONED_FIGURE` — single image + caption (component-finder body,
+  no fall-back).  ~52% of figure-shape wikitables.
+- `CAPTIONED_FIGURE_INLINE` — image + caption share one cell
+  (`<br>`-separated; ORDNANCE Fig 54-style).  ~3%.
+- `LEGENDED_FIGURE` — cells-based legend (multicol-alternating,
+  multicol-full-entry-with-continuation, prose-cell single).
+  Unified through `_chop_legend_entries(text, delimiter, …)` —
+  one helper, multiple sub-shapes.  ~12%.
+- `LEGENDED_FIGURE_CHILD` — legend lives in a POEM placeholder or
+  nested wikitable child.  ~4%.
+- `SIMPLE_PLATE` — multi-image arrangements that don't fit the
+  simple parallel-row grid (vertical-stack OR multi-row column-
+  slice).  Real population is the multi-image figure WIKITABLES
+  embedded in regular articles; standalone plate ARTICLES still
+  go through `parsers/plate/` (separate pipeline by design).
+
+**Shared figure pipeline** (`elements/_layout.py`):
+- `_extract_figure_components(cells, registry, tt, skip_ph)` —
+  partitions cell text into (caption, attribution, legend) via a
+  Fig./Plate. marker split.  Handles POEM placeholders embedded
+  in cells, image-cell-with-text shape via `skip_ph`.
+- `_assemble_figure_parts(filename, cap, attr, legend)` — canonical
+  `{{IMG:fn|caption (attribution)}}` + optional `{{LEGEND:…}LEGEND}`.
+  Source-shape variations collapse to the same output here.
+- `_unwrap_cell_wrappers` — strips `{{center|…}}`, `<span>…</span>`,
+  `{{Fs|N%|…}}` via balanced-brace matching.
+- `_chop_legend_entries(text, delimiter, tt)` — one helper for
+  multicol-alternating, multicol-full-entry, prose-cell entries;
+  auto-detects label-only vs full-entry shape from first chunk.
+
+**LAYOUT_WRAPPER residual**: 3374 → 444 figure-shape hits.  Most of
+the 444 are now genuine non-figure layouts (plate articles routed
+elsewhere, verse-only wrappers, table-only wrappers) rather than
+figure shapes the architecture can't handle.  Catch-all is doing
+its job again.
+
+**Snapshot suite** (`tests/regression/test_transform_snapshots.py`):
+11/18 → 15/18 passing.  The 3 remaining failures are precise
+regression signals for tracked future work, not noise (see
+"Queued").
+
+**New tool**: `tools/diagnostics/snapshot_diff_patch.py` — surgical
+hunk-level snapshot updater.  Computes the line-level diff against
+a snapshot, exposes each non-equal opcode as a numbered hunk, and
+applies specific hunks back via splice while leaving every other
+line byte-identical.  Lets us accept intentional output changes
+(IMG/LEGEND standardization) while keeping the snapshot useful as
+a regression-detection contract on unrelated lines.
+
+**Contributor extractor: wikilink shape landed**
+(`extract_contributors.py`).  ~152 articles credit their authors
+as `{{right|([[Author:Full Name|Initials]]; …)}}` instead of the
+canonical `{{EB1911 footer initials|…}}` template — THUCYDIDES is
+the canonical case.  New `_RIGHT_AUTHOR_PATTERN` +
+`_parse_right_author_contributors` extract `(name, initials)` from
+each `[[Author:…|…]]` wiki-link, unwrap `{{small-caps|…}}`
+wrappers, and feed the same downstream attribution path.  ~152
+articles will pick up contributors on the next pipeline run.
+Long-tail (~28 articles, mostly bare `:([[Author:…]])` and
+parenthesized-initials shapes) tracked separately.
+
+**Audit tools written**:
+- `tools/_scratch/audit_figure_layouts.py` — per-bucket
+  classification health check.
+- `tools/_scratch/audit_signature_shapes.py` — end-of-article
+  signature/contributor shape inventory.
+- `tools/_scratch/audit_layout_wrapper_figures.py` — figure-
+  shape-only LAYOUT_WRAPPER residual audit.
+- `tools/diagnostics/label_distribution_snapshot.py` +
+  `label_distribution_diff.py` — capture per-element label
+  assignments across the corpus and compute directional
+  transition counts.  The regression-surface check for any
+  predicate change.  See
+  `[[feedback_classification_is_regression_surface]]`.
+
+**Failed loosening — diagnostic value**.  Attempted to relax
+`_is_captioned_figure_pred`'s "image in row 0" / "no `||` in row 0"
+gates to recover the 62-hit LAYOUT_WRAPPER figure-shape residual.
+Reverted after the directional-diff revealed 4 real data-table
+regressions (COMPLEX_HTML/DATA_TABLE → CAPTIONED_FIGURE) plus
+figure-family regressions (ABBEY Fig 1's `|ELEM||legend` shape
+was being handled correctly by LAYOUT_WRAPPER's
+`_try_image_layout_subclass`).  Lesson: those gates were doing
+structural-shape discrimination, not redundant data-table
+protection; the LAYOUT_WRAPPER catch-all also does meaningful
+internal work via its subclass mechanism.  Led to the ICL-family
+gate / family-collapse architecture (`[[feedback_family_sub_pipelines]]`,
+`[[project_icl_family]]`).
+
+**Tests**: 286 unit/integration passing (same 8 pre-existing reds —
+legend-extraction sub-patterns + chemistry-layout 2-D table); 15/18
+snapshot regression tests passing.
+
+---
+
+## Previous focus (2026-05-17) — Phase A recovery shipped
 
 The 2026-05-16 V2 deploy shipped marker-contaminated titles (`«B»X«/B»` in
 the `title` field) plus a separately-broken xref resolver and contributor
@@ -69,30 +174,110 @@ chemistry layout), not a stale fixture.
 
 ## Queued (next session)
 
+**Figure-shape redistribution follow-on** (each item is a tracked
+failing snapshot in `tests/regression/test_transform_snapshots.py`
+or a known LAYOUT_WRAPPER residual):
+
+- **STEAM_ENGINE Fig 10 — preprocessing-to-producer migration.**
+  `transform_articles/__init__.py` lines ~470-479 unwrap
+  `{{center|[[File:…]]<br>caption}}` to `[[File:…]]\ncaption`
+  BEFORE classification.  The unwrap was scaffolding from the
+  catch-all era; with `CAPTIONED_FIGURE_INLINE` in place the
+  preprocessing is producer logic in disguise — and it's the reason
+  Fig 10's caption is lost in the current pipeline (the preprocessing
+  strips the wrapper inside wikitables, leaving the producer with
+  a degenerate shape).  Two paths: (a) tighten
+  `CAPTIONED_FIGURE_INLINE` to handle the post-preprocessing shape,
+  or (b) move the unwrap into the producer + add a sister extractor
+  for the bare-`{{center|…}}` (non-wikitable) case.  (b) is more
+  architecturally correct.  See
+  `[[feedback_preprocessing_is_producer_work]]`.
+
+- **ARACHNIDA Fig 3 — `{{hi|…}}`-separated same-line legend.**
+  11+ legend entries packed into one cell, each wrapped in
+  `{{hi|…}}` or separated by `<br>`, all on a single line.
+  Neither multicol-row nor prose-cell-by-newline detection catches
+  it.  May warrant a new label `LEGENDED_FIGURE_INLINE` (legend
+  material packed into one cell).  Likely shared shape with
+  ARACHNIDA Figs 26, 73, 78.
+
+- **HYDROMEDUSAE Statocyst-series legend ordering.**  60 hunks,
+  many showing legend entries in different order than snapshot.
+  Statocyst figures (30-44) share legend structure across multiple
+  images.  Need to inspect a representative figure visually before
+  deciding whether new ordering is correct (column-major reading)
+  or a regression.
+
+- **ORDNANCE Fig 86-7 — positional sub-labels shape.**  Image
+  contains two diagrams (Fig 86 + Fig 87) with positional labels
+  meant to sit UNDER each in the rendered image.  Source has a
+  row of `<span>` labels + a colspan caption row.  Currently
+  baselined as "wrong but no worse than production" — when the
+  positional-sub-labels shape gets its own producer (drop the
+  labels in text rendering, keep the caption), snapshot will
+  diverge and we re-evaluate.
+
+- **Contributor extractor long-tail (~28 articles).**  After the
+  `{{right|[[Author:…]]}}` pattern lands, residual signature shapes
+  per `tools/_scratch/signature_shapes_audit.md`: 7 bare-`(X. Y.)`,
+  7 `{{right|(X. Y.)}}` no-Author-link, 2 right-template-other,
+  ~12 bare `:([[Author:…]])` (need discriminator vs in-prose Author
+  refs).  Note: actual user-visible miss after the wikilink fix is
+  smaller because volume author lists and vol 29 contributor list
+  (the other two signals) cover some of these.
+
+- **Refactor `parse_plate.py` to classify-then-produce architecture.**
+  Plate articles stay in their own pipeline (different beast from
+  regular articles — different inputs, different output
+  expectations).  But the parse_plate.py implementation should use
+  the same architectural principles as elements: walker identifies
+  shape boundaries, classifier assigns labels (SIMPLE_PLATE,
+  GROUPED_PLATE for GEM-style aggregated captions, etc.),
+  producers are small focused handlers per label, shared assembler
+  for canonical output.  Two pipelines stay separate but analogous;
+  they share producers, utilities, predicates, labels — just
+  organized as separate passes.  See
+  `[[feedback_pipelines_share_producers]]`.
+
+**Medium-term roadmap — redistribution by shape family, then collapse.**
+The figure-shape work this session is the first of three analogous
+redistribution campaigns; once each family's sub-shapes stabilize, a
+final collapse encapsulates the family behind a single outer label.
+
+1. **Figure-shape (ICL) redistribution** (this session — mostly done):
+   IMG/caption/legend producers carved from LAYOUT_WRAPPER.  62
+   figure-shape edge cases remain in LAYOUT_WRAPPER per
+   `tools/_scratch/layout_wrapper_figures_audit.md`; predicate
+   tightening attempted (`#24`) revealed real regression risk
+   (4 data-table over-claims + figure-family transitions) — see
+   `[[feedback_classification_is_regression_surface]]`.  Tracked
+   as `#24`.
+2. **Table-shape redistribution** (next campaign): the remaining
+   non-figure LAYOUT_WRAPPER contents are TABLE_WRAPPER (~100,
+   typographic outer wrappers around nested wikitables) and
+   VERSE_WRAPPER (~37, wikitables wrapping a `<poem>` for
+   positioning).  Plus possibly carving more-specific shapes out
+   of today's DATA_TABLE / COMPLEX_HTML labels.  Same architectural
+   principles.
+3. **Plate redistribution** (separate but analogous pipeline):
+   `parse_plate.py` → walker/classifier/producer for plate-article
+   structural variants.  Shares producers/utilities with elements
+   where shapes overlap.  See `[[feedback_pipelines_share_producers]]`.
+4. **Family collapse — endgame** (after each family stabilizes):
+   collapse the sub-labels of each family behind a single outer
+   label (`ICL`, `TABLE`, etc.) with a private sub-pipeline.  The
+   outer dispatch and article-level consumer see ~6-7 element
+   kinds; sub-shape selection stays internal to each family.
+   Tracked as `#25` (ICL collapse) and `#26` (TABLE collapse).
+   See `[[feedback_family_sub_pipelines]]` and
+   `[[project_icl_family]]`.
+
+**Other open work** (carryover from prior session):
+
 - **Phase B**: restore H1 typography via a `title_html` field rendered at
   export time in Python, emitted alongside plain `title` in the article
   JSON.  Single chokepoint (Python), every JS surface drops `title_html`
   into innerHTML.  No marker contamination, no per-surface helpers.
-- **Wikilink-attribution footer shape** — defer.  THUCYDIDES (vol 26
-  p893) and ~160 other articles credit their authors as
-  `{{right|([[Author:Richard Claverhouse Jebb|R. C. J.]]; [[Author:John Malcolm Mitchell|J. M. M.]])}}`
-  instead of the canonical `{{EB1911 footer initials|Name|Init|…}}`
-  template (8,225 corpus-wide).  Two consumers both miss the wikilink
-  shape:
-    1. `extract_contributors.py::_FOOTER_PATTERN` regex matches only
-       the canonical template, so wikilink-credited articles end up
-       with `contributors: []`.
-    2. The producer that strips the credit line from body text uses
-       the same template assumption, so the rendered articles carry
-       a stray `(R. C. J.; J. M. M.)` tail in body prose.
-  Structural fix: teach both consumers a SECOND attribution pattern
-  matching `{{right|\\(?(\\[\\[Author:Name|Init\\]\\];?\\s*)+\\)?}}`,
-  with the wikilink's pre-`|` half giving the canonical name (no
-  alias-table lookup needed — the wikitext already has the full
-  name).  ~160 articles gain their contributors AND lose their stray
-  footer-line tail in one fix.  Per `[[feedback_data_contract_audit]]`:
-  both consumers must learn the new shape together, never one without
-  the other.
 - **Captioned-figure producer bug — Phase 1** — defer until after the
   next clean rebuild.  Producer-bug pool = STRANDED + BLOCK_LAYOUT +
   float-wrapped refs = **2,226 corpus-wide**.  Adjacency audit
@@ -410,34 +595,35 @@ chemistry layout), not a stale fixture.
   5-part botanical legend).  Single-bare-label paragraphs render as body prose;
   needs a figure-pass that collects consecutive single-entry paragraphs.
   Styling, not content loss.
-- **Two-column legend variants — RESOLVED for canonical cases 2026-05-15.**
-  The MULTICOL_LEGEND layout subclass now handles multi-row continuation
-  entries via column-major reconstruction (ARACHNIDA Figs 7, 12, 14, 47,
-  54, 65 all clean).  Trailing single-cell colspan annotations break the
-  legend at the right boundary; pre-existing LEGEND blocks are preserved
-  through the figure walker so trailing credits still fold into the IMG
-  caption.  Remaining sub-patterns within the same systemic class:
-    * **`rowspan=N` continuation cells** (ARACHNIDA Fig 31) — col-1 cell
-      spans 2 rows of col-0; the rowspan row has only one source cell so
-      legend parsing terminates early.  Need rowspan-aware row expansion
-      before column-major build.
-    * **Prime-marked labels** (`7′`, `I′ to V′` — ARACHNIDA Fig 47) —
-      `_MULTICOL_FULL_ENTRY_RE` doesn't accept prime characters in the
-      label, so labelled-with-prime cells get folded into the prior entry.
-      Extend label regex to include `′″‴` etc.
-    * **Hanging-indent entries in wide-column cells** (ARACHNIDA Fig 26)
-      — legend laid out as one `{{Hi|1em|…}}`-wrapped entry per template,
-      multiple per cell, no `||` separator.  Different shape from the
-      standard 2-col legend; needs its own detector that walks `{{Hi}}`
-      templates as legend entries.
-    * **Side-by-side image cells losing caption + legend** (ARACHNIDA Figs
-      57–58, BAG-PIPE vol 3 p221) — two figures laid out in a 2-column
+- **Legend extraction sub-patterns — refactored 2026-05-19 under
+  LEGENDED_FIGURE / LEGENDED_FIGURE_CHILD.**  The figure-shape
+  redistribution moved multicol + prose-cell legend extraction into
+  focused producers using a shared `_chop_legend_entries(text,
+  delimiter, …)` helper and column-major continuation via
+  `_parse_multicol_legend_rows_column_major`.  Canonical cases
+  (ARACHNIDA Figs 7, 12, 14, 47, 54, 65; ABBEY Fig 5) clean.
+  Remaining sub-patterns:
+    * **`rowspan=N` continuation cells** (ARACHNIDA Fig 31) — col-1
+      cell spans 2 rows of col-0; rowspan row has only one source
+      cell so legend parsing terminates early.  Need rowspan-aware
+      row expansion before column-major build.
+    * **Prime-marked labels** (`7′`, `I′ to V′` — ARACHNIDA Fig 47)
+      — `_MULTICOL_FULL_ENTRY_RE` doesn't accept prime characters
+      in the label, so labelled-with-prime cells get folded into
+      the prior entry.  Extend label regex to include `′″‴` etc.
+    * **`{{hi|…}}`-wrapped same-line legend** (ARACHNIDA Fig 3, 26,
+      73, 78) — legend packed into one cell as a sequence of
+      `{{hi|1em|…}}` templates separated by `<br>`, all on one
+      line.  Tracked as queued task — may warrant a new
+      `LEGENDED_FIGURE_INLINE` label.
+    * **Side-by-side image cells losing caption + legend** (ARACHNIDA
+      Figs 57–58, BAG-PIPE vol 3 p221) — two figures in a 2-column
       wikitable, each cell containing `[[File:…]]` (or `<score>`) +
       caption + `<br>`-stacked legend; pipeline lifts the IMG markers
-      but drops the cell text and leaks the TABLE marker.  Sackpfeife /
-      Bock / Schäferpfeife / Hümmelchen image labels lost, and the
-      chalumeau-scores table renders as raw `{{TABLE:…}TABLE}` text.
-      Distinct extraction-time issue.
+      but drops the cell text and leaks the TABLE marker.  Distinct
+      extraction-time issue (likely a CAPTIONED_FIGURE_GRID gap
+      since it has the right shape but cell-content extraction
+      doesn't see captions properly).
 - **Fig 7 editorial note in trailing PRE** — a wikitable that follows the
   figure containing an editorial annotation `[According to the system…]`
   classifies as PRE; the figure walker doesn't recurse into PRE for an
@@ -469,10 +655,9 @@ chemistry layout), not a stale fixture.
   decoration pattern + rowspan grouping, plus a focused producer that
   emits an `«OUTLINE:…«/OUTLINE»` marker.  The outline renderer is
   general-purpose and we underexploit it; this is one of several
-  patterns that ought to route there.  Deferred until the figure-shape
-  redistribution (`CAPTIONED_FIGURE`, `CAPTIONED_FIGURE_GRID`,
-  `NESTED_LEGEND_FIGURE`) lands — taxonomy is a separate carve campaign
-  not in the figure-layout family.
+  patterns that ought to route there.  Figure-shape redistribution
+  has now landed (2026-05-19) — TAXONOMY is the next non-figure carve
+  campaign queued for the architecture.
 - **IMG-caption credit-glue missing space** — when a figure's descriptive
   caption and its `(From …)` credit live in the same source cell separated
   only by structural markup that gets stripped (`{{center|{{Fs|N%|…}}}}`,
@@ -480,6 +665,15 @@ chemistry layout), not a stale fixture.
   the join.  Sample: ARACHNIDA Figs 13, 63, 74.  Narrow extraction-time
   fix: normalise `.(` → `. (` when assembling the caption (in
   `clean_caption` or the caption-build path of the layout subclasses).
+- **Single-image-figure edge cases (~50)** — LAYOUT_WRAPPER residual
+  with `images=1` after the 2026-05-19 figure-shape redistribution.
+  Each is a figure that should have matched
+  `CAPTIONED_FIGURE` / `CAPTIONED_FIGURE_INLINE` / `LEGENDED_FIGURE` /
+  `LEGENDED_FIGURE_CHILD` but didn't — likely predicate gaps rather
+  than missing labels.  Investigate by sampling per-bucket in
+  `tools/_scratch/figure_layouts_audit.md`; fixes here improve the
+  existing focused producers (especially the 51%-dominant
+  CAPTIONED_FIGURE) rather than adding new ones.
 - **Italic-marker inversion (residual)** — pre-existing class.  Post-Phase-A
   `stray_wiki_italic` counter is at 15 (vs baseline 2 on 2026-05-14, and a
   catastrophic 2,159 on the broken 2026-05-16 V2 deploy).  Ref-internal
