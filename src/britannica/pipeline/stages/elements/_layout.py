@@ -18,7 +18,11 @@ from __future__ import annotations
 
 import re
 
-from britannica.pipeline.stages.elements._registry import ElementRegistry, _PH
+from britannica.pipeline.stages.elements._registry import (
+    ElementRegistry,
+    TABLE_LABELS,
+    _PH,
+)
 from britannica.pipeline.stages.elements._tables import split_wiki_row
 from britannica.pipeline.stages.elements._text import _clean_text
 
@@ -1388,6 +1392,172 @@ def _simple_table_text(raw: str) -> str | None:
         pieces.append(cell.strip())
     text = " ".join(p for p in pieces if p).strip()
     return text or None
+
+
+# Attribution-before-caption pattern: cell contains `From X` /
+# `After X` / `Photo X` / `Copyright X` / `Modified X` and then a
+# `Fig.` or `Plate.` caption marker LATER in the cell.  When a
+# wikitable packs attribution and caption into one cell with
+# attribution first (HYDROMEDUSAE Fig 71 plain prose, ARACHNIDA
+# Fig 33 wrapped in `{{Fs|92%|…}}` styling), this lets us spot the
+# shape and defer to the legacy producer's attribution-reordering
+# logic.  When attribution is AFTER the Fig marker (the normal
+# in-source order), this pattern doesn't match because `From` only
+# appears after `Fig`.
+_ATTRIBUTION_BEFORE_CAPTION_RE = re.compile(
+    r"\b(?:From|After|Photo|Copyright|Modified)\b"
+    r".{0,400}?(?:\{\{\s*sc\s*\|\s*)?(?:Fig|Plate)s?\.?\s*\d",
+    re.IGNORECASE | re.DOTALL,
+)
+
+
+def _process_captioned_figure(
+    raw: str,
+    inner: str,
+    text_transform,
+    inner_registry: ElementRegistry | None,
+) -> str:
+    """Focused producer for `CAPTIONED_FIGURE` — single-image figure
+    layout.
+
+    The classifier predicate guarantees:
+      * Exactly 1 IMAGE child in `inner_registry`.
+      * That image sits in row 0, alone in its cell.
+      * Wikitable header carries no data-table signal.
+
+    Strategy:
+
+      1. Get the image filename from the IMAGE child's raw bytes.
+      2. For trailing rows (row 1+), gather their text content as
+         the caption body.
+      3. If the trailing rows contain a legend-shaped run (≥2
+         consecutive `LABEL. text` entries, optionally split into
+         `||`-separated label/text columns), emit those entries as
+         a separate `{{LEGEND:…}LEGEND}` block and leave non-legend
+         trailing rows as the caption.
+      4. Emit `{{IMG:filename|caption}}` (and the LEGEND block if
+         present, separated by a blank line so the viewer renders
+         them as adjacent figure + legend).
+
+    Complex shapes — nested wikitables in caption position, `<poem>`
+    blocks as legend cells, in-cell `<br>`-separated multi-segment
+    captions, image-raw with baked caption — fall back to
+    `_unwrap_layout_table` to preserve today's behaviour while we
+    iterate on the focused logic.
+    """
+    if inner_registry is None:
+        return _unwrap_layout_table(inner, text_transform, inner_registry)
+
+    image_phs = [ph for ph, lbl in inner_registry.labels.items()
+                 if lbl == "IMAGE"]
+    if len(image_phs) != 1:
+        return _unwrap_layout_table(inner, text_transform, inner_registry)
+    image_ph = image_phs[0]
+
+    eraw = inner_registry.elements[image_ph][1]
+    # If the image's raw already contains a caption (e.g.
+    # `[[File:Foo.jpg|thumb|Fig. N — caption text]]`), defer to the
+    # legacy producer — it has the rich-caption handling for
+    # multi-segment baked captions (ROOFS Fig. 4 style).
+    link_only = bool(re.match(
+        r"\[\[(?:File|Image):[^\]]+\]\]\s*$",
+        eraw.strip(), re.IGNORECASE | re.DOTALL,
+    ))
+    if not link_only:
+        return _unwrap_layout_table(inner, text_transform, inner_registry)
+
+    fname_m = re.match(
+        r"\[\[(?:File|Image):([^\]|]+)", eraw, re.IGNORECASE)
+    if not fname_m:
+        return _unwrap_layout_table(inner, text_transform, inner_registry)
+    filename = fname_m.group(1).strip()
+
+    # Nested wikitables / `<poem>` cells need the existing layout
+    # heuristics (NESTED_LEGEND, POEM_LEGEND paths in
+    # `_try_image_layout_subclass`).  Fall back.
+    for child_ph, label in inner_registry.labels.items():
+        if child_ph == image_ph:
+            continue
+        if label in {"POEM"} or label in TABLE_LABELS:
+            return _unwrap_layout_table(inner, text_transform, inner_registry)
+
+    # Parse rows.  The classifier predicate guarantees the image is
+    # in row 0, alone in its cell; trailing rows beneath carry the
+    # caption and possibly attribution / legend material.
+    cleaned = re.sub(r"<br\s*/?>", " ", inner, flags=re.IGNORECASE)
+    rows = re.split(r"\|-[^\n]*", cleaned)
+
+    # In-cell caption case: the image's own row contains substantive
+    # text beyond the placeholder (separated by `<br>`, `<span>`,
+    # etc., as in ORDNANCE Fig 54).  Legacy `_unwrap_layout_table`
+    # handles this via the IMG_SIMPLE_CAPTION subclass; we defer
+    # rather than parse it ourselves.  Detection: strip the image
+    # placeholder + HTML tags + templates + structural punctuation
+    # from the image row, anything left is substantive text.
+    image_row = next((r for r in rows if image_ph in r), "")
+    leftover = image_row.replace(image_ph, "")
+    leftover = re.sub(r"<[^>]+>", " ", leftover)
+    # Iteratively strip nested templates (caption templates can wrap
+    # multiple levels deep — `{{center|{{Fs85|…}}}}` etc.).
+    while "{{" in leftover:
+        new = re.sub(r"\{\{[^{}]*\}\}", " ", leftover)
+        if new == leftover:
+            break
+        leftover = new
+    leftover = re.sub(r"[|=]", " ", leftover)
+    leftover = re.sub(r"\s+", " ", leftover).strip()
+    if leftover:
+        return _unwrap_layout_table(inner, text_transform, inner_registry)
+
+    trailing_rows: list[str] = [
+        r for r in rows if image_ph not in r and r.strip()
+    ]
+
+    # Narrow path: ZERO or ONE trailing row.  Zero → image with no
+    # caption.  One → all that row's cells become the caption text.
+    # Anything more (≥2 trailing rows) likely carries legend /
+    # attribution structure that the legacy unwrap_layout_table
+    # interprets specifically, so we defer to it for now.
+    if len(trailing_rows) > 1:
+        return _unwrap_layout_table(inner, text_transform, inner_registry)
+
+    if not trailing_rows:
+        return f"{{{{IMG:{filename}}}}}"
+
+    # Single trailing row — gather its cells as the caption.
+    cells: list[str] = []
+    for _sep, _attr, content in split_wiki_row(trailing_rows[0]):
+        if not content:
+            continue
+        content = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*", "",
+                          content).strip()
+        if not content or _PH in content:
+            continue
+        # Attribution-before-caption pattern: cell contains
+        # `From X` / `After X` / etc. ahead of a Fig./Plate. marker.
+        # Legacy `_unwrap_layout_table` detects the attribution +
+        # reorders it parenthesized after the caption; we don't
+        # replicate that here, so fall back.  HYDROMEDUSAE Fig 71
+        # has it as plain prose; ARACHNIDA Fig 33 / Fig 48 wrap it
+        # inside a `{{Fs|N%|From X}}` styling template.
+        if _ATTRIBUTION_BEFORE_CAPTION_RE.search(content):
+            return _unwrap_layout_table(inner, text_transform, inner_registry)
+        cells.append(content)
+
+    if not cells:
+        return f"\n\n{{{{IMG:{filename}}}}}\n\n"
+
+    combined = " ".join(cells).strip()
+    combined = text_transform(combined)
+    combined = _clean_text(combined)
+    # Always flank with `\n\n`.  Figures are paragraph-level
+    # elements; the legacy producer's context-sensitive flanking
+    # (sometimes `\n\n` flanks, sometimes the IMG inlines with
+    # surrounding prose depending on which subclass path fires)
+    # is accidental complexity from the catch-all dispatch.
+    if combined:
+        return f"\n\n{{{{IMG:{filename}|{combined}}}}}\n\n"
+    return f"\n\n{{{{IMG:{filename}}}}}\n\n"
 
 
 def _unwrap_layout_table(inner: str, text_transform,

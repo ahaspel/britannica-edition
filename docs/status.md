@@ -452,13 +452,27 @@ chemistry layout), not a stale fixture.
 - **Tall-brace taxonomic grouping** — print-typographic device using a tall
   `\left\{ \begin{matrix} \\ \end{matrix} \right .` (no math content, pure
   ornament) to group preceding-or-following items as members of a single
-  category.  Currently renders as a stray vertical brace splitting the
-  surrounding prose.  Examples: ARACHNIDA (Eurypteromorpha sub-orders;
-  scorpion families with Carboniferous bracket), ARENIG GROUP, ATMOSPHERIC
-  ELECTRICITY — ~8 instances corpus-wide.  Real fix: detect the
-  empty-matrix brace pattern, parse the grouped items, emit as an OUTLINE
-  block.  The outline renderer is general-purpose and we underexploit it;
-  this is one of several patterns that ought to route there.
+  category.  Two encodings in source:
+    * **Brace inline in prose** (ARACHNIDA Eurypteromorpha sub-orders;
+      scorpion families with Carboniferous bracket; ATMOSPHERIC ELECTRICITY)
+      — renders as a stray vertical brace splitting the surrounding prose.
+    * **Wikitable with rowspan + brace cells** (ARENIG GROUP — geological
+      taxonomy of Ordovician sub-divisions) — multi-row wikitable using
+      `rowspan="N"` to group items, brace-`<math>` cells as visual
+      depth indicator.  Routes today to `COMPLEX_HTML` (correctly — it's
+      not a figure) but renders as a verbatim HTML table, losing the
+      hierarchy.
+
+  ~8 instances corpus-wide between both encodings.  Real fix under the
+  new walker/classifier/producer architecture: add a `TAXONOMY` (or
+  `OUTLINE_FROM_TABLE`) classifier predicate that recognises the brace-
+  decoration pattern + rowspan grouping, plus a focused producer that
+  emits an `«OUTLINE:…«/OUTLINE»` marker.  The outline renderer is
+  general-purpose and we underexploit it; this is one of several
+  patterns that ought to route there.  Deferred until the figure-shape
+  redistribution (`CAPTIONED_FIGURE`, `CAPTIONED_FIGURE_GRID`,
+  `NESTED_LEGEND_FIGURE`) lands — taxonomy is a separate carve campaign
+  not in the figure-layout family.
 - **IMG-caption credit-glue missing space** — when a figure's descriptive
   caption and its `(From …)` credit live in the same source cell separated
   only by structural markup that gets stripped (`{{center|{{Fs|N%|…}}}}`,

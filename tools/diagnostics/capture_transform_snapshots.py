@@ -50,10 +50,13 @@ from britannica.pipeline.stages.transform_articles import (  # noqa: E402
 SEED_FILENAMES: tuple[str, ...] = (
     "01-0032-a-A",                   # inline glyphs (alphabet initials, brief)
     "01-0036-s5-ABACUS",             # table-figure
+    "01-0042-s5-ABBEY",              # multi-poem-cell external-image legend
     "01-0127-s3-ACACIA",             # simple captioned figure
     "01-0157-s2-ACCUMULATOR",        # captioned figures (GLUED_BR)
+    "01-0571-s4-ALDEHYDES",          # chemistry-layout / Langle bracket tables
     "01-0766-s5-ALPHABET",           # inline glyphs at scale
     "02-0302-s5-ARACHNIDA",          # user-flagged trouble article
+    "02-0723-s2-ARTHUR",             # verse-quotation in wikitable (DATA_TABLE)
     "03-0219-s5-BAG-PIPE",           # SCORE + img/caption
     "04-0375-brachiopoda-BRACHIOPODA",  # wikitable-legend
     "06-0411-cithara-CITHARA",       # img-float
