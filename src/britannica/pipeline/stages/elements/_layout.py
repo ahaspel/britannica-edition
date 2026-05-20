@@ -1685,30 +1685,110 @@ def _process_captioned_figure_inline(
     return "\n\n" + "\n\n".join(parts) + "\n\n"
 
 
-# Legend-cell shape detection — used inside `_process_legended_figure`
-# to partition rows into "legend rows" and "caption/attribution rows."
-# Mirrors the predicate-time regexes in `__init__.py` but operates on
-# one row's text rather than the whole inner.
+# Legend-cell shape detection.  Used at both classification and
+# production time to decide whether a row carries multicol legend
+# entries.  Operating on CELL CONTENT (post-`split_wiki_row`) — not
+# raw row text — lets us see past cell-attribute prefixes
+# (``|align="right"|…``) and simple wrapper templates (``{{nowrap|…}}``).
 
-_LEGEND_ROW_MULTICOL_RE = re.compile(
-    r"^\s*\|"
-    r"(?:\s*(?:&emsp;|&nbsp;|&ensp;|&thinsp;))*\s*"
-    r"(?:«I»[A-Za-z][A-Za-z0-9]{0,5}«/I»|[A-Za-z][A-Za-z0-9]{0,5})"
-    r"\s*[.,]"
-    r"(?:\s+[A-Za-z][^|\n]*)?"
-    r"\s*\|\|"
+# A "label" token is short and distinct from prose text:
+#   * Italic-wrapped: ``«I»...«/I»`` with up to ~30 chars (covers
+#     single letters, multi-word abbreviations like `«I»cl. osc.«/I»`,
+#     hyphenated like `«I»prae-gen«/I»`).
+#   * Plain: 1-6 alphanumerics (digit-starting OK — `1`, `10`),
+#     OR a compound form with internal `.`/`-`/`,` like `c.c`,
+#     `c,c`, `st.c`, `prae-gen` (max 10 chars).
+#   * Optional prime suffix (`′″‴`) — ARACHNIDA Fig 47 `7′`,
+#     HYDROMEDUSAE Fig 49 `«I»g«/I»′`.
+#
+# Plain labels are deliberately kept short so plain words like
+# `Osculum.` or `Gateway.` (the text-cell of an alternating-pair
+# row) don't false-match as labels.
+_LEGEND_CELL_LABEL = (
+    r"(?:"
+    r"«I»[^«]{1,30}«/I»"                                       # italic
+    r"|[A-Za-z0-9]+\s+to\s+[A-Za-z0-9]+"                        # range (`III to VI`, `1 to 5`)
+    r"|[A-Za-z0-9]{1,6}"                                        # 1-6 pure alphanumerics
+    r"|[A-Za-z0-9]+[.,\-][A-Za-z0-9.,\-]{0,7}[A-Za-z0-9]"      # 3-10 with required internal punct
+    r")"
+    r"[′″‴]?"
 )
+
+_CELL_LABEL_ONLY_RE = re.compile(
+    r"^\s*" + _LEGEND_CELL_LABEL + r"\s*[.,]\s*$"
+)
+
+_CELL_FULL_ENTRY_RE = re.compile(
+    r"^\s*" + _LEGEND_CELL_LABEL + r"\s*[.,]\s+\S"
+)
+
+
+def _legend_cell_prep(content: str) -> str:
+    """Normalise a cell's content before label-shape matching.
+
+    Unwraps simple text templates (``{{nowrap|…}}``) and normalises
+    HTML whitespace entities (``&emsp;``, ``&nbsp;``, etc.) to plain
+    spaces so labels wrapped/padded with them match cleanly.  Mirrors
+    what the producer's `_chop_legend_entries` does to cell pieces
+    before parsing.
+    """
+    c = re.sub(r"\{\{[Nn]owrap\|([^{}]*)\}\}", r"\1", content)
+    c = re.sub(r"&[a-zA-Z]+;|&#\d+;", " ", c)
+    return c.strip()
+
+
+def _cell_is_legend_label(content: str) -> bool:
+    """The cell is just a label (with `.` or `,` terminator).
+    Examples: `1.`, `«I»osc.«/I»,`, `{{nowrap|&emsp;«I»a«/I»,&nbsp;}}`."""
+    return bool(_CELL_LABEL_ONLY_RE.match(_legend_cell_prep(content)))
+
+
+def _cell_is_legend_full_entry(content: str) -> bool:
+    """The cell is `LABEL[.,]\\s+TEXT` — a complete legend entry.
+    Examples: `1. Kibla.`, `«I»cl. osc.«/I», Closed osculum.`."""
+    return bool(_CELL_FULL_ENTRY_RE.match(_legend_cell_prep(content)))
+
+
+def _row_has_legend_multicol_cells(row: str) -> bool:
+    """True iff the row's FIRST non-empty cell is a legend label and
+    the row has ≥2 cells.  Covers both legend shapes:
+
+      * **Alternating pairs** — `|«I»b«/I»,||Cephalic tentacles.` —
+        cell 0 is a label-only cell, cell 1 is the description.
+        Canonical: ABBEY Fig 5, GASTROPODA Fig 32, HYDROMEDUSAE Fig 30.
+
+      * **Full-entry-per-cell** — `| 1. Kibla. || 5. Fountain…` —
+        cell 0 is a full `LABEL.,TEXT` entry.  Canonical: MOSQUE OF AMR.
+
+    The decision keys on the FIRST cell only.  A legend row always
+    *starts* with a label; the trailing description cells must not be
+    label-classified because short single-word descriptions
+    (`Foot.`) or hyphenated phrases (`Mantle-skirt, …`) would
+    spuriously match the label/full-entry shapes and skew a
+    per-cell count.
+
+    Cell-aware via ``split_wiki_row``, so cell-attribute prefixes
+    (``align="right"|`` etc.) are stripped before matching.
+    """
+    cells = split_wiki_row(row)
+    contents = [c for _sep, _attr, c in cells if c.strip()]
+    if len(contents) < 2:
+        return False
+    first = contents[0]
+    return _cell_is_legend_label(first) or _cell_is_legend_full_entry(first)
+
 
 _LEGEND_ROW_PROSE_RE = re.compile(
     r"(?:^|\n)\s*"
-    r"(?:«I»[A-Za-z][A-Za-z0-9]{0,5}«/I»|[A-Za-z][A-Za-z0-9]{0,5})"
+    r"(?:«I»[A-Za-z][A-Za-z0-9.]{0,3}«/I»|[A-Za-z][A-Za-z0-9.]{0,3})"
+    r"[′″‴]?"
     r"\s*[.,]\s+[A-Z‘“a-z]"
 )
 
 
 def _row_is_legend(row: str) -> bool:
     """True if ``row`` looks like a legend row (multicol or prose)."""
-    if _LEGEND_ROW_MULTICOL_RE.search(row):
+    if _row_has_legend_multicol_cells(row):
         return True
     if len(_LEGEND_ROW_PROSE_RE.findall(row)) >= 2:
         return True
@@ -1736,12 +1816,24 @@ def _chop_legend_entries(
     treats the returned entries identically regardless of how they
     were chopped.
     """
+    # Normalise `\n|` cell separators to the `||` delimiter so a
+    # multi-line multicol row chops into individual cells.  Some
+    # legends pack 2-3 (label, text) pairs per row with `&emsp;`
+    # spacer cells and newline-pipe separators between pairs
+    # (GASTROPODA Fig 28); without this the `||` split glues the
+    # `\n|&emsp;\n|`-joined neighbours onto the prior entry's text.
+    if delimiter == "||":
+        text = re.sub(r"\n\s*\|(?![-}|])", "||", text)
     pieces = [p.strip() for p in text.split(delimiter)]
     pieces = [p.lstrip("|").strip() for p in pieces if p]
     if not pieces:
         return []
     pieces = [_strip_cell_attributes(p).strip() for p in pieces]
-    pieces = [p for p in pieces if p]
+    # Drop spacer-only cells (entity-only `&emsp;`/`&nbsp;` or empty) —
+    # they separate (label, text) pairs in multi-pair rows and would
+    # otherwise shift the alternating-pair index pairing.
+    pieces = [p for p in pieces
+              if re.sub(r"&[a-zA-Z]+;|&#\d+;|\s+", "", p)]
     if not pieces:
         return []
     transformed = [text_transform(p) for p in pieces]
@@ -1750,11 +1842,19 @@ def _chop_legend_entries(
     first_is_italic = transformed[0].strip().startswith("«I»")
 
     # Full-entry shape: first chunk parses as a complete `label, text`.
-    full_match = (
-        (first_is_italic and _MULTICOL_FULL_ENTRY_ITALIC_RE.match(
-            transformed[0]))
-        or _MULTICOL_FULL_ENTRY_RE.match(first)
-    )
+    # Italic-wrapped first chunks must be tested against the italic
+    # shape ONLY.  Falling through to the plain regex on the
+    # italic-stripped text spuriously full-matches multi-word
+    # abbreviations: ``«I»cl. osc.«/I»,`` cleaned to ``cl. osc.,``
+    # parses as plain LABEL=`cl` + TEXT=`osc.,` even though the
+    # italic shape rejects it (no text after the trailing comma).
+    # That would route the row to full-entry mode where the actual
+    # italic chunk fails → empty pair list (SPONGES Fig 2).
+    if first_is_italic:
+        full_match = bool(
+            _MULTICOL_FULL_ENTRY_ITALIC_RE.match(transformed[0]))
+    else:
+        full_match = bool(_MULTICOL_FULL_ENTRY_RE.match(first))
     if full_match:
         out: list[tuple[str, str]] = []
         for t in transformed:
@@ -1834,7 +1934,7 @@ def _process_legended_figure(
     for row in rows:
         if not row.strip():
             continue
-        if _LEGEND_ROW_MULTICOL_RE.search(row):
+        if _row_has_legend_multicol_cells(row):
             multicol_rows.append(row)
             in_block = True
         elif in_block and "||" in row:
@@ -1974,6 +2074,78 @@ def _process_legended_figure_child(
 
     parts = _assemble_figure_parts(
         filename, cap_parts, attr_parts, legend_lines)
+    return "\n\n" + "\n\n".join(parts) + "\n\n"
+
+
+def _process_legended_figure_beside(
+    raw: str,
+    inner: str,
+    text_transform,
+    inner_registry: ElementRegistry | None,
+) -> str:
+    """Focused producer for `LEGENDED_FIGURE_BESIDE` — single-image
+    figure whose legend sits in a sibling cell to the image's right,
+    separated from the image by ``||`` on the same row.  Canonical
+    case: ABBEY Fig 1 (Santa Laura) — image cell + paragraph-
+    separated ``A. Gateway.\\n\\nB. Chapels.\\n\\n…`` legend cell.
+
+    The caption typically lives in a subsequent ``colspan``-row.
+
+    Distinct from `LEGENDED_FIGURE` because the legend cell shares
+    a row with the image, which requires preserving paragraph-`\\n\\n`
+    breaks (`split_wiki_row` collapses them) when parsing legend
+    entries.  Parsing the raw row text directly keeps the producer
+    simple — one helper does the legend extraction, one helper does
+    the caption.
+    """
+    if inner_registry is None:
+        return ""
+    image_phs = [ph for ph, lbl in inner_registry.labels.items()
+                 if lbl == "IMAGE"]
+    if len(image_phs) != 1:
+        return ""
+    image_ph = image_phs[0]
+    filename = _image_ph_filename(image_ph, inner_registry)
+    if not filename:
+        return ""
+
+    rows = re.split(r"\|-[^\n]*", inner)
+
+    # Locate the image's row and extract the raw cell text (image
+    # cell + sibling-legend cell, newlines intact).
+    image_row_idx = next((i for i, r in enumerate(rows)
+                           if image_ph in r), None)
+    if image_row_idx is None:
+        return ""
+    image_row = rows[image_row_idx]
+    row_lines = [l for l in image_row.split("\n") if l.strip()]
+    image_line = next((l for l in row_lines if image_ph in l), None)
+    if image_line is None or "||" not in image_line:
+        return ""
+    li = row_lines.index(image_line)
+    cell_lines = [image_line]
+    for nxt in row_lines[li + 1:]:
+        if nxt.lstrip().startswith("|"):
+            break
+        cell_lines.append(nxt)
+    cell_text = "\n".join(cell_lines).lstrip("|")
+
+    _, entries = _parse_inline_legend_cell(cell_text, text_transform)
+    if not entries or not _entries_look_like_legend(entries):
+        return ""
+    legend_lines = [f"{lbl}. {text}" for lbl, text in entries]
+
+    # Caption: scan subsequent rows for a `colspan`-row containing a
+    # Fig./Plate. marker.
+    caption = None
+    for r in rows[image_row_idx + 1:]:
+        c = _extract_caption_from_colspan_row(r, text_transform)
+        if c:
+            caption = c
+            break
+
+    parts = _assemble_figure_parts(
+        filename, [caption] if caption else [], [], legend_lines)
     return "\n\n" + "\n\n".join(parts) + "\n\n"
 
 
