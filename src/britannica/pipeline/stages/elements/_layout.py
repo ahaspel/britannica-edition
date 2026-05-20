@@ -423,6 +423,50 @@ def _parse_multicol_legend_rows_column_major(
     return entries if entries else None
 
 
+def _row_is_single_full_entry(row: str) -> bool:
+    """True iff the row has exactly one non-empty cell and it is a
+    complete `LABEL,. text` legend entry.  These are the
+    rowspan-continuation rows of a 2-column legend (ARACHNIDA Fig 31):
+    the right column's cell spans two rows, so the second row carries
+    only the left column's next entry."""
+    cells = [c for _s, _a, c in split_wiki_row(row) if c.strip()]
+    if len(cells) != 1:
+        return False
+    c = cells[0].strip()
+    if c.startswith("«I»"):
+        return bool(_MULTICOL_FULL_ENTRY_ITALIC_RE.match(c))
+    return bool(_MULTICOL_FULL_ENTRY_RE.match(_clean_legend_text(c)))
+
+
+def _collect_rowspan_legend(
+    rows: list[str], text_transform,
+) -> list[tuple[str, str]]:
+    """Column-major legend collection for `rowspan`-uneven rows
+    (ARACHNIDA Fig 31).  Each cell is a complete entry; the right
+    column uses `rowspan=2`, so alternate rows have only the left
+    cell.  Reads every cell by column index — col 0 from all rows,
+    then col 1 from the rows that have it — which yields the print's
+    column-major reading order without needing uniform rows."""
+    row_cells = [_split_multicol_row_cells(r, text_transform) for r in rows]
+    max_cols = max((len(c) for c in row_cells), default=0)
+    entries: list[tuple[str, str]] = []
+    for col in range(max_cols):
+        for cells in row_cells:
+            if col >= len(cells):
+                continue
+            cell = cells[col].strip()
+            if not cell:
+                continue
+            if cell.startswith("«I»"):
+                m = _MULTICOL_FULL_ENTRY_ITALIC_RE.match(cell)
+            else:
+                m = _MULTICOL_FULL_ENTRY_RE.match(_clean_legend_text(cell))
+            if m:
+                entries.append(
+                    (m.group(1).strip(), m.group(2).rstrip(". ").strip()))
+    return entries
+
+
 def _parse_multicol_legend_row(
     row_text: str, text_transform
 ) -> list[tuple[str, str]]:
@@ -1425,6 +1469,121 @@ _CELL_FIG_MARKER_RE = re.compile(
 )
 
 
+# ── ICL presentation-markup normalizer ───────────────────────────────
+#
+# Family-scoped (ICL only): pure-DECORATION templates that NO figure
+# path needs and EVERY figure path benefits from removing.  Unwrapping
+# them once, up front, lets the legend / caption / multicol detectors
+# and producers operate on clean content instead of each
+# re-implementing a partial unwrap.
+#
+# Three exclusions, each by the "does any path need it?" test:
+#   * Semantic typography (`sc`, `b`, `i`) — the OUTPUT path needs them;
+#     they survive as `«SC»/«B»/«I»` markers via the text transform.
+#   * Cell-attribute templates (`Ts`) — sit in the attribute position;
+#     stripped per-cell by `_strip_cell_attributes`.
+#   * `{{Hi|…}}` hanging-indent — NOT decoration: it wraps each legend
+#     entry individually, so the Hi boundary IS the entry boundary that
+#     the legend-extraction path needs (`_extract_hi_legend`).  Removing
+#     it would destroy that structure.
+_ICL_WRAPPER_TEMPLATES = frozenset({
+    "center", "c", "fs", "nowrap",
+    "fine block", "fine print", "small", "smaller", "fqm",
+})
+_ICL_SPACER_TEMPLATES = frozenset({
+    "em", "gap", "thinsp", "ensp", "emsp", "nbsp", "dhr", "vr", "hr",
+})
+
+
+def _match_braced_template(text: str, i: int) -> tuple[int, str] | tuple[None, None]:
+    """``text[i:i+2] == '{{'``.  Return ``(end, inner)`` where ``end``
+    is the index just past the matching ``}}`` and ``inner`` is the
+    content between the braces, handling nested ``{{…}}``.  Returns
+    ``(None, None)`` if unbalanced."""
+    depth = 0
+    k, n = i, len(text)
+    while k < n - 1:
+        if text[k] == "{" and text[k + 1] == "{":
+            depth += 1
+            k += 2
+            continue
+        if text[k] == "}" and text[k + 1] == "}":
+            depth -= 1
+            k += 2
+            if depth == 0:
+                return k, text[i + 2:k - 2]
+            continue
+        k += 1
+    return None, None
+
+
+def _split_template_args(inner: str) -> list[str]:
+    """Split a template's inner on top-level ``|`` (ignoring ``|``
+    inside nested ``{{…}}`` / ``[[…]]``)."""
+    args: list[str] = []
+    depth = 0
+    cur: list[str] = []
+    i, n = 0, len(inner)
+    while i < n:
+        two = inner[i:i + 2]
+        if two in ("{{", "[["):
+            depth += 1
+            cur.append(two)
+            i += 2
+            continue
+        if two in ("}}", "]]"):
+            depth = max(0, depth - 1)
+            cur.append(two)
+            i += 2
+            continue
+        if inner[i] == "|" and depth == 0:
+            args.append("".join(cur))
+            cur = []
+            i += 1
+            continue
+        cur.append(inner[i])
+        i += 1
+    args.append("".join(cur))
+    return args
+
+
+def _normalize_icl_markup(text: str) -> str:
+    """Unwrap pure-layout templates from ICL content to a fixpoint.
+
+    Wrapper templates (`{{Hi|…}}`, `{{center|…}}`, `{{Fs|N%|…}}`,
+    `{{nowrap|…}}`, …) collapse to their LAST argument — which is the
+    content regardless of whether the template carries a leading size
+    / option argument (`{{hi|X}}` and `{{hi|1em|X}}` both → ``X``).
+    Spacer templates (`{{em|.7}}`, `{{gap}}`, …) collapse to a single
+    space.  Nested wrappers (`{{center|{{Fs|92%|X}}}}`) resolve over
+    successive passes.  Non-layout templates (`{{sc|…}}`, `{{IMG:…}}`,
+    placeholders) are left untouched.
+    """
+    prev = None
+    while text != prev:
+        prev = text
+        out: list[str] = []
+        i, n = 0, len(text)
+        while i < n:
+            if text[i] == "{" and i + 1 < n and text[i + 1] == "{":
+                end, inner = _match_braced_template(text, i)
+                if end is not None:
+                    args = _split_template_args(inner)
+                    name = args[0].strip().lower()
+                    if name in _ICL_WRAPPER_TEMPLATES:
+                        out.append(args[-1] if len(args) > 1 else "")
+                        i = end
+                        continue
+                    if name in _ICL_SPACER_TEMPLATES:
+                        out.append(" ")
+                        i = end
+                        continue
+            out.append(text[i])
+            i += 1
+        text = "".join(out)
+    return text
+
+
 def _unwrap_cell_wrappers(text: str) -> str:
     """Unwrap purely positional/styling wrappers around figure-cell
     text so a downstream Fig-marker split doesn't slice through a
@@ -1610,6 +1769,7 @@ def _process_captioned_figure(
     # Collect text units: every non-empty cell across all rows.  `<br>`
     # → space first so an in-cell multi-segment caption arrives as a
     # single string per cell.  `{{Ts|…}}` is styling-only — strip it.
+    inner = _normalize_icl_markup(inner)
     cleaned = re.sub(r"<br\s*/?>", " ", inner, flags=re.IGNORECASE)
     rows = re.split(r"\|-[^\n]*", cleaned)
     cells_text: list[str] = []
@@ -1664,6 +1824,7 @@ def _process_captioned_figure_inline(
     if not filename:
         return ""
 
+    inner = _normalize_icl_markup(inner)
     cleaned = re.sub(r"<br\s*/?>", " ", inner, flags=re.IGNORECASE)
     rows = re.split(r"\|-[^\n]*", cleaned)
     cells_text: list[str] = []
@@ -1879,6 +2040,129 @@ def _chop_legend_entries(
     return out
 
 
+# `{{Hi|LABEL, text}}` / `{{Hi|SIZE|LABEL, text}}` / `{{hi|…}}` — a
+# "hanging indent" template the source uses to typeset each legend
+# entry.  Multiple per cell, scattered across columns (ARACHNIDA Fig
+# 26, 78).  Both arities occur: a leading size argument is optional
+# (ARACHNIDA Fig 3 uses bare `{{hi|content}}`).  The capture is the
+# LAST argument either way.  Content is brace-free by producer time
+# (italics already `«I»` markers).
+_HI_LEGEND_RE = re.compile(r"\{\{[Hh]i\|(?:[^|{}]*\|)?([^{}]*)\}\}")
+
+
+def _extract_hi_legend(
+    inner: str, text_transform,
+) -> tuple[list[str], str]:
+    """Extract legend entries wrapped in ``{{Hi|SIZE|LABEL, text}}`` /
+    ``{{hi|…}}`` hanging-indent templates.
+
+    Each ``{{Hi}}`` chunk is one complete legend entry; chunks appear
+    in source (column-major) order.  Returns ``(legend_lines,
+    inner_without_hi)`` — the inner with the ``{{Hi}}`` chunks
+    excised so the rest of the producer only sees the image, caption
+    and attribution.  Returns ``([], inner)`` when fewer than two
+    ``{{Hi}}`` chunks are present (not the hanging-indent shape).
+
+    Canonical: ARACHNIDA Fig 26 (A–D in two columns), Fig 78
+    (A/B/C with `;`-separated sub-references kept inside each entry).
+    """
+    chunks = _HI_LEGEND_RE.findall(inner)
+    if len(chunks) < 2:
+        return [], inner
+    lines: list[str] = []
+    for raw_chunk in chunks:
+        t = text_transform(re.sub(r"<br\s*/?>", " ", raw_chunk)).strip()
+        if t.startswith("«I»"):
+            m = _MULTICOL_FULL_ENTRY_ITALIC_RE.match(t)
+        else:
+            m = _MULTICOL_FULL_ENTRY_RE.match(_clean_legend_text(t))
+        if m:
+            label = m.group(1).strip()
+            text = m.group(2).rstrip(". ").strip()
+            lines.append(f"{label}. {text}")
+        else:
+            cleaned = _clean_legend_text(t)
+            if cleaned:
+                lines.append(cleaned)
+    return lines, _HI_LEGEND_RE.sub("", inner)
+
+
+# A short italic legend label, possibly with a `<sup>/<sub>` suffix and
+# an `X and Y` compound (ARACHNIDA Fig 3 `«I»m¹«/I» and «I»m²«/I»`).
+_FLOWING_LABEL = (
+    r"«I»[A-Za-z][A-Za-z0-9.]{0,6}(?:<su[bp]>[^<]+</su[bp]>)?«/I»"
+    r"(?:\s+and\s+«I»[A-Za-z][A-Za-z0-9.]{0,6}(?:<su[bp]>[^<]+</su[bp]>)?«/I»)?"
+)
+_FLOWING_ENTRY_START_RE = re.compile(r"(" + _FLOWING_LABEL + r")\s*,\s")
+_FLOWING_ATTRIBUTION_RE = re.compile(
+    r"\(\s*(?:After|From|Modified|Photo|Copyright)\b", re.IGNORECASE)
+
+
+def _extract_flowing_italic_legend(
+    inner: str, text_transform,
+) -> tuple[list[str], str]:
+    """Extract a *flowing* italic-labelled legend — a run of
+    ``«I»label«/I», text.`` entries packed into one cell, mixing
+    `{{hi|…}}`-wrapped and bare entries separated by ``. `` / ``<br>``
+    (ARACHNIDA Fig 3, Fig 31).  Distinct from `_extract_hi_legend`
+    (discrete `{{Hi}}` chunks, plain labels — Fig 26, 78): here the
+    entry boundary is the italic short-label, not the template.
+
+    Operates per-row so a stray short italic in the caption row can't
+    be mistaken for a legend entry.  In the legend row, ``{{hi|…}}`` is
+    unwrapped transparently and the run is split on each italic-label
+    start; a trailing ``(After …)`` attribution is left in place.
+
+    Returns ``(legend_lines, inner_without_run)`` — the legend row's
+    entry text removed, caption / attribution preserved.  Returns
+    ``([], inner)`` when no row carries ≥3 such entries.
+    """
+    parts = re.split(r"(\|-[^\n]*)", inner)
+    legend_lines: list[str] = []
+    found = False
+    for idx, part in enumerate(parts):
+        if part.startswith("|-") or found:
+            continue
+        # A flowing legend is packed into ONE cell with no `||` cell
+        # separators (entries run together, `. `/`<br>`-separated).
+        # Rows carrying `||` are multicol legends — leave them for the
+        # multicol path (ORDNANCE `|b.||Traversing bracket,||r.||…`).
+        if "||" in part:
+            continue
+        unwrapped = _HI_LEGEND_RE.sub(lambda m: m.group(1), part)
+        starts = list(_FLOWING_ENTRY_START_RE.finditer(unwrapped))
+        if len(starts) < 3:
+            continue
+        # Slice each entry from its label to the next label start.
+        run_start = starts[0].start()
+        prefix = unwrapped[:run_start]
+        for i, m in enumerate(starts):
+            seg_end = (starts[i + 1].start() if i + 1 < len(starts)
+                       else len(unwrapped))
+            body = unwrapped[m.end():seg_end]
+            # Trailing attribution belongs to the figure, not the
+            # legend — cut it from the last entry and keep as suffix.
+            suffix = ""
+            attr = _FLOWING_ATTRIBUTION_RE.search(body)
+            if attr:
+                suffix = body[attr.start():]
+                body = body[:attr.start()]
+            label = _clean_legend_text(text_transform(m.group(1)))
+            text = _clean_legend_text(text_transform(body)).rstrip(". ")
+            if label and text:
+                legend_lines.append(f"{label}. {text}")
+            if suffix:
+                # Keep `prefix`'s leading newline + cell marker so the
+                # leftover stays a parseable row (otherwise the `|-`
+                # splitter swallows the attribution).
+                prefix = prefix + " " + suffix.strip()
+        parts[idx] = prefix
+        found = True
+    if not found:
+        return [], inner
+    return legend_lines, "".join(parts)
+
+
 def _process_legended_figure(
     raw: str,
     inner: str,
@@ -1889,9 +2173,12 @@ def _process_legended_figure(
     whose legend is encoded in regular cells (NOT in a POEM or
     nested-wikitable child; those go to `LEGENDED_FIGURE_CHILD`).
 
-    Three legend-cell sub-shapes are unified through
-    `_chop_legend_entries`:
+    Four legend-cell sub-shapes share one assembly path:
 
+      * Hanging-indent (ARACHNIDA Fig 26, 78): each entry wrapped in
+        a `{{Hi|SIZE|LABEL, text}}` template, packed several per cell
+        across columns.  Extracted first (Phase 0) and excised from
+        the inner so the remaining phases only see image/caption.
       * Multicol-alternating (ABBEY Fig 5): `|A.||Gateway.||F.||…`
         — `||` delimiter, label-only first chunk → alternating pairs.
       * Multicol-full-entry (ARACHNIDA Fig 7):
@@ -1915,11 +2202,31 @@ def _process_legended_figure(
     if not filename:
         return ""
 
-    cleaned = re.sub(r"<br\s*/?>", " ", inner, flags=re.IGNORECASE)
-    rows = re.split(r"\|-[^\n]*", cleaned)
-
     legend_lines: list[str] = []
     text_cells: list[str] = []
+
+    # Family-scoped normalization: strip pure-decoration layout
+    # templates ({{center}}, {{Fs}}, {{em}} spacers, …) so the legend
+    # detectors see clean content.  `{{Hi}}` survives — it carries
+    # legend-entry boundaries that Phase 0 needs.
+    inner = _normalize_icl_markup(inner)
+
+    # Phase 0: single-cell packed legends.
+    #   (a) Flowing italic legend — a run of `«I»label«/I», text.`
+    #       entries (hi-wrapped and/or bare) in one cell (Fig 3, 31).
+    #   (b) Discrete hanging-indent — each `{{Hi}}` is one complete
+    #       entry, plain-labelled, across columns (Fig 26, 78).
+    # Try the flowing parse first; fall back to discrete `{{Hi}}`.
+    flowing_lines, inner = _extract_flowing_italic_legend(
+        inner, text_transform)
+    if flowing_lines:
+        legend_lines.extend(flowing_lines)
+    else:
+        hi_lines, inner = _extract_hi_legend(inner, text_transform)
+        legend_lines.extend(hi_lines)
+
+    cleaned = re.sub(r"<br\s*/?>", " ", inner, flags=re.IGNORECASE)
+    rows = re.split(r"\|-[^\n]*", cleaned)
 
     # Phase 1: multicol legend rows.  A multicol BLOCK starts when a
     # row matches the strict label-shape regex; subsequent rows that
@@ -1937,15 +2244,21 @@ def _process_legended_figure(
         if _row_has_legend_multicol_cells(row):
             multicol_rows.append(row)
             in_block = True
-        elif in_block and "||" in row:
+        elif in_block and ("||" in row or _row_is_single_full_entry(row)):
+            # A `||` row continues a multicol block (ARACHNIDA Fig 7);
+            # a single full-entry row continues a `rowspan` block where
+            # the right column spans two rows (ARACHNIDA Fig 31).
             multicol_rows.append(row)
         else:
             in_block = False
             other_rows.append(row)
     if multicol_rows:
-        # Two multicol sub-shapes share the iteration ("walk rows,
+        # Three multicol sub-shapes share the iteration ("walk rows,
         # collect entries column-major"), but differ in cell parsing:
         #
+        # * Rowspan-uneven (ARACHNIDA Fig 31): a `rowspan=2` right
+        #   column leaves alternate rows with one cell.  Each cell is
+        #   a complete entry — collect column-major by cell index.
         # * Full-entry-per-cell with cross-row continuation
         #   (ARACHNIDA Fig 7): an entry can span 3-4 rows of the
         #   same column.  Handled by `_parse_multicol_legend_rows_
@@ -1957,8 +2270,13 @@ def _process_legended_figure(
         # Column-major parser returns None on the alternating-pair
         # shape (first cell is label-only, no text), giving us a
         # clean fallback signal.
-        col_pairs = _parse_multicol_legend_rows_column_major(
-            multicol_rows, text_transform)
+        if any(re.search(r"rowspan", r, re.IGNORECASE)
+               for r in multicol_rows):
+            col_pairs = _collect_rowspan_legend(
+                multicol_rows, text_transform)
+        else:
+            col_pairs = _parse_multicol_legend_rows_column_major(
+                multicol_rows, text_transform)
         if col_pairs:
             legend_lines.extend(
                 f"{lbl}. {text}" for lbl, text in col_pairs)
