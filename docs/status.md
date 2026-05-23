@@ -1,12 +1,55 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-05-19.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-05-23.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
 ---
 
-## Current focus (2026-05-19) — Figure-shape redistribution + contributor signal
+## Current focus (2026-05-23) — Structural figure break: `_process_figures` DELETED
+
+Goal achieved: the walker/classifier/producer now PRODUCES the final figure;
+nothing runs after it.  The `_process_figures` post-pass (a prose heuristic) is
+**deleted**.  Captions/legends in EB1911 source are always *structurally*
+delimited (templates/tables), never bare prose — so recognition is structural.
+
+**The structural figure break** (`elements/_figure.py`):
+- `figure_wrapper_end` (`{{center|…image…}}` wrapper IS the figure) +
+  `figure_tail_end` (bare image + its caption/legend run).  Pure structural
+  gates, **NO length heuristics**: caption templates require an `{{sc|Fig}}`/
+  `(From` signal inside; bare `Fig. N.—…` requires the em-dash immediately after
+  the number (so body "Fig. 6. The simplest…" is NOT a caption); italic-label
+  legends are `«I»short«/I», text` (comma, not period — `«I»d«/I». …` is a body
+  item); verse legends are `<poem>`; attribution is parenthesized `(From`/
+  `(After`; attribution-only tails (no caption) are left alone.
+- `SHAPE_FIGURE` in the walker (leaf); `_produce_figure` re-processes the span
+  with `_allow_figure=False` then runs `_assemble_figures` (the assembly utility,
+  now a producer helper — TEMPORARY; a fully structural producer is the next step).
+- The old prose-based `LOOSE_FIGURE` detour was ripped out first (it used the
+  POST-production classifier pre-production; structural recognition replaced it).
+
+**Verification (the discipline that mattered)** — render-level, not length:
+- Body-preservation: **0 render diffs / 1499** with the break vs baseline.
+- Deletion is data-safe: **0 content loss** (word-multiset check — only 3
+  cosmetic hyphen/space joins at figure boundaries, all letters preserved).
+- Deleting `_process_figures` is a NET WIN: ~73 body paragraphs the post-pass had
+  wrongly captured (numbered sections "21. Method…", taxonomy, author citations,
+  article openers) return to body.
+- Snapshots **rebaselined** (`tools/diagnostics/capture_transform_snapshots.py`);
+  full suite green (359).
+
+**FILED BACKLOG** — two content-preserving format forms the structural producer
+must still own (see tasks): (1) **attribution-fold** — `(From X.)` after a figure
+lands as a stray body line instead of folding into the caption (~51); (2) **loose
+table-legend** — a `{|`/`<table>` legend after an image renders as `{{TABLE}}`
+not `{{LEGEND}}` (~37); plus the 3 cosmetic hyphen-joins.  These are *wrong*
+(our problem in the new architecture), not regressions vs the deleted band-aid.
+
+Kept tool: `tools/diagnostics/figure_span_audit.py` (over-absorption audit).
+
+---
+
+## Prior focus (2026-05-19) — Figure-shape redistribution + contributor signal
 
 **Figure pipeline rewritten as focused producers**.  The 1700-line
 `_unwrap_layout_table` catch-all has been dissolved into 6 focused

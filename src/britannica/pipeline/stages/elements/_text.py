@@ -75,6 +75,12 @@ def _clean_text(text: str) -> str:
     text = re.sub(r"«I»(.*?)«/I»", r"\1", text)
     text = re.sub(r"«SC»(.*?)«/SC»", r"\1", text)
     text = re.sub(r"«/?[A-Z]+»", "", text)
+    # `_clean_text` flattens to PLAIN text (captions, cell text, etc.).
+    # Image markers carry `|`-separated layout metadata; the generic
+    # `{{name|content}}` rule below would otherwise mangle them into
+    # stray text (`{{IMG:fn|align=inline}}` → `align=inline`).  A plain-
+    # text context can't render a glyph, so drop image markers entirely.
+    text = re.sub(r"\{\{IMG:[^{}]*\}\}", "", text)
     # Strip raw wiki templates (pre-fetch-stage): {{sc|text}} → text
     text = re.sub(r"\{\{[^{}|]*\|([^{}]*)\}\}", r"\1", text)
     # Strip remaining templates with no args

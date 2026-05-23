@@ -18,9 +18,8 @@ from britannica.markers import RENDERED_MARKER_OPENS
 # Negative-lookahead alternation built from the shared marker list in
 # `markers.py`.  The strip regex matches any `{{…}}` template-style
 # block UNLESS it opens with one of the rendered-marker prefixes (IMG,
-# IMG-INLINE, TABLE, TABLEH, LEGEND, VERSE), in which case it's left
-# alone for the viewer.  Strip `{{` from each entry — the regex
-# already anchors there.
+# TABLE, TABLEH, LEGEND, VERSE), in which case it's left alone for the
+# viewer.  Strip `{{` from each entry — the regex already anchors there.
 _MARKER_OPEN_NAMES = "|".join(
     re.escape(o[2:]) for o in RENDERED_MARKER_OPENS
 )

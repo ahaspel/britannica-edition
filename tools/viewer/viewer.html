@@ -1416,26 +1416,62 @@
       return `/data/images/${encodeURIComponent(name)}`;
     }
 
-    // Render an `{{IMG-INLINE:fn|size}}` marker as an inline `<img>`.
-    // `size` follows the MediaWiki convention:
-    //   `Npx`     → width:N, height auto
-    //   `xHpx`    → height:H, width auto
-    //   `WxHpx`   → bounding box; max-width:W, max-height:H, aspect preserved
-    //   (empty)   → line-height fallback for tiny glyphs
+    // Render an inline glyph (`{{IMG:fn|align=inline|width|height}}`) as
+    // an inline `<img>`.  width/height are px ints (either may be null),
+    // following MediaWiki sizing:
+    //   width only  → width:Wpx, height auto
+    //   height only → height:Hpx, width auto  (glyph sized to the line)
+    //   both        → bounding box, aspect preserved
+    //   neither     → line-height fallback for tiny glyphs
     // Glyph SVGs go through commonsUrl() which routes to .svg.png
     // raster on S3 / local derived images.
-    function renderInlineGlyph(filename, size) {
+    function renderInlineGlyph(filename, width, height) {
       const url = commonsUrl(filename);
-      let style = "";
-      const s = (size || "").trim().toLowerCase();
-      const wh = s.match(/^(\d+)x(\d+)px$/);
-      const w  = s.match(/^(\d+)px$/);
-      const h  = s.match(/^x(\d+)px$/);
-      if (wh) style = `max-width:${wh[1]}px;max-height:${wh[2]}px;width:auto;height:auto;`;
-      else if (w) style = `width:${w[1]}px;height:auto;`;
-      else if (h) style = `height:${h[1]}px;width:auto;`;
+      let style;
+      if (width && height) style = `max-width:${width}px;max-height:${height}px;width:auto;height:auto;`;
+      else if (width) style = `width:${width}px;height:auto;`;
+      else if (height) style = `height:${height}px;width:auto;`;
       else style = "height:1.2em;width:auto;";
       return `<img src="${url}" alt="${escapeHtml(filename)}" class="inline-glyph" loading="lazy" style="${style}vertical-align:middle;" />`;
+    }
+
+    // Block image marker grammar — mirrors britannica.markers.IMG_PARTS_RE.
+    //   {{IMG:filename[|align=center|left|right][|width=N][|height=N][|caption]}}
+    // group 1 filename, group 2 meta-block, group 3 caption.  The article
+    // encodes this; the renderer is the sole decoder (see markers.py).
+    const IMG_PARTS_SRC =
+      "\\{\\{IMG:([^|}]+)" +
+      "((?:\\|(?:align=(?:center|left|right|inline)|width=\\d+|height=\\d+))*)" +
+      "(?:\\|([^{}]*))?\\}\\}";
+    const IMG_PARTS_RE_G = new RegExp(IMG_PARTS_SRC, "g");        // replace / exec-all
+    const IMG_PARTS_RE = new RegExp(IMG_PARTS_SRC);              // first match anywhere
+    const IMG_PARTS_RE_ANCHORED = new RegExp("^" + IMG_PARTS_SRC + "$");
+
+    function parseImgMeta(metaBlock) {
+      const out = {};
+      if (metaBlock) {
+        const re = /(align|width|height)=([^|]+)/g;
+        let m;
+        while ((m = re.exec(metaBlock)) !== null)
+          out[m[1]] = m[1] === "align" ? m[2] : parseInt(m[2], 10);
+      }
+      return out;
+    }
+
+    // A figure is "wide" (full column, no 600px box) when its carried
+    // width exceeds the default box.  The filename/attribution heuristic
+    // is a FALLBACK only when no width was carried — older exports and
+    // figure/table-embedded images that don't carry size yet.
+    const IMG_DEFAULT_BOX_PX = 600;
+    function imgIsWide(meta, filename, caption) {
+      if (meta.width) return meta.width > IMG_DEFAULT_BOX_PX;
+      return /(?:^|[\s_-])map(?:$|[\s._-])/i.test(filename || "")
+          || /Justus Perthes|Emery Walker|Drawn and Engraved/i.test(caption || "");
+    }
+    // Source width sizes the figure box; CSS max-width:100% clamps it to
+    // the column.  "" when no width carried (falls back to the CSS box).
+    function imgWidthStyle(meta) {
+      return meta.width ? ` style="max-width:${meta.width}px"` : "";
     }
 
     let footnoteCounter = 0;
@@ -1845,6 +1881,16 @@
       h = h.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
       h = h.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
       h = h.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
+      // Footnote bodies now keep image markers (glyphs in notes, e.g.
+      // ALPHABET).  Render inline glyphs inline; any block image in a
+      // note renders small/inline since a footnote is an inline context.
+      h = h.replace(IMG_PARTS_RE_G, (match, filename, metaBlock, caption) => {
+        const meta = parseImgMeta(metaBlock);
+        if (meta.align === "inline")
+          return renderInlineGlyph(unescapeHtml(filename), meta.width, meta.height);
+        const url = commonsUrl(unescapeHtml(filename));
+        return `<img src="${url}" alt="${escapeHtml(caption || filename)}" class="inline-glyph" loading="lazy" style="max-height:1.4em;vertical-align:middle;" />`;
+      });
       return h;
     }
 
@@ -1855,12 +1901,10 @@
       h = h.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
       h = h.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
       h = h.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
-      h = h.replace(/\{\{IMG:([^|}]+)(?:\|([^}]*))?\}\}/g, (match, filename, caption) => {
+      h = h.replace(IMG_PARTS_RE_G, (match, filename, metaBlock, caption) => {
         const url = filename.startsWith("http") ? filename : commonsUrl(filename);
         return `<img src="${url}" alt="${escapeHtml(caption || filename)}" class="cell-image" loading="lazy" style="max-height:60px;" />`;
       });
-      h = h.replace(/\{\{IMG-INLINE:([^|}]+)(?:\|([^}]*))?\}\}/g,
-                    (match, filename, size) => renderInlineGlyph(filename, size));
       h = h.replace(/\[hieroglyph:\s*([^\]]+)\]/g, (match, codes) => {
         const rendered = codes.trim().split(/[:\s\-]+/).map(code => {
           code = code.replace(/\\/g, "");
@@ -2097,12 +2141,16 @@
       // Section-heading detection (SEC marker + standalone/with-body
       // SC variants) is handled by the detectSections pre-pass \u2014 see
       // the early-return guard at the top of this function.
-      const imgMatch = p.match(/^\{\{IMG:([^|}]+)(?:\|([^}]*))?\}\}$/);
+      const imgMatch = p.match(IMG_PARTS_RE_ANCHORED);
       if (imgMatch) {
         const filename = imgMatch[1];
-        const caption = imgMatch[2] || "";
+        const meta = parseImgMeta(imgMatch[2]);
+        const caption = imgMatch[3] || "";
+        if (meta.align === "inline")
+          return renderInlineGlyph(filename, meta.width, meta.height);
         const url = commonsUrl(filename);
-        return `<figure class="inline-image">
+        const cls = "inline-image" + (imgIsWide(meta, filename, caption) ? " wide" : "");
+        return `<figure class="${cls}"${imgWidthStyle(meta)}>
           <a href="${url}" target="_blank"><img src="${url}" alt="${escapeHtml(caption || filename)}" loading="lazy" /></a>
           ${caption ? `<figcaption>${escapeHtml(caption)}</figcaption>` : ""}
         </figure>`;
@@ -2495,41 +2543,43 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
         /\u2060FIG\u2060([\s\S]*?)\u2060FIG\u2060/g,
         (_match, content) => {
           const figs = [];
-          const figRe = /\{\{IMG:([^|}]+)(?:\|([^}]*))?\}\}(?:\s*\{\{LEGEND:([\s\S]*?)\}LEGEND\})?/g;
+          const figRe = new RegExp(
+            IMG_PARTS_SRC + "(?:\\s*\\{\\{LEGEND:([\\s\\S]*?)\\}LEGEND\\})?", "g");
           let m;
           while ((m = figRe.exec(content)) !== null) {
             const url = commonsUrl(unescapeHtml(m[1]));
-            const caption = m[2] || "";
-            const legend = m[3] || "";
+            const meta = parseImgMeta(m[2]);
+            const caption = m[3] || "";
+            const legend = m[4] || "";
             let legendHtml = "";
             if (legend) {
               const lines = legend.split("\n").map(l => l.trim()).filter(Boolean);
               legendHtml = `<div class="float-legend">${lines.map(l => `<div>${l}</div>`).join("")}</div>`;
             }
-            figs.push(`<figure class="inline-image inline-float"><a href="${url}" target="_blank"><img src="${url}" alt="${caption || m[1]}" loading="lazy" /></a>${caption ? `<figcaption>${caption}</figcaption>` : ""}${legendHtml}</figure>`);
+            figs.push(`<figure class="inline-image inline-float"${imgWidthStyle(meta)}><a href="${url}" target="_blank"><img src="${url}" alt="${caption || m[1]}" loading="lazy" /></a>${caption ? `<figcaption>${caption}</figcaption>` : ""}${legendHtml}</figure>`);
           }
           return figs.join("");
         });
       // Strip any stray sentinels (shouldn't happen but guard).
       html = html.replace(/\u2060FIG\u2060/g, "");
-      // Render inline images — captions are pre-cleaned by the pipeline.
+      // Render images — captions are pre-cleaned by the pipeline.
       // Filename must be unescaped before URL construction because the
       // surrounding paragraph was run through escapeHtml(), which would
       // otherwise double-encode entities like `'` → `&#39;` → `%26%2339%3B`
-      // and produce a 403 on S3.
-      html = html.replace(/\{\{IMG-INLINE:([^|}]+)(?:\|([^}]*))?\}\}/g,
-                          (match, filename, size) =>
-                            renderInlineGlyph(unescapeHtml(filename), size));
-      html = html.replace(/\{\{IMG:([^|}]+)(?:\|([^}]*))?\}\}/g, (match, filename, caption) => {
+      // and produce a 403 on S3.  `align=inline` renders inline in the
+      // prose flow (folded-in glyphs); everything else is a block figure.
+      html = html.replace(IMG_PARTS_RE_G, (match, filename, metaBlock, caption) => {
         const url = commonsUrl(unescapeHtml(filename));
-        // Large-format figures — Perthes country maps, Emery-Walker
-        // engravings, any filename with "map" — need full column width,
-        // not the 600px cap that suits diagrams and portraits.
-        const isWide = /Justus Perthes|Emery Walker|Drawn and Engraved/i
-                         .test(caption || "")
-                       || /(?:^|[\s_-])map(?:$|[\s._-])/i.test(filename);
-        const cls = isWide ? "inline-image wide" : "inline-image";
-        return `<figure class="${cls}"><a href="${url}" target="_blank"><img src="${url}" alt="${caption || filename}" loading="lazy" /></a>${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure>`;
+        const meta = parseImgMeta(metaBlock);
+        if (meta.align === "inline")
+          return renderInlineGlyph(unescapeHtml(filename), meta.width, meta.height);
+        caption = caption || "";
+        // Carried width drives sizing: source width sizes the box (CSS
+        // clamps to the column); width > the default box → full-column
+        // "wide".  Filename/attribution is the fallback for width-less
+        // markers only (see imgIsWide).
+        const cls = "inline-image" + (imgIsWide(meta, filename, caption) ? " wide" : "");
+        return `<figure class="${cls}"${imgWidthStyle(meta)}><a href="${url}" target="_blank"><img src="${url}" alt="${caption || filename}" loading="lazy" /></a>${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure>`;
       });
       // Render inline preformatted blocks (structural formulas)
       html = html.replace(/\u00abPRE:(.*?)\u00ab\/PRE\u00bb/gs, (match, content) => {
@@ -2779,16 +2829,18 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
               markedBody = `\x01PAGE:${article.page_start}\x01` + markedBody;
             }
 
-            // Normalize so every {{IMG:…}} marker sits on its own
+            // Normalize so every BLOCK {{IMG:…}} marker sits on its own
             // paragraph, separated from the surrounding body text by
             // \n\n. The pipeline sometimes leaves an IMG glued to the
             // previous paragraph with a single \n (common in TOOL after
             // corrections.json replacements), which would defeat the
-            // per-paragraph float-merge below.
+            // per-paragraph float-merge below.  `align=inline` glyphs are
+            // EXCLUDED — they must stay in the prose flow, not be pulled
+            // onto their own paragraph.
             markedBody = markedBody.replace(
-              /(?<!\n\n)(\{\{IMG:[^}]*\}\})/g, "\n\n$1");
+              /(?<!\n\n)(\{\{IMG:(?![^}]*align=inline)[^}]*\}\})/g, "\n\n$1");
             markedBody = markedBody.replace(
-              /(\{\{IMG:[^}]*\}\})(?!\n\n)/g, "$1\n\n");
+              /(\{\{IMG:(?![^}]*align=inline)[^}]*\}\})(?!\n\n)/g, "$1\n\n");
 
 
             // Merge shoulder heading paragraphs with surrounding text.
@@ -2827,14 +2879,10 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
             // engravings) should NOT float — they're too big to wrap
             // prose around. Leaving them out of the mid-paragraph merge
             // makes them render as standalone full-width figures.
-            const IS_WIDE_IMG = /\{\{IMG:([^|}]+)(?:\|([^}]*))?\}\}/;
             const isWideFigure = s => {
-              const m = s.match(IS_WIDE_IMG);
+              const m = s.match(IMG_PARTS_RE);
               if (!m) return false;
-              const filename = m[1] || "";
-              const caption = m[2] || "";
-              return /Justus Perthes|Emery Walker|Drawn and Engraved/i.test(caption)
-                  || /(?:^|[\s_-])map(?:$|[\s._-])/i.test(filename);
+              return imgIsWide(parseImgMeta(m[2]), m[1] || "", m[3] || "");
             };
             // Collapse ``\n\n`` inside balanced ``«HTMLTABLE:`` blocks to
             // ``\n`` so paragraph-splitting doesn't slice a nested

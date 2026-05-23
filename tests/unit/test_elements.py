@@ -4,8 +4,8 @@ import re
 from britannica.pipeline.stages.elements import (
     ElementContext,
     process_elements,
-    _clean_text,
 )
+from britannica.pipeline.stages.elements._text import _clean_text
 from britannica.pipeline.stages.elements._shapes import (
     SHAPE_BRACE_PIPE,
     SHAPE_DOUBLE_BRACKET,
@@ -124,14 +124,15 @@ class TestProcessing:
         assert "\u00abFN:A footnote\u00ab/FN\u00bb" in result
         assert "<ref>" not in result
 
-    def test_ref_text_is_clean(self):
-        """Footnote text has no formatting markers."""
-        text = "<ref>See '''bold''' and ''italic''</ref>"
+    def test_ref_text_preserves_formatting(self):
+        """Footnote text KEEPS its formatting markers \u2014 the producer no
+        longer flattens the body, so \u00abB\u00bb/\u00abI\u00bb/etc. survive for the viewer
+        to render (the footnote producer owns its body, no _clean_text)."""
+        text = "<ref>See '''bold''' here</ref>"
         result = process_elements(text, _bold_transform, ElementContext())
         fn_match = re.search(r"\u00abFN:(.*?)\u00ab/FN\u00bb", result)
         assert fn_match is not None
-        fn_text = fn_match.group(1)
-        assert "\u00ab" not in fn_text
+        assert "\u00abB\u00bbbold\u00ab/B\u00bb" in fn_match.group(1)
 
 
 class TestRealData:

@@ -40,21 +40,25 @@ class TestRealImages:
     def test_file_image_produces_inline_marker(self):
         """Vol 1 p774 has alphabet-glyph `[[File:\u2026|14px]]` refs sitting
         mid-prose between italic transliterations.  These are INLINE_GLYPH
-        bucket \u2014 promoted to `{{IMG-INLINE:\u2026}}` so the viewer renders them
-        inline at source size, not as block figures."""
+        bucket \u2014 folded into the unified `{{IMG:\u2026|align=inline}}` marker so
+        the viewer renders them inline at source size, not as block figures."""
         raw = _load_page(1, 774)
         result = _transform(raw)
-        assert "{{IMG-INLINE:" in result, "No IMG-INLINE marker produced"
+        assert "align=inline" in result, "No inline-glyph marker produced"
 
     def test_inline_marker_has_filename_and_size(self):
+        from britannica.markers import IMG_PARTS_RE, parse_img_meta
         raw = _load_page(1, 774)
         result = _transform(raw)
-        m = re.search(r"\{\{IMG-INLINE:([^|}]+)(?:\|([^}]+))?\}\}", result)
-        assert m, "No IMG-INLINE marker found"
-        assert m.group(1).endswith((".jpg", ".png", ".gif", ".svg")), \
-            f"Filename doesn't look like image: {m.group(1)}"
-        assert m.group(2) == "14px", \
-            f"Expected 14px size hint, got: {m.group(2)!r}"
+        inline = [(m.group(1), parse_img_meta(m.group(2)))
+                  for m in IMG_PARTS_RE.finditer(result)
+                  if parse_img_meta(m.group(2)).get("align") == "inline"]
+        assert inline, "No inline-glyph marker found"
+        fn, _meta = inline[0]
+        assert fn.endswith((".jpg", ".png", ".gif", ".svg")), \
+            f"Filename doesn't look like image: {fn}"
+        assert any(m.get("width") == 14 for _, m in inline), \
+            "Expected an inline glyph with width=14"
 
 
 class TestRealImageFloat:

@@ -23,6 +23,7 @@ from britannica.pipeline.stages.elements._registry import (
     TABLE_LABELS,
     _PH,
 )
+from britannica.pipeline.stages.elements._image import build_img_marker
 from britannica.pipeline.stages.elements._tables import split_wiki_row
 from britannica.pipeline.stages.elements._text import _clean_text
 
@@ -695,6 +696,22 @@ def _image_ph_filename(
     return m.group(1).strip() if m else None
 
 
+def _image_ph_extcap(
+    ph_id: str, inner_registry: ElementRegistry
+) -> str:
+    """The trailing caption the (context-blind) walker folded into an
+    IMAGE element via `|EXTCAP:` — the first line(s) of a figure's
+    caption when the image and caption sit in the same wikitable cell
+    (HYDROMEDUSAE Fig 36: the walker grabs the `{{sc|Fig. 36.}}—…`
+    line into the image, leaving the continuation in the cell).  A
+    captioned/legended producer must recover it and re-join, otherwise
+    rebuilding the IMG marker from cell text alone drops it."""
+    inner = inner_registry.inners.get(ph_id, "")
+    if "|EXTCAP:" in inner:
+        return inner.rsplit("|EXTCAP:", 1)[1]
+    return ""
+
+
 def _looks_like_caption(text: str) -> bool:
     """True if `text` starts with `Fig. N.` / `Plate N.` / `{{sc|Fig` /
     `''Fig.''`."""
@@ -1057,10 +1074,7 @@ def _try_image_layout_subclass(
             cap = " ".join(cap_parts).strip()
             for attr in attr_parts:
                 cap = _append_attribution(cap, attr) if cap else attr
-            out = [
-                f"{{{{IMG:{fn}|{cap}}}}}" if cap
-                else f"{{{{IMG:{fn}}}}}"
-            ]
+            out = [build_img_marker(fn, cap)]
             if legend_lines:
                 out.append(
                     "{{LEGEND:" + "\n".join(legend_lines) + "}LEGEND}")
@@ -1205,7 +1219,7 @@ def _try_image_layout_subclass(
                     # as the other legend handlers.
                     _emit_legend_chunk(eraw, text_transform, legend_lines)
                 if legend_lines:
-                    img_marker = f"{{{{IMG:{filename}|{caption}}}}}"
+                    img_marker = build_img_marker(filename, caption)
                     legend_block = (
                         "{{LEGEND:" + "\n".join(legend_lines) +
                         "}LEGEND}")
@@ -1247,9 +1261,7 @@ def _try_image_layout_subclass(
                     caption_cell = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*",
                                            "", caption_cell)
                     caption = _clean_text(text_transform(caption_cell))
-            img_marker = (f"{{{{IMG:{filename}|{caption}}}}}"
-                          if caption
-                          else f"{{{{IMG:{filename}}}}}")
+            img_marker = build_img_marker(filename, caption)
             legend_block = (
                 "{{LEGEND:" + "\n".join(legend_lines) + "}LEGEND}")
             return f"\n\n{img_marker}\n\n{legend_block}\n\n"
@@ -1281,8 +1293,7 @@ def _try_image_layout_subclass(
                 if c:
                     caption = c
                     break
-            img_marker = (f"{{{{IMG:{filename}|{caption}}}}}"
-                          if caption else f"{{{{IMG:{filename}}}}}")
+            img_marker = build_img_marker(filename, caption)
             legend_block = ("{{LEGEND:" +
                              _format_legend_entries(entries) + "}LEGEND}")
             return f"\n\n{img_marker}\n\n{legend_block}\n\n"
@@ -1325,7 +1336,7 @@ def _try_image_layout_subclass(
                 if (entries
                         and len(entries) >= 2
                         and _entries_look_like_legend(entries)):
-                    img_marker = f"{{{{IMG:{filename}|{caption}}}}}"
+                    img_marker = build_img_marker(filename, caption)
                     # Column-major output already reflects the print
                     # reading order — top-to-bottom of column 1, then
                     # column 2.  Preserve that.  Per-row entries
@@ -1355,7 +1366,7 @@ def _try_image_layout_subclass(
             caption = _extract_caption_from_colspan_row(
                 rows[fig_cap_idx], text_transform)
             if caption:
-                img_marker = f"{{{{IMG:{filename}|{caption}}}}}"
+                img_marker = build_img_marker(filename, caption)
                 legend_block = (
                     "{{LEGEND:" + "\n".join(legend_lines) + "}LEGEND}")
                 return f"\n\n{img_marker}\n\n{legend_block}\n\n"
@@ -1392,7 +1403,7 @@ def _try_image_layout_subclass(
                 rows, img_row_idx, fig_cap_idx, text_transform)
             if attr:
                 caption = _append_attribution(caption, attr)
-            return f"\n\n{{{{IMG:{filename}|{caption}}}}}\n\n"
+            return f"\n\n{build_img_marker(filename, caption)}\n\n"
 
     return None
 
@@ -1716,10 +1727,7 @@ def _assemble_figure_parts(
     cap = " ".join(caption_parts).strip()
     for attr in attribution_parts:
         cap = _append_attribution(cap, attr) if cap else attr
-    out = [
-        f"{{{{IMG:{filename}|{cap}}}}}" if cap
-        else f"{{{{IMG:{filename}}}}}"
-    ]
+    out = [build_img_marker(filename, cap)]
     if legend_lines:
         out.append(
             "{{LEGEND:" + "\n".join(legend_lines) + "}LEGEND}")
@@ -1766,6 +1774,13 @@ def _process_captioned_figure(
     if not filename:
         return ""
 
+    # The walker may have folded the caption's first line(s) into the
+    # image via `|EXTCAP:` (image + caption share a cell — Fig 36).
+    # Re-attach it at the image's position so the full caption is
+    # processed as one unit instead of being dropped on rebuild.
+    extcap = _image_ph_extcap(image_ph, inner_registry)
+    extcap = re.sub(r"<br\s*/?>", " ", extcap, flags=re.IGNORECASE).strip()
+
     # Collect text units: every non-empty cell across all rows.  `<br>`
     # → space first so an in-cell multi-segment caption arrives as a
     # single string per cell.  `{{Ts|…}}` is styling-only — strip it.
@@ -1781,6 +1796,9 @@ def _process_captioned_figure(
                               content).strip()
             if not content:
                 continue
+            if extcap and image_ph in content:
+                content = content.replace(
+                    image_ph, image_ph + " " + extcap, 1)
             cells_text.append(content)
 
     cap_parts, attr_parts, legend = _extract_figure_components(
@@ -2123,11 +2141,18 @@ def _extract_flowing_italic_legend(
     for idx, part in enumerate(parts):
         if part.startswith("|-") or found:
             continue
-        # A flowing legend is packed into ONE cell with no `||` cell
-        # separators (entries run together, `. `/`<br>`-separated).
-        # Rows carrying `||` are multicol legends — leave them for the
-        # multicol path (ORDNANCE `|b.||Traversing bracket,||r.||…`).
+        # A flowing legend is packed into ONE cell — each entry's text
+        # follows its label directly (`«I»sf«/I», The sub-frontal…`),
+        # entries `. `/`<br>`-separated.  Skip rows that are really
+        # multicol: `||`-separated, OR an alternating `\n|` grid where
+        # the label and its text sit in SEPARATE cells (HYDROMEDUSAE
+        # Fig 74 `|«I»n«/I»,\n|Nectocalyx.`).  The latter is detected
+        # by a bare label-only cell — flowing entries never put the
+        # label alone in a cell.
         if "||" in part:
+            continue
+        if any(_cell_is_legend_label(c)
+               for _s, _a, c in split_wiki_row(part)):
             continue
         unwrapped = _HI_LEGEND_RE.sub(lambda m: m.group(1), part)
         starts = list(_FLOWING_ENTRY_START_RE.finditer(unwrapped))
@@ -2766,7 +2791,7 @@ def _unwrap_layout_table(inner: str, text_transform,
                             trailing_parts.append(parts[i])
 
                     if caption:
-                        img_marker = f"{{{{IMG:{filename}|{caption}}}}}"
+                        img_marker = build_img_marker(filename, caption)
                     else:
                         img_marker = f"{{{{IMG:{filename}}}}}"
                     # Preserve remaining trailing parts (legend tables,

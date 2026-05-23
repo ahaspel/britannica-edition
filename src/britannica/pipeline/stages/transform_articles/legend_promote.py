@@ -1,16 +1,16 @@
-"""Figure / legend / attribution promotion.
+"""Figure / legend / attribution assembly.
 
-The figure walker: for each ``{{IMG:…}}`` in body text, collect any
-following attribution paragraphs, key-value legend entries, and verse
-content into a single ``{{LEGEND:…}LEGEND}`` block paired with the
-image.  Captures all the figure-material that the wikitext lays out
-loosely after an image rather than inside a wikitable.
+``_assemble_figures(text)``: for each ``{{IMG:…}}`` in body text, collect any
+following attribution paragraphs, key-value legend entries, and verse content
+into a single ``{{LEGEND:…}LEGEND}`` block paired with the image.  Captures the
+figure-material wikitext lays out loosely after an image rather than inside a
+wikitable.
 
-Public entry point used by ``_transform_text_v2``:
-- ``_process_figures(text)``: single-pass walker over the body.
-- ``_promote_paragraph_legends(text)``, ``_promote_legend_verses(text)``,
-  ``_promote_legend_tables(text)``, ``_fold_image_attribution(text)``,
-  ``_bundle_raw_image_with_caption(text)``: ordered helper passes.
+This is the figure-assembly utility called by the ``FIGURE`` element producer
+(``elements/_produce_figure``).  It formerly also ran as a whole-body post-pass
+(``_process_figures``) after the producers; that post-pass was deleted once the
+structural figure break (``elements/_figure.py``) carried recognition into the
+walker, so the producer now produces the final figure — nothing runs after it.
 """
 
 from __future__ import annotations
@@ -18,6 +18,14 @@ from __future__ import annotations
 import re
 
 from britannica.captions import clean_caption
+from britannica.markers import IMG_PARTS_RE
+
+
+# Throw away render-irrelevant figure spacing: a plain figure (no legend /
+# attribution to assemble) is left untouched rather than re-spaced with `\n\n`,
+# because the viewer normalizes figure spacing itself.  Flag exists so the
+# render-equivalence of that throwaway can be A/B-verified.
+_SKIP_PLAIN_FIGURE_SPACING = True
 
 
 def _table_row_cells(row: str) -> list[str]:
@@ -354,10 +362,9 @@ def _promote_paragraph_legends(text: str) -> str:
         # into the IMG caption; promoting it again as LEGEND made the
         # caption render twice.
         if len(entries) == 1:
-            img_cap_match = re.match(
-                r"\{\{IMG:[^|}]+\|([^}]*)\}\}", m.group(0))
-            if img_cap_match:
-                img_cap = img_cap_match.group(1).strip().rstrip(".,")
+            img_cap_match = IMG_PARTS_RE.match(m.group(0))
+            if img_cap_match and img_cap_match.group(3):
+                img_cap = img_cap_match.group(3).strip().rstrip(".,")
                 legend_text = (
                     f"{entries[0][0]}. {entries[0][1]}"
                 ).strip().rstrip(".,")
@@ -907,11 +914,14 @@ def _classify_figure_paragraph(
     return "boundary", None
 
 
-def _process_figures(text: str) -> str:
+def _assemble_figures(text: str) -> str:
     """Walk each `{{IMG:…}}` marker and absorb the figure material
     that follows it (attribution, legend) up to the figure boundary.
     Emits a clean `{{IMG:…|caption}}` optionally followed by a single
-    `{{LEGEND:…}LEGEND}`."""
+    `{{LEGEND:…}LEGEND}`.
+
+    The figure-assembly utility behind the global post-pass
+    `_process_figures`."""
     img_re = re.compile(r"\{\{IMG:[^}]+\}\}")
     # Skip IMG markers that live inside a table-like container — those
     # are inline icons (e.g. ABBREVIATION's per-symbol/pound glyphs in a
@@ -959,10 +969,35 @@ def _process_figures(text: str) -> str:
             if cls == "attribution":
                 attributions.append(payload)  # type: ignore[arg-type]
             elif cls == "legend":
+                # If this figure already carries a legend that was
+                # extracted *structurally* (a pre-existing `{{LEGEND:}}`
+                # produced from inside the figure's `{| |}` container),
+                # the container was the delimiter — the legend is
+                # complete.  An EB1911 figure has one legend, so a
+                # FOLLOWING paragraph that merely shape-matches
+                # `label, text` is body prose, not more legend
+                # (HYDROMEDUSAE Fig 74: the numbered body section
+                # "2. In the Siphonanthae…" parsed as a 2-entry legend
+                # off "2." and a line-wrapped "were,").  Stop here and
+                # leave it as body text.
+                if preserved:
+                    boundary = p_start
+                    break
                 entries.extend(payload)  # type: ignore[arg-type]
             elif cls == "preserve":
                 preserved.append(payload)  # type: ignore[arg-type]
             boundary = p_end
+        # Plain figure — nothing to assemble (no attribution, legend, or
+        # pre-existing legend to preserve).  Leave it exactly as-is: figure
+        # spacing is the viewer's job (it normalizes `\n\n` around every
+        # `{{IMG}}` and re-derives float-vs-block from the prose), so the
+        # `\n\n` this pass used to insert here is render-irrelevant dead work.
+        if (_SKIP_PLAIN_FIGURE_SPACING
+                and not attributions and not entries and not preserved):
+            out_parts.append(img_marker)
+            pos = m.end()
+            continue
+
         # Build the updated IMG marker with any attribution folded in
         updated_img = img_marker
         for attr in attributions:
@@ -1001,11 +1036,12 @@ def _try_convert_with_attr(m: re.Match) -> str:
 
 def _append_attr_to_img(img_block: str, attribution: str) -> str:
     """Append attribution text to an IMG marker's caption in parens."""
-    m = re.match(r"\{\{IMG:([^|}]+)(?:\|([^}]*))?\}\}", img_block)
+    m = IMG_PARTS_RE.match(img_block)
     if not m:
         return img_block
     filename = m.group(1)
-    caption = m.group(2) or ""
+    meta_block = m.group(2)  # "|align=…|width=…" or "" — carried through
+    caption = m.group(3) or ""
     # `attribution` is captured straight off body text that may not have
     # been through the body-text transform — clean it the same way every
     # caption is (templates, entities, cell-attrs, stray pipes/braces).
@@ -1018,7 +1054,7 @@ def _append_attr_to_img(img_block: str, attribution: str) -> str:
     else:
         new_caption = (f"{caption.rstrip()} ({attribution}.)"
                        if caption else f"({attribution}.)")
-    return f"{{{{IMG:{filename}|{new_caption}}}}}"
+    return f"{{{{IMG:{filename}{meta_block}|{new_caption}}}}}"
 
 
 def _promote_legend_tables(text: str) -> str:

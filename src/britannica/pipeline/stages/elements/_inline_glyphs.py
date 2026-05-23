@@ -1,10 +1,15 @@
-"""Promote bare `[[File:X|size]]` refs in prose context to the
-`{{IMG-INLINE:X|size}}` marker the viewer renders as an inline image.
+"""Detect bare `[[File:X|size]]` refs in prose context and emit them as
+the unified `{{IMG:X|align=inline|…}}` marker — inline is just another
+image alignment (folded in from the former `{{IMG-INLINE:}}` marker).
 
-Runs as a pre-pass to element extraction.  The IMAGE element extractor
-then sees only the block-figure forms — refs that have an inline
-caption, a layout keyword, live inside a wikitable, or stand alone in
-their own paragraph.
+This is the POSITIONAL detector: deciding "inline" requires the
+surrounding prose context, which the isolated element producer never
+sees, so it can't live in the producer.  Per the stupid-walker rule,
+location-dependent logic belongs in scoped preprocessing — and running
+pre-extraction on the full raw text is also what lets it catch inline
+glyphs ANYWHERE (body, footnotes, poems), not just top-level.  The
+marker itself is built with the same `build_img_marker` every image
+producer uses, so encoding/rendering are unified.
 
 Routing decision is by structural signals, not size heuristics:
 
@@ -18,7 +23,7 @@ Routing decision is by structural signals, not size heuristics:
     skip.  Block figure.  (BLOCK_LAYOUT.)
   * **File link alone on its source line** — skip.  Captionless block
     figure stranded between paragraphs.  (STRANDED.)
-  * **File link mid-prose-line** — rewrite to `{{IMG-INLINE:fn|size}}`.
+  * **File link mid-prose-line** — emit `{{IMG:fn|align=inline|…}}`.
     (INLINE_GLYPH — 337 refs corpus-wide per the audit.)
 
 See `tools/_scratch/audit_image_routing.py` for the per-bucket counts.
@@ -26,6 +31,11 @@ See `tools/_scratch/audit_image_routing.py` for the per-bucket counts.
 from __future__ import annotations
 
 import re
+
+from britannica.pipeline.stages.elements._image import (
+    _parse_image_size,
+    build_img_marker,
+)
 
 _FILE_RE = re.compile(
     r"\[\[(?:File|Image):([^\]]+)\]\]",
@@ -166,10 +176,11 @@ def _is_inline_line(text: str, ref_start: int, ref_end: int) -> bool:
 
 
 def promote_inline_glyphs(text: str) -> str:
-    """Rewrite the in-prose-line `[[File:X|Npx]]` refs to
-    `{{IMG-INLINE:X|Npx}}`.  All other file refs (including captioned,
-    layout-keyword'd, table-wrapped, and stranded captionless blocks)
-    are left intact for the standard element pipeline."""
+    """Rewrite the in-prose-line `[[File:X|Npx]]` refs to the unified
+    `{{IMG:X|align=inline|width=…|height=…}}` marker.  All other file
+    refs (including captioned, layout-keyword'd, table-wrapped, and
+    stranded captionless blocks) are left intact for the standard
+    element pipeline."""
     ranges = _table_ranges(text)
 
     def _maybe_rewrite(m: re.Match) -> str:
@@ -183,8 +194,9 @@ def promote_inline_glyphs(text: str) -> str:
             return m.group(0)
         if not _is_inline_line(text, m.start(), m.end()):
             return m.group(0)
-        if size_hint:
-            return f"{{{{IMG-INLINE:{filename}|{size_hint}}}}}"
-        return f"{{{{IMG-INLINE:{filename}}}}}"
+        width, height = (_parse_image_size(size_hint)
+                         if size_hint else (None, None))
+        return build_img_marker(
+            filename, align="inline", width=width, height=height)
 
     return _FILE_RE.sub(_maybe_rewrite, text)
