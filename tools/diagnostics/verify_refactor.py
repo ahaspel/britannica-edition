@@ -73,6 +73,26 @@ from britannica.pipeline.stages.transform_articles import _transform_text_v2
 ARTICLES_DIR = Path("data/derived/articles")
 
 
+# ── progress logging ─────────────────────────────────────────────────────
+#
+# A long shadow run must be inspectable mid-flight (and killable if it's
+# gone wrong) — not a black box that only prints on exit.  Stdout here is
+# usually a harness-captured pipe that buffers until the process ends, so
+# per-unit `print(flush=True)` lines never reach an on-disk file while the
+# run is live.  `log()` therefore also writes to a script-owned log file
+# opened line-buffered, which IS flushed per line regardless of how stdout
+# is redirected.  `tail -f` that file to watch progress; kill the process
+# if the mismatch count starts climbing.
+_LOG_FH = None
+
+
+def log(msg: str = "") -> None:
+    print(msg, flush=True)
+    if _LOG_FH is not None:
+        _LOG_FH.write(msg + "\n")
+        _LOG_FH.flush()
+
+
 # ── transform shadow ────────────────────────────────────────────────────
 
 
@@ -166,6 +186,7 @@ def check_transform(volume: int | None, limit: int | None, diff_n: int,
                 n_mismatches += 1
                 if mismatch_fh:
                     mismatch_fh.write(f"{article.id}\t{article.volume:02d}-{article.page_start:04d}\t{article.title}\n")
+                    mismatch_fh.flush()
                 if len(sample_diffs) < diff_n:
                     sample_diffs.append((
                         f"{article.volume:02d}-{article.page_start:04d}-{article.title}",
@@ -176,11 +197,8 @@ def check_transform(volume: int | None, limit: int | None, diff_n: int,
 
             now = time.monotonic()
             if now - last_print > 5:
-                print(
-                    f"  transform: {n_checked}/{len(ids)} "
-                    f"({n_mismatches} mismatches)",
-                    flush=True,
-                )
+                log(f"  transform: {n_checked}/{len(ids)} "
+                    f"({n_mismatches} mismatches)")
                 last_print = now
 
         return n_checked, n_mismatches, sample_diffs
@@ -262,11 +280,11 @@ def check_export(volume: int | None, limit: int | None, diff_n: int) -> tuple[in
     with tempfile.TemporaryDirectory(prefix="verify_refactor_") as tmp:
         tmp_dir = Path(tmp)
         for vol in volumes:
-            print(f"  export: volume {vol} -> tmp", flush=True)
+            log(f"  export: volume {vol} -> tmp")
             try:
                 export_articles_to_json(vol, tmp_dir)
             except Exception as exc:
-                print(f"    EXPORT EXCEPTION vol {vol}: {exc}", flush=True)
+                log(f"    EXPORT EXCEPTION vol {vol}: {exc}")
                 n_mismatches += 1
                 if len(sample_diffs) < diff_n:
                     sample_diffs.append((f"<volume {vol}>", str(exc)))
@@ -346,16 +364,13 @@ def check_full(volume: int | None, limit: int | None, diff_n: int,
                     if shadow != (article.body or ""):
                         vol_changed += 1
                 n_bodies_changed += vol_changed
-                print(
-                    f"  full: volume {vol} -> tmp "
-                    f"({len(articles)} articles, {vol_changed} bodies changed)",
-                    flush=True,
-                )
+                log(f"  full: volume {vol} -> tmp "
+                    f"({len(articles)} articles, {vol_changed} bodies changed)")
 
                 try:
                     export_articles_to_json(vol, tmp_dir, body_override=overrides)
                 except Exception as exc:
-                    print(f"    EXPORT EXCEPTION vol {vol}: {exc}", flush=True)
+                    log(f"    EXPORT EXCEPTION vol {vol}: {exc}")
                     n_mismatches += 1
                     if len(sample_diffs) < diff_n:
                         sample_diffs.append((f"<volume {vol}>", str(exc)))
@@ -374,6 +389,7 @@ def check_full(volume: int | None, limit: int | None, diff_n: int,
                         n_mismatches += 1
                         if mismatch_fh:
                             mismatch_fh.write(f"{tmp_file.name}\t{diff}\n")
+                            mismatch_fh.flush()
                         if len(sample_diffs) < diff_n:
                             sample_diffs.append((tmp_file.name, diff))
                 for p in volume_files:
@@ -409,7 +425,13 @@ def main() -> int:
                    help="write mismatches to this file (default verify_mismatches.tsv)")
     p.add_argument("--only-from", type=Path,
                    help="check only articles whose IDs appear in the given mismatch file")
+    p.add_argument("--log", type=Path, default=Path("verify_refactor.log"),
+                   help="progress log file, flushed per line so the run is "
+                        "inspectable mid-flight (default verify_refactor.log)")
     args = p.parse_args()
+
+    global _LOG_FH
+    _LOG_FH = args.log.open("w", encoding="utf-8", buffering=1)
 
     only_ids: set[int] | None = None
     if args.only_from:
@@ -422,7 +444,7 @@ def main() -> int:
                 only_ids.add(int(line.split("\t", 1)[0]))
             except (ValueError, IndexError):
                 continue
-        print(f"Limiting to {len(only_ids)} article IDs from {args.only_from}")
+        log(f"Limiting to {len(only_ids)} article IDs from {args.only_from}")
 
     if args.full:
         do_transform = do_export = False
@@ -433,87 +455,89 @@ def main() -> int:
         do_full = False
 
     if not ARTICLES_DIR.exists():
-        print(f"FATAL: {ARTICLES_DIR} not found — no baseline to compare against.")
+        log(f"FATAL: {ARTICLES_DIR} not found — no baseline to compare against.")
         return 2
 
     overall_mismatch = 0
+    try:
+        if do_full:
+            log("=" * 60)
+            log("Full-pipeline shadow run (transform → export → diff baseline)")
+            log("=" * 60)
+            t0 = time.monotonic()
+            n, changed, m, diffs = check_full(
+                args.volume, args.limit, args.diff,
+                mismatch_log=args.save_mismatches,
+            )
+            dt = time.monotonic() - t0
+            log(f"  Checked {n} JSON files in {dt:.1f}s")
+            log(f"  Bodies changed by current code vs DB: {changed}")
+            log(f"  JSON mismatches vs baseline: {m}")
+            if diffs:
+                log()
+                log("  Sample diffs:")
+                for label, diff in diffs:
+                    log(f"    {label}")
+                    log(f"      {diff}")
+            overall_mismatch += m
 
-    if do_full:
-        print("=" * 60)
-        print("Full-pipeline shadow run (transform → export → diff baseline)")
-        print("=" * 60)
-        t0 = time.monotonic()
-        n, changed, m, diffs = check_full(
-            args.volume, args.limit, args.diff,
-            mismatch_log=args.save_mismatches,
-        )
-        dt = time.monotonic() - t0
-        print(f"  Checked {n} JSON files in {dt:.1f}s")
-        print(f"  Bodies changed by current code vs DB: {changed}")
-        print(f"  JSON mismatches vs baseline: {m}")
-        if diffs:
-            print()
-            print("  Sample diffs:")
-            for label, diff in diffs:
-                print(f"    {label}")
-                print(f"      {diff}")
-        overall_mismatch += m
+        if do_transform:
+            log("=" * 60)
+            log("Transform shadow run")
+            log("=" * 60)
+            t0 = time.monotonic()
+            n, m, diffs = check_transform(args.volume, args.limit, args.diff,
+                                           only_ids=only_ids,
+                                           mismatch_log=args.save_mismatches)
+            dt = time.monotonic() - t0
+            log(f"  Checked {n} articles in {dt:.1f}s")
+            log(f"  Mismatches: {m}")
+            if diffs:
+                log()
+                log("  Sample diffs:")
+                for label, expected, actual in diffs:
+                    log(f"    --- {label} ---")
+                    # Show a unified-diff snippet (first 12 lines).
+                    exp_lines = expected.splitlines(keepends=False)
+                    act_lines = actual.splitlines(keepends=False)
+                    lines = list(difflib.unified_diff(
+                        exp_lines, act_lines,
+                        fromfile="baseline", tofile="refactored",
+                        n=2, lineterm="",
+                    ))
+                    for line in lines[:12]:
+                        log(f"      {line}")
+                    if len(lines) > 12:
+                        log(f"      ... ({len(lines) - 12} more lines)")
+            overall_mismatch += m
 
-    if do_transform:
-        print("=" * 60)
-        print("Transform shadow run")
-        print("=" * 60)
-        t0 = time.monotonic()
-        n, m, diffs = check_transform(args.volume, args.limit, args.diff,
-                                       only_ids=only_ids,
-                                       mismatch_log=args.save_mismatches)
-        dt = time.monotonic() - t0
-        print(f"  Checked {n} articles in {dt:.1f}s")
-        print(f"  Mismatches: {m}")
-        if diffs:
-            print()
-            print("  Sample diffs:")
-            for label, expected, actual in diffs:
-                print(f"    --- {label} ---")
-                # Show a unified-diff snippet (first 12 lines).
-                exp_lines = expected.splitlines(keepends=False)
-                act_lines = actual.splitlines(keepends=False)
-                lines = list(difflib.unified_diff(
-                    exp_lines, act_lines,
-                    fromfile="baseline", tofile="refactored",
-                    n=2, lineterm="",
-                ))
-                for line in lines[:12]:
-                    print(f"      {line}")
-                if len(lines) > 12:
-                    print(f"      ... ({len(lines) - 12} more lines)")
-        overall_mismatch += m
+        if do_export:
+            log()
+            log("=" * 60)
+            log("Export shadow run")
+            log("=" * 60)
+            t0 = time.monotonic()
+            n, m, diffs = check_export(args.volume, args.limit, args.diff)
+            dt = time.monotonic() - t0
+            log(f"  Checked {n} JSON files in {dt:.1f}s")
+            log(f"  Mismatches: {m}")
+            if diffs:
+                log()
+                log("  Sample diffs:")
+                for label, diff in diffs:
+                    log(f"    {label}")
+                    log(f"      {diff}")
+            overall_mismatch += m
 
-    if do_export:
-        print()
-        print("=" * 60)
-        print("Export shadow run")
-        print("=" * 60)
-        t0 = time.monotonic()
-        n, m, diffs = check_export(args.volume, args.limit, args.diff)
-        dt = time.monotonic() - t0
-        print(f"  Checked {n} JSON files in {dt:.1f}s")
-        print(f"  Mismatches: {m}")
-        if diffs:
-            print()
-            print("  Sample diffs:")
-            for label, diff in diffs:
-                print(f"    {label}")
-                print(f"      {diff}")
-        overall_mismatch += m
-
-    print()
-    print("=" * 60)
-    if overall_mismatch == 0:
-        print("VERIFY OK — no behavior change detected on the sampled corpus.")
-        return 0
-    print(f"VERIFY FAIL — {overall_mismatch} total mismatches.")
-    return 1
+        log()
+        log("=" * 60)
+        if overall_mismatch == 0:
+            log("VERIFY OK — no behavior change detected on the sampled corpus.")
+            return 0
+        log(f"VERIFY FAIL — {overall_mismatch} total mismatches.")
+        return 1
+    finally:
+        _LOG_FH.close()
 
 
 if __name__ == "__main__":

@@ -393,6 +393,18 @@ _HTML_MATH_SIGNALS = re.compile(
 )
 
 
+# An actual inline-math signal in a cell: sub/sup (HTML tags, EB templates,
+# or Unicode super/subscripts) or an arithmetic operator standing before an
+# operand.  Used to gate the otherwise content-free "spacer-heavy" math
+# fallback so it stops claiming data / list / legend / outline / verse tables.
+_INLINE_MATH_SIGNAL = re.compile(
+    r"<su[pb]\b"                                  # <sub> / <sup>
+    r"|\{\{\s*su[pb]\b"                           # {{sub}} / {{sup}}
+    r"|[⁰-ₜ]"                           # Unicode super/subscripts
+    r"|[+−=＝×÷±]\s*(?:''|[0-9(]|«I)",  # op+operand
+)
+
+
 def _math_table_kind(
     raw: str, inner: str, inner_registry: ElementRegistry | None
 ) -> str | None:
@@ -464,7 +476,17 @@ def _math_table_kind(
                 r"\|\s*\(\d+[a-z]?\)\.?\s*$", row, re.MULTILINE))
             if has_sfrac and has_eqn_label:
                 return "math_blocks"
-    if not re.search(r"\balign\s*=", inner, re.IGNORECASE):
+    # Spacer-heavy alignment layout: many empty cells used to align an
+    # equation across columns.  GATED on an actual inline-math signal —
+    # the empty-cell ratio alone is content-FREE and mis-claimed 28
+    # data/list/legend/outline/taxonomy/verse tables (debt tables, name
+    # lists, SKULL's anatomy legend, REVELATION's outline, the WRIT poem,
+    # …) as math.  Signal-bearing math layouts are already caught by the
+    # MATH-child / tokens / sfrac paths above; this fallback only ever
+    # needs to add the spacer-heavy ones that ALSO carry inline math
+    # markup, so requiring the signal drops exactly the over-claims.
+    if (not re.search(r"\balign\s*=", inner, re.IGNORECASE)
+            and _INLINE_MATH_SIGNAL.search(inner)):
         raw_rows = re.split(r"\|-[^\n]*", inner)
         total_cells = 0
         empty_cells = 0
