@@ -6,92 +6,118 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## Current focus (2026-05-24) — `_process_table` tease-apart underway: SINGLE_COLUMN + VERSE carved, math over-claim fixed
+## Current focus (2026-05-24) — Remove non-tables from the table path; HTML_TABLE decomposition (Phase 2 next)
 
-**Governing invariant (this session):** every producer is **shape-in -> shape-out**.
-By the time input reaches a producer it is already KNOWN to be that shape; a
-producer NEVER decides "this looks like my shape but isn't really" — that is the
-classifier's job.  A table producer emitting `«PRE:` / `{{VERSE:}` / `{{IMG:}` /
-math / chem / `""` is proof a non-table shape leaked into the catch-all = a
-classifier RECOGNITION gap, fixed UPSTREAM, never by a buried branch.  Plus:
-transformation happens ONLY in minimal preprocessing or producers (classification
-is structure-alone; content-recognition a justified last resort — CHEM/MATH); and
-the corpus is static, so corpus-verified classification claims are durable.  See
-`[[table-producer-invariant]]`, `[[transform-only-two-places]]`,
-`[[family-sub-pipelines]]`, `[[source-is-static]]`.
+**THE GOAL (reframed this session):** not decomposing the table producers — it's
+**removing everything that isn't truly a table from the table path**.  Producer
+leanness is a *consequence*, not the goal.  Non-tables in the table path is the
+ROOT of almost every bug this campaign found (#8/#10/#12-empties/#13/#6) — the
+table producer's job is to grid-and-flatten, so handing it a non-table corrupts
+it.  Metric = **table-path purity**.  See `[[remove-nontables-from-table-path]]`.
 
-`_process_table` was a HIDDEN DISPATCHER of ~6 shapes (audit
-`tools/_scratch/process_table_branch_audit.py`, 1470 DATA_TABLE tables: data-grid
-1026 / single-column→«PRE: 259 / inline-text 135 / empty 26 / verse 24).  Each
-buried branch is being carved to its own upstream classifier label, draining
-`_process_table` toward a lean data-grid producer.
+**"When is a table not a table?"** — when its grid is *incidental* (a positioning
+crutch), not load-bearing for meaning.  Test: strip the grid, reflow the cells —
+if meaning survives, it was never a table.  Non-tables wearing table syntax + the
+content signal that unmasks each: figure (IMAGE child) · verse (POEM child) · chem
+(element-formula + reaction operator) · math (math content, not a value grid) ·
+preformatted (single content column) · plate (`article_type=='plate'`, a separate
+pipeline).  Genuine tables (stay): DATA_TABLE (the grid IS the data) · HTMLTABLE
+(needs cell spans); a reference grid of equations (function/derivative) IS a table.
 
-**Done this session (committed; NOT yet rebuilt/deployed):**
-- **SINGLE_COLUMN_TABLE** — PURE-STRUCTURAL predicate (every row exactly one
-  content cell, NO transform), `«PRE:` producer; branch 3 deleted.  287 tables,
-  output-identical for genuine single-column; ragged tables (a value + a trailing
-  whitespace-spacer cell) correctly route to grid.  Reverted two wrong turns
-  first — recognising whitespace entities, and threading `text_transform` into the
-  classifier — both transform-to-classify violations; the structural cell-count is
-  the only signal used.
-- **VERSE_TABLE** — content-recognition (col1 = quotation punctuation, ≥1
-  non-empty col1; no structural signal separates verse from a 2-col data table),
-  `{{VERSE:}` producer; branch 5 deleted.  24/24 real verse, 0 false positives
-  (matrices/TOC/taxonomy excluded — the no-transform predicate reads their
-  `{{em}}`/template col1 as non-punctuation).  Only the table-2col-quote subset;
-  the ~455 other verse markers are `<poem>`/poem-wrapper paths, untouched.
-- **Math spacer-heavy over-claim FIXED** — `_math_table_kind`'s content-free
-  ">50% empty cells -> math_blocks" fallback gated on `_INLINE_MATH_SIGNAL`.  28
-  non-math tables (debt/population data, name lists, SKULL anatomy legend,
-  REVELATION outline, ORNITHOLOGY taxonomy, WRIT poem) stopped rendering as
-  math-equations -> DATA_TABLE; WRIT -> VERSE_TABLE.
+**Governing invariant:** every producer is shape-in → shape-out; NEVER self-
+classifies.  Transform only in minimal preprocessing or producers (classification
+is structure-alone; content-recognition justified only for CHEM/MATH/VERSE).
+Corpus static → corpus-verified claims durable.  See `[[table-producer-invariant]]`,
+`[[transform-only-two-places]]`, `[[layout-wrapper-definition]]`,
+`[[plate-component-model]]`, `[[source-is-static]]`.
 
-Each carve verified with the corpus-wide label-distribution diff (only the
-intended transitions, zero collateral) + snapshots 20/20 (AGRICULTURE rebaselined:
-its over-claimed college-list now a grid, consistent with its page-452
-continuation).  Verification net: `tools/_scratch/table_label_dist.py` (scoped
-table-label snapshot, diffable before/after — reusable for any table-classification
-change; promote to `tools/diagnostics/`).
+### TABLE-PATH PURITY scoreboard (`tools/_scratch/check_table_path_purity.py`)
+| Path | total | genuine grid | pure | remaining non-tables |
+|---|---:|---:|---:|---|
+| DATA_TABLE (wiki `{`-pipe) | 1272 | 1216 | ~99.8%\* | 54 single-col, 2 math\* |
+| COMPLEX_HTML | 1506 | 1454 | 96% | 36 math, 7 single-col, 5 verse, 4 figure |
+| HTML_TABLE (`<table>`) | 4998 | 2472 | **49%** | **2073 figure**, 210 single-col, 167 verse, 70 math, 6 chem |
 
-### NEXT — finish the drain + the MATH/CHEM recognition campaign
-- **#3 (drawer decomposition)** — the no-`|-` "inline-text" bucket is a 257-table
-  junk drawer (quantify_inline_drawer.py): single-cell verse 13 (DONE → VERSE),
-  caption/credit/legend 22 → figure, has-image 34 → plates (see #4), math/chem 25
-  → #8, multi-cell-fragment 128 + single-cell-prose 35 = structural residue.
-  DELETE the `<120`-char length heuristic (it splits verse by byte count) as
-  shapes are recognised.
-- **#4 image-frame — VERIFIED NON-BUG (closed).**  The "26 empty image-frame"
-  was an audit artifact (standalone classify didn't extract the image; real
-  pipeline keeps it as a placeholder → `{{IMG:}`).  All 34 image-bearing
-  DATA_TABLE tables are PLATE articles (parse_plate, not `_process_table`); zero
-  regular-article image loss corpus-wide.
-- **#5** reduce `_process_table` to the lean data-grid producer (delete now-dead
-  branches, confirm dead).
-- **#6** grid producer: spurious `⟦2⟧` colspan on a row whose full-width status is
-  only a trailing empty cell (producer refinement, low-risk, postponable).
-- **#8 — MATH & CHEM inline-shape recognition (the big one).**  Inline-`<sub>`
-  chemistry reactions / math equations / determinant matrices fall to DATA_TABLE
-  (chem keys on `<big>`/Langle-SVG, math on `<math>` blocks; these are written
-  inline).  Route to CHEM/MATH labels (each family can hold >1 producer).
-  SCOPED + HARD: heterogeneous, shared markup — MECHANICS `C₁P₁=…` is byte-
-  identical to a chem formula; ~9 reactions, ~9 math equations, ~7 legit chem-DATA
-  tables that must STAY DATA_TABLE.  Needs element-aware CHEM recognition (H/O/N
-  formulae, operator-connected in cells), a matrix signal (bracket-border cells +
-  repeated single-letter-subscript), and a real `\begin{vmatrix}` producer.
-  Tools: `check_chem_candidates.py`, `check_matrix_candidates.py`.
-  **The #7 math over-claim fix must land in a rebuild before any deploy.**
+\* the 2 DATA_TABLE "math" are the INFINITESIMAL CALCULUS derivative/integral
+reference grids — genuine tables (scan false-positive).  The **wiki path is
+essentially DONE** (the carves worked).  **ALL remaining impurity is the `<table>`
+path** — HTML_TABLE is 49% pure (half non-tables, dominated by 2073 figures).
+Phase 2 routes `<table>` through the shape classifiers → ~pure.
 
-**#29 — HTMLTABLE/CHEM de-HTML (still queued, after the drain).**  COMPLEX_HTML
-(~1523) partitioned; AFRICA leak root = `<ref>` bodies inside `<td>` hidden from
-`resolve_ref_bodies` (~21 corpus-wide).  Per prior sequencing: do NOT attack
-HTMLTABLE until DATA_TABLE is squared away.
+**Done this session (committed unless noted; NOT yet rebuilt/deployed):**
+- **#8 CHEM** — element-aware reaction recognizer (`_has_chem_reaction_content`:
+  periodic-table + formula grammar, operator-connected formulae in a cell;
+  wrapper-agnostic core `_chem_row_is_reaction`) wired as 3rd OR-arm of
+  `_is_chemistry_layout_pred`.  16 reactions routed → CHEMISTRY_LAYOUT (7
+  DATA_TABLE, 5 COMPLEX_HTML, 3 SINGLE_COLUMN, 1 MATH), 0 collateral.  PURIN's
+  reaction diagrams now uniform.  MATH-gap probe found NO gap (the 2 INFIN.
+  CALCULUS math grids are legit DATA_TABLE).
+- **#10 `{{sub}}`/`{{sup}}`** — text_transform STRIPPED these → ~7000 sub/super
+  lost across 195 articles (apocaffeine C₇H₇N₃O₅ + hypocaffeine C₆H₇N₃O₃ both
+  rendered "CHNO").  Fixed at top of `_convert_sub_sup` (body_text.py).
+  Scoping-verified: single central call site (the shared text_transform);
+  sibling `_convert_inline_sub_sup` is `<sub>`-only and feeds text_transform.
+- **#12 figure-removal milestone** — SIMPLE_PLATE + CAPTIONED_FIGURE_GRID
+  classifiers REMOVED, collapsed into one clear label **UNPAIRED_FIGURE_GROUP**
+  (un-pairable multi-image; producer = `_process_simple_plate`, proven TOTAL:
+  ≥passthrough bundles in every case, **+11 bundling fixes** incl 4 grids).  381
+  multi-image figures, **0 table-path leaks by construction**, 0 regressions; all
+  381 audited OK (every IMAGE child bundled, 0 lost —
+  `check_unpaired_figure_output.py`).  Dead code removed (`_is_image_grid`, dead
+  labels/dispatch).  B-lite primitive **`_table_grid`** (rows×cells, both syntaxes,
+  robust to unclosed `<td>`/`<tr>`) added; ICL helpers `_image_alone_in_row` +
+  `_has_inline_caption_signal` + the 3 `_is_icl_family` anti-signals made
+  syntax-agnostic (the gate is now `<table>`-ready).
 
-**Earlier today (committed before the tease-apart):** #24 structural prose-figure
-producer; #25 chemistry-equation tables -> CHEMISTRY_LAYOUT (via `<big>`+`<sub>`
-content signal); #28 carry table metadata (`⟦r⟧`/`⟦c⟧` align, colspan, `⟦+⟧`
-caption) into `{{TABLE:}}`, deleting the viewer's colspan guess; #30
-`_process_table` sub-header row-drop fixed.  Snapshot suite extended to table-land
-(AGRICULTURE, AFRICA).
+Every carve verified by the corpus-wide label-distribution diff (intended
+transitions only, zero collateral) + snapshots 20/20.  Verification net:
+`tools/_scratch/table_label_dist.py` (now **skips `article_type=='plate'`** to
+mirror production — production routes plates to `parse_plate`, not the element
+pipeline) + `diff_tld.py`; baselines `tld.np0..np5.jsonl`.  Promote
+`table_label_dist.py`, `diff_tld.py`, `check_table_path_purity.py` to
+`tools/diagnostics/`.
+
+### NEXT — Phase 2: route `<table>` figures out of the table path (the 2073)
+Same playbook as the wiki carves, applied to `<table>`.  Remaining steps (task #12):
+1. **Legend helpers agnostic** — `_has_legend_material` (refactor
+   `_row_has_legend_multicol_cells` to take a cell-list; it's shared with producer
+   `_layout.py:2368` + `_row_is_legend`) + `_has_beside_legend_signal`
+   (line-level).  Each verified wiki-path-zero vs `tld.np5`.
+2. **Figure producers read `<table>` cells** — `_process_captioned_figure` /
+   `_process_simple_plate` / etc. build `cells_text` via `split_wiki_row`; rebuild
+   via `_table_grid` so `<td>` feeds the shared figure pipeline.  Wiki-zero-verified.
+   (The meatiest step, but bounded.)
+3. **Flip routing** — `<table>` through the shape classifiers instead of flat
+   `_derive_html_tag_label` (`tag=="table"→HTML_TABLE`).  The moment the 2073
+   figures + 167 verse + 6 chem LEAVE the table path.  Verify intended transitions
+   + output equal-or-better vs the buried `_unwrap_html_illustration` branch
+   (which has gaps: MAGNETISM empty, BRAIN/CARPET leak text+placeholders).
+4. **Drain `_process_html_table`** to the genuine span-HTMLTABLE residue; DELETE
+   `_unwrap_html_illustration` (pure duplicate of the shared figure pipeline).
+
+Then drain COMPLEX_HTML's 45 non-tables + LAYOUT_WRAPPER's ~107 residue (verse→
+VERSE, single-fig→CAPTIONED_FIGURE, data-shells→table homes).  NOTE: the `<table>`
+figures CURRENTLY render as `{{IMG:}}` via the buried `_unwrap_html_illustration`
+branch — so this is mostly relocating *recognition* (out of the table path, onto
+the shared pipeline, closing the duplicate's gaps), not first-time rendering.
+
+**Filed (separate tracks):**
+- **#13** `{{dual line|A|B}}` stripped by text_transform → 625 two-line formulas
+  lost across 66 articles (#10-sibling; surfaced by the #12 HYDRAULICS empty;
+  quick fix mirroring #10).
+- **#11** delete `_convert_inline_sub_sup` (de-dup — text_transform now owns
+  sub/sup + tag-strip; gated on a render check of the COMPLEX_HTML articles).
+- **#6** spurious `⟦r⟧`/`⟦c⟧` colspan — several instances fixed incidentally by #8.
+- **#3** wiki no-pipe "inline-text" drawer — largely subsumed; the wiki path is
+  ~99.8% pure, so the residue is small (54 DATA_TABLE single-col to re-check +
+  a few prose).
+
+**Earlier in this campaign (committed):** SINGLE_COLUMN_TABLE carve (→`«PRE:`),
+VERSE_TABLE carve (2-col + single-cell quote verse → `{{VERSE:}`), math
+spacer-heavy over-claim fix (`_INLINE_MATH_SIGNAL` gate); #4 image-frame VERIFIED
+NON-BUG (all plate articles); #24 prose-figure producer; #25/#28/#30
+table-metadata + sub-header fixes.  #29 HTMLTABLE de-HTML (AFRICA `<ref>`-in-`<td>`
+leak) still queued — naturally folds into Phase 2.
 
 ---
 
