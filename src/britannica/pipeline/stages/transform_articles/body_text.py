@@ -561,7 +561,21 @@ def _unwrap_layout_templates(text: str) -> str:
 
 
 def _convert_sub_sup(text: str) -> str:
-    """<sub>x</sub> → Unicode subscript, <sup>x</sup> → Unicode superscript."""
+    """`<sub>x</sub>`/`<sup>x</sup>` AND the `{{sub|x}}`/`{{sup|x}}` template
+    forms → Unicode subscript / superscript.
+
+    The template forms were previously left for the catch-all `_strip_templates`
+    pass, which deleted them outright — silently losing ~7000 sub/superscripts
+    across 195 articles (chemistry formulae `C{{sub|4}}H{{sub|9}}O{{sub|4}}` →
+    `CHO`; math variables/exponents `r{{sub|12}}` → `r`, `x{{sup|2}}` → `x`).
+    Normalise them to the HTML form first so the existing conversion renders
+    them.  (Surfaced by routing chemistry reactions to a focused producer — see
+    [[current-output-not-oracle]].)
+    """
+    text = re.sub(r"\{\{\s*sub\s*\|([^{}]*)\}\}", r"<sub>\1</sub>",
+                  text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{\s*sup\s*\|([^{}]*)\}\}", r"<sup>\1</sup>",
+                  text, flags=re.IGNORECASE)
     _SUB = str.maketrans("0123456789+-=()", "₀₁₂₃₄₅₆₇₈₉₊₋₌₍₎")
     _SUP = str.maketrans("0123456789+-=()", "⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾")
 

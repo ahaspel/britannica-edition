@@ -6,96 +6,92 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## Current focus (2026-05-24) — TABLE: metadata carried, residue closed; NEXT = tease apart `_process_table`
+## Current focus (2026-05-24) — `_process_table` tease-apart underway: SINGLE_COLUMN + VERSE carved, math over-claim fixed
 
-The producer's contract, finalized this session as a one-liner (user's words):
-**"regularize the markup so the viewer can render it consistently."**  Correct
-**iff** zero viewer guesses AND zero rendering-in-the-producer.  Every viewer
-guess is a symptom that the producer under-regularized; every render decision in
-the producer is over-regularizing.  This frames all the table work below and the
-next campaign.
+**Governing invariant (this session):** every producer is **shape-in -> shape-out**.
+By the time input reaches a producer it is already KNOWN to be that shape; a
+producer NEVER decides "this looks like my shape but isn't really" — that is the
+classifier's job.  A table producer emitting `«PRE:` / `{{VERSE:}` / `{{IMG:}` /
+math / chem / `""` is proof a non-table shape leaked into the catch-all = a
+classifier RECOGNITION gap, fixed UPSTREAM, never by a buried branch.  Plus:
+transformation happens ONLY in minimal preprocessing or producers (classification
+is structure-alone; content-recognition a justified last resort — CHEM/MATH); and
+the corpus is static, so corpus-verified classification claims are durable.  See
+`[[table-producer-invariant]]`, `[[transform-only-two-places]]`,
+`[[family-sub-pipelines]]`, `[[source-is-static]]`.
 
-**Caveat that governs everything:** the current output is **NOT** a correctness
-oracle (`[[current-output-not-oracle]]`).  Separating producer/renderer is a
-bug-FINDING activity — scrutinizing a path surfaces latent bugs (the super-walker
-found dropped articles; this session found the HTMLTABLE child-leak, a DATA_TABLE
-row-drop, 26 empty image-tables, an inline-text truncation).
+`_process_table` was a HIDDEN DISPATCHER of ~6 shapes (audit
+`tools/_scratch/process_table_branch_audit.py`, 1470 DATA_TABLE tables: data-grid
+1026 / single-column→«PRE: 259 / inline-text 135 / empty 26 / verse 24).  Each
+buried branch is being carved to its own upstream classifier label, draining
+`_process_table` toward a lean data-grid producer.
 
-**Shipped this session (all browser-confirmed + content-preservation proven by
-word-multiset; vol-1 rebuild confirms corpus-wide):**
-- **#24 — structural prose-figure producer (figures).**  Captions now FOLD INTO
-  the `{{IMG:…}}` marker *and consume their source*; the leak (loose caption) and
-  the duplicate (loose caption + `_patch_img` export-fill) were the same root —
-  a producer claiming content without consuming it.  See `[[loose-figure-status]]`.
-- **#25 — chemistry-equation tables → CHEMISTRY_LAYOUT.**  Classify by CONTENT
-  signal (`<big>±/=…` operators + `Xx<sub>N` formulae), not just bracket markup,
-  so `<math>\Big[`/`<big>+`-notation equation tables route to the chem producer.
-- **#28 — carry table layout metadata into `{{TABLE:}}` (the IMAGE playbook for
-  tables).**  Per-cell alignment + group-header colspan are now ENCODED by the
-  producer and DECODED solely by the viewer; the viewer's old
-  `contentCount < cells.length/2` colspan GUESS is deleted.  Grammar lives once in
-  `markers.py` (`TABLE_CELL_RE = ^⟦([rc]?)(\d*)⟧`, `build_table_cell`,
-  `parse_table_cell`) and is mirrored in `viewer.html` (`parseTableCell`/
-  `tableCellHtml`).  `⟦r⟧`/`⟦c⟧` = right/center (left = default, no prefix); the
-  trailing digits = colspan; `⟦+⟧`-prefixed first row = `<caption>`.  See
-  `[[metadata-carrying-pattern]]` (now validated for TABLE too).
-- **Residue closed + DATA_TABLE "marked off":** caption carry (`|+` row →
-  `⟦+⟧`-prefixed leading row → `<caption>`); `!`-header detection from the REAL
-  signal (first data row has `!` cells → `{{TABLEH:}}`, replacing the buggy
-  `header=bool(caption)`); the dead ~95-line `if "colspan" in inner` spacer block
-  deleted (0/1470 hit it).
-- **#30 — `_process_table` sub-header row-drop FIXED.**  The main loop did
-  `if "|+" in raw_row: continue`, which discarded the ENTIRE pre-`|-` segment when
-  it carried both a `|+` caption AND header cells (AGRICULTURE "Average Acreage").
-  Now strips just the `|+` LINE (`re.sub(r"(?:\A|\n)[ \t]*\|\+[^\n]*", "", …)`) and
-  keeps the header cells.
+**Done this session (committed; NOT yet rebuilt/deployed):**
+- **SINGLE_COLUMN_TABLE** — PURE-STRUCTURAL predicate (every row exactly one
+  content cell, NO transform), `«PRE:` producer; branch 3 deleted.  287 tables,
+  output-identical for genuine single-column; ragged tables (a value + a trailing
+  whitespace-spacer cell) correctly route to grid.  Reverted two wrong turns
+  first — recognising whitespace entities, and threading `text_transform` into the
+  classifier — both transform-to-classify violations; the structural cell-count is
+  the only signal used.
+- **VERSE_TABLE** — content-recognition (col1 = quotation punctuation, ≥1
+  non-empty col1; no structural signal separates verse from a 2-col data table),
+  `{{VERSE:}` producer; branch 5 deleted.  24/24 real verse, 0 false positives
+  (matrices/TOC/taxonomy excluded — the no-transform predicate reads their
+  `{{em}}`/template col1 as non-punctuation).  Only the table-2col-quote subset;
+  the ~455 other verse markers are `<poem>`/poem-wrapper paths, untouched.
+- **Math spacer-heavy over-claim FIXED** — `_math_table_kind`'s content-free
+  ">50% empty cells -> math_blocks" fallback gated on `_INLINE_MATH_SIGNAL`.  28
+  non-math tables (debt/population data, name lists, SKULL anatomy legend,
+  REVELATION outline, ORNITHOLOGY taxonomy, WRIT poem) stopped rendering as
+  math-equations -> DATA_TABLE; WRIT -> VERSE_TABLE.
 
-**Snapshot suite extended to table-land** (per user: "now that we're in
-table-land… we need HTMLTABLE candidates too"): added `AGRICULTURE` (DATA_TABLE
-align + caption + HTMLTABLE) and `AFRICA` (a brutal HTMLTABLE-leak case — kept on
-purpose so the bug is captured).  The test normalizes the leaked-placeholder
-NUMBER (`\x03ELEM:N\x03` → `\x03ELEM\x03`) so snapshots are deterministic WITHOUT
-hiding the leak's presence (`[[verify-the-counter]]` discipline).
+Each carve verified with the corpus-wide label-distribution diff (only the
+intended transitions, zero collateral) + snapshots 20/20 (AGRICULTURE rebaselined:
+its over-claimed college-list now a grid, consistent with its page-452
+continuation).  Verification net: `tools/_scratch/table_label_dist.py` (scoped
+table-label snapshot, diffable before/after — reusable for any table-classification
+change; promote to `tools/diagnostics/`).
 
-**#29 — de-HTML `«HTMLTABLE:`/`«CHEM:` → semantic grid (IN PROGRESS, scoped, not
-started).**  COMPLEX_HTML (~1523) partitioned: plain-spans-only 414, span 887,
-ref ~139, math ~81, image ~6, nested ~3.  Root cause of the AFRICA leak: `<ref>`
-bodies living inside `<td>` cells are hidden from `resolve_ref_bodies`, so their
-child placeholders (REF_SELF, empty markers) never get substituted and leak to
-export (~21 corpus-wide).  **Sequencing (user): do NOT attack HTMLTABLE until
-DATA_TABLE is squared away** — i.e. the `_process_table` tease-apart below comes
-first.
+### NEXT — finish the drain + the MATH/CHEM recognition campaign
+- **#3 (drawer decomposition)** — the no-`|-` "inline-text" bucket is a 257-table
+  junk drawer (quantify_inline_drawer.py): single-cell verse 13 (DONE → VERSE),
+  caption/credit/legend 22 → figure, has-image 34 → plates (see #4), math/chem 25
+  → #8, multi-cell-fragment 128 + single-cell-prose 35 = structural residue.
+  DELETE the `<120`-char length heuristic (it splits verse by byte count) as
+  shapes are recognised.
+- **#4 image-frame — VERIFIED NON-BUG (closed).**  The "26 empty image-frame"
+  was an audit artifact (standalone classify didn't extract the image; real
+  pipeline keeps it as a placeholder → `{{IMG:}`).  All 34 image-bearing
+  DATA_TABLE tables are PLATE articles (parse_plate, not `_process_table`); zero
+  regular-article image loss corpus-wide.
+- **#5** reduce `_process_table` to the lean data-grid producer (delete now-dead
+  branches, confirm dead).
+- **#6** grid producer: spurious `⟦2⟧` colspan on a row whose full-width status is
+  only a trailing empty cell (producer refinement, low-risk, postponable).
+- **#8 — MATH & CHEM inline-shape recognition (the big one).**  Inline-`<sub>`
+  chemistry reactions / math equations / determinant matrices fall to DATA_TABLE
+  (chem keys on `<big>`/Langle-SVG, math on `<math>` blocks; these are written
+  inline).  Route to CHEM/MATH labels (each family can hold >1 producer).
+  SCOPED + HARD: heterogeneous, shared markup — MECHANICS `C₁P₁=…` is byte-
+  identical to a chem formula; ~9 reactions, ~9 math equations, ~7 legit chem-DATA
+  tables that must STAY DATA_TABLE.  Needs element-aware CHEM recognition (H/O/N
+  formulae, operator-connected in cells), a matrix signal (bracket-border cells +
+  repeated single-letter-subscript), and a real `\begin{vmatrix}` producer.
+  Tools: `check_chem_candidates.py`, `check_matrix_candidates.py`.
+  **The #7 math over-claim fix must land in a rebuild before any deploy.**
 
-### NEXT — tease apart `_process_table` (the table catch-all)
+**#29 — HTMLTABLE/CHEM de-HTML (still queued, after the drain).**  COMPLEX_HTML
+(~1523) partitioned; AFRICA leak root = `<ref>` bodies inside `<td>` hidden from
+`resolve_ref_bodies` (~21 corpus-wide).  Per prior sequencing: do NOT attack
+HTMLTABLE until DATA_TABLE is squared away.
 
-User's hypothesis, confirmed by audit: **`_process_table` is doing too much; it
-is analogous to the old `_process_figure`/`_assemble_figures` catch-all and is the
-source of the table-shape entanglement.**  DATA_TABLE needs its own LEAN data-grid
-producer, private to its label.
-
-`tools/_scratch/process_table_branch_audit.py` categorized all **1470** DATA_TABLE
-tables by what `_process_table` actually PRODUCES (the output marker reveals the
-secret branch taken):
-
-| Branch (output shape) | Count | % | Note |
-|---|---:|---:|---|
-| **data-grid** (`{{TABLE:}}`/`{{TABLEH:}}`) | 1026 | 70% | the real DATA_TABLE |
-| single-column → `«PRE:` | 259 | 18% | not a grid; a text block |
-| inline-text / other | 135 | 9% | flattened to prose |
-| **empty** (`""`) | 26 | — | **BUG: content loss** (e.g. Crete `[[Image:…]]` table → "") |
-| verse → `{{VERSE:}}` | 24 | — | a poem, not a table |
-
-So ~30% of DATA_TABLE is NOT a data grid — `_process_table` is a catch-all that
-silently routes 6 shapes, two of them buggy (26 empty + an inline truncation
-`{|…{{{width}}}…` → `"have either or"`).
-
-**Plan — the figure playbook applies exactly** (`[[loose-figure-status]]` is the
-template): recognize the non-grid shapes UPSTREAM (classifier predicates → own
-labels → focused producers — single-column-text, verse-table, image-table), so
-`_process_table` drains to a lean data-grid producer that only ever sees grids —
-just as the structural figure break drained `_assemble_figures`.  Start with the
-largest non-grid bucket (single-column→text, 259).  This subsumes #30 and kills
-the empty/truncation bugs.  See `[[table-family-status]]`.
+**Earlier today (committed before the tease-apart):** #24 structural prose-figure
+producer; #25 chemistry-equation tables -> CHEMISTRY_LAYOUT (via `<big>`+`<sub>`
+content signal); #28 carry table metadata (`⟦r⟧`/`⟦c⟧` align, colspan, `⟦+⟧`
+caption) into `{{TABLE:}}`, deleting the viewer's colspan guess; #30
+`_process_table` sub-header row-drop fixed.  Snapshot suite extended to table-land
+(AGRICULTURE, AFRICA).
 
 ---
 
