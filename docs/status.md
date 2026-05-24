@@ -1,12 +1,105 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-05-23.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-05-24.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
 ---
 
-## Current focus (2026-05-23) — Structural figure break: `_process_figures` DELETED
+## Current focus (2026-05-24) — TABLE: metadata carried, residue closed; NEXT = tease apart `_process_table`
+
+The producer's contract, finalized this session as a one-liner (user's words):
+**"regularize the markup so the viewer can render it consistently."**  Correct
+**iff** zero viewer guesses AND zero rendering-in-the-producer.  Every viewer
+guess is a symptom that the producer under-regularized; every render decision in
+the producer is over-regularizing.  This frames all the table work below and the
+next campaign.
+
+**Caveat that governs everything:** the current output is **NOT** a correctness
+oracle (`[[current-output-not-oracle]]`).  Separating producer/renderer is a
+bug-FINDING activity — scrutinizing a path surfaces latent bugs (the super-walker
+found dropped articles; this session found the HTMLTABLE child-leak, a DATA_TABLE
+row-drop, 26 empty image-tables, an inline-text truncation).
+
+**Shipped this session (all browser-confirmed + content-preservation proven by
+word-multiset; vol-1 rebuild confirms corpus-wide):**
+- **#24 — structural prose-figure producer (figures).**  Captions now FOLD INTO
+  the `{{IMG:…}}` marker *and consume their source*; the leak (loose caption) and
+  the duplicate (loose caption + `_patch_img` export-fill) were the same root —
+  a producer claiming content without consuming it.  See `[[loose-figure-status]]`.
+- **#25 — chemistry-equation tables → CHEMISTRY_LAYOUT.**  Classify by CONTENT
+  signal (`<big>±/=…` operators + `Xx<sub>N` formulae), not just bracket markup,
+  so `<math>\Big[`/`<big>+`-notation equation tables route to the chem producer.
+- **#28 — carry table layout metadata into `{{TABLE:}}` (the IMAGE playbook for
+  tables).**  Per-cell alignment + group-header colspan are now ENCODED by the
+  producer and DECODED solely by the viewer; the viewer's old
+  `contentCount < cells.length/2` colspan GUESS is deleted.  Grammar lives once in
+  `markers.py` (`TABLE_CELL_RE = ^⟦([rc]?)(\d*)⟧`, `build_table_cell`,
+  `parse_table_cell`) and is mirrored in `viewer.html` (`parseTableCell`/
+  `tableCellHtml`).  `⟦r⟧`/`⟦c⟧` = right/center (left = default, no prefix); the
+  trailing digits = colspan; `⟦+⟧`-prefixed first row = `<caption>`.  See
+  `[[metadata-carrying-pattern]]` (now validated for TABLE too).
+- **Residue closed + DATA_TABLE "marked off":** caption carry (`|+` row →
+  `⟦+⟧`-prefixed leading row → `<caption>`); `!`-header detection from the REAL
+  signal (first data row has `!` cells → `{{TABLEH:}}`, replacing the buggy
+  `header=bool(caption)`); the dead ~95-line `if "colspan" in inner` spacer block
+  deleted (0/1470 hit it).
+- **#30 — `_process_table` sub-header row-drop FIXED.**  The main loop did
+  `if "|+" in raw_row: continue`, which discarded the ENTIRE pre-`|-` segment when
+  it carried both a `|+` caption AND header cells (AGRICULTURE "Average Acreage").
+  Now strips just the `|+` LINE (`re.sub(r"(?:\A|\n)[ \t]*\|\+[^\n]*", "", …)`) and
+  keeps the header cells.
+
+**Snapshot suite extended to table-land** (per user: "now that we're in
+table-land… we need HTMLTABLE candidates too"): added `AGRICULTURE` (DATA_TABLE
+align + caption + HTMLTABLE) and `AFRICA` (a brutal HTMLTABLE-leak case — kept on
+purpose so the bug is captured).  The test normalizes the leaked-placeholder
+NUMBER (`\x03ELEM:N\x03` → `\x03ELEM\x03`) so snapshots are deterministic WITHOUT
+hiding the leak's presence (`[[verify-the-counter]]` discipline).
+
+**#29 — de-HTML `«HTMLTABLE:`/`«CHEM:` → semantic grid (IN PROGRESS, scoped, not
+started).**  COMPLEX_HTML (~1523) partitioned: plain-spans-only 414, span 887,
+ref ~139, math ~81, image ~6, nested ~3.  Root cause of the AFRICA leak: `<ref>`
+bodies living inside `<td>` cells are hidden from `resolve_ref_bodies`, so their
+child placeholders (REF_SELF, empty markers) never get substituted and leak to
+export (~21 corpus-wide).  **Sequencing (user): do NOT attack HTMLTABLE until
+DATA_TABLE is squared away** — i.e. the `_process_table` tease-apart below comes
+first.
+
+### NEXT — tease apart `_process_table` (the table catch-all)
+
+User's hypothesis, confirmed by audit: **`_process_table` is doing too much; it
+is analogous to the old `_process_figure`/`_assemble_figures` catch-all and is the
+source of the table-shape entanglement.**  DATA_TABLE needs its own LEAN data-grid
+producer, private to its label.
+
+`tools/_scratch/process_table_branch_audit.py` categorized all **1470** DATA_TABLE
+tables by what `_process_table` actually PRODUCES (the output marker reveals the
+secret branch taken):
+
+| Branch (output shape) | Count | % | Note |
+|---|---:|---:|---|
+| **data-grid** (`{{TABLE:}}`/`{{TABLEH:}}`) | 1026 | 70% | the real DATA_TABLE |
+| single-column → `«PRE:` | 259 | 18% | not a grid; a text block |
+| inline-text / other | 135 | 9% | flattened to prose |
+| **empty** (`""`) | 26 | — | **BUG: content loss** (e.g. Crete `[[Image:…]]` table → "") |
+| verse → `{{VERSE:}}` | 24 | — | a poem, not a table |
+
+So ~30% of DATA_TABLE is NOT a data grid — `_process_table` is a catch-all that
+silently routes 6 shapes, two of them buggy (26 empty + an inline truncation
+`{|…{{{width}}}…` → `"have either or"`).
+
+**Plan — the figure playbook applies exactly** (`[[loose-figure-status]]` is the
+template): recognize the non-grid shapes UPSTREAM (classifier predicates → own
+labels → focused producers — single-column-text, verse-table, image-table), so
+`_process_table` drains to a lean data-grid producer that only ever sees grids —
+just as the structural figure break drained `_assemble_figures`.  Start with the
+largest non-grid bucket (single-column→text, 259).  This subsumes #30 and kills
+the empty/truncation bugs.  See `[[table-family-status]]`.
+
+---
+
+## Prior focus (2026-05-23) — Structural figure break: `_process_figures` DELETED
 
 Goal achieved: the walker/classifier/producer now PRODUCES the final figure;
 nothing runs after it.  The `_process_figures` post-pass (a prose heuristic) is
