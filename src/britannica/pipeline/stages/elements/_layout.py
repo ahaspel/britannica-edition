@@ -2597,8 +2597,10 @@ def _process_simple_plate(
     text_transform,
     inner_registry: ElementRegistry | None,
 ) -> str:
-    """Focused producer for `SIMPLE_PLATE` — multi-image plate
-    layouts that don't fit the simple side-by-side grid shape.
+    """Producer for `UNPAIRED_FIGURE_GROUP` — any multi-image figure
+    layout (formerly `SIMPLE_PLATE`; the grid/non-grid split was dropped
+    because this producer is total over both — it bundles equal-or-more
+    than the generic passthrough in every case).
 
     The classifier predicate guarantees ≥2 IMAGE children and no
     data-table header signal.  Images may be arranged:
