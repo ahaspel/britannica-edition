@@ -53,6 +53,28 @@ _LINE_CAP = re.compile(
 # A bare caption line: `Fig. 3.—…`, `Figs. 1–6.—…`.
 _BARE_FIG = re.compile(
     r"(?:Figs?|Plate)s?\b" + _CAP_HEAD_TAIL, re.IGNORECASE)
+# RELAXED caption signals — used ONLY in the tail-after-`<br>` position
+# (directly beneath the image), where a caption needs no `{{sc|Fig}}` marker
+# and no em-dash: the `<br>` under the image IS the caption signal.  These
+# fold the bare numbered captions (`{{Fs|92%|Fig. 10.}}`, `{{sc|Fig. 13.}}`,
+# `Fig. 4. Fig. 5. Fig. 6`) that the strict patterns reject.  NEVER applied in
+# mid-run position, so a body sentence opening `Fig. 6. The simplest…` is
+# untouched.
+_CAP_SIGNAL_RELAXED = re.compile(
+    r"\{\{\s*(?:c?sc|small-caps)\s*\|\s*(?:Figs?|Plate)"
+    r"|<poem\b"
+    r"|\(\s*(?:From|After)\b"
+    r"|\b(?:Figs?|Plate)s?\.?\s*\d",
+    re.IGNORECASE)
+# A small-caps caption template carrying the number INSIDE it
+# (`{{sc|Fig. 13.}}`) — `sc` is not a layout template (not in `_TMPL`) and the
+# number sits inside, so neither the `_TMPL` nor the `_LINE_CAP` path sees it.
+_SC_FIG = re.compile(
+    r"\{\{\s*(?:c?sc|small-caps)\s*\|[^{}]*(?:Figs?|Plate)s?\.?\s*\d",
+    re.IGNORECASE)
+# A bare numbered caption with no em-dash (`Fig. 13.`, `Plate II.`).
+_BARE_FIG_RELAXED = re.compile(
+    r"(?:Figs?|Plate)s?\.?\s*[\dIVXLC]", re.IGNORECASE)
 # A parenthesized attribution citation — case-SENSITIVE `(From`/`(After`: the
 # lowercase `(from Greek …)` etymology form (ANOMALY) is body, not attribution.
 _ATTRIB = re.compile(
@@ -70,7 +92,17 @@ _ITALIC_LABEL = re.compile(
 _POEM = re.compile(r"<poem\b", re.IGNORECASE)
 _POEM_END = re.compile(r"</poem\s*>", re.IGNORECASE)
 _PAGE = re.compile(r"[\x01-\x08]PAGE:\d+[\x01-\x08]")
-_SEP = re.compile(r"(?:<br\s*/?>|[ \t\r\n])*")
+# Separator between an image and its caption material: `<br>`, ordinary or
+# Unicode whitespace (`\s` is Unicode-aware), and HTML space entities.  The
+# Unicode/entity coverage matters because a `{{center|…}}` wrapper unwrapped
+# upstream can leave a bare ` `/`&emsp;`/`&nbsp;` sitting between the
+# image and its caption — without consuming it the caption is unreachable and
+# the figure decays to a bare image (ACCUMULATOR Figs 8, 9).
+_SEP = re.compile(
+    r"(?:<br\s*/?>"
+    r"|&(?:nbsp|ensp|emsp|thinsp);"
+    r"|&#(?:160|8194|8195|8201|8202);"
+    r"|\s)*")
 
 
 def _balanced_brace_end(text: str, start: int) -> int | None:
@@ -117,7 +149,25 @@ def _paren_end(text: str, start: int) -> int | None:
     return None
 
 
-def _match_material(text: str, pos: int) -> tuple[int | None, bool]:
+def _caption_paragraph_end(text: str, pos: int) -> int:
+    """End of a caption/legend paragraph starting at ``pos``: the next blank
+    line, but never crossing a ``PAGE`` marker.  A caption is sometimes only
+    a single ``\\n`` from the following body (the blank-line break sits a
+    paragraph too far), and when a page/column boundary falls in that gap the
+    naive ``\\n\\n`` scan swallows the body into the caption (STEAM_ENGINE
+    Fig 60).  Capping at the PAGE marker mirrors the run-level rule that a
+    figure never crosses a page boundary into column-interleaved body."""
+    pp = text.find("\n\n", pos)
+    end = pp if pp >= 0 else len(text)
+    pg = _PAGE.search(text, pos)
+    if pg is not None and pg.start() < end:
+        end = pg.start()
+    return end
+
+
+def _match_material(
+    text: str, pos: int, tail_after_br: bool = False,
+) -> tuple[int | None, bool]:
     """If a figure-material unit starts at ``pos``, return ``(end, is_caption)``;
     else ``(None, False)``.  ``is_caption`` is False for a bare attribution
     citation — an attribution alone (no caption) does not make a figure.
@@ -125,6 +175,12 @@ def _match_material(text: str, pos: int) -> tuple[int | None, bool]:
     A unit is a balanced caption template, a layout template that *contains* a
     caption signal, a single `Fig. N.—…` caption line, or a parenthesized
     attribution.  Prose (no opener match) returns None — the run stops there.
+
+    ``tail_after_br`` is True for the FIRST unit when the image is directly
+    followed by ``<br>`` (the caption-below-image position).  There a caption
+    needs no `{{sc|Fig}}` marker and no em-dash — the `<br>` under the image is
+    itself the signal — so bare numbered captions are accepted.  Never set
+    mid-run, so a body sentence opening `Fig. 6. The simplest…` stays body.
 
     Deliberately NOT figure material: the paired ``{{EB1911 fine print/s}}…/e}}``
     wrapper (small-type BODY sections, not legends) and bare ``{|`` / ``<table>``
@@ -138,17 +194,22 @@ def _match_material(text: str, pos: int) -> tuple[int | None, bool]:
         e = _balanced_brace_end(text, pos)
         if e is not None and _CAP_SIGNAL.search(text, pos, e):
             return e, True
+        if (tail_after_br and e is not None
+                and _CAP_SIGNAL_RELAXED.search(text, pos, e)):
+            return e, True
         return None, False
     # A caption (`{{sc|Fig}} N.—…` / bare `Fig. N.—…`): absorb the whole caption
     # PARAGRAPH (to the blank-line break), so a caption wrapped across source
     # lines (`…System for␤Ventilating Tunnels.`) stays whole.
     if _LINE_CAP.match(rest) or _BARE_FIG.match(rest):
-        pp = text.find("\n\n", pos)
-        return (pp if pp >= 0 else len(text)), True
+        return _caption_paragraph_end(text, pos), True
+    # Bare numbered caption directly beneath the image (`{{sc|Fig. 13.}}`,
+    # `{{Fs|…Fig. 10.}}` handled above, plain `Fig. 4. Fig. 5. Fig. 6`).
+    if tail_after_br and (_SC_FIG.match(rest) or _BARE_FIG_RELAXED.match(rest)):
+        return _caption_paragraph_end(text, pos), True
     # An italic-label legend paragraph (`«I»a«/I», text`): absorb the paragraph.
     if _ITALIC_LABEL.match(rest):
-        pp = text.find("\n\n", pos)
-        return (pp if pp >= 0 else len(text)), True
+        return _caption_paragraph_end(text, pos), True
     # A verse legend (`<poem>…</poem>`): absorb the balanced block.
     if _POEM.match(rest):
         c = _POEM_END.search(text, pos)
@@ -163,7 +224,12 @@ def _match_material(text: str, pos: int) -> tuple[int | None, bool]:
 
 
 # A wrapper template that, when it encloses an image, IS the figure unit.
-_WRAP_OPEN = re.compile(r"\{\{\s*(?:center|block\s*center)\s*\|", re.IGNORECASE)
+# A wrapper template that, when it encloses an image, IS the figure unit.
+# Includes small-caps wrappers (`{{csc|[[File:…]]<br>Fig. N.}}` — ACCUMULATOR
+# Fig 20): around a whole figure the small-caps is just caption styling, so the
+# wrapper is the figure unit (gated on `_IMG_IN` — must contain an image).
+_WRAP_OPEN = re.compile(
+    r"\{\{\s*(?:center|block\s*center|c?sc|small-caps)\s*\|", re.IGNORECASE)
 # An image opener (bracket or float template) — used to confirm a wrapper
 # actually encloses a figure.
 _IMG_IN = re.compile(
@@ -210,7 +276,12 @@ def figure_tail_end(text: str, img_end: int) -> int:
         if _PAGE.search(sep_text):
             break  # never cross a page boundary into column-interleaved body
         scan = sep.end()
-        unit, is_caption = _match_material(text, scan)
+        # The FIRST unit, when the image is directly followed by `<br>`, sits in
+        # the caption-below-image position — relax the caption patterns there.
+        tail_after_br = (not saw_caption
+                         and re.search(r"<br\s*/?>", sep_text, re.IGNORECASE)
+                         is not None)
+        unit, is_caption = _match_material(text, scan, tail_after_br)
         if unit is None or unit <= scan:
             break
         end = unit

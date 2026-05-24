@@ -1345,6 +1345,26 @@
       return h;
     }
 
+    // H1-only title render: prefer the marked-up `title_display` and
+    // render «FN» title footnotes (collected into the article's note
+    // list).  Kept separate from renderTitleMarkers — which TOC / search
+    // / link callers use — because renderFnMarker has collection
+    // side-effects that don't belong in those contexts (and those
+    // callers pass the plain title anyway, which has no «FN»).
+    function renderArticleTitleDisplay(article) {
+      let h = escapeHtml(article.title_display || article.title || "Untitled");
+      // Footnote first — its body markers are handled by
+      // formatFootnoteText inside renderFnMarker — so the title's own
+      // «B»/«I»/«SC» convert afterwards without disturbing the note.
+      h = h.replace(/«FN(?:\[([^\]]+)\])?:([\s\S]*?)«\/FN»/g,
+                    (m, name, content) => renderFnMarker(name, content));
+      h = h.replace(/«B»([\s\S]*?)«\/B»/g, "<b>$1</b>");
+      h = h.replace(/«I»([\s\S]*?)«\/I»/g, "<i>$1</i>");
+      h = h.replace(/«SC»([\s\S]*?)«\/SC»/g,
+                    '<span class="small-caps">$1</span>');
+      return h;
+    }
+
     // Reverse of escapeHtml. Used when we need to pass captured text
     // (e.g. an image filename pulled from already-escaped paragraph
     // HTML) back into a URL or attribute context.
@@ -2764,7 +2784,7 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
             // their typography from the source.
             const plain = (article.title || "Untitled").replace(
               /«\/?(?:B|I|SC)»/g, "");
-            const rendered = renderTitleMarkers(article.title || "Untitled");
+            const rendered = renderArticleTitleDisplay(article);
             const firstLetter = escapeHtml(plain.charAt(0));
             // Trim the drop-cap's letter from the rendered title.  We
             // walk through `rendered` skipping HTML tags until we've

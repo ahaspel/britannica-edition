@@ -23,9 +23,13 @@ from britannica.pipeline.stages.elements._registry import (
     TABLE_LABELS,
     _PH,
 )
-from britannica.pipeline.stages.elements._image import build_img_marker
+from britannica.pipeline.stages.elements._image import (
+    build_img_marker,
+    _process_image,
+)
 from britannica.pipeline.stages.elements._tables import split_wiki_row
 from britannica.pipeline.stages.elements._text import _clean_text
+from britannica.markers import IMG_PARTS_RE, parse_img_meta
 
 def _is_layout_wrapper(raw: str, inner: str, inner_registry: ElementRegistry | None) -> bool:
     """Detect tables that wrap other tables/images for layout purposes.
@@ -1715,6 +1719,10 @@ def _assemble_figure_parts(
     caption_parts: list[str],
     attribution_parts: list[str],
     legend_lines: list[str],
+    *,
+    width: int | None = None,
+    height: int | None = None,
+    align: str | None = None,
 ) -> list[str]:
     """Return the canonical figure marker(s) for one image.
 
@@ -1723,11 +1731,17 @@ def _assemble_figure_parts(
     only if legend content exists — a separate ``{{LEGEND:…}LEGEND}``
     marker.  Callers are responsible for `\\n\\n` flanking when joining
     multiple figures together.
+
+    ``width``/``height``/``align`` carry the image's layout metadata into
+    the marker (the metadata-carrying pattern).  Optional — callers that
+    work from a bare filename omit them and get the identical
+    metadata-free marker.
     """
     cap = " ".join(caption_parts).strip()
     for attr in attribution_parts:
         cap = _append_attribution(cap, attr) if cap else attr
-    out = [build_img_marker(filename, cap)]
+    out = [build_img_marker(
+        filename, cap or None, width=width, height=height, align=align)]
     if legend_lines:
         out.append(
             "{{LEGEND:" + "\n".join(legend_lines) + "}LEGEND}")
@@ -1861,6 +1875,91 @@ def _process_captioned_figure_inline(
 
     parts = _assemble_figure_parts(
         filename, cap_parts, attr_parts, legend)
+    return "\n\n" + "\n\n".join(parts) + "\n\n"
+
+
+# A `[[File:…]]` / `[[Image:…]]` opener inside a prose FIGURE span.
+_PROSE_FIG_IMG_RE = re.compile(
+    r"\[\[(?:File|Image):[^\]]*\]\]", re.IGNORECASE)
+_FIG_SC_WRAP_RE = re.compile(
+    r"\{\{\s*(?:c?sc|small-caps)\s*\|", re.IGNORECASE)
+
+
+def _strip_figure_outer_wrapper(span: str) -> str:
+    """Peel layout / small-caps wrappers enclosing a WHOLE figure down to
+    image + caption.  `_unwrap_cell_wrappers` handles `{{center|…}}`/`{{Fs|…}}`;
+    this loop adds the small-caps figure wrappers (`{{csc|[[File:…]]<br>Fig. N.}}`
+    — ACCUMULATOR Fig 20) it deliberately preserves for caption *cells* but which,
+    around an entire figure, are only caption styling."""
+    prev = None
+    while span != prev:
+        prev = span
+        span = _unwrap_cell_wrappers(span).strip()
+        if _FIG_SC_WRAP_RE.match(span) and "[[" in span:
+            end, inner = _match_braced_template(span, 0)
+            if end is not None:
+                args = _split_template_args(inner)
+                content = args[-1] if len(args) > 1 else inner
+                span = (content + span[end:]).strip()
+    return span
+
+
+def _process_prose_figure(raw: str, text_transform) -> str | None:
+    """Structural producer for the prose ``SHAPE_FIGURE`` — an image plus
+    its structurally-delimited caption run, carved as one span by the
+    walker's figure break (float-div, ``{{center|…}}``-wrapped, or bare).
+
+    Extracts the image (filename + width/align), folds the caption and
+    attribution INTO the ``{{IMG:…}}`` marker and emits any legend as a
+    separate ``{{LEGEND:…}}`` — routed through the same
+    ``_extract_figure_components`` + ``_assemble_figure_parts`` the table
+    captioned-figure producers use, so prose and table figures fold
+    identically.  Folding *and consuming* the caption is what kills the
+    leak/duplicate: the caption never survives as loose body text, and a
+    marker that already carries its caption leaves the export-time
+    caption-fill (`_patch_img`) nothing to do.
+
+    Returns ``None`` for spans this producer doesn't yet own (no image, or
+    ≥2 images — the multi-image caption row, e.g. Figs 22-23); the caller
+    falls back to the legacy assembly so those keep rendering as before.
+    """
+    span = _strip_figure_outer_wrapper(raw.strip())
+    images = _PROSE_FIG_IMG_RE.findall(span)
+    if len(images) != 1:
+        return None
+    m = _PROSE_FIG_IMG_RE.search(span)
+
+    image_inner = re.sub(
+        r"^\[\[(?:File|Image):", "", m.group(0), flags=re.IGNORECASE)
+    image_inner = re.sub(r"\]\]$", "", image_inner)
+    img_marker = _process_image(image_inner, text_transform)
+    pm = IMG_PARTS_RE.match(img_marker)
+    if pm is None:
+        return None
+    filename = pm.group(1)
+    meta = parse_img_meta(pm.group(2))
+    filelink_caption = pm.group(3)
+
+    material = span[m.end():]
+    material = re.sub(r"<br\s*/?>", " ", material, flags=re.IGNORECASE)
+    material = _normalize_icl_markup(material)
+    paras = [p for p in re.split(r"\n\n+", material) if p.strip()]
+
+    cap_parts, attr_parts, legend = _extract_figure_components(
+        paras, ElementRegistry(), text_transform)
+    # EB1911 figures frequently repeat the caption in BOTH the File link's
+    # caption param AND a separate `{{sc|Fig.}} N.—…` block beneath the
+    # image (WEIGHING / SEWING MACHINES, ORDNANCE Figs 22, 23-30).  The
+    # block caption is the fuller one (carries the `Fig. N.—` prefix), so
+    # it wins; the File-link caption is only used when no block caption
+    # exists — folding both would duplicate the text.
+    if filelink_caption and not cap_parts:
+        cap_parts = [filelink_caption]
+
+    parts = _assemble_figure_parts(
+        filename, cap_parts, attr_parts, legend,
+        width=meta.get("width"), height=meta.get("height"),
+        align=meta.get("align"))
     return "\n\n" + "\n\n".join(parts) + "\n\n"
 
 
