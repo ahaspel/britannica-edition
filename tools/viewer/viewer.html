@@ -1478,6 +1478,25 @@
       return out;
     }
 
+    // Decode a {{TABLE:}} cell's ⟦align/colspan⟧ prefix — mirror of
+    // markers.py TABLE_CELL_RE / parse_table_cell.  The producer carries the
+    // cell's resolved alignment and group-header colspan here so the viewer
+    // renders them mechanically instead of guessing from cell sparseness.
+    const TABLE_CELL_RE = /^⟦([rc]?)(\d*)⟧/;
+    function parseTableCell(cell) {
+      const m = cell.match(TABLE_CELL_RE);
+      if (!m) return { align: null, colspan: 1, content: cell };
+      const align = m[1] === "r" ? "right" : (m[1] === "c" ? "center" : null);
+      const colspan = m[2] ? parseInt(m[2], 10) : 1;
+      return { align, colspan, content: cell.slice(m[0].length) };
+    }
+    function tableCellHtml(tag, cell) {
+      const { align, colspan, content } = parseTableCell(cell.trim());
+      const attrs = (colspan > 1 ? ` colspan="${colspan}"` : "") +
+                    (align ? ` style="text-align:${align}"` : "");
+      return `<${tag}${attrs}>${formatCell(content)}</${tag}>`;
+    }
+
     // A figure is "wide" (full column, no 600px box) when its carried
     // width exceeds the default box.  The filename/attribution heuristic
     // is a FALLBACK only when no width was carried — older exports and
@@ -2431,11 +2450,18 @@
         const protectedBody = tableMatch[2].replace(
           /\{\{VERSE:[\s\S]*?\}VERSE\}/g,
           m => m.replace(/\n/g, "\x05"));
-        const rows = protectedBody.split("\n")
+        let rows = protectedBody.split("\n")
           .filter(r => r.trim())
           .map(r => r.replace(/\x05/g, "\n"));
+        // Pull a ⟦+⟧-flagged leading caption row out as <caption> before
+        // row-indexing, so a header row stays the first DATA row.
+        let captionHtml = "";
+        if (rows.length && rows[0].startsWith("⟦+⟧")) {
+          captionHtml = `<caption>${formatCell(rows[0].slice("⟦+⟧".length))}</caption>`;
+          rows = rows.slice(1);
+        }
         // Single-row tables render inline (common for hieroglyph glosses)
-        if (rows.length === 1 && !hasHeader) {
+        if (rows.length === 1 && !hasHeader && !captionHtml) {
           return `<span class="inline-table">${formatCell(rows[0])}</span>`;
         }
         // Detect max columns for colspan calculation.
@@ -2447,36 +2473,14 @@
           return protectedRow.split(" | ").map(
             c => c.replace(/\x04/g, " | "));
         });
-        const maxCols = Math.max(...splitRows.map(r => r.length));
-
         const tableRows = splitRows.map((cells, i) => {
           const tag = (hasHeader && i === 0) ? "th" : "td";
-          // Group header row: fewer content cells than data rows,
-          // with empty cells between content — use colspan
-          const contentCount = cells.filter(c => c.trim()).length;
-          if (contentCount < cells.length / 2 && contentCount >= 1 && cells.length === maxCols) {
-            // Build cells with colspan for content spanning empty neighbors
-            let result = "";
-            let j = 0;
-            while (j < cells.length) {
-              if (cells[j].trim()) {
-                // Count following empty cells
-                let span = 1;
-                while (j + span < cells.length && !cells[j + span].trim()) span++;
-                result += `<${tag} colspan="${span}">${formatCell(cells[j].trim())}</${tag}>`;
-                j += span;
-              } else {
-                // Leading empty cell
-                result += `<${tag}></${tag}>`;
-                j++;
-              }
-            }
-            return `<tr>${result}</tr>`;
-          }
-          const cellsHtml = cells.map(c => `<${tag}>${formatCell(c.trim())}</${tag}>`).join("");
+          // Mechanical decode: each cell carries its own align/colspan
+          // (⟦…⟧ prefix from the producer) — no sparseness guessing.
+          const cellsHtml = cells.map(c => tableCellHtml(tag, c)).join("");
           return `<tr>${cellsHtml}</tr>`;
         }).join("");
-        return `<table class="data-table">${tableRows}</table>`;
+        return `<table class="data-table">${captionHtml}${tableRows}</table>`;
       }
 
 
@@ -2531,15 +2535,20 @@
         html = out;
       }
       html = html.replace(/\{\{TABLE[H]?:([\s\S]*?)\}TABLE\}/g, (match, content) => {
-        const rows = content.split("\n").filter(r => r.trim());
-        if (rows.length === 1) {
-          return `<span class="inline-table">${formatCell(rows[0])}</span>`;
+        let rows = content.split("\n").filter(r => r.trim());
+        let captionHtml = "";
+        if (rows.length && rows[0].startsWith("⟦+⟧")) {
+          captionHtml = `<caption>${formatCell(rows[0].slice("⟦+⟧".length))}</caption>`;
+          rows = rows.slice(1);
+        }
+        if (rows.length === 1 && !captionHtml) {
+          return `<span class="inline-table">${formatCell(rows[0].replace(/⟦[rc]?\d*⟧/g, ""))}</span>`;
         }
         const tableRows = rows.map(r => {
-          const cells = r.split(" | ").map(c => `<td>${formatCell(c.trim())}</td>`).join("");
+          const cells = r.split(" | ").map(c => tableCellHtml("td", c)).join("");
           return `<tr>${cells}</tr>`;
         }).join("");
-        return `<table class="data-table">${tableRows}</table>`;
+        return `<table class="data-table">${captionHtml}${tableRows}</table>`;
       });
       // Inline VERSE — appears when the pipeline converts a mid-paragraph
       // ``<poem>`` (e.g. an enumerated list inside running prose) into

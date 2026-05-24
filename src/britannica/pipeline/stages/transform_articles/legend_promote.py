@@ -41,7 +41,10 @@ def _table_row_cells(row: str) -> list[str]:
     etc.) have no space around them so they're untouched.
     """
     row = re.sub(r"\| (?=\|)", "|  ", row)
-    return [c.strip() for c in row.split(" | ")]
+    # Strip the producer's ⟦…⟧ layout prefix (align / colspan / ⟦+⟧ caption) —
+    # legend detection wants the cell's text, not its layout metadata.
+    return [re.sub(r"^⟦[^⟧]*⟧", "", c.strip()).strip()
+            for c in row.split(" | ")]
 
 
 def _clean_loose_caption(text: str) -> str:

@@ -55,6 +55,7 @@ SNAPSHOT_DIR = Path("tests/snapshots/transform")
 _PAGE_MARKER_RE = re.compile(r"\x01PAGE:\d+\x01")
 _LN_RESOLVED_RE = re.compile(
     r"«LN:\d{2}-\d{4}-[^|]+\.json\|([^|]+)\|")
+_ELEM_PH_RE = re.compile(r"\x03ELEM:\d+\x03")
 
 
 def _normalize_for_compare(text: str) -> str:
@@ -64,9 +65,19 @@ def _normalize_for_compare(text: str) -> str:
     Normalisations:
       * `\\x01PAGE:NN\\x01` → `\\x01PAGE:N\\x01`  (ws ↔ printed page renumber)
       * `«LN:NN-NNNN-stem.json|Title|…»` → `«LN:Title|…»`  (xref resolution)
+      * `\\x03ELEM:NN\\x03` → `\\x03ELEM\\x03`  (placeholder-number stabilise)
+
+    The last one is NOT hiding a bug — it's the opposite.  A LEAKED child
+    placeholder (a producer that built HTML without substituting a child —
+    e.g. AFRICA's HTMLTABLE) is non-deterministic because the placeholder
+    counter is process-global; stabilising the NUMBER lets us snapshot the
+    brutal case so the leak's PRESENCE is captured and grep-able (`\\x03ELEM`).
+    When the producer/renderer split (#2) fixes the leak, the markers vanish
+    from the snapshot — the diff is the proof of the fix.
     """
     text = _PAGE_MARKER_RE.sub("\x01PAGE:N\x01", text)
     text = _LN_RESOLVED_RE.sub(r"«LN:\1|", text)
+    text = _ELEM_PH_RE.sub("\x03ELEM\x03", text)
     return text
 
 
