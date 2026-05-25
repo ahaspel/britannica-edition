@@ -6,7 +6,50 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## Current focus (2026-05-24) — Remove non-tables from the table path; HTML_TABLE decomposition (Phase 2 next)
+## Current focus (2026-05-24) — Remove non-tables from the table path; HTML_TABLE decomposition (Phase 2 steps 1-2 DONE; step-3 flip WIRED, hardening figure producers)
+
+### Step-3 flip WIRED + producer-hardening underway (2026-05-24, NOT committed)
+The `<table>` flip is in: `_classify_html_table` (in `_classifier.py`) routes a
+`<table>` through `_classify_table` but remaps genuine-table labels back to
+HTML_TABLE, so ONLY the figure family (`_HTML_TABLE_ROUTE_AWAY`) leaves the table
+path.  The flip exposed that the figure producers had latent bugs (masked by my
+image-only step-2 check) — which is the WIN: table-path entanglements became
+LOCAL producer bugs ([[turn-bugs-into-producer-bugs]]).  Fixed so far, in
+`_layout.py`:
+- **Metadata-carry** — new `_image_ph_meta`; all figure producers now pass
+  `width`/`height`/`align` to `_assemble_figure_parts` (they dropped them before,
+  on wiki AND table).  Verified clean (STEAM_ENGINE/ORDNANCE = pure width/align
+  restorations).  Broad: restores figure dimensions corpus-wide.
+- **Poem-caption** — a `<poem>` opening with a `Fig./Plate.` marker folds as a
+  caption (`_CAPTION_POEM_RE` in `_extract_figure_components`) instead of being
+  chopped by `_emit_legend_chunk`.
+- **In-cell content** — `_process_simple_plate` now reads each image's OWN cell
+  (vertical + column slice), not just rows below, so an `IMG<br>caption` cell is
+  captured.  **JOINTS now renders all 7 figures with full captions** (verified).
+
+**Remaining producer bugs (the hard call + cleanup):**
+- **Conservative caption / NO fancy legend heuristics** — BRACHIOPODA Fig 12-18:
+  a flowing `Fig.`-caption with inline `f, foramen;` glosses gets mis-mined into a
+  malformed legend (+`{{hi}}` leak).  Per user: where a clear structural signal is
+  lacking, DON'T try — default to caption.  Fix = DELETE the content-guessing
+  legend detectors (inline-gloss counting, flowing-italic), keep structural ones
+  (multicol cells, `{{Hi}}`, POEM/TABLE child); a `Fig.`-opener cell is a caption,
+  never mine a legend from it.  Verify against canonical legends (ARACHNIDA Fig 7,
+  ABBEY Fig 5, HYDROMEDUSAE Fig 1).  See [[turn-bugs-into-producer-bugs]].
+- **ACCUMULATOR block-ification** — `<table>` figures now emit as `\n\n` blocks
+  vs inline-in-prose; likely an improvement, confirm.
+- **Rebaseline** the figure snapshots (the width restorations are improvements;
+  9 reds currently = width-restorations + BRACHIOPODA's real bug) AFTER the
+  conservative-caption fix.  Then re-run `render_zero.py` on the `<table>`
+  population (flippre/flippost) WITHOUT the metadata filter that hid the width
+  drop, to confirm the full regression set is clean.
+
+Verification this session used render-level gates (snapshots + `render_zero.py`),
+not image counts — the image-only check (`check_table_figure_producer.py`) hid the
+width drop AND the caption mangle.  `losscheck` filters attribute words, so it
+also hid width; un-filter for the final gate.
+
+
 
 **THE GOAL (reframed this session):** not decomposing the table producers — it's
 **removing everything that isn't truly a table from the table path**.  Producer
@@ -73,27 +116,58 @@ Every carve verified by the corpus-wide label-distribution diff (intended
 transitions only, zero collateral) + snapshots 20/20.  Verification net:
 `tools/_scratch/table_label_dist.py` (now **skips `article_type=='plate'`** to
 mirror production — production routes plates to `parse_plate`, not the element
-pipeline) + `diff_tld.py`; baselines `tld.np0..np5.jsonl`.  Promote
-`table_label_dist.py`, `diff_tld.py`, `check_table_path_purity.py` to
-`tools/diagnostics/`.
+pipeline) + `diff_tld.py`; baselines `tld.np0..np5.jsonl`.  **Promoted** to
+`tools/diagnostics/` (2026-05-24): `table_label_dist.py`, `diff_tld.py`,
+`check_table_path_purity.py` (their `tld.*.jsonl` baselines stay in `_scratch`).
 
-### NEXT — Phase 2: route `<table>` figures out of the table path (the 2073)
-Same playbook as the wiki carves, applied to `<table>`.  Remaining steps (task #12):
-1. **Legend helpers agnostic** — `_has_legend_material` (refactor
-   `_row_has_legend_multicol_cells` to take a cell-list; it's shared with producer
-   `_layout.py:2368` + `_row_is_legend`) + `_has_beside_legend_signal`
-   (line-level).  Each verified wiki-path-zero vs `tld.np5`.
-2. **Figure producers read `<table>` cells** — `_process_captioned_figure` /
-   `_process_simple_plate` / etc. build `cells_text` via `split_wiki_row`; rebuild
-   via `_table_grid` so `<td>` feeds the shared figure pipeline.  Wiki-zero-verified.
-   (The meatiest step, but bounded.)
-3. **Flip routing** — `<table>` through the shape classifiers instead of flat
-   `_derive_html_tag_label` (`tag=="table"→HTML_TABLE`).  The moment the 2073
-   figures + 167 verse + 6 chem LEAVE the table path.  Verify intended transitions
-   + output equal-or-better vs the buried `_unwrap_html_illustration` branch
-   (which has gaps: MAGNETISM empty, BRAIN/CARPET leak text+placeholders).
+### Phase 2: route `<table>` figures out of the table path (the 2073) — steps 1-2 DONE
+Same playbook as the wiki carves, applied to `<table>`.  Steps (task #12):
+1. **Legend + chem helpers agnostic — DONE 2026-05-24, wiki-zero verified.**
+   `_row_has_legend_multicol_cells` now takes a **cell-list** (was a wiki row-
+   string); `_has_legend_material` + `_has_chem_reaction_content` feed it via
+   `_table_grid`, so both fire on `{|` AND `<table>`.  Two `_layout.py` callers
+   (`_row_is_legend`, the multicol producer) updated to pass `split_wiki_row`
+   cells.  Wiki-zero: `tld.s1pre→s1post2` = **0 transitions, 0 elements changed**.
+   (`_has_beside_legend_signal` left wiki-only — the preview shows NO `<table>`
+   figure routes to BESIDE, so it degrades gracefully to LEGENDED/CAPTIONED.)
+   (`_row_is_legend` is dead code — only its own def; clean up later.)
+2. **Figure producers read `<table>` cells — DONE 2026-05-24, wiki render-zero
+   verified.**  Converted the 5 producers reachable by `<table>` figures —
+   `_process_captioned_figure` (1693), `_process_captioned_figure_inline`,
+   `_process_legended_figure_child` (46), `_process_legended_figure` Phase 2,
+   `_process_simple_plate` (242) — to build cells via `_table_grid` instead of
+   `re.split(|-)`+`split_wiki_row`.  **Wiki render-zero: 1224/1226 byte-identical**
+   (`render_zero.py` full-corpus before/after); the 2 diffs are an INCIDENTAL FIX —
+   `_table_grid` drops a dangling `|-` separator that the old `_process_simple_plate`
+   run-collapsing split mis-captured as a `-` cell → spurious `(-.)` attribution
+   (BEARINGS Fig 6, BELLOWS Fig 8).  And **`<table>` figures render content-
+   preserved**: `check_table_figure_producer.py` → 2059 figs with NEW≥OLD images
+   (vs the buried `_unwrap_html_illustration`), **0 image drops, 0 producer errors**;
+   14 route to non-ICL producers (LAYOUT_WRAPPER/CHEM residue, step-2 follow-up).
+   Residual producers NOT yet `<table>`-aware: `_unwrap_layout_table` (uses
+   sep/attr; 10 figs), chem-figure (5), beside (wiki-only).  362 tests pass.
+3. **Flip routing — NEXT (the invasive step; pause-point agreed with user).**
+   Route `<table>` through the shape classifiers instead of flat
+   `_derive_html_tag_label` (`tag=="table"→HTML_TABLE`).  **Safest design (refined
+   from the preview):** a `_classify_html_table` adapter that calls `_classify_table`
+   but **remaps any genuine-table label (DATA_TABLE/COMPLEX_HTML/…) back to
+   HTML_TABLE** — because `DATA_TABLE`'s producer `_process_table` is wiki-only and
+   would break the 789 no-span `<table>` grids that fall to the catch-all.  This
+   ISOLATES the change to non-tables: the 2472 genuine grids stay byte-identical
+   (still `_process_html_table`); only the 2071 figures + 66 math + 164 verse + 6
+   chem newly route to proper producers.  Preview (`preview_html_table_routing.py`):
+   figures 2071/2073 leave, chem 6/6, math 66/70, verse 164/167.  Verify render
+   equal-or-better vs the buried branch (which has gaps: MAGNETISM empty,
+   BRAIN/CARPET leak); extend `render_zero.py` to the `<table>` population.
 4. **Drain `_process_html_table`** to the genuine span-HTMLTABLE residue; DELETE
    `_unwrap_html_illustration` (pure duplicate of the shared figure pipeline).
+
+New diagnostics this session — promoted to `tools/diagnostics/`:
+`preview_html_table_routing.py` (the flip dry-run / oracle×flip-label crosstab),
+`render_zero.py` (full-corpus before/after producer render-diff via
+`_shadow_transform`; `capture <tag>` / `diff <a> <b>`), `check_table_figure_producer.py`
+(NEW-vs-buried image preservation on `<table>` figures).  Their per-run artifacts
+(`rz.*.json`, `tld.*.jsonl`) stay disposable in `tools/_scratch/`.
 
 Then drain COMPLEX_HTML's 45 non-tables + LAYOUT_WRAPPER's ~107 residue (verse→
 VERSE, single-fig→CAPTIONED_FIGURE, data-shells→table homes).  NOTE: the `<table>`

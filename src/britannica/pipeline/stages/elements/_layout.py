@@ -27,7 +27,8 @@ from britannica.pipeline.stages.elements._image import (
     build_img_marker,
     _process_image,
 )
-from britannica.pipeline.stages.elements._tables import split_wiki_row
+from britannica.pipeline.stages.elements._tables import (
+    split_wiki_row, _table_grid)
 from britannica.pipeline.stages.elements._text import _clean_text
 from britannica.markers import IMG_PARTS_RE, parse_img_meta
 
@@ -698,6 +699,25 @@ def _image_ph_filename(
     m = re.match(r"\[\[(?:File|Image):([^\]|]+)",
                  raw, re.IGNORECASE)
     return m.group(1).strip() if m else None
+
+
+def _image_ph_meta(
+    ph_id: str, inner_registry: ElementRegistry
+) -> tuple[str | None, dict]:
+    """``(filename, meta)`` for an IMAGE placeholder — ``meta`` carries
+    ``width``/``height``/``align`` parsed from the image's own raw the same way
+    `_process_image` produces a standalone ``{{IMG:}}``.  Figure producers use
+    this instead of `_image_ph_filename` so the source layout metadata rides
+    into the assembled figure marker instead of being dropped (the caption is
+    rebuilt from the figure's cells, so the parsed caption is ignored)."""
+    fn = _image_ph_filename(ph_id, inner_registry)
+    if not fn:
+        return None, {}
+    raw = inner_registry.elements[ph_id][1]
+    inner = re.sub(r"^\[\[(?:File|Image):", "", raw, flags=re.IGNORECASE)
+    inner = re.sub(r"\]\][\s\S]*$", "", inner)
+    pm = IMG_PARTS_RE.match(_process_image(inner, lambda s: s))
+    return (pm.group(1), parse_img_meta(pm.group(2))) if pm else (fn, {})
 
 
 def _image_ph_extcap(
@@ -1652,6 +1672,14 @@ def _unwrap_cell_wrappers(text: str) -> str:
     return text
 
 
+# A `<poem>` figure-child that OPENS with a Fig./Plate. marker is a CAPTION
+# (flowing prose, line-broken for the print column), not a structured legend —
+# distinguishes JOINTS Fig 1's `{{sc|Fig. 1.}}—Vertical section…` poem-caption
+# from a poem of discrete `a, Hydranth;` legend entries.
+_CAPTION_POEM_RE = re.compile(
+    r"^\s*(?:\{\{\s*c?sc\s*\|\s*)?(?:Fig|Plate)s?\b", re.IGNORECASE)
+
+
 def _extract_figure_components(
     cells_text: list[str],
     inner_registry: ElementRegistry,
@@ -1687,11 +1715,23 @@ def _extract_figure_components(
             continue
         cell_text = content
         for poem_ph in poem_phs:
-            if poem_ph in cell_text:
-                poem_raw = inner_registry.elements[poem_ph][1]
-                _emit_legend_chunk(
-                    poem_raw, text_transform, legend_lines)
-                cell_text = cell_text.replace(poem_ph, "")
+            if poem_ph not in cell_text:
+                continue
+            poem_raw = inner_registry.elements[poem_ph][1]
+            pm = re.search(r"<poem>([\s\S]*?)</poem>", poem_raw,
+                           re.IGNORECASE)
+            poem_body = (pm.group(1) if pm else poem_raw).strip()
+            if _CAPTION_POEM_RE.match(poem_body):
+                # Caption-poem (Fig./Plate. opener): join the print-column
+                # line breaks and fold into the caption rather than chopping
+                # it into legend entries (which silently drops flowing lines).
+                cap = _clean_text(text_transform(
+                    re.sub(r"\s*\n\s*", " ", poem_body)))
+                if cap:
+                    caption_parts.append(cap)
+            else:
+                _emit_legend_chunk(poem_raw, text_transform, legend_lines)
+            cell_text = cell_text.replace(poem_ph, "")
         marker = _CELL_FIG_MARKER_RE.search(cell_text)
         if marker:
             before = cell_text[:marker.start()].strip()
@@ -1784,7 +1824,7 @@ def _process_captioned_figure(
     if not image_phs:
         return ""
     image_ph = image_phs[0]
-    filename = _image_ph_filename(image_ph, inner_registry)
+    filename, _imeta = _image_ph_meta(image_ph, inner_registry)
     if not filename:
         return ""
 
@@ -1800,10 +1840,9 @@ def _process_captioned_figure(
     # single string per cell.  `{{Ts|…}}` is styling-only — strip it.
     inner = _normalize_icl_markup(inner)
     cleaned = re.sub(r"<br\s*/?>", " ", inner, flags=re.IGNORECASE)
-    rows = re.split(r"\|-[^\n]*", cleaned)
     cells_text: list[str] = []
-    for row in rows:
-        for _sep, _attr, content in split_wiki_row(row):
+    for cells in _table_grid(cleaned):
+        for content in cells:
             if not content.strip():
                 continue
             content = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*", "",
@@ -1819,7 +1858,9 @@ def _process_captioned_figure(
         cells_text, inner_registry, text_transform, skip_ph=image_ph)
 
     parts = _assemble_figure_parts(
-        filename, cap_parts, attr_parts, legend)
+        filename, cap_parts, attr_parts, legend,
+        width=_imeta.get("width"), height=_imeta.get("height"),
+        align=_imeta.get("align"))
     return "\n\n" + "\n\n".join(parts) + "\n\n"
 
 
@@ -1852,16 +1893,15 @@ def _process_captioned_figure_inline(
     if not image_phs:
         return ""
     image_ph = image_phs[0]
-    filename = _image_ph_filename(image_ph, inner_registry)
+    filename, _imeta = _image_ph_meta(image_ph, inner_registry)
     if not filename:
         return ""
 
     inner = _normalize_icl_markup(inner)
     cleaned = re.sub(r"<br\s*/?>", " ", inner, flags=re.IGNORECASE)
-    rows = re.split(r"\|-[^\n]*", cleaned)
     cells_text: list[str] = []
-    for row in rows:
-        for _sep, _attr, content in split_wiki_row(row):
+    for cells in _table_grid(cleaned):
+        for content in cells:
             if not content.strip():
                 continue
             content = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*", "",
@@ -1874,7 +1914,9 @@ def _process_captioned_figure_inline(
         cells_text, inner_registry, text_transform, skip_ph=image_ph)
 
     parts = _assemble_figure_parts(
-        filename, cap_parts, attr_parts, legend)
+        filename, cap_parts, attr_parts, legend,
+        width=_imeta.get("width"), height=_imeta.get("height"),
+        align=_imeta.get("align"))
     return "\n\n" + "\n\n".join(parts) + "\n\n"
 
 
@@ -2027,7 +2069,7 @@ def _cell_is_legend_full_entry(content: str) -> bool:
     return bool(_CELL_FULL_ENTRY_RE.match(_legend_cell_prep(content)))
 
 
-def _row_has_legend_multicol_cells(row: str) -> bool:
+def _row_has_legend_multicol_cells(cells: list[str]) -> bool:
     """True iff the row's FIRST non-empty cell is a legend label and
     the row has ≥2 cells.  Covers both legend shapes:
 
@@ -2045,11 +2087,12 @@ def _row_has_legend_multicol_cells(row: str) -> bool:
     spuriously match the label/full-entry shapes and skew a
     per-cell count.
 
-    Cell-aware via ``split_wiki_row``, so cell-attribute prefixes
-    (``align="right"|`` etc.) are stripped before matching.
+    Takes a list of raw cell-content strings (the caller supplies them
+    via ``split_wiki_row`` for ``{|`` or ``_table_grid`` for ``<table>``,
+    so the same legend recognition serves both syntaxes); cell-attribute
+    prefixes (``align="right"|`` etc.) are already stripped by both.
     """
-    cells = split_wiki_row(row)
-    contents = [c for _sep, _attr, c in cells if c.strip()]
+    contents = [c for c in cells if c.strip()]
     if len(contents) < 2:
         return False
     first = contents[0]
@@ -2066,7 +2109,8 @@ _LEGEND_ROW_PROSE_RE = re.compile(
 
 def _row_is_legend(row: str) -> bool:
     """True if ``row`` looks like a legend row (multicol or prose)."""
-    if _row_has_legend_multicol_cells(row):
+    if _row_has_legend_multicol_cells(
+            [c for _s, _a, c in split_wiki_row(row)]):
         return True
     if len(_LEGEND_ROW_PROSE_RE.findall(row)) >= 2:
         return True
@@ -2322,7 +2366,7 @@ def _process_legended_figure(
     if not image_phs:
         return ""
     image_ph = image_phs[0]
-    filename = _image_ph_filename(image_ph, inner_registry)
+    filename, _imeta = _image_ph_meta(image_ph, inner_registry)
     if not filename:
         return ""
 
@@ -2365,7 +2409,8 @@ def _process_legended_figure(
     for row in rows:
         if not row.strip():
             continue
-        if _row_has_legend_multicol_cells(row):
+        if _row_has_legend_multicol_cells(
+                [c for _s, _a, c in split_wiki_row(row)]):
             multicol_rows.append(row)
             in_block = True
         elif in_block and ("||" in row or _row_is_single_full_entry(row)):
@@ -2416,23 +2461,31 @@ def _process_legended_figure(
                         lbl, text = row_pairs[col]
                         legend_lines.append(f"{lbl}. {text}")
 
-    # Phase 2: prose-cell legends and caption/attribution cells.
+    # Phase 2: prose-cell legends and caption/attribution cells.  Cell
+    # extraction goes through `_table_grid` so a `<table>` LEGENDED_FIGURE
+    # (whose Phase-1 multicol `||` detection never fires — `<table>` has no
+    # `||`) still yields its cells here as caption/attribution/prose-legend
+    # rather than being dropped.  For a wiki `other_row` (no `|-` inside),
+    # `_table_grid` returns the same single row of cells `split_wiki_row`
+    # did, so the wiki path is unchanged.
     for row in other_rows:
-        for _sep, _attr, content in split_wiki_row(row):
-            if not content.strip():
-                continue
-            content = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*", "",
-                              content).strip()
-            if not content:
-                continue
-            # A cell with ≥3 line-shaped `LABEL.text` entries is the
-            # prose-cell legend shape — chop by newline.
-            if len(_LEGEND_ROW_PROSE_RE.findall(content)) >= 3:
-                pairs = _chop_legend_entries(
-                    content, "\n", text_transform)
-                legend_lines.extend(f"{lbl}. {text}" for lbl, text in pairs)
-                continue
-            text_cells.append(content)
+        for cells in _table_grid(row):
+            for content in cells:
+                if not content.strip():
+                    continue
+                content = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*", "",
+                                  content).strip()
+                if not content:
+                    continue
+                # A cell with ≥3 line-shaped `LABEL.text` entries is the
+                # prose-cell legend shape — chop by newline.
+                if len(_LEGEND_ROW_PROSE_RE.findall(content)) >= 3:
+                    pairs = _chop_legend_entries(
+                        content, "\n", text_transform)
+                    legend_lines.extend(
+                        f"{lbl}. {text}" for lbl, text in pairs)
+                    continue
+                text_cells.append(content)
 
     cap_parts, attr_parts, _extra_legend = _extract_figure_components(
         text_cells, inner_registry, text_transform, skip_ph=image_ph)
@@ -2440,7 +2493,9 @@ def _process_legended_figure(
         legend_lines.extend(_extra_legend)
 
     parts = _assemble_figure_parts(
-        filename, cap_parts, attr_parts, legend_lines)
+        filename, cap_parts, attr_parts, legend_lines,
+        width=_imeta.get("width"), height=_imeta.get("height"),
+        align=_imeta.get("align"))
     return "\n\n" + "\n\n".join(parts) + "\n\n"
 
 
@@ -2473,19 +2528,16 @@ def _process_legended_figure_child(
     if not image_phs:
         return ""
     image_ph = image_phs[0]
-    filename = _image_ph_filename(image_ph, inner_registry)
+    filename, _imeta = _image_ph_meta(image_ph, inner_registry)
     if not filename:
         return ""
 
     cleaned = re.sub(r"<br\s*/?>", " ", inner, flags=re.IGNORECASE)
-    rows = re.split(r"\|-[^\n]*", cleaned)
 
     legend_lines: list[str] = []
     text_cells: list[str] = []
-    for row in rows:
-        if not row.strip():
-            continue
-        for _sep, _attr, content in split_wiki_row(row):
+    for cells in _table_grid(cleaned):
+        for content in cells:
             if not content.strip():
                 continue
             content = re.sub(r"\{\{[Tt]s\|[^{}]*\}\}\s*", "",
@@ -2515,7 +2567,9 @@ def _process_legended_figure_child(
         legend_lines.extend(_extra_legend)
 
     parts = _assemble_figure_parts(
-        filename, cap_parts, attr_parts, legend_lines)
+        filename, cap_parts, attr_parts, legend_lines,
+        width=_imeta.get("width"), height=_imeta.get("height"),
+        align=_imeta.get("align"))
     return "\n\n" + "\n\n".join(parts) + "\n\n"
 
 
@@ -2547,7 +2601,7 @@ def _process_legended_figure_beside(
     if len(image_phs) != 1:
         return ""
     image_ph = image_phs[0]
-    filename = _image_ph_filename(image_ph, inner_registry)
+    filename, _imeta = _image_ph_meta(image_ph, inner_registry)
     if not filename:
         return ""
 
@@ -2587,7 +2641,9 @@ def _process_legended_figure_beside(
             break
 
     parts = _assemble_figure_parts(
-        filename, [caption] if caption else [], [], legend_lines)
+        filename, [caption] if caption else [], [], legend_lines,
+        width=_imeta.get("width"), height=_imeta.get("height"),
+        align=_imeta.get("align"))
     return "\n\n" + "\n\n".join(parts) + "\n\n"
 
 
@@ -2632,15 +2688,18 @@ def _process_simple_plate(
         return ""
 
     cleaned = re.sub(r"<br\s*/?>", " ", inner, flags=re.IGNORECASE)
-    # Strip leading row-separator if any, then split on `\n|-` runs.
-    inner_stripped = re.sub(r"^\s*\|-+[^\n]*\n", "", cleaned)
-    rows = re.split(r"\n(?:\s*\|-+[^\n]*\n)+", inner_stripped)
+    # Row model via `_table_grid` (syntax-neutral: `{|` rows or `<table>`
+    # `<tr>` rows), so the per-image row grouping + column-slice logic below
+    # serves both encodings.  On the wiki path `_table_grid` drops the empty
+    # rows that consecutive `|-` separators produce, matching the previous
+    # `\n|-`-run-collapsing split.
+    grid = _table_grid(cleaned)
 
     # Per-image row index.
     img_row_of: dict[str, int] = {}
     for ph in image_phs:
-        for i, r in enumerate(rows):
-            if ph in r:
+        for i, cells in enumerate(grid):
+            if any(ph in c for c in cells):
                 img_row_of[ph] = i
                 break
     if len(img_row_of) != len(image_phs):
@@ -2657,31 +2716,35 @@ def _process_simple_plate(
         phs_in_group = groups[img_row_idx]
         next_row = (sorted_group_rows[i + 1]
                     if i + 1 < len(sorted_group_rows)
-                    else len(rows))
+                    else len(grid))
         content_rows = list(range(img_row_idx + 1, next_row))
 
         if len(phs_in_group) == 1:
             # Vertical slice: all content cells belong to this image.
             ph = phs_in_group[0]
-            filename = _image_ph_filename(ph, inner_registry)
+            filename, _imeta = _image_ph_meta(ph, inner_registry)
             if not filename:
                 continue
-            cells_text: list[str] = []
+            # Include the image's OWN cell (an in-cell `IMG<br>caption`
+            # rides here, not in a row below); skip_ph strips the image.
+            cells_text: list[str] = [
+                c for c in grid[img_row_idx] if c.strip()]
             for r_idx in content_rows:
-                for _sep, _attr, content in split_wiki_row(rows[r_idx]):
+                for content in grid[r_idx]:
                     if content.strip():
                         cells_text.append(content)
             cap, attr, legend = _extract_figure_components(
                 cells_text, inner_registry, text_transform, skip_ph=ph)
             output_parts.extend(_assemble_figure_parts(
-                filename, cap, attr, legend))
+                filename, cap, attr, legend,
+                width=_imeta.get("width"), height=_imeta.get("height"),
+                align=_imeta.get("align")))
         else:
             # Column slice: each image owns the cells at its column
             # index in subsequent rows.
-            img_row_cells = list(split_wiki_row(rows[img_row_idx]))
+            img_row_cells = grid[img_row_idx]
             image_col_of: dict[str, int] = {}
-            for col_idx, (_sep, _attr, content) in enumerate(
-                    img_row_cells):
+            for col_idx, content in enumerate(img_row_cells):
                 for ph in phs_in_group:
                     if ph in content:
                         image_col_of[ph] = col_idx
@@ -2689,21 +2752,24 @@ def _process_simple_plate(
                 continue  # malformed group — skip
             for ph in sorted(phs_in_group,
                               key=lambda p: image_col_of[p]):
-                filename = _image_ph_filename(ph, inner_registry)
+                filename, _imeta = _image_ph_meta(ph, inner_registry)
                 if not filename:
                     continue
                 col_idx = image_col_of[ph]
-                col_cells: list[str] = []
+                # Start with the image's OWN cell (in-cell `IMG<br>caption`
+                # rides here — JOINTS Fig 4/5); skip_ph strips the image.
+                col_cells: list[str] = [img_row_cells[col_idx]]
                 for r_idx in content_rows:
-                    cells = list(split_wiki_row(rows[r_idx]))
+                    cells = grid[r_idx]
                     if col_idx < len(cells):
-                        _sep, _attr, cell_content = cells[col_idx]
-                        col_cells.append(cell_content)
+                        col_cells.append(cells[col_idx])
                 cap, attr, legend = _extract_figure_components(
                     col_cells, inner_registry, text_transform,
                     skip_ph=ph)
                 output_parts.extend(_assemble_figure_parts(
-                    filename, cap, attr, legend))
+                    filename, cap, attr, legend,
+                    width=_imeta.get("width"), height=_imeta.get("height"),
+                    align=_imeta.get("align")))
 
     if not output_parts:
         return ""
