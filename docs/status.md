@@ -1,12 +1,82 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-05-24.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-05-25.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
 ---
 
-## Current focus (2026-05-25) — Remove non-tables from the table path; **`<table>` FIGURE+MATH+CHEM+SINGLE-COLUMN+VERSE routed** (HTML_TABLE 49%→98% pure)
+## Current focus (2026-05-25) — Honesty campaign: super-walker WIRED (Stage 1 landed)
+
+**Goal:** every transform from corrected-raw happens inside a producer.  The
+walker walks raw and hands raw to the classifier; the classifier decides the
+label (it may consult a transformed copy, but emits nothing); the producer
+receives RAW and does all transformation.  Result: the transformation surface is
+100% producer-owned, and every residual bug sorts into a clean, data-safe tier —
+**producer** (wrong render of correct raw), **classifier** (wrong label, e.g.
+LAYOUT_WRAPPER leaks), or **walker** (wrong boundary).  Raw always arrives intact,
+so a bug can only mis-route, never destroy.  See [[transform-only-two-places]],
+[[walker-on-raw-source]], [[turn-bugs-into-producer-bugs]],
+[[layout-wrapper-definition]].
+
+### Super-walker runs on RAW — pre-walker chew DELETED (this session)
+`super_walker.volume_stream` no longer calls `_preprocess_wikitext`; it joins raw
+pages.  Page chrome (`<noinclude>`, `<section …>`) is RECOGNIZED and skipped in
+`_LEAD` (carry-raw), not stripped.  Of the 3 chew transforms: line-endings was a
+no-op (**0 CR in 28,706 pages**), `<section end>` strip contributed **0
+boundaries**, and noinclude (**+31 detections**) is fully replaced by the `_LEAD`
+recognizer.  **raw == chewed: 36,689 = 36,689 boundaries, 0 volume diffs**; all 31
+noinclude-adjacent articles recovered (incl. STRAFFORD, THOMAS WENTWORTH).
+
+Two real boundary MISSES the raw walker exposed, both fixed (recognizer gaps):
+- **STAWELL, SIR WILLIAM FOSTER** — `[[Author:…|` + newline before `«B»`; added
+  `\s*` to `_HEADING` / `_BOLD` / the super_detect anchor pattern.
+- **HOLLAND, JOSIAH GILBERT** — `{{sc}}` title-case headword rejected by the
+  title-case guard; `clean_title` now uppercases `{{sc}}` content.
+
+**rawvsview** (raw-fed vs view-fed classification) = **98.6% identical** corpus-
+wide (4438/4500 on figure/table-heavy vols); the ~1.4% residual is entirely the
+image/figure family (inline `[[File:|Npx]]`, the css_crop cluster, figure-vs-
+image) — i.e. the predicates that must reach for a utility = the Stage-2 worklist.
+
+### Stage 0 — baseline captured (the regression net)
+`tools/diagnostics/label_distribution_snapshot.py before` →
+`tools/_scratch/label_distribution.before.json` (**51,155 classified elements,
+37,219 articles**).  Producer net pre-exists: per-seed snapshots +
+`tests/regression/test_transform_snapshots.py`.
+
+### Stage 1 — boundaries WIRED  ← THIS CHECKPOINT (NOT yet rebuilt/deployed)
+`detect_boundaries` → `super_detect_boundaries` at `cli/main.py:114`.  Changes:
+- NEW **`src/britannica/pipeline/stages/super_detect.py`** — clean
+  `super_detect_boundaries(volume)`: boundaries from `super_walk`, RAW article
+  slices, title via `produce_title`, per-page segments from `«PAGE»` markers.
+- **`elements/_title.py`** — `produce_title` now returns `(title, body,
+  title_raw)`; unwraps `[[Author:…|…]]`/`[[Portal:…|…]]` in the returned span so
+  the downstream `title_display` transform keeps the bold run.
+- **`cli/main.py:114`** — the one-line swap.
+
+VALIDATED: boundaries conserved (36,689, +23 wins); the `title_raw`→`title_display`
+contract holds across vols 1/13/15/25 — the *only* divergence is super_detect
+**preserving** a formatted display detect_boundaries dropped (HOLLAND, a win).
+Wired function runs (vol 1 → 1716 articles).  Gated on the next clean rebuild +
+corpus quality gate (`cli.main` full-import can't run in-env: missing
+`mwparserfromhell`, pre-existing).
+
+### Stage 2 — honesty hand-off  ← NEXT (where producer bugs manifest)
+Feed `process_elements` the RAW body (capture `original_raw` atop
+`_transform_text_v2`) so `ce.raw` is raw and producers receive it (single walk on
+raw; `produce_tree` already forwards `ce.raw`).  **Layer A is UNTOUCHED** — it
+becomes the optional utility shelf both classifier predicates and producers draw
+from à la carte (no mandatory whole-body pre-pass).  Gated by: label-distribution
+diff (classifier stable, modulo the image/figure predicates reaching for
+utilities) + the seed regression test (the producer-bug queue).  Expect: no label
+flips outside image/figure; some producer breakage = the fix-as-we-go queue.
+Known standing classifier-tier work surfaced by this lens: drain LAYOUT_WRAPPER
+(~107 mislabels).
+
+---
+
+## Prior focus (2026-05-25) — Remove non-tables from the table path; **`<table>` FIGURE+MATH+CHEM+SINGLE-COLUMN+VERSE routed** (HTML_TABLE 49%→98% pure)
 
 ### Step-3 `<table>` flip LANDED — figures left the table path (2026-05-24)
 `_classify_html_table` (`_classifier.py`) routes a `<table>` through

@@ -26,6 +26,7 @@ from britannica.pipeline.stages.elements._registry import (
 from britannica.pipeline.stages.elements._image import (
     build_img_marker,
     _process_image,
+    image_extcap_from_raw,
 )
 from britannica.pipeline.stages.elements._tables import (
     split_wiki_row, _table_grid)
@@ -729,11 +730,13 @@ def _image_ph_extcap(
     (HYDROMEDUSAE Fig 36: the walker grabs the `{{sc|Fig. 36.}}—…`
     line into the image, leaving the continuation in the cell).  A
     captioned/legended producer must recover it and re-join, otherwise
-    rebuilding the IMG marker from cell text alone drops it."""
-    inner = inner_registry.inners.get(ph_id, "")
-    if "|EXTCAP:" in inner:
-        return inner.rsplit("|EXTCAP:", 1)[1]
-    return ""
+    rebuilding the IMG marker from cell text alone drops it.
+
+    The honest walker carries the caption in the IMAGE child's RAW span
+    (`[[File:…]]\\ncaption`), not a folded `|EXTCAP:` tail — so parse it
+    from the raw."""
+    raw = inner_registry.elements.get(ph_id, (None, ""))[1]
+    return image_extcap_from_raw(raw)
 
 
 def _looks_like_caption(text: str) -> bool:
