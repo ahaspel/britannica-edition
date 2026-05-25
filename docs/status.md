@@ -6,48 +6,104 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## Current focus (2026-05-24) — Remove non-tables from the table path; HTML_TABLE decomposition (Phase 2 steps 1-2 DONE; step-3 flip WIRED, hardening figure producers)
+## Current focus (2026-05-25) — Remove non-tables from the table path; **`<table>` FIGURE+MATH+CHEM+SINGLE-COLUMN+VERSE routed** (HTML_TABLE 49%→98% pure)
 
-### Step-3 flip WIRED + producer-hardening underway (2026-05-24, NOT committed)
-The `<table>` flip is in: `_classify_html_table` (in `_classifier.py`) routes a
-`<table>` through `_classify_table` but remaps genuine-table labels back to
-HTML_TABLE, so ONLY the figure family (`_HTML_TABLE_ROUTE_AWAY`) leaves the table
-path.  The flip exposed that the figure producers had latent bugs (masked by my
-image-only step-2 check) — which is the WIN: table-path entanglements became
-LOCAL producer bugs ([[turn-bugs-into-producer-bugs]]).  Fixed so far, in
-`_layout.py`:
-- **Metadata-carry** — new `_image_ph_meta`; all figure producers now pass
-  `width`/`height`/`align` to `_assemble_figure_parts` (they dropped them before,
-  on wiki AND table).  Verified clean (STEAM_ENGINE/ORDNANCE = pure width/align
-  restorations).  Broad: restores figure dimensions corpus-wide.
-- **Poem-caption** — a `<poem>` opening with a `Fig./Plate.` marker folds as a
-  caption (`_CAPTION_POEM_RE` in `_extract_figure_components`) instead of being
-  chopped by `_emit_legend_chunk`.
-- **In-cell content** — `_process_simple_plate` now reads each image's OWN cell
-  (vertical + column slice), not just rows below, so an `IMG<br>caption` cell is
-  captured.  **JOINTS now renders all 7 figures with full captions** (verified).
+### Step-3 `<table>` flip LANDED — figures left the table path (2026-05-24)
+`_classify_html_table` (`_classifier.py`) routes a `<table>` through
+`_classify_table` but remaps genuine-table labels back to HTML_TABLE, so only the
+figure family (`_HTML_TABLE_ROUTE_AWAY` = the 5 captioned/legended/unpaired
+labels) leaves the path.  **Result (purity scoreboard):**
 
-**Remaining producer bugs (the hard call + cleanup):**
-- **Conservative caption / NO fancy legend heuristics** — BRACHIOPODA Fig 12-18:
-  a flowing `Fig.`-caption with inline `f, foramen;` glosses gets mis-mined into a
-  malformed legend (+`{{hi}}` leak).  Per user: where a clear structural signal is
-  lacking, DON'T try — default to caption.  Fix = DELETE the content-guessing
-  legend detectors (inline-gloss counting, flowing-italic), keep structural ones
-  (multicol cells, `{{Hi}}`, POEM/TABLE child); a `Fig.`-opener cell is a caption,
-  never mine a legend from it.  Verify against canonical legends (ARACHNIDA Fig 7,
-  ABBEY Fig 5, HYDROMEDUSAE Fig 1).  See [[turn-bugs-into-producer-bugs]].
-- **ACCUMULATOR block-ification** — `<table>` figures now emit as `\n\n` blocks
-  vs inline-in-prose; likely an improvement, confirm.
-- **Rebaseline** the figure snapshots (the width restorations are improvements;
-  9 reds currently = width-restorations + BRACHIOPODA's real bug) AFTER the
-  conservative-caption fix.  Then re-run `render_zero.py` on the `<table>`
-  population (flippre/flippost) WITHOUT the metadata filter that hid the width
-  drop, to confirm the full regression set is clean.
+| Path | Before | After |
+|---|---|---|
+| HTML_TABLE | 4998, **49%** pure (2073 figures) | 2942, **84%** pure (**figures 2073→17**) |
+| DATA_TABLE | 1272, 95% | 1272, 95% (unchanged) |
+| COMPLEX_HTML | 1506, 96% | 1506, 96% (unchanged) |
 
-Verification this session used render-level gates (snapshots + `render_zero.py`),
-not image counts — the image-only check (`check_table_figure_producer.py`) hid the
-width drop AND the caption mangle.  `losscheck` filters attribute words, so it
-also hid width; un-filter for the final gate.
+The flip exposed latent FIGURE-PRODUCER bugs (the WIN — table-path entanglements
+became LOCAL producer bugs, [[turn-bugs-into-producer-bugs]]); all fixed in the
+producers, render-verified, **0 content loss, bounded to the figure bucket**
+(`snapcheck.py`; all 9 changed snapshots are figure articles, rebaselined):
+- **Metadata-carry** (`_image_ph_meta`) — figure producers now pass
+  width/height/align to `_assemble_figure_parts` (dropped before, wiki AND table).
+- **Poem-caption** (`_CAPTION_POEM_RE`) — a `<poem>` opening with Fig./Plate.
+  folds as caption, not chopped by `_emit_legend_chunk`.  JOINTS Fig 1/2 fixed.
+- **In-cell content** — `_process_simple_plate` reads each image's OWN cell, not
+  just rows below.  JOINTS Fig 4/5 fixed → all 7 JOINTS figures render full.
+- **Conservative caption / no fancy legend heuristics (option A)** —
+  `_has_legend_material`: `{{Hi}}` is NO LONGER a legend signal (ambiguous: real
+  legend in ARACHNIDA Fig 26 vs sub-figure list in BRACHIOPODA Fig 12-18, no
+  clean discriminator → default to caption); prose-cell detection skips
+  Fig./Plate.-opener AND `{{Hi}}` cells.  BRACHIOPODA now content-complete (minor
+  parens on the sub-figure list); ARACHNIDA `{{Hi}}` legends fold to captions
+  (approved, lossless); HYDROMEDUSAE's dedicated prose-cell legend still extracts.
+
+**Cleanup follow-ups (small):** delete the now-dead `_extract_hi_legend` /
+flowing-italic in `_process_legended_figure`; re-run `render_zero.py` on the
+`<table>` population WITHOUT the metadata filter for a final end-to-end gate.
+
+### MATH/CHEM buckets — LANDED 2026-05-24 (HTML_TABLE 84%→86%)
+Cheapest because the CLASSIFIER already recognized them — only producer plumbing
+needed (the wiki path stays byte-identical; a `<table>` branch is added):
+- MATH: `_process_equation_layout` + `_process_math_layout_table` read cells via
+  `_content_rows` (wiki=`parse_wiki_table`, `<table>`=`_html_table_grid`).
+- CHEM: `_process_chemistry_layout` splits `<tr>` + `_split_html_chem_row` (the
+  span-aware `<td>/<th>` analog of `_split_chem_row`); wiki path untouched.
+- Added `MATH_LAYOUT_*` + `CHEMISTRY_LAYOUT` to `_HTML_TABLE_ROUTE_AWAY`.
+Result: HTML_TABLE math 70→4, chem 6→0, figure-residue 17→12 (5 chem-bracket
+"figures" recovered to CHEMISTRY_LAYOUT — confirming CHEM was bigger than the bare
+6).  Content-safe (`check_mathchem_textloss.py`: only marker/template/placeholder
+tokens consumed by producers, 0 formula/equation content lost).  362 tests green.
+
+### SINGLE-COLUMN bucket — LANDED 2026-05-24 (HTML_TABLE 86%→92%)
+`_is_single_column_table` (detector) + `_process_single_column_table` (producer)
+made `<table>`-aware (detector uses `_table_grid` with the `|-` gate kept
+wiki-only so wiki is unchanged; producer branches `_html_table_grid`).  Added
+SINGLE_COLUMN_TABLE to `_HTML_TABLE_ROUTE_AWAY`.  HTML_TABLE single-col 210→4
+(206 → `«PRE:`); content-safe (`check_mathchem_textloss.py`: only 2 `eb` ref-marker
+tokens, 0 real content).  Unit test `test_html_table` updated (one-cell `<table>`
+is now SINGLE_COLUMN_TABLE; added `test_html_table_single_column`).  363 green.
+
+### VERSE bucket — LANDED 2026-05-25 (HTML_TABLE 92%→98%)
+NOT the 2-col-quote `_is_verse_table` shape — the 167 are POEM-WRAPPERS: a table
+that just centres `<poem>` child(ren) (BELL/BOAT — a quotation).  New
+`_is_poem_wrapper_pred` (≥1 POEM child, no IMAGE, no data-header, AND no
+substantive non-poem cell text) placed BEFORE `_is_layout_wrapper_pred`;
+`_process_verse_table` gained a poem-child branch (emits each `<poem>` as
+`{{VERSE:}`, like `_process_poem`); VERSE_TABLE added to route-away.  167→6
+(the 6 are caption+poem figure-legend tables — BRACHIOPODA — correctly KEPT: the
+substantive-content check excludes them so their caption isn't dropped).
+Content-safe by construction (cell is only the poem) + 363 green.
+
+### NEXT SESSION (2026-05-25+) — the HARD cases: ~100-200 classification errors
+The easy wins are done — every bucket whose shape the classifier ALREADY
+recognized has been routed (figures/math/chem/single-col/verse), HTML_TABLE
+49%→98%.  What remains is ONE kind of work: **classification errors** — shapes
+the classifier does NOT yet recognize, so they land in a catch-all / wrong label.
+These need RECOGNITION (new/fixed predicates), not producer plumbing.  Inventory:
+- **LAYOUT_WRAPPER (108)** — pure misclassification sump (its un-pairable-figure
+  role is empty post-flip): 36 verse, 23 single-col, 22 nested-figure-group, 19
+  data-tables (Governors lists / grammar / correlation tables — `«other»`), 8
+  single-image.  Each belongs to an existing producer but isn't recognized as
+  such.  Characterize with `tools/diagnostics/layout_wrapper_contents.py`.
+- **HTML_TABLE residue (26)** — 12 figure (CATACOMB/CORNET miss the ICL gate),
+  6 verse (caption+poem figure-legend tables), 4 single-col, 4 math.
+- **COMPLEX_HTML residue (45)** — 36 math, 7 single-col, 5 verse, 4 figure
+  (these are `{|`-with-spans / span-HTML; a different recognition surface).
+- **DATA_TABLE residue (54 single-col)** — wiki one-col tables to re-check (the
+  2 "math" are the legit INFINITESIMAL CALCULUS reference grids — leave).
+Approach: same as this session but the hard half — recognize each shape
+structurally, route to its producer, verify render-zero + content-safe + purity.
+Verification net (all in `tools/diagnostics/`): `check_table_path_purity.py`
+(scoreboard), `render_zero.py` (producer render-diff), `check_mathchem_textloss.py`
+(content-preservation per routed label), `layout_wrapper_contents.py`.
+
+### Step-4 cleanup (deferred) — drain `_process_html_table`, delete dead code
+Now that figures/math/chem/single-col/verse leave the `<table>` path,
+`_process_html_table`'s buried `_unwrap_html_illustration` branch is superseded
+(delete it); and `_extract_hi_legend` / flowing-italic in `_process_legended_figure`
+are dead (the conservative-caption fix dropped `{{Hi}}`/flowing-italic legends).
+`_row_is_legend` (`_layout.py`) is also dead.
 
 
 

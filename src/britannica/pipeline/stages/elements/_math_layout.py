@@ -48,8 +48,21 @@ import re
 from britannica.pipeline.stages.elements._registry import ElementRegistry, _PH
 from britannica.pipeline.stages.elements._tables import (
     _CELL_ATTR_RE,
+    _HTML_TABLE_TAG_RE,
+    _html_table_grid,
     parse_wiki_table,
 )
+
+
+def _content_rows(text: str) -> list[list[str]]:
+    """Row × cell-content for a math-layout table, syntax-detected.  The wiki
+    path stays on `parse_wiki_table` (so wiki output is byte-identical); a
+    `<table>` is read via `_html_table_grid`.  Math producers only use cell
+    CONTENT (they strip attrs), so dropping the (sep, attr) is safe."""
+    if _HTML_TABLE_TAG_RE.search(text):
+        return _html_table_grid(text)
+    _, parsed = parse_wiki_table(text)
+    return [[content for _sep, _attr, content in row] for row in parsed]
 
 
 _MATH_CELL_RE = re.compile(
@@ -173,12 +186,11 @@ def _process_math_layout_table(raw: str) -> str:
     ``\\begin{vmatrix}`` wrapping depending on whether the rows are
     equations (share an ``=`` column) or a matrix/determinant grid.
     """
-    _, parsed_rows = parse_wiki_table(raw)
     rows: list[list[str]] = []
-    for parsed_row in parsed_rows:
+    for content_row in _content_rows(raw):
         row_cells = [
             _math_cell_to_latex(content)
-            for _sep, _attr, content in parsed_row
+            for content in content_row
             if content
         ]
         if row_cells:
@@ -360,11 +372,10 @@ def _process_equation_layout(inner: str, text_transform) -> str:
     first/last equation and kills display-mode rendering —
     METEOROLOGY Margules energy equations).
     """
-    _, parsed_rows = parse_wiki_table(inner)
     lines: list[str] = []
-    for parsed_row in parsed_rows:
+    for content_row in _content_rows(inner):
         cells: list[str] = []
-        for _sep, _attr, content in parsed_row:
+        for content in content_row:
             if not content or content in ("}", "{|"):
                 continue
             # Cells whose content is itself a bare attribute keyword
