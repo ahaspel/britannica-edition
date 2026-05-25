@@ -6,7 +6,7 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## Current focus (2026-05-25) — Honesty campaign: super-walker WIRED (Stage 1 landed)
+## Current focus (2026-05-25) — Honesty campaign: super-walker WIRED + producers on RAW (Stages 1–2 landed; per-family producer queue open)
 
 **Goal:** every transform from corrected-raw happens inside a producer.  The
 walker walks raw and hands raw to the classifier; the classifier decides the
@@ -62,17 +62,52 @@ Wired function runs (vol 1 → 1716 articles).  Gated on the next clean rebuild 
 corpus quality gate (`cli.main` full-import can't run in-env: missing
 `mwparserfromhell`, pre-existing).
 
-### Stage 2 — honesty hand-off  ← NEXT (where producer bugs manifest)
-Feed `process_elements` the RAW body (capture `original_raw` atop
-`_transform_text_v2`) so `ce.raw` is raw and producers receive it (single walk on
-raw; `produce_tree` already forwards `ce.raw`).  **Layer A is UNTOUCHED** — it
-becomes the optional utility shelf both classifier predicates and producers draw
-from à la carte (no mandatory whole-body pre-pass).  Gated by: label-distribution
-diff (classifier stable, modulo the image/figure predicates reaching for
-utilities) + the seed regression test (the producer-bug queue).  Expect: no label
-flips outside image/figure; some producer breakage = the fix-as-we-go queue.
-Known standing classifier-tier work surfaced by this lens: drain LAYOUT_WRAPPER
-(~107 mislabels).
+### Stage 2 — honesty hand-off  ← LANDED (flip in; per-family producer queue open)
+**Producers now receive the RAW corrected body, zero pre-pass.**  In
+`_transform_text_v2`, `original_raw` is captured before any pass and fed to
+`process_elements` (`process_elements(original_raw, …)`); the whole Layer A is
+**bypassed** (and being deleted per-family as each lands).  `produce_tree`
+already forwards `ce.raw`, so producers get raw by construction.
+
+**INVARIANT (unbendable):** corrected-raw → nothing → producer.  corrections.json
+is the only thing that touches source (already baked into `page.wikitext`).  No
+pre-pass, no relocated pre-pass, no "pure-noise" pre-pass.  A failing producer is
+NOT fixed by re-adding a pass — it's fixed by the producer *calling* the relevant
+Layer-A method as a **utility** (Layer A is the shelf; producers reach for it).
+The drift to watch (caught twice this session): rationalising a pre-pass back in
+under a "noise"/"preserve old output" label.  Old output is NOT the oracle.
+
+**Family 1 — layout-unwrap: DRAINED.**  `_unwrap_layout_templates` (inside the
+text producer `_transform_body_text`) gained `block center / larger / smaller /
+nowrap / Fine / sm`; the Layer-A `c_unwrap`/`balanced_unwrap`/`poem_unwrap`/
+`csc_normalize`/`fine_print_se` passes are now duplicates of it (bypassed; delete
+when convenient).  Verse/center/fine-block render from raw via the producer.
+
+**Seed regression net (standalone runner `tools/_scratch/run_seed_snapshots.py`,
+since the pytest conftest needs missing `mwparserfromhell`): 8 pass / 12 fail.**
+The 8 green = layout/simple (validates Family 1).  The 12 red = the per-family
+producer queue — each a producer that must CALL a Layer-A utility it lost:
+
+| Seed(s) | Producer | utility to call |
+|---|---|---|
+| ACCUMULATOR, STEAM_ENGINE, BRACHIOPODA | CAPTIONED_FIGURE / IMAGE EXTCAP | caption-pairing (`center_file_split`/`bundle_raw_image`/GLUED_BR fold) |
+| ABBEY, HYDROMEDUSAE | LEGENDED_FIGURE | `_transform_body_text` on legend cells |
+| A, ALPHABET | IMAGE (inline) | `promote_inline_glyphs` — **positional** (the rare survivor; tag-not-transform is the honest target) |
+| AFRICA | HTML_TABLE | table cell/quote normalization |
+| ACCUMULATOR-chem | CHEMISTRY_LAYOUT | chem cell handling |
+| ALDEHYDES (`＋`→`+`), MOLECULE (lead space), AGRICULTURE | text/chem/verse | `normalize_unicode`/`replace_print_artifacts`/whitespace — pure-noise; **re-baseline** (honest output is the non-meddling one) |
+
+**Proof the flip lost nothing:** `raw_error=0` corpus-wide; the producer-output
+diff (pure-noise filtered) was ~3% real divergence, all in these families.
+Net: image/figure/table/chem are the work — the SAME producers the table-path
+purity campaign (Prior focus) was sharpening, so it folds in here.
+
+**NEXT:** per-family, wire each red producer to call its utility (image/figure
+first), turning reds green; re-baseline the pure-noise seeds; delete each Layer-A
+pass as its family lands.  Tests stay red-then-green per family by design — NOT
+pushed to production (deliberately, to keep liberty to break).  Standing
+classifier-tier work this lens still implies: drain LAYOUT_WRAPPER (~107
+mislabels).
 
 ---
 

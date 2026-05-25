@@ -544,9 +544,14 @@ def _convert_shoulder_headings(text: str) -> str:
 
 
 def _unwrap_layout_templates(text: str) -> str:
-    """Unwrap {{center|...}}, {{c|...}}, {{fine block|...}} to content.
-    {{csc|...}} → «SC»...«/SC»."""
-    for name in ["center", "c", "fine block", "EB1911 Fine Print"]:
+    """Unwrap layout-only templates to their content (the text producer owns
+    this — formerly duplicated by Layer-A's ``balanced_unwrap``/``c_unwrap``/
+    ``poem_unwrap``/``fine_print_se``).  {{csc|...}} → «SC»...«/SC».  The
+    fixed-point loop in ``_transform_body_text`` resolves nesting one level per
+    pass (e.g. {{fine block|{{block center|…}}}})."""
+    for name in ["block center", "center", "c", "fine block",
+                 "EB1911 Fine Print", "larger", "smaller", "nowrap",
+                 "Fine", "sm"]:
         text = re.sub(
             r"\{\{" + re.escape(name) + r"\|((?:[^{}]|\{\{[^{}]*\}\})*)\}\}",
             r"\1", text, flags=re.IGNORECASE,
