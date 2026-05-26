@@ -401,6 +401,43 @@ def _unwrap_content_templates(text: str) -> str:
     # doesn't break the regex.
     text = _unwrap_balanced(text, "sans-serif",
                             lambda inner: f"{_FMT}SS{inner}{_FMT}/SS")
+    # {{Serif|X}} — opposite of sans-serif: explicit serif font for a
+    # single letter discussed AS A LETTER.  Mirror of the sans-serif
+    # marker.  Less common than sans-serif (ALPHABET uses it twice).
+    text = _unwrap_balanced(text, "Serif",
+                            lambda inner: f"{_FMT}SR{inner}{_FMT}/SR")
+    # {{small-caps|X}} — long-form alias for {{sc|X}}; reuse the
+    # existing «SC» marker so the viewer renders identically.
+    text = _unwrap_balanced(text, "small-caps",
+                            lambda inner: f"{_FMT}SC{inner}{_FMT}/SC")
+    # {{=}} — Wikisource convention for a literal `=` inside template
+    # args (escapes the named-parameter separator).  Just emit `=`.
+    text = re.sub(r"\{\{\s*=\s*\}\}", "=", text)
+    # {{–}} — literal en-dash, used in source where `–` would be
+    # ambiguous (e.g. inside template args).
+    text = re.sub(r"\{\{\s*–\s*\}\}", "–", text)
+    # {{shy}} — soft hyphen (U+00AD): invisible, marks an acceptable
+    # hyphenation point.  Preserve as the actual soft-hyphen char.
+    text = re.sub(r"\{\{\s*shy\s*\}\}", "­", text, flags=re.IGNORECASE)
+    # {{...|N}} — ellipsis with optional spacing arg; render as plain
+    # `...` regardless of arg.  (Different from {{...}} bare, which is
+    # already handled in _unwrap_content_templates' fixed-point loop.)
+    text = re.sub(r"\{\{\s*\.\.\.\s*\|[^{}]*\}\}", "...", text)
+    # {{hws|short|full}} / {{hwe|short|full}} — hyphenated-word page-
+    # split markers: at a page boundary, `hws` is the last syllable on
+    # the previous page and `hwe` is the first syllable on the next.
+    # The pair's second arg is the FULL word.  In our linear rendering
+    # (no page boundaries), hws emits the full word once; hwe drops
+    # (the full word was already emitted by its hws partner).
+    text = re.sub(r"\{\{\s*hws\s*\|[^{}|]*\|([^{}]*)\}\}", r"\1",
+                  text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{\s*hwe\s*\|[^{}|]*\|[^{}]*\}\}", "",
+                  text, flags=re.IGNORECASE)
+    # {{SIC|wrong|right}} — source-error annotation.  Render the
+    # wrong-as-printed text followed by `[sic]` so the reader sees
+    # both the source's actual content and a typographic notice.
+    text = re.sub(r"\{\{\s*sic\s*\|([^{}|]*)\|[^{}]*\}\}",
+                  r"\1 [sic]", text, flags=re.IGNORECASE)
     # {{xx-larger|X}} / {{x-larger|X}} — math grouping characters scaled
     # up for tall equations: `(`, `)`, `√`, `[`, `]`.  Source uses 200%
     # / 150% size respectively.  STEAM_ENGINE / ORDNANCE: 22 occurrences;
@@ -760,6 +797,8 @@ def _finalize_markers(text: str) -> str:
     text = text.replace(f"{_FMT}/SC", "\u00ab/SC\u00bb")
     text = text.replace(f"{_FMT}SS", "\u00abSS\u00bb")
     text = text.replace(f"{_FMT}/SS", "\u00ab/SS\u00bb")
+    text = text.replace(f"{_FMT}SR", "\u00abSR\u00bb")
+    text = text.replace(f"{_FMT}/SR", "\u00ab/SR\u00bb")
     text = text.replace(f"{_FMT}XXL", "\u00abXXL\u00bb")
     text = text.replace(f"{_FMT}/XXL", "\u00ab/XXL\u00bb")
     text = text.replace(f"{_FMT}XL", "\u00abXL\u00bb")
@@ -834,9 +873,32 @@ def _apply_markup(text: str) -> str:
     # the catch-all below (that joins legend entries: BRACHIOPODA Fig 27
     # "Peduncle.{{em|2}}z" → "Peduncle.z").  The last Layer-A rendering pass
     # (`spacing`) re-homed here, in the text producer.
-    text = re.sub(r"\{\{\s*em\s*\|[^{}]*\}\}", " ", text, flags=re.IGNORECASE)
+    #
+    # Each rule allows the arg-bearing AND bare forms — previously the
+    # bare forms (`{{em}}`, `{{rule|N|...}}`) fell through to the catch-
+    # all and got deleted with their contents.
+    text = re.sub(r"\{\{\s*em(?:\s*\|[^{}]*)?\s*\}\}", " ", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{\s*gap(?:\s*\|[^{}]*)?\s*\}\}", " ", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{\s*rule\s*\}\}", "———", text, flags=re.IGNORECASE)
+    # {{rule|Nem|...}} — width-bearing horizontal rule (same shape as
+    # `{{bar|N}}` but with optional alignment).  Reuse the `«BAR[N]»`
+    # marker via the shared RULE sentinel.
+    text = re.sub(r"\{\{\s*rule\s*\|\s*(\d+)\s*em\b[^{}]*\}\}",
+                  lambda m: f"{_FMT}RULE[{m.group(1)}]",
+                  text, flags=re.IGNORECASE)
+    # {{dhr}} / {{dhr|N%}} — Display Horizontal Rule, a vertical spacer.
+    # CONVERSION is universal (source → marker); the marker is data
+    # the viewer renders contextually.  Specific producers that want a
+    # different concrete rendering (legend's compact-inline collapse,
+    # e.g. `_clean_legend_text`) handle the marker form as their own
+    # override after `_apply_markup` returns.  Emit the final marker
+    # directly (no `_FMT` sentinel) so the catch-all doesn't see a
+    # template to delete; `«…»` form passes through `_strip_templates`.
+    text = re.sub(r"\{\{\s*dhr(?:\s*\|([^{}]*))?\s*\}\}",
+                  lambda m: (f"«DHR[{(m.group(1) or '').strip()}]»"
+                             if (m.group(1) or '').strip()
+                             else "«DHR»"),
+                  text, flags=re.IGNORECASE)
     # Bold/italic markers already present from prepare_wikitext's
     # `_convert_quote_runs` (the canonical MediaWiki-aware conversion).
     # No quote-run conversion is needed here.

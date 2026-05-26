@@ -138,6 +138,11 @@ def _clean_legend_text(text: str) -> str:
     text = text.replace("&emsp;", " ").replace("&nbsp;", " ")
     text = re.sub(r"\{\{\s*(?:em|gap|dhr|vr|hr|thinsp)\s*(?:\|[^{}]*)?\}\}",
                   " ", text, flags=re.IGNORECASE)
+    # `_apply_markup` (text_transform) now converts `{{dhr|N%}}` to the
+    # `«DHR[N%]»` marker for universal preservation; collapse it back to
+    # a single space in legend context per legend's compact-inline
+    # convention (legends never want a vertical break).
+    text = re.sub(r"«DHR(?:\[[^\]]*\])?»", " ", text)
     text = re.sub(r"<br\s*/?>", " ", text, flags=re.IGNORECASE)
     # Unwrap any layout/style templates that snuck through, keep arg
     for _ in range(3):
