@@ -547,25 +547,98 @@ def _convert_shoulder_headings(text: str) -> str:
     return text
 
 
+def _find_balanced_template(
+    text: str, name: str, start: int = 0,
+) -> tuple[int, int, int] | None:
+    """Find the next ``{{name|…}}`` opener at or after ``start``, matching
+    via balanced ``{{`` / ``}}`` depth counting (so the inner content may
+    carry literal single braces — e.g. ``{{xx-larger|√ {}}`` from
+    STEAM_ENGINE's Q=V equation, where ``{`` is a math square-root
+    opener, not a template open).
+
+    Returns ``(open_idx, content_start, close_idx)`` where
+    ``text[open_idx : close_idx + 2]`` is the full ``{{…}}`` span and
+    ``text[content_start : close_idx]`` is the inner content (after the
+    template name and the pipe).  Returns ``None`` if no balanced match
+    is found.  Case-insensitive on the template name."""
+    prefix = "{{" + name + "|"
+    pref_lower = prefix.lower()
+    text_lower = text.lower()
+    idx = text_lower.find(pref_lower, start)
+    if idx < 0:
+        return None
+    content_start = idx + len(prefix)
+    depth = 1
+    j = content_start
+    n = len(text)
+    while j < n - 1:
+        if text[j:j + 2] == "{{":
+            depth += 1
+            j += 2
+        elif text[j:j + 2] == "}}":
+            depth -= 1
+            if depth == 0:
+                return (idx, content_start, j)
+            j += 2
+        else:
+            j += 1
+    return None
+
+
+def _unwrap_balanced(text: str, name: str, substitute) -> str:
+    """Unwrap every balanced ``{{name|…}}`` via ``substitute(inner)``.
+
+    ``substitute`` takes the inner content (with any leading MediaWiki
+    positional-parameter name like ``1=`` already stripped) and returns
+    the replacement bytes.  Unbalanced openers (no matching ``}}``) are
+    left intact and skipped — the scanner advances past them."""
+    out: list[str] = []
+    pos = 0
+    while True:
+        m = _find_balanced_template(text, name, pos)
+        if m is None:
+            out.append(text[pos:])
+            return "".join(out)
+        idx, content_start, close_idx = m
+        out.append(text[pos:idx])
+        inner = text[content_start:close_idx]
+        # Strip leading MediaWiki positional-parameter name (``1=``).
+        # MediaWiki accepts ``{{center|1=payload}}`` for templates that
+        # might otherwise mis-parse a content-leading ``=`` as a named
+        # arg; we don't want ``1=`` leaking through into the unwrapped
+        # output.
+        inner = re.sub(r"^\d+=", "", inner)
+        out.append(substitute(inner))
+        pos = close_idx + 2
+
+
+_LAYOUT_TEMPLATES = (
+    "block center", "center", "c", "fine block",
+    "EB1911 Fine Print", "larger", "smaller", "nowrap",
+    "Fine", "sm",
+)
+
+
 def _unwrap_layout_templates(text: str) -> str:
     """Unwrap layout-only templates to their content (the text producer owns
     this — formerly duplicated by Layer-A's ``balanced_unwrap``/``c_unwrap``/
-    ``poem_unwrap``/``fine_print_se``).  {{csc|...}} → «SC»...«/SC».  The
-    fixed-point loop in ``_transform_body_text`` resolves nesting one level per
-    pass (e.g. {{fine block|{{block center|…}}}})."""
-    for name in ["block center", "center", "c", "fine block",
-                 "EB1911 Fine Print", "larger", "smaller", "nowrap",
-                 "Fine", "sm"]:
-        text = re.sub(
-            r"\{\{" + re.escape(name) + r"\|((?:[^{}]|\{\{[^{}]*\}\})*)\}\}",
-            r"\1", text, flags=re.IGNORECASE,
-        )
-    # {{csc|...}} = centered small caps — always a section heading,
-    # so ensure paragraph breaks around it
-    text = re.sub(
-        r"\{\{csc\|((?:[^{}]|\{\{[^{}]*\}\})*)\}\}",
-        f"\n\n{_FMT}SC\\1{_FMT}/SC\n\n", text, flags=re.IGNORECASE,
-    )
+    ``poem_unwrap``/``fine_print_se``).  ``{{csc|…}}`` → ``«SC»…«/SC»``
+    with surrounding paragraph breaks.  The fixed-point loop in
+    ``_transform_body_text`` resolves nesting one level per pass (e.g.
+    ``{{fine block|{{block center|…}}}}``).
+
+    Uses brace-counted matching so templates whose inner content carries
+    literal single braces (the math square-root ``{`` in STEAM_ENGINE's
+    Q=V equation, the math grouping braces in ALPHABET's Carian alphabet
+    inscriptions, etc.) unwrap correctly — a regex-only
+    ``\\{\\{[^{}]*\\}\\}`` inner-template pattern leaks the outer wrapper
+    as visible markup when an inner template contains an unbalanced
+    single ``{`` or ``}``."""
+    for name in _LAYOUT_TEMPLATES:
+        text = _unwrap_balanced(text, name, lambda inner: inner)
+    text = _unwrap_balanced(
+        text, "csc",
+        lambda inner: f"\n\n{_FMT}SC{inner}{_FMT}/SC\n\n")
     return text
 
 
@@ -640,18 +713,6 @@ def _strip_templates(text: str) -> str:
     return text
 
 
-def _strip_html(text: str) -> str:
-    """Strip remaining HTML tags (safe on body text — elements already extracted).
-
-    `<br>` is replaced with a space FIRST so line breaks separating
-    words (e.g. `{{sc|Fig. 4.}}<br />St Mary's Abbey`) survive as word
-    boundaries instead of collapsing to `Fig. 4.St Mary's Abbey`.
-    """
-    text = re.sub(r"<br\s*/?>", " ", text, flags=re.IGNORECASE)
-    text = re.sub(r"</?[a-zA-Z][^>]*>", "", text)
-    return text
-
-
 def _decode_entities(text: str) -> str:
     """Decode HTML entities to characters."""
     import html as html_mod
@@ -684,11 +745,20 @@ def _finalize_markers(text: str) -> str:
     return text
 
 
-def _transform_body_text(text: str) -> str:
-    """Transform plain wikitext body text to internal marker format.
+def _apply_markup(text: str) -> str:
+    """Shared text-transform utility: convert EB1911 source markup
+    (templates, entities, sub/sup, small-caps, italic/bold, hieroglyphs,
+    links) to the internal marker format.  Called by every producer that
+    handles wikitext content (cell producers, caption producers, figure
+    producers, footnotes, etc.) — anyone with a fragment of source that
+    needs its markup canonicalised.
 
-    Each step is explicit.  No fetch stage dependencies.
-    Embedded elements have already been extracted.
+    Does NOT do body-prose finishing (whitespace collapse, ``\\xa0`` →
+    ASCII space, paragraph-break collapse).  Those normalisations belong
+    to the BODY producer's own finishing pass and should NOT be applied
+    to fragments handled by other producers (cells with ``&nbsp;``
+    padding, captions, etc. — body normalisations would lose information
+    those producers must preserve).
     """
     # Strip HTML comments — non-rendering; the bypassed Layer-A `html_comments`
     # pass re-homed here (else they leak into output: AFRICA's
@@ -700,13 +770,6 @@ def _transform_body_text(text: str) -> str:
     # Layer-A `unicode`/`print_artifacts` passes re-homed in the text producer.
     text = normalize_unicode(text)
     text = replace_print_artifacts(text)
-    # Strip MediaWiki indent / definition-list prefix `:` and `;` at
-    # the start of a line.  Used throughout EB1911 as visual indent
-    # for numbered equations (e.g. BALLISTICS `:(43) <math>…</math>`).
-    # We don't render these as indented blocks — stripping the sigil
-    # keeps the content flush without a stray colon leaking through.
-    # Bullet `*` and ordered `#` lists are left alone.
-    text = re.sub(r"^[:;]+\s*", "", text, flags=re.MULTILINE)
     text = _convert_hieroglyphs(text)
     text = _convert_links(text)
     # Template unwrap is a fixed-point loop: nested patterns like
@@ -735,10 +798,73 @@ def _transform_body_text(text: str) -> str:
     # `_convert_quote_runs` (the canonical MediaWiki-aware conversion).
     # No quote-run conversion is needed here.
     text = _strip_templates(text)
-    text = _strip_html(text)
     text = _decode_entities(text)
     text = _finalize_markers(text)
-    # Normalize whitespace
+    return text
+
+
+_KNOWN_WRAPPER_TAGS: tuple[str, ...] = (
+    "span", "small", "big", "div", "p", "ins",
+)
+
+
+def strip_known_wrapper_tags(text: str) -> str:
+    """Strip an enumerated set of HTML wrapper tags, keeping each tag's
+    inner content.  Each tag is listed EXPLICITLY — if a new wrapper tag
+    appears in EB1911 source, it surfaces as a literal tag in output
+    rather than being silently swept like the old ``_strip_html`` catch-
+    all did.  This is a toolkit utility: producers that emit prose
+    content (body, cell, caption, …) call it on the content they own;
+    it does NOT run as part of the shared markup transform.
+
+    Order ≠ priority — each tag is independent, and the same span never
+    qualifies for two strips."""
+    for tag in _KNOWN_WRAPPER_TAGS:
+        text = re.sub(
+            rf"<{tag}\b[^>]*>(.*?)</{tag}>", r"\1",
+            text, flags=re.IGNORECASE | re.DOTALL)
+    return text
+
+
+def _transform_body_text(text: str) -> str:
+    """Body-text producer: apply the shared markup transform, then the
+    body-only finishing normalisations that prose-flow output needs.
+
+    Called EXACTLY ONCE per article — by ``process_elements`` on the
+    article body's placeholderized text.  Element producers (cells,
+    captions, figures) do NOT call this — they call ``_apply_markup``
+    directly via the ``text_transform`` parameter ``process_elements``
+    hands them.
+    """
+    # Body-prose line-leading indent markers (`:` / `;` definition-list
+    # prefix used in EB1911 for numbered-equation indents like BALLISTICS
+    # `:(43) <math>…</math>`).  We don't render these as indented blocks —
+    # stripping the sigil keeps the content flush.  Body-only because
+    # only the body has line-leading prose context.
+    text = re.sub(r"^[:;]+\s*", "", text, flags=re.MULTILINE)
+    text = _apply_markup(text)
+    # Body-only `<br>` regularization: in flowing prose, a `<br>` is a
+    # soft line break that should render as a word boundary, NOT a
+    # paragraph break and not a literal tag.  This is the body
+    # producer's owned rule — figure / caption / cell producers handle
+    # `<br>` on their own terms (segment boundary, paragraph, etc.)
+    # via their own producers, NOT by calling this function.
+    text = re.sub(r"<br\s*/?>", " ", text, flags=re.IGNORECASE)
+    # Body-only wrapper-strip HTML rules: shared toolkit utility, called
+    # explicitly here rather than absorbed into the markup transform
+    # because each producer owns whether to strip wrappers (body and
+    # cells yes; producer markers like {{IMG:…}} no, the rendering tags
+    # IN them are deliberate).
+    text = strip_known_wrapper_tags(text)
+    # Body-only whitespace finishing.  These article-wide sweeps are
+    # "guilty until proven innocent" per the architecture; we keep them
+    # for now because the existing snapshots assume them and removing
+    # them is a corpus-wide rebaseline (separate decision).  Crucially,
+    # they run on the BODY's placeholderized text — placeholders are
+    # opaque control chars, producer-emitted markers haven't been
+    # substituted yet — so these sweeps shape the body's own prose, not
+    # producer output.  Cell / caption / etc. producers call
+    # ``_apply_markup`` directly (no body finishing).
     text = text.replace("\xa0", " ")
     text = re.sub(r"[ \t]+", " ", text)
     text = re.sub(r" +([,.;:!?])", r"\1", text)

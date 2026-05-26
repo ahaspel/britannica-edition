@@ -1,5 +1,12 @@
 {
   "_doc": "Targeted text corrections applied to raw wikisource text during transform. Keys are 'vol:page' (zero-padded vol, ws page number). Each entry is a list of {from, to} replacements applied literally to raw_text before any other processing. Use sparingly — for transcription typos only, not for rendering issues.",
+  "_1:775_note": "Vol 1 ALPHABET page 775 places each Table caption BEFORE its `{{Css image crop}}` (leading-caption order — vol 1 ALPHABET is the only place in the corpus this happens; 3 crops out of 218). Every other djvu crop in the corpus pairs caption AFTER, which is what the walker's `_DJVU_CROP_RE` absorbs (`{{Css image crop|…}}` + optional trailing `{{center|cap}}` / `{{csc|cap}}`). Without this fix Table I.'s `{{csc|}}` caption sits orphaned in body text and crop 1 absorbs Table II.'s caption instead, so crop 0 gets the wrong label and crop 1 has no caption at all. The fix swaps each caption with the crop that follows it so each crop carries its OWN caption trailing.",
+  "1:775": [
+    {
+      "from": "{{csc|Table I.}}\n{{Css image crop\n|Image   = EB1911 - Volume 01.djvu\n|Page    = 775\n|bSize   = 600\n|cWidth  = 600\n|cHeight = 505\n|oTop    = 130\n|oLeft   = \n|Location = center\n|Description    = \n}}\n{{center|{{sc|Table II}}.—''Cyrillic and Glagolitic Symbols not given above.''}}\n{{Css image crop\n|Image   = EB1911 - Volume 01.djvu\n|Page    = 775\n|bSize   = 600\n|cWidth  = 600\n|cHeight = 58\n|oTop    = 646\n|oLeft   = \n|Location = center\n|Description    = \n}}",
+      "to": "{{Css image crop\n|Image   = EB1911 - Volume 01.djvu\n|Page    = 775\n|bSize   = 600\n|cWidth  = 600\n|cHeight = 505\n|oTop    = 130\n|oLeft   = \n|Location = center\n|Description    = \n}}\n{{csc|Table I.}}\n{{Css image crop\n|Image   = EB1911 - Volume 01.djvu\n|Page    = 775\n|bSize   = 600\n|cWidth  = 600\n|cHeight = 58\n|oTop    = 646\n|oLeft   = \n|Location = center\n|Description    = \n}}\n{{center|{{sc|Table II}}.—''Cyrillic and Glagolitic Symbols not given above.''}}"
+    }
+  ],
   "_2:6_note": "Vol 2 contributor table mistypes Grant Showerman's signature initials as 'G. Sh.' All other volumes (07, 12, 18, 26) and vol 29's Index of Contributors use 'G. Sn.' — the canonical signature. Without this fix the contributor-table builder creates a phantom 'G. Sh.' Contributor record with no articles attached.",
   "2:6": [
     {

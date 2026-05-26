@@ -196,12 +196,19 @@ def _match_material(
     rest = text[pos:]
     # Any caption-bearing template — absorbed only when a caption signal sits
     # inside the balanced block (else it's a body note / section heading).
+    # A template that itself ENCLOSES an image is a self-contained sibling
+    # figure (e.g. ``{{center|[[File:Fig 31]]<br>{{sc|Fig}}. 31.…}}`` directly
+    # after ``{{center|[[File:Fig 30]]<br>{{sc|Fig}}. 30.…}}`` in STEAM_ENGINE);
+    # leave it for the walker's next match, NOT as our caption tail material.
     if _TMPL.match(rest):
         e = _balanced_brace_end(text, pos)
-        if e is not None and _CAP_SIGNAL.search(text, pos, e):
+        if e is None:
+            return None, False
+        if _IMG_IN.search(text, pos, e):
+            return None, False
+        if _CAP_SIGNAL.search(text, pos, e):
             return e, True
-        if (tail_after_br and e is not None
-                and _CAP_SIGNAL_RELAXED.search(text, pos, e)):
+        if tail_after_br and _CAP_SIGNAL_RELAXED.search(text, pos, e):
             return e, True
         return None, False
     # A caption (`{{sc|Fig}} N.—…` / bare `Fig. N.—…`): absorb the whole caption
@@ -243,13 +250,19 @@ _IMG_IN = re.compile(
 
 
 def figure_wrapper_end(text: str, pos: int) -> int | None:
-    """If a ``{{center|…}}`` / ``{{block center|…}}`` wrapper at ``pos``
-    encloses an image, return the end of the figure unit (the balanced wrapper
+    """If a ``{{center|…}}`` / ``{{block center|…}}`` / ``{{csc|…}}``
+    wrapper at ``pos`` encloses BOTH an image AND a structural caption
+    signal (``{{sc|Fig|Plate}}`` / ``Fig. N.—`` / ``(From|After)`` /
+    ``<poem>``), return the end of the figure unit (the balanced wrapper
     plus any trailing caption/legend run); else None.
 
-    This is the entry point for figures whose image sits INSIDE the wrapper
-    (CALCITE, many BRIDGES) — recognizing the wrapper as the unit keeps the
-    caption that lives inside it intact and never spills past its ``}}``.
+    The dual gate is what keeps generic centering wrappers OFF the figure
+    path: ``{{center|«I»Symbols of Ogam Alphabet.«/I»<br>[[File:…]]}}``
+    (ALPHABET) has an image but no structural caption signal — it's a
+    layout-positioning wrapper, not a figure; let the body-text layout-
+    unwrap handle it.  ``{{center|[[File:Fig22]] [[File:Fig23]]<br>
+    {{sc|Fig.}} 22.{{sc|Fig.}} 23.}}`` (ACCUMULATOR Figs 22-23) has BOTH
+    — image and ``{{sc|Fig.}}`` caption marker — and IS a figure.
     """
     if not _WRAP_OPEN.match(text, pos):
         return None
@@ -257,6 +270,8 @@ def figure_wrapper_end(text: str, pos: int) -> int | None:
     if end is None:
         return None
     if _IMG_IN.search(text, pos, end) is None:
+        return None
+    if _CAP_SIGNAL_RELAXED.search(text, pos, end) is None:
         return None
     return figure_tail_end(text, end)
 

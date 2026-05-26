@@ -1995,14 +1995,27 @@ def _process_prose_figure(raw: str, text_transform) -> str:
         images.append(
             (pm.group(1), parse_img_meta(pm.group(2)), pm.group(3) or ""))
 
-    # Trailing structural material — caption / attribution / legend
-    # rows after the LAST image.  Same `<br>` → space + ICL-template
-    # unwrap as the table-cell path; then a single pass through the
-    # shared extractor yields the caption parts.
+    # Trailing structural material after the LAST image.  Inside the
+    # wrapper, ``<br>`` is the STRUCTURAL signal that separates the
+    # caption from any legend/supplementary lines: source convention is
+    # ``[[File:…]]<br>{{sc|Fig}}. N.—caption<br>supplementary text``.
+    # Split on ``<br>`` and take the FIRST non-empty segment as the
+    # caption material; subsequent segments are emitted as plain body
+    # lines after the IMG marker (NOT a ``{{LEGEND:}LEGEND}`` block —
+    # these segments are free-flowing supplementary prose, not
+    # LABEL.text legend entries).
+    # When no ``<br>`` split exists, everything stays in the caption —
+    # we'd rather preserve content as caption text than risk losing it
+    # to a structural-signal-we-don't-have decision.
     trailing = span[image_matches[-1].end():]
-    trailing = re.sub(r"<br\s*/?>", " ", trailing, flags=re.IGNORECASE)
-    trailing = _normalize_icl_markup(trailing)
-    paras = [p for p in re.split(r"\n\n+", trailing) if p.strip()]
+    raw_segments = re.split(r"<br\s*/?>", trailing, flags=re.IGNORECASE)
+    segments = [_normalize_icl_markup(s).strip() for s in raw_segments]
+    segments = [s for s in segments if s]
+    cap_segment = segments[0] if segments else ""
+    below_segments = segments[1:]
+
+    paras = ([p for p in re.split(r"\n\n+", cap_segment) if p.strip()]
+             if cap_segment else [])
     cap_parts, attr_parts, legend = _extract_figure_components(
         paras, ElementRegistry(), text_transform)
 
@@ -2020,12 +2033,22 @@ def _process_prose_figure(raw: str, text_transform) -> str:
         width=last_meta.get("width"), height=last_meta.get("height"),
         align=last_meta.get("align"))
 
+    # Supplementary segments (post-first-``<br>``) — emit each as a
+    # separate body line below the IMG marker.  Pass through the markup
+    # transform so any inline markup (``{{sc|…}}``, ``''italic''``, etc.)
+    # is converted, then keep the segment as-is (it's body-flow text,
+    # not folded into any marker).
+    below_lines = [text_transform(s).strip() for s in below_segments]
+    below_lines = [s for s in below_lines if s]
+
     if len(images) == 1:
-        return "\n\n" + "\n\n".join(last_parts) + "\n\n"
+        out_blocks = list(last_parts) + below_lines
+        return "\n\n" + "\n\n".join(out_blocks) + "\n\n"
 
     # Multi-image: each earlier image is its own block IMG marker
     # carrying only its own File-link caption.  The trailing
-    # structural caption/attribution/legend attach to the LAST image.
+    # structural caption/attribution/legend attach to the LAST image;
+    # supplementary segments stay after that.
     out_blocks: list[str] = []
     for filename, meta, filelink_cap in images[:-1]:
         cap_for_this = [filelink_cap] if filelink_cap else []
@@ -2034,6 +2057,7 @@ def _process_prose_figure(raw: str, text_transform) -> str:
             width=meta.get("width"), height=meta.get("height"),
             align=meta.get("align")))
     out_blocks.extend(last_parts)
+    out_blocks.extend(below_lines)
     return "\n\n" + "\n\n".join(out_blocks) + "\n\n"
 
 
