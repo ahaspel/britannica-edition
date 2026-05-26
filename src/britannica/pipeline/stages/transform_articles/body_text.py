@@ -12,6 +12,10 @@ from __future__ import annotations
 
 import re
 
+from britannica.cleaners.unicode import (
+    normalize_unicode,
+    replace_print_artifacts,
+)
 from britannica.markers import RENDERED_MARKER_OPENS
 
 
@@ -686,6 +690,16 @@ def _transform_body_text(text: str) -> str:
     Each step is explicit.  No fetch stage dependencies.
     Embedded elements have already been extracted.
     """
+    # Strip HTML comments — non-rendering; the bypassed Layer-A `html_comments`
+    # pass re-homed here (else they leak into output: AFRICA's
+    # `<!-- Greenland is actually the largest -->`).  The walker already masks
+    # comments for table-scanning, so this is purely a rendering concern.
+    text = re.sub(r"<!--.*?-->", "", text, flags=re.DOTALL)
+    # Unicode normalization (NFC, subscript-preserving) + audited lossless print-
+    # artifact substitutions for font-portability/searchability — the bypassed
+    # Layer-A `unicode`/`print_artifacts` passes re-homed in the text producer.
+    text = normalize_unicode(text)
+    text = replace_print_artifacts(text)
     # Strip MediaWiki indent / definition-list prefix `:` and `;` at
     # the start of a line.  Used throughout EB1911 as visual indent
     # for numbered equations (e.g. BALLISTICS `:(43) <math>…</math>`).
@@ -710,6 +724,13 @@ def _transform_body_text(text: str) -> str:
         if text == before:
             break
     text = _convert_sub_sup(text)
+    # Spacer templates render as the space/rule they ARE — not stripped to "" by
+    # the catch-all below (that joins legend entries: BRACHIOPODA Fig 27
+    # "Peduncle.{{em|2}}z" → "Peduncle.z").  The last Layer-A rendering pass
+    # (`spacing`) re-homed here, in the text producer.
+    text = re.sub(r"\{\{\s*em\s*\|[^{}]*\}\}", " ", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{\s*gap(?:\s*\|[^{}]*)?\s*\}\}", " ", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{\s*rule\s*\}\}", "———", text, flags=re.IGNORECASE)
     # Bold/italic markers already present from prepare_wikitext's
     # `_convert_quote_runs` (the canonical MediaWiki-aware conversion).
     # No quote-run conversion is needed here.

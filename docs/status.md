@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-05-25.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-05-26.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -114,34 +114,72 @@ figure files; the producer forks on the arg.
 an HTML `<table>`, the missing inter-cell space) — that's the table-path/ICL
 mechanism, its own problem.
 
-**Seed regression net (standalone runner `tools/_scratch/run_seed_snapshots.py`,
-since the pytest conftest needs missing `mwparserfromhell`).  Initial flip: 8 pass
-/ 12 fail; after the image family: 9 pass / 11 fail (A green; css_crop/raw-image
-articles aren't seeds — verified directly on OPIUM/SEWERAGE/WEIR/PACIFIC OCEAN);
-0 green→red.  Initial queue map below:**
-The 8 green = layout/simple (validates Family 1).  The 12 red = the per-family
-producer queue — each a producer that must CALL a Layer-A utility it lost:
+**Family 2 — rendering re-homes (LANDED 2026-05-26).**  Three whole-text passes
+re-homed into the text producer `_transform_body_text` (top, before
+template/marker handling), so the producer regularizes the source it now receives
+raw instead of leaning on Layer A:
+- `<!--...-->` strip (`html_comments`) — fixed AFRICA's `<!-- Greenland is
+  actually the largest -->` body leak.
+- `normalize_unicode` (NFC, subscript-preserving) + `replace_print_artifacts`
+  (audited lossless table: `℔→lb`, `℥→oz`, `＝→=`, `＋→+`, …) — fixed
+  AGRICULTURE/ORDNANCE/STEAM_ENGINE `℔` glyphs and ALDEHYDES/ACCUMULATOR chem-cell
+  `＝/＋` fullwidth glyphs.  Re-baseline was the wrong call: the docstring
+  documents these as render-equivalent ASCII substitutions chosen for "font
+  portability, copy-paste, and search indexability" — `℔` renders as a box in
+  most fonts.  Re-home wins on every axis (search, render, the producer's job to
+  regularize); re-baseline would have baked stray glyphs into the canon.
 
-| Seed(s) | Producer | utility to call |
+**Family 3 — chem cell comment-strip (LANDED 2026-05-26).**  ACCUMULATOR's chem
+producer was leaking column-number markers (`<!--2--><!--3-->…<!--7 -->`) as
+bogus cells because `_process_chemistry_layout` parses `<tr>`/`<td>` directly
+from raw `inner` — text-producer-level strips never reach it.  Added
+`re.sub(r"<!--.*?-->", "", inner, flags=re.DOTALL)` at the top of
+`_process_chemistry_layout` AND `_process_html_table` (defensive symmetry — the
+HTML-table's generic `<[^>]+>` strip mostly catches comments, but row-splitting
+runs first on raw `inner`).  Chem `<table>` cells now match snapshot byte-for-byte.
+
+### Seed-snapshot residual (10 of 20 red — all deferred scope)
+After the image family + rendering re-homes + chem-comment strip, the 10
+remaining reds split CLEANLY into two deferred families:
+
+**A. Figure-recognition family (4 seeds)** — the walker sees a layout-template
+wrap (`{{center|…}}` or float-figure inside prose) and doesn't peer inside, so
+the figure-pairing producer never gets the caption+image pair / the paragraph
+splits around each float-figure:
+| Seed | Shape (raw) | Outcome |
 |---|---|---|
-| ACCUMULATOR, STEAM_ENGINE, BRACHIOPODA | CAPTIONED_FIGURE / IMAGE EXTCAP | caption-pairing (`center_file_split`/`bundle_raw_image`/GLUED_BR fold) |
-| ABBEY, HYDROMEDUSAE | LEGENDED_FIGURE | `_transform_body_text` on legend cells |
-| A, ALPHABET | IMAGE (inline) | `promote_inline_glyphs` — **positional** (the rare survivor; tag-not-transform is the honest target) |
-| AFRICA | HTML_TABLE | table cell/quote normalization |
-| ACCUMULATOR-chem | CHEMISTRY_LAYOUT | chem cell handling |
-| ALDEHYDES (`＋`→`+`), MOLECULE (lead space), AGRICULTURE | text/chem/verse | `normalize_unicode`/`replace_print_artifacts`/whitespace — pure-noise; **re-baseline** (honest output is the non-meddling one) |
+| ACCUMULATOR | `{{center|[[File:Fig22]]  [[File:Fig23]]<br>caption}}` | both figures dropped (LAYOUT_WRAPPER, no recognizer) |
+| ALPHABET | `{{center|«I»caption«/I»<br>[[File:…]]}}` | caption-before-image dropped (same family) |
+| HYDROMEDUSAE | prose with `{{img float|…}}` inline | walker SHAPE_FIGURE break splits paragraph in two; also a NEW-is-better OUTLINE demotion + `inter stitial`→`interstitial` join |
+| ORDNANCE | prose with `{{img float|…}}` inline (× many) | same paragraph-split pattern |
+
+All fold into the standing **LAYOUT_WRAPPER drain (~107 mislabels)** + a
+SHAPE_FIGURE refinement (keep inline-float figures with their paragraph, only
+break standalone ones).
+
+**B. Whitespace-presence (6 seeds)** — table-cell or marker-adjacent whitespace
+the producer now receives raw:
+| Seed | Shape | Producer to regularize |
+|---|---|---|
+| AFRICA, AGRICULTURE, ALDEHYDES, STEAM_ENGINE | leading/trailing space in `<td>`/`{{TABLE:` cell | table cell `.strip()` (chem path + html_table path + wiki TABLE marker) |
+| DYNAMICS, MOLECULE | whitespace between/before `«EQN»`/`«MATH»` markers | equation/math producer marker-adjacent trim |
+
+Render-equivalent (browsers collapse leading/trailing cell whitespace; inter-
+marker space collapses), but the producer should regularize for canonical
+markup.  Falls under the standing **table-path purity** + math-producer work.
 
 **Proof the flip lost nothing:** `raw_error=0` corpus-wide; the producer-output
-diff (pure-noise filtered) was ~3% real divergence, all in these families.
-Net: image/figure/table/chem are the work — the SAME producers the table-path
-purity campaign (Prior focus) was sharpening, so it folds in here.
+diff (pure-noise filtered) was ~3% real divergence, all bounded to image/figure/
+table/chem.  Net: image/figure/table/chem are the work — the SAME producers the
+table-path purity campaign (Prior focus) was sharpening, so it folds in here.
 
-**NEXT:** per-family, wire each red producer to call its utility (image/figure
-first), turning reds green; re-baseline the pure-noise seeds; delete each Layer-A
-pass as its family lands.  Tests stay red-then-green per family by design — NOT
-pushed to production (deliberately, to keep liberty to break).  Standing
-classifier-tier work this lens still implies: drain LAYOUT_WRAPPER (~107
-mislabels).
+**NEXT:** the seed queue has hit the figure-family / table-path frontier.  Next
+clean territories are (a) **LAYOUT_WRAPPER drain** (figure recognition inside
+`{{center|…}}` wraps — clears ACCUMULATOR / ALPHABET / similar) and
+(b) **SHAPE_FIGURE refinement** for inline-float figures (clears HYDROMEDUSAE /
+ORDNANCE paragraph-split), and (c) table-cell trim in the producer.  Tests stay
+red-then-green per family by design — NOT pushed to production (deliberately,
+to keep liberty to break).
 
 ---
 
