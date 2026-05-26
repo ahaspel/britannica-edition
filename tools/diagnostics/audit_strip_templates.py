@@ -1,76 +1,79 @@
-"""Audit what `_strip_templates` is silently deleting across the corpus.
+"""Audit what `_strip_templates` is silently deleting across articles.
 
-Instruments the catch-all to capture every template match BEFORE the strip
-actually deletes it, then runs the transform pipeline on a chosen scope
-and reports per-template-name counts (with sample contents).
+Instruments the catch-all to capture every match BEFORE the strip
+actually deletes it.  Iterates over ARTICLES (via the DB), NOT raw
+pages — front matter, plates, and other non-article content go
+through different pipelines and aren't relevant to article-body
+catch-all behaviour.
+
+Templates are bucketed by full name (e.g. ``EB1911 article link``,
+not lazily collapsed to a first token), so producer-handler gap
+analysis can pinpoint each variant.
 
 Usage:
     uv run python tools/diagnostics/audit_strip_templates.py snapshots
-    uv run python tools/diagnostics/audit_strip_templates.py corpus
-    uv run python tools/diagnostics/audit_strip_templates.py volumes 1 5 10
+    uv run python tools/diagnostics/audit_strip_templates.py articles
+    uv run python tools/diagnostics/audit_strip_templates.py articles --volumes 1 2 3
 """
 from __future__ import annotations
 
+import io
 import json
 import re
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
-from britannica.pipeline.stages.transform_articles import (
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
+                              errors="replace")
+
+from britannica.pipeline.stages.transform_articles import (  # noqa: E402
     _transform_text_v2,
 )
-from britannica.pipeline.stages.transform_articles import body_text as bt
+from britannica.pipeline.stages.transform_articles import body_text as bt  # noqa: E402
 
 
 # ── Instrumentation ──────────────────────────────────────────────────
-# Each call to `_strip_templates` runs:
-#   * an iterated _STRIP_TEMPLATES_RE.sub loop (phase 1 — the template strip)
-#   * orphan `}}` / `{|` / `|}` / `|-` strips (phases 2-6)
-# We capture matches BEFORE the substitution runs, so we see what content
-# the catch-all is silently eating.
 
-_TEMPLATE_NAME_RE = re.compile(r"\{\{\s*([^|{}<>\n\s]+)")
+# Full-name extractor: `{{NAME|...}}` or `{{NAME}}` — captures the
+# complete template name including embedded spaces.  Stops at `|` or
+# `}}`.  Different from the lazy first-token tokenizer; an
+# ``{{EB1911 article link|...}}`` template's NAME is the full
+# ``EB1911 article link``, not just ``eb1911``.
+_TEMPLATE_NAME_RE = re.compile(r"\{\{\s*([^|{}\n]+?)\s*(?:\||\}\})")
 
-_phase1_matches: Counter[str] = Counter()   # template name → count
+_phase1_matches: Counter[str] = Counter()
 _phase1_samples: dict[str, list[str]] = defaultdict(list)
-_phase2_count = 0      # orphan `}}` lines
-_phase3_count = 0      # per-line excess `}}` strips
-_phase4_count = 0      # orphan `|}` lines
-_phase5_count = 0      # orphan `{|` lines
-_phase6_count = 0      # orphan `|-` lines
-
-# Samples of context surrounding phase 2-6 strips.  Per the user's
-# guidance: orphan-marker strips are themselves lossy in disguise — if
-# `}}` lands orphaned, the matching `{{` was probably eaten with its
-# content.  We capture the surrounding lines so we can trace each
-# orphan back to its likely loss site.
+_phase2_count = 0
+_phase3_count = 0
+_phase4_count = 0
+_phase5_count = 0
+_phase6_count = 0
 _phase2_samples: list[str] = []
 _phase3_samples: list[str] = []
 _phase4_samples: list[str] = []
 _phase5_samples: list[str] = []
 _phase6_samples: list[str] = []
-_SAMPLE_LIMIT = 20
+_SAMPLE_LIMIT = 10
+
+
+def _name_of(template: str) -> str:
+    m = _TEMPLATE_NAME_RE.match(template)
+    return (m.group(1).strip().lower() if m else "<unparseable>")
 
 
 def _context(text: str, pos: int, width: int = 120) -> str:
-    """Snippet around `pos` for sample logging."""
     lo = max(0, pos - width)
     hi = min(len(text), pos + width)
     return text[lo:hi].replace("\n", "\\n")
 
 
-def _name_of(template: str) -> str:
-    m = _TEMPLATE_NAME_RE.match(template)
-    return (m.group(1).lower() if m else "<unparseable>")
-
-
 def _instrumented_strip_templates(text: str) -> str:
-    """Drop-in replacement that logs every match before stripping."""
     global _phase2_count, _phase3_count
     global _phase4_count, _phase5_count, _phase6_count
 
-    # Phase 1 — iterated template strip (capture each round's matches).
+    # Phase 1 — iterated template strip.
     prev = None
     while prev != text:
         prev = text
@@ -128,19 +131,10 @@ def _instrumented_strip_templates(text: str) -> str:
 
 
 def _patch():
-    """Install the instrumented strip everywhere `_strip_templates` is reached.
-
-    `_apply_markup` calls the function via its module-level name within
-    `body_text`, so monkey-patching the attribute there covers the article-
-    body call AND every element-producer call that goes through
-    `_apply_markup` (cells, captions, refs, …)."""
     bt._strip_templates = _instrumented_strip_templates
 
 
 def _process_snapshots() -> int:
-    """Process every snapshot input through the transform pipeline.
-
-    Returns article count processed."""
     n = 0
     snap = Path("tests/snapshots/transform")
     for meta_path in sorted(snap.glob("*.meta.json")):
@@ -152,62 +146,77 @@ def _process_snapshots() -> int:
     return n
 
 
-def _process_corpus(volumes: list[int] | None = None) -> int:
-    """Process every page in the named volumes (or all volumes) through the
-    transform pipeline.  Articles aren't pre-segmented here — we feed each
-    page's raw wikitext directly, which is a superset of what a single
-    article would receive.  This is acceptable for an audit (we want to see
-    what `_strip_templates` deletes, regardless of article boundaries)."""
+def _process_articles(volumes: list[int] | None = None) -> int:
+    """Iterate ARTICLES via the DB (filtering out plates / front matter
+    / etc.).  Mirrors what production transform_articles processes."""
+    from britannica.db.models import Article, ArticleSegment, SourcePage
+    from britannica.db.session import SessionLocal
+    from sqlalchemy.orm import sessionmaker
+
     n = 0
-    pages_root = Path("data/raw/wikisource")
-    vol_dirs = sorted(pages_root.glob("vol_*"))
-    if volumes:
-        wanted = {f"vol_{v}" for v in volumes}
-        vol_dirs = [d for d in vol_dirs if d.name in wanted]
-    for vol_dir in vol_dirs:
-        vol_num = int(vol_dir.name.removeprefix("vol_"))
-        for page_path in sorted(vol_dir.glob("*.json")):
-            page_data = json.loads(page_path.read_text(encoding="utf-8"))
-            raw = page_data.get("wikitext") or ""
-            if not raw:
+    s = SessionLocal()
+    try:
+        q = (s.query(Article)
+             .filter(Article.article_type != "plate"))
+        if volumes:
+            q = q.filter(Article.volume.in_(volumes))
+        articles = q.order_by(Article.volume, Article.page_start).all()
+        total = len(articles)
+        for i, article in enumerate(articles):
+            segments = (
+                s.query(ArticleSegment)
+                .join(SourcePage,
+                      ArticleSegment.source_page_id == SourcePage.id)
+                .filter(ArticleSegment.article_id == article.id)
+                .order_by(ArticleSegment.sequence_in_article)
+                .add_columns(SourcePage.page_number)
+                .all()
+            )
+            if not segments:
                 continue
-            page_num_m = re.search(r"page(\d+)\.json$", page_path.name)
-            page_num = int(page_num_m.group(1)) if page_num_m else 0
+            raw_parts = []
+            for seg, page_number in segments:
+                raw_parts.append(
+                    f"\x01PAGE:{page_number}\x01{seg.segment_text or ''}")
+            joined_raw = "\n".join(raw_parts)
+            joined_raw = re.sub(
+                r"(\w)-\n(\x01PAGE:\d+\x01)(\w)",
+                r"\1\2\3", joined_raw,
+            )
+            first_page = segments[0][1]
             try:
-                _transform_text_v2(raw, vol_num, page_num)
+                _transform_text_v2(joined_raw, article.volume, first_page)
             except Exception as e:
-                print(f"  ! {page_path.name}: {type(e).__name__}: {e}",
-                      file=sys.stderr)
+                print(f"  ! article id={article.id}: "
+                      f"{type(e).__name__}: {e}", file=sys.stderr)
             n += 1
-        print(f"  vol {vol_num}: {n} pages so far", file=sys.stderr)
+            if n % 500 == 0:
+                print(f"  {n}/{total} articles processed",
+                      file=sys.stderr)
+    finally:
+        s.close()
     return n
 
 
 def _report(scope_label: str, page_count: int) -> None:
     out: list[str] = []
-    out.append(f"# _strip_templates audit — {scope_label}")
-    out.append(f"# pages processed: {page_count}")
+    out.append(f"# _strip_templates audit -- {scope_label}")
+    out.append(f"# articles processed: {page_count}")
     out.append("")
-    out.append("## Phase 1 — template strip (template name → count)")
+    out.append("## Phase 1 -- template strip (full template name -> count)")
     out.append("")
     total = sum(_phase1_matches.values())
     out.append(f"total deletions: {total}")
     out.append("")
     if _phase1_matches:
-        out.append(f"{'name':30s}  {'count':>8s}  sample")
-        out.append("-" * 100)
+        out.append(f"{'count':>8s}  {'name':40s}  sample")
+        out.append("-" * 130)
         for name, count in _phase1_matches.most_common():
             sample = _phase1_samples[name][0] if _phase1_samples[name] else ""
-            sample = sample.replace("\n", " ")
-            if len(sample) > 80:
-                sample = sample[:77] + "..."
-            out.append(f"{name:30s}  {count:>8d}  {sample}")
+            sample = sample.replace("\n", " ")[:80]
+            out.append(f"{count:>8d}  {name:40s}  {sample}")
         out.append("")
-    out.append("## Phases 2-6 — orphan markup (LIKELY EVIDENCE OF UPSTREAM LOSS)")
-    out.append("")
-    out.append("Per [[no-catchall-cleanup]]: an orphan `}}` is the half-stranded")
-    out.append("closer of a `{{...}}` whose opener (and contents) got eaten")
-    out.append("elsewhere.  Count is a LOWER BOUND on lossy strips.")
+    out.append("## Phases 2-6 -- orphan markup (LIKELY EVIDENCE OF UPSTREAM LOSS)")
     out.append("")
     out.append(f"  phase 2 (orphan `}}}}` lines):       {_phase2_count}")
     out.append(f"  phase 3 (per-line excess `}}}}`):    {_phase3_count}")
@@ -231,21 +240,23 @@ def _report(scope_label: str, page_count: int) -> None:
     out_path = Path("tools/_scratch/strip_templates_audit.txt")
     out_path.write_text("\n".join(out), encoding="utf-8")
     print(f"wrote {out_path}", file=sys.stderr)
-    print("\n".join(out[:50]))
+    # Print head to stdout
+    for line in out[:60]:
+        print(line)
 
 
 def main() -> int:
     _patch()
     if len(sys.argv) < 2 or sys.argv[1] == "snapshots":
         n = _process_snapshots()
-        _report("snapshots", n)
-    elif sys.argv[1] == "corpus":
-        n = _process_corpus()
-        _report("full corpus", n)
-    elif sys.argv[1] == "volumes":
-        vols = [int(v) for v in sys.argv[2:]]
-        n = _process_corpus(vols)
-        _report(f"volumes {vols}", n)
+        _report("snapshot articles", n)
+    elif sys.argv[1] == "articles":
+        vols = None
+        if len(sys.argv) > 2 and sys.argv[2] == "--volumes":
+            vols = [int(v) for v in sys.argv[3:]]
+        n = _process_articles(vols)
+        scope = f"articles in volumes {vols}" if vols else "all articles"
+        _report(scope, n)
     else:
         print(f"unknown scope: {sys.argv[1]}", file=sys.stderr)
         return 1

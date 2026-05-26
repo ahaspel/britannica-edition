@@ -638,6 +638,21 @@
       font-variant: small-caps;
     }
 
+    /* Centered display block — `{{center|...}}` and variants.  Mostly
+       used for math equations and decorative title blocks.  Paragraph-
+       level centering via text-align on a wrapping div. */
+    .centered {
+      text-align: center;
+      margin: 0.5em 0;
+    }
+
+    /* Fine-print scholarly aside — `{{EB1911 fine print/s}}...{{/e}}`.
+       Capture-now-decide-later: marker preserved end-to-end but no
+       font-size change applied yet.  Future iteration can tune. */
+    .fine-print {
+      /* font-size: 0.95em;  uncomment when ready */
+    }
+
     /* Sans-serif metalinguistic letter — source uses
        `{{sans-serif|…}}` to mark single letters being discussed AS
        LETTERS (alphabetic typography convention).  Distinguishes
@@ -672,6 +687,19 @@
     .inline-bar {
       display: inline-block;
       border-bottom: 1px solid currentColor;
+      vertical-align: middle;
+    }
+
+    /* Multi-row brace — `{{brace2|N|side}}` is the printed-source's
+       N-row-tall vertical brace inside a table cell.  Render as the
+       Unicode brace char scaled to roughly the cell's row height.
+       Hypothesis pending (task #31) whether brace2-containing tables
+       are actually outlines in disguise — until that's settled we
+       preserve the brace as visible typography. */
+    .brace2 {
+      display: inline-block;
+      font-size: 1.5em;
+      line-height: 0.9;
       vertical-align: middle;
     }
 
@@ -2698,6 +2726,32 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
       // underlines.  No content; marker carries the width.
       html = html.replace(/\u00abBAR\[(\d+)\]\u00bb/g,
                           (_m, n) => `<span class="inline-bar" style="width:${n}em">&nbsp;</span>`);
+      // {{brace2|N|side}} \u2014 printed-source's tall vertical brace
+      // grouping N rows of a table.  Render as a sized Unicode brace
+      // glyph; the height is informational (carried for #31's pending
+      // outline-vs-table hypothesis).
+      // {{center|}}, {{c|}}, {{block center|}}, and paired begin/end
+      // variants all collapse to \u00abCTR\u00bbcontent\u00ab/CTR\u00bb.  Render with
+      // text-align:center on a wrapping div; mostly used for math
+      // equations and decorative blocks.
+      html = html.replace(/\u00abCTR\u00bb([\s\S]*?)\u00ab\/CTR\u00bb/g, (_m, content) =>
+        `<div class="centered">${content}</div>`);
+      // {{EB1911 fine print/s}}\u2026{{EB1911 fine print/e}} \u2014 small-type
+      // scholarly aside.  Capture-now-decide-later: viewer wraps with
+      // a class but applies no font-size change yet (the typography
+      // crutch in scans is subtle; future iteration can tune CSS).
+      html = html.replace(/\u00abFINE:([\s\S]*?)\u00ab\/FINE\u00bb/g, (_m, content) =>
+        `<div class="fine-print">${content}</div>`);
+      // brace2: l/r are vertical braces (l-pointing or r-pointing,
+      // grouping rows); u/d are horizontal (column-grouping above/below
+      // a label).  Choose Unicode glyph per side.
+      html = html.replace(/\u00abBRACE2\[(\d+)\|([lrud])\]\u00bb/g, (_m, _n, side) => {
+        const glyph = side === 'l' ? '\u23a7'
+                    : side === 'r' ? '\u23ab'
+                    : side === 'u' ? '\u23de'
+                    : '\u23df';  // 'd'
+        return `<span class="brace2 brace2-${side}">${glyph}</span>`;
+      });
       // Shoulder headings — id, display text, and margin-pointer
       // status were assigned by the detectSections pre-pass and
       // queued in document order.  Consume one entry per match.

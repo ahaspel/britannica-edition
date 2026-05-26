@@ -438,6 +438,66 @@ def _unwrap_content_templates(text: str) -> str:
     # both the source's actual content and a typographic notice.
     text = re.sub(r"\{\{\s*sic\s*\|([^{}|]*)\|[^{}]*\}\}",
                   r"\1 [sic]", text, flags=re.IGNORECASE)
+    # Center-family templates → `«CTR»content«/CTR»` marker.  All six
+    # variants (inline {{center|}}, {{c|}}, {{block center|}}; paired
+    # {{c/s}}…{{c/e}}, {{block center/s}}…{{/e}}, {{center block/s}}…
+    # {{/e}}) collapse to one marker — the centering signal is what
+    # matters; the inline-vs-block distinction in MediaWiki's templates
+    # is mostly cosmetic margin and can be revisited per-context in the
+    # viewer if needed.  Paired forms are atomic during body-split (see
+    # walker's _PAIRED_WRAPPER_NAMES) so a placeholder inside doesn't
+    # fragment them.
+    for _name in _CENTER_INLINE_TEMPLATES:
+        text = _unwrap_balanced(
+            text, _name,
+            lambda inner: f"\n\n«CTR»{inner.strip()}«/CTR»\n\n")
+    # Paired forms: {{NAME/s}}content{{NAME/e}}.  Same marker output.
+    for _name in ("c", "block center", "center block"):
+        text = re.sub(
+            r"\{\{\s*" + re.escape(_name) + r"/s\s*\}\}"
+            r"(.*?)"
+            r"\{\{\s*" + re.escape(_name) + r"/e\s*\}\}",
+            lambda m: f"\n\n«CTR»{m.group(1).strip()}«/CTR»\n\n",
+            text, flags=re.IGNORECASE | re.DOTALL)
+    # {{EB1911 fine print/s}}…{{EB1911 fine print/e}} — paired small-type
+    # scholarly aside.  ~25,755 corpus instances; previously the catch-
+    # all stripped both markers silently, leaving inner prose at body
+    # size.  Emit `«FINE:content«/FINE»` so the viewer can render the
+    # small-type signal.  Inner already flows through normal body
+    # processing — no separate re-transformation needed; this is purely
+    # a marker emission, the renderer decides what (if anything) to do.
+    text = re.sub(
+        r"\{\{\s*EB1911\s+fine\s+print/s\s*\}\}(.*?)\{\{\s*EB1911\s+fine\s+print/e\s*\}\}",
+        lambda m: f"\n\n«FINE:{m.group(1).strip()}«/FINE»\n\n",
+        text, flags=re.IGNORECASE | re.DOTALL)
+    # {{section|TITLE}} — Wikisource transclusion anchor.  The transcriber
+    # places this BEFORE the visible inline italic-em-dash section
+    # heading (e.g. `{{section|Literature of Alchemy}}''Literature of
+    # Alchemy''.—`).  The template itself produces no visible output —
+    # it's a `{{#section:Page|Name}}` partial-transclusion anchor — and
+    # the visible heading is the italic-em-dash text that follows,
+    # which the body's section-detector already renders correctly.
+    # Drop explicitly so the deletion is a named no-op, not catch-all-
+    # swept.  759 corpus instances; cross-reference audit confirmed
+    # only 6/6328 unresolved xrefs target sections (0.1%), so the
+    # preservation upside is negligible for now.
+    text = re.sub(r"\{\{\s*section\s*\|[^{}]*\}\}", "", text,
+                  flags=re.IGNORECASE)
+    # {{brace2|N|side}} — vertical or horizontal grouping brace.  Two
+    # distinct uses (corpus-audited 2026-05-26, task #31):
+    #   * Multi-row (N≥2) inside wikitables: row-grouping brace.  May
+    #     be data-table annotation OR outline-in-disguise (the user's
+    #     hypothesis under #31, verify-before-acting).
+    #   * Single-row (N=1) in body math: inline grouping bracket
+    #     (proper math notation, e.g. ALGEBRA's polynomial expansions).
+    # Sides: `l`/`r` (vertical, 99% of cases), `u`/`d` (horizontal
+    # column-grouping, rare).  Some source spans the side with italic
+    # markup (``''r''``) — strip the italic markers when normalising.
+    # Preserve as `«BRACE2[N|side]»` marker; viewer renders per side.
+    text = re.sub(
+        r"\{\{\s*brace2\s*\|\s*(\d+)\s*\|\s*(?:'')?([lrud])(?:'')?\s*\}\}",
+        lambda m: f"«BRACE2[{m.group(1)}|{m.group(2).lower()}]»",
+        text, flags=re.IGNORECASE)
     # {{xx-larger|X}} / {{x-larger|X}} — math grouping characters scaled
     # up for tall equations: `(`, `)`, `√`, `[`, `]`.  Source uses 200%
     # / 150% size respectively.  STEAM_ENGINE / ORDNANCE: 22 occurrences;
@@ -681,10 +741,15 @@ def _unwrap_balanced(text: str, name: str, substitute) -> str:
 
 
 _LAYOUT_TEMPLATES = (
-    "block center", "center", "c", "fine block",
+    "fine block",
     "EB1911 Fine Print", "larger", "smaller", "nowrap",
     "Fine", "sm",
 )
+# Center-family templates — DEDICATED handling (emit `«CTR»` marker
+# instead of unwrap-to-content), so the centering signal survives end-
+# to-end.  All variants (center / c / block center / paired begin-end
+# forms) collapse to one marker; viewer renders with text-align:center.
+_CENTER_INLINE_TEMPLATES = ("center", "c", "block center")
 
 
 def _unwrap_layout_templates(text: str) -> str:
