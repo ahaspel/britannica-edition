@@ -1012,6 +1012,24 @@ def _transform_body_text(text: str) -> str:
     # stripping the sigil keeps the content flush.  Body-only because
     # only the body has line-leading prose context.
     text = re.sub(r"^[:;]+\s*", "", text, flags=re.MULTILINE)
+    # Body-only paragraph styling: `<p {{Ts|...ac...}}>content</p>` is
+    # a centered paragraph (~173 corpus instances, 95% include `ac`).
+    # Extract the centering signal — same `«CTR»` marker as the other
+    # center variants.  Non-centered `<p {{Ts|...}}>` paragraphs (rare:
+    # margin-left, etc.) lose their styling and unwrap to plain content,
+    # which is the existing behaviour for unstyled `<p>` (Family A
+    # wrapper-strip drops them).  Must run BEFORE `_apply_markup` so
+    # the Ts template inside the `<p>` attribute doesn't get processed
+    # independently.
+    def _p_ts(m):
+        codes = re.split(r"[|\s]+", m.group(1).lower().strip())
+        content = m.group(2).strip()
+        if "ac" in codes:
+            return f"\n\n«CTR»{content}«/CTR»\n\n"
+        return content
+    text = re.sub(
+        r"<p\s+\{\{[Tt]s\|([^}]*)\}\}[^>]*>(.*?)</p>",
+        _p_ts, text, flags=re.DOTALL)
     text = _apply_markup(text)
     # Body-only `<br>` regularization: in flowing prose, a `<br>` is a
     # soft line break that should render as a word boundary, NOT a
