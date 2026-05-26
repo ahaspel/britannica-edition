@@ -98,11 +98,17 @@ _PAGE = re.compile(r"[\x01-\x08]PAGE:\d+[\x01-\x08]")
 # upstream can leave a bare ` `/`&emsp;`/`&nbsp;` sitting between the
 # image and its caption — without consuming it the caption is unreachable and
 # the figure decays to a bare image (ACCUMULATOR Figs 8, 9).
+# Pure spacer templates ({{em|N}}, {{gap}}, {{dhr}}) are separators too — a
+# {{em|3}} between the <br> and the caption is layout spacing, not a caption
+# wrapper (left in _TMPL an empty one halts the run and orphans the caption,
+# ACCUMULATOR Fig 3).  Content-bearing forms still route via _TMPL.
 _SEP = re.compile(
     r"(?:<br\s*/?>"
     r"|&(?:nbsp|ensp|emsp|thinsp);"
     r"|&#(?:160|8194|8195|8201|8202);"
-    r"|\s)*")
+    r"|\{\{\s*(?:em(?:\s*\|\s*\d+)?|gap(?:\s*\|[^{}]*)?|dhr)\s*\}\}"
+    r"|\s)*",
+    re.IGNORECASE)
 
 
 def _balanced_brace_end(text: str, start: int) -> int | None:

@@ -83,8 +83,42 @@ nowrap / Fine / sm`; the Layer-A `c_unwrap`/`balanced_unwrap`/`poem_unwrap`/
 `csc_normalize`/`fine_print_se` passes are now duplicates of it (bypassed; delete
 when convenient).  Verse/center/fine-block render from raw via the producer.
 
+**Image family — DRAINED (figure-caption, inline, css_crop, raw-image), 2026-05-25.**
+Every image row of the Stage-2 queue landed, and notably **none needed a pre-pass
+re-added** — each was the OWNING layer (walker or classifier), carry-raw:
+- **Figure caption-pairing** (ACCUMULATOR Fig 3) — NOT a producer-utility call, a
+  walker mis-break.  `figure_tail_end`'s `_SEP` now treats pure spacer templates
+  (`{{em|N}}`/`{{gap}}`/`{{dhr}}`) as separators, so a `{{em|3}}` between image and
+  `{{Fs|…{{sc|Fig.}}…}}` caption no longer halts the run.  Byte-identical to
+  snapshot; corpus orphan audit **0 real orphans / 1071 IMAGE**.  `_figure.py`.
+- **Inline glyphs** (A, ALPHABET) — the "positional survivor", done with NO
+  pre-pass and NO walker logic.  The walker already carries the surrounding markup
+  in the placeholderized text; `classify_article` (`_mark_inline_images`) reads
+  the IMAGE placeholder's trailing line-context and relabels prose-adjacent ones
+  `INLINE_IMAGE`; the producer stamps `align=inline` (`force_align`).  Vols 1,20:
+  93 INLINE_IMAGE, all genuine (letterforms, per-symbol, chem `Rangle`/`Langle`),
+  0 block mis-fires.
+- **css_crop** (218; SHIPBUILDING/OPIUM/SEWERAGE) — walker recognition only:
+  `_DJVU_CROP_RE` + opener hint + `_derive_double_brace_label`→DJVU_CROP; producer
+  `_process_djvu_crop` already existed.  Per-page crop index order-consistent. No leak.
+- **raw-image** (34; PACIFIC OCEAN/SWITZERLAND maps, WEIR/WATER MOTORS figures) —
+  `_RAW_IMAGE_RE`→RAW_IMAGE→new `_process_raw_image` (djvu page-ref →
+  `djvu_volNN_pagePPPP.jpg`; plain filename keeps spaces; `{{c|cap}}` folded). No leak.
+
+The recipe held every time: diagnose the mis-break → fix the layer the
+architecture points to → verify (byte-diff + corpus count).  `{{raw image}}` is
+"bare full-image, no inline caption" — full-page djvu (maps/plates) AND plain
+figure files; the producer forks on the arg.
+
+**Remaining image work:** only **table-figure legends** (BRACHIOPODA — legend in
+an HTML `<table>`, the missing inter-cell space) — that's the table-path/ICL
+mechanism, its own problem.
+
 **Seed regression net (standalone runner `tools/_scratch/run_seed_snapshots.py`,
-since the pytest conftest needs missing `mwparserfromhell`): 8 pass / 12 fail.**
+since the pytest conftest needs missing `mwparserfromhell`).  Initial flip: 8 pass
+/ 12 fail; after the image family: 9 pass / 11 fail (A green; css_crop/raw-image
+articles aren't seeds — verified directly on OPIUM/SEWERAGE/WEIR/PACIFIC OCEAN);
+0 green→red.  Initial queue map below:**
 The 8 green = layout/simple (validates Family 1).  The 12 red = the per-family
 producer queue — each a producer that must CALL a Layer-A utility it lost:
 
