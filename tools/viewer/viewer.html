@@ -638,6 +638,46 @@
       font-variant: small-caps;
     }
 
+    /* Sans-serif metalinguistic letter — source uses
+       `{{sans-serif|…}}` to mark single letters being discussed AS
+       LETTERS (alphabetic typography convention).  Distinguishes
+       the letter "A" qua letter from the running word "A". */
+    .sans-serif {
+      font-family: "Helvetica", "Arial", sans-serif;
+    }
+
+    /* Math-typography sizing: source uses `{{xx-larger|(}}` (200%) and
+       `{{x-larger|[}}` (150%) for math grouping characters scaled up
+       in tall equations (STEAM_ENGINE / ORDNANCE).  CSS scales the
+       character without affecting line-height. */
+    .size-xxl {
+      font-size: 200%;
+      line-height: 0.7;
+    }
+    .size-xl {
+      font-size: 150%;
+      line-height: 0.8;
+    }
+
+    /* Horizontal rule — `{{bar|N}}` renders an N-em underline,
+       typically for column-sum underlines in tables (AFRICA / GREAT
+       BRITAIN territorial summaries). */
+    .inline-bar {
+      display: inline-block;
+      border-bottom: 1px solid currentColor;
+      vertical-align: middle;
+    }
+
+    /* Horizontally mirrored glyph — source uses
+       `<span style="{{mirrorH}}">…</span>` in ALPHABET to show
+       left-right-flipped letters of early/regional alphabets
+       (Etruscan, Italic, Cleonae's reversed E).  The pipeline emits
+       «MIRROR:…«/MIRROR»; we apply transform: scaleX(-1) here. */
+    .mirror-h {
+      display: inline-block;
+      transform: scaleX(-1);
+    }
+
     .verse {
       font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
       margin: 1em 2em;
@@ -2616,10 +2656,27 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
         const cls = isFormula ? "structural-formula" : "text-block";
         return `<pre class="${cls}">${content}</pre>`;
       });
-      // Render bold/italic/small-caps markers
+      // Render mirrored glyph markers BEFORE B/I/SC so inner formatting
+      // (e.g. \u00abB\u00bb\ud800\udf04\u00ab/B\u00bb inside \u00abMIRROR:\u00bb) still resolves afterwards.
+      // Source: <span style="{{mirrorH}}">\ud800\udf04</span> \u2014 used in ALPHABET
+      // to show left-right-flipped letters in Etruscan / Italic /
+      // Cleonae's reversed E.  CSS applies `transform: scaleX(-1)`.
+      html = html.replace(/\u00abMIRROR:(.*?)\u00ab\/MIRROR\u00bb/gs,
+                          '<span class="mirror-h">$1</span>');
+      // Render bold/italic/small-caps/sans-serif markers
       html = html.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
       html = html.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
       html = html.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
+      html = html.replace(/\u00abSS\u00bb(.*?)\u00ab\/SS\u00bb/gs, '<span class="sans-serif">$1</span>');
+      // Math-typography sizing: {{xx-larger|X}} (200%) and {{x-larger|X}}
+      // (150%) wrap math grouping characters scaled up for tall equations
+      // (STEAM_ENGINE / ORDNANCE).  Preserves the size signal end-to-end.
+      html = html.replace(/\u00abXXL\u00bb(.*?)\u00ab\/XXL\u00bb/gs, '<span class="size-xxl">$1</span>');
+      html = html.replace(/\u00abXL\u00bb(.*?)\u00ab\/XL\u00bb/gs, '<span class="size-xl">$1</span>');
+      // {{bar|N}} \u2014 N-em horizontal rule, e.g. AFRICA's table column-sum
+      // underlines.  No content; marker carries the width.
+      html = html.replace(/\u00abBAR\[(\d+)\]\u00bb/g,
+                          (_m, n) => `<span class="inline-bar" style="width:${n}em">&nbsp;</span>`);
       // Shoulder headings — id, display text, and margin-pointer
       // status were assigned by the detectSections pre-pass and
       // queued in document order.  Consume one entry per match.

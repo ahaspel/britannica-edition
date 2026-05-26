@@ -391,6 +391,37 @@ def _unwrap_content_templates(text: str) -> str:
                   _ne_labeled, text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{ne\|\|([^{}]*(?:\{\{[^{}]*\}\}[^{}]*)*)\}\}",
                   r"\n\n\1\n\n", text, flags=re.IGNORECASE)
+    # {{sans-serif|content}} — metalinguistic letter typography: the
+    # source visually distinguishes letters being discussed as letters
+    # (the letter "A" qua letter) from running prose by wrapping them
+    # in a sans-serif font, usually combined with bold.  ALPHABET uses
+    # this 117 times to mark up the individual letters under discussion.
+    # Emit as `«SS»content«/SS»`; the viewer applies the sans-serif font.
+    # Brace-counted so an inner template (e.g. `{{EB1911 lkpl|X}}`)
+    # doesn't break the regex.
+    text = _unwrap_balanced(text, "sans-serif",
+                            lambda inner: f"{_FMT}SS{inner}{_FMT}/SS")
+    # {{xx-larger|X}} / {{x-larger|X}} — math grouping characters scaled
+    # up for tall equations: `(`, `)`, `√`, `[`, `]`.  Source uses 200%
+    # / 150% size respectively.  STEAM_ENGINE / ORDNANCE: 22 occurrences;
+    # losing them silently broke equation grouping (the bare `(` would
+    # vanish, leaving the equation mis-grouped).  Emit per-size markers
+    # so the viewer scales appropriately.  Brace-counted unwrap so a
+    # literal `{` inside content (math square-root opener `{{xx-larger|√ {}}`)
+    # doesn't break the pairing.
+    text = _unwrap_balanced(text, "xx-larger",
+                            lambda inner: f"{_FMT}XXL{inner}{_FMT}/XXL")
+    text = _unwrap_balanced(text, "x-larger",
+                            lambda inner: f"{_FMT}XL{inner}{_FMT}/XL")
+    # {{bar|N}} — N-em horizontal rule, used for column-sum underlines
+    # in tables (AFRICA / GREAT BRITAIN territorial summaries) and a few
+    # other inline-rule contexts.  Single numeric arg, no content;
+    # emit as a labeled marker so the viewer can render the rule width.
+    # Sentinel uses `RULE` (not `BAR`) because `\x05B` is the bold-open
+    # sentinel — `\x05BAR` would collide with it in _finalize_markers.
+    text = re.sub(r"\{\{bar\|(\d+)\}\}",
+                  lambda m: f"{_FMT}RULE[{m.group(1)}]",
+                  text, flags=re.IGNORECASE)
     # Body-context running-header rows: {{rh|LEFT|MIDDLE|RIGHT}} —
     # 3-column layout used to label equation rows in math articles
     # (MOLECULE p.688: ``{{rh|(ii)|<eq chain>|}}``). Same template name
@@ -727,6 +758,18 @@ def _finalize_markers(text: str) -> str:
     text = text.replace(f"{_FMT}/I", "\u00ab/I\u00bb")
     text = text.replace(f"{_FMT}SC", "\u00abSC\u00bb")
     text = text.replace(f"{_FMT}/SC", "\u00ab/SC\u00bb")
+    text = text.replace(f"{_FMT}SS", "\u00abSS\u00bb")
+    text = text.replace(f"{_FMT}/SS", "\u00ab/SS\u00bb")
+    text = text.replace(f"{_FMT}XXL", "\u00abXXL\u00bb")
+    text = text.replace(f"{_FMT}/XXL", "\u00ab/XXL\u00bb")
+    text = text.replace(f"{_FMT}XL", "\u00abXL\u00bb")
+    text = text.replace(f"{_FMT}/XL", "\u00ab/XL\u00bb")
+    # BAR is a no-content marker (`\u00abBAR[N]\u00bb` with width).  Sentinel
+    # uses RULE prefix internally to avoid the `\x05B` bold-open
+    # collision; finalised marker keeps the BAR name for the viewer.
+    text = re.sub(re.escape(_FMT) + r"RULE\[(\d+)\]",
+                  lambda m: f"\u00abBAR[{m.group(1)}]\u00bb",
+                  text)
     text = text.replace(f"{_SH}SH", "\u00abSH\u00bb")
     text = text.replace(f"{_SH}/SH", "\u00ab/SH\u00bb")
     # Link markers

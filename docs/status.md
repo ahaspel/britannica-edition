@@ -6,7 +6,91 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## Current focus (2026-05-25) — Honesty campaign: super-walker WIRED + producers on RAW (Stages 1–2 landed; per-family producer queue open)
+## Current focus (2026-05-26) — BODY-as-element + catch-all dismantling: `_strip_html` DELETED, `strip_known_wrapper_tags` toolkit pattern established
+
+**Goal:** drive shared catch-all sweeps to zero by making each producer responsible
+for its own markup regularization, with shared toolkit utilities composed (not
+inherited).  Architectural shift this session: the body-text producer became a
+**normal element producer** instead of half-substrate-half-producer.
+
+### BODY-as-element refactor LANDED
+- **`SHAPE_BODY`** added; walker emits BODY extracts for every residual prose run
+  between extracted elements (`_walker.py::_wrap_body_runs`, gated by
+  `_wrap_body=True` at the article entry point only — recursive walks into
+  cells/figures pass False).
+- **Layout-wrapper-aware splitting** so `{{center|…}}`/`{{larger|…}}`/etc. AND
+  `<div>`/`<span>`/etc. wrappers around extracted placeholders stay atomic
+  (`_find_atomic_wrapper_spans`).  Without this, `{{center|<math>…</math>}}`
+  centered equations would split into two body runs and the brace-counted unwrap
+  couldn't pair the wrapper.
+- **Classifier** maps SHAPE_BODY → `"BODY"` label; `_PRODUCER_DISPATCH["BODY"]`
+  dispatches to a new `_produce_body` wrapper that invokes `_transform_body_text`.
+- **`process_elements` simplified:** dropped the `body_transform` parameter and
+  the special "body_transform(placeholderized_text)" substrate step.  Article
+  assembly is now pure ordered concatenation of element markers — no glue layer,
+  no body-substrate.
+
+### `_strip_html` DELETED + Family A wrapper-strip toolkit
+- **`_strip_html` deleted entirely.**  The catch-all was silently sweeping any
+  HTML tag — including ones that signalled real producer bugs.  Removing it
+  surfaced ~14 producer-level leaks that had been hidden.
+- **Body `<br>` rule** explicitly owned by `_transform_body_text` (body prose
+  `<br>` is a soft line break → space; figure/caption/cell producers own their
+  own `<br>` decisions).
+- **`strip_known_wrapper_tags(text)`** in `body_text.py` — shared toolkit utility,
+  enumerated tag set (`span`, `small`, `big`, `div`, `p`, `ins`).  Explicit list
+  so a new wrapper tag in EB1911 source surfaces as a literal tag in output
+  rather than being silently swept.
+- **Per-producer composition** of the helper, each deciding what to keep vs strip:
+  - BODY producer (`_transform_body_text`) — body prose
+  - CHEM cells (`_process_chemistry_layout`)
+  - Complex-wikitable cells (`_process_complex_table`)
+  - REF/FN bodies (`_process_ref`)
+  Pattern: each producer knows what markup it needs and what markup it doesn't.
+
+### `_unwrap_layout_templates` brace-counted (Q=V equation fix)
+The regex-based version failed when an inner template had an unbalanced literal
+brace (`{{xx-larger|√ {}}` in STEAM_ENGINE's Q=V equation).  Replaced with a
+brace-counted `_unwrap_balanced` helper that scans `{{` / `}}` pairs ignoring
+single braces — `{{center|…}}` now unwraps cleanly even when its content carries
+math square-root opening braces.
+
+### Snapshot scoreboard (the regression net)
+- Start of session: 16 passing / 4 failing (pre-existing reds)
+- After `_strip_html` deletion (catch-all bugs surfaced): 2 / 18
+- After Family A toolkit + per-producer composition: **10 passing / 10 failing**
+
+All 6 newly-passing tests that previously relied on `_strip_html`'s silent
+sweeping are now passing via explicit producer-owned rules.  Remaining 10 fails
+fall into:
+- **Enumerable tag leaks** (4 tests): BRACHIOPODA `<br>` (cell context),
+  MOLECULE `<sub>`/`<p>`, AGRICULTURE `<tr>`/`<td>`, ORDNANCE table escape
+  (168 `<td>` + 24 `<tr>` + 4 `<table>`).  All clean producer-local fixes —
+  tasks #21-#23, #22.
+- **Content-level differences** (6 tests): ALPHABET, BAG-PIPE, DYNAMICS,
+  HYDROMEDUSAE, STEAM_ENGINE, CITHARA.  No tag leaks — these are pre-existing
+  reds unrelated to the catch-all dismantling.
+
+### Pattern established (the architectural win)
+Every leak that's now visible was previously hidden by `_strip_html`.  Each is
+a producer-local fix — exactly what `[[turn-bugs-into-producer-bugs]]` and
+`[[no-catchall-cleanup]]` want.  The toolkit pattern (shared utility, producer
+composes it explicitly) is the template for `_strip_templates` next (task #13).
+
+### Next on this campaign
+- **Task #13** — `_strip_templates` (the surviving catch-all in `_apply_markup`).
+  Same shape as `_strip_html` was; enumerate what it actually catches across the
+  corpus, route each template to its producer or canonical-marker conversion,
+  drive count to zero, delete.
+- **Task #18** — split `_apply_markup` megafunction into a named utility toolkit
+  that producers compose ad hoc (rather than every producer piping end-to-end
+  through one shared transform).  BODY-as-element refactor unblocks this.
+- **Task #21** (MOLECULE `<sub>`), **#22** (ORDNANCE HTML-table escape),
+  **#23** (BRACHIOPODA cell-`<br>`) — the remaining Family-B per-producer fixes.
+
+---
+
+## Prior focus (2026-05-25) — Honesty campaign: super-walker WIRED + producers on RAW (Stages 1–2 landed; per-family producer queue open)
 
 **Goal:** every transform from corrected-raw happens inside a producer.  The
 walker walks raw and hands raw to the classifier; the classifier decides the
