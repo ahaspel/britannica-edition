@@ -20,6 +20,7 @@ import re
 
 from britannica.pipeline.stages.elements._registry import (
     ElementRegistry,
+    IMAGE_LABELS,
     TABLE_LABELS,
     _PH,
 )
@@ -84,7 +85,7 @@ def _is_layout_wrapper(raw: str, inner: str, inner_registry: ElementRegistry | N
         # image plus `||` are figure-legend layouts (ABBEY Fig. 1,
         # etc.) and stay as layout wrappers; a single spacer row like
         # `| &emsp; ||` in a plate-grid (VAULT Plate I) does not count.
-        if "IMAGE" not in child_types:
+        if not (child_types & IMAGE_LABELS):
             # Count rows shaped like a real data row: `| LEFT || RIGHT`
             # where BOTH sides have substantive alphanumeric content.
             # Plate-layout attribution rows (`| &nbsp;''Photo, …'' ||`)
@@ -107,7 +108,7 @@ def _is_layout_wrapper(raw: str, inner: str, inner_registry: ElementRegistry | N
             if data_rows >= 2:
                 return False
         return True
-    if "IMAGE" in child_types:
+    if child_types & IMAGE_LABELS:
         # Strong signal: table contains a `Fig. N.—` / `Plate N.—`
         # caption line.  HYDROMEDUSAE Fig. 30 has ~800 chars of legend
         # text that would fail the length heuristic below, but it IS a
@@ -124,7 +125,7 @@ def _is_layout_wrapper(raw: str, inner: str, inner_registry: ElementRegistry | N
         non_ph = re.sub(r'[="]+', "", non_ph)
         non_ph = re.sub(r"\s+", " ", non_ph).strip()
         # If remaining text is short relative to number of images, it's a layout table
-        n_images = sum(1 for label in inner_registry.labels.values() if label == "IMAGE")
+        n_images = sum(1 for label in inner_registry.labels.values() if label in IMAGE_LABELS)
         if len(non_ph) < n_images * 300:
             return True
     return False
@@ -694,7 +695,7 @@ def _image_ph_filename(
     ph_id: str, inner_registry: ElementRegistry
 ) -> str | None:
     """Look up the filename for an IMAGE element placeholder."""
-    if inner_registry.labels.get(ph_id) != "IMAGE":
+    if inner_registry.labels.get(ph_id) not in IMAGE_LABELS:
         return None
     raw = inner_registry.elements[ph_id][1]
     m = re.match(r"\[\[(?:File|Image):([^\]|]+)",
@@ -988,7 +989,7 @@ def _try_image_layout_subclass(
     if not inner_registry:
         return None
     image_phs = [k for k, label in inner_registry.labels.items()
-                 if label == "IMAGE"]
+                 if label in IMAGE_LABELS]
     if not image_phs:
         return None
 
@@ -1823,7 +1824,7 @@ def _process_captioned_figure(
     if inner_registry is None:
         return ""
     image_phs = [ph for ph, lbl in inner_registry.labels.items()
-                 if lbl == "IMAGE"]
+                 if lbl in IMAGE_LABELS]
     if not image_phs:
         return ""
     image_ph = image_phs[0]
@@ -1892,7 +1893,7 @@ def _process_captioned_figure_inline(
     if inner_registry is None:
         return ""
     image_phs = [ph for ph, lbl in inner_registry.labels.items()
-                 if lbl == "IMAGE"]
+                 if lbl in IMAGE_LABELS]
     if not image_phs:
         return ""
     image_ph = image_phs[0]
@@ -1949,63 +1950,91 @@ def _strip_figure_outer_wrapper(span: str) -> str:
     return span
 
 
-def _process_prose_figure(raw: str, text_transform) -> str | None:
-    """Structural producer for the prose ``SHAPE_FIGURE`` — an image plus
-    its structurally-delimited caption run, carved as one span by the
+def _process_prose_figure(raw: str, text_transform) -> str:
+    """Total producer for the prose ``SHAPE_FIGURE`` — one or more images
+    plus a trailing structural caption run, carved as one span by the
     walker's figure break (float-div, ``{{center|…}}``-wrapped, or bare).
 
-    Extracts the image (filename + width/align), folds the caption and
-    attribution INTO the ``{{IMG:…}}`` marker and emits any legend as a
-    separate ``{{LEGEND:…}}`` — routed through the same
-    ``_extract_figure_components`` + ``_assemble_figure_parts`` the table
-    captioned-figure producers use, so prose and table figures fold
-    identically.  Folding *and consuming* the caption is what kills the
-    leak/duplicate: the caption never survives as loose body text, and a
-    marker that already carries its caption leaves the export-time
-    caption-fill (`_patch_img`) nothing to do.
+    Strips the outer layout wrapper, iterates every image, processes
+    each into its ``{{IMG:…}}`` marker (filename + width/height/align
+    from the File-link params).  The trailing structural material after
+    the LAST image is fed through the shared
+    ``_extract_figure_components`` + ``_assemble_figure_parts`` (same
+    helpers the table captioned-figure producers use), and the caption
+    / attribution / legend it yields attach to the LAST image's marker.
+    Earlier images render as block ``{{IMG:…}}`` markers carrying only
+    their own File-link caption (if any).
 
-    Returns ``None`` for spans this producer doesn't yet own (no image, or
-    ≥2 images — the multi-image caption row, e.g. Figs 22-23); the caller
-    falls back to the legacy assembly so those keep rendering as before.
+    Single-image is the canonical case; multi-image (ACCUMULATOR Figs
+    22-23: ``{{center|[[File:A]] [[File:B]]<br>{{sc|Fig.}} 22.
+    {{sc|Fig.}} 23.}}``) just iterates and applies the same per-image
+    assembly.  Caption-consumption discipline matches the single-image
+    path: caption material is folded into the IMG marker, never left as
+    loose body text.
     """
     span = _strip_figure_outer_wrapper(raw.strip())
-    images = _PROSE_FIG_IMG_RE.findall(span)
-    if len(images) != 1:
-        return None
-    m = _PROSE_FIG_IMG_RE.search(span)
+    image_matches = list(_PROSE_FIG_IMG_RE.finditer(span))
+    if not image_matches:
+        # Walker guarantees at least one image in SHAPE_FIGURE; empty
+        # span means the outer-wrapper strip removed everything.
+        return ""
 
-    image_inner = re.sub(
-        r"^\[\[(?:File|Image):", "", m.group(0), flags=re.IGNORECASE)
-    image_inner = re.sub(r"\]\]$", "", image_inner)
-    img_marker = _process_image(image_inner, text_transform)
-    pm = IMG_PARTS_RE.match(img_marker)
-    if pm is None:
-        return None
-    filename = pm.group(1)
-    meta = parse_img_meta(pm.group(2))
-    filelink_caption = pm.group(3)
+    images: list[tuple[str, dict, str]] = []
+    for m in image_matches:
+        image_inner = re.sub(
+            r"^\[\[(?:File|Image):", "", m.group(0), flags=re.IGNORECASE)
+        image_inner = re.sub(r"\]\]$", "", image_inner)
+        img_marker = _process_image(image_inner, text_transform)
+        pm = IMG_PARTS_RE.match(img_marker)
+        if pm is None:
+            # `_process_image` produced something the marker grammar
+            # can't parse — carry the raw image through rather than
+            # silently dropping it.
+            images.append((m.group(0), {}, ""))
+            continue
+        images.append(
+            (pm.group(1), parse_img_meta(pm.group(2)), pm.group(3) or ""))
 
-    material = span[m.end():]
-    material = re.sub(r"<br\s*/?>", " ", material, flags=re.IGNORECASE)
-    material = _normalize_icl_markup(material)
-    paras = [p for p in re.split(r"\n\n+", material) if p.strip()]
-
+    # Trailing structural material — caption / attribution / legend
+    # rows after the LAST image.  Same `<br>` → space + ICL-template
+    # unwrap as the table-cell path; then a single pass through the
+    # shared extractor yields the caption parts.
+    trailing = span[image_matches[-1].end():]
+    trailing = re.sub(r"<br\s*/?>", " ", trailing, flags=re.IGNORECASE)
+    trailing = _normalize_icl_markup(trailing)
+    paras = [p for p in re.split(r"\n\n+", trailing) if p.strip()]
     cap_parts, attr_parts, legend = _extract_figure_components(
         paras, ElementRegistry(), text_transform)
-    # EB1911 figures frequently repeat the caption in BOTH the File link's
-    # caption param AND a separate `{{sc|Fig.}} N.—…` block beneath the
-    # image (WEIGHING / SEWING MACHINES, ORDNANCE Figs 22, 23-30).  The
-    # block caption is the fuller one (carries the `Fig. N.—` prefix), so
-    # it wins; the File-link caption is only used when no block caption
-    # exists — folding both would duplicate the text.
-    if filelink_caption and not cap_parts:
-        cap_parts = [filelink_caption]
 
-    parts = _assemble_figure_parts(
-        filename, cap_parts, attr_parts, legend,
-        width=meta.get("width"), height=meta.get("height"),
-        align=meta.get("align"))
-    return "\n\n" + "\n\n".join(parts) + "\n\n"
+    last_filename, last_meta, last_filelink_cap = images[-1]
+    # EB1911 figures frequently repeat the caption in BOTH the File-link
+    # param AND a separate ``{{sc|Fig.}} N.—…`` block under the image
+    # (WEIGHING / SEWING MACHINES, ORDNANCE Figs 22, 23-30).  The block
+    # caption is fuller (carries the ``Fig. N.—`` prefix), so it wins;
+    # the File-link caption is the fallback when no block caption
+    # exists — folding both would duplicate the text.
+    last_cap_parts = cap_parts or (
+        [last_filelink_cap] if last_filelink_cap else [])
+    last_parts = _assemble_figure_parts(
+        last_filename, last_cap_parts, attr_parts, legend,
+        width=last_meta.get("width"), height=last_meta.get("height"),
+        align=last_meta.get("align"))
+
+    if len(images) == 1:
+        return "\n\n" + "\n\n".join(last_parts) + "\n\n"
+
+    # Multi-image: each earlier image is its own block IMG marker
+    # carrying only its own File-link caption.  The trailing
+    # structural caption/attribution/legend attach to the LAST image.
+    out_blocks: list[str] = []
+    for filename, meta, filelink_cap in images[:-1]:
+        cap_for_this = [filelink_cap] if filelink_cap else []
+        out_blocks.extend(_assemble_figure_parts(
+            filename, cap_for_this, [], [],
+            width=meta.get("width"), height=meta.get("height"),
+            align=meta.get("align")))
+    out_blocks.extend(last_parts)
+    return "\n\n" + "\n\n".join(out_blocks) + "\n\n"
 
 
 # Legend-cell shape detection.  Used at both classification and
@@ -2365,7 +2394,7 @@ def _process_legended_figure(
     if inner_registry is None:
         return ""
     image_phs = [ph for ph, lbl in inner_registry.labels.items()
-                 if lbl == "IMAGE"]
+                 if lbl in IMAGE_LABELS]
     if not image_phs:
         return ""
     image_ph = image_phs[0]
@@ -2527,7 +2556,7 @@ def _process_legended_figure_child(
     if inner_registry is None:
         return ""
     image_phs = [ph for ph, lbl in inner_registry.labels.items()
-                 if lbl == "IMAGE"]
+                 if lbl in IMAGE_LABELS]
     if not image_phs:
         return ""
     image_ph = image_phs[0]
@@ -2600,7 +2629,7 @@ def _process_legended_figure_beside(
     if inner_registry is None:
         return ""
     image_phs = [ph for ph, lbl in inner_registry.labels.items()
-                 if lbl == "IMAGE"]
+                 if lbl in IMAGE_LABELS]
     if len(image_phs) != 1:
         return ""
     image_ph = image_phs[0]
@@ -2650,19 +2679,26 @@ def _process_legended_figure_beside(
     return "\n\n" + "\n\n".join(parts) + "\n\n"
 
 
-def _process_simple_plate(
+def _process_unpaired_figure_group(
     raw: str,
     inner: str,
     text_transform,
     inner_registry: ElementRegistry | None,
 ) -> str:
     """Producer for `UNPAIRED_FIGURE_GROUP` — any multi-image figure
-    layout (formerly `SIMPLE_PLATE`; the grid/non-grid split was dropped
-    because this producer is total over both — it bundles equal-or-more
-    than the generic passthrough in every case).
+    wikitable / `<table>` layout where the images and their content cells
+    sit on a grid (≥2 IMAGE children, no data-table header signal).
+    Total over single-image-row (vertical-stack) and multi-image-row
+    (column-slice) arrangements.
 
-    The classifier predicate guarantees ≥2 IMAGE children and no
-    data-table header signal.  Images may be arranged:
+    Note on the name: this is an ARTICLE-element producer, not a plate-
+    page handler.  Plate-page processing is a separate pipeline
+    (``_transform_plate`` → ``parsers/plate/``).  The producer was once
+    called ``_process_simple_plate`` and the label ``SIMPLE_PLATE`` —
+    both names are gone; the structural concept is "grid figure-group
+    whose images can't be 1:1-paired with their captions/legends."
+
+    Images may be arranged:
 
       * Vertical-stack: each image alone in its own row, caption
         rows immediately following until the next image-row
@@ -2686,7 +2722,7 @@ def _process_simple_plate(
     if inner_registry is None:
         return ""
     image_phs = [ph for ph, lbl in inner_registry.labels.items()
-                 if lbl == "IMAGE"]
+                 if lbl in IMAGE_LABELS]
     if len(image_phs) < 2:
         return ""
 
@@ -2886,7 +2922,7 @@ def _unwrap_layout_table(inner: str, text_transform,
         image_indices = [
             i for i, p in enumerate(parts)
             if ph_re.fullmatch(p.strip())
-            and inner_registry.labels.get(p.strip()) == "IMAGE"
+            and inner_registry.labels.get(p.strip()) in IMAGE_LABELS
         ]
         text_indices = [
             i for i, p in enumerate(parts)

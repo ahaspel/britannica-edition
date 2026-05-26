@@ -1,16 +1,19 @@
-"""Figure / legend / attribution assembly.
+"""Legend / attribution utility helpers (paragraph classification,
+legend-line matching, attribution detection).
 
-``_assemble_figures(text)``: for each ``{{IMG:…}}`` in body text, collect any
-following attribution paragraphs, key-value legend entries, and verse content
-into a single ``{{LEGEND:…}LEGEND}`` block paired with the image.  Captures the
-figure-material wikitext lays out loosely after an image rather than inside a
-wikitable.
+Historical note: this module also held ``_assemble_figures``, a
+post-pass-style orchestrator that walked ``{{IMG:…}}`` markers in body
+text and absorbed following paragraphs as attribution / legend.  It was
+used first as a whole-body ``_process_figures`` post-pass (deleted when
+the structural figure break landed) and then as a fallback inside the
+``FIGURE`` element producer (deleted once ``_process_prose_figure``
+became total over single + multi-image cases).  Whatever it did is now
+done inside the figure producers themselves, which receive structural
+spans from the walker and own their final output bytes.
 
-This is the figure-assembly utility called by the ``FIGURE`` element producer
-(``elements/_produce_figure``).  It formerly also ran as a whole-body post-pass
-(``_process_figures``) after the producers; that post-pass was deleted once the
-structural figure break (``elements/_figure.py``) carried recognition into the
-walker, so the producer now produces the final figure — nothing runs after it.
+The helpers below remain as Layer-A utilities; producers / classifiers
+may call them as private diagnostics or transform aids, but nothing
+threads their outputs across stages.
 """
 
 from __future__ import annotations
@@ -19,13 +22,6 @@ import re
 
 from britannica.captions import clean_caption
 from britannica.markers import IMG_PARTS_RE
-
-
-# Throw away render-irrelevant figure spacing: a plain figure (no legend /
-# attribution to assemble) is left untouched rather than re-spaced with `\n\n`,
-# because the viewer normalizes figure spacing itself.  Flag exists so the
-# render-equivalence of that throwaway can be A/B-verified.
-_SKIP_PLAIN_FIGURE_SPACING = True
 
 
 def _table_row_cells(row: str) -> list[str]:
@@ -915,108 +911,6 @@ def _classify_figure_paragraph(
 
     # Anything else is body prose — figure boundary.
     return "boundary", None
-
-
-def _assemble_figures(text: str) -> str:
-    """Walk each `{{IMG:…}}` marker and absorb the figure material
-    that follows it (attribution, legend) up to the figure boundary.
-    Emits a clean `{{IMG:…|caption}}` optionally followed by a single
-    `{{LEGEND:…}LEGEND}`.
-
-    The figure-assembly utility behind the global post-pass
-    `_process_figures`."""
-    img_re = re.compile(r"\{\{IMG:[^}]+\}\}")
-    # Skip IMG markers that live inside a table-like container — those
-    # are inline icons (e.g. ABBREVIATION's per-symbol/pound glyphs in a
-    # data-table cell), not standalone figures. Walking paragraphs after
-    # them would scoop up subsequent table rows and emit a runaway
-    # LEGEND that engulfs the rest of the table.
-    skip_spans: list[tuple[int, int]] = []
-    for sm in re.finditer(
-        r"«HTMLTABLE:.*?«/HTMLTABLE»", text, re.DOTALL,
-    ):
-        skip_spans.append((sm.start(), sm.end()))
-    for sm in re.finditer(
-        r"\{\{TABLE[A-Z]?:.*?\}TABLE\}", text, re.DOTALL,
-    ):
-        skip_spans.append((sm.start(), sm.end()))
-
-    def _in_skip(p: int) -> bool:
-        return any(s <= p < e for s, e in skip_spans)
-
-    out_parts: list[str] = []
-    pos = 0
-    for m in img_re.finditer(text):
-        if m.start() < pos:
-            # Overlap: we already consumed this IMG as part of a
-            # prior figure (shouldn't happen since IMG markers are
-            # atomic, but guard anyway).
-            continue
-        if _in_skip(m.start()):
-            # Inline IMG inside a table/htmltable cell — leave as-is.
-            out_parts.append(text[pos:m.end()])
-            pos = m.end()
-            continue
-        out_parts.append(text[pos:m.start()])
-        img_marker = m.group()
-        scan = m.end()
-        attributions: list[str] = []
-        entries: list[tuple[str, str]] = []
-        preserved: list[str] = []  # paragraphs to re-emit verbatim
-        boundary = scan
-        for p_start, p_end, para in _paragraphs_starting_at(text, scan):
-            cls, payload = _classify_figure_paragraph(para)
-            if cls == "boundary":
-                boundary = p_start
-                break
-            if cls == "attribution":
-                attributions.append(payload)  # type: ignore[arg-type]
-            elif cls == "legend":
-                # If this figure already carries a legend that was
-                # extracted *structurally* (a pre-existing `{{LEGEND:}}`
-                # produced from inside the figure's `{| |}` container),
-                # the container was the delimiter — the legend is
-                # complete.  An EB1911 figure has one legend, so a
-                # FOLLOWING paragraph that merely shape-matches
-                # `label, text` is body prose, not more legend
-                # (HYDROMEDUSAE Fig 74: the numbered body section
-                # "2. In the Siphonanthae…" parsed as a 2-entry legend
-                # off "2." and a line-wrapped "were,").  Stop here and
-                # leave it as body text.
-                if preserved:
-                    boundary = p_start
-                    break
-                entries.extend(payload)  # type: ignore[arg-type]
-            elif cls == "preserve":
-                preserved.append(payload)  # type: ignore[arg-type]
-            boundary = p_end
-        # Plain figure — nothing to assemble (no attribution, legend, or
-        # pre-existing legend to preserve).  Leave it exactly as-is: figure
-        # spacing is the viewer's job (it normalizes `\n\n` around every
-        # `{{IMG}}` and re-derives float-vs-block from the prose), so the
-        # `\n\n` this pass used to insert here is render-irrelevant dead work.
-        if (_SKIP_PLAIN_FIGURE_SPACING
-                and not attributions and not entries and not preserved):
-            out_parts.append(img_marker)
-            pos = m.end()
-            continue
-
-        # Build the updated IMG marker with any attribution folded in
-        updated_img = img_marker
-        for attr in attributions:
-            updated_img = _append_attr_to_img(updated_img, attr)
-        out_parts.append(updated_img)
-        for prev in preserved:
-            out_parts.append(f"\n\n{prev}")
-        if entries:
-            legend = "\n".join(f"{lbl}. {t}." for lbl, t in entries)
-            out_parts.append(f"\n\n{{{{LEGEND:{legend}}}LEGEND}}")
-        # Preserve the blank-line separator after our figure so the
-        # paragraph break between figure and body text survives.
-        out_parts.append("\n\n")
-        pos = boundary
-    out_parts.append(text[pos:])
-    return "".join(out_parts)
 
 
 def _try_convert_with_attr(m: re.Match) -> str:
