@@ -64,6 +64,42 @@ def _convert_hieroglyphs(text: str) -> str:
     )
 
 
+def _convert_dual_line(text: str) -> str:
+    """``{{dual line|A|B}}`` → ``A<br>B`` (two stacked lines).
+
+    EB1911 layout primitive for two-line cell content (Cast/Iron., Bro-/nze.,
+    math summand stacks in ALGEBRAIC FORMS / COMBINATORIAL ANALYSIS, table
+    headers in POST / RUSSIA / IRON AND STEEL).  427 corpus instances across
+    49 articles; previously the catch-all `_strip_templates` silently dropped
+    each one, losing both lines.
+
+    Form variants:
+      * ``{{dual line|A|B}}`` — bare two-arg.
+      * ``{{dual line|style=…|A|B}}`` — leading ``style=…`` param (POST).
+        The style is layout decoration (line-height); we drop it.
+
+    Emits ``<br>`` because the downstream renderers (table cell, body
+    prose) already handle ``<br>`` as a line break.  Producer-time
+    conversion (`_apply_markup`) means the catch-all sees nothing to
+    strip — one more template moves out of `_strip_templates`'s reach.
+    """
+    def _repl(m: re.Match) -> str:
+        body = m.group(1)
+        # Drop a leading `style=…|` decoration param, if any.
+        parts = body.split("|")
+        if parts and parts[0].lstrip().lower().startswith("style="):
+            parts = parts[1:]
+        if len(parts) < 2:
+            return " ".join(p.strip() for p in parts).strip()
+        a = parts[0].strip()
+        b = "|".join(parts[1:]).strip()
+        return f"{a}<br>{b}"
+    return re.sub(
+        r"\{\{\s*dual\s+line\s*\|([^{}]*)\}\}",
+        _repl, text, flags=re.IGNORECASE,
+    )
+
+
 def _convert_links(text: str) -> str:
     """Convert link templates and wikilinks to link markers."""
 
@@ -987,6 +1023,7 @@ def _apply_markup(text: str) -> str:
     text = normalize_unicode(text)
     text = replace_print_artifacts(text)
     text = _convert_hieroglyphs(text)
+    text = _convert_dual_line(text)
     text = _convert_links(text)
     # Template unwrap is a fixed-point loop: nested patterns like
     # `{{nowrap|1{{EB1911 tfrac|2}} m.}}` need the inner template
