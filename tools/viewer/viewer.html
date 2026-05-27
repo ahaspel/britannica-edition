@@ -647,10 +647,12 @@
     }
 
     /* Fine-print scholarly aside — `{{EB1911 fine print/s}}...{{/e}}`.
-       Capture-now-decide-later: marker preserved end-to-end but no
-       font-size change applied yet.  Future iteration can tune. */
+       Marker preserved end-to-end; the wrapping `<div>` exists so a
+       future tune is a one-line CSS change.  Currently `1em` so FINE
+       reads as if it weren't there — the marker carries the semantic,
+       the rendering is unchanged. */
     .fine-print {
-      /* font-size: 0.95em;  uncomment when ready */
+      font-size: 1em;
     }
 
     /* Sans-serif metalinguistic letter — source uses

@@ -477,9 +477,12 @@ def _unwrap_content_templates(text: str) -> str:
     # scholarly aside.  ~25,755 corpus instances; previously the catch-
     # all stripped both markers silently, leaving inner prose at body
     # size.  Emit `«FINE:content«/FINE»` so the viewer can render the
-    # small-type signal.  Inner already flows through normal body
-    # processing — no separate re-transformation needed; this is purely
-    # a marker emission, the renderer decides what (if anything) to do.
+    # small-type signal.  Per-paragraph regularization happens at the
+    # body's final-shape step (`_split_fine_per_paragraph` in
+    # `_transform_text_v2`) — at THIS stage the content can still
+    # acquire `\n\n` from nested-element placeholder substitution and
+    # cross-page assembly.  Inner already flows through normal body
+    # processing — no separate re-transformation needed.
     text = re.sub(
         r"\{\{\s*EB1911\s+fine\s+print/s\s*\}\}(.*?)\{\{\s*EB1911\s+fine\s+print/e\s*\}\}",
         lambda m: f"\n\n«FINE:{m.group(1).strip()}«/FINE»\n\n",
