@@ -646,15 +646,6 @@
       margin: 0.5em 0;
     }
 
-    /* Fine-print scholarly aside — `{{EB1911 fine print/s}}...{{/e}}`.
-       Marker preserved end-to-end; the wrapping `<div>` exists so a
-       future tune is a one-line CSS change.  Currently `1em` so FINE
-       reads as if it weren't there — the marker carries the semantic,
-       the rendering is unchanged. */
-    .fine-print {
-      font-size: 1em;
-    }
-
     /* Sans-serif metalinguistic letter — source uses
        `{{sans-serif|…}}` to mark single letters being discussed AS
        LETTERS (alphabetic typography convention).  Distinguishes
@@ -2065,14 +2056,6 @@
         const lines = content.split("\n").filter(l => l.trim());
         return `<span class="cell-verse">${lines.join("<br>")}</span>`;
       });
-      // Multi-line PRE inside a cell — single-column sub-tables are
-      // emitted as «PRE:line\nline\nline«/PRE». Render as <br>-joined
-      // inline content so they fit inside their containing cell.
-      // Style slot ignored in cell context (cell already constrains layout).
-      h = h.replace(/«PRE(?:\[style:[^\]]*\])?:([\s\S]*?)«\/PRE»/g, (_m, content) => {
-        const lines = content.split("\n").filter(l => l.trim());
-        return `<span class="cell-pre">${lines.join("<br>")}</span>`;
-      });
       return h;
     }
 
@@ -2149,7 +2132,52 @@
     //   [3] the equation content
     const EQN_PARA_RE = /^\s*((?:\x01PAGE:\d+\x01\s*)*)«EQN:([^»]*)»([\s\S]*?)«\/EQN»\s*$/;
 
+    // Block-element marker patterns the body can contain.  When a
+    // paragraph mixes one of these with surrounding prose, the
+    // renderer splits the paragraph at marker boundaries and renders
+    // each chunk in isolation — block markers become block HTML, prose
+    // chunks get their own ``<p>`` wrap.  This lets producers stop
+    // emitting ``\n\n`` borders around their markers: source structure
+    // (where the placeholder was) determines placement, the renderer
+    // handles paragraph rendering regardless.
+    const BLOCK_MARKER_SCAN_RE =
+      /\{\{TABLEH?(?:\[style:[^\]]*\])?:[\s\S]*?\}TABLE\}|\{\{VERSE(?:\[style:[^\]]*\])?:[\s\S]*?\}VERSE\}|\{\{LEGEND:[\s\S]*?\}LEGEND\}|\{\{IMG:[^}]*\}\}|«OUTLINE:[\s\S]*?«\/OUTLINE»|«PLATE_OUTLINE:[\s\S]*?«\/PLATE_OUTLINE»|«HTMLTABLE:[\s\S]*?«\/HTMLTABLE»|«CHEM:[\s\S]*?«\/CHEM»/g;
+
     function renderParagraph(p, nextPara, sectionInfo) {
+      // Mixed-paragraph split: if this paragraph contains a block
+      // marker AND content around it that isn't part of the marker,
+      // split at boundaries and recurse so each chunk renders in its
+      // proper element class (block markers → block HTML, prose →
+      // ``<p>``).  Pure-block and pure-prose paragraphs fall through
+      // to the existing flow below.
+      if (!sectionInfo) {
+        BLOCK_MARKER_SCAN_RE.lastIndex = 0;
+        const blocks = [...p.matchAll(BLOCK_MARKER_SCAN_RE)];
+        if (blocks.length > 0) {
+          const onlyBlock =
+            blocks.length === 1 && blocks[0][0] === p.trim();
+          if (!onlyBlock) {
+            const pieces = [];
+            let cursor = 0;
+            for (const m of blocks) {
+              if (m.index > cursor) {
+                const before = p.slice(cursor, m.index);
+                if (before.trim()) pieces.push(before);
+              }
+              pieces.push(m[0]);
+              cursor = m.index + m[0].length;
+            }
+            if (cursor < p.length) {
+              const after = p.slice(cursor);
+              if (after.trim()) pieces.push(after);
+            }
+            return pieces
+              .map(piece => renderParagraph(piece.trim(), null, null))
+              .join("");
+          }
+        }
+      }
+
       // If this paragraph was tagged as a section heading by the
       // pre-pass (detectSections), emit the <h3> with its pre-assigned
       // stable id and skip the rest of the rendering pipeline.
@@ -2318,19 +2346,6 @@
           out.push("</ul>");
           return out.join("");
         }
-      }
-      const preMatch = p.match(/^\u00abPRE(?:\[style:([^\]]*)\])?:([\s\S]*)\u00ab\/PRE\u00bb$/);
-      if (preMatch) {
-        const preStyleAttr = preMatch[1] ? ` style="${preMatch[1].replace(/"/g, "&quot;")}"` : "";
-        let preContent = escapeHtml(preMatch[2]);
-        // Process formatting markers inside preformatted blocks
-        preContent = preContent.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
-        preContent = preContent.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
-        preContent = preContent.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
-        // Use text-block style (wrapping) unless it looks like a structural formula
-        const isFormula = /[─│┌┐└┘|\\\/]{3,}/.test(preMatch[2]);
-        const cls = isFormula ? "structural-formula" : "text-block";
-        return `<pre class="${cls}"${preStyleAttr}>${preContent}</pre>`;
       }
       // Render verse markers.  The verse handler returns early with a
       // complete HTML string, so the global B/I/SC replacements at the
@@ -2713,13 +2728,6 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
         const cls = "inline-image" + (imgIsWide(meta, filename, caption) ? " wide" : "");
         return `<figure class="${cls}"${imgWidthStyle(meta)}><a href="${url}" target="_blank"><img src="${url}" alt="${caption || filename}" loading="lazy" /></a>${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure>`;
       });
-      // Render inline preformatted blocks (structural formulas)
-      html = html.replace(/\u00abPRE(?:\[style:([^\]]*)\])?:(.*?)\u00ab\/PRE\u00bb/gs, (match, styles, content) => {
-        const preStyleAttr = styles ? ` style="${styles.replace(/"/g, "&quot;")}"` : "";
-        const isFormula = /[─│┌┐└┘|\\\/]{3,}/.test(content);
-        const cls = isFormula ? "structural-formula" : "text-block";
-        return `<pre class="${cls}"${preStyleAttr}>${content}</pre>`;
-      });
       // Render mirrored glyph markers BEFORE B/I/SC so inner formatting
       // (e.g. \u00abB\u00bb\ud800\udf04\u00ab/B\u00bb inside \u00abMIRROR:\u00bb) still resolves afterwards.
       // Source: <span style="{{mirrorH}}">\ud800\udf04</span> \u2014 used in ALPHABET
@@ -2752,12 +2760,6 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
       // equations and decorative blocks.
       html = html.replace(/\u00abCTR\u00bb([\s\S]*?)\u00ab\/CTR\u00bb/g, (_m, content) =>
         `<div class="centered">${content}</div>`);
-      // {{EB1911 fine print/s}}\u2026{{EB1911 fine print/e}} \u2014 small-type
-      // scholarly aside.  Capture-now-decide-later: viewer wraps with
-      // a class but applies no font-size change yet (the typography
-      // crutch in scans is subtle; future iteration can tune CSS).
-      html = html.replace(/\u00abFINE:([\s\S]*?)\u00ab\/FINE\u00bb/g, (_m, content) =>
-        `<div class="fine-print">${content}</div>`);
       // brace2: l/r are vertical braces (l-pointing or r-pointing,
       // grouping rows); u/d are horizontal (column-grouping above/below
       // a label).  Choose Unicode glyph per side.
@@ -3035,7 +3037,7 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
             // BEFORE the IMG doesn't end in a strong terminator
             // (``.``, ``!``, ``?``) followed by a capitalized
             // continuation, treat as mid-paragraph.
-            const NON_TEXT_PREFIX = /^(?:\{\{(?:TABLE|LEGEND|IMG|VERSE)|\u00abHTMLTABLE|\u00abSEC:|\u00abSH\u00bb|\u00abPRE[\[:]|\u00abOUTLINE:|\u00abPLATE_OUTLINE:)/;
+            const NON_TEXT_PREFIX = /^(?:\{\{(?:TABLE|LEGEND|IMG|VERSE)|\u00abHTMLTABLE|\u00abSEC:|\u00abSH\u00bb|\u00abOUTLINE:|\u00abPLATE_OUTLINE:)/;
             const IMG_ONLY = /^\s*(?:\x01PAGE:\d+\x01\s*)*\{\{IMG:[^|}]+(?:\|[^}]*)?\}\}\s*$/;
             const stripMarginMarkers = s => s
               .replace(/\x01PAGE:\d+\x01/g, "")
@@ -3087,6 +3089,30 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
                 i = endIdx;
               }
               markedBody = collapsed;
+            }
+            // Same protection for the other block-element markers
+            // (TABLE/VERSE/LEGEND/OUTLINE/PLATE_OUTLINE/PRE/CHEM): each
+            // is rendered by a paragraph-anchored regex, so any
+            // internal ``\n\n`` (from cell-content transforms that
+            // unwrap centred/fine-print prose, page-break artefacts,
+            // or genuine multi-paragraph cell content) would fragment
+            // the marker at the viewer's paragraph split and leak the
+            // marker text.  Collapse internal ``\n\n+`` to ``\n``
+            // BEFORE splitting so the marker reaches its renderer as
+            // one atomic span.  These markers don't nest within
+            // themselves so a non-greedy regex is sufficient (no
+            // balanced-walker needed like HTMLTABLE).
+            const _BLOCK_MARKER_RES = [
+              /\{\{TABLEH?(?:\[style:[^\]]*\])?:[\s\S]*?\}TABLE\}/g,
+              /\{\{VERSE(?:\[style:[^\]]*\])?:[\s\S]*?\}VERSE\}/g,
+              /\{\{LEGEND:[\s\S]*?\}LEGEND\}/g,
+              /«OUTLINE:[\s\S]*?«\/OUTLINE»/g,
+              /«PLATE_OUTLINE:[\s\S]*?«\/PLATE_OUTLINE»/g,
+              /«CHEM:[\s\S]*?«\/CHEM»/g,
+            ];
+            for (const re of _BLOCK_MARKER_RES) {
+              markedBody = markedBody.replace(re,
+                m => m.replace(/\n\n+/g, "\n"));
             }
             const rawParas = markedBody.split("\n\n");
             const mergedParas = [];

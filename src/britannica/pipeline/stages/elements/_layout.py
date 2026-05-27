@@ -1184,7 +1184,7 @@ def _try_image_layout_subclass(
                     parts_out.extend(_emit_image(ph, col_cells))
 
         if ok and parts_out:
-            return "\n\n" + "\n\n".join(parts_out) + "\n\n"
+            return "\n\n".join(parts_out)
         return None
 
     img_ph = image_phs[0]
@@ -1260,7 +1260,7 @@ def _try_image_layout_subclass(
                     # always ends up as its own paragraph, regardless
                     # of surrounding whitespace. Excess newlines get
                     # collapsed by the transform normalizer.
-                    return f"\n\n{img_marker}\n\n{legend_block}\n\n"
+                    return f"{img_marker}\n\n{legend_block}"
 
     # -- NESTED_LEGEND: outer has a single TABLE child (a nested
     #    layout table containing the legend).  `_extract_poem_legend`
@@ -1297,7 +1297,7 @@ def _try_image_layout_subclass(
             img_marker = build_img_marker(filename, caption)
             legend_block = (
                 "{{LEGEND:" + "\n".join(legend_lines) + "}LEGEND}")
-            return f"\n\n{img_marker}\n\n{legend_block}\n\n"
+            return f"{img_marker}\n\n{legend_block}"
 
     # -- INLINE_LEGEND: image row contains `||` on the image's own line.
     if "||" in rows[img_row_idx]:
@@ -1329,7 +1329,7 @@ def _try_image_layout_subclass(
             img_marker = build_img_marker(filename, caption)
             legend_block = ("{{LEGEND:" +
                              _format_legend_entries(entries) + "}LEGEND}")
-            return f"\n\n{img_marker}\n\n{legend_block}\n\n"
+            return f"{img_marker}\n\n{legend_block}"
 
     # -- MULTICOL_LEGEND: image row + caption row + N rows of
     #    ||-separated (label, text) pairs.  Guards:
@@ -1383,7 +1383,7 @@ def _try_image_layout_subclass(
                             entries,
                             sort_alphabetic=not used_column_major) +
                         "}LEGEND}")
-                    return f"\n\n{img_marker}\n\n{legend_block}\n\n"
+                    return f"{img_marker}\n\n{legend_block}"
 
     # -- IMG_PROSE_LEGEND: image + caption + rows of prose-format
     #    entries (multiple `LABEL, text.` chunks per line, optional
@@ -1402,7 +1402,7 @@ def _try_image_layout_subclass(
                 img_marker = build_img_marker(filename, caption)
                 legend_block = (
                     "{{LEGEND:" + "\n".join(legend_lines) + "}LEGEND}")
-                return f"\n\n{img_marker}\n\n{legend_block}\n\n"
+                return f"{img_marker}\n\n{legend_block}"
 
     # -- IMG_SIMPLE_CAPTION / IMG_ATTRIBUTION_CAPTION: 1 image + a
     #    Fig.-matched caption row, no legend (no meaningful `||`, no
@@ -1436,7 +1436,7 @@ def _try_image_layout_subclass(
                 rows, img_row_idx, fig_cap_idx, text_transform)
             if attr:
                 caption = _append_attribution(caption, attr)
-            return f"\n\n{build_img_marker(filename, caption)}\n\n"
+            return build_img_marker(filename, caption)
 
     return None
 
@@ -1870,7 +1870,7 @@ def _process_captioned_figure(
         filename, cap_parts, attr_parts, legend,
         width=_imeta.get("width"), height=_imeta.get("height"),
         align=_imeta.get("align"))
-    return "\n\n" + "\n\n".join(parts) + "\n\n"
+    return "\n\n".join(parts)
 
 
 def _process_captioned_figure_inline(
@@ -1926,7 +1926,7 @@ def _process_captioned_figure_inline(
         filename, cap_parts, attr_parts, legend,
         width=_imeta.get("width"), height=_imeta.get("height"),
         align=_imeta.get("align"))
-    return "\n\n" + "\n\n".join(parts) + "\n\n"
+    return "\n\n".join(parts)
 
 
 # A `[[File:…]]` / `[[Image:…]]` opener inside a prose FIGURE span.
@@ -2048,7 +2048,7 @@ def _process_prose_figure(raw: str, text_transform) -> str:
 
     if len(images) == 1:
         out_blocks = list(last_parts) + below_lines
-        return "\n\n" + "\n\n".join(out_blocks) + "\n\n"
+        return "\n\n".join(out_blocks)
 
     # Multi-image: each earlier image is its own block IMG marker
     # carrying only its own File-link caption.  The trailing
@@ -2063,7 +2063,7 @@ def _process_prose_figure(raw: str, text_transform) -> str:
             align=meta.get("align")))
     out_blocks.extend(last_parts)
     out_blocks.extend(below_lines)
-    return "\n\n" + "\n\n".join(out_blocks) + "\n\n"
+    return "\n\n".join(out_blocks)
 
 
 # Legend-cell shape detection.  Used at both classification and
@@ -2557,7 +2557,7 @@ def _process_legended_figure(
         filename, cap_parts, attr_parts, legend_lines,
         width=_imeta.get("width"), height=_imeta.get("height"),
         align=_imeta.get("align"))
-    return "\n\n" + "\n\n".join(parts) + "\n\n"
+    return "\n\n".join(parts)
 
 
 def _process_legended_figure_child(
@@ -2631,7 +2631,7 @@ def _process_legended_figure_child(
         filename, cap_parts, attr_parts, legend_lines,
         width=_imeta.get("width"), height=_imeta.get("height"),
         align=_imeta.get("align"))
-    return "\n\n" + "\n\n".join(parts) + "\n\n"
+    return "\n\n".join(parts)
 
 
 def _process_legended_figure_beside(
@@ -2705,7 +2705,7 @@ def _process_legended_figure_beside(
         filename, [caption] if caption else [], [], legend_lines,
         width=_imeta.get("width"), height=_imeta.get("height"),
         align=_imeta.get("align"))
-    return "\n\n" + "\n\n".join(parts) + "\n\n"
+    return "\n\n".join(parts)
 
 
 def _process_unpaired_figure_group(
@@ -2841,7 +2841,7 @@ def _process_unpaired_figure_group(
 
     if not output_parts:
         return ""
-    return "\n\n" + "\n\n".join(output_parts) + "\n\n"
+    return "\n\n".join(output_parts)
 
 
 def _unwrap_layout_table(inner: str, text_transform,
@@ -3050,7 +3050,7 @@ def _unwrap_layout_table(inner: str, text_transform,
             if label == "POEM"
         }
     ):
-        return "\n\n" + parts[0] + "\n\n"
+        return parts[0]
 
     return "\n\n".join(parts)
 

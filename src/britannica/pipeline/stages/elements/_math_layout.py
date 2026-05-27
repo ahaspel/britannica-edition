@@ -217,8 +217,8 @@ def _process_math_layout_table(raw: str) -> str:
     latex = re.sub(r"\s+", " ", latex).strip()
     hint = scale_hint(latex)
     if hint:
-        return f"\n\n«MATH[{hint}]:{latex}«/MATH»\n\n"
-    return f"\n\n«MATH:{latex}«/MATH»\n\n"
+        return f"«MATH[{hint}]:{latex}«/MATH»"
+    return f"«MATH:{latex}«/MATH»"
 
 
 def _is_math_dominant_layout(
@@ -388,7 +388,7 @@ def _process_equation_layout(inner: str, text_transform) -> str:
             cells.append(text_transform(stripped))
         if cells:
             lines.append(" ".join(cells))
-    return ("\n\n" + "\n\n".join(lines) + "\n\n") if lines else ""
+    return "\n".join(lines) if lines else ""
 
 
 # ── Unified math-table-layout detector + dispatch ────────────────────────

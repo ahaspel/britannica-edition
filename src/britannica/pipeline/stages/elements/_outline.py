@@ -266,4 +266,4 @@ def _process_outline(inner: str, text_transform) -> str:
         return ""
 
     body = "\n".join(f"{d}|{c}" for d, c in items)
-    return f"\n\n«OUTLINE:\n{body}\n«/OUTLINE»\n\n"
+    return f"«OUTLINE:\n{body}\n«/OUTLINE»"

@@ -461,31 +461,49 @@ def _unwrap_content_templates(text: str) -> str:
     # viewer if needed.  Paired forms are atomic during body-split (see
     # walker's _PAIRED_WRAPPER_NAMES) so a placeholder inside doesn't
     # fragment them.
+    # Emit one `«CTR»para«/CTR»` per source paragraph (split on `\n\n`).
+    # Pure placeholder paragraphs stay unwrapped (they substitute back to
+    # block markers which are semantically centred-as-blocks by their
+    # own rendering, not by CTR-around-block).  No outer `\n\n` borders:
+    # paragraph separation between this CTR and surrounding content is
+    # the renderer's problem; the producer only emits the marker itself.
+    _CTR_PURE_PH_RE = re.compile(r"^\s*\x03ELEM:\d+\x03\s*$")
+    def _wrap_ctr(inner: str) -> str:
+        content = inner.strip()
+        if not content:
+            return ""
+        out = []
+        for p in re.split(r"\n\n+", content):
+            p = p.strip()
+            if not p:
+                continue
+            if _CTR_PURE_PH_RE.match(p):
+                out.append(p)
+            else:
+                out.append(f"«CTR»{p}«/CTR»")
+        return "\n\n".join(out)
     for _name in _CENTER_INLINE_TEMPLATES:
-        text = _unwrap_balanced(
-            text, _name,
-            lambda inner: f"\n\n«CTR»{inner.strip()}«/CTR»\n\n")
+        text = _unwrap_balanced(text, _name, _wrap_ctr)
     # Paired forms: {{NAME/s}}content{{NAME/e}}.  Same marker output.
     for _name in ("c", "block center", "center block"):
         text = re.sub(
             r"\{\{\s*" + re.escape(_name) + r"/s\s*\}\}"
             r"(.*?)"
             r"\{\{\s*" + re.escape(_name) + r"/e\s*\}\}",
-            lambda m: f"\n\n«CTR»{m.group(1).strip()}«/CTR»\n\n",
+            lambda m: _wrap_ctr(m.group(1)),
             text, flags=re.IGNORECASE | re.DOTALL)
     # {{EB1911 fine print/s}}…{{EB1911 fine print/e}} — paired small-type
-    # scholarly aside.  ~25,755 corpus instances; previously the catch-
-    # all stripped both markers silently, leaving inner prose at body
-    # size.  Emit `«FINE:content«/FINE»` so the viewer can render the
-    # small-type signal.  Per-paragraph regularization happens at the
-    # body's final-shape step (`_split_fine_per_paragraph` in
-    # `_transform_text_v2`) — at THIS stage the content can still
-    # acquire `\n\n` from nested-element placeholder substitution and
-    # cross-page assembly.  Inner already flows through normal body
-    # processing — no separate re-transformation needed.
+    # scholarly aside.  Templates stripped; inner content emitted
+    # unwrapped.  Carrying a `«FINE:…«/FINE»` marker through the
+    # pipeline created a wrapper-fragmentation class (multi-paragraph
+    # content, nested block markers like figures) for which there's no
+    # current rendering value — the `.fine-print` CSS rule was a no-op
+    # placeholder for future styling that never landed.  Deleted per
+    # [[preserved-markup-is-a-contract]]: if we can't fully render it,
+    # we don't emit it.
     text = re.sub(
         r"\{\{\s*EB1911\s+fine\s+print/s\s*\}\}(.*?)\{\{\s*EB1911\s+fine\s+print/e\s*\}\}",
-        lambda m: f"\n\n«FINE:{m.group(1).strip()}«/FINE»\n\n",
+        lambda m: m.group(1).strip(),
         text, flags=re.IGNORECASE | re.DOTALL)
     # {{section|TITLE}} — Wikisource transclusion anchor.  The transcriber
     # places this BEFORE the visible inline italic-em-dash section
@@ -513,7 +531,7 @@ def _unwrap_content_templates(text: str) -> str:
         codes = re.split(r"[|\s]+", m.group(1).lower().strip())
         content = m.group(2).strip()
         if "ac" in codes:
-            return f"\n\n«CTR»{content}«/CTR»\n\n"
+            return f"«CTR»{content}«/CTR»"
         return content
     text = re.sub(
         r"<p\s+\{\{[Tt]s\|([^}]*)\}\}[^>]*>(.*?)</p>",
