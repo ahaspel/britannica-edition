@@ -32,14 +32,24 @@ _TMPL = re.compile(
     r"\{\{\s*(?:center|block\s*center|c|EB1911\s+Fine\s+Print|Fine\s*block|"
     r"Fs|fs\d*|sm|smaller|em|gap|dhr|Hi)\b",
     re.IGNORECASE)
-# Caption signal: an `{{sc|Fig}}`/`{{sc|Plate}}` marker or a `(From …`/
-# `(After …` source citation.  Deliberately NOT a bare "fig" (body says "in
-# fig. 31") and NOT an image — in TAIL context an image opens a *new* figure,
-# not caption material (that's the wrapper entry's job).
+# Caption signal: an `{{sc|Fig}}`/`{{sc|Plate}}` marker, a `(From …`/
+# `(After …` source citation, or an `{{EB1911 fine print|…}}` / `{{fine
+# block|…}}` template (the canonical EB1911 caption small-type templates).
+# Deliberately NOT a bare "fig" (body says "in fig. 31") and NOT an image —
+# in TAIL context an image opens a *new* figure, not caption material (that's
+# the wrapper entry's job).
+#
+# `{{EB1911 fine print|…}}` is also used for body small-type (SUNSHINE
+# "Adjustments.—…", DUNBAR source notes); those occurrences are never the
+# FIRST unit after an image (figure_tail_end only checks immediately post-
+# image), so including the template here is safe.  SUMACH `image + \n\n +
+# {{c|{{EB1911 Fine Print|cap}}}}` lights up via this rule even at \n\n
+# distance, eliminating the `_patch_img` need for that family.
 _CAP_SIGNAL = re.compile(
     r"\{\{\s*(?:c?sc|small-caps)\s*\|\s*(?:Figs?|Plate)"
     r"|<poem\b"
-    r"|\(\s*(?:From|After)\b",
+    r"|\(\s*(?:From|After)\b"
+    r"|\{\{\s*(?:EB1911\s+fine\s+print|fine\s*block)\s*\|",
     re.IGNORECASE)
 # The figure-number → em-dash tail that distinguishes a caption (`Fig. 6.—…`)
 # from a body paragraph that merely *starts* with a label (`Fig. 6. The
@@ -294,8 +304,12 @@ def _match_material(
 # Includes small-caps wrappers (`{{csc|[[File:…]]<br>Fig. N.}}` — ACCUMULATOR
 # Fig 20): around a whole figure the small-caps is just caption styling, so the
 # wrapper is the figure unit (gated on `_IMG_IN` — must contain an image).
+# Wrapper templates that, when they enclose a whole figure (image +
+# caption signal), ARE the figure unit.  `c` is the short-form center
+# wrapper used in SHREW (`{{c|[[Image:…]]\n\n{{EB1911 fine print|cap}}}}`),
+# WRASSE, TAPACULO and the species-card pattern across the corpus.
 _WRAP_OPEN = re.compile(
-    r"\{\{\s*(?:center|block\s*center|c?sc|small-caps)\s*\|", re.IGNORECASE)
+    r"\{\{\s*(?:center|block\s*center|c|c?sc|small-caps)\s*\|", re.IGNORECASE)
 # An image opener (bracket or float template) — used to confirm a wrapper
 # actually encloses a figure.  `{{raw image|…}}` deliberately NOT included
 # here: ``_process_prose_figure``'s ``_PROSE_FIG_IMG_RE`` only matches

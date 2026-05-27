@@ -12,11 +12,22 @@ Public dispatch points consumed elsewhere:
 
 Everything else here is internal helper logic for the legend / caption /
 attribution parsers.
+
+Figure data model.  Every figure-family producer ultimately constructs the
+same 4-part record — image, caption, legend, attribution — and renders it
+the same way (via ``_assemble_figure_parts``).  ``Figure`` makes that
+data shape explicit so the 12 producer entry points can collapse to one
+``find_figure → render_figure`` pipeline.  The per-shape variation
+(``[[File:…]]`` vs ``{{raw image|…}}`` vs ``CAPTIONED_FIGURE`` cells vs
+``LEGENDED_FIGURE`` multicol cells vs …) becomes per-shape **extractors**,
+each finding its piece(s) of the same 4-tuple; the assembler is
+identical for all.
 """
 
 from __future__ import annotations
 
 import re
+from dataclasses import dataclass, field
 
 from britannica.pipeline.stages.elements._registry import (
     ElementRegistry,
@@ -33,6 +44,43 @@ from britannica.pipeline.stages.elements._tables import (
     split_wiki_row, _table_grid)
 from britannica.pipeline.stages.elements._text import _clean_text
 from britannica.markers import IMG_PARTS_RE, parse_img_meta
+
+
+@dataclass
+class Figure:
+    """The universal figure-family data record: image + (optional)
+    caption + (optional) legend + (optional) attribution.
+
+    Built by the per-shape extractors; rendered by ``render_figure``.
+    ``caption_parts`` / ``attribution_parts`` are lists (cells/segments
+    may contribute separately and get joined at assembly time);
+    ``legend_lines`` is a list of ``"label. text"`` lines.  Image
+    metadata (``width``/``height``/``align``) rides on the Figure rather
+    than alongside it — it's intrinsic to the image, not a separate field
+    in the four-part model.
+    """
+    filename: str
+    caption_parts: list[str] = field(default_factory=list)
+    attribution_parts: list[str] = field(default_factory=list)
+    legend_lines: list[str] = field(default_factory=list)
+    width: int | None = None
+    height: int | None = None
+    align: str | None = None
+
+
+def render_figure(fig: Figure) -> str:
+    """Render a ``Figure`` to its marker string(s), joined by ``\\n\\n``.
+
+    Single canonical assembler for the figure family.  Internally calls
+    ``_assemble_figure_parts`` (already the canonical builder); this
+    wrapper is the entry point per-shape producers/extractors call.
+    A multi-image source yields multiple Figure objects which each
+    render and are joined by the caller.
+    """
+    return "\n\n".join(_assemble_figure_parts(
+        fig.filename, fig.caption_parts, fig.attribution_parts,
+        fig.legend_lines,
+        width=fig.width, height=fig.height, align=fig.align))
 
 def _is_layout_wrapper(raw: str, inner: str, inner_registry: ElementRegistry | None) -> bool:
     """Detect tables that wrap other tables/images for layout purposes.
@@ -1866,11 +1914,15 @@ def _process_captioned_figure(
     cap_parts, attr_parts, legend = _extract_figure_components(
         cells_text, inner_registry, text_transform, skip_ph=image_ph)
 
-    parts = _assemble_figure_parts(
-        filename, cap_parts, attr_parts, legend,
-        width=_imeta.get("width"), height=_imeta.get("height"),
-        align=_imeta.get("align"))
-    return "\n\n".join(parts)
+    return render_figure(Figure(
+        filename=filename,
+        caption_parts=cap_parts,
+        attribution_parts=attr_parts,
+        legend_lines=legend,
+        width=_imeta.get("width"),
+        height=_imeta.get("height"),
+        align=_imeta.get("align"),
+    ))
 
 
 def _process_captioned_figure_inline(
@@ -1922,11 +1974,15 @@ def _process_captioned_figure_inline(
     cap_parts, attr_parts, legend = _extract_figure_components(
         cells_text, inner_registry, text_transform, skip_ph=image_ph)
 
-    parts = _assemble_figure_parts(
-        filename, cap_parts, attr_parts, legend,
-        width=_imeta.get("width"), height=_imeta.get("height"),
-        align=_imeta.get("align"))
-    return "\n\n".join(parts)
+    return render_figure(Figure(
+        filename=filename,
+        caption_parts=cap_parts,
+        attribution_parts=attr_parts,
+        legend_lines=legend,
+        width=_imeta.get("width"),
+        height=_imeta.get("height"),
+        align=_imeta.get("align"),
+    ))
 
 
 # A `[[File:…]]` / `[[Image:…]]` opener inside a prose FIGURE span.
@@ -1978,15 +2034,23 @@ def _process_prose_figure(raw: str, text_transform) -> str:
     loose body text.
     """
     span = _strip_figure_outer_wrapper(raw.strip())
-    # Multi-image wrappers where each image+caption is its own paragraph
-    # (BOOK-PLATES: `{{center|img1<br>cap1\n\nimg2<br>cap2}}` from a stripped
-    # `{{EB1911 fine print/s}}` block) decompose to one figure per paragraph.
-    # The shared-caption multi-image case (ACCUMULATOR Figs 22-23:
-    # `[[File:A]] [[File:B]]<br>{{sc|Fig.}} 22.{{sc|Fig.}} 23.`) has no `\n\n`
-    # between images, so the split leaves it intact and the existing
-    # shared-trailing logic handles it.
-    if re.search(r"\n\n+", span):
-        sub_spans = [s.strip() for s in re.split(r"\n\n+", span) if s.strip()]
+    # Multi-image wrappers where each image+caption is its own paragraph-
+    # equivalent unit decompose to one figure per unit.  The unit separator
+    # is either ``\n\n`` (BOOK-PLATES: `{{center|img1<br>cap1\n\nimg2<br>
+    # cap2}}` from a stripped `{{EB1911 fine print/s}}` block) or
+    # ``<br><br>`` (CATACOMB / FRUIT / FLOWER / WEIGHING MACHINES /
+    # TELEGRAPH: `{{center|{{EB1911 Fine Print|img1<br>cap1<br><br>img2<br>
+    # cap2}}}}` — author uses HTML breaks for the paragraph layout instead
+    # of source-line newlines).  The shared-caption multi-image case
+    # (ACCUMULATOR Figs 22-23: `[[File:A]] [[File:B]]<br>{{sc|Fig.}} 22.
+    # {{sc|Fig.}} 23.`) has only a single `<br>` between images, so the
+    # split leaves it intact and the existing shared-trailing logic
+    # handles it.
+    _MULTI_UNIT_SEP = re.compile(r"\n\n+|(?:\s*<br\s*/?>\s*){2,}",
+                                  re.IGNORECASE)
+    if _MULTI_UNIT_SEP.search(span):
+        sub_spans = [s.strip()
+                     for s in _MULTI_UNIT_SEP.split(span) if s.strip()]
         if len(sub_spans) > 1 and all(
                 _PROSE_FIG_IMG_RE.search(s) for s in sub_spans):
             return "\n\n".join(
@@ -2046,37 +2110,35 @@ def _process_prose_figure(raw: str, text_transform) -> str:
     # exists — folding both would duplicate the text.
     last_cap_parts = cap_parts or (
         [last_filelink_cap] if last_filelink_cap else [])
-    last_parts = _assemble_figure_parts(
-        last_filename, last_cap_parts, attr_parts, legend,
-        width=last_meta.get("width"), height=last_meta.get("height"),
-        align=last_meta.get("align"))
 
     # Supplementary segments (post-first-``<br>``) — emit each as a
-    # separate body line below the IMG marker.  Pass through the markup
+    # separate body line below the LAST figure.  Pass through the markup
     # transform so any inline markup (``{{sc|…}}``, ``''italic''``, etc.)
     # is converted, then keep the segment as-is (it's body-flow text,
     # not folded into any marker).
     below_lines = [text_transform(s).strip() for s in below_segments]
     below_lines = [s for s in below_lines if s]
 
-    if len(images) == 1:
-        out_blocks = list(last_parts) + below_lines
-        return "\n\n".join(out_blocks)
-
-    # Multi-image: each earlier image is its own block IMG marker
-    # carrying only its own File-link caption.  The trailing
-    # structural caption/attribution/legend attach to the LAST image;
-    # supplementary segments stay after that.
-    out_blocks: list[str] = []
+    # Build one Figure per image: earlier images get only their File-link
+    # caption; the LAST image gets the extracted block caption (or its
+    # File-link caption as fallback) plus attribution and legend.
+    figures: list[Figure] = []
     for filename, meta, filelink_cap in images[:-1]:
-        cap_for_this = [filelink_cap] if filelink_cap else []
-        out_blocks.extend(_assemble_figure_parts(
-            filename, cap_for_this, [], [],
+        figures.append(Figure(
+            filename=filename,
+            caption_parts=[filelink_cap] if filelink_cap else [],
             width=meta.get("width"), height=meta.get("height"),
             align=meta.get("align")))
-    out_blocks.extend(last_parts)
-    out_blocks.extend(below_lines)
-    return "\n\n".join(out_blocks)
+    figures.append(Figure(
+        filename=last_filename,
+        caption_parts=last_cap_parts,
+        attribution_parts=attr_parts,
+        legend_lines=legend,
+        width=last_meta.get("width"), height=last_meta.get("height"),
+        align=last_meta.get("align")))
+
+    blocks = [render_figure(f) for f in figures] + below_lines
+    return "\n\n".join(blocks)
 
 
 # Legend-cell shape detection.  Used at both classification and
@@ -2566,11 +2628,15 @@ def _process_legended_figure(
     if _extra_legend:
         legend_lines.extend(_extra_legend)
 
-    parts = _assemble_figure_parts(
-        filename, cap_parts, attr_parts, legend_lines,
-        width=_imeta.get("width"), height=_imeta.get("height"),
-        align=_imeta.get("align"))
-    return "\n\n".join(parts)
+    return render_figure(Figure(
+        filename=filename,
+        caption_parts=cap_parts,
+        attribution_parts=attr_parts,
+        legend_lines=legend_lines,
+        width=_imeta.get("width"),
+        height=_imeta.get("height"),
+        align=_imeta.get("align"),
+    ))
 
 
 def _process_legended_figure_child(
@@ -2640,11 +2706,15 @@ def _process_legended_figure_child(
     if _extra_legend:
         legend_lines.extend(_extra_legend)
 
-    parts = _assemble_figure_parts(
-        filename, cap_parts, attr_parts, legend_lines,
-        width=_imeta.get("width"), height=_imeta.get("height"),
-        align=_imeta.get("align"))
-    return "\n\n".join(parts)
+    return render_figure(Figure(
+        filename=filename,
+        caption_parts=cap_parts,
+        attribution_parts=attr_parts,
+        legend_lines=legend_lines,
+        width=_imeta.get("width"),
+        height=_imeta.get("height"),
+        align=_imeta.get("align"),
+    ))
 
 
 def _process_legended_figure_beside(
@@ -2714,11 +2784,15 @@ def _process_legended_figure_beside(
             caption = c
             break
 
-    parts = _assemble_figure_parts(
-        filename, [caption] if caption else [], [], legend_lines,
-        width=_imeta.get("width"), height=_imeta.get("height"),
-        align=_imeta.get("align"))
-    return "\n\n".join(parts)
+    return render_figure(Figure(
+        filename=filename,
+        caption_parts=[caption] if caption else [],
+        attribution_parts=[],
+        legend_lines=legend_lines,
+        width=_imeta.get("width"),
+        height=_imeta.get("height"),
+        align=_imeta.get("align"),
+    ))
 
 
 def _process_unpaired_figure_group(
@@ -2792,7 +2866,7 @@ def _process_unpaired_figure_group(
         groups.setdefault(img_row_of[ph], []).append(ph)
     sorted_group_rows = sorted(groups.keys())
 
-    output_parts: list[str] = []
+    figures: list[Figure] = []
     for i, img_row_idx in enumerate(sorted_group_rows):
         phs_in_group = groups[img_row_idx]
         next_row = (sorted_group_rows[i + 1]
@@ -2816,8 +2890,9 @@ def _process_unpaired_figure_group(
                         cells_text.append(content)
             cap, attr, legend = _extract_figure_components(
                 cells_text, inner_registry, text_transform, skip_ph=ph)
-            output_parts.extend(_assemble_figure_parts(
-                filename, cap, attr, legend,
+            figures.append(Figure(
+                filename=filename, caption_parts=cap,
+                attribution_parts=attr, legend_lines=legend,
                 width=_imeta.get("width"), height=_imeta.get("height"),
                 align=_imeta.get("align")))
         else:
@@ -2847,14 +2922,15 @@ def _process_unpaired_figure_group(
                 cap, attr, legend = _extract_figure_components(
                     col_cells, inner_registry, text_transform,
                     skip_ph=ph)
-                output_parts.extend(_assemble_figure_parts(
-                    filename, cap, attr, legend,
+                figures.append(Figure(
+                    filename=filename, caption_parts=cap,
+                    attribution_parts=attr, legend_lines=legend,
                     width=_imeta.get("width"), height=_imeta.get("height"),
                     align=_imeta.get("align")))
 
-    if not output_parts:
+    if not figures:
         return ""
-    return "\n\n".join(output_parts)
+    return "\n\n".join(render_figure(f) for f in figures)
 
 
 def _unwrap_layout_table(inner: str, text_transform,
