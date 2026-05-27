@@ -64,6 +64,23 @@ def _convert_hieroglyphs(text: str) -> str:
     )
 
 
+def _convert_lb_dash(text: str) -> str:
+    """``{{lb-|N}}`` → ``N lb.`` (N pounds, non-breaking).
+
+    EB1911 unit-quantity template: ``{{lb-|N}}`` renders a pound-weight
+    figure with a non-breaking space so the number and unit don't wrap
+    across a line.  Examples: ``rails weighing from 50 to {{lb-|70}}
+    per yard`` (RAILWAYS), ``it weighs {{Lb-|120,000}}`` (PEKING).
+    446 corpus instances previously dropped by ``_strip_templates``,
+    losing the unit and the number both.
+    """
+    return re.sub(
+        r"\{\{\s*lb-\s*\|\s*([^{}|]+?)\s*\}\}",
+        lambda m: f"{m.group(1).strip()} lb",
+        text, flags=re.IGNORECASE,
+    )
+
+
 def _convert_dual_line(text: str) -> str:
     """``{{dual line|A|B}}`` → ``A<br>B`` (two stacked lines).
 
@@ -1024,6 +1041,7 @@ def _apply_markup(text: str) -> str:
     text = replace_print_artifacts(text)
     text = _convert_hieroglyphs(text)
     text = _convert_dual_line(text)
+    text = _convert_lb_dash(text)
     text = _convert_links(text)
     # Template unwrap is a fixed-point loop: nested patterns like
     # `{{nowrap|1{{EB1911 tfrac|2}} m.}}` need the inner template
