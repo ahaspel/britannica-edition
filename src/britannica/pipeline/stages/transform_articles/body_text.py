@@ -81,6 +81,92 @@ def _convert_lb_dash(text: str) -> str:
     )
 
 
+def _convert_overline(text: str) -> str:
+    """``{{overline|X}}`` -> X with a combining overline U+0305 after
+    each character.  EB1911 crystallography uses this for Miller-index
+    negative-axis notation: ``(11{{overline|1}})`` -> the (1 1 -1)
+    plane, written with a bar over the digit.  290 corpus instances.
+    Combining-overline is inline (no marker needed); modern fonts
+    render a bar above each character glyph.
+    """
+    def _repl(m):
+        s = m.group(1)
+        return "".join(c + "̅" for c in s)
+    return re.sub(
+        r"\{\{\s*overline\s*\|([^{}|]+)\}\}",
+        _repl, text, flags=re.IGNORECASE,
+    )
+
+
+def _convert_spaces(text: str) -> str:
+    """``{{spaces|N}}`` -> N non-breaking spaces.  EB1911 layout
+    primitive for explicit padding (typically HTML-table cell padding,
+    e.g. ``{{spaces|2}}Year{{spaces|2}}``).  289 corpus instances."""
+    def _repl(m):
+        try:
+            n = int(m.group(1).strip())
+        except ValueError:
+            return ""
+        return " " * max(0, min(n, 20))  # cap defensively
+    return re.sub(
+        r"\{\{\s*spaces\s*\|([^{}|]+)\}\}",
+        _repl, text, flags=re.IGNORECASE,
+    )
+
+
+def _convert_zero_pad(text: str) -> str:
+    """``{{0|TEXT}}`` -> empty.  EB1911 invisible-padding template:
+    renders TEXT as transparent-width spacing for column alignment in
+    tables (``{{0|IIV}}I.`` aligns ``I.`` so its tail lines up with a
+    sibling ``IIV.``).  Once flattened into body prose the alignment
+    is irrelevant; emit nothing.  247 corpus instances."""
+    return re.sub(
+        r"\{\{\s*0\s*\|[^{}|]*\}\}",
+        "", text,
+    )
+
+
+def _convert_sfrac(text: str) -> str:
+    """``{{sfrac|num|den}}`` -> ``num/den``.  EB1911 inline-fraction
+    template (variants: ``sfrac``, ``sfrac nobar``, ``frac``).  May
+    carry a leading ``font-size=...`` styling param which we drop.
+    ~150 corpus instances across the variants.  Math-grade rendering
+    is left for the math pipeline; this is the body-text fallback."""
+    def _repl(m):
+        body = m.group(1)
+        parts = [p.strip() for p in body.split("|")]
+        parts = [p for p in parts if not p.lower().startswith("font-size")]
+        if len(parts) < 2:
+            return parts[0] if parts else ""
+        return f"{parts[0]}/{parts[1]}"
+    return re.sub(
+        r"\{\{\s*(?:sfrac(?:\s+nobar)?|frac)\s*\|([^{}]*)\}\}",
+        _repl, text, flags=re.IGNORECASE,
+    )
+
+
+def _convert_anchor_plus(text: str) -> str:
+    """``{{anchor+|Name}}`` -> empty.  EB1911 anchor template — sets
+    a cross-reference target with no visible output.  73 corpus
+    instances; explicit named no-op."""
+    return re.sub(
+        r"\{\{\s*anchor\+\s*\|[^{}]*\}\}",
+        "", text, flags=re.IGNORECASE,
+    )
+
+
+def _convert_sp(text: str) -> str:
+    """``{{sp|word}}`` -> word.  EB1911 letter-spaced-typography
+    template (used for emphasis in language entries like
+    ``{{sp|amare}}``).  72 corpus instances; emit the bare word
+    since marker-form letter-spacing isn't supported by the viewer."""
+    return re.sub(
+        r"\{\{\s*sp\s*\|([^{}|]+)\}\}",
+        lambda m: m.group(1).strip(),
+        text, flags=re.IGNORECASE,
+    )
+
+
 def _convert_dual_line(text: str) -> str:
     """``{{dual line|A|B}}`` → ``A<br>B`` (two stacked lines).
 
@@ -1042,6 +1128,16 @@ def _apply_markup(text: str) -> str:
     text = _convert_hieroglyphs(text)
     text = _convert_dual_line(text)
     text = _convert_lb_dash(text)
+    text = _convert_overline(text)
+    text = _convert_spaces(text)
+    text = _convert_zero_pad(text)
+    text = _convert_anchor_plus(text)
+    text = _convert_sp(text)
+    # `_convert_sfrac` deliberately NOT called: the single-arg form
+    # `{{sfrac|n}}` was emerging from the catch-all in a way that
+    # produced `¹/n` in some baselines (likely the catch-all output
+    # interacting with sup/sub context).  Math-grade rendering for
+    # this template needs the math pipeline, not body-text.
     text = _convert_links(text)
     # Template unwrap is a fixed-point loop: nested patterns like
     # `{{nowrap|1{{EB1911 tfrac|2}} m.}}` need the inner template
