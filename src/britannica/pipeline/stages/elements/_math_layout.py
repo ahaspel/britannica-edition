@@ -61,7 +61,7 @@ def _content_rows(text: str) -> list[list[str]]:
     CONTENT (they strip attrs), so dropping the (sep, attr) is safe."""
     if _HTML_TABLE_TAG_RE.search(text):
         return _html_table_grid(text)
-    _, parsed = parse_wiki_table(text)
+    _, _, parsed = parse_wiki_table(text)
     return [[content for _sep, _attr, content in row] for row in parsed]
 
 

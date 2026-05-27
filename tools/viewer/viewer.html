@@ -1864,7 +1864,7 @@
       // UNITED STATES "West Central Massachusetts"), not a section
       // heading.  Python mirror: _TABLE_MARKER_PREFIX_RE in
       // src/britannica/export/sections.py.
-      const TABLE_MARKER_PREFIX_RE = /^(?:\{\{TABLE:|«HTMLTABLE:)/;
+      const TABLE_MARKER_PREFIX_RE = /^(?:\{\{TABLE(?:\[style:[^\]]*\])?:|«HTMLTABLE:)/;
 
       // Latest top-level heading we've identified — used to flag SH
       // margin pointers (a SH whose dehyphenated text matches the
@@ -1891,7 +1891,7 @@
           activeSectionKey = key;
           return info;
         }
-        if (p.includes("{{IMG:") || p.includes("{{TABLE:")) return null;
+        if (p.includes("{{IMG:") || p.includes("{{TABLE")) return null;
         m = p.match(SC_RE);
         if (!m) return null;
         const outerRoman = m[1];
@@ -2059,14 +2059,15 @@
         return `<code class="math-fallback">${escapeHtml(raw)}</code>`;
       });
       // Multi-line VERSE inside a cell — newline-separated lines joined with <br>.
-      h = h.replace(/\{\{VERSE:([\s\S]*?)\}VERSE\}/g, (_m, content) => {
+      h = h.replace(/\{\{VERSE(?:\[style:[^\]]*\])?:([\s\S]*?)\}VERSE\}/g, (_m, content) => {
         const lines = content.split("\n").filter(l => l.trim());
         return `<span class="cell-verse">${lines.join("<br>")}</span>`;
       });
       // Multi-line PRE inside a cell — single-column sub-tables are
       // emitted as «PRE:line\nline\nline«/PRE». Render as <br>-joined
       // inline content so they fit inside their containing cell.
-      h = h.replace(/«PRE:([\s\S]*?)«\/PRE»/g, (_m, content) => {
+      // Style slot ignored in cell context (cell already constrains layout).
+      h = h.replace(/«PRE(?:\[style:[^\]]*\])?:([\s\S]*?)«\/PRE»/g, (_m, content) => {
         const lines = content.split("\n").filter(l => l.trim());
         return `<span class="cell-pre">${lines.join("<br>")}</span>`;
       });
@@ -2316,17 +2317,18 @@
           return out.join("");
         }
       }
-      const preMatch = p.match(/^\u00abPRE:([\s\S]*)\u00ab\/PRE\u00bb$/);
+      const preMatch = p.match(/^\u00abPRE(?:\[style:([^\]]*)\])?:([\s\S]*)\u00ab\/PRE\u00bb$/);
       if (preMatch) {
-        let preContent = escapeHtml(preMatch[1]);
+        const preStyleAttr = preMatch[1] ? ` style="${preMatch[1].replace(/"/g, "&quot;")}"` : "";
+        let preContent = escapeHtml(preMatch[2]);
         // Process formatting markers inside preformatted blocks
         preContent = preContent.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
         preContent = preContent.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
         preContent = preContent.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
         // Use text-block style (wrapping) unless it looks like a structural formula
-        const isFormula = /[─│┌┐└┘|\\\/]{3,}/.test(preMatch[1]);
+        const isFormula = /[─│┌┐└┘|\\\/]{3,}/.test(preMatch[2]);
         const cls = isFormula ? "structural-formula" : "text-block";
-        return `<pre class="${cls}">${preContent}</pre>`;
+        return `<pre class="${cls}"${preStyleAttr}>${preContent}</pre>`;
       }
       // Render verse markers.  The verse handler returns early with a
       // complete HTML string, so the global B/I/SC replacements at the
@@ -2343,9 +2345,13 @@
       // Such blocks have no business styled as poetry (italic-block-
       // quote with a left border).  Detect the term-led pattern and
       // emit a definition list instead.
-      const verseMatch = p.match(/^\{\{VERSE:([\s\S]*)\}VERSE\}$/);
+      // Optional ``[style:…]`` slot carries whole-table styling from
+      // the source ``{|<attrs>`` opener.
+      const verseMatch = p.match(/^\{\{VERSE(?:\[style:([^\]]*)\])?:([\s\S]*)\}VERSE\}$/);
       if (verseMatch) {
-        const lines = verseMatch[1].split("\n").filter(l => l.trim());
+        const verseStyleAttr = verseMatch[1]
+          ? ` style="${verseMatch[1].replace(/"/g, "&quot;")}"` : "";
+        const lines = verseMatch[2].split("\n").filter(l => l.trim());
         const applyMarkers = (s) => {
           let h = escapeHtml(s);
           h = h.replace(/«B»(.*?)«\/B»/gs, "<b>$1</b>");
@@ -2369,10 +2375,10 @@
               }
               return `<dt></dt><dd>${applyMarkers(l)}</dd>`;
             }).join("");
-            return `<dl class="glossary">${items}</dl>`;
+            return `<dl class="glossary"${verseStyleAttr}>${items}</dl>`;
           }
         }
-        return `<blockquote class="verse">${lines.map(applyMarkers).join("<br>")}</blockquote>`;
+        return `<blockquote class="verse"${verseStyleAttr}>${lines.map(applyMarkers).join("<br>")}</blockquote>`;
       }
       // Render figure-legend markers (structured image legends emitted
       // by the image-layout subclass handlers). Format:
@@ -2529,14 +2535,20 @@
         if (trailingHtml) rendered += trailingHtml;
         return rendered;
       }
-      // Render table markers (with or without headers)
-      const tableMatch = p.match(/^\{\{TABLE(H?):([\s\S]*)\}TABLE\}$/);
+      // Render table markers (with or without headers).  Optional
+      // ``[style:…]`` slot carries whole-table styling from the source
+      // ``{|<attrs>`` opener (extracted by ``_table_opener_styles``);
+      // applied as the ``<table style="…">`` attr.
+      const tableMatch = p.match(
+        /^\{\{TABLE(H?)(?:\[style:([^\]]*)\])?:([\s\S]*)\}TABLE\}$/);
       if (tableMatch) {
         const hasHeader = tableMatch[1] === "H";
+        const tableStyleAttr = tableMatch[2]
+          ? ` style="${tableMatch[2].replace(/"/g, "&quot;")}"` : "";
         // Protect \n inside {{VERSE:…}VERSE} blocks before row-splitting —
         // VERSE contents are multi-line but belong to a single cell.
-        const protectedBody = tableMatch[2].replace(
-          /\{\{VERSE:[\s\S]*?\}VERSE\}/g,
+        const protectedBody = tableMatch[3].replace(
+          /\{\{VERSE(?:\[style:[^\]]*\])?:[\s\S]*?\}VERSE\}/g,
           m => m.replace(/\n/g, "\x05"));
         let rows = protectedBody.split("\n")
           .filter(r => r.trim())
@@ -2568,7 +2580,7 @@
           const cellsHtml = cells.map(c => tableCellHtml(tag, c)).join("");
           return `<tr>${cellsHtml}</tr>`;
         }).join("");
-        return `<table class="data-table">${captionHtml}${tableRows}</table>`;
+        return `<table class="data-table"${tableStyleAttr}>${captionHtml}${tableRows}</table>`;
       }
 
 
@@ -2622,7 +2634,8 @@
         }
         html = out;
       }
-      html = html.replace(/\{\{TABLE[H]?:([\s\S]*?)\}TABLE\}/g, (match, content) => {
+      html = html.replace(/\{\{TABLE[H]?(?:\[style:([^\]]*)\])?:([\s\S]*?)\}TABLE\}/g, (match, styles, content) => {
+        const tableStyleAttr = styles ? ` style="${styles.replace(/"/g, "&quot;")}"` : "";
         let rows = content.split("\n").filter(r => r.trim());
         let captionHtml = "";
         if (rows.length && rows[0].startsWith("⟦+⟧")) {
@@ -2636,14 +2649,14 @@
           const cells = r.split(" | ").map(c => tableCellHtml("td", c)).join("");
           return `<tr>${cells}</tr>`;
         }).join("");
-        return `<table class="data-table">${captionHtml}${tableRows}</table>`;
+        return `<table class="data-table"${tableStyleAttr}>${captionHtml}${tableRows}</table>`;
       });
       // Inline VERSE — appears when the pipeline converts a mid-paragraph
       // ``<poem>`` (e.g. an enumerated list inside running prose) into
       // ``{{VERSE:…}VERSE}``.  The paragraph-level VERSE handler only
       // fires for whole-paragraph blocks, so inline occurrences would
       // leak raw markers without this replacement.
-      html = html.replace(/\{\{VERSE:([\s\S]*?)\}VERSE\}/g, (_m, content) => {
+      html = html.replace(/\{\{VERSE(?:\[style:[^\]]*\])?:([\s\S]*?)\}VERSE\}/g, (_m, content) => {
         const lines = content.split("\n").filter(l => l.trim());
         return `<span class="inline-verse">${lines.join("<br>")}</span>`;
       });
@@ -2699,10 +2712,11 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
         return `<figure class="${cls}"${imgWidthStyle(meta)}><a href="${url}" target="_blank"><img src="${url}" alt="${caption || filename}" loading="lazy" /></a>${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure>`;
       });
       // Render inline preformatted blocks (structural formulas)
-      html = html.replace(/\u00abPRE:(.*?)\u00ab\/PRE\u00bb/gs, (match, content) => {
+      html = html.replace(/\u00abPRE(?:\[style:([^\]]*)\])?:(.*?)\u00ab\/PRE\u00bb/gs, (match, styles, content) => {
+        const preStyleAttr = styles ? ` style="${styles.replace(/"/g, "&quot;")}"` : "";
         const isFormula = /[─│┌┐└┘|\\\/]{3,}/.test(content);
         const cls = isFormula ? "structural-formula" : "text-block";
-        return `<pre class="${cls}">${content}</pre>`;
+        return `<pre class="${cls}"${preStyleAttr}>${content}</pre>`;
       });
       // Render mirrored glyph markers BEFORE B/I/SC so inner formatting
       // (e.g. \u00abB\u00bb\ud800\udf04\u00ab/B\u00bb inside \u00abMIRROR:\u00bb) still resolves afterwards.
@@ -3019,7 +3033,7 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
             // BEFORE the IMG doesn't end in a strong terminator
             // (``.``, ``!``, ``?``) followed by a capitalized
             // continuation, treat as mid-paragraph.
-            const NON_TEXT_PREFIX = /^(?:\{\{(?:TABLE|LEGEND|IMG|VERSE)|\u00abHTMLTABLE|\u00abSEC:|\u00abSH\u00bb|\u00abPRE:|\u00abOUTLINE:|\u00abPLATE_OUTLINE:)/;
+            const NON_TEXT_PREFIX = /^(?:\{\{(?:TABLE|LEGEND|IMG|VERSE)|\u00abHTMLTABLE|\u00abSEC:|\u00abSH\u00bb|\u00abPRE[\[:]|\u00abOUTLINE:|\u00abPLATE_OUTLINE:)/;
             const IMG_ONLY = /^\s*(?:\x01PAGE:\d+\x01\s*)*\{\{IMG:[^|}]+(?:\|[^}]*)?\}\}\s*$/;
             const stripMarginMarkers = s => s
               .replace(/\x01PAGE:\d+\x01/g, "")

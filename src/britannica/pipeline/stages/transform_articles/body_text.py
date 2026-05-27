@@ -24,8 +24,22 @@ from britannica.markers import RENDERED_MARKER_OPENS
 # block UNLESS it opens with one of the rendered-marker prefixes (IMG,
 # TABLE, TABLEH, LEGEND, VERSE), in which case it's left alone for the
 # viewer.  Strip `{{` from each entry — the regex already anchors there.
+#
+# TABLE/TABLEH/VERSE markers may also carry an optional ``[style:…]``
+# slot between the tag and ``:`` (whole-table styling from the source
+# ``{|<attrs>`` opener — see :func:`_table_opener_styles`).  Accept
+# either form in the lookahead so a ``{{TABLE[style:…]:…}}``-bearing
+# marker isn't mistaken for a stray template.
+def _marker_lookahead(name: str) -> str:
+    # `name` includes its trailing `:` (e.g. `TABLE:`).  Allow either
+    # ``TABLE:`` or ``TABLE[``; the marker body always closes with
+    # ``}TABLE}`` / ``}VERSE}`` / ``}LEGEND}`` rather than ``}}``, so
+    # the strip regex can't end inside it regardless.
+    tag = name.rstrip(":")
+    return rf"{re.escape(tag)}[:\[]"
+
 _MARKER_OPEN_NAMES = "|".join(
-    re.escape(o[2:]) for o in RENDERED_MARKER_OPENS
+    _marker_lookahead(o[2:]) for o in RENDERED_MARKER_OPENS
 )
 _STRIP_TEMPLATES_RE = re.compile(
     rf"\{{\{{(?!{_MARKER_OPEN_NAMES})[^{{}}]*\}}\}}"
@@ -483,6 +497,24 @@ def _unwrap_content_templates(text: str) -> str:
     # preservation upside is negligible for now.
     text = re.sub(r"\{\{\s*section\s*\|[^{}]*\}\}", "", text,
                   flags=re.IGNORECASE)
+    # `<p {{Ts|...ac...}}>content</p>` — paragraph centering, appears
+    # in body prose AND inside refs/footnotes/captions.  Convert to the
+    # universal `«CTR»` marker BEFORE the catch-all sees the `{{Ts|}}`.
+    # ~173 corpus instances; 95% include `ac` (center-align), the rest
+    # have margin/sizing styling we drop.  Handled here in
+    # `_unwrap_content_templates` (not in `_transform_body_text`) so it
+    # runs in every text-transform context — bodies, refs, captions,
+    # cells.  Without this, refs that wrap a centered equation lose
+    # the centering (MOLECULE's footnotes contain centered formulas).
+    def _p_ts(m: re.Match) -> str:
+        codes = re.split(r"[|\s]+", m.group(1).lower().strip())
+        content = m.group(2).strip()
+        if "ac" in codes:
+            return f"\n\n«CTR»{content}«/CTR»\n\n"
+        return content
+    text = re.sub(
+        r"<p\s+\{\{[Tt]s\|([^}]*)\}\}[^>]*>(.*?)</p>",
+        _p_ts, text, flags=re.DOTALL)
     # {{brace2|N|side}} — vertical or horizontal grouping brace.  Two
     # distinct uses (corpus-audited 2026-05-26, task #31):
     #   * Multi-row (N≥2) inside wikitables: row-grouping brace.  May
@@ -911,7 +943,23 @@ def _apply_markup(text: str) -> str:
     # pass re-homed here (else they leak into output: AFRICA's
     # `<!-- Greenland is actually the largest -->`).  The walker already masks
     # comments for table-scanning, so this is purely a rendering concern.
-    text = re.sub(r"<!--.*?-->", "", text, flags=re.DOTALL)
+    #
+    # NEWLINE-PRESERVING: a comment surrounded by soft-wrap newlines on
+    # both sides — ``\n<!-- col. 2 -->\n`` (the wikisource column-break
+    # hint between physically-adjacent text lines) — must NOT collapse
+    # to a paragraph break (``\n\n``); it must collapse to ONE newline so
+    # the surrounding prose remains a single paragraph.  Keep the LONGER
+    # adjacent run so `\n\n<!--…-->\n\n` (genuine paragraph break) stays
+    # `\n\n`, and `\n<!--…-->\n` (soft-wrap interpolation) stays `\n`.
+    # Without this, ORDNANCE / HYDROMEDUSAE had mid-sentence blank-line
+    # breaks (FINE_WRAP_BREAK regression, ≥6 corpus hits).
+    def _strip_comment(m: re.Match) -> str:
+        pre, post = m.group(1) or "", m.group(2) or ""
+        if not pre and not post:
+            return ""
+        return pre if len(pre) >= len(post) else post
+    text = re.sub(r"(\n*)<!--.*?-->(\n*)", _strip_comment,
+                  text, flags=re.DOTALL)
     # Unicode normalization (NFC, subscript-preserving) + audited lossless print-
     # artifact substitutions for font-portability/searchability — the bypassed
     # Layer-A `unicode`/`print_artifacts` passes re-homed in the text producer.
@@ -1006,30 +1054,23 @@ def _transform_body_text(text: str) -> str:
     directly via the ``text_transform`` parameter ``process_elements``
     hands them.
     """
-    # Body-prose line-leading indent markers (`:` / `;` definition-list
-    # prefix used in EB1911 for numbered-equation indents like BALLISTICS
-    # `:(43) <math>…</math>`).  We don't render these as indented blocks —
-    # stripping the sigil keeps the content flush.  Body-only because
-    # only the body has line-leading prose context.
-    text = re.sub(r"^[:;]+\s*", "", text, flags=re.MULTILINE)
-    # Body-only paragraph styling: `<p {{Ts|...ac...}}>content</p>` is
-    # a centered paragraph (~173 corpus instances, 95% include `ac`).
-    # Extract the centering signal — same `«CTR»` marker as the other
-    # center variants.  Non-centered `<p {{Ts|...}}>` paragraphs (rare:
-    # margin-left, etc.) lose their styling and unwrap to plain content,
-    # which is the existing behaviour for unstyled `<p>` (Family A
-    # wrapper-strip drops them).  Must run BEFORE `_apply_markup` so
-    # the Ts template inside the `<p>` attribute doesn't get processed
-    # independently.
-    def _p_ts(m):
-        codes = re.split(r"[|\s]+", m.group(1).lower().strip())
-        content = m.group(2).strip()
-        if "ac" in codes:
-            return f"\n\n«CTR»{content}«/CTR»\n\n"
-        return content
-    text = re.sub(
-        r"<p\s+\{\{[Tt]s\|([^}]*)\}\}[^>]*>(.*?)</p>",
-        _p_ts, text, flags=re.DOTALL)
+    # Body-prose line-leading equation indent: a BALLISTICS-style
+    # `:(43) <math>…</math>` line uses `:` as a typographic indent
+    # sigil, not as content.  Strip the colon when it's IMMEDIATELY
+    # followed by `(N)` — the only line-leading `:` shape that's a
+    # bare indent rather than content (outline-depth `:` lines are
+    # extracted by the walker as OUTLINE elements BEFORE this body
+    # producer ever runs; this strip only sees residual prose lines).
+    #
+    # Narrow lookahead is the load-bearing constraint: a generic
+    # `^[:;]+\s*` strip swallows mid-sentence `;`/`:` punctuation when
+    # the walker has carved an element span and left a BODY fragment
+    # starting with the trailing punctuation (the MATH_SEAM /
+    # FN_SEAM regression — `<math>X</math>; the theorem` left
+    # fragment ``; the theorem`` whose ``;`` got eaten).  Requiring
+    # `(\d+)` afterwards excludes those cases without losing the
+    # equation-indent use.
+    text = re.sub(r"^:+\s*(?=\(\d+\))", "", text, flags=re.MULTILINE)
     text = _apply_markup(text)
     # Body-only `<br>` regularization: in flowing prose, a `<br>` is a
     # soft line break that should render as a word boundary, NOT a

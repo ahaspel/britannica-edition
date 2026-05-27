@@ -568,7 +568,9 @@ def _paragraphs_starting_at(text: str, start: int):
     while pos < len(text):
         # Does the current position start with a self-terminating
         # block marker? If so, the paragraph is just that block.
-        if text[pos:].startswith(("{{VERSE:", "{{TABLE:", "{{TABLEH:",
+        if text[pos:].startswith(("{{VERSE:", "{{VERSE[",
+                                   "{{TABLE:", "{{TABLE[",
+                                   "{{TABLEH:", "{{TABLEH[",
                                    "{{LEGEND:")):
             # Find the matching close.
             end_m = _BLOCK_END_RE.search(text, pos)

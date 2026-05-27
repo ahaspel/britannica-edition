@@ -14,10 +14,18 @@ def reflow_paragraphs(text: str) -> str:
     def _protect_newlines(m: re.Match) -> str:
         return m.group(0).replace("\n", "\x02")
 
+    # Marker patterns accept the optional ``[style:\u2026]`` slot the
+    # producers may emit (whole-table styling from the source
+    # ``{|<attrs>`` opener \u2014 TABLE / VERSE / PRE markers carry this
+    # since the table-opener Ts work landed).  Without the optional
+    # slot in the lookahead, a styled marker like
+    # ``\u00abPRE[style:text-align:center]:\u2026\u00ab/PRE\u00bb`` would NOT match \u2014 the
+    # newlines inside it wouldn't be protected, and reflow would flatten
+    # the row separators to spaces (TABLE_TO_PRE_FLATTENS_ROWS regression).
     text = re.sub(r"\{\{TABLE.*?\}TABLE\}", _protect_newlines, text, flags=re.DOTALL)
-    text = re.sub(r"\{\{VERSE:.*?\}VERSE\}", _protect_newlines, text, flags=re.DOTALL)
+    text = re.sub(r"\{\{VERSE(?:\[style:[^\]]*\])?:.*?\}VERSE\}", _protect_newlines, text, flags=re.DOTALL)
     text = re.sub(r"\{\{LEGEND:.*?\}LEGEND\}", _protect_newlines, text, flags=re.DOTALL)
-    text = re.sub(r"\u00abPRE:.*?\u00ab/PRE\u00bb", _protect_newlines, text, flags=re.DOTALL)
+    text = re.sub(r"\u00abPRE(?:\[style:[^\]]*\])?:.*?\u00ab/PRE\u00bb", _protect_newlines, text, flags=re.DOTALL)
     text = re.sub(r"\u00abOUTLINE:.*?\u00ab/OUTLINE\u00bb", _protect_newlines, text, flags=re.DOTALL)
 
     paragraphs = re.split(r"\n\n+", text)
@@ -25,8 +33,8 @@ def reflow_paragraphs(text: str) -> str:
     result = []
     for para in paragraphs:
         # Don't reflow table blocks, image markers, or preformatted blocks
-        if para.strip().startswith(("{{TABLE", "{{IMG:", "{{VERSE:",
-                                     "{{LEGEND:", "\u00abPRE:", "\u00abOUTLINE:")):
+        if para.strip().startswith(("{{TABLE", "{{IMG:", "{{VERSE",
+                                     "{{LEGEND:", "\u00abPRE", "\u00abOUTLINE:")):
             result.append(para.strip())
             continue
 
@@ -50,7 +58,7 @@ def reflow_paragraphs(text: str) -> str:
         flags=re.DOTALL,
     )
     text = re.sub(
-        r"\{\{VERSE:.*?\}VERSE\}",
+        r"\{\{VERSE(?:\[style:[^\]]*\])?:.*?\}VERSE\}",
         lambda m: m.group(0).replace("\x02", "\n"),
         text,
         flags=re.DOTALL,
@@ -62,7 +70,7 @@ def reflow_paragraphs(text: str) -> str:
         flags=re.DOTALL,
     )
     text = re.sub(
-        r"\u00abPRE:.*?\u00ab/PRE\u00bb",
+        r"\u00abPRE(?:\[style:[^\]]*\])?:.*?\u00ab/PRE\u00bb",
         lambda m: m.group(0).replace("\x02", "\n"),
         text,
         flags=re.DOTALL,
