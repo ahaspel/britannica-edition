@@ -13,8 +13,11 @@ classifies prose — body text matches no opener and ends the run.
 
 Scope note: gated against the over-absorption the corpus span audit found —
 the paired ``{{EB1911 fine print/s}}…/e}}`` wrapper is small-type BODY, not a
-legend, and ``{|`` / ``<table>`` legend tables are left as sibling elements for
-now (grouping them with the image is a later step).
+legend.  ``{|`` wikitables directly under an image (no ``\n\n`` separator)
+ARE absorbed as legend tables: a corpus check found 25 such instances,
+uniformly legend-shaped (short labels + descriptions, caption-style ``Ts``
+classes).  HTML ``<table>`` legends remain sibling elements (no current
+corpus evidence demands inclusion).
 """
 from __future__ import annotations
 
@@ -53,18 +56,25 @@ _LINE_CAP = re.compile(
 # A bare caption line: `Fig. 3.—…`, `Figs. 1–6.—…`.
 _BARE_FIG = re.compile(
     r"(?:Figs?|Plate)s?\b" + _CAP_HEAD_TAIL, re.IGNORECASE)
-# RELAXED caption signals — used ONLY in the tail-after-`<br>` position
-# (directly beneath the image), where a caption needs no `{{sc|Fig}}` marker
-# and no em-dash: the `<br>` under the image IS the caption signal.  These
-# fold the bare numbered captions (`{{Fs|92%|Fig. 10.}}`, `{{sc|Fig. 13.}}`,
-# `Fig. 4. Fig. 5. Fig. 6`) that the strict patterns reject.  NEVER applied in
-# mid-run position, so a body sentence opening `Fig. 6. The simplest…` is
-# untouched.
+# RELAXED caption signals — used ONLY in the tight-after-image position
+# (image directly followed by `<br>`, single `\n`, or whitespace — anything
+# WITHOUT a blank-line break).  Body small-type uses `\n\n` to separate
+# itself from any preceding content, so the absence of `\n\n` between an
+# image and the next unit IS the caption-position signal — and that lets
+# us accept caption-bearing content that the strict signal would reject:
+# the bare numbered captions (`{{Fs|92%|Fig. 10.}}`, `{{sc|Fig. 13.}}`,
+# `Fig. 4. Fig. 5. Fig. 6`), AND the bare fine-print or italicized name
+# (RORQUAL: `{{c|{{EB1911 fine print|Common Rorqual («I»Balaenoptera
+# musculus«/I»).}}}}`).  NEVER applied in mid-run position, so a body
+# sentence opening `Fig. 6. The simplest…` or a SUNSHINE-style
+# `{{EB1911 Fine Print|Adjustments.—…}}` body annotation (always
+# `\n\n`-separated from its surroundings) is untouched.
 _CAP_SIGNAL_RELAXED = re.compile(
     r"\{\{\s*(?:c?sc|small-caps)\s*\|\s*(?:Figs?|Plate)"
     r"|<poem\b"
     r"|\(\s*(?:From|After)\b"
-    r"|\b(?:Figs?|Plate)s?\.?\s*\d",
+    r"|\b(?:Figs?|Plate)s?\.?\s*\d"
+    r"|\{\{\s*(?:EB1911\s+fine\s+print|fine\s*block)\s*\|",
     re.IGNORECASE)
 # A small-caps caption template carrying the number INSIDE it
 # (`{{sc|Fig. 13.}}`) — `sc` is not a layout template (not in `_TMPL`) and the
@@ -133,6 +143,41 @@ def _balanced_brace_end(text: str, start: int) -> int | None:
     return None
 
 
+# A `{|…|}` wikitable directly under an image is uniformly a legend table
+# in the corpus (25/25 instances examined: LEMON, MILLIPEDE, MYRTLE, NIAGARA,
+# PARASITIC DISEASES, OIL ENGINE, PANSY, PLANKTON, PRIMULACEAE×2, PROBOSCIDEA,
+# RIVER ENGINEERING, SAGO, SCROPHULARIACEAE, SHIP×2, THEATRE, TRUFFLE, ALGAE×4,
+# ANDES, MODERN, PLATE_VOL12).  All carry caption-style `Ts` classes
+# (`ma`/`mc`/`sm92`/`lh…`) and short-label content.  A sibling DATA table
+# always has a `\n\n` paragraph break separating it from preceding content,
+# so gating on the tight-after-image position excludes them structurally.
+_WIKITABLE_OPEN = re.compile(r"\{\|")
+
+
+def _wikitable_end(text: str, start: int) -> int | None:
+    """End just past the ``|}`` matching the ``{|`` at ``start``; None if
+    unbalanced.  Tracks ``{|`` nesting so a wikitable containing another
+    wikitable (rare but legal) closes at the outer ``|}``."""
+    if text[start:start + 2] != "{|":
+        return None
+    depth = 1
+    i = start + 2
+    n = len(text)
+    while i < n - 1:
+        two = text[i:i + 2]
+        if two == "{|":
+            depth += 1
+            i += 2
+        elif two == "|}":
+            depth -= 1
+            i += 2
+            if depth == 0:
+                return i
+        else:
+            i += 1
+    return None
+
+
 def _paren_end(text: str, start: int) -> int | None:
     """End just past the ``)`` matching the ``(`` at ``start``; None if
     unbalanced or it would cross a paragraph break.  Keeps an attribution
@@ -189,9 +234,9 @@ def _match_material(
     mid-run, so a body sentence opening `Fig. 6. The simplest…` stays body.
 
     Deliberately NOT figure material: the paired ``{{EB1911 fine print/s}}…/e}}``
-    wrapper (small-type BODY sections, not legends) and bare ``{|`` / ``<table>``
-    legend tables (left as sibling elements for now) — both caused large body
-    over-absorption in the corpus span audit.
+    wrapper (small-type BODY sections, not legends).  Bare ``{|…|}`` wikitables
+    in the tight-after-image position ARE absorbed (legend tables — see the
+    ``_WIKITABLE_OPEN`` note); HTML ``<table>`` legends remain sibling.
     """
     rest = text[pos:]
     # Any caption-bearing template — absorbed only when a caption signal sits
@@ -223,6 +268,14 @@ def _match_material(
     # An italic-label legend paragraph (`«I»a«/I», text`): absorb the paragraph.
     if _ITALIC_LABEL.match(rest):
         return _caption_paragraph_end(text, pos), True
+    # A `{|…|}` wikitable directly under the image: legend table.  Gated to
+    # the tight-after-image position — a wikitable separated by ``\n\n`` is a
+    # sibling data table.  Corpus-verified uniform legend shape (see
+    # ``_WIKITABLE_OPEN`` note above).
+    if tail_after_br and _WIKITABLE_OPEN.match(rest):
+        e = _wikitable_end(text, pos)
+        if e is not None:
+            return e, True
     # A verse legend (`<poem>…</poem>`): absorb the balanced block.
     if _POEM.match(rest):
         c = _POEM_END.search(text, pos)
@@ -244,9 +297,22 @@ def _match_material(
 _WRAP_OPEN = re.compile(
     r"\{\{\s*(?:center|block\s*center|c?sc|small-caps)\s*\|", re.IGNORECASE)
 # An image opener (bracket or float template) — used to confirm a wrapper
-# actually encloses a figure.
+# actually encloses a figure.  `{{raw image|…}}` deliberately NOT included
+# here: ``_process_prose_figure``'s ``_PROSE_FIG_IMG_RE`` only matches
+# bracket syntax, so a wrapper whose only image is ``{{raw image|…}}``
+# (WELDING-style ``<div style="float:left">{{raw image|…}}…</div>``)
+# recognises as a figure but produces empty output.  Raw image lives on
+# the separate DOUBLE_BRACE walker path (``_RAW_IMAGE_RE``) for now.
 _IMG_IN = re.compile(
     r"\[\[(?:File|Image):|\{\{\s*(?:img\s*float|figure|FI)\b", re.IGNORECASE)
+# HTML float-wrapper opener: ``<span/div style="...float: left|right..."``
+# enclosing an image + caption.  EB1911's standard floating-figure markup
+# (WATERBUCK, VOLTMETER, YAM, SUMACH, WELDING, …; ~150 corpus instances).
+# Parallel to ``_WRAP_OPEN`` but for HTML wrappers — the closed wrapper
+# bounds caption absorption, so bare-prose captions ("Waterbuck.") under
+# ``<br>`` are safe to fold in.
+_HTML_WRAP_OPEN = re.compile(
+    r"<(?P<tag>span|div)\b[^>]*\bfloat\s*:[^>]*>", re.IGNORECASE)
 
 
 def figure_wrapper_end(text: str, pos: int) -> int | None:
@@ -273,10 +339,37 @@ def figure_wrapper_end(text: str, pos: int) -> int | None:
         return None
     if _CAP_SIGNAL_RELAXED.search(text, pos, end) is None:
         return None
-    return figure_tail_end(text, end)
+    return figure_tail_end(text, end, post_wrapper=True)
 
 
-def figure_tail_end(text: str, img_end: int) -> int:
+def html_float_figure_end(text: str, pos: int) -> int | None:
+    """If a ``<span/div style="...float: left|right...">…</…>`` HTML
+    wrapper at ``pos`` encloses an image, return the end of the closing
+    tag; else None.
+
+    Unlike ``figure_wrapper_end``, NO caption-signal gate: the wrapper
+    boundary itself is closed (HTML tags pair structurally), so bare-prose
+    captions under ``<br>`` are safe to fold in — the close tag bounds the
+    absorption.  WATERBUCK ``<span style="float: right">[[Image:…]]<br />
+    Waterbuck.</span>`` is the canonical case; the wrapper IS the figure
+    signal (you don't write ``style="float: right"`` around prose).
+    """
+    m = _HTML_WRAP_OPEN.match(text, pos)
+    if m is None:
+        return None
+    tag = m.group("tag").lower()
+    # Match the FIRST closing tag — corpus float wrappers are non-nested.
+    close = re.search(rf"</{tag}\s*>", text[m.end():], re.IGNORECASE)
+    if close is None:
+        return None
+    inner_start = m.end()
+    inner_end = inner_start + close.start()
+    if _IMG_IN.search(text, inner_start, inner_end) is None:
+        return None
+    return inner_start + close.end()
+
+
+def figure_tail_end(text: str, img_end: int, post_wrapper: bool = False) -> int:
     """Given an image whose own extract ends at ``img_end``, return the end of
     the figure unit after absorbing the trailing structural caption/legend run.
 
@@ -286,6 +379,14 @@ def figure_tail_end(text: str, img_end: int) -> int:
     for the post-pass, matching baseline, rather than splitting the attribution
     off a caption the recognizer can't see).  Stops at the first unmarked prose
     block, a page-break sentinel, or a following image.
+
+    ``post_wrapper`` is True when called from ``figure_wrapper_end`` — the
+    wrapper already absorbed the caption(s), so anything that follows is
+    post-figure content.  We still scan for strict signals (a trailing
+    ``<poem>`` legend or ``(From …)`` attribution that the wrapper didn't
+    enclose), but RELAXED signals stay off — otherwise a body paragraph
+    starting "Figs. 62 and 63 are sections…" after a ``{{center|…}}``
+    wrapper figure gets pulled in as caption material.
     """
     pos = img_end
     end = img_end
@@ -297,12 +398,17 @@ def figure_tail_end(text: str, img_end: int) -> int:
         if _PAGE.search(sep_text):
             break  # never cross a page boundary into column-interleaved body
         scan = sep.end()
-        # The FIRST unit, when the image is directly followed by `<br>`, sits in
-        # the caption-below-image position — relax the caption patterns there.
-        tail_after_br = (not saw_caption
-                         and re.search(r"<br\s*/?>", sep_text, re.IGNORECASE)
-                         is not None)
-        unit, is_caption = _match_material(text, scan, tail_after_br)
+        # The FIRST unit, when the image is in the caption-below-image
+        # position — directly followed by `<br>` OR by only single-line
+        # whitespace (no blank-line break) — relaxes the caption signal
+        # requirements: a body-text small-type block uses `\n\n` to
+        # separate itself, so the absence of `\n\n` between image and
+        # the next unit IS the caption-position signal.  Suppressed when
+        # called post-wrapper (the wrapper already absorbed its captions).
+        tight_after_image = (not saw_caption
+                              and not post_wrapper
+                              and "\n\n" not in sep_text)
+        unit, is_caption = _match_material(text, scan, tight_after_image)
         if unit is None or unit <= scan:
             break
         end = unit

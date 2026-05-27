@@ -1978,6 +1978,19 @@ def _process_prose_figure(raw: str, text_transform) -> str:
     loose body text.
     """
     span = _strip_figure_outer_wrapper(raw.strip())
+    # Multi-image wrappers where each image+caption is its own paragraph
+    # (BOOK-PLATES: `{{center|img1<br>cap1\n\nimg2<br>cap2}}` from a stripped
+    # `{{EB1911 fine print/s}}` block) decompose to one figure per paragraph.
+    # The shared-caption multi-image case (ACCUMULATOR Figs 22-23:
+    # `[[File:A]] [[File:B]]<br>{{sc|Fig.}} 22.{{sc|Fig.}} 23.`) has no `\n\n`
+    # between images, so the split leaves it intact and the existing
+    # shared-trailing logic handles it.
+    if re.search(r"\n\n+", span):
+        sub_spans = [s.strip() for s in re.split(r"\n\n+", span) if s.strip()]
+        if len(sub_spans) > 1 and all(
+                _PROSE_FIG_IMG_RE.search(s) for s in sub_spans):
+            return "\n\n".join(
+                _process_prose_figure(s, text_transform) for s in sub_spans)
     image_matches = list(_PROSE_FIG_IMG_RE.finditer(span))
     if not image_matches:
         # Walker guarantees at least one image in SHAPE_FIGURE; empty
