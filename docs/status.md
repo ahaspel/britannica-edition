@@ -6,7 +6,124 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## Current focus (2026-05-26) — BODY-as-element + catch-all dismantling: `_strip_html` DELETED, `strip_known_wrapper_tags` toolkit pattern established
+## Current focus (2026-05-26 evening) — Ts styling end-to-end + post-rebaseline regression-net recovery + Tier-1 sweeper-audit dismantling
+
+**Goal:** Carry source `{{Ts|…}}` styling through the producer to viewer (cell
+*and* opener level, all wikitable producers); then recover the regression-net
+signal that an earlier wholesale rebaseline silently destroyed; then audit and
+delete the post-producer marker-mutating sweepers the audit flagged as Tier-1
+"garbage that must go."  Three workstreams in one session.
+
+### Snapshot scoreboard
+- **20/20 snapshot regression tests passing** (`tests/regression/test_transform_snapshots.py`).
+- **346/346 unit + regression tests passing** (full `tests/unit` + `tests/regression`).
+- Earlier in session: 11/20 → all green via 5 producer-bug fixes, then verified-clean wholesale rebaseline.
+
+### Table-Ts styling — end-to-end (tasks #36/#37/#39)
+- **`_cell_styles` toolkit** in `elements/_tables.py` extracts FULL per-cell CSS
+  (HTML `align=`/`valign=`/`style=` + `{{Ts|…}}` shorthand) into a list applied
+  via `emit_html_cell(…, styles=)`; previously cell styling was dropped on the
+  floor.  Plumbed through `_process_complex_table`, `_process_html_table`,
+  `_process_chemistry_layout`.
+- **Table-opener Ts** — `{|<attrs>` line carries whole-table styling
+  (`{|{{Ts|ma|sm92|lh12}}` etc.).  `_table_opener_styles(raw)` extracts it;
+  HTMLTABLE / CHEM producers apply it inline as `<table style="…">`; the
+  `{{TABLE`/`«PRE`/`{{VERSE` markers gained an optional `[style:…]` slot that
+  the viewer reads.  All five wikitable producers now accept `raw` (signature
+  change from `(inner, …)` to `(raw, inner, …)`).
+- **Paragraph-Ts** — body-text `<p {{Ts|ac}}>…</p>` shape now emits `«CTR»…«/CTR»`
+  marker for centred prose.  Center variants (`{{c|}}`/`{{block center|}}`/
+  paired `c/s`/`c/e`) all converge on `«CTR»`.
+- **Wikisource Module mirror** — `_parse_ts_codes` re-implemented as a direct
+  lookup against the wikisource `Module:Table_style/styles` (262 entries) +
+  `/aliases` (232 entries), converted via `tools/_scratch/lua_to_py.py` and
+  embedded as `elements/_ts_codes.py`.  Replaces a hand-rolled regex chain that
+  had wrong scales for `w<N>` (em→%), `m[lrtb]<N>` (em→px), and treated
+  `pl15` literally instead of as decimal-encoded `1.5em`.  Adds "missing
+  period" heuristic for `pl15`/`pr15`-style shorthand the Module doesn't
+  define (1261 corpus occurrences).
+
+### Post-rebaseline regression-net recovery (tasks #38, #46-#50, #30)
+**The disaster:** earlier-session wholesale rebaseline (commit `3707dda`)
+froze ~40 regressions into 13 snapshot baselines as "expected output."  Tests
+went green against the corrupted baseline — full signal loss.
+
+**Recovery method:** diff every rebaselined article against the trusted pre-
+rebaseline state (`3707dda^`) via subagent audit, tag each hunk
+improvement/regression/neutral, fix each regression at the producer, then
+re-baseline ONLY after a verification pass confirmed clean.  Six producer-bug
+families fixed:
+- **MATH_SEAM / FN_SEAM** (#46, #30) — `«/MATH»; …` / `«/FN»; …` punctuation
+  swallowed by `^[:;]+\s*` MULTILINE strip firing on walker-induced fragment
+  starts.  Strip narrowed to `^:+\s*(?=\(\d+\))` (equation-indent shape only);
+  moved into `_transform_body_text` (initial pre-walker move killed outlines,
+  caught by verification pass).
+- **PADDING_SCALE** (#47) — see Module-mirror above; `pl15` now correctly
+  `1.5em` (was `15em`).  Incidentally fixed `w50` (50% not 50em) and `mt5`
+  (5px not 5em) since the Module table covers everything.
+- **CELL_STYLES_INHALE** (#48) — `_cell_styles` scanned `attr_part + content`,
+  hoisting inner `<span style="…">` declarations onto the cell.  AFRICA
+  shipped `border-bottom:1px dashed red` from an annotation span; ALDEHYDES
+  duplicated cell content after a malformed inline span.  Scoped to
+  `attr_part` only.
+- **FINE_WRAP_BREAK** (#49) — `<!-- col. 2 -->` HTML column-break comments
+  triggered paragraph breaks mid-sentence (ORDNANCE: `1429, and\n<!-- col. 2 -->\ninto England`).
+  Comment-strip now newline-preserving (keeps longer adjacent newline run).
+- **TABLE_TO_PRE_FLATTENS_ROWS** (#50) — reflow's PRE/VERSE protect/restore
+  regexes didn't match the new `[style:…]` slot; row separators inside
+  styled PRE markers got flattened to spaces.  Regex updated.
+
+**The principle that landed:** [[no-wholesale-rebaseline]] — always produce a
+tagged diff and get sign-off before writing new baseline bytes.
+
+### Tier-1 sweeper-audit dismantling (tasks #40, #41)
+**The audit** (post-producer marker-mutating sweepers) identified
+`legend_promote.py`'s promotion family (`_promote_paragraph_legends`,
+`_promote_legend_verses`, `_promote_legend_tables`, `_fold_image_attribution`,
+`_append_attr_to_img`, `_try_convert_with_attr`, `_try_convert_verse_simple`,
+`_bundle_raw_image_with_caption`) as the densest concentration of "garbage
+that must go" — exactly the post-classification relabel anti-pattern
+([[no-post-classification-relabel]]).
+
+**Finding:** every top-level symbol was imported into `transform_articles/__init__.py`
+but NEVER CALLED.  Dead code preserved by the old "leave it around in case"
+directive; the user reversed that directive after seeing the rot.
+[[delete-dead-code]] captured the new principle.
+
+**Deleted:** `legend_promote.py` entirely, the import block (lines 45-77 of
+`__init__.py`), the `tools/_scratch/audit_legend_promote_usage.py` audit
+script, and the stale `# ── Figure walker` comment block.  20/20 snapshot
+tests held — confirming no live dependency.
+
+**Tier-1 #41 — nested-TABLE inlining** (`_inline_nested_table_markers_in_htmltable_blocks`):
+moved from a post-substitution sweep in `_classifier.py:437` INTO
+`_process_html_table` as a pre-substitution step on its own DATA_TABLE
+children.  The producer now owns the conversion of wiki-table children to
+inline `<table>` HTML.  Renamed helper: `_inline_table_marker_as_html`.
+
+### Stale-test cleanup (task #51)
+Full-suite run surfaced 7 failures.  1 was an actual breakage from this
+session (`SHAPE_FINE_PRINT` dead branch in `_shapes.py:162`, leftover from a
+reverted walker-shape attempt — fixed).  6 were stale tests that pre-dated
+architectural changes (SHAPE_BODY vocabulary expansion, INLINE_IMAGE rename
+of DOUBLE_BRACKET).  All 6 updated to assert current behavior with comments
+explaining the architectural shift.  Suite is signal again — a future break
+will surface clearly instead of vanishing into a permanent-red noise floor.
+
+### Tier-2/3/4 audit punch list (open)
+- **#42** — `_patch_img` in `article_json.py` back-fills empty `{{IMG:fn}}`
+  captions from DB; move into FIGURE producer.
+- **#43** — `_strip_redundant_title` in `body_postprocess.py` strips the
+  duplicate title twice downstream; BODY producer should never emit it.
+- **#44** — orphan `\}\}+` / `\{\|` / `\|-` line strippers in `body_text.py`
+  L860-873 (dumping ground for table-producer escapes).
+- **#45** — orphan-punctuation collapse `,(\s+,)+`→`,` in `transform_articles/__init__.py`
+  L302-303 (defensive cleanup for stripped templates).
+- **#13** — `_strip_templates` catch-all (Tier-3, ongoing).
+
+---
+
+## Prior focus (2026-05-26) — BODY-as-element + catch-all dismantling: `_strip_html` DELETED, `strip_known_wrapper_tags` toolkit pattern established
 
 **Goal:** drive shared catch-all sweeps to zero by making each producer responsible
 for its own markup regularization, with shared toolkit utilities composed (not
