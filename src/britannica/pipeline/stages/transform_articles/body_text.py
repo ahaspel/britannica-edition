@@ -167,40 +167,97 @@ def _convert_sp(text: str) -> str:
     )
 
 
+_DUAL_LINE_OPEN = re.compile(r"\{\{\s*dual\s+line\s*\|", re.IGNORECASE)
+
+
+def _split_top_level_pipe(s: str) -> list[str]:
+    """Split ``s`` on `|`, but only at depth-0 brace nesting — pipes
+    INSIDE nested ``{{…|…}}`` aren't separators.  Pure utility, no
+    dual-line-specific knowledge."""
+    parts: list[str] = []
+    buf: list[str] = []
+    depth = 0
+    i = 0
+    n = len(s)
+    while i < n:
+        if i + 1 < n and s[i] == "{" and s[i + 1] == "{":
+            depth += 1
+            buf.append("{{")
+            i += 2
+        elif i + 1 < n and s[i] == "}" and s[i + 1] == "}":
+            depth = max(0, depth - 1)
+            buf.append("}}")
+            i += 2
+        elif s[i] == "|" and depth == 0:
+            parts.append("".join(buf))
+            buf = []
+            i += 1
+        else:
+            buf.append(s[i])
+            i += 1
+    parts.append("".join(buf))
+    return parts
+
+
 def _convert_dual_line(text: str) -> str:
     """``{{dual line|A|B}}`` → ``A<br>B`` (two stacked lines).
 
-    EB1911 layout primitive for two-line cell content (Cast/Iron., Bro-/nze.,
-    math summand stacks in ALGEBRAIC FORMS / COMBINATORIAL ANALYSIS, table
-    headers in POST / RUSSIA / IRON AND STEEL).  427 corpus instances across
-    49 articles; previously the catch-all `_strip_templates` silently dropped
-    each one, losing both lines.
+    Pure layout primitive — content-agnostic, used by every family
+    (math summands in ALGEBRAIC FORMS, formula stacks in COUMARONES /
+    ALCOHOLS, table headers in POST / RUSSIA / IRON AND STEEL, figure-
+    caption splits in PHOTOGRAPHY).  611 corpus instances; the handler
+    does NOT inspect content semantics — just "split this line" and emit.
+
+    Brace-balanced scanner: the args can contain any nested template
+    (``{{gap}}``, ``{{sub|N}}``, ``{{brace2|…}}``) or HTML tag, so a
+    naive ``[^{}]*`` regex would refuse the nested case and the catch-
+    all ``_strip_templates`` would silently delete both lines.  Splits
+    only on top-level pipes — pipes inside nested templates stay put.
 
     Form variants:
       * ``{{dual line|A|B}}`` — bare two-arg.
-      * ``{{dual line|style=…|A|B}}`` — leading ``style=…`` param (POST).
-        The style is layout decoration (line-height); we drop it.
-
-    Emits ``<br>`` because the downstream renderers (table cell, body
-    prose) already handle ``<br>`` as a line break.  Producer-time
-    conversion (`_apply_markup`) means the catch-all sees nothing to
-    strip — one more template moves out of `_strip_templates`'s reach.
+      * ``{{dual line|style=…|A|B}}`` — leading ``style=…`` param.  Style
+        is layout decoration (line-height); we drop it.
     """
-    def _repl(m: re.Match) -> str:
-        body = m.group(1)
-        # Drop a leading `style=…|` decoration param, if any.
-        parts = body.split("|")
+    out: list[str] = []
+    i = 0
+    n = len(text)
+    while i < n:
+        m = _DUAL_LINE_OPEN.search(text, i)
+        if not m:
+            out.append(text[i:])
+            break
+        out.append(text[i:m.start()])
+        # Scan from m.end() to find the matching `}}` at depth 0.
+        depth = 1
+        j = m.end()
+        while j < n - 1:
+            if text[j] == "{" and text[j + 1] == "{":
+                depth += 1
+                j += 2
+            elif text[j] == "}" and text[j + 1] == "}":
+                depth -= 1
+                if depth == 0:
+                    break
+                j += 2
+            else:
+                j += 1
+        if depth != 0:
+            # Unbalanced — emit the rest raw and stop.
+            out.append(text[m.start():])
+            break
+        body = text[m.end():j]
+        parts = _split_top_level_pipe(body)
         if parts and parts[0].lstrip().lower().startswith("style="):
             parts = parts[1:]
         if len(parts) < 2:
-            return " ".join(p.strip() for p in parts).strip()
-        a = parts[0].strip()
-        b = "|".join(parts[1:]).strip()
-        return f"{a}<br>{b}"
-    return re.sub(
-        r"\{\{\s*dual\s+line\s*\|([^{}]*)\}\}",
-        _repl, text, flags=re.IGNORECASE,
-    )
+            out.append(" ".join(p.strip() for p in parts).strip())
+        else:
+            a = parts[0].strip()
+            b = "|".join(parts[1:]).strip()
+            out.append(f"{a}<br>{b}")
+        i = j + 2
+    return "".join(out)
 
 
 def _convert_links(text: str) -> str:
@@ -1126,13 +1183,17 @@ def _apply_markup(text: str) -> str:
     text = normalize_unicode(text)
     text = replace_print_artifacts(text)
     text = _convert_hieroglyphs(text)
-    text = _convert_dual_line(text)
-    text = _convert_lb_dash(text)
-    text = _convert_overline(text)
+    # Order: content-BEARING template handlers (dual_line, overline,
+    # lb-, sp) run AFTER `_convert_sub_sup` and the iterative-unwrap
+    # loop below, so their content is brace-free when matched.
+    # Counter-example: `{{dual line|C{{sub|6}}H{{sub|5}}|CH{{sub|3}}}}`
+    # — the regex's `[^{}]*` rightly refuses nested braces, so the
+    # handler must run when the inner `{{sub|...}}` is already resolved.
+    # Empty-content handlers (spaces, 0, anchor+) don't care about
+    # nesting and can run here.
     text = _convert_spaces(text)
     text = _convert_zero_pad(text)
     text = _convert_anchor_plus(text)
-    text = _convert_sp(text)
     # `_convert_sfrac` deliberately NOT called: the single-arg form
     # `{{sfrac|n}}` was emerging from the catch-all in a way that
     # produced `¹/n` in some baselines (likely the catch-all output
@@ -1154,6 +1215,14 @@ def _apply_markup(text: str) -> str:
         if text == before:
             break
     text = _convert_sub_sup(text)
+    # Content-bearing handlers, deferred from before the unwrap loop so
+    # any inner `{{sub|N}}` / `{{sup|N}}` / unwrap-templates inside their
+    # arguments are already resolved — their regexes use `[^{}]*` and
+    # would otherwise reject e.g. `{{dual line|C{{sub|6}}H{{sub|5}}|…}}`.
+    text = _convert_dual_line(text)
+    text = _convert_overline(text)
+    text = _convert_lb_dash(text)
+    text = _convert_sp(text)
     # Spacer templates render as the space/rule they ARE — not stripped to "" by
     # the catch-all below (that joins legend entries: BRACHIOPODA Fig 27
     # "Peduncle.{{em|2}}z" → "Peduncle.z").  The last Layer-A rendering pass

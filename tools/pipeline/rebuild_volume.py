@@ -60,25 +60,20 @@ from pathlib import Path
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                               errors="replace")
 
-from britannica.db.models import (
-    Article,
-    ArticleContributor,
-    ArticleImage,
-    ArticleSegment,
-    CrossReference,
-)
+from britannica.db.models import Article
 from britannica.db.session import SessionLocal
 from britannica.export.article_json import (
     _safe_filename,
     export_articles_to_json,
 )
 from britannica.pipeline.stages.detect_boundaries import (
-    detect_boundaries,
     persist_articles,
+    wipe_articles,
 )
+from britannica.pipeline.stages.super_detect import detect_boundaries
 from britannica.pipeline.stages.prepare_wikitext import prepare_wikitext
 from britannica.pipeline.stages.transform_articles import transform_articles
-from sqlalchemy import delete, select, text
+from sqlalchemy import text
 
 
 # ── Article lookup ────────────────────────────────────────────────────
@@ -130,45 +125,8 @@ def find_article(session, volume: int, title: str | None,
 
 
 # ── Wipe helpers ──────────────────────────────────────────────────────
-
-def _wipe_articles_only(volume: int) -> int:
-    """Delete articles + dependents but preserve source_pages.  Fast
-    path: cheap iteration when source data hasn't changed."""
-    s = SessionLocal()
-    try:
-        art_ids = [
-            a[0] for a in s.execute(
-                select(Article.id).where(Article.volume == volume)
-            ).all()
-        ]
-        if not art_ids:
-            return 0
-        s.execute(
-            CrossReference.__table__.update()
-            .where(CrossReference.target_article_id.in_(art_ids))
-            .values(target_article_id=None, status="unresolved")
-        )
-        s.execute(
-            delete(CrossReference)
-            .where(CrossReference.article_id.in_(art_ids))
-        )
-        s.execute(
-            delete(ArticleContributor)
-            .where(ArticleContributor.article_id.in_(art_ids))
-        )
-        s.execute(
-            delete(ArticleImage)
-            .where(ArticleImage.article_id.in_(art_ids))
-        )
-        s.execute(
-            delete(ArticleSegment)
-            .where(ArticleSegment.article_id.in_(art_ids))
-        )
-        s.execute(delete(Article).where(Article.id.in_(art_ids)))
-        s.commit()
-        return len(art_ids)
-    finally:
-        s.close()
+# Articles-only wipe is provided by ``britannica.pipeline.stages
+# .detect_boundaries.wipe_articles``; rebuild calls it directly.
 
 
 def _wipe_everything(volume: int) -> None:
@@ -209,7 +167,7 @@ def _run_fast(volume: int, t0: float) -> None:
     transform → export.  Article-shaping stages only — skips
     classification, xrefs, images, contributors."""
     print(f"[{time.time()-t0:5.1f}s] Wiping vol {volume} articles…")
-    n = _wipe_articles_only(volume)
+    n = wipe_articles(volume)
     print(f"[{time.time()-t0:5.1f}s]   Deleted {n} articles")
 
     print(f"[{time.time()-t0:5.1f}s] Preparing wikitext "

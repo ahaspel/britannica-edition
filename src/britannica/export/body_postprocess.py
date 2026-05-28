@@ -13,74 +13,15 @@ from __future__ import annotations
 
 import re
 
-from britannica.markers import strip_page_markers, strip_title_markers
+from britannica.markers import strip_page_markers
 
 
-def _strip_redundant_title(body: str, title: str) -> str:
-    """Strip a body's leading '«B»…«/B»' title matter that duplicates the
-    article title. Handles single-bold ('''PIETAS''') and multi-bold
-    ('''POPILIA''' (or Popillia), '''VIA,''') forms by accumulating the
-    visible text of consecutive bold + interstitial chunks and comparing
-    to the article title."""
-    page_m = re.match(r"^(\x01PAGE:\d+\x01)?\s*", body)
-    page_prefix = page_m.group(0) if page_m else ""
-    rest = body[len(page_prefix):]
-
-    # Titles may carry `«B»`/`«I»`/`«SC»` formatting markers; strip
-    # them for content comparison against the body's bold text.
-    title_key = re.sub(
-        r"\s+", " ",
-        strip_title_markers(title).strip().rstrip(",.;:"),
-    ).upper()
-    bold_re = re.compile(
-        r"^«B»([^«]+)«/B»"
-        r"([\s,.\-–— ]*(?:\([^)]*\)|\[[^\]]*\])"
-        r"[\s,.\-–— ]*|[\s,.\-–— ]+)?"
-    )
-
-    cursor = 0
-    accumulated = ""
-    best_end = -1
-    while True:
-        m = bold_re.match(rest[cursor:])
-        if not m:
-            break
-        bold_text = m.group(1).strip().rstrip(",.;:")
-        interstitial = (m.group(2) or "").strip()
-        if accumulated:
-            accumulated += " "
-        accumulated += bold_text
-        if interstitial:
-            accumulated += " " + interstitial
-        cursor += m.end()
-        normalized = re.sub(r"\s+", " ", accumulated.rstrip(" ,.;:")).upper()
-        if normalized == title_key:
-            best_end = cursor
-            break
-        if not title_key.startswith(normalized):
-            break
-
-    if best_end < 0:
-        # Fall back to single-bold strip when the article title contains
-        # the first bold as a prefix (covers PIETAS / SEMMELWEISS style).
-        fallback = re.match(
-            r"^«B»([^«]+)«/B»"
-            r"[\s,.\-–—]*",
-            rest,
-        )
-        if fallback:
-            bold = fallback.group(1).strip().rstrip(",.;:").upper()
-            if (bold == title_key
-                    or title_key.startswith(bold + ",")
-                    or title_key.startswith(bold + " ")
-                    or bold.startswith(title_key + ",")
-                    or bold.startswith(title_key + " ")):
-                best_end = fallback.end()
-
-    if best_end >= 0:
-        tail = re.sub(r"^[\s,.\-–— ]+", "", rest[best_end:])
-        return page_prefix + tail
-    return body
+# `_strip_redundant_title` removed: title chop-up happens at source in
+# detect_boundaries — `_extract_bold_delimited_title` + `produce_title`
+# extract the title from the article opening and leave a clean body in
+# segment_text.  Stale DB rows persisted before the chop-up fix will
+# display the title-bold in their body until re-detected; that's a
+# known transition cost, not something to sweep.
 
 
 # Structured-content spans we must not wrap inside (breaking them
