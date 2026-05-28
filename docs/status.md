@@ -1,8 +1,149 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-05-26.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-05-27.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
+
+---
+
+## Current focus (2026-05-27) — Sweeper architecture / element-promotion pattern + dual_line as walker element + chem/math family classification
+
+**Goal:** Internalise the sweeper-antipattern principles, fix several
+sweepers at the source, then prove the element-promotion pattern by
+moving `{{dual line|…}}` out of body-text and into the walker /
+classifier / producer triple — with chem and math now owning their
+own dual_line content via family predicates.  Three architectural
+insights captured as feedback memories; one significant refactor
+landed byte-identical; the audit's top names are now mostly element-
+promotion candidates rather than regex-pass candidates.
+
+### Snapshot scoreboard
+- **328/328 unit + regression tests passing** (full `tests/unit` + `tests/regression` minus the unrunnable `test_prepare_wikitext.py`).
+- AGRICULTURE + STEAM_ENGINE snapshots **rebaselined**: dual_line content recovery (AGRICULTURE: `Hay.|{{brace2|6|u}}` cell was empty pre-fix, now correct; STEAM_ENGINE: `1⅓ lb` was lost, now preserved).
+
+### Architectural principles captured (memory)
+- **`feedback_sweepers_hide_bugs`** — INVARIANT, not heuristic: EVERY
+  downstream regex/cleanup pass on producer output is hiding an
+  upstream bug.  100%, not "often."  Raw source has no redundancy by
+  construction → any redundancy/wrong-byte downstream was introduced
+  by us → a sweeper deleting it is, by definition, hiding the producer
+  bug.  The "this one is benign" feeling is the warning sign, not the
+  exception.
+- **`feedback_element_production_in_body_text`** — adding a `_convert_X`
+  regex pass to body-text's `_apply_markup` for a content-bearing
+  template is element production smuggled into the wrong producer.
+  The walker should recognize that template as its own element; a
+  dedicated producer should render it.  Without walker-level
+  recognition, the classifier has no bounded unit to inspect, which
+  blocks family routing (chem / math).  Granularity is the gate.
+- **`feedback_orthogonal_problems`** — a single surface symptom can
+  hide two distinct problems sharing a venue.  Decompose into
+  orthogonal problems BEFORE proposing a fix.  Worked example:
+  `{{dual line|…}}` audit hits were TWO problems — layout primitive
+  (body-text's job, fixed via reorder+balance-brace) AND chem content
+  routing (walker-element promotion's job, separate work) — and
+  conflating them was the trap.
+
+### ACCURSIUS / detect_boundaries consolidation
+- **Bug:** `ACCURSIUS (Ital. Accorso), FRANCISCUS` article body
+  opened with `(Ital. Accorso), FRANCISCUS …` — title-bold leaking
+  into `segment_text`.  Tracked through layers (`_strip_redundant_title`
+  sweeper hiding it) to a 1-character fix at `super_detect.py:119`:
+  `parts = _PAGE_RE.split(content)` should have been `…split(body)`.
+  `produce_title()` was returning the title-stripped body; the chop-up
+  step then ignored it and split the raw content, re-packing the title-
+  bold into seg 0.  Body-postprocess sweeper masked the bug.
+- **Cleanup:** legacy 299-line per-page `detect_boundaries()` deleted
+  from `pipeline/stages/detect_boundaries.py`; `super_detect_boundaries`
+  renamed to `detect_boundaries` (only one function in the codebase
+  now).  `persist_articles()` kept pure (no implicit wipe);
+  `wipe_articles(volume)` added as an explicit public utility; CLI
+  `detect-boundaries` and `tools/pipeline/rebuild_volume.py` both
+  wipe-then-persist explicitly.  `_wipe_articles_only` duplicate in
+  `rebuild_volume.py` deleted.
+
+### Sweeper-elimination playbook applied
+- **`_strip_redundant_title`** (body-postprocess) — deleted.  The
+  upstream chop-up fix above made it unnecessary.
+- **`_patch_img`** (export sweeper) — deleted earlier in same session
+  arc; exposed real classifier gaps for figure family (#65/#66/#67)
+  rather than being silently absorbed by the sweep.
+- **`_strip_templates` catch-all** — focused handlers landed for
+  `dual line` (later promoted to element — see below), `lb-` (446
+  corpus hits), `overline` (290), `spaces` (289), `0` (247),
+  `anchor+` (73), `sp` (72).  Each handler is a producer-level fix:
+  recover the bytes the catch-all was deleting.  Combined: ~2000 strip-
+  template victims now route to correct rendering.
+
+### dual_line walker-element promotion (#76 + #77)
+The reference implementation of the element-promotion pattern,
+applied to `{{dual line|A|B}}` (611 corpus instances across 60% math
+/ 9% chem / 22% plain layout / 9% scattered):
+
+- **Walker (`elements/_walker.py`)** — `_DUAL_LINE_RE` (4-level brace-
+  nesting tolerance, matching `_IMAGE_FLOAT_RE` depth) registered as
+  `SHAPE_DOUBLE_BRACE`; opener hint extended.
+- **Classifier (`elements/_classifier.py`)** — `_derive_double_brace_label`
+  recognizes `dual` template name; consults `is_chem_dual_line` then
+  `is_math_dual_line` predicates on the inner content; returns
+  `CHEM_DUAL` / `MATH_DUAL` / `DUAL_LINE` accordingly.
+- **Plain producer (`elements/_dual_line.py`, new)** —
+  `_process_dual_line(inner, text_transform)` does brace-balanced
+  top-level-pipe split, drops leading style decoration, strips raw
+  args before transform (so decoded entities like `&numsp;` → U+2007
+  survive as content), emits `A<br>B`.
+- **Chem family (`elements/_chem.py`, new)** —
+  `is_chem_dual_line(inner_text)` uses the existing
+  `_chem_normalize` + `_is_chem_formula` machinery from `_tables.py`
+  (same element-aware test the table classifier uses for
+  `CHEMISTRY_LAYOUT`).  `_process_chem_dual_line(inner, tt)` delegates
+  to `_process_dual_line` for now (byte-identical); future chem-
+  specific rendering goes here.
+- **Math family (`elements/_math.py`, new)** —
+  `is_math_dual_line(inner_text)` checks for italic-variable spans
+  (`«I»…«/I»`) or sub/sup markup, AFTER chem has had first claim
+  (sub/sup ride on element symbols in chem context, on variables in
+  math context).  `_process_math_dual_line(inner, tt)` delegates to
+  `_process_dual_line` for now.
+- **Body-text (`transform_articles/body_text.py`)** — `_convert_dual_line`,
+  `_DUAL_LINE_OPEN`, `_split_top_level_pipe` ALL DELETED.  The
+  smuggled-in producer is gone; the deferred-content-bearing-handlers
+  comment updated.  `_apply_markup` shrinks.
+
+**Classification result** (corpus-wide, 611 dual_lines): 58 CHEM_DUAL
++ 264 MATH_DUAL + 294 plain DUAL_LINE.  322 dual_lines now route
+through family producers; the remaining 294 are plain-layout cases
+(table headers, hyphenations, figure-caption splits) that legitimately
+stay with the layout producer.  Output is byte-identical to pre-
+promotion (family producers all currently delegate to the shared
+layout producer).
+
+**Why this matters architecturally:** before promotion, body-text was
+silently rendering chemistry and math content via `_convert_sub_sup`
+and other regex passes that lived in body-text but explicitly handled
+chem/math forms (per `_convert_sub_sup`'s own docstring: "for
+chemistry formulae and math variables/exponents").  Body-text was
+hosting two foreign producers in disguise.  Now CHEM and MATH have
+their own modules, predicates, and (initially trivial) producers —
+future specialisation (formula validation, KaTeX, structural-formula
+layout) has a clear home and won't ever touch body-text.
+
+### Memory deltas
+- New: `feedback_sweepers_hide_bugs`, `feedback_element_production_in_body_text`,
+  `feedback_orthogonal_problems`.
+- Updated index entry: prior `feedback_walker_before_producer`
+  remains relevant; now reinforced.
+
+### Next session — `_strip_templates` long tail
+Audit's top names after dual_line promotion: `ts` (31, orphan-Ts), `nw`
+(16, non-wrap), `sfrac nobar` (9, math fraction), `nopt` (8),
+`font size` (8, math typography), `xxxx-larger` (6, math symbol),
+`smallcaps` (4 — should be «SC» path), `u` (3, underline), and the
+long tail.  Each will get triaged by the now-canonical question: is
+this a sweeper masking an upstream bug, an element to promote
+(walker-level), or a legitimate decoration handler?  The user's
+observation: "we'll have moved just about everything into the
+producers, or even lower down, into the extractors."
 
 ---
 

@@ -167,99 +167,6 @@ def _convert_sp(text: str) -> str:
     )
 
 
-_DUAL_LINE_OPEN = re.compile(r"\{\{\s*dual\s+line\s*\|", re.IGNORECASE)
-
-
-def _split_top_level_pipe(s: str) -> list[str]:
-    """Split ``s`` on `|`, but only at depth-0 brace nesting — pipes
-    INSIDE nested ``{{…|…}}`` aren't separators.  Pure utility, no
-    dual-line-specific knowledge."""
-    parts: list[str] = []
-    buf: list[str] = []
-    depth = 0
-    i = 0
-    n = len(s)
-    while i < n:
-        if i + 1 < n and s[i] == "{" and s[i + 1] == "{":
-            depth += 1
-            buf.append("{{")
-            i += 2
-        elif i + 1 < n and s[i] == "}" and s[i + 1] == "}":
-            depth = max(0, depth - 1)
-            buf.append("}}")
-            i += 2
-        elif s[i] == "|" and depth == 0:
-            parts.append("".join(buf))
-            buf = []
-            i += 1
-        else:
-            buf.append(s[i])
-            i += 1
-    parts.append("".join(buf))
-    return parts
-
-
-def _convert_dual_line(text: str) -> str:
-    """``{{dual line|A|B}}`` → ``A<br>B`` (two stacked lines).
-
-    Pure layout primitive — content-agnostic, used by every family
-    (math summands in ALGEBRAIC FORMS, formula stacks in COUMARONES /
-    ALCOHOLS, table headers in POST / RUSSIA / IRON AND STEEL, figure-
-    caption splits in PHOTOGRAPHY).  611 corpus instances; the handler
-    does NOT inspect content semantics — just "split this line" and emit.
-
-    Brace-balanced scanner: the args can contain any nested template
-    (``{{gap}}``, ``{{sub|N}}``, ``{{brace2|…}}``) or HTML tag, so a
-    naive ``[^{}]*`` regex would refuse the nested case and the catch-
-    all ``_strip_templates`` would silently delete both lines.  Splits
-    only on top-level pipes — pipes inside nested templates stay put.
-
-    Form variants:
-      * ``{{dual line|A|B}}`` — bare two-arg.
-      * ``{{dual line|style=…|A|B}}`` — leading ``style=…`` param.  Style
-        is layout decoration (line-height); we drop it.
-    """
-    out: list[str] = []
-    i = 0
-    n = len(text)
-    while i < n:
-        m = _DUAL_LINE_OPEN.search(text, i)
-        if not m:
-            out.append(text[i:])
-            break
-        out.append(text[i:m.start()])
-        # Scan from m.end() to find the matching `}}` at depth 0.
-        depth = 1
-        j = m.end()
-        while j < n - 1:
-            if text[j] == "{" and text[j + 1] == "{":
-                depth += 1
-                j += 2
-            elif text[j] == "}" and text[j + 1] == "}":
-                depth -= 1
-                if depth == 0:
-                    break
-                j += 2
-            else:
-                j += 1
-        if depth != 0:
-            # Unbalanced — emit the rest raw and stop.
-            out.append(text[m.start():])
-            break
-        body = text[m.end():j]
-        parts = _split_top_level_pipe(body)
-        if parts and parts[0].lstrip().lower().startswith("style="):
-            parts = parts[1:]
-        if len(parts) < 2:
-            out.append(" ".join(p.strip() for p in parts).strip())
-        else:
-            a = parts[0].strip()
-            b = "|".join(parts[1:]).strip()
-            out.append(f"{a}<br>{b}")
-        i = j + 2
-    return "".join(out)
-
-
 def _convert_links(text: str) -> str:
     """Convert link templates and wikilinks to link markers."""
 
@@ -1218,8 +1125,9 @@ def _apply_markup(text: str) -> str:
     # Content-bearing handlers, deferred from before the unwrap loop so
     # any inner `{{sub|N}}` / `{{sup|N}}` / unwrap-templates inside their
     # arguments are already resolved — their regexes use `[^{}]*` and
-    # would otherwise reject e.g. `{{dual line|C{{sub|6}}H{{sub|5}}|…}}`.
-    text = _convert_dual_line(text)
+    # would otherwise reject nested templates.  (`{{dual line|…}}` was
+    # also in this group; promoted to a walker-level DUAL_LINE element,
+    # so body-text no longer sees the raw template here.)
     text = _convert_overline(text)
     text = _convert_lb_dash(text)
     text = _convert_sp(text)
