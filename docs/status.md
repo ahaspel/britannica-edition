@@ -1,12 +1,176 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-05-27.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-05-28.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
 ---
 
-## Current focus (2026-05-27) — Sweeper architecture / element-promotion pattern + dual_line as walker element + chem/math family classification
+## Current focus (2026-05-28) — Math labelled-equation lift + contributor footers + NOINCLUDE elimination + cross-page table bounding
+
+**Goal:** Drain the `_strip_templates` catch-all by giving every template an
+explicit owner.  Three architectural moves landed this session, each tied to
+an audit hit cluster: lift block-level labelled-equation templates (the math
+half of the audit), lift contributor footers (the 8k-deletion bucket), and
+eliminate NOINCLUDE as an element entirely (the chrome bucket plus the cross-
+page table cell-row Ts leaks).  Net: 11,964 → 2,666 strip-template deletions
+this session (−9,298), with structural improvements that drained the orphan-
+markup phases too (phase 6 `|-` orphans 1,809 → 202 — cross-page table cell
+rows now correctly bounded).
+
+### Snapshot scoreboard
+- **346/346** unit + regression + snapshot tests passing.
+- Snapshot regression net unchanged (20/20); all extension work landed byte-
+  identical with the legacy paths for the patterns the snapshots cover.
+
+### Architectural principles clarified (memory)
+- **`feedback_walker_only_lifts_declared_structure`** — the walker lifts what
+  the source structurally declares (named-template wrapper, HTML tag).
+  Inline typography whose rendered output flows back into prose stays in
+  body-text — its CONTENT isn't a chunk, its OUTPUT is.  Lifting inline
+  typography breaks the surrounding processing that depends on its rendered
+  bytes (the `<sup>{{sfrac|1|n}}</sup>` regression that surfaced this
+  principle).
+- **`feedback_dual_use_template_discriminator`** — `{{rh|…}}` /
+  `{{RunningHeader|…}}` etc. carry DUAL semantics in EB1911 source: page
+  chrome inside `<noinclude>`, inline content layout outside.  Same template
+  NAME, different ROLE keyed on noinclude wrapping.  Producer logic that
+  ignores the discriminator (e.g. blanket strip the template name) corrupts
+  inline content.  STEAM_ENGINE's `{{rh|or|equation|}}` centring an equation
+  is the canonical case.
+- **`feedback_walker_recognizers_explicit_names`** — the walker may
+  enumerate template names it bounds (each is structurally bounded;
+  enumeration is part of bounding, not classification).  But comments /
+  variable names must describe what the recognizer DOES structurally, not
+  what FAMILY the templates belong to — the classifier owns labels.  My
+  initial `_MATH_TEMPLATE_NAMES_PATTERN` violated this; renamed to
+  `_LABELED_EQUATION_TEMPLATE_NAMES_PATTERN` (structural, not family-named).
+
+### Math labelled-equation lift (#equation/#MathForm1/#ne)
+- Walker recognizes `{{equation|…}}`, `{{MathForm1|…}}`, `{{ne|…}}` as
+  SHAPE_DOUBLE_BRACE via `_LABELED_EQUATION_TEMPLATE_OPENER_RE` +
+  `_find_balanced_template_end` (balanced-brace scanner that masks
+  `<math>` / `<nowiki>` / comments — `ne` carries LaTeX content with
+  literal `{`/`}` that a `[^{}]`-based regex couldn't span).
+- Classifier dispatches the three template names to MATH_EQUATION /
+  MATH_FORMULA_LABELED / MATH_NE labels.
+- ONE producer (`_process_math_equation` in `elements/_math.py`) handles
+  all three labels keyed on template name — per-template arg parsing
+  internal to the producer (equation has `tag=` / `pretext=` named params;
+  MathForm1 is label-first; ne has three arg shapes: bare, empty-label-
+  content, empty-label-content-label).  Output marker `«EQN:LABEL»content
+  «/EQN»` with `\n\n` paragraph margins.
+- **Inline fractions stayed in body-text.**  Initially attempted walker-
+  lift for `sfrac` / `frac` / `mfrac` / `over` / `sfracN` / `EB1911 sfrac`
+  / `EB1911 tfrac` / unicode-name variants → broke `<sup>{{sfrac|1|n}}</sup>`
+  cases because lifting the inner template put a placeholder inside the
+  outer `<sup>` and `_convert_sub_sup`'s translation can't see across.
+  Reverted; instead extended body-text's iterative fraction handler in
+  `_apply_markup` to cover all 11 corpus variants (previously only
+  `sfrac`/`sfrac nobar`/`frac`/`EB1911 tfrac`).  Inline typography stays
+  in body-text — the principle that fell out.
+- Body-text deletes: dead `_convert_sfrac` (line 129), iterative
+  `_ne_labeled` regex block, the `{{equation|}}` and `{{ne|}}` raw-text
+  handling.  Body-text no longer owns any math rendering.
+- Audit eliminated: equation (29 → 0), MathForm1 (15 → 0), ne (48 → 0),
+  sfrac nobar (62 → 0), frac (27 → 0), sfracN (26 → 0), mfrac (2 → 0),
+  over (5 → 0), EB1911 sfrac (31 → 0), EB¹⁹¹¹ variants (67 → 0),
+  EB₁₉₁₁ ₜfᵣₐc (2 → 0) — ~314 total.
+
+### Contributor-footer lift (~8,290 audit hits eliminated)
+- `_CONTRIBUTOR_FOOTER_RE` in walker recognizes `{{EB1911 footer initials|
+  …}}`, `{{EB1911 footer double initials|…}}` and the ~20 bare-initials
+  shortcut variants (`{{EB1911 TAs}}`, `{{EB1911 WABC}}`, `{{EB1911 JF-K}}`,
+  `{{EB1911 HWR*}}`, …) via enumerated alternation + balanced-brace
+  bounding (footer-initials forms) or bare-template close (initials
+  shortcuts, max 5-char suffix with mixed-case + asterisk/hyphen).
+- Classifier returns CONTRIBUTOR_FOOTER for name == "eb1911" (walker only
+  lifts contributor footers for that name token, so the discriminator is
+  safe by construction).
+- Producer returns "" — `extract_contributors` reads the same raw template
+  in its own pipeline stage to populate the contributors table, so body
+  output renders nothing for these.
+- Audit eliminated: 8,072 + 157 + ~60 + 1 (typo `footer  initials` double-
+  space) ≈ 8,290 silent-strip deletions.
+
+### NOINCLUDE elimination + cross-page table bounding (the big architectural move)
+- **What NOINCLUDE was doing** (before this session): walker element that
+  claimed `<noinclude>…</noinclude>` blocks; producer dropped chrome
+  content silently (anti-pattern — identical mechanism to `_strip_templates`
+  but at a different layer) and attempted to preserve `{|`/`|}` cross-page
+  table markers (which its own docstring admitted didn't work because the
+  re-emitted markers ran AFTER walker, so they never got paired).
+- **What replaced it:** `_transform_text_v2` strips `<noinclude>…</noinclude>`
+  BLOCKS wholesale upstream (tags + content), preserving `{|<attrs>` and
+  `|}` lines as naked bytes in body raw.  BRACE_PIPE then pairs them
+  naturally via its existing scanner — cross-page tables become one
+  bounded element.  Inside that element, `_process_table` consumes Ts
+  styling in cell-attr position correctly via the existing
+  `_extract_table_cells` flow.
+- **`SHAPE_NOINCLUDE`, `_NOINCLUDE_RE`, `_process_noinclude`, the dispatch
+  entry, the `_noinclude.py` module: DELETED.**  Walker has one less concept.
+- **`<pagequality level=… user=… />` self-closing tag** added as a walker
+  recognizer (sibling to `<ref name=X/>`) with classifier label PAGEQUALITY
+  and empty producer — previously consumed inside NOINCLUDE, now needs its
+  own explicit owner.
+- **Dual-use templates preserved.**  `{{rh|or|equation|}}` (STEAM_ENGINE's
+  centred equation continuation) stays in body as content because the
+  block-wipe operates on the noinclude WRAPPING, not the template name.
+  Page-chrome `{{rh|XL|TITLE|XL_PAGE/XL}}` was inside `<noinclude>` and
+  drops with the block; inline-content `{{rh|…}}` was outside `<noinclude>`
+  and survives.  The structural discriminator (in or out of noinclude) is
+  preserved by where the block boundary falls.
+- **Plate pipeline untouched.**  The block-wipe is in `_transform_text_v2`,
+  on the article-only branch after the plate-vs-article fork in
+  `transform_articles`.  Plate-title extraction in `parsers/plate/` still
+  reads raw bytes including `<noinclude>` headers and finds
+  `{{x-larger|TITLE}}` inside.
+- **Test infrastructure fix.**  `tests/regression/conftest.py` updated to
+  import `detect_boundaries` from its new home in `super_detect.py` (last
+  session's rename left the conftest broken).  The 18 abbey/alloys/blank_verse
+  regression tests went from pre-existing-failure to passing without any
+  real regressions surfacing.
+
+### Audit progression this session
+- Session start (post-prior-session): **11,964** strip-template deletions
+- After math labelled-equation lift + body-text fraction extension:
+  **11,648** (−316, math families cleared)
+- After contributor-footer lift: **3,354** (−8,294, footer family
+  cleared)
+- After NOINCLUDE elimination + block-wipe: **2,666** (−688, chrome
+  consumed by block-wipe + Ts 1,107 → 554 because cross-page tables now
+  bound properly + Phase 6 `|-` orphans 1,809 → 202)
+- **Net session reduction: 11,964 → 2,666 (−9,298 strip-template deletions).**
+
+### What remains (separate future campaigns)
+- **Ts** (554 remaining) — HTML-attribute leaks (`<div {{Ts|…}}>`,
+  `<td {{Ts|…}}>`, `<span {{Ts|…}}>` etc.) outside wikitable cells.
+  Different leak class from the cross-page-table cell-attr cases just
+  fixed.  ~282 inside body-prose HTML wrappers, ~169 inside HTML table
+  tag attrs (`<td>` / `<tr>` / `<table>`), 10 misc.
+- **sfrac** (76 edge cases) — nested-content fractions the iterative
+  pass can't unwrap (carries `{{overline|…}}` etc. inside).
+- **Cross-reference templates** (~250 hits) — `lkpl` (73),
+  `intra-article link` (45), `cite` (29), `9link` (13), `EB1911 article
+  link` (16), etc.  Content-loss bugs (link target + display text both
+  deleted).
+- **Foreign-script content** (~110) — `Polytoⁿⁱc` (46), `pₒₗyₜₒₙᵢc` (45),
+  `Greek` (13), `arabic` (9), `he` (7), `latin` (6), `coptic` (1).
+  Actual non-Latin characters being deleted.
+- **Inline typography decorations** (~1,500) — `x-smaller`, `underline`,
+  `smallcaps`, `word-spacing`, `strikethrough`, `nw`, `fs70`, etc.
+- **Phases 2-6 orphan markup** — phase 3 (`}}` excess) 522, phase 4
+  (`|}` orphans) 36, phase 5 (`{|` orphans) 28.  Down significantly from
+  pre-session but each remaining instance is a producer leak to track.
+
+### Memory deltas
+- New: `feedback_walker_only_lifts_declared_structure`,
+  `feedback_dual_use_template_discriminator`,
+  `feedback_walker_recognizers_explicit_names`.
+
+---
+
+## Prior focus (2026-05-27) — Sweeper architecture / element-promotion pattern + dual_line as walker element + chem/math family classification
 
 **Goal:** Internalise the sweeper-antipattern principles, fix several
 sweepers at the source, then prove the element-promotion pattern by
