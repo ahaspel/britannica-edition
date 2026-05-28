@@ -64,6 +64,75 @@ def _convert_hieroglyphs(text: str) -> str:
     )
 
 
+def _convert_foreign_script(text: str) -> str:
+    """Foreign-script wrapper templates whose arg is the already-Unicode
+    content the audience should see.
+
+    Each template name in source declares the script of the wrapped
+    glyphs; we just unwrap.  Previously falling to `_strip_templates`,
+    which silently deleted Greek / Hebrew / Arabic / etc. characters
+    (real data loss — articles like SEMITIC LANGUAGES, BIBLE, hundreds
+    of etymology footnotes rendered empty where source had non-Latin
+    script).
+
+    Variants handled:
+
+      * ``{{Polytonic|content}}`` — Greek with polytonic diacritics.
+        The corpus also has OCR'd unicode-suffix variants
+        ``{{Polytoⁿⁱc|…}}`` (superscript, 46 hits) and
+        ``{{Pₒₗyₜₒₙᵢc|…}}`` (subscript, 45 hits) that fell through
+        the ascii-name match.
+      * ``{{Greek|content}}`` — Greek without diacritics.
+      * ``{{arabic|content}}`` / ``{{Arabic|content}}`` — Arabic.
+      * ``{{latin|content}}`` — Latin (typographic emphasis, not
+        translation).
+      * ``{{coptic|content}}`` — Coptic.
+      * ``{{grc|content}}`` — ISO 639 ancient-Greek tag.
+      * ``{{lang|code|content}}`` — generic language wrapper; code
+        is metadata, content is what renders.
+      * ``{{he|letter[|transliteration]}}`` — Hebrew letter, optional
+        romanization; emit ``letter (transliteration)`` when both
+        present, just letter otherwise.  ``small=y`` and other named
+        args are template-formatting flags, dropped.
+    """
+    # Single-arg unwrap: content rendered verbatim.
+    text = re.sub(
+        r"\{\{\s*(?:Polytonic|Polytoⁿⁱc|Pₒₗyₜₒₙᵢc|polytonic"
+        r"|Greek|arabic|latin|coptic|grc)\s*\|([^{}]*)\}\}",
+        lambda m: m.group(1),
+        text, flags=re.IGNORECASE,
+    )
+    # {{lang|code|content}} — two-arg, emit content (positional[1]).
+    def _lang(m):
+        positional = [p for p in m.group(1).split("|") if "=" not in p]
+        if len(positional) >= 2:
+            return positional[1]
+        if positional:
+            return positional[0]
+        return ""
+    text = re.sub(
+        r"\{\{\s*lang\s*\|([^{}]+)\}\}",
+        _lang, text, flags=re.IGNORECASE,
+    )
+    # {{he|letter[|transliteration]}} — Hebrew with optional
+    # romanization.  Render both when present so readers without
+    # Hebrew get the transliteration in parens.
+    def _he(m):
+        positional = [
+            p.strip() for p in m.group(1).split("|") if "=" not in p
+        ]
+        if len(positional) >= 2:
+            return f"{positional[0]} ({positional[1]})"
+        if positional:
+            return positional[0]
+        return ""
+    text = re.sub(
+        r"\{\{\s*he\s*\|([^{}]+)\}\}",
+        _he, text, flags=re.IGNORECASE,
+    )
+    return text
+
+
 def _convert_lb_dash(text: str) -> str:
     """``{{lb-|N}}`` → ``N lb.`` (N pounds, non-breaking).
 
@@ -171,27 +240,32 @@ def _convert_links(text: str) -> str:
             return f"{_LNK}{display}|{display}{_LNK}"
         return f"{_LNK}{target}|{display}{_LNK}"
 
-    # Unwrap nested {{sc|}} before matching EB1911 article link
+    # Unwrap nested {{sc|}} before matching EB1911 article link.
+    # `\s+` tolerates the double-space typo variant
+    # `{{EB1911 article  link|…}}` (3 corpus hits).
     text = re.sub(
-        r"(\{\{EB1911 article link\|[^}]*)(\{\{sc\|)([^}]*)(\}\})",
+        r"(\{\{EB1911\s+article\s+link\|[^}]*)(\{\{sc\|)([^}]*)(\}\})",
         lambda m: m.group(1) + m.group(3), text, flags=re.IGNORECASE,
     )
     text = re.sub(
-        r"\{\{EB1911 article link\|([^{}]*)\}\}",
+        r"\{\{\s*EB1911\s+article\s+link\s*\|([^{}]*)\}\}",
         _eb1911_link, text, flags=re.IGNORECASE,
     )
 
-    # {{1911link|Target}} or {{1911link|Target|Display}} (and 11link).
-    # Positional args named like `nosc=yes` are template options, not
-    # display text — drop them.
+    # {{1911link|Target}} or {{1911link|Target|Display}} (and 11link,
+    # `1911 article link`).  Positional args named like `nosc=yes` are
+    # template options that can sit BEFORE the target slot — drop all
+    # `name=value` parts first, then take the first remaining positional
+    # as target and the second as display.
     def _link11(m):
-        parts = m.group(1).split("|")
-        target = parts[0].strip()
         positional = [
-            p.strip() for p in parts[1:]
+            p.strip() for p in m.group(1).split("|")
             if p.strip() and "=" not in p
         ]
-        display = positional[0] if positional else target
+        if not positional:
+            return ""
+        target = positional[0]
+        display = positional[1] if len(positional) > 1 else target
         return f"{_LNK}{target}|{display}{_LNK}"
     text = re.sub(
         r"\{\{(?:1911link|11link|EB1911\s+link)\|([^{}]+)\}\}",
@@ -258,8 +332,104 @@ def _convert_links(text: str) -> str:
         _article_link_soft, text, flags=re.IGNORECASE,
     )
 
-    # {{EB1911 lkpl|...}} and {{DNB lkpl|...}}
-    def _lkpl(m):
+    # {{EB1911 intra-article link|Target[|Display]}} — Wikisource template
+    # that links to ANOTHER EB1911 article (despite the misleading "intra-
+    # article" name).  Target is first arg; display defaults to target.
+    # Same hard-link marker shape as `EB1911 article link` — xref resolver
+    # (stage 3a) picks them up cross-volume.  Distinct from `EB9 intra-
+    # article link` (which is 9th-edition target-first with arg2 as
+    # section name, soft-linked).
+    def _eb1911_intra(m):
+        positional = [p.strip() for p in m.group(1).split("|")
+                      if p.strip() and "=" not in p]
+        if not positional:
+            return ""
+        target = positional[0]
+        display = positional[1] if len(positional) > 1 else target
+        return f"{_LNK}{target}|{display}{_LNK}"
+    text = re.sub(
+        r"\{\{\s*EB1911\s+intra[- ]article\s+link\s*\|([^{}]+)\}\}",
+        _eb1911_intra, text, flags=re.IGNORECASE,
+    )
+
+    # {{1911 article link|[nosc=N|]Target[|Display]}} — sibling of
+    # `{{1911link|…}}` / `{{11link|…}}` with a longer name.  Same
+    # target-first / display-second convention; `nosc=…` is a template-
+    # option flag (drop, not display).
+    text = re.sub(
+        r"\{\{\s*1911\s+article\s+link\s*\|([^{}]+)\}\}",
+        _link11, text, flags=re.IGNORECASE,
+    )
+
+    # {{9link|Target}} — Wikisource short-form 9th-edition link, target-
+    # only.  Same soft-link semantics as `{{EB9link|…}}` — emit
+    # `«EB9:Target|Target«/EB9»`, xref export resolves to a real link
+    # when a corpus counterpart exists, falls back to plain display
+    # otherwise.
+    def _9link(m):
+        positional = [p.strip() for p in m.group(1).split("|")
+                      if p.strip() and "=" not in p]
+        if not positional:
+            return ""
+        target = positional[0]
+        display = positional[1] if len(positional) > 1 else target
+        return _soft_link(target, display)
+    text = re.sub(
+        r"\{\{\s*9link\s*\|([^{}]+)\}\}",
+        _9link, text, flags=re.IGNORECASE,
+    )
+
+    # {{CE lkpl|Target[|Display][|text=Display]}} — Catholic Encyclopedia
+    # link.  Target-first like `{{EB1911 lkpl|…}}` but the work being
+    # cited is external (CE has no per-article EB1911 counterpart most
+    # of the time), so emit a soft link via `_soft_link` rather than a
+    # hard `«LN:` marker.  Supports both positional `|Display` and the
+    # named `|text=Display` form the corpus uses interchangeably.
+    def _ce_lkpl(m):
+        parts = m.group(1).split("|")
+        target = parts[0].strip()
+        # Look for `text=` named arg first, then fall back to first
+        # non-empty positional after the target.
+        display = None
+        for p in parts[1:]:
+            if p.strip().lower().startswith("text="):
+                display = p.split("=", 1)[1].strip()
+                break
+        if display is None:
+            display = next(
+                (p.strip() for p in parts[1:] if p.strip() and "=" not in p),
+                target,
+            )
+        return _soft_link(target, display)
+    text = re.sub(
+        r"\{\{\s*CE\s+lkpl\s*\|([^{}]+)\}\}",
+        _ce_lkpl, text, flags=re.IGNORECASE,
+    )
+
+    # {{cite|Work title[|Subtitle]}} — Wikisource bibliography cite.  The
+    # work being cited is external (rarely an EB1911 article), so we
+    # don't emit any link marker — just unwrap to the inner content,
+    # preserving any nested `[[wikilink]]` to a Wikisource source page.
+    # Replaces silent deletion via `_strip_templates` (~29 corpus hits,
+    # all content-loss).
+    def _cite(m):
+        # The whole content joined back — cite is structurally just
+        # typographic emphasis on a work title; inner wikilinks /
+        # italics survive downstream handlers.
+        return m.group(1).strip()
+    text = re.sub(
+        r"\{\{\s*cite\s*\|((?:[^{}]|\{\{[^{}]*\}\}|\[\[[^\]]*\]\])+)\}\}",
+        _cite, text, flags=re.IGNORECASE,
+    )
+
+    # {{EB1911 lkpl|...}}, {{DNB lkpl|...}}, {{EB9 lkpl|...}} — Wikisource
+    # link-with-display-text-and-target templates.  `EB1911`/`DNB` get a
+    # hard `«LN:` marker (xref resolver looks for cross-volume EB1911
+    # articles); `EB9` falls through to a soft `«EB9:` marker because
+    # the 9th edition is a different work without a per-article counterpart
+    # in our corpus.  Outer `\s*` + name-internal `\s+` tolerate the
+    # double-space typo `{{EB1911  lkpl|…}}` (2 corpus hits).
+    def _lkpl_hard(m):
         parts = m.group(1).split("|")
         target = parts[0].strip()
         # Display is the first non-empty parameter after the target;
@@ -268,8 +438,18 @@ def _convert_links(text: str) -> str:
         display = next((p.strip() for p in parts[1:] if p.strip()), target)
         return f"{_LNK}{target}|{display}{_LNK}"
     text = re.sub(
-        r"\{\{(?:EB1911|DNB)\s+lkpl\|([^{}]+)\}\}",
-        _lkpl, text, flags=re.IGNORECASE,
+        r"\{\{\s*(?:EB1911|DNB)\s+lkpl\s*\|([^{}]+)\}\}",
+        _lkpl_hard, text, flags=re.IGNORECASE,
+    )
+
+    def _eb9_lkpl(m):
+        parts = m.group(1).split("|")
+        target = parts[0].strip()
+        display = next((p.strip() for p in parts[1:] if p.strip()), target)
+        return _soft_link(target, display)
+    text = re.sub(
+        r"\{\{\s*EB9\s+lkpl\s*\|([^{}]+)\}\}",
+        _eb9_lkpl, text, flags=re.IGNORECASE,
     )
 
     # [[wikilinks]] — handle nested brackets
@@ -1087,6 +1267,7 @@ def _apply_markup(text: str) -> str:
     text = normalize_unicode(text)
     text = replace_print_artifacts(text)
     text = _convert_hieroglyphs(text)
+    text = _convert_foreign_script(text)
     # Order: content-BEARING template handlers (dual_line, overline,
     # lb-, sp) run AFTER `_convert_sub_sup` and the iterative-unwrap
     # loop below, so their content is brace-free when matched.
