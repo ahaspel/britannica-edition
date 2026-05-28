@@ -126,25 +126,6 @@ def _convert_zero_pad(text: str) -> str:
     )
 
 
-def _convert_sfrac(text: str) -> str:
-    """``{{sfrac|num|den}}`` -> ``num/den``.  EB1911 inline-fraction
-    template (variants: ``sfrac``, ``sfrac nobar``, ``frac``).  May
-    carry a leading ``font-size=...`` styling param which we drop.
-    ~150 corpus instances across the variants.  Math-grade rendering
-    is left for the math pipeline; this is the body-text fallback."""
-    def _repl(m):
-        body = m.group(1)
-        parts = [p.strip() for p in body.split("|")]
-        parts = [p for p in parts if not p.lower().startswith("font-size")]
-        if len(parts) < 2:
-            return parts[0] if parts else ""
-        return f"{parts[0]}/{parts[1]}"
-    return re.sub(
-        r"\{\{\s*(?:sfrac(?:\s+nobar)?|frac)\s*\|([^{}]*)\}\}",
-        _repl, text, flags=re.IGNORECASE,
-    )
-
-
 def _convert_anchor_plus(text: str) -> str:
     """``{{anchor+|Name}}`` -> empty.  EB1911 anchor template — sets
     a cross-reference target with no visible output.  73 corpus
@@ -399,9 +380,18 @@ def _unwrap_content_templates(text: str) -> str:
     # Bare ``{{fqm}}`` defaults to a curly opening double-quote.
     text = re.sub(r"\{\{fqm\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{fqm\}\}", "\u201c", text, flags=re.IGNORECASE)
-    # Fractions. {{sfrac|a|b}} = {{EB1911 tfrac|a|b}} = a/b.
-    # Single-arg form {{sfrac|a}} = {{EB1911 tfrac|a}} = 1/a.
-    # Render common ones as Unicode vulgar fractions; rest as "a/b".
+    # Inline fraction typography.  Variants share a single rendering
+    # contract (num/den as plain text, vulgar Unicode where available):
+    # `{{sfrac|n|d}}`, `{{sfrac nobar|n|d}}`, `{{frac|n|d}}`,
+    # `{{mfrac|i|n|d}}` (mixed fraction), `{{over|n|d}}`,
+    # `{{sfracN|n|d}}`, `{{EB1911 sfrac|n|d}}`, `{{EB1911 tfrac|n|d}}`,
+    # and the unicode-name variants `{{EB\u00b9\u2079\u00b9\u00b9 sfrac|...}}` /
+    # `{{EB\u00b9\u2079\u00b9\u00b9 tfrac|...}}` / `{{EB\u2081\u2089\u2081\u2081 \u209cf\u1d63\u2090c|...}}`.  Three positional
+    # arg shapes: 3-arg \u2192 integer + num/den (mixed), 2-arg \u2192 num/den,
+    # 1-arg \u2192 1/n.  Named-param styling args (`font-size=\u2026`,
+    # `color=\u2026`) are dropped.  Fixed-point loop because nested
+    # variants resolve outer-in (`{{sfrac|f-s=100%|x {{EB1911 tfrac|2|3}}|y}}`
+    # \u2014 inner tfrac must resolve before outer sfrac's regex matches).
     _VULGAR = {
         ("1", "2"): "\u00bd", ("1", "4"): "\u00bc", ("3", "4"): "\u00be",
         ("1", "3"): "\u2153", ("2", "3"): "\u2154",
@@ -414,11 +404,31 @@ def _unwrap_content_templates(text: str) -> str:
     def _frac(num, den):
         return _VULGAR.get((num.strip(), den.strip()),
                            f"{num.strip()}/{den.strip()}")
-    # Strip named-param args (``|font-size=100%``, ``|color=red``, …)
-    # from sfrac before positional-arg extraction. MediaWiki sfrac
-    # accepts styling overrides as named args; without this they fall
-    # into the integer/numerator slot and leak as literal text.
-    def _strip_sfrac_named_args(m: re.Match) -> str:
+    # Name alternation shared across the three arg-shape regexes below.
+    # The two-token names (`EB1911 sfrac`, etc.) need `\s+` between
+    # tokens; `sfrac` matches as a prefix so multi-token variants are
+    # spelled out to avoid `sfrac` swallowing `sfrac nobar` as just
+    # `sfrac` with `nobar` falling into the integer slot.
+    _FRAC_NAMES = (
+        r"sfrac\s+nobar"
+        r"|sfracN"
+        r"|sfrac"
+        r"|mfrac"
+        r"|frac"
+        r"|over"
+        r"|EB1911\s+sfrac"
+        r"|EB1911\s+tfrac"
+        r"|EB\u00b9\u2079\u00b9\u00b9\s+sfrac"
+        r"|EB\u00b9\u2079\u00b9\u00b9\s+tfrac"
+        r"|EB\u2081\u2089\u2081\u2081\s+\u209cf\u1d63\u2090c"
+    )
+    _FRAC_TOKEN_RE = re.compile(
+        r"\{\{\s*(?:" + _FRAC_NAMES + r")\b", re.IGNORECASE)
+
+    def _strip_frac_named_args(m: re.Match) -> str:
+        """Drop `name=value` styling args (`font-size=100%`, `color=\u2026`)
+        from a matched fraction template so positional-arg extraction
+        below sees only numerator/denominator/integer slots."""
         template = m.group(0)
         inner = template[2:-2]
         parts = inner.split("|")
@@ -426,38 +436,30 @@ def _unwrap_content_templates(text: str) -> str:
                                  if not re.match(r"^[a-zA-Z_-]+=", p)]
         return "{{" + "|".join(cleaned) + "}}"
 
-    # Loop sfrac resolution to fixed point — nested forms like
-    # ``{{sfrac|font-size=100%|X {{EB1911 tfrac|2|3}}|Y}}`` need the
-    # inner tfrac to resolve first, then the outer sfrac to re-match
-    # once its braces are no longer nested. Without iteration the outer
-    # survives my regexes and gets wiped by the catch-all template
-    # stripper at line ~440, dropping the entire formula's LHS.
-    _SFRAC_TOKEN_RE = re.compile(r"\{\{(?:sfrac|EB1911 tfrac)\b",
-                                  re.IGNORECASE)
     for _ in range(8):
-        if not _SFRAC_TOKEN_RE.search(text):
+        if not _FRAC_TOKEN_RE.search(text):
             break
         before = text
         text = re.sub(
-            r"\{\{(?:sfrac|EB1911 tfrac)\|[^{}]*\}\}",
-            _strip_sfrac_named_args,
+            r"\{\{(?:" + _FRAC_NAMES + r")\|[^{}]*\}\}",
+            _strip_frac_named_args,
             text, flags=re.IGNORECASE,
         )
-        # Three-arg sfrac: {{sfrac|integer|num|den}} → "integer num/den"
+        # Three-arg form: integer + num/den (mixed fraction).
         text = re.sub(
-            r"\{\{(?:sfrac|EB1911 tfrac)\|([^{}|]*)\|([^{}|]*)\|([^{}|]*)\}\}",
+            r"\{\{(?:" + _FRAC_NAMES + r")\|([^{}|]*)\|([^{}|]*)\|([^{}|]*)\}\}",
             lambda m: f"{m.group(1).strip()}{_frac(m.group(2), m.group(3))}",
             text, flags=re.IGNORECASE,
         )
-        # Two-arg: {{sfrac|num|den}} → num/den
+        # Two-arg form: num/den.
         text = re.sub(
-            r"\{\{(?:sfrac|EB1911 tfrac)\|([^{}|]*)\|([^{}|]*)\}\}",
+            r"\{\{(?:" + _FRAC_NAMES + r")\|([^{}|]*)\|([^{}|]*)\}\}",
             lambda m: _frac(m.group(1), m.group(2)),
             text, flags=re.IGNORECASE,
         )
-        # One-arg: {{sfrac|N}} → 1/N
+        # One-arg form: 1/n.
         text = re.sub(
-            r"\{\{(?:sfrac|EB1911 tfrac)\|([^{}|]*)\}\}",
+            r"\{\{(?:" + _FRAC_NAMES + r")\|([^{}|]*)\}\}",
             lambda m: _frac("1", m.group(1)),
             text, flags=re.IGNORECASE,
         )
@@ -475,39 +477,12 @@ def _unwrap_content_templates(text: str) -> str:
     # Blackletter → Unicode Mathematical Fraktur
     text = re.sub(r"\{\{[Bb]lackletter\|([^{}]*)\}\}",
                   lambda m: _to_fraktur(m.group(1)), text)
-    # Numbered equations: {{ne||content|(N)}} → an «EQN»-marked
-    # labeled display block.  The viewer renders the content (which
-    # may be a `<math>` block OR italic-text like `''pv''=RT`) as a
-    # centred display equation with the label `(N)` floated to the
-    # right margin.  Wrap with `\n\n` so the equation always sits on
-    # its own paragraph — `{{ne}}` typically appears on a single
-    # source line between prose sentences (one `\n` either side),
-    # which reflow_paragraphs would otherwise glue back into prose.
-    def _ne_labeled(m: re.Match) -> str:
-        content = m.group(1).strip()
-        raw_label = m.group(2).strip()
-        # Source convention is `(N)` — strip the parens so the label
-        # marker holds just the content, mirroring the MATH_PARA_RE
-        # capture style used for multi-row rowspan systems.  Trailing
-        # spacing entities (`&ensp;`, `&nbsp;`) are dropped.
-        paren = re.match(r"\(([^()]+)\)", raw_label)
-        label = (paren.group(1) if paren else raw_label).strip()
-        # Strip wikitext italic markers (``''``) from labels.  The label
-        # is emitted as ``«EQN:LABEL»content«/EQN»``; if the italic
-        # span survives to the later italic-conversion pass, ``''a''``
-        # becomes ``«I»a«/I»`` and the EQN open-marker's trailing ``»``
-        # collides with the italic ``»`` of the label.  Viewer parses
-        # the label up to the first ``»``, splitting ``10«I»a«/I»`` into
-        # label=``10«I`` and stranding ``a«/I»`` onto the content.
-        # ORDNANCE p244 (10''a''): canonical form for equation labels
-        # is plain text — italic styling on a label is decorative noise.
-        label = label.replace("''", "")
-        return f"\n\n«EQN:{label}»{content}«/EQN»\n\n"
-
-    text = re.sub(r"\{\{ne\|\|([^{}|]*(?:\{\{[^{}]*\}\}[^{}|]*)*)\|([^{}]*)\}\}",
-                  _ne_labeled, text, flags=re.IGNORECASE)
-    text = re.sub(r"\{\{ne\|\|([^{}]*(?:\{\{[^{}]*\}\}[^{}]*)*)\}\}",
-                  r"\n\n\1\n\n", text, flags=re.IGNORECASE)
+    # Numbered equations `{{ne|...}}` and labeled-equation templates
+    # (`{{equation|...}}`, `{{MathForm1|...}}`) are now lifted at the
+    # walker as MATH_NE / MATH_EQUATION / MATH_FORMULA_LABELED elements
+    # and rendered by the math producers — `«EQN:LABEL»content«/EQN»`
+    # markers come back substituted into body prose with `\n\n` margins
+    # the producer applies.
     # {{sans-serif|content}} — metalinguistic letter typography: the
     # source visually distinguishes letters being discussed as letters
     # (the letter "A" qua letter) from running prose by wrapping them
@@ -932,16 +907,22 @@ def _unwrap_layout_templates(text: str) -> str:
 
 
 def _convert_sub_sup(text: str) -> str:
-    """`<sub>x</sub>`/`<sup>x</sup>` AND the `{{sub|x}}`/`{{sup|x}}` template
-    forms → Unicode subscript / superscript.
+    """`<sub>x</sub>`/`<sup>x</sup>` AND the `{{sub|x}}`/`{{sup|x}}`
+    template forms → Unicode subscript / superscript.
 
-    The template forms were previously left for the catch-all `_strip_templates`
-    pass, which deleted them outright — silently losing ~7000 sub/superscripts
-    across 195 articles (chemistry formulae `C{{sub|4}}H{{sub|9}}O{{sub|4}}` →
-    `CHO`; math variables/exponents `r{{sub|12}}` → `r`, `x{{sup|2}}` → `x`).
-    Normalise them to the HTML form first so the existing conversion renders
-    them.  (Surfaced by routing chemistry reactions to a focused producer — see
-    [[current-output-not-oracle]].)
+    Sub/sup are typography (chem subscripts, math exponents, French
+    ordinals, footnote markers) — NOT math.  This function owns both
+    syntactic forms: it first rewrites the template form to the HTML
+    form, then translates the HTML span.  Lifting templates here
+    instead of at the walker keeps the volume of small inline elements
+    out of the classifier/producer dispatch.
+
+    Element placeholders (``\\x03ELEM:N\\x03``) inside the matched
+    HTML span are preserved verbatim — their digit IDs would otherwise
+    be translated to Unicode superscripts and break the marker
+    substitution.  STEAM_ENGINE's nozzle equation has
+    ``D<sup>{{sfrac|1|n}}</sup>`` — the inner sfrac is a walker
+    element placeholder; only the surrounding chars get translated.
     """
     text = re.sub(r"\{\{\s*sub\s*\|([^{}]*)\}\}", r"<sub>\1</sub>",
                   text, flags=re.IGNORECASE)
@@ -949,17 +930,33 @@ def _convert_sub_sup(text: str) -> str:
                   text, flags=re.IGNORECASE)
     _SUB = str.maketrans("0123456789+-=()", "₀₁₂₃₄₅₆₇₈₉₊₋₌₍₎")
     _SUP = str.maketrans("0123456789+-=()", "⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾")
+    _PLACEHOLDER_SPAN = re.compile(r"\x03[^\x03]*\x03")
 
     def _strip_wiki_format(s):
         """Strip bold/italic markers from sub/sup content."""
         return (s.replace("«B»", "").replace("«/B»", "")
                  .replace("«I»", "").replace("«/I»", ""))
 
+    def _translate_around_placeholders(s: str, table) -> str:
+        """Apply ``str.translate(table)`` to every non-placeholder span,
+        leaving ``\\x03ELEM:N\\x03`` placeholders verbatim so their
+        digit IDs survive for the marker-substitution pass."""
+        parts = []
+        last = 0
+        for m in _PLACEHOLDER_SPAN.finditer(s):
+            parts.append(s[last:m.start()].translate(table))
+            parts.append(m.group(0))
+            last = m.end()
+        parts.append(s[last:].translate(table))
+        return "".join(parts)
+
     def _sub_repl(m):
-        return _strip_wiki_format(m.group(1)).translate(_SUB)
+        return _translate_around_placeholders(
+            _strip_wiki_format(m.group(1)), _SUB)
 
     def _sup_repl(m):
-        return _strip_wiki_format(m.group(1)).translate(_SUP)
+        return _translate_around_placeholders(
+            _strip_wiki_format(m.group(1)), _SUP)
 
     text = re.sub(r"<sub>([^<]*)</sub>", _sub_repl, text, flags=re.IGNORECASE)
     text = re.sub(r"<sup>([^<]*)</sup>", _sup_repl, text, flags=re.IGNORECASE)

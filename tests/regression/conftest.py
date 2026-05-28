@@ -10,6 +10,7 @@ from sqlalchemy.orm import sessionmaker
 from britannica.db.base import Base
 from britannica.db.models import Article, ArticleSegment, SourcePage  # noqa: F401
 from britannica.pipeline.stages import detect_boundaries as detect_boundaries_stage
+from britannica.pipeline.stages import super_detect as super_detect_stage
 from britannica.pipeline.stages import transform_articles as transform_articles_stage
 from britannica.pipeline.stages.prepare_wikitext import _convert_quote_runs
 
@@ -62,10 +63,16 @@ def _seed_pages(session_factory, pages_data: list[dict], volume: int):
 
 def _run_pipeline(monkeypatch, session_factory, pages_data, volume):
     """Seed pages and run detect_boundaries → transform_articles, matching the real pipeline."""
+    # `detect_boundaries` lives in super_detect.py (renamed from
+    # super_detect_boundaries last session); `persist_articles` /
+    # `wipe_articles` still live in detect_boundaries.py.  Both modules
+    # need their `SessionLocal` patched so the test DB is used.
     monkeypatch.setattr(detect_boundaries_stage, "SessionLocal", session_factory)
+    monkeypatch.setattr(super_detect_stage, "SessionLocal", session_factory)
     monkeypatch.setattr(transform_articles_stage, "SessionLocal", session_factory)
     _seed_pages(session_factory, pages_data, volume)
-    detect_boundaries_stage.persist_articles(detect_boundaries_stage.detect_boundaries(volume))
+    detect_boundaries_stage.persist_articles(
+        super_detect_stage.detect_boundaries(volume))
     transform_articles_stage.transform_articles(volume)
 
 
