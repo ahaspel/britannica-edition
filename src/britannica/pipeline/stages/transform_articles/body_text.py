@@ -142,12 +142,20 @@ def _convert_lb_dash(text: str) -> str:
     per yard`` (RAILWAYS), ``it weighs {{Lb-|120,000}}`` (PEKING).
     446 corpus instances previously dropped by ``_strip_templates``,
     losing the unit and the number both.
+
+    Bare form ``{{lb-}}`` (no arg) is the unit symbol alone, attached
+    to a preceding number on the text-side: ``quarters of 480
+    {{lb-}}`` (IRON AND STEEL) → ``quarters of 480 lb``; ``112
+    {{lb-}}<br>(546.852 kg.)`` (fire-resistance tables) → ``112 lb<br>
+    (546.852 kg.)``.  54 additional corpus instances.
     """
-    return re.sub(
+    text = re.sub(
         r"\{\{\s*lb-\s*\|\s*([^{}|]+?)\s*\}\}",
         lambda m: f"{m.group(1).strip()} lb",
         text, flags=re.IGNORECASE,
     )
+    text = re.sub(r"\{\{\s*lb-\s*\}\}", "lb", text, flags=re.IGNORECASE)
+    return text
 
 
 def _convert_overline(text: str) -> str:
@@ -184,15 +192,61 @@ def _convert_spaces(text: str) -> str:
 
 
 def _convert_zero_pad(text: str) -> str:
-    """``{{0|TEXT}}`` -> empty.  EB1911 invisible-padding template:
-    renders TEXT as transparent-width spacing for column alignment in
-    tables (``{{0|IIV}}I.`` aligns ``I.`` so its tail lines up with a
-    sibling ``IIV.``).  Once flattened into body prose the alignment
-    is irrelevant; emit nothing.  247 corpus instances."""
-    return re.sub(
-        r"\{\{\s*0\s*\|[^{}|]*\}\}",
-        "", text,
+    """``{{0}}`` / ``{{0|TEXT}}`` -> empty.  EB1911 invisible-padding
+    template: MediaWiki renders the digit ``0`` (or TEXT, when arg
+    supplied) at zero width — a glyph that occupies a numeric-figure's
+    width in print typography for column alignment, but is visually
+    absent.  Bare form is used as right-pad in numeric table columns
+    (``||{{0}}3,410,756||`` aligns under ``||1,768,781||``); arg form
+    pads with custom text (``{{0|IIV}}I.``).  In HTML with proportional
+    fonts the alignment function is meaningless either way; emit
+    nothing.  247 arg-form + 106 bare-form corpus instances."""
+    text = re.sub(r"\{\{\s*0\s*\|[^{}|]*\}\}", "", text)
+    text = re.sub(r"\{\{\s*0\s*\}\}", "", text)
+    return text
+
+
+def _convert_dotted_toc(text: str) -> str:
+    """``{{Dotted TOC line|N|LABEL|VALUE|…}}`` and
+    ``{{Dotted TOC page listing|...|entrytext=X|pagetext=Y}}`` →
+    space-separated text from the content args.
+
+    Despite the template name these are NOT used for tables of contents
+    in EB1911 articles (articles don't have TOCs) — they're a
+    typographic primitive for dotted-leader enumeration rows.  COUNCIL
+    (vol 7) uses them for a list of ecumenical councils with dates,
+    FISHERIES (vol 10) for a country/fleet-count table, SUGAR (vol 26)
+    for production figures.  Print rendering connects label and value
+    with dot leaders (``1. Nicaea I. ........ 325``); we drop the
+    leader styling and emit the label/value content space-joined so
+    the figures survive in prose form.  47 + 5 corpus instances
+    previously dropped whole by ``_strip_templates``.
+    """
+    def _line(m: re.Match) -> str:
+        parts = [p.strip() for p in m.group(1).split("|")
+                 if "=" not in p]
+        return " ".join(p for p in parts if p)
+    text = re.sub(
+        r"\{\{\s*Dotted\s+TOC\s+line\s*\|([^{}]*)\}\}",
+        _line, text, flags=re.IGNORECASE,
     )
+    # `Dotted TOC page listing` uses named args (`entrytext=`,
+    # `pagetext=`) for label/value.  Extract those by name.
+    def _listing(m: re.Match) -> str:
+        body = m.group(1)
+        entry = re.search(r"entrytext\s*=\s*([^|}]*)", body, re.IGNORECASE)
+        page = re.search(r"pagetext\s*=\s*([^|}]*)", body, re.IGNORECASE)
+        parts = []
+        if entry and entry.group(1).strip():
+            parts.append(entry.group(1).strip())
+        if page and page.group(1).strip():
+            parts.append(page.group(1).strip())
+        return " ".join(parts)
+    text = re.sub(
+        r"\{\{\s*Dotted\s+TOC\s+page\s+listing\s*\|([^{}]*)\}\}",
+        _listing, text, flags=re.IGNORECASE,
+    )
+    return text
 
 
 def _convert_anchor_plus(text: str) -> str:
@@ -481,13 +535,10 @@ def _convert_links(text: str) -> str:
 
 
 def _convert_small_caps(text: str) -> str:
-    """{{sc|text}}, {{asc|text}} → «SC»text«/SC»"""
+    """{{sc|text}}, {{asc|text}}, {{smallcaps|text}}, {{small caps|text}}
+    → «SC»text«/SC»"""
     text = re.sub(
-        r"\{\{sc\|([^{}]*)\}\}",
-        f"{_FMT}SC\\1{_FMT}/SC", text, flags=re.IGNORECASE,
-    )
-    text = re.sub(
-        r"\{\{asc\|([^{}]*)\}\}",
+        r"\{\{\s*(?:sc|asc|smallcaps|small\s+caps)\s*\|([^{}]*)\}\}",
         f"{_FMT}SC\\1{_FMT}/SC", text, flags=re.IGNORECASE,
     )
     return text
@@ -691,6 +742,22 @@ def _unwrap_content_templates(text: str) -> str:
     # {{shy}} — soft hyphen (U+00AD): invisible, marks an acceptable
     # hyphenation point.  Preserve as the actual soft-hyphen char.
     text = re.sub(r"\{\{\s*shy\s*\}\}", "­", text, flags=re.IGNORECASE)
+    # Single-char escapes — Wikisource uses `{{X}}` to embed literal
+    # characters that would otherwise be parsed as template / wikitable
+    # syntax.  Each renders to its literal char; previously falling to
+    # `_strip_templates` and losing the char entirely.  Corpus counts
+    # (post-prior-cleanups audit): `(` 24, `)` 24, `'` 22, `!` 15,
+    # `*` 3 — and the spaced-dots `***` 4, `…` 7, `. . .` 2.
+    text = re.sub(r"\{\{\s*\(\s*\}\}", "(", text)
+    text = re.sub(r"\{\{\s*\)\s*\}\}", ")", text)
+    text = re.sub(r"\{\{\s*'\s*\}\}", "'", text)
+    text = re.sub(r"\{\{\s*!\s*\}\}", "|", text)
+    text = re.sub(r"\{\{\s*\*\s*\}\}", "*", text)
+    text = re.sub(r"\{\{\s*…\s*\}\}", "…", text)
+    text = re.sub(r"\{\{\s*\.\s*\.\s*\.\s*\}\}", "...", text)
+    # `{{***|N}}` — typographic ornamental break (3+ asterisks centered).
+    # The `|N` arg controls width; we emit a literal `***` separator.
+    text = re.sub(r"\{\{\s*\*\*\*\s*(?:\|[^{}]*)?\}\}", "***", text)
     # {{...|N}} — ellipsis with optional spacing arg; render as plain
     # `...` regardless of arg.  (Different from {{...}} bare, which is
     # already handled in _unwrap_content_templates' fixed-point loop.)
@@ -701,10 +768,17 @@ def _unwrap_content_templates(text: str) -> str:
     # The pair's second arg is the FULL word.  In our linear rendering
     # (no page boundaries), hws emits the full word once; hwe drops
     # (the full word was already emitted by its hws partner).
-    text = re.sub(r"\{\{\s*hws\s*\|[^{}|]*\|([^{}]*)\}\}", r"\1",
-                  text, flags=re.IGNORECASE)
-    text = re.sub(r"\{\{\s*hwe\s*\|[^{}|]*\|[^{}]*\}\}", "",
-                  text, flags=re.IGNORECASE)
+    #
+    # Long-form names `{{hyphenated word start|…}}` and `{{hyphenated
+    # word end|…}}` are aliases — same arg convention.  Previously
+    # falling to `_strip_templates`, losing both the word fragment
+    # AND the word join (~35 audit hits across the corpus).
+    text = re.sub(
+        r"\{\{\s*(?:hws|hyphenated\s+word\s+start)\s*\|[^{}|]*\|([^{}]*)\}\}",
+        r"\1", text, flags=re.IGNORECASE)
+    text = re.sub(
+        r"\{\{\s*(?:hwe|hyphenated\s+word\s+end)\s*\|[^{}|]*\|[^{}]*\}\}",
+        "", text, flags=re.IGNORECASE)
     # {{SIC|wrong|right}} — source-error annotation.  Render the
     # wrong-as-printed text followed by `[sic]` so the reader sees
     # both the source's actual content and a typographic notice.
@@ -794,6 +868,39 @@ def _unwrap_content_templates(text: str) -> str:
     text = re.sub(
         r"<p\s+\{\{[Tt]s\|([^}]*)\}\}[^>]*>(.*?)</p>",
         _p_ts, text, flags=re.DOTALL)
+    # `<div {{Ts|…}}>content</div>` — sibling of the `<p {{Ts|…}}>`
+    # handler above for the `<div>` variant of the same shape: an HTML
+    # block wrapper around flowing prose whose attributes are packed in
+    # the `Ts` template (text-indent, sm92, lh12, ac, …).  Same logic:
+    # `ac` → «CTR» marker, else unwrap-only (presentation lost in
+    # flowing HTML).  167 corpus instances of pure-prose `<div>`
+    # wrappers (taxonomic enumerations like SUBORDER lists, dairy
+    # cleanliness rules under MILK, scholarly small-type asides).
+    # The 6 image-bearing variants reach this stage as walker FIGURE
+    # extracts (via `html_ts_figure_end`) and never appear here.
+    # The `(?P<attrs>[^>{}]*?)` slot between `<div\s+` and `{{Ts|…}}`
+    # tolerates other HTML attributes — ~108 corpus instances of
+    # CRYSTALLOGRAPHY-style `<div align=center {{Ts|pt1|lg}}>…</div>`
+    # (centred boldface system-name headings between sections) carry
+    # `align=center` before the `Ts` block.  `[^>{}]` keeps the match
+    # inside the opener tag (no crossing `>`) and outside any nested
+    # template (no crossing `{`).  Center-signal is read from either
+    # an `ac` code OR an `align=center`/`text-align:center` attr in
+    # the prefix slot.
+    def _div_ts(m: re.Match) -> str:
+        attrs = m.group("attrs")
+        codes = re.split(r"[|\s]+", m.group("codes").lower().strip())
+        content = m.group("content").strip()
+        centered = "ac" in codes or re.search(
+            r"""align\s*=\s*['"]?center|text-align\s*:\s*center""",
+            attrs, re.IGNORECASE,
+        )
+        return f"«CTR»{content}«/CTR»" if centered else content
+    text = re.sub(
+        r"<div\s+(?P<attrs>[^>{}]*?)\{\{[Tt]s\|(?P<codes>[^}]*)\}\}"
+        r"[^>]*>(?P<content>.*?)</div>",
+        _div_ts, text, flags=re.DOTALL,
+    )
     # {{brace2|N|side}} — vertical or horizontal grouping brace.  Two
     # distinct uses (corpus-audited 2026-05-26, task #31):
     #   * Multi-row (N≥2) inside wikitables: row-grouping brace.  May
@@ -821,6 +928,47 @@ def _unwrap_content_templates(text: str) -> str:
                             lambda inner: f"{_FMT}XXL{inner}{_FMT}/XXL")
     text = _unwrap_balanced(text, "x-larger",
                             lambda inner: f"{_FMT}XL{inner}{_FMT}/XL")
+    # Inline typography wrappers — content carriers previously falling
+    # to `_strip_templates`, so the catch-all deleted both wrapper and
+    # content. Corpus-audit counts (2026-05-28): bold 2 (with nested
+    # {{Greek|…}}), bl 30, smb 31, nw 24, di 16, x-smaller 40,
+    # word-spacing 36.
+    #
+    # `bold`, `bl`, `smb` — bold variants. `bl|X` is a bold single
+    # letter (math/table label), `smb|X` small bold; both reduce to
+    # «B»…«/B» (the small-bold size distinction is lost — present
+    # `«B»` is the only bold marker we carry).
+    text = _unwrap_balanced(text, "bold",
+                            lambda inner: f"{_FMT}B{inner}{_FMT}/B")
+    text = re.sub(r"\{\{\s*(?:bl|smb)\s*\|([^{}]*)\}\}",
+                  lambda m: f"{_FMT}B{m.group(1)}{_FMT}/B",
+                  text, flags=re.IGNORECASE)
+    # `nw|TEXT` (no-wrap: typographic hint that TEXT shouldn't break
+    # across a line) and `di|X` (drop-initial: decorative large
+    # opening letter at section start) — both content-pass-through
+    # with presentation lost in flowing HTML.  Unwrap to content.
+    text = re.sub(r"\{\{\s*(?:nw|di)\s*\|([^{}]*)\}\}",
+                  r"\1", text, flags=re.IGNORECASE)
+    # `x-smaller|TEXT` — small typography (smaller-than-small; used
+    # for parenthetical inline labels like `{{x-smaller|[HISTORY}}`
+    # in HISTORY-tagged article headers).  No marker for this size;
+    # unwrap to content.
+    text = re.sub(r"\{\{\s*x-smaller\s*\|([^{}]*)\}\}",
+                  r"\1", text, flags=re.IGNORECASE)
+    # `word-spacing|Npx|TEXT` — extra inter-word spacing (typography).
+    # Lost in flowing HTML; unwrap second arg.
+    text = re.sub(r"\{\{\s*word-spacing\s*\|[^{}|]*\|([^{}]*)\}\}",
+                  r"\1", text, flags=re.IGNORECASE)
+    # `rule|...` — same N-em rule as {{bar|N}}, alternate template.
+    # Two arg forms in corpus: `{{rule|4em}}` (em-suffix) and
+    # `{{rule|width=12em}}` (named arg).  Strip non-digit suffix to
+    # reuse the BAR[N] marker the viewer already renders.
+    def _rule_to_bar(m: re.Match) -> str:
+        arg = m.group(1)
+        digits = re.search(r"(\d+)", arg)
+        return f"{_FMT}RULE[{digits.group(1)}]" if digits else ""
+    text = re.sub(r"\{\{\s*rule\s*\|([^{}]*)\}\}",
+                  _rule_to_bar, text, flags=re.IGNORECASE)
     # {{bar|N}} — N-em horizontal rule, used for column-sum underlines
     # in tables (AFRICA / GREAT BRITAIN territorial summaries) and a few
     # other inline-rule contexts.  Single numeric arg, no content;
@@ -1278,6 +1426,7 @@ def _apply_markup(text: str) -> str:
     # nesting and can run here.
     text = _convert_spaces(text)
     text = _convert_zero_pad(text)
+    text = _convert_dotted_toc(text)
     text = _convert_anchor_plus(text)
     # `_convert_sfrac` deliberately NOT called: the single-arg form
     # `{{sfrac|n}}` was emerging from the catch-all in a way that

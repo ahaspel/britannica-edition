@@ -328,6 +328,15 @@ _IMG_IN = re.compile(
 _HTML_WRAP_OPEN = re.compile(
     r"<(?P<tag>span|div)\b[^>]*\bfloat\s*:[^>]*>", re.IGNORECASE)
 
+# Sibling of `_HTML_WRAP_OPEN`: a `<div/span>` wrapper that carries
+# styling via a `{{Ts|…}}` template instead of an inline `float:` style.
+# CATACOMB ``<div {{Ts|ac|sm92|lh12}}>[[File:…]]<br>{{sc|Fig.}} 12. …
+# </div>`` is the canonical case; the `Ts` template is the same role as
+# the `style="..."` attribute — it just packs the CSS through a
+# transclusion.
+_HTML_TS_WRAP_OPEN = re.compile(
+    r"<(?P<tag>div|span)\s+\{\{[Tt]s\|[^}]*\}\}[^>]*>", re.IGNORECASE)
+
 
 def figure_wrapper_end(text: str, pos: int) -> int | None:
     """If a ``{{center|…}}`` / ``{{block center|…}}`` / ``{{csc|…}}``
@@ -373,6 +382,30 @@ def html_float_figure_end(text: str, pos: int) -> int | None:
         return None
     tag = m.group("tag").lower()
     # Match the FIRST closing tag — corpus float wrappers are non-nested.
+    close = re.search(rf"</{tag}\s*>", text[m.end():], re.IGNORECASE)
+    if close is None:
+        return None
+    inner_start = m.end()
+    inner_end = inner_start + close.start()
+    if _IMG_IN.search(text, inner_start, inner_end) is None:
+        return None
+    return inner_start + close.end()
+
+
+def html_ts_figure_end(text: str, pos: int) -> int | None:
+    """Sibling of ``html_float_figure_end`` for the ``<div {{Ts|…}}>``
+    HTML figure-wrapper variant: CATACOMB / APPARELLED ALB / CORINTH-
+    style ``<div {{Ts|ac|sm92|lh13}}>[[File:…]]<br>caption</div>``
+    where the ``Ts`` template packs the figure's CSS (centred, small,
+    line-height) where an inline ``style="…"`` attribute would
+    otherwise sit.  Same gate as ``html_float_figure_end``: gated on
+    an image inside, no caption-signal required (the closing tag
+    bounds caption absorption).
+    """
+    m = _HTML_TS_WRAP_OPEN.match(text, pos)
+    if m is None:
+        return None
+    tag = m.group("tag").lower()
     close = re.search(rf"</{tag}\s*>", text[m.end():], re.IGNORECASE)
     if close is None:
         return None
