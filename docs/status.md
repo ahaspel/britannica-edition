@@ -254,13 +254,61 @@ it, killed at Step C).  Full principle in
   classifier cluster already loop-skips plates, so status.md's
   LAYOUT_WRAPPER / purity numbers stand.  See
   [[feedback_audit_code_discipline]].
+- **Stage A — `_is_layout_wrapper`'s nested-TABLE branch REMOVED (invalid
+  signal), VERIFIED.**  "Contains a nested table" distinguishes nothing
+  (real grids carry decorative sub-tables too); it intercepted genuine
+  tables because `_is_layout_wrapper_pred` sits at POST_ICL position 2,
+  ahead of DATA_TABLE / single-column / math.  Removed → occupants fall
+  through to the correct downstream predicate.  Full-coverage diff:
+  **LAYOUT_WRAPPER 84 → 17** (67 transitions, ALL `LAYOUT_WRAPPER →
+  {COMPLEX_HTML 28, SINGLE_COLUMN 28, DATA_TABLE 11}`; zero collateral on
+  any principled label; tree structure identical).  INTERPOLATION
+  render-verified content-preserved (`(4).`/`(5).` + equation-VERSE intact).
+  CAVEAT: the `17/0795` MARSUPIALIA `→ SINGLE_COLUMN` rows are the WRONG
+  target — pure-figure article, belongs in ICL; Stage A only *relocated* a
+  pre-existing ICL miss (was equally-wrong LAYOUT_WRAPPER), Stage B reclaims.
+- **CRITICAL audit fix — label-distribution KEY COLLISION + full re-verify.**
+  `label_distribution_snapshot` keyed by `vol/page_start/path` with no
+  article id.  Many EB1911 articles share a page_start (GERMANTOWN + GERMANY
+  at 11/825), so co-located articles COLLIDED on every shared tree path and
+  silently overwrote.  Impact was large: collision-free count **341,055** vs
+  colliding **239,417** — **~30% of elements were hidden**, so every prior
+  diff (incl. the "0-transition" inert proofs) covered only ~70%.  Surfaced
+  by the 79-vs-84 two-method gap (snapshot dict vs audit loop) — the lesson
+  is don't defer a small counter divergence; small gap, large blast radius
+  ([[feedback_verify_the_counter]], [[feedback_audit_code_discipline]]).
+  Fixed: key now includes `art.id`.  Re-verified at full coverage — reverted
+  to 3bb1b37, captured `fix_orig` (341,055), restored, captured `fix_cur`,
+  diffed → **67 transitions, ALL LAYOUT_WRAPPER exits, 0 others.**  So
+  ICL+poem are inert over FULL coverage (not just the visible 70%), Stage A
+  confirmed, and the two methods now AGREE (both 84).  **`fix_cur` is the
+  trustworthy collision-free baseline now; the colliding `stepb_*` /
+  `art_base` snapshots are OBSOLETE.**  (Earlier "239,417" / "≤572" /
+  `art_base` references above are pre-fix; true total ≈341k, and the ≤572
+  figure-group bound must be recomputed on `fix_cur` near Step C.)
 
 ### Next steps
-1. **Step B, `_is_layout_wrapper`** (`_layout.py:85`) — the big one:
-   delete-by-redistribution.  POEM-only → verse, image+short → ICL,
-   nested-TABLE signal → deleted (invalid signal).  Use
-   `_mask_nested_tables_all` (both flavors) per the INTERPOLATION lesson.
-2. **Step B, chem/math predicates** — `_has_chem_brackets(registry)` and
+1. **Stage B — the ICL fix (PRIORITY; runway clear after the audit re-verify).**
+   The 17 remaining LAYOUT_WRAPPER occupants + the `17/0795`-style
+   `→ SINGLE_COLUMN` mis-routes are **ICL misses** — figures the gate/sub-
+   dispatch fails to claim, so they fall through (to LAYOUT_WRAPPER, or now
+   SINGLE_COLUMN since image/caption/attribution stacked one-per-row *looks*
+   single-column).  User render-confirmed **MARSUPIALIA** (vol 17, pure-
+   figure article, NO tables) is the clean test case: the bug is the
+   *attribution* taken as the caption and the *real* caption leaking to body.
+   Fix locus: `_is_icl_family` gate (likely its image detection doesn't
+   *see* the figure's image — the audit bucketed these "uncategorised", not
+   "1 IMAGE") and/or `_classify_icl_shape` sub-dispatch (returns None on the
+   attribution+caption shape).  Fixing ICL reclaims them *before* single-
+   column (ICL runs ahead of POST_ICL), so the LAYOUT_WRAPPER drain and the
+   single-column mis-grab both resolve.  Diagnostic started:
+   `tools/_scratch/inspect_marsupialia.py` (dumps raw + gate/sub verdict).
+   Verify on `fix_cur` baseline; expect `→ ICL` labels, render-checked.
+2. **Finish `_is_layout_wrapper`** — once ICL claims the figures, drop its
+   remaining IMAGE branch + POEM-only branch (likely already dead — poem-
+   wrapper runs first) and delete the predicate + dispatch entry: the 95
+   lines and the `*300` content-length heuristic gone.
+3. **Step B, chem/math predicates** — `_has_chem_brackets(registry)` and
    `_is_math_dominant_layout(…, registry)` also read the registry; each
    denests to a raw scan.  (So "fix the classifier" is a known roster of
    ~6–8 predicates, not "maybe none.")

@@ -94,7 +94,12 @@ def main() -> int:
                 continue
 
             for elem_path, label in walk(tree, ""):
-                key = f"{art.volume:02d}/{art.page_start:04d}/{elem_path}"
+                # Include art.id: multiple articles can share (volume,
+                # page_start) (e.g. GERMANTOWN + GERMANY both at 11/825),
+                # so a vol/page/path key COLLIDES and silently overwrites —
+                # undercounting and leaving the diff blind to the hidden
+                # element.  art.id makes the key unique per element.
+                key = f"{art.volume:02d}/{art.page_start:04d}/{art.id}/{elem_path}"
                 distribution[key] = label
         elapsed = time.time() - start
         print(f"Done in {elapsed:.0f}s.  "

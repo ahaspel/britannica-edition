@@ -114,48 +114,13 @@ def _is_layout_wrapper(raw: str, inner: str, inner_registry: ElementRegistry | N
     # case.  Unwrap to just the <poem> content (VERSE marker).
     if child_types == {"POEM"}:
         return True
-    if "TABLE" in child_types:
-        # A nested TABLE usually means layout (outer is a shell around
-        # the sub-table).  Exception: if the outer declares a wikitext
-        # table caption via ``|+`` at the top of the table body, it's
-        # a genuine data table.  ``|+`` is the MediaWiki table-caption
-        # sigil — only data tables carry it.  This catches AFRICA's
-        # "BANTU NEGROIDS" table (40 rows of tribe names, plus one
-        # incidental nested bracket-grouping table) without relying on
-        # content-length heuristics.
-        if re.search(r"^\|\+", inner, re.MULTILINE):
-            return False
-        # Another data-table signal: MULTIPLE rows with `||` cell
-        # separators AND substantive content before the separator AND
-        # no nested image. Such tables are genuine data tables whose
-        # nested TABLE is just a caption/header sub-block (INDIA
-        # Vernaculars-of-India language table). Tables that contain an
-        # image plus `||` are figure-legend layouts (ABBEY Fig. 1,
-        # etc.) and stay as layout wrappers; a single spacer row like
-        # `| &emsp; ||` in a plate-grid (VAULT Plate I) does not count.
-        if not (child_types & IMAGE_LABELS):
-            # Count rows shaped like a real data row: `| LEFT || RIGHT`
-            # where BOTH sides have substantive alphanumeric content.
-            # Plate-layout attribution rows (`| &nbsp;''Photo, …'' ||`)
-            # have trailing `||` with an empty second cell — those
-            # don't count. The INDIA language table has many rows like
-            # `|Malay Group (7831)|| 2` where both sides ARE
-            # substantive.
-            data_rows = 0
-
-            def _substantive(s: str) -> bool:
-                stripped = re.sub(r"&[a-zA-Z]+;|&#\d+;", "", s)
-                return bool(re.search(r"[A-Za-z0-9]", stripped))
-
-            for m in re.finditer(
-                r"^\|(?!-|\}|\+)([^|\n]*)\|\|([^|\n]*)(?:\||$)",
-                inner, re.MULTILINE,
-            ):
-                if _substantive(m.group(1)) and _substantive(m.group(2)):
-                    data_rows += 1
-            if data_rows >= 2:
-                return False
-        return True
+    # Stage A (deleting _is_layout_wrapper): the nested-TABLE detection is
+    # REMOVED.  "Contains a nested table" is an invalid layout signal —
+    # real data tables carry decorative/caption sub-tables too, so it
+    # intercepted genuine grids (the 36 data-leak occupants).  With it
+    # gone these fall through to their correct downstream predicate
+    # (DATA_TABLE / SINGLE_COLUMN / MATH), since `_is_layout_wrapper_pred`
+    # sits at POST_ICL position 2 ahead of all of them.  See status.md.
     if child_types & IMAGE_LABELS:
         # Strong signal: table contains a `Fig. N.—` / `Plate N.—`
         # caption line.  HYDROMEDUSAE Fig. 30 has ~800 chars of legend
