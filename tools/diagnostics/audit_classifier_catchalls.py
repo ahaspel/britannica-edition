@@ -237,8 +237,10 @@ def main() -> int:
             if ce.label == "LAYOUT_WRAPPER":
                 sh = layout_wrapper_shape(ce)
                 lw_shapes[sh] += 1
-                if len(lw_examples[sh]) < 6:
-                    lw_examples[sh].append(_current_article)
+                if len(lw_examples[sh]) < 12:
+                    opener = (ce.raw or "").split("\n", 1)[0]
+                    lw_examples[sh].append(
+                        (_current_article, opener[:200]))
     s.close()
 
     print()
@@ -257,8 +259,9 @@ def main() -> int:
     for sh, n in sorted(lw_shapes.items(), key=lambda x: -x[1]):
         tag = "" if sh.startswith("PRINCIPLED") else "  <-- MISCLASS"
         print(f"  {n:5}  {sh}{tag}")
-        for v, p, t in lw_examples[sh][:3]:
+        for (v, p, t), opener in lw_examples[sh][:12]:
             print(f"         {v:02d}-{p:04d} {t}")
+            print(f"            opener: {opener}")
 
     print()
     print("═" * 70)
