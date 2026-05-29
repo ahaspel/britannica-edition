@@ -335,20 +335,31 @@ it, killed at Step C).  Full principle in
   spacer/`<br>` noise filtered).  Not wired into any producer yet.  The figure
   analog of table Step A; proves "recurse in the extractor" on the hardest
   case.  `_assemble_figure_parts` stays unchanged — all the work is extraction.
+- **Figure legend descent DONE + VALIDATED byte-identical vs production.**
+  Structural rule (`_gather_legend_table`): a no-image nested table inside a
+  figure → LEGEND; an image-bearing nested table → recurse as a sub-figure.
+  Plus full "recurse all the way down" — the whole legend-table inner is fed
+  to the REUSED `_emit_legend_chunk`, so table → poem → per-entry descent
+  yields clean `### Subhead.` + `A. …` lines, not a flattened blob.  Caption-
+  unwrap fix too (`{{center|…}}` no longer fragments off as junk at the Fig
+  split).  **Validated on the full untrimmed ABBEY Fig. 3** (the gnarliest
+  legend in the corpus; `tools/_scratch/compare_abbey_fig3.py`): 49 legend
+  lines, all 3 csc sub-heads, the full label zoo (FF / X₁X₁ / P₁ / italic
+  a–z / `<br>`-folded continuations) — `only in PROD: []`, `only in NEW: []`.
+  Fig. 3 is also a *working* figure, so matching it exactly = the approach
+  handles full complexity AND won't regress the working set.  Reuse paid off:
+  `_emit_legend_chunk` agrees with production's `_extract_poem_legend` here.
+  Still additive/inert (not wired into any producer or the gate).
 
 ### Next steps
-1. **Legend-vs-caption discriminator (PRIORITY — the hard problem; needs full
-   attention, NOT a tail-end add-on).**  The figure Step-A extractor handles
-   image / caption / attribution / footnote but does NOT yet type LEGENDS —
-   ALGAE's A–R part-legend would currently be mis-typed as caption.  The
-   boundary is fuzzy BOTH ways: a caption can read list-ish (embedded
-   part-refs, semicolons); a short 1–2-entry legend reads caption-ish.
-   Mistype → flatten a legend to one blob, OR shatter a caption into bogus
-   entries.  Real discriminator = the label-ladder grammar (≥N `LABEL[.,] text`
-   entries, short/often-sequential labels A,B,C / a,b,c / i,ii) — REUSE
-   `_LEGEND_ENTRY_RE` / `_entries_look_like_legend` / the multicol detectors,
-   don't reinvent.  `feedback_hard_means_unencoded_knowledge`.  ALGAE + EGYPT
-   (hieroglyph) are the next direct-feed cases once legend typing lands.
+1. **Legend grammar — the LOOSE (non-table) case.**  The TABLE-legend case is
+   done and validated (above).  Remaining is a label-ladder sitting LOOSE in a
+   cell (not in a clean table) → legend — the "better than production" part,
+   for figures whose legend isn't tabular (ALGAE's A–R).  Reuse the ladder
+   grammar (`_LEGEND_ENTRY_RE` / `_entries_look_like_legend`); default-safe to
+   caption when it's not a confident ladder (no-drop).
+   `feedback_hard_means_unencoded_knowledge`.  EGYPT (image+hieroglyph) is the
+   other next direct-feed case.
 2. **Wire the extractor (figure Step B/C).**  Gate recognizes
    image-anywhere-in-raw (so MARSUPIALIA *routes*, not just extracts); figure
    producers read `extract_figure_components` instead of `inner_registry`;

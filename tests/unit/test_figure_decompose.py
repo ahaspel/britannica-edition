@@ -104,9 +104,12 @@ class TestAbbeyTableLegend:
         assert any("Ground-plan of St Gall" in c for c in comps.caption_parts)
         # The nested table's content went to LEGEND, not caption, not dropped.
         assert comps.legend_lines, "legend table content was dropped"
+        # Recursed ALL the way down: per-entry lines + the csc sub-heading,
+        # not a flattened blob.
+        assert "### Church." in comps.legend_lines
+        assert "A. High altar." in comps.legend_lines
+        assert "G. Cloister." in comps.legend_lines
         legend_blob = " ".join(comps.legend_lines)
-        assert "High altar" in legend_blob
-        assert "Cloister" in legend_blob
         # And it did NOT leak into the caption.
         assert not any("High altar" in c for c in comps.caption_parts)
         # nor the caption into the legend.

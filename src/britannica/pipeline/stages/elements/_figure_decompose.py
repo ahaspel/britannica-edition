@@ -113,6 +113,16 @@ def _gather_cell(content: str, comps: FigureComponents,
     if not content:
         return
 
+    # Unwrap layout wrappers ({{center|…}}, {{Fs|…}}) now that any nested
+    # table is gone — the wrapper now spans the remaining content, so a
+    # `{{center|` opener won't fragment off as junk at the Fig-marker split.
+    from britannica.pipeline.stages.elements._layout import (
+        _unwrap_cell_wrappers,
+    )
+    content = _unwrap_cell_wrappers(content).strip()
+    if not content:
+        return
+
     # Footnotes — carry the raw <ref> through; strip from the typed text.
     refs = _REF_RE.findall(content)
     if refs:
@@ -156,13 +166,29 @@ def _gather_cell(content: str, comps: FigureComponents,
 
 def _gather_legend_table(table_raw: str, comps: FigureComponents,
                          tt: TextTransform) -> None:
-    """A no-image nested table inside a figure is a LEGEND — every row
-    becomes a legend line (cells joined, so `|A.||text` → "A. text").
-    No grammar inspection: a table here IS a legend (the structural rule)."""
+    """A no-image nested table inside a figure is a LEGEND.  Recurse ALL
+    the way down: each cell's source — interleaved `{{csc|…}}` sub-headings
+    and `<poem>` entry-blocks — is parsed into per-entry legend lines +
+    `### Subhead.` lines by the shared `_emit_legend_chunk` (the same
+    descent production uses; its label parser handles caps / multi-char /
+    subscript / italic labels).  A cell with no csc/poem falls back to its
+    cleaned text as one legend line (no-drop)."""
+    from britannica.pipeline.stages.elements._layout import _emit_legend_chunk
+    inner = _peel_table(table_raw)
+    # Feed the WHOLE inner — `_emit_legend_chunk` scans for `{{csc}}` /
+    # `<poem>` itself with newlines intact, so the poem entries split per
+    # line.  (Running the table cell-splitter first would merge the poem's
+    # continuation lines and re-flatten it.)
+    before = len(comps.legend_lines)
+    _emit_legend_chunk(inner, tt, comps.legend_lines)
+    if len(comps.legend_lines) > before:
+        return
+    # Fallback: no csc/poem in the table — gather each row's cell text as a
+    # legend line (no-drop) via the cell splitter.
     from britannica.pipeline.stages.elements._table_decompose import (
         extract_wiki_rows,
     )
-    _caption, rows = extract_wiki_rows(_peel_table(table_raw))
+    _caption, rows = extract_wiki_rows(inner)
     for _attrs, cells in rows:
         line = " ".join(
             _clean(tt(c)) for _s, _a, c in cells if _has_text(c)).strip()
