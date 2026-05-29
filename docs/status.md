@@ -130,13 +130,97 @@ Skip (1) and (2)'s producer fixes are debugging in fog.  Skip (2) and even
 correct-input producers carry inline content-classification leftovers.
 Do them in order and producer bugs become finite and tractable.
 
+### Architectural pivot late in session: the LAYOUT_WRAPPER drain is walker work, not classifier work
+
+Diagnostic on the 36 data-leaks (extending `audit_classifier_catchalls.py`
+with per-occupant opener dumps and sampling outer-body structure for
+GERMANY / ICELAND / GYMNOSPERMS) revealed:
+
+- These outers DO have substantial content beyond the nested table
+  (real data tables with `{{brace2|N|side}}` decoration mini-tables;
+  complex timelines with sub-grouping; figure-groups with image-bearing
+  nested children).  Not empty attribute envelopes.
+- `_is_layout_wrapper`'s detection (2) "has nested TABLE child" is an
+  invalid classification signal — having a nested table doesn't
+  distinguish anything; many real data tables have decorative nested
+  mini-tables, and figure-groups have image-bearing nested tables.
+- The misclassification isn't at the classifier — it's that the walker
+  separately bounds the nested `{|…|}`, putting it in the outer's
+  `inner_registry` where `_is_layout_wrapper` can detect it.
+
+The fix moves to the walker, and along the way collapses to a much
+sharper architectural target:
+
+**Universal leaf-shape contract: every shape is a leaf from the
+classifier's perspective.**
+
+  - `classify()` returns a flat list of `(label, raw_bytes)` pairs — one
+    per outermost atomic shape.  No tree, no `inner_registry`, no
+    placeholder substitution coordination across layers.
+  - The walker is ONE PASS over the article body, bounding only
+    outermost atomic shapes — no recursion into element bodies for
+    sub-elements of any family.
+  - Every producer owns its own recursion privately, through its
+    extractor chain.  The TABLE producer's cell extractor recognizes
+    nested `{|…|}` in cell content and recursively invokes the
+    canonical pipeline; the FIGURE producer's caption/legend extractor
+    does the same for nested figures.  Whether there's actually
+    anything left to recurse on is the producer's private decision.
+  - The classifier doesn't know or care whether a shape's content has
+    sub-elements; each invocation is total over its byte string with
+    no parent-context awareness.
+
+The "shape recurses / shape doesn't" distinction (current `LEAF_SHAPES`
+at `_classifier.py:342`) collapses — leaf behavior becomes universal.
+
+**Why this matters (captured in [[feedback_recursion_at_the_right_layer]]):**
+from every layer's local perspective, there is no nesting.  The walker
+sees a flat sequence of outermost shapes; the classifier sees independent
+byte strings; each producer sees only its own decomposition.  Nesting
+only exists in a global cross-layer view, and no layer needs that view.
+Nesting bugs can't exist when no layer is positioned to make them — the
+entire class of bugs we've been chasing (LAYOUT_WRAPPER misclassification,
+placeholder-substitution coordination, BRACE2-separator collision,
+parent-child context predicates) is symptomatic of nesting being visible
+to a layer that shouldn't see it.
+
 ### Next session
-LAYOUT_WRAPPER drain campaign (move 1): route each of the three detection
-branches in `_is_layout_wrapper` to its proper label via predicate fix
-upstream, starting with the biggest bucket (36 nested-TABLE data-leaks).
-Each fix follows the standard recipe: find articles → trace why upstream
-classifier missed → extend predicate → verify label-distribution diff shows
-only expected transitions ([[feedback_classification_is_regression_surface]]).
+Begin the walker-side re-scope.  One shape at a time, validate at each
+step, then move on.
+
+**Order matters (safety):**
+
+1. **Step A (additive, safe):** Teach the wikitable cell extractor in
+   `_table_decompose.py` to recognize and recursively process raw nested
+   `{|…|}` markup in cell content.  Pure addition — doesn't change
+   existing behavior because the walker is still placeholderizing
+   nested tables; the new path doesn't fire until step C.  Validate
+   with focused unit tests that feed raw nested-table content directly.
+2. **Step B (drain `inner_registry` consumers):** Migrate each consumer
+   that reaches into `inner_registry` for SHAPE_BRACE_PIPE
+   sub-elements to do its own extractor-side discovery instead.
+   Consumers: `_is_icl_family` (IMAGE / FIGURE child check),
+   `_is_layout_wrapper` (nested TABLE child — the buggy detection
+   we're targeting), `_process_table` (POEM / TABLE block child
+   check), `_process_html_table` (similar).  Each becomes simpler,
+   not more complex, when it stops checking the registry.
+3. **Step C (flip the switch):** Remove the recursive walk for
+   SHAPE_BRACE_PIPE elements in `classify()` at `_classifier.py:360-367`.
+   With step B done, no consumer relies on the old data; the flip is
+   a no-op for existing producers and dissolves LAYOUT_WRAPPER's
+   nested-TABLE data-leak occupants automatically.
+4. **Repeat** for each remaining shape family until the universal
+   leaf-shape contract holds everywhere.  Final step: delete the
+   `LEAF_SHAPES` distinction entirely and simplify `classify()` to
+   return flat `(label, raw)` pairs.
+
+Start point: open `_table_decompose.py`, add nested-`{|…|}` recognition
+to `produce_cell` (or its upstream cell-extraction logic in
+`split_wiki_row` / `_extract_table_cells`).  Test by feeding GERMANY's
+outer-table content directly without going through the walker (which
+would currently placeholderize the nested table); verify the cell
+extractor finds the nested table and invokes the canonical pipeline
+recursively.
 
 ---
 
