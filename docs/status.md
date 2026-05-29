@@ -322,26 +322,48 @@ it, killed at Step C).  Full principle in
   covering BAG-PIPE/EGYPT/ALGAE/MARSUPIALIA together.  Diagnostics:
   `tools/_scratch/inspect_marsupialia.py`, `inspect_lw_holdovers.py`,
   `inspect_element.py`.
+- **Figure Step A DONE — raw, recursive figure-component extractor
+  (`_figure_decompose.py`), additive/inert.**  `extract_figure_components(raw)`
+  → `FigureComponents(images, caption_parts, attribution_parts, legend_lines,
+  footnotes)`, RECURSING into nested figure-tables to GATHER (not finalize)
+  their components — reusing the table machinery (`extract_wiki_rows`,
+  `find_nested_table_spans`) for the nesting, figure-typing layered on top.
+  Direct-feed tested (`tests/unit/test_figure_decompose.py`): **MARSUPIALIA**
+  (two-level nested → image + attribution from the inner table, caption from
+  the outer row; attribution NOT mistyped as caption — the central nesting
+  bug fixed at the owning layer) and **BAG-PIPE** (image + 2 footnotes,
+  spacer/`<br>` noise filtered).  Not wired into any producer yet.  The figure
+  analog of table Step A; proves "recurse in the extractor" on the hardest
+  case.  `_assemble_figure_parts` stays unchanged — all the work is extraction.
 
 ### Next steps
-1. **Return to the ICL outliers — the `_extract_figure_components` raw rebuild
-   (PRIORITY).**  The figure-family component extractor is currently
-   placeholder/registry-bound; rebuild it on raw so the figure producer owns
-   its own decomposition (the ICL analog of `_table_decompose`).  This is the
-   one fix that resolves the 8 LAYOUT_WRAPPER holdovers + the MARSUPIALIA
-   single-column cohort.  Plus the small `_is_icl_family` gate exception for
-   the `|+`-holds-an-image case (ALGAE).  Verify against `fix_cur`; expect
-   the figure cohort → ICL labels, render-checked (esp. MARSUPIALIA's
-   caption/attribution and BAG-PIPE's footnotes).  CHESS deferred.
-2. **Finish `_is_layout_wrapper`** — once ICL claims the figures, drop its
+1. **Legend-vs-caption discriminator (PRIORITY — the hard problem; needs full
+   attention, NOT a tail-end add-on).**  The figure Step-A extractor handles
+   image / caption / attribution / footnote but does NOT yet type LEGENDS —
+   ALGAE's A–R part-legend would currently be mis-typed as caption.  The
+   boundary is fuzzy BOTH ways: a caption can read list-ish (embedded
+   part-refs, semicolons); a short 1–2-entry legend reads caption-ish.
+   Mistype → flatten a legend to one blob, OR shatter a caption into bogus
+   entries.  Real discriminator = the label-ladder grammar (≥N `LABEL[.,] text`
+   entries, short/often-sequential labels A,B,C / a,b,c / i,ii) — REUSE
+   `_LEGEND_ENTRY_RE` / `_entries_look_like_legend` / the multicol detectors,
+   don't reinvent.  `feedback_hard_means_unencoded_knowledge`.  ALGAE + EGYPT
+   (hieroglyph) are the next direct-feed cases once legend typing lands.
+2. **Wire the extractor (figure Step B/C).**  Gate recognizes
+   image-anywhere-in-raw (so MARSUPIALIA *routes*, not just extracts); figure
+   producers read `extract_figure_components` instead of `inner_registry`;
+   `_assemble_figure_parts` unchanged.  Verify on `fix_cur`: figure cohort →
+   ICL labels AND the ~4,100 already-correct figures DON'T move (inertness for
+   the working set), render-checked.  CHESS still deferred.
+3. **Finish `_is_layout_wrapper`** — once ICL claims the figures, drop its
    remaining IMAGE branch + POEM-only branch (likely already dead — poem-
    wrapper runs first) and delete the predicate + dispatch entry: the 95
    lines and the `*300` content-length heuristic gone.
-3. **Step B, chem/math predicates** — `_has_chem_brackets(registry)` and
+4. **Step B, chem/math predicates** — `_has_chem_brackets(registry)` and
    `_is_math_dominant_layout(…, registry)` also read the registry; each
    denests to a raw scan.  (So "fix the classifier" is a known roster of
    ~6–8 predicates, not "maybe none.")
-3. **Step C prep — `inner`-consumers (inert no-op pre-flip):**
+5. **Step C prep — `inner`-consumers (inert no-op pre-flip):**
    `_is_single_column_table` / `_is_verse_table` / the per-cell checks
    read *placeholderized* `inner` via `_table_grid`.  They read no
    registry, but at the flip `inner` arrives raw and `_table_grid`
