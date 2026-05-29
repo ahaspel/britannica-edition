@@ -95,12 +95,19 @@ def _gather_cell(content: str, comps: FigureComponents,
     if not content:
         return
 
-    # Nested figure-table → RECURSE to gather its components (the point).
+    # Nested table → two cases (no-drop both ways):
+    #   * contains an image → it's a sub-figure CONTAINER: RECURSE to gather
+    #     its components (image + attribution + …) into THIS figure.
+    #   * no image → it's a LEGEND (a table inside a figure is a key);
+    #     everything in it goes to legend.  Matches production's
+    #     TABLE-child legend signal; the structural baseline.
     spans = find_nested_table_spans(content)
     for start, end in reversed(spans):
         nested_raw = content[start:end]
         if _IMAGE_NS_LINK_RE.search(nested_raw):
             _gather(_peel_table(nested_raw), comps, tt)
+        else:
+            _gather_legend_table(nested_raw, comps, tt)
         content = content[:start] + content[end:]
     content = content.strip()
     if not content:
@@ -145,6 +152,22 @@ def _gather_cell(content: str, comps: FigureComponents,
         comps.attribution_parts.append(_clean(tt(content)))
     else:
         comps.caption_parts.append(_clean(tt(content)))
+
+
+def _gather_legend_table(table_raw: str, comps: FigureComponents,
+                         tt: TextTransform) -> None:
+    """A no-image nested table inside a figure is a LEGEND — every row
+    becomes a legend line (cells joined, so `|A.||text` → "A. text").
+    No grammar inspection: a table here IS a legend (the structural rule)."""
+    from britannica.pipeline.stages.elements._table_decompose import (
+        extract_wiki_rows,
+    )
+    _caption, rows = extract_wiki_rows(_peel_table(table_raw))
+    for _attrs, cells in rows:
+        line = " ".join(
+            _clean(tt(c)) for _s, _a, c in cells if _has_text(c)).strip()
+        if line:
+            comps.legend_lines.append(line)
 
 
 def _clean(s: str) -> str:

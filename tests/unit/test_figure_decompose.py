@@ -70,3 +70,44 @@ class TestBagpipeImageWithFootnotes:
         assert len(comps.footnotes) == 2
         assert comps.caption_parts == []
         assert comps.attribution_parts == []
+
+
+# ABBEY Fig. 3 — table legend: the figure's caption cell CONTAINS a nested
+# `{|…|}` table laying out the (multi-column) legend.  The structural rule:
+# a no-image nested table inside a figure → everything in it is legend.
+# (Faithfully trimmed from the real Fig. 3 — Ground-plan of St Gall.)
+ABBEY_FIG3 = (
+    '{| {{ts|sm92|lh10|ma|width:450px}}\n'
+    '|[[image:Abbey_3.png|450px|frameless]]\n'
+    '|-\n'
+    '|{{center|{{sc|Fig. 3.}}—Ground-plan of St Gall.}}\n'
+    '{|{{Ts|ma}}\n'
+    '|{{Ts|width:49%|vtp}}|\n'
+    '{{csc|Church. }}\n\n'
+    '<poem>A.&emsp;High altar.\n'
+    'B.&emsp;Altar of St Paul.\n'
+    'C.&emsp;Altar of St Peter.</poem>\n'
+    '|width=49%|\n'
+    '<poem>G.&emsp;Cloister.\n'
+    'H.&emsp;Calefactory.\n'
+    'I.&emsp;Necessary.</poem>\n'
+    '|}\n'
+    '|}'
+)
+
+
+class TestAbbeyTableLegend:
+    def test_nested_table_is_legend(self):
+        comps = extract_figure_components(ABBEY_FIG3, _identity)
+        # Image + caption separated correctly.
+        assert comps.images == ["Abbey_3.png"]
+        assert any("Ground-plan of St Gall" in c for c in comps.caption_parts)
+        # The nested table's content went to LEGEND, not caption, not dropped.
+        assert comps.legend_lines, "legend table content was dropped"
+        legend_blob = " ".join(comps.legend_lines)
+        assert "High altar" in legend_blob
+        assert "Cloister" in legend_blob
+        # And it did NOT leak into the caption.
+        assert not any("High altar" in c for c in comps.caption_parts)
+        # nor the caption into the legend.
+        assert "Ground-plan" not in legend_blob
