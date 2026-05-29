@@ -1,12 +1,146 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-05-28.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-05-29.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
 ---
 
-## Current focus (2026-05-28) — Math labelled-equation lift + contributor footers + NOINCLUDE elimination + cross-page table bounding
+## Current focus (2026-05-29) — Recursive table decomposition + classifier tier model + LAYOUT_WRAPPER audit
+
+**Goal:** finish draining `_strip_templates` of nameable templates, then move
+the drain *upstream* to the classifier where its analog (`LAYOUT_WRAPPER` and
+`DATA_TABLE` catch-alls) hides recognition gaps.  Architectural pivot mid-
+session: each remaining `ts` leak got mapped to a specific producer bug, so
+`ts` is no longer a strip-templates problem but a localized table-producer
+problem.  That insight cascaded into a target-architecture recording for the
+whole classifier dispatch.
+
+### Catch-all drain
+- 2,292 → ~1,646 phase-1 deletions (−28% this session); explicit named
+  owners for: cheap-win inline typography (smallcaps / small caps / bold /
+  bl / smb / nw / di / x-smaller / word-spacing / rule, hyphenation
+  joiners, char escapes), bare `{{0}}` (padding), bare `{{lb-}}` (unit),
+  Dotted TOC line / Dotted TOC page listing (council and country tables).
+- `<div {{Ts|…}}>…</div>` body-text handler (167) + extended to tolerate
+  `<div align=center {{Ts|…}}>` (~108).
+- Walker `html_ts_figure_end` recognizer for `<div {{Ts|ac|…}}>…[[File:…]]…
+  </div>` figure-wrapper variant (6), sibling of `html_float_figure_end`.
+- **`ts` 391 → localized to producer bugs:** the remaining `ts` strips
+  break down to specific producer-side leaks now queued as tasks (#24 HTML
+  table attr-slot peel, #25 `_process_prose_figure` absorbed caption-table
+  opener, #26 wikitable special-shape producers bypassing
+  `_extract_table_cells`).  `_strip_templates` no longer hides them.
+
+### Architectural principles clarified (memory)
+- **`feedback_total_functions_not_cleanup_passes`** updated with the user's
+  canonical vocabulary: "total" = every producer is total over its byte
+  string.  Use the term.
+- **`feedback_table_decomposes_recursively`** (new) — table → row → cell →
+  body-text; each layer peels only its own structural wrapper, cell content
+  reaches body-text in prose-uniform context.  One body-text handler set
+  covers cell content AND article content AND ref content.  No "in a table"
+  mode.  The architectural fix for ALL context-specific leaks (e.g. `Ts` on
+  attribute slots, `sc`/`sup` inside cells) in one stroke: every wrapper
+  producer total → inner template handlers' totality is sufficient.
+- **`project_classifier_tier_architecture`** (new) — five-tier dispatch
+  PRE-ICL → ICL → PRE-TABLE → TABLE → body-text; each tier total over its
+  accepted domain or rejects (falls through); NO CATCH-ALLS at any tier.
+  ICL and TABLE tiers have symmetric shapes (gate → atomic decomposition →
+  assembly).  Wiki vs HTML at the table tier is one producer with two row
+  extractors.
+- **`feedback_sweepers_hide_bugs`** extended: the producer-side invariant
+  applies identically at the classifier layer.  `LAYOUT_WRAPPER` and
+  `DATA_TABLE` (as catch-alls) are classifier-side sweepers; every occupant
+  is a known classifier recognition gap.
+
+### Table-decomposition refactor (Step 2 done)
+- **Step 1:** new `_table_decompose.py` (200 lines) — canonical
+  `extract_wiki_rows` / `extract_html_rows` / `produce_cell` /
+  `assemble_wiki_marker` shape-agnostic infrastructure.  Producers pick
+  the appropriate row extractor; downstream cell parsing, style
+  extraction, content via body-text, and marker assembly are uniform.
+- **Step 2:** `_process_html_table` migrated to flow through canonical
+  pipeline.  Per-cell alignment that the old HTML producer was silently
+  dropping for non-rowspan tables (HTML_TABLE path was 49% pure per
+  project status) is now preserved automatically — `⟦r⟧` / `⟦c⟧` marker
+  prefixes fall out of the canonical chain without special-casing.
+  AGRICULTURE Table XIII (UK 1905 livestock numbers) and STEAM_ENGINE
+  Load-in-kilowatts table snapshots updated to capture recovered
+  alignment.  Tasks #27 (cell-separator `|` collision with marker
+  contents like `«BRACE2[2|r]»`) and #28 (viewer renders `<br>` in cells
+  as literal text) queued as pre-existing leaks the migration exposed.
+- **Step 3 deferred:** wiki `_process_table` migration is small
+  architectural work (wiki path already ~99.8% pure per
+  [[project_table_family_status]]); the bigger leak reductions live in
+  carving `_process_table`'s content-classification fallbacks (image+
+  caption bundle, plate-image-layout, structural-formula, tiny-inline)
+  out to dedicated classifier labels + producers.  Each fallback hits
+  `_process_table` because the classifier missed the shape upstream
+  ([[feedback_turn_bugs_into_producer_bugs]] / table-producer-invariant).
+
+### Classifier-catchalls audit (`tools/diagnostics/audit_classifier_catchalls.py`)
+First measurement of how bad the classifier-side catch-alls are:
+
+- **DATA_TABLE: 95% pure** (1201/1255 are genuine grids, 54 misclassifications
+  — 52 SINGLE-COLUMN leaks, 2 MATH leaks).  Real over-inclusion problem but
+  small.
+- **LAYOUT_WRAPPER: 0% principled** (84 occupants, ZERO match the principled
+  un-pairable multi-image figure role).  Bucket breakdown:
+  - 36 data-leak (no images at all — claimed by nested-TABLE detection)
+  - 25 uncategorised (edge structural shapes)
+  - 9 verse-leak (POEM children — `_is_poem_wrapper_pred` gap)
+  - 8 single-figure-leak (1 IMAGE — ICL family rejected, sub-dispatch gap)
+  - 6 single-column-leak (`_is_single_column_table_pred` runs after, never
+    gets a chance)
+
+Diagnostic: `_is_layout_wrapper` does three unrelated detections bundled under
+one label name (POEM-only / nested-TABLE / IMAGE-with-short-content); each
+maps to a different proper home.  The label can be deleted entirely once each
+of the three detection branches routes to its correct label via predicate fix
+upstream.
+
+ICL path itself is **close but no cigar** — when the ICL dispatcher's gate
+passes but sub-dispatch returns None, the element falls through to POST_ICL
+unlabeled.  That's a catch-all-shaped hole inside ICL: gate said "figure"
+but sub said "I can't label it."  Total-function discipline forbids it; the
+fix is to either tighten the gate (reject shapes the sub can't label) or
+extend sub-dispatch (label everything the gate claims).  Empirically this is
+a small bucket — only 8 single-figure-leaks in the LAYOUT_WRAPPER audit point
+at this hole.
+
+### Strategic work-order (user's synthesis, 2026-05-29)
+
+The full campaign for eliminating producer bugs in three ordered moves:
+
+1. **Classifier totality first** — every producer receives only the shapes
+   it's instrumented for.  Eliminates the entire class of "producer received
+   the wrong input" bugs.  This is the LAYOUT_WRAPPER / DATA_TABLE catch-all
+   drain, plus the ICL gate/sub-dispatch totality fix.
+2. **Producer architecture: canonical decomposition** — table → row → cell →
+   body-text (Step 1 / Step 2 done for HTML side; the figure-family analog
+   already established in `[[project_icl_family]]`).  Cell content reaches
+   body-text in prose-uniform context; one body-text handler set covers
+   everything; context-specific bugs evaporate.
+3. **What remains is strictly localized** — half the prior producer bugs
+   were misclassification, fixed by (1).  The other half are inside one
+   producer's body, with no upstream contamination, and trivially debuggable.
+
+Skip (1) and (2)'s producer fixes are debugging in fog.  Skip (2) and even
+correct-input producers carry inline content-classification leftovers.
+Do them in order and producer bugs become finite and tractable.
+
+### Next session
+LAYOUT_WRAPPER drain campaign (move 1): route each of the three detection
+branches in `_is_layout_wrapper` to its proper label via predicate fix
+upstream, starting with the biggest bucket (36 nested-TABLE data-leaks).
+Each fix follows the standard recipe: find articles → trace why upstream
+classifier missed → extend predicate → verify label-distribution diff shows
+only expected transitions ([[feedback_classification_is_regression_surface]]).
+
+---
+
+## Earlier focus (2026-05-28) — Math labelled-equation lift + contributor footers + NOINCLUDE elimination + cross-page table bounding
 
 **Goal:** Drain the `_strip_templates` catch-all by giving every template an
 explicit owner.  Three architectural moves landed this session, each tied to
