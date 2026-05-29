@@ -59,8 +59,16 @@ def main() -> int:
     session = SessionLocal()
     distribution: dict[str, str] = {}
     try:
-        articles = session.query(Article).all()
-        print(f"Articles: {len(articles)}", flush=True)
+        # Article pages only.  Plate pages (`article_type == "plate"`) fork
+        # to `parsers/plate/` in production and never reach the element
+        # classifier — including them here would classify plate bodies with
+        # the article pipeline (inflating figure labels) and mis-mirror prod.
+        articles = (
+            session.query(Article)
+            .filter(Article.article_type != "plate")
+            .all()
+        )
+        print(f"Articles (non-plate): {len(articles)}", flush=True)
         start = time.time()
         for i, art in enumerate(articles):
             if i % 1000 == 0 and i > 0:

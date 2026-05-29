@@ -184,43 +184,107 @@ placeholder-substitution coordination, BRACE2-separator collision,
 parent-child context predicates) is symptomatic of nesting being visible
 to a layer that shouldn't see it.
 
-### Next session
-Begin the walker-side re-scope.  One shape at a time, validate at each
-step, then move on.
+### Methodology crystallized (2026-05-29, this session)
 
-**Order matters (safety):**
+The flat-walker move is one re-entrant triple — **walk → classify →
+produce** — threaded through every producer.  Each producer peels its own
+structure (family-specific) then re-enters the triple on its sub-content;
+the triple bottoms out at body-text.  `inner_registry` is the **central
+evil** from the producer's POV — the artifact that ferries "inside" across
+layer boundaries, violating [[feedback_classifier_returns_only_label]].  It
+wears two faces of one cause (recursion in the wrong layer): the
+producer-facing face (`inner_registry` as a producer input, killed in
+Step B) and the classifier-facing face (`classify()` recursing to build
+it, killed at Step C).  Full principle in
+[[feedback_recursion_at_the_right_layer]].
 
-1. **Step A (additive, safe):** Teach the wikitable cell extractor in
-   `_table_decompose.py` to recognize and recursively process raw nested
-   `{|…|}` markup in cell content.  Pure addition — doesn't change
-   existing behavior because the walker is still placeholderizing
-   nested tables; the new path doesn't fire until step C.  Validate
-   with focused unit tests that feed raw nested-table content directly.
-2. **Step B (drain `inner_registry` consumers):** Migrate each consumer
-   that reaches into `inner_registry` for SHAPE_BRACE_PIPE
-   sub-elements to do its own extractor-side discovery instead.
-   Consumers: `_is_icl_family` (IMAGE / FIGURE child check),
-   `_is_layout_wrapper` (nested TABLE child — the buggy detection
-   we're targeting), `_process_table` (POEM / TABLE block child
-   check), `_process_html_table` (similar).  Each becomes simpler,
-   not more complex, when it stops checking the registry.
-3. **Step C (flip the switch):** Remove the recursive walk for
-   SHAPE_BRACE_PIPE elements in `classify()` at `_classifier.py:360-367`.
-   With step B done, no consumer relies on the old data; the flip is
-   a no-op for existing producers and dissolves LAYOUT_WRAPPER's
-   nested-TABLE data-leak occupants automatically.
-4. **Repeat** for each remaining shape family until the universal
-   leaf-shape contract holds everywhere.  Final step: delete the
-   `LEAF_SHAPES` distinction entirely and simplify `classify()` to
-   return flat `(label, raw)` pairs.
+**Per-family loop (repeat until `LEAF_SHAPES` is universal, then delete it):**
+- **A.** Producer-owned recursion: recognize raw, recurse, direct-feed
+  tests, prove inertness.
+- **B.** Migrate the family's `inner_registry` readers — producers AND the
+  label predicates — onto raw-byte discovery; diff the label distribution,
+  zero unintended transitions.
+- **C.** Add the shape to `LEAF_SHAPES` (`_shapes.py:67`) → `classify()`
+  sets `inner_registry = {}` and stops descending.  Recursion goes live
+  for that family; the per-family flip with smallest blast radius.
 
-Start point: open `_table_decompose.py`, add nested-`{|…|}` recognition
-to `produce_cell` (or its upstream cell-extraction logic in
-`split_wiki_row` / `_extract_table_cells`).  Test by feeding GERMANY's
-outer-table content directly without going through the walker (which
-would currently placeholderize the nested table); verify the cell
-extractor finds the nested table and invokes the canonical pipeline
-recursively.
+### Progress (2026-05-29, this session)
+
+- **Step A DONE — table family.**  `_table_decompose.py` gained
+  `find_nested_table_spans` / `_mask_nested_tables`; `extract_wiki_rows`
+  masks nested `{|…|}` so the outer row-splitter can't fragment them;
+  `produce_cell` takes an opt-in `recurse` callback.  Dormant in
+  production (no caller passes `recurse`; no raw `{|` reaches cells while
+  the walker still placeholderizes).  12 direct-feed unit tests
+  (`tests/unit/test_table_decompose_nested.py`); 116/116 fast suites +
+  20/20 snapshots byte-identical.
+- **Step B STARTED — ICL gate `has_image` → raw, PROVEN INERT.**
+  `_is_icl_family`'s `has_image` now reads raw via
+  `_top_level_image_present` (peel outer → `_mask_nested_tables` →
+  `_IMAGE_NS_LINK_RE`); **0 label transitions across 242,252 elements**
+  (`tools/_scratch/diff_label_dist.py stepb_base stepb_icl`).
+  `figure_child_count` left registry-backed ON PURPOSE — the multi-figure
+  GROUP branch is flip-coupled (a container of figures isn't a figure; its
+  children speak for themselves once they recurse out).  It **self-
+  dissolves at Step C**: registry empties → count 0 → groups reclassify
+  automatically; sweep the dead branch then.  Reclassification population
+  ≤ 572 (clean article-only `UNPAIRED_FIGURE_GROUP`; the unfiltered count
+  of 869 included 297 plate-page hits — 34% pollution, vindicating the
+  article-only audit fix) → ≤0.24% of 239,417 article elements.  Clean
+  Step-C reference baseline: `tools/_scratch/label_distribution.art_base.json`.
+- **Step B — `_is_poem_wrapper_pred` → raw, PROVEN INERT.**  POEM/IMAGE
+  detection + the per-cell "just a poem" check now read raw (peel outer →
+  `_mask_nested_tables_all` → scan), not the registry/placeholders.  First
+  diff surfaced 2 `LAYOUT_WRAPPER → VERSE_TABLE` flips (INTERPOLATION,
+  vol 14) the 20-article snapshot suite missed — a masking inconsistency
+  (nested *HTML* `<table>` wasn't masked, only wiki `{|`, so a nested
+  `<table><poem>` leaked and the outer's `(4).` equation cell was missed).
+  Unified both predicates onto `_mask_nested_tables_all` (masks both
+  flavors); re-diff **0/239,417**.  `_is_single_column_table_pred` was
+  already registry-free (no migration needed).  The corpus diff catching a
+  regression the snapshots couldn't = the net working; lessons banked in
+  [[feedback_classification_is_regression_surface]] (two-regimes +
+  catch-all-exit-trap).  INTERPOLATION logged as a future MATH-drain
+  occupant of LAYOUT_WRAPPER (its nested `<table><poem>` is already
+  correctly VERSE_TABLE; the outer is a numbered equation system → MATH).
+- **Audit-discipline fix.**  All audits scope to article pages until
+  plate-land (plates fork to `parsers/plate/`, never reach the element
+  classifier).  `label_distribution_snapshot.py` was the lone unfiltered
+  audit (now filters `article_type != "plate"`); the table/figure/
+  classifier cluster already loop-skips plates, so status.md's
+  LAYOUT_WRAPPER / purity numbers stand.  See
+  [[feedback_audit_code_discipline]].
+
+### Next steps
+1. **Step B, `_is_layout_wrapper`** (`_layout.py:85`) — the big one:
+   delete-by-redistribution.  POEM-only → verse, image+short → ICL,
+   nested-TABLE signal → deleted (invalid signal).  Use
+   `_mask_nested_tables_all` (both flavors) per the INTERPOLATION lesson.
+2. **Step B, chem/math predicates** — `_has_chem_brackets(registry)` and
+   `_is_math_dominant_layout(…, registry)` also read the registry; each
+   denests to a raw scan.  (So "fix the classifier" is a known roster of
+   ~6–8 predicates, not "maybe none.")
+3. **Step C prep — `inner`-consumers (inert no-op pre-flip):**
+   `_is_single_column_table` / `_is_verse_table` / the per-cell checks
+   read *placeholderized* `inner` via `_table_grid`.  They read no
+   registry, but at the flip `inner` arrives raw and `_table_grid`
+   miscounts nested-table pipes — add `_mask_nested_tables_all` so they
+   stay correct.  (The flip changes TWO things per element: registry→{}
+   AND inner_text placeholderized→raw; both consumer classes must migrate.)
+4. **Step B, producers** — `_process_table` / `_process_html_table`
+   `inner_registry` reads → raw discovery (Step A's `recurse` wired in);
+   `_extract_figure_components` raw rebuild (placeholder/registry-bound)
+   so predicate + producer share one raw extractor.
+5. **Refs — the global exception** — `<ref name=X/>` reuse resolves
+   article-wide (`resolve_ref_bodies` walks the tree).  Flipping a family
+   that contains refs (table cells, figure captions/legends) puts those
+   refs off-tree, so tree-based resolution misses them.  Ref-*definition*
+   collection must become a global raw pre-scan feeding every recursive
+   invocation — the one place the locality invariant genuinely doesn't
+   hold (see [[feedback_recursion_at_the_right_layer]]).
+6. **Step C flip — table family:** add SHAPE_BRACE_PIPE / `<table>` to
+   `LEAF_SHAPES`; diff `art_base` vs post-flip; the ≤572 figure-group
+   reclassifications are the deliberate, signed-off transition.
 
 ---
 
