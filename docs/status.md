@@ -286,24 +286,53 @@ it, killed at Step C).  Full principle in
   `art_base` snapshots are OBSOLETE.**  (Earlier "239,417" / "≤572" /
   `art_base` references above are pre-fix; true total ≈341k, and the ≤572
   figure-group bound must be recomputed on `fix_cur` near Step C.)
+- **Stage C — `_is_layout_wrapper`'s POEM-only branch REMOVED (invalid
+  signal), VERIFIED.**  "Only POEM children" is also invalid — a data table
+  can carry a poem cell.  Genuine verse-wrappers are claimed upstream by
+  `_is_poem_wrapper_pred` → VERSE_TABLE; the leftovers reaching this branch
+  were all data-tables-with-poem.  Diff (`fix_cur` vs `stepb_lwC`): **9
+  transitions, ALL `LAYOUT_WRAPPER → {DATA_TABLE 5, COMPLEX_HTML 4}`, zero
+  to VERSE_TABLE, zero collateral.**  Render-verified NUT (4-col
+  `Name/Source/Locality/Remarks` grid, poem = Name column) and TEA (variety
+  table, poem = sub-races) are genuine data-tables-with-poem.  **LAYOUT_WRAPPER
+  84 → 17 (Stage A) → 8 (Stage C).**  `_is_layout_wrapper` now has only its
+  IMAGE branch left.
+- **ICL-outlier inventory COMPLETE (the remaining 8 + the figure cohort).**
+  The 8 LAYOUT_WRAPPER holdovers are all image-bearing figure misses, and
+  they resolve to a small, finite set of micro-shapes that converge on ONE
+  root — the figure family's component extraction is too rigid
+  (`_classify_icl_shape` single-image case returns CAPTIONED_FIGURE only when
+  `_image_alone_in_row`, else None):
+    * BAG-PIPE×2 — image + `<ref>` footnote(s), no caption (gate=1, sub=None).
+    * EGYPT — image + HIEROGLYPH sibling (gate=1, sub=None).
+    * ALGAE — image in the `|+` slot + full A–R legend + attribution
+      (gate=0: the `|+` caption anti-signal fires on an image).
+    * EUROPE / ORGAN — image, gate=0 (anti-signal / carrier miss, TBD).
+    * MARSUPIALIA (now in SINGLE_COLUMN, not LAYOUT_WRAPPER) — two-level
+      NESTED figure: outer wraps inner[image+attribution] + a separate
+      caption row → attribution-as-caption + caption-leaks-to-body.
+    * CHESS×2 (DEFERRED) — image + substantive PROSE; possibly a layout-
+      unwrap (prose→body, image→figure), maybe not a figure at all; 3+
+      plausible readings, decide later.
+  Conclusion: do NOT micro-patch each sub-shape (rule-of-three → additive
+  anti-pattern).  The total-function fix is the **`_extract_figure_components`
+  raw rebuild** (the figure-family analog of the table recursion) — one
+  extractor robust to whatever a figure table contains (image→figure,
+  `<ref>`→footnote, attribution→attribution, caption→caption, nested→recurse),
+  covering BAG-PIPE/EGYPT/ALGAE/MARSUPIALIA together.  Diagnostics:
+  `tools/_scratch/inspect_marsupialia.py`, `inspect_lw_holdovers.py`,
+  `inspect_element.py`.
 
 ### Next steps
-1. **Stage B — the ICL fix (PRIORITY; runway clear after the audit re-verify).**
-   The 17 remaining LAYOUT_WRAPPER occupants + the `17/0795`-style
-   `→ SINGLE_COLUMN` mis-routes are **ICL misses** — figures the gate/sub-
-   dispatch fails to claim, so they fall through (to LAYOUT_WRAPPER, or now
-   SINGLE_COLUMN since image/caption/attribution stacked one-per-row *looks*
-   single-column).  User render-confirmed **MARSUPIALIA** (vol 17, pure-
-   figure article, NO tables) is the clean test case: the bug is the
-   *attribution* taken as the caption and the *real* caption leaking to body.
-   Fix locus: `_is_icl_family` gate (likely its image detection doesn't
-   *see* the figure's image — the audit bucketed these "uncategorised", not
-   "1 IMAGE") and/or `_classify_icl_shape` sub-dispatch (returns None on the
-   attribution+caption shape).  Fixing ICL reclaims them *before* single-
-   column (ICL runs ahead of POST_ICL), so the LAYOUT_WRAPPER drain and the
-   single-column mis-grab both resolve.  Diagnostic started:
-   `tools/_scratch/inspect_marsupialia.py` (dumps raw + gate/sub verdict).
-   Verify on `fix_cur` baseline; expect `→ ICL` labels, render-checked.
+1. **Return to the ICL outliers — the `_extract_figure_components` raw rebuild
+   (PRIORITY).**  The figure-family component extractor is currently
+   placeholder/registry-bound; rebuild it on raw so the figure producer owns
+   its own decomposition (the ICL analog of `_table_decompose`).  This is the
+   one fix that resolves the 8 LAYOUT_WRAPPER holdovers + the MARSUPIALIA
+   single-column cohort.  Plus the small `_is_icl_family` gate exception for
+   the `|+`-holds-an-image case (ALGAE).  Verify against `fix_cur`; expect
+   the figure cohort → ICL labels, render-checked (esp. MARSUPIALIA's
+   caption/attribution and BAG-PIPE's footnotes).  CHESS deferred.
 2. **Finish `_is_layout_wrapper`** — once ICL claims the figures, drop its
    remaining IMAGE branch + POEM-only branch (likely already dead — poem-
    wrapper runs first) and delete the predicate + dispatch entry: the 95

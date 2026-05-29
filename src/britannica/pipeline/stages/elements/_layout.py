@@ -107,13 +107,15 @@ def _is_layout_wrapper(raw: str, inner: str, inner_registry: ElementRegistry | N
     if re.search(r'class\s*=\s*"[^"]*(?:wikitable|tablecolhd|border)', header, re.IGNORECASE):
         return False
     child_types = {t for t, _ in inner_registry.elements.values()}
-    # Verse-only layout: <table {{Ts|ma|sm92|lh12}}><tr><td><poem>…
-    # </poem></td></tr></table>.  Editors used these purely to centre
-    # / resize embedded verse; the table carries no tabular meaning.
-    # DONNE's "Sweetest Love, I do not go" passage is the canonical
-    # case.  Unwrap to just the <poem> content (VERSE marker).
-    if child_types == {"POEM"}:
-        return True
+    # Stage C (deleting _is_layout_wrapper): the POEM-only branch is REMOVED.
+    # "Only POEM children" is also an invalid layout signal — a data table
+    # can carry a poem cell (NUT / SILK: class=_tablecolhdborder + poem).
+    # Genuine verse-wrappers are already claimed upstream by
+    # `_is_poem_wrapper_pred` → VERSE_TABLE (runs before this); what reaches
+    # here is the leftover (poem + substantive non-poem content), which falls
+    # through to DATA_TABLE / VERSE / SINGLE_COLUMN per its own signals.  A
+    # genuine verse-wrapper landing on DATA_TABLE would be a poem-wrapper gap
+    # to close, not a reason to keep this branch.
     # Stage A (deleting _is_layout_wrapper): the nested-TABLE detection is
     # REMOVED.  "Contains a nested table" is an invalid layout signal —
     # real data tables carry decorative/caption sub-tables too, so it
