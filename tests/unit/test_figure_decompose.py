@@ -36,9 +36,11 @@ MARSUPIALIA = (
 class TestMarsupialiaNestedFigure:
     def test_components_gathered_across_nesting(self):
         comps = extract_figure_components(MARSUPIALIA, _identity)
-        # Image gathered from the INNER table.
-        assert comps.images == [
-            "EB1911 Marsupialia - Skull of the Tasmanian Devil.jpg"]
+        # Image gathered from the INNER table — full spec (filename + params)
+        # carried, not just the filename.
+        assert len(comps.images) == 1
+        assert "Skull of the Tasmanian Devil.jpg" in comps.images[0]
+        assert "391px" in comps.images[0]          # width param carried
         # Attribution gathered from the inner table — NOT taken as caption.
         assert any("From Flower" in a for a in comps.attribution_parts), \
             comps.attribution_parts
@@ -66,7 +68,10 @@ BAGPIPE = (
 class TestBagpipeImageWithFootnotes:
     def test_image_and_footnotes_only(self):
         comps = extract_figure_components(BAGPIPE, _identity)
-        assert comps.images == ["Bag-pipe music 1.png"]
+        assert len(comps.images) == 1
+        assert "Bag-pipe music 1.png" in comps.images[0]
+        # layout params carried, not tossed:
+        assert "450px" in comps.images[0] and "center" in comps.images[0]
         assert len(comps.footnotes) == 2
         assert comps.caption_parts == []
         assert comps.attribution_parts == []
@@ -99,8 +104,10 @@ ABBEY_FIG3 = (
 class TestAbbeyTableLegend:
     def test_nested_table_is_legend(self):
         comps = extract_figure_components(ABBEY_FIG3, _identity)
-        # Image + caption separated correctly.
-        assert comps.images == ["Abbey_3.png"]
+        # Image + caption separated correctly; full spec carried.
+        assert len(comps.images) == 1
+        assert "Abbey_3.png" in comps.images[0]
+        assert "frameless" in comps.images[0]      # param carried
         assert any("Ground-plan of St Gall" in c for c in comps.caption_parts)
         # The nested table's content went to LEGEND, not caption, not dropped.
         assert comps.legend_lines, "legend table content was dropped"

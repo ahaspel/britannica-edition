@@ -46,7 +46,11 @@ _ATTRIBUTION_RE = re.compile(
 
 @dataclass
 class FigureComponents:
-    images: list[str] = field(default_factory=list)       # filenames
+    # Full `[[File:…|params]]` specs — filename PLUS its width/align/float
+    # params, carried (not tossed) so the partition stays complete and the
+    # assembler can use what the viewer renders.  See
+    # [[feedback_capture_now_decide_later]].
+    images: list[str] = field(default_factory=list)
     caption_parts: list[str] = field(default_factory=list)
     attribution_parts: list[str] = field(default_factory=list)
     legend_lines: list[str] = field(default_factory=list)
@@ -131,10 +135,13 @@ def _gather_cell(content: str, comps: FigureComponents,
         if not content:
             return
 
-    # Image at this level.
-    img = _IMAGE_FILENAME_RE.search(content)
+    # Image at this level — carry its FULL spec (filename + width/align/float
+    # params), not just the filename, so layout info isn't tossed.  The
+    # assembler parses the params it can render; the rest waits for the
+    # richer layout markers (carry now, emit later).
+    img = _IMAGE_NS_LINK_RE.search(content)
     if img:
-        comps.images.append(img.group(1).strip())
+        comps.images.append(img.group(0))
         content = _IMAGE_NS_LINK_RE.sub("", content).strip()
         if not content:
             return
