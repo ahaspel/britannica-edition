@@ -12,13 +12,72 @@ agent's memory directory and are not duplicated here.
 producer — there is **one recursive `render()`**: at each node, `leaf` vs `nested`
 → *process directly* vs *recurse*. Nested (block structure: `{|` table,
 `{{center}}`, `<poem>`) → preserve it, pass the node's own style through *at level*,
-recurse into children. Leaf → dispatch to a **real terminal** (MATH, CHEM, OUTLINE,
-BODY_TEXT) — the *only* surviving classification, legitimate because terminals need
-genuinely different *transformation* (LaTeX→KaTeX ≠ prose→HTML). Everything else —
-figure / legend / data-table / caption / attribution — collapses to recurse +
-pass-attributes; structure & style are read from the **source's own attributes**,
-not a label. `leaf()` = "no block children" (inline markup stays inside the prose
-leaf). Termination is free: every path bottoms out at prose.
+recurse into children. Leaf → dispatch by what the leaf IS: prose → carry its style,
+`[[File:]]` → image, `<math>` → KaTeX.
+
+**REFINED (2026-05-30, later) — there is NO element-level terminal *classification*.**
+The leaf-dispatch is by what the leaf literally is, not a label on the container:
+- **OUTLINE dissolved** — indentation (`:` / `{{em|N}}`) is a STYLE you carry, not a
+  transform; its semantic nested-`<ul>` is *optional presentation* (for overflow).
+- **CHEM dissolved** — a `CHEMISTRY_LAYOUT` is a borderless TABLE of
+  `<sub>`/`<big>`/`«I»` fragments that *leans on* the `<math>` leaf for its `\Big[`
+  delimiters. Recurse the table; the math parts become math; nothing chem-specific.
+  **CONFIRMED by a full ALDEHYDES chem render via `render()` (`tools/_scratch/
+  ald_render.py`):** reaction formulas render with their `[[File:Langle.svg|12px]]`
+  bond-bracket glyphs (sized image-leaves), sub/sups, and `→` arrows; the aldehydes
+  data table recurses to clean aligned columns; the structural-formula diagram is a
+  plain centered `IMAGE`. **CHEM dissolves as a TAXONOMY** (no compile-terminal, no
+  label). BUT naive recurse renders the bond-brackets BADLY — it drops `rowspan` and
+  pins the bracket at inline 12px, so it can't span its 2-line group; the hand-tuned
+  CHEM path is FAR better on bracket layout. Matching it needs rowspan-aware cells +
+  the bracket sized to its spanning cell — real work; **current CHEM path stays until
+  then. Dissolves-as-category ≠ renders-as-well.** Key insight: the source already
+  records the *transcriber's renderability decision as the form* — markup for what he
+  could mark up (reaction formulas), an `[[File:]]` IMAGE for what he couldn't (the
+  ring diagram). Recursion honors both (recurse markup / carry image); the
+  genuinely-hard chem is pre-resolved as scans, so the bracket-layout work is bounded
+  to the cases he judged markup-able.
+- The genuine *compile-terminals* are the notations that are PROGRAMS, not pictures:
+  **`<math>`** (LaTeX→KaTeX), **`<hiero>`** (WikiHiero — Gardiner codes + layout
+  operators `-` join / `:` stack / `\` mirror → a 2-D quadrat; 17 in corpus, currently
+  PUNTED to a `[hieroglyph: …]` placeholder), and **`<score>`** (LilyPond
+  `\new Staff \relative <<{…}>>` → engraving via the Score extension; 5 in corpus —
+  BAG-PIPE, BINIOU — CONFIRMED 2026-05-30). They fire as leaves wherever they sit. **MIRROR_GLYPH is NOT
+  one** — `<span style="{{mirrorH}}">char</span>` is text + a CSS mirror = style;
+  dissolves. **HARD-AND-FAST RULE for a terminal node: anything the VIEWER has to
+  COMPILE** (run a notation-engine on — KaTeX / WikiHiero / LilyPond). The producer
+  carries every leaf verbatim (math/hiero/score source rides through like style or an
+  image — no special-casing); the viewer then either LAYS OUT (structure + style →
+  HTML/CSS) or COMPILES (the notation-leaves → an engine). So "terminal" is a
+  viewer-side fact, not a producer classification — it is exactly the set of engines
+  the viewer embeds. Bounded, stable (grows only with a new notation-engine, never by
+  special-casing), and it retroactively explains every dissolution (lay-out) and every
+  terminal (compile).
+
+Everything else — figure / legend / data-table / caption / attribution / chem /
+outline — collapses to recurse + pass-attributes; structure & style read from the
+**source's own attributes**, not a label. `leaf()` = "no block children" (inline
+markup stays inside the prose leaf). Termination bottoms out at prose.
+
+**TOTALITY INVARIANT / acceptance gate — NO LEAKED MARKUP, EVER, except transcription
+errors.** If every construct is recurse / carry / compile, no WELL-FORMED source can
+survive to output. So once the recursion is total, any residual `{|` / `<table>` /
+`{{…}}` / `«…»` / `[[…]]` / literal `<hiero>` ⟺ a **transcription error** (malformed
+source), located to the element — fixed at the TOP (`corrections.json`) or reported
+upstream, **never swept** (the positive form of no-sweepers: handled, or a flagged
+source defect — no third bucket). The leak-scan thus flips from a dev gap-finder (now:
+HTML-table branch, template renderers, hiero punt) to a **corpus proofreading tool**
+when total; leak-count → "only malformed source" *is* the totality signal. Distinct
+from render *quality* (chem-bracket layout, hiero placeholder = handled-but-incomplete,
+NOT leaks). Two gates: no-leaked-markup (totality) and renders-well (quality).
+**Leak verdict, fully stated:** a **transcription error** (fix at TOP / `corrections.json`)
+— OR, *only after proving we use EVERYTHING the source gives and there is no transcriber
+image-fallback*, **genuine source inadequacy** (well-formed but can't convey the
+original; an accepted limit, RARE by construction — the transcriber already absorbs
+most inadequacy into `[[File:]]` fallbacks). **Leash:** "source inadequate" is the LAST
+verdict, never the first reach — this session repeatedly found apparent-inadequacy was
+our own *underuse* (figure / chem / brace / csc all "had it" once we used it all). The
+exception is not an escape hatch.
 
 **Prototype + render proof — `tools/_scratch/faithful_html.py` (~40-line `render()`,
 no figure/table/ICL anywhere in it) → screenshot, against viewer's real CSS:**
@@ -60,11 +119,62 @@ the forks). The tell: it made us work *harder*, not easier.
    per-element style like width/align/valign. No recognition residue — border is
    attribute-passing, same as everything else; terminals stay the only real classify.
 3. **Wiring** — all of the above is a prototype `render()`, NOT in the pipeline. The
-   terminals already exist and are correct; the work is the structural walk that
-   dispatches to them + the viewer subtraction (drop figure-box / legend-aside /
-   imposed data-table gridlines; recognise `{{ts}}` at level instead of spreading).
+   terminals exist, but csc proved a terminal can silently flatten (BODY_TEXT dropped
+   centring), so they need a faithfulness AUDIT, not the assumption that they're
+   correct. Work: the structural walk that dispatches to them + the viewer subtraction
+   (drop figure-box / legend-aside / imposed data-table gridlines + the `GRID` flag;
+   recognise `{{ts}}`/border at level instead of spreading/bucketing).
 4. **csc snapshot re-baseline** — `body_text.py` change is live; affected snapshot
    baselines need re-baselining on sign-off (the audit is the tagged diff).
+
+### Falsification test — PRE-REGISTERED (2026-05-30), verdict fixed before running
+
+Guards both biases at once: the wish (toward the elegant single-`render()`) and the
+over-correction (manufacturing theory-kills to perform rigour). Run the HOSTILE set,
+count breaks, do NOT relabel a break as "engineering" afterward.
+
+**A break = a real theory residue** iff a source shape:
+- (a) renders correctly ONLY with a *label*, not from per-element attributes; or
+- (b) needs a *source-MEANING* decision absent from the source (NOT presentation —
+  see below); or
+- (c) loses content; or
+- (d) forces the "mechanical" viewer to decide a source-question (caption? ruled?).
+
+**Explicitly NOT breaks:** (1) viewport/presentation fitting — wide content
+overflowing a column (wide math, wide image, wide table) is a display strategy
+orthogonal to source meaning; (2) the article→element PARTITION — section /
+boundary / plate-DETECTION is an upstream layer, never claimed to be `render()`'s
+job. A "decision absent from the source" counts under (b) only if it's about what the
+source MEANS, not how to fit a faithful render into a viewport.
+
+**Hostile set:** AFRICA (brutal), a wide-math article, an HTML-`<table>` article, a
+float/`{{clear}}` layout (the standalone CHESS solutions), a plate, an OCR-garbage
+math page — chosen *because* they are likely to break it.
+
+**Standing bets (2026-05-30):** wide math → presentation, not a break; **plates →
+`render()` covers rendering in full** (a plate is a figure-of-figures; detection is
+the partition). The test exists to *earn* these, not assume them.
+
+**RAN (2026-05-30) — NO BREAK.** Prototype `render()` + an HTML-`<table>` branch
+(reusing `_html_table_grid`, balanced nested-table masking) over `tools/_scratch/
+hostile.py`:
+- **Plate** (AEGEAN PLATE II) → rendered as images + centred `Fig.` captions. Bet won.
+- **AFRICA** (187 elems, the corpus's worst): **0 exceptions; structural recursion
+  100% clean** — the 16 residual leaks are ALL `{{tmpl}}` (two unhandled body-text
+  templates: `{{EB1911 Shoulder Heading}}`×16, `{{Fine block}}`×4); **zero** raw
+  `<table>` / `{|` / `<poem>` / `[[File]]` leaks. The HTML-`<table>` branch took
+  structural leaks 57→16 on AFRICA and 45→1 on INTERPOLATION.
+- **Residue, fully enumerated, all engineering (no label, no source-meaning call):**
+  (1) a finite set of missing body-text template renderers — `{{EB1911 Shoulder
+  Heading}}`, `{{Fine block}}`, `{{ne}}`, `{{Polytonic}}`, `{{EB1911 tfrac}}`, and
+  `{{brace}}` (the last a real row-spanning brace-group LAYOUT renderer, not a
+  one-liner); (2) dropped table captions (`|+`/`<caption>`); (3) the
+  CONTRIBUTOR_FOOTER terminal (names drop) — footer renderer or partition-layer.
+- **Verdict:** earned, not asserted — the structural core + HTML branch hold on the
+  worst article with criteria fixed beforehand. **Bounds:** proves structure, not
+  that every missing renderer is trivial (`{{brace}}` isn't); still AFRICA +
+  INTERPOLATION, not the broad corpus. Detector caveat: content-loss counts are
+  inflated by a word-counter that strips `«LN»` link text from output-but-not-raw.
 
 ---
 
