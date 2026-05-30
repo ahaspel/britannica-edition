@@ -70,6 +70,44 @@ def _peel_table(raw: str) -> str:
     return s
 
 
+# Poem mask token — `\x03`-delimited so the wiki row/cell splitters treat it
+# as opaque content (carries no `|`/`!`/newline).  The `PM` infix keeps it
+# distinct from `_table_decompose`'s `NT` nested-table tokens.  Same plumbing
+# as `_mask_nested_tables`: protect a structural sub-unit from the cell
+# splitter's newline collapse so the leaf delegate (`_emit_legend_chunk`)
+# receives the poem with its line structure intact (each line = one entry).
+_POEM_SENTINEL = "\x03"
+_POEM_RE = re.compile(r"<poem>[\s\S]*?</poem>", re.IGNORECASE)
+
+
+def _poem_token(i: int) -> str:
+    return f"{_POEM_SENTINEL}PM{i}{_POEM_SENTINEL}"
+
+
+def _mask_poems(text: str) -> tuple[str, list[str]]:
+    """Replace each ``<poem>…</poem>`` with an opaque token, returning
+    ``(masked, raw_spans)``.  No-op when there is no poem."""
+    spans = list(_POEM_RE.finditer(text))
+    if not spans:
+        return text, []
+    raw: list[str] = []
+    out: list[str] = []
+    last = 0
+    for m in spans:
+        out.append(text[last:m.start()])
+        out.append(_poem_token(len(raw)))
+        raw.append(m.group(0))
+        last = m.end()
+    out.append(text[last:])
+    return "".join(out), raw
+
+
+def _restore_poems(text: str, raw: list[str]) -> str:
+    for i, span in enumerate(raw):
+        text = text.replace(_poem_token(i), span)
+    return text
+
+
 def extract_figure_components(
     raw: str, text_transform: TextTransform,
 ) -> FigureComponents:
@@ -81,12 +119,95 @@ def extract_figure_components(
 
 
 def _gather(inner: str, comps: FigureComponents, tt: TextTransform) -> None:
-    from britannica.pipeline.stages.elements._table_decompose import (
-        extract_wiki_rows, find_nested_table_spans,
+    from britannica.pipeline.stages.elements._tables import (
+        _HTML_TABLE_TAG_RE, _html_table_grid,
     )
-    _caption, rows = extract_wiki_rows(inner)
+    # HTML `<table>` figure flavor.  `_html_table_grid` gives rows×cell-content
+    # robustly (EB1911 routinely omits `</td>`/`</tr>`) and preserves cell
+    # newlines, so poem legends survive with no masking.  HTML figures carry no
+    # `||` multicol, so the wiki Phase-1 column-major pass doesn't apply —
+    # every cell goes straight to the shared `_gather_cell`.  Same flavor
+    # primitive (`_table_grid`) and cell-path production uses for `<table>`
+    # figures (`_process_legended_figure_child` Phase 2).  One recursion, two
+    # row-extractors: flavor is a leaf detail, everything downstream is shared.
+    if _HTML_TABLE_TAG_RE.search(inner):
+        for cells in _html_table_grid(inner):
+            for content in cells:
+                _gather_cell(content, comps, tt)
+        return
+
+    # ── wiki `{|` flavor ────────────────────────────────────────────────
+    from britannica.pipeline.stages.elements._layout import (
+        _chop_legend_entries, _collect_rowspan_legend,
+        _parse_multicol_legend_rows_column_major,
+        _row_has_legend_multicol_cells, _row_is_single_full_entry,
+    )
+    from britannica.pipeline.stages.elements._table_decompose import (
+        _mask_nested_tables, _restore_nested, extract_wiki_rows,
+    )
+    from britannica.pipeline.stages.elements._tables import split_wiki_row
+
+    # Mask the two sub-units that a raw `|-` split / cell split would damage:
+    # nested ``{|…|}`` tables (their own `|-` rows would fragment) and
+    # ``<poem>`` blocks (their entry-per-line structure would collapse).
+    # Production never hits this — both are registry placeholders by the time
+    # its legend code runs — so masking restores the same clean rows.  Poems
+    # are masked AFTER nested tables, so a poem inside a nested table travels
+    # with its (masked) table and is restored when the table is.
+    masked, nested = _mask_nested_tables(inner)
+    masked, poems = _mask_poems(masked)
+
+    # ── Phase 1: multicol legend block ──────────────────────────────────
+    # A multicol legend's entries run ACROSS rows (down each column), so the
+    # whole block parses together — delegate to production's COMPLETE multicol
+    # logic (rowspan / column-major-with-continuation / alternating-pair, all
+    # in column-major reading order, NO alphabetical sort).  Delegating the
+    # whole parser — not a per-row fragment — is what joins down-column
+    # continuations (no truncation) and preserves reading order.  Block
+    # detection mirrors `_process_legended_figure_child`.
+    raw_rows = [r for r in re.split(r"\|-[^\n]*", masked) if r.strip()]
+    multicol_rows: list[str] = []
+    other_rows: list[str] = []
+    in_block = False
+    for row in raw_rows:
+        if _row_has_legend_multicol_cells(
+                [c for _s, _a, c in split_wiki_row(row)]):
+            multicol_rows.append(row)
+            in_block = True
+        elif in_block and ("||" in row or _row_is_single_full_entry(row)):
+            multicol_rows.append(row)
+        else:
+            in_block = False
+            other_rows.append(row)
+    if multicol_rows:
+        if any(re.search(r"rowspan", r, re.IGNORECASE)
+               for r in multicol_rows):
+            col_pairs = _collect_rowspan_legend(multicol_rows, tt)
+        else:
+            col_pairs = _parse_multicol_legend_rows_column_major(
+                multicol_rows, tt)
+        if col_pairs:
+            comps.legend_lines.extend(
+                f"{lbl}. {text}" for lbl, text in col_pairs)
+        else:
+            pairs_per_row = [
+                _chop_legend_entries(r, "||", tt) for r in multicol_rows]
+            max_cols = max((len(p) for p in pairs_per_row), default=0)
+            for col in range(max_cols):
+                for row_pairs in pairs_per_row:
+                    if col < len(row_pairs):
+                        lbl, text = row_pairs[col]
+                        comps.legend_lines.append(f"{lbl}. {text}")
+
+    # ── Phase 2: every other row via the cell-based gather ──────────────
+    # Image, caption, attribution, loose poems, nested-table legends, prose
+    # legends.  Re-join the non-multicol rows and decompose to cells; restore
+    # the masked sub-units (nested tables first, then loose poems) so each
+    # cell reaches `_gather_cell` in raw form.
+    _caption, rows = extract_wiki_rows("\n|-\n".join(other_rows))
     for _row_attrs, cells in rows:
         for _sep, _attr, content in cells:
+            content = _restore_poems(_restore_nested(content, nested), poems)
             _gather_cell(content, comps, tt)
 
 
@@ -126,6 +247,34 @@ def _gather_cell(content: str, comps: FigureComponents,
     content = _unwrap_cell_wrappers(content).strip()
     if not content:
         return
+
+    # Loose <poem> legend(s).  Production routes a figure cell's <poem> the
+    # same way (`_extract_figure_components`'s poem loop): a caption-poem
+    # (Fig./Plate. opener) folds into the caption; any other poem parses to
+    # per-entry legend lines via `_emit_legend_chunk` (SOURCE ORDER, periods
+    # preserved).  Handle here, BEFORE the prose/multicol typing, so a loose
+    # poem never reaches the prose parser — which mangles it (dropped labels,
+    # comma→period, stripped trailing periods).  This is the same delegate the
+    # nested-table legend path (`_gather_legend_table`) already uses.
+    if re.search(r"<poem>", content, re.IGNORECASE):
+        from britannica.pipeline.stages.elements._layout import (
+            _CAPTION_POEM_RE, _emit_legend_chunk,
+        )
+        from britannica.pipeline.stages.elements._text import _clean_text
+        for pm in re.finditer(r"<poem>[\s\S]*?</poem>", content,
+                              re.IGNORECASE):
+            span = pm.group(0)
+            body = re.sub(r"</?poem>", "", span, flags=re.IGNORECASE).strip()
+            if _CAPTION_POEM_RE.match(body):
+                cap = _clean_text(tt(re.sub(r"\s*\n\s*", " ", body)))
+                if cap:
+                    comps.caption_parts.append(cap)
+            else:
+                _emit_legend_chunk(span, tt, comps.legend_lines)
+        content = re.sub(r"<poem>[\s\S]*?</poem>", "", content,
+                         flags=re.IGNORECASE).strip()
+        if not content:
+            return
 
     # Footnotes — carry the raw <ref> through; strip from the typed text.
     refs = _REF_RE.findall(content)
@@ -168,7 +317,20 @@ def _gather_cell(content: str, comps: FigureComponents,
     elif _ATTRIBUTION_RE.match(content):
         comps.attribution_parts.append(_clean(tt(content)))
     else:
-        comps.caption_parts.append(_clean(tt(content)))
+        # Loose-ladder (prose arm): a cell with ≥3 `LABEL., text` entries is
+        # a legend, not a caption.  `_parse_prose_legend_rows` is production's
+        # parser AND its gate — it returns [] unless it finds ≥3 entries that
+        # look like a legend, so it doubles as the detector.  (Runs AFTER the
+        # Fig-marker check, so a caption-opener cell still wins; falls through
+        # to caption when it's not a ladder — no-drop.)
+        from britannica.pipeline.stages.elements._layout import (
+            _parse_prose_legend_rows,
+        )
+        lines = _parse_prose_legend_rows([content], tt)
+        if lines:
+            comps.legend_lines.extend(lines)
+        else:
+            comps.caption_parts.append(_clean(tt(content)))
 
 
 def _gather_legend_table(table_raw: str, comps: FigureComponents,

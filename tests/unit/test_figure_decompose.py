@@ -101,6 +101,67 @@ ABBEY_FIG3 = (
 )
 
 
+# A figure whose legend is MULTICOL rows in its OWN cells (not a nested
+# table) — the loose-ladder case: `|A. x || C. y` rows.  Source row-major
+# order is a visual grid; reading order is alphabetical.
+MULTICOL = (
+    '{| {{Ts|ma}}\n'
+    '|[[File:Foo.png|300px]]\n'
+    '|-\n'
+    '|colspan=2|{{sc|Fig. 9.}}—A multicol-legend figure.\n'
+    '|-\n'
+    '|A. Apple.||C. Cherry.\n'
+    '|-\n'
+    '|B. Banana.||D. Date.\n'
+    '|}'
+)
+
+
+class TestMulticolLegend:
+    def test_multicol_rows_become_sorted_legend(self):
+        comps = extract_figure_components(MULTICOL, _identity)
+        assert "Foo.png" in comps.images[0]
+        assert any("multicol-legend figure" in c for c in comps.caption_parts)
+        # Row-major source (A,C,B,D) → reading order (A,B,C,D) in the legend.
+        # (Trailing period stripped — production's `_parse_multicol_legend_row`
+        # behaviour, inherited by reuse.)
+        assert comps.legend_lines == [
+            "A. Apple", "B. Banana", "C. Cherry", "D. Date"], \
+            comps.legend_lines
+        # entries went to legend, not caption
+        assert not any("Apple" in c for c in comps.caption_parts)
+
+
+# A figure whose legend is a PROSE label-ladder sitting loose in one cell
+# (newline-separated `LABEL, text.` entries) — NOT a nested table, NOT
+# multicol rows.  The prose arm of the loose-ladder: ≥3 entries ⇒ legend.
+PROSE_LEGEND = (
+    '{| {{Ts|ma}}\n'
+    '|[[File:Bar.png|300px]]\n'
+    '|-\n'
+    '|{{sc|Fig. 4.}}—A prose-legend figure.\n'
+    '|-\n'
+    '|a, Head.\n'
+    'b, Thorax.\n'
+    'c, Abdomen.\n'
+    '|}'
+)
+
+
+class TestProseLegend:
+    def test_prose_ladder_cell_becomes_legend(self):
+        comps = extract_figure_components(PROSE_LEGEND, _identity)
+        assert "Bar.png" in comps.images[0]
+        assert any("prose-legend figure" in c for c in comps.caption_parts), \
+            comps.caption_parts
+        # ≥3-entry prose ladder → legend (parsed per-entry via production's
+        # `_parse_prose_legend_rows`; trailing period stripped as it does).
+        assert comps.legend_lines == [
+            "a. Head", "b. Thorax", "c. Abdomen"], comps.legend_lines
+        # the ladder went to legend, not caption
+        assert not any("Thorax" in c for c in comps.caption_parts)
+
+
 class TestAbbeyTableLegend:
     def test_nested_table_is_legend(self):
         comps = extract_figure_components(ABBEY_FIG3, _identity)

@@ -1,8 +1,63 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-05-29.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-05-30.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
+
+---
+
+## Current focus (2026-05-30) — Figure extractor rebuild + corpus loss-sieve
+
+**Context:** `_figure_decompose.extract_figure_components(raw, tt)` is the raw,
+recursive figure-component extractor (the ICL analog of `_table_decompose`) —
+a clean PARTITION of a figure into images / caption / attribution / legend /
+footnotes via consume-as-extract.  Built + validated, still **additive/inert**
+(not wired into any producer or the gate).
+
+**Governing principle this session (memory: `feedback_current_output_not_oracle`):**
+production is a **floor, not a target** — byte-identical is a chimera; the only
+failure mode that matters is being **worse** (content lost/corrupted), not
+**different**.  Validation flipped from "IDENTICAL vs DIVERGE" to a
+one-directional **loss** check.  Corollary: when reusing production's
+battle-tested leaf parsers, **delegate a parser WHOLE or reimplement it whole —
+never splice** (a cherry-picked multicol fragment + my own sort made us *worse*
+than production: scrambled order + truncated continuations).
+
+**Landed this session (all in `_figure_decompose.py`, inert):**
+- **Loose-`<poem>` legends** → `_emit_legend_chunk` (poem masked through the
+  cell splitter so its entry-per-line structure survives — the nested-table
+  masking analog).  Fixed a real data-loss (dropped `A.`/`B.` labels).
+- **Multicol legends** → production's COMPLETE logic (rowspan / column-major-
+  with-continuation / alternating-pair, column-major reading order, conditional
+  sort).  Replaced a partial fragment that truncated + reordered.
+- **HTML `<table>` figures** → flavor dispatch in `_gather`: `<table>` peels to
+  `_html_table_grid` (robust to EB1911's unclosed `</td>`/`</tr>`, preserves
+  newlines), `{|` to the wiki path; everything downstream shared.  "One
+  recursion, two row-extractors."
+
+**Corpus loss-sieve (`tools/_scratch/sieve_legend_loss.py`) — the standing
+acceptance gate.**  For every article-page figure: does any content word
+production put in a `{{LEGEND:}}` appear *anywhere* in the new extractor's
+output (reorder/markup/arrangement-tolerant)?  Loss = real drop.  Run over all
+36,691 article pages.
+- Before HTML fix: **3526 missing content-words / 35 articles**, ~all one root
+  (extractor was wiki-only → HTML figures produced empty).  *This is the blind
+  spot reasoning can't see: a whole input flavor never entered the recursion —*
+  *the no-loss theorem only covers bytes that get in the door.*
+- After HTML fix: **~40 words.**  Residual = (a) production markup-leak
+  (`td/tr/style` — we're strictly better, 0 content), (b) **the prose-legend
+  case** — `<br/>`/newline/italic-label/`{{em}}` entries `_gather_cell`
+  flattens (`<br/>`→space as *noise*) and the prose parser partially DROPS
+  (CHAERONEIA: `commissure`/`ventral` genuinely lost), (c) PALAEOGRAPHY (13
+  Latin words, manuscript facsimile, outside any figure element) + OCR noise.
+
+**Next — step 2: recurse the prose legend to the ground.**  `<br/>`, newline,
+`<poem>` line, and `;` are all entry-boundaries; the ground-up recursion treats
+them UNIFORMLY → each entry a labelled leaf in reading order → retires the
+masks, `_parse_prose_legend_rows`/`_emit_legend_chunk` delegates, and the
+`<br/>`-as-noise drop together.  Sieve must go to zero on the prose residual.
+Then wire the extractor (gate recognizes image-anywhere-in-raw; producers read
+`extract_figure_components`; corpus inertness; figure cohort → ICL).
 
 ---
 
