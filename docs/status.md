@@ -6,6 +6,68 @@ agent's memory directory and are not duplicated here.
 
 ---
 
+## VALIDATED (2026-05-30, later) — one recursive `render()` spans figures AND tables; the taxonomy was negative-value
+
+**Extends the pivot below to its endpoint.** There is no ICL producer and no table
+producer — there is **one recursive `render()`**: at each node, `leaf` vs `nested`
+→ *process directly* vs *recurse*. Nested (block structure: `{|` table,
+`{{center}}`, `<poem>`) → preserve it, pass the node's own style through *at level*,
+recurse into children. Leaf → dispatch to a **real terminal** (MATH, CHEM, OUTLINE,
+BODY_TEXT) — the *only* surviving classification, legitimate because terminals need
+genuinely different *transformation* (LaTeX→KaTeX ≠ prose→HTML). Everything else —
+figure / legend / data-table / caption / attribution — collapses to recurse +
+pass-attributes; structure & style are read from the **source's own attributes**,
+not a label. `leaf()` = "no block children" (inline markup stays inside the prose
+leaf). Termination is free: every path bottoms out at prose.
+
+**Prototype + render proof — `tools/_scratch/faithful_html.py` (~40-line `render()`,
+no figure/table/ICL anywhere in it) → screenshot, against viewer's real CSS:**
+- **OGAM** centred italic caption over image; **CHESS/Sarratt** title+image | solution
+  side-by-side (the source's two-cell `{|` table); **ABBEY Fig.3** image + centred
+  caption + two-column legend, each item its own line, centred small-caps heads.
+- **DATA TABLES through the *same* `render()`**: **ABBREVIATION** (173-row two-column
+  list → clean aligned columns + centred small-caps section head), **ABERRATION**
+  (numeric columns), **ABRACADABRA** (display). All borderless/aligned — and *more
+  faithful than production*, because EB1911 "tables" are aligned columns, not ruled
+  grids: the source carries **no border attr**; production's `DATA_TABLE`→`.data-table`
+  gridlines were our imposition. Border-vs-borderless comes from the source attr
+  (a `GRID` check on the `{|` line), not a label.
+
+**csc fix landed + corpus-audited.** `{{csc}}` = "Center Small Caps" (= `{{center}}`
++ `{{small-caps block}}`); the pipeline flattened `csc → «SC»`, dropping the
+centring. Fixed in `body_text.py` (`csc → «CTR»«SC»…«/SC»«/CTR»`). Corpus audit
+(`tools/_scratch/audit_csc.py` + `diff_csc.py`): **732 segments / 943 occurrences,
+100% pure centring-wrap, zero content change, zero errors.** The "centred-vs-left"
+fork was never a source-vs-print judgment — it was us tossing an attribute the
+source named in the template. See [[forks-are-dropped-attributes]],
+[[imposed-taxonomy-is-negative-value]].
+
+**Capstone:** the figure/table/ICL taxonomy was an imposed, **negative-value**
+re-encode — a lossy re-encode of an already-clean signal that could only lose
+fidelity AND add work (the classifier, the gate, `LAYOUT_WRAPPER`, the sweepers,
+the forks). The tell: it made us work *harder*, not easier.
+
+**Open (NOT done — report is, not ought):**
+1. **Corpus-wide validation** — proven on ~6 representative cases, not the corpus.
+2. **Ruled-table inverse — RESOLVED (AUSTRIA, 2026-05-30).** AUSTRIA-HUNGARY has both
+   kinds and the source distinguishes every one: borderless → no border signal;
+   ruled → explicit (`border="1"`, `class="wikitable"`, a `{{Ts|bt}}` row border-top,
+   per-cell `border:none` overrides). Sharper: **border is per-element style (table /
+   row / cell), NOT a table-level binary** — #4's rule is `{{Ts|bt}}` on a *single
+   row* (a header separator), which "gridded vs borderless" cannot even express. So
+   the prototype's `GRID` flag (data-table-class vs figtable) was itself a small
+   RELAPSE into the dismantled taxonomy; the fix is to DROP it and carry border as
+   per-element style like width/align/valign. No recognition residue — border is
+   attribute-passing, same as everything else; terminals stay the only real classify.
+3. **Wiring** — all of the above is a prototype `render()`, NOT in the pipeline. The
+   terminals already exist and are correct; the work is the structural walk that
+   dispatches to them + the viewer subtraction (drop figure-box / legend-aside /
+   imposed data-table gridlines; recognise `{{ts}}` at level instead of spreading).
+4. **csc snapshot re-baseline** — `body_text.py` change is live; affected snapshot
+   baselines need re-baselining on sign-off (the audit is the tagged diff).
+
+---
+
 ## ARCHITECTURAL PIVOT (2026-05-30, late) — the ICL taxonomy is a needless two-ended imposition
 
 **The conclusion that supersedes the figure-extractor section below.** Reached by

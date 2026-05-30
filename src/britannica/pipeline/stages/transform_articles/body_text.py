@@ -1230,7 +1230,7 @@ def _unwrap_layout_templates(text: str) -> str:
         text = _unwrap_balanced(text, name, lambda inner: inner)
     text = _unwrap_balanced(
         text, "csc",
-        lambda inner: f"\n\n{_FMT}SC{inner}{_FMT}/SC\n\n")
+        lambda inner: f"\n\n«CTR»{_FMT}SC{inner}{_FMT}/SC«/CTR»\n\n")
     return text
 
 

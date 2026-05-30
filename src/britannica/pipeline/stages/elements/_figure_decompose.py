@@ -507,3 +507,119 @@ def _has_text(s: str) -> bool:
     s = re.sub(r"&[a-zA-Z]+;|&#\d+;", "", s)
     s = re.sub(r"«/?[A-Z]+»", "", s)
     return bool(re.search(r"[A-Za-z0-9]", s))
+
+
+# ---------------------------------------------------------------------------
+# Faithful figure producer (additive / inert) — the walk→translate model.
+#
+# Walk the figure into ordered structural Elements (no role judgment), then
+# TRANSLATE each into the viewer's EXISTING marker vocabulary, in source order:
+#   image          → {{IMG:..}}  (width / align / height carried; NO bundled
+#                     caption — the caption is its own ordered element)
+#   text           → its own style: centring → «CTR», italic / small-caps via
+#                     `tt`, `<br>` / poem newlines preserved as `<br>`
+#   nested legend  → «HTMLTABLE:<table>..</table>«/HTMLTABLE»; each source cell's
+#     table          width / valign carried as <td style> (the viewer renders
+#                     the table natively).
+#
+# No classification, no relocation — the producer's one job is translation into
+# something the viewer reads ([[feedback_producer_regularizes_markup]]).  The
+# render's remaining gaps are step-2 viewer-recognition work: a borderless
+# layout-table lane (sibling of «CHEM:») and dropping the IMG figure-box /
+# LEGEND-aside opinions.
+# ---------------------------------------------------------------------------
+
+_CENTER_FIGURE_RE = re.compile(r"^\s*\{\{\s*c(?:enter)?\b", re.IGNORECASE)
+
+
+def _figure_bag(raw: str) -> list[Element]:
+    """Walk a figure's RAW bytes into ordered structural Elements — the bag the
+    faithful producer translates.  Same dispatch as `_gather` minus the role
+    classification: HTML → `_html_table_grid`; wiki → nested/poem mask +
+    `extract_wiki_rows` → `_walk_cell`; loose (no table) → `_walk_cell`."""
+    from ._table_decompose import (extract_wiki_rows, _mask_nested_tables,
+                                   _restore_nested)
+    from ._tables import _HTML_TABLE_TAG_RE, _html_table_grid
+
+    inner = _peel_table(raw)
+    bag: list[Element] = []
+    if _HTML_TABLE_TAG_RE.search(inner):
+        for row in _html_table_grid(inner):
+            for sep, attr, content in row:
+                bag.extend(_walk_cell(content,
+                                      {**_normalize_attrs(attr), "sep": sep}))
+        return bag
+    masked, nested = _mask_nested_tables(inner)
+    masked, poems = _mask_poems(masked)
+    _caption, rows = extract_wiki_rows(masked)
+    if not rows:
+        return _walk_cell(
+            _restore_poems(_restore_nested(masked, nested), poems), {})
+    for _rattr, cells in rows:
+        for sep, attr, content in cells:
+            content = _restore_poems(_restore_nested(content, nested), poems)
+            bag.extend(_walk_cell(content,
+                                  {**_normalize_attrs(attr), "sep": sep}))
+    return bag
+
+
+def _faithful_image(content: str, tt: TextTransform) -> str:
+    """`[[File:..]]` → `{{IMG:..}}` via the shared image producer — width / align
+    / height translated from the link params; NO bundled caption."""
+    from ._layout import _process_image
+    inner = re.sub(r"\]\]\s*$", "",
+                   re.sub(r"^\s*\[\[(?:File|Image):", "", content,
+                          flags=re.IGNORECASE))
+    return _process_image(inner, tt)
+
+
+def _faithful_lines(text: str, tt: TextTransform) -> str:
+    """Translate a text element's inline markup (`tt`) while preserving its line
+    structure — poem / `<br>` / source newlines all become `<br>`."""
+    text = re.sub(r"</?poem>", "", text, flags=re.IGNORECASE)
+    text = re.sub(r"<br\s*/?>", "\n", text, flags=re.IGNORECASE)
+    return "<br>".join(tt(line).strip()
+                       for line in text.split("\n") if line.strip())
+
+
+def _faithful_legend_table(content: str, tt: TextTransform) -> str:
+    """Nested legend table → «HTMLTABLE:» raw <table>; each <td> carries the
+    source cell's width / valign as inline style, and the cell's lines are kept
+    via `_faithful_lines`.  The viewer renders it natively (gridded today; the
+    borderless layout-table lane is step-2 work)."""
+    from ._table_decompose import extract_wiki_rows
+    _cap, rows = extract_wiki_rows(_peel_table(content))
+    out_rows: list[str] = []
+    for _rattr, cells in rows:
+        tds: list[str] = []
+        for _sep, attr, cell in cells:
+            na = _normalize_attrs(attr)
+            style = ""
+            if na.get("width"):
+                style += f"width:{na['width']};"
+            if na.get("valign"):
+                style += f"vertical-align:{na['valign']};"
+            tds.append(f'<td style="{style}">{_faithful_lines(cell, tt)}</td>')
+        if tds:
+            out_rows.append("<tr>" + "".join(tds) + "</tr>")
+    return f"«HTMLTABLE:<table>{''.join(out_rows)}</table>«/HTMLTABLE»"
+
+
+def _produce_figure_faithful(raw: str, tt: TextTransform) -> str:
+    """Translate a figure's RAW bytes into faithful ordered markers (see the
+    module note above).  Additive / inert — exercised by the render prototype,
+    not yet wired into any producer."""
+    centered = bool(_CENTER_FIGURE_RE.match(raw))
+    parts: list[str] = []
+    for el in _figure_bag(raw):
+        if el.kind == "NESTED_TABLE":
+            parts.append(_faithful_legend_table(el.content, tt))
+            continue
+        if el.kind == "IMAGE":
+            mk = _faithful_image(el.content, tt)
+        else:
+            mk = _faithful_lines(el.content, tt)
+        if not mk:
+            continue
+        parts.append(f"«CTR»{mk}«/CTR»" if centered else mk)
+    return "\n\n".join(parts)
