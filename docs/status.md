@@ -6,6 +6,64 @@ agent's memory directory and are not duplicated here.
 
 ---
 
+## ARCHITECTURAL PIVOT (2026-05-30, late) — the ICL taxonomy is a needless two-ended imposition
+
+**The conclusion that supersedes the figure-extractor section below.** Reached by
+stepping back and asking what caption / legend / attribution REALLY are: they are
+**our invented categories**, not properties of the source. The source already
+carries everything renderable — **structure** (what each element is), **order**
+(arrangement: the thing above the image renders above the image), and
+**attributes** (per-element style: italic, centred, cell widths, image size).
+Classification reads that information, buckets it into our categories, then maps
+the buckets *back* to styled output — a **roundtrip that begins and ends at the
+same information.** The label "caption" is attached and never consulted; the
+output is produced from text+style+order regardless.
+
+**It's a TWO-ENDED imposition, one taxonomy:**
+- **Producer end** — the classifier sorting content into caption/legend/attribution
+  (and everything serving it: legend parser, multicol logic, `{{LEGEND}}` block,
+  attribution-relocation, the move-list mis-fire).
+- **Viewer end** — `viewer.html`'s opinionated renderers: the 600px IMG figure-box,
+  the `figure-legend` aside, caption-bundled-in-IMG, `data-table` gridlines. The
+  **viewer has too many OPINIONS** — it decides how a figure/legend/table looks
+  instead of rendering the author's markup ([[feedback_shape_vs_rendering]]:
+  viewer deciding a source-question = bug).
+
+**The clean model — both ends SUBTRACT:**
+- **Producer**: preserve source structure + style + order; emit the one genuinely
+  structural marker (`[[File:]]`→IMG, because an image must render as an image);
+  carry everything else's markup (`«I»`, `{{center}}`, cell attrs) through. No
+  classify, no relocate, no assemble. The walk/bag/attributes/order work already
+  done is exactly what this consumes — it is NOT wasted; only the classification
+  *layer on top* dissolves.
+- **Viewer**: render that markup MECHANICALLY, holding no opinions — italic→italic,
+  centred→centred, table→table-with-its-own-attrs. Delete the figure-box, the
+  legend-aside, the caption-bundling, the data-table styling.
+
+**Validated (producer side) by a faithful-render prototype (`tools/_scratch/
+faithful_prototype.py`):**
+- **OGAM** (`{{center|«I»caption«/I»<br>[[File:…]]}}`) — production *breaks* it
+  (renders the image as the literal filename text); faithful = `[italic caption,
+  IMG width=700]` in order → caption above image. **Production bug fixed for free.**
+- **CHESS** — every "problem" DISSOLVES with no classification: the move-list
+  "White wins… 1.… 2.…" renders as the prose it is (production bundled it as the
+  IMG caption); "Diagram 1.—…" renders as small-caps text (never needed to be a
+  `Fig`); position titles render italic. CHESS was never broken — *we* invented
+  its problems by imposing a taxonomy it didn't fit.
+
+**Remaining work = subtraction + one preservation gap (sized on real cases, not
+hand-waved):** (1) walk loose `{{center|…}}` figures, not just tables; (2) STOP
+stripping wrapper-style — `_walk_cell`'s `_unwrap_cell_wrappers` discards
+`{{center}}`/`{{Fs}}`, so the ogam caption loses its centring; carry it as an
+attribute; (3) `<br>`→line break; (4) viewer: remove the opinionated renderers,
+render carried markup faithfully.
+
+**DISCIPLINE — do NOT rip out until rendered output is looked at.** Producer side
+proven by prototype; **viewer side pending**: render source markup with the
+viewer's opinions removed and confirm figures come out correct. Look, then delete.
+
+---
+
 ## Current focus (2026-05-30) — Figure extractor rebuild + corpus loss-sieve
 
 **Context:** `_figure_decompose.extract_figure_components(raw, tt)` is the raw,

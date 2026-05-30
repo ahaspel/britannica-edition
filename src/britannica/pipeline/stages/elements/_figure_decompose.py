@@ -57,6 +57,22 @@ class FigureComponents:
     footnotes: list[str] = field(default_factory=list)     # raw <ref>…
 
 
+@dataclass
+class Element:
+    """One structurally-atomic piece of a figure cell, in the walk's ordered
+    bag.  `kind` is the STRUCTURAL type — IMAGE / NESTED_TABLE / POEM / REF /
+    TEXT — NOT a role.  `content` is the raw bytes; `attrs` carries the cell /
+    layout attributes (cell `sep`, attribute slot, alignment) the role-
+    classifier reads to decide WHERE the element belongs (CHESS: align-left
+    legend vs align-right image).  The walk emits these; the role-classifier
+    (`_classify_element`) assigns each to a FigureComponents part.  Step toward
+    the recursive ICL producer: walk → classify(role) → produce(part) →
+    compose — the same skeleton the table producer will reuse."""
+    kind: str
+    content: str
+    attrs: dict = field(default_factory=dict)
+
+
 def _peel_table(raw: str) -> str:
     """Strip the outer ``{|…|}`` (wiki) or ``<table>…</table>`` (HTML)
     delimiters, returning the inner content (nested tables intact)."""
@@ -132,8 +148,9 @@ def _gather(inner: str, comps: FigureComponents, tt: TextTransform) -> None:
     # row-extractors: flavor is a leaf detail, everything downstream is shared.
     if _HTML_TABLE_TAG_RE.search(inner):
         for cells in _html_table_grid(inner):
-            for content in cells:
-                _gather_cell(content, comps, tt)
+            for sep, attr, content in cells:
+                _gather_cell(content, {**_normalize_attrs(attr), "sep": sep},
+                             comps, tt)
         return
 
     # ── wiki `{|` flavor ────────────────────────────────────────────────
@@ -208,129 +225,243 @@ def _gather(inner: str, comps: FigureComponents, tt: TextTransform) -> None:
     for _row_attrs, cells in rows:
         for _sep, _attr, content in cells:
             content = _restore_poems(_restore_nested(content, nested), poems)
-            _gather_cell(content, comps, tt)
+            _gather_cell(content, {**_normalize_attrs(_attr), "sep": _sep},
+                         comps, tt)
 
 
-def _gather_cell(content: str, comps: FigureComponents,
-                 tt: TextTransform) -> None:
-    from britannica.pipeline.stages.elements._table_decompose import (
-        find_nested_table_spans,
+_CSC_LINE_RE = re.compile(r"^\s*\{\{\s*csc\s*\|([^{}]*)\}\}\s*$", re.IGNORECASE)
+# Split a flowed legend line at a sentence/clause boundary that PRECEDES a
+# label token — recovers per-entry structure when the cell splitter collapsed
+# the source newlines to spaces (mirrors `_parse_prose_legend_rows`'s chunker,
+# plus `;` for the `a. Hydranth; b. Hydrocaulus;` shape).
+_ENTRY_BOUNDARY_RE = re.compile(
+    r"(?<=[.;])\s+(?=(?:«I»)?(?:[IVX]+|[A-Za-z0-9][A-Za-z0-9.]{0,4})\s*[.,]\s)")
+
+
+def _parse_legend_lines(content: str, tt: TextTransform) -> tuple[list[str], int]:
+    """Ground-up linear-legend recursion: parse a legend's source into
+    per-entry lines IN READING ORDER, unifying `<poem>` / `<br/>` / newline /
+    collapsed-prose entries.  `<poem>`/`<br/>`/newline are uniform line
+    boundaries; each line is further split at period/`;`-before-label
+    boundaries (for cell-collapsed prose).  A unit whose head matches the
+    legend label grammar (plain or italic) starts a new entry; `{{csc|…}}` is
+    a sub-heading; a unit with NO label is a CONTINUATION of the previous
+    entry — appended, NEVER dropped (the no-drop floor the production parsers
+    lack: `_emit_legend_chunk` / `_parse_prose_legend_rows` silently discard
+    label-less continuation lines, which is the partial-loss bug).  Returns
+    `(lines, n_labelled)` so the caller can gate caption-vs-legend.  Owns the
+    line structure; reuses the leaf label GRAMMAR."""
+    from britannica.pipeline.stages.elements._layout import (
+        _MULTICOL_FULL_ENTRY_ITALIC_RE, _MULTICOL_FULL_ENTRY_RE,
+        _clean_legend_text,
     )
-    content = content.strip()
-    if not content:
-        return
+    text = re.sub(r"</?poem>", "\n", content, flags=re.IGNORECASE)
+    text = re.sub(r"<br\s*/?>", "\n", text, flags=re.IGNORECASE)
+    units: list[str] = []
+    for seg in text.split("\n"):
+        seg = seg.strip()
+        if seg:
+            units.extend(p for p in _ENTRY_BOUNDARY_RE.split(seg) if p.strip())
 
-    # Nested table → two cases (no-drop both ways):
-    #   * contains an image → it's a sub-figure CONTAINER: RECURSE to gather
-    #     its components (image + attribution + …) into THIS figure.
-    #   * no image → it's a LEGEND (a table inside a figure is a key);
-    #     everything in it goes to legend.  Matches production's
-    #     TABLE-child legend signal; the structural baseline.
-    spans = find_nested_table_spans(content)
-    for start, end in reversed(spans):
-        nested_raw = content[start:end]
-        if _IMAGE_NS_LINK_RE.search(nested_raw):
-            _gather(_peel_table(nested_raw), comps, tt)
+    out: list[str] = []
+    n_labelled = 0
+    for unit in units:
+        unit = unit.strip()
+        m_csc = _CSC_LINE_RE.match(unit)
+        if m_csc:
+            sub = _clean_legend_text(m_csc.group(1)).rstrip(". ")
+            if sub:
+                out.append(f"### {sub}.")
+            continue
+        label = txt = None
+        if unit.startswith("«I»"):
+            m = _MULTICOL_FULL_ENTRY_ITALIC_RE.match(unit)
+            if m:
+                label, txt = m.group(1).strip(), _clean_legend_text(tt(m.group(2)))
         else:
-            _gather_legend_table(nested_raw, comps, tt)
-        content = content[:start] + content[end:]
-    content = content.strip()
-    if not content:
-        return
+            cleaned = _clean_legend_text(tt(unit))
+            m = _MULTICOL_FULL_ENTRY_RE.match(cleaned)
+            if m:
+                label, txt = m.group(1).strip(), m.group(2).strip()
+        if label is not None:
+            out.append(f"{label}. {txt}".rstrip())
+            n_labelled += 1
+            continue
+        # No label → CONTINUATION of the previous entry (no-drop floor).
+        cont = _clean_legend_text(tt(unit)).strip()
+        if not cont:
+            continue
+        if out and not out[-1].startswith("###"):
+            out[-1] = f"{out[-1]} {cont}".rstrip()
+        else:
+            out.append(cont)  # orphan leading line — keep, never drop
+    return out, n_labelled
 
-    # Unwrap layout wrappers ({{center|…}}, {{Fs|…}}) now that any nested
-    # table is gone — the wrapper now spans the remaining content, so a
-    # `{{center|` opener won't fragment off as junk at the Fig-marker split.
+
+def _normalize_attrs(attr_part: str) -> dict:
+    """Normalize a cell's raw attribute string into the uniform layout signals
+    the role-classifier reads — ``{align, valign, width, float}``.  Reuses
+    production's ``_cell_styles`` (which already parses HTML ``align=``/
+    ``valign=``, inline ``style=``, and ``{{Ts|…}}`` codes into CSS
+    declarations); we just lift out the four properties.  Flavor-blind: same
+    result whether the attrs came from a wiki ``_attr`` slot or an HTML
+    ``<td …>`` opener, so the classifier never sees which syntax produced it."""
+    if not attr_part:
+        return {}
+    from britannica.pipeline.stages.elements._tables import _cell_styles
+    out: dict = {}
+    for decl in _cell_styles(attr_part, ""):
+        prop, _, val = decl.partition(":")
+        prop, val = prop.strip().lower(), val.strip().lower()
+        if prop == "text-align" and val in ("left", "right", "center"):
+            out["align"] = val
+        elif prop == "vertical-align" and val in ("top", "middle", "bottom"):
+            out["valign"] = val
+        elif prop == "width":
+            out["width"] = val
+        elif prop == "float" and val in ("left", "right"):
+            out["float"] = val
+    return out
+
+
+def _walk_cell(content: str, attrs: dict) -> list[Element]:
+    """The WALK: decompose ONE cell's raw bytes into an ordered bag of
+    structural Elements IN SOURCE SEQUENCE.  NO role decisions, NO grouping by
+    type — the walker's only job is to hand back what's there, in order; what
+    each element *is* belongs to the role-classifier.  Nested tables and poems
+    are masked to opaque tokens first, so the wrapper-unwrap and the scan treat
+    them as single atomic units (and their inner refs/images aren't separately
+    extracted), while their source position is preserved.  Then we scan left to
+    right, emitting text gaps and structural spans in the order they appear."""
+    from britannica.pipeline.stages.elements._table_decompose import (
+        _mask_nested_tables, _restore_nested,
+    )
     from britannica.pipeline.stages.elements._layout import (
         _unwrap_cell_wrappers,
     )
-    content = _unwrap_cell_wrappers(content).strip()
+    content = content.strip()
     if not content:
-        return
+        return []
+    # Mask nested tables (their `|-` rows) and poems (their entry lines) so the
+    # unwrap and the scan see them as atomic, keeping their source position.
+    masked, nt_raws = _mask_nested_tables(content)
+    masked, poem_raws = _mask_poems(masked)
+    masked = _unwrap_cell_wrappers(masked).strip()
+    if not masked:
+        return []
 
-    # Loose <poem> legend(s).  Production routes a figure cell's <poem> the
-    # same way (`_extract_figure_components`'s poem loop): a caption-poem
-    # (Fig./Plate. opener) folds into the caption; any other poem parses to
-    # per-entry legend lines via `_emit_legend_chunk` (SOURCE ORDER, periods
-    # preserved).  Handle here, BEFORE the prose/multicol typing, so a loose
-    # poem never reaches the prose parser — which mangles it (dropped labels,
-    # comma→period, stripped trailing periods).  This is the same delegate the
-    # nested-table legend path (`_gather_legend_table`) already uses.
-    if re.search(r"<poem>", content, re.IGNORECASE):
+    # Collect structural spans (positions in the masked text), then walk them
+    # in source order.  Refs/images inside a masked table/poem aren't found
+    # here — they travel with their (atomic) container, as they should.
+    spans: list[tuple[int, int, str, str]] = []
+    for m in re.finditer(r"\x03NT\d+\x03", masked):
+        spans.append((m.start(), m.end(), "NESTED_TABLE",
+                      _restore_nested(m.group(0), nt_raws)))
+    for m in re.finditer(r"\x03PM\d+\x03", masked):
+        spans.append((m.start(), m.end(), "POEM",
+                      _restore_poems(m.group(0), poem_raws)))
+    for m in _REF_RE.finditer(masked):
+        spans.append((m.start(), m.end(), "REF", m.group(0)))
+    for m in _IMAGE_NS_LINK_RE.finditer(masked):
+        spans.append((m.start(), m.end(), "IMAGE", m.group(0)))
+    spans.sort()
+
+    bag: list[Element] = []
+    pos = 0
+    for start, end, kind, raw in spans:
+        _emit_text(masked[pos:start], attrs, bag)
+        bag.append(Element(kind, raw, dict(attrs)))
+        pos = end
+    _emit_text(masked[pos:], attrs, bag)
+    return bag
+
+
+def _emit_text(gap: str, attrs: dict, bag: list[Element]) -> None:
+    """Emit a residual-text gap as a TEXT element iff it carries real text.
+    Carries the raw (`<br/>` intact — an entry boundary for a legend ladder)
+    plus a `flat` copy (`<br/>`→space) for caption/attribution typing; the cell
+    attrs ride along for the role-classifier to read (CHESS)."""
+    gap = gap.strip()
+    if not gap:
+        return
+    flat = re.sub(r"<br\s*/?>", " ", gap, flags=re.IGNORECASE).strip()
+    if _has_text(flat):
+        bag.append(Element("TEXT", gap, {**attrs, "flat": flat}))
+
+
+def _classify_element(el: Element, comps: FigureComponents,
+                      tt: TextTransform) -> None:
+    """The role-CLASSIFY (+ recurse/produce): assign ONE structural element to
+    its figure part.  The named home for what was `_gather_cell`'s inline
+    if/elif typing — including the `else → caption` catch-all the role-
+    classifier will dissolve.  ICL is a FLAT bag: a nested figure-table is
+    GATHERED (flattened) into this figure's parts, never kept as a hierarchy
+    (that disposition is the table producer's, not ours)."""
+    if el.kind == "NESTED_TABLE":
+        if _IMAGE_NS_LINK_RE.search(el.content):
+            _gather(_peel_table(el.content), comps, tt)     # sub-figure → gather
+        else:
+            _gather_legend_table(el.content, comps, tt)     # no image → legend
+    elif el.kind == "POEM":
         from britannica.pipeline.stages.elements._layout import (
             _CAPTION_POEM_RE, _emit_legend_chunk,
         )
         from britannica.pipeline.stages.elements._text import _clean_text
-        for pm in re.finditer(r"<poem>[\s\S]*?</poem>", content,
-                              re.IGNORECASE):
-            span = pm.group(0)
-            body = re.sub(r"</?poem>", "", span, flags=re.IGNORECASE).strip()
-            if _CAPTION_POEM_RE.match(body):
-                cap = _clean_text(tt(re.sub(r"\s*\n\s*", " ", body)))
-                if cap:
-                    comps.caption_parts.append(cap)
-            else:
-                _emit_legend_chunk(span, tt, comps.legend_lines)
-        content = re.sub(r"<poem>[\s\S]*?</poem>", "", content,
-                         flags=re.IGNORECASE).strip()
-        if not content:
-            return
+        body = re.sub(r"</?poem>", "", el.content, flags=re.IGNORECASE).strip()
+        if _CAPTION_POEM_RE.match(body):                    # caption-poem
+            cap = _clean_text(tt(re.sub(r"\s*\n\s*", " ", body)))
+            if cap:
+                comps.caption_parts.append(cap)
+        else:                                                # legend-poem
+            _emit_legend_chunk(el.content, tt, comps.legend_lines)
+    elif el.kind == "REF":
+        comps.footnotes.append(el.content)
+    elif el.kind == "IMAGE":
+        comps.images.append(el.content)
+    elif el.kind == "TEXT":
+        _classify_text(el, comps, tt)
 
-    # Footnotes — carry the raw <ref> through; strip from the typed text.
-    refs = _REF_RE.findall(content)
-    if refs:
-        comps.footnotes.extend(refs)
-        content = _REF_RE.sub("", content).strip()
-        if not content:
-            return
 
-    # Image at this level — carry its FULL spec (filename + width/align/float
-    # params), not just the filename, so layout info isn't tossed.  The
-    # assembler parses the params it can render; the rest waits for the
-    # richer layout markers (carry now, emit later).
-    img = _IMAGE_NS_LINK_RE.search(content)
-    if img:
-        comps.images.append(img.group(0))
-        content = _IMAGE_NS_LINK_RE.sub("", content).strip()
-        if not content:
-            return
-
-    # Drop non-content noise — `<br>`, spacer entities (`&emsp;`), bare
-    # punctuation — left over after pulling images/refs.  Only substantive
-    # text (some alphanumeric) is a real caption/attribution/legend.
-    content = re.sub(r"<br\s*/?>", " ", content, flags=re.IGNORECASE).strip()
-    if not _has_text(content):
-        return
-
-    # Type the remaining prose: caption (Fig./Plate. marker), attribution
-    # (credit phrasing), else caption.
-    if _FIG_MARKER_RE.search(content):
-        marker = _FIG_MARKER_RE.search(content)
-        before = content[:marker.start()].strip()
-        after = content[marker.start():].strip()
+def _classify_text(el: Element, comps: FigureComponents,
+                   tt: TextTransform) -> None:
+    """Type a residual-text element: caption (Fig./Plate. marker) / attribution
+    (credit phrasing) / legend (≥3-entry label ladder) / caption — the last is
+    the no-drop default, i.e. the catch-all the role-classifier is meant to
+    dissolve once it can read the carried attributes."""
+    from britannica.pipeline.stages.elements._layout import (
+        _entries_look_like_legend,
+    )
+    flat = el.attrs["flat"]
+    if _FIG_MARKER_RE.search(flat):
+        marker = _FIG_MARKER_RE.search(flat)
+        before = flat[:marker.start()].strip()
+        after = flat[marker.start():].strip()
         if before and _ATTRIBUTION_RE.match(before):
             comps.attribution_parts.append(_clean(tt(before)))
         elif before:
             comps.caption_parts.append(_clean(tt(before)))
         if after:
             comps.caption_parts.append(_clean(tt(after)))
-    elif _ATTRIBUTION_RE.match(content):
-        comps.attribution_parts.append(_clean(tt(content)))
+        return
+    if _ATTRIBUTION_RE.match(flat):
+        comps.attribution_parts.append(_clean(tt(flat)))
+        return
+    leg_lines, n_lab = _parse_legend_lines(el.content, tt)
+    entries = [tuple(ln.split(". ", 1)) for ln in leg_lines
+               if not ln.startswith("###")]
+    if (n_lab >= 3
+            and _entries_look_like_legend([e for e in entries if len(e) == 2])):
+        comps.legend_lines.extend(leg_lines)
     else:
-        # Loose-ladder (prose arm): a cell with ≥3 `LABEL., text` entries is
-        # a legend, not a caption.  `_parse_prose_legend_rows` is production's
-        # parser AND its gate — it returns [] unless it finds ≥3 entries that
-        # look like a legend, so it doubles as the detector.  (Runs AFTER the
-        # Fig-marker check, so a caption-opener cell still wins; falls through
-        # to caption when it's not a ladder — no-drop.)
-        from britannica.pipeline.stages.elements._layout import (
-            _parse_prose_legend_rows,
-        )
-        lines = _parse_prose_legend_rows([content], tt)
-        if lines:
-            comps.legend_lines.extend(lines)
-        else:
-            comps.caption_parts.append(_clean(tt(content)))
+        comps.caption_parts.append(_clean(tt(flat)))
+
+
+def _gather_cell(content: str, attrs: dict, comps: FigureComponents,
+                 tt: TextTransform) -> None:
+    """Walk one cell into its element bag, then classify each element to its
+    part — the producer's walk → classify shape at cell scope."""
+    for el in _walk_cell(content, attrs):
+        _classify_element(el, comps, tt)
 
 
 def _gather_legend_table(table_raw: str, comps: FigureComponents,

@@ -154,12 +154,47 @@ class TestProseLegend:
         assert "Bar.png" in comps.images[0]
         assert any("prose-legend figure" in c for c in comps.caption_parts), \
             comps.caption_parts
-        # ≥3-entry prose ladder → legend (parsed per-entry via production's
-        # `_parse_prose_legend_rows`; trailing period stripped as it does).
+        # ≥3-entry prose ladder → legend (ground-up `_parse_legend_lines`,
+        # which preserves the source trailing period — a fidelity gain over
+        # production's `_parse_prose_legend_rows`, which strips it).
         assert comps.legend_lines == [
-            "a. Head", "b. Thorax", "c. Abdomen"], comps.legend_lines
+            "a. Head.", "b. Thorax.", "c. Abdomen."], comps.legend_lines
         # the ladder went to legend, not caption
         assert not any("Thorax" in c for c in comps.caption_parts)
+
+
+# A figure whose legend is `<br/>`-separated italic-label entries where one
+# entry WRAPS across a `<br/>` — the second line has no label, so it's a
+# continuation.  Production's parsers (`_emit_legend_chunk` /
+# `_parse_prose_legend_rows`) silently DROP that label-less line (the
+# CHAERONEIA partial-loss).  The ground-up parser appends it to its entry.
+CONTINUATION = (
+    '{| {{Ts|ma}}\n'
+    '|[[File:Baz.png|300px]]\n'
+    '|-\n'
+    '|{{sc|Fig. 5.}}—A wrapped-entry legend.\n'
+    '|-\n'
+    '|«I»g«/I», Cerebral ganglia.<br/>'
+    '«I»n«/I», Commissure uniting<br/>'
+    'this with the ventral cord.<br/>'
+    '«I»v«/I», Ventral nerve cord.\n'
+    '|}'
+)
+
+
+class TestContinuationNotDropped:
+    def test_wrapped_entry_continuation_is_appended(self):
+        comps = extract_figure_components(CONTINUATION, _identity)
+        blob = " ".join(comps.legend_lines)
+        # The continuation ("this with the ventral cord") must NOT be dropped.
+        assert "ventral cord" in blob, comps.legend_lines
+        # It is APPENDED to the entry it continues, not lost or orphaned.
+        merged = [ln for ln in comps.legend_lines if "Commissure uniting" in ln]
+        assert merged and "this with the ventral cord" in merged[0], \
+            comps.legend_lines
+        # Three labelled entries (g, n, v) — the continuation isn't one of them.
+        assert len([ln for ln in comps.legend_lines
+                    if not ln.startswith("###")]) == 3, comps.legend_lines
 
 
 class TestAbbeyTableLegend:
