@@ -178,6 +178,60 @@ hostile.py`:
 
 ---
 
+## WORK PLAN (2026-05-30) — remaining work is PURE ENGINEERING, ordered
+
+Recognition / architecture is settled (sections above). This supersedes the looser
+open-items list. Two instruments gate and drive everything — build them first.
+
+**Phase 0 — instruments.**
+- **leak-scan** = totality gate + worklist. De-noised (do NOT flag `render()`'s own
+  `<table class=…>`; measure real content-word loss with a template-name stopset). Run
+  on `render()` output corpus-wide; each leak names the next construct to handle.
+- **render-diff vs the current pipeline** = regression + quality net. Two-way; tag
+  every diff improvement / regression / neutral.
+
+**Phase 1+2 — producer ⇄ viewer, ONE per-attribute lockstep loop** (broad-strokes
+steps 1+2). Built as a PARALLEL path on raw elements — the live pipeline is untouched,
+so the whole phase is low-risk and validated offline. It is the metadata-carrying
+pattern (proven on img align/width) repeated attribute by attribute: translate one
+attribute in the producer → handle it in the viewer → verify → commit → next. The
+system is consistent at every attribute boundary (never a half-built contract), so you
+can stop / commit / ship between any two.
+- **Totality attributes (leak-scan-driven):** transcribe every source attribute — full
+  `{{Ts}}` vocab, `{{em}}`, font-size / line-height, image width / align,
+  rowspan / colspan — plus the few template renderers (`{{Fine block}}`, `{{ne}}`, …).
+  Viewer SUBTRACTS opinions (600px figure-box, legend-aside, data-table stripes, the
+  `GRID` flag) and gains the borderless layout-table lane + `{{Ts}}` recognition. Done
+  when leak-scan → only-transcription-errors corpus-wide (TOTALITY FLOOR). Lousy
+  renders allowed here.
+- **Quality attributes (render-diff-driven):** the ones that don't leak but render
+  badly (chem bracket → rowspan-aware sizing). Same lockstep, graded by the visual
+  diff. **Keep the current CHEM path live until its bracket quality is matched** —
+  total never ships worse.
+
+**Phase 3 — cutover (broad-strokes step 3 + classifier + SHAPE), LAST, incremental,
+netted.** The front end collapses to **one recursive `decompose` + outer boundaries**:
+the walker = `decompose` at the top level + the genuinely-outer boundaries it keeps
+(`«PAGE»`/segment, section, article); `render()` = the same `decompose` recursing.
+- Cut over **one outer-element-type at a time** through `render()`; render-diff each
+  against the working mass; sign-off before any rebaseline. NOT big-bang.
+- When all types route with clean diffs, DELETE the dead code (delete-dead-code: after
+  call-sites are gone, not before) — the tier-dispatch **classifier** (~35 labels), the
+  **SHAPE** layer (`_shapes.py` + SHAPE_* + shape-dispatch; its regexes were the
+  construct-inventory `decompose` had to absorb), and the **per-label producers**.
+- Re-run leak-scan corpus-wide post-cutover — totality must still hold.
+
+**Invariants throughout:** (1) totality = no leaked markup except transcription errors
+(leashed inadequacy exception); (2) total never ships worse than the current render
+(chem quality preserved across the move); (3) the two gates stay independent —
+no-leaked-markup (totality) and renders-well (quality).
+
+**Shape:** instruments → parallel low-risk per-attribute build (totality-floor, then
+quality) → incremental netted cutover that collapses walker + classifier + SHAPE into
+`decompose` and deletes the taxonomy + per-label producers.
+
+---
+
 ## ARCHITECTURAL PIVOT (2026-05-30, late) — the ICL taxonomy is a needless two-ended imposition
 
 **The conclusion that supersedes the figure-extractor section below.** Reached by
