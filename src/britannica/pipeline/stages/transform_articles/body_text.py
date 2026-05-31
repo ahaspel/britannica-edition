@@ -560,6 +560,134 @@ def _to_fraktur(text: str) -> str:
     return "".join(_FRAKTUR_MAP.get(c, c) for c in text)
 
 
+# ── Inline fraction typography ────────────────────────────────────────
+#
+# Variants share one rendering contract (num/den as plain text, vulgar
+# Unicode where available): {{sfrac|n|d}}, {{sfrac nobar|n|d}}, {{frac|n|d}},
+# {{mfrac|i|n|d}} (mixed), {{over|n|d}}, {{sfracN|n|d}}, {{EB1911 sfrac|…}},
+# {{EB1911 tfrac|…}}, and the unicode-name EB¹⁹¹¹ / EB₁₉₁₁ variants.  Three
+# positional-arg shapes: 3 → integer + num/den (mixed), 2 → num/den, 1 → 1/n.
+# Named-param styling args (font-size=…, color=…) are dropped.
+_VULGAR_FRACTIONS = {
+    ("1", "2"): "½", ("1", "4"): "¼", ("3", "4"): "¾",
+    ("1", "3"): "⅓", ("2", "3"): "⅔",
+    ("1", "5"): "⅕", ("2", "5"): "⅖",
+    ("3", "5"): "⅗", ("4", "5"): "⅘",
+    ("1", "6"): "⅙", ("5", "6"): "⅚",
+    ("1", "8"): "⅛", ("3", "8"): "⅜",
+    ("5", "8"): "⅝", ("7", "8"): "⅞",
+}
+
+_FRAC_NAMES = (
+    r"sfrac\s+nobar"
+    r"|sfracN"
+    r"|sfrac"
+    r"|mfrac"
+    r"|frac"
+    r"|over"
+    r"|EB1911\s+sfrac"
+    r"|EB1911\s+tfrac"
+    r"|EB¹⁹¹¹\s+sfrac"
+    r"|EB¹⁹¹¹\s+tfrac"
+    r"|EB₁₉₁₁\s+ₜfᵣₐc"
+)
+_FRAC_TOKEN_RE = re.compile(
+    r"\{\{\s*(?:" + _FRAC_NAMES + r")\b", re.IGNORECASE)
+
+
+def _frac(num: str, den: str) -> str:
+    return _VULGAR_FRACTIONS.get((num.strip(), den.strip()),
+                                 f"{num.strip()}/{den.strip()}")
+
+
+def _split_top_pipes(s: str) -> list[str]:
+    """Split ``s`` on ``|`` at brace/bracket depth 0, so nested ``{{…}}`` /
+    ``[[…]]`` arguments aren't bisected."""
+    parts: list[str] = []
+    buf: list[str] = []
+    depth = 0
+    i, n = 0, len(s)
+    while i < n:
+        two = s[i:i + 2]
+        if two in ("{{", "[["):
+            depth += 1
+            buf.append(two)
+            i += 2
+        elif two in ("}}", "]]"):
+            depth = max(0, depth - 1)
+            buf.append(two)
+            i += 2
+        elif s[i] == "|" and depth == 0:
+            parts.append("".join(buf))
+            buf = []
+            i += 1
+        else:
+            buf.append(s[i])
+            i += 1
+    parts.append("".join(buf))
+    return parts
+
+
+def _render_fraction(args: str) -> str:
+    """Render one fraction's already-expanded ``|``-joined arg string (which
+    begins with the leading ``|``).  Drops ``name=value`` styling args; the
+    positional-arg count selects mixed / num-den / 1-n."""
+    parts = _split_top_pipes(args)
+    if parts and parts[0] == "":          # empty slot before the first `|`
+        parts = parts[1:]
+    pos = [p for p in parts if not re.match(r"^[a-zA-Z_-]+=", p)]
+    if len(pos) >= 3:
+        return f"{pos[0].strip()}{_frac(pos[1], pos[2])}"
+    if len(pos) == 2:
+        return _frac(pos[0], pos[1])
+    if len(pos) == 1:
+        return _frac("1", pos[0])
+    return ""
+
+
+def _expand_fractions(text: str) -> str:
+    """Render every inline fraction template via balanced-brace recursion.
+
+    Replaces the former nested 8-pass fixpoint loop (a loop inside
+    ``_unwrap_content_templates``, itself re-run by the body unwrap pass —
+    doubly fake recursion).  Each ``{{frac…|…}}`` is located, brace-counted
+    to its matching ``}}`` (spanning nested braces the old ``[^{}|]`` slots
+    could not), its inner recursively expanded FIRST so a nested fraction arg
+    is plain text before the args are split, then the positional args drive
+    ``_frac``.  Children-resolved-first is structural — no iteration, no
+    ordering, and pipe-bearing / >8-deep nestings now resolve instead of
+    leaking to ``_strip_templates``."""
+    m = _FRAC_TOKEN_RE.search(text)
+    if m is None:
+        return text
+    open_idx = m.start()
+    depth, j, n, close = 0, open_idx, len(text), None
+    while j < n - 1:
+        pair = text[j:j + 2]
+        if pair == "{{":
+            depth += 1
+            j += 2
+        elif pair == "}}":
+            depth -= 1
+            if depth == 0:
+                close = j
+                break
+            j += 2
+        else:
+            j += 1
+    if close is None:
+        # Unbalanced opener — advance past the name token (never stall) and
+        # recurse on the remainder; the bare opener is left as it is today.
+        return text[:m.end()] + _expand_fractions(text[m.end():])
+    inner = text[m.end():close]
+    if not inner.startswith("|"):
+        # Name not immediately followed by `|` (the old `names\|` adjacency
+        # requirement) — not a positional fraction call; leave it, recurse on.
+        return text[:m.end()] + _expand_fractions(text[m.end():])
+    rendered = _render_fraction(_expand_fractions(inner))
+    return text[:open_idx] + rendered + _expand_fractions(text[close + 2:])
+
+
 def _unwrap_content_templates(text: str) -> str:
     """Unwrap content templates to their text content."""
     # Language/script templates → plain text
@@ -613,91 +741,10 @@ def _unwrap_content_templates(text: str) -> str:
     # Bare ``{{fqm}}`` defaults to a curly opening double-quote.
     text = re.sub(r"\{\{fqm\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{fqm\}\}", "\u201c", text, flags=re.IGNORECASE)
-    # Inline fraction typography.  Variants share a single rendering
-    # contract (num/den as plain text, vulgar Unicode where available):
-    # `{{sfrac|n|d}}`, `{{sfrac nobar|n|d}}`, `{{frac|n|d}}`,
-    # `{{mfrac|i|n|d}}` (mixed fraction), `{{over|n|d}}`,
-    # `{{sfracN|n|d}}`, `{{EB1911 sfrac|n|d}}`, `{{EB1911 tfrac|n|d}}`,
-    # and the unicode-name variants `{{EB\u00b9\u2079\u00b9\u00b9 sfrac|...}}` /
-    # `{{EB\u00b9\u2079\u00b9\u00b9 tfrac|...}}` / `{{EB\u2081\u2089\u2081\u2081 \u209cf\u1d63\u2090c|...}}`.  Three positional
-    # arg shapes: 3-arg \u2192 integer + num/den (mixed), 2-arg \u2192 num/den,
-    # 1-arg \u2192 1/n.  Named-param styling args (`font-size=\u2026`,
-    # `color=\u2026`) are dropped.  Fixed-point loop because nested
-    # variants resolve outer-in (`{{sfrac|f-s=100%|x {{EB1911 tfrac|2|3}}|y}}`
-    # \u2014 inner tfrac must resolve before outer sfrac's regex matches).
-    _VULGAR = {
-        ("1", "2"): "\u00bd", ("1", "4"): "\u00bc", ("3", "4"): "\u00be",
-        ("1", "3"): "\u2153", ("2", "3"): "\u2154",
-        ("1", "5"): "\u2155", ("2", "5"): "\u2156",
-        ("3", "5"): "\u2157", ("4", "5"): "\u2158",
-        ("1", "6"): "\u2159", ("5", "6"): "\u215a",
-        ("1", "8"): "\u215b", ("3", "8"): "\u215c",
-        ("5", "8"): "\u215d", ("7", "8"): "\u215e",
-    }
-    def _frac(num, den):
-        return _VULGAR.get((num.strip(), den.strip()),
-                           f"{num.strip()}/{den.strip()}")
-    # Name alternation shared across the three arg-shape regexes below.
-    # The two-token names (`EB1911 sfrac`, etc.) need `\s+` between
-    # tokens; `sfrac` matches as a prefix so multi-token variants are
-    # spelled out to avoid `sfrac` swallowing `sfrac nobar` as just
-    # `sfrac` with `nobar` falling into the integer slot.
-    _FRAC_NAMES = (
-        r"sfrac\s+nobar"
-        r"|sfracN"
-        r"|sfrac"
-        r"|mfrac"
-        r"|frac"
-        r"|over"
-        r"|EB1911\s+sfrac"
-        r"|EB1911\s+tfrac"
-        r"|EB\u00b9\u2079\u00b9\u00b9\s+sfrac"
-        r"|EB\u00b9\u2079\u00b9\u00b9\s+tfrac"
-        r"|EB\u2081\u2089\u2081\u2081\s+\u209cf\u1d63\u2090c"
-    )
-    _FRAC_TOKEN_RE = re.compile(
-        r"\{\{\s*(?:" + _FRAC_NAMES + r")\b", re.IGNORECASE)
-
-    def _strip_frac_named_args(m: re.Match) -> str:
-        """Drop `name=value` styling args (`font-size=100%`, `color=\u2026`)
-        from a matched fraction template so positional-arg extraction
-        below sees only numerator/denominator/integer slots."""
-        template = m.group(0)
-        inner = template[2:-2]
-        parts = inner.split("|")
-        cleaned = [parts[0]] + [p for p in parts[1:]
-                                 if not re.match(r"^[a-zA-Z_-]+=", p)]
-        return "{{" + "|".join(cleaned) + "}}"
-
-    for _ in range(8):
-        if not _FRAC_TOKEN_RE.search(text):
-            break
-        before = text
-        text = re.sub(
-            r"\{\{(?:" + _FRAC_NAMES + r")\|[^{}]*\}\}",
-            _strip_frac_named_args,
-            text, flags=re.IGNORECASE,
-        )
-        # Three-arg form: integer + num/den (mixed fraction).
-        text = re.sub(
-            r"\{\{(?:" + _FRAC_NAMES + r")\|([^{}|]*)\|([^{}|]*)\|([^{}|]*)\}\}",
-            lambda m: f"{m.group(1).strip()}{_frac(m.group(2), m.group(3))}",
-            text, flags=re.IGNORECASE,
-        )
-        # Two-arg form: num/den.
-        text = re.sub(
-            r"\{\{(?:" + _FRAC_NAMES + r")\|([^{}|]*)\|([^{}|]*)\}\}",
-            lambda m: _frac(m.group(1), m.group(2)),
-            text, flags=re.IGNORECASE,
-        )
-        # One-arg form: 1/n.
-        text = re.sub(
-            r"\{\{(?:" + _FRAC_NAMES + r")\|([^{}|]*)\}\}",
-            lambda m: _frac("1", m.group(1)),
-            text, flags=re.IGNORECASE,
-        )
-        if text == before:
-            break
+    # Inline fractions are rendered by the recursive expander
+    # `_expand_fractions` (module-level): one balanced-brace pass, nested
+    # fractions resolved bottom-up by construction — no loop, no ordering.
+    text = _expand_fractions(text)
     # Any remaining Css image crop templates (non-DjVu sources, or
     # those that survived the pre-pass in _transform_text_v2).
     text = re.sub(r"\{\{Css image crop[^}]*\}\}", "", text, flags=re.IGNORECASE)
