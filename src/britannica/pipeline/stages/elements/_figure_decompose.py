@@ -321,6 +321,15 @@ def _normalize_attrs(attr_part: str) -> dict:
             out["width"] = val
         elif prop == "float" and val in ("left", "right"):
             out["float"] = val
+    # colspan/rowspan are HTML grid attrs (not CSS), so `_cell_styles`
+    # doesn't surface them — lift directly.  Additive: the role-classifier
+    # reads align/valign/width/float; cell producers carry the span.
+    cs = re.search(r"colspan\s*=\s*[\"']?(\d+)", attr_part, re.I)
+    if cs:
+        out["colspan"] = cs.group(1)
+    rs = re.search(r"rowspan\s*=\s*[\"']?(\d+)", attr_part, re.I)
+    if rs:
+        out["rowspan"] = rs.group(1)
     return out
 
 

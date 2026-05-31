@@ -6,6 +6,64 @@ agent's memory directory and are not duplicated here.
 
 ---
 
+## PROGRESS (2026-05-30, latest) — plate-probe session: render() bet CONFIRMED on real plates; THREE steps to the finish
+
+Ran the recursive-render bet on real plates (AEGEAN PLATE I–IV) via `render_proto.render_markers`
+(new producer-contract variant: emits the MARKER contract, not HTML) + viewer CSS. **Result: the
+grid-preserving `render()` beats production with ZERO plate-specific producer logic.** Everything
+the plate needed was *generic, corpus-wide* work. The plate doubled as a **probe** that flushed out
+the real remaining issues.
+
+**The runway — literally three steps left:** (1) fix the last five viewer context-rewires →
+(2) drain the leak tail & delete `_strip_templates` → (3) **flip the walker** (route the pipeline
+through recursive `render()`, full vol-1 rebuild). Then the architecture is live.
+
+**Landed this session (all corpus-wide, not plate hacks):**
+- **Size family — DONE, regression-clean.** The font-size scale now carries SYMMETRICALLY: was
+  half-handled (up only — `x-larger`/`xx-larger`→`«XL»`/`«XXL»`), the *entire smaller half* +
+  `larger` + `fs` were flattening (size dropped on ~12k corpus instances). Now `larger`→`«LG»`,
+  `smaller`/`sm`→`«SM»`, `x-smaller`→`«XS»`, `xx-smaller`→`«XXS»`, `{{fs|N%}}`→`«FS[N%]»`
+  (value-bearing). Viewer renders the scale (`.size-lg/sm/xs/xxs`, `«FS[v]»`, `«LH[v]»`). Git-isolated
+  before/after: **zero content change** (purely additive markers).
+- **`{{lh}}` (line-height) — DONE.** Was a SILENT content-loss bug: `_strip_templates` ate
+  `{{lh|N%|content}}` whole (Figs 3-6 captions vanished) — invisible to leak_scan (it catches
+  over-retention, not deletion). Now carries `«LH[N]»` (content + line-height). 19 articles.
+- **`colspan`/`rowspan` — DONE.** `_normalize_attrs` lifted CSS only; now lifts the HTML span attrs.
+- **Figure-grid rendering — DONE (viewer).** Figure-tables emit `«HTMLTABLE»` w/ `class=figtable`;
+  full-size cell images (`formatCell` was 60px-capping), `display:block` images, `body.plate-page`
+  breaks the 960px reading column. Wide-table Expand confirmed intact (HTMLTABLE path, ≥10 cols).
+
+**Step 1 — Viewer consolidation — IN PROGRESS. "Main source of remaining bugs" (user).**
+Seven near-duplicate marker renderers, each covering a different SUBSET → **context-leaks**: a
+marker renders in the body but not in cells/footnotes/verse/title (the `«CTR»`/`«LH»`-in-cells bug).
+This is the viewer-side form of a producer NESTING bug — see memory [[context-leaks-are-nesting-bugs]].
+Built ONE shared `decodeInlineMarkers` (the position-invariant markers; frame ones — FN/IMG/MATH/SH/
+page/DHR-block-vs-inline — stay per-context). **Headless-tested** (`tools/_scratch/test_decoder.js`,
+node: 0 diffs vs body, 0 leaks). **Body wired.** Remaining FIVE: `formatCell`, `formatFootnoteText`,
+`renderTitleMarkers` (+ title-display), verse `applyMarkers`, inline-`«HTMLTABLE»`. Acceptance test:
+adding a marker becomes a ONE-LINE change. (Two harmless dead no-op handlers — hieroglyph/LN —
+linger in the body to tidy; the `«`-vs-`«` escaping mix made the exact-match fragile.)
+
+**Step 2 — `_strip_templates` is a disguised sweeper — CAMPAIGN (drain → delete).** It's the catch-all
+tail of `_apply_markup`: deletes ANY unhandled `{{template}}` (content + all) + orphan-brace cleanup,
+silently — INVISIBLE to leak_scan. `tools/diagnostics/strip_scan.py` = the MIRROR of leak_scan;
+corpus-wide ≈ **1378 deletions / ~135 keys** (distinct count likely inflated by `/s`+`/e` paired-form
+splits, size-variant spread, and a count-1 sentinel-artifact tail — verify). Drain to zero, then
+delete. Orphan markup should be source-errors-ONLY by construction (every structural token is consumed
+by its owning producer); residual → `corrections.json`, surfaced not swept (the totality invariant —
+a faithful renderer SHOWS source errors instead of hiding them; the AEGEAN plate's 1-2-vs-3-6 spacing
+inconsistency is exactly such a transcription error, faithfully reproduced).
+
+**New diagnostic tools:** `strip_scan.py`, `viewer_loop.py`, `plate_render_diff.py`, and
+`render_proto.render_markers` (producer-contract render).
+
+**Lesson (recurring this session):** several audit-counter failures (wrong-file title-globs,
+full-pipeline-vs-standalone drift, byte-vs-content metric, nested-marker word-strip) each manufactured
+phantom diffs. When a strong structural prior says "this can't happen" and the audit disagrees,
+**suspect the audit first.** See memory [[verify-the-counter]].
+
+---
+
 ## VALIDATED (2026-05-30, later) — one recursive `render()` spans figures AND tables; the taxonomy was negative-value
 
 **Extends the pivot below to its endpoint.** There is no ICL producer and no table

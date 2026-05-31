@@ -569,18 +569,20 @@ def _unwrap_content_templates(text: str) -> str:
     # Formatting wrappers → content
     text = re.sub(r"\{\{uc\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{nowrap\s*\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
-    text = re.sub(r"\{\{smaller\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
-    text = re.sub(r"\{\{larger\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    # smaller/larger now carry graduated size markers (see the «SM»/«LG»
+    # block below) instead of flattening — kept symmetric with «XL»/«XXL».
     # `{{Fs|<size>|<content>}}` — Wikisource font-size template, used
     # to size individual math operators (∫, (, ), {, }, etc.) in
-    # table cells (HYDROMECHANICS vol 14 p138/139).  Strip the
-    # wrapper, keep content.  Content can be a literal `{` or `}`
-    # (math grouping brace), so `[^}]*` rather than `[^{}]*` — the
-    # regex still stops at the first `}}` because of the literal
-    # `\}\}` close requirement.
+    # table cells (HYDROMECHANICS vol 14 p138/139).  CARRY the explicit
+    # size as a value-bearing marker «FS[size]»content«/FS» (the
+    # parameterized companion to the named size scale); the viewer sets
+    # font-size from it.  Content can be a literal `{` or `}` (math
+    # grouping brace), so `[^}]*` — the regex still stops at the first
+    # `}}` because of the literal `\}\}` close requirement.
     text = re.sub(
-        r"\{\{Fs\|[^{}|]+\|([^}]*)\}\}",
-        r"\1", text, flags=re.IGNORECASE,
+        r"\{\{Fs\|([^{}|]+)\|([^}]*)\}\}",
+        lambda m: f"{_FMT}FS[{m.group(1).strip()}]{m.group(2)}{_FMT}/FS",
+        text, flags=re.IGNORECASE,
     )
     # Drop initial (decorative large first letter) → just the letter
     text = re.sub(r"\{\{[Dd]rop ?initial\|([^{}|]*)[^{}]*\}\}", r"\1", text)
@@ -594,8 +596,7 @@ def _unwrap_content_templates(text: str) -> str:
     text = re.sub(
         r"\{\{tooltip\|(" + _ABBR_ARG1 + r")\|[^{}]*\}\}",
         r"\1", text, flags=re.IGNORECASE)
-    # Size/alignment wrappers → content
-    text = re.sub(r"\{\{sm\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    # Alignment wrappers → content (`sm` now carries «SM» — see size block).
     text = re.sub(r"\{\{right\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     text = re.sub(r"\{\{left\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
     # Rotation wrapper: {{rotate|angle|content}} → content. Rotation
@@ -928,6 +929,36 @@ def _unwrap_content_templates(text: str) -> str:
                             lambda inner: f"{_FMT}XXL{inner}{_FMT}/XXL")
     text = _unwrap_balanced(text, "x-larger",
                             lambda inner: f"{_FMT}XL{inner}{_FMT}/XL")
+    # Complete the size scale SYMMETRICALLY (down-steps + plain `larger`).
+    # Previously these flattened to bare text in `_unwrap_content_templates`
+    # / `_unwrap_layout_templates`, dropping the size signal on ~12k corpus
+    # instances (the smaller half was the missing mirror of «XL»/«XXL»).
+    # Now each carries a graduated marker; the viewer renders the scale
+    # (.size-lg/.size-sm/.size-xs/.size-xxs).  Longest names first so the
+    # balanced matcher resolves `xx-smaller` before `x-smaller`/`smaller`.
+    text = _unwrap_balanced(text, "larger",
+                            lambda inner: f"{_FMT}LG{inner}{_FMT}/LG")
+    text = _unwrap_balanced(text, "xx-smaller",
+                            lambda inner: f"{_FMT}XXS{inner}{_FMT}/XXS")
+    text = _unwrap_balanced(text, "x-smaller",
+                            lambda inner: f"{_FMT}XS{inner}{_FMT}/XS")
+    text = _unwrap_balanced(text, "smaller",
+                            lambda inner: f"{_FMT}SM{inner}{_FMT}/SM")
+    text = _unwrap_balanced(text, "sm",
+                            lambda inner: f"{_FMT}SM{inner}{_FMT}/SM")
+    # `{{lh|<line-height>|content}}` — line-height wrapper (tightens
+    # multi-line captions so label/description/citation read as one unit,
+    # e.g. AEGEAN plate figure legends).  Previously the inner templates
+    # resolved to markers, then `{{lh|88%|«SC»…}}` (now brace-free) was
+    # eaten WHOLE by `_strip_templates` — silent caption loss, invisible
+    # to leak_scan.  CARRY the line-height (it spaces the lines — dropping
+    # it spreads caption and citation apart); viewer renders it.
+    def _lh_carry(inner: str) -> str:
+        head, sep, tail = inner.partition("|")
+        if sep and re.fullmatch(r"\s*[\d.]+\s*(?:%|px|em)?\s*", head):
+            return f"«LH[{head.strip()}]»{tail}«/LH»"
+        return inner
+    text = _unwrap_balanced(text, "lh", _lh_carry)
     # Inline typography wrappers — content carriers previously falling
     # to `_strip_templates`, so the catch-all deleted both wrapper and
     # content. Corpus-audit counts (2026-05-28): bold 2 (with nested
@@ -951,10 +982,12 @@ def _unwrap_content_templates(text: str) -> str:
                   r"\1", text, flags=re.IGNORECASE)
     # `x-smaller|TEXT` — small typography (smaller-than-small; used
     # for parenthetical inline labels like `{{x-smaller|[HISTORY}}`
-    # in HISTORY-tagged article headers).  No marker for this size;
-    # unwrap to content.
+    # in HISTORY-tagged article headers).  Whitespace-padded residual
+    # not caught by the balanced «XS» pass above — carry «XS» here too
+    # (don't flatten; keep the size signal).
     text = re.sub(r"\{\{\s*x-smaller\s*\|([^{}]*)\}\}",
-                  r"\1", text, flags=re.IGNORECASE)
+                  lambda m: f"{_FMT}XS{m.group(1)}{_FMT}/XS",
+                  text, flags=re.IGNORECASE)
     # `word-spacing|Npx|TEXT` — extra inter-word spacing (typography).
     # Lost in flowing HTML; unwrap second arg.
     text = re.sub(r"\{\{\s*word-spacing\s*\|[^{}|]*\|([^{}]*)\}\}",
@@ -1349,6 +1382,20 @@ def _finalize_markers(text: str) -> str:
     text = text.replace(f"{_FMT}/XXL", "\u00ab/XXL\u00bb")
     text = text.replace(f"{_FMT}XL", "\u00abXL\u00bb")
     text = text.replace(f"{_FMT}/XL", "\u00ab/XL\u00bb")
+    # Down-steps + plain `larger` \u2014 symmetric with \u00abXL\u00bb/\u00abXXL\u00bb.  Longest
+    # tokens first so \u00abXXS\u00bb isn't bitten by the \u00abXS\u00bb replace.
+    text = text.replace(f"{_FMT}XXS", "\u00abXXS\u00bb")
+    text = text.replace(f"{_FMT}/XXS", "\u00ab/XXS\u00bb")
+    text = text.replace(f"{_FMT}XS", "\u00abXS\u00bb")
+    text = text.replace(f"{_FMT}/XS", "\u00ab/XS\u00bb")
+    text = text.replace(f"{_FMT}SM", "\u00abSM\u00bb")
+    text = text.replace(f"{_FMT}/SM", "\u00ab/SM\u00bb")
+    text = text.replace(f"{_FMT}LG", "\u00abLG\u00bb")
+    text = text.replace(f"{_FMT}/LG", "\u00ab/LG\u00bb")
+    # `{{fs|<size>|X}}` \u2192 value-bearing \u00abFS[size]\u00bbX\u00ab/FS\u00bb (parameterized).
+    text = re.sub(re.escape(_FMT) + r"FS\[([^\]]*)\]",
+                  lambda m: f"\u00abFS[{m.group(1)}]\u00bb", text)
+    text = text.replace(f"{_FMT}/FS", "\u00ab/FS\u00bb")
     # BAR is a no-content marker (`\u00abBAR[N]\u00bb` with width).  Sentinel
     # uses RULE prefix internally to avoid the `\x05B` bold-open
     # collision; finalised marker keeps the BAR name for the viewer.

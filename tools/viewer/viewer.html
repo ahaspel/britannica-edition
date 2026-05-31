@@ -37,6 +37,15 @@
       padding: 24px;
     }
 
+    /* Plate pages have no marginal furniture (page numbers, shoulder
+       headers) — drop the reading-column cap and give the viewport to
+       the display.  Toggled by renderArticle on article_type==="plate". */
+    body.plate-page .page {
+      max-width: none;
+      padding-left: 2vw;
+      padding-right: 2vw;
+    }
+
     .card {
       background: var(--panel);
       border: 1px solid var(--border);
@@ -495,6 +504,43 @@
       border-bottom: 1px solid currentColor;
     }
 
+    /* Figure-tables: plate / multi-figure image grids carried as
+       «HTMLTABLE» but WITHOUT data-table chrome.  The point is to
+       preserve the SOURCE LAYOUT — a row of three figures in the print
+       stays a row of three, captions in their own cells — which the
+       linear plate parser flattened into a single column down the page.
+       Cell images render at full size; the !important beats formatCell's
+       inline 60px data-cell cap (which is right for data tables, wrong
+       for plates). */
+    table.figtable {
+      margin: 1.2em auto;
+      border-collapse: collapse;
+      border: none;
+      width: auto;
+      max-width: 100%;
+    }
+    table.figtable td, table.figtable th {
+      border: none;
+      /* Tight vertical padding: in the source a figure's caption and its
+         legend often sit in SEPARATE rows (AEGEAN Figs 1-2 — caption row,
+         legend row), and they read as one caption block in print.  Wide
+         vertical padding spread them apart; keep horizontal column gap. */
+      padding: 1px 12px;
+      text-align: center;
+      vertical-align: top;
+    }
+    table.figtable .cell-image,
+    table.figtable img {
+      max-height: none !important;
+      max-width: 100%;
+      height: auto;
+      /* Block (not inline) so the image carries no line-box descender
+         space below it — that baseline gap was reading as the image
+         sitting too far above its caption. */
+      display: block;
+      margin: 0 auto;
+    }
+
     /* Wide data tables: shown inline but horizontally scrollable, with an
        Expand button that pops them into a full-viewport modal. */
     .wide-table-wrap {
@@ -673,6 +719,13 @@
       font-size: 150%;
       line-height: 0.8;
     }
+    /* Down-steps + plain larger — the symmetric other half of the size
+       scale ({{smaller}}/{{sm}}→sm, {{x-smaller}}→xs, {{xx-smaller}}→xxs,
+       {{larger}}→lg).  Inline citations / sub-captions / plate footers. */
+    .size-lg  { font-size: 120%; }
+    .size-sm  { font-size: 85%; }
+    .size-xs  { font-size: 75%; }
+    .size-xxs { font-size: 62%; }
 
     /* Horizontal rule — `{{bar|N}}` renders an N-em underline,
        typically for column-sum underlines in tables (AFRICA / GREAT
@@ -2014,6 +2067,85 @@
       return h;
     }
 
+    // Font-size scale markers — ONE pass shared by every render context
+    // (body prose + table cells), so a carried size renders identically
+    // wherever it appears.  Named steps map to .size-* classes; «FS[v]»
+    // carries an explicit CSS size (sanitized).  Longest tokens first so
+    // «XXL»/«XXS» aren't bitten by «XL»/«XS».
+    function applySizeMarkers(h) {
+      h = h.replace(/«XXL»([\s\S]*?)«\/XXL»/g, '<span class="size-xxl">$1</span>');
+      h = h.replace(/«XL»([\s\S]*?)«\/XL»/g, '<span class="size-xl">$1</span>');
+      h = h.replace(/«LG»([\s\S]*?)«\/LG»/g, '<span class="size-lg">$1</span>');
+      h = h.replace(/«XXS»([\s\S]*?)«\/XXS»/g, '<span class="size-xxs">$1</span>');
+      h = h.replace(/«XS»([\s\S]*?)«\/XS»/g, '<span class="size-xs">$1</span>');
+      h = h.replace(/«SM»([\s\S]*?)«\/SM»/g, '<span class="size-sm">$1</span>');
+      h = h.replace(/«FS\[([^\]]*)\]»([\s\S]*?)«\/FS»/g, (_m, sz, c) => {
+        sz = sz.trim();
+        if (/^[\d.]+$/.test(sz)) sz += "%";
+        const ok = /^[\d.]+(%|em|rem|px|pt)$|^(xx-small|x-small|small|medium|large|x-large|xx-large|smaller|larger)$/i.test(sz);
+        return ok ? `<span style="font-size:${sz}">${c}</span>` : c;
+      });
+      // «LH[v]» — line-height wrapper ({{lh}}); tightens multi-line caption
+      // blocks.  inline-block so the line-height governs the wrapped/«br»
+      // lines inside.  Sanitized: unitless number, %, or length.
+      h = h.replace(/«LH\[([^\]]*)\]»([\s\S]*?)«\/LH»/g, (_m, lh, c) => {
+        lh = lh.trim();
+        const ok = /^[\d.]+(%|em|rem|px|pt)?$/.test(lh);
+        return ok ? `<span style="display:inline-block;line-height:${lh}">${c}</span>` : c;
+      });
+      return h;
+    }
+
+    // ONE shared inline-marker decoder — the position-INVARIANT markers that
+    // render identically in every context (body, cells, footnotes, titles,
+    // verse).  Killing the seven-way duplication that caused context-leaks
+    // (a marker rendering in one place but not another — the viewer-side form
+    // of a producer nesting bug).  Operates on ALREADY-ESCAPED text (each
+    // caller escapeHtml's as appropriate, then calls this); does NOT handle
+    // frame-dependent markers (FN numbering, IMG sizing, MATH display-mode,
+    // SH queue, page-marker hoisting) — those legitimately differ by context
+    // and stay there.  Order matches the canonical body sequence verbatim.
+    function decodeInlineMarkers(h, opts) {
+      const dhrInline = !!(opts && opts.dhrInline);
+      h = h.replace(/«MIRROR:(.*?)«\/MIRROR»/gs, '<span class="mirror-h">$1</span>');
+      h = h.replace(/«B»(.*?)«\/B»/gs, "<b>$1</b>");
+      h = h.replace(/«I»(.*?)«\/I»/gs, "<i>$1</i>");
+      h = h.replace(/«SC»(.*?)«\/SC»/gs, '<span class="small-caps">$1</span>');
+      h = h.replace(/«SS»(.*?)«\/SS»/gs, '<span class="sans-serif">$1</span>');
+      h = h.replace(/«SR»(.*?)«\/SR»/gs, '<span class="explicit-serif">$1</span>');
+      h = applySizeMarkers(h);
+      h = h.replace(/«BAR\[(\d+)\]»/g,
+                    (_m, n) => `<span class="inline-bar" style="width:${n}em">&nbsp;</span>`);
+      h = h.replace(/«DHR(?:\[[^\]]*\])?»/g,
+                    dhrInline ? '<span class="dhr-inline"></span>'
+                              : '<span class="dhr-block"></span>');
+      h = h.replace(/«CTR»([\s\S]*?)«\/CTR»/g, '<div class="centered">$1</div>');
+      h = h.replace(/«BRACE2\[(\d+)\|([lrud])\]»/g, (_m, _n, side) => {
+        const glyph = side === 'l' ? '⎧' : side === 'r' ? '⎫'
+                    : side === 'u' ? '⏞' : '⏟';
+        return `<span class="brace2 brace2-${side}">${glyph}</span>`;
+      });
+      h = h.replace(/\[hieroglyph:\s*([^\]]+)\]/g, (match, codes) => {
+        const rendered = codes.trim().split(/[:\s\-]+/).map(code => {
+          code = code.replace(/\\/g, "");
+          if (!code || code === "<" || code === ">" || code === "!" || code === "-") return "";
+          const cp = gardinerToUnicode(code);
+          if (cp) return `<span class="hieroglyph">&#x${cp.toString(16)};</span>`;
+          return `<span class="hieroglyph-fallback" title="Gardiner ${code}">${code}</span>`;
+        }).join("");
+        return rendered || match;
+      });
+      h = h.replace(/«LN:([^|]*)\|([^|«]*?)(?:\|([^«]*))?«\/LN»/g, (match, g1, g2, g3) => {
+        const hasFile = g3 !== undefined;
+        const target = hasFile ? g2 : g1;
+        const display = hasFile ? g3 : g2;
+        const filename = hasFile ? g1 : null;
+        const href = filename ? articleUrl(filename) : `/search.html?q=${encodeURIComponent(target)}`;
+        return `<a href="${href}" class="article-link" title="${target}">${display}</a>`;
+      });
+      return h;
+    }
+
     function formatCell(text) {
       let h = escapeHtml(text);
       h = h.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
@@ -2023,7 +2155,12 @@
       h = h.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
       h = h.replace(IMG_PARTS_RE_G, (match, filename, metaBlock, caption) => {
         const url = filename.startsWith("http") ? filename : commonsUrl(filename);
-        return `<img src="${url}" alt="${escapeHtml(caption || filename)}" class="cell-image" loading="lazy" style="max-height:60px;" />`;
+        // Honor carried width (figure-grid / plate cells size from source
+        // px); fall back to the 60px data-cell cap only when no width was
+        // carried (the producer carries it for figures, not data tables).
+        const meta = parseImgMeta(metaBlock);
+        const sz = meta.width ? `max-width:${meta.width}px;` : "max-height:60px;";
+        return `<img src="${url}" alt="${escapeHtml(caption || filename)}" class="cell-image" loading="lazy" style="${sz}" />`;
       });
       h = h.replace(/\[hieroglyph:\s*([^\]]+)\]/g, (match, codes) => {
         const rendered = codes.trim().split(/[:\s\-]+/).map(code => {
@@ -2056,6 +2193,14 @@
         const lines = content.split("\n").filter(l => l.trim());
         return `<span class="cell-verse">${lines.join("<br>")}</span>`;
       });
+      // {{dhr|N%}} inside a cell — inline spacer between list items
+      // (AFRICA tribal tables).  Inline variant: zero-width, 1em tall.
+      h = h.replace(/«DHR(?:\[[^\]]*\])?»/g, '<span class="dhr-inline"></span>');
+      h = applySizeMarkers(h);
+      // «CTR» in a cell (e.g. a figure-grid caption {{c|…}}) — handled in
+      // the body path too, but cells run through formatCell, so it must be
+      // rendered here or it leaks.  Centered block within the cell.
+      h = h.replace(/«CTR»([\s\S]*?)«\/CTR»/g, '<div class="centered">$1</div>');
       return h;
     }
 
@@ -2491,6 +2636,23 @@
             // markers to bare <table> elements, so their content is
             // still unformatted raw marker text.
             function formatCellNode(node, pageMarkers) {
+              // Whole-cell fast path: if children are only text + <br>,
+              // format the cell's full marker string at once so markers
+              // that span a <br> (block «CTR»/«LH» around a multi-line
+              // caption) stay balanced.  Per-text-node formatting would
+              // split such a span into unbalanced halves → leak.  Cells
+              // with nested tables/elements fall through to the walk.
+              const kids = Array.from(node.childNodes);
+              if (kids.length && kids.every(
+                  c => c.nodeType === 3 ||
+                       (c.nodeType === 1 && c.tagName === "BR"))) {
+                const raw = kids.map(
+                    c => c.nodeType === 3 ? c.nodeValue : "\x00BR\x00").join("")
+                  .replace(/\x01PAGE:(\d+)\x01/g, (_x, pg) => {
+                    pageMarkers.push(pg); return ""; });
+                node.innerHTML = formatCell(raw).replace(/\x00BR\x00/g, "<br>");
+                return;
+              }
               for (const child of Array.from(node.childNodes)) {
                 if (child.nodeType === 3) {
                   const txt = child.nodeValue.replace(
@@ -2733,43 +2895,13 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
       // Source: <span style="{{mirrorH}}">\ud800\udf04</span> \u2014 used in ALPHABET
       // to show left-right-flipped letters in Etruscan / Italic /
       // Cleonae's reversed E.  CSS applies `transform: scaleX(-1)`.
-      html = html.replace(/\u00abMIRROR:(.*?)\u00ab\/MIRROR\u00bb/gs,
-                          '<span class="mirror-h">$1</span>');
-      // Render bold/italic/small-caps/sans-serif markers
-      html = html.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
-      html = html.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
-      html = html.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
-      html = html.replace(/\u00abSS\u00bb(.*?)\u00ab\/SS\u00bb/gs, '<span class="sans-serif">$1</span>');
-      html = html.replace(/\u00abSR\u00bb(.*?)\u00ab\/SR\u00bb/gs, '<span class="explicit-serif">$1</span>');
-      // Math-typography sizing: {{xx-larger|X}} (200%) and {{x-larger|X}}
-      // (150%) wrap math grouping characters scaled up for tall equations
-      // (STEAM_ENGINE / ORDNANCE).  Preserves the size signal end-to-end.
-      html = html.replace(/\u00abXXL\u00bb(.*?)\u00ab\/XXL\u00bb/gs, '<span class="size-xxl">$1</span>');
-      html = html.replace(/\u00abXL\u00bb(.*?)\u00ab\/XL\u00bb/gs, '<span class="size-xl">$1</span>');
-      // {{bar|N}} \u2014 N-em horizontal rule, e.g. AFRICA's table column-sum
-      // underlines.  No content; marker carries the width.
-      html = html.replace(/\u00abBAR\[(\d+)\]\u00bb/g,
-                          (_m, n) => `<span class="inline-bar" style="width:${n}em">&nbsp;</span>`);
-      // {{brace2|N|side}} \u2014 printed-source's tall vertical brace
-      // grouping N rows of a table.  Render as a sized Unicode brace
-      // glyph; the height is informational (carried for #31's pending
-      // outline-vs-table hypothesis).
-      // {{center|}}, {{c|}}, {{block center|}}, and paired begin/end
-      // variants all collapse to \u00abCTR\u00bbcontent\u00ab/CTR\u00bb.  Render with
-      // text-align:center on a wrapping div; mostly used for math
-      // equations and decorative blocks.
-      html = html.replace(/\u00abCTR\u00bb([\s\S]*?)\u00ab\/CTR\u00bb/g, (_m, content) =>
-        `<div class="centered">${content}</div>`);
-      // brace2: l/r are vertical braces (l-pointing or r-pointing,
-      // grouping rows); u/d are horizontal (column-grouping above/below
-      // a label).  Choose Unicode glyph per side.
-      html = html.replace(/\u00abBRACE2\[(\d+)\|([lrud])\]\u00bb/g, (_m, _n, side) => {
-        const glyph = side === 'l' ? '\u23a7'
-                    : side === 'r' ? '\u23ab'
-                    : side === 'u' ? '\u23de'
-                    : '\u23df';  // 'd'
-        return `<span class="brace2 brace2-${side}">${glyph}</span>`;
-      });
+      // ONE shared inline-marker decoder (see decodeInlineMarkers) \u2014 the
+      // per-marker block that used to live here was the duplication behind
+      // the context-leak class.  It runs the full invariant set (MIRROR,
+      // B/I/SC, SS/SR, sizes, BAR, DHR-block, CTR, BRACE2, hieroglyph, LN).
+      // SH + MATH below remain \u2014 they're frame-dependent (queue / display-
+      // mode) and stay per-context.
+      html = decodeInlineMarkers(html);
       // Shoulder headings — id, display text, and margin-pointer
       // status were assigned by the detectSections pre-pass and
       // queued in document order.  Consume one entry per match.
@@ -2908,6 +3040,10 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
       currentVolume = article.volume || "?";
       currentScanUrl = scanUrl(article);
       unproofedPages = (article.source_quality && article.source_quality.unproofed_pages) ? article.source_quality.unproofed_pages : {};
+      // Plate pages carry no marginal furniture (no page-number margin,
+      // no shoulder headers) — drop the reading-column cap and give the
+      // whole viewport to the display (see body.plate-page CSS).
+      document.body.classList.toggle("plate-page", article.article_type === "plate");
       const segments = Array.isArray(article.segments) ? article.segments : [];
       const xrefs = (Array.isArray(article.xrefs) ? article.xrefs : [])
         .slice().sort((a, b) => (a.normalized_target || "").localeCompare(b.normalized_target || ""));
