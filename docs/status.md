@@ -63,6 +63,38 @@ surviving ordering comments; pathological → 0.
   the leak-tail drain; 15/20 fail for reasons predating 1a (1a changed 0 seeds). Re-sync with a
   TAGGED per-seed diff (not a blind rebaseline) so it resumes guarding during 1b.
 
+**STEP 1b — general recursive inline-template expander: IN PROGRESS.** `_expand_inline_templates`
+(module-level, registry-driven balanced-brace recursion — the general form of `_expand_fractions`)
+added to `body_text.py`, run first in the unwrap loop. Registry batch 1: greek/polytonic/hebrew/
+lang/uc/nowrap/right/left → content; sc/asc/smallcaps/small-caps → «SC»; Fs → «FS[size]» (value-
+bearing). Verified vs `base`/`s1a`: 17 articles changed, 0 regressions — leak-resolutions
+(empty `«I»«/I»` / `«CTR»«/CTR»` → full content) + marker RE-NESTING corrections (overlapping
+`«FS»«SC»…«/FS»…«/SC»` → properly nested `«FS»«SC»…«/SC»…«/FS»` — EGYPT, SILK; the recursion paying
+off). NEXT: step B (delete the now-redundant flat regexes the engine supersedes — byte-identical) +
+migrate remaining nestable families (sub/sup translate-family, etc.).
+
+**THE NESTING-REGEX SCOREBOARD (user principle, 2026-05-31): any regex that gestures at nesting is a
+latent bug.** Regexes provably can't match balanced structure, so a negated class / non-greedy used
+to fake "stop at the nesting boundary" (`[^{}]*`, `[^}]*`, `[^<]*`, `.*?` butting a `{{`/`<`/`[[`) is
+correct only on non-nesting inputs; where they nest it silently deletes / mis-matches / drops a
+marker — usually LATENT. Corpus-of-code count: ~256 candidate sites (233 brace, 14 tag, 9 non-
+greedy). NOT 256 fixes — they PARTITION into a few structural cures, each dissolving a category:
+body_text inline (~92) → the engine + step B; `_walker` (~13) → recursive recognition (the flip
+proper — a correctly-recursive walker needs no regex to approximate nestable extent);
+figure/table/math producers (~50) → route captions/cells through the recursive transform;
+detect_boundaries / title / extract_* (~50) → separate subsystems, triage (some are honest flat-
+token matchers, not nesting). The count is a second flip scoreboard alongside strip_scan; it falls in
+STEPS (one per cure) to a floor of genuine leaf matches. Per-site test: does the construct actually
+nest in the corpus? ([[verify-corpus-claims]]).
+
+**FINDING — multi-line caption truncation (pre-existing, logged):** the IMAGE producer's external-
+caption capture is LINE-BASED; a caption spanning two source lines (TRANSFORMERS Fig. 4:
+`{{center|{{Fs|92%|{{sc|Fig}}. 4.—…⏎Closed Circuit Transformer.}}}}`) is captured only to line 1,
+cutting `{{center|{{Fs|` before its closers → unbalanced braces → mangled caption (`92%` debris).
+Broken in BOTH pre- and post-1b (s1a's caption is also truncated, missing line 2) — step 1b only
+changed the cosmetic debris, NOT a regression. Fix = brace-aware multi-line caption capture; belongs
+to the figure/caption worklist.
+
 **REMAINING RUNWAY:** 1b (general inline-template expander — same recipe, the `_unwrap_content_
 templates` / `_strip_templates` surface) → 2 (`/s`-`/e`) → 3 (`ts` carry) → 4 (bridge drop) →
 vol-1 rebuild. Plus the curated-seed re-sync.

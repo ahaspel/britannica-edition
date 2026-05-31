@@ -688,6 +688,111 @@ def _expand_fractions(text: str) -> str:
     return text[:open_idx] + rendered + _expand_fractions(text[close + 2:])
 
 
+# ── General recursive inline-template expander ────────────────────────
+#
+# Registry-driven balanced-brace recursion — the general form of
+# `_expand_fractions`.  Finds each balanced `{{name|args}}`; if `name` is
+# registered, recursively expands its inner FIRST (children-resolved-first
+# by construction), then dispatches the handler; unregistered templates are
+# scanned INTO (not skipped over), so a registered template nested inside an
+# unregistered one still resolves.  This dissolves the fake-recursion loop
+# for the registered families: nesting and pipe-bearing inners that the flat
+# `[^{}]` regexes leaked now resolve in one pass, no ordering, no iteration.
+#
+# Families migrate into the registry one batch at a time; each batch first
+# runs ALONGSIDE the legacy flat handlers (the expander resolves the hard
+# nested cases up-front, the flat passes then no-op on what's left), then the
+# now-redundant flat regexes are removed in a separate byte-identical step.
+
+
+def _next_template(text: str, start: int = 0):
+    """Find the next balanced ``{{…}}`` at/after ``start``.  Returns
+    ``(open_idx, full_inner, close_idx)`` (``full_inner`` = name+args between
+    the braces) or ``None``.  An unbalanced ``{{`` is skipped, not fatal — the
+    scan resumes past it so later well-formed templates still resolve."""
+    pos = start
+    n = len(text)
+    while True:
+        idx = text.find("{{", pos)
+        if idx < 0:
+            return None
+        depth, j = 0, idx
+        while j < n - 1:
+            pair = text[j:j + 2]
+            if pair == "{{":
+                depth += 1
+                j += 2
+            elif pair == "}}":
+                depth -= 1
+                if depth == 0:
+                    return (idx, text[idx + 2:j], j)
+                j += 2
+            else:
+                j += 1
+        pos = idx + 2  # unbalanced opener — skip it, keep scanning
+
+
+def _inline_unwrap(args: list[str]) -> str:
+    """Wrapper → its content: everything after the first pipe, verbatim
+    (matches the legacy `[^{}]*` capture, which kept inner pipes)."""
+    return "|".join(args)
+
+
+def _inline_lang(args: list[str]) -> str:
+    """`{{lang|code|text}}` → text (drop the language code)."""
+    return "|".join(args[1:])
+
+
+def _inline_small_caps(args: list[str]) -> str:
+    return f"{_FMT}SC" + "|".join(args) + f"{_FMT}/SC"
+
+
+def _inline_fs(args: list[str]) -> str:
+    """`{{Fs|size|content}}` → value-bearing `«FS[size]»content«/FS»` marker
+    (the recursive companion to the flat handler in `_unwrap_content_templates`
+    — content may itself hold nested `{{sc|…}}`/etc., resolved children-first)."""
+    if len(args) < 2:
+        return "|".join(args)
+    return f"{_FMT}FS[{args[0].strip()}]" + "|".join(args[1:]) + f"{_FMT}/FS"
+
+
+_INLINE_REGISTRY = {
+    # script/language + alignment wrappers → content
+    "greek": _inline_unwrap, "polytonic": _inline_unwrap,
+    "hebrew": _inline_unwrap, "uc": _inline_unwrap,
+    "nowrap": _inline_unwrap, "right": _inline_unwrap, "left": _inline_unwrap,
+    "lang": _inline_lang,
+    # small-caps family → «SC» marker
+    "sc": _inline_small_caps, "asc": _inline_small_caps,
+    "smallcaps": _inline_small_caps, "small caps": _inline_small_caps,
+    # value-bearing font-size wrapper → «FS[size]» marker
+    "fs": _inline_fs,
+}
+
+
+def _expand_inline_templates(text: str) -> str:
+    out: list[str] = []
+    pos = 0
+    while True:
+        nt = _next_template(text, pos)
+        if nt is None:
+            out.append(text[pos:])
+            return "".join(out)
+        open_idx, full_inner, close_idx = nt
+        name = _split_top_pipes(full_inner)[0].strip().lower()
+        handler = _INLINE_REGISTRY.get(name)
+        if handler is None:
+            # not ours — keep the opener, scan inward for nested registered ones
+            out.append(text[pos:open_idx + 2])
+            pos = open_idx + 2
+            continue
+        out.append(text[pos:open_idx])
+        # children-resolved-first: expand the inner, then re-split + dispatch
+        parts = _split_top_pipes(_expand_inline_templates(full_inner))
+        out.append(handler(parts[1:]))
+        pos = close_idx + 2
+
+
 def _unwrap_content_templates(text: str) -> str:
     """Unwrap content templates to their text content."""
     # Language/script templates → plain text
@@ -1614,6 +1719,10 @@ def _apply_markup(text: str) -> str:
     # Bound is generous; real-world EB1911 wikitext rarely nests >2 deep.
     for _ in range(8):
         before = text
+        # General recursive expander first — resolves the registered families
+        # (greek/sc/lang/… ) incl. nested/pipe-bearing inners the flat passes
+        # below leak; those passes then no-op on what it already handled.
+        text = _expand_inline_templates(text)
         text = _unwrap_content_templates(text)
         text = _convert_small_caps(text)
         text = _convert_shoulder_headings(text)
