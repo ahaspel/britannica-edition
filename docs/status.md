@@ -14,9 +14,76 @@ grid-preserving `render()` beats production with ZERO plate-specific producer lo
 the plate needed was *generic, corpus-wide* work. The plate doubled as a **probe** that flushed out
 the real remaining issues.
 
-**The runway — literally three steps left:** (1) fix the last five viewer context-rewires →
-(2) drain the leak tail & delete `_strip_templates` → (3) **flip the walker** (route the pipeline
-through recursive `render()`, full vol-1 rebuild). Then the architecture is live.
+**The runway (corrected):**
+
+1. **Viewer consolidation — DONE.** One `decodeInlineMarkers`; all six render contexts wired;
+   plate renders clean.  Adding a marker is now one line.
+2. **Leak tail — IN PROGRESS (1378 → ~1015, acceptance test PROVEN).** Drain what `_strip_templates`
+   silently deletes, then delete it.  KEY REFRAME: the raw "1378 deletions / ~135 keys" overstates the
+   WORK.  Families split into (a) genuinely-unhandled — small new handler; (b) bulk-handled, EDGE-TAIL
+   only — a targeted patch.  **Drained so far (each verified: strip_scan count → 0):**
+   `float` ✓ (143, «FR»/«FL»), `coordinates` ✓ (100, formatted in place), `underline`/`double
+   underline`/`u` ✓ («U»), `strikethrough` ✓ («STK»), size-extras ✓ (`fs70/85/90`, `font-size`,
+   `font size`, `xxx(x)-larger` → reuse «FS[n%]»).  Re-run #1 confirmed float+coordinates dropped
+   to 0 (1378→1130); cheapies are ~115 more.  **Remaining:** `ts` 247 (table *style* — belongs with
+   table-producer style extraction, not a content carry), the paired `/s`-`/e` style-wrappers (~200,
+   one paired begin/end handler), `lkpl` 71 (3/4-arg edge-fix), `brace`/`brace2`/`center block`/`fsp`
+   (layout), `sfrac` ~65 + `sup`/`sub` (nested-content edge form — DEFERRED to a focused pipe-aware
+   arg-parser), `greek`/`sc` (13s).  Acceptance test: strip_scan records zero → delete
+   `_strip_templates`.  Measure with **strip_scan** (real pipeline), NOT leak_scan (its render_proto
+   engine over-reports page-furniture consumed upstream).
+3. **Flip the walker — render() takes over AS the classifier comes OUT.**  This is mostly a
+   DELETION, not feature-building.  In the recursive model there is no labeling step, so wiring
+   `render()` makes the entire classify-then-produce edifice dead: the 5-tier dispatch,
+   `ClassifiedElement` + labels, ICL-pairability, DATA_TABLE-vs-figure, the CHEM/figure-family
+   taxonomy, the per-family producers, the SHAPE layer.  **Migrates (survives, simplified):** the
+   structural *recognition* — which source token = which block — i.e. `decompose`, already present
+   at every depth, minus the labels.  **render() genuinely still needs:** the real terminals
+   (math/hiero/score) + a few structural dispatches (footnotes, sections, titles, figure↔legend
+   assembly).  Most "element types" (ICL/chem/figure families) DON'T need new handlers — they
+   dissolve (recurse the table/figure structurally; the plate proved render() preserves structure
+   instead of classifying).  Then: wire it in (promote `render_markers` from `tools/diagnostics`),
+   **regression-snapshot** vol-1/working-mass before vs after (the safety the whole approach rests
+   on), flip, rebuild vol 1.
+
+Non-blocking tidy: 2-3 redundant viewer no-op handlers (body hieroglyph/LN, footnote LN); the
+queued bare-initial contributor pickup.
+
+### DISSOLVE-CHECKLIST vs SURVIVORS — verify against the post-flip vol-1 rebuild
+
+The flip CLAIMS to dissolve every classifier-rooted bug. The rebuild must PROVE it: re-test each
+DISSOLVE item against the rebuilt output — if one survives, the refactor missed it (a real finding,
+not an assumption).  The SURVIVORS are NOT expected to dissolve; keep tracking them separately.
+Rule: a bug dies iff its root is in the deleted layer (per-family producers / classification labels
+/ `ELEM:` placeholder indirection / imposed table-figure-legend-chem taxonomy); it survives iff
+rooted in a layer that persists.
+
+**DISSOLVE — re-test each post-rebuild (should be GONE):**
+- [ ] `ELEM:NNNN` placeholder leaks inside `«HTMLTABLE»` cells (VIRGINIA governors, WEST INDIES
+  population) — render recurses cells in place, no placeholder substitution step.
+- [ ] Chemistry rendering edge-cases — CHEM dissolves (recurse the table).  *Caveat: current CHEM
+  path stays until render's rowspan-aware bracket layout matches it — verify parity, not just presence.*
+- [ ] Bare-label legend bundling — SPINAL CORD, MALLOW.
+- [ ] Two-column-legend sub-patterns — ARACHNIDA Figs: rowspan continuation (31), prime labels (47),
+  hanging-indent (26), side-by-side image cells (57-58), credit-glue missing space (13/63/74),
+  trailing-PRE annotation (7).  ARACHNIDA is the canonical "all at once" target — if it's clean, this class is dead.
+- [ ] BRITISH EMPIRE India-acquisitions table (multi-line cell + `|+` caption leak).
+- [ ] (general) any remaining per-family-producer / classification-leak bug.
+
+**SURVIVE — keep tracking (the flip does NOT touch these):**
+- **Walker/boundary** (feeds render(), not deleted): title parenthetical-bundling (NITRIC ACID,
+  BELLARMINE); `{{c|…}}` Roman-numeral heading-shaped blocks (24); section-recognition.
+- **Terminals**: wide-math scaling (KaTeX/CSS dead-end); tall-brace→OUTLINE grouping reconstruction (~8).
+- **Upstream text-conversion** (`prepare_wikitext`/`_convert_quote_runs`, below render): italic-inversion
+  cascade (`stray_wiki_italic`).
+- **Source/data/infra** — ⚠ STALE-SUSPECT, sourced from a weeks-old known-issues memory; **re-verify
+  against current state before treating any as open** (the faithful renderer SURFACES source errors
+  but never fixes them — `corrections.json`/ops domain).  CONFIRMED STALE/RESOLVED: vol-6 page-map
+  off-by-2 (map is sequential 790-794, no gap; scans look right), Meilisearch port exposure (user
+  confirms fixed).  UNVERIFIED (could not quick-check; assume nothing): unproofed-OCR count, 13
+  missing image files, page-level image mis-ownership, ~93 linkless contributors.
+- **Diagnostics/calibration**: `pipe_leak` false-positives on centered math; `stray_braces` math/typo collisions.
+- **Content-inspection** (no structural signal): bare-initial contributors (queued, [[hard-means-unencoded-knowledge]]).
 
 **Landed this session (all corpus-wide, not plate hacks):**
 - **Size family — DONE, regression-clean.** The font-size scale now carries SYMMETRICALLY: was
@@ -56,6 +123,21 @@ inconsistency is exactly such a transcription error, faithfully reproduced).
 
 **New diagnostic tools:** `strip_scan.py`, `viewer_loop.py`, `plate_render_diff.py`, and
 `render_proto.render_markers` (producer-contract render).
+
+**QUEUED — bare-initial contributor signatures.** `extract_contributors` only knows the
+structured shapes (`{{EB1911 footer initials}}`, `{{right|[[Author:…]]}}`); it misses bare
+`(A. P. C.)`-style sigs (`{{float right|(A. P. C.)}}` / `{{right|(…)}}` / bare text). These have
+NO structural signal — recognition is content-inspection, but *principled*: a sig iff the initials
+are MEMBERS of the EB1911 contributor-initials roster (the [[hard-means-unencoded-knowledge]]
+move — set-membership in the frozen key, not a parens-and-caps heuristic which false-positives on
+asides). They also appear at SECTION ends, not just article ends, so the scan is "find every
+`(INITIALS)`, test against the roster, attribute to the enclosing section" — position is a
+secondary confidence signal, not the anchor.  ~5-8 named instances in float/right form (`A. P. C.`,
+`S. K. M.`, `E. S. M. B.`) + unknown bare-text count; `(X.)` is the ANONYMOUS marker (correctly
+excluded).  The float-drain now DISPLAYS them (`«FR»`, no longer deleted); the remaining piece is
+ATTRIBUTION — needs the initials key (we have it via `vol29_index`/`vol29_linker`; the current
+`ContributorResolver` is full-name-based, not initials-keyed).  Small, self-contained, not a
+content-loss bug now.
 
 **Lesson (recurring this session):** several audit-counter failures (wrong-file title-globs,
 full-pipeline-vs-standalone drift, byte-vs-content metric, nested-marker word-strip) each manufactured

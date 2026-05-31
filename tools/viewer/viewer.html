@@ -692,6 +692,13 @@
       margin: 0.5em 0;
     }
 
+    /* {{float right}}/{{float left}} — margin-floated inline content
+       (contributor-initial signatures like "(A. P. C.)", right-floated
+       marginal status notes). */
+    .float-right { float: right; margin-left: 1em; }
+    .float-left  { float: left;  margin-right: 1em; }
+    .underline { text-decoration: underline; }
+
     /* Sans-serif metalinguistic letter — source uses
        `{{sans-serif|…}}` to mark single letters being discussed AS
        LETTERS (alphabetic typography convention).  Distinguishes
@@ -1471,12 +1478,7 @@
     // with drop-cap on the first letter).  Use everywhere we display
     // a title: H1, TOC, parent-plate link, search results, etc.
     function renderTitleMarkers(value) {
-      let h = escapeHtml(value);
-      h = h.replace(/«B»([\s\S]*?)«\/B»/g, "<b>$1</b>");
-      h = h.replace(/«I»([\s\S]*?)«\/I»/g, "<i>$1</i>");
-      h = h.replace(/«SC»([\s\S]*?)«\/SC»/g,
-                    '<span class="small-caps">$1</span>');
-      return h;
+      return decodeInlineMarkers(escapeHtml(value));
     }
 
     // H1-only title render: prefer the marked-up `title_display` and
@@ -1492,10 +1494,7 @@
       // «B»/«I»/«SC» convert afterwards without disturbing the note.
       h = h.replace(/«FN(?:\[([^\]]+)\])?:([\s\S]*?)«\/FN»/g,
                     (m, name, content) => renderFnMarker(name, content));
-      h = h.replace(/«B»([\s\S]*?)«\/B»/g, "<b>$1</b>");
-      h = h.replace(/«I»([\s\S]*?)«\/I»/g, "<i>$1</i>");
-      h = h.replace(/«SC»([\s\S]*?)«\/SC»/g,
-                    '<span class="small-caps">$1</span>');
+      h = decodeInlineMarkers(h);
       return h;
     }
 
@@ -2051,9 +2050,6 @@
         const href = filename ? articleUrl(filename) : `/search.html?q=${encodeURIComponent(target)}`;
         return `<a href="${href}" class="article-link" title="${target}">${display}</a>`;
       });
-      h = h.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
-      h = h.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
-      h = h.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
       // Footnote bodies now keep image markers (glyphs in notes, e.g.
       // ALPHABET).  Render inline glyphs inline; any block image in a
       // note renders small/inline since a footnote is an inline context.
@@ -2064,6 +2060,9 @@
         const url = commonsUrl(unescapeHtml(filename));
         return `<img src="${url}" alt="${escapeHtml(caption || filename)}" class="inline-glyph" loading="lazy" style="max-height:1.4em;vertical-align:middle;" />`;
       });
+      // All position-invariant inline markers via the shared decoder (LN,
+      // B/I/SC, MIRROR, SS/SR, sizes, BAR, DHR, CTR, BRACE2, hieroglyph).
+      h = decodeInlineMarkers(h);
       return h;
     }
 
@@ -2113,6 +2112,8 @@
       h = h.replace(/«SC»(.*?)«\/SC»/gs, '<span class="small-caps">$1</span>');
       h = h.replace(/«SS»(.*?)«\/SS»/gs, '<span class="sans-serif">$1</span>');
       h = h.replace(/«SR»(.*?)«\/SR»/gs, '<span class="explicit-serif">$1</span>');
+      h = h.replace(/«U»([\s\S]*?)«\/U»/g, '<span class="underline">$1</span>');
+      h = h.replace(/«STK»([\s\S]*?)«\/STK»/g, '<s>$1</s>');
       h = applySizeMarkers(h);
       h = h.replace(/«BAR\[(\d+)\]»/g,
                     (_m, n) => `<span class="inline-bar" style="width:${n}em">&nbsp;</span>`);
@@ -2120,6 +2121,10 @@
                     dhrInline ? '<span class="dhr-inline"></span>'
                               : '<span class="dhr-block"></span>');
       h = h.replace(/«CTR»([\s\S]*?)«\/CTR»/g, '<div class="centered">$1</div>');
+      // {{float right|X}}/{{float left|X}} — margin-floated content
+      // (contributor-initial signatures, right-floated marginal notes).
+      h = h.replace(/«FR»([\s\S]*?)«\/FR»/g, '<span class="float-right">$1</span>');
+      h = h.replace(/«FL»([\s\S]*?)«\/FL»/g, '<span class="float-left">$1</span>');
       h = h.replace(/«BRACE2\[(\d+)\|([lrud])\]»/g, (_m, _n, side) => {
         const glyph = side === 'l' ? '⎧' : side === 'r' ? '⎫'
                     : side === 'u' ? '⏞' : '⏟';
@@ -2150,9 +2155,6 @@
       let h = escapeHtml(text);
       h = h.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
                     (match, name, content) => renderFnMarker(name, content));
-      h = h.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
-      h = h.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
-      h = h.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
       h = h.replace(IMG_PARTS_RE_G, (match, filename, metaBlock, caption) => {
         const url = filename.startsWith("http") ? filename : commonsUrl(filename);
         // Honor carried width (figure-grid / plate cells size from source
@@ -2161,16 +2163,6 @@
         const meta = parseImgMeta(metaBlock);
         const sz = meta.width ? `max-width:${meta.width}px;` : "max-height:60px;";
         return `<img src="${url}" alt="${escapeHtml(caption || filename)}" class="cell-image" loading="lazy" style="${sz}" />`;
-      });
-      h = h.replace(/\[hieroglyph:\s*([^\]]+)\]/g, (match, codes) => {
-        const rendered = codes.trim().split(/[:\s\-]+/).map(code => {
-          code = code.replace(/\\/g, "");
-          if (!code || code === "<" || code === ">" || code === "!" || code === "-") return "";
-          const cp = gardinerToUnicode(code);
-          if (cp) return `<span class="hieroglyph">&#x${cp.toString(16)};</span>`;
-          return `<span class="hieroglyph-fallback" title="Gardiner ${code}">${code}</span>`;
-        }).join("");
-        return rendered || match;
       });
       // LaTeX math in cells — render inline with KaTeX.
       // Cell math is always inline (no displayMode) \u2014 scale hints
@@ -2193,14 +2185,10 @@
         const lines = content.split("\n").filter(l => l.trim());
         return `<span class="cell-verse">${lines.join("<br>")}</span>`;
       });
-      // {{dhr|N%}} inside a cell — inline spacer between list items
-      // (AFRICA tribal tables).  Inline variant: zero-width, 1em tall.
-      h = h.replace(/«DHR(?:\[[^\]]*\])?»/g, '<span class="dhr-inline"></span>');
-      h = applySizeMarkers(h);
-      // «CTR» in a cell (e.g. a figure-grid caption {{c|…}}) — handled in
-      // the body path too, but cells run through formatCell, so it must be
-      // rendered here or it leaks.  Centered block within the cell.
-      h = h.replace(/«CTR»([\s\S]*?)«\/CTR»/g, '<div class="centered">$1</div>');
+      // All position-invariant inline markers via the ONE shared decoder
+      // (B/I/SC, MIRROR, SS/SR, sizes, BAR, DHR, CTR, BRACE2, hieroglyph,
+      // LN).  dhrInline: cells use the inline DHR spacer variant.
+      h = decodeInlineMarkers(h, { dhrInline: true });
       return h;
     }
 
@@ -2514,14 +2502,7 @@
         const verseStyleAttr = verseMatch[1]
           ? ` style="${verseMatch[1].replace(/"/g, "&quot;")}"` : "";
         const lines = verseMatch[2].split("\n").filter(l => l.trim());
-        const applyMarkers = (s) => {
-          let h = escapeHtml(s);
-          h = h.replace(/«B»(.*?)«\/B»/gs, "<b>$1</b>");
-          h = h.replace(/«I»(.*?)«\/I»/gs, "<i>$1</i>");
-          h = h.replace(/«SC»(.*?)«\/SC»/gs,
-                        '<span class="small-caps">$1</span>');
-          return h;
-        };
+        const applyMarkers = (s) => decodeInlineMarkers(escapeHtml(s));
         // Glossary detection: at least 4 lines, AND ≥75% match the
         // `«I»term.«/I» definition` shape.  A plain poem rarely starts
         // every line with an italicised dotted term.
@@ -2805,9 +2786,7 @@
           );
           content = stripHtmlTableMarkers(content);
           let t = content.replace("<table>", '<table class="data-table">');
-          t = t.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
-          t = t.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
-          t = t.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span class="small-caps">$1</span>');
+          t = decodeInlineMarkers(t);
           out += t;
           i = endIdx;
         }

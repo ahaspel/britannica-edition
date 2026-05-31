@@ -959,6 +959,50 @@ def _unwrap_content_templates(text: str) -> str:
             return f"«LH[{head.strip()}]»{tail}«/LH»"
         return inner
     text = _unwrap_balanced(text, "lh", _lh_carry)
+    # `{{float right|X}}` / `{{zfloat right|X}}` / `{{float left|X}}` — content
+    # floated to the margin: contributor-initial signatures (`(A. P. C.)`,
+    # `(E. H. Palmer's translation.)`) and right-floated marginal annotations
+    # (`† «I»in carcere«/I»`, `«I»resignat.«/I»` — status notes in chronological
+    # tables).  Previously DELETED whole by `_strip_templates` (the float-scan
+    # worklist's biggest content loss).  Carry «FR»/«FL»; viewer renders the
+    # float.  `float center` → the existing «CTR».
+    text = _unwrap_balanced(text, "float right", lambda inner: f"«FR»{inner}«/FR»")
+    text = _unwrap_balanced(text, "zfloat right", lambda inner: f"«FR»{inner}«/FR»")
+    text = _unwrap_balanced(text, "float left", lambda inner: f"«FL»{inner}«/FL»")
+    text = _unwrap_balanced(text, "float center", lambda inner: f"«CTR»{inner}«/CTR»")
+    # `{{11co|D|M|S|dir}}` / `{{EB1911 Coordinates|…}}` — geographic
+    # coordinates (D°M′S″ + N/S/E/W).  Deterministic formatting (args →
+    # text), like fractions — format in place; no marker, no viewer work.
+    # Args vary (D|dir, D|M, D|M|dir, D|M|S|dir): numeric parts take °/′/″ by
+    # position, the letter is the hemisphere.  Previously DELETED whole by
+    # `_strip_templates` (the coordinates leaked as nothing — silent loss).
+    def _coord_fmt(inner: str) -> str:
+        parts = [p.strip() for p in inner.split("|") if p.strip()]
+        sym = ["°", "′", "″"]
+        nums = [p for p in parts if p.isdigit()]
+        dirs = [p.upper() for p in parts if re.fullmatch(r"[NSEWnsew]", p)]
+        deg = " ".join(n + (sym[i] if i < 3 else "") for i, n in enumerate(nums))
+        return (deg + (" " + dirs[0] if dirs else "")).strip()
+    text = _unwrap_balanced(text, "11co", _coord_fmt)
+    text = _unwrap_balanced(text, "EB1911 Coordinates", _coord_fmt)
+    # Underline family ({{underline}}, {{double underline}}, {{u}}) → «U»;
+    # {{strikethrough}} → «STK».  Both were DELETED whole by _strip_templates.
+    text = _unwrap_balanced(text, "double underline", lambda inner: f"«U»{inner}«/U»")
+    text = _unwrap_balanced(text, "underline", lambda inner: f"«U»{inner}«/U»")
+    text = _unwrap_balanced(text, "u", lambda inner: f"«U»{inner}«/U»")
+    text = _unwrap_balanced(text, "strikethrough", lambda inner: f"«STK»{inner}«/STK»")
+    # Size-extras — all reuse the existing «FS[n%]» marker (no new viewer
+    # work).  {{fsNN|X}} carries the % in the name (fs70/fs85/fs90); the
+    # named {{font-size|N%|X}} / {{font size|N%|X}} match {{fs|N%|X}};
+    # {{xxx-larger}}/{{xxxx-larger}} extend the larger scale (250/300%).
+    text = re.sub(r"\{\{fs(\d{1,3})\|([^{}]*)\}\}",
+                  lambda m: f"«FS[{m.group(1)}%]»{m.group(2)}«/FS»",
+                  text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{font[- ]size\|([^{}|]+)\|([^{}]*)\}\}",
+                  lambda m: f"«FS[{m.group(1).strip()}]»{m.group(2)}«/FS»",
+                  text, flags=re.IGNORECASE)
+    text = _unwrap_balanced(text, "xxxx-larger", lambda inner: f"«FS[300%]»{inner}«/FS»")
+    text = _unwrap_balanced(text, "xxx-larger", lambda inner: f"«FS[250%]»{inner}«/FS»")
     # Inline typography wrappers — content carriers previously falling
     # to `_strip_templates`, so the catch-all deleted both wrapper and
     # content. Corpus-audit counts (2026-05-28): bold 2 (with nested
@@ -1327,7 +1371,14 @@ def _convert_sub_sup(text: str) -> str:
 
 
 def _strip_templates(text: str) -> str:
-    """Strip all remaining {{...}} wiki templates and orphaned markup."""
+    """Strip all remaining {{...}} wiki templates and orphaned markup.
+
+    DRAIN-AND-DELETE CAMPAIGN (2026-05-31): this is a disguised sweeper —
+    it silently deletes every unhandled {{template}} (content and all),
+    invisible to leak_scan.  Worklist = `strip_scan.py` (real-pipeline
+    mirror).  Draining each family upstream until this records zero, then
+    deleting the function.  Measure with strip_scan, NOT leak_scan (whose
+    render_proto engine over-reports page-furniture consumed upstream)."""
     # Iterative stripping handles nesting — preserve our own markers
     prev = None
     while prev != text:
