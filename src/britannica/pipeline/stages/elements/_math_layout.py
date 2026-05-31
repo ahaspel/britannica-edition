@@ -60,7 +60,11 @@ def _content_rows(text: str) -> list[list[str]]:
     `<table>` is read via `_html_table_grid`.  Math producers only use cell
     CONTENT (they strip attrs), so dropping the (sep, attr) is safe."""
     if _HTML_TABLE_TAG_RE.search(text):
-        return _html_table_grid(text)
+        # `_html_table_grid` yields `(sep, attr, content)` triples; take the
+        # content slot only, exactly as the wiki branch does below — the
+        # `list[list[str]]` this function promises.
+        return [[content for _sep, _attr, content in row]
+                for row in _html_table_grid(text)]
     _, _, parsed = parse_wiki_table(text)
     return [[content for _sep, _attr, content in row] for row in parsed]
 
