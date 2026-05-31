@@ -271,6 +271,15 @@ def _convert_sp(text: str) -> str:
     )
 
 
+def _lkpl_to_marker(args: str) -> str:
+    """`{{EB1911/DNB lkpl|target|display|…}}` arg string → hard link marker.
+    target = arg 0; display = first non-empty arg after it, else the target."""
+    parts = args.split("|")
+    target = parts[0].strip()
+    display = next((p.strip() for p in parts[1:] if p.strip()), target)
+    return f"{_LNK}{target}|{display}{_LNK}"
+
+
 def _convert_links(text: str) -> str:
     """Convert link templates and wikilinks to link markers."""
 
@@ -483,17 +492,9 @@ def _convert_links(text: str) -> str:
     # the 9th edition is a different work without a per-article counterpart
     # in our corpus.  Outer `\s*` + name-internal `\s+` tolerate the
     # double-space typo `{{EB1911  lkpl|…}}` (2 corpus hits).
-    def _lkpl_hard(m):
-        parts = m.group(1).split("|")
-        target = parts[0].strip()
-        # Display is the first non-empty parameter after the target;
-        # fall back to the target when all others are empty
-        # (e.g. `{{EB1911 lkpl|Grebe|grebes|}}` with trailing empty arg).
-        display = next((p.strip() for p in parts[1:] if p.strip()), target)
-        return f"{_LNK}{target}|{display}{_LNK}"
     text = re.sub(
         r"\{\{\s*(?:EB1911|DNB)\s+lkpl\s*\|([^{}]+)\}\}",
-        _lkpl_hard, text, flags=re.IGNORECASE,
+        lambda m: _lkpl_to_marker(m.group(1)), text, flags=re.IGNORECASE,
     )
 
     def _eb9_lkpl(m):
@@ -825,18 +826,20 @@ def _unwrap_content_templates(text: str) -> str:
             r"\{\{\s*" + re.escape(_name) + r"/e\s*\}\}",
             lambda m: _wrap_ctr(m.group(1)),
             text, flags=re.IGNORECASE | re.DOTALL)
-    # {{EB1911 fine print/s}}…{{EB1911 fine print/e}} — paired small-type
-    # scholarly aside.  Templates stripped; inner content emitted
-    # unwrapped.  Carrying a `«FINE:…«/FINE»` marker through the
-    # pipeline created a wrapper-fragmentation class (multi-paragraph
-    # content, nested block markers like figures) for which there's no
-    # current rendering value — the `.fine-print` CSS rule was a no-op
-    # placeholder for future styling that never landed.  Deleted per
-    # [[preserved-markup-is-a-contract]]: if we can't fully render it,
-    # we don't emit it.
+    # Paired small-type BLOCK wrappers — {{EB1911 fine print/s}}…/e}},
+    # {{fine block/s}}…/e}}, {{smaller block/s}}…/e}}.  The 1911 printers set
+    # whole blocks small to save PAGE space (scholarly asides, image credits);
+    # that's a print-medium artifact we deliberately do NOT reproduce.  Strip
+    # the pair, keep the inner content.  (Contrast INLINE {{smaller}}/{{sm}} →
+    # «SM», a deliberate per-text size choice we DO carry.)  Carrying a block
+    # «FINE:…» marker created a wrapper-fragmentation class (multi-paragraph,
+    # nested block markers) with no rendering value — deleted per
+    # [[preserved-markup-is-a-contract]]: if we can't fully render it, we don't
+    # emit it.  Name backref so each `/s` pairs with its own `/e`.
     text = re.sub(
-        r"\{\{\s*EB1911\s+fine\s+print/s\s*\}\}(.*?)\{\{\s*EB1911\s+fine\s+print/e\s*\}\}",
-        lambda m: m.group(1).strip(),
+        r"\{\{\s*(EB1911\s+fine\s+print|fine\s+block|smaller\s+block)/s\s*\}\}"
+        r"(.*?)\{\{\s*\1/e\s*\}\}",
+        lambda m: m.group(2).strip(),
         text, flags=re.IGNORECASE | re.DOTALL)
     # {{section|TITLE}} — Wikisource transclusion anchor.  The transcriber
     # places this BEFORE the visible inline italic-em-dash section
@@ -1024,6 +1027,30 @@ def _unwrap_content_templates(text: str) -> str:
     # with presentation lost in flowing HTML.  Unwrap to content.
     text = re.sub(r"\{\{\s*(?:nw|di)\s*\|([^{}]*)\}\}",
                   r"\1", text, flags=re.IGNORECASE)
+    # Layout/spacing scatter (leak-tail) — all previously DELETED whole by
+    # `_strip_templates`.  None are nesting issues (those are the fake-recursion
+    # class); these are flat: unwrap-to-content / space / strip-contentless.
+    #   * Styling wrappers we don't reproduce → unwrap to content (text survives,
+    #     like nw/di): {{lsp|[v|]X}} / {{letter-spacing|v|X}} / {{font-stretch|[v|]X}}
+    #     (letter/word-spacing, stretch) and {{pad thin|X}} (thin padding).
+    text = re.sub(
+        r"\{\{\s*(?:lsp|letter-spacing|font-stretch)\s*\|(?:[^{}|]*\|)?([^{}]*)\}\}",
+        r"\1", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{\s*pad thin\s*\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    #   * Spacing/break: {{fsp}} → figure space (U+2007); {{parabr}} → paragraph break.
+    text = re.sub(r"\{\{\s*fsp\s*\}\}", " ", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{\s*parabr\s*\}\}", "\n\n", text, flags=re.IGNORECASE)
+    #   * Contentless column/clear layout markers → strip; the content between
+    #     flows normally (single-column in our reflowing layout).
+    text = re.sub(r"\{\{\s*multicol(?:-break|-end)?(?:\s*\|[^{}]*)?\s*\}\}", "",
+                  text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{\s*(?:clear|nopt)\s*\}\}", "", text, flags=re.IGNORECASE)
+    #   * Brace glyphs the existing «BRACE2[N|side]» handler misses: no-side
+    #     {{brace2|N}} (default left) and side-first {{brace|side|…}}.
+    text = re.sub(r"\{\{\s*brace2\s*\|\s*(\d+)\s*\}\}",
+                  lambda m: f"«BRACE2[{m.group(1)}|l]»", text, flags=re.IGNORECASE)
+    text = re.sub(r"\{\{\s*brace\s*\|\s*([lrud])\b[^{}]*\}\}",
+                  lambda m: f"«BRACE2[1|{m.group(1).lower()}]»", text, flags=re.IGNORECASE)
     # `x-smaller|TEXT` — small typography (smaller-than-small; used
     # for parenthetical inline labels like `{{x-smaller|[HISTORY}}`
     # in HISTORY-tagged article headers).  Whitespace-padded residual
@@ -1285,7 +1312,7 @@ _LAYOUT_TEMPLATES = (
 # instead of unwrap-to-content), so the centering signal survives end-
 # to-end.  All variants (center / c / block center / paired begin-end
 # forms) collapse to one marker; viewer renders with text-align:center.
-_CENTER_INLINE_TEMPLATES = ("center", "c", "block center")
+_CENTER_INLINE_TEMPLATES = ("center", "c", "block center", "center block")
 
 
 def _unwrap_layout_templates(text: str) -> str:
@@ -1546,6 +1573,13 @@ def _apply_markup(text: str) -> str:
         text = _unwrap_layout_templates(text)
         if text == before:
             break
+    # Residual `{{EB1911/DNB lkpl|…}}` whose DISPLAY held a nested {{sc}}/
+    # {{small-caps}}: the early `_convert_links` pass couldn't span the braces,
+    # but the unwrap loop above has now resolved them to «SC» (brace- AND
+    # inner-pipe-free), so the link converts here instead of being deleted by
+    # `_strip_templates` (~71 corpus instances — the lkpl leak-tail item).
+    text = re.sub(r"\{\{\s*(?:EB1911|DNB)\s+lkpl\s*\|([^{}]+)\}\}",
+                  lambda m: _lkpl_to_marker(m.group(1)), text, flags=re.IGNORECASE)
     text = _convert_sub_sup(text)
     # Content-bearing handlers, deferred from before the unwrap loop so
     # any inner `{{sub|N}}` / `{{sup|N}}` / unwrap-templates inside their

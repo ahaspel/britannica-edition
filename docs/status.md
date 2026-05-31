@@ -25,13 +25,24 @@ the real remaining issues.
    `float` ✓ (143, «FR»/«FL»), `coordinates` ✓ (100, formatted in place), `underline`/`double
    underline`/`u` ✓ («U»), `strikethrough` ✓ («STK»), size-extras ✓ (`fs70/85/90`, `font-size`,
    `font size`, `xxx(x)-larger` → reuse «FS[n%]»).  Re-run #1 confirmed float+coordinates dropped
-   to 0 (1378→1130); cheapies are ~115 more.  **Remaining:** `ts` 247 (table *style* — belongs with
-   table-producer style extraction, not a content carry), the paired `/s`-`/e` style-wrappers (~200,
-   one paired begin/end handler), `lkpl` 71 (3/4-arg edge-fix), `brace`/`brace2`/`center block`/`fsp`
-   (layout), `sfrac` ~65 + `sup`/`sub` (nested-content edge form — DEFERRED to a focused pipe-aware
-   arg-parser), `greek`/`sc` (13s).  Acceptance test: strip_scan records zero → delete
-   `_strip_templates`.  Measure with **strip_scan** (real pipeline), NOT leak_scan (its render_proto
-   engine over-reports page-furniture consumed upstream).
+   to 0 (1378→1130); cheapies are ~115 more.  Also drained: `lkpl` (71, via a post-loop second pass)
+   and the small-print paired wrappers (consolidated at body_text:838; center paired already at 820-828).
+   **THE ENDGAME — three moves and the tail is done:**
+   - **layout scatter** (`brace`/`brace2`/`fsp`/`center block`/`lsp`/`letter-spacing`/`font-stretch`/
+     `pad thin`/`multicol*`/`parabr`/`clear`/`nopt`) — flat, non-nesting: unwrap-to-content / space /
+     strip-contentless. Genuinely cheap. IN PROGRESS.
+   - **`ts`** (247) — table-style extraction; entangled with table handling (wants render's table path).
+   - **KILL THE FAKE RECURSION** — the BIG move.  `sfrac`/`sub`/`sup`/`greek`/`sc` (+ nested `lkpl`) are
+     NOT edge-forms to patch: they're NESTING bugs ([[context-leaks-are-nesting-bugs]], 3rd instance).
+     `TT`'s template unwrap uses flat `[^{}|]` arg-slots + an **8-pass iterative loop that fakes
+     recursion** (inner-out); residual leaks are where the fake breaks — a resolved nested marker with a
+     PIPE (`«LN:a|b»`, `{{sub}}`'s pipe) the slot can't span, or nesting >8.  CURE = real recursion
+     (balanced parse, split on TOP-LEVEL pipes, recurse into each arg, then apply) — NOT a flat
+     "pipe-aware parser" patch.  This dissolves the whole class at once AND **is the recursive
+     inline-template handling `render()` needs** — so the leak-tail's last move is the flip's
+     foundation.  (`lkpl`'s post-loop patch is itself flat-paradigm; the recursion subsumes it.)
+   Acceptance test: strip_scan records zero → delete `_strip_templates`.  Measure with **strip_scan**
+   (real pipeline), NOT leak_scan (its render_proto engine over-reports page-furniture consumed upstream).
 3. **Flip the walker — render() takes over AS the classifier comes OUT.**  This is mostly a
    DELETION, not feature-building.  In the recursive model there is no labeling step, so wiring
    `render()` makes the entire classify-then-produce edifice dead: the 5-tier dispatch,
