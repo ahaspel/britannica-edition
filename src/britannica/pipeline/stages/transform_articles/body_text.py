@@ -535,16 +535,6 @@ def _convert_links(text: str) -> str:
     return text
 
 
-def _convert_small_caps(text: str) -> str:
-    """{{sc|text}}, {{asc|text}}, {{smallcaps|text}}, {{small caps|text}}
-    → «SC»text«/SC»"""
-    text = re.sub(
-        r"\{\{\s*(?:sc|asc|smallcaps|small\s+caps)\s*\|([^{}]*)\}\}",
-        f"{_FMT}SC\\1{_FMT}/SC", text, flags=re.IGNORECASE,
-    )
-    return text
-
-
 _FRAKTUR_MAP = {}
 for _i, _c in enumerate("ABCDEFGHIJKLMNOPQRSTUVWXYZ"):
     _FRAKTUR_MAP[_c] = chr(0x1D504 + _i)
@@ -795,29 +785,14 @@ def _expand_inline_templates(text: str) -> str:
 
 def _unwrap_content_templates(text: str) -> str:
     """Unwrap content templates to their text content."""
-    # Language/script templates → plain text
-    text = re.sub(r"\{\{Greek\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
-    text = re.sub(r"\{\{polytonic\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
-    text = re.sub(r"\{\{Hebrew\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
-    text = re.sub(r"\{\{lang\|[^{}|]*\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
-    # Formatting wrappers → content
-    text = re.sub(r"\{\{uc\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
-    text = re.sub(r"\{\{nowrap\s*\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    # greek/polytonic/hebrew/lang/uc/nowrap → owned by the recursive
+    # `_expand_inline_templates` engine (run first in the unwrap loop); the
+    # flat negated-class passes here were superseded and removed (step 1b).
     # smaller/larger now carry graduated size markers (see the «SM»/«LG»
     # block below) instead of flattening — kept symmetric with «XL»/«XXL».
-    # `{{Fs|<size>|<content>}}` — Wikisource font-size template, used
-    # to size individual math operators (∫, (, ), {, }, etc.) in
-    # table cells (HYDROMECHANICS vol 14 p138/139).  CARRY the explicit
-    # size as a value-bearing marker «FS[size]»content«/FS» (the
-    # parameterized companion to the named size scale); the viewer sets
-    # font-size from it.  Content can be a literal `{` or `}` (math
-    # grouping brace), so `[^}]*` — the regex still stops at the first
-    # `}}` because of the literal `\}\}` close requirement.
-    text = re.sub(
-        r"\{\{Fs\|([^{}|]+)\|([^}]*)\}\}",
-        lambda m: f"{_FMT}FS[{m.group(1).strip()}]{m.group(2)}{_FMT}/FS",
-        text, flags=re.IGNORECASE,
-    )
+    # `{{Fs|size|content}}` → «FS[size]» — owned by the recursive engine
+    # (`_inline_fs`), which resolves nested-brace content (fractions/sub/sup/
+    # sc) correctly where the flat negated-class handler mis-scoped «FS».
     # Drop initial (decorative large first letter) → just the letter
     text = re.sub(r"\{\{[Dd]rop ?initial\|([^{}|]*)[^{}]*\}\}", r"\1", text)
     # Abbreviation/tooltip → first arg (display text). The first arg
@@ -831,8 +806,7 @@ def _unwrap_content_templates(text: str) -> str:
         r"\{\{tooltip\|(" + _ABBR_ARG1 + r")\|[^{}]*\}\}",
         r"\1", text, flags=re.IGNORECASE)
     # Alignment wrappers → content (`sm` now carries «SM» — see size block).
-    text = re.sub(r"\{\{right\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
-    text = re.sub(r"\{\{left\|([^{}]*)\}\}", r"\1", text, flags=re.IGNORECASE)
+    # right/left → content: owned by the recursive engine (step 1b).
     # Rotation wrapper: {{rotate|angle|content}} → content. Rotation
     # is purely visual styling (used for rotated column labels in
     # geology/stratigraphy tables); preserve the text.
@@ -1724,7 +1698,6 @@ def _apply_markup(text: str) -> str:
         # below leak; those passes then no-op on what it already handled.
         text = _expand_inline_templates(text)
         text = _unwrap_content_templates(text)
-        text = _convert_small_caps(text)
         text = _convert_shoulder_headings(text)
         text = _unwrap_layout_templates(text)
         if text == before:
