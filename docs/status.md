@@ -1,12 +1,75 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-05-30.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-05-31.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
 ---
 
-## PROGRESS (2026-05-30, latest) — plate-probe session: render() bet CONFIRMED on real plates; THREE steps to the finish
+## PROGRESS (2026-05-31, latest) — THE FLIP, started: net up, fraction step landed; runway corrected
+
+The flip is underway, and grounding in the live code corrected the plan materially.
+
+**ARCHITECTURE CORRECTION (supersedes the 2026-05-30 step-3 framing below).** The recursive
+`walker → classify_article → produce_tree → substitute_top_level_markers` spine is **already live
+and is the ONLY architecture** — the legacy three-pass (`_walk_recursive`/`_classify_recursive`/
+`_produce_recursive`) is gone (a stale docstring sentence in `_classifier.py` is its only trace).
+`produce_tree` **IS** `render()` — a recursive bottom-up pass. So the flip is NOT "build render(),
+wire it in, delete the classifier / `ClassifiedElement` / SHAPE layer" — `ClassifiedElement` and the
+recursive classify ARE the live spine, not the thing being deleted. The flip reduces to folding the
+last LAYERED constructs into the spine that's already running:
+  1. **Kill the fake recursion** — the two `for _ in range(8)` loops in `body_text.py` (fraction
+     family; the general inline-template unwrap). [STEP 1a DONE — fractions.]
+  2. **`/s`-`/e` overlap** → recognize the delimiter in the walker so the span is a node.
+  3. **`ts` carry** → render's table path carries `{{Ts}}` style at level (the carry-half).
+  4. **Drop the legacy bridge** — `produce_tree` invokes producers via `_to_legacy_registry` /
+     `ElementRegistry`; handlers can take `ClassifiedElement` children directly. Pure refactor, last.
+
+**STEP 0 — regression net: DONE, and it earned its keep immediately.** `tools/diagnostics/
+snapshot_corpus.py` — corpus-wide `_transform_text_v2` snapshot+diff net (per-article body + sha
+manifest under `data/derived/_flip_snap/<tag>/`; `capture` / `diff` / `show`). Every flip step is a
+TAGGED DIFF vs the prior accepted tag, never a wholesale rebaseline. **On its first run it caught a
+93-article LATENT CRASH** — `_process_single_column_table` (`_tables.py`) and `_content_rows`
+(`_math_layout.py`) passed `_html_table_grid`'s `(sep, attr, content)` triples whole to
+`text_transform` → `re.sub` TypeError. Latent since the `<table>`→non-table routing landed (post-
+dates last build, so deployed bodies intact); a flip rebuild would have triggered it. FIXED (take
+the content slot) + committed. Baseline `base` = post-bugfix / pre-flip, 36,691 articles, 0 errors.
+
+**STEP 1a — recursive fraction expander: DONE + committed.** Replaced the (doubly) fake-recursion
+fraction loop with module-level `_expand_fractions` (balanced parse → recurse inner → render).
+Verified vs `base` (tag `s1a`): **14 articles changed, 0 added/removed, 0 transform-errors corpus-
+wide; all 14 leak-resolved** (previously-DELETED equations now render — RADIOACTIVITY a/b/c coeffs,
+PROBABILITY, INTERFERENCE, POWER TRANSMISSION, YACHTING…). Fraction tokens reaching the catch-all
+`_strip_templates`: **94 → 6** (the 6 = ALGEBRAIC FORMS OCR-garbage source + a MOLECULE fraction
+bisected by a table-cell boundary — both pre-existing, out of scope). The fraction loop's
+pathological ordering comment deleted itself.
+
+**ACCEPTANCE TEST for the flip (user, 2026-05-31): separate PATHOLOGICAL from LEGITIMATE ordering.**
+"X must run after Y" comments are mostly fake-recursion scaffolding (flat `[^{}]` can't span nested
+braces, so passes are hand-ordered to fake inner-out). Real recursion makes children-resolved-first
+structural → those comments delete themselves. A residue is genuine precedence (classification
+disambiguation, input canonicalization, longest-match lexing) and survives. Per-step signal: count
+surviving ordering comments; pathological → 0.
+
+**FINDINGS LOGGED (pre-existing, NOT flip-caused):**
+- **7 articles leak a raw `ELEM:` placeholder** into output (e.g. HYDRAULICS, `…ELEM:N}VERSE}`) — a
+  placeholder-substitution leak, likely VERSE-related, with an order-dependent element id. Revisit
+  during the walker / substitution steps. (NB: the order-dependent id means cross-tool diffs must
+  share processing order — `snapshot_corpus` always captures in volume/page order.)
+- 1a EXPOSED (did not cause) two downstream rendering artifacts now that the content survives:
+  overline applied over `«I»` marker chars (CLOCK), an unrendered sup (POWER TRANSMISSION). For the
+  overline / sup handlers' own attention.
+- **Curated 20-seed snapshot suite (`test_transform_snapshots.py`) is STALE** — not re-captured since
+  the leak-tail drain; 15/20 fail for reasons predating 1a (1a changed 0 seeds). Re-sync with a
+  TAGGED per-seed diff (not a blind rebaseline) so it resumes guarding during 1b.
+
+**REMAINING RUNWAY:** 1b (general inline-template expander — same recipe, the `_unwrap_content_
+templates` / `_strip_templates` surface) → 2 (`/s`-`/e`) → 3 (`ts` carry) → 4 (bridge drop) →
+vol-1 rebuild. Plus the curated-seed re-sync.
+
+---
+
+## PROGRESS (2026-05-30) — plate-probe session: render() bet CONFIRMED on real plates; THREE steps to the finish
 
 Ran the recursive-render bet on real plates (AEGEAN PLATE I–IV) via `render_proto.render_markers`
 (new producer-contract variant: emits the MARKER contract, not HTML) + viewer CSS. **Result: the
