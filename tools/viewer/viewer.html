@@ -655,29 +655,29 @@
       color: #555;
     }
 
+    /* Tables are FAITHFUL to the scan: padding for legibility, no invented
+       borders/shading.  The scans are mostly borderless and never shaded —
+       alignment alone carries the structure. */
     .data-table td {
       padding: 5px 10px;
-      border: 1px solid #ddd4c4;
       vertical-align: top;
-    }
-
-    .data-table tr:nth-child(even) td {
-      background: #f7f3ec;
-    }
-
-    .data-table tr:nth-child(odd) td {
-      background: var(--panel);
     }
 
     .data-table th {
       padding: 6px 10px;
+      vertical-align: top;
+      font-weight: normal;   /* scans show plain (not bold) headers */
+    }
+
+    /* The source's own `class="wikitable"` faithfully marks the tables the
+       scans render WITH rules (AUSTRIA: 5/5 — class⇔borders).  Carry the
+       class through the producer; only THESE get borders. */
+    .data-table.wikitable {
+      border-collapse: collapse;
+    }
+    .data-table.wikitable td,
+    .data-table.wikitable th {
       border: 1px solid #c4b49a;
-      background: #ebe4d6;
-      font-weight: 600;
-      text-align: left;
-      font-variant: small-caps;
-      letter-spacing: 0.03em;
-      color: #5c4a32;
     }
 
     .small-caps {
@@ -2244,6 +2244,22 @@
     function stripChemMarkers(s) {
       return s.split(CHEM_OPEN).join("").split(CHEM_CLOSE).join("");
     }
+    // Add a class to the FIRST <table> tag, preserving any class the
+    // producer already carried (e.g. the source's own `wikitable` — the
+    // faithful border signal).  Robust to bare `<table>`, `<table
+    // class="…">`, `<table style="…">`, and both together; the old
+    // `replace("<table>", …)` matched only a BARE opener, so every
+    // styled/classed table silently escaped the class.
+    function mergeTableClass(html, cls) {
+      return html.replace(/<table\b([^>]*)>/, (m, attrs) => {
+        const cm = attrs.match(/\sclass="([^"]*)"/);
+        if (cm) {
+          if (cm[1].split(/\s+/).includes(cls)) return m;
+          return `<table${attrs.replace(cm[0], ` class="${cm[1]} ${cls}"`)}>`;
+        }
+        return `<table class="${cls}"${attrs}>`;
+      });
+    }
 
     // Math-only paragraph: optional leading PAGE markers, one MATH
     // marker, optional trailing punctuation, optional `(N)` label,
@@ -2581,7 +2597,7 @@
         const inner = stripChemMarkers(
           stripHtmlTableMarkers(htmlTableHit.inner));
         const outerClass = isChem ? "chem-grid" : "data-table";
-        let t = inner.replace("<table>", `<table class="${outerClass}">`);
+        let t = mergeTableClass(inner, outerClass);
         // Process <caption> contents through formatCell so internal
         // markers (italic, small-caps, links) render as HTML rather
         // than leaking their «…» form.
@@ -2785,7 +2801,7 @@
             endIdx - HTMLTABLE_CLOSE.length
           );
           content = stripHtmlTableMarkers(content);
-          let t = content.replace("<table>", '<table class="data-table">');
+          let t = mergeTableClass(content, "data-table");
           t = decodeInlineMarkers(t);
           out += t;
           i = endIdx;
