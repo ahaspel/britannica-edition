@@ -65,7 +65,7 @@ def _content_rows(text: str) -> list[list[str]]:
         # `list[list[str]]` this function promises.
         return [[content for _sep, _attr, content in row]
                 for row in _html_table_grid(text)]
-    _, _, parsed = parse_wiki_table(text)
+    _, _, parsed, _ = parse_wiki_table(text)
     return [[content for _sep, _attr, content in row] for row in parsed]
 
 
