@@ -944,29 +944,11 @@ def _unwrap_content_templates(text: str) -> str:
         return "\n\n".join(out)
     for _name in _CENTER_INLINE_TEMPLATES:
         text = _unwrap_balanced(text, _name, _wrap_ctr)
-    # Paired forms: {{NAME/s}}content{{NAME/e}}.  Same marker output.
-    for _name in ("c", "block center", "center block"):
-        text = re.sub(
-            r"\{\{\s*" + re.escape(_name) + r"/s\s*\}\}"
-            r"(.*?)"
-            r"\{\{\s*" + re.escape(_name) + r"/e\s*\}\}",
-            lambda m: _wrap_ctr(m.group(1)),
-            text, flags=re.IGNORECASE | re.DOTALL)
-    # Paired small-type BLOCK wrappers — {{EB1911 fine print/s}}…/e}},
-    # {{fine block/s}}…/e}}, {{smaller block/s}}…/e}}.  The 1911 printers set
-    # whole blocks small to save PAGE space (scholarly asides, image credits);
-    # that's a print-medium artifact we deliberately do NOT reproduce.  Strip
-    # the pair, keep the inner content.  (Contrast INLINE {{smaller}}/{{sm}} →
-    # «SM», a deliberate per-text size choice we DO carry.)  Carrying a block
-    # «FINE:…» marker created a wrapper-fragmentation class (multi-paragraph,
-    # nested block markers) with no rendering value — deleted per
-    # [[preserved-markup-is-a-contract]]: if we can't fully render it, we don't
-    # emit it.  Name backref so each `/s` pairs with its own `/e`.
-    text = re.sub(
-        r"\{\{\s*(EB1911\s+fine\s+print|fine\s+block|smaller\s+block)/s\s*\}\}"
-        r"(.*?)\{\{\s*\1/e\s*\}\}",
-        lambda m: m.group(2).strip(),
-        text, flags=re.IGNORECASE | re.DOTALL)
+    # Paired `{{NAME/s}}…{{NAME/e}}` wrappers (center family → «CTR»;
+    # fine-print family → strip-keep-content) are now recognized at the WALKER
+    # as the CENTER element — a balanced node whose inner is recursively
+    # classified (step 2).  The former `.*?` overlays here couldn't span a
+    # `/s`-`/e` pair the walker had split between, so orphaned halves leaked.
     # {{section|TITLE}} — Wikisource transclusion anchor.  The transcriber
     # places this BEFORE the visible inline italic-em-dash section
     # heading (e.g. `{{section|Literature of Alchemy}}''Literature of
