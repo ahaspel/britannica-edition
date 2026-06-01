@@ -2639,8 +2639,7 @@ final collapse encapsulates the family behind a single outer label.
   filtered out of the contributors page.  All three queued for merge via
   `data/contributor_aliases.json` on next rebuild.
 - **Lower priority:** ~7 unlinked contributors after Phase 3b2 (down from
-  ~88 in yesterday's broken deploy); ~3,633 unproofread Wikisource pages;
-  Meilisearch port 7700 open to all (should be CloudFront-only).
+  ~88 in yesterday's broken deploy); ~3,633 unproofread Wikisource pages.
 
 See `docs/reports/` for historical audit snapshots.
 
