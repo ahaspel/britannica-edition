@@ -13,6 +13,34 @@ agent's memory directory and are not duplicated here.
 
 ---
 
+## PROGRESS (2026-06-02) — table fidelity: lossless `<br>` + print-style borders (AUSTRIA)
+
+Tables didn't read like the scans.  Canonical case AUSTRIA (02-1021-s3, vol2 p1021).
+After a long design dialogue, the decision was **lossless `<br>` over taxonomy**
+([[feedback_lossless_over_taxonomy]]): a `<br>` in a table cell is the source/print's
+deliberate line break (stacked-list data rows, wrapped headers, legend breaks) — stop
+flattening it to a space, render it as a break, and DON'T classify what it "means" (the
+faithful render is right whether it's a row or a wrap).
+
+- **Lossless `<br>` (HTMLTABLE class) — DONE.** Changed `_strip_br(text)` →
+  `_strip_br(text, "<br>")` in the HTMLTABLE-emitting producers: `parse_wiki_table:277`,
+  `_process_complex_table:575`, `_html_cell_clean` (the latter also exempts `<br>` from its
+  tag-strip).  `-<br>` soft-hyphen join kept.  AUSTRIA's columns now align row-by-row.
+- **Border model — DONE (viewer CSS).** The print rules COLUMNS not rows: `.data-table.wikitable`
+  now renders vertical column rules + frame, NOT a full per-cell grid (which added data-row
+  horizontals the scans never have).
+- Snapshot net: 7 table seeds rebaselined, each changed ONLY in `<br>` placement (verified by
+  `<br>`↔space normalization — no content loss); all other seeds byte-identical.  Full suite green.
+- **Verified against the scan** via the render loop (`tools/_scratch/shot_table.py` + the cached
+  DjVu page).
+
+**The bigger thing this surfaced (next arc): producer sprawl.** One policy ("keep `<br>`") needed
+edits in N bespoke `_process_*table` producers — whack-a-mole.  The resolution is the END-STATE the
+user named: **treat tables like ICLs — recurse to the ground** (table→row→cell→body-text, one
+lossless leaf), collapsing the per-label producers so cell-cleaning/`<br>`/styling live ONCE.
+Deferred to that arc: the `{{TABLE:}}`-marker path's `<br>` (needs viewer-side rendering), the
+header-rule refinement (needs header-row identification), and the producer collapse itself.
+
 ## PROGRESS (2026-06-02) — catch-all content-loss drain (cont.): selection rule + format wrappers
 
 **Selection rule (learned the hard way):** a family's catch-all *leak* count is NOT its

@@ -670,14 +670,19 @@
     }
 
     /* The source's own `class="wikitable"` faithfully marks the tables the
-       scans render WITH rules (AUSTRIA: 5/5 — class⇔borders).  Carry the
-       class through the producer; only THESE get borders. */
+       scans render WITH rules.  But the print rules COLUMNS, not rows: the
+       scans show vertical rules between columns + a frame + a rule under the
+       header, and NO horizontal rules between data rows (alignment carries the
+       rows).  So carry the class but render verticals + frame only — the old
+       full per-cell grid added data-row horizontals the print never has. */
     .data-table.wikitable {
       border-collapse: collapse;
+      border: 1px solid #c4b49a;          /* frame */
     }
     .data-table.wikitable td,
     .data-table.wikitable th {
-      border: 1px solid #c4b49a;
+      border-left: 1px solid #c4b49a;
+      border-right: 1px solid #c4b49a;    /* vertical column rules, no row rules */
     }
 
     .small-caps {
