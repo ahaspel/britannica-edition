@@ -1,8 +1,15 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-05-31.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-06-01.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
+
+> **THE CAMPAIGN (2026-06-01):** the recursive architecture works; the bugs are
+> old scaffolding still running beside it.  The good path is written down in
+> **[`docs/canonical_path.md`](canonical_path.md)** — the few steps that build an
+> article/plate properly.  Everything outside it has to go (catch-all
+> `_strip_templates`, 16 fake-recursion regexes, the legacy `parsers/plate/`).
+> Measure: `strip_scan.py` / `fake_recursion_audit.py` → 0, then delete.
 
 ---
 
@@ -1402,6 +1409,14 @@ will surface clearly instead of vanishing into a permanent-red noise floor.
 - **#45** — orphan-punctuation collapse `,(\s+,)+`→`,` in `transform_articles/__init__.py`
   L302-303 (defensive cleanup for stripped templates).
 - **#13** — `_strip_templates` catch-all (Tier-3, ongoing).
+- **#78** — INDIGO (vol 14, p514) page-seam wrap renders as a paragraph split.
+  Raw: `…phenylglycocoll<ref>…(July 1899).</ref>\n<section end="s2"/>\n␞PAGE:514␞<section begin>(phenyl…`.
+  Both `heal_page_seams` wrap rules miss it: the word-anchor rule can't reach
+  `phenylglycocoll` across the `<ref>…</ref>` footnote, and the lowercase-
+  continuation rule doesn't fire because the continuation starts with `(`.
+  So the `\n\n` survives → split mid-sentence.  PRE-EXISTING (the deleted
+  `_transform_text_v2` post-pass missed it too — not a regression).  Fix: let
+  the seam-wrap bridge skip a complete `<ref>…</ref>` to reach the anchor word.
 
 ---
 

@@ -40,17 +40,17 @@ from britannica.db.session import SessionLocal  # noqa: E402
 from britannica.pipeline.stages.transform_articles import (  # noqa: E402
     _transform_text_v2,
 )
+from britannica.util.strings import section_slug  # noqa: E402
 
 ROOT = Path("data/derived/_flip_snap")
 
-_HYPHEN_RE = re.compile(r"(\w)-\n(\x01PAGE:\d+\x01)(\w)")
-
 
 def _build_joined_raw(segs: list[tuple[str, int]]) -> str:
-    """Mirror transform_articles' joined_raw build + cross-page
-    hyphenation fix (identical to capture_transform_snapshots)."""
-    joined = "\n".join(f"\x01PAGE:{pg}\x01{txt or ''}" for txt, pg in segs)
-    return _HYPHEN_RE.sub(r"\1\2\3", joined)
+    """Mirror transform_articles' faithful segment re-join: concatenate
+    ``marker+segment`` with NO separator, reproducing the article's slice of the
+    clean stream exactly (preprocess already did the seam healing; no re-join
+    healing) — dry-run-must-mirror-prod."""
+    return "".join(f"\x01PAGE:{pg}\x01{txt or ''}" for txt, pg in segs)
 
 
 def _load_segments_by_article(s) -> dict[int, list[tuple[str, int]]]:
@@ -82,7 +82,8 @@ def capture(tag: str, vol_filter: str) -> int:
 
     s = SessionLocal()
     try:
-        q = s.query(Article.id, Article.volume, Article.title).filter(
+        q = s.query(Article.id, Article.volume, Article.title,
+                    Article.page_start, Article.section_name).filter(
             Article.article_type != "plate")
         if vol_filter != "all":
             q = q.filter(Article.volume == int(vol_filter))
@@ -92,10 +93,17 @@ def capture(tag: str, vol_filter: str) -> int:
 
         out = manifest.open("w", encoding="utf-8")
         done = err = 0
-        for art_id, vol, title in arts:
+        for art_id, vol, title, page_start, section_name in arts:
             segs = segs_by_art.get(art_id)
             if not segs:
                 continue
+            # Key on the DURABLE stable_id (vol+page_start+section_slug), NOT the
+            # autoincrement PK — the PK is reassigned on every re-detect, which
+            # would break any cross-rebuild diff (the whole point of the net).
+            slug = section_slug(section_name) if section_name else ""
+            if not slug:
+                slug = section_slug(title)
+            sid = f"{vol:02d}-{page_start:04d}-{slug}"
             joined = _build_joined_raw(segs)
             try:
                 body = _transform_text_v2(joined, vol, segs[0][1])
@@ -105,9 +113,9 @@ def capture(tag: str, vol_filter: str) -> int:
             sha = hashlib.sha256(body.encode("utf-8")).hexdigest()[:16]
             vdir = body_dir / str(vol)
             vdir.mkdir(exist_ok=True)
-            (vdir / f"{art_id}.txt").write_text(body, encoding="utf-8")
+            (vdir / f"{sid}.txt").write_text(body, encoding="utf-8")
             safe_title = (title or "").replace("\t", " ").replace("\n", " ")
-            out.write(f"{art_id}\t{sha}\t{len(body)}\t{vol}\t{safe_title}\n")
+            out.write(f"{sid}\t{sha}\t{len(body)}\t{vol}\t{safe_title}\n")
             done += 1
             if done % 1000 == 0:
                 out.flush()
@@ -120,18 +128,18 @@ def capture(tag: str, vol_filter: str) -> int:
         s.close()
 
 
-def _load_manifest(tag: str) -> dict[int, tuple[str, int, int, str]]:
-    """{id: (sha, bytes, vol, title)}."""
+def _load_manifest(tag: str) -> dict[str, tuple[str, int, int, str]]:
+    """{stable_id: (sha, bytes, vol, title)}."""
     path = ROOT / tag / "manifest.tsv"
     if not path.exists():
         sys.exit(f"no manifest for tag {tag!r} at {path}")
-    out: dict[int, tuple[str, int, int, str]] = {}
+    out: dict[str, tuple[str, int, int, str]] = {}
     for line in path.read_text(encoding="utf-8").splitlines():
         parts = line.split("\t")
         if len(parts) < 5:
             continue
         aid, sha, nbytes, vol, title = parts[0], parts[1], parts[2], parts[3], parts[4]
-        out[int(aid)] = (sha, int(nbytes), int(vol), title)
+        out[aid] = (sha, int(nbytes), int(vol), title)
     return out
 
 
@@ -172,7 +180,7 @@ def diff(tag_a: str, tag_b: str) -> int:
     return 0
 
 
-def show(tag_a: str, tag_b: str, art_id: int) -> int:
+def show(tag_a: str, tag_b: str, art_id: str) -> int:
     a = _load_manifest(tag_a)
     vol = (a.get(art_id) or _load_manifest(tag_b).get(art_id) or ("", 0, 0, ""))[2]
     pa = ROOT / tag_a / "b" / str(vol) / f"{art_id}.txt"
@@ -195,7 +203,7 @@ def main() -> int:
     if cmd == "diff":
         return diff(sys.argv[2], sys.argv[3])
     if cmd == "show":
-        return show(sys.argv[2], sys.argv[3], int(sys.argv[4]))
+        return show(sys.argv[2], sys.argv[3], sys.argv[4])
     sys.exit(f"unknown command {cmd!r}")
 
 
