@@ -752,6 +752,12 @@ _INLINE_REGISTRY = {
     "hebrew": _inline_unwrap, "uc": _inline_unwrap,
     "nowrap": _inline_unwrap, "right": _inline_unwrap, "left": _inline_unwrap,
     "lang": _inline_lang,
+    # Typographic OVERRIDE wrappers — meaningful only in a context whose default
+    # they cancel (`nobold` = non-bold inside a bold table header; `font-variant
+    # normal` = cancel small-caps).  In default body context the override equals
+    # the default, so unwrapping to the inner content is faithful and recovers
+    # text the catch-all was deleting whole (BEER's analysis-table headers).
+    "nobold": _inline_unwrap, "font-variant normal": _inline_unwrap,
     # small-caps family → «SC» marker
     "sc": _inline_small_caps, "asc": _inline_small_caps,
     "smallcaps": _inline_small_caps, "small caps": _inline_small_caps,

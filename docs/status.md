@@ -13,6 +13,26 @@ agent's memory directory and are not duplicated here.
 
 ---
 
+## PROGRESS (2026-06-02) — catch-all content-loss drain (cont.): selection rule + format wrappers
+
+**Selection rule (learned the hard way):** a family's catch-all *leak* count is NOT its
+size.  Compare `raw_total` (instances in segment_text) vs `catch-all leak`: leak ≈ total →
+genuinely UNHANDLED (a real drain target); leak ≪ total → a working handler's tail (skip /
+queue per [[feedback_structure_before_tail]]).  I mis-recommended `{{sup}}` on its leak
+count (22) — but raw_total=1346 (98% handled by `_convert_sub_sup`→Unicode; the 22 are
+math-superscript edge cases = deferred).  Same trap: `{{sub}}` 5641→5, `{{sans}}` 145→1.
+Genuinely unhandled (leak≈total): nobold 6=6, font-variant normal 4=4, ordered list 6=6,
+EB9 Margin Note 7=7, familytree 15≈13, tree chart 8≈6.
+
+- **`{{nobold}}` + `{{font-variant normal}}` — DONE 2026-06-02.** Typographic OVERRIDE
+  wrappers (non-bold in a bold table header; cancel small-caps) — in default body context
+  the override equals the default, so unwrap to inner content is faithful.  Registered in
+  `_INLINE_REGISTRY` (`_inline_unwrap`) so the recursive engine resolves their nested
+  `{{sc}}`/`<br>`/«I».  Verified discriminatingly: BEER's analysis-table headers (`English
+  Beers`, `Mild Ales`) present, no leftover.
+- **STILL UNHANDLED (clean pure-code, queued):** `{{ordered list}}` (6), `{{EB9 Margin
+  Note}}` (7, needs aside-vs-inline render decision).  Asset-blocked: familytree/tree chart.
+
 ## PROGRESS (2026-06-02) — catch-all content-loss drain: prioritize HARM over count; MAP figures recovered
 
 Full-corpus `strip_scan` worklist (553 deletions / 87 families) reframed by **harm,
