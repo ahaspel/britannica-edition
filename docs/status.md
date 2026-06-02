@@ -22,14 +22,27 @@ link}}` 9942 handled → 10 leak; `{{11link}}` 476 → 6; `{{dual line}}` 113 �
 are queue-the-tail per [[feedback_structure_before_tail]].  The genuine **no-handler
 content loss is tiny and localized**:
 
-- **`{{Plain image with caption}}` — MAP (vol 17, pp 647-657), ~17 figures — DONE 2026-06-02.**
-  Standard Wikisource named-param figure macro the walker didn't recognize → all 17
+- **`{{Plain image with caption}}` — MAP (vol 17), ~16 figures — DONE 2026-06-02.**
+  Standard Wikisource named-param figure macro the walker didn't recognize → MAP's
   cartography plates fell to body-text's catch-all and vanished.  Added to the image-
   template family beside `{{img float}}`/`{{raw image}}`: walker `_PLAIN_IMAGE_RE`
   recognizer (DOUBLE_BRACE), classifier `PLAIN_IMAGE` label, `_process_plain_image`
-  producer (parses `image=`/`align=`/`width=`/`caption=` → `{{IMG:…}}`).  MAP-ONLY
-  corpus-wide (1 article) → zero risk to the working mass.  Verified: 0 leftover, 17
-  figures recovered, clean captions.
+  producer (parses `image=`/`align=`/`width=`/`caption=` → `{{IMG:…}}`).  **CRITICAL:
+  a recognizer is INERT unless its template name is also in the walker's
+  `_OPENER_HINT_RE`** (the gate deciding which positions the scan examines).  The first
+  commit omitted that line, so the fix did nothing — caught only because the verify was
+  non-discriminating (see [[feedback_verify_the_counter]]).  Now genuinely verified:
+  `Map Fig 1.png` + `Peutinger` caption present, IMG 46→62.  Guardrail added
+  (`test_double_brace_template_is_recognized`) so an opener-hint omission fails CI.
+- **`{{ppoem}}` — 7/8 articles, verse recovered as VERSE — DONE 2026-06-02.**
+  Preformatted-poem template, verse analog of `<poem>`; the catch-all was deleting the
+  whole `{{ppoem|…}}` (verse lost).  Walker `_PPOEM_RE` (DOUBLE_BRACE) + `PPOEM` label +
+  `_process_ppoem` (strips `start=`/`end=` control params, takes the verse, routes
+  through the same `{{VERSE:…}VERSE}` producer as `<poem>`).  Verified discriminatingly
+  (verse text present AND inside a VERSE block), keyed on the ppoem-bearing article_id.
+  **QUEUED: HOOD (vol 13)** — its ` {fine}` stray single-brace (OCR for `{{fine}}`?)
+  breaks the bounded-nesting regex; verse survives as text but not as VERSE.  Fix later
+  via corrections.json or a balanced-brace scanner recognizer.
 - **2 genealogical trees — QUEUED (asset-blocked).** `{{familytree}}` COWPER, WILLIAM
   (vol 7 p369); `{{tree chart}}` SOLOMON, PSALMS OF (vol 25 p382).  Chart2's exact
   siblings → chart2 playbook (manual crop → `CHART2_IMAGES`-style substitution).  Needs
