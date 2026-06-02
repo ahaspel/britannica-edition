@@ -30,8 +30,28 @@ EB9 Margin Note 7=7, familytree 15≈13, tree chart 8≈6.
   `_INLINE_REGISTRY` (`_inline_unwrap`) so the recursive engine resolves their nested
   `{{sc}}`/`<br>`/«I».  Verified discriminatingly: BEER's analysis-table headers (`English
   Beers`, `Mild Ales`) present, no leftover.
-- **STILL UNHANDLED (clean pure-code, queued):** `{{ordered list}}` (6), `{{EB9 Margin
-  Note}}` (7, needs aside-vs-inline render decision).  Asset-blocked: familytree/tree chart.
+- **`{{familytree}}` / `{{tree chart}}` — DONE 2026-06-02.** chart2's sibling tree macros:
+  `TREE_IMAGES{(vol,page):filename}` + `_TREE_BLOCK` regex substituted in `make_stream`
+  (preprocess), like chart2.  COWPER (vol7 p369) family tree + SOLOMON, PSALMS OF (vol25
+  p382) manuscript stemma → cropped page scans (`familytree_vol07_page0369.jpg`,
+  `treechart_vol25_page0382.jpg` in the gitignored `data/derived/images/`, deployed like
+  chart2).  Crops produced via the Commons API thumb URL (width 1920; the tool's hard-coded
+  1200 404s — DjVu renders only at specific widths) + Pillow, placed by viewing the scan.
+  COWPER's inner `<ref>` footnote (Alderman-Cooper name note) PRESERVED: `_tree_to_img`
+  re-emits it after the IMG so the footnote producer renders it (user: "I hate losing even
+  trivial content when we don't have to").  Takes effect on next rebuild.
+- **`{{ordered list}}` — DONE 2026-06-02.** Not 6 lists — ONE nested 4-level
+  classification in GEOGRAPHY (vol11 p653, "Richthofen's Classification of Mountains":
+  upper-roman→lower-alpha→decimal→lower-roman, each item «I»German«/I»—English).  Built
+  as its own LEAF shape `SHAPE_ORDERED_LIST` (CHART2 precedent — producer owns the
+  recursion, so the classifier doesn't split each level into its own marker): balanced-
+  scanner recognizer + opener-hint + `_process_ordered_list` (`elements/_ordered_list.py`)
+  recursively parses the nest, computes each level's label from `type=`, and emits ONE
+  depth-encoded `«OUTLINE»` marker — reusing OUTLINE's nested-indent rendering, labels as
+  item prefixes (printed source shows both indent + labels).  Verified: 0 leftover, one
+  OUTLINE, correct depths/labels/terms.  `test_shapes` 13→14; recognition guardrail added.
+- **STILL UNHANDLED (clean pure-code, queued):** `{{EB9 Margin Note}}` (7, needs
+  aside-vs-inline render decision).
 
 ## PROGRESS (2026-06-02) — catch-all content-loss drain: prioritize HARM over count; MAP figures recovered
 
