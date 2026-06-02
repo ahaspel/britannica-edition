@@ -46,27 +46,36 @@ from __future__ import annotations
 import re
 
 from britannica.pipeline.stages.elements._registry import ElementRegistry, _PH
+from britannica.pipeline.stages.elements._table_decompose import (
+    extract_wiki_rows,
+)
 from britannica.pipeline.stages.elements._tables import (
     _CELL_ATTR_RE,
     _HTML_TABLE_TAG_RE,
     _html_table_grid,
-    parse_wiki_table,
 )
 
 
 def _content_rows(text: str) -> list[list[str]]:
     """Row × cell-content for a math-layout table, syntax-detected.  The wiki
-    path stays on `parse_wiki_table` (so wiki output is byte-identical); a
-    `<table>` is read via `_html_table_grid`.  Math producers only use cell
-    CONTENT (they strip attrs), so dropping the (sep, attr) is safe."""
+    path uses the shared `extract_wiki_rows` decomposition; a `<table>` is
+    read via `_html_table_grid`.  Math producers only use cell CONTENT (they
+    strip attrs), so dropping the (sep, attr) is safe."""
     if _HTML_TABLE_TAG_RE.search(text):
         # `_html_table_grid` yields `(sep, attr, content)` triples; take the
         # content slot only, exactly as the wiki branch does below — the
         # `list[list[str]]` this function promises.
         return [[content for _sep, _attr, content in row]
                 for row in _html_table_grid(text)]
-    _, _, parsed, _ = parse_wiki_table(text)
-    return [[content for _sep, _attr, content in row] for row in parsed]
+    # `_content_rows` is called with both `raw` (outer `{|<attrs>` opener
+    # present) and already-stripped `inner`; `extract_wiki_rows` expects
+    # walker-bounded inner, so peel a leading opener / trailing `|}` closer
+    # first (what `parse_wiki_table` used to do internally).
+    inner = re.sub(r"^\{\|[^\n]*\n?", "", text)
+    inner = re.sub(r"\n?\|\}\s*$", "", inner)
+    _caption, rows = extract_wiki_rows(inner)
+    return [[content for _sep, _attr, content in cells]
+            for _row_attr, cells in rows]
 
 
 _MATH_CELL_RE = re.compile(
@@ -185,7 +194,8 @@ def _process_math_layout_table(raw: str) -> str:
     """Emit a math-layout wikitable as a KaTeX math block.
 
     Table parsing is shared with the other wiki-table paths
-    (``parse_wiki_table``); the math-layout specialisation is
+    (``extract_wiki_rows`` via ``_content_rows``); the math-layout
+    specialisation is
     ``_math_cell_to_latex`` per cell + ``\\begin{aligned}`` /
     ``\\begin{vmatrix}`` wrapping depending on whether the rows are
     equations (share an ``=`` column) or a matrix/determinant grid.
@@ -369,8 +379,9 @@ def _process_equation_layout(inner: str, text_transform) -> str:
 
     These are wiki tables used for visual alignment of equations, not
     for tabular data.  Table parsing is shared with the other wiki-
-    table paths (``parse_wiki_table``); the equation-layout
-    specialisation is the post-processing: one line per row, then
+    table paths (``extract_wiki_rows`` via ``_content_rows``); the
+    equation-layout specialisation is the post-processing: one line per
+    row, then
     ``\\n\\n``-paragraph wrap so each equation reaches the viewer as
     its own paragraph (otherwise leading/trailing prose glues to the
     first/last equation and kills display-mode rendering —
