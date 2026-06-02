@@ -36,6 +36,8 @@ PRODUCER_MODULES: set[str] = {
     "_ref",          # footnote producer (+ article-scoped resolution)
     "_math_layout",  # math-layout table producers
     "_outline",      # outline producer
+    "_figure_decompose",  # ICL figure-component extractor (cleans caption/
+                          # legend content it produces — analog of _table_decompose)
 }
 
 SRC = Path("src/britannica")

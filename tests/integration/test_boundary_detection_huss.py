@@ -11,6 +11,7 @@ continuations rather than creating duplicate articles.
 """
 from britannica.db.models import Article, SourcePage
 from britannica.pipeline.stages import detect_boundaries as detect_boundaries_stage
+from britannica.pipeline.stages import super_detect as super_detect_stage
 from britannica.pipeline.stages.prepare_wikitext import _convert_quote_runs as _clean
 
 
@@ -83,7 +84,7 @@ def test_huss_continuation_across_pages(
     finally:
         session.close()
 
-    created = detect_boundaries_stage.persist_articles(detect_boundaries_stage.detect_boundaries(14))
+    created = detect_boundaries_stage.persist_articles(super_detect_stage.detect_boundaries(14))
 
     session = test_session_local()
     try:

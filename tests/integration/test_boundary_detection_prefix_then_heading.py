@@ -1,5 +1,6 @@
 from britannica.db.models import Article, ArticleSegment, SourcePage
 from britannica.pipeline.stages import detect_boundaries as detect_boundaries_stage
+from britannica.pipeline.stages import super_detect as super_detect_stage
 from britannica.pipeline.stages.prepare_wikitext import _convert_quote_runs as _clean
 
 
@@ -37,7 +38,7 @@ def test_detect_boundaries_handles_continuation_then_new_heading_same_page(
     finally:
         session.close()
 
-    created = detect_boundaries_stage.persist_articles(detect_boundaries_stage.detect_boundaries(1))
+    created = detect_boundaries_stage.persist_articles(super_detect_stage.detect_boundaries(1))
     assert created == 2
 
     session = test_session_local()

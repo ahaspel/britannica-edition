@@ -22,6 +22,13 @@ britannica = "britannica.cli.main:run"
 requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[tool.pytest.ini_options]
+# Scope collection to the real suite.  Without this a bare `pytest` walks the
+# whole tree and collects stray `test_*.py` scratch scripts under tools/_scratch
+# (some reassign sys.stdout / do heavy corpus+DB work), which hangs for minutes
+# and errors during collection.  `pytest` and `pytest tests/` now behave the same.
+testpaths = ["tests"]
+
 [tool.setuptools]
 package-dir = {"" = "src"}
 

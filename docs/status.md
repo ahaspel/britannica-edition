@@ -13,6 +13,66 @@ agent's memory directory and are not duplicated here.
 
 ---
 
+## PROGRESS (2026-06-02) — catch-all content-loss drain: prioritize HARM over count; MAP figures recovered
+
+Full-corpus `strip_scan` worklist (553 deletions / 87 families) reframed by **harm,
+not count**.  Key finding: most families are NOT content-loss classes — they have a
+working handler and the catch-all only sees a tiny **leak-tail** (`{{eb1911 article
+link}}` 9942 handled → 10 leak; `{{11link}}` 476 → 6; `{{dual line}}` 113 → 5).  Those
+are queue-the-tail per [[feedback_structure_before_tail]].  The genuine **no-handler
+content loss is tiny and localized**:
+
+- **`{{Plain image with caption}}` — MAP (vol 17, pp 647-657), ~17 figures — DONE 2026-06-02.**
+  Standard Wikisource named-param figure macro the walker didn't recognize → all 17
+  cartography plates fell to body-text's catch-all and vanished.  Added to the image-
+  template family beside `{{img float}}`/`{{raw image}}`: walker `_PLAIN_IMAGE_RE`
+  recognizer (DOUBLE_BRACE), classifier `PLAIN_IMAGE` label, `_process_plain_image`
+  producer (parses `image=`/`align=`/`width=`/`caption=` → `{{IMG:…}}`).  MAP-ONLY
+  corpus-wide (1 article) → zero risk to the working mass.  Verified: 0 leftover, 17
+  figures recovered, clean captions.
+- **2 genealogical trees — QUEUED (asset-blocked).** `{{familytree}}` COWPER, WILLIAM
+  (vol 7 p369); `{{tree chart}}` SOLOMON, PSALMS OF (vol 25 p382).  Chart2's exact
+  siblings → chart2 playbook (manual crop → `CHART2_IMAGES`-style substitution).  Needs
+  the user to crop 2 scans before the substitution can be wired.
+- **2 margin notes — TODO.** `{{EB9 Margin Note|…}}` VARIATIONS / VARIATIONS, CALCULUS OF
+  (vol 27 p941).  Small; needs a render decision (aside vs inline).
+- **~8 poems (`{{ppoem}}`), 3-4 format wrappers (`{{font-variant normal}}`, `{{nobold}}`)
+  — TODO**, small.
+- **`{{Ts}}` (287) — LAST.** Biggest by count but STYLE, and the table/layout producers
+  already discard it; the 287 are leftovers their own strips miss.  No content loss →
+  lowest harm.  Drain belongs to the table-family work ([[project_table_family_status]]).
+
+### Test-suite green-up + snapshot rebaseline (2026-06-02)
+
+Full suite went 41-fail → 0-fail.  ALL 41 were stale TEST scaffolding lagging the
+committed FLIP (preprocess + super_detect + reflow-deletion), NOT production bugs:
+
+- **18 abbey/alloys/blank_verse (KeyError):** regression conftest patched
+  `SessionLocal` on 3 modules but not `super_walker` — post-FLIP `detect_boundaries`
+  delegates the stream/heading walk there, so the walk read the wrong DB.  Fixed:
+  patch `super_walker.SessionLocal` too.
+- **9 integration (AttributeError):** `detect_boundaries(volume)` moved to
+  `super_detect`; tests still called it on the old module.  Fixed: new
+  `tests/integration/conftest.py` autouse fixture patches super_detect+super_walker
+  session; call sites → `super_detect.detect_boundaries`.
+- **1 realdata (`<noinclude>` survives):** the `_transform` test helper didn't run
+  `preprocess` (which now strips noinclude upstream).  Fixed: helper mirrors prod
+  (`preprocess(_convert_quote_runs(raw))`).
+- **2 unit (`test_shapes` count 12→13, `test_producer_boundaries`):** SHAPES grew by
+  `SHAPE_CENTER`; `_figure_decompose` is a genuine producer module (cleans the figure
+  caption/legend content it extracts) → registered in PRODUCER_MODULES.
+- **20 transform snapshots:** the committed reflow/seam-deletion footprint.  Verified
+  render-neutral BEFORE rebaselining (per [[feedback_no_wholesale_rebaseline]]): a
+  faithful viewer-model triage classified every paragraph-structure change as
+  TERMINATOR (genuine boundary the deleted reflow had wrongly MERGED → improvement)
+  or BLOCK (display-block separation the viewer normalizes anyway) — **0 mid-sentence
+  page-seam splits, 0 regressions**.  Then synced the stale capture tool
+  (`capture_transform_snapshots.py`): faithful `"".join` re-join (was `"\n".join`) +
+  stable_id lookup (was the reassigned PK), and re-captured all 20.
+
+Triage tooling: `tools/_scratch/triage_snapshots.py` (render-neutral classifier),
+`classify_breaks.py` (per-junction TERMINATOR/BLOCK/MID-SENT).
+
 ## PROGRESS (2026-05-31, latest) — THE FLIP, started: net up, fraction step landed; runway corrected
 
 The flip is underway, and grounding in the live code corrected the plan materially.

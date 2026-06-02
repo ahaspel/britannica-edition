@@ -26,10 +26,18 @@ def _transform(raw, volume=1, page_number=1):
     ``transform_articles``).  Without the quote-run conversion, raw
     ``''italic''`` markers survive to the transform output because
     transform doesn't do that conversion itself — it expects
-    ``«I»…«/I»`` already."""
+    ``«I»…«/I»`` already.
+
+    Post-FLIP the production path also runs ``preprocess`` (source cleaning —
+    noinclude/comment/nop strip, word-spacing, seam healing) on the stream
+    BEFORE ``_transform_text_v2``; so the body the transform receives is already
+    preprocessed.  Mirror that here (otherwise e.g. ``<noinclude>`` chrome that
+    preprocess removes would wrongly appear to 'survive' the transform)."""
     from britannica.pipeline.stages.prepare_wikitext import _convert_quote_runs
+    from britannica.pipeline.stages.preprocess import preprocess
     from britannica.pipeline.stages.transform_articles import _transform_text_v2
-    return _transform_text_v2(_convert_quote_runs(raw), volume, page_number)
+    return _transform_text_v2(
+        preprocess(_convert_quote_runs(raw)), volume, page_number)
 
 
 # ── Element Types ──────────────────────────────────────────────────────

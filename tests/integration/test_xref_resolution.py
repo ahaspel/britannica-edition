@@ -1,5 +1,6 @@
 from britannica.db.models import Article, CrossReference, SourcePage
 from britannica.pipeline.stages import detect_boundaries as detect_boundaries_stage
+from britannica.pipeline.stages import super_detect as super_detect_stage
 from britannica.pipeline.stages import extract_xrefs as extract_xrefs_stage
 from britannica.pipeline.stages import resolve_xrefs as resolve_xrefs_stage
 from britannica.pipeline.stages.prepare_wikitext import _convert_quote_runs as _clean
@@ -37,7 +38,7 @@ def test_extract_and_resolve_xrefs_exact_match(
     finally:
         session.close()
 
-    created_articles = detect_boundaries_stage.persist_articles(detect_boundaries_stage.detect_boundaries(1))
+    created_articles = detect_boundaries_stage.persist_articles(super_detect_stage.detect_boundaries(1))
     assert created_articles == 2
 
     created_xrefs = extract_xrefs_stage.extract_xrefs_for_volume(1)

@@ -1,5 +1,6 @@
 from britannica.db.models import SourcePage
 from britannica.pipeline.stages import detect_boundaries as detect_boundaries_stage
+from britannica.pipeline.stages import super_detect as super_detect_stage
 from britannica.pipeline.stages import extract_xrefs as extract_xrefs_stage
 from britannica.pipeline.stages import resolve_xrefs as resolve_xrefs_stage
 from britannica.pipeline.stages.prepare_wikitext import _convert_quote_runs as _clean
@@ -39,7 +40,7 @@ def test_backlinks_report_groups_by_target_article(
     finally:
         session.close()
 
-    detect_boundaries_stage.persist_articles(detect_boundaries_stage.detect_boundaries(1))
+    detect_boundaries_stage.persist_articles(super_detect_stage.detect_boundaries(1))
     extract_xrefs_stage.extract_xrefs_for_volume(1)
     resolve_xrefs_stage.resolve_xrefs_for_volume(1)
 

@@ -40,6 +40,7 @@ from britannica.db.session import SessionLocal  # noqa: E402
 from britannica.pipeline.stages.transform_articles import (  # noqa: E402
     _transform_text_v2,
 )
+from britannica.util.strings import section_slug  # noqa: E402
 
 
 # Seed list — JSON filenames (without .json) under
@@ -78,36 +79,57 @@ EXPORT_DIR = Path("data/derived/articles")
 
 
 def build_joined_raw(segments: list) -> str:
-    """Mirror the build in `transform_articles` (lines ~757-768).
-    Joins each segment's text with a page marker, then applies the
-    cross-page hyphenation fix."""
-    raw_parts = []
-    for seg, page_number in segments:
-        raw = seg.segment_text or ""
-        raw_parts.append(f"\x01PAGE:{page_number}\x01{raw}")
-    joined_raw = "\n".join(raw_parts)
-    joined_raw = re.sub(
-        r"(\w)-\n(\x01PAGE:\d+\x01)(\w)",
-        r"\1\2\3", joined_raw,
-    )
-    return joined_raw
+    """Mirror the FAITHFUL re-join in `transform_articles`: concatenate
+    ``marker+segment`` with NO separator.  The segment text is already a slice
+    of the preprocess-healed stream (preprocess did the seam healing upstream),
+    so re-inserting a ``\\n`` between segments — as the old ``"\\n".join`` did —
+    invents a page-seam newline production no longer has.  Matches
+    ``snapshot_corpus._build_joined_raw`` and production exactly."""
+    return "".join(
+        f"\x01PAGE:{page_number}\x01{seg.segment_text or ''}"
+        for seg, page_number in segments)
+
+
+def _find_article(session, stable_id: str):
+    """Resolve an article by its DURABLE stable_id (``vol-page-slug``), NOT the
+    autoincrement PK — the PK is reassigned on every re-detect, so a seed JSON's
+    stored ``id`` goes stale after any rebuild.  Mirrors the stable_id
+    construction in ``snapshot_corpus`` / the exporter."""
+    parts = stable_id.split("-", 2)
+    if len(parts) < 3:
+        return None
+    vol, page, slug = int(parts[0]), int(parts[1]), parts[2]
+    for a in (session.query(Article)
+              .filter(Article.volume == vol, Article.page_start == page,
+                      Article.article_type != "plate").all()):
+        s = section_slug(a.section_name) if a.section_name else ""
+        if not s:
+            s = section_slug(a.title)
+        if s == slug:
+            return a
+    return None
 
 
 def capture_one(session, filename_stem: str) -> tuple[str, str]:
-    """Look up an article by JSON filename stem, capture input/body/meta.
-    Returns (status, message)."""
-    json_path = EXPORT_DIR / f"{filename_stem}.json"
-    if not json_path.exists():
-        return ("MISSING", f"no JSON at {json_path}")
-    art_json = json.loads(json_path.read_text(encoding="utf-8"))
+    """Capture input/body/meta for a seed, located by its durable stable_id.
+    The stable_id comes from the existing snapshot meta (falls back to the
+    export JSON) — robust to PK reassignment across rebuilds."""
+    meta_path = SNAPSHOT_DIR / f"{filename_stem}.meta.json"
+    stable_id = None
+    if meta_path.exists():
+        stable_id = json.loads(meta_path.read_text(encoding="utf-8")).get("stable_id")
+    if not stable_id:
+        json_path = EXPORT_DIR / f"{filename_stem}.json"
+        if not json_path.exists():
+            return ("MISSING", f"no meta/JSON to resolve stable_id for {filename_stem}")
+        stable_id = json.loads(json_path.read_text(encoding="utf-8")).get("stable_id")
+    if not stable_id:
+        return ("MISSING", "no stable_id available")
 
-    db_id = art_json.get("id")
-    if db_id is None:
-        return ("MISSING", "JSON has no 'id' field")
-
-    article = session.get(Article, db_id)
+    article = _find_article(session, stable_id)
     if not article:
-        return ("MISSING", f"no DB row for id={db_id}")
+        return ("MISSING", f"no DB row for stable_id={stable_id}")
+    art_json = {"stable_id": stable_id}
     if article.article_type == "plate":
         return ("SKIP", "plate articles use parse_plate, not _transform_text_v2")
 

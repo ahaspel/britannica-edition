@@ -3,6 +3,7 @@ import json
 from britannica.db.models import SourcePage
 from britannica.export import article_json as article_json_module
 from britannica.pipeline.stages import detect_boundaries as detect_boundaries_stage
+from britannica.pipeline.stages import super_detect as super_detect_stage
 from britannica.pipeline.stages import extract_xrefs as extract_xrefs_stage
 from britannica.pipeline.stages.prepare_wikitext import _convert_quote_runs
 
@@ -49,7 +50,7 @@ def test_export_articles_to_json_writes_article_files(
     finally:
         session.close()
 
-    detect_boundaries_stage.persist_articles(detect_boundaries_stage.detect_boundaries(1))
+    detect_boundaries_stage.persist_articles(super_detect_stage.detect_boundaries(1))
     extract_xrefs_stage.extract_xrefs_for_volume(1)
 
     out_dir = tmp_path / "exports"
