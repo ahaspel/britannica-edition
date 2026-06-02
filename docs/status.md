@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-06-01.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-06-02.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -12,6 +12,48 @@ agent's memory directory and are not duplicated here.
 > Measure: `strip_scan.py` / `fake_recursion_audit.py` → 0, then delete.
 
 ---
+
+## PROGRESS (2026-06-02) — table producer collapse: one shared decomposition (arc COMPLETE)
+
+The producer-sprawl problem the `<br>` work surfaced (below) is resolved.  The 6 bespoke
+table producers each re-implemented row/cell parsing on **three divergent `|-` row-split
+regexes**; collapsed to ONE shared, correct splitter.  Strategy (the user's call, over
+byte-identical-via-params): **unify for real, let the snapshot+corpus net judge** — bytes may
+move, but every move is a tagged diff signed off as bug-finding ([[project_table_collapse_strategy]]).
+Each phase net-gated with a corpus-wide before/after capture of the affected output
+(`tools/_scratch/cap_{complex,tables,math,all}.py` + `diff_*.py`, gitignored).
+
+- **Phase 0 — shared leaf.** `produce_table_rows` / `assemble_html_rows` / `assemble_table_marker`
+  + `split_wiki_rows_raw` in `_table_decompose.py`, lifted verbatim from the `_process_html_table`
+  spine.  Landed inert, byte-identical (unit byte-identity test `test_table_shared_leaf.py`).
+- **Phase 1 — `_process_complex_table`** onto the shared decomposition (image-vs-text cell kept as a
+  transitional `cell_body` strategy).  Net (437 HTMLTABLE articles): 432 identical, **4 latent bugs
+  FIXED**, 0 regressions — STAR (rows un-merged, 2 dropped `<caption>`s recovered), WATER SUPPLY
+  (leaked `-style=…` cell → proper `<tr style>`), PHOTOGRAPHY, ZOOLOGY.  Root cause: the old
+  `(?:^|\n)\|-` (no-indent) silently dropped indented row separators.
+- **Phase 2 — `_process_table`** (dominant DATA_TABLE) onto `split_wiki_rows_raw`.  Net (693
+  table-marker articles): 691 identical, **2 DATA-RECOVERY**, 0 regressions — the old unanchored
+  `\|-[^\n]*` read any cell beginning `|-…` as a row separator and truncated the row: SYENITE
+  (oxide columns restored), TEUTONIC LANGUAGES (Gothic declension grid, nearly gutted, recovered).
+- **`parse_wiki_table` DELETED.** Its one live caller (`_math_layout._content_rows`) migrated to the
+  shared `extract_wiki_rows`.  «MATH net (122 articles): **0 changed** (inert) — `_math_cell_to_latex`
+  never depended on its `<br>`-normalize.
+- **Phase 3+4 — `_process_single_column_table` + `_process_verse_table`** onto `split_wiki_rows_raw`.
+  cap_all net (1240 `{|`-bearing articles, full output): **0 changed** — pure unification (their real
+  inputs lack the mid-line `|-` trigger).
+- **Phase 5 — `_process_compound_table`: no change.** Its outer split is already depth-aware +
+  line-anchored (it processes RAW nested `{|…|}`, not placeholders) and its cells already use the
+  shared `split_wiki_row` — the documented exception the plan reserved.
+
+**Net for the arc:** 3 divergent regexes → 1 shared splitter; the bespoke `parse_wiki_table` lineage
+gone; **6 articles fixed, 0 regressions** across ~2,500 table outputs verified; snapshot suite green
+WITHOUT rebaseline throughout; 387 unit+regression tests green.
+
+REMAINING (separate scope): the old `\|-[^\n]*` still lives in two **classification** sites
+(`_table_grid`, `_is_verse_table`) — recognition, not producers; converging needs a label-distribution
+check.  DEFERRED structural follow-ons: unify to one marker form; wire the nested-table recursion
+socket (`produce_cell(recurse=)`) — needs the walker to stop placeholderizing nested `{|` cells, which
+then dissolves compound's depth-aware exception.
 
 ## PROGRESS (2026-06-02) — table fidelity: lossless `<br>` + print-style borders (AUSTRIA)
 
