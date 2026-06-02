@@ -1261,14 +1261,23 @@ def _unwrap_content_templates(text: str) -> str:
 def _convert_shoulder_headings(text: str) -> str:
     """{{EB1911 Shoulder Heading|text}} → «SH»text«/SH»
 
+    ``{{EB9 Margin Note|text}}`` is the 9th-edition synonym — the same
+    construct, a marginal topic label for the following paragraph (VARIATIONS,
+    CALCULUS OF: "Euler", "Lagrange", "Formulation of the First Problem.") —
+    so it converts to the same «SH» marker (margin furniture; the viewer inlines
+    it on narrow screens).  Previously deleted whole by ``_strip_templates``.
+
     Handles nested templates (e.g. {{Fs|108%|...}}) inside the heading.
     Consumes surrounding newlines to prevent false paragraph breaks.
     """
-    prefix = "{{EB1911 Shoulder Heading"
+    prefixes = ("{{eb1911 shoulder heading", "{{eb9 margin note")
     while True:
-        idx = text.lower().find(prefix.lower())
-        if idx < 0:
+        low = text.lower()
+        cands = [(low.find(p), p) for p in prefixes]
+        cands = [(pos, p) for pos, p in cands if pos >= 0]
+        if not cands:
             break
+        idx, prefix = min(cands)
         # Find balanced closing }}
         depth = 0
         i = idx

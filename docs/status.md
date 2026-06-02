@@ -50,8 +50,19 @@ EB9 Margin Note 7=7, familytree 15≈13, tree chart 8≈6.
   depth-encoded `«OUTLINE»` marker — reusing OUTLINE's nested-indent rendering, labels as
   item prefixes (printed source shows both indent + labels).  Verified: 0 leftover, one
   OUTLINE, correct depths/labels/terms.  `test_shapes` 13→14; recognition guardrail added.
-- **STILL UNHANDLED (clean pure-code, queued):** `{{EB9 Margin Note}}` (7, needs
-  aside-vs-inline render decision).
+- **`{{EB9 Margin Note}}` — DONE 2026-06-02.** Not aside-vs-inline — it's the 9th-edition
+  synonym of `{{EB1911 Shoulder Heading}}` (a marginal topic label for the following
+  paragraph; VARIATIONS, CALCULUS OF: "Euler", "Lagrange", "Formulation of the First
+  Problem."…).  Extended `_convert_shoulder_headings` to match both prefixes → the same
+  `«SH»` marker + existing margin rendering ([[feedback_check_existing_detection]] — reuse,
+  no new aside).  ~10 lines; 7 notes recovered, 0 leftover.  *Clean architecture made the
+  recovery nearly free — the shoulder-heading mechanism already existed.*
+
+**MILESTONE: the catch-all's CONTENT-loss families are drained** (plain-image/MAP, ppoem,
+nobold + font-variant normal, familytree/tree-chart, ordered-list, EB9 margin note).  What
+remains is NOT content: `{{Ts}}` (287 — table styling, already discarded in the table path)
+and the ≤2-each chrome/style tail, plus the queued HOOD `{fine}`.  Next is the `{{Ts}}`
+table-family work ([[project_table_family_status]]).
 
 ## PROGRESS (2026-06-02) — catch-all content-loss drain: prioritize HARM over count; MAP figures recovered
 
