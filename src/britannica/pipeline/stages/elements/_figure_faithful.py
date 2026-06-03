@@ -70,6 +70,15 @@ _CENTER = re.compile(r"\{\{\s*(?:block center|center block|center|c)\s*\|", re.I
 # decompose treats it as a recursing wrapper, not a leaf — else it pulls the
 # [[File:]] out and shatters the balanced {{csc|…}}.
 _CSC = re.compile(r"\{\{\s*csc\s*\|", re.I)
+# Image LEAF in TEMPLATE spelling — `{{img float|…}}` / `{{figure|…}}` /
+# `{{FI|…}}` (named params file/cap/width/align) and `{{raw image|…}}` (DjVu
+# page-ref → local full-page render, optional trailing `{{c|cap}}`).  decompose
+# treats these as image atoms exactly like `[[File:…]]`; the marker reuses the
+# shared parsers + `build_img_marker`, so the `_process_image_float` /
+# `_process_raw_image` PRODUCERS are no longer needed (the bracket form and the
+# template forms are now all one leaf in faithful).
+_IMG_TEMPLATE = re.compile(
+    r"\{\{\s*(?:img\s*float|figure|FI|raw\s+image)\s*\|", re.I)
 
 
 def decompose(c: str) -> list[tuple[str, str]]:
@@ -97,6 +106,9 @@ def decompose(c: str) -> list[tuple[str, str]]:
         im = re.search(r"\[\[(?:File|Image):", c[i:], re.I)
         if im:
             cand.append((i + im.start(), "img"))
+        it = _IMG_TEMPLATE.search(c, i)
+        if it:
+            cand.append((it.start(), "imgt"))
         if not cand:
             if c[i:].strip():
                 out.append(("prose", c[i:]))
@@ -122,6 +134,9 @@ def decompose(c: str) -> list[tuple[str, str]]:
             mc = re.search(r"</poem>", c[st:], re.I)
             en = st + (mc.end() if mc else len(c) - st)
             out.append(("poem", re.sub(r"^<poem>|</poem>$", "", c[st:en], flags=re.I)))
+        elif kind == "imgt":
+            en = _match(c, st, "{{", "}}")
+            out.append(("imgt", c[st:en]))
         else:  # img
             en = c.find("]]", st) + 2
             out.append(("img", c[st:en]))
@@ -200,6 +215,40 @@ def _img_marker(raw: str) -> str:
     # that follows the image — which was being DOUBLED by the old caps-fold here).
     meta = (f"|align={align}" if align else "") + (f"|width={width}" if width else "")
     return f"{{{{IMG:{fn}{meta}}}}}"
+
+
+def _template_image_marker(raw: str) -> str:
+    """Image leaf in TEMPLATE spelling → `{{IMG:…}}`.  `{{raw image|…}}` carries
+    a DjVu page-ref (→ local full-page render) or a plain filename plus an
+    optional trailing `{{c|cap}}`; `{{img float|…}}` / `{{figure|…}}` / `{{FI|…}}`
+    carry named params (file/cap/width/align).  Unlike the bare `[[File:…]]`
+    leaf, these templates carry an AUTHOR-DECLARED caption (`cap=` / the `{{c}}`
+    block) the EB1911 template renders — a real caption, not alt — so it is
+    kept.  Reuses the shared parsers + `build_img_marker` (the leaves that
+    survive); the old `_process_image_float`/`_process_raw_image` producers do
+    not."""
+    from britannica.parsers import img_float as _imgf
+    from britannica.pipeline.stages.elements._image import (
+        build_img_marker, _RAW_IMAGE_ARG_RE, _RAW_DJVU_REF_RE, _RAW_CAPTION_RE)
+    s = raw.strip()
+    if re.match(r"\{\{\s*raw\s+image", s, re.I):
+        m = _RAW_IMAGE_ARG_RE.match(s)
+        if not m:
+            return ""
+        arg = m.group(1).strip()
+        dref = _RAW_DJVU_REF_RE.match(arg)
+        filename = (f"djvu_vol{int(dref.group(1)):02d}_page{int(dref.group(2)):04d}.jpg"
+                    if dref else arg)
+        cap_m = _RAW_CAPTION_RE.search(s, m.end())
+        caption = TT(cap_m.group(1).strip()) if cap_m else ""
+        return build_img_marker(filename, caption or None)
+    inner = s[2:-2] if s.startswith("{{") and s.endswith("}}") else s
+    parsed = _imgf.parse(inner)
+    if parsed is None:
+        return ""
+    caption = TT(parsed.caption) if parsed.caption else None
+    return build_img_marker(parsed.filename, caption or None,
+                            align=parsed.align, width=parsed.width)
 
 
 def _cell_marker(sep: str, attr: str, content: str) -> str:
@@ -343,6 +392,8 @@ def render_markers(c: str) -> str:
             out.append("{{VERSE:" + "\n".join(lines) + "}VERSE}")
         elif kind == "img":
             out.append(_img_marker(pay))
+        elif kind == "imgt":
+            out.append(_template_image_marker(pay))
         else:
             out.append(_tt_br(pay).strip())
     return "\n\n".join(x for x in out if x)
