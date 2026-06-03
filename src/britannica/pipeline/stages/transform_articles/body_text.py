@@ -1374,14 +1374,16 @@ def _find_balanced_template(
     ``text[open_idx : close_idx + 2]`` is the full ``{{…}}`` span and
     ``text[content_start : close_idx]`` is the inner content (after the
     template name and the pipe).  Returns ``None`` if no balanced match
-    is found.  Case-insensitive on the template name."""
-    prefix = "{{" + name + "|"
-    pref_lower = prefix.lower()
-    text_lower = text.lower()
-    idx = text_lower.find(pref_lower, start)
-    if idx < 0:
+    is found.  Case-insensitive on the template name, and tolerant of
+    whitespace around it — MediaWiki ignores it, and source carries
+    ``{{ Fine block|…}}`` / ``{{fine block |…}}`` variants that a literal
+    ``{{name|`` match dropped to ``_strip_templates`` (content lost)."""
+    opener = re.compile(r"\{\{\s*" + re.escape(name) + r"\s*\|", re.IGNORECASE)
+    om = opener.search(text, start)
+    if om is None:
         return None
-    content_start = idx + len(prefix)
+    idx = om.start()
+    content_start = om.end()
     depth = 1
     j = content_start
     n = len(text)
@@ -1427,7 +1429,7 @@ def _unwrap_balanced(text: str, name: str, substitute) -> str:
 
 
 _LAYOUT_TEMPLATES = (
-    "fine block",
+    "fine block", "smaller block",
     "EB1911 Fine Print", "larger", "smaller", "nowrap",
     "Fine", "sm",
 )

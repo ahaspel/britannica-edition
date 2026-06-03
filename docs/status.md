@@ -13,6 +13,57 @@ agent's memory directory and are not duplicated here.
 
 ---
 
+## PROGRESS (2026-06-03) — style_producer + table-notation equivalence (`{{Ts}}` leak 219 → 91)
+
+Two landed pieces, plus one false trail worth recording.
+
+**`style_producer` (faithful).** The three styling-wrapper branches in faithful's `decompose`/`render`
+(`div`, `center`, `csc`) were the same shape — recognize a wrapper, wrap recursed content in block
+markers — so they collapsed onto ONE handler (`_style_marker`) driven by a wrapper REGISTRY
+(`_STYLE_WRAPPERS`): a wrapper is now a data row (`ctr`→`«CTR»`, `sc`→`«SC»`, `css`→`«DIV[style:CSS]»`),
+and the decompose opener-regex is built from the registry, so a newly-found wrapper is a one-line add,
+not a new branch.  Behavior-identical for div/center/csc (suite green).  This is good and kept — but it
+did NOT move the `{{Ts}}` leak, because of the false trail below.
+
+**False trail (recorded so it isn't repeated).** Last session's strip_scan breakdown labelled the 226
+`{{Ts}}` deletions as "family A = div-Ts" by ASSUMPTION.  It was wrong: a context audit
+(`tools/diagnostics/ts_audit.py`) showed the Ts are overwhelmingly in TABLES (cell/row/opener attrs) —
+exactly ONE was in a `<div>`.  Lesson, already in memory but re-proven: verify the context before
+labelling a leak class ([[feedback_verify_corpus_claims]], [[feedback_current_output_not_oracle]]).
+
+**The real root cause — wiki/HTML table notation treated as distinct when it is EQUIVALENT.** A cell is
+a cell whether spelled `|`/`!` or `<td>`/`<th>`; a row whether `|-` or `<tr>`; a table whether opened
+`{|` / closed `|}` or opened `<table>` / closed `</table>`.  Source MIXES the spellings inside one table,
+and the single-syntax extractor dropped whichever spelling it didn't own — losing whole table bodies and
+spilling their `{{Ts}}` to `_strip_templates`.  Fixed at every level (the user's "regard them as
+functionally equivalent"):
+- **Cell/row (producer).** `extract_wiki_rows` canonicalises embedded `<td>`/`<th>`/`<tr>` → `|`/`!`/`|-`
+  before splitting (`_canonicalize_html_cells_to_wiki`, no-op when no HTML tokens → pure-wiki byte-
+  identical), and `_process_table_unified` chooses flavor by the OPENER (`{|`→wiki, `<table>`→html), not
+  by tag presence.  Was: a `{|` table containing a `<td>` routed to the HTML extractor, which saw only the
+  `<td>` cells and dropped the wiki `|` rows.  Recovers 19 mixed tables in 9 articles (AGRICULTURE: was
+  rendering only its header row, now full caption + 11 data rows); CEMENT's 16 Ts drained.  AGRICULTURE
+  snapshot rebaselined (tagged improvement, sign-off).
+- **Opener/closer (walker).** `_scan_balanced` gained an optional alt closer: a `{|` table may close with
+  `</table>` (LAMPROPHYRES, POST, MAGNETISM, MALAY ARCHIPELAGO all open `{|`, close `</table>`).  The alt
+  is only ever tested at depth 0 (nested constructs skipped whole), so a nested closer can't truncate the
+  span.  The reverse (`<table>` closed by `|}`) has 0 corpus hits → NOT accepted (a stray `|}` must not
+  end a `<table>`).  Recovers 10 tables in 5 articles (MAGNETISM is the "zeroed" table the code comments
+  flag); drains LAMPROPHYRES 73 + POST 39 = 112 Ts.
+
+**Verification.**  Full suite **396 green**; snapshot suite **20** (AGRICULTURE rebaselined).  Blast
+radius measured both ways: 19 producer-path tables + 10 walker tables, **all 29 strictly RECOVER cells,
+none lose** (several from rendering nothing / header-only to a full table).  `{{Ts}}` leak **219 → 91**.
+
+**Tooling.**  The audit was minutes-slow (2 DB queries × 36,691 articles); now `tools/diagnostics/
+_corpus_cache.py` bulk-loads + pickles the raw text once, and `ts_audit.py` runs the producer in PARALLEL
+over only Ts-bearing articles and SAVES the leaking article-ids — `ts_audit.py ids` re-runs just the ~30
+leakers in **~12s** (the dev loop).  `strip_scan.py all` uses the same cache (`--refresh` after a rebuild).
+
+**Still open — the remaining 91 `{{Ts}}` are not table structure:** 37 `OTHER` (mostly `{{Ts|width:50%}}`
+table-width openers), 23 `<span {{ts}}>` inline styling (body-text's domain, not tables), ~31 other
+(wiki-cell content, `<p>`, caption).  Next: the `<span>` 23 (the cleanly-non-table chunk).
+
 ## PROGRESS (2026-06-03) — figure + table producers collapse onto ONE recursive producer
 
 The endgame the whole campaign pointed at: **faithful (`elements/_figure_faithful.py`) is now the one
