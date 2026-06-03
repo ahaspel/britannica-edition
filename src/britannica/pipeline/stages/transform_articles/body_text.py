@@ -1749,6 +1749,15 @@ def _apply_markup(text: str) -> str:
     # Bold/italic markers already present from prepare_wikitext's
     # `_convert_quote_runs` (the canonical MediaWiki-aware conversion).
     # No quote-run conversion is needed here.
+    # <small>/<big> HTML tags → size markers.  We now CARRY size (the viewer
+    # renders «SM»/«LG»), so these are the HTML twins of {{smaller}}→«SM» /
+    # {{larger}}→«LG» — not presentational wrappers to flatten.  Tag-only
+    # conversion (open/close separately, so nested/cross-line content is handled
+    # by the other passes); finalize turns the «…» sentinels into real markers.
+    text = re.sub(r"<small\b[^>]*>", f"{_FMT}SM", text, flags=re.IGNORECASE)
+    text = re.sub(r"</small\s*>", f"{_FMT}/SM", text, flags=re.IGNORECASE)
+    text = re.sub(r"<big\b[^>]*>", f"{_FMT}LG", text, flags=re.IGNORECASE)
+    text = re.sub(r"</big\s*>", f"{_FMT}/LG", text, flags=re.IGNORECASE)
     text = _strip_templates(text)
     text = _decode_entities(text)
     text = _finalize_markers(text)
@@ -1756,7 +1765,9 @@ def _apply_markup(text: str) -> str:
 
 
 _KNOWN_WRAPPER_TAGS: tuple[str, ...] = (
-    "span", "small", "big", "div", "p", "ins",
+    # NB: `small`/`big` are NOT here — `_apply_markup` now carries them as
+    # «SM»/«LG» size markers (we support size), rather than flattening to plain.
+    "span", "div", "p", "ins",
 )
 
 

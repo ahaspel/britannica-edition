@@ -172,17 +172,12 @@ _IMG_ATTR = re.compile(
 
 
 def _tt_br(s: str) -> str:
-    """Apply body markup, then regularize the inline HTML the viewer can't
-    render raw inside an escaped marker into canonical markers: `<br>`→«BR»
-    (figure prose treats it as a line break — the BODY producer renders it as a
-    space, different rule), and `<small>`→«SM» (the HTML twin of `{{smaller}}`,
-    which TT already maps to «SM»; the source mixes both forms — AEGEAN PLATE II
-    Figs 6-7). The single place that knows figure inline-HTML → marker."""
-    s = TT(s)
-    s = re.sub(r"<br\s*/?>", "«BR»", s, flags=re.I)
-    s = re.sub(r"<small>", "«SM»", s, flags=re.I)
-    s = re.sub(r"</small>", "«/SM»", s, flags=re.I)
-    return s
+    """Apply body markup, then regularize `<br>` to the canonical «BR» line
+    break: figure prose treats `<br>` as a break (the BODY producer renders it as
+    a space — different producer, different rule). `<small>`/`<big>` are carried
+    by TT itself now (→ «SM»/«LG»). The single place that knows figure `<br>` =
+    line break."""
+    return re.sub(r"<br\s*/?>", "«BR»", TT(s), flags=re.I)
 
 
 def _img_marker(raw: str) -> str:
@@ -196,11 +191,15 @@ def _img_marker(raw: str) -> str:
             width = int(mw.group(1))
         elif p.lower() in ("center", "right", "left"):
             align = p.lower()
-    caps = [p for p in parts[1:] if p and not _IMG_ATTR.match(p)]
-    cap = _tt_br(caps[-1]).strip() if caps else ""
+    # The image is a LEAF: filename + display params, nothing else.  The
+    # bracket's trailing text on a sized/centred image is `alt`, NOT a caption —
+    # MediaWiki never renders it, and there are no "honest captions" living
+    # inside an image marker.  We don't render it either; if that leaves a figure
+    # captionless, that's the source author's intent.  Every VISIBLE caption is a
+    # separate sibling block, recursed on its own (e.g. SUNDEW's {{center|…}}
+    # that follows the image — which was being DOUBLED by the old caps-fold here).
     meta = (f"|align={align}" if align else "") + (f"|width={width}" if width else "")
-    body = f"IMG:{fn}{meta}"
-    return f"{{{{{body}|{cap}}}}}" if cap else f"{{{{{body}}}}}"
+    return f"{{{{IMG:{fn}{meta}}}}}"
 
 
 def _cell_marker(sep: str, attr: str, content: str) -> str:
