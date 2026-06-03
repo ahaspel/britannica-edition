@@ -188,8 +188,16 @@ def _wiki_table(t: str) -> str:
     m = re.match(r"\{\|([^\n]*)", t)
     ta = m.group(1) if m else ""
     cls = "data-table" if _GW.search(ta) else "figtable"
-    _cap, rows = extract_wiki_rows(_peel_table(t))
-    return _wrap(cls, rows)
+    cap, rows = extract_wiki_rows(_peel_table(t))
+    tbl = _wrap(cls, rows) if rows else ""
+    if cap.strip():
+        # `|+` is the table caption — for a figure it carries the Fig. caption
+        # or even the image itself (ALGAE). Recurse it (don't drop), in source
+        # position (before the rows).
+        cap_html = render(cap).strip()
+        if cap_html:
+            return cap_html + tbl
+    return tbl
 
 
 def _mask_nested(s: str, store: list) -> str:
@@ -340,8 +348,15 @@ def _wiki_table_marker(t: str) -> str:
     m = re.match(r"\{\|([^\n]*)", t)
     ta = m.group(1) if m else ""
     cls = "data-table" if _GW.search(ta) else "figtable"
-    _cap, rows = extract_wiki_rows(_peel_table(t))
-    return _rows_to_htmltable(rows, cls)
+    cap, rows = extract_wiki_rows(_peel_table(t))
+    tbl = _rows_to_htmltable(rows, cls) if rows else ""
+    if cap.strip():
+        # `|+` carries the figure's caption — or its image (ALGAE). Recurse it
+        # (don't drop), in source position before the rows.
+        cap_md = render_markers(cap).strip()
+        if cap_md:
+            return (cap_md + "\n\n" + tbl) if tbl else cap_md
+    return tbl
 
 
 def _html_table_marker(block: str) -> str:

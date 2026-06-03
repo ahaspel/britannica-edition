@@ -512,8 +512,16 @@
        Cell images render at full size; the !important beats formatCell's
        inline 60px data-cell cap (which is right for data tables, wrong
        for plates). */
+    /* MECHANICAL ONLY. The figtable's POSITION (float / margin:auto centring /
+       width) and its cells' alignment come from the source, carried by the
+       producer onto the <table style> / <td style> — the viewer must not
+       impose them. So no margin:auto centring here (it rides on the source's
+       align=center / {{Ts|ma}}) and no cell text-align (it rides on the
+       source's cell align). What remains is genuinely the viewer's: borders
+       off (this is a figure, not a data grid), vertical breathing room, and
+       the column gap. */
     table.figtable {
-      margin: 1.2em auto;
+      margin: 1.2em 0;
       border-collapse: collapse;
       border: none;
       width: auto;
@@ -526,7 +534,6 @@
          legend row), and they read as one caption block in print.  Wide
          vertical padding spread them apart; keep horizontal column gap. */
       padding: 1px 12px;
-      text-align: center;
       vertical-align: top;
     }
     table.figtable .cell-image,
@@ -2119,6 +2126,10 @@
       h = h.replace(/«SR»(.*?)«\/SR»/gs, '<span class="explicit-serif">$1</span>');
       h = h.replace(/«U»([\s\S]*?)«\/U»/g, '<span class="underline">$1</span>');
       h = h.replace(/«STK»([\s\S]*?)«\/STK»/g, '<s>$1</s>');
+      // «BR» — canonical line break (producer-regularized `<br>`). Decoded
+      // here, the one decoder both the body and formatCell route through, so a
+      // line break renders identically in centred captions, cells, and prose.
+      h = h.replace(/«BR»/g, "<br>");
       h = applySizeMarkers(h);
       h = h.replace(/«BAR\[(\d+)\]»/g,
                     (_m, n) => `<span class="inline-bar" style="width:${n}em">&nbsp;</span>`);
@@ -2157,18 +2168,26 @@
     }
 
     function formatCell(text) {
-      let h = escapeHtml(text);
-      h = h.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
-                    (match, name, content) => renderFnMarker(name, content));
-      h = h.replace(IMG_PARTS_RE_G, (match, filename, metaBlock, caption) => {
+      // An IMG marker's filename is DATA that becomes a URL \u2014 not display
+      // text.  escapeHtml would corrupt it (a `'` \u2192 `&#39;` \u2192 a 404 src,
+      // breaking ANY cell image with `'`/`&`/`<`/`>`/`"` in its filename,
+      // plates included).  So extract IMG from the RAW text first, build the
+      // URL from the pristine filename, and shield the emitted <img> from the
+      // blanket escape with a placeholder \u2014 escape only the prose around it.
+      const imgHtml = [];
+      text = text.replace(IMG_PARTS_RE_G, (match, filename, metaBlock, caption) => {
         const url = filename.startsWith("http") ? filename : commonsUrl(filename);
         // Honor carried width (figure-grid / plate cells size from source
         // px); fall back to the 60px data-cell cap only when no width was
         // carried (the producer carries it for figures, not data tables).
         const meta = parseImgMeta(metaBlock);
         const sz = meta.width ? `max-width:${meta.width}px;` : "max-height:60px;";
-        return `<img src="${url}" alt="${escapeHtml(caption || filename)}" class="cell-image" loading="lazy" style="${sz}" />`;
+        imgHtml.push(`<img src="${url}" alt="${escapeHtml(caption || filename)}" class="cell-image" loading="lazy" style="${sz}" />`);
+        return `\x00IMG${imgHtml.length - 1}\x00`;
       });
+      let h = escapeHtml(text);
+      h = h.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
+                    (match, name, content) => renderFnMarker(name, content));
       // LaTeX math in cells — render inline with KaTeX.
       // Cell math is always inline (no displayMode) \u2014 scale hints
       // don't apply here.  Strip the optional `[hint]` if present.
@@ -2194,6 +2213,8 @@
       // (B/I/SC, MIRROR, SS/SR, sizes, BAR, DHR, CTR, BRACE2, hieroglyph,
       // LN).  dhrInline: cells use the inline DHR spacer variant.
       h = decodeInlineMarkers(h, { dhrInline: true });
+      // Restore the shielded <img> tags now that escaping/decoding is done.
+      h = h.replace(/\x00IMG(\d+)\x00/g, (_m, idx) => imgHtml[+idx]);
       return h;
     }
 
@@ -2462,9 +2483,16 @@
           return renderInlineGlyph(filename, meta.width, meta.height);
         const url = commonsUrl(filename);
         const cls = "inline-image" + (imgIsWide(meta, filename, caption) ? " wide" : "");
+        // The caption carries producer markers (small-caps Fig., «BR» line
+        // breaks): escape the prose, then decode the markers — the same pass
+        // every other context uses.  This path returns early, so it must decode
+        // inline (the non-anchored figure path relies on the trailing
+        // decodeInlineMarkers).  alt is plain text: strip markers for it.
+        const capHtml = caption ? decodeInlineMarkers(escapeHtml(caption)) : "";
+        const altText = (caption || filename).replace(/«[^»]*»/g, "");
         return `<figure class="${cls}"${imgWidthStyle(meta)}>
-          <a href="${url}" target="_blank"><img src="${url}" alt="${escapeHtml(caption || filename)}" loading="lazy" /></a>
-          ${caption ? `<figcaption>${escapeHtml(caption)}</figcaption>` : ""}
+          <a href="${url}" target="_blank"><img src="${url}" alt="${escapeHtml(altText)}" loading="lazy" /></a>
+          ${capHtml ? `<figcaption>${capHtml}</figcaption>` : ""}
         </figure>`;
       }
       // Render preformatted blocks (structural chemical formulas)
