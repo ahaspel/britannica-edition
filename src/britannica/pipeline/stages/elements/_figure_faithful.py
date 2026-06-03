@@ -65,11 +65,55 @@ def _match_html(s: str, st: int) -> int:
     return len(s)
 
 
-_CENTER = re.compile(r"\{\{\s*(?:block center|center block|center|c)\s*\|", re.I)
-# csc = centred small-caps; it can WRAP block structure (image + caption), so
-# decompose treats it as a recursing wrapper, not a leaf — else it pulls the
-# [[File:]] out and shatters the balanced {{csc|…}}.
-_CSC = re.compile(r"\{\{\s*csc\s*\|", re.I)
+# ── The styled-WRAPPER family: ONE producer, a registry of wrappers ──────
+# Every `{{name|…}}` block wrapper (and `<div>`, via `_div_block_marker`)
+# reduces to the same shape: recurse the content, then wrap it in block markers
+# derived from the wrapper.  A newly-discovered wrapper is ONE ROW here, not a
+# new decompose/render branch.  Spec keys: `ctr` → «CTR» centred block; `sc` →
+# «SC» small-caps; `css` → «DIV[style:CSS]» (the universal block-style carrier).
+# csc = centred small-caps; like the rest it WRAPS block structure (image +
+# caption), so it recurses — it must not be treated as a leaf (that would pull
+# the [[File:]] out and shatter the balanced {{csc|…}}).
+_STYLE_WRAPPERS: dict[str, dict] = {
+    "center":       {"ctr": True},
+    "block center": {"ctr": True},
+    "center block": {"ctr": True},
+    "c":            {"ctr": True},
+    "csc":          {"ctr": True, "sc": True},
+}
+# Opener regex built FROM the registry (longest names first so `center block`
+# wins over `center`/`c`) — add a wrapper above and recognition follows.
+_STYLE_OPENER_RE = re.compile(
+    r"\{\{\s*(" + "|".join(
+        re.escape(n) for n in sorted(_STYLE_WRAPPERS, key=len, reverse=True))
+    + r")\s*\|", re.IGNORECASE)
+
+
+def _style_marker(body: str, *, ctr: bool = False, sc: bool = False,
+                  css: str = "") -> str:
+    """The ONE styled-wrapper wrap: recursed `body` → block markers.  `«CTR»`
+    for a centred block (keeps the viewer's `.centered` class), `«SC»` for
+    small-caps, `«DIV[style:CSS]»` for arbitrary block CSS.  Shared by the
+    template wrappers (`_style_tmpl_marker`) and `<div>` (`_div_block_marker`)."""
+    if not body:
+        return ""
+    if sc:
+        body = f"«SC»{body}«/SC»"
+    if ctr:
+        body = f"«CTR»{body}«/CTR»"
+    elif css:
+        body = f"«DIV[style:{css}]»{body}«/DIV»"
+    return body
+
+
+def _style_tmpl_marker(raw: str) -> str:
+    """A `{{name|…}}` styling wrapper → recurse the inner, wrap per its registry
+    spec.  `raw` is the whole balanced `{{name|INNER}}`."""
+    mm = _STYLE_OPENER_RE.match(raw)
+    inner = raw[mm.end():]
+    inner = inner[:-2] if inner.endswith("}}") else inner
+    return _style_marker(render_markers(inner).strip(),
+                         **_STYLE_WRAPPERS[mm.group(1).lower()])
 # Image LEAF in TEMPLATE spelling — `{{img float|…}}` / `{{figure|…}}` /
 # `{{FI|…}}` (named params file/cap/width/align) and `{{raw image|…}}` (DjVu
 # page-ref → local full-page render, optional trailing `{{c|cap}}`).  decompose
@@ -91,12 +135,9 @@ def decompose(c: str) -> list[tuple[str, str]]:
         t = c.find("{|", i)
         if t >= 0:
             cand.append((t, "tbl"))
-        m = _CENTER.search(c, i)
-        if m:
-            cand.append((m.start(), "ctr"))
-        cm = _CSC.search(c, i)
-        if cm:
-            cand.append((cm.start(), "csc"))
+        sm = _STYLE_OPENER_RE.search(c, i)
+        if sm:
+            cand.append((sm.start(), "stylet"))
         p = re.search(r"<poem>", c[i:], re.I)
         if p:
             cand.append((i + p.start(), "poem"))
@@ -127,14 +168,9 @@ def decompose(c: str) -> list[tuple[str, str]]:
         elif kind == "html":
             en = _match_html(c, st)
             out.append(("html", c[st:en]))
-        elif kind == "ctr":
+        elif kind == "stylet":
             en = _match(c, st, "{{", "}}")
-            mm = _CENTER.match(c, st)
-            out.append(("ctr", c[st + (mm.end() - st):en - 2]))
-        elif kind == "csc":
-            en = _match(c, st, "{{", "}}")
-            mm = _CSC.match(c, st)
-            out.append(("csc", c[st + (mm.end() - st):en - 2]))
+            out.append(("stylet", c[st:en]))
         elif kind == "poem":
             mc = re.search(r"</poem>", c[st:], re.I)
             en = st + (mc.end() if mc else len(c) - st)
@@ -280,7 +316,7 @@ def _div_block_marker(raw: str) -> str:
     if not body:
         return ""
     css = ";".join(_table_opener_styles("{|" + attrs))
-    return f"«DIV[style:{css}]»{body}«/DIV»" if css else body
+    return _style_marker(body, css=css) if css else body
 
 
 def _cell_marker(sep: str, attr: str, content: str) -> str:
@@ -408,10 +444,8 @@ def render_markers(c: str) -> str:
             out.append(_wiki_table_marker(pay))
         elif kind == "html":
             out.append(_html_table_marker(pay))
-        elif kind == "ctr":
-            out.append(f"«CTR»{render_markers(pay)}«/CTR»")
-        elif kind == "csc":
-            out.append(f"«CTR»«SC»{render_markers(pay)}«/SC»«/CTR»")
+        elif kind == "stylet":
+            out.append(_style_tmpl_marker(pay))
         elif kind == "poem":
             lines = [TT(ln).strip() for ln in
                      re.sub(r"<br\s*/?>", "\n", pay, flags=re.I).split("\n")

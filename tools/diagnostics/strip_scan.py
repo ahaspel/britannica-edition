@@ -8,7 +8,11 @@ The result is the remaining worklist to drain before `_strip_templates` is a
 no-op and can be deleted.  Template deletions = content concern; orphan
 brace/table cleanups are reported separately (malformed-markup, lesser).
 
-Usage: uv run python tools/diagnostics/strip_scan.py [N|all|validate]
+Usage: uv run python tools/diagnostics/strip_scan.py [N|all|validate] [--refresh]
+
+`all` scans every non-plate article (cached raw, seconds after first build);
+`N` scans the first N; `validate` checks the instrument on {{lh}} articles.
+`--refresh` rebuilds the raw-text cache from the DB (do this after a rebuild).
 """
 from __future__ import annotations
 import io, re, sys
@@ -17,8 +21,8 @@ from pathlib import Path
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
-from britannica.db.session import SessionLocal
-from britannica.db.models import Article, ArticleSegment, SourcePage
+sys.path.insert(0, str(Path(__file__).resolve().parent))   # _corpus_cache
+from _corpus_cache import load_corpus
 from britannica.pipeline.stages.transform_articles import body_text as BT
 from britannica.pipeline.stages.transform_articles import _transform_text_v2
 
@@ -38,38 +42,36 @@ def _spy(text: str) -> str:
     return _orig(text)
 BT._strip_templates = _spy
 
-def run(article_ids, s):
-    for aid in article_ids:
-        a = s.get(Article, aid)
-        if not a:
-            continue
-        segs = (s.query(ArticleSegment, SourcePage.page_number)
-                .join(SourcePage, ArticleSegment.source_page_id == SourcePage.id)
-                .filter(ArticleSegment.article_id == aid)
-                .order_by(ArticleSegment.sequence_in_article).all())
-        raw = "\n".join(f"\x01PAGE:{pg}\x01{(seg.segment_text or '')}" for seg, pg in segs)
+def run(corpus) -> int:
+    """Run the REAL producer over each (aid, vol, pg0, raw); the spy records.
+    Returns the number of articles processed."""
+    n = 0
+    for aid, vol, pg0, raw in corpus:
+        n += 1
         try:
-            _transform_text_v2(raw, a.volume, segs[0][1] if segs else 0)
+            _transform_text_v2(raw, vol, pg0)
         except Exception:
             pass
+    return n
 
 def main():
-    arg = sys.argv[1] if len(sys.argv) > 1 else "2000"
-    s = SessionLocal()
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    refresh = "--refresh" in sys.argv
+    arg = args[0] if args else "2000"
     if arg == "validate":
-        # known {{lh}} non-plate articles — instrument must catch lh
-        ids = [aid for (aid,) in s.query(ArticleSegment.article_id)
-               .filter(ArticleSegment.segment_text.like("%{{lh%")).distinct()][:30]
-        run(ids, s)
-        print(f"VALIDATE on {len(ids)} {{{{lh}}}}-bearing articles:")
+        # known {{lh}}-bearing articles — instrument must catch lh
+        corpus = [r for r in load_corpus(contains="{{lh", refresh=refresh)][:30]
+        run(corpus)
+        print(f"VALIDATE on {len(corpus)} {{{{lh}}}}-bearing articles:")
         print(f"  'lh' deletions caught: {DELETED.get('lh', 0)}  (instrument {'WORKS' if DELETED.get('lh') else 'BROKEN'})")
         print(f"  top deleted here: {dict(DELETED.most_common(8))}")
     else:
-        q = s.query(Article.id).filter(Article.article_type != "plate").order_by(Article.volume, Article.page_start)
-        ids = [a.id for a in (q.all() if arg == "all" else q.limit(int(arg)).all())]
-        run(ids, s)
+        corpus = load_corpus(refresh=refresh)
+        if arg != "all":
+            corpus = (r for i, r in enumerate(corpus) if i < int(arg))
+        n_arts = run(corpus)
         tot = sum(DELETED.values())
-        print(f"=== STRIP-SCAN: {len(ids)} articles, {tot} template-deletions, {len(DELETED)} distinct ===")
+        print(f"=== STRIP-SCAN: {n_arts} articles, {tot} template-deletions, {len(DELETED)} distinct ===")
         print("  (each is content `_strip_templates` silently removed — invisible to leak_scan)\n")
         import collections
         dist = collections.Counter(v for v in DELETED.values())
@@ -79,7 +81,6 @@ def main():
         print()
         for name, n in DELETED.most_common():
             print(f"  {n:6d}  {{{{{name}}}}}   e.g. {SAMPLES[name]!r}")
-    s.close()
 
 if __name__ == "__main__":
     main()
