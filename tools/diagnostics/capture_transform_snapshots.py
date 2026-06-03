@@ -67,6 +67,10 @@ SEED_FILENAMES: tuple[str, ...] = (
     "06-0411-cithara-CITHARA",       # img-float
     "08-0783-dynamics-DYNAMICS",     # math-heavy
     "14-0147-hydromedusae-HYDROMEDUSAE",  # captioned figures + legends
+    "14-0737-s2-INTERPOLATION",      # math html_wrapper: {| positioning an
+                                     # inner <table> equation display (Newton
+                                     # interpolation coeffs) — guards the
+                                     # table-collapse / html_wrapper boundary
     "18-0684-s2-MOLECULE",           # FN named-ref cross-paragraph
     "20-0215-s3-ORDNANCE",           # plate figures
     "25-0840-s3-STEAM_ENGINE",       # complex layout
@@ -181,18 +185,27 @@ def capture_one(session, filename_stem: str) -> tuple[str, str]:
 
 def main() -> int:
     SNAPSHOT_DIR.mkdir(parents=True, exist_ok=True)
+    # Optional positional args restrict capture to those seed stems — so a new
+    # seed can be captured WITHOUT rewriting the other baselines (some of which
+    # are post-downstream form from add_snapshot_from_production).  No args =
+    # capture every seed.
+    only = set(sys.argv[1:])
+    seeds = tuple(f for f in SEED_FILENAMES if f in only) if only else SEED_FILENAMES
+    if only and not seeds:
+        print(f"no seed matches {sorted(only)}; known: {SEED_FILENAMES}")
+        return 1
     s = SessionLocal()
     try:
-        widest = max(len(f) for f in SEED_FILENAMES)
+        widest = max(len(f) for f in seeds)
         ok = miss = skip = 0
-        for stem in SEED_FILENAMES:
+        for stem in seeds:
             status, msg = capture_one(s, stem)
             print(f"  [{status:7}] {stem:<{widest}}  {msg}")
             if status == "OK":   ok += 1
             elif status == "SKIP": skip += 1
             else:                miss += 1
         print()
-        print(f"Captured {ok} / {len(SEED_FILENAMES)} "
+        print(f"Captured {ok} / {len(seeds)} "
               f"(skipped {skip}, missing {miss})")
         return 0 if miss == 0 else 1
     finally:

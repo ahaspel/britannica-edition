@@ -13,6 +13,54 @@ agent's memory directory and are not duplicated here.
 
 ---
 
+## PROGRESS (2026-06-03) — table classifier collapse: 6 labels → one `TABLE` (Arc B DONE)
+
+The six wikitable/`<table>` labels (`DATA_TABLE` / `COMPLEX_HTML` / `HTML_TABLE` /
+`SINGLE_COLUMN_TABLE` / `VERSE_TABLE` / `COMPOUND_TABLE`) collapsed to **one `TABLE`**, one dispatch
+entry → `_process_table_unified` (the `table_decompose` engine).  The point (user): *all table
+classifiers should run on a single path; the sub-labels shouldn't exist.*  The ladder's table
+predicates are KEPT — their ORDER still gates table-vs-(math/chem/figure/glyph) — only the six emitted
+**outcomes** collapsed to `"TABLE"`.  Sites moved together: `_PRE/_POST_ICL_PREDS` + fallback, the 6→1
+dispatch, `_classify_html_table` (else-branch `HTML_TABLE`→`TABLE`; dead `SINGLE_COLUMN`/`VERSE` route-away
+dropped), `_classifier.py:84` map, `_registry.py` `TABLE_LABELS`/`BLOCK_LABELS`, `_table_decompose.py:568`
+(`!= "DATA_TABLE"`→`!= "TABLE"`), `_math_layout.py:268` (dead `HTML_TABLE` dropped).
+
+**Consumer audit — only TWO consumers genuinely keyed on a sub-label** (`_table_decompose:568` on
+`DATA_TABLE`, `_math_layout:475` on `HTML_TABLE`); everything else keys on the CLASS (`TABLE_LABELS` /
+`IMAGE_LABELS` / `POEM`).  568→`TABLE` is a strict improvement (`_inline_table_marker_as_html` passes
+non-`{{TABLE}}` markers through unchanged → no-op for those, leak-fix for the `{{TABLE}}` ones) and had
+**0 live instances** corpus-wide.
+
+**The one real risk surface was math** (`_math_layout:475` html_wrapper).  Keyed on `TABLE` first (per
+"key on table"); the net FOUND that it fixed INTERPOLATION (an outer `{|` positioning an inner HTML
+`<table>` of equations — was mislabeled `SINGLE_COLUMN`; redundant outer figtable now dropped) but
+REGRESSED PROBABILITY (Fig 13's bordered `{|` grid of `{{sfrac}}` fractions flattened to equation
+paragraphs).  Root: html_wrapper's real signal is an inner **HTML `<table>`** (transcriber typeset a math
+display), NOT a wiki `{|` (ordinary structural grid) — one of the few places `{|`≠`<table>`.  Fix = a
+source-syntax guard (`eraw.lstrip().startswith("<table")` — reads the SOURCE, not a sub-label) →
+INTERPOLATION fixed, PROBABILITY safe.  **The guard is PROVISIONAL**: it, html_wrapper, and most of
+`_math_table_kind` all dissolve at the cell-recursion frontier (Arc A) — once cells recurse, math-in-cells
+renders inline by the normal descent and the parent never sniffs child raw.
+[[feedback_current_output_not_oracle]] [[feedback_lossless_over_taxonomy]]
+
+**Verification (the net is the point).**  Label-dist over the ~1500 table-bearing articles
+(`table_label_dist.py` + `tld_diff.py`): **4520 `→TABLE` transitions, 0 UNEXPECTED, keys identical**
+(no element moved/dropped); the only non-`TABLE` moves were the 2 reviewed math-improvements (INTERPOLATION).
+Corpus body diff (`snapshot_corpus.py`, 36,691 articles, **0 transform-errors**): **exactly 1 article
+changed** — INTERPOLATION (−180 B, the reviewed improvement); 36,689 byte-identical, PROBABILITY identical.
+Full suite **396 green**; INTERPOLATION added as the **21st snapshot seed** (guards the html_wrapper
+boundary — its baseline will legitimately shift when Arc A lands).
+
+**Next frontier = Arc A (cell recursion)** — confirmed with the user as where the last session left off,
+and this collapse is its ENABLER (line ~323 below): one uniform `TABLE` / one recursive producer means
+"recurse the cell" = run cell content through the same `walk→classify→produce`, where a nested table is
+*just* `TABLE`.  The math discussion this session sharpened the payoff: cells don't get *promoted* to math
+blocks (PROBABILITY is a table of fractions, INTERPOLATION a positioning wrapper) — the cell math just
+RENDERS inline by the normal descent, which is what makes html_wrapper's raw-sniffing (and the guard above)
+deletable.  Guardrail still stands (Arc A): generalise `produce_cell`'s dormant `recurse=` socket to all
+walker-elements, NOT a blanket `process_elements` over the whole cell (that was tried + reverted — it
+collapsed cell `<br>`).
+
 ## PROGRESS (2026-06-03) — style_producer + table-notation equivalence (`{{Ts}}` leak 219 → 91)
 
 Two landed pieces, plus one false trail worth recording.
@@ -66,13 +114,13 @@ table-width openers), 23 `<span {{ts}}>` inline styling (body-text's domain, not
 
 ---
 
-## NEXT ARCS — scoped, not yet started (2026-06-03)
+## NEXT ARCS (2026-06-03)
 
-Two structural arcs were investigated this session, scoped, and deliberately deferred (one attempted +
-reverted).  Both are real and finish trajectories already in flight.  Written down so the next pass starts
-clean.
+Two structural arcs were investigated, scoped, and deferred.  **Arc B is now DONE** (table-label collapse
+— see the progress entry above).  **Arc A is the live next frontier** (confirmed with the user as where the
+last session left off); the Arc B collapse is its enabler.
 
-### Arc A — cell content is content: recurse it, don't body-text it
+### Arc A — cell content is content: recurse it, don't body-text it  ← NEXT
 
 **Symptom.** A walker-level element inside a table cell (a `{{dual line|…}}`, and the `{{Ts}}`-in-cell
 residual) leaks to `_strip_templates`.  **Root.** `produce_cell` runs cell content through
@@ -95,7 +143,7 @@ inside math, so the payoff is the structural unification, not the leak count.  U
 an isolated `classify_article` finds only 2 raw dual lines but the full pipeline strips 27 — the gap is the
 PREPROCESSING the full `_transform_text_v2` does before classify; pin that before building.
 
-### Arc B — collapse the 6 table labels → one `TABLE` (finish the table-collapse arc)
+### Arc B — collapse the 6 table labels → one `TABLE`  ✅ DONE 2026-06-03 (see progress entry above; scoping below was followed)
 
 **Why.** `DATA_TABLE` / `COMPLEX_HTML` / `HTML_TABLE` / `SINGLE_COLUMN_TABLE` / `VERSE_TABLE` /
 `COMPOUND_TABLE` all now dispatch to the **identical** `_process_table_unified` — six identical lambdas

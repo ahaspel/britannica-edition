@@ -265,8 +265,7 @@ def _is_math_dominant_layout(
     # have a few <math> cells (chemistry / physics tables) usually
     # also carries images, refs, or nested tables.
     for t, _ in elements:
-        if t in {"IMAGE", "IMAGE_FLOAT", "REF", "TABLE", "HTML_TABLE",
-                 "POEM"}:
+        if t in {"IMAGE", "IMAGE_FLOAT", "REF", "TABLE", "POEM"}:
             return False
     if re.search(r"^\s*!", raw, re.MULTILINE):
         return False
@@ -467,14 +466,23 @@ def _math_table_kind(
         if math_ct >= 2 and math_ct >= len(inner_registry.labels) * 0.5:
             return "math_blocks"
 
-    # html_wrapper: a single HTML_TABLE child whose raw content carries
-    # math signals.  The outer wikitable is just positioning around
-    # that HTML table (and an equation-number cell, typically).
+    # html_wrapper: a single nested *HTML `<table>`* child whose raw carries
+    # math signals — the outer wikitable is just positioning around an inner
+    # HTML table the transcriber used to typeset a math display.  The inner
+    # being `<table>` (not a wiki `{|`) is itself part of the signal: a nested
+    # `{|` — also "TABLE" after the table-label collapse — is an ordinary
+    # structural grid (PROBABILITY Fig. 13's bordered tree of `{{sfrac}}`
+    # cells) and must stay a table, NOT be flattened to equation paragraphs.
+    # So this is one of the few spots where `{|` and `<table>` are not
+    # interchangeable; the syntax check restores the discriminator the
+    # collapsed label no longer carries (we read the source, not a sub-label).
     if inner_registry:
         for ph, label in inner_registry.labels.items():
-            if label != "HTML_TABLE":
+            if label != "TABLE":
                 continue
             eraw = inner_registry.elements[ph][1]
+            if not eraw.lstrip().lower().startswith("<table"):
+                continue
             if _HTML_MATH_SIGNALS.search(eraw):
                 return "html_wrapper"
 
