@@ -13,6 +13,49 @@ agent's memory directory and are not duplicated here.
 
 ---
 
+## PROGRESS (2026-06-03) — figure + table producers collapse onto ONE recursive producer
+
+The endgame the whole campaign pointed at: **faithful (`elements/_figure_faithful.py`) is now the one
+producer for every figure/image AND every table**; the image leaf is its `_img_marker` /
+`_template_image_marker` (+ the shared `build_img_marker`).  ~1,130 LOC of per-shape producers deleted.
+
+- **Image leaf, every spelling.** faithful's `decompose` recognizes `[[File:…]]` AND the template forms
+  `{{img float|…}}` / `{{figure|…}}` / `{{FI|…}}` / `{{raw image|…}}` (→ `_template_image_marker`, reusing
+  the shared `img_float` parser + `build_img_marker`).  The parser also learned the `{{figure}}` synonyms
+  `image=`/`caption=`/`position=`, recovering ~50 figures the `file=`-only pattern silently dropped (in
+  the old producer too — a content GAIN).  Verified 14/14 figure labels content-total (0 empty, 0 exc).
+- **Tables → one engine.** All six table labels (DATA_TABLE / COMPLEX_HTML / HTML_TABLE / SINGLE_COLUMN /
+  VERSE / COMPOUND) route to `_process_table_unified` (`produce_table_rows` + `assemble_html_rows`): full
+  per-cell `_cell_styles` carried, class tracks the source's border verdict (`border`/`rules`/`wikitable`
+  → `data-table`, else borderless `figtable`), always full-style `«HTMLTABLE»` (one marker form; the
+  align-only `{{TABLE}}` is gone).  0 producer exceptions over the table-bearing corpus; 0 residual
+  `{{TABLE}}`.  The VERSE/SINGLE_COLUMN carve was reverted on purpose — those labels mis-fire on non-verse
+  (ALGEBRA's poem-cell number table was emitting an EMPTY `{{VERSE:}VERSE}`); rendering the `{|` as the
+  table it literally is preserves the content and the real poems still render as verse inside their cells
+  ([[feedback_lossless_over_taxonomy]]).
+- **One cell path.** faithful's own `_cell_marker` folded onto the canonical `produce_cell`, so figure-
+  NESTED tables carry full cell styles too (fixes bordered figure-tables rendering border-less cells —
+  the four-property `_normalize_attrs` lift dropped `{{Ts|ba}}`→`border:1px`).
+- **Dead producers deleted.** The six `_process_*table` + twelve figure producers (`_produce_figure`,
+  `_process_captioned_figure[_inline]`, `_process_legended_figure[_beside|_child]`,
+  `_process_unpaired_figure_group`, `_unwrap_layout_table`, `_unwrap_html_illustration`,
+  `_process_{raw,plain,}image_float`) + orphan helpers, dispatch override loop replaced with direct
+  label→faithful, dead imports stripped.  KEPT as live utilities: `_process_image` /
+  `_process_image_from_raw` / `build_img_marker` (used by classifier predicates).
+
+**Verification.** Snapshot regression suite GREEN (20/20) after rebaseline; the diffs were tagged and
+showed no content loss — every "lost" token was style/layout moved into HTML attrs, the intentionally-
+dropped footer signature, or the OLD producers' figure-legend flattening that faithful now PRESERVES
+(ARACHNIDA: old ran `«I»sgc«/I»` labels together + dropped `«BR»`; faithful keeps both).  `elemΔ=0`
+(no leaked child placeholders).  Corpus stayed 0-exception throughout.
+
+**Still open:** (1) reconcile ~42 unit tests to the new contract — the `test_image_layout_unwrap` legend
+tests assert the deleted role-producers (retire), the table/image tests assert the old markers (update).
+(2) The deeper `_layout` legend-helper sweep is gated on the classifier-label collapse (the figure labels
+are now vestigial — they all route to faithful identically — so the classifier's figure-distinction
+predicates can collapse to one, the "two stages not three" trajectory).  (3) Overnight rebuild → bank the
+corpus-wide output.
+
 ## PROGRESS (2026-06-03) — walker: one balanced rule for every bracket construct
 
 The walker bounded HTML `<tag>…</tag>` with non-greedy regexes (`<table\b[^>]*>.*?</table>`, likewise
