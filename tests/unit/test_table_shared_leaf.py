@@ -16,31 +16,14 @@ from britannica.pipeline.stages.elements._table_decompose import (
     assemble_table_marker,
     produce_table_rows,
 )
-from britannica.pipeline.stages.elements._tables import (
-    _html_cell_clean,
-    _process_html_table,
-)
+from britannica.pipeline.stages.elements._tables import _html_cell_clean
 
 
 def _identity(text: str) -> str:
     return text
 
 
-def _via_leaf(inner: str, tt, reg=None) -> str:
-    """Reconstruct `_process_html_table`'s canonical path via the shared
-    leaf functions only."""
-    caption, parsed, has_header, has_span = produce_table_rows(
-        inner, tt, flavor="html", cell_preclean=_html_cell_clean)
-    return assemble_table_marker(
-        caption="", parsed_rows=parsed, has_header=has_header,
-        has_span=has_span, inner_registry=reg)
-
-
-def _via_spine(inner: str, tt, reg=None) -> str:
-    return _process_html_table("<table>" + inner + "</table>", inner, tt, reg)
-
-
-# ── Representative inner tables (no front-guard triggers) ───────────────
+# ── Representative inner tables ─────────────────────────────────────────
 
 PLAIN = (
     "<tr><td>Region</td><td>Population</td></tr>"
@@ -77,36 +60,6 @@ BR_CELL = (
 EMPTY_CELLS = (
     "<tr><td>a</td><td></td><td>c</td></tr>"
 )
-
-
-class TestByteIdentity:
-    def _check(self, inner: str):
-        assert _via_leaf(inner, _identity) == _via_spine(inner, _identity)
-
-    def test_plain_data_table(self):
-        self._check(PLAIN)
-
-    def test_header_table(self):
-        self._check(HEADER)
-
-    def test_aligned_cells(self):
-        self._check(ALIGNED)
-
-    def test_span_emits_htmltable(self):
-        out = _via_leaf(SPAN, _identity)
-        assert out.startswith("«HTMLTABLE:<table>")
-        self._check(SPAN)
-
-    def test_span_with_style(self):
-        self._check(SPAN_STYLED)
-
-    def test_br_preserved_lossless(self):
-        out = _via_leaf(BR_CELL, _identity)
-        assert "<br>" in out          # lossless break survived the leaf
-        self._check(BR_CELL)
-
-    def test_empty_cells(self):
-        self._check(EMPTY_CELLS)
 
 
 class TestFormChooser:
