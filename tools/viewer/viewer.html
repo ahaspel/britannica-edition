@@ -2151,6 +2151,12 @@
                     dhrInline ? '<span class="dhr-inline"></span>'
                               : '<span class="dhr-block"></span>');
       h = h.replace(/«CTR»([\s\S]*?)«\/CTR»/g, '<div class="centered">$1</div>');
+      // «DIV[style:CSS]»…«/DIV» — a styled block <div> (carried whole from the
+      // source's {{Ts}}/style=/align=); the producer regularized the style, we
+      // just render it.  Innermost-first loop so nested styled divs pair right.
+      { let _p; do { _p = h; h = h.replace(
+          /«DIV\[style:([^\]]*)\]»((?:(?!«DIV\[)[\s\S])*?)«\/DIV»/g,
+          '<div style="$1">$2</div>'); } while (h !== _p); }
       // {{float right|X}}/{{float left|X}} — margin-floated content
       // (contributor-initial signatures, right-floated marginal notes).
       h = h.replace(/«FR»([\s\S]*?)«\/FR»/g, '<span class="float-right">$1</span>');

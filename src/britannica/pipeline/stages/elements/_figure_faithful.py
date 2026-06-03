@@ -36,6 +36,7 @@ from britannica.export.sections import _dehyphenate_shoulder
 from britannica.pipeline.stages.elements._table_decompose import extract_wiki_rows
 from britannica.pipeline.stages.elements._figure_decompose import _peel_table
 from britannica.pipeline.stages.elements._tables import _html_table_grid
+from britannica.pipeline.stages.elements._walker import _construct_end
 
 
 # ── balanced-span helpers ──────────────────────────────────────────────
@@ -108,6 +109,11 @@ def decompose(c: str) -> list[tuple[str, str]]:
         it = _IMG_TEMPLATE.search(c, i)
         if it:
             cand.append((it.start(), "imgt"))
+        dv = re.search(r"<div\b", c[i:], re.I)
+        if dv and _construct_end(c, i + dv.start()) is not None:
+            # only a BALANCED div is a block node; an unbalanced one falls to
+            # prose (fail-closed — never bound-to-EOF / swallow).
+            cand.append((i + dv.start(), "div"))
         if not cand:
             if c[i:].strip():
                 out.append(("prose", c[i:]))
@@ -136,6 +142,9 @@ def decompose(c: str) -> list[tuple[str, str]]:
         elif kind == "imgt":
             en = _match(c, st, "{{", "}}")
             out.append(("imgt", c[st:en]))
+        elif kind == "div":
+            en = _construct_end(c, st)        # depth-aware, shared matcher
+            out.append(("div", c[st:en]))
         else:  # img
             en = c.find("]]", st) + 2
             out.append(("img", c[st:en]))
@@ -248,6 +257,30 @@ def _template_image_marker(raw: str) -> str:
     caption = TT(parsed.caption) if parsed.caption else None
     return build_img_marker(parsed.filename, caption or None,
                             align=parsed.align, width=parsed.width)
+
+
+_DIV_OPEN_RE = re.compile(r"<div\b([^>]*)>", re.IGNORECASE)
+
+
+def _div_block_marker(raw: str) -> str:
+    """A styled `<div …>` block → carry its FULL style as
+    ``«DIV[style:CSS]»…«/DIV»`` (the viewer renders ``<div style="CSS">…</div>``)
+    and recurse the content.  The `{{Ts}}` shorthand + inline `style=` + `align=`
+    are translated ONCE by the shared `_table_opener_styles` (same parser the
+    table opener uses), so every block style — float, centring, text-indent,
+    padding, width, font-size, line-height — rides through with no per-property
+    mapping and no loss; the `{{Ts}}` is consumed, not swept.  The inner recurses
+    to the ground (image → leaf, nested table → table branch, etc.).  Mirrors
+    `«HTMLTABLE»` carrying `<table style>`; the viewer is a pure decoder."""
+    from britannica.pipeline.stages.elements._tables import _table_opener_styles
+    m = _DIV_OPEN_RE.match(raw)
+    attrs = m.group(1) if m else ""
+    inner = re.sub(r"</div\s*>\s*$", "", raw[m.end():] if m else raw, flags=re.I)
+    body = render_markers(inner).strip()
+    if not body:
+        return ""
+    css = ";".join(_table_opener_styles("{|" + attrs))
+    return f"«DIV[style:{css}]»{body}«/DIV»" if css else body
 
 
 def _cell_marker(sep: str, attr: str, content: str) -> str:
@@ -388,6 +421,8 @@ def render_markers(c: str) -> str:
             out.append(_img_marker(pay))
         elif kind == "imgt":
             out.append(_template_image_marker(pay))
+        elif kind == "div":
+            out.append(_div_block_marker(pay))
         else:
             out.append(_tt_br(pay).strip())
     return "\n\n".join(x for x in out if x)
