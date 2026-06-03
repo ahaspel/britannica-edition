@@ -34,8 +34,7 @@ from britannica.pipeline.stages.transform_articles.body_text import (
     _apply_markup as TT, _convert_shoulder_headings)
 from britannica.export.sections import _dehyphenate_shoulder
 from britannica.pipeline.stages.elements._table_decompose import extract_wiki_rows
-from britannica.pipeline.stages.elements._figure_decompose import (
-    _peel_table, _normalize_attrs)
+from britannica.pipeline.stages.elements._figure_decompose import _peel_table
 from britannica.pipeline.stages.elements._tables import _html_table_grid
 
 
@@ -252,27 +251,22 @@ def _template_image_marker(raw: str) -> str:
 
 
 def _cell_marker(sep: str, attr: str, content: str) -> str:
-    # Carry the cell's PAGE layout faithfully — align (the caption row's
-    # `align="center"`), valign, width — so the viewer need not guess. The
-    # viewer's figtable CSS no longer imposes text-align:center; it comes from
-    # here, from the source.
+    # Carry the cell's FULL source styling via the canonical `produce_cell`
+    # (= `_cell_styles` + body-text) — not the four-property `_normalize_attrs`
+    # lift, which dropped the `{{Ts|ba}}` → `border:1px` (so bordered figure
+    # tables rendered border-less cells) along with padding and the rest.  The
+    # cell body recurses to the ground via `render_markers` (images / nested
+    # tables / poems become their own markers in source order).
+    from britannica.pipeline.stages.elements._table_decompose import produce_cell
+    from britannica.pipeline.stages.elements._tables import emit_html_cell
     tag = "th" if sep == "!" else "td"
-    na = _normalize_attrs(attr)
-    extra = ""
-    if na.get("colspan"):
-        extra += f' colspan="{na["colspan"]}"'
-    if na.get("rowspan"):
-        extra += f' rowspan="{na["rowspan"]}"'
-    style = ""
-    if na.get("align"):
-        style += f"text-align:{na['align']};"
-    if na.get("valign"):
-        style += f"vertical-align:{na['valign']};"
-    if na.get("width"):
-        style += f"width:{na['width']};"
-    if style:
-        extra += f' style="{style}"'
-    return f"<{tag}{extra}>{render_markers(content).strip()}</{tag}>"
+    styles, body = produce_cell(attr, content, render_markers)
+    rs = re.search(r'rowspan\s*=\s*"?(\d+)', attr, re.I)
+    cs = re.search(r'colspan\s*=\s*"?(\d+)', attr, re.I)
+    return emit_html_cell(
+        tag, body, styles=styles,
+        rowspan=int(rs.group(1)) if rs else 1,
+        colspan=int(cs.group(1)) if cs else 1)
 
 
 # Page-faithful figure-table layout from the `{|<attrs>` opener — carried
