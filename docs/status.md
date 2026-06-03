@@ -64,6 +64,64 @@ leakers in **~12s** (the dev loop).  `strip_scan.py all` uses the same cache (`-
 table-width openers), 23 `<span {{ts}}>` inline styling (body-text's domain, not tables), ~31 other
 (wiki-cell content, `<p>`, caption).  Next: the `<span>` 23 (the cleanly-non-table chunk).
 
+---
+
+## NEXT ARCS — scoped, not yet started (2026-06-03)
+
+Two structural arcs were investigated this session, scoped, and deliberately deferred (one attempted +
+reverted).  Both are real and finish trajectories already in flight.  Written down so the next pass starts
+clean.
+
+### Arc A — cell content is content: recurse it, don't body-text it
+
+**Symptom.** A walker-level element inside a table cell (a `{{dual line|…}}`, and the `{{Ts}}`-in-cell
+residual) leaks to `_strip_templates`.  **Root.** `produce_cell` runs cell content through
+`text_transform` (body-text, inline-markup-only) instead of the full `process_elements`
+walk→classify→produce the article body gets — so a cell is the one place "content" doesn't get recursed
+normally.  The framing (user): *a cell is just content; recurse it like any other content.*
+
+**Attempt + why reverted.** Passed `context` to `_process_table_unified` and made cells run
+`process_elements(cell, text_transform, context, _allow_figure=False)`.  Two problems: (1) it **collapses
+cell `<br>`** — `process_elements`' BODY producer does body-level line-joining, dropping the lossless-`<br>`
+that the cell path's `_html_cell_clean` preserves (9 snapshots: ORDNANCE `Length of<br>projectile` →
+`Length of projectile`); (2) it **didn't even drain dual line** — those sit inside `MATH_NE` (opaque) /
+odd contexts, not plain cells.  Reverted (`git checkout HEAD -- _tables.py __init__.py`).
+
+**The right shape (next time).** Recurse only the WALKER-ELEMENTS in a cell (extract → produce →
+substitute their markers) while leaving the cell's own `<br>`/text handling intact — i.e. generalise
+`produce_cell`'s dormant `recurse=` socket from nested-tables-only to all walker elements, NOT a blanket
+`process_elements` over the whole cell.  Note the dual-line residual is small (27 in 5 articles) and partly
+inside math, so the payoff is the structural unification, not the leak count.  Unexplained-and-worth-checking:
+an isolated `classify_article` finds only 2 raw dual lines but the full pipeline strips 27 — the gap is the
+PREPROCESSING the full `_transform_text_v2` does before classify; pin that before building.
+
+### Arc B — collapse the 6 table labels → one `TABLE` (finish the table-collapse arc)
+
+**Why.** `DATA_TABLE` / `COMPLEX_HTML` / `HTML_TABLE` / `SINGLE_COLUMN_TABLE` / `VERSE_TABLE` /
+`COMPOUND_TABLE` all now dispatch to the **identical** `_process_table_unified` — six identical lambdas
+(user: *there'd be one*).  The end-state is one `TABLE` label, one dispatch entry.
+
+**It's a RELABEL, not a predicate-deletion.** The `_classify_table` ladder's table predicates **order-gate**
+against the math/chem/figure predicates (`_is_brace_table` claims a table as TABLE *before*
+`_is_math_dominant` can grab it) — so keep the predicates firing in order; only change their 6 emitted
+outcomes to `"TABLE"`.  Math/chem/glyph/djvu/LAYOUT_WRAPPER labels STAY (different producers).
+
+**Three entanglements that must move together (this is why it's an arc, not a rename):**
+1. **In-progress `<table>`-flip** — `_classify_html_table` returns `HTML_TABLE` unless the label is in
+   `_HTML_TABLE_ROUTE_AWAY`; that gate is keyed on these labels and is mid-migration.  Don't leave it in a
+   broken in-between.
+2. **Legacy-registry bridge** — `_to_legacy_registry` stores the ACTUAL label in `reg.labels`; a downstream
+   check on a specific label silently stops matching after a relabel.
+3. **`_table_decompose.py:568`** — nested-table-inline-into-HTML-cell is keyed on `label == "DATA_TABLE"`;
+   collapsing flips it to "inline any nested `TABLE`" — a real byte-moving change (arguably a latent-bug
+   fix: today a nested `SINGLE_COLUMN`/`VERSE` in an HTML cell leaks its marker).
+
+**Protocol.** Capture label-distribution before; relabel all sites together (ladder + `_classify_html_table`
++ line 84 `"table"` map + dispatch 6→1 + `_table_decompose:568` + `TABLE_LABELS`); label-distribution diff
+should show ONLY the 6→`TABLE` transition; snapshot suite + full suite green (byte-identical except the 568
+cases, reviewed as a tagged diff); then update tests asserting the old labels.  Take Arc B first — it's the
+more contained of the two and finishes the table-collapse arc.
+
 ## PROGRESS (2026-06-03) — figure + table producers collapse onto ONE recursive producer
 
 The endgame the whole campaign pointed at: **faithful (`elements/_figure_faithful.py`) is now the one
