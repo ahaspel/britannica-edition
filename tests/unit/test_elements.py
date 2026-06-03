@@ -99,21 +99,19 @@ class TestProcessing:
         assert "<ref>" not in result
 
     def test_image_clean_caption(self):
+        # The image is a LEAF: the bracket's trailing text is alt, not a
+        # rendered caption ("no honest captions"); captionless-by-author
+        # intent is fine.  Any visible caption is a separate sibling block.
         text = "[[File:Foo.jpg|thumb|A nice caption]]"
         result = process_elements(text, _identity_transform, ElementContext())
-        assert "{{IMG:Foo.jpg|A nice caption}}" in result
+        assert "{{IMG:Foo.jpg}}" in result
 
     def test_image_caption_markers_stripped(self):
-        """Bold/italic markers in captions are stripped to plain text."""
+        """Trailing bracket text is alt (dropped), so no caption \u2014 and no
+        markers \u2014 ride in the IMG leaf."""
         text = "[[File:Foo.jpg|thumb|'''Fig.''' 1 - ''Italic'' caption]]"
         result = process_elements(text, _bold_transform, ElementContext())
-        assert "{{IMG:Foo.jpg|" in result
-        # Caption should be plain text, no markers
-        caption = re.search(r"\{\{IMG:[^|]+\|([^}]+)\}\}", result)
-        assert caption is not None
-        cap_text = caption.group(1)
-        assert "\u00ab" not in cap_text
-        assert "'''" not in cap_text
+        assert "{{IMG:Foo.jpg}}" in result
 
     def test_math_preserved(self):
         text = "formula <math>x^2 + y^2</math> end"
@@ -190,18 +188,19 @@ class TestTableProcessing:
     def test_simple_table(self):
         text = '{|\n|A\n|B\n|-\n|C\n|D\n|}'
         result = process_elements(text, _identity_transform, ElementContext())
-        assert "{{TABLE" in result
-        assert "}TABLE}" in result
-        assert "A | B" in result
-        assert "C | D" in result
+        assert "«HTMLTABLE:" in result and "«/HTMLTABLE»" in result
+        for cell in ("A", "B", "C", "D"):
+            assert f">{cell}</td>" in result
 
-    def test_table_strips_attributes(self):
+    def test_table_carries_cell_styles(self):
+        """Cell attributes are CARRIED into `<td style=…>` (the faithful
+        contract), not stripped: `align="right"` → text-align:right, inline
+        `style=` preserved."""
         text = '{|\n|align="right"|100\n|style="color:red"|hello\n|}'
         result = process_elements(text, _identity_transform, ElementContext())
-        assert "100" in result
-        assert "hello" in result
-        assert "align" not in result
-        assert "style" not in result
+        assert ">100</td>" in result and ">hello</td>" in result
+        assert "text-align:right" in result
+        assert "color:red" in result
 
     def test_table_with_footnote(self):
         """Footnote inside table cell should be clean in output."""
@@ -211,11 +210,12 @@ class TestTableProcessing:
         assert "\u00abFN:" in result
         assert "Tidal wave" in result
 
-    def test_table_br_single_cell_collapses(self):
-        """Single cell with <br> collapses to space."""
+    def test_table_br_preserved_in_cell(self):
+        """`<br>` is preserved losslessly in the cell, not collapsed to space."""
         text = '{|\n|Houses<br />destroyed.\n|Deaths.\n|}'
         result = process_elements(text, _identity_transform, ElementContext())
-        assert "Houses destroyed." in result or "Houses  destroyed." in result
+        assert "Houses" in result and "destroyed." in result
+        assert "<br" in result
 
     def test_table_with_image(self):
         """Image inside table is extracted as separate element."""
@@ -264,7 +264,7 @@ class TestChemistryLayout:
         table = '{|\n|A\n|B\n|-\n|C\n|D\n|}'
         result = process_elements(table, _identity_transform, ElementContext())
         assert "\u00abCHEM:" not in result
-        assert "{{TABLE" in result
+        assert "\u00abHTMLTABLE:" in result
 
 
 class TestCleanText:

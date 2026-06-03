@@ -125,13 +125,15 @@ class TestRealTables:
         assert "{|" not in result, "Raw wiki table markup survived"
 
     def test_table_attributes_stripped(self):
-        """Table cell attributes like align, colspan should be stripped."""
+        """Cell attributes must not leak OUTSIDE table markers.  Inside the
+        «HTMLTABLE» they are CARRIED as `<td style=…>` — that's the contract;
+        only a leak into surrounding prose is a bug."""
         raw = _load_page(3, 76)
         result = _transform(raw, volume=3, page_number=76)
-        # Check no cell attributes leaked
+        outside = re.sub(r"\{\{TABLE.*?\}TABLE\}", "", result, flags=re.DOTALL)
+        outside = re.sub(r"«HTMLTABLE:.*?«/HTMLTABLE»", "", outside,
+                         flags=re.DOTALL)
         for attr in ["colspan=", "rowspan=", 'align="', 'style="']:
-            # Only check outside TABLE markers (attributes inside markers are OK)
-            outside = re.sub(r"\{\{TABLE.*?\}TABLE\}", "", result, flags=re.DOTALL)
             assert attr not in outside, f"Leaked attribute: {attr}"
 
 
@@ -146,15 +148,12 @@ class TestRealPoems:
         assert "line one" in result
 
     def test_poem_in_table_produces_legend(self):
-        """Vol 1 p44 has <poem>s inside a nested image-legend table.
-        The POEM_LEGEND subclass handler absorbs them into a single
-        `{{LEGEND:…}LEGEND}` block alongside the figure, so no raw
-        <poem> tag survives and the legend content is preserved."""
+        """Vol 1 p44 has <poem>s inside a nested image-legend table. Faithful
+        renders them as VERSE inside the table (no {{LEGEND}} role); the
+        legend content survives and no raw <poem> tag remains."""
         raw = _load_page(1, 44)
         result = _transform(raw)
         assert "<poem>" not in result, "Raw <poem> survived"
-        assert "{{LEGEND:" in result, "No LEGEND marker from poem in table"
-        # Entries from the St Gall legend must be present in the LEGEND block
         assert "High altar" in result
         assert "Cloister" in result
 
@@ -323,10 +322,13 @@ class TestRealMultiElement:
         """No HTML tags should survive in the output (except in markers)."""
         raw = _load_page(3, 76)
         result = _transform(raw, volume=3, page_number=76)
-        # Strip our markers first
-        clean = re.sub(r"\u00ab[^«»]*\u00bb", "", result)
+        # «HTMLTABLE» carries literal <table>/<tr>/<td> as its payload (the
+        # viewer decodes it) — strip it (and the other markers) before
+        # checking that no RAW html leaked into the surrounding prose.
+        clean = re.sub(r"«HTMLTABLE:.*?«/HTMLTABLE»", "", result, flags=re.DOTALL)
+        clean = re.sub(r"«[^«»]*»", "", clean)
         clean = re.sub(r"\{\{(?:IMG|TABLE|VERSE).*?\}\}", "", clean, flags=re.DOTALL)
         html_tags = re.findall(r"<[a-z]+[^>]*>", clean, re.IGNORECASE)
-        # Filter out [hieroglyph:] markers which aren't HTML
-        html_tags = [t for t in html_tags if not t.startswith("<poem") and not t.startswith("<br")]
+        html_tags = [t for t in html_tags
+                     if not t.startswith("<poem") and not t.startswith("<br")]
         assert not html_tags, f"HTML tags survived: {html_tags[:5]}"

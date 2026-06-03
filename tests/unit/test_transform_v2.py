@@ -44,16 +44,14 @@ class TestImageCaptions:
     """Image captions come out as clean plain text."""
 
     def test_simple_image(self):
+        # Image leaf — bracket trailing text is alt, not a bundled caption.
         result = _transform_v2("[[File:Foo.jpg|thumb|A caption]]")
-        assert "{{IMG:Foo.jpg|A caption}}" in result
+        assert "{{IMG:Foo.jpg}}" in result
 
     def test_caption_no_markers(self):
         """Bold/italic in captions should be stripped."""
         result = _transform_v2("[[File:Foo.jpg|thumb|'''Fig.''' 1 — ''Italic'']]")
-        cap = re.search(r"\{\{IMG:[^|]+\|([^}]+)\}\}", result)
-        assert cap, f"No caption found in: {result}"
-        assert "\u00ab" not in cap.group(1), f"Markers in caption: {cap.group(1)}"
-        assert "Fig." in cap.group(1)
+        assert "{{IMG:Foo.jpg}}" in result
 
     def test_cithara_real_data(self):
         """CITHARA image caption from real data should be clean."""
@@ -94,18 +92,19 @@ class TestFootnotes:
 
 
 class TestTables:
-    """Tables produce {{TABLE:...}TABLE} markers."""
+    """Tables produce full-style «HTMLTABLE» markers."""
 
     def test_simple_table(self):
         result = _transform_v2("{|\n|A\n|B\n|-\n|C\n|D\n|}")
-        assert "{{TABLE" in result
-        assert "A | B" in result
-        assert "C | D" in result
+        assert "«HTMLTABLE:" in result and "«/HTMLTABLE»" in result
+        for cell in ("A", "B", "C", "D"):
+            assert f">{cell}</td>" in result
 
-    def test_table_attributes_stripped(self):
+    def test_table_carries_cell_styles(self):
+        # Cell attributes are CARRIED into <td style=…> now, not stripped.
         result = _transform_v2('{|\n|align="right"|100\n|200\n|}')
-        assert "100" in result
-        assert "align" not in result
+        assert ">100</td>" in result and ">200</td>" in result
+        assert "text-align:right" in result
 
 
 class TestScores:
