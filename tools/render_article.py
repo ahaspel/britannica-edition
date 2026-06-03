@@ -110,8 +110,10 @@ def render(title: str, volume: int | None = None,
               f"{len(joined_raw):,} chars")
 
         if article.article_type == "plate":
-            from britannica.parsers.plate import parse_plate
-            body = parse_plate(segs[0][0].segment_text or "") if segs else ""
+            from britannica.pipeline.stages.elements._figure_faithful import (
+                produce_faithful_figure,
+            )
+            body = produce_faithful_figure(segs[0][0].segment_text or "") if segs else ""
         else:
             body = _transform_text_v2(
                 joined_raw, volume=article.volume,

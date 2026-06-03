@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-06-02.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-06-03.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -12,6 +12,61 @@ agent's memory directory and are not duplicated here.
 > Measure: `strip_scan.py` / `fake_recursion_audit.py` → 0, then delete.
 
 ---
+
+## PROGRESS (2026-06-03) — figure family cutover: the faithful recursive producer (the last big item)
+
+The plate playbook applied to in-article figures.  `CAPTIONED_FIGURE` and `FIGURE` now dispatch
+to **`elements/_figure_faithful.py`** (`produce_faithful_figure`): `decompose` recognises a chunk's
+BLOCK structure by source token (tbl/html/ctr/csc/poem/img/prose), `render_markers` recurses and
+translates each block into existing markers IN SOURCE ORDER.  No role classification (no
+caption/legend/attribution), content-total by construction.  The old `_process_captioned_figure` /
+`_produce_figure` (which reordered, folded captions into `{{IMG:|cap}}`, flattened `{{sc}}`, mangled
+multi-line captions) are bypassed.  Still on old producers: `UNPAIRED_FIGURE_GROUP`,
+`CAPTIONED_FIGURE_INLINE`, `LEGENDED_FIGURE*` — the next cuts.  [[project_figure_collapse]]
+
+The governing finding (the user's words): **the fix was the same every single time** — every figure
+bug reduced to the producer or viewer *answering a source-question differently*, and the fix was always
+"stop deciding; carry what the page says; render it mechanically."  Once shape lives in the producer
+and the viewer is a pure decoder, there's one *kind* of bug left (a missed attribute) and one *kind*
+of fix.  [[feedback_shape_vs_rendering]] [[feedback_producer_regularizes_markup]]
+
+- **Figtable layout carried from source.** The `{|<attrs>` opener's float (`align=right/left`),
+  centring (`align=center` and `{{Ts|ma}}` → `margin:auto`), width, `{{Ts}}` codes, and inline
+  margins are carried onto the `<table class="figtable" style=…>`; per-cell `align`/`valign`/`width`
+  onto `<td style>` (`_figtable_table_style`, `_cell_marker`, reusing `_table_opener_styles`).  The
+  viewer's `table.figtable` CSS is stripped to MECHANICAL (borderless, breathing room) — the
+  `margin:auto` centring and cell `text-align:center` OPINIONS are gone; position rides from source.
+  SEWING MACHINES Figs 1-2 float per the scan; HYDROMEDUSAE centres via the source's `ma`.
+- **`<br>` unified to one rule.** `_tt_br` (the single producer site) regularises figure-prose
+  `<br>` → canonical `«BR»`; `decodeInlineMarkers` decodes `«BR»` → `<br>` (the one decoder body,
+  cells, and figcaptions all route through).  Was three divergent handlers (poem-branch,
+  cell `\x00BR\x00`, and a leaking prose path).  [[feedback_capture_now_decide_later]]
+- **Viewer bug fixes (latent, exposed by the cutover).** (1) `formatCell` built cell-image URLs from
+  the **HTML-escaped** filename — any `'`/`&`/`<`/`>`/`"` filename 404'd (plates included); fixed by
+  extracting IMG from the RAW text before the blanket escape.  (2) The anchored figcaption path did
+  `escapeHtml(caption)` with **no decode**, so `«SC»`/`«BR»` leaked (the old producer hid this by
+  flattening); now `decodeInlineMarkers(escapeHtml(caption))` like every other context.
+- **Captions, resolved.** A caption *inside* the image brackets (`[[Image:…|cap]]`) is the one honest
+  caption — the source bound it to the image, so it stays attached, markup-preserved (NOT an opinion,
+  NOT EXTCAP).  A loose `{{c|…}}` block only *becomes* a caption once an image↔caption association is
+  asserted — that assertion is the **EXTCAP** opinion, deliberately deferred.  Source layout that
+  diverges from the plate (e.g. `center` where the plate floats) is a transcription error we render
+  faithfully and leave honest — not bulk-corrected (too many to bother; mechanism exists for the
+  worth-it cases).  [[feedback_spec_vs_typo]]
+
+**State:** full local rebuild DONE (`rebuild_all.sh --no-deploy`, all 28 vols, 113 min, **0
+tracebacks**).  Changes committed.  Quality-report deltas vs previous build looked alarming
+(`unhandled_marker_in_htmltable` 77→229, `html_tag` 245→394, `stray_braces` 2321→2410) but are
+**verify-the-counter**: the faithful producer now recurses figtable cells fully, so cells legitimately
+carry the whole viewer-decoded inline vocabulary (`«BR»`, `«CTR»`, `«LH»`, `«SM/FS/XS»` sizes, `«BAR»`,
+`«BRACE2»`, `«DHR»`), but the checkers' allowlists predate it.  After stripping the full handled set,
+the **TRUE corpus-wide residue is 3 articles**: `{{left}}` (AMICE), `{{nowrap}}` (EUROPE, FORESTS AND
+FORESTRY) — unconverted layout templates inside figtables (small producer/TT gap).
+**Owed before any push:** (1) teach the quality checkers (`quality_report.py:345` `_MARKER_NAMES`,
+`find_htmltable_leaks.py`) the full marker set; (2) handle `{{left}}`/`{{nowrap}}` in the figure
+producer (3 arts); (3) the figure-aware corpus net (before/after tagged diff, not the `{|`-only
+`cap_all.py`) + snapshot/unit rebaseline, with sign-off ([[feedback_no_wholesale_rebaseline]]).  Then
+most of what remains is deleting dead scaffolding (campaign banner above).
 
 ## PROGRESS (2026-06-02) — table producer collapse: one shared decomposition (arc COMPLETE)
 

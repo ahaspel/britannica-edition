@@ -34,7 +34,9 @@ from sqlalchemy import select
 
 from britannica.db.models import Article, ArticleSegment, SourcePage
 from britannica.db.session import SessionLocal
-from britannica.parsers.plate import parse_plate
+from britannica.pipeline.stages.elements._figure_faithful import (
+    produce_faithful_figure,
+)
 from britannica.pipeline.stages.transform_articles import _transform_text_v2
 
 
@@ -48,7 +50,7 @@ def _shadow(session, a: Article) -> str:
         return ""
     if a.article_type == "plate":
         raw = segs[0][0].segment_text or ""
-        return parse_plate(raw) if raw else ""
+        return produce_faithful_figure(raw) if raw else ""
     raw_parts = [f"\x01PAGE:{pg}\x01{seg.segment_text or ''}" for seg, pg in segs]
     joined = "\n".join(raw_parts)
     joined = re.sub(r"(\w)-\n(\x01PAGE:\d+\x01)(\w)", r"\1\2\3", joined)

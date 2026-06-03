@@ -62,7 +62,9 @@ from sqlalchemy import select
 from britannica.db.models import Article, ArticleSegment, SourcePage
 from britannica.db.session import SessionLocal
 from britannica.export.article_json import export_articles_to_json
-from britannica.parsers.plate import parse_plate
+from britannica.pipeline.stages.elements._figure_faithful import (
+    produce_faithful_figure,
+)
 from britannica.pipeline.stages.transform_articles import _transform_text_v2
 
 # Note: there is no longer any body-cleanup pass — each producer
@@ -114,7 +116,7 @@ def _shadow_transform(session, article: Article) -> str:
 
     if article.article_type == "plate":
         raw = segments[0][0].segment_text or ""
-        return parse_plate(raw) if raw else ""
+        return produce_faithful_figure(raw) if raw else ""
 
     raw_parts = []
     for seg, page_number in segments:

@@ -172,12 +172,17 @@ _IMG_ATTR = re.compile(
 
 
 def _tt_br(s: str) -> str:
-    """Apply body markup, then regularize `<br>` to the canonical «BR» line
-    break. Figure prose treats `<br>` as a break (the BODY producer renders it
-    as a space — different producer, different rule); «BR» survives the viewer's
-    escape and decodes in the one shared inline decoder. The single place that
-    knows figure `<br>` = line break."""
-    return re.sub(r"<br\s*/?>", "«BR»", TT(s), flags=re.I)
+    """Apply body markup, then regularize the inline HTML the viewer can't
+    render raw inside an escaped marker into canonical markers: `<br>`→«BR»
+    (figure prose treats it as a line break — the BODY producer renders it as a
+    space, different rule), and `<small>`→«SM» (the HTML twin of `{{smaller}}`,
+    which TT already maps to «SM»; the source mixes both forms — AEGEAN PLATE II
+    Figs 6-7). The single place that knows figure inline-HTML → marker."""
+    s = TT(s)
+    s = re.sub(r"<br\s*/?>", "«BR»", s, flags=re.I)
+    s = re.sub(r"<small>", "«SM»", s, flags=re.I)
+    s = re.sub(r"</small>", "«/SM»", s, flags=re.I)
+    return s
 
 
 def _img_marker(raw: str) -> str:

@@ -547,6 +547,20 @@
       display: block;
       margin: 0 auto;
     }
+    /* PLATE full-bleed: the source's fixed px (e.g. width:1000px, cell images
+       at 450px) is the PRINT width.  On a plate page the column cap is gone
+       (body.plate-page .page), so let the grid and its images fill the
+       viewport — the table stretches and the cells scale proportionally,
+       overriding formatCell's inline max-width:Npx cap (same !important
+       pattern as the height cap above). */
+    body.plate-page table.figtable {
+      width: 100%;
+    }
+    body.plate-page table.figtable .cell-image,
+    body.plate-page table.figtable img {
+      max-width: 100% !important;
+      width: 100%;
+    }
 
     /* Wide data tables: shown inline but horizontally scrollable, with an
        Expand button that pops them into a full-viewport modal. */

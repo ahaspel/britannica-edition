@@ -1209,7 +1209,7 @@ def _unwrap_content_templates(text: str) -> str:
         slots = [m.group(1).strip(), m.group(2).strip(), m.group(3).strip()]
         return "\t".join(s for s in slots if s)
     text = re.sub(
-        r"\{\{rh\|([^{}|]*)\|([^{}|]*(?:\{\{[^{}]*\}\}[^{}|]*)*)\|([^{}]*)\}\}",
+        r"\{\{(?:rh|RunningHeader)\|([^{}|]*)\|([^{}|]*(?:\{\{[^{}]*\}\}[^{}|]*)*)\|([^{}]*)\}\}",
         _rh_body, text, flags=re.IGNORECASE,
     )
     # Hanging indent → unwrap to content
