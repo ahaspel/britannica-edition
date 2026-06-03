@@ -13,6 +13,36 @@ agent's memory directory and are not duplicated here.
 
 ---
 
+## PROGRESS (2026-06-03) — walker: one balanced rule for every bracket construct
+
+The walker bounded HTML `<tag>…</tag>` with non-greedy regexes (`<table\b[^>]*>.*?</table>`, likewise
+ref/poem/math/score) while `{|…|}` already bounded by balanced depth.  The non-greedy form **embeds a
+false assumption** — that nothing nests between open and close — so every nesting case was its own bug:
+table-in-table orphaned the outer table's tail into body-text (EUROPE's cell `{{Ts|…}}` leaked to
+`_strip_templates`, 49 of them); table-in-ref the same.  Patching each pair (a balanced `<table>`
+finder, then a `<ref>` finder, …) is whack-a-mole — the user's frame: **"the walker is stupid but not
+stupid enough."**
+
+**Fix = one syntactic matcher.**  `_construct_end` / `_scan_balanced` replace the five per-tag regexes,
+`_find_brace_pipe_end`, and `_NON_TABLE_BRACE_SPAN_RE`: match an opener to its closer by skipping every
+nested construct whole (recursively).  It knows only bracket syntax (`{{}}`, `{|…|}`, `[[]]`, `<x>…</x>`)
+— **not** "table"/"ref"/"figure".  Lifted block elements are a set `{table,ref,poem,math,score}`; opaque
+tags (math/nowiki/score/…) have verbatim interiors, skipped uninterpreted (LaTeX braces / lilypond
+`<c e g>` aren't wiki brackets); other tags (`<td>`/`<div>`/`<i>`) are text, not constructs (chasing
+their often-omitted closers ran quadratic — the one trap).  Balanced-matching **is** the leaf/recurse
+decision.  [[project_walker_one_matcher]] [[feedback_recurse_it_dont_layer_it]] [[feedback_stupid_walker]]
+
+- **Verified** vs the prior walker over 749 table-bearing articles: table content leaking to body-text
+  **halved** (`<td>` 236→113, `<table>` 8→4 — strict reduction, no new drops); nested-table class fixed
+  (22/23 articles →0; EUROPE 49→0, EOCENE 27→0); full test-suite failure set **unchanged** (zero added,
+  stash-isolated); no perf regression; net −LOC.
+- **Remaining table-tag-to-body leaks are OTHER classes**, not bounding: table-in-`<ref>` (the ref
+  producer flattens its body via `_apply_markup`; the ref now *bounds* correctly with the table inside —
+  this is task #21, the recursive-ref/footnote producer), `<div {{Ts}}>`, and malformed/unclosed source.
+- **Trajectory (deferred):** once the walker emits a clean balanced tree, terminal-vs-recurse = "has
+  nested brackets" and faithful's token-dispatch covers producer routing → the separate classifier
+  (`_derive_label`) becomes vestigial.  Two stages, not three.
+
 ## PROGRESS (2026-06-03) — figure family cutover: the faithful recursive producer (the last big item)
 
 The plate playbook applied to in-article figures.  `CAPTIONED_FIGURE` and `FIGURE` now dispatch
@@ -54,8 +84,39 @@ of fix.  [[feedback_shape_vs_rendering]] [[feedback_producer_regularizes_markup]
   faithfully and leave honest — not bulk-corrected (too many to bother; mechanism exists for the
   worth-it cases).  [[feedback_spec_vs_typo]]
 
+### PLATES on the faithful producer + old plate code DELETED (2026-06-03, same session)
+
+The rebuild shipped botched plates — flattened to a vertical stack of caption-folded `{{IMG:|cap}}`
+with all `«SC»`/`«I»`/`«BR»` destroyed.  Root: production still routed `article_type=="plate"` to the
+OLD `parse_plate` (`transform_articles/__init__.py:388` AND `render_article.py:113`); the faithful
+producer was wired for in-article figures only.  AEGEAN rendered "perfectly" before because that was
+the faithful render-looped — but never the production wire.  **Fix = the one wire:** both call sites
+now `produce_faithful_figure(raw)`.  Verified: 548 plates, **0 exceptions**, 306 figtable grids;
+AEGEAN PLATE I/II render the source grid + header + marked-up captions.
+- **Old plate code DELETED:** `parsers/plate/`, `transform_articles/plate_legacy.py`, and the obsolete
+  `plate_render_diff.py` / `plate_rewrite_compare.py` / `check_plate_extraction.py`; dead
+  `_transform_plate` import removed; `verify_refactor`/`verify_targeted` repointed.  `img_float` kept
+  (used live by the element pipeline).
+- **Plate-display fixes:** full-bleed CSS (`body.plate-page table.figtable { width:100% }` + image
+  scaling overriding formatCell's inline cap) — and confirmed the leftover margin on low-res plates
+  (PLATE II images ~360px native, already upscaled) is the honest scan-resolution ceiling, NOT a bug.
+  Producer: `<small>`→`«SM»` (HTML twin of `{{smaller}}`) in `_tt_br`; `{{RunningHeader}}` alias on
+  `_rh_body` so arg-3 attributions survive.  Owed: **4 empty plates** (raw shapes the faithful
+  producer doesn't recognise yet) before a real rebuild.
+
+### NEXT SWEEPER NAMED: the contributor-footer leak = `_strip_templates` (2026-06-03)
+
+`{{Fs|108%|{{EB1911 footer initials|Name|Initials}}}}` (the author signature) leaks in **2828** shipped
+articles (+2111 with empty `«FS[..]»«/FS»`).  Bisected: the recursive `{{Fs}}` handler is fine; the
+catch-all **`_strip_templates`** eats the footer template wholesale (and the `{{Fs}}`'s closing braces
+with it → dangling opener).  This is the campaign's named villain (`canonical_path.md` "What Must Go").
+**Fix = give `{{EB1911 footer initials}}` a real producer (it's a named element — the author signature),
+then pull it from the catch-all.**  ~100 catch-all/brace-strip ops remain in the transform stage
+(`_strip_templates` + `_unwrap_balanced`); end state = `strip_scan.py → 0`, then delete `_strip_templates`.
+
 **State:** full local rebuild DONE (`rebuild_all.sh --no-deploy`, all 28 vols, 113 min, **0
-tracebacks**).  Changes committed.  Quality-report deltas vs previous build looked alarming
+tracebacks**) — NOTE: that rebuild predates the plate-wire fix, so its plate bodies are the old
+flattened output; a re-rebuild is needed to bank correct plates.  Changes committed.  Quality-report deltas vs previous build looked alarming
 (`unhandled_marker_in_htmltable` 77→229, `html_tag` 245→394, `stray_braces` 2321→2410) but are
 **verify-the-counter**: the faithful producer now recurses figtable cells fully, so cells legitimately
 carry the whole viewer-decoded inline vocabulary (`«BR»`, `«CTR»`, `«LH»`, `«SM/FS/XS»` sizes, `«BAR»`,
