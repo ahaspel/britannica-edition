@@ -73,15 +73,17 @@ class TestRealImageFloat:
     """{{img float}} images from real pages (CITHARA)."""
 
     def test_cithara_img_float(self):
+        """{{img float|cap=\u2026}} \u2192 floated faithful figtable: a pure image leaf
+        plus the caption carried in a cell with its \u00abSC\u00bb/\u00abI\u00bb/\u00abBR\u00bb markup
+        intact \u2014 NOT a flattened IMG caption."""
         raw = _load_page(6, 411)
         result = _transform(raw, volume=6, page_number=411)
-        caps = re.findall(r"\{\{IMG:[^|]+\|([^}]+)\}\}", result)
-        nero_caps = [c for c in caps if "Nero" in c]
-        assert nero_caps, "Nero Citharoedus caption not found"
-        cap = nero_caps[0]
-        assert "<br" not in cap, f"HTML in caption: {cap}"
-        assert "\u00ab" not in cap, f"Marker in caption: {cap}"
-        assert "{{" not in cap, f"Template in caption: {cap}"
+        assert 'class="figtable"' in result and "float:" in result
+        # No IMG marker bundles the Nero caption \u2014 the image is a leaf.
+        assert not re.search(r"\{\{IMG:[^|}]*\|[^}]*Nero", result)
+        # Caption rides in the figure, markup preserved.
+        assert "Nero Citharoedus" in result
+        assert "\u00abSC\u00bbFig.\u00ab/SC\u00bb" in result and "\u00abI\u00bb" in result
 
 
 class TestRealFootnotes:

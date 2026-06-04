@@ -520,12 +520,22 @@
        source's cell align). What remains is genuinely the viewer's: borders
        off (this is a figure, not a data grid), vertical breathing room, and
        the column gap. */
+    /* Float→width: the source's literal print px (carried faithfully on the
+       <table>/<img>) doesn't respect the viewport — a full-column print figure
+       under-fills a wide reading column.  So the viewer maps the figure's box
+       to a fraction of the column, keyed on the float the producer carried:
+       centered / un-floated → fill the column (100%); floated → half, so body
+       text wraps beside it.  `!important` overrides the carried inline width. */
     table.figtable {
       margin: 1.2em 0;
       border-collapse: collapse;
       border: none;
-      width: auto;
+      width: 100% !important;
       max-width: 100%;
+    }
+    table.figtable[style*="float"] {
+      width: 50% !important;
+      margin: 0.4em 0;
     }
     table.figtable td, table.figtable th {
       border: none;
@@ -539,7 +549,13 @@
     table.figtable .cell-image,
     table.figtable img {
       max-height: none !important;
-      max-width: 100%;
+      /* Fill the cell so the figure scales with its float-derived box width
+         (above) instead of sitting at the carried print px.  The
+         `max-width:100%` MUST be `!important` to beat formatCell's inline
+         `max-width:Npx` cap — without it the image stays pinned at its source
+         px and a centered figure under-fills the column. */
+      width: 100% !important;
+      max-width: 100% !important;
       height: auto;
       /* Block (not inline) so the image carries no line-box descender
          space below it — that baseline gap was reading as the image
@@ -2278,6 +2294,15 @@
     function findHtmlTableEnd(str, start) {
       return findMarkerEnd(str, start, HTMLTABLE_OPEN, HTMLTABLE_CLOSE);
     }
+    // «DIV[style:…]»…«/DIV» — the open marker carries a variable `[style:…]`
+    // payload, but `«DIV[` is a stable prefix, so the balanced walker keys on
+    // it (depth-counting needs only to recognize opens/closes, not parse the
+    // style).  Styled divs can nest, so this must be balanced.
+    const DIV_OPEN = "«DIV[";
+    const DIV_CLOSE = "«/DIV»";
+    function findDivEnd(str, start) {
+      return findMarkerEnd(str, start, DIV_OPEN, DIV_CLOSE);
+    }
     function findChemEnd(str, start) {
       return findMarkerEnd(str, start, CHEM_OPEN, CHEM_CLOSE);
     }
@@ -2347,10 +2372,37 @@
       // to the existing flow below.
       if (!sectionInfo) {
         BLOCK_MARKER_SCAN_RE.lastIndex = 0;
-        const blocks = [...p.matchAll(BLOCK_MARKER_SCAN_RE)];
+        const rawMatches = [...p.matchAll(BLOCK_MARKER_SCAN_RE)];
+        // Repair HTMLTABLE/CHEM matches: the scan regex matches them
+        // NON-greedily (`«HTMLTABLE:[\s\S]*?«/HTMLTABLE»`), so a figure
+        // table whose cell holds another table (St Gall's Fig. 3 ground-
+        // plan key) stops at the FIRST inner «/HTMLTABLE» — its tail
+        // (`</td></tr></table>«/HTMLTABLE»`) would then split off as a
+        // prose piece and leak the raw markers. Recompute the TRUE
+        // balanced end with the same walker the pure-block path uses, and
+        // drop any later match the regex spuriously found inside the
+        // extended span.
+        const blocks = [];
+        let guard = 0;
+        for (const m of rawMatches) {
+          if (m.index < guard) continue;
+          let text = m[0];
+          const isHT = text.startsWith(HTMLTABLE_OPEN);
+          const isCH = text.startsWith(CHEM_OPEN);
+          if (isHT || isCH) {
+            const end = isCH
+              ? findChemEnd(p, m.index)
+              : findHtmlTableEnd(p, m.index);
+            if (end !== -1) {
+              text = p.slice(m.index, end);
+              guard = end;
+            }
+          }
+          blocks.push({ index: m.index, text });
+        }
         if (blocks.length > 0) {
           const onlyBlock =
-            blocks.length === 1 && blocks[0][0] === p.trim();
+            blocks.length === 1 && blocks[0].text === p.trim();
           if (!onlyBlock) {
             const pieces = [];
             let cursor = 0;
@@ -2359,8 +2411,8 @@
                 const before = p.slice(cursor, m.index);
                 if (before.trim()) pieces.push(before);
               }
-              pieces.push(m[0]);
-              cursor = m.index + m[0].length;
+              pieces.push(m.text);
+              cursor = m.index + m.text.length;
             }
             if (cursor < p.length) {
               const after = p.slice(cursor);
@@ -3263,6 +3315,35 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
                 }
                 collapsed += markedBody.substring(i, openIdx);
                 const endIdx = findHtmlTableEnd(markedBody, openIdx);
+                if (endIdx === -1) {
+                  collapsed += markedBody.substring(openIdx);
+                  break;
+                }
+                collapsed += markedBody
+                  .substring(openIdx, endIdx)
+                  .replace(/\n\n+/g, "\n");
+                i = endIdx;
+              }
+              markedBody = collapsed;
+            }
+            // Same balanced protection for «DIV[style:…]»…«/DIV» blocks: a
+            // styled <div> can wrap MULTI-paragraph content (CHESS's post-
+            // board Fine-Print analysis has a blank line between the prose and
+            // the move list).  Without this the paragraph split lands the
+            // opener and «/DIV» in different paragraphs, the inline «DIV»
+            // decoder can't pair them, and both markers leak raw.  Balanced
+            // (divs nest) via the `«DIV[` prefix walker.
+            {
+              let collapsed = "";
+              let i = 0;
+              while (i < markedBody.length) {
+                const openIdx = markedBody.indexOf(DIV_OPEN, i);
+                if (openIdx === -1) {
+                  collapsed += markedBody.substring(i);
+                  break;
+                }
+                collapsed += markedBody.substring(i, openIdx);
+                const endIdx = findDivEnd(markedBody, openIdx);
                 if (endIdx === -1) {
                   collapsed += markedBody.substring(openIdx);
                   break;

@@ -303,9 +303,28 @@ def _template_image_marker(raw: str) -> str:
     parsed = _imgf.parse(inner)
     if parsed is None:
         return ""
-    caption = TT(parsed.caption) if parsed.caption else None
-    return build_img_marker(parsed.filename, caption or None,
-                            align=parsed.align, width=parsed.width)
+    if not parsed.caption:
+        # Pure image leaf — nothing rides with it.
+        return build_img_marker(parsed.filename, None,
+                                align=parsed.align, width=parsed.width)
+    # Image + associated text → a faithful FLOATED FIGURE, the SAME shape the
+    # source's own `{|`-figures use.  There is no "caption" concept: the text
+    # is just a cell, recursed through the standard renderer so its «SC»/«BR»/
+    # «I» survive (the old `build_img_marker` caption ran it through
+    # `clean_caption`, flattening every marker to plain text).  The template
+    # FLOATS — that's its whole purpose — so carry the float: an explicit
+    # `align=` wins, else default to the majority side (left skews 21:2 over
+    # right corpus-wide); `center` is the rare margin:auto box.
+    align = parsed.align or "left"
+    box = ("margin-right:auto;margin-left:auto" if align == "center"
+           else f"float:{align}")
+    width = f"width:{parsed.width}px" if parsed.width else ""
+    table_style = ";".join(x for x in (box, width) if x)
+    img_src = (f"[[File:{parsed.filename}|{parsed.width}px]]"
+               if parsed.width else f"[[File:{parsed.filename}]]")
+    rows = [(None, [("|", "", img_src)]),
+            (None, [("|", "", parsed.caption)])]
+    return _rows_to_htmltable(rows, "figtable", table_style)
 
 
 _DIV_OPEN_RE = re.compile(r"<div\b([^>]*)>", re.IGNORECASE)
@@ -427,6 +446,36 @@ def _mask_nested(s: str, store: list) -> str:
     return "".join(res)
 
 
+_HTML_TABLE_STYLE_RE = re.compile(r'style\s*=\s*"([^"]*)"', re.I)
+_HTML_TABLE_ALIGN_RE = re.compile(r'\balign\s*=\s*"?(left|right|center)\b', re.I)
+_HTML_TABLE_WIDTH_RE = re.compile(r'\bwidth\s*=\s*"?(\d+)', re.I)
+
+
+def _html_figtable_style(ta: str) -> str:
+    """An HTML `<table …>`'s box styling → the CSS the figtable carries.  The
+    `<table>` already speaks CSS (inline `style="…"`), unlike the `{|` opener's
+    `{{Ts}}` shorthand — so carry the inline style verbatim and only fold the
+    legacy HTML `align=`/`width=` attrs into it.  The chess BOARDS put `float:
+    left; width:350px; clear:both` on the table and leave the image bare; this
+    is the (previously dropped) signal that floats the board and the renderer's
+    float→width rule reads."""
+    decls = []
+    sm = _HTML_TABLE_STYLE_RE.search(ta)
+    inline = sm.group(1).strip().rstrip(";") if sm else ""
+    low = inline.lower()
+    if inline:
+        decls.append(inline)
+    am = _HTML_TABLE_ALIGN_RE.search(ta)
+    if am and "float" not in low and "margin" not in low:
+        a = am.group(1).lower()
+        decls.append("margin-right:auto;margin-left:auto" if a == "center"
+                     else f"float:{a}")
+    wm = _HTML_TABLE_WIDTH_RE.search(ta)
+    if wm and "width" not in low:
+        decls.append(f"width:{wm.group(1)}px")
+    return ";".join(decls)
+
+
 def _html_table_marker(block: str) -> str:
     tg = re.match(r"<table\b([^>]*)>", block, re.I)
     ta = tg.group(1) if tg else ""
@@ -442,7 +491,9 @@ def _html_table_marker(block: str) -> str:
                                lambda mm: store[int(mm.group(1))], co))
                  for s, a, co in row]
         restored.append((None, cells))
-    return _rows_to_htmltable(restored)
+    return _rows_to_htmltable(
+        restored, cls,
+        _html_figtable_style(ta) if cls == "figtable" else "")
 
 
 def render_markers(c: str) -> str:

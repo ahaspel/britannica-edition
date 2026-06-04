@@ -146,20 +146,20 @@ class TestRealData:
         with open(path, encoding="utf-8") as f:
             return json.load(f)["raw_text"]
 
-    def test_cithara_caption_clean(self):
-        """CITHARA image caption should have no HTML or markers."""
+    def test_cithara_faithful_figtable(self):
+        """CITHARA Nero {{img float}} \u2192 floated faithful figtable: a pure
+        image leaf plus the caption in a cell with markup preserved (the old
+        clean_caption flattening is gone \u2014 no "caption" concept on images)."""
         raw = self._load_page(6, 411)
         # Extract just the img float for Nero Citharoedus
         m = re.search(r"\{\{img float\s*\|(?:[^{}]|\{\{[^{}]*\}\})*Nero(?:[^{}]|\{\{[^{}]*\}\})*\}\}", raw, re.DOTALL | re.IGNORECASE)
         assert m, "Nero image not found in page"
         result = process_elements(m.group(0), _identity_transform, ElementContext())
+        assert 'class="figtable"' in result and "float:" in result
+        # Pure image leaf \u2014 no caption bundled into the IMG marker.
         assert "{{IMG:" in result
-        # Caption should be plain text
-        cap = re.search(r"\{\{IMG:[^|]+\|([^}]+)\}\}", result)
-        assert cap, f"No caption in: {result}"
-        assert "<br" not in cap.group(1), f"HTML in caption: {cap.group(1)}"
-        assert "\u00ab" not in cap.group(1), f"Markers in caption: {cap.group(1)}"
-        assert "Nero" in cap.group(1)
+        assert not re.search(r"\{\{IMG:[^|}]*\|[^}]*Nero", result)
+        assert "Nero" in result
 
     def test_japan_footnote_in_table(self):
         """JAPAN earthquake table footnotes should be clean."""
