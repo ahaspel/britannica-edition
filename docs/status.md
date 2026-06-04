@@ -11,7 +11,62 @@ agent's memory directory and are not duplicated here.
 > `_strip_templates`, 16 fake-recursion regexes, the legacy `parsers/plate/`).
 > Measure: `strip_scan.py` / `fake_recursion_audit.py` → 0, then delete.
 
+> **THE THREE PRINCIPLES (2026-06-03, the user's governing philosophy)** — one
+> end-to-end losslessness chain; old junk is whatever breaks it:
+> 1. **Recurse to the end** — decompose every structure to its leaves; never
+>    flatten/body-text what should recurse.  Scoreboard: `fake_recursion_audit`→0;
+>    "does the cell run `process_elements`, not `text_transform`?" (open frontier).
+> 2. **Carry everything in the source** — carry-by-default, never drop source
+>    styling/content.  Scoreboard: `strip_scan`/`ts_audit`→0 for the *visible* leaks —
+>    but **silent drops** (a discarded slot, e.g. row-attrs pre-row-carry) are
+>    invisible to those, so auditing carry also means "what slots does a producer throw away?"
+> 3. **Render what we carry** — the viewer renders mechanically every marker / carried
+>    `style=`; carrying into a void (e.g. raw HTML on an `escapeHtml` path) is a bug.
+>    VERIFY rendering before claiming a carry-win.
+>
+> **`_strip_templates` is the canonical DOUBLE violator (1 **and** 2):** it flattens
+> (strips a template without descending into the shape it wraps) AND drops (the
+> content is gone).  So every catch-all leak is a 1+2 violation, and draining a family
+> is a two-for-one — the highest-leverage hunt.  Handled-but-drops (the `«CTR»`-only
+> `<p>`/`<div>` handlers that lose font-size) violate 2 ONLY (the handler already
+> recurses) — the carry cleanup tail.  See [[feedback_three_principles]].
+>
+> **DIAGNOSTIC (user): virtually every bug traces to a violation of one or more of
+> these three.**  Debugging = name the principle the bug breaks, restore it.  Bug-
+> classification, not philosophy.
+
 ---
+
+## PROGRESS (2026-06-03) — carry the source: row styling, `<span>` Ts, dead-encoder deletion
+
+The three principles in action; all net-verified.
+
+- **Row-carry (CARRY).**  `assemble_html_rows` captured the `|-<attrs>` / `<tr ...>` row-attr
+  slot then *discarded* it for a bare `<tr>` (a SILENT drop — invisible to `ts_audit`, which only
+  sees `_strip_templates` leaks).  Now carries it onto `<tr style=…>` via `_cell_styles` (same parser
+  cells use).  Corpus diff vs `post-tablecollapse2`: **465 articles** recover row styling
+  (`{{Ts|ac}}`/`{{Ts|ar}}` align, line-height, explicit `style=`), **all pure `<tr>`→`<tr style>`**
+  (normalize `<tr…>`→`<tr>` → 465/465 byte-identical), 0 added/removed, 0 transform-errors.  PROCESS
+  NOTE: I first misreported this suite run as green — it had 8 stale snapshot seeds (the row-styled
+  ones); re-captured + verified pure.  [[feedback_run_right_test_suite]]
+- **`<span {{Ts}}>` fold (CARRY + RECURSE + RENDER).**  A `{{Ts}}` in a `<span>` opener was leaking
+  to `_strip_templates` (a 1+2 double-violation).  `body_text._unwrap_content_templates` now folds
+  the FULL `{{Ts}}` → `<span style=…>` via `_parse_ts_codes` (carry), handles nested inner spans to
+  the end (recurse), and the viewer body path (`viewer.html:2952`, no `escapeHtml`) renders raw
+  `<span style>` (render — VERIFIED before claiming the win).  `{{Ts}}`-leak **92 → 69**; corpus diff
+  4 articles, all pure `<span>`-style.
+- **Dead `{{TABLE}}`-encoder chain DELETED (RENDER/CARRY hygiene).**  `assemble_table_marker` (the
+  form-chooser routing non-span tables to the align-only `{{TABLE}}` form that DROPPED cell styling)
+  had no callers — the live producer always emits full-style `«HTMLTABLE»`.  Deleted it +
+  `assemble_wiki_marker` + `_align_of` + `_emit_table_marker` + `build_table_cell` + `_TABLE_ALIGN_ENCODE`
+  + the stale import; trimmed `test_table_shared_leaf`.  Kept the `{{TABLE}}` DECODER (`parse_table_cell`
+  / viewer JS) — deployed data may still carry the marker; full-format retirement is separate.
+  Byte-neutral; 393 tests green.
+
+**Owed next (carry cleanup tail, violate 2 only):** `<p>`/`<div> {{Ts}}` drop font-size — fold the full
+`{{Ts}}` like the span (`«CTR»` block-center + `<span style>` inline rest), since the viewer wraps body
+paragraphs in `<p>` (raw nested `<p>` invalid).  Then the bigger `{{Ts}}`-leak chunks: 37
+`{{Ts|width:50%}}` "OTHER" (needs a context spy — likely table openers) + caption `|+{{Ts}}`.
 
 ## PROGRESS (2026-06-03) — table classifier collapse: 6 labels → one `TABLE` (Arc B DONE)
 

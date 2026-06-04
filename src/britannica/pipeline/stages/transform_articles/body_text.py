@@ -977,12 +977,24 @@ def _unwrap_content_templates(text: str) -> str:
     # runs in every text-transform context — bodies, refs, captions,
     # cells.  Without this, refs that wrap a centered equation lose
     # the centering (MOLECULE's footnotes contain centered formulas).
-    def _p_ts(m: re.Match) -> str:
-        codes = re.split(r"[|\s]+", m.group(1).lower().strip())
-        content = m.group(2).strip()
-        if "ac" in codes:
+    def _ts_block(codes_str: str, content: str,
+                  force_center: bool = False) -> str:
+        # Carry the FULL `{{Ts}}` styling (carry-by-default), not just center.
+        # Pure-center stays the canonical «CTR» (byte-identical to before);
+        # anything more becomes a styled block «DIV[style:CSS]» (the viewer
+        # renders it, incl. block props like text-indent an inline span can't
+        # hold); empty → unwrap.  `_parse_ts_codes` is the cell/row parser.
+        from britannica.pipeline.stages.elements._tables import _parse_ts_codes
+        css = _parse_ts_codes(codes_str)
+        if force_center and "text-align:center" not in css:
+            css = ["text-align:center", *css]
+        if not css:
+            return content
+        if css == ["text-align:center"]:
             return f"«CTR»{content}«/CTR»"
-        return content
+        return f"«DIV[style:{';'.join(css)}]»{content}«/DIV»"
+    def _p_ts(m: re.Match) -> str:
+        return _ts_block(m.group(1), m.group(2).strip())
     text = re.sub(
         r"<p\s+\{\{[Tt]s\|([^}]*)\}\}[^>]*>(.*?)</p>",
         _p_ts, text, flags=re.DOTALL)
@@ -1006,19 +1018,41 @@ def _unwrap_content_templates(text: str) -> str:
     # an `ac` code OR an `align=center`/`text-align:center` attr in
     # the prefix slot.
     def _div_ts(m: re.Match) -> str:
-        attrs = m.group("attrs")
-        codes = re.split(r"[|\s]+", m.group("codes").lower().strip())
-        content = m.group("content").strip()
-        centered = "ac" in codes or re.search(
+        force_center = bool(re.search(
             r"""align\s*=\s*['"]?center|text-align\s*:\s*center""",
-            attrs, re.IGNORECASE,
-        )
-        return f"«CTR»{content}«/CTR»" if centered else content
+            m.group("attrs"), re.IGNORECASE))
+        return _ts_block(m.group("codes"), m.group("content").strip(),
+                         force_center)
     text = re.sub(
         r"<div\s+(?P<attrs>[^>{}]*?)\{\{[Tt]s\|(?P<codes>[^}]*)\}\}"
         r"[^>]*>(?P<content>.*?)</div>",
         _div_ts, text, flags=re.DOTALL,
     )
+    # `<span ...{{Ts|codes}}...>` — inline styling.  Unlike the <p>/<div>
+    # prose wrappers above (where only the center signal survives), a span's
+    # styling is STRUCTURAL: the math limit-notation spans
+    # (`{{Ts|display:inline-block;|ac|vbm|lh11|fs120}}`) stack the limit via
+    # inline-block + vertical-align, the over-bar spans (`{{ts|bt}}`) draw a
+    # rule.  So carry the FULL `{{Ts}}` → `style="…"` (`_parse_ts_codes`, the
+    # same parser cells/rows use) rather than reducing to «CTR».  Rewrites the
+    # opening tag only; content + `</span>` are untouched, so nested spans
+    # fold independently.  Drains the 23 `<span {{Ts}}>` Ts-leaks.
+    def _span_ts(m: re.Match) -> str:
+        from britannica.pipeline.stages.elements._tables import _parse_ts_codes
+        pre, post = m.group("pre").strip(), m.group("post").strip()
+        css = _parse_ts_codes(m.group("codes"))
+        out = "<span"
+        if pre:
+            out += " " + pre
+        if css:
+            out += f' style="{";".join(css)}"'
+        if post:
+            out += " " + post
+        return out + ">"
+    text = re.sub(
+        r"<span\s+(?P<pre>[^>{}]*?)\{\{[Tt]s\|(?P<codes>[^}]*)\}\}"
+        r"(?P<post>[^>]*)>",
+        _span_ts, text)
     # {{brace2|N|side}} — vertical or horizontal grouping brace.  Two
     # distinct uses (corpus-audited 2026-05-26, task #31):
     #   * Multi-row (N≥2) inside wikitables: row-grouping brace.  May
