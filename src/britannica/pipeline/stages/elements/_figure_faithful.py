@@ -122,7 +122,8 @@ def _style_tmpl_marker(raw: str) -> str:
 # `_process_raw_image` PRODUCERS are no longer needed (the bracket form and the
 # template forms are now all one leaf in faithful).
 _IMG_TEMPLATE = re.compile(
-    r"\{\{\s*(?:img\s*float|figure|FI|raw\s+image)\s*\|", re.I)
+    r"\{\{\s*(?:img\s*float|figure|FI|raw\s+image|Css\s+image\s+crop)\s*\|",
+    re.I)
 
 
 def decompose(c: str) -> list[tuple[str, str]]:
@@ -273,8 +274,20 @@ def _template_image_marker(raw: str) -> str:
     not."""
     from britannica.parsers import img_float as _imgf
     from britannica.pipeline.stages.elements._image import (
-        build_img_marker, _RAW_IMAGE_ARG_RE, _RAW_DJVU_REF_RE, _RAW_CAPTION_RE)
+        build_img_marker, djvu_crop_filename, _parse_crop_param,
+        _RAW_IMAGE_ARG_RE, _RAW_DJVU_REF_RE, _RAW_CAPTION_RE)
     s = raw.strip()
+    # `{{Css image crop|…}}` — a DjVu crop is just another image: its filename is
+    # a stateless function of its identity (page + geometry); the wrapping table's
+    # caption/attribution cells recurse as ordinary cells.  No caption lives in
+    # the template (Description is empty corpus-wide).  A non-`.djvu` `Image=` is
+    # a plain Commons file, used directly.
+    if re.match(r"\{\{\s*Css\s+image\s+crop", s, re.I):
+        fn = djvu_crop_filename(s)
+        if fn is None:
+            img = _parse_crop_param(s, "Image")
+            fn = img.replace(" ", "_") if img else ""
+        return build_img_marker(fn) if fn else ""
     if re.match(r"\{\{\s*raw\s+image", s, re.I):
         m = _RAW_IMAGE_ARG_RE.match(s)
         if not m:
@@ -462,7 +475,22 @@ def render_markers(c: str) -> str:
     return "\n\n".join(x for x in out if x)
 
 
+_CROP_TEMPLATE_RE = re.compile(
+    r"\{\{\s*Css\s+image\s+crop\b.*?\}\}", re.DOTALL | re.IGNORECASE)
+
+
+def _collapse_crop_newlines(c: str) -> str:
+    """`{{Css image crop … }}` is multi-line (`|Image=…\\n|Page=…\\n…`).  Its
+    `|param` lines would be mis-read as separate table cells by the wiki
+    cell-splitter, so collapse the template's internal newlines to nothing
+    BEFORE any decomposition — keeping it one balanced unit.  Crop-only; the
+    params stay `|`-delimited and parse identically (`_parse_crop_param` reads
+    either spelling).  A normalization, not a structure-peel."""
+    return _CROP_TEMPLATE_RE.sub(
+        lambda m: re.sub(r"\s*\n\s*", "", m.group(0)), c)
+
+
 def produce_faithful_figure(raw: str) -> str:
     """Producer entry point: a figure's RAW bytes → marker output. Wired into
     the dispatch as ``lambda raw, inner, tt, ctx, reg: produce_faithful_figure(raw)``."""
-    return render_markers(raw)
+    return render_markers(_collapse_crop_newlines(raw))

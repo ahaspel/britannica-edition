@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-06-03.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-06-04.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -36,6 +36,48 @@ agent's memory directory and are not duplicated here.
 > classification, not philosophy.
 
 ---
+
+## PROGRESS (2026-06-04) — DjVu-crop fold: kill the nested-regex "failed recursion", crops become images
+
+The user's INFALLIBLE TELL of a failed recursion — *a stack of regexes peeling nested
+wrappers layer-by-layer* — was `_process_djvu_crop` (bespoke `{{center|…}}`/`{{csc|…}}`
+caption-stripping + a positional, **stateful** per-page crop counter).  A `{{Css image
+crop}}` is just **another image**: we already rendered every crop to a file on disk.  So
+treat it as one.
+
+- **Stateless filename (CARRY/RECURSE).**  `crop_filename(image,page,geom…)` in
+  `elements/_image.py` — a pure function of the crop's IDENTITY (DjVu vol+page + geometry
+  rectangle → 8-hex hash).  No counter, no document order, no `ElementContext` state.  THE
+  one filename authority: `djvu_crop_filename` (producer, body-parsing) + the download tool
+  + the rename all call it, so they agree **by construction**.  Deleted the
+  `djvu_crop_counters` context field.
+- **One figure path.**  `_process_djvu_crop` + `_CSS_CROP_RE` + the `_is_djvu_crop_table`
+  predicate DELETED.  `{|`-crop tables now classify as `CAPTIONED_FIGURE` and standalone
+  `{{Css image crop}}` as `DJVU_CROP` (∈ `IMAGE_LABELS`) — **both** route to the single
+  faithful figure producer (`_figure_faithful`), whose `_template_image_marker` recognizes
+  the crop template and emits `{{IMG:<hash>.jpg}}`.  The crop is a leaf image; the figure
+  table around it decomposes recursively.
+- **The carry win.**  Crop figures now render the source FAITHFULLY: `«FS»`/`«I»`/`«SC»`/
+  `«br»`/`«CTR»` in the caption (NERVE: "Text-Book of Anatomy" italic; ALPHABET:
+  `«SC»Table I.«/SC»`) — all of which the old flattener DROPPED.  `{|`-crop figures recover
+  their full figure-table structure + float instead of a flat `{{IMG|caption}}`.
+- **One-time rename + tool fix.**  208 `…_cropN.jpg` → `…_<hash>.jpg` (in
+  `data/derived/images/`, alongside every other image; `rebuild_all.sh` Phase-7 sync ships
+  them — **no `--delete`**, so old `cropN` keys linger as harmless bucket orphans, optional
+  `aws s3 rm …_crop*.jpg` to sweep).  The download tool's `_CSS_CROP_PATTERN` required a
+  newline after the name → **missed 3 single-line crops** (NEUROPATHOLOGY vol19 pp.453-4,
+  never downloaded under EITHER naming — a pre-existing gap the fold's verify *exposed*).
+  Broadened the pattern (`\s*\n`→`\s*`) and cropped the 3 locally from the cached full pages.
+- **Verification.**  Corpus diff `pre-djvufold`→`post-djvufold`: **34 articles changed, all
+  positive byte-swings, 0 added/removed, 0 `Css image crop` leaks, 201/201 emitted hash
+  names resolve on disk.**  3 crop seeds (ALPHABET/ORDNANCE/STEAM_ENGINE) rebaselined after
+  per-article verify (cropN→hash + faithful caption, IMG-djvu count unchanged, 0 leak/loss).
+  Suite **393 green**.
+- **Ts impact.**  The crop-caption Ts family — NERVE / NERVOUS SYSTEM / NEUROPATHOLOGY —
+  is **drained from the leaker list** (the producer consumes `{{Ts|ac}}` as a real table
+  cell).  `ts_audit` now **35 leaks / 14 articles**, of which **28 are table-path** (17
+  `{{Ts|width:50%}}` openers + 11 `|{{ts|al}}` cells) — the next Ts frontier (Arc A / table
+  cell + opener carry), none crop-related.
 
 ## PROGRESS (2026-06-03) — carry the source: row styling, `<span>` Ts, dead-encoder deletion
 
@@ -2164,6 +2206,9 @@ re-added** — each was the OWNING layer (walker or classifier), carry-raw:
 - **css_crop** (218; SHIPBUILDING/OPIUM/SEWERAGE) — walker recognition only:
   `_DJVU_CROP_RE` + opener hint + `_derive_double_brace_label`→DJVU_CROP; producer
   `_process_djvu_crop` already existed.  Per-page crop index order-consistent. No leak.
+  *(SUPERSEDED 2026-06-04 — `_process_djvu_crop` + the positional per-page counter
+  DELETED; crops now route to the one faithful figure producer with a stateless
+  geometry-hash filename.  See the 2026-06-04 PROGRESS entry at the top.)*
 - **raw-image** (34; PACIFIC OCEAN/SWITZERLAND maps, WEIR/WATER MOTORS figures) —
   `_RAW_IMAGE_RE`→RAW_IMAGE→new `_process_raw_image` (djvu page-ref →
   `djvu_volNN_pagePPPP.jpg`; plain filename keeps spaces; `{{c|cap}}` folded). No leak.

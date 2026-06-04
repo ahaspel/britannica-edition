@@ -28,6 +28,9 @@ import requests
 from PIL import Image
 from io import BytesIO
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
+from britannica.pipeline.stages.elements._image import crop_filename
+
 # Force UTF-8 output on Windows
 if sys.stdout.encoding != "utf-8":
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
@@ -49,8 +52,13 @@ SESSION.headers["User-Agent"] = (
 # Parse {{Css image crop}} from raw wikitext
 # ---------------------------------------------------------------------------
 
+# `\s*` (not `\s*\n`) so single-line, pipe-delimited crops match too —
+# `{{Css image crop |Image = … |Page = … }}` with no newline after the
+# name (NEUROPATHOLOGY vol19 pp.453-4 write them this way).  The body
+# capture is unchanged: `\s*` eats the leading whitespace/newline, so
+# `(.*?)` still begins at the first `|param`.
 _CSS_CROP_PATTERN = re.compile(
-    r"\{\{Css image crop\s*\n(.*?)\}\}", re.DOTALL | re.IGNORECASE
+    r"\{\{Css image crop\s*(.*?)\}\}", re.DOTALL | re.IGNORECASE
 )
 
 
@@ -332,9 +340,12 @@ def crop_region(full_page_path: Path, crop: dict, crop_index: int) -> Path | Non
 
     Returns the output path if successful.
     """
-    vol = crop["volume"]
-    page = crop["page"]
-    out_name = f"djvu_vol{vol:02d}_page{page:04d}_crop{crop_index}.jpg"
+    # Stateless name from the crop's identity (page + geometry) — shared with the
+    # producer's image leaf so they agree by construction.  `crop_index` is no
+    # longer part of the name (kept in the signature for the caller's loop).
+    out_name = crop_filename(crop["djvu_file"], crop["page"], crop["bSize"],
+                             crop["cWidth"], crop["cHeight"], crop["oTop"],
+                             crop["oLeft"])
     out_path = IMAGE_DIR / out_name
     if out_path.exists() and out_path.stat().st_size > 0:
         return out_path
