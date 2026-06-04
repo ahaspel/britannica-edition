@@ -46,6 +46,14 @@
       padding-right: 2vw;
     }
 
+    /* Transliteration tooltip: the romanization of a Greek/Hebrew word, carried
+       from the source's `<span title="…">` and shown on hover.  Dotted underline
+       + help cursor signal it's hover-able (the print offered no such aid). */
+    .xlit {
+      border-bottom: 1px dotted currentColor;
+      cursor: help;
+    }
+
     .card {
       background: var(--panel);
       border: 1px solid var(--border);
@@ -2173,6 +2181,19 @@
       { let _p; do { _p = h; h = h.replace(
           /«DIV\[style:([^\]]*)\]»((?:(?!«DIV\[)[\s\S])*?)«\/DIV»/g,
           '<div style="$1">$2</div>'); } while (h !== _p); }
+      // «SPAN[style:CSS]»…«/SPAN» — the INLINE sibling of «DIV»: same carried
+      // style, rendered as an inline <span> (sub/superscript positioning,
+      // centring, over-bars, …).  Same innermost-first nesting loop.
+      { let _p; do { _p = h; h = h.replace(
+          /«SPAN\[style:([^\]]*)\]»((?:(?!«SPAN\[)[\s\S])*?)«\/SPAN»/g,
+          '<span style="$1">$2</span>'); } while (h !== _p); }
+      // «SPAN[title:T]»…«/SPAN» — a transliteration tooltip (the romanization of
+      // wrapped Greek/Hebrew).  Rendered with a dotted underline + help cursor
+      // (`.xlit`) so the reader knows to hover; the print had no such aid.
+      { let _p; do { _p = h; h = h.replace(
+          /«SPAN\[title:([^\]]*)\]»((?:(?!«SPAN\[)[\s\S])*?)«\/SPAN»/g,
+          (_m, t, c) => `<span class="xlit" title="${t.replace(/"/g, "&quot;")}">${c}</span>`);
+        } while (h !== _p); }
       // {{float right|X}}/{{float left|X}} — margin-floated content
       // (contributor-initial signatures, right-floated marginal notes).
       h = h.replace(/«FR»([\s\S]*?)«\/FR»/g, '<span class="float-right">$1</span>');

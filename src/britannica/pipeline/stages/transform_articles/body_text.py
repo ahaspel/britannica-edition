@@ -789,6 +789,109 @@ def _expand_inline_templates(text: str) -> str:
         pos = close_idx + 2
 
 
+_SPAN_STYLE_OPEN_RE = re.compile(
+    r'<span\b[^>]*?\bstyle\s*=\s*"([^"]*)"[^>]*>', re.IGNORECASE)
+_SPAN_OPEN_RE = re.compile(r"<span\b", re.IGNORECASE)
+_SPAN_CLOSE_RE = re.compile(r"</span\s*>", re.IGNORECASE)
+
+
+def _carry_style_spans(text: str) -> str:
+    """`<span style="CSS">X</span>` → `«SPAN[style:CSS]»X«/SPAN»` — the inline
+    sibling of `«DIV[style]»` (block), via the shared `styled_marker`.  A styled
+    span is markup we CARRY, not strip.  Balanced + recursive so nested style-
+    spans (math limit-notation) fold correctly; the inner X is recursed here and
+    left for the rest of `_apply_markup` to finish.  A span with no `style=`
+    (bare / class-only) is left untouched."""
+    from britannica.pipeline.stages.elements._tables import styled_marker
+    out: list[str] = []
+    i, n = 0, len(text)
+    while i < n:
+        m = _SPAN_STYLE_OPEN_RE.search(text, i)
+        if not m:
+            out.append(text[i:])
+            break
+        out.append(text[i:m.start()])
+        css = m.group(1).strip().rstrip(";")
+        # Walk to the balanced `</span>` (count ALL `<span …>` for depth).
+        depth, j, close = 1, m.end(), None
+        while j < n and depth > 0:
+            nxt = _SPAN_OPEN_RE.search(text, j)
+            cls = _SPAN_CLOSE_RE.search(text, j)
+            if cls is None:
+                break
+            if nxt and nxt.start() < cls.start():
+                depth += 1
+                j = nxt.end()
+            else:
+                depth -= 1
+                close = cls
+                j = cls.end()
+        if depth != 0 or close is None:
+            # Unbalanced — leave the opener literal, advance past it.
+            out.append(text[m.start():m.end()])
+            i = m.end()
+            continue
+        content = _carry_style_spans(text[m.end():close.start()])
+        out.append(styled_marker("SPAN", css, content))
+        i = close.end()
+    return "".join(out)
+
+
+_SPAN_TITLE_OPEN_RE = re.compile(
+    r'<span\b[^>]*?\btitle\s*=\s*(?:"(?P<q>[^"]*)"|(?P<uq>[^\s">]+))[^>]*>',
+    re.IGNORECASE)
+# Greek/Hebrew in the wrapped content marks a TRANSLITERATION span (the title is
+# the romanization).  `{{Greek}}`/`{{Hebrew}}` templates or the raw script ranges
+# (Greek + Greek-Extended, Hebrew).
+_TRANSLIT_CONTENT_RE = re.compile(
+    r"\{\{\s*(?:Greek|Hebrew|polytonic)|[Ͱ-Ͽἀ-῿֐-׿]",
+    re.IGNORECASE)
+
+
+def _handle_title_spans(text: str) -> str:
+    """`<span title="T">X</span>`: when X is Greek/Hebrew, T is its romanized
+    TRANSLITERATION — carry it as `«SPAN[title:T]»X«/SPAN»` so the romanization
+    survives as a hover tooltip (EB1911 assumed the reader knew both scripts; we
+    don't).  Every other `title=` is editorial (Wikisource `amended from …`
+    proofreading provenance, gap-date notes) — drop the wrapper, keep X.  Runs
+    BEFORE the style carry so a styled-AND-titled amendment span is dropped, not
+    carried as decoration.  Balanced + recursive (counts all `<span>` for depth)."""
+    out: list[str] = []
+    i, n = 0, len(text)
+    while i < n:
+        m = _SPAN_TITLE_OPEN_RE.search(text, i)
+        if not m:
+            out.append(text[i:])
+            break
+        out.append(text[i:m.start()])
+        title = (m.group("q") or m.group("uq") or "").strip()
+        title = title.replace("]", "").replace("»", "")
+        depth, j, close = 1, m.end(), None
+        while j < n and depth > 0:
+            nxt = _SPAN_OPEN_RE.search(text, j)
+            cls = _SPAN_CLOSE_RE.search(text, j)
+            if cls is None:
+                break
+            if nxt and nxt.start() < cls.start():
+                depth += 1
+                j = nxt.end()
+            else:
+                depth -= 1
+                close = cls
+                j = cls.end()
+        if depth != 0 or close is None:
+            out.append(text[m.start():m.end()])
+            i = m.end()
+            continue
+        content = _handle_title_spans(text[m.end():close.start()])
+        if title and _TRANSLIT_CONTENT_RE.search(content):
+            out.append(f"«SPAN[title:{title}]»{content}«/SPAN»")
+        else:
+            out.append(content)  # editorial title — drop wrapper, keep text
+        i = close.end()
+    return "".join(out)
+
+
 def _unwrap_content_templates(text: str) -> str:
     """Unwrap content templates to their text content."""
     # greek/polytonic/hebrew/lang/uc/nowrap → owned by the recursive
@@ -1053,6 +1156,16 @@ def _unwrap_content_templates(text: str) -> str:
         r"<span\s+(?P<pre>[^>{}]*?)\{\{[Tt]s\|(?P<codes>[^}]*)\}\}"
         r"(?P<post>[^>]*)>",
         _span_ts, text)
+    # `<span title="T">X</span>` — transliteration tooltip (Greek/Hebrew) is
+    # CARRIED as «SPAN[title:T]»; editorial (amended-from) title spans drop.
+    # MUST precede the style carry so a styled-AND-titled amendment span is
+    # dropped, not carried as decoration.
+    text = _handle_title_spans(text)
+    # `<span style="CSS">X</span>` → «SPAN[style:CSS]»X«/SPAN» — the INLINE
+    # sibling of «DIV[style]» (block).  A styled span is markup we CARRY, not
+    # strip: same producer/marker as <div>, differing only in display level.
+    # Runs AFTER `_span_ts` so `{{Ts}}` spans (now `style="…"`) are carried too.
+    text = _carry_style_spans(text)
     # {{brace2|N|side}} — vertical or horizontal grouping brace.  Two
     # distinct uses (corpus-audited 2026-05-26, task #31):
     #   * Multi-row (N≥2) inside wikitables: row-grouping brace.  May

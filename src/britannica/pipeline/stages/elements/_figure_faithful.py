@@ -95,6 +95,7 @@ def _style_marker(body: str, *, ctr: bool = False, sc: bool = False,
     for a centred block (keeps the viewer's `.centered` class), `«SC»` for
     small-caps, `«DIV[style:CSS]»` for arbitrary block CSS.  Shared by the
     template wrappers (`_style_tmpl_marker`) and `<div>` (`_div_block_marker`)."""
+    from britannica.pipeline.stages.elements._tables import styled_marker
     if not body:
         return ""
     if sc:
@@ -102,7 +103,7 @@ def _style_marker(body: str, *, ctr: bool = False, sc: bool = False,
     if ctr:
         body = f"«CTR»{body}«/CTR»"
     elif css:
-        body = f"«DIV[style:{css}]»{body}«/DIV»"
+        body = styled_marker("DIV", css, body)
     return body
 
 

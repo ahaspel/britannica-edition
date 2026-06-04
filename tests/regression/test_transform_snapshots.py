@@ -33,7 +33,6 @@ When you intentionally change `_transform_text_v2` behaviour:
 from __future__ import annotations
 
 import difflib
-import json
 import re
 from pathlib import Path
 
@@ -81,32 +80,33 @@ def _normalize_for_compare(text: str) -> str:
     return text
 
 
-def _snapshot_triples() -> list[tuple[str, Path, Path, Path]]:
-    """Discover (stem, input, body, meta) triples on disk."""
+def _snapshot_pairs() -> list[tuple[str, Path, Path]]:
+    """Discover (stem, input, body) pairs on disk.  The `.body.txt` IS the
+    snapshot; its sibling `.input.txt` is the fixture.  Volume + page are
+    parsed from the `NN-NNNN-…` stem, so no per-seed metadata file is needed."""
     if not SNAPSHOT_DIR.exists():
         return []
-    triples = []
-    for meta_path in sorted(SNAPSHOT_DIR.glob("*.meta.json")):
-        stem = meta_path.name.removesuffix(".meta.json")
-        triples.append((
+    pairs = []
+    for body_path in sorted(SNAPSHOT_DIR.glob("*.body.txt")):
+        stem = body_path.name.removesuffix(".body.txt")
+        pairs.append((
             stem,
             SNAPSHOT_DIR / f"{stem}.input.txt",
-            SNAPSHOT_DIR / f"{stem}.body.txt",
-            meta_path,
+            body_path,
         ))
-    return triples
+    return pairs
 
 
-@pytest.mark.parametrize("stem,input_path,body_path,meta_path",
-                         _snapshot_triples(),
+@pytest.mark.parametrize("stem,input_path,body_path",
+                         _snapshot_pairs(),
                          ids=lambda v: v if isinstance(v, str) else "")
-def test_transform_snapshot(stem, input_path, body_path, meta_path):
+def test_transform_snapshot(stem, input_path, body_path):
     raw_wikitext = input_path.read_text(encoding="utf-8")
     expected_raw = body_path.read_text(encoding="utf-8")
-    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    # Volume + page from the `NN-NNNN-…` stem (e.g. 01-0426-… → vol 1, p426).
+    volume, page_number = int(stem[:2]), int(stem[3:7])
 
-    actual_raw = _transform_text_v2(raw_wikitext, meta["volume"],
-                                    meta["page_number"])
+    actual_raw = _transform_text_v2(raw_wikitext, volume, page_number)
 
     expected = _normalize_for_compare(expected_raw)
     actual = _normalize_for_compare(actual_raw)

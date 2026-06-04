@@ -160,24 +160,15 @@ def capture_one(session, filename_stem: str) -> tuple[str, str]:
     # those in would defeat the snapshot's purpose.
     body = _transform_text_v2(joined_raw, article.volume, first_page)
 
+    # The `.body.txt` IS the snapshot; `.input.txt` is its fixture.  No
+    # per-seed meta file: the test parses volume + page from the `NN-NNNN-…`
+    # stem (the article's first ws page == `first_page`), so a metadata
+    # sidecar would only drift with the DB (it carried the now-removed
+    # stable_id/sizes).
     (SNAPSHOT_DIR / f"{filename_stem}.input.txt").write_text(joined_raw,
                                                               encoding="utf-8")
     (SNAPSHOT_DIR / f"{filename_stem}.body.txt").write_text(body,
                                                              encoding="utf-8")
-    (SNAPSHOT_DIR / f"{filename_stem}.meta.json").write_text(
-        json.dumps({
-            "stable_id": art_json.get("stable_id"),
-            "title": article.title,
-            "volume": article.volume,
-            "page_number": first_page,
-            "page_start": article.page_start,
-            "page_end": article.page_end,
-            "segments": len(segments),
-            "input_bytes": len(joined_raw),
-            "body_bytes": len(body),
-        }, indent=2),
-        encoding="utf-8",
-    )
     return ("OK", f"vol {article.volume} pp.{article.page_start}-"
                   f"{article.page_end}  in={len(joined_raw):>7,}  "
                   f"out={len(body):>7,}")
