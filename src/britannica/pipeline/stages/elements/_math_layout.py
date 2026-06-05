@@ -235,6 +235,26 @@ def _process_math_layout_table(raw: str) -> str:
     return f"«MATH:{latex}«/MATH»"
 
 
+def _flatten_styled(registry: ElementRegistry):
+    """STYLED is presentation — TRANSPARENT to classification.  Splice each
+    styled `<span>`/`<div>` wrapper to the elements it contains, so cell-
+    counting predicates see through it.  Once SHAPE_STYLED is recognized at
+    every depth, a styled-wrapped `<math>` cell is no longer a DIRECT MATH
+    child and a styled label cell adds a spurious child; both would skew a
+    raw child-ratio.  Returns the `(legacy_name, raw)` tuples with STYLED
+    nodes replaced by their contents (the flagless-recursion invariant:
+    extraction must not perturb classification — [[feedback_walker_on_raw_source]])."""
+    out = []
+    for ph, (t, eraw) in registry.elements.items():
+        if t == "STYLED":
+            sub = registry.inner_registries.get(ph)
+            if sub is not None:
+                out.extend(_flatten_styled(sub))
+        else:
+            out.append((t, eraw))
+    return out
+
+
 def _is_math_dominant_layout(
     raw: str, inner: str, inner_registry: ElementRegistry | None
 ) -> bool:
@@ -255,16 +275,20 @@ def _is_math_dominant_layout(
     """
     if inner_registry is None:
         return False
-    elements = list(inner_registry.elements.values())
-    if not elements:
-        return False
-    math_ct = sum(1 for t, _ in elements if t == "MATH")
-    if math_ct < 2 or math_ct < len(elements) * 0.75:
+    # Positive signal = the raw's OWN label: `<math>`.  Count it from raw (≥2),
+    # robust to any nesting — a `<math>` cell wrapped in a styled alignment
+    # `<span>` still counts.  No proportion/ratio: the raw already labels math,
+    # so we don't infer it from a fraction-of-children (that proxy broke once
+    # the equation's own STYLED alignment cells diluted it).  Data-vs-display is
+    # decided by the STRUCTURAL disqualifiers below, not by a math ratio.
+    math_ct = len(re.findall(r"<math[\s>]", raw, re.IGNORECASE))
+    if math_ct < 2:
         return False
     # Disqualifying child types — a real data table that happens to
     # have a few <math> cells (chemistry / physics tables) usually
-    # also carries images, refs, or nested tables.
-    for t, _ in elements:
+    # also carries images, refs, or nested tables.  STYLED is transparent
+    # (flattened) so a styled-wrapped image/ref still disqualifies.
+    for t, _ in _flatten_styled(inner_registry):
         if t in {"IMAGE", "IMAGE_FLOAT", "REF", "TABLE", "POEM"}:
             return False
     if re.search(r"^\s*!", raw, re.MULTILINE):
@@ -459,11 +483,22 @@ def _math_table_kind(
         return None
 
     # math_blocks: majority MATH placeholders (was _is_equation_layout
-    # check 1).
+    # check 1).  STYLED wrappers are TRANSPARENT to classification: a styled
+    # `<span>` label cell was invisible to this ratio before SHAPE_STYLED was
+    # recognized at every depth, so keep it out of the denominator — otherwise
+    # a genuine `<math>`-majority equation layout with a couple of styled label
+    # cells dilutes below 50% and mis-routes to a plain TABLE (the flagless-
+    # recursion invariant: extraction must not perturb classification).
     if _PH in inner and inner_registry:
-        math_ct = sum(1 for lbl in inner_registry.labels.values()
-                       if lbl == "MATH")
-        if math_ct >= 2 and math_ct >= len(inner_registry.labels) * 0.5:
+        # Count `<math>` blocks from RAW (transparent to STYLED nesting): a
+        # `<math>` wrapped in a styled `<span>` is no longer a DIRECT MATH child
+        # once SHAPE_STYLED is recognized at every depth, so a registry count
+        # would undercount it.  Denominator excludes STYLED for the same reason
+        # (a styled label cell was invisible to this ratio before).
+        math_ct = len(re.findall(r"<math[\s>]", raw, re.IGNORECASE))
+        structural = sum(1 for lbl in inner_registry.labels.values()
+                          if lbl != "STYLED")
+        if math_ct >= 2 and math_ct >= structural * 0.5:
             return "math_blocks"
 
     # html_wrapper: a single nested *HTML `<table>`* child whose raw carries
