@@ -1859,7 +1859,10 @@ def _apply_markup(text: str) -> str:
         # below leak; those passes then no-op on what it already handled.
         text = _expand_inline_templates(text)
         text = _unwrap_content_templates(text)
-        text = _convert_shoulder_headings(text)
+        # Shoulder headings are now a walker element (SHAPE_STYLED → «SH»); the
+        # flat `_convert_shoulder_headings` reader is gone from the body path
+        # (it broke once {{Fs}} inside became an element).  `_shoulder` in the
+        # figure path still uses it until render_markers is collapsed.
         text = _unwrap_layout_templates(text)
         if text == before:
             break
