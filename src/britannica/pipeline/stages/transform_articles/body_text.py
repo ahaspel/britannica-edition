@@ -801,7 +801,19 @@ def _carry_style_spans(text: str) -> str:
     span is markup we CARRY, not strip.  Balanced + recursive so nested style-
     spans (math limit-notation) fold correctly; the inner X is recursed here and
     left for the rest of `_apply_markup` to finish.  A span with no `style=`
-    (bare / class-only) is left untouched."""
+    (bare / class-only) is left untouched.
+
+    SCOPE (Step-2 of style-unification): at the ARTICLE level the walker now
+    picks off styled `<span>` as the STYLED element, so this never fires there.
+    It survives for the `text_transform`-DIRECT producer contexts the walker
+    recursion does NOT reach — the faithful FIGURE path's cell bodies
+    (`render_markers`→`produce_cell`→`text_transform`), the CHEM cell path, plain
+    `<ref>` bodies, captions.  Those re-process RAW fragment text through
+    `text_transform`, so the inline-span carry must stay here until Step 4/5
+    collapses the figure decomposer into `process_elements` (after which the
+    walker recursion reaches them and this can go).  `_handle_title_spans` runs
+    first, so an editorial `title="amended from…"` span is unwrapped before this
+    sees it — the red-dashed OCR-correction decoration is dropped, not carried."""
     from britannica.pipeline.stages.elements._tables import styled_marker
     out: list[str] = []
     i, n = 0, len(text)
@@ -1071,22 +1083,31 @@ def _unwrap_content_templates(text: str) -> str:
     # preservation upside is negligible for now.
     text = re.sub(r"\{\{\s*section\s*\|[^{}]*\}\}", "", text,
                   flags=re.IGNORECASE)
-    # `<p {{Ts|...ac...}}>content</p>` — paragraph centering, appears
-    # in body prose AND inside refs/footnotes/captions.  Convert to the
-    # universal `«CTR»` marker BEFORE the catch-all sees the `{{Ts|}}`.
-    # ~173 corpus instances; 95% include `ac` (center-align), the rest
-    # have margin/sizing styling we drop.  Handled here in
-    # `_unwrap_content_templates` (not in `_transform_body_text`) so it
-    # runs in every text-transform context — bodies, refs, captions,
-    # cells.  Without this, refs that wrap a centered equation lose
-    # the centering (MOLECULE's footnotes contain centered formulas).
+    # STYLE-UNIFICATION STEP 2.  At the ARTICLE level the walker now picks off
+    # styled `<p>`/`<div>`/`<span>` wrappers UNIFORMLY as the STYLED element
+    # (`SHAPE_STYLED`) and the ONE styled-wrapper producer (`_process_styled`)
+    # derives the CSS and recurses the inner through the main dispatch (so a
+    # table / MATH / CHEM / image inside is handled by its own producer — the
+    # `_p_ts` image-drop defect is fixed there).
+    #
+    # The five emitters below (`_ts_block`/`_p_ts`/`_div_ts`/`_span_ts` +
+    # `_carry_style_spans`) STAY — NOT because body-text is still the catch-all,
+    # but because they serve the `text_transform`-DIRECT producer contexts the
+    # walker recursion does NOT reach in Step 2: the faithful FIGURE path
+    # (`render_markers`→`produce_cell`→`text_transform`) and CHEM cell bodies,
+    # plain `<ref>` bodies, captions.  Those re-process RAW fragment text, so a
+    # `<p {{Ts}}>`/`<div {{Ts}}>`/`<span style>` in a figure caption cell still
+    # needs carrying here (verified: deleting them spilled 11 figure-cell
+    # `<p {{Ts}}>` captions — BEE Figs, GATE Figs — to `_strip_templates`).  At
+    # the article level the walker extracts the wrapper FIRST, so these fire ONLY
+    # inside those producer fragments — no double-handling.  They retire in Step
+    # 4/5 when the figure decomposer collapses into `process_elements` and the
+    # walker recursion finally reaches cell bodies.
+    #
+    # `<p {{Ts|...ac...}}>content</p>` — paragraph centering inside a figure
+    # caption cell.  Pure-center → `«CTR»`; richer styling → `«DIV[style:CSS]»`.
     def _ts_block(codes_str: str, content: str,
                   force_center: bool = False) -> str:
-        # Carry the FULL `{{Ts}}` styling (carry-by-default), not just center.
-        # Pure-center stays the canonical «CTR» (byte-identical to before);
-        # anything more becomes a styled block «DIV[style:CSS]» (the viewer
-        # renders it, incl. block props like text-indent an inline span can't
-        # hold); empty → unwrap.  `_parse_ts_codes` is the cell/row parser.
         from britannica.pipeline.stages.elements._tables import _parse_ts_codes
         css = _parse_ts_codes(codes_str)
         if force_center and "text-align:center" not in css:
@@ -1101,25 +1122,9 @@ def _unwrap_content_templates(text: str) -> str:
     text = re.sub(
         r"<p\s+\{\{[Tt]s\|([^}]*)\}\}[^>]*>(.*?)</p>",
         _p_ts, text, flags=re.DOTALL)
-    # `<div {{Ts|…}}>content</div>` — sibling of the `<p {{Ts|…}}>`
-    # handler above for the `<div>` variant of the same shape: an HTML
-    # block wrapper around flowing prose whose attributes are packed in
-    # the `Ts` template (text-indent, sm92, lh12, ac, …).  Same logic:
-    # `ac` → «CTR» marker, else unwrap-only (presentation lost in
-    # flowing HTML).  167 corpus instances of pure-prose `<div>`
-    # wrappers (taxonomic enumerations like SUBORDER lists, dairy
-    # cleanliness rules under MILK, scholarly small-type asides).
-    # The 6 image-bearing variants reach this stage as walker FIGURE
-    # extracts (via `html_ts_figure_end`) and never appear here.
-    # The `(?P<attrs>[^>{}]*?)` slot between `<div\s+` and `{{Ts|…}}`
-    # tolerates other HTML attributes — ~108 corpus instances of
-    # CRYSTALLOGRAPHY-style `<div align=center {{Ts|pt1|lg}}>…</div>`
-    # (centred boldface system-name headings between sections) carry
-    # `align=center` before the `Ts` block.  `[^>{}]` keeps the match
-    # inside the opener tag (no crossing `>`) and outside any nested
-    # template (no crossing `{`).  Center-signal is read from either
-    # an `ac` code OR an `align=center`/`text-align:center` attr in
-    # the prefix slot.
+    # `<div {{Ts|…}}>content</div>` — `<div>` sibling of the `<p {{Ts}}>` caption
+    # handler.  `align=center`/`text-align:center` in the prefix slot OR an `ac`
+    # code → `«CTR»`, else the full styled `«DIV[style]»`.
     def _div_ts(m: re.Match) -> str:
         force_center = bool(re.search(
             r"""align\s*=\s*['"]?center|text-align\s*:\s*center""",
@@ -1131,15 +1136,11 @@ def _unwrap_content_templates(text: str) -> str:
         r"[^>]*>(?P<content>.*?)</div>",
         _div_ts, text, flags=re.DOTALL,
     )
-    # `<span ...{{Ts|codes}}...>` — inline styling.  Unlike the <p>/<div>
-    # prose wrappers above (where only the center signal survives), a span's
-    # styling is STRUCTURAL: the math limit-notation spans
-    # (`{{Ts|display:inline-block;|ac|vbm|lh11|fs120}}`) stack the limit via
-    # inline-block + vertical-align, the over-bar spans (`{{ts|bt}}`) draw a
-    # rule.  So carry the FULL `{{Ts}}` → `style="…"` (`_parse_ts_codes`, the
-    # same parser cells/rows use) rather than reducing to «CTR».  Rewrites the
-    # opening tag only; content + `</span>` are untouched, so nested spans
-    # fold independently.  Drains the 23 `<span {{Ts}}>` Ts-leaks.
+    # `<span ...{{Ts|codes}}...>` — inline styling.  Carry the FULL `{{Ts}}` →
+    # `style="…"` (`_parse_ts_codes`, the same parser cells/rows use); the
+    # `_carry_style_spans` pass below then folds the resulting `style="…"` to the
+    # `«SPAN[style]»` marker.  Rewrites the opening tag only; content +
+    # `</span>` are untouched, so nested spans fold independently.
     def _span_ts(m: re.Match) -> str:
         from britannica.pipeline.stages.elements._tables import _parse_ts_codes
         pre, post = m.group("pre").strip(), m.group("post").strip()
@@ -1159,12 +1160,14 @@ def _unwrap_content_templates(text: str) -> str:
     # `<span title="T">X</span>` — transliteration tooltip (Greek/Hebrew) is
     # CARRIED as «SPAN[title:T]»; editorial (amended-from) title spans drop.
     # MUST precede the style carry so a styled-AND-titled amendment span is
-    # dropped, not carried as decoration.
+    # dropped, not carried as decoration.  `_handle_title_spans` STAYS: a
+    # `title=` span is a SEMANTIC tooltip / editorial provenance strip, a
+    # different job from the style carry.
     text = _handle_title_spans(text)
     # `<span style="CSS">X</span>` → «SPAN[style:CSS]»X«/SPAN» — the INLINE
-    # sibling of «DIV[style]» (block).  A styled span is markup we CARRY, not
-    # strip: same producer/marker as <div>, differing only in display level.
-    # Runs AFTER `_span_ts` so `{{Ts}}` spans (now `style="…"`) are carried too.
+    # sibling of «DIV[style]» (block).  Runs AFTER `_span_ts` so `{{Ts}}` spans
+    # (now `style="…"`) are carried too.  See the scope note on
+    # `_carry_style_spans`: `text_transform`-direct contexts only.
     text = _carry_style_spans(text)
     # {{brace2|N|side}} — vertical or horizontal grouping brace.  Two
     # distinct uses (corpus-audited 2026-05-26, task #31):
