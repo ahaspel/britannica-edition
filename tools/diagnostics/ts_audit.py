@@ -45,10 +45,14 @@ def _classify(pre: str) -> str:
 _HITS: list[tuple[str, str]] = []
 
 
-def _init():
+def _init(no_emitters: bool = False):
     global _tx
     from britannica.pipeline.stages.transform_articles import body_text as BT
     from britannica.pipeline.stages.transform_articles import _transform_text_v2 as _tx2
+    if no_emitters:
+        # Simulate deleting the four style emitters: the meter for the
+        # style-recognizer campaign.  What still leaks = a recognizer gap.
+        BT._EMIT_STYLE_WRAPPERS = False
     _strip_re = BT._STRIP_TEMPLATES_RE
     _orig = BT._strip_templates
 
@@ -90,6 +94,7 @@ def _titles(aids):
 def main():
     mode = sys.argv[1] if len(sys.argv) > 1 else "scan"
     refresh = "--refresh" in sys.argv
+    no_emitters = "--no-emitters" in sys.argv
     t0 = time.time()
     if mode == "ids":
         if not LEAKERS.exists():
@@ -98,7 +103,8 @@ def main():
         corpus = [r for r in load_corpus() if r[0] in ids]
     else:
         corpus = list(load_corpus(contains="{{ts", refresh=refresh))
-    with Pool(max(1, cpu_count() - 1), initializer=_init) as pool:
+    with Pool(max(1, cpu_count() - 1), initializer=_init,
+              initargs=(no_emitters,)) as pool:
         results = pool.map(_work, corpus, chunksize=8)
     ctx = Counter(); samp = {}; per_art = {}
     for aid, hits in results:

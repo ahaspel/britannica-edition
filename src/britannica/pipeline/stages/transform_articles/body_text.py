@@ -56,6 +56,14 @@ _FMT = "\x05"   # formatting (bold/italic/small-caps)
 _LNK = "\x06"   # link markers
 _SH  = "\x07"   # shoulder headings
 
+# STYLE-RECOGNIZER CAMPAIGN meter seam.  The four body-text style emitters
+# (`_p_ts`/`_div_ts`/`_span_ts`/`_carry_style_spans`) are SWEEPERS hiding the
+# walker `SHAPE_STYLED` recognizer's gaps.  Flip this False to simulate their
+# deletion and watch what leaks (the meter, tools/diagnostics/emitter_meter.py);
+# drive that count to 0 by completing the recognizer, THEN delete the emitters
+# AND this flag.  See [[project_style_recognizer_campaign]].
+_EMIT_STYLE_WRAPPERS = True
+
 def _convert_hieroglyphs(text: str) -> str:
     """{{hieroglyph|code}} → [hieroglyph: code]"""
     return re.sub(
@@ -1119,9 +1127,10 @@ def _unwrap_content_templates(text: str) -> str:
         return f"«DIV[style:{';'.join(css)}]»{content}«/DIV»"
     def _p_ts(m: re.Match) -> str:
         return _ts_block(m.group(1), m.group(2).strip())
-    text = re.sub(
-        r"<p\s+\{\{[Tt]s\|([^}]*)\}\}[^>]*>(.*?)</p>",
-        _p_ts, text, flags=re.DOTALL)
+    if _EMIT_STYLE_WRAPPERS:
+        text = re.sub(
+            r"<p\s+\{\{[Tt]s\|([^}]*)\}\}[^>]*>(.*?)</p>",
+            _p_ts, text, flags=re.DOTALL)
     # `<div {{Ts|…}}>content</div>` — `<div>` sibling of the `<p {{Ts}}>` caption
     # handler.  `align=center`/`text-align:center` in the prefix slot OR an `ac`
     # code → `«CTR»`, else the full styled `«DIV[style]»`.
@@ -1131,11 +1140,12 @@ def _unwrap_content_templates(text: str) -> str:
             m.group("attrs"), re.IGNORECASE))
         return _ts_block(m.group("codes"), m.group("content").strip(),
                          force_center)
-    text = re.sub(
-        r"<div\s+(?P<attrs>[^>{}]*?)\{\{[Tt]s\|(?P<codes>[^}]*)\}\}"
-        r"[^>]*>(?P<content>.*?)</div>",
-        _div_ts, text, flags=re.DOTALL,
-    )
+    if _EMIT_STYLE_WRAPPERS:
+        text = re.sub(
+            r"<div\s+(?P<attrs>[^>{}]*?)\{\{[Tt]s\|(?P<codes>[^}]*)\}\}"
+            r"[^>]*>(?P<content>.*?)</div>",
+            _div_ts, text, flags=re.DOTALL,
+        )
     # `<span ...{{Ts|codes}}...>` — inline styling.  Carry the FULL `{{Ts}}` →
     # `style="…"` (`_parse_ts_codes`, the same parser cells/rows use); the
     # `_carry_style_spans` pass below then folds the resulting `style="…"` to the
@@ -1153,10 +1163,11 @@ def _unwrap_content_templates(text: str) -> str:
         if post:
             out += " " + post
         return out + ">"
-    text = re.sub(
-        r"<span\s+(?P<pre>[^>{}]*?)\{\{[Tt]s\|(?P<codes>[^}]*)\}\}"
-        r"(?P<post>[^>]*)>",
-        _span_ts, text)
+    if _EMIT_STYLE_WRAPPERS:
+        text = re.sub(
+            r"<span\s+(?P<pre>[^>{}]*?)\{\{[Tt]s\|(?P<codes>[^}]*)\}\}"
+            r"(?P<post>[^>]*)>",
+            _span_ts, text)
     # `<span title="T">X</span>` — transliteration tooltip (Greek/Hebrew) is
     # CARRIED as «SPAN[title:T]»; editorial (amended-from) title spans drop.
     # MUST precede the style carry so a styled-AND-titled amendment span is
@@ -1168,7 +1179,8 @@ def _unwrap_content_templates(text: str) -> str:
     # sibling of «DIV[style]» (block).  Runs AFTER `_span_ts` so `{{Ts}}` spans
     # (now `style="…"`) are carried too.  See the scope note on
     # `_carry_style_spans`: `text_transform`-direct contexts only.
-    text = _carry_style_spans(text)
+    if _EMIT_STYLE_WRAPPERS:
+        text = _carry_style_spans(text)
     # {{brace2|N|side}} — vertical or horizontal grouping brace.  Two
     # distinct uses (corpus-audited 2026-05-26, task #31):
     #   * Multi-row (N≥2) inside wikitables: row-grouping brace.  May
