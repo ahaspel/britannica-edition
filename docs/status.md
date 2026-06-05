@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-06-04.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-06-05.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -36,6 +36,56 @@ agent's memory directory and are not duplicated here.
 > classification, not philosophy.
 
 ---
+
+## PROGRESS (2026-06-05) — style unification: the cash is ONE COMPLETE STYLE RECOGNIZER (campaign scoped; opens next session)
+
+**Banked this session:**
+- **Step 1 (`edfbd24`)** — `style_block` in `_tables.py`: the ONE style-marker emitter
+  (`«CTR»`/`«DIV[style]»`/`«SPAN[style]»`/`«SC»`), byte-identical to `_ts_block`/`_style_marker`/the
+  span carry. Inert (nothing rewired); `tests/unit/test_style_block.py`.
+- **Step 2 (`487a185`)** — `SHAPE_STYLED`: the walker picks off a styled `<div>/<p>/<span>` and
+  `_process_styled` recurses its content through the ONE dispatch (`process_elements`,
+  `_allow_figure=False`). Killed the `<p paragraph` Ts-leak class (3→0); fixed the `_p_ts` image-drop.
+- **`<br>` flip (`b7763c4`)** — `<br>` is ALWAYS a genuine line break → `«BR»`, one rule every context
+  (was: body→space "soft-wrap"; figure/cell→`«BR»`). Soft re-flow is already the default (a plain
+  space), so an author types `<br>` only for a HARD break — one mark, one meaning; our context-split
+  was imposed taxonomy. Recovered breaks the body rule was MERGING (AGRICULTURE +12; `{{dual line}}`
+  stacked cells `4·1<br>3·6`). Also the prerequisite that unblocks genuine cell recursion.
+
+**THE DIAGNOSIS — the real shape of the style unification.** The four body-text emitters
+(`_p_ts`/`_div_ts`/`_span_ts`/`_carry_style_spans`) are **SWEEPERS** hiding the **style producer's
+incomplete recognition** (sweepers are easy to add, hard to remove — removing one means proving the
+upstream handles every case it silently caught). Disabling them → 86 leaks, which bin:
+~72 (`<div>/<span>/<p>` wrappers + bare `{{Ts}}`) = **style-wrapper recognition gaps**; ~14
+(`|{{ts}}`/`<td {{Ts}}>`/`colspan {{Ts}}`) = **table-recognition** (a separate fish). So the
+unification is NOT "collapse the producers" — it is **ONE COMPLETE STYLE RECOGNIZER**; the emitters +
+leak-sweepers exist only to paper over what `SHAPE_STYLED` can't yet recognize. Drive its catch to 0,
+the sweepers delete themselves ([[feedback_sweepers_hide_bugs]], [[feedback_no_catchall_cleanup]]).
+
+`SHAPE_STYLED` recognition GAPS to close (spec = the emitters' regexes + the leak classes):
+(a) **template-form** style wrappers — `{{left|…}}`, standalone `{{Ts|…}}`, etc. The article walker only
+    knows HTML `<div>/<p>/<span>`; the figure `decompose` knows `{{center}}/{{csc}}/{{c}}` but that's a
+    SEPARATE registry → unify into ONE registry both use. (b) **opener-only** `<div>/<p>` (the balanced
+    `_construct_end` gate fails them closed).
+
+**THE COLLAPSE (proven, parked — a detour from the cash).** `decompose`→`process_elements` (route figure
+AND data-table cell content through the one dispatch) is **content-clean and TERMINATES** (peel exactly
+ONE structural layer per recursion ⇒ well-founded; `_allow_figure=False` makes a bare `[[File:]]` a
+`{{IMG}}` leaf not a re-recognized figure; data-table placeholders survive it). It fixes raw-`<br>` and
+RECOVERS content the old figure path truncated (ABBEY plan items 4–6). BUT it does **not** deliver the
+cash — the leaks are table-RECOGNITION, the emitters need the style-RECOGNITION gaps closed, both one
+layer UP in the classifier. Reverted to the `<br>`-flip checkpoint; re-do as its own deliberate arc
+(with a full rebuild) AFTER the recognizer is complete. Threading recipe for the re-do: one
+`recurse = lambda c: process_elements(c, tt, ctx, _allow_figure=False)` threaded through
+`_faithful_figure`→`render_markers`→`_wiki/_html_table_marker`→`_rows_to_htmltable`→`_cell_marker`→
+`produce_cell` (~14 sites, 0 errors when complete), and the `TABLE` dispatch lambda passes that closure
+as `text_transform` to `_process_table_unified`. Plan: [`docs/plan_style_unification.md`].
+
+**NEXT (open the campaign):** corpus-audit the COMPLETE template-style-wrapper set (which `{{name|…}}`
+carry style — `left`/`right`/`Ts`/`fine`/…), unify into one registry shared by the walker's
+`SHAPE_STYLED` and the figure path, add opener-only HTML recognition, and drive the emitter-disable leak
+count to 0 (the meter) — THEN delete the four emitters. The ~14 table-cell leaks are a separate
+table-recognition task.
 
 ## PROGRESS (2026-06-04) — DjVu-crop fold: kill the nested-regex "failed recursion", crops become images
 
