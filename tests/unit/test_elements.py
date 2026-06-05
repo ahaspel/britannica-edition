@@ -211,11 +211,15 @@ class TestTableProcessing:
         assert "Tidal wave" in result
 
     def test_table_br_preserved_in_cell(self):
-        """`<br>` is preserved losslessly in the cell, not collapsed to space."""
+        """`<br>` is preserved losslessly in the cell — now as the canonical
+        «BR» line break.  The cell recurses through `process_elements` (the
+        producer collapse), so it applies the same `<br>`→«BR» rule as body
+        prose (b7763c4) instead of keeping a raw `<br>`; the viewer decodes «BR»
+        back to `<br>` everywhere, including inside «HTMLTABLE»."""
         text = '{|\n|Houses<br />destroyed.\n|Deaths.\n|}'
         result = process_elements(text, _identity_transform, ElementContext())
         assert "Houses" in result and "destroyed." in result
-        assert "<br" in result
+        assert "«BR»" in result
 
     def test_table_with_image(self):
         """Image inside table is extracted as separate element."""
