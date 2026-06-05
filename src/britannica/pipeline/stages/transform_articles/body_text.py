@@ -1969,13 +1969,15 @@ def _transform_body_text(text: str) -> str:
     # equation-indent use.
     text = re.sub(r"^:+\s*(?=\(\d+\))", "", text, flags=re.MULTILINE)
     text = _apply_markup(text)
-    # Body-only `<br>` regularization: in flowing prose, a `<br>` is a
-    # soft line break that should render as a word boundary, NOT a
-    # paragraph break and not a literal tag.  This is the body
-    # producer's owned rule — figure / caption / cell producers handle
-    # `<br>` on their own terms (segment boundary, paragraph, etc.)
-    # via their own producers, NOT by calling this function.
-    text = re.sub(r"<br\s*/?>", " ", text, flags=re.IGNORECASE)
+    # `<br>` → the canonical «BR» line break.  A `<br>` in the EB1911 source is
+    # ALWAYS a genuine line break (stacked cell content `Cast<br>Iron.`, list
+    # items, addresses) — never a soft, re-flowable space.  Treating it as a
+    # space MERGES lines the source kept apart (a206344/AUSTRIA, {{dual line}}'s
+    # `4·1<br>3·6`).  ONE rule, every context: body prose AND recursed
+    # cell/figure content carry «BR» uniformly — which is what unblocks genuine
+    # cell recursion (the body producer no longer flattens a cell's breaks when
+    # the cell's content recurses through it).
+    text = re.sub(r"<br\s*/?>", "«BR»", text, flags=re.IGNORECASE)
     # Body-only wrapper-strip HTML rules: shared toolkit utility, called
     # explicitly here rather than absorbed into the markup transform
     # because each producer owns whether to strip wrappers (body and
