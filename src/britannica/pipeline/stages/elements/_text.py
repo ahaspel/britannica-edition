@@ -9,67 +9,6 @@ from __future__ import annotations
 import re
 
 
-_SUB_TRANS = str.maketrans({
-    "0": "₀", "1": "₁", "2": "₂", "3": "₃", "4": "₄",
-    "5": "₅", "6": "₆", "7": "₇", "8": "₈", "9": "₉",
-    "+": "₊", "-": "₋", "=": "₌", "(": "₍", ")": "₎",
-    "a": "ₐ", "e": "ₑ", "h": "ₕ", "i": "ᵢ", "j": "ⱼ",
-    "k": "ₖ", "l": "ₗ", "m": "ₘ", "n": "ₙ", "o": "ₒ",
-    "p": "ₚ", "r": "ᵣ", "s": "ₛ", "t": "ₜ", "u": "ᵤ",
-    "v": "ᵥ", "x": "ₓ",
-    # Math-italic letters (used in EB1911 chemical formulas like
-    # C<sub>𝑛</sub>H<sub>2𝑛</sub>O<sub>2</sub>) → matching subscript
-    "𝑎": "ₐ", "𝑒": "ₑ", "𝒽": "ₕ", "𝑖": "ᵢ", "𝑗": "ⱼ",
-    "𝑘": "ₖ", "𝑙": "ₗ", "𝑚": "ₘ", "𝑛": "ₙ", "𝑜": "ₒ",
-    "𝑝": "ₚ", "𝑟": "ᵣ", "𝑠": "ₛ", "𝑡": "ₜ", "𝑢": "ᵤ",
-    "𝑣": "ᵥ", "𝑥": "ₓ",
-})
-
-_SUP_TRANS = str.maketrans({
-    "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴",
-    "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹",
-    "+": "⁺", "-": "⁻", "=": "⁼", "(": "⁽", ")": "⁾",
-    "i": "ⁱ", "n": "ⁿ",
-    "𝑖": "ⁱ", "𝑛": "ⁿ",
-})
-
-
-_PLACEHOLDER_SPAN = re.compile(r"\x03[^\x03]*\x03")
-
-
-def _translate_outside_placeholders(s: str, table) -> str:
-    """`str.translate`, but leaving walker element placeholders verbatim:
-    translating a placeholder's ID digits to sub/superscript would break the
-    outer marker substitution (INTERPOLATION's δu over a fraction placeholder)."""
-    parts, last = [], 0
-    for m in _PLACEHOLDER_SPAN.finditer(s):
-        parts.append(s[last:m.start()].translate(table))
-        parts.append(m.group(0))
-        last = m.end()
-    parts.append(s[last:].translate(table))
-    return "".join(parts)
-
-
-def _convert_inline_sub_sup(text: str) -> str:
-    """Convert <sub>/<sup> tags to Unicode sub/superscripts in cell
-    content.  Run BEFORE generic HTML-tag stripping in table handlers
-    so chemical formulas like C<sub>2</sub>H<sub>4</sub>O<sub>2</sub>
-    survive as C₂H₄O₂ instead of being flattened to "C 2 H 4 O 2".
-    Characters with no Unicode subscript form pass through unchanged; walker
-    element placeholders pass through too (`_translate_outside_placeholders`)."""
-    text = re.sub(
-        r"<sub>([^<]*)</sub>",
-        lambda m: _translate_outside_placeholders(m.group(1), _SUB_TRANS),
-        text, flags=re.IGNORECASE,
-    )
-    text = re.sub(
-        r"<sup>([^<]*)</sup>",
-        lambda m: _translate_outside_placeholders(m.group(1), _SUP_TRANS),
-        text, flags=re.IGNORECASE,
-    )
-    return text
-
-
 def _strip_br(text: str, replacement: str = " ") -> str:
     """Convert `<br>` to `replacement`, handling soft-hyphen line breaks.
 
