@@ -30,8 +30,8 @@ from __future__ import annotations
 
 import re
 
-from britannica.pipeline.stages.transform_articles.body_text import (
-    _apply_markup as TT, _convert_shoulder_headings)
+from britannica.pipeline.stages.elements._prose import _apply_markup as TT
+from britannica.pipeline.stages.elements._shoulder import _convert_shoulder_headings
 from britannica.export.sections import _dehyphenate_shoulder
 from britannica.pipeline.stages.elements._table_decompose import extract_wiki_rows
 from britannica.pipeline.stages.elements._figure_decompose import _peel_table
