@@ -766,7 +766,10 @@ _INLINE_REGISTRY = {
     # the default, so unwrapping to the inner content is faithful and recovers
     # text the catch-all was deleting whole (BEER's analysis-table headers).
     "nobold": _inline_unwrap, "font-variant normal": _inline_unwrap,
-    # small-caps family → «SC» marker
+    # small-caps family → «SC» marker.  TRANSITIONAL: also belongs at the walker,
+    # but can't move until render_markers' figure captions recurse through
+    # `process_elements` instead of `_apply_markup` (the figure collapse) — and
+    # `{{sc|[[Image]]}}` overlaps the figure recognizer.  Kept here until then.
     "sc": _inline_small_caps, "asc": _inline_small_caps,
     "smallcaps": _inline_small_caps, "small caps": _inline_small_caps,
     # value-bearing font-size wrapper → «FS[size]» marker
@@ -1630,11 +1633,12 @@ def _convert_sub_sup(text: str) -> str:
     template forms → Unicode subscript / superscript.
 
     Sub/sup are typography (chem subscripts, math exponents, French
-    ordinals, footnote markers) — NOT math.  This function owns both
-    syntactic forms: it first rewrites the template form to the HTML
-    form, then translates the HTML span.  Lifting templates here
-    instead of at the walker keeps the volume of small inline elements
-    out of the classifier/producer dispatch.
+    ordinals, footnote markers) — NOT math.  The template forms are ALSO
+    walker-level SUBSUP elements now (`_process_subsup`); this body-text
+    pass stays as the figure-caption path (render_markers) until the figure
+    collapse routes captions through `process_elements`.  It no-ops on prose
+    (the walker resolved the template first) and fires only where a producer
+    bypasses the walker.
 
     Element placeholders (``\\x03ELEM:N\\x03``) inside the matched
     HTML span are preserved verbatim — their digit IDs would otherwise
@@ -1881,6 +1885,10 @@ def _apply_markup(text: str) -> str:
     # also in this group; promoted to a walker-level DUAL_LINE element,
     # so body-text no longer sees the raw template here.)
     text = _convert_overline(text)
+    # `{{lb-}}` is also a walker-level LB element now; this body-text pass stays
+    # as the figure-caption path (render_markers) until the figure collapse routes
+    # captions through `process_elements`.  No-ops on prose (the walker resolved
+    # it first), fires only where a producer bypasses the walker.
     text = _convert_lb_dash(text)
     text = _convert_sp(text)
     # Spacer templates render as the space/rule they ARE — not stripped to "" by
