@@ -291,37 +291,11 @@ def _lkpl_to_marker(args: str) -> str:
 def _convert_links(text: str) -> str:
     """Convert link templates and wikilinks to link markers."""
 
-    # {{EB1911 article link|...}} — multiple parameter forms
-    def _eb1911_link(m):
-        inner = m.group(1)
-        # Unwrap nested {{sc|...}}
-        inner = re.sub(r"\{\{sc\|([^{}]*)\}\}", r"\1", inner, flags=re.IGNORECASE)
-        parts = [p.strip() for p in inner.split("|")]
-        positional = [p for p in parts if "=" not in p and p]
-        if len(positional) >= 2:
-            display, target = positional[0], positional[1]
-        elif len(positional) == 1:
-            display = target = positional[0]
-        else:
-            return ""
-        # Subpage targets → plain text for section labels, link for articles
-        if "/" in target:
-            if re.match(r"^[IVXLC]+\.", display):
-                return display
-            return f"{_LNK}{display}|{display}{_LNK}"
-        return f"{_LNK}{target}|{display}{_LNK}"
-
-    # Unwrap nested {{sc|}} before matching EB1911 article link.
-    # `\s+` tolerates the double-space typo variant
-    # `{{EB1911 article  link|…}}` (3 corpus hits).
-    text = re.sub(
-        r"(\{\{EB1911\s+article\s+link\|[^}]*)(\{\{sc\|)([^}]*)(\}\})",
-        lambda m: m.group(1) + m.group(3), text, flags=re.IGNORECASE,
-    )
-    text = re.sub(
-        r"\{\{\s*EB1911\s+article\s+link\s*\|([^{}]*)\}\}",
-        _eb1911_link, text, flags=re.IGNORECASE,
-    )
+    # ({{EB1911 article link|…}} is now a walker element —
+    # `_link.process_eb1911_article_link` bounds it with the one balanced matcher and
+    # recurses its display, so a nested {{sc|…}} is CARRIED as «SC» instead of being
+    # flat-stripped.  The old handler + its {{sc}} pre-unwrap pre-pass lived here; they
+    # couldn't bound the nested braces, which is exactly why the pre-unwrap existed.)
 
     # {{1911link|Target}} or {{1911link|Target|Display}} (and 11link,
     # `1911 article link`).  Positional args named like `nosc=yes` are
@@ -766,10 +740,10 @@ _INLINE_REGISTRY = {
     # the default, so unwrapping to the inner content is faithful and recovers
     # text the catch-all was deleting whole (BEER's analysis-table headers).
     "nobold": _inline_unwrap, "font-variant normal": _inline_unwrap,
-    # small-caps family → «SC» marker.  TRANSITIONAL: also belongs at the walker,
-    # but can't move until render_markers' figure captions recurse through
-    # `process_elements` instead of `_apply_markup` (the figure collapse) — and
-    # `{{sc|[[Image]]}}` overlaps the figure recognizer.  Kept here until then.
+    # small-caps family → «SC» marker.  Stays in body-text until the RENDERED
+    # cross-reference links (eb1911 lkpl / article link / cite) recurse their display
+    # instead of flat-reading raw `{{sc}}` — promoting sc to the walker breaks them
+    # otherwise (the field cut fixed the author-signature flat-reader; these remain).
     "sc": _inline_small_caps, "asc": _inline_small_caps,
     "smallcaps": _inline_small_caps, "small caps": _inline_small_caps,
     # value-bearing font-size wrapper → «FS[size]» marker
@@ -1804,6 +1778,14 @@ def _apply_markup(text: str) -> str:
     padding, captions, etc. — body normalisations would lose information
     those producers must preserve).
     """
+    # `_apply_markup` is LOST — identity for now.  There is no "leaf-text" floor to
+    # keep: every construct it flat-handled (links, the inline styler registry, sub/sup,
+    # em/gap/rule/dhr, hieroglyphs, foreign script, entities, the strip_templates catch-
+    # all) is a span the walker should recognize + recurse, no different from `center`.
+    # With this gone they all leak raw — and the leak list IS the walker's to-do.
+    # (`«B»/«I»` survive: prepare_wikitext converts them upstream — itself the same
+    # garbage one stage earlier, to be lost next.)
+    return text
     # Strip HTML comments — non-rendering; the bypassed Layer-A `html_comments`
     # pass re-homed here (else they leak into output: AFRICA's
     # `<!-- Greenland is actually the largest -->`).  The walker already masks
