@@ -2000,6 +2000,12 @@ def _transform_body_text(text: str) -> str:
     # cell/figure content carry «BR» uniformly — which is what unblocks genuine
     # cell recursion (the body producer no longer flattens a cell's breaks when
     # the cell's content recurses through it).
+    # `-<br>` soft-hyphen FIRST: a word the typesetter broke across a print line
+    # (`Perman-<br>ent` = "Permanent") — strip the hyphen AND the break so the word
+    # rejoins.  Was `_strip_br` (cell-only, in the now-deleted cell flattener);
+    # body_text owns it now so a recursed cell rejoins exactly like prose.  This is
+    # the soft-hyphen, NOT a second meaning for plain `<br>` (which stays «BR»).
+    text = re.sub(r"-<br\s*/?>", "", text, flags=re.IGNORECASE)
     text = re.sub(r"<br\s*/?>", "«BR»", text, flags=re.IGNORECASE)
     # Body-only wrapper-strip HTML rules: shared toolkit utility, called
     # explicitly here rather than absorbed into the markup transform
