@@ -164,6 +164,8 @@ def main() -> None:
     ap.add_argument("--renderable", action="store_true",
                     help="also list the renderable (viewer-decoded) bucket")
     ap.add_argument("--limit", type=int, default=None)
+    ap.add_argument("--dist", action="store_true",
+                    help="per-article BROKEN-count distribution (gaps vs misses)")
     args = ap.parse_args()
 
     corpus = [it for it in load_corpus()
@@ -175,11 +177,15 @@ def main() -> None:
     total: Counter = Counter()
     samples: dict[str, list] = defaultdict(list)
     n_art = n_broken = 0
+    per_art: list[tuple[int, str]] = []
     with Pool(max(1, cpu_count() - 1)) as pool:
         for aid, leaks in pool.imap_unordered(_work, corpus, chunksize=64):
             n_art += 1
-            if any(not _is_renderable(k) for k in leaks):
+            broken_here = sum(v for k, v in leaks.items()
+                              if not _is_renderable(k))
+            if broken_here:
                 n_broken += 1
+                per_art.append((broken_here, aid))
             for k, v in leaks.items():
                 total[k] += v
                 if args.samples and not _is_renderable(k) and len(samples[k]) < 5:
@@ -218,6 +224,24 @@ def main() -> None:
                 rcats[k] += v
         for k, n in rcats.most_common(args.top):
             print(f"{n:8d}  {k}")
+    if args.dist:
+        import statistics
+        per_art.sort(reverse=True)
+        counts = [b for b, _ in per_art]
+        print("--- per-article BROKEN distribution ---")
+        if counts:
+            print(f"  articles >=1 broken: {len(counts)}   max: {counts[0]}   "
+                  f"median: {statistics.median(counts)}   "
+                  f"mean: {sum(counts) / len(counts):.1f}")
+            for lo, hi in ((1, 1), (2, 3), (4, 5), (6, 10), (11, 20),
+                           (21, 50), (51, 99), (100, 10**9)):
+                n = sum(1 for c in counts if lo <= c <= hi)
+                lab = (f"{lo}" if lo == hi
+                       else f"{lo}+" if hi >= 10**9 else f"{lo}-{hi}")
+                print(f"  {lab:>7}: {n:5d} articles")
+            print("  top 15 articles by broken count:")
+            for b, aid in per_art[:15]:
+                print(f"    {b:4d}  {aid}")
 
 
 if __name__ == "__main__":
