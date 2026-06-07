@@ -44,7 +44,7 @@ def test_extract_and_resolve_xrefs_exact_match(
     created_xrefs = extract_xrefs_stage.extract_xrefs_for_volume(1)
     assert created_xrefs == 1
 
-    resolved_xrefs = resolve_xrefs_stage.resolve_xrefs_for_volume(1)
+    resolved_xrefs = resolve_xrefs_stage.resolve_xrefs_all()
     assert resolved_xrefs == 1
 
     session = test_session_local()

@@ -42,7 +42,7 @@ def test_backlinks_report_groups_by_target_article(
 
     detect_boundaries_stage.persist_articles(super_detect_stage.detect_boundaries(1))
     extract_xrefs_stage.extract_xrefs_for_volume(1)
-    resolve_xrefs_stage.resolve_xrefs_for_volume(1)
+    resolve_xrefs_stage.resolve_xrefs_all()
 
     report = reports_module.get_backlinks_report(1)
 

@@ -215,7 +215,7 @@ def _run_full(volume: int, t0: float) -> None:
         ("Extracting xrefs",
          ["uv", "run", "britannica", "extract-xrefs", str(volume)]),
         ("Resolving xrefs",
-         ["uv", "run", "britannica", "resolve-xrefs", str(volume)]),
+         ["uv", "run", "britannica", "resolve-xrefs-all"]),
         ("Extracting images",
          ["uv", "run", "britannica", "extract-images", str(volume)]),
         ("Extracting contributors",

@@ -36,7 +36,7 @@ uv run britannica detect-boundaries "$VOLUME"
 uv run britannica transform-articles "$VOLUME"
 uv run britannica classify-articles "$VOLUME"
 uv run britannica extract-xrefs "$VOLUME"
-uv run britannica resolve-xrefs "$VOLUME"
+uv run britannica resolve-xrefs-all
 uv run britannica extract-images "$VOLUME"
 uv run britannica extract-contributors "$VOLUME"
 uv run britannica export-articles "$VOLUME"

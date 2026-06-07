@@ -107,9 +107,6 @@ for vol in $VOLUMES; do
   echo "  Extracting cross-references..."
   uv run britannica extract-xrefs "$vol"
 
-  echo "  Resolving cross-references (intra-volume)..."
-  uv run britannica resolve-xrefs "$vol"
-
   echo "  Extracting images..."
   uv run britannica extract-images "$vol"
 

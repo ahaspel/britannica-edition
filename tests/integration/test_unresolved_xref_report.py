@@ -54,7 +54,7 @@ def test_unresolved_xref_report_groups_by_article(
     created_xrefs = extract_xrefs_stage.extract_xrefs_for_volume(1)
     assert created_xrefs == 2
 
-    resolved_xrefs = resolve_xrefs_stage.resolve_xrefs_for_volume(1)
+    resolved_xrefs = resolve_xrefs_stage.resolve_xrefs_all()
     assert resolved_xrefs == 1
 
     report = reports_module.get_unresolved_xrefs_report(1)
