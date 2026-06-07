@@ -15,16 +15,17 @@ import re
 from britannica.pipeline.stages.elements._registry import ElementRegistry
 
 
-_PAGE_MARKER_PREFIX_RE = re.compile(r"^\x01PAGE:\d+\x01")
+_LEADING_PLACEHOLDER_RE = re.compile(r"^\x03ELEM:\d+\x03")  # leading extracted-element placeholder (the page break is now a PAGE element)
 
 
-def _strip_page_marker_prefix(line: str) -> str:
-    """Drop a leading `\\x01PAGE:N\\x01` marker so detection sees the
-    visible content.  Lists that span a page boundary start a new line
-    with the marker glued to the next item: `\\x01PAGE:191\\x01::Gospel
-    of Nicodemus.` is visually `::Gospel of Nicodemus.` and must be
-    recognized as a `:`-indented list line."""
-    return _PAGE_MARKER_PREFIX_RE.sub("", line)
+def _strip_leading_placeholder(line: str) -> str:
+    """Drop a leading extracted-element placeholder so indent detection
+    sees the visible content.  A page break that falls at a list-line
+    start is now a PAGE element, so the line begins with that element's
+    placeholder; the recognizer steps past it to reach the `:` exactly
+    as it would past any element a line happens to begin with.  The
+    placeholder rides through untouched and is substituted back after."""
+    return _LEADING_PLACEHOLDER_RE.sub("", line)
 
 
 def _outline_indent_depth(line: str) -> int | None:
@@ -38,7 +39,7 @@ def _outline_indent_depth(line: str) -> int | None:
       • Leading `&emsp;` / `&nbsp;` / `&ensp;` / `&thinsp;` entity run
         (depth = number of entities)
     """
-    line = _strip_page_marker_prefix(line)
+    line = _strip_leading_placeholder(line)
     m = re.match(r"^(:+)", line)
     if m:
         return len(m.group(1))
@@ -61,7 +62,7 @@ def _outline_is_bare_emphasis(line: str) -> bool:
     hierarchy label (depth 0) within an outline — e.g. ARACHNIDA's
     ``''Grade A. ANOMOMERISTICA.''`` which sits between `::`-indented
     Sub-Class lines."""
-    s = _strip_page_marker_prefix(line).strip()
+    s = _strip_leading_placeholder(line).strip()
     if not s:
         return False
     # Accept both raw wikitext `'''…'''` / `''…''` and the post-
@@ -95,7 +96,7 @@ def _outline_is_list_shaped(line: str) -> bool:
         return True
     if _outline_is_bare_emphasis(line):
         return True
-    if _OUTLINE_RANGE_HEADER_RE.match(_strip_page_marker_prefix(line).strip()):
+    if _OUTLINE_RANGE_HEADER_RE.match(_strip_leading_placeholder(line).strip()):
         return True
     return False
 
@@ -219,11 +220,12 @@ def _process_outline(inner: str) -> str:
         line = raw_line.rstrip()
         if not line:
             continue
-        # Lift any leading `\x01PAGE:N\x01` marker so it survives in
-        # the rendered item (page-break visual is preserved) but
-        # doesn't interfere with indent-prefix stripping.
+        # Lift any leading element placeholder so it survives in the
+        # rendered item — a page break landing at a list-line start is
+        # itself a PAGE element now — but doesn't interfere with the
+        # indent-prefix stripping below.
         page_marker = ""
-        pm = _PAGE_MARKER_PREFIX_RE.match(line)
+        pm = _LEADING_PLACEHOLDER_RE.match(line)
         if pm:
             page_marker = pm.group(0)
             line = line[pm.end():]
