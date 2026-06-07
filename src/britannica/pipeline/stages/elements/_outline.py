@@ -197,7 +197,7 @@ def _extract_outlines(
     return "\n".join(out)
 
 
-def _process_outline(inner: str, text_transform) -> str:
+def _process_outline(inner: str) -> str:
     """Convert a `:`-indented outline block into an OUTLINE marker.
 
     Output format:
@@ -208,9 +208,9 @@ def _process_outline(inner: str, text_transform) -> str:
         «/OUTLINE»
 
     where ``N`` is the source indent depth (number of leading `:` —
-    bare emphasis lines get depth 0).  Content has been run through
-    ``text_transform`` so inline markers (italic/bold/sc/footnotes,
-    links) are converted.  Viewer.html maps the marker to a nested
+    bare emphasis lines get depth 0).  Content's inline markers (italic/
+    bold/sc/footnotes, links) were extracted by the walker and ride
+    through as placeholders that ``produce_tree`` substitutes.  Viewer.html maps the marker to a nested
     ``<ul>`` keyed on indent depth (densely re-ranked so 0/2/3/4/6/8
     source depths become 0/1/2/3/4/5 nesting levels).
     """
@@ -255,7 +255,7 @@ def _process_outline(inner: str, text_transform) -> str:
         # bold / sc / fn / link templates become «I»…«/I» / «B»… etc.
         # Don't run `_clean_text` — that would strip the markers we
         # want the viewer to convert to <i>/<b>/<span class="sc">.
-        rendered = text_transform(content).strip()
+        rendered = content.strip()
         if not rendered:
             continue
         # Collapse trailing `\n` and inner whitespace runs.

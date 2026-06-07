@@ -13,7 +13,7 @@ Predicate:
     block-level classifier uses for `CHEMISTRY_LAYOUT`.
 
 Producer:
-  * ``_process_chem_dual_line(inner, text_transform)`` — initially
+  * ``_process_chem_dual_line(inner)`` — initially
     byte-identical with `_process_dual_line` (renders `A<br>B`).
     Lives here so future chem-specific work (formula validation,
     structural-formula layout, element linking) has a single home.
@@ -62,7 +62,7 @@ def is_chem_dual_line(inner_text: str) -> bool:
     return False
 
 
-def _process_chem_dual_line(inner: str, text_transform) -> str:
+def _process_chem_dual_line(inner: str) -> str:
     """Render a CHEM_DUAL element.
 
     Initially byte-identical with `_process_dual_line` (the shared
@@ -71,4 +71,4 @@ def _process_chem_dual_line(inner: str, text_transform) -> str:
     natural home — the chem family owns its chem-shaped dual_lines
     even when the rendering hasn't specialized yet.
     """
-    return _process_dual_line(inner, text_transform)
+    return _process_dual_line(inner)
