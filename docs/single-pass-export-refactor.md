@@ -81,8 +81,11 @@ Not in this plan, for a real reason: the byline is assembled from the contributo
 
 ## Staged, verifiable rollout
 The shipped artifact is the JSON; **every stage is proven by comparing the JSON
-corpus before/after.** (Extend `verify_refactor.py`'s shadow-body comparison to
-whole-JSON.)
+corpus before/after.** The net is `shadow_export.py`: it diffs
+`current-export(walk_body)` against the shadow, **both** on the fresh walk-body,
+so staleness can't leak into the diff.  (The stored `article.body` / shipped JSON
+are days-to-weeks behind the code — useless as a baseline — which is why the old
+`verify_refactor` / `verify_targeted` / `render_zero` cluster was deleted.)
 
 - **A — Expose the tree.** `process_elements` returns the tree alongside the body
   string. Purely additive; body unchanged → `walker_snapshot` 0/36,691, the same net
@@ -105,8 +108,10 @@ whole-JSON.)
 - Collider disambiguation == `resolve_xrefs` (same target picked).
 - Backlink aggregation == the current CrossReference graph.
 - Held state stays metadata-scale (no accidental tree-holding); one tree resident.
-- The ~5 tools rerouted off `Article.body` (verify_refactor, disambiguate_xrefs,
-  resolve_unresolved, link_vol29_articles, xref_coverage_audit).
+- The ~4 tools rerouted off `Article.body` (disambiguate_xrefs,
+  resolve_unresolved, link_vol29_articles, xref_coverage_audit).  (The
+  verify_refactor/verify_targeted/render_zero cluster was deleted, not rerouted —
+  stale-baseline, superseded by shadow_export.py.)
 
 ## Settled decisions
 Drop `Article.body`. Trees transient (no hold). Corpus single-pass (not per-volume).
