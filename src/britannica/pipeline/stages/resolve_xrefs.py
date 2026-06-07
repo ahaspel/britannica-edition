@@ -146,12 +146,12 @@ class ResolutionIndex:
     __slots__ = (
         "title_to_articles", "section_lookup", "title_map",
         "ambiguous_titles", "stable_id_to_article_id", "disambig_cache",
-        "articles_by_id",
+        "articles_by_id", "body_of",
     )
 
     def __init__(self, title_to_articles, section_lookup, title_map,
                  ambiguous_titles, stable_id_to_article_id, disambig_cache,
-                 articles_by_id):
+                 articles_by_id, body_of):
         self.title_to_articles = title_to_articles
         self.section_lookup = section_lookup
         self.title_map = title_map
@@ -159,9 +159,10 @@ class ResolutionIndex:
         self.stable_id_to_article_id = stable_id_to_article_id
         self.disambig_cache = disambig_cache
         self.articles_by_id = articles_by_id
+        self.body_of = body_of
 
 
-def build_resolution_index(all_articles: list[Article]) -> ResolutionIndex:
+def build_resolution_index(all_articles: list[Article], corpus=None) -> ResolutionIndex:
     """Build the corpus-wide resolution maps once.
 
     Collision-aware ``title (UPPER) → list[Article]`` plus alias / section /
@@ -206,10 +207,21 @@ def build_resolution_index(all_articles: list[Article]) -> ResolutionIndex:
     )
     articles_by_id = {a.id: a for a in all_articles}
 
+    # The collider tie-break reads a candidate's body opening.  Source it
+    # from the in-memory corpus when supplied — so article.body is never
+    # read for the full-corpus build — falling back to the DB body only for
+    # a candidate absent from a partial (per-volume) corpus.
+    if corpus is not None:
+        def body_of(c):
+            return corpus[c.id] if c.id in corpus else (c.body or "")
+    else:
+        def body_of(c):
+            return c.body or ""
+
     return ResolutionIndex(
         title_to_articles, section_lookup, title_map,
         ambiguous_titles, stable_id_to_article_id, disambig_cache,
-        articles_by_id,
+        articles_by_id, body_of,
     )
 
 
@@ -244,7 +256,7 @@ def resolve_one(
     # 1. Exact title / alias / section-alias (collision-aware).
     candidates = idx.title_to_articles.get(target)
     if candidates:
-        target_article_id = disambiguate_among(xref, candidates)
+        target_article_id = disambiguate_among(xref, candidates, idx.body_of)
         if target in idx.section_lookup:
             section = idx.section_lookup[target]
 
@@ -259,7 +271,7 @@ def resolve_one(
         suffix = suffix.strip()
         base_candidates = idx.title_to_articles.get(base)
         if base_candidates and suffix:
-            target_article_id = disambiguate_among(xref, base_candidates)
+            target_article_id = disambiguate_among(xref, base_candidates, idx.body_of)
             section = suffix
 
     # 3. Fuzzy matching.

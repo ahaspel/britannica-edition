@@ -50,7 +50,7 @@ def main() -> None:
     print(f"walking {len(arts)} articles...", flush=True)
     override = {a.id: walk_body(session, a) for a in arts}
     print("building resolution index...", flush=True)
-    idx = build_resolution_index(session.query(Article).all())
+    idx = build_resolution_index(session.query(Article).all(), corpus=override)
 
     with tempfile.TemporaryDirectory() as td:
         d_idx = Path(td) / "idx"
