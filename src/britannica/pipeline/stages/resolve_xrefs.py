@@ -135,6 +135,151 @@ def _try_disambig_cache(
     return stable_id_to_article_id.get(chosen)
 
 
+class ResolutionIndex:
+    """Everything ``resolve_one`` needs, built once over the corpus.
+
+    Lifted out of ``resolve_xrefs_all`` so the same resolution can run
+    in-memory inside the single-pass export (which has no stored
+    CrossReference to read) — `[[feedback_export_owns_assembly]]`.
+    """
+
+    __slots__ = (
+        "title_to_articles", "section_lookup", "title_map",
+        "ambiguous_titles", "stable_id_to_article_id", "disambig_cache",
+        "articles_by_id",
+    )
+
+    def __init__(self, title_to_articles, section_lookup, title_map,
+                 ambiguous_titles, stable_id_to_article_id, disambig_cache,
+                 articles_by_id):
+        self.title_to_articles = title_to_articles
+        self.section_lookup = section_lookup
+        self.title_map = title_map
+        self.ambiguous_titles = ambiguous_titles
+        self.stable_id_to_article_id = stable_id_to_article_id
+        self.disambig_cache = disambig_cache
+        self.articles_by_id = articles_by_id
+
+
+def build_resolution_index(all_articles: list[Article]) -> ResolutionIndex:
+    """Build the corpus-wide resolution maps once.
+
+    Collision-aware ``title (UPPER) → list[Article]`` plus alias / section /
+    vol29 overlays, a plain ``title → id`` map for fuzzy, the ambiguity
+    state + LLM disambiguation cache, and an id→article lookup.
+    """
+    # Collision-aware canonical map: title (UPPER) → list[Article].
+    title_to_articles: dict[str, list[Article]] = defaultdict(list)
+    for a in all_articles:
+        if a.article_type == "plate":
+            continue
+        key = (a.title or "").strip().upper()
+        if key:
+            title_to_articles[key].append(a)
+
+    # Aliases: don't overwrite canonical titles; inherit candidate lists so
+    # disambiguation applies uniformly.
+    alias_map = build_alias_map()
+    for alias, canonical in alias_map.items():
+        if alias not in title_to_articles and canonical in title_to_articles:
+            title_to_articles[alias] = title_to_articles[canonical]
+
+    section_map = build_section_alias_map()
+    section_lookup: dict[str, str] = {}
+    for alias, canonical in section_map.items():
+        if alias not in title_to_articles and canonical in title_to_articles:
+            title_to_articles[alias] = title_to_articles[canonical]
+            section_lookup[alias] = alias
+
+    vol29_map = build_vol29_index_aliases()
+    for alias, canonical in vol29_map.items():
+        if alias not in title_to_articles and canonical in title_to_articles:
+            title_to_articles[alias] = title_to_articles[canonical]
+
+    # Fuzzy needs a plain title→id map (first candidate for collisions).
+    title_map: dict[str, int] = {
+        k: v[0].id for k, v in title_to_articles.items()
+    }
+
+    ambiguous_titles, stable_id_to_article_id, disambig_cache = (
+        _build_ambiguity_state(all_articles)
+    )
+    articles_by_id = {a.id: a for a in all_articles}
+
+    return ResolutionIndex(
+        title_to_articles, section_lookup, title_map,
+        ambiguous_titles, stable_id_to_article_id, disambig_cache,
+        articles_by_id,
+    )
+
+
+def resolve_one(
+    xref: CrossReference, idx: ResolutionIndex
+) -> tuple[int | None, str | None]:
+    """The six-step resolution ladder for one xref, with no DB writes.
+
+    Returns ``(target_article_id, target_section)`` — both ``None`` when
+    nothing resolves.  Identical logic to the loop body of
+    ``resolve_xrefs_all``; that loop now calls this, and so does the
+    single-pass export's in-memory `«LN»` resolution.
+    """
+    target = xref.normalized_target.strip().upper()
+    target_article_id: int | None = None
+    section: str | None = None
+
+    # 0. Ambiguous-title routing via the LLM disambiguation cache.
+    if target in idx.ambiguous_titles:
+        source = idx.articles_by_id.get(xref.article_id)
+        cached_target = (
+            _try_disambig_cache(
+                xref, source, idx.disambig_cache,
+                idx.stable_id_to_article_id,
+            )
+            if source is not None else None
+        )
+        if cached_target is not None:
+            return cached_target, None
+        # else: cache miss → fall through to normal resolution.
+
+    # 1. Exact title / alias / section-alias (collision-aware).
+    candidates = idx.title_to_articles.get(target)
+    if candidates:
+        target_article_id = disambiguate_among(xref, candidates)
+        if target in idx.section_lookup:
+            section = idx.section_lookup[target]
+
+    # 1b. Bible-reference handler.
+    if target_article_id is None:
+        target_article_id = _try_bible_handler(target, idx.title_to_articles)
+
+    # 2. Section-suffix form: "EUROPE: HISTORY" -> (EUROPE, HISTORY).
+    if target_article_id is None and ": " in target:
+        base, _, suffix = target.rpartition(": ")
+        base = base.strip()
+        suffix = suffix.strip()
+        base_candidates = idx.title_to_articles.get(base)
+        if base_candidates and suffix:
+            target_article_id = disambiguate_among(xref, base_candidates)
+            section = suffix
+
+    # 3. Fuzzy matching.
+    if target_article_id is None:
+        target_article_id = resolve_xref_fuzzy(xref, idx.title_map)
+
+    # 4. LLM-resolved unresolveds (last-resort).
+    if target_article_id is None and idx.disambig_cache:
+        source = idx.articles_by_id.get(xref.article_id)
+        if source is not None:
+            cached_target = _try_disambig_cache(
+                xref, source, idx.disambig_cache,
+                idx.stable_id_to_article_id,
+            )
+            if cached_target is not None:
+                target_article_id = cached_target
+
+    return target_article_id, section
+
+
 def resolve_xrefs_for_volume(volume: int) -> int:
     session = SessionLocal()
 
@@ -183,68 +328,7 @@ def resolve_xrefs_all() -> int:
 
     try:
         all_articles = session.query(Article).all()
-
-        # Collision-aware canonical map: title (UPPER) → list[Article].
-        # 580 titles in the corpus are shared by 2+ articles (ABBAS I,
-        # ABDERA, ABERDEEN, ZÜRICH, …); the legacy single-value dict
-        # silently dropped all but one candidate.
-        title_to_articles: dict[str, list[Article]] = defaultdict(list)
-        for a in all_articles:
-            if a.article_type == "plate":
-                continue
-            key = (a.title or "").strip().upper()
-            if key:
-                title_to_articles[key].append(a)
-
-        # Aliases: same guard as before — don't overwrite canonical
-        # titles.  When the canonical has collisions, the alias
-        # inherits the full candidate list so disambiguation applies
-        # uniformly.
-        alias_map = build_alias_map()
-        for alias, canonical in alias_map.items():
-            if alias not in title_to_articles and canonical in title_to_articles:
-                title_to_articles[alias] = title_to_articles[canonical]
-
-        section_map = build_section_alias_map()
-        section_lookup: dict[str, str] = {}
-        for alias, canonical in section_map.items():
-            if alias not in title_to_articles and canonical in title_to_articles:
-                title_to_articles[alias] = title_to_articles[canonical]
-                section_lookup[alias] = alias
-
-        vol29_map = build_vol29_index_aliases()
-        for alias, canonical in vol29_map.items():
-            if alias not in title_to_articles and canonical in title_to_articles:
-                title_to_articles[alias] = title_to_articles[canonical]
-
-        # Fuzzy matching still needs a plain title→id map.  Include
-        # all titles (picking the first candidate for collisions) so
-        # fuzzy retains the coverage it had before collision-aware
-        # lookup landed — fuzzy has no xref-side signal to disambiguate,
-        # and the first-wins fallback matches what disambiguate_among
-        # does when no rule fires.
-        title_map: dict[str, int] = {
-            k: v[0].id
-            for k, v in title_to_articles.items()
-        }
-
-        # Ambiguity routing — bare-surname targets (SMITH, GRAY, …)
-        # whose generic article exists alongside 3+ person-variants
-        # ("SMITH, ADAM") consult the LLM disambiguation cache before
-        # falling through to default resolution.
-        #
-        # Per-entry opt-in: cache HIT → use the chosen target.  Cache
-        # MISS → fall through to normal title-match (same behaviour
-        # as before the disambiguator existed).  This means a partial
-        # cache only improves the entries it covers; uncached
-        # ambiguous candidates aren't degraded to ``status='ambiguous'``,
-        # they keep their pre-disambig resolution.  Coverage
-        # improvements (new extractor patterns) ship independently of
-        # disambiguator runs.
-        ambiguous_titles, stable_id_to_article_id, disambig_cache = (
-            _build_ambiguity_state(all_articles)
-        )
-        articles_by_id = {a.id: a for a in all_articles}
+        idx = build_resolution_index(all_articles)
 
         unresolved = (
             session.query(CrossReference)
@@ -255,12 +339,12 @@ def resolve_xrefs_all() -> int:
         # re-evaluation when the cache has gained an entry that
         # would route them differently.  Only relevant if the cache
         # has any entries.
-        if disambig_cache and ambiguous_titles:
+        if idx.disambig_cache and idx.ambiguous_titles:
             previously_resolved_ambiguous = (
                 session.query(CrossReference)
                 .filter(
                     CrossReference.status == "resolved",
-                    CrossReference.normalized_target.in_(ambiguous_titles),
+                    CrossReference.normalized_target.in_(idx.ambiguous_titles),
                 )
                 .all()
             )
@@ -268,82 +352,8 @@ def resolve_xrefs_all() -> int:
             previously_resolved_ambiguous = []
 
         resolved = 0
-
         for xref in unresolved + previously_resolved_ambiguous:
-            target = xref.normalized_target.strip().upper()
-            target_article_id: int | None = None
-            section: str | None = None
-
-            # 0. Ambiguous-title routing.  If the target matches one
-            # of the surname-with-variants titles AND the cache has
-            # an entry, route to the cached choice.  Cache miss
-            # falls through to normal resolution — preserves
-            # pre-disambig behaviour for unprocessed entries so
-            # partial cache deployments never degrade existing links.
-            if target in ambiguous_titles:
-                source = articles_by_id.get(xref.article_id)
-                cached_target = (
-                    _try_disambig_cache(
-                        xref, source, disambig_cache,
-                        stable_id_to_article_id,
-                    )
-                    if source is not None else None
-                )
-                if cached_target is not None:
-                    xref.target_article_id = cached_target
-                    xref.target_section = None
-                    xref.status = "resolved"
-                    resolved += 1
-                    continue
-                # else: cache miss → fall through to normal resolution.
-
-            # 1. Exact title / alias / section-alias (collision-aware)
-            candidates = title_to_articles.get(target)
-            if candidates:
-                target_article_id = disambiguate_among(xref, candidates)
-                if target in section_lookup:
-                    section = section_lookup[target]
-
-            # 1b. Bible-reference handler: ``BIBLE (KING JAMES)/EXODUS:
-            # 4:27`` → EXODUS, BOOK OF.  Deterministic, fast,
-            # matches ~45 unresolved entries cleanly.  No LLM needed.
-            if target_article_id is None:
-                target_article_id = _try_bible_handler(
-                    target, title_to_articles
-                )
-
-            # 2. Section-suffix form: "EUROPE: HISTORY" -> (EUROPE, HISTORY)
-            if target_article_id is None and ": " in target:
-                base, _, suffix = target.rpartition(": ")
-                base = base.strip()
-                suffix = suffix.strip()
-                base_candidates = title_to_articles.get(base)
-                if base_candidates and suffix:
-                    target_article_id = disambiguate_among(
-                        xref, base_candidates
-                    )
-                    section = suffix
-
-            # 3. Fuzzy matching (plurals, name inversion, section-strip, etc.)
-            if target_article_id is None:
-                target_article_id = resolve_xref_fuzzy(xref, title_map)
-
-            # 4. LLM-resolved unresolveds (last-resort fall-back).
-            # When everything above has missed, check whether
-            # ``tools/xrefs/resolve_unresolved.py`` has a cached
-            # decision for this xref.  Same cache file as the
-            # ambiguous-surname disambig path; same key shape; same
-            # opt-in semantics (no cache → no behaviour change).
-            if target_article_id is None and disambig_cache:
-                source = articles_by_id.get(xref.article_id)
-                if source is not None:
-                    cached_target = _try_disambig_cache(
-                        xref, source, disambig_cache,
-                        stable_id_to_article_id,
-                    )
-                    if cached_target is not None:
-                        target_article_id = cached_target
-
+            target_article_id, section = resolve_one(xref, idx)
             if target_article_id is not None:
                 xref.target_article_id = target_article_id
                 xref.target_section = section

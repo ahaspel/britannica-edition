@@ -1,119 +1,143 @@
-# Single-pass export: drop `transform_articles`, the export owns the walk
+# Export refactor: drop `article.body`; xrefs become one isolated pass
 
 ## One line
-Collapse the article pipeline from a chain that flattens the tree to a string
-and then repeatedly reparses it, into **two stages**: *detect* (corpus metadata)
-and *assemble* (one walk that resolves, assembles, and writes). `transform_articles`,
-`extract_xrefs`, `resolve_xrefs`, and the export's reparse all disappear;
-`Article.body` stops being materialized.
+The article body is never stored. The pipeline becomes: **walk → assemble an
+in-memory corpus → run the xref module once over it → serialize to JSON.**
+`article.body` and the stored `CrossReference` table both disappear, and xref
+handling collapses from a scattered chain (extract → intra-resolve → inter-resolve
+→ export-wrap-by-re-search) into a single isolated module that runs exactly once,
+with the whole corpus in hand.
 
 ## Why
-`transform_articles` is `process_elements` + a DB write — it materializes the
-*flattened* tree as `Article.body`, and that flattening is the sole reason every
-downstream stage reparses. The xref pass is the keystone: it is *why* the body is
-stored (so a later, inter-volume resolve can re-read it), why resolution is split
-intra/inter, why the export rebuilds `link_targets`. Remove the stored body and
-resolve in one pass, and the rest doesn't get fixed — it loses its reason to exist.
+`article.body` is a flattened-tree cache that drifts from the code — days locally,
+weeks on the live site. Every downstream stage reparses it. Stop storing it and the
+reparses lose their reason to exist.
 
-Reads are cheap and idempotent; what's expensive is materializing/mutating to
-*avoid* a re-read, because that's what couples the stages. This refactor deletes
-the read-once-and-mutate, and pays cheap re-reads for full decoupling.
+Xrefs are the one thing that genuinely cannot fold into the per-article structural
+walk, for two reasons no cleverness removes:
+- **They read prose.** "see PHYSIOLOGY" is language, not structure; the structural
+  walker must not touch it (and *can't* — you can't even bound the span until
+  something resolves).
+- **They need the whole corpus.** A reference can point forward; whether "see X" is
+  a link at all depends on whether X exists. You cannot decide one until you have all.
 
-## End-state architecture
+So we stop fighting it. Xrefs get **one separate module**, run once, after the corpus
+is fully assembled — the only point at which it is *possible* to handle all of them,
+and therefore the only point at which dropping a resolvable link becomes structurally
+impossible. (Dropping resolvable links is non-negotiable; this timing is the guarantee.)
 
-### Stage 1 — detect (corpus metadata)
-`detect_boundaries` (the honest `super_walker`) runs over every volume — it already
-does. It carves articles and, in passing, records each `Article.title` + span. From
-those titles, build the corpus-wide **title→filename index**. This is a light
-boundary scan, **not** a `process_elements` walk, built from rows that already
-exist — no body is touched. Pre-render disambiguation openings for the small set of
-**colliding** titles only (a tiny walk of just those articles).
+## The pipeline
 
-- **Change from today:** `detect_boundaries` records the plain title but **stops
-  yanking it** — the title stays in the article span so Stage 2 can recognize it as
-  an element. (The plain title is the *partition* read for identity; the marked-up
-  title is the *produce* read in Stage 2. Same heading, twice, cheaply — the price
-  of the title being an element instead of a yanked field.)
+### Stage 1 — walk + assemble (in memory)
+The walker is **unchanged** and stays structural. It marks explicit
+`{{EB1911 article link}}` as `«LN:target»` — pure template preservation, carrying the
+target through the render; it decides no link and resolves nothing. Bare prose
+("see PHYSIOLOGY") is left as prose. The export assembles each article body and holds
+the corpus in memory: a `dict[id → body]`, a few hundred MB for ~44M words, transient,
+**never written to the DB**. The resolution index (the titles, taken from the recognized
+TITLE elements — see the title-fold — plus what the content rung keys on) is accumulated
+as the corpus assembles.
 
-### Stage 2 — assemble (one walk)
-Per article: `process_elements(raw)` → tree (held only for this article's turn,
-then dropped) → read off the tree and assemble:
-- resolve each `«LN»` on the fly against the title index (unambiguous straight off
-  it; colliders against the pre-rendered openings); record the edge as the
-  CrossReference byproduct;
-- the **TITLE element** → `title_display` (marked-up);
-- body, sections, page numbers, word count; byline + images + plates from the
-  metadata tables;
-- write the JSON record.
+**No `article.body`. No `CrossReference`.**
 
-Backlinks (referenced-by) are a cheap aggregation of the recorded forward-edges,
-applied after the pass.
+### Stage 2 — the xref module (one pass, in memory)
+A single isolated module, run once over the assembled corpus. Three steps (the user's):
+1. **Find candidates.** Reuse `xrefs/extractor.py`'s trigger detection (`(q.v.)`,
+   `See`/`see`, `Cf.`, `compare`, the parenthesized `(See …)` forms) to locate every
+   place that might be a link, and add them to the explicit `«LN»` markers — one unified
+   candidate set. *The one improvement over today:* the span is the **longest prefix that
+   resolves** against the index, not the `_TARGET_TAIL` regex guess `extract_xrefs` is
+   forced into because it runs before any index exists. Resolution decides the boundary.
+2. **Resolve each.** Reuse `resolve_one` (exact / fuzzy / alias / section / Bible / cache)
+   against the in-memory index. The content rung — references matching no title — finally
+   runs *here*, where the whole corpus is available to match against; impossible upstream.
+3. **Write back.** Resolved → link, **in place** (no re-`search`, so the wrapping leak
+   that silently drops resolved prose links is gone). Unresolved → leave as prose — only
+   the genuine no-target residue, never a resolvable link.
 
-**Held state:** title index + collider openings — tens of MB, metadata-scale.
-**Never** the trees: one tree resident at a time.
+### Stage 3 — serialize
+Walk the in-memory dict → JSON. The shipped artifact.
 
-**No `Article.body`.** The shipped artifact is the JSON `"body"`. Nothing outside
-the pipeline reads `Article.body` except ~5 diagnostic tools (no Meilisearch-from-DB,
-no viewer backend — confirmed), which reroute to shadow-compute or read the JSON.
+## Isolation — what the module owns, what it touches
+The module owns **all** xref handling; everything else is innocent of it:
+- the walker marks `«LN»` (preservation) and otherwise knows nothing of xrefs;
+- the export assembles bodies and knows nothing of links;
+- `article_json.py` loses `_resolve_link` and `_wrap_resolved_xrefs_in_body` entirely.
+
+Its only inputs are the in-memory corpus + the index; its only output is the same
+corpus with links written in. A self-contained box, one entry, one exit — "as isolated
+and painless as possible," which is the right shape *because* xrefs are irreducibly a
+separate step.
+
+## The pattern: a Decorator over the assembled corpus
+This is the Decorator pattern, with one precision: the decorated object is the **corpus**, not
+the article in isolation. Assembly produces the base (the bodies), innocent of links and
+bylines. Each cross-corpus concern is a **decorator** — corpus in, corpus enriched out,
+ignorant of its siblings: xrefs first, **contributors** (page + bios) next, then backlinks /
+search index / anything that spans articles. Each touches every article *through its
+whole-corpus view* — the only way it can resolve a link or aggregate a contributor — and that
+corpus-scope is exactly why it can't fold into per-article assembly.
+
+Two things the pattern buys beyond description:
+- **The contract:** a decorator takes the assembled corpus, returns it enriched, and knows
+  nothing of the others — one entry, one exit, the isolation made an invariant.
+- **The placement test:** needs only the local article → it's assembly; needs the whole corpus
+  → it's a decorator, a peer pass. The pattern decides where anything new goes, so the argument
+  never recurs.
+
+It also draws the "no post-passes" line cleanly: a decorator *produces* its own concern (links,
+attributions) with the corpus as input — it is **not** a sweeper patching the body's output.
+Producing a new layer is legitimate; patching an old one is the sin. Holding the corpus is what
+makes the decorator half possible, and its cost amortizes across every tenant — never an
+xref-specific price.
+
+## The building blocks already exist (relocation, not invention)
+- **candidate-finding:** `xrefs/extractor.py` (triggers + patterns).
+- **resolution:** `resolve_one` + `build_resolution_index` (already extracted from
+  `resolve_xrefs_all`).
+- **collision-aware lookup / aliases / fuzzy / disambiguation cache:** `resolver.py`,
+  `scoring.py`, `alias_table.py`, the cache file — reused as-is.
+
+## What's retooled (the "bit")
+- `build_resolution_index` sources from the in-memory corpus, not a DB query.
+- candidate spans use longest-resolving-prefix (index in hand) instead of `_TARGET_TAIL`.
+- linking is in place; `CrossReference` writes and the export re-`search` wrap are deleted.
+- `resolve_xrefs_for_volume` (intra pass) is deleted — one corpus resolution, not two.
 
 ## What disappears
-- `transform_articles` → folded into the Stage-2 walk.
-- `extract_xrefs` + `resolve_xrefs` + the intra/inter split → on-the-fly resolution
-  during assembly.
-- `classify_articles` → a tree check (empty? plate?) during assembly.
-- the export's `«LN»` / `\x01PAGE` reparse → reads off the tree.
-- the title yank + the separate `title_display` walk → the TITLE element in the tree.
-- `Article.body` the field.
+- `article.body` (the field) and the `CrossReference` table.
+- `extract_xrefs` / `resolve_xrefs` as separate pipeline stages → folded into the module.
+- the intra/inter resolution split.
+- `_resolve_link` + `_wrap_resolved_xrefs_in_body` in `article_json.py`.
 
-## The title-fold (in this plan)
-Pieces already exist — `super_walker.py` (honest boundary, 0 misses) and
-`elements/_title.py` (the TITLE producer). This is **wiring**, not building:
-- `detect_boundaries` → `super_walker`: set the boundary, record the plain title,
-  leave the title in the span;
-- the walk recognizes the TITLE element (first element of the article);
-- the export reads it → `title_display`.
+## Deferred to their own arcs (Stage-1 assembly, not this doc)
+- **Title as element (a bonus the new architecture unlocks):** because the resolution
+  index now sources from the TITLE elements, `detect_boundaries` sheds title-fetching
+  entirely and returns to pure boundary-detection. The title is extracted **exactly once**,
+  in the walk, and that one recognition feeds both `title_display` and the index — detector
+  reads to partition, element extracts, the project's own rule honored for the title at
+  last. (Pieces exist: `super_walker.py`, `elements/_title.py`.)
+- **Contributors:** the same two-kinds split as xrefs. The byline is a per-article lookup
+  (initials → name via the contributor table) — local, fits Stage-1 assembly. But the
+  contributors page and the bios are **cross-corpus aggregations** (they need every article),
+  so they become a module over the assembled corpus — a peer of the xref module, run once.
+  Its own arc, but the shape is already known, and the corpus-hold already pays for it.
+  It's also the only reasonable way to **recover the mid-article bare initials** —
+  section-level contributor signatures embedded in prose that the table extraction misses
+  today and we've been losing. They're the contributor twin of the bare-prose "see":
+  prose-embedded, corpus-table-resolved, caught by the same scan-then-resolve, lost
+  everywhere else.
 
-## Contributors — deferred (the deliberate follow-on)
-Not in this plan, for a real reason: the byline is assembled from the contributor
-*tables*, not from walking the body, so deferring it forces no second walk — only
-`strip_attributions` stays, as a strip. And contributors feed more than the byline
-(the contributors page, the bios), so they are their own arc.
-
-## Staged, verifiable rollout
-The shipped artifact is the JSON; **every stage is proven by comparing the JSON
-corpus before/after.** The net is `shadow_export.py`: it diffs
-`current-export(walk_body)` against the shadow, **both** on the fresh walk-body,
-so staleness can't leak into the diff.  (The stored `article.body` / shipped JSON
-are days-to-weeks behind the code — useless as a baseline — which is why the old
-`verify_refactor` / `verify_targeted` / `render_zero` cluster was deleted.)
-
-- **A — Expose the tree.** `process_elements` returns the tree alongside the body
-  string. Purely additive; body unchanged → `walker_snapshot` 0/36,691, the same net
-  as the page fold.
-- **B — Shadow the single-pass export.** Build the walk-once export beside the live
-  pipeline: index from metadata, on-the-fly resolve, assemble JSON. Diff its JSON
-  field-by-field against the current export's until identical. This is where
-  transform/extract/resolve/classify become tree-reads, checked against ground truth
-  at every step.
-- **C — Title-fold.** Switch detection to `super_walker` (no yank); recognize the
-  TITLE element; export reads it. Prove `body` (title still out of the prose) and
-  `title_display` in the JSON are unchanged.
-- **D — Cut over.** The single-pass export replaces the four stages; drop
-  `Article.body`; reroute the ~5 tools; fix `cli/main`'s order. Final proof: JSON
-  corpus identical to pre-refactor, modulo intended diffs.
-
-## Things to prove (not assume)
-- On-the-fly resolution == the current CrossReference-based resolution (JSON
-  link-wrapping identical).
-- Collider disambiguation == `resolve_xrefs` (same target picked).
-- Backlink aggregation == the current CrossReference graph.
-- Held state stays metadata-scale (no accidental tree-holding); one tree resident.
-- The ~4 tools rerouted off `Article.body` (disambiguate_xrefs,
-  resolve_unresolved, link_vol29_articles, xref_coverage_audit).  (The
-  verify_refactor/verify_targeted/render_zero cluster was deleted, not rerouted —
-  stale-baseline, superseded by shadow_export.py.)
+## Verification
+Fresh-rebuild a volume for a clean baseline (`tools/db/rebuild_volume.sh`), then diff the
+new pipeline's JSON against it, field by field. The link set must be a **superset** of
+today's: the module recovers the wrapping-leak drops and resolves the content rung in
+place. It must never drop a link today's pipeline makes. Body/word_count/sections may
+legitimately freshen (always walked); resolution must not regress.
 
 ## Settled decisions
-Drop `Article.body`. Trees transient (no hold). Corpus single-pass (not per-volume).
-Title demoted to an element (this plan). Contributors deferred. Verification moves
-to the JSON output.
+- `article.body` is never stored — in-memory only, per build.
+- Xrefs are one isolated module, run once, after full assembly — by their nature.
+- Resolution is corpus-wide and single (no intra/inter).
+- Candidate spans **resolve**, they don't guess.
+- Drop **zero** resolvable links — the acceptance bar, non-negotiable.
