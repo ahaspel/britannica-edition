@@ -1,5 +1,6 @@
 from britannica.db.models import Article
 from britannica.db.session import SessionLocal
+from britannica.pipeline.stages.transform_articles import produce_article
 
 
 def classify_articles_for_volume(volume: int) -> dict[str, int]:
@@ -17,7 +18,7 @@ def classify_articles_for_volume(volume: int) -> dict[str, int]:
         counts: dict[str, int] = {}
 
         for article in articles:
-            body = (article.body or "").strip()
+            body = produce_article(session, article)[0].strip()
 
             # Preserve plate classification from boundary detection
             if article.article_type == "plate":

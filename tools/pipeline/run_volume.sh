@@ -68,20 +68,8 @@ echo "=== Detecting boundaries ==="
 uv run britannica detect-boundaries "$VOLUME"
 
 echo
-echo "=== Transforming articles ==="
-uv run britannica transform-articles "$VOLUME"
-
-echo
 echo "=== Classifying articles ==="
 uv run britannica classify-articles "$VOLUME"
-
-echo
-echo "=== Extracting cross-references ==="
-uv run britannica extract-xrefs "$VOLUME"
-
-echo
-echo "=== Resolving cross-references ==="
-uv run britannica resolve-xrefs-all
 
 echo
 echo "=== Extracting images ==="

@@ -98,14 +98,8 @@ for vol in $VOLUMES; do
   echo "  Detecting boundaries..."
   uv run britannica detect-boundaries "$vol"
 
-  echo "  Transforming articles..."
-  uv run britannica transform-articles "$vol"
-
   echo "  Classifying articles..."
   uv run britannica classify-articles "$vol"
-
-  echo "  Extracting cross-references..."
-  uv run britannica extract-xrefs "$vol"
 
   echo "  Extracting images..."
   uv run britannica extract-images "$vol"
@@ -113,16 +107,8 @@ for vol in $VOLUMES; do
   echo "  Extracting contributors..."
   uv run britannica extract-contributors "$vol"
 
-  echo "  Exporting articles..."
-  uv run britannica export-articles "$vol"
-
   echo "  Volume $vol complete. [$(elapsed)]"
 done
-
-# --- Phase 3: Cross-volume resolution ---
-echo
-echo "=== Phase 3a: Resolving cross-references across all volumes [$(elapsed)] ==="
-uv run britannica resolve-xrefs-all
 
 echo
 echo "=== Phase 3b: Linking contributors from front matter [$(elapsed)] ==="
@@ -162,13 +148,10 @@ echo
 echo "=== Phase 3d: Snapshot article index [$(elapsed)] ==="
 uv run python tools/diagnostics/snapshot_article_index.py
 
-# --- Phase 4: Re-export (xref targets now resolved cross-volume) ---
+# --- Phase 4: Assemble + export the whole corpus (in-memory resolution) ---
 echo
-echo "=== Phase 4: Re-exporting all volumes (with resolved xrefs) [$(elapsed)] ==="
-for vol in $VOLUMES; do
-  echo "  Re-exporting volume $vol..."
-  uv run britannica export-articles "$vol"
-done
+echo "=== Phase 4: Assembling + exporting all volumes [$(elapsed)] ==="
+uv run britannica corpus-export
 
 # --- Phase 4b: Measure math widths (refresh scale-hint cache) ---
 # Renders every unique display-mode `«MATH:` marker in the exported
