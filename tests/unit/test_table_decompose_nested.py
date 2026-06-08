@@ -118,7 +118,7 @@ class TestProduceCellRecursion:
             return "«NESTED-MARKER»"
 
         content = f"North {NESTED_RAW} tail"
-        styles, body = produce_cell("", content, _identity, recurse=recurse)
+        styles, body = produce_cell("", content, recurse=recurse)
         assert seen == [NESTED_RAW]            # recursed on the nested raw
         assert body == "North «NESTED-MARKER» tail"   # marker substituted
 
@@ -136,8 +136,7 @@ class TestProduceCellRecursion:
             seen.append(raw)
             return "x"
 
-        _styles, body = produce_cell("", "plain cell", _identity,
-                                     recurse=recurse)
+        _styles, body = produce_cell("", "plain cell", recurse=recurse)
         assert seen == []
         assert body == "plain cell"
 
@@ -152,7 +151,7 @@ class TestEndToEnd:
 
         _caption, rows = extract_wiki_rows(NESTED_INNER)
         produced = [
-            [produce_cell(attr, content, _identity, recurse=recurse)[1]
+            [produce_cell(attr, content, recurse=recurse)[1]
              for _sep, attr, content in cells]
             for _attrs, cells in rows
         ]

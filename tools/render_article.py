@@ -35,12 +35,13 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8") if hasattr(
     sys.stdout, "reconfigure") else None
 
-from britannica.db.models import Article, ArticleSegment, SourcePage
+from britannica.db.models import Article
 from britannica.db.session import SessionLocal
 from britannica.export.article_json import (
     _safe_filename, export_articles_to_json,
 )
-from britannica.pipeline.stages.transform_articles import _transform_text_v2
+from britannica.pipeline.stages.transform_articles import walk_article
+from britannica.pipeline.stages.resolve_xrefs import build_resolution_index
 
 
 def _find_article(session, title: str, volume: int | None) -> Article | None:
@@ -81,45 +82,23 @@ def render(title: str, volume: int | None = None,
         print(f"[{time.time()-t0:4.1f}s] {article.title} "
               f"(vol {article.volume}, p{article.page_start})")
 
-        # Use ``segment_text`` (article-scoped, already filtered to
-        # this article's portion of each page) joined with PAGE markers
-        # — the same input ``transform_articles`` builds for the live
-        # pipeline.  ``pg.wikitext`` is page-scoped and contains
-        # adjacent articles' content too; joining those would
-        # contaminate the transform output (LARVAL FORMS bug).
-        import re as _re
-        segs = (
-            session.query(ArticleSegment)
-            .join(SourcePage,
-                  ArticleSegment.source_page_id == SourcePage.id)
-            .filter(ArticleSegment.article_id == article.id)
-            .order_by(ArticleSegment.sequence_in_article)
-            .add_columns(SourcePage.page_number)
-            .all()
-        )
-        # Mirror production: segments already carry their «PAGE» marker (stamped
-        # at detection) and the seam is healed upstream — just concatenate.
-        joined_raw = "".join(seg.segment_text or "" for seg, page_number in segs)
-        print(f"[{time.time()-t0:4.1f}s] Read {len(segs)} segments, "
-              f"{len(joined_raw):,} chars")
-
-        if article.article_type == "plate":
-            from britannica.pipeline.stages.elements._figure_faithful import (
-                produce_faithful_figure,
-            )
-            body = produce_faithful_figure(segs[0][0].segment_text or "") if segs else ""
-        else:
-            body = _transform_text_v2(
-                joined_raw, volume=article.volume,
-                page_number=segs[0][1] if segs else article.page_start,
-            ) if joined_raw else ""
-        print(f"[{time.time()-t0:4.1f}s] Transformed → {len(body):,} chars")
+        # Mirror production EXACTLY: assemble_and_export walks every article —
+        # plates included — through walk_article (segment-join with the carried
+        # «PAGE» markers, footer strip, the ONE element walk, title split).  No
+        # manual concatenation, no plate special-case, no transform shim.
+        body, _disp = walk_article(session, article)
+        print(f"[{time.time()-t0:4.1f}s] Walked → {len(body):,} chars")
+        # Resolve this article's «LN» links exactly as production does:
+        # assemble_and_export builds the same corpus index before serializing.
+        idx = build_resolution_index(session.query(Article).all())
     finally:
         session.close()
 
     export_articles_to_json(
         article.volume, out_dir,
         body_override={article.id: body},
+        link_index=idx,
+        title_display_override={article.id: _disp},
         only_article_id=article.id,
     )
     fn = _safe_filename(article, article.title)
