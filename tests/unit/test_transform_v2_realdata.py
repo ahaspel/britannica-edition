@@ -267,10 +267,16 @@ class TestTableCellProcessing:
         assert "''" not in result, f"Raw italic survived: {result[:60]}"
 
     def test_sub_sup_in_table_cell(self):
-        """<sub>/<sup> in table cells must be converted to Unicode."""
-        result = _transform("{|\n|H<sub>2</sub>O\n|100\n|}")
-        assert "<sub>" not in result, f"Raw sub survived: {result[:60]}"
-        assert "\u2082" in result, f"No Unicode subscript: {result[:60]}"
+        """Cells recurse their content, so sub/sup is handled as the producer
+        actually sees it in production: HTML `<sub>`/`<sup>` (the dominant form,
+        ~51k occ across 1233 articles) is carried verbatim for the viewer to
+        decode; the `{{sub|x}}` template (~7k occ) is normalized to Unicode by
+        the SUBSUP producer.  Both outcomes prove the cell recursed."""
+        html = _transform("{|\n|H<sub>2</sub>O\n|100\n|}")
+        assert "<sub>2</sub>" in html, f"HTML <sub> not carried: {html[:80]}"
+        tmpl = _transform("{|\n|H{{sub|2}}O\n|100\n|}")
+        assert "\u2082" in tmpl and "{{sub" not in tmpl, \
+            f"template sub not normalized: {tmpl[:80]}"
 
     def test_abbreviation_italic_real_data(self):
         """ABBREVIATION (vol 1 p58) has ''e.g.'' in table cells."""

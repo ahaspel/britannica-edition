@@ -5,7 +5,6 @@ from britannica.pipeline.stages.elements import (
     ElementContext,
     process_elements,
 )
-from britannica.pipeline.stages.elements._text import _clean_text
 from britannica.pipeline.stages.elements._shapes import (
     SHAPE_BRACE_PIPE,
     SHAPE_DOUBLE_BRACKET,
@@ -13,16 +12,6 @@ from britannica.pipeline.stages.elements._shapes import (
     SHAPE_INLINE_IMAGE,
 )
 from britannica.pipeline.stages.elements._walker import walk
-
-
-def _identity_transform(text: str) -> str:
-    """Dummy text transform that returns text unchanged."""
-    return text
-
-
-def _bold_transform(text: str) -> str:
-    """Simple transform that converts '''bold''' to markers."""
-    return text.replace("'''", "\u00abB\u00bb", 1).replace("'''", "\u00ab/B\u00bb", 1)
 
 
 class TestExtraction:
@@ -92,7 +81,7 @@ class TestProcessing:
 
     def test_ref_becomes_footnote_marker(self):
         text = "text <ref>See also Wikipedia</ref> more"
-        result = process_elements(text, _identity_transform, ElementContext())
+        result = process_elements(text, ElementContext())
         assert "\u00abFN:" in result
         assert "\u00ab/FN\u00bb" in result
         assert "See also Wikipedia" in result
@@ -103,25 +92,25 @@ class TestProcessing:
         # rendered caption ("no honest captions"); captionless-by-author
         # intent is fine.  Any visible caption is a separate sibling block.
         text = "[[File:Foo.jpg|thumb|A nice caption]]"
-        result = process_elements(text, _identity_transform, ElementContext())
+        result = process_elements(text, ElementContext())
         assert "{{IMG:Foo.jpg}}" in result
 
     def test_image_caption_markers_stripped(self):
         """Trailing bracket text is alt (dropped), so no caption \u2014 and no
         markers \u2014 ride in the IMG leaf."""
         text = "[[File:Foo.jpg|thumb|'''Fig.''' 1 - ''Italic'' caption]]"
-        result = process_elements(text, _bold_transform, ElementContext())
+        result = process_elements(text, ElementContext())
         assert "{{IMG:Foo.jpg}}" in result
 
     def test_math_preserved(self):
         text = "formula <math>x^2 + y^2</math> end"
-        result = process_elements(text, _identity_transform, ElementContext())
+        result = process_elements(text, ElementContext())
         assert "\u00abMATH:x^2 + y^2\u00ab/MATH\u00bb" in result
 
     def test_ref_inside_table(self):
         """Footnote inside a table is processed cleanly."""
         text = "{|\n|cell <ref>A footnote</ref>\n|}"
-        result = process_elements(text, _identity_transform, ElementContext())
+        result = process_elements(text, ElementContext())
         assert "\u00abFN:A footnote\u00ab/FN\u00bb" in result
         assert "<ref>" not in result
 
@@ -129,8 +118,8 @@ class TestProcessing:
         """Footnote text KEEPS its formatting markers \u2014 the producer no
         longer flattens the body, so \u00abB\u00bb/\u00abI\u00bb/etc. survive for the viewer
         to render (the footnote producer owns its body, no _clean_text)."""
-        text = "<ref>See '''bold''' here</ref>"
-        result = process_elements(text, _bold_transform, ElementContext())
+        text = "<ref>See «B»bold«/B» here</ref>"
+        result = process_elements(text, ElementContext())
         fn_match = re.search(r"\u00abFN:(.*?)\u00ab/FN\u00bb", result)
         assert fn_match is not None
         assert "\u00abB\u00bbbold\u00ab/B\u00bb" in fn_match.group(1)
@@ -154,7 +143,7 @@ class TestRealData:
         # Extract just the img float for Nero Citharoedus
         m = re.search(r"\{\{img float\s*\|(?:[^{}]|\{\{[^{}]*\}\})*Nero(?:[^{}]|\{\{[^{}]*\}\})*\}\}", raw, re.DOTALL | re.IGNORECASE)
         assert m, "Nero image not found in page"
-        result = process_elements(m.group(0), _identity_transform, ElementContext())
+        result = process_elements(m.group(0), ElementContext())
         assert 'class="figtable"' in result and "float:" in result
         # Pure image leaf \u2014 no caption bundled into the IMG marker.
         assert "{{IMG:" in result
@@ -167,7 +156,7 @@ class TestRealData:
         # Find the earthquake table
         m = re.search(r"\{\|.*?684.*?\|\}", raw, re.DOTALL)
         if m:
-            result = process_elements(m.group(0), _identity_transform, ElementContext())
+            result = process_elements(m.group(0), ElementContext())
             assert "<ref>" not in result, "Raw ref tags survived"
             if "\u00abFN:" in result:
                 fn = re.search(r"\u00abFN:(.*?)\u00ab/FN\u00bb", result)
@@ -177,7 +166,7 @@ class TestRealData:
         """BINIOU score tags inside tables should become image markers."""
         raw = self._load_page(3, 971)
         context = ElementContext(volume=3, page_number=971)
-        result = process_elements(raw, _identity_transform, context)
+        result = process_elements(raw, context)
         assert "<score>" not in result, "Raw score tags survived"
         assert "\\new Staff" not in result, "LilyPond code survived"
 
@@ -187,7 +176,7 @@ class TestTableProcessing:
 
     def test_simple_table(self):
         text = '{|\n|A\n|B\n|-\n|C\n|D\n|}'
-        result = process_elements(text, _identity_transform, ElementContext())
+        result = process_elements(text, ElementContext())
         assert "«HTMLTABLE:" in result and "«/HTMLTABLE»" in result
         for cell in ("A", "B", "C", "D"):
             assert f">{cell}</td>" in result
@@ -197,7 +186,7 @@ class TestTableProcessing:
         contract), not stripped: `align="right"` → text-align:right, inline
         `style=` preserved."""
         text = '{|\n|align="right"|100\n|style="color:red"|hello\n|}'
-        result = process_elements(text, _identity_transform, ElementContext())
+        result = process_elements(text, ElementContext())
         assert ">100</td>" in result and ">hello</td>" in result
         assert "text-align:right" in result
         assert "color:red" in result
@@ -205,26 +194,26 @@ class TestTableProcessing:
     def test_table_with_footnote(self):
         """Footnote inside table cell should be clean in output."""
         text = '{|\n|Year\n|Deaths\n|-\n|1703\n|5000<ref>Tidal wave.</ref>\n|}'
-        result = process_elements(text, _identity_transform, ElementContext())
+        result = process_elements(text, ElementContext())
         assert "<ref>" not in result
         assert "\u00abFN:" in result
         assert "Tidal wave" in result
 
     def test_table_br_preserved_in_cell(self):
-        """`<br>` is preserved losslessly in the cell — now as the canonical
-        «BR» line break.  The cell recurses through `process_elements` (the
-        producer collapse), so it applies the same `<br>`→«BR» rule as body
-        prose (b7763c4) instead of keeping a raw `<br>`; the viewer decodes «BR»
-        back to `<br>` everywhere, including inside «HTMLTABLE»."""
+        """`<br>` is preserved losslessly in a cell — carried as HTML for the
+        viewer to decode, exactly as `<sub>`/`<sup>` are (the renderable bucket).
+        The cell recurses, but `<br>` rides through verbatim; it is NOT rewritten
+        to «BR» — that's the styled-wrapper rule (where the body producer would
+        otherwise collapse the break to a space), not the cell rule."""
         text = '{|\n|Houses<br />destroyed.\n|Deaths.\n|}'
-        result = process_elements(text, _identity_transform, ElementContext())
+        result = process_elements(text, ElementContext())
         assert "Houses" in result and "destroyed." in result
-        assert "«BR»" in result
+        assert "<br />" in result  # carried verbatim, renderable — not «BR»
 
     def test_table_with_image(self):
         """Image inside table is extracted as separate element."""
         text = '{|\n|[[File:Foo.jpg|thumb|Caption]]\n|Text\n|}'
-        result = process_elements(text, _identity_transform, ElementContext())
+        result = process_elements(text, ElementContext())
         assert "{{IMG:Foo.jpg" in result
 
 
@@ -248,7 +237,7 @@ class TestChemistryLayout:
             '|Steiner, || colspan=2|Divers, ||Scholl, ||Nef.\n'
             '|}'
         )
-        result = process_elements(table, _identity_transform, ElementContext())
+        result = process_elements(table, ElementContext())
         # Its own marker \u2014 not the flattened {{TABLE:}} path.
         assert "\u00abCHEM:" in result
         assert "{{TABLE:" not in result
@@ -266,20 +255,8 @@ class TestChemistryLayout:
     def test_plain_table_unaffected(self):
         # A normal data table with NO angle-bracket image is untouched.
         table = '{|\n|A\n|B\n|-\n|C\n|D\n|}'
-        result = process_elements(table, _identity_transform, ElementContext())
+        result = process_elements(table, ElementContext())
         assert "\u00abCHEM:" not in result
         assert "\u00abHTMLTABLE:" in result
 
 
-class TestCleanText:
-    def test_strips_bold(self):
-        assert _clean_text("\u00abB\u00bbhello\u00ab/B\u00bb") == "hello"
-
-    def test_strips_italic(self):
-        assert _clean_text("\u00abI\u00bbworld\u00ab/I\u00bb") == "world"
-
-    def test_strips_html(self):
-        assert _clean_text("a<br />b") == "a b"
-
-    def test_collapses_whitespace(self):
-        assert _clean_text("a   b  c") == "a b c"
