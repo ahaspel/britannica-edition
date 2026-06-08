@@ -75,11 +75,19 @@ def _run_pipeline(monkeypatch, session_factory, pages_data, volume):
     # SessionLocal — patch it too or the walk reads the wrong DB (page numbers
     # then mismatch `pid` → KeyError).
     monkeypatch.setattr(super_walker_stage, "SessionLocal", session_factory)
-    monkeypatch.setattr(transform_articles_stage, "SessionLocal", session_factory)
     _seed_pages(session_factory, pages_data, volume)
     detect_boundaries_stage.persist_articles(
         super_detect_stage.detect_boundaries(volume))
-    transform_articles_stage.transform_articles(volume)
+    # Walk each article into its body the way the assemble does
+    # (transform_articles is gone; produce_article is the shared walk).
+    session = session_factory()
+    try:
+        for a in session.query(Article).filter(Article.volume == volume).all():
+            a.body, a.title_display = transform_articles_stage.produce_article(
+                session, a)
+        session.commit()
+    finally:
+        session.close()
 
 
 @pytest.fixture()

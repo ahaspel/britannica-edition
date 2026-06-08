@@ -72,7 +72,7 @@ from britannica.pipeline.stages.detect_boundaries import (
 )
 from britannica.pipeline.stages.super_detect import detect_boundaries
 from britannica.pipeline.stages.prepare_wikitext import prepare_wikitext
-from britannica.pipeline.stages.transform_articles import transform_articles
+from britannica.pipeline.assemble import assemble_and_export
 from sqlalchemy import text
 
 
@@ -180,12 +180,8 @@ def _run_fast(volume: int, t0: float) -> None:
     persist_articles(detected)
     print(f"[{time.time()-t0:5.1f}s]   Detected {len(detected)} articles")
 
-    print(f"[{time.time()-t0:5.1f}s] Transforming articles…")
-    n = transform_articles(volume)
-    print(f"[{time.time()-t0:5.1f}s]   Transformed {n} articles")
-
-    print(f"[{time.time()-t0:5.1f}s] Exporting volume {volume} to JSON…")
-    n = export_articles_to_json(volume, "data/derived/articles")
+    print(f"[{time.time()-t0:5.1f}s] Assembling + exporting (in-memory walk + resolve)…")
+    n = assemble_and_export("data/derived/articles", only_volume=volume)
     print(f"[{time.time()-t0:5.1f}s]   Exported {n} articles")
 
 
@@ -208,20 +204,14 @@ def _run_full(volume: int, t0: float) -> None:
          ["uv", "run", "britannica", "prepare-wikitext", str(volume)]),
         ("Detecting boundaries",
          ["uv", "run", "britannica", "detect-boundaries", str(volume)]),
-        ("Transforming articles",
-         ["uv", "run", "britannica", "transform-articles", str(volume)]),
         ("Classifying articles",
          ["uv", "run", "britannica", "classify-articles", str(volume)]),
-        ("Extracting xrefs",
-         ["uv", "run", "britannica", "extract-xrefs", str(volume)]),
-        ("Resolving xrefs",
-         ["uv", "run", "britannica", "resolve-xrefs-all"]),
         ("Extracting images",
          ["uv", "run", "britannica", "extract-images", str(volume)]),
         ("Extracting contributors",
          ["uv", "run", "britannica", "extract-contributors", str(volume)]),
-        ("Exporting articles",
-         ["uv", "run", "britannica", "export-articles", str(volume)]),
+        ("Assembling + exporting",
+         ["uv", "run", "britannica", "corpus-export"]),
     ]
     for label, cmd in steps:
         print(f"[{time.time()-t0:5.1f}s] {label}…")

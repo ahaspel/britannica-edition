@@ -61,8 +61,8 @@ def main():
     print(f"{'vol':>3} {'figs':>5} {'tails':>6}", flush=True)
     for v in vols:
         aids = [a for (a,) in s.query(Article.id)
-                .filter(Article.volume == v, Article.article_type == "article",
-                        Article.body.like("%{{IMG:%")).all()]
+                .filter(Article.volume == v, Article.article_type == "article")
+                .all()]
         vt = 0
         for aid in aids:
             txt = inp(s, aid)
