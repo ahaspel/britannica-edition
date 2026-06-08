@@ -79,11 +79,11 @@ def _run_pipeline(monkeypatch, session_factory, pages_data, volume):
     detect_boundaries_stage.persist_articles(
         super_detect_stage.detect_boundaries(volume))
     # Walk each article into its body the way the assemble does
-    # (transform_articles is gone; produce_article is the shared walk).
+    # (transform_articles is gone; walk_article is the shared one-walk).
     session = session_factory()
     try:
         for a in session.query(Article).filter(Article.volume == volume).all():
-            a.body, a.title_display = transform_articles_stage.produce_article(
+            a.body, a.title_display = transform_articles_stage.walk_article(
                 session, a)
         session.commit()
     finally:
