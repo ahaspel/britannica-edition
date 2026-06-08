@@ -50,9 +50,7 @@ def walk_body(session, article: Article) -> tuple[str, dict]:
     )
     if not segments:
         return "", {}
-    joined_raw = "".join(
-        f"\x01PAGE:{page_number}\x01{seg.segment_text or ''}"
-        for seg, page_number in segments)
+    joined_raw = "".join(seg.segment_text or "" for seg, page_number in segments)
     if not joined_raw:
         return "", {}
     ctx = ElementContext(volume=article.volume, page_number=segments[0][1])

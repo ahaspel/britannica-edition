@@ -174,15 +174,8 @@ def _process_articles(volumes: list[int] | None = None) -> int:
             )
             if not segments:
                 continue
-            raw_parts = []
-            for seg, page_number in segments:
-                raw_parts.append(
-                    f"\x01PAGE:{page_number}\x01{seg.segment_text or ''}")
-            joined_raw = "\n".join(raw_parts)
-            joined_raw = re.sub(
-                r"(\w)-\n(\x01PAGE:\d+\x01)(\w)",
-                r"\1\2\3", joined_raw,
-            )
+            joined_raw = "".join(
+                seg.segment_text or "" for seg, page_number in segments)
             first_page = segments[0][1]
             try:
                 _transform_text_v2(joined_raw, article.volume, first_page)

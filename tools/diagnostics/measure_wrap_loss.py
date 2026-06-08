@@ -31,8 +31,7 @@ def walk_body(session, article):
             .add_columns(SourcePage.page_number).all())
     if not segs:
         return ""
-    joined = "".join(f"\x01PAGE:{pn}\x01{s.segment_text or ''}"
-                     for s, pn in segs)
+    joined = "".join(s.segment_text or "" for s, pn in segs)
     if not joined:
         return ""
     ctx = ElementContext(volume=article.volume, page_number=segs[0][1])

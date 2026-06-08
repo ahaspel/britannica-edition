@@ -83,11 +83,7 @@ def main() -> int:
                     .order_by(ArticleSegment.sequence_in_article).all())
             if not segs:
                 continue
-            raw = "\n".join(
-                f"\x01PAGE:{pn}\x01{(seg.segment_text or '')}"
-                for seg, pn in segs)
-            raw = re.sub(
-                r"(\w)-\n(\x01PAGE:\d+\x01)(\w)", r"\1\2\3", raw)
+            raw = "".join(seg.segment_text or "" for seg, pn in segs)
             try:
                 body = _transform_text_v2(raw, art.volume, segs[0][1])
             except Exception:

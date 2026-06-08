@@ -97,15 +97,9 @@ def render(title: str, volume: int | None = None,
             .add_columns(SourcePage.page_number)
             .all()
         )
-        raw_parts: list[str] = []
-        for seg, page_number in segs:
-            raw_parts.append(
-                f"\x01PAGE:{page_number}\x01{seg.segment_text or ''}")
-        joined_raw = "\n".join(raw_parts)
-        # Heal cross-page hyphenation (same fix transform_articles does).
-        joined_raw = _re.sub(
-            r"(\w)-\n(\x01PAGE:\d+\x01)(\w)",
-            r"\1\2\3", joined_raw)
+        # Mirror production: segments already carry their «PAGE» marker (stamped
+        # at detection) and the seam is healed upstream — just concatenate.
+        joined_raw = "".join(seg.segment_text or "" for seg, page_number in segs)
         print(f"[{time.time()-t0:4.1f}s] Read {len(segs)} segments, "
               f"{len(joined_raw):,} chars")
 

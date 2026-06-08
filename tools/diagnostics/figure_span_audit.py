@@ -29,7 +29,6 @@ from britannica.pipeline.stages.elements._figure import (
     figure_tail_end, figure_wrapper_end,
 )
 
-_HY = re.compile(r"(\w)-\n(\x01PAGE:\d+\x01)(\w)")
 _OPEN = re.compile(
     r"\{\{\s*(?:center|block\s*center)\s*\||"
     r"\[\[(?:File|Image):|\{\{\s*(?:img float|figure|FI)\b", re.IGNORECASE)
@@ -39,8 +38,7 @@ def inp(s, aid):
     segs = (s.query(ArticleSegment).join(SourcePage, ArticleSegment.source_page_id == SourcePage.id)
             .filter(ArticleSegment.article_id == aid).order_by(ArticleSegment.sequence_in_article)
             .add_columns(SourcePage.page_number).all())
-    parts = [f"\x01PAGE:{pn}\x01{(seg.segment_text or '')}" for seg, pn in segs]
-    return _HY.sub(r"\1\2\3", "\n".join(parts))
+    return "".join(seg.segment_text or "" for seg, pn in segs)
 
 
 def main():

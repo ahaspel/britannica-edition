@@ -45,20 +45,11 @@ EXPORT_DIR = Path("data/derived/articles")
 
 
 def _build_joined_raw(segments: list) -> str:
-    """Same join used by `transform_articles` and
-    `capture_transform_snapshots`.  Each segment gets a
-    `\\x01PAGE:N\\x01` prefix; the cross-page hyphenation fix runs
-    once over the joined result."""
-    parts = []
-    for seg, page_number in segments:
-        raw = seg.segment_text or ""
-        parts.append(f"\x01PAGE:{page_number}\x01{raw}")
-    joined = "\n".join(parts)
-    joined = re.sub(
-        r"(\w)-\n(\x01PAGE:\d+\x01)(\w)",
-        r"\1\2\3", joined,
-    )
-    return joined
+    """Same join used by `transform_articles` and `capture_transform_snapshots`:
+    concatenate the segments with NO separator.  Each segment already carries its
+    `\\x01PAGE:N\\x01` marker (stamped at detection) and the seam was healed
+    upstream — nothing to re-stamp, nothing to re-heal."""
+    return "".join(seg.segment_text or "" for seg, page_number in segments)
 
 
 def add_one(session, stem: str) -> tuple[str, str]:

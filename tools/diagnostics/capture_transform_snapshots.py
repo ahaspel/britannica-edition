@@ -83,15 +83,13 @@ EXPORT_DIR = Path("data/derived/articles")
 
 
 def build_joined_raw(segments: list) -> str:
-    """Mirror the FAITHFUL re-join in `transform_articles`: concatenate
-    ``marker+segment`` with NO separator.  The segment text is already a slice
-    of the preprocess-healed stream (preprocess did the seam healing upstream),
-    so re-inserting a ``\\n`` between segments — as the old ``"\\n".join`` did —
-    invents a page-seam newline production no longer has.  Matches
-    ``snapshot_corpus._build_joined_raw`` and production exactly."""
-    return "".join(
-        f"\x01PAGE:{page_number}\x01{seg.segment_text or ''}"
-        for seg, page_number in segments)
+    """Mirror the FAITHFUL re-join in `transform_articles`: concatenate the
+    segments with NO separator.  Each segment already carries its «PAGE» marker
+    (stamped at detection) and is a slice of the preprocess-healed stream, so
+    there is nothing to re-stamp and nothing to re-heal; re-inserting a ``\\n``
+    between segments would invent a page-seam newline production no longer has.
+    Matches ``snapshot_corpus._build_joined_raw`` and production exactly."""
+    return "".join(seg.segment_text or "" for seg, page_number in segments)
 
 
 def _find_article(session, stable_id: str):

@@ -56,9 +56,7 @@ def _retransform(session, article: Article) -> str | None:
             .order_by(ArticleSegment.sequence_in_article).all())
     if not segs:
         return None
-    raw = "\n".join(
-        f"\x01PAGE:{pn}\x01{(seg.segment_text or '')}" for seg, pn in segs)
-    raw = re.sub(r"(\w)-\n(\x01PAGE:\d+\x01)(\w)", r"\1\2\3", raw)
+    raw = "".join(seg.segment_text or "" for seg, pn in segs)
     try:
         return _transform_text_v2(raw, article.volume, segs[0][1])
     except Exception as e:
