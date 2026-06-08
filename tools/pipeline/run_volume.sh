@@ -72,10 +72,6 @@ echo "=== Classifying articles ==="
 uv run britannica classify-articles "$VOLUME"
 
 echo
-echo "=== Extracting images ==="
-uv run britannica extract-images "$VOLUME"
-
-echo
 echo "=== Extracting contributors ==="
 uv run britannica extract-contributors "$VOLUME"
 

@@ -15,14 +15,6 @@ WHERE article_id IN (
   SELECT id FROM articles WHERE volume = $VOLUME
 );
 
-DELETE FROM article_images
-WHERE article_id IN (
-  SELECT id FROM articles WHERE volume = $VOLUME
-)
-OR source_page_id IN (
-  SELECT id FROM source_pages WHERE volume = $VOLUME
-);
-
 UPDATE cross_references
 SET target_article_id = NULL, status = 'unresolved'
 WHERE target_article_id IN (

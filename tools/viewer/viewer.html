@@ -3168,7 +3168,6 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
       const segments = Array.isArray(article.segments) ? article.segments : [];
       const xrefs = (Array.isArray(article.xrefs) ? article.xrefs : [])
         .slice().sort((a, b) => (a.normalized_target || "").localeCompare(b.normalized_target || ""));
-      const images = Array.isArray(article.images) ? article.images : [];
       const contributors = Array.isArray(article.contributors) ? article.contributors : [];
       const plates = Array.isArray(article.plates) ? article.plates : [];
 

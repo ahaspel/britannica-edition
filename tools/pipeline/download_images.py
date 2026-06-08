@@ -1,7 +1,7 @@
 """Download Commons images for local hosting and EPUB prep.
 
-Downloads all images tracked in the ArticleImage table
-(upload.wikimedia.org URLs, PNG/JPG/SVG/GIF).
+Downloads every image the corpus references — the filenames are harvested from
+the exported article bodies' {{IMG:…}} markers, not a DB table (PNG/JPG/SVG/GIF).
 
 DjVu page crops are handled separately by tools/download_djvu_crops.py.
 
@@ -18,6 +18,7 @@ Usage:
 
 import argparse
 import io
+import json
 import sys
 import time
 from pathlib import Path
@@ -32,6 +33,7 @@ if sys.stderr.encoding != "utf-8":
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
 IMAGE_DIR = Path("data/derived/images")
+ARTICLES_DIR = Path("data/derived/articles")
 DELAY = 3  # seconds between requests
 BATCH_SIZE = 350  # requests before cooldown
 COOLDOWN = 15 * 60  # 15 minutes
@@ -43,7 +45,7 @@ SESSION.headers["User-Agent"] = (
 
 
 # ---------------------------------------------------------------------------
-# Commons images (from DB)
+# Commons images (from the exported corpus)
 # ---------------------------------------------------------------------------
 
 def _local_filename(commons_url: str) -> str:
@@ -92,26 +94,37 @@ def _download_with_retry(url: str, local_path: Path, local_name: str,
     return False
 
 
+def _harvest_image_filenames() -> list[str]:
+    """Every image filename the corpus references, read from the exported article
+    bodies' ``{{IMG:filename|…}}`` markers — the corpus is its own record of which
+    images it needs, so there's no separate table to keep in sync."""
+    from britannica.markers import IMG_PARTS_RE
+
+    names: set[str] = set()
+    for path in sorted(ARTICLES_DIR.glob("*.json")):
+        data = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(data, dict):
+            continue  # skip index files (contributors.json, …) — per-article objects only
+        for m in IMG_PARTS_RE.finditer(data.get("body") or ""):
+            fn = (m.group(1) or "").strip()
+            if fn:
+                names.add(fn)
+    return sorted(names)
+
+
 def download_commons_images(delay: float, request_count: int = 0) -> tuple[int, int, int]:
-    """Download all Commons images from the ArticleImage table.
+    """Download every Commons image the corpus references.
 
     Returns (downloaded, skipped, request_count).
     """
-    from britannica.db.session import SessionLocal
-    from britannica.db.models import ArticleImage
-
-    session = SessionLocal()
-    images = session.query(ArticleImage.commons_url, ArticleImage.filename).distinct().all()
-    session.close()
+    filenames = _harvest_image_filenames()
 
     IMAGE_DIR.mkdir(parents=True, exist_ok=True)
     downloaded = 0
     skipped = 0
 
-    for commons_url, orig_filename in images:
-        # Original Commons name (for URL) vs sanitized name (for local file)
-        commons_name = unquote(commons_url.rsplit("/", 1)[-1])
-        local_name = _local_filename(commons_url)
+    for filename in filenames:
+        local_name = _local_filename(filename)
         local_path = IMAGE_DIR / local_name
         if local_path.exists() and local_path.stat().st_size > 0:
             skipped += 1
@@ -125,11 +138,15 @@ def download_commons_images(delay: float, request_count: int = 0) -> tuple[int, 
                 skipped += 1
                 continue
 
-        # Use Special:FilePath with original Commons name
-        url = (
-            f"https://commons.wikimedia.org/wiki/Special:FilePath/"
-            f"{quote(commons_name)}?width=1200"
-        )
+        # A bare Commons name → Special:FilePath; a full URL (e.g. a rendered
+        # score image) → fetch it directly, the way the viewer links it.
+        if filename.startswith("http"):
+            url = filename
+        else:
+            url = (
+                f"https://commons.wikimedia.org/wiki/Special:FilePath/"
+                f"{quote(filename)}?width=1200"
+            )
 
         request_count += 1
         request_count = _cooldown_if_needed(request_count)

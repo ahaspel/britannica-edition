@@ -14,7 +14,7 @@ Default (fast) mode — for code-iteration:
     * Preserves `source_pages`.
     * Runs only `prepare_wikitext` → `detect_boundaries` →
       `transform_articles` → `export_articles_to_json`, in-process.
-    * Skips classify / extract-xrefs / resolve-xrefs / extract-images /
+    * Skips classify / extract-xrefs / resolve-xrefs /
       extract-contributors — those don't change when you're tweaking
       detection / transform / export logic.
     * ~30-90s per volume.
@@ -137,10 +137,6 @@ def _wipe_everything(volume: int) -> None:
         stmts = [
             f"DELETE FROM article_contributors WHERE article_id IN "
             f"(SELECT id FROM articles WHERE volume = {volume})",
-            f"DELETE FROM article_images WHERE article_id IN "
-            f"(SELECT id FROM articles WHERE volume = {volume}) "
-            f"OR source_page_id IN "
-            f"(SELECT id FROM source_pages WHERE volume = {volume})",
             f"UPDATE cross_references SET target_article_id = NULL, "
             f"status = 'unresolved' WHERE target_article_id IN "
             f"(SELECT id FROM articles WHERE volume = {volume})",
@@ -206,8 +202,6 @@ def _run_full(volume: int, t0: float) -> None:
          ["uv", "run", "britannica", "detect-boundaries", str(volume)]),
         ("Classifying articles",
          ["uv", "run", "britannica", "classify-articles", str(volume)]),
-        ("Extracting images",
-         ["uv", "run", "britannica", "extract-images", str(volume)]),
         ("Extracting contributors",
          ["uv", "run", "britannica", "extract-contributors", str(volume)]),
         ("Assembling + exporting",

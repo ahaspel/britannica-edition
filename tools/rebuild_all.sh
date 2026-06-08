@@ -101,9 +101,6 @@ for vol in $VOLUMES; do
   echo "  Classifying articles..."
   uv run britannica classify-articles "$vol"
 
-  echo "  Extracting images..."
-  uv run britannica extract-images "$vol"
-
   echo "  Extracting contributors..."
   uv run britannica extract-contributors "$vol"
 

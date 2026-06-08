@@ -7,7 +7,6 @@ from sqlalchemy import text
 session = SessionLocal()
 for table in [
     "article_contributors",
-    "article_images",
     "cross_references",
     "article_segments",
     "articles",
