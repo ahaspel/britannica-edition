@@ -39,6 +39,7 @@ from pathlib import Path
 import pytest
 
 from britannica.pipeline.stages.elements import ElementContext, process_elements
+from britannica.pipeline.stages.preprocess import preprocess
 
 
 SNAPSHOT_DIR = Path("tests/snapshots/transform")
@@ -106,8 +107,13 @@ def test_transform_snapshot(stem, input_path, body_path):
     # Volume + page from the `NN-NNNN-…` stem (e.g. 01-0426-… → vol 1, p426).
     volume, page_number = int(stem[:2]), int(stem[3:7])
 
+    # Mirror production/ingest: the stored segments are a slice of the
+    # `preprocess()`-cleaned stream, so the body is produced from preprocessed
+    # input.  preprocess is idempotent on already-clean segments and corrective
+    # on stale fixtures (which still carry `{{nop}}`/`<del>` from an older ingest).
     actual_raw = process_elements(
-        raw_wikitext, ElementContext(volume=volume, page_number=page_number))
+        preprocess(raw_wikitext),
+        ElementContext(volume=volume, page_number=page_number))
 
     expected = _normalize_for_compare(expected_raw)
     actual = _normalize_for_compare(actual_raw)
