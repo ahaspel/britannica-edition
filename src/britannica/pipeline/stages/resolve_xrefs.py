@@ -264,15 +264,23 @@ def resolve_one(
     if target_article_id is None:
         target_article_id = _try_bible_handler(target, idx.title_to_articles)
 
-    # 2. Section-suffix form: "EUROPE: HISTORY" -> (EUROPE, HISTORY).
+    # 2. Section-suffix form: "EUROPE: HISTORY" -> (EUROPE, HISTORY).  A bare
+    # ": HISTORY" (a same-article `[[#History]]` normalized, empty base) resolves to
+    # THIS article, section History — the source the context-free producer couldn't
+    # name; the resolver fills it from xref.article_id.
     if target_article_id is None and ": " in target:
         base, _, suffix = target.rpartition(": ")
         base = base.strip()
         suffix = suffix.strip()
-        base_candidates = idx.title_to_articles.get(base)
-        if base_candidates and suffix:
-            target_article_id = disambiguate_among(xref, base_candidates, idx.body_of)
+        if not base and suffix:
+            target_article_id = xref.article_id
             section = suffix
+        else:
+            base_candidates = idx.title_to_articles.get(base)
+            if base_candidates and suffix:
+                target_article_id = disambiguate_among(
+                    xref, base_candidates, idx.body_of)
+                section = suffix
 
     # 3. Fuzzy matching.
     if target_article_id is None:
