@@ -258,7 +258,8 @@ class TestRealSmallCaps:
 
 
 class TestTableCellProcessing:
-    """Table cell content is processed through text_transform."""
+    """Table cell content recurses through the dispatch (process_elements),
+    not a flat pass — cell children are walker-extracted like article prose."""
 
     def test_italic_in_table_cell(self):
         """Wiki italic in table cells must be converted."""
