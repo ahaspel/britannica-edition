@@ -33,7 +33,6 @@ from britannica.db.session import SessionLocal
 from britannica.export.article_json import export_articles_to_json
 from britannica.pipeline.stages.elements import (
     ElementContext, process_elements_tree)
-from britannica.pipeline.stages.extract_contributors import strip_attributions
 
 
 def walk_body(session, article: Article) -> tuple[str, dict]:
@@ -54,7 +53,7 @@ def walk_body(session, article: Article) -> tuple[str, dict]:
     if not joined_raw:
         return "", {}
     ctx = ElementContext(volume=article.volume, page_number=segments[0][1])
-    return process_elements_tree(strip_attributions(joined_raw), ctx)
+    return process_elements_tree(joined_raw, ctx)
 
 
 def main() -> None:

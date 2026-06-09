@@ -18,7 +18,6 @@ from britannica.db.models import Article, ArticleSegment, SourcePage, CrossRefer
 from britannica.db.session import SessionLocal
 from britannica.pipeline.stages.elements import (
     ElementContext, process_elements_tree)
-from britannica.pipeline.stages.extract_contributors import strip_attributions
 from britannica.pipeline.stages.resolve_xrefs import (
     build_resolution_index, resolve_one)
 from britannica.xrefs.extractor import extract_xrefs, _strip_markers
@@ -37,7 +36,7 @@ def walk_body(session, article):
         return ""
     joined = "".join(s.segment_text or "" for s, pn in segs)
     ctx = ElementContext(volume=article.volume, page_number=segs[0][1])
-    return process_elements_tree(strip_attributions(joined), ctx)[0] if joined else ""
+    return process_elements_tree(joined, ctx)[0] if joined else ""
 
 
 def _resolve(text, aid, idx):
