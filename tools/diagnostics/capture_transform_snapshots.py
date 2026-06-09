@@ -37,9 +37,8 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
 
 from britannica.db.models import Article, ArticleSegment, SourcePage  # noqa: E402
 from britannica.db.session import SessionLocal  # noqa: E402
-from britannica.pipeline.stages.transform_articles import (  # noqa: E402
-    _transform_text_v2,
-)
+from britannica.pipeline.stages.elements import (  # noqa: E402
+    ElementContext, process_elements)
 from britannica.util.strings import section_slug  # noqa: E402
 
 
@@ -156,7 +155,7 @@ def capture_one(session, filename_stem: str) -> tuple[str, str]:
     # ws-page numbers to printed-page numbers; per-article qualifier
     # strip) that are not part of the transform under test.  Locking
     # those in would defeat the snapshot's purpose.
-    body = _transform_text_v2(joined_raw, article.volume, first_page)
+    body = process_elements(joined_raw, ElementContext(volume=article.volume, page_number=first_page))
 
     # The `.body.txt` IS the snapshot; `.input.txt` is its fixture.  No
     # per-seed meta file: the test parses volume + page from the `NN-NNNN-…`

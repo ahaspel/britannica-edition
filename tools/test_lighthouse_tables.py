@@ -7,7 +7,7 @@ import sys
 sys.stdout.reconfigure(encoding="utf-8")
 sys.path.insert(0, "src")
 
-from britannica.pipeline.stages.transform_articles import _transform_text_v2
+from britannica.pipeline.stages.elements import ElementContext, process_elements
 
 
 def load_page(pn: int) -> str:
@@ -23,7 +23,7 @@ for pn in (652, 669, 670, 671, 672):
     parts.append(f"\x01PAGE:{pn}\x01{raw}")
 
 joined = "\n\n".join(parts)
-body = _transform_text_v2(joined, 16, 669)
+body = process_elements(joined, ElementContext(volume=16, page_number=669))
 
 article = {
     "id": 9999999,

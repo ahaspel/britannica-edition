@@ -19,8 +19,8 @@ def _load_page(vol, page):
 
 
 def _transform_v2(raw, volume=1, page_number=1):
-    from britannica.pipeline.stages.transform_articles import _transform_text_v2
-    return _transform_text_v2(raw, volume, page_number)
+    from britannica.pipeline.stages.elements import ElementContext, process_elements
+    return process_elements(raw, ElementContext(volume=volume, page_number=page_number))
 
 
 class TestBasicTransform:

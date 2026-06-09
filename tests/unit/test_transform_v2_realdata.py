@@ -35,9 +35,10 @@ def _transform(raw, volume=1, page_number=1):
     preprocess removes would wrongly appear to 'survive' the transform)."""
     from britannica.pipeline.stages.prepare_wikitext import _convert_quote_runs
     from britannica.pipeline.stages.preprocess import preprocess
-    from britannica.pipeline.stages.transform_articles import _transform_text_v2
-    return _transform_text_v2(
-        preprocess(_convert_quote_runs(raw)), volume, page_number)
+    from britannica.pipeline.stages.elements import ElementContext, process_elements
+    return process_elements(
+        preprocess(_convert_quote_runs(raw)),
+        ElementContext(volume=volume, page_number=page_number))
 
 
 # ── Element Types ──────────────────────────────────────────────────────

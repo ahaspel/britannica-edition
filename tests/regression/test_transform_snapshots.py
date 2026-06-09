@@ -38,7 +38,7 @@ from pathlib import Path
 
 import pytest
 
-from britannica.pipeline.stages.transform_articles import _transform_text_v2
+from britannica.pipeline.stages.elements import ElementContext, process_elements
 
 
 SNAPSHOT_DIR = Path("tests/snapshots/transform")
@@ -106,7 +106,8 @@ def test_transform_snapshot(stem, input_path, body_path):
     # Volume + page from the `NN-NNNN-…` stem (e.g. 01-0426-… → vol 1, p426).
     volume, page_number = int(stem[:2]), int(stem[3:7])
 
-    actual_raw = _transform_text_v2(raw_wikitext, volume, page_number)
+    actual_raw = process_elements(
+        raw_wikitext, ElementContext(volume=volume, page_number=page_number))
 
     expected = _normalize_for_compare(expected_raw)
     actual = _normalize_for_compare(actual_raw)

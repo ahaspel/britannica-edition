@@ -34,9 +34,10 @@ _AFFECTED = re.compile(
 
 def _work(item):
     aid, vol, pg, raw = item
-    from britannica.pipeline.stages.transform_articles import _transform_text_v2
+    from britannica.pipeline.stages.elements import (
+        ElementContext, process_elements)
     try:
-        out = _transform_text_v2(raw, vol, pg)
+        out = process_elements(raw, ElementContext(volume=vol, page_number=pg))
     except Exception as e:                      # a crash is a change we must see
         out = f"__CRASH__{type(e).__name__}: {e}"
     h = hashlib.md5(out.encode("utf-8", "replace")).hexdigest()

@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 from britannica.db.session import SessionLocal
 from britannica.db.models import Article, ArticleSegment
-from britannica.pipeline.stages.transform_articles import _transform_text_v2
+from britannica.pipeline.stages.elements import ElementContext, process_elements
 
 # Viewer handler vocabulary: « markers and {{ markers it references in source.
 viewer_src = (ROOT / "tools/viewer/viewer.html").read_text(encoding="utf-8")
@@ -50,7 +50,7 @@ def main() -> None:
                 .order_by(ArticleSegment.sequence_in_article).all())
         raw = "\n\n".join(x.segment_text or "" for x in segs)
         try:
-            out = _transform_text_v2(raw, a.volume, a.page_start)
+            out = process_elements(raw, ElementContext(volume=a.volume, page_number=a.page_start))
         except Exception:
             continue
         emitted.update(re.findall(r"«([A-Z][A-Za-z0-9]*)»", out))   # opening « markers in FINAL output

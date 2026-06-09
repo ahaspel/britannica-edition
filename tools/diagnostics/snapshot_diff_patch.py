@@ -48,9 +48,8 @@ sys.path.insert(0, str(REPO / "src"))
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                                errors="replace")
 
-from britannica.pipeline.stages.transform_articles import (  # noqa: E402
-    _transform_text_v2,
-)
+from britannica.pipeline.stages.elements import (  # noqa: E402
+    ElementContext, process_elements)
 
 SNAPSHOT_DIR = REPO / "tests" / "snapshots" / "transform"
 
@@ -91,7 +90,7 @@ def _compute_hunks(stem: str) -> dict:
       * `hunks`             list[Hunk] non-equal opcodes
     """
     raw, body, meta = _load(stem)
-    actual = _transform_text_v2(raw, meta["volume"], meta["page_number"])
+    actual = process_elements(raw, ElementContext(volume=meta["volume"], page_number=meta["page_number"]))
     expected_n = _normalize(body)
     actual_n = _normalize(actual)
 

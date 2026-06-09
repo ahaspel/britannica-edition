@@ -30,7 +30,7 @@ import time
 
 from britannica.db.models import Article, ArticleSegment, SourcePage
 from britannica.db.session import SessionLocal
-from britannica.pipeline.stages.transform_articles import _transform_text_v2
+from britannica.pipeline.stages.elements import ElementContext, process_elements
 
 
 # Block markers whose viewer renderer matches ``^…$`` per paragraph.
@@ -58,7 +58,7 @@ def _retransform(session, article: Article) -> str | None:
         return None
     raw = "".join(seg.segment_text or "" for seg, pn in segs)
     try:
-        return _transform_text_v2(raw, article.volume, segs[0][1])
+        return process_elements(raw, ElementContext(volume=article.volume, page_number=segs[0][1]))
     except Exception as e:
         sys.stdout.buffer.write(
             f"  EXCEPTION {article.title}: {e}\n".encode("utf-8"))

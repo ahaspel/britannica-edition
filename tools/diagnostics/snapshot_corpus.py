@@ -37,9 +37,8 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
 
 from britannica.db.models import Article, ArticleSegment, SourcePage  # noqa: E402
 from britannica.db.session import SessionLocal  # noqa: E402
-from britannica.pipeline.stages.transform_articles import (  # noqa: E402
-    _transform_text_v2,
-)
+from britannica.pipeline.stages.elements import (  # noqa: E402
+    ElementContext, process_elements)
 from britannica.util.strings import section_slug  # noqa: E402
 
 ROOT = Path("data/derived/_flip_snap")
@@ -106,7 +105,7 @@ def capture(tag: str, vol_filter: str) -> int:
             sid = f"{vol:02d}-{page_start:04d}-{slug}"
             joined = _build_joined_raw(segs)
             try:
-                body = _transform_text_v2(joined, vol, segs[0][1])
+                body = process_elements(joined, ElementContext(volume=vol, page_number=segs[0][1]))
             except Exception as exc:  # noqa: BLE001 — record, don't abort the net
                 body = f"\x00TRANSFORM-ERROR\x00{type(exc).__name__}: {exc}"
                 err += 1

@@ -101,9 +101,10 @@ def _bucket(target: str) -> str:
 
 def _work(item):
     aid, vol, pg, raw = item
-    from britannica.pipeline.stages.transform_articles import _transform_text_v2
+    from britannica.pipeline.stages.elements import (
+        ElementContext, process_elements)
     try:
-        out = _transform_text_v2(raw, vol, pg)
+        out = process_elements(raw, ElementContext(volume=vol, page_number=pg))
     except Exception:
         return Counter(), {}
     out = _mask_final_form(out)
