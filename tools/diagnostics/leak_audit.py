@@ -148,8 +148,15 @@ def _work(item):
     aid, vol, pg, raw = item
     from britannica.pipeline.stages.elements import (
         ElementContext, process_elements)
+    from britannica.pipeline.stages.preprocess import preprocess
     try:
-        out = process_elements(raw, ElementContext(volume=vol, page_number=pg))
+        # Run the stream-`preprocess()` the ingest applies before segments are
+        # stored, so the audit reflects PRODUCTION (post-ingest), not the stale
+        # DB.  Without this, anything preprocess cleans (e.g. `<del>` proofreading
+        # corrections) shows as a phantom leak when the cached segments predate
+        # that preprocess step.
+        out = process_elements(preprocess(raw),
+                               ElementContext(volume=vol, page_number=pg))
     except Exception as e:  # a crash is the most broken leak of all
         return aid, Counter({f"crash:{type(e).__name__}": 1})
     return aid, find_leaks(out)
