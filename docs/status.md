@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-06-05.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-06-09.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -34,6 +34,45 @@ agent's memory directory and are not duplicated here.
 > **DIAGNOSTIC (user): virtually every bug traces to a violation of one or more of
 > these three.**  Debugging = name the principle the bug breaks, restore it.  Bug-
 > classification, not philosophy.
+
+---
+
+## PROGRESS (2026-06-09) — the LINK ARC: close the BROKEN xref/link backlog (6,118 → 1,589)
+
+Every link/ref surviving raw into output (the leak-audit BROKEN backlog) is now a recognized
+element resolved to a marker. Attacked end-to-end this session, each arc banked separately:
+
+- **Contributor harvester** reworked to a body-scan: scan the walked body for `(initials)`
+  sign-offs, bind via the ContributorInitials index (never mis-attributes — binds to the article
+  the sign-off sits in). Replaces the raw-parse position-matcher. 0 lost / 1283 gained.
+- **Author links** `[[Author:X]]` → contributor-initials or «LN» xref.
+- **Section anchors** `{{section|Name}}` → «ANCHOR:slug» (invisible target); the `#frag` links at
+  them (`[[#Section]]`, `{{EB1911 intra-article link}}`) → «LN:#Section», resolved empty-base to
+  "this article, section".
+- **Contributor shortcut** `{{EB1911 TAs}}` → 3rd CONTRIBUTOR_FOOTER form (→ "(T. As.)"); the harvest
+  binds it (Thomas Ashby et al. recovered).
+- **Generic wikilinks** `[[X]]` (biggest bucket, 1,733) → WIKILINK → «LN», resolved by a 3-rung
+  LADDER (user: "resolve links, not source fidelity"): internal EB11 first (the normalizer strips
+  w:/Portal: prefixes → the bare name hits exact+alias+fuzzy: w:Tacitus→TACITUS, w:Herbert Spencer→
+  SPENCER) → external WS-VERIFIED «XL» (against the enwikisource all-titles dump, `xrefs/ws_titles.py`,
+  gitignored) → else strip. Split: 9% internal / 54% external-verified / 37% strip.
+  [[project_wikilink_backlog]]
+
+**The xref panel (user spec):** the bottom-of-article panel = the article's RESOLVED INTERNAL links
+ONLY — it harvests «LN» (never «XL»), and the export filters it to status=="resolved". External links
+live inline as «XL»; the panel stays the internal EB11 web. [[project_xref_panel]]
+
+**Numbers (leak_audit):** BROKEN **6,118 → 1,589** (74% closed). wikilink 1,733 → 2; the contributor/
+section/#frag/shortcut classes → 0. 343 unit pass throughout.
+
+**Markers added (viewer-decode DEFERRED to the render phase):** «ANCHOR:slug» (section target),
+«XL:url|display» (external link). Both need viewer registration.
+
+**NEXT — close the rest (1,589):** template 1,028 (hi 193, sp 72, blackletter 66, rh 64, spaces 48,
+coordinates 36, lb- 31, missing-table 30, smb 30, cite 29, fine 26, eb9-family ~60, …), htmltag 551
+(del 260, nowiki 144, t 14, a 11), wikifmt 8, wikilink 2. Mostly inline-style / editorial templates +
+HTML tags — the next sweep. The link arc closing also unblocks the deferred snapshot rebaseline /
+render phase ([[feedback_producers_before_rendering]]).
 
 ---
 
