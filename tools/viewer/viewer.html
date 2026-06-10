@@ -2156,6 +2156,13 @@
     // and stay there.  Order matches the canonical body sequence verbatim.
     function decodeInlineMarkers(h, opts) {
       const dhrInline = !!(opts && opts.dhrInline);
+      // Carried presentational HTML the producer must keep RAW as classifier
+      // signals (CHEM/MATH key on <sub>/<sup>/<big>) reaches us escaped by the
+      // caller.  Un-escape this fixed safe set — ONE uniform step in the ONE
+      // decoder, so every path renders them identically; literal `<` in data
+      // stays escaped.  These can't become markers without blinding the
+      // classifiers that read them, so the viewer renders the tags directly.
+      h = h.replace(/&lt;(\/?(?:sub|sup|small|big|br)\s*\/?)&gt;/gi, "<$1>");
       h = h.replace(/«MIRROR:(.*?)«\/MIRROR»/gs, '<span class="mirror-h">$1</span>');
       h = h.replace(/«B»(.*?)«\/B»/gs, "<b>$1</b>");
       h = h.replace(/«I»(.*?)«\/I»/gs, "<i>$1</i>");
@@ -2240,8 +2247,11 @@
       // skip escapeHtml and just decode the markers in place.  Used when
       // decoding a whole cell run (markers that span carried inline HTML must
       // stay balanced).  Default (no opts) escapes — for marker strings that are
-      // plain text (the simple {{TABLE}} cells, <caption> contents).
-      const rawHtml = !!(opts && opts.raw);
+      // plain text (the simple {{TABLE}} cells, <caption> contents).  The escape
+      // matches the prose path (renderParagraph's escapeHtml); the only reason a
+      // {raw} caller skips it is that its innerHTML is already encoded.  Carried
+      // HTML (&mdash;, <small>) that the producer leaves raw is escaped by BOTH
+      // paths until the producer normalizes it to a char/marker (the contract).
       // An IMG marker's filename is DATA that becomes a URL \u2014 not display
       // text.  escapeHtml would corrupt it (a `'` \u2192 `&#39;` \u2192 a 404 src,
       // breaking ANY cell image with `'`/`&`/`<`/`>`/`"` in its filename,
@@ -2250,16 +2260,21 @@
       // blanket escape with a placeholder \u2014 escape only the prose around it.
       const imgHtml = [];
       text = text.replace(IMG_PARTS_RE_G, (match, filename, metaBlock, caption) => {
-        const url = filename.startsWith("http") ? filename : commonsUrl(filename);
+        const fn = unescapeHtml(filename);  // innerHTML encodes `&`; decode for the URL
+        const url = fn.startsWith("http") ? fn : commonsUrl(fn);
         // Honor carried width (figure-grid / plate cells size from source
         // px); fall back to the 60px data-cell cap only when no width was
         // carried (the producer carries it for figures, not data tables).
         const meta = parseImgMeta(metaBlock);
         const sz = meta.width ? `max-width:${meta.width}px;` : "max-height:60px;";
-        imgHtml.push(`<img src="${url}" alt="${escapeHtml(caption || filename)}" class="cell-image" loading="lazy" style="${sz}" />`);
+        imgHtml.push(`<img src="${url}" alt="${escapeHtml(caption || fn)}" class="cell-image" loading="lazy" style="${sz}" />`);
         return `\x00IMG${imgHtml.length - 1}\x00`;
       });
-      let h = escapeHtml(text);
+      // Escape ONLY a marker STRING ({{TABLE}} cell / <caption>) \u2014 its literal
+      // `<`/`&` isn't yet encoded (same as the prose path's escapeHtml).  A {raw}
+      // caller (formatCellNode) hands DOM-serialized innerHTML that's already
+      // encoded, so leave it; double-escaping would mangle its carried <small>.
+      let h = (opts && opts.raw) ? text : escapeHtml(text);
       h = h.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
                     (match, name, content) => renderFnMarker(name, content));
       // LaTeX math in cells — render inline with KaTeX.
@@ -2776,31 +2791,15 @@
             // markers to bare <table> elements, so their content is
             // still unformatted raw marker text.
             function formatCellNode(node, pageMarkers) {
-              // Whole-cell fast path: if children are only text + <br>,
-              // format the cell's full marker string at once so markers
-              // that span a <br> (block «CTR»/«LH» around a multi-line
-              // caption) stay balanced.  Per-text-node formatting would
-              // split such a span into unbalanced halves → leak.  Cells
-              // with nested tables/elements fall through to the walk.
-              const kids = Array.from(node.childNodes);
-              if (kids.length && kids.every(
-                  c => c.nodeType === 3 ||
-                       (c.nodeType === 1 && c.tagName === "BR"))) {
-                const raw = kids.map(
-                    c => c.nodeType === 3 ? c.nodeValue : "\x00BR\x00").join("")
-                  .replace(/\x01PAGE:(\d+)\x01/g, (_x, pg) => {
-                    pageMarkers.push(pg); return ""; });
-                node.innerHTML = formatCell(raw).replace(/\x00BR\x00/g, "<br>");
-                return;
-              }
-              // Cell carries inline HTML (<sub>/<i>/…) and/or a nested table:
-              // decode its WHOLE marker run in place over the (already-HTML-safe)
-              // innerHTML — {raw} so the carried HTML is not re-escaped — so a
-              // «VERSE»/«CTR»/«BR»/«SC» that spans a carried inline element stays
-              // balanced, and nested-table cell markers decode too (the marker
-              // decoders leave the <table>/<td> structure alone).  Replaces the
-              // per-text-node walk, which split any marker crossing a carried
-              // element into unbalanced halves → leak (ABBEY figure key, AUSTRIA).
+              // ONE path: format the cell's whole DOM-serialized innerHTML, which
+              // is render-safe (carried <sub>/<i>/<small>/<br>, nested tables, and
+              // re-encoded entities all intact).  formatCell resolves the markers
+              // in place WITHOUT escaping — identical to the prose path — so a
+              // «VERSE»/«CTR»/«BR» spanning carried inline HTML stays balanced,
+              // nested-table cell markers decode too, and a carried &mdash;/<small>
+              // renders instead of being re-escaped.  (The old text+<br> fast path
+              // fed DOM-DECODED nodeValue, which only worked because formatCell
+              // re-escaped; with no escape it must read innerHTML.)
               const inner = node.innerHTML.replace(
                 /\x01PAGE:(\d+)\x01/g,
                 (_x, pg) => { pageMarkers.push(pg); return ""; });
