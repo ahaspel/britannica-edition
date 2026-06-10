@@ -2221,10 +2221,27 @@
         const href = filename ? articleUrl(filename) : `/search.html?q=${encodeURIComponent(target)}`;
         return `<a href="${href}" class="article-link" title="${target}">${display}</a>`;
       });
+      // «XL:url|display«/XL» — external link (WS-verified reference to another
+      // work / wiki).  Opens in a new tab.  The display defaults to the url.
+      h = h.replace(
+          /«XL:([^|«]*)(?:\|((?:(?!«\/XL»)[\s\S])*?))?«\/XL»/g,
+          (_m, url, disp) =>
+            `<a href="${url}" class="external-link" target="_blank" rel="noopener">${disp || url}</a>`);
+      // «ANCHOR:slug» — invisible in-article section-anchor target that a `#slug`
+      // fragment link lands on (the producer's anchor from `{{section|…}}`).
+      h = h.replace(/«ANCHOR:([^»]*)»/g,
+          (_m, slug) => `<span id="${slug}" class="section-anchor"></span>`);
       return h;
     }
 
-    function formatCell(text) {
+    function formatCell(text, opts) {
+      // {raw:true} — the input is ALREADY HTML-safe (a cell's DOM-serialized
+      // innerHTML: carried <sub>/<i>/<br>, nested tables, encoded entities), so
+      // skip escapeHtml and just decode the markers in place.  Used when
+      // decoding a whole cell run (markers that span carried inline HTML must
+      // stay balanced).  Default (no opts) escapes — for marker strings that are
+      // plain text (the simple {{TABLE}} cells, <caption> contents).
+      const rawHtml = !!(opts && opts.raw);
       // An IMG marker's filename is DATA that becomes a URL \u2014 not display
       // text.  escapeHtml would corrupt it (a `'` \u2192 `&#39;` \u2192 a 404 src,
       // breaking ANY cell image with `'`/`&`/`<`/`>`/`"` in its filename,
@@ -2776,23 +2793,18 @@
                 node.innerHTML = formatCell(raw).replace(/\x00BR\x00/g, "<br>");
                 return;
               }
-              for (const child of Array.from(node.childNodes)) {
-                if (child.nodeType === 3) {
-                  const txt = child.nodeValue.replace(
-                    /\x01PAGE:(\d+)\x01/g, (_x, pg) => {
-                      pageMarkers.push(pg); return "";
-                    });
-                  if (!txt) { child.remove(); continue; }
-                  const html = formatCell(txt);
-                  const tmp = document.createElement("span");
-                  tmp.innerHTML = html;
-                  const frag = document.createDocumentFragment();
-                  while (tmp.firstChild) frag.appendChild(tmp.firstChild);
-                  child.replaceWith(frag);
-                } else if (child.nodeType === 1) {
-                  formatCellNode(child, pageMarkers);
-                }
-              }
+              // Cell carries inline HTML (<sub>/<i>/…) and/or a nested table:
+              // decode its WHOLE marker run in place over the (already-HTML-safe)
+              // innerHTML — {raw} so the carried HTML is not re-escaped — so a
+              // «VERSE»/«CTR»/«BR»/«SC» that spans a carried inline element stays
+              // balanced, and nested-table cell markers decode too (the marker
+              // decoders leave the <table>/<td> structure alone).  Replaces the
+              // per-text-node walk, which split any marker crossing a carried
+              // element into unbalanced halves → leak (ABBEY figure key, AUSTRIA).
+              const inner = node.innerHTML.replace(
+                /\x01PAGE:(\d+)\x01/g,
+                (_x, pg) => { pageMarkers.push(pg); return ""; });
+              node.innerHTML = formatCell(inner, { raw: true });
             }
             for (const tr of Array.from(outer.rows)) {
               const pageMarkers = [];
