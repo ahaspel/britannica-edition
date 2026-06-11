@@ -3,7 +3,7 @@
 The title heading raw is NOT preserved post-boundary-detection
 (segment_text is the body), so we re-derive each heading from its
 SOURCE PAGE: scan «B» spans, run the LIVE extractor
-(_extract_bold_delimited_title), and match the flattened result to the
+(elements/_title.py:_title_span), and match the flattened result to the
 stored plain Article.title.  The matching span is the heading; we
 categorize the markup inside it that the plain title flattens away.
 
@@ -18,8 +18,7 @@ sys.path.insert(0, "src")
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 from britannica.db.session import SessionLocal
 from britannica.db.models import Article, ArticleSegment, SourcePage
-from britannica.pipeline.stages.detect_boundaries import _extract_bold_delimited_title
-from britannica.pipeline.stages.title import clean_title
+from britannica.pipeline.stages.elements._title import _title_span, clean_title
 
 s = SessionLocal()
 _SC = re.compile(r"\{\{\s*(?:sc|asc|small[\s\-]?caps?)\b", re.IGNORECASE)
@@ -57,7 +56,7 @@ for v in vols:
         want = _norm(title)
         title_raw = None
         for m in re.finditer("«B»", w):
-            tr, _ = _extract_bold_delimited_title(w[m.start():])
+            tr, _ = _title_span(w[m.start():])
             if tr and _norm(clean_title(tr)) == want:
                 title_raw = tr
                 break

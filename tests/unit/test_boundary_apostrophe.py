@@ -10,6 +10,7 @@ from pathlib import Path
 import pytest
 
 from britannica.pipeline.stages.detect_boundaries import (
+    _compose_plate_title,
     _preprocess_wikitext,
     _parse_page_by_sections,
     _split_on_bold_headings,
@@ -17,6 +18,15 @@ from britannica.pipeline.stages.detect_boundaries import (
 from britannica.pipeline.stages.prepare_wikitext import _convert_quote_runs
 
 RAW_DIR = Path("data/raw/wikisource")
+
+
+def _raw_page(vol: int, page: int) -> str:
+    """Return the raw wikitext of a single source page from the on-disk
+    fixture (the input ``_split_out_plates`` / ``_compose_plate_title``
+    see before any cleaning)."""
+    path = RAW_DIR / f"vol_{vol:02d}" / f"vol{vol:02d}-page{page:04d}.json"
+    with open(path, encoding="utf-8") as f:
+        return json.load(f)["raw_text"]
 
 
 def _detect_page(vol: int, page: int):
@@ -113,6 +123,27 @@ class TestApostropheTitles:
             assert "BRIEN" not in parsed.prefix_text or any(
                 "BRIEN" in c.title for c in parsed.candidates
             ), "O'BRIEN is in prefix and not detected as candidate"
+
+
+class TestPlateTitleComposition:
+    """Plate-title composition must survive the title-extractor
+    consolidation byte-for-byte.
+
+    ``_compose_plate_title`` projects the page-heading title field to
+    plain text and suffixes the ``PLATE N`` label — the title path that
+    used to call the deleted ``title.py`` cleaners.  After routing all
+    title work through ``elements/_title.py`` the composed plate title
+    must be unchanged (a plate title is the only title the legacy
+    boundary path still persists in production).  These two real
+    AEGEAN CIVILIZATION plate inserts pin that output."""
+
+    def test_aegean_plate_i(self):
+        raw = _raw_page(1, 278)
+        assert _compose_plate_title(raw, 1, 278) == "AEGEAN CIVILIZATION, PLATE I"
+
+    def test_aegean_plate_iii(self):
+        raw = _raw_page(1, 284)
+        assert _compose_plate_title(raw, 1, 284) == "AEGEAN CIVILIZATION, PLATE III"
 
 
 class TestNoFalseSplits:

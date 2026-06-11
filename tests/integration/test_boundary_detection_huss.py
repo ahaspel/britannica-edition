@@ -18,6 +18,7 @@ from britannica.pipeline.stages.prepare_wikitext import _convert_quote_runs as _
 def test_huss_continuation_across_pages(
     monkeypatch,
     test_session_local,
+    transform_titles,
 ):
     monkeypatch.setattr(detect_boundaries_stage, "SessionLocal", test_session_local)
 
@@ -85,6 +86,7 @@ def test_huss_continuation_across_pages(
         session.close()
 
     created = detect_boundaries_stage.persist_articles(super_detect_stage.detect_boundaries(14))
+    transform_titles(test_session_local, 14)
 
     session = test_session_local()
     try:

@@ -7,6 +7,7 @@ from britannica.pipeline.stages.prepare_wikitext import _convert_quote_runs as _
 def test_detect_boundaries_handles_continuation_then_new_heading_same_page(
     monkeypatch,
     test_session_local,
+    transform_titles,
 ):
     monkeypatch.setattr(detect_boundaries_stage, "SessionLocal", test_session_local)
 
@@ -40,6 +41,7 @@ def test_detect_boundaries_handles_continuation_then_new_heading_same_page(
 
     created = detect_boundaries_stage.persist_articles(super_detect_stage.detect_boundaries(1))
     assert created == 2
+    transform_titles(test_session_local, 1)
 
     session = test_session_local()
     try:

@@ -7,6 +7,7 @@ from britannica.pipeline.stages.prepare_wikitext import _convert_quote_runs as _
 def test_detect_boundaries_with_section_markers(
     monkeypatch,
     test_session_local,
+    transform_titles,
 ):
     monkeypatch.setattr(detect_boundaries_stage, "SessionLocal", test_session_local)
 
@@ -48,6 +49,7 @@ def test_detect_boundaries_with_section_markers(
 
     created = detect_boundaries_stage.persist_articles(super_detect_stage.detect_boundaries(1))
     assert created == 3
+    transform_titles(test_session_local, 1)
 
     session = test_session_local()
     try:
@@ -84,6 +86,7 @@ def test_detect_boundaries_with_section_markers(
 def test_detect_boundaries_continuation_without_sections(
     monkeypatch,
     test_session_local,
+    transform_titles,
 ):
     """Pages without section markers are pure continuation."""
     monkeypatch.setattr(detect_boundaries_stage, "SessionLocal", test_session_local)
@@ -121,6 +124,7 @@ def test_detect_boundaries_continuation_without_sections(
 
     created = detect_boundaries_stage.persist_articles(super_detect_stage.detect_boundaries(1))
     assert created == 2
+    transform_titles(test_session_local, 1)
 
     session = test_session_local()
     try:
@@ -138,6 +142,7 @@ def test_detect_boundaries_continuation_without_sections(
 def test_named_section_without_bold_is_continuation(
     monkeypatch,
     test_session_local,
+    transform_titles,
 ):
     """A named section without a bold heading is continuation, not a new article."""
     monkeypatch.setattr(detect_boundaries_stage, "SessionLocal", test_session_local)
@@ -175,6 +180,7 @@ def test_named_section_without_bold_is_continuation(
 
     created = detect_boundaries_stage.persist_articles(super_detect_stage.detect_boundaries(1))
     assert created == 2
+    transform_titles(test_session_local, 1)
 
     session = test_session_local()
     try:

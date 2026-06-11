@@ -16,9 +16,9 @@ import re
 from britannica.markers import strip_page_markers
 
 
-# `_strip_redundant_title` removed: title chop-up happens at source in
-# detect_boundaries — `_extract_bold_delimited_title` + `produce_title`
-# extract the title from the article opening and leave a clean body in
+# `_strip_redundant_title` removed: title chop-up happens at source by
+# the sole title extractor (`elements/_title.py:produce_title`), which
+# carves the title off the article opening and leaves a clean body in
 # segment_text.  Stale DB rows persisted before the chop-up fix will
 # display the title-bold in their body until re-detected; that's a
 # known transition cost, not something to sweep.
