@@ -6,12 +6,21 @@ from britannica.pipeline.stages.elements import (
     process_elements,
 )
 from britannica.pipeline.stages.elements._shapes import (
+    SHAPE_BODY,
     SHAPE_BRACE_PIPE,
     SHAPE_DOUBLE_BRACKET,
     SHAPE_HTML_TAG,
     SHAPE_INLINE_IMAGE,
 )
 from britannica.pipeline.stages.elements._walker import walk
+
+
+def _non_body(extracts):
+    """Real (non-prose) extracts.  BODY is now its own element shape: the
+    walker emits a SHAPE_BODY run for every residual prose stretch between
+    structural elements, so a single tag inside prose now yields BODY +
+    element + BODY.  These tests pin the structural element."""
+    return [e for e in extracts if e[1] != SHAPE_BODY]
 
 
 class TestExtraction:
@@ -21,16 +30,18 @@ class TestExtraction:
         text = "before <ref>footnote text</ref> after"
         extracted, extracts = walk(text)
         assert "<ref>" not in extracted
-        assert len(extracts) == 1
-        _ph, _shape, raw = extracts[0]
+        real = _non_body(extracts)
+        assert len(real) == 1
+        _ph, _shape, raw = real[0]
         assert "footnote text" in raw
 
     def test_extract_table(self):
         text = "before\n{|\n|cell\n|}\nafter"
         extracted, extracts = walk(text)
         assert "{|" not in extracted
-        assert len(extracts) == 1
-        _ph, shape, _raw = extracts[0]
+        real = _non_body(extracts)
+        assert len(real) == 1
+        _ph, shape, _raw = real[0]
         assert shape == SHAPE_BRACE_PIPE
 
     def test_extract_image(self):
@@ -39,8 +50,9 @@ class TestExtraction:
         text = "text [[File:Foo.jpg|thumb|A caption]] more"
         extracted, extracts = walk(text)
         assert "[[File:" not in extracted
-        assert len(extracts) == 1
-        _ph, shape, _raw = extracts[0]
+        real = _non_body(extracts)
+        assert len(real) == 1
+        _ph, shape, _raw = real[0]
         assert shape == SHAPE_INLINE_IMAGE
 
     def test_extract_score(self):
@@ -70,10 +82,20 @@ class TestExtraction:
         assert "<ref>" in raw  # ref still inside the table's bytes
 
     def test_preserves_surrounding_text(self):
+        # Surrounding prose is now carried in its own BODY extracts (one before
+        # and one after the ref), so the placeholderized text is a pure run of
+        # placeholders; the prose lives losslessly in the BODY extracts' raw.
         text = "Hello <ref>note</ref> world"
         extracted, extracts = walk(text)
-        ph = extracts[0][0]
-        assert extracted == f"Hello {ph} world"
+        # Reassembling each extract's raw in order reproduces the input exactly.
+        by_ph = {ph: raw for ph, _shape, raw in extracts}
+        reassembled = extracted
+        for ph, raw in by_ph.items():
+            reassembled = reassembled.replace(ph, raw)
+        assert reassembled == text
+        # The leading/trailing prose is carried as BODY extracts.
+        bodies = [raw for _ph, shape, raw in extracts if shape == SHAPE_BODY]
+        assert bodies == ["Hello ", " world"]
 
 
 class TestProcessing:
@@ -246,11 +268,10 @@ class TestChemistryLayout:
         # Cell content survives intact.
         assert "C : N\u00b7OH" in result
         assert "Steiner" in result and "Nef" in result
-        # The angle-bracket image is rendered as the Unicode glyph
-        # \u276e (U+276E) by the specialized CHEM processor.  Earlier this
-        # was a `{{IMG:Langle.svg}}` marker (with a TODO to glyph-ify
-        # it); the glyph rendering has since landed.
-        assert "\u276e" in result
+        # The angle-bracket image rides through the CHEM block as its raw
+        # `[[File:Langle.svg|\u2026]]` link \u2014 carried losslessly for the viewer,
+        # not flattened away (no glyph substitution happens at this stage).
+        assert "[[File:Langle.svg" in result
 
     def test_plain_table_unaffected(self):
         # A normal data table with NO angle-bracket image is untouched.

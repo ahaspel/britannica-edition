@@ -2181,26 +2181,24 @@
       h = h.replace(/«DHR(?:\[[^\]]*\])?»/g,
                     dhrInline ? '<span class="dhr-inline"></span>'
                               : '<span class="dhr-block"></span>');
-      h = h.replace(/«CTR»([\s\S]*?)«\/CTR»/g, '<div class="centered">$1</div>');
-      // «DIV[style:CSS]»…«/DIV» — a styled block <div> (carried whole from the
-      // source's {{Ts}}/style=/align=); the producer regularized the style, we
-      // just render it.  Innermost-first loop so nested styled divs pair right.
-      { let _p; do { _p = h; h = h.replace(
-          /«DIV\[style:([^\]]*)\]»((?:(?!«DIV\[)[\s\S])*?)«\/DIV»/g,
-          '<div style="$1">$2</div>'); } while (h !== _p); }
-      // «SPAN[style:CSS]»…«/SPAN» — the INLINE sibling of «DIV»: same carried
-      // style, rendered as an inline <span> (sub/superscript positioning,
-      // centring, over-bars, …).  Same innermost-first nesting loop.
-      { let _p; do { _p = h; h = h.replace(
-          /«SPAN\[style:([^\]]*)\]»((?:(?!«SPAN\[)[\s\S])*?)«\/SPAN»/g,
-          '<span style="$1">$2</span>'); } while (h !== _p); }
-      // «SPAN[title:T]»…«/SPAN» — a transliteration tooltip (the romanization of
-      // wrapped Greek/Hebrew).  Rendered with a dotted underline + help cursor
-      // (`.xlit`) so the reader knows to hover; the print had no such aid.
-      { let _p; do { _p = h; h = h.replace(
-          /«SPAN\[title:([^\]]*)\]»((?:(?!«SPAN\[)[\s\S])*?)«\/SPAN»/g,
-          (_m, t, c) => `<span class="xlit" title="${t.replace(/"/g, "&quot;")}">${c}</span>`);
-        } while (h !== _p); }
+      // Paragraph + wrapper markers are substituted open/close INDEPENDENTLY
+      // (not as balanced pairs): `«P»`→`<p>` (open only — the browser closes it
+      // at the next `<p>` or block), `«CTR»`/`«DIV»`/`«SPAN»` open→open-tag and
+      // close→close-tag.  Independence is the point: a wrapper whose open and
+      // close land in different render chunks still pairs in the browser, so
+      // nothing has to match a span or look ahead.
+      h = h.replace(/«P»/g, "<p>");
+      h = h.replace(/«CTR»/g, '<div class="centered">').replace(/«\/CTR»/g, "</div>");
+      // «DIV[style:CSS]»…«/DIV» (block) and «SPAN[style:CSS]» / «SPAN[title:T]»
+      // …«/SPAN» (inline) — open and close substituted INDEPENDENTLY; the browser
+      // pairs and nests them, including a «DIV» whose open and close were sliced
+      // into different render chunks (the former DIV-leak — no longer possible,
+      // there's nothing to orphan).  No nesting loop, no balanced match.
+      h = h.replace(/«DIV\[style:([^\]]*)\]»/g, '<div style="$1">').replace(/«\/DIV»/g, "</div>");
+      h = h.replace(/«SPAN\[style:([^\]]*)\]»/g, '<span style="$1">');
+      h = h.replace(/«SPAN\[title:([^\]]*)\]»/g,
+                    (_m, t) => `<span class="xlit" title="${t.replace(/"/g, "&quot;")}">`);
+      h = h.replace(/«\/SPAN»/g, "</span>");
       // {{float right|X}}/{{float left|X}} — margin-floated content
       // (contributor-initial signatures, right-floated marginal notes).
       h = h.replace(/«FR»([\s\S]*?)«\/FR»/g, '<span class="float-right">$1</span>');
