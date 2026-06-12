@@ -1138,7 +1138,9 @@
     .footnote-ref a {
       color: #7b3f00;
       text-decoration: none;
-      font-size: 1em;
+      /* Absolute size so a footnote ref renders identically everywhere — body,
+         cell, or inside the title H1 (was 1em, which inherited the heading font). */
+      font-size: 0.8rem;
       font-weight: 700;
       padding: 0 2px;
       cursor: pointer;
@@ -1531,22 +1533,6 @@
       return decodeInlineMarkers(escapeHtml(value));
     }
 
-    // H1-only title render: prefer the marked-up `title_display` and
-    // render «FN» title footnotes (collected into the article's note
-    // list).  Kept separate from renderTitleMarkers — which TOC / search
-    // / link callers use — because renderFnMarker has collection
-    // side-effects that don't belong in those contexts (and those
-    // callers pass the plain title anyway, which has no «FN»).
-    function renderArticleTitleDisplay(article) {
-      let h = escapeHtml(article.title_display || article.title || "Untitled");
-      // Footnote first — its body markers are handled by
-      // formatFootnoteText inside renderFnMarker — so the title's own
-      // «B»/«I»/«SC» convert afterwards without disturbing the note.
-      h = h.replace(/«FN(?:\[([^\]]+)\])?:([\s\S]*?)«\/FN»/g,
-                    (m, name, content) => renderFnMarker(name, content));
-      h = decodeInlineMarkers(h);
-      return h;
-    }
 
     // Reverse of escapeHtml. Used when we need to pass captured text
     // (e.g. an image filename pulled from already-escaped paragraph
@@ -2325,6 +2311,8 @@
     // _process_chemistry_layout in _tables.py.
     const CHEM_OPEN = "\u00abCHEM:";
     const CHEM_CLOSE = "\u00ab/CHEM\u00bb";
+    const TITLE_OPEN = "\u00abTITLE:";
+    const TITLE_CLOSE = "\u00ab/TITLE\u00bb";
     function findMarkerEnd(str, start, openMarker, closeMarker) {
       let depth = 1;
       let i = start + openMarker.length;
@@ -2412,7 +2400,7 @@
     // (where the placeholder was) determines placement, the renderer
     // handles paragraph rendering regardless.
     const BLOCK_MARKER_SCAN_RE =
-      /\{\{TABLEH?(?:\[style:[^\]]*\])?:[\s\S]*?\}TABLE\}|\{\{VERSE(?:\[style:[^\]]*\])?:[\s\S]*?\}VERSE\}|\{\{LEGEND:[\s\S]*?\}LEGEND\}|\{\{IMG:[^}]*\}\}|«OUTLINE:[\s\S]*?«\/OUTLINE»|«PLATE_OUTLINE:[\s\S]*?«\/PLATE_OUTLINE»|«HTMLTABLE:[\s\S]*?«\/HTMLTABLE»|«CHEM:[\s\S]*?«\/CHEM»/g;
+      /\{\{TABLEH?(?:\[style:[^\]]*\])?:[\s\S]*?\}TABLE\}|\{\{VERSE(?:\[style:[^\]]*\])?:[\s\S]*?\}VERSE\}|\{\{LEGEND:[\s\S]*?\}LEGEND\}|\{\{IMG:[^}]*\}\}|«OUTLINE:[\s\S]*?«\/OUTLINE»|«PLATE_OUTLINE:[\s\S]*?«\/PLATE_OUTLINE»|«HTMLTABLE:[\s\S]*?«\/HTMLTABLE»|«CHEM:[\s\S]*?«\/CHEM»|«TITLE:[\s\S]*?«\/TITLE»/g;
 
     function renderParagraph(p, nextPara, sectionInfo) {
       // Mixed-paragraph split: if this paragraph contains a block
@@ -2491,6 +2479,24 @@
         const headingHtml = renderParagraph(rawTitle || title);
         const bodyHtml = tail ? renderParagraph(tail) : "";
         return `<h3 class="section-heading" id="${id}" data-slug="${slug}">${headingHtml}</h3>${bodyHtml}`;
+      }
+
+      // Article title — «TITLE» is the heading element preprocess_article
+      // stamps and walk_article now ships at the head of the body.  Render it
+      // through this same heading path: escape, then «FN» → an in-stream
+      // superscript via renderFnMarker (numbered + collected with every other
+      // footnote), then «B»/«I»/«SC» decode, then size up the first visible
+      // character as a drop-cap.  No special title path, no separate footnote
+      // stream — a title footnote is now identical to a body footnote.
+      if (p.startsWith(TITLE_OPEN) && p.endsWith(TITLE_CLOSE)) {
+        const inner = p.slice(TITLE_OPEN.length, p.length - TITLE_CLOSE.length);
+        let h = escapeHtml(inner).replace(
+          /«FN(?:\[([^\]]+)\])?:([\s\S]*?)«\/FN»/g,
+          (mm, name, content) => renderFnMarker(name, content));
+        h = decodeInlineMarkers(h);
+        const dc = h.match(/^((?:<[^>]+>)*)([\s\S])([\s\S]*)$/);
+        if (dc) h = `${dc[1]}<span style="font-size:1.6em; line-height:1; vertical-align:baseline;">${dc[2]}</span>${dc[3]}`;
+        return `<h1>${h}</h1>`;
       }
 
       // Numbered display-math block (single equation OR an equation
@@ -3201,27 +3207,20 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
 
       app.innerHTML = `
         <div class="card">
-          <h1>${(() => {
-            // Plain title for drop-cap (first letter sized up).  Render
-            // the rest with formatting markers converted to HTML so
-            // multi-bold / small-caps titles like AGRICOLA preserve
-            // their typography from the source.
-            const plain = (article.title || "Untitled").replace(
-              /«\/?(?:B|I|SC)»/g, "");
-            const rendered = renderArticleTitleDisplay(article);
-            const firstLetter = escapeHtml(plain.charAt(0));
-            // Trim the drop-cap's letter from the rendered title.  We
-            // walk through `rendered` skipping HTML tags until we've
-            // consumed one visible character.
-            let stripped = rendered;
-            let consumed = false;
-            stripped = stripped.replace(/^(<[^>]+>)*(.)/, (m, tags, ch) => {
-              consumed = true;
-              return tags || "";
-            });
-            const tail = consumed ? stripped : rendered.slice(1);
-            return `<span style="font-size:1.6em; line-height:1; vertical-align:baseline;">${firstLetter}</span>${tail}`;
-          })()}</h1>
+          ${(() => {
+            // The title is an ordinary «TITLE» element at the head of the body.
+            // Reset the footnote/section stream HERE — before the title renders,
+            // the first thing on the page — so the title's own footnote is #1 in
+            // document order, numbered and collected exactly like a body
+            // footnote.  Then render the title block through renderParagraph, the
+            // same path the body uses: no bespoke title render, no separate
+            // footnote stream.  (Plates and any title-less body fall back to the
+            // flattened article.title.)
+            footnoteCounter = 0; namedFnNumbers.clear(); fnAnchorInstance = 0; collectedFootnotes = []; sectionCounter = 0; collectedSections = []; emittedSectionKeys = new Set(); emittedSectionIds = new Set(); sectionByIndex = new Map(); shoulderQueue = []; shoulderCursor = 0; wideTableCounter = 0; for (const k in wideTableSources) delete wideTableSources[k];
+            const tm = (article.body || "").match(/^«TITLE:[\s\S]*?«\/TITLE»/);
+            return tm ? renderParagraph(tm[0], null, null)
+                      : `<h1>${renderTitleMarkers(article.title || "Untitled")}</h1>`;
+          })()}
           <div style="font-size: 0.85rem; color: #6b5e4f; font-style: italic; margin-bottom: 6px;">
             <a href="${scanUrl(article)}" style="color: #6b5e4f;">vol. ${escapeHtml(article.volume ?? "?")}, ${article.page_start !== article.page_end ? `pp. ${escapeHtml(article.page_start ?? "")}–${escapeHtml(article.page_end ?? "")}` : `p. ${escapeHtml(article.page_start ?? "")}`}</a>
             ${article.word_count ? `&middot; ${article.word_count.toLocaleString()} words` : ""}
@@ -3263,12 +3262,15 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
                </div>`
             : ""}
           ${(() => {
-            footnoteCounter = 0; namedFnNumbers.clear(); fnAnchorInstance = 0; collectedFootnotes = []; sectionCounter = 0; collectedSections = []; emittedSectionKeys = new Set(); emittedSectionIds = new Set(); sectionByIndex = new Map(); shoulderQueue = []; shoulderCursor = 0; wideTableCounter = 0; for (const k in wideTableSources) delete wideTableSources[k];
+            // The title block above already reset the footnote/section stream
+            // and rendered the «TITLE» element as the H1.  Strip that leading
+            // block here so the body continues the SAME stream (title footnote
+            // = #1, body footnotes #2+) instead of re-rendering the title.
 
             // Page markers (\x01PAGE:N\x01) are embedded directly in the
             // body text by the transform stage.  If none are present
             // (e.g. single-page articles), inject one for page_start.
-            let markedBody = article.body || "";
+            let markedBody = (article.body || "").replace(/^«TITLE:[\s\S]*?«\/TITLE»/, "");
             if (markedBody.indexOf("\x01PAGE:") === -1 && article.page_start) {
               markedBody = `\x01PAGE:${article.page_start}\x01` + markedBody;
             }
@@ -3302,7 +3304,7 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
             // BEFORE the IMG doesn't end in a strong terminator
             // (``.``, ``!``, ``?``) followed by a capitalized
             // continuation, treat as mid-paragraph.
-            const NON_TEXT_PREFIX = /^(?:\{\{(?:TABLE|LEGEND|IMG|VERSE)|\u00abHTMLTABLE|\u00abSEC:|\u00abSH\u00bb|\u00abOUTLINE:|\u00abPLATE_OUTLINE:)/;
+            const NON_TEXT_PREFIX = /^(?:\{\{(?:TABLE|LEGEND|IMG|VERSE)|\u00abHTMLTABLE|\u00abSEC:|\u00abSH\u00bb|\u00abOUTLINE:|\u00abPLATE_OUTLINE:|\u00abTITLE:)/;
             const IMG_ONLY = /^\s*(?:\x01PAGE:\d+\x01\s*)*\{\{IMG:[^|}]+(?:\|[^}]*)?\}\}\s*$/;
             const stripMarginMarkers = s => s
               .replace(/\x01PAGE:\d+\x01/g, "")
