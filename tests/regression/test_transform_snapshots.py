@@ -39,7 +39,7 @@ from pathlib import Path
 import pytest
 
 from britannica.pipeline.stages.elements import ElementContext, process_elements
-from britannica.pipeline.stages.preprocess import preprocess
+from britannica.pipeline.stages.preprocess import _clean_and_heal
 
 
 SNAPSHOT_DIR = Path("tests/snapshots/transform")
@@ -107,12 +107,13 @@ def test_transform_snapshot(stem, input_path, body_path):
     # Volume + page from the `NN-NNNN-…` stem (e.g. 01-0426-… → vol 1, p426).
     volume, page_number = int(stem[:2]), int(stem[3:7])
 
-    # Mirror production/ingest: the stored segments are a slice of the
-    # `preprocess()`-cleaned stream, so the body is produced from preprocessed
-    # input.  preprocess is idempotent on already-clean segments and corrective
-    # on stale fixtures (which still carry `{{nop}}`/`<del>` from an older ingest).
+    # The `.input.txt` fixtures were captured POST-quote-run but PRE-clean (they
+    # still carry raw `&nbsp;`/`{{nop}}`/`<del>`).  Apply `_clean_and_heal` — the
+    # re-appliable cleans half of `preprocess` — NOT full `preprocess`, which would
+    # re-run quote-run on the already-converted markup and mangle a leftover `'''`
+    # from a source typo (BRACHIOPODA).  Production runs the full pass on raw.
     actual_raw = process_elements(
-        preprocess(raw_wikitext),
+        _clean_and_heal(raw_wikitext),
         ElementContext(volume=volume, page_number=page_number))
 
     expected = _normalize_for_compare(expected_raw)

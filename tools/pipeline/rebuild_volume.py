@@ -12,8 +12,9 @@ many stages get re-run.
 
 Default (fast) mode — for code-iteration:
     * Preserves `source_pages`.
-    * Runs only `prepare_wikitext` → `detect_boundaries` →
-      `transform_articles` → `export_articles_to_json`, in-process.
+    * Runs only `detect_boundaries` → `assemble_and_export`, in-process
+      (source-prep — corrections + quote-run + cleans — is folded into
+      detect's `preprocess`).
     * Skips classify / extract-xrefs / resolve-xrefs /
       extract-contributors — those don't change when you're tweaking
       detection / transform / export logic.
@@ -71,7 +72,6 @@ from britannica.pipeline.stages.detect_boundaries import (
     wipe_articles,
 )
 from britannica.pipeline.stages.super_detect import detect_boundaries
-from britannica.pipeline.stages.prepare_wikitext import prepare_wikitext
 from britannica.pipeline.assemble import assemble_and_export
 from sqlalchemy import text
 
@@ -159,17 +159,16 @@ def _wipe_everything(volume: int) -> None:
 # ── Pipeline runners ──────────────────────────────────────────────────
 
 def _run_fast(volume: int, t0: float) -> None:
-    """In-process minimal pipeline: prepare_wikitext → detect →
-    transform → export.  Article-shaping stages only — skips
-    classification, xrefs, images, contributors."""
+    """In-process minimal pipeline: detect → assemble/export.  Article-shaping
+    stages only — skips classification, xrefs, images, contributors.
+
+    Source-prep (corrections + quote-run + cleans) now happens inside detect's
+    `volume_stream` → `preprocess`, on the RAW `page.wikitext` the importer
+    stores.  So fast mode assumes source_pages hold raw wikitext (the importer's
+    default; a prior `--full` rebuild guarantees it) — it no longer pre-converts."""
     print(f"[{time.time()-t0:5.1f}s] Wiping vol {volume} articles…")
     n = wipe_articles(volume)
     print(f"[{time.time()-t0:5.1f}s]   Deleted {n} articles")
-
-    print(f"[{time.time()-t0:5.1f}s] Preparing wikitext "
-          f"(corrections.json + quote-run conversion)…")
-    n = prepare_wikitext(volume)
-    print(f"[{time.time()-t0:5.1f}s]   Prepared {n} pages")
 
     print(f"[{time.time()-t0:5.1f}s] Detecting boundaries…")
     detected = detect_boundaries(volume)
@@ -196,12 +195,8 @@ def _run_full(volume: int, t0: float) -> None:
         ("Importing pages",
          ["uv", "run", "python", "tools/fetch/import_wikisource_pages.py",
           "--indir", raw_dir, "--volume", str(volume), "--overwrite"]),
-        ("Preparing wikitext",
-         ["uv", "run", "britannica", "prepare-wikitext", str(volume)]),
         ("Detecting boundaries",
          ["uv", "run", "britannica", "detect-boundaries", str(volume)]),
-        ("Classifying articles",
-         ["uv", "run", "britannica", "classify-articles", str(volume)]),
         ("Extracting contributors",
          ["uv", "run", "britannica", "extract-contributors", str(volume)]),
         ("Assembling + exporting",

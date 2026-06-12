@@ -38,7 +38,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
 # Reuse the article-pipeline's quote-run converter — same logic
 # detect_boundaries / transform_articles already rely on.
 from britannica.corrections import apply_corrections
-from britannica.pipeline.stages.prepare_wikitext import _convert_quote_runs
+from britannica.pipeline.stages.quote_runs import _convert_quote_runs
 
 VOL = 1
 # Per-page (key is `vol:page`) corrections.json patches need apply

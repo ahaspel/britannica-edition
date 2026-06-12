@@ -1,7 +1,7 @@
 from britannica.db.models import Article, ArticleSegment, SourcePage
 from britannica.pipeline.stages import detect_boundaries as detect_boundaries_stage
 from britannica.pipeline.stages import super_detect as super_detect_stage
-from britannica.pipeline.stages.prepare_wikitext import _convert_quote_runs as _clean
+from britannica.pipeline.stages.quote_runs import _convert_quote_runs as _clean
 
 
 def test_detect_boundaries_with_section_markers(

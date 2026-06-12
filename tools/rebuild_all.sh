@@ -92,14 +92,8 @@ for vol in $VOLUMES; do
     --indir "$RUN_DIR" \
     --volume "$vol"
 
-  echo "  Preparing wikitext (corrections.json + quote-run conversion)..."
-  uv run britannica prepare-wikitext "$vol"
-
   echo "  Detecting boundaries..."
   uv run britannica detect-boundaries "$vol"
-
-  echo "  Classifying articles..."
-  uv run britannica classify-articles "$vol"
 
   echo "  Extracting contributors..."
   uv run britannica extract-contributors "$vol"

@@ -13,7 +13,6 @@ from britannica.pipeline.stages import detect_boundaries as detect_boundaries_st
 from britannica.pipeline.stages import super_detect as super_detect_stage
 from britannica.pipeline.stages import super_walker as super_walker_stage
 from britannica.pipeline.stages import transform_articles as transform_articles_stage
-from britannica.pipeline.stages.prepare_wikitext import _convert_quote_runs
 
 FIXTURE_DIR = Path(__file__).parent.parent / "fixtures" / "regression"
 
@@ -39,17 +38,16 @@ def regression_session(tmp_path):
 def _seed_pages(session_factory, pages_data: list[dict], volume: int):
     """Insert page data matching the real import pipeline.
 
-    The real importer stores cleaned_preview as raw_text, raw wikitext
-    as wikitext.  Production then runs prepare_wikitext which converts
-    wikitext quote-runs (``'''X'''`` / ``''X''``) to internal markers
-    (``«B»X«/B»`` / ``«I»X«/I»``).  Tests must apply that conversion
-    so detect_boundaries sees the same shape it does in production.
+    The importer stores cleaned_preview as raw_text and the raw wikitext
+    as wikitext — left RAW.  Quote-run conversion (``'''X'''``/``''X''`` →
+    ``«B»``/``«I»``) now happens in ``preprocess`` (the single source-prep
+    step, run by detect's ``volume_stream``), so the seed stores raw wikitext
+    exactly as the importer does — no pre-conversion here.
     """
     session = session_factory()
     try:
         for p in pages_data:
             wikitext = p.get("raw_text") or ""
-            wikitext = _convert_quote_runs(wikitext)
             session.add(SourcePage(
                 source_name="wikisource",
                 volume=volume,

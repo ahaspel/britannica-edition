@@ -33,7 +33,7 @@ def _transform(raw, volume=1, page_number=1):
     BEFORE ``_transform_text_v2``; so the body the transform receives is already
     preprocessed.  Mirror that here (otherwise e.g. ``<noinclude>`` chrome that
     preprocess removes would wrongly appear to 'survive' the transform)."""
-    from britannica.pipeline.stages.prepare_wikitext import _convert_quote_runs
+    from britannica.pipeline.stages.quote_runs import _convert_quote_runs
     from britannica.pipeline.stages.preprocess import preprocess
     from britannica.pipeline.stages.elements import ElementContext, process_elements
     return process_elements(

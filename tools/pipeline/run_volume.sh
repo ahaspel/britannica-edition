@@ -68,10 +68,6 @@ echo "=== Detecting boundaries ==="
 uv run britannica detect-boundaries "$VOLUME"
 
 echo
-echo "=== Classifying articles ==="
-uv run britannica classify-articles "$VOLUME"
-
-echo
 echo "=== Extracting contributors ==="
 uv run britannica extract-contributors "$VOLUME"
 
