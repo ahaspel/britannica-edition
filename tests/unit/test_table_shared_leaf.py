@@ -1,17 +1,17 @@
-"""Flavor autodetection + decomposition shape for the shared table leaf.
+"""Flavor autodetection + decomposition shape for the table leaf.
 
-`produce_table_rows` is the single row/cell split every table producer shares.
-These tests pin its `{|` vs `<table>` flavor autodetection (`flavor=None`) and
-the `(tag, colspan, rowspan, content, styles)` cell tuple it returns.
-
-(The old form-chooser `assemble_table_marker` + its `{{TABLE}}`-marker emitter
-`assemble_wiki_marker` were deleted as dead code: the live producer always
-assembles `«HTMLTABLE»` via `assemble_html_rows`, so the align-only `{{TABLE}}`
-form had no producer left.)
+`produce_table` recurses the grid to the ground and emits in one descent — both
+`{|` and `<table>` syntaxes recognized by `recognize_table`, no flavor branch.
+These tests pin that autodetection and the cell decomposition via the emitted
+`«HTMLTABLE»` marker.  `recurse` is identity here: a cell's content is its own
+producer's problem, and the real leaf recursion is exercised by the snapshot
+suite — here we only check the structural chop.
 """
-from britannica.pipeline.stages.elements._table_decompose import (
-    produce_table_rows,
-)
+from britannica.pipeline.stages.elements._table_decompose import produce_table
+
+
+def _ident(s: str) -> str:
+    return s
 
 
 PLAIN = (
@@ -23,14 +23,13 @@ PLAIN = (
 
 class TestFlavorAutodetect:
     def test_html_detected(self):
-        # `<tr>`/`<td>` with no `{|` → `flavor=None` auto-detects HTML.
-        _c, parsed, _hh, _hs = produce_table_rows(PLAIN)
-        assert len(parsed) == 3
+        # `<tr>`/`<td>` with no `{|` → recognized as HTML; three rows.
+        _caption, marker = produce_table(PLAIN, _ident)
+        assert marker.count("<tr>") == 3
+        assert "<td>Region</td>" in marker
 
     def test_wiki_detected(self):
         inner = "|-\n| a || b\n|-\n| c || d"
-        _c, parsed, _hh, _hs = produce_table_rows(inner)
-        # Cell tuple is (tag, colspan, rowspan, content, styles) — content at [3].
-        assert [[cell[3] for cell in cells] for _row_attr, cells in parsed] == [
-            ["a", "b"], ["c", "d"],
-        ]
+        _caption, marker = produce_table(inner, _ident)
+        assert "<td>a</td><td>b</td>" in marker
+        assert "<td>c</td><td>d</td>" in marker
