@@ -3,7 +3,15 @@
 # Wipes everything (DB, exports, S3), rebuilds from scratch,
 # deploys, and runs quality analytics.
 #
-# Usage: ./tools/rebuild_all.sh [--no-deploy]
+# Usage: ./tools/rebuild_all.sh [--no-deploy] [--skip-import]
+#
+#   --skip-import  Reuse the already-imported source_pages instead of re-writing
+#                  them (the raw wikileaves never change — saves ~30 min).  Spares
+#                  source_pages at truncate and skips ONLY Phase 2's page import;
+#                  detect-boundaries + extract-contributors still run every volume,
+#                  re-deriving segments/articles/contributors from the kept pages.
+#                  Use only when source_pages is already populated from a prior
+#                  full rebuild and the raw files are unchanged.
 #
 # Preserves: data/raw/wikisource/*, data/derived/quality_reports/*
 
@@ -24,10 +32,13 @@ VOLUMES=$(seq 1 28)
 EXPORT_DIR="data/derived/articles"
 BUILD_START=$(date +%s)
 NO_DEPLOY=""
+SKIP_IMPORT=""
 
 for arg in "$@"; do
   if [ "$arg" = "--no-deploy" ]; then
     NO_DEPLOY="yes"
+  elif [ "$arg" = "--skip-import" ]; then
+    SKIP_IMPORT="yes"
   fi
 done
 
@@ -42,15 +53,22 @@ echo "  Full rebuild: volumes 1-28"
 echo "  Started: $(date '+%Y-%m-%d %H:%M:%S')"
 echo "============================================"
 echo
+[ -n "$SKIP_IMPORT" ] && { echo "  Mode: --skip-import (reusing source_pages; skipping Phase 2 page import)"; echo; }
 
 # --- Phase 1: Clean everything ---
 echo "=== Phase 1: Cleaning everything [$(elapsed)] ==="
 
-echo "  Truncating database..."
-uv run python tools/db/truncate_all.py
+if [ -n "$SKIP_IMPORT" ]; then
+  echo "  Truncating database (keeping source_pages — reusing imported raw)..."
+  uv run python tools/db/truncate_all.py --keep-source-pages
+  # verify_empty is skipped on purpose: source_pages is intentionally non-empty.
+else
+  echo "  Truncating database..."
+  uv run python tools/db/truncate_all.py
 
-echo "  Verifying..."
-uv run python tools/db/verify_empty.py
+  echo "  Verifying..."
+  uv run python tools/db/verify_empty.py
+fi
 
 echo "  Clearing exports..."
 rm -rf "$EXPORT_DIR"
@@ -87,11 +105,18 @@ for vol in $VOLUMES; do
   echo
   echo "--- Volume $vol [$(elapsed)] ---"
 
-  echo "  Importing pages..."
-  uv run python tools/fetch/import_wikisource_pages.py \
-    --indir "$RUN_DIR" \
-    --volume "$vol"
+  if [ -z "$SKIP_IMPORT" ]; then
+    echo "  Importing pages..."
+    uv run python tools/fetch/import_wikisource_pages.py \
+      --indir "$RUN_DIR" \
+      --volume "$vol"
+  else
+    echo "  Reusing imported pages (--skip-import)."
+  fi
 
+  # detect-boundaries + extract-contributors ALWAYS run: they are derived from
+  # source_pages (re-created each rebuild), and detect-boundaries itself changes
+  # with code.  --skip-import only spares the immutable page IMPORT above.
   echo "  Detecting boundaries..."
   uv run britannica detect-boundaries "$vol"
 
