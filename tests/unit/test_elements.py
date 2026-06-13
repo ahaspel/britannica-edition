@@ -268,10 +268,13 @@ class TestChemistryLayout:
         # Cell content survives intact.
         assert "C : N\u00b7OH" in result
         assert "Steiner" in result and "Nef" in result
-        # The angle-bracket image rides through the CHEM block as its raw
-        # `[[File:Langle.svg|\u2026]]` link \u2014 carried losslessly for the viewer,
-        # not flattened away (no glyph substitution happens at this stage).
-        assert "[[File:Langle.svg" in result
+        # The angle-bracket image is recursed (the CHEM cell is a wrapper, not a
+        # leaf) \u2014 the raw `[[File:Langle.svg|10px]]` becomes a proper `{{IMG:\u2026}}`
+        # image marker the viewer renders, instead of leaking as a raw wiki link.
+        # (When the walker lifts the bracket image into the registry, the
+        # `_CHEM_SENTINEL` path renders it as the \u276e glyph instead; that path is
+        # unaffected \u2014 its sentinel rides through the recursion untouched.)
+        assert "{{IMG:Langle.svg" in result
 
     def test_plain_table_unaffected(self):
         # A normal data table with NO angle-bracket image is untouched.
