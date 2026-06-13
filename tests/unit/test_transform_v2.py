@@ -54,11 +54,11 @@ class TestImageCaptions:
         assert "{{IMG:Foo.jpg}}" in result
 
     def test_cithara_real_data(self):
-        """CITHARA's {{img float}} caption is carried faithfully in a figtable
+        """CITHARA's {{img float}} caption is carried faithfully in a figure
         cell (markup intact), NOT flattened into an IMG caption."""
         raw = _load_page(6, 411)
         result = _transform_v2(raw, volume=6, page_number=411)
-        assert 'class="figtable"' in result
+        assert "«HTMLTABLE:" in result and 'class="figtable"' not in result
         # The Nero image is a pure leaf \u2014 no caption bundled into the marker.
         assert not re.search(r"\{\{IMG:[^|}]*\|[^}]*Nero", result)
         assert "Nero Citharoedus" in result and "\u00abSC\u00bb" in result
