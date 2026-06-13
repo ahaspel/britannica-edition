@@ -81,8 +81,7 @@ def _run_pipeline(monkeypatch, session_factory, pages_data, volume):
     session = session_factory()
     try:
         for a in session.query(Article).filter(Article.volume == volume).all():
-            a.body, a.title_display = transform_articles_stage.walk_article(
-                session, a)
+            a.body = transform_articles_stage.walk_article(session, a)
         session.commit()
     finally:
         session.close()

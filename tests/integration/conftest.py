@@ -29,16 +29,15 @@ def _patch_walk_session(monkeypatch, test_session_local):
 def transform_titles():
     """MOVE 2: the title is produced in the transform (``walk_article``, the sole
     title site), not at detection.  Returns a callable that, after
-    ``persist_articles``, runs the transform to populate ``Article.title``/
-    ``title_raw``/``title_display`` — mirrors the real pipeline, where the
-    transform stage (classify / assemble) walks each article."""
+    ``persist_articles``, runs the transform to populate ``Article.title`` —
+    mirrors the real pipeline, where the transform stage (classify / assemble)
+    walks each article."""
     def _run(session_factory, volume):
         session = session_factory()
         try:
             for a in (session.query(Article)
                       .filter(Article.volume == volume).all()):
-                a.body, a.title_display = transform_articles_stage.walk_article(
-                    session, a)
+                a.body = transform_articles_stage.walk_article(session, a)
             session.commit()
         finally:
             session.close()

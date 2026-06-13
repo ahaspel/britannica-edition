@@ -147,14 +147,8 @@
     }
 
     .body-text p {
-      text-indent: 1.5em;
       margin: 0 0 0.5em 0;
       position: relative;
-    }
-
-
-    .body-text p:first-of-type {
-      text-indent: 0;
     }
 
     /* Mid-paragraph figures: body prose wraps around the figure so
@@ -512,62 +506,35 @@
       border-bottom: 1px solid currentColor;
     }
 
-    /* Figure-tables: plate / multi-figure image grids carried as
-       «HTMLTABLE» but WITHOUT data-table chrome.  The point is to
-       preserve the SOURCE LAYOUT — a row of three figures in the print
-       stays a row of three, captions in their own cells — which the
-       linear plate parser flattened into a single column down the page.
-       Cell images render at full size; the !important beats formatCell's
-       inline 60px data-cell cap (which is right for data tables, wrong
-       for plates). */
-    /* MECHANICAL ONLY. The figtable's POSITION (float / margin:auto centring /
-       width) and its cells' alignment come from the source, carried by the
-       producer onto the <table style> / <td style> — the viewer must not
-       impose them. So no margin:auto centring here (it rides on the source's
-       align=center / {{Ts|ma}}) and no cell text-align (it rides on the
-       source's cell align). What remains is genuinely the viewer's: borders
-       off (this is a figure, not a data grid), vertical breathing room, and
-       the column gap. */
-    /* Float→width: the source's literal print px (carried faithfully on the
-       <table>/<img>) doesn't respect the viewport — a full-column print figure
-       under-fills a wide reading column.  So the viewer maps the figure's box
-       to a fraction of the column, keyed on the float the producer carried:
-       centered / un-floated → fill the column (100%); floated → half, so body
-       text wraps beside it.  `!important` overrides the carried inline width. */
-    table.figtable {
+    /* Figure-tables = the author's class-less {| ("layout, not data").  The
+       producer mints no class, so a figure is recognized by the ABSENCE of one,
+       :not([class]), and no output attribute is added.  POSITION rides on the
+       carried margin:auto / {{ts|ma}}; the viewer's ONLY opinions here are
+       VIEWPORT-RESPONSIVE (cf. wide-table): the figure fills the reading column,
+       a floated one takes half so prose wraps, the image scales -- plus the
+       figure basics it owns: borders off, vertical breathing room, column gap. */
+.body-text table:not([class]) {
       margin: 1.2em 0;
       border-collapse: collapse;
       border: none;
       width: 100% !important;
       max-width: 100%;
     }
-    table.figtable[style*="float"] {
+.body-text table:not([class])[style*="float"] {
       width: 50% !important;
       margin: 0.4em 0;
     }
-    table.figtable td, table.figtable th {
+.body-text table:not([class]) td,
+.body-text table:not([class]) th {
       border: none;
-      /* Tight vertical padding: in the source a figure's caption and its
-         legend often sit in SEPARATE rows (AEGEAN Figs 1-2 — caption row,
-         legend row), and they read as one caption block in print.  Wide
-         vertical padding spread them apart; keep horizontal column gap. */
       padding: 1px 12px;
-      vertical-align: top;
     }
-    table.figtable .cell-image,
-    table.figtable img {
+.body-text table:not([class]) .cell-image,
+.body-text table:not([class]) img {
       max-height: none !important;
-      /* Fill the cell so the figure scales with its float-derived box width
-         (above) instead of sitting at the carried print px.  The
-         `max-width:100%` MUST be `!important` to beat formatCell's inline
-         `max-width:Npx` cap — without it the image stays pinned at its source
-         px and a centered figure under-fills the column. */
       width: 100% !important;
       max-width: 100% !important;
       height: auto;
-      /* Block (not inline) so the image carries no line-box descender
-         space below it — that baseline gap was reading as the image
-         sitting too far above its caption. */
       display: block;
       margin: 0 auto;
     }
@@ -2100,26 +2067,36 @@
     // carries an explicit CSS size (sanitized).  Longest tokens first so
     // «XXL»/«XXS» aren't bitten by «XL»/«XS».
     function applySizeMarkers(h) {
-      h = h.replace(/«XXL»([\s\S]*?)«\/XXL»/g, '<span class="size-xxl">$1</span>');
-      h = h.replace(/«XL»([\s\S]*?)«\/XL»/g, '<span class="size-xl">$1</span>');
-      h = h.replace(/«LG»([\s\S]*?)«\/LG»/g, '<span class="size-lg">$1</span>');
-      h = h.replace(/«XXS»([\s\S]*?)«\/XXS»/g, '<span class="size-xxs">$1</span>');
-      h = h.replace(/«XS»([\s\S]*?)«\/XS»/g, '<span class="size-xs">$1</span>');
-      h = h.replace(/«SM»([\s\S]*?)«\/SM»/g, '<span class="size-sm">$1</span>');
-      h = h.replace(/«FS\[([^\]]*)\]»([\s\S]*?)«\/FS»/g, (_m, sz, c) => {
+      // Open→open-tag, close→close-tag INDEPENDENTLY (the «P»/«CTR» rule), so a
+      // nested or chunk-spanning size pairs in the browser instead of a `.*?`
+      // span-match mis-pairing it.  Longest openers first so «XXL»/«XXS» aren't
+      // bitten by «XL»/«XS» (the `»` already anchors them, but keep the order).
+      h = h.replace(/«XXL»/g, '<span class="size-xxl">').replace(/«\/XXL»/g, "</span>");
+      // No «XL» size line: its close «/XL» COLLIDES with the external-link marker
+      // «XL:…«/XL» (decoded later in decodeInlineMarkers), so an unconditional
+      // «/XL»→</span> here would eat all 734 external-link closes.  Size «XL» is
+      // unused corpus-wide (0 occurrences); independent open/close substitution
+      // is only safe when the close token is UNAMBIGUOUS, and «/XL» is not.  If
+      // x-large text is ever needed it must use a non-colliding token.
+      h = h.replace(/«LG»/g, '<span class="size-lg">').replace(/«\/LG»/g, "</span>");
+      h = h.replace(/«XXS»/g, '<span class="size-xxs">').replace(/«\/XXS»/g, "</span>");
+      h = h.replace(/«XS»/g, '<span class="size-xs">').replace(/«\/XS»/g, "</span>");
+      h = h.replace(/«SM»/g, '<span class="size-sm">').replace(/«\/SM»/g, "</span>");
+      // «FS[v]» / «LH[v]» carry a sanitized CSS value on the OPENER ({{fs}}/{{lh}});
+      // the close is plain «/FS»/«/LH».  An invalid value emits a neutral <span>
+      // (content still renders, the pair still closes) — never an orphan tag.
+      // «LH» inline-block lets the line-height govern the wrapped/«BR» lines.
+      h = h.replace(/«FS\[([^\]]*)\]»/g, (_m, sz) => {
         sz = sz.trim();
         if (/^[\d.]+$/.test(sz)) sz += "%";
         const ok = /^[\d.]+(%|em|rem|px|pt)$|^(xx-small|x-small|small|medium|large|x-large|xx-large|smaller|larger)$/i.test(sz);
-        return ok ? `<span style="font-size:${sz}">${c}</span>` : c;
-      });
-      // «LH[v]» — line-height wrapper ({{lh}}); tightens multi-line caption
-      // blocks.  inline-block so the line-height governs the wrapped/«br»
-      // lines inside.  Sanitized: unitless number, %, or length.
-      h = h.replace(/«LH\[([^\]]*)\]»([\s\S]*?)«\/LH»/g, (_m, lh, c) => {
+        return ok ? `<span style="font-size:${sz}">` : "<span>";
+      }).replace(/«\/FS»/g, "</span>");
+      h = h.replace(/«LH\[([^\]]*)\]»/g, (_m, lh) => {
         lh = lh.trim();
         const ok = /^[\d.]+(%|em|rem|px|pt)?$/.test(lh);
-        return ok ? `<span style="display:inline-block;line-height:${lh}">${c}</span>` : c;
-      });
+        return ok ? `<span style="display:inline-block;line-height:${lh}">` : "<span>";
+      }).replace(/«\/LH»/g, "</span>");
       return h;
     }
 
@@ -2141,14 +2118,19 @@
       // stays escaped.  These can't become markers without blinding the
       // classifiers that read them, so the viewer renders the tags directly.
       h = h.replace(/&lt;(\/?(?:sub|sup|small|big|br)\s*\/?)&gt;/gi, "<$1>");
-      h = h.replace(/«MIRROR:(.*?)«\/MIRROR»/gs, '<span class="mirror-h">$1</span>');
-      h = h.replace(/«B»(.*?)«\/B»/gs, "<b>$1</b>");
-      h = h.replace(/«I»(.*?)«\/I»/gs, "<i>$1</i>");
-      h = h.replace(/«SC»(.*?)«\/SC»/gs, '<span class="small-caps">$1</span>');
-      h = h.replace(/«SS»(.*?)«\/SS»/gs, '<span class="sans-serif">$1</span>');
-      h = h.replace(/«SR»(.*?)«\/SR»/gs, '<span class="explicit-serif">$1</span>');
-      h = h.replace(/«U»([\s\S]*?)«\/U»/g, '<span class="underline">$1</span>');
-      h = h.replace(/«STK»([\s\S]*?)«\/STK»/g, '<s>$1</s>');
+      // Inline style wrappers — open→open-tag, close→close-tag INDEPENDENTLY
+      // (the «P»/«CTR» rule below).  A marker that nests («B» inside «B») or
+      // spans render chunks now pairs in the browser; the old `«X»(.*?)«/X»`
+      // span-match mis-paired the first and leaked the second.  The `»` anchors
+      // each opener, so «B» can't bite «BR»/«BAR»/«BRACE2».
+      h = h.replace(/«MIRROR:/g, '<span class="mirror-h">').replace(/«\/MIRROR»/g, "</span>");
+      h = h.replace(/«B»/g, "<b>").replace(/«\/B»/g, "</b>");
+      h = h.replace(/«I»/g, "<i>").replace(/«\/I»/g, "</i>");
+      h = h.replace(/«SC»/g, '<span class="small-caps">').replace(/«\/SC»/g, "</span>");
+      h = h.replace(/«SS»/g, '<span class="sans-serif">').replace(/«\/SS»/g, "</span>");
+      h = h.replace(/«SR»/g, '<span class="explicit-serif">').replace(/«\/SR»/g, "</span>");
+      h = h.replace(/«U»/g, '<span class="underline">').replace(/«\/U»/g, "</span>");
+      h = h.replace(/«STK»/g, "<s>").replace(/«\/STK»/g, "</s>");
       // «BR» — canonical line break (producer-regularized `<br>`). Decoded
       // here, the one decoder both the body and formatCell route through, so a
       // line break renders identically in centred captions, cells, and prose.
@@ -2179,8 +2161,8 @@
       h = h.replace(/«\/SPAN»/g, "</span>");
       // {{float right|X}}/{{float left|X}} — margin-floated content
       // (contributor-initial signatures, right-floated marginal notes).
-      h = h.replace(/«FR»([\s\S]*?)«\/FR»/g, '<span class="float-right">$1</span>');
-      h = h.replace(/«FL»([\s\S]*?)«\/FL»/g, '<span class="float-left">$1</span>');
+      h = h.replace(/«FR»/g, '<span class="float-right">').replace(/«\/FR»/g, "</span>");
+      h = h.replace(/«FL»/g, '<span class="float-left">').replace(/«\/FL»/g, "</span>");
       h = h.replace(/«BRACE2\[(\d+)\|([lrud])\]»/g, (_m, _n, side) => {
         const glyph = side === 'l' ? '⎧' : side === 'r' ? '⎫'
                     : side === 'u' ? '⏞' : '⏟';
@@ -3447,34 +3429,11 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
                   continue;
                 }
               }
-              // Mid-paragraph figure merge.  Also handles the common
-              // ``prev + IMG + LEGEND + next`` pattern (legend is part
-              // of the figure, not a paragraph boundary).
-              if (IMG_ONLY.test(cur) && mergedParas.length > 0) {
-                const prev = mergedParas[mergedParas.length - 1];
-                // Look ahead over consecutive IMG and LEGEND paragraphs
-                // — figures often stack (IMG4, LEGEND4, IMG5, LEGEND5)
-                // between the prev body text and the next body text.
-                // All stacked figures get pulled into one float block.
-                const figParas = [cur];
-                let scan = i + 1;
-                while (scan < rawParas.length &&
-                       (IMG_ONLY.test(rawParas[scan]) ||
-                        LEGEND_ONLY.test(rawParas[scan]))) {
-                  figParas.push(rawParas[scan]);
-                  scan++;
-                }
-                const next = scan < rawParas.length ? rawParas[scan] : "";
-                if (next && !NON_TEXT_PREFIX.test(prev) &&
-                    !NON_TEXT_PREFIX.test(next) &&
-                    isContinuation(prev, next)) {
-                  const fig = figParas.join(" ");
-                  mergedParas[mergedParas.length - 1] =
-                    prev + " \u2060FIG\u2060 " + fig + " \u2060FIG\u2060 " + next;
-                  i = scan + 1;
-                  continue;
-                }
-              }
+              // No mid-paragraph figure merge.  A block figure renders in place
+              // (its own block, where the producer put it); the viewer does NOT
+              // float it into the surrounding prose.  Killed the round trip:
+              // producer leaves the IMG in prose, the IMG-normalization injected
+              // a blank-line break to isolate it, this merge re-floated it back.
               // Plain-text continuation merge: prev ends mid-sentence
               // (no terminator) + next starts lowercase. Handles
               // OCR-induced paragraph breaks that aren't really

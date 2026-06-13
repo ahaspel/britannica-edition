@@ -86,7 +86,7 @@ def render(title: str, volume: int | None = None,
         # plates included — through walk_article (segment-join with the carried
         # «PAGE» markers, footer strip, the ONE element walk, title split).  No
         # manual concatenation, no plate special-case, no transform shim.
-        body, _disp = walk_article(session, article)
+        body = walk_article(session, article)
         print(f"[{time.time()-t0:4.1f}s] Walked → {len(body):,} chars")
         # Resolve this article's «LN» links exactly as production does:
         # assemble_and_export builds the same corpus index before serializing.
@@ -98,7 +98,6 @@ def render(title: str, volume: int | None = None,
         article.volume, out_dir,
         body_override={article.id: body},
         link_index=idx,
-        title_display_override={article.id: _disp},
         only_article_id=article.id,
     )
     fn = _safe_filename(article, article.title)
