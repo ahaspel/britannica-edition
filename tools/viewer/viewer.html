@@ -1138,12 +1138,20 @@
     .footnote-ref a {
       color: #7b3f00;
       text-decoration: none;
-      /* Absolute size so a footnote ref renders identically everywhere — body,
-         cell, or inside the title H1 (was 1em, which inherited the heading font). */
+      /* Absolute size so a body/cell footnote ref renders identically — but the
+         title H1 is the EXCEPTION (rule below), where the ref scales to title font. */
       font-size: 0.8rem;
       font-weight: 700;
       padding: 0 2px;
       cursor: pointer;
+    }
+
+    /* EXCEPTION (title footnote): the ref NUMBER in the title H1 renders in TITLE
+       font — a title-proportional superscript (1em inherits the heading size) —
+       not the body 0.8rem.  The note popup (.fn-popup) keeps its standard 0.85rem,
+       so the on-click note stays in normal footnote font. */
+    h1 .footnote-ref a {
+      font-size: 1em;
     }
 
     .fn-popup {
@@ -1222,15 +1230,6 @@
       margin: 1.2em auto;
       text-align: center;
       max-width: 600px;
-    }
-
-    /* Large-format figures — Perthes country maps, Emery-Walker
-       engravings — need full column width, not the 600px default. */
-    .inline-image.wide {
-      max-width: 100%;
-    }
-    .inline-image.wide img {
-      max-height: none;
     }
 
     .inline-image img {
@@ -1666,18 +1665,11 @@
       return `<${tag}${attrs}>${formatCell(content)}</${tag}>`;
     }
 
-    // A figure is "wide" (full column, no 600px box) when its carried
-    // width exceeds the default box.  The filename/attribution heuristic
-    // is a FALLBACK only when no width was carried — older exports and
-    // figure/table-embedded images that don't carry size yet.
-    const IMG_DEFAULT_BOX_PX = 600;
-    function imgIsWide(meta, filename, caption) {
-      if (meta.width) return meta.width > IMG_DEFAULT_BOX_PX;
-      return /(?:^|[\s_-])map(?:$|[\s._-])/i.test(filename || "")
-          || /Justus Perthes|Emery Walker|Drawn and Engraved/i.test(caption || "");
-    }
     // Source width sizes the figure box; CSS max-width:100% clamps it to
     // the column.  "" when no width carried (falls back to the CSS box).
+    // We render at the size the producer CARRIES — no "is this wide?" guess.
+    // Any future viewport-overflow handling (cf. wide-table / wide-math)
+    // would build on this known width, deliberately, not on a heuristic.
     function imgWidthStyle(meta) {
       return meta.width ? ` style="max-width:${meta.width}px"` : "";
     }
@@ -2399,8 +2391,15 @@
     // emitting ``\n\n`` borders around their markers: source structure
     // (where the placeholder was) determines placement, the renderer
     // handles paragraph rendering regardless.
+    //
+    // IMG is NOT here.  An image is not block-by-nature: its placement is
+    // its carried `align` — `inline` → an inline glyph in the prose flow;
+    // otherwise → a `<figure>` whose block-ness the surrounding `«P»`/`«CTR»`
+    // already expresses.  Listing it here chopped the prose around every
+    // inline letterform image and wrapped the fragments in separate `<p>`s,
+    // forcing the image onto its own line (ALPHABET's β/λ/σ glyphs).
     const BLOCK_MARKER_SCAN_RE =
-      /\{\{TABLEH?(?:\[style:[^\]]*\])?:[\s\S]*?\}TABLE\}|\{\{VERSE(?:\[style:[^\]]*\])?:[\s\S]*?\}VERSE\}|\{\{LEGEND:[\s\S]*?\}LEGEND\}|\{\{IMG:[^}]*\}\}|«OUTLINE:[\s\S]*?«\/OUTLINE»|«PLATE_OUTLINE:[\s\S]*?«\/PLATE_OUTLINE»|«HTMLTABLE:[\s\S]*?«\/HTMLTABLE»|«CHEM:[\s\S]*?«\/CHEM»|«TITLE:[\s\S]*?«\/TITLE»/g;
+      /\{\{TABLEH?(?:\[style:[^\]]*\])?:[\s\S]*?\}TABLE\}|\{\{VERSE(?:\[style:[^\]]*\])?:[\s\S]*?\}VERSE\}|\{\{LEGEND:[\s\S]*?\}LEGEND\}|«OUTLINE:[\s\S]*?«\/OUTLINE»|«PLATE_OUTLINE:[\s\S]*?«\/PLATE_OUTLINE»|«HTMLTABLE:[\s\S]*?«\/HTMLTABLE»|«CHEM:[\s\S]*?«\/CHEM»|«TITLE:[\s\S]*?«\/TITLE»/g;
 
     function renderParagraph(p, nextPara, sectionInfo) {
       // Mixed-paragraph split: if this paragraph contains a block
@@ -2611,7 +2610,7 @@
         if (meta.align === "inline")
           return renderInlineGlyph(filename, meta.width, meta.height);
         const url = commonsUrl(filename);
-        const cls = "inline-image" + (imgIsWide(meta, filename, caption) ? " wide" : "");
+        const cls = "inline-image";
         // The caption carries producer markers (small-caps Fig., «BR» line
         // breaks): escape the prose, then decode the markers — the same pass
         // every other context uses.  This path returns early, so it must decode
@@ -3019,11 +3018,9 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
         if (meta.align === "inline")
           return renderInlineGlyph(unescapeHtml(filename), meta.width, meta.height);
         caption = caption || "";
-        // Carried width drives sizing: source width sizes the box (CSS
-        // clamps to the column); width > the default box → full-column
-        // "wide".  Filename/attribution is the fallback for width-less
-        // markers only (see imgIsWide).
-        const cls = "inline-image" + (imgIsWide(meta, filename, caption) ? " wide" : "");
+        // Carried width sizes the box (CSS max-width:100% clamps it to the
+        // column).  No "wide" guess — render at the size the producer carries.
+        const cls = "inline-image";
         return `<figure class="${cls}"${imgWidthStyle(meta)}><a href="${url}" target="_blank"><img src="${url}" alt="${caption || filename}" loading="lazy" /></a>${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure>`;
       });
       // Render mirrored glyph markers BEFORE B/I/SC so inner formatting
@@ -3321,15 +3318,6 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
             };
 
             const LEGEND_ONLY = /^\s*\{\{LEGEND:[\s\S]*?\}LEGEND\}\s*$/;
-            // Large-format figures (Perthes country maps, Emery-Walker
-            // engravings) should NOT float — they're too big to wrap
-            // prose around. Leaving them out of the mid-paragraph merge
-            // makes them render as standalone full-width figures.
-            const isWideFigure = s => {
-              const m = s.match(IMG_PARTS_RE);
-              if (!m) return false;
-              return imgIsWide(parseImgMeta(m[2]), m[1] || "", m[3] || "");
-            };
             // Collapse ``\n\n`` inside balanced ``«HTMLTABLE:`` blocks to
             // ``\n`` so paragraph-splitting doesn't slice a nested
             // HTMLTABLE (e.g. SHIP's per-nationality subtables, whose
@@ -3461,11 +3449,8 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
               }
               // Mid-paragraph figure merge.  Also handles the common
               // ``prev + IMG + LEGEND + next`` pattern (legend is part
-              // of the figure, not a paragraph boundary). Skip for
-              // wide figures — those render as standalone blocks, not
-              // floats, so surrounding prose does not wrap.
-              if (IMG_ONLY.test(cur) && !isWideFigure(cur)
-                  && mergedParas.length > 0) {
+              // of the figure, not a paragraph boundary).
+              if (IMG_ONLY.test(cur) && mergedParas.length > 0) {
                 const prev = mergedParas[mergedParas.length - 1];
                 // Look ahead over consecutive IMG and LEGEND paragraphs
                 // — figures often stack (IMG4, LEGEND4, IMG5, LEGEND5)
