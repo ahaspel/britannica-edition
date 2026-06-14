@@ -154,29 +154,40 @@ next deploy.  Full notes in `status_history.md`.  [[project_wikilink_backlog]]
   local `--no-deploy` rebuilds since; **the campaign output has not shipped** — a fresh
   full rebuild + deploy is owed to put all of the above (and the LINK ARC) into
   production.
-- **Uncommitted working tree:** 22 regenerated `tools/viewer/readers-guide-*.html` —
-  article-ID sequence-suffix shifts only (e.g. `26-1031-s3`→`s4`), a byproduct of a
-  rebuild changing which page fragments count as articles.  Decision pending: bank the
-  regeneration or discard.
+- **Uncommitted working tree:**
+  - *Producer (banked 2026-06-14, awaiting a rebuild to land):* the `«BR»` inline-image fix
+    (`_walker.py`), the MATH `display` carry (`_leaf.py`/`__init__.py`/
+    `annotate_math_markers.py`), the dead-relic deletion (`_walker.py` + the `_tables.py`
+    stale-comment trim), and 5 rebaselined transform snapshots.  Suite 378 green.
+  - 22 regenerated `tools/viewer/readers-guide-*.html` — article-ID sequence-suffix shifts
+    only (e.g. `26-1031-s3`→`s4`), a rebuild byproduct.  Decision pending: bank or discard.
 
-### Leak audit (2026-06-13, `tools/diagnostics/leak_audit.py`, full corpus)
+### Leak audit (re-audited 2026-06-14, `tools/diagnostics/leak_audit.py`, full corpus)
 
 **BROKEN: 149 in 48 articles (0% of corpus)** — down from 1,589 at 06-09; the old
-per-class census is **superseded**.  Reading the actual output around each leak, **~90%
-is source / OCR junk, not pipeline bugs**: un-transcribed math (Bessel/trig articles —
-`<n`, `cos;<A+c-B)`, `sin A<sin a`, mojibake — the transcriber never wrapped the formulae
-in `<math>`), literal angle-brackets in source text (Pliny inscription: `<Secundus>`,
-`<consul;>`, `<praetor>`), and orphan/unbalanced `</math>` `</poem>` closers.  The
-genuinely-fixable pipeline residue is a **small known set**:
+per-class census is **superseded**.  Reading the actual output around each leak, the
+producer is **essentially done** — the 149 decompose as:
 
-- **`<chem>` recognition** — a well-formed `<chem>K4Fe(NC)6->…</chem>` reaction not routed
-  to CHEM (e.g. art 5939264).  Real recognizer gap.
-- **`{{nowrap}}` carry** (4) + **`{{fine block}}`** (1) — small producer gap (e.g. the
-  hieroglyph-transliteration article 5916112).
-- **`<includeonly>` unwrap** (2) — small preprocess gap (art 5938103).
+- **~100 OCR / source junk** — `<word`/`<letter` scannos (Pliny inscription `<consul`,
+  `<praetor`, `<secundus`), un-transcribed math `<`, mojibake.  Not pipeline bugs.
+- **audit masking false-positives** — `htmltag:math` / `htmltag:poem` are *conjured by the
+  audit's own* `_mask_final_form` fusing fragments across a masked marker; the real output
+  is clean (verified: 0 `<math>`, 263 `«MATH»` in a flagged article).  The audit
+  over-reports here — **hardening `_mask_*` is owed** so the "is the producer done?" check
+  is trustworthy (a noisy audit corrupts the very check, [[feedback_kill_all_darlings]]).
+- **recognized constructs failing on malformed source** — `{{nowrap}}` (79/84 in the worst
+  article render fine; the leaks are unclosed `}}`), `{{fine block}}` (recognized in the
+  style registry; nested-source), `<includeonly>` (recognized + unwrapped at
+  `__init__.py:809`; the leak is an overlapping `{{fine print/s}}…/e}}` span straddling the
+  tag).  OCR/transcription noise — **not producer gaps** (corrects the 06-13 list, which
+  wrongly flagged these three for closing).
 
-Close those three; the rest is faithful rendering of broken source (a viewer/escaping
-question at most, not breakage).  [[feedback_dont_flag_honesty]] [[project_leak_audit_reframe]]
+The **one genuine unrecognized construct is `<chem>`** (2 corpus-wide — e.g. art 5939264, a
+well-formed `<chem>K4Fe(NC)6->…</chem>`): absent from `_OPAQUE_TAGS`/`_ELEMENT_TAGS`.  The
+fix is **viewer-coupled** — route to `«MATH:\ce{…}»`, which renders only if KaTeX has the
+mhchem extension — so it rides with the MATH viewer work, not the producer.  Everything
+else is faithful rendering of broken source.  [[feedback_dont_flag_honesty]]
+[[project_leak_audit_reframe]]
 
 ### Open frontier / next
 
@@ -191,6 +202,13 @@ question at most, not breakage).  [[feedback_dont_flag_honesty]] [[project_leak_
   dead `{{TABLE}}` decoder (`parseTableCell`/`tableCellHtml`/`scaleDisplayMath` — 0 in
   fresh output, ride the rebuild); WS3 block-marker re-split; WS5 CSS audit.
   See [[feedback_viewer_mechanical]], [[feedback_viewer_no_regex]].
+- **MATH display half + `<chem>`** (rides the viewer campaign): render `displayMode` from the
+  carried `«MATH[display]:…»` token and drop the `mathOnly`/`skipMath` guesses; recognize
+  `<chem>` → `«MATH:\ce{…}»` once KaTeX has the mhchem extension (the one genuine producer
+  gap, deferred here because it's viewer-coupled).  Both need a rebuild.
+- **Harden `leak_audit._mask_final_form`** — it conjures `htmltag:math`/`htmltag:poem`
+  phantoms by fusing fragments across masked markers; fix so the BROKEN headline is
+  trustworthy (the audit is the "is the producer done?" instrument).
 - **Re-triage the old "Known issues" list (now in `status_history.md`) — mostly stale,
   must be confirmed.**  It predates the recursive-architecture campaign and references
   now-deleted labels/producers (`LAYOUT_WRAPPER`, `CAPTIONED_FIGURE_INLINE`,
@@ -253,6 +271,7 @@ decisions) lives in `source_cleanup.py`.
 | `«LN:target\|display«/LN»` | Unresolved link (falls back to search) |
 | `«MATH:…«/MATH»` | LaTeX, plain |
 | `«MATH[fs=N]:…«/MATH»` | LaTeX, render at N% font-size |
+| `«MATH[display]:…«/MATH»` | LaTeX, block display mode (carried from source `<math display="block">` / `\begin{…}`) |
 | `«MATH[popout]:…«/MATH»` | LaTeX, render click-to-pop-out link |
 | `«FN:…«/FN»` | Footnote |
 | `«HTMLTABLE:…«/HTMLTABLE»` | Complex table preserved as HTML |
