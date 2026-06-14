@@ -2048,10 +2048,6 @@
           /«XL:([^|«]*)(?:\|((?:(?!«\/XL»)[\s\S])*?))?«\/XL»/g,
           (_m, url, disp) =>
             `<a href="${url}" class="external-link" target="_blank" rel="noopener">${disp || url}</a>`);
-      // «ANCHOR:slug» — invisible in-article section-anchor target that a `#slug`
-      // fragment link lands on (the producer's anchor from `{{section|…}}`).
-      h = h.replace(/«ANCHOR:([^»]*)»/g,
-          (_m, slug) => `<span id="${slug}" class="section-anchor"></span>`);
       // «SEC:slug|name» — major-section anchor placed by stamp_sections.  An
       // invisible target at the section start; the «CTR»«SC» heading renders
       // right after it and the TOC is built from these (+ «SH»).  id matches
