@@ -154,10 +154,12 @@ question at most, not breakage).  [[feedback_dont_flag_honesty]] [[project_leak_
 ### Open frontier / next
 
 - **THE VIEWER (next campaign).**  With the producers/leaks settled, the viewer is now
-  the remaining source of nearly all bugs (user, 06-13).  Hunt the places it stops being
-  mechanical — any regex over the marker stream, any structural re-parse, any decision
-  about *where* content belongs (that's the producer's job).  See the keystone memories
-  [[feedback_viewer_mechanical]], [[feedback_viewer_no_regex]].
+  the remaining source of nearly all bugs (user, 06-13).  Make it a pure mechanical
+  decoder; everything structural becomes producer work.  Plan:
+  [`docs/plan_viewer_mechanical.md`](plan_viewer_mechanical.md).  **WS1 (start here):**
+  headings / sections / TOC — today `detectSections`/`SC_RE`/`scanShoulders` re-derive
+  them in the viewer with heuristics; the producer should decide and carry them via
+  `«SEC»`/`«SH»`.  See [[feedback_viewer_mechanical]], [[feedback_viewer_no_regex]].
 - **Re-triage the old "Known issues" list (now in `status_history.md`) — mostly stale,
   must be confirmed.**  It predates the recursive-architecture campaign and references
   now-deleted labels/producers (`LAYOUT_WRAPPER`, `CAPTIONED_FIGURE_INLINE`,
