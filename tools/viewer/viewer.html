@@ -1412,6 +1412,25 @@
     // recover the LaTeX without serialising it into HTML attributes.
     const _MATH_POPOUT_LATEX = {};
     let _mathPopoutCounter = 0;
+    // Parse a MATH marker's `[hint]` slot — a comma-separated list of
+    // build-time directives the producer baked in: `display` (block vs
+    // inline, carried from the source `<math display="block">` / `\begin{…}`),
+    // `fs=N` (in-column scale), `popout` (too wide → click-to-modal).  ONE
+    // tokenizer so a combined hint (`display,fs=80`) parses everywhere; the
+    // viewer reads displayMode off the carried token instead of guessing from
+    // paragraph context.
+    function parseMathHint(hint) {
+      const toks = hint ? hint.split(",") : [];
+      let fsPct = null;
+      for (const t of toks) {
+        const m = t.match(/^fs=(\d+)$/);
+        if (m) fsPct = parseInt(m[1], 10);
+      }
+      return { display: toks.includes("display"),
+               popout: toks.includes("popout"),
+               fsPct };
+    }
+
     function renderMathPopout(latex, isDisplay) {
       const id = "mp-" + (_mathPopoutCounter++);
       _MATH_POPOUT_LATEX[id] = latex;
@@ -1998,13 +2017,13 @@
       h = h.replace(/«FN(?:\[([^\]]+)\])?:([\s\S]*?)«\/FN»/g,
                     (match, name, content) => renderFnMarker(name, content));
       if (!opts.skipMath) {
-        h = h.replace(/«MATH(?:\[[^\]]*\])?:([\s\S]*?)«\/MATH»/g, (_m, latex) => {
+        h = h.replace(/«MATH(?:\[([^\]]*)\])?:([\s\S]*?)«\/MATH»/g, (_m, hint, latex) => {
           const tmp = document.createElement("textarea");
           tmp.innerHTML = latex;
           const raw = tmp.value.replace(/\\mbox\b/g, "\\text");
           try {
             if (typeof katex !== "undefined")
-              return katex.renderToString(raw, { throwOnError: false, displayMode: false });
+              return katex.renderToString(raw, { throwOnError: false, displayMode: parseMathHint(hint).display });
           } catch (e) { console.warn("KaTeX inline error:", e.message); }
           return `<code class="math-fallback">${escapeHtml(raw)}</code>`;
         });
@@ -2324,15 +2343,11 @@
           const raw = tmp.value
             .replace(/\\mbox\b/g, "\\text")
             .replace(/[\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u00a0\u200b]/g, " ");
-          if (hint === "popout") {
+          const { popout, fsPct } = parseMathHint(hint);
+          if (popout) {
             // EQNGROUP rows are always display-math context — the
             // popout link belongs in the math column, not inline.
             return renderMathPopout(raw, true);
-          }
-          let fsPct = null;
-          if (hint) {
-            const m = hint.match(/^fs=(\d+)$/);
-            if (m) fsPct = parseInt(m[1], 10);
           }
           try {
             if (typeof katex === "undefined") {
@@ -2774,9 +2789,6 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
         if (!info) return "";
         return `<span class="shoulder-heading" id="${info.id}">${escapeHtml(info.display)}</span>`;
       });
-      // Detect if this paragraph is a single standalone equation (one math block, no other text)
-      const mathCount = (html.match(/\u00abMATH(?:\[[^\]]*\])?:/g) || []).length;
-      const mathOnly = mathCount === 1 && /^\s*(<a class="page-marker[^"]*"[^>]*>[^<]*<\/a>)?\s*\u00abMATH(?:\[[^\]]*\])?:.*?\u00ab\/MATH\u00bb[,.\s;:]*$/s.test(html);
       // Render math markers with KaTeX.  An optional `[hint]` after
       // MATH carries a rendering directive baked at build time:
       //   `fs=N`   render at font-size N%  (Tier 2: in-column scaling)
@@ -2795,18 +2807,16 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
           const raw = tmp.value.replace(/\\mbox\b/g, "\\text")
             .replace(/[\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u00A0\u200B]/g, " ")
             .replace(/\\overset\{([^}]*)\}\s*\\underset\{([^}]*)\}\s*\{\\Sigma\s*/g, "\\sum_{$2}^{$1}{");
-          const isDisplay = /\\begin\{/.test(raw) || mathOnly;
-          if (hint === "popout") {
-            // Pass display flag so a standalone display-math popout
-            // renders as a block-centred placeholder where the
-            // equation would have been, rather than inline within
-            // the surrounding prose paragraph.
+          // displayMode is the AUTHOR's choice, carried in the `display`
+          // token (source `<math display="block">` / `\begin{…}`) — read it
+          // off the marker, don't guess from `\begin{` or paragraph-alone.
+          // fs=/popout ride the same comma-separated hint.
+          const { display: isDisplay, popout, fsPct } = parseMathHint(hint);
+          if (popout) {
+            // Pass the display flag so a display-math popout renders as a
+            // block-centred placeholder where the equation would have been,
+            // rather than inline in the surrounding prose paragraph.
             return renderMathPopout(raw, isDisplay);
-          }
-          let fsPct = null;
-          if (hint) {
-            const m = hint.match(/^fs=(\d+)$/);
-            if (m) fsPct = parseInt(m[1], 10);
           }
           try {
             if (typeof katex !== "undefined") {
