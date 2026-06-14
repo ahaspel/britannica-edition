@@ -1991,20 +1991,24 @@
       });
       // Escape a plain marker string on entry — the ONE boundary variation.
       if (opts.escape) h = escapeHtml(h);
-      // Render-irreducible inline decodes — footnotes, inline math, verse — the
-      // same in every context now that there is ONE decoder.
+      // Footnotes and verse decode the same in every context.  Inline MATH is the
+      // CELL default; MATH is frame-dependent (display in prose, inline in a cell),
+      // so the prose path — which renders «MATH» itself with display-mode / popout
+      // / fs hints — passes {skipMath} and the decoder leaves the marker for it.
       h = h.replace(/«FN(?:\[([^\]]+)\])?:([\s\S]*?)«\/FN»/g,
                     (match, name, content) => renderFnMarker(name, content));
-      h = h.replace(/«MATH(?:\[[^\]]*\])?:([\s\S]*?)«\/MATH»/g, (_m, latex) => {
-        const tmp = document.createElement("textarea");
-        tmp.innerHTML = latex;
-        const raw = tmp.value.replace(/\\mbox\b/g, "\\text");
-        try {
-          if (typeof katex !== "undefined")
-            return katex.renderToString(raw, { throwOnError: false, displayMode: false });
-        } catch (e) { console.warn("KaTeX inline error:", e.message); }
-        return `<code class="math-fallback">${escapeHtml(raw)}</code>`;
-      });
+      if (!opts.skipMath) {
+        h = h.replace(/«MATH(?:\[[^\]]*\])?:([\s\S]*?)«\/MATH»/g, (_m, latex) => {
+          const tmp = document.createElement("textarea");
+          tmp.innerHTML = latex;
+          const raw = tmp.value.replace(/\\mbox\b/g, "\\text");
+          try {
+            if (typeof katex !== "undefined")
+              return katex.renderToString(raw, { throwOnError: false, displayMode: false });
+          } catch (e) { console.warn("KaTeX inline error:", e.message); }
+          return `<code class="math-fallback">${escapeHtml(raw)}</code>`;
+        });
+      }
       h = h.replace(/\{\{VERSE(?:\[style:[^\]]*\])?:([\s\S]*?)\}VERSE\}/g, (_m, content) => {
         const lines = content.split("\n").filter(l => l.trim());
         return `<span class="cell-verse">${lines.join("<br>")}</span>`;
@@ -2761,7 +2765,7 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
       // B/I/SC, SS/SR, sizes, BAR, DHR-block, CTR, BRACE2, hieroglyph, LN).
       // SH + MATH below remain \u2014 they're frame-dependent (queue / display-
       // mode) and stay per-context.
-      html = decodeInlineMarkers(html);
+      html = decodeInlineMarkers(html, { skipMath: true });
       // Shoulder headings — id, display text, and margin-pointer
       // status were assigned by the detectSections pre-pass and
       // queued in document order.  Consume one entry per match.
