@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-06-13.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-06-14.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -53,6 +53,33 @@ remaining scaffolding (the catch-all preprocess stage, the title double-decider,
 viewer's layout-guessing) and drained several whole leak classes.  **Three principles**
 above still govern; every change below is one of *recurse to the end* / *carry the
 source* / *render what we carry*.
+
+### Session 2026-06-14 — figures render block · MATH display carry · dead-relic deletion
+
+**Centred figures, not inline glyphs.**  `_styled_br_to_marker` rewrites a wrapper's
+top-level `<br>`→`«BR»` *before* the inner walk, so `_is_inline_image_position` (which knew
+only the literal `<br>` line-ender) read the `«BR»` as same-line prose and mis-stamped
+centred figures `align=inline`.  The check now treats `«BR»` as a line break like
+`\n`/`<br>`: **109 captioned figures across 40 articles flip inline→block** (HYDRAULICS
+Figs 209/210, BOILER, BREAKWATER, CATACOMB, …).  Routing them to the block producer also
+drops a redundant File `|alt` arg they kept as a caption ([[feedback_no_caption_concept]];
+no content loss).  5 transform snapshots rebaselined.
+
+**MATH carries `display`.**  `_process_math` reads block-vs-inline off the source
+(`<math display="block">` or a `\begin{…}` environment) into `«MATH[display]:…»`, so the
+viewer renders `displayMode` mechanically — exactly like an image's carried `align`.
+Producer wired (`_leaf.py`/`__init__.py`/`annotate_math_markers.py`); viewer half (read the
+token, drop `mathOnly`/`skipMath`) pending — needs a rebuild.
+
+**Dead body-producer-unwrap relic deleted.**  `_wrap_body_runs` (+ `_find_atomic_wrapper_spans`,
+`_LAYOUT_WRAPPER_NAMES`, `_HTML_WRAPPER_TAGS`, ~165 lines) is the corpse of the old design
+where layout wrappers were kept atomic in body runs for the *body producer* to unwrap.
+`walk()` now extracts `{{nowrap|…}}`/`{{center|…}}` as whole `DOUBLE_BRACE` elements routed
+to the sole-owner style registry, so the chain had no caller; the body producer does ONLY
+`\n\n`→«P», exactly as it must ([[feedback_producer_template]]).  Byte-identical (dead code).
+The `\Big` math-typography leak was diagnosed a raw-source muff (3 fragments, HYDRAULICS —
+`\sqrt` with a sizing delimiter as radicand; 280 corpus `\sqrt` uses, only these 3 break),
+not a producer gap.  **Suite 378 green** throughout.
 
 ### Producer / preprocess / title / viewer sweep (2026-06-12 → 2026-06-13)
 
