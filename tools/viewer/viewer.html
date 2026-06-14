@@ -1475,7 +1475,6 @@
     // `project_wide_math_dead_end.md`.  Pipeline-side LaTeX
     // rewriting (splitting `\begin{align}` rows at `&=` boundaries)
     // is the proposed real fix; not done yet.
-    function scaleDisplayMath() { /* no-op */ }
 
     function escapeHtml(value) {
       return String(value ?? "")
@@ -1630,24 +1629,6 @@
       return out;
     }
 
-    // Decode a {{TABLE:}} cell's ⟦align/colspan⟧ prefix — mirror of
-    // markers.py TABLE_CELL_RE / parse_table_cell.  The producer carries the
-    // cell's resolved alignment and group-header colspan here so the viewer
-    // renders them mechanically instead of guessing from cell sparseness.
-    const TABLE_CELL_RE = /^⟦([rc]?)(\d*)⟧/;
-    function parseTableCell(cell) {
-      const m = cell.match(TABLE_CELL_RE);
-      if (!m) return { align: null, colspan: 1, content: cell };
-      const align = m[1] === "r" ? "right" : (m[1] === "c" ? "center" : null);
-      const colspan = m[2] ? parseInt(m[2], 10) : 1;
-      return { align, colspan, content: cell.slice(m[0].length) };
-    }
-    function tableCellHtml(tag, cell) {
-      const { align, colspan, content } = parseTableCell(cell.trim());
-      const attrs = (colspan > 1 ? ` colspan="${colspan}"` : "") +
-                    (align ? ` style="text-align:${align}"` : "");
-      return `<${tag}${attrs}>${formatCell(content)}</${tag}>`;
-    }
 
     // Source width sizes the figure box; CSS max-width:100% clamps it to
     // the column.  "" when no width carried (falls back to the CSS box).
@@ -1983,13 +1964,55 @@
     // SH queue, page-marker hoisting) — those legitimately differ by context
     // and stay there.  Order matches the canonical body sequence verbatim.
     function decodeInlineMarkers(h, opts) {
-      const dhrInline = !!(opts && opts.dhrInline);
-      // Carried presentational HTML the producer must keep RAW as classifier
-      // signals (CHEM/MATH key on <sub>/<sup>/<big>) reaches us escaped by the
-      // caller.  Un-escape this fixed safe set — ONE uniform step in the ONE
-      // decoder, so every path renders them identically; literal `<` in data
-      // stays escaped.  These can't become markers without blinding the
-      // classifiers that read them, so the viewer renders the tags directly.
+      // THE one inline decoder.  Every context — body prose, table cells,
+      // captions, legends, footnote bodies, titles — decodes its markers here, so
+      // a marker renders identically everywhere.  The only per-call variation is
+      // `escape` (a plain marker string vs already-encoded DOM innerHTML) and
+      // `dhrInline` (cells use the inline DHR spacer).
+      opts = opts || {};
+      const dhrInline = !!opts.dhrInline;
+      // IMG — render an embedded image by the CARRIED width (no per-context cap),
+      // shielded from escapeHtml because the filename is a URL, not display text.
+      // align=inline → an inline glyph; else a sized <img> (imgWidthStyle).  A
+      // STANDALONE figure is handled at the paragraph level (renderImgFigure).
+      const imgHtml = [];
+      h = h.replace(IMG_PARTS_RE_G, (match, filename, metaBlock, caption) => {
+        const meta = parseImgMeta(metaBlock);
+        let tag;
+        if (meta.align === "inline") {
+          tag = renderInlineGlyph(unescapeHtml(filename), meta.width, meta.height);
+        } else {
+          const fn = unescapeHtml(filename);
+          const url = fn.startsWith("http") ? fn : commonsUrl(fn);
+          tag = `<img src="${url}" alt="${escapeHtml(caption || fn)}" loading="lazy"${imgWidthStyle(meta)} />`;
+        }
+        imgHtml.push(tag);
+        return `\x00IMG${imgHtml.length - 1}\x00`;
+      });
+      // Escape a plain marker string on entry — the ONE boundary variation.
+      if (opts.escape) h = escapeHtml(h);
+      // Render-irreducible inline decodes — footnotes, inline math, verse — the
+      // same in every context now that there is ONE decoder.
+      h = h.replace(/«FN(?:\[([^\]]+)\])?:([\s\S]*?)«\/FN»/g,
+                    (match, name, content) => renderFnMarker(name, content));
+      h = h.replace(/«MATH(?:\[[^\]]*\])?:([\s\S]*?)«\/MATH»/g, (_m, latex) => {
+        const tmp = document.createElement("textarea");
+        tmp.innerHTML = latex;
+        const raw = tmp.value.replace(/\\mbox\b/g, "\\text");
+        try {
+          if (typeof katex !== "undefined")
+            return katex.renderToString(raw, { throwOnError: false, displayMode: false });
+        } catch (e) { console.warn("KaTeX inline error:", e.message); }
+        return `<code class="math-fallback">${escapeHtml(raw)}</code>`;
+      });
+      h = h.replace(/\{\{VERSE(?:\[style:[^\]]*\])?:([\s\S]*?)\}VERSE\}/g, (_m, content) => {
+        const lines = content.split("\n").filter(l => l.trim());
+        return `<span class="cell-verse">${lines.join("<br>")}</span>`;
+      });
+      // ── position-invariant styler / link markers ──
+      // Carried presentational HTML the producer keeps RAW as a classifier signal
+      // (CHEM/MATH key on <sub>/<sup>/<big>) reaches us escaped — un-escape this
+      // fixed safe set; literal `<` in data stays escaped.
       h = h.replace(/&lt;(\/?(?:sub|sup|small|big|br)\s*\/?)&gt;/gi, "<$1>");
       // Inline style wrappers — open→open-tag, close→close-tag INDEPENDENTLY
       // (the «P»/«CTR» rule below).  A marker that nests («B» inside «B») or
@@ -2071,74 +2094,11 @@
       // buildXrefHref's `section-<slug>`, so resolved section xrefs land here.
       h = h.replace(/«SEC:([^|»]*)\|[^»]*»/g,
           (_m, slug) => `<span id="section-${slug}" class="section-anchor"></span>`);
-      return h;
-    }
-
-    function formatCell(text, opts) {
-      // {raw:true} — the input is ALREADY HTML-safe (a cell's DOM-serialized
-      // innerHTML: carried <sub>/<i>/<br>, nested tables, encoded entities), so
-      // skip escapeHtml and just decode the markers in place.  Used when
-      // decoding a whole cell run (markers that span carried inline HTML must
-      // stay balanced).  Default (no opts) escapes — for marker strings that are
-      // plain text (the simple {{TABLE}} cells, <caption> contents).  The escape
-      // matches the prose path (renderParagraph's escapeHtml); the only reason a
-      // {raw} caller skips it is that its innerHTML is already encoded.  Carried
-      // HTML (&mdash;, <small>) that the producer leaves raw is escaped by BOTH
-      // paths until the producer normalizes it to a char/marker (the contract).
-      // An IMG marker's filename is DATA that becomes a URL \u2014 not display
-      // text.  escapeHtml would corrupt it (a `'` \u2192 `&#39;` \u2192 a 404 src,
-      // breaking ANY cell image with `'`/`&`/`<`/`>`/`"` in its filename,
-      // plates included).  So extract IMG from the RAW text first, build the
-      // URL from the pristine filename, and shield the emitted <img> from the
-      // blanket escape with a placeholder \u2014 escape only the prose around it.
-      const imgHtml = [];
-      text = text.replace(IMG_PARTS_RE_G, (match, filename, metaBlock, caption) => {
-        const fn = unescapeHtml(filename);  // innerHTML encodes `&`; decode for the URL
-        const url = fn.startsWith("http") ? fn : commonsUrl(fn);
-        // Honor carried width (figure-grid / plate cells size from source
-        // px); fall back to the 60px data-cell cap only when no width was
-        // carried (the producer carries it for figures, not data tables).
-        const meta = parseImgMeta(metaBlock);
-        const sz = meta.width ? `max-width:${meta.width}px;` : "max-height:60px;";
-        imgHtml.push(`<img src="${url}" alt="${escapeHtml(caption || fn)}" loading="lazy" style="${sz}" />`);
-        return `\x00IMG${imgHtml.length - 1}\x00`;
-      });
-      // Escape ONLY a marker STRING ({{TABLE}} cell / <caption>) \u2014 its literal
-      // `<`/`&` isn't yet encoded (same as the prose path's escapeHtml).  A {raw}
-      // caller (formatCellNode) hands DOM-serialized innerHTML that's already
-      // encoded, so leave it; double-escaping would mangle its carried <small>.
-      let h = (opts && opts.raw) ? text : escapeHtml(text);
-      h = h.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
-                    (match, name, content) => renderFnMarker(name, content));
-      // LaTeX math in cells — render inline with KaTeX.
-      // Cell math is always inline (no displayMode) \u2014 scale hints
-      // don't apply here.  Strip the optional `[hint]` if present.
-      h = h.replace(/\u00abMATH(?:\[[^\]]*\])?:(.*?)\u00ab\/MATH\u00bb/gs, (_m, latex) => {
-        const tmp = document.createElement("textarea");
-        tmp.innerHTML = latex;
-        const raw = tmp.value.replace(/\\mbox\b/g, "\\text");
-        try {
-          if (typeof katex !== "undefined") {
-            return katex.renderToString(raw, { throwOnError: false, displayMode: false });
-          }
-        } catch(e) {
-          console.warn("KaTeX cell error:", e.message);
-        }
-        return `<code class="math-fallback">${escapeHtml(raw)}</code>`;
-      });
-      // Multi-line VERSE inside a cell — newline-separated lines joined with <br>.
-      h = h.replace(/\{\{VERSE(?:\[style:[^\]]*\])?:([\s\S]*?)\}VERSE\}/g, (_m, content) => {
-        const lines = content.split("\n").filter(l => l.trim());
-        return `<span class="cell-verse">${lines.join("<br>")}</span>`;
-      });
-      // All position-invariant inline markers via the ONE shared decoder
-      // (B/I/SC, MIRROR, SS/SR, sizes, BAR, DHR, CTR, BRACE2, hieroglyph,
-      // LN).  dhrInline: cells use the inline DHR spacer variant.
-      h = decodeInlineMarkers(h, { dhrInline: true });
-      // Restore the shielded <img> tags now that escaping/decoding is done.
+      // Restore the shielded inline images.
       h = h.replace(/\x00IMG(\d+)\x00/g, (_m, idx) => imgHtml[+idx]);
       return h;
     }
+
 
     function sectionSlug(name) {
       return name.trim().toLowerCase()
@@ -2407,7 +2367,7 @@
             const mathOnly = content.match(/^\u00abMATH(?:\[([^\]]*)\])?:([\s\S]*?)\u00ab\/MATH\u00bb\s*[.,;:]?\s*$/);
             const contentHtml = mathOnly
               ? renderDisplayMath(mathOnly[2], mathOnly[1])
-              : formatCell(content);
+              : decodeInlineMarkers(content, { escape: true, dhrInline: true });
             rowHtmls.push(
               `<div class="math-system-row">${renderPageMarkers(pageMarkers)}${contentHtml}</div>`);
             continue;
@@ -2543,9 +2503,9 @@
         const parts = rawLines.map(line => {
           const s = line.trim();
           if (s.startsWith("### ")) {
-            return `<h5 class="legend-subhead">${formatCell(s.slice(4))}</h5>`;
+            return `<h5 class="legend-subhead">${decodeInlineMarkers(s.slice(4), { escape: true, dhrInline: true })}</h5>`;
           }
-          return `<div class="legend-entry">${formatCell(s)}</div>`;
+          return `<div class="legend-entry">${decodeInlineMarkers(s, { escape: true, dhrInline: true })}</div>`;
         });
         return `<aside class="figure-legend">${parts.join("")}</aside>`;
       }
@@ -2600,7 +2560,7 @@
         // markers (italic, small-caps, links) render as HTML rather
         // than leaking their «…» form.
         t = t.replace(/<caption>([\s\S]*?)<\/caption>/g,
-          (_m, content) => `<caption>${formatCell(content)}</caption>`);
+          (_m, content) => `<caption>${decodeInlineMarkers(content, { escape: true, dhrInline: true })}</caption>`);
         // Hoist any page markers inside cells to the row level — render
         // them as a floated span at the start of the row's first cell so
         // they land in the left margin alongside body-paragraph markers,
@@ -2643,7 +2603,7 @@
               const inner = node.innerHTML.replace(
                 /\x01PAGE:(\d+)\x01/g,
                 (_x, pg) => { pageMarkers.push(pg); return ""; });
-              node.innerHTML = formatCell(inner, { raw: true });
+              node.innerHTML = decodeInlineMarkers(inner, { dhrInline: true });
             }
             for (const tr of Array.from(outer.rows)) {
               const pageMarkers = [];
@@ -2687,53 +2647,6 @@
         }
         if (trailingHtml) rendered += trailingHtml;
         return rendered;
-      }
-      // Render table markers (with or without headers).  Optional
-      // ``[style:…]`` slot carries whole-table styling from the source
-      // ``{|<attrs>`` opener (extracted by ``_table_opener_styles``);
-      // applied as the ``<table style="…">`` attr.
-      const tableMatch = p.match(
-        /^\{\{TABLE(H?)(?:\[style:([^\]]*)\])?:([\s\S]*)\}TABLE\}$/);
-      if (tableMatch) {
-        const hasHeader = tableMatch[1] === "H";
-        const tableStyleAttr = tableMatch[2]
-          ? ` style="${tableMatch[2].replace(/"/g, "&quot;")}"` : "";
-        // Protect \n inside {{VERSE:…}VERSE} blocks before row-splitting —
-        // VERSE contents are multi-line but belong to a single cell.
-        const protectedBody = tableMatch[3].replace(
-          /\{\{VERSE(?:\[style:[^\]]*\])?:[\s\S]*?\}VERSE\}/g,
-          m => m.replace(/\n/g, "\x05"));
-        let rows = protectedBody.split("\n")
-          .filter(r => r.trim())
-          .map(r => r.replace(/\x05/g, "\n"));
-        // Pull a ⟦+⟧-flagged leading caption row out as <caption> before
-        // row-indexing, so a header row stays the first DATA row.
-        let captionHtml = "";
-        if (rows.length && rows[0].startsWith("⟦+⟧")) {
-          captionHtml = `<caption>${formatCell(rows[0].slice("⟦+⟧".length))}</caption>`;
-          rows = rows.slice(1);
-        }
-        // Single-row tables render inline (common for hieroglyph glosses)
-        if (rows.length === 1 && !hasHeader && !captionHtml) {
-          return `<span class="inline-table">${formatCell(rows[0])}</span>`;
-        }
-        // Detect max columns for colspan calculation.
-        // Protect {{IMG:...}} markers before splitting on " | " — their
-        // internal pipe would otherwise be mistaken for a cell separator.
-        const splitRows = rows.map(r => {
-          const protectedRow = r.replace(/\{\{IMG:[^}]*\}\}/g,
-            m => m.replace(/ \| /g, "\x04"));
-          return protectedRow.split(" | ").map(
-            c => c.replace(/\x04/g, " | "));
-        });
-        const tableRows = splitRows.map((cells, i) => {
-          const tag = (hasHeader && i === 0) ? "th" : "td";
-          // Mechanical decode: each cell carries its own align/colspan
-          // (⟦…⟧ prefix from the producer) — no sparseness guessing.
-          const cellsHtml = cells.map(c => tableCellHtml(tag, c)).join("");
-          return `<tr>${cellsHtml}</tr>`;
-        }).join("");
-        return `<table class="data-table"${tableStyleAttr}>${captionHtml}${tableRows}</table>`;
       }
 
 
@@ -2785,23 +2698,6 @@
         }
         html = out;
       }
-      html = html.replace(/\{\{TABLE[H]?(?:\[style:([^\]]*)\])?:([\s\S]*?)\}TABLE\}/g, (match, styles, content) => {
-        const tableStyleAttr = styles ? ` style="${styles.replace(/"/g, "&quot;")}"` : "";
-        let rows = content.split("\n").filter(r => r.trim());
-        let captionHtml = "";
-        if (rows.length && rows[0].startsWith("⟦+⟧")) {
-          captionHtml = `<caption>${formatCell(rows[0].slice("⟦+⟧".length))}</caption>`;
-          rows = rows.slice(1);
-        }
-        if (rows.length === 1 && !captionHtml) {
-          return `<span class="inline-table">${formatCell(rows[0].replace(/⟦[rc]?\d*⟧/g, ""))}</span>`;
-        }
-        const tableRows = rows.map(r => {
-          const cells = r.split(" | ").map(c => tableCellHtml("td", c)).join("");
-          return `<tr>${cells}</tr>`;
-        }).join("");
-        return `<table class="data-table"${tableStyleAttr}>${captionHtml}${tableRows}</table>`;
-      });
       // Inline VERSE — appears when the pipeline converts a mid-paragraph
       // ``<poem>`` (e.g. an enumerated list inside running prose) into
       // ``{{VERSE:…}VERSE}``.  The paragraph-level VERSE handler only

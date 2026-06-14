@@ -38,7 +38,13 @@ _ROMAN_PREFIX = re.compile(r"^\s*(?:[IVXLCDM]+|[A-Z]|\d+)\s*[.—\-]+\s*")
 _PREHEAD = re.compile(
     r"\{\{\s*anchor\b[^}]*\}\}|\{\{\s*clear\s*\}\}|\x01PAGE:\d+\x01|\s+",
     re.IGNORECASE)
-_SC_UNWRAP = re.compile(r"\{\{\s*c?sc\s*\|([^{}]*)\}\}", re.IGNORECASE)
+# Reduce a nested template to its DISPLAY content, innermost-first: a styler
+# with a leading size/param arg ({{lh|88%|X}}) keeps X, a one-arg styler
+# ({{sc|X}} / {{smaller|X}}) keeps X.  FULL reduction (not just {{sc}}) is what
+# lets the caption gate see a `Fig.`/`Plate.` label buried under a {{lh|…}}
+# wrapper — AEGEAN's figure captions `{{c|{{lh|88%|{{sc|Fig. 3.}}…}}}}`, which
+# would otherwise read as the bogus heading name `{{lh/88%/…}}`.
+_TMPL_UNWRAP = re.compile(r"\{\{[^{}|]+\|(?:[^{}|]*\|)?([^{}]*)\}\}")
 _MARKER = re.compile(r"«/?[A-Za-z]+(?:\[[^\]]*\])?»")
 
 
@@ -60,8 +66,15 @@ def _balanced_end(s: str, i: int) -> int:
 
 
 def _visible(inner: str) -> str:
-    """The heading's display text: unwrap `{{sc|…}}`, drop markers/HTML."""
-    inner = _SC_UNWRAP.sub(r"\1", inner)
+    """The heading's display text: reduce nested templates to their content
+    (innermost-first), then drop markers / HTML.  Full reduction exposes a
+    caption label (`Fig. 3.`) buried under styling wrappers, so `_find_heads`'
+    gate refuses a figure caption that only *looks* like a heading."""
+    for _ in range(6):
+        reduced = _TMPL_UNWRAP.sub(r"\1", inner)
+        if reduced == inner:
+            break
+        inner = reduced
     inner = _MARKER.sub("", inner)
     inner = re.sub(r"<[^>]+>", "", inner)
     return inner.replace(" ", " ").strip()
@@ -94,7 +107,10 @@ def _find_heads(raw: str) -> list[tuple[int, str]]:
         inner = raw[m.end():end]
         inner = inner[:-2] if inner.endswith("}}") else inner.rstrip("}")
         name = _visible(inner).split("\n")[0].strip()  # clamp malformed names
-        name = name.replace("»", "").replace("|", "/")
+        # The «SEC» name is INERT display text by contract — strip every brace
+        # and marker glyph (and escape the `|` delimiter) so a recognition
+        # failure can never smuggle a live `{{…}}`/marker the walk re-parses.
+        name = re.sub(r"[{}«»]", "", name).replace("|", "/")
         if not name or _CAPWORD.match(name):
             continue  # caption (Fig./Plate./Table.)
         if not _NUMERAL.match(name):
