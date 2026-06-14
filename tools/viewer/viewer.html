@@ -2740,7 +2740,16 @@
         const inner = stripChemMarkers(
           stripHtmlTableMarkers(htmlTableHit.inner));
         const outerClass = isChem ? "chem-grid" : "data-table";
-        let t = mergeTableClass(inner, outerClass);
+        // Render the table with the class the PRODUCER carried — `data-table`
+        // when the source was a wikitable/bordered grid (its reference markup),
+        // and NO class for a figure `{|` (layout, not data).  Forcing
+        // `data-table` here re-imposed the figtable taxonomy the producer
+        // deliberately dropped: the figure then matched `.data-table` (width
+        // without !important) instead of `table:not([class])` (width:100%
+        // !important / float→50%), so its carried print width (e.g.
+        // `width:390px`) won and it never filled the column.  Only chem needs a
+        // viewer-applied class.
+        let t = isChem ? mergeTableClass(inner, "chem-grid") : inner;
         // Process <caption> contents through formatCell so internal
         // markers (italic, small-caps, links) render as HTML rather
         // than leaking their «…» form.
