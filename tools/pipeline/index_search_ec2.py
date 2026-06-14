@@ -9,10 +9,15 @@ Usage:
 """
 import json
 import os
-import re
 import glob
 import sys
 import urllib.request
+
+# markers.py is pure-stdlib and is shipped to ~ next to this script by the
+# rebuild deploy step, so search indexing uses the SAME marker->text converter
+# as the export (britannica.markers) -- no separate EC2 copy of the strip logic.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from markers import markers_to_text
 
 MEILI_URL = "http://localhost:7700"
 MEILI_KEY = os.environ.get("MEILI_MASTER_KEY", "gibbon-winters-lewis")
@@ -90,28 +95,11 @@ def main():
         if "id" not in article or "volume" not in article:
             continue
 
-        body = article.get("body", "")
-        body = re.sub(r"\x01PAGE:\d+\x01", " ", body)
-        body = re.sub(r"\u00abFN(?:\[[^\]]+\])?:.*?\u00ab/FN\u00bb", " ", body,
-                       flags=re.DOTALL)
-        body = re.sub(r"\u00abLN:[^«]*\u00ab/LN\u00bb", " ", body)
-        body = re.sub(r"\u00abMATH:.*?\u00ab/MATH\u00bb", " ", body,
-                       flags=re.DOTALL)
-        # Strip image/table/verse markers — these aren't searchable text
-        # and they leak into body_start previews as raw markup.
-        body = re.sub(r"\{\{IMG:[^}]*\}\}", " ", body)
-        body = re.sub(r"\{\{TABLE[A-Z]?:[\s\S]*?\}TABLE\}", " ", body)
-        body = re.sub(r"\{\{VERSE:[\s\S]*?\}VERSE\}", " ", body)
-        body = re.sub(
-            r"\u00abHTMLTABLE:[\s\S]*?\u00ab/HTMLTABLE\u00bb", " ", body)
-        body = re.sub(r"\u00abB\u00bb(.*?)\u00ab/B\u00bb", r"\1", body)
-        body = re.sub(r"\u00abI\u00bb(.*?)\u00ab/I\u00bb", r"\1", body)
-        body = re.sub(r"\u00abSC\u00bb(.*?)\u00ab/SC\u00bb", r"\1", body)
-        body = re.sub(r"\u00abSH\u00bb(.*?)\u00ab/SH\u00bb", r"\1", body)
-        body = re.sub(r"\u00abLN:[^|]*\|([^«]*)\u00ab/LN\u00bb", r"\1",
-                       body)
-        body = re.sub(r"\u00ab/?[A-Z]+\u00bb", "", body)
-        body = re.sub(r"  +", " ", body)
+        # ONE marker->text converter (britannica.markers.markers_to_text,
+        # shipped here as markers.py): strips the TITLE head (indexed directly
+        # as the `title` field), drops non-prose block markers, keeps inline
+        # prose, and collapses links to their display text.
+        body = " ".join(markers_to_text(article.get("body", "")).split())
         words = body.split()
         body_start = (" ".join(words[:10]) + "\u2026"
                        if len(words) > 10 else " ".join(words))

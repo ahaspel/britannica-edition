@@ -324,6 +324,13 @@ if [ -z "$NO_DEPLOY" ]; then
   echo "  Indexing search (via EC2)..."
   EC2_HOST="ec2-44-222-119-72.compute-1.amazonaws.com"
   EC2_KEY="${EC2_KEY:-D:/work/web/cloudinstall/britannica11.pem}"
+  # Ship the indexer AND markers.py (pure-stdlib) so the EC2 copies match the
+  # repo and index_search_ec2.py imports the SAME marker->text converter the
+  # export uses — one definition, no drifting EC2 copy of the strip logic.
+  scp -i "$EC2_KEY" \
+    tools/pipeline/index_search_ec2.py \
+    src/britannica/markers.py \
+    ec2-user@"$EC2_HOST":~/
   ssh -i "$EC2_KEY" ec2-user@"$EC2_HOST" \
     "aws s3 sync s3://britannica11.org/data/articles/ ~/articles/ --delete --quiet && python3 ~/index_search_ec2.py"
 
