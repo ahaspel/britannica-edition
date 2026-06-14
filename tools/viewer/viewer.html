@@ -529,7 +529,6 @@
       border: none;
       padding: 1px 12px;
     }
-.body-text table:not([class]) .cell-image,
 .body-text table:not([class]) img {
       max-height: none !important;
       width: 100% !important;
@@ -544,11 +543,10 @@
        viewport — the table stretches and the cells scale proportionally,
        overriding formatCell's inline max-width:Npx cap (same !important
        pattern as the height cap above). */
-    body.plate-page table.figtable {
+    body.plate-page table:not([class]) {
       width: 100%;
     }
-    body.plate-page table.figtable .cell-image,
-    body.plate-page table.figtable img {
+    body.plate-page table:not([class]) img {
       max-width: 100% !important;
       width: 100%;
     }
@@ -2102,7 +2100,7 @@
         // carried (the producer carries it for figures, not data tables).
         const meta = parseImgMeta(metaBlock);
         const sz = meta.width ? `max-width:${meta.width}px;` : "max-height:60px;";
-        imgHtml.push(`<img src="${url}" alt="${escapeHtml(caption || fn)}" class="cell-image" loading="lazy" style="${sz}" />`);
+        imgHtml.push(`<img src="${url}" alt="${escapeHtml(caption || fn)}" loading="lazy" style="${sz}" />`);
         return `\x00IMG${imgHtml.length - 1}\x00`;
       });
       // Escape ONLY a marker STRING ({{TABLE}} cell / <caption>) \u2014 its literal
