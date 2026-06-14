@@ -1824,19 +1824,9 @@
     })();
     let unproofedPages = {};
     let collectedFootnotes = [];
-    let sectionCounter = 0;
     let collectedSections = [];
     let wideTableCounter = 0;
     const wideTableSources = {};
-    // Track section keys emitted via top-level heading rules (SEC
-    // marker, «SC»I.—Foo«/SC» major-section pattern). Used to
-    // suppress duplicate top-level emissions for the same name.
-    let emittedSectionKeys = new Set();
-    let emittedSectionIds = new Set();
-    // Pre-pass result: paragraph-index → section info.  Populated once
-    // per article by detectSections() and consulted by renderParagraph
-    // when emitting heading paragraphs.
-    let sectionByIndex = new Map();
     // Pre-computed shoulder-heading metadata, in document order.
     // Each `«SH»…«/SH»` marker in the article body produces one entry
     // (id, display, isPointer); the SH replace step at render time
@@ -1846,175 +1836,41 @@
     let shoulderQueue = [];
     let shoulderCursor = 0;
 
-    // Reserve a unique heading id derived from `slug`, falling back to
-    // `fallback` when slug is empty. If the chosen id is already in
-    // use within this article, append `-2`, `-3`, … Two distinct
-    // headings whose titles differ only in punctuation collapse to the
-    // same slug; suffixing keeps each anchor reachable.
-    function reserveSectionId(slug, fallback) {
-      let id = slug ? `section-${slug}` : fallback;
-      if (!emittedSectionIds.has(id)) {
-        emittedSectionIds.add(id);
-        return id;
-      }
-      for (let n = 2; ; n++) {
-        const candidate = `${id}-${n}`;
-        if (!emittedSectionIds.has(candidate)) {
-          emittedSectionIds.add(candidate);
-          return candidate;
-        }
-      }
-    }
-
-    // One-pass section detection. Walks article paragraphs, identifies
-    // every paragraph that's a top-level section heading via either
-    // raw-source signal:
-    //   • «SEC:name«/SEC»  pipeline-emitted absorbed-subsection marker
-    //   • «SC»...«/SC»     small-caps heading (with optional outer
-    //                      Roman prefix and optional inline body tail)
-    // Assigns a stable slug-derived id, dedupes cross-signal duplicates
-    // (an earlier SEC for "Cyanophyceae" suppresses a later SC for the
-    // same section), and records each in `collectedSections` (TOC
-    // source).  Returns Map<paraIdx, info>; renderParagraph consults
-    // this map and emits the <h3> when the index matches.
+    // Build the TOC source mechanically from the anchors the producer placed:
+    // «SEC:slug|name» (major, L1) from stamp_sections, and «SH»…«/SH» (shoulder,
+    // L2) from the shoulder producer.  No recognition, no SC_RE guess — a «SEC»
+    // is a section because stamp_sections said so.  Returns an EMPTY map (the
+    // heading renders as its normal «CTR»«SC», and the «SEC» anchor carries the
+    // id); populates collectedSections (TOC) and shoulderQueue (the «SH» render
+    // pulls ids/labels from it, in document order).
     function detectSections(paragraphs) {
-      const byIndex = new Map();
-      // Reset section state up front; same article is never detected
-      // twice in one render pass.
-      emittedSectionKeys = new Set();
-      emittedSectionIds = new Set();
       collectedSections = [];
-      sectionCounter = 0;
       shoulderQueue = [];
       shoulderCursor = 0;
-
-      const SEC_RE = /^«SEC:([^«]+)«\/SEC»$/;
-      // Two paragraph shapes captured by the SC regex:
-      //   • Standalone heading paragraph (group 4 = "")
-      //   • Heading + inline body in same paragraph (group 4 = body)
-      // Optional Roman prefix may sit OUTSIDE «SC» (group 1) or INSIDE
-      // (group 3).
-      const SC_RE = /^(?:([IVXLCA-Z]+\.)[\s—]*)?«SC»(([IVXLCA-Z]+[.—]\s*)?.*?)«\/SC»[.:]?—?(.*)$/s;
-      const SH_RE = /«SH»(.*?)«\/SH»/gs;
-      const FN_RE = /«FN(?:\[[^\]]+\])?:.*?«\/FN»/gs;
-      const ROMAN_PREFIX_RE = /^[IVXLCA-Z]+\.[\s—]*/;
-      const EXCLUDED_RE = /^(?:(?:References|Authorities|Bibliography|See also)\b|Fig\.)/i;
-      // A standalone SC paragraph immediately followed by an extracted
-      // table marker is a table caption (LIGHTHOUSE "Table II.",
-      // UNITED STATES "West Central Massachusetts"), not a section
-      // heading.  Python mirror: _TABLE_MARKER_PREFIX_RE in
-      // src/britannica/export/sections.py.
-      const TABLE_MARKER_PREFIX_RE = /^(?:\{\{TABLE(?:\[style:[^\]]*\])?:|«HTMLTABLE:)/;
-
-      // Latest top-level heading we've identified — used to flag SH
-      // margin pointers (a SH whose dehyphenated text matches the
-      // containing section's name is the margin label for that
-      // section, not a real subsection, so it's omitted from the TOC).
-      let activeSectionKey = "";
-
-      // Detect a SEC- or SC-shape heading on paragraph p.  Returns the
-      // info object (and pushes it into byIndex/collectedSections,
-      // updates activeSectionKey) or null when p isn't a heading.
-      function detectHeading(p, i, paragraphs) {
-        let m = p.match(SEC_RE);
-        if (m) {
-          const name = displaySectionName(m[1].trim());
-          const key = sectionKey(name);
-          if (emittedSectionKeys.has(key)) return null;
-          const slug = sectionSlug(name);
-          sectionCounter++;
-          const id = reserveSectionId(slug, `section-${sectionCounter}`);
-          emittedSectionKeys.add(key);
-          collectedSections.push({ id, title: name, level: 1 });
-          const info = { kind: "sec", id, slug, title: name, nameKey: key };
-          byIndex.set(i, info);
-          activeSectionKey = key;
-          return info;
-        }
-        if (p.includes("{{IMG:") || p.includes("{{TABLE")) return null;
-        m = p.match(SC_RE);
-        if (!m) return null;
-        const outerRoman = m[1];
-        const inner = m[2].trim();
-        const innerRoman = m[3];
-        const tail = (m[4] || "").trim();
-        // For the with-inline-body shape, require a Roman prefix and
-        // limit the SC inner content to <60 chars.  Without those
-        // gates an inline «SC» label embedded in prose ("century «SC»
-        // A.D.«/SC» …") would render as a heading.  Standalone shape
-        // (whole paragraph = SC) is signal-strong enough on its own.
-        const hasNumeral = outerRoman || (innerRoman && innerRoman.length > 0);
-        const passesShapeGate = tail ? (hasNumeral && inner.length < 60) : true;
-        if (!passesShapeGate) return null;
-        // Standalone SC followed by a table marker = table caption.
-        if (!tail && paragraphs && TABLE_MARKER_PREFIX_RE.test(paragraphs[i + 1] || "")) {
-          return null;
-        }
-        // Stitch heading title with em-dash separator (matches EB1911
-        // typography "I.—Geography").  Keep the raw form (with «FN»
-        // markers intact) for heading rendering, but strip FN content
-        // out of the slug + TOC title — otherwise an SC heading
-        // wrapping a footnote (ARACHNIDA "Tabular Classification«FN:
-        // …Pocock…«/FN» of the Arachnida") yields a 1000-char slug of
-        // footnote text and a TOC entry full of noise.
-        const rawTitle = outerRoman ? `${outerRoman}—${inner}` : inner;
-        const title = rawTitle.replace(FN_RE, "").trim();
-        if (EXCLUDED_RE.test(title)) return null;
-        // Dedup key strips Roman prefix + FN markers so SEC:Foo
-        // dedupes a later SC:I. Foo (and vice versa).
-        const nameOnly = inner.replace(FN_RE, "").replace(ROMAN_PREFIX_RE, "").trim();
-        const key = sectionKey(nameOnly);
-        if (emittedSectionKeys.has(key)) return null;
-        const slug = sectionSlug(title);
-        sectionCounter++;
-        const id = reserveSectionId(slug, `section-${sectionCounter}`);
-        emittedSectionKeys.add(key);
-        collectedSections.push({ id, title, level: 1 });
-        const info = { kind: "sc", id, slug, title, rawTitle, nameKey: key, tail };
-        byIndex.set(i, info);
-        activeSectionKey = key;
-        return info;
-      }
-
-      // Queue SH markers found in `text` (in the order they appear).
-      // Margin pointers — SH whose dehyphenated text matches the most
-      // recent top-level heading — get an id but aren't added to the
-      // TOC, mirroring the previous render-time behavior.
-      function scanShoulders(text) {
-        let shMatch;
-        SH_RE.lastIndex = 0;
-        while ((shMatch = SH_RE.exec(text)) !== null) {
-          const display = dehyphenateShoulder(shMatch[1].trim());
-          const isPointer = activeSectionKey && sectionKey(display) === activeSectionKey;
-          const slug = sectionSlug(display);
-          sectionCounter++;
-          const id = reserveSectionId(slug, `section-${sectionCounter}`);
-          if (!isPointer) {
-            collectedSections.push({ id, title: display, level: 2 });
+      const ANCHOR_RE = /«SEC:([^|»]*)\|([^»]*)»|«SH»([\s\S]*?)«\/SH»/g;
+      let activeSlug = "";  // most recent L1 slug, for SH margin-pointer dedup
+      for (const p of paragraphs) {
+        ANCHOR_RE.lastIndex = 0;
+        let m;
+        while ((m = ANCHOR_RE.exec(p)) !== null) {
+          if (m[3] === undefined) {              // «SEC» — major section (L1)
+            const slug = m[1], name = m[2];
+            collectedSections.push({ id: `section-${slug}`, title: name, level: 1 });
+            activeSlug = slug;
+          } else {                               // «SH» — shoulder (L2)
+            const display = dehyphenateShoulder(
+              m[3].replace(/«\/?[A-Za-z]+(?:\[[^\]]*\])?»/g, "").trim());
+            const slug = sectionSlug(display);
+            const isPointer = !!activeSlug && slug === activeSlug;
+            if (!isPointer) {
+              collectedSections.push({ id: `section-${slug}`, title: display, level: 2 });
+            }
+            shoulderQueue.push({ id: `section-${slug}`, display, isPointer });
           }
-          shoulderQueue.push({ id, display, isPointer });
         }
       }
-
-      for (let i = 0; i < paragraphs.length; i++) {
-        const p = paragraphs[i];
-        // Detect heading first so activeSectionKey reflects this
-        // paragraph's heading (if any) before SHs in the same
-        // paragraph are evaluated for margin-pointer status.
-        detectHeading(p, i, paragraphs);
-        // Scan for SH markers regardless — they can appear in heading
-        // titles, inline-body tails, or plain prose paragraphs.
-        scanShoulders(p);
-      }
-
-      return byIndex;
+      return new Map();
     }
-    // Normalize a section name for dup-detection: lowercase,
-    // alphanumerics only (so "Poly-morphism." matches "Polymorphism").
-    function sectionKey(name) {
-      return name.trim().toLowerCase().replace(/[^a-z0-9]+/g, "");
-    }
-
     // Pretty-print a raw SEC name for display. Inserts a space at
     // lowercase→uppercase transitions so source artifacts like
     // "BrewingTrade" render as "Brewing Trade". Leaves names without
@@ -2196,6 +2052,12 @@
       // fragment link lands on (the producer's anchor from `{{section|…}}`).
       h = h.replace(/«ANCHOR:([^»]*)»/g,
           (_m, slug) => `<span id="${slug}" class="section-anchor"></span>`);
+      // «SEC:slug|name» — major-section anchor placed by stamp_sections.  An
+      // invisible target at the section start; the «CTR»«SC» heading renders
+      // right after it and the TOC is built from these (+ «SH»).  id matches
+      // buildXrefHref's `section-<slug>`, so resolved section xrefs land here.
+      h = h.replace(/«SEC:([^|»]*)\|[^»]*»/g,
+          (_m, slug) => `<span id="section-${slug}" class="section-anchor"></span>`);
       return h;
     }
 
@@ -2383,14 +2245,14 @@
     const BLOCK_MARKER_SCAN_RE =
       /\{\{TABLEH?(?:\[style:[^\]]*\])?:[\s\S]*?\}TABLE\}|\{\{VERSE(?:\[style:[^\]]*\])?:[\s\S]*?\}VERSE\}|\{\{LEGEND:[\s\S]*?\}LEGEND\}|«OUTLINE:[\s\S]*?«\/OUTLINE»|«PLATE_OUTLINE:[\s\S]*?«\/PLATE_OUTLINE»|«HTMLTABLE:[\s\S]*?«\/HTMLTABLE»|«CHEM:[\s\S]*?«\/CHEM»|«TITLE:[\s\S]*?«\/TITLE»/g;
 
-    function renderParagraph(p, nextPara, sectionInfo) {
+    function renderParagraph(p, nextPara) {
       // Mixed-paragraph split: if this paragraph contains a block
       // marker AND content around it that isn't part of the marker,
       // split at boundaries and recurse so each chunk renders in its
       // proper element class (block markers → block HTML, prose →
       // ``<p>``).  Pure-block and pure-prose paragraphs fall through
       // to the existing flow below.
-      if (!sectionInfo) {
+      {
         BLOCK_MARKER_SCAN_RE.lastIndex = 0;
         const rawMatches = [...p.matchAll(BLOCK_MARKER_SCAN_RE)];
         // Repair HTMLTABLE/CHEM matches: the scan regex matches them
@@ -2439,27 +2301,10 @@
               if (after.trim()) pieces.push(after);
             }
             return pieces
-              .map(piece => renderParagraph(piece.trim(), null, null))
+              .map(piece => renderParagraph(piece.trim(), null))
               .join("");
           }
         }
-      }
-
-      // If this paragraph was tagged as a section heading by the
-      // pre-pass (detectSections), emit the <h3> with its pre-assigned
-      // stable id and skip the rest of the rendering pipeline.
-      if (sectionInfo) {
-        const { id, slug, title, rawTitle, kind, tail } = sectionInfo;
-        if (kind === "sec") {
-          return `<h3 class="section-heading" id="${id}" data-slug="${slug}">${escapeHtml(title)}</h3>`;
-        }
-        // SC: render the *raw* title (with «FN»/«I» markers intact)
-        // through this same function so footnotes become superscript
-        // links and italics render correctly.  The TOC-side `title` is
-        // FN-stripped for clean URLs and TOC display.
-        const headingHtml = renderParagraph(rawTitle || title);
-        const bodyHtml = tail ? renderParagraph(tail) : "";
-        return `<h3 class="section-heading" id="${id}" data-slug="${slug}">${headingHtml}</h3>${bodyHtml}`;
       }
 
       // Article title — «TITLE» is the heading element preprocess_article
@@ -3204,9 +3049,9 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
             // same path the body uses: no bespoke title render, no separate
             // footnote stream.  (Plates and any title-less body fall back to the
             // flattened article.title.)
-            footnoteCounter = 0; namedFnNumbers.clear(); fnAnchorInstance = 0; collectedFootnotes = []; sectionCounter = 0; collectedSections = []; emittedSectionKeys = new Set(); emittedSectionIds = new Set(); sectionByIndex = new Map(); shoulderQueue = []; shoulderCursor = 0; wideTableCounter = 0; for (const k in wideTableSources) delete wideTableSources[k];
+            footnoteCounter = 0; namedFnNumbers.clear(); fnAnchorInstance = 0; collectedFootnotes = []; collectedSections = []; shoulderQueue = []; shoulderCursor = 0; wideTableCounter = 0; for (const k in wideTableSources) delete wideTableSources[k];
             const tm = (article.body || "").match(/^«TITLE:[\s\S]*?«\/TITLE»/);
-            return tm ? renderParagraph(tm[0], null, null)
+            return tm ? renderParagraph(tm[0], null)
                       : `<h1>${renderTitleMarkers(article.title || "Untitled")}</h1>`;
           })()}
           <div style="font-size: 0.85rem; color: #6b5e4f; font-style: italic; margin-bottom: 6px;">
@@ -3479,8 +3324,8 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
               }
               i++;
             }
-            sectionByIndex = detectSections(mergedParas);
-            const bodyHtml = mergedParas.map((p, idx) => renderParagraph(p, mergedParas[idx + 1], sectionByIndex.get(idx))).join("");
+            detectSections(mergedParas);
+            const bodyHtml = mergedParas.map((p, idx) => renderParagraph(p, mergedParas[idx + 1])).join("");
             const level1 = collectedSections.filter(s => s.level === 1);
             const level2 = collectedSections.filter(s => s.level === 2);
             let tocHtml = "";
