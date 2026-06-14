@@ -1590,6 +1590,25 @@
       return `<img src="${url}" alt="${escapeHtml(filename)}" class="inline-glyph" loading="lazy" style="${style}vertical-align:middle;" />`;
     }
 
+    // The ONE block-figure render — every non-inline image site routes through it
+    // (the inline case is renderInlineGlyph).  Honors the carried width
+    // (imgWidthStyle); the caption decodes through the same content path every
+    // context uses; the alt is the caption stripped of markers.  No per-context
+    // size guess — the producer carried align/width, we render it.  `floatClass`
+    // (" inline-float") and `trailing` (a float legend) are the only context add-ons.
+    function renderImgFigure(filename, meta, caption, floatClass, trailing) {
+      const fn = unescapeHtml(filename);  // no-op on a raw name; decodes an escaped one
+      const url = fn.startsWith("http") ? fn : commonsUrl(fn);
+      const cap = caption || "";
+      const capHtml = cap ? decodeInlineMarkers(escapeHtml(cap)) : "";
+      const altText = (cap || fn).replace(/«[^»]*»/g, "");
+      return `<figure class="inline-image${floatClass || ""}"${imgWidthStyle(meta)}>`
+        + `<a href="${url}" target="_blank"><img src="${url}" alt="${escapeHtml(altText)}" loading="lazy" /></a>`
+        + (capHtml ? `<figcaption>${capHtml}</figcaption>` : "")
+        + (trailing || "")
+        + `</figure>`;
+    }
+
     // Block image marker grammar — mirrors britannica.markers.IMG_PARTS_RE.
     //   {{IMG:filename[|align=center|left|right][|width=N][|height=N][|caption]}}
     // group 1 filename, group 2 meta-block, group 3 caption.  The article
@@ -2432,19 +2451,7 @@
         const caption = imgMatch[3] || "";
         if (meta.align === "inline")
           return renderInlineGlyph(filename, meta.width, meta.height);
-        const url = commonsUrl(filename);
-        const cls = "inline-image";
-        // The caption carries producer markers (small-caps Fig., «BR» line
-        // breaks): escape the prose, then decode the markers — the same pass
-        // every other context uses.  This path returns early, so it must decode
-        // inline (the non-anchored figure path relies on the trailing
-        // decodeInlineMarkers).  alt is plain text: strip markers for it.
-        const capHtml = caption ? decodeInlineMarkers(escapeHtml(caption)) : "";
-        const altText = (caption || filename).replace(/«[^»]*»/g, "");
-        return `<figure class="${cls}"${imgWidthStyle(meta)}>
-          <a href="${url}" target="_blank"><img src="${url}" alt="${escapeHtml(altText)}" loading="lazy" /></a>
-          ${capHtml ? `<figcaption>${capHtml}</figcaption>` : ""}
-        </figure>`;
+        return renderImgFigure(filename, meta, caption);
       }
       // Render preformatted blocks (structural chemical formulas)
       // Hierarchical taxonomic / classificatory outline.  Pipeline
@@ -2823,7 +2830,6 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
             IMG_PARTS_SRC + "(?:\\s*\\{\\{LEGEND:([\\s\\S]*?)\\}LEGEND\\})?", "g");
           let m;
           while ((m = figRe.exec(content)) !== null) {
-            const url = commonsUrl(unescapeHtml(m[1]));
             const meta = parseImgMeta(m[2]);
             const caption = m[3] || "";
             const legend = m[4] || "";
@@ -2832,7 +2838,7 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
               const lines = legend.split("\n").map(l => l.trim()).filter(Boolean);
               legendHtml = `<div class="float-legend">${lines.map(l => `<div>${l}</div>`).join("")}</div>`;
             }
-            figs.push(`<figure class="inline-image inline-float"${imgWidthStyle(meta)}><a href="${url}" target="_blank"><img src="${url}" alt="${caption || m[1]}" loading="lazy" /></a>${caption ? `<figcaption>${caption}</figcaption>` : ""}${legendHtml}</figure>`);
+            figs.push(renderImgFigure(m[1], meta, caption, " inline-float", legendHtml));
           }
           return figs.join("");
         });
@@ -2845,15 +2851,10 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
       // and produce a 403 on S3.  `align=inline` renders inline in the
       // prose flow (folded-in glyphs); everything else is a block figure.
       html = html.replace(IMG_PARTS_RE_G, (match, filename, metaBlock, caption) => {
-        const url = commonsUrl(unescapeHtml(filename));
         const meta = parseImgMeta(metaBlock);
         if (meta.align === "inline")
           return renderInlineGlyph(unescapeHtml(filename), meta.width, meta.height);
-        caption = caption || "";
-        // Carried width sizes the box (CSS max-width:100% clamps it to the
-        // column).  No "wide" guess — render at the size the producer carries.
-        const cls = "inline-image";
-        return `<figure class="${cls}"${imgWidthStyle(meta)}><a href="${url}" target="_blank"><img src="${url}" alt="${caption || filename}" loading="lazy" /></a>${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure>`;
+        return renderImgFigure(filename, meta, caption);
       });
       // Render mirrored glyph markers BEFORE B/I/SC so inner formatting
       // (e.g. \u00abB\u00bb\ud800\udf04\u00ab/B\u00bb inside \u00abMIRROR:\u00bb) still resolves afterwards.

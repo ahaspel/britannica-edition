@@ -98,7 +98,15 @@ Residual imposed widths / alignments / margins (the figtable case was fixed
 
 ## Workstreams (sequenced by leverage × safety)
 
-### WS1 — Sections / headings / TOC become producer-decided  ← START HERE
+### WS1 — Sections / headings / TOC become producer-decided  ✅ DONE 2026-06-14
+
+**Landed:** `transform_articles/sections.py::stamp_sections` recognizes the major-
+section series in `preprocess_article` and tramp-stamps `«SEC:slug|name»` before
+each heading (rides the walk like `«TITLE»`); `export/sections.py` and the viewer
+`detectSections` both collect `«SEC»`+`«SH»` mechanically; the dual `SC_RE`
+heuristic is deleted (viewer −8 KB, both inline scripts `node --check` clean); the
+orphaned minor `{{section}}`→`«ANCHOR»` is dropped.  UNITED STATES regains its 10
+L1 sections (verified); 378 tests green.  Owed: a rebuild+deploy to ship corpus-wide.
 
 **Scoped 2026-06-14 (corpus + DB).**  A **regression fix** as much as a cleanup:
 major sections were silently dropped from the TOC when the producers collapsed.

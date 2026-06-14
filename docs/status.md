@@ -153,13 +153,17 @@ question at most, not breakage).  [[feedback_dont_flag_honesty]] [[project_leak_
 
 ### Open frontier / next
 
-- **THE VIEWER (next campaign).**  With the producers/leaks settled, the viewer is now
-  the remaining source of nearly all bugs (user, 06-13).  Make it a pure mechanical
-  decoder; everything structural becomes producer work.  Plan:
-  [`docs/plan_viewer_mechanical.md`](plan_viewer_mechanical.md).  **WS1 (start here):**
-  headings / sections / TOC — today `detectSections`/`SC_RE`/`scanShoulders` re-derive
-  them in the viewer with heuristics; the producer should decide and carry them via
-  `«SEC»`/`«SH»`.  See [[feedback_viewer_mechanical]], [[feedback_viewer_no_regex]].
+- **THE VIEWER campaign — make it mechanical; "get out of the way and let the markup
+  do its job" (user).**  Plan: [`docs/plan_viewer_mechanical.md`](plan_viewer_mechanical.md).
+  **WS1 (headings/sections/TOC) ✅ DONE 2026-06-14** — recognition moved to
+  `preprocess_article`'s `stamp_sections` (`«SEC»` anchors riding the walk); the dual
+  `SC_RE` slum deleted (viewer −8 KB); orphaned minor `{{section}}` anchors dropped;
+  UNITED STATES TOC restored (verified).  **Remaining (viewer-side):** WS2 collapse the
+  per-context decoders (`decodeInlineMarkers`/`formatCell`/`applySizeMarkers`/
+  `renderTitleMarkers`) into one — the "renders here but not there" class; WS4 delete the
+  dead `{{TABLE}}` decoder (`parseTableCell`/`tableCellHtml`/`scaleDisplayMath` — 0 in
+  fresh output, ride the rebuild); WS3 block-marker re-split; WS5 CSS audit.
+  See [[feedback_viewer_mechanical]], [[feedback_viewer_no_regex]].
 - **Re-triage the old "Known issues" list (now in `status_history.md`) — mostly stale,
   must be confirmed.**  It predates the recursive-architecture campaign and references
   now-deleted labels/producers (`LAYOUT_WRAPPER`, `CAPTIONED_FIGURE_INLINE`,
