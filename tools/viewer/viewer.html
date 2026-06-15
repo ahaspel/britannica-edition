@@ -2158,20 +2158,6 @@
           const onlyBlock =
             blocks.length === 1 && blocks[0].text === p.trim();
           if (!onlyBlock) {
-            // A floated figure (an HTMLTABLE carrying float:right/left) must not
-            // guillotine the paragraph at its source anchor — that anchor is the
-            // 1911 print line-break, not ours.  Pull every float to the front and
-            // render ALL the surrounding prose as one continuous flow that wraps
-            // around it, exactly as the engraving (and MediaWiki's
-            // `[[File:…|right]]`) did.  Only when EVERY block here is a float;
-            // a real divider (e.g. a data table) still splits the prose below.
-            if (blocks.every(b => /float:\s*(?:right|left)/.test(b.text))) {
-              let prose = p;
-              for (const b of blocks) prose = prose.split(b.text).join(" ");
-              prose = prose.replace(/\s*\n\s*/g, " ").trim();
-              const floatHtml = blocks.map(b => renderParagraph(b.text, null)).join("");
-              return floatHtml + (prose ? renderParagraph(prose, null) : "");
-            }
             const pieces = [];
             let cursor = 0;
             for (const m of blocks) {
