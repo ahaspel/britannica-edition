@@ -493,11 +493,17 @@
       margin: 1.2em 0;
       border-collapse: collapse;
       border: none;
-      width: 100% !important;
       max-width: 100%;
     }
+    /* A non-float figure fills the reading column.  A FLOAT honors its carried
+       width:Npx — that's an inline style, so it beats this non-!important rule —
+       and falls back to half-column only when the source carried no width, so the
+       prose has room to wrap either way.  max-width:100% (above) still caps it. */
+    .body-text table:not([class]):not([style*="float"]) {
+      width: 100% !important;
+    }
 .body-text table:not([class])[style*="float"] {
-      width: 50% !important;
+      width: 50%;
       margin: 0.4em 0;
     }
 .body-text table:not([class]) td,
@@ -1519,15 +1525,6 @@
       return `/data/images/${encodeURIComponent(name)}`;
     }
 
-    // Render an inline glyph (`{{IMG:fn|align=inline|width|height}}`) as
-    // an inline `<img>`.  width/height are px ints (either may be null),
-    // following MediaWiki sizing:
-    //   width only  → width:Wpx, height auto
-    //   height only → height:Hpx, width auto  (glyph sized to the line)
-    //   both        → bounding box, aspect preserved
-    //   neither     → line-height fallback for tiny glyphs
-    // Glyph SVGs go through commonsUrl() which routes to .svg.png
-    // raster on S3 / local derived images.
     // THE one image render: an image is just an <img>, and the surrounding context
     // — a «CTR» block, fencing «BR»s, a <td> — does the layout, exactly as it does
     // for text.  Carried width is honored and capped to the column (max-width:100%);
@@ -1554,7 +1551,7 @@
     // encodes this; the renderer is the sole decoder (see markers.py).
     const IMG_PARTS_SRC =
       "\\{\\{IMG:([^|}]+)" +
-      "((?:\\|(?:align=(?:center|left|right|inline)|width=\\d+|height=\\d+))*)" +
+      "((?:\\|(?:align=(?:center|left|right)|width=\\d+|height=\\d+))*)" +
       "(?:\\|([^{}]*))?\\}\\}";
     const IMG_PARTS_RE_G = new RegExp(IMG_PARTS_SRC, "g");        // replace / exec-all
     const IMG_PARTS_RE = new RegExp(IMG_PARTS_SRC);              // first match anywhere
@@ -2164,6 +2161,20 @@
           const onlyBlock =
             blocks.length === 1 && blocks[0].text === p.trim();
           if (!onlyBlock) {
+            // A floated figure (an HTMLTABLE carrying float:right/left) must not
+            // guillotine the paragraph at its source anchor — that anchor is the
+            // 1911 print line-break, not ours.  Pull every float to the front and
+            // render ALL the surrounding prose as one continuous flow that wraps
+            // around it, exactly as the engraving (and MediaWiki's
+            // `[[File:…|right]]`) did.  Only when EVERY block here is a float;
+            // a real divider (e.g. a data table) still splits the prose below.
+            if (blocks.every(b => /float:\s*(?:right|left)/.test(b.text))) {
+              let prose = p;
+              for (const b of blocks) prose = prose.split(b.text).join(" ");
+              prose = prose.replace(/\s*\n\s*/g, " ").trim();
+              const floatHtml = blocks.map(b => renderParagraph(b.text, null)).join("");
+              return floatHtml + (prose ? renderParagraph(prose, null) : "");
+            }
             const pieces = [];
             let cursor = 0;
             for (const m of blocks) {
