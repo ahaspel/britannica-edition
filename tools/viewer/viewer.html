@@ -800,27 +800,6 @@
       line-height: 1.6;
     }
 
-    /* Definition-list rendering for glossary blocks (DOG "Glossary of
-       Points of the Dog" et al.).  Term and definition flow inline on
-       the same visual line; entries are stacked one per line via the
-       ::after line-break trick.  Term italicisation comes from the
-       embedded <i>…</i> markers, so no italic styling at the block. */
-    dl.glossary {
-      margin: 1em 0;
-      line-height: 1.55;
-    }
-    dl.glossary dt {
-      display: inline;
-      margin: 0;
-    }
-    dl.glossary dd {
-      display: inline;
-      margin: 0 0 0 0.3em;
-    }
-    dl.glossary dd::after {
-      content: "";
-      display: block;
-    }
 
     .page-marker {
       float: left;
@@ -1875,8 +1854,7 @@
             collectedSections.push({ id: `section-${slug}`, title: name, level: 1 });
             activeSlug = slug;
           } else {                               // «SH» — shoulder (L2)
-            const display = dehyphenateShoulder(
-              m[3].replace(/«\/?[A-Za-z]+(?:\[[^\]]*\])?»/g, "").trim());
+            const display = m[3].replace(/«\/?[A-Za-z]+(?:\[[^\]]*\])?»/g, "").trim();
             const slug = sectionSlug(display);
             const isPointer = !!activeSlug && slug === activeSlug;
             if (!isPointer) {
@@ -1887,23 +1865,6 @@
         }
       }
       return new Map();
-    }
-    // Pretty-print a raw SEC name for display. Inserts a space at
-    // lowercase→uppercase transitions so source artifacts like
-    // "BrewingTrade" render as "Brewing Trade". Leaves names without
-    // case transitions (Cyanophyceae, CLEMENT VII) untouched.
-    function displaySectionName(name) {
-      return name.replace(/([a-z])([A-Z])/g, "$1 $2");
-    }
-
-    // Strip line-wrap hyphens inside a shoulder-heading label:
-    // "Poly-morphism." → "Polymorphism.". Only removes hyphens sitting
-    // between two lowercase letters — a heuristic tuned for the
-    // single-word or short-phrase shoulder headings EB1911 uses. Real
-    // compound words ("self-help") would be incorrectly collapsed, but
-    // those don't appear as shoulder-heading labels in the corpus.
-    function dehyphenateShoulder(text) {
-      return text.replace(/([a-z])-([a-z])/g, "$1$2");
     }
 
     function formatFootnoteText(text) {
@@ -2471,40 +2432,17 @@
       // verbatim through the verse path (DOG glossary, MOLECULE
       // Lucretius quote, &c.).
       //
-      // VERSE is also (mis)used by the pipeline for glossary-style
-      // definition blocks where each line is `«I»term.«/I» definition`
-      // (DOG "Glossary of Points of the Dog" is the canonical example —
-      // the wikisource wraps it in a single-cell table containing a
-      // <poem> block, the pipeline strips the table and emits VERSE).
-      // Such blocks have no business styled as poetry (italic-block-
-      // quote with a left border).  Detect the term-led pattern and
-      // emit a definition list instead.
-      // Optional ``[style:…]`` slot carries whole-table styling from
-      // the source ``{|<attrs>`` opener.
+      // A VERSE marker → blockquote.  The optional ``[style:…]`` slot carries
+      // whole-table styling from the source ``{|<attrs>`` opener.  No glossary
+      // re-classification: the producer said verse, we render verse.  A
+      // term-led list that wants a <dl> is the producer's call, not a 75%
+      // line-shape guess made here.
       const verseMatch = p.match(/^\{\{VERSE(?:\[style:([^\]]*)\])?:([\s\S]*)\}VERSE\}$/);
       if (verseMatch) {
         const verseStyleAttr = verseMatch[1]
           ? ` style="${verseMatch[1].replace(/"/g, "&quot;")}"` : "";
         const lines = verseMatch[2].split("\n").filter(l => l.trim());
         const applyMarkers = (s) => decodeInlineMarkers(escapeHtml(s));
-        // Glossary detection: at least 4 lines, AND ≥75% match the
-        // `«I»term.«/I» definition` shape.  A plain poem rarely starts
-        // every line with an italicised dotted term.
-        const GLOSSARY_LINE = /^«I»[^«]+\.«\/I»\s+\S/;
-        if (lines.length >= 4) {
-          const hits = lines.filter(l => GLOSSARY_LINE.test(l)).length;
-          if (hits / lines.length >= 0.75) {
-            const items = lines.map(l => {
-              const m = l.match(/^«I»([^«]+)«\/I»\s+(.*)$/);
-              if (m) {
-                return `<dt>${applyMarkers("«I»" + m[1] + "«/I»")}</dt>` +
-                       `<dd>${applyMarkers(m[2])}</dd>`;
-              }
-              return `<dt></dt><dd>${applyMarkers(l)}</dd>`;
-            }).join("");
-            return `<dl class="glossary"${verseStyleAttr}>${items}</dl>`;
-          }
-        }
         return `<blockquote class="verse"${verseStyleAttr}>${lines.map(applyMarkers).join("<br>")}</blockquote>`;
       }
       // Render figure-legend markers (structured image legends emitted
@@ -2887,12 +2825,10 @@ html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
       // append the anchor. The viewer emits <h3 id="section-<slug>">
       // for absorbed subsections; match that slug here.
       if (xref?.target_section) {
-        // Apply the same display normalization as the renderer so
-        // "BrewingTrade" → "brewing-trade" on both sides.
-        const slug = displaySectionName(xref.target_section)
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, "-")
-          .replace(/^-|-$/g, "");
+        // The SAME slug function the section anchor uses — sectionSlug on the
+        // raw name, both sides — so the jump matches.  (No display-normalising
+        // transform on one side only; that broke hyphenated / camelCase names.)
+        const slug = sectionSlug(xref.target_section);
         if (slug) base = base + "#section-" + slug;
       }
       return base;

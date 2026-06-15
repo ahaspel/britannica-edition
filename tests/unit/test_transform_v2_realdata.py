@@ -46,28 +46,29 @@ def _transform(raw, volume=1, page_number=1):
 class TestRealImages:
     """[[File:...]] images from real pages."""
 
-    def test_file_image_produces_inline_marker(self):
+    def test_file_image_produces_image_marker(self):
         """Vol 1 p774 has alphabet-glyph `[[File:\u2026|14px]]` refs sitting
-        mid-prose between italic transliterations.  These are INLINE_GLYPH
-        bucket \u2014 folded into the unified `{{IMG:\u2026|align=inline}}` marker so
-        the viewer renders them inline at source size, not as block figures."""
+        mid-prose between italic transliterations.  They become bare
+        `{{IMG:\u2026|width=14}}` markers \u2014 no `align=inline`, because the image
+        carries only the raw's own params; an image in prose renders inline by
+        HTML default, with no special "inline" mark (the raw never wrote one)."""
         raw = _load_page(1, 774)
         result = _transform(raw)
-        assert "align=inline" in result, "No inline-glyph marker produced"
+        assert "{{IMG:" in result, "No image marker produced"
+        assert "align=inline" not in result, "align=inline is dead \u2014 no inline mark"
 
-    def test_inline_marker_has_filename_and_size(self):
+    def test_image_marker_has_filename_and_size(self):
         from britannica.markers import IMG_PARTS_RE, parse_img_meta
         raw = _load_page(1, 774)
         result = _transform(raw)
-        inline = [(m.group(1), parse_img_meta(m.group(2)))
-                  for m in IMG_PARTS_RE.finditer(result)
-                  if parse_img_meta(m.group(2)).get("align") == "inline"]
-        assert inline, "No inline-glyph marker found"
-        fn, _meta = inline[0]
+        imgs = [(m.group(1), parse_img_meta(m.group(2)))
+                for m in IMG_PARTS_RE.finditer(result)]
+        assert imgs, "No image marker found"
+        fn, _meta = imgs[0]
         assert fn.endswith((".jpg", ".png", ".gif", ".svg")), \
             f"Filename doesn't look like image: {fn}"
-        assert any(m.get("width") == 14 for _, m in inline), \
-            "Expected an inline glyph with width=14"
+        assert any(m.get("width") == 14 for _, m in imgs), \
+            "Expected a glyph with width=14"
 
 
 class TestRealImageFloat:

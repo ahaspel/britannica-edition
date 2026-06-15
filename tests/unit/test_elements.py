@@ -10,7 +10,6 @@ from britannica.pipeline.stages.elements._shapes import (
     SHAPE_BRACE_PIPE,
     SHAPE_DOUBLE_BRACKET,
     SHAPE_HTML_TAG,
-    SHAPE_INLINE_IMAGE,
 )
 from britannica.pipeline.stages.elements._walker import walk
 
@@ -45,15 +44,15 @@ class TestExtraction:
         assert shape == SHAPE_BRACE_PIPE
 
     def test_extract_image(self):
-        # `[[File:…]]` in inline prose is classified as SHAPE_INLINE_IMAGE
-        # (more specific than the generic SHAPE_DOUBLE_BRACKET).
+        # `[[File:…]]` is one shape — SHAPE_DOUBLE_BRACKET — in every context;
+        # the walker draws no inline-vs-block distinction.
         text = "text [[File:Foo.jpg|thumb|A caption]] more"
         extracted, extracts = walk(text)
         assert "[[File:" not in extracted
         real = _non_body(extracts)
         assert len(real) == 1
         _ph, shape, _raw = real[0]
-        assert shape == SHAPE_INLINE_IMAGE
+        assert shape == SHAPE_DOUBLE_BRACKET
 
     def test_extract_score(self):
         text = "music <score>{ \\new Staff }</score> here"
