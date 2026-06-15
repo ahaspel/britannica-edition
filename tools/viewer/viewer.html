@@ -780,6 +780,16 @@
       font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
       margin: 1em 2em;
       line-height: 1.6;
+      text-align: left;
+    }
+    /* Inline/cell verse — a «VERSE» inside prose, a table cell, or a «CTR».
+       Verse is flush-left BY DEFINITION, so its lines never inherit a container's
+       centering; but a centred container (a «CTR» wrapper, a centred figure cell)
+       may still center the verse block AS A UNIT.  inline-block makes those two
+       independent: text-align:left flushes the lines, the block stays centerable. */
+    .cell-verse {
+      display: inline-block;
+      text-align: left;
     }
 
 
@@ -1803,19 +1813,6 @@
       // Input may already be HTML-escaped (from formatCell or renderParagraph),
       // so don't escape again.
       let h = text;
-      h = h.replace(/\u00abLN:([^|]*)\|([^|«]*?)(?:\|([^«]*))?\u00ab\/LN\u00bb/g, (match, g1, g2, g3) => {
-        const hasFile = g3 !== undefined;
-        const target = hasFile ? g2 : g1;
-        const display = hasFile ? g3 : g2;
-        const filename = hasFile ? g1 : null;
-        const href = filename ? articleUrl(filename) : `/search.html?q=${encodeURIComponent(target)}`;
-        return `<a href="${href}" class="article-link" title="${target}">${display}</a>`;
-      });
-      // Footnote bodies now keep image markers (glyphs in notes, e.g.
-      // ALPHABET).  Render inline glyphs inline; any block image in a
-      // note renders small/inline since a footnote is an inline context.
-      h = h.replace(IMG_PARTS_RE_G, (match, filename, metaBlock, caption) =>
-        renderImg(filename, parseImgMeta(metaBlock), caption));
       // All position-invariant inline markers via the shared decoder (LN,
       // B/I/SC, MIRROR, SS/SR, sizes, BAR, DHR, CTR, BRACE2, hieroglyph).
       h = decodeInlineMarkers(h);
@@ -2205,9 +2202,7 @@
       // stream — a title footnote is now identical to a body footnote.
       if (p.startsWith(TITLE_OPEN) && p.endsWith(TITLE_CLOSE)) {
         const inner = p.slice(TITLE_OPEN.length, p.length - TITLE_CLOSE.length);
-        let h = escapeHtml(inner).replace(
-          /«FN(?:\[([^\]]+)\])?:([\s\S]*?)«\/FN»/g,
-          (mm, name, content) => renderFnMarker(name, content));
+        let h = escapeHtml(inner);
         h = decodeInlineMarkers(h);
         const dc = h.match(/^((?:<[^>]+>)*)([\s\S])([\s\S]*)$/);
         if (dc) h = `${dc[1]}<span style="font-size:1.6em; line-height:1; vertical-align:baseline;">${dc[2]}</span>${dc[3]}`;
@@ -2581,36 +2576,11 @@
         }
         html = out;
       }
-      // Inline VERSE — appears when the pipeline converts a mid-paragraph
-      // ``<poem>`` (e.g. an enumerated list inside running prose) into
-      // ``{{VERSE:…}VERSE}``.  The paragraph-level VERSE handler only
-      // fires for whole-paragraph blocks, so inline occurrences would
-      // leak raw markers without this replacement.
-      html = html.replace(/\{\{VERSE(?:\[style:[^\]]*\])?:([\s\S]*?)\}VERSE\}/g, (_m, content) => {
-        const lines = content.split("\n").filter(l => l.trim());
-        return `<span class="inline-verse">${lines.join("<br>")}</span>`;
-      });
-html = html.replace(/\u00abFN(?:\[([^\]]+)\])?:(.*?)\u00ab\/FN\u00bb/gs,
-                          (match, name, content) => renderFnMarker(name, content));
-      // Render images — captions are pre-cleaned by the pipeline.
-      // Filename must be unescaped before URL construction because the
-      // surrounding paragraph was run through escapeHtml(), which would
-      // otherwise double-encode entities like `'` → `&#39;` → `%26%2339%3B`
-      // and produce a 403 on S3.  `align=inline` renders inline in the
-      // prose flow (folded-in glyphs); everything else is a block figure.
-      html = html.replace(IMG_PARTS_RE_G, (match, filename, metaBlock, caption) =>
-        renderImg(filename, parseImgMeta(metaBlock), caption));
-      // Render mirrored glyph markers BEFORE B/I/SC so inner formatting
-      // (e.g. \u00abB\u00bb\ud800\udf04\u00ab/B\u00bb inside \u00abMIRROR:\u00bb) still resolves afterwards.
-      // Source: <span style="{{mirrorH}}">\ud800\udf04</span> \u2014 used in ALPHABET
-      // to show left-right-flipped letters in Etruscan / Italic /
-      // Cleonae's reversed E.  CSS applies `transform: scaleX(-1)`.
-      // ONE shared inline-marker decoder (see decodeInlineMarkers) \u2014 the
-      // per-marker block that used to live here was the duplication behind
-      // the context-leak class.  It runs the full invariant set (MIRROR,
-      // B/I/SC, SS/SR, sizes, BAR, DHR-block, CTR, BRACE2, hieroglyph, LN).
-      // SH + MATH below remain \u2014 they're frame-dependent (queue / display-
-      // mode) and stay per-context.
+      // Everything inline goes through the ONE shared decoder below — VERSE, FN,
+      // IMG, and the full invariant set (MIRROR, B/I/SC, SS/SR, sizes, BAR, DHR,
+      // CTR, BRACE2, hieroglyph, LN) — a marker renders identically here and in a
+      // cell / caption / footnote.  Only «SH» (shoulder queue) and «MATH» (display
+      // mode) stay per-context, held out via {skipMath} and decoded just below.
       html = decodeInlineMarkers(html, { skipMath: true });
       // Shoulder headings — id, display text, and margin-pointer
       // status were assigned by the detectSections pre-pass and
