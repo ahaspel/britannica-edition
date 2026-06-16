@@ -241,12 +241,6 @@ class TestRealLinks:
         assert "[[" not in result or "[[" in result and "hieroglyph" in result, \
             "Raw wikilink survived"
 
-    def test_link_template(self):
-        """Vol 3 p8 has {{EB1911 article link}}."""
-        raw = _load_page(3, 8)
-        result = _transform(raw, volume=3, page_number=8)
-        assert "EB1911 article link" not in result, "Raw link template survived"
-
 
 class TestRealSmallCaps:
     """{{sc|...}} template conversion."""

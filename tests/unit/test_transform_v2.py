@@ -20,7 +20,11 @@ def _load_page(vol, page):
 
 def _transform_v2(raw, volume=1, page_number=1):
     from britannica.pipeline.stages.elements import ElementContext, process_elements
-    return process_elements(raw, ElementContext(volume=volume, page_number=page_number))
+    from britannica.pipeline.stages.preprocess import _clean_and_heal
+    # Mirror production: the walk runs on preprocessed source, so apply the
+    # re-appliable cleans (furniture strip / entity decode / noinclude) first.
+    return process_elements(
+        _clean_and_heal(raw), ElementContext(volume=volume, page_number=page_number))
 
 
 class TestBasicTransform:
