@@ -40,7 +40,8 @@ OUT = Path("data/hyphen_map.json")
 def build() -> dict[str, str]:
     freq_solid: Counter = Counter()
     freq_hyph: Counter = Counter()
-    candidates: set[tuple[str, str]] = set()
+    wrap_pairs: set[tuple[str, str]] = set()    # seen broken across a wrap (<br>/newline)
+    all_pairs: set[tuple[str, str]] = set()     # every hyphenated pair, solid OR broken
 
     session = SessionLocal()
     for p in session.query(SourcePage).all():
@@ -50,15 +51,25 @@ def build() -> dict[str, str]:
         low = wt.lower()
         freq_solid.update(_SOLID.findall(low))
         freq_hyph.update(_HYPH.findall(low))
-        candidates.update((x.lower(), y.lower()) for x, y in _WRAP.findall(wt))
+        broken = {(x.lower(), y.lower()) for x, y in _WRAP.findall(wt)}
+        wrap_pairs |= broken
+        all_pairs |= broken
+        all_pairs.update(_HYPH.findall(low))    # contiguous `Differenti-ation` counts too
 
     out: dict[str, str] = {}
-    for x, y in candidates:
+    for x, y in all_pairs:
         solid = freq_solid.get(x + y, 0)
         hyph = freq_hyph.get((x, y), 0)
         if solid == 0 and hyph == 0:
-            continue                                  # leave (absent)
-        out[f"{x}-{y}"] = "drop" if solid > hyph else "keep"
+            continue                             # absent both ways — suspended hyphen
+                                                 # (`two- or three-fold`) / non-word — leave
+        if solid > hyph:
+            out[f"{x}-{y}"] = "drop"             # corpus prefers `XY` solid — join it
+        elif (x, y) in wrap_pairs:
+            out[f"{x}-{y}"] = "keep"             # real compound the corpus hyphenates,
+                                                 # broken by a wrap here — rejoin (drop the break)
+        # else: a contiguous compound the corpus keeps hyphenated — leaving it
+        # untouched is already correct, so it needn't enter the map.
     return out
 
 
