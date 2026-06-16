@@ -31,8 +31,6 @@ import re
 import sys
 import unicodedata
 
-sys.path.insert(0, "src")
-
 from britannica.contributors.vol29_index import Vol29Entry, parse_vol29_index
 from britannica.db.models import (
     Article, ArticleContributor, Contributor,

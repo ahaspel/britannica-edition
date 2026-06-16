@@ -8,8 +8,9 @@
 #   --skip-import  Reuse the already-imported source_pages instead of re-writing
 #                  them (the raw wikileaves never change — saves ~30 min).  Spares
 #                  source_pages at truncate and skips ONLY Phase 2's page import;
-#                  detect-boundaries + extract-contributors still run every volume,
-#                  re-deriving segments/articles/contributors from the kept pages.
+#                  detect-boundaries still runs every volume, re-deriving
+#                  segments/articles from the kept pages (contributors are
+#                  harvested later, in corpus-export's assemble walk).
 #                  Use only when source_pages is already populated from a prior
 #                  full rebuild and the raw files are unchanged.
 #
@@ -87,10 +88,9 @@ uv run python tools/pipeline/build_contributor_table.py
 # Adds contributors that vol 29's master Index lists but per-volume
 # tables don't, plus paired re-keys / duplicate-initials resolutions.
 # Must run AFTER 1b (so the linker sees the post-corrections.json
-# contributor table) and BEFORE Phase 2's extract-contributors (so
-# the per-volume footer matcher sees the new ContributorInitials
-# rows).  Conservative: NEEDS_REVIEW items are reported but not
-# auto-applied.
+# contributor table) and BEFORE the Phase-4 contributor harvest (so the
+# footer matcher sees the new ContributorInitials rows).  Conservative:
+# NEEDS_REVIEW items are reported but not auto-applied.
 echo
 echo "=== Phase 1c: Applying vol 29 contributor linker [$(elapsed)] ==="
 uv run python tools/pipeline/link_vol29_contributors.py --apply
@@ -114,33 +114,15 @@ for vol in $VOLUMES; do
     echo "  Reusing imported pages (--skip-import)."
   fi
 
-  # detect-boundaries + extract-contributors ALWAYS run: they are derived from
-  # source_pages (re-created each rebuild), and detect-boundaries itself changes
-  # with code.  --skip-import only spares the immutable page IMPORT above.
+  # detect-boundaries ALWAYS runs: it's derived from source_pages (re-created
+  # each rebuild) and changes with code.  --skip-import only spares the immutable
+  # page IMPORT above.  (Contributor harvest + linking now ride corpus-export's
+  # single assemble walk — Phase 4 — so there's no per-volume extract pass.)
   echo "  Detecting boundaries..."
   uv run britannica detect-boundaries "$vol"
 
-  echo "  Extracting contributors..."
-  uv run britannica extract-contributors "$vol"
-
   echo "  Volume $vol complete. [$(elapsed)]"
 done
-
-echo
-echo "=== Phase 3b: Linking contributors from front matter [$(elapsed)] ==="
-uv run python tools/pipeline/link_contributors_from_frontmatter.py
-
-# --- Phase 3b2: Link vol 29 master-Index article attributions ---
-# Per-volume front matter doesn't list vol-29-only contributors (the
-# Phase 1c INSERTs), and many of their attributed articles have no
-# `(initials)` footer signature — so without this step they ship as
-# orphans (no ArticleContributor rows) and get filtered out of
-# contributors.json.  Must run AFTER Phase 3b so we only fill
-# contributors who are still genuinely orphaned.
-echo
-echo "=== Phase 3b2: Linking vol 29 article attributions [$(elapsed)] ==="
-uv run python tools/pipeline/link_vol29_articles.py --apply
-
 
 # --- Phase 3c: Rebuild printed-page mapping (ws→printed / leaf→printed) ---
 # MUST run before Phase 4's re-export: the article exporter consults
@@ -227,7 +209,7 @@ uv run python tools/viewer/build_preface.py
 
 # --- Phase 6e: Build Reader's Guide (65 chapters + 6 part pages + TOC) ---
 # Depends on data/derived/articles/index.json (Phase 4) and
-# data/derived/articles/contributors.json (Phase 3b) for link resolution.
+# data/derived/articles/contributors.json (Phase 4) for link resolution.
 echo
 echo "=== Phase 6e: Building Reader's Guide [$(elapsed)] ==="
 uv run python tools/viewer/build_readers_guide.py all > /dev/null

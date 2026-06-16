@@ -8,11 +8,8 @@ Run AFTER extract-contributors (footer matching) has completed for all volumes.
 """
 import json
 import re
-import sys
 from collections import defaultdict
 from pathlib import Path
-
-sys.path.insert(0, "src")
 
 from britannica.db.models import Article, ArticleContributor, Contributor, ContributorInitials
 from britannica.db.session import SessionLocal
