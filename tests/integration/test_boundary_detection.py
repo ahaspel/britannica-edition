@@ -18,7 +18,7 @@ def test_detect_boundaries_with_section_markers(
                 SourcePage(
                     source_name="sample",
                     volume=1,
-                    page_number=1,
+                    page_number=40,
                     raw_text="unused",
                     wikitext=_clean(
                         '<section begin="Abacus" />\'\'\'ABACUS,\'\'\'\n'
@@ -30,14 +30,14 @@ def test_detect_boundaries_with_section_markers(
                 SourcePage(
                     source_name="sample",
                     volume=1,
-                    page_number=2,
+                    page_number=41,
                     raw_text="unused",
                     wikitext=_clean("Continuation of the abalone article on the next page."),
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
-                    page_number=3,
+                    page_number=42,
                     raw_text="unused",
                     wikitext=_clean('<section begin="Abandon" />\'\'\'ABANDON,\'\'\' To relinquish, desert, or give up.'),
                 ),
@@ -66,17 +66,17 @@ def test_detect_boundaries_with_section_markers(
         abalone = next(a for a in articles if a.title == "ABALONE")
         abandon = next(a for a in articles if a.title == "ABANDON")
 
-        assert abacus.page_start == 1
-        assert abacus.page_end == 1
+        assert abacus.page_start == 40
+        assert abacus.page_end == 40
         assert "encyclopaedia entry" in abacus.body
 
-        assert abalone.page_start == 1
-        assert abalone.page_end == 2
+        assert abalone.page_start == 40
+        assert abalone.page_end == 41
         assert "shellfish" in abalone.body
         assert "Continuation" in abalone.body
 
-        assert abandon.page_start == 3
-        assert abandon.page_end == 3
+        assert abandon.page_start == 42
+        assert abandon.page_end == 42
         assert "relinquish" in abandon.body
 
     finally:
@@ -98,21 +98,21 @@ def test_detect_boundaries_continuation_without_sections(
                 SourcePage(
                     source_name="sample",
                     volume=1,
-                    page_number=1,
+                    page_number=40,
                     raw_text="unused",
                     wikitext=_clean('<section begin="Abalone" />\'\'\'ABALONE,\'\'\' A type of shellfish.'),
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
-                    page_number=2,
+                    page_number=41,
                     raw_text="unused",
                     wikitext=_clean("Continuation text with no section markers."),
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
-                    page_number=3,
+                    page_number=42,
                     raw_text="unused",
                     wikitext=_clean('<section begin="Abandon" />\'\'\'ABANDON,\'\'\' To relinquish.'),
                 ),
@@ -133,7 +133,7 @@ def test_detect_boundaries_continuation_without_sections(
             .filter(Article.title == "ABALONE")
             .first()
         )
-        assert abalone.page_end == 2
+        assert abalone.page_end == 41
         assert "Continuation" in abalone.body
     finally:
         session.close()
@@ -154,21 +154,21 @@ def test_named_section_without_bold_is_continuation(
                 SourcePage(
                     source_name="sample",
                     volume=1,
-                    page_number=1,
+                    page_number=40,
                     raw_text="unused",
                     wikitext=_clean('<section begin="Huss" />\'\'\'HUSS,\'\'\' John (c. 1373-1415), Bohemian reformer.'),
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
-                    page_number=2,
+                    page_number=41,
                     raw_text="unused",
                     wikitext=_clean('<section begin="Huss, John" />spiritual teaching that influenced later movements.'),
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
-                    page_number=3,
+                    page_number=42,
                     raw_text="unused",
                     wikitext=_clean('<section begin="Hussar" />\'\'\'HUSSAR,\'\'\' a light cavalry soldier.'),
                 ),
@@ -185,10 +185,10 @@ def test_named_section_without_bold_is_continuation(
     session = test_session_local()
     try:
         huss = session.query(Article).filter(Article.title.like("HUSS%")).first()
-        assert huss.page_end == 2
+        assert huss.page_end == 41
         assert "spiritual teaching" in huss.body
 
         hussar = session.query(Article).filter(Article.title == "HUSSAR").first()
-        assert hussar.page_start == 3
+        assert hussar.page_start == 42
     finally:
         session.close()

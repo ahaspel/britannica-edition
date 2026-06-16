@@ -1,6 +1,6 @@
 # The One True Path — Off-Path Survey & Wipe-List
 
-**Date:** 2026-06-16  **Status:** pure-delete pass **COMPLETE** (§A–C, F, G — ~90 files removed + 11 surgical trims; suite green except the 10 pre-existing «SH:slug» snapshots, which are a separate rebaseline). The 5 fix-first collapses (§D–E) remain for the architectural pass.
+**Date:** 2026-06-16  **Status:** enumeration complete; nothing deleted yet.
 
 **Purpose.** Enumerate *everything* on the producer side that is not **on**, or **necessary to**, the single legitimate pipeline ("the One True Path"). Deletion follows this list — the order is fixed: *enumerate → wipe → only then rebuild.*
 

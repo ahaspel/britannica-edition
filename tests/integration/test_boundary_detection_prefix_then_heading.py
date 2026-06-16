@@ -18,14 +18,14 @@ def test_detect_boundaries_handles_continuation_then_new_heading_same_page(
                 SourcePage(
                     source_name="sample",
                     volume=1,
-                    page_number=1,
+                    page_number=40,
                     raw_text="unused",
                     wikitext=_clean('<section begin="Abalone" />\'\'\'ABALONE,\'\'\' A type of shellfish.'),
                 ),
                 SourcePage(
                     source_name="sample",
                     volume=1,
-                    page_number=2,
+                    page_number=41,
                     raw_text="unused",
                     wikitext=_clean(
                         "Continuation of the abalone article on the next page.\n\n"
@@ -57,12 +57,12 @@ def test_detect_boundaries_handles_continuation_then_new_heading_same_page(
         abalone = next(a for a in articles if a.title == "ABALONE")
         abandon = next(a for a in articles if a.title == "ABANDON")
 
-        assert abalone.page_start == 1
-        assert abalone.page_end == 2
+        assert abalone.page_start == 40
+        assert abalone.page_end == 41
         assert "Continuation" in abalone.body
 
-        assert abandon.page_start == 2
-        assert abandon.page_end == 2
+        assert abandon.page_start == 41
+        assert abandon.page_end == 41
         assert "relinquish" in abandon.body
     finally:
         session.close()

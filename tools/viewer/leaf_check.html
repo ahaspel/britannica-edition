@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Boundary check — 56 marked leaves</title>
+<style>
+  body { font-family: Georgia, serif; background:#f5f0e8; color:#2c2416; margin:0; padding:16px; }
+  h1 { font-size:1.2rem; margin:0 0 6px; }
+  .hint { color:#5c4f3d; font-size:0.92rem; margin-bottom:14px; }
+  .hint b1 { color:#2e7d32; font-weight:bold; }
+  .hint b2 { color:#c62828; font-weight:bold; }
+  .vol { border-top:2px solid #ccc; padding:14px 0; display:grid;
+         grid-template-columns:60px 1fr 1fr; gap:18px; align-items:start; }
+  .vnum { font-size:1.4rem; font-weight:bold; padding-top:10px; }
+  .pane { text-align:center; }
+  .pane .cap { font-size:0.95rem; padding-bottom:6px; }
+  .pane.first .cap { color:#2e7d32; font-weight:bold; }
+  .pane.last  .cap { color:#c62828; font-weight:bold; }
+  .pane img { width:100%; max-width:380px; border:1px solid #bbb; background:#faf7f0; }
+</style>
+</head>
+<body>
+<h1>The 56 boundary leaves I have marked</h1>
+<div class="hint">
+  Per volume: <b1>left = my FIRST-article guess</b1>, <b2>right = my LAST-article guess</b2>, each with its leaf number.
+  Click an image to enlarge. Tell me which are wrong and the right leaf — e.g. &ldquo;vol&nbsp;1 first should be 38&rdquo;.
+</div>
+<div id="list"></div>
+<script>
+const G = {"1":[39,1044],"2":[19,1048],"3":[21,1026],"4":[23,1048],"5":[21,1024],"6":[23,1032],"7":[21,1016],"8":[21,1034],"9":[21,1020],"10":[23,984],"11":[21,982],"12":[21,994],"13":[21,998],"14":[19,980],"15":[21,1030],"16":[21,1024],"17":[21,1058],"18":[19,1018],"19":[21,1062],"20":[21,1048],"21":[21,1034],"22":[21,1002],"23":[21,1088],"24":[19,1118],"25":[21,1112],"26":[21,1118],"27":[21,1110],"28":[21,1106]};
+const pad=(n,w)=>String(n).padStart(w,'0');
+const url=(v,lf)=>`../../data/derived/scans/vol${pad(v,2)}_leaf${pad(lf,4)}.jpg`;
+const list=document.getElementById('list');
+for(let v=1; v<=28; v++){
+  const [f,l]=G[String(v)];
+  const row=document.createElement('div'); row.className='vol';
+  row.innerHTML =
+    `<div class="vnum">${v}</div>`+
+    `<div class="pane first"><div class="cap">first article &mdash; leaf ${f}</div>`+
+      `<a href="${url(v,f)}" target="_blank"><img loading="lazy" alt="vol ${v} leaf ${f}" src="${url(v,f)}"></a></div>`+
+    `<div class="pane last"><div class="cap">last article &mdash; leaf ${l}</div>`+
+      `<a href="${url(v,l)}" target="_blank"><img loading="lazy" alt="vol ${v} leaf ${l}" src="${url(v,l)}"></a></div>`;
+  list.appendChild(row);
+}
+</script>
+</body>
+</html>
