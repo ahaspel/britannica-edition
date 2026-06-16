@@ -38,10 +38,10 @@ def regression_session(tmp_path):
 def _seed_pages(session_factory, pages_data: list[dict], volume: int):
     """Insert page data matching the real import pipeline.
 
-    The importer stores cleaned_preview as raw_text and the raw wikitext
-    as wikitext — left RAW.  Quote-run conversion (``'''X'''``/``''X''`` →
-    ``«B»``/``«I»``) now happens in ``preprocess`` (the single source-prep
-    step, run by detect's ``volume_stream``), so the seed stores raw wikitext
+    The importer stores the raw wikitext in both raw_text and wikitext;
+    the walk reads wikitext.  Quote-run conversion (``'''X'''``/``''X''`` →
+    ``«B»``/``«I»``) happens in ``preprocess`` (the single source-prep step,
+    run by detect's ``volume_stream``), so the seed stores raw wikitext
     exactly as the importer does — no pre-conversion here.
     """
     session = session_factory()
@@ -52,7 +52,7 @@ def _seed_pages(session_factory, pages_data: list[dict], volume: int):
                 source_name="wikisource",
                 volume=volume,
                 page_number=p["page_number"],
-                raw_text=p["cleaned_preview"],
+                raw_text=wikitext,
                 wikitext=wikitext,
             ))
         session.commit()

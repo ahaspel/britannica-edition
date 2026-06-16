@@ -104,8 +104,6 @@ def _outline_is_list_shaped(line: str) -> bool:
 def _extract_outlines(
     text: str,
     registry: ElementRegistry,
-    *,
-    require_emphasis: bool = True,
 ) -> str:
     """Find runs of visually-indented hierarchical content and replace
     each with an OUTLINE placeholder.
@@ -118,9 +116,6 @@ def _extract_outlines(
       • 2+ DISTINCT indent depths in the run (it's hierarchical, not
         a flat list — a flat list renders fine as a table or `<ol>`)
       • at least one bold/italic/sc emphasis token in the run
-        (skipped when ``require_emphasis=False`` — used by the plate
-        outline detector, where the IMG + numbered list shape is
-        already specific enough on its own)
 
     `<poem>` / `<math>` / `<ref>` content is already placeholdered by
     the time this runs, so verse stanzas with `{{em|N}}` indent and
@@ -183,7 +178,7 @@ def _extract_outlines(
         if (
             len(non_empty) >= 4
             and len(depths) >= 2
-            and (has_emphasis or not require_emphasis)
+            and has_emphasis
         ):
             block_text = "\n".join(block_lines).rstrip()
             placeholder = registry.add("OUTLINE", block_text)

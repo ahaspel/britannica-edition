@@ -219,7 +219,7 @@ class TestRealShoulderHeadings:
         """Shoulder headings are converted to SH markers."""
         raw = 'text {{EB1911 Shoulder Heading|Topic Name}} more'
         result = _transform(raw)
-        assert "\u00abSH\u00bb" in result, "No SH marker produced"
+        assert "\u00abSH:" in result, "No SH:slug marker produced"
         assert "Topic Name" in result
 
     def test_shoulder_heading_real_page(self):

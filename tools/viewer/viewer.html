@@ -1765,48 +1765,24 @@
     let collectedSections = [];
     let wideTableCounter = 0;
     const wideTableSources = {};
-    // Pre-computed shoulder-heading metadata, in document order.
-    // Each `«SH»…«/SH»` marker in the article body produces one entry
-    // (id, display, isPointer); the SH replace step at render time
-    // consumes them in order via shoulderCursor.  Pre-computing lets
-    // SH anchors be slug-stable across rebuilds the same way SEC/SC
-    // anchors are.
-    let shoulderQueue = [];
-    let shoulderCursor = 0;
-
-    // Build the TOC source mechanically from the anchors the producer placed:
-    // «SEC:slug|name» (major, L1) from stamp_sections, and «SH»…«/SH» (shoulder,
-    // L2) from the shoulder producer.  No recognition, no SC_RE guess — a «SEC»
-    // is a section because stamp_sections said so.  Returns an EMPTY map (the
-    // heading renders as its normal «CTR»«SC», and the «SEC» anchor carries the
-    // id); populates collectedSections (TOC) and shoulderQueue (the «SH» render
-    // pulls ids/labels from it, in document order).
+    // Build the TOC mechanically by walking the anchors the producer placed,
+    // in document order: «SEC:slug|name» (L1) and «SH:slug»…«/SH» (L2).  Both
+    // carry their own slug — nothing is recomputed here, nothing is guessed.
     function detectSections(paragraphs) {
       collectedSections = [];
-      shoulderQueue = [];
-      shoulderCursor = 0;
-      const ANCHOR_RE = /«SEC:([^|»]*)\|([^»]*)»|«SH»([\s\S]*?)«\/SH»/g;
-      let activeSlug = "";  // most recent L1 slug, for SH margin-pointer dedup
+      const ANCHOR_RE = /«SEC:([^|»]*)\|([^»]*)»|«SH:([^»]*)»([\s\S]*?)«\/SH»/g;
       for (const p of paragraphs) {
         ANCHOR_RE.lastIndex = 0;
         let m;
         while ((m = ANCHOR_RE.exec(p)) !== null) {
-          if (m[3] === undefined) {              // «SEC» — major section (L1)
-            const slug = m[1], name = m[2];
-            collectedSections.push({ id: `section-${slug}`, title: name, level: 1 });
-            activeSlug = slug;
-          } else {                               // «SH» — shoulder (L2)
-            const display = m[3].replace(/«\/?[A-Za-z]+(?:\[[^\]]*\])?»/g, "").trim();
-            const slug = sectionSlug(display);
-            const isPointer = !!activeSlug && slug === activeSlug;
-            if (!isPointer) {
-              collectedSections.push({ id: `section-${slug}`, title: display, level: 2 });
-            }
-            shoulderQueue.push({ id: `section-${slug}`, display, isPointer });
+          if (m[1] !== undefined) {              // «SEC» — major section (L1)
+            collectedSections.push({ id: `section-${m[1]}`, title: m[2], level: 1 });
+          } else {                               // «SH:slug» — shoulder (L2)
+            const display = m[4].replace(/«\/?[A-Za-z]+(?:\[[^\]]*\])?»/g, "").trim();
+            collectedSections.push({ id: `section-${m[3]}`, title: display, level: 2 });
           }
         }
       }
-      return new Map();
     }
 
     function formatFootnoteText(text) {
@@ -2562,20 +2538,19 @@
         }
         html = out;
       }
-      // Everything inline goes through the ONE shared decoder below — VERSE, FN,
-      // IMG, and the full invariant set (MIRROR, B/I/SC, SS/SR, sizes, BAR, DHR,
-      // CTR, BRACE2, hieroglyph, LN) — a marker renders identically here and in a
-      // cell / caption / footnote.  Only «SH» (shoulder queue) and «MATH» (display
-      // mode) stay per-context, held out via {skipMath} and decoded just below.
-      html = decodeInlineMarkers(html, { skipMath: true });
-      // Shoulder headings — id, display text, and margin-pointer
-      // status were assigned by the detectSections pre-pass and
-      // queued in document order.  Consume one entry per match.
-      html = html.replace(/\u00abSH\u00bb(.*?)\u00ab\/SH\u00bb/gs, () => {
-        const info = shoulderQueue[shoulderCursor++];
-        if (!info) return "";
-        return `<span class="shoulder-heading" id="${info.id}">${escapeHtml(info.display)}</span>`;
+      // Shoulder headings carry their own slug («SH:slug»…«/SH»): stamp the
+      // anchor id straight off it and show the label as plain text (markers
+      // stripped).  Done BEFORE the decoder so we strip the raw «…» markers,
+      // not the HTML they would become.
+      html = html.replace(/«SH:([^»]*)»(.*?)«\/SH»/gs, (_m, slug, content) => {
+        const display = content.replace(/«\/?[A-Za-z]+(?:\[[^\]]*\])?»/g, "").trim();
+        return `<span class="shoulder-heading" id="section-${slug}">${escapeHtml(display)}</span>`;
       });
+      // Everything else inline goes through the ONE shared decoder — VERSE, FN,
+      // IMG, and the full invariant set (MIRROR, B/I/SC, SS/SR, sizes, BAR, DHR,
+      // CTR, BRACE2, hieroglyph, LN).  Only «MATH» (display mode) stays per-context,
+      // held out via {skipMath} and decoded just below.
+      html = decodeInlineMarkers(html, { skipMath: true });
       // Render math markers with KaTeX.  An optional `[hint]` after
       // MATH carries a rendering directive baked at build time:
       //   `fs=N`   render at font-size N%  (Tier 2: in-column scaling)
@@ -2739,7 +2714,7 @@
             // same path the body uses: no bespoke title render, no separate
             // footnote stream.  (Plates and any title-less body fall back to the
             // flattened article.title.)
-            footnoteCounter = 0; namedFnNumbers.clear(); fnAnchorInstance = 0; collectedFootnotes = []; collectedSections = []; shoulderQueue = []; shoulderCursor = 0; wideTableCounter = 0; for (const k in wideTableSources) delete wideTableSources[k];
+            footnoteCounter = 0; namedFnNumbers.clear(); fnAnchorInstance = 0; collectedFootnotes = []; collectedSections = []; wideTableCounter = 0; for (const k in wideTableSources) delete wideTableSources[k];
             const tm = (article.body || "").match(/^«TITLE:[\s\S]*?«\/TITLE»/);
             return tm ? renderParagraph(tm[0], null)
                       : `<h1>${renderTitleMarkers(article.title || "Untitled")}</h1>`;
@@ -2813,10 +2788,10 @@
             // that isn't a real one — prev ends mid-clause, next starts lowercase.
             // NON_TEXT_PREFIX keeps a structural block from being merged; the margin
             // strip ignores page / shoulder-heading markers when judging the seam.
-            const NON_TEXT_PREFIX = /^(?:\{\{(?:TABLE|LEGEND|IMG|VERSE)|\u00abHTMLTABLE|\u00abSEC:|\u00abSH\u00bb|\u00abOUTLINE:|\u00abPLATE_OUTLINE:|\u00abTITLE:)/;
+            const NON_TEXT_PREFIX = /^(?:\{\{(?:TABLE|LEGEND|IMG|VERSE)|\u00abHTMLTABLE|\u00abSEC:|\u00abSH:|\u00abOUTLINE:|\u00abPLATE_OUTLINE:|\u00abTITLE:)/;
             const stripMarginMarkers = s => s
               .replace(/\x01PAGE:\d+\x01/g, "")
-              .replace(/\u00abSH\u00bb.*?\u00ab\/SH\u00bb/gs, "")
+              .replace(/\u00abSH:[^\u00bb]*\u00bb.*?\u00ab\/SH\u00bb/gs, "")
               .trim();
             // Collapse ``\n\n`` inside balanced ``«HTMLTABLE:`` blocks to
             // ``\n`` so paragraph-splitting doesn't slice a nested
@@ -2970,7 +2945,7 @@
                   }
                 }
               }
-              if (cur.startsWith("\u00abSH\u00bb")) {
+              if (cur.startsWith("\u00abSH:")) {
                 // Shoulder heading: attach to previous, then absorb next
                 const sh = cur;
                 if (mergedParas.length > 0) {
@@ -2979,7 +2954,7 @@
                   mergedParas.push(sh);
                 }
                 // Also absorb the next paragraph (continuation of sentence)
-                if (i + 1 < rawParas.length && !rawParas[i + 1].startsWith("\u00abSH\u00bb")) {
+                if (i + 1 < rawParas.length && !rawParas[i + 1].startsWith("\u00abSH:")) {
                   mergedParas[mergedParas.length - 1] += " " + rawParas[i + 1];
                   i++;
                 }

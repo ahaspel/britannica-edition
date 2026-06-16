@@ -756,16 +756,6 @@ def walk_and_attribute(toc: list[dict],
                 if comma != raw_name and len(comma) >= 4:
                     match = title_lookup.get(_art_norm(comma))
             if not match:
-                # Dehyphenate wrapped titles: "Schellen-dorf" → "Schellendorf"
-                if "-" in raw_name:
-                    dehyphed = re.sub(r"(\w)-(\w)", r"\1\2", raw_name)
-                    match = title_lookup.get(_art_norm(dehyphed))
-                    if not match:
-                        # Also try comma-split after dehyphenation
-                        comma2 = dehyphed.split(",", 1)[0].strip()
-                        if comma2 != dehyphed and len(comma2) >= 4:
-                            match = title_lookup.get(_art_norm(comma2))
-            if not match:
                 # "X or Y" alternate names: "Ahom or Aham" → "AHOM"
                 if " or " in raw_name:
                     before_or = raw_name.split(" or ")[0].strip()
