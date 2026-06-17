@@ -38,12 +38,15 @@ OCR_FILE = Path("data/derived/vol29_contributors_ocr.json")
 VISION_TAG = "<!-- vision-ocr -->"
 
 # Header line: SURNAME, FIRSTNAMES, CREDENTIALS (Initials)
-# The name portion runs from the start to the opening paren of the
-# initials.  We don't try to split name/credentials in the regex —
-# that's done by `_split_name_creds` after the match, since
-# credentials use commas internally and a one-shot split is brittle.
+# The name portion runs from the start to the FINAL paren-group (the
+# initials).  The name may itself contain parenthetical credentials —
+# "(Mrs. Edward Wilde)", "F.R.S.(Edin.)" — so it allows balanced parens, not
+# just non-paren chars; otherwise such a header fails the match and the whole
+# entry is swallowed into the PREVIOUS entry's article list, mis-attributing
+# the swallowed articles.  Name/credential split is done by
+# `_split_name_creds` after the match.
 _HEADER_RE = re.compile(
-    r"^([A-Z][^()]*?)\s*\(([^)]{1,30})\)\s*\.?\s*$"
+    r"^([A-Z](?:[^()]|\([^)]*\))*?)\s*\(([^)]{1,30})\)\s*\.?\s*$"
 )
 
 # Article-list line: starts with `:` (vision prompt enforces this).
@@ -218,7 +221,14 @@ def parse_vol29_index(
                 i += 1
                 continue
             raw_name, raw_init = m.group(1), m.group(2)
+            # Lift any parenthetical credentials out of the name ("(Mrs. Edward
+            # Wilde)") so the comma-split sees a clean SURNAME, FIRSTNAMES form;
+            # fold them into the credentials.
+            paren_creds = re.findall(r"\(([^)]*)\)", raw_name)
+            raw_name = re.sub(r"\s*\([^)]*\)\s*", " ", raw_name)
             display, full_name, creds = _split_name_creds(raw_name)
+            if paren_creds:
+                creds = ", ".join(c for c in [creds, *paren_creds] if c)
             initials = _clean_initials(raw_init)
 
             # Collect article-list lines until next header / blank /
