@@ -1975,7 +1975,10 @@
       // invisible target at the section start; the «CTR»«SC» heading renders
       // right after it and the TOC is built from these (+ «SH»).  id matches
       // buildXrefHref's `section-<slug>`, so resolved section xrefs land here.
-      h = h.replace(/«SEC:([^|»]*)\|[^»]*»/g,
+      // `«ANCHOR:slug|name»` rides the SAME stamp — same `section-<slug>` id, so
+      // `[[#X]]` and Reader's-Guide deep-links land — but it is never collected by the
+      // TOC scan above (which matches «SEC»/«SH» only), so it stays a pure target.
+      h = h.replace(/«(?:SEC|ANCHOR):([^|»]*)\|[^»]*»/g,
           (_m, slug) => `<span id="section-${slug}" class="section-anchor"></span>`);
       // Restore the shielded inline images.
       h = h.replace(/\x00IMG(\d+)\x00/g, (_m, idx) => imgHtml[+idx]);
@@ -2796,7 +2799,7 @@
             // that isn't a real one — prev ends mid-clause, next starts lowercase.
             // NON_TEXT_PREFIX keeps a structural block from being merged; the margin
             // strip ignores page / shoulder-heading markers when judging the seam.
-            const NON_TEXT_PREFIX = /^(?:\{\{(?:TABLE|LEGEND|IMG|VERSE)|\u00abHTMLTABLE|\u00abSEC:|\u00abSH:|\u00abOUTLINE:|\u00abPLATE_OUTLINE:|\u00abTITLE:)/;
+            const NON_TEXT_PREFIX = /^(?:\{\{(?:TABLE|LEGEND|IMG|VERSE)|\u00abHTMLTABLE|\u00abSEC:|\u00abSH:|\u00abANCHOR:|\u00abOUTLINE:|\u00abPLATE_OUTLINE:|\u00abTITLE:)/;
             const stripMarginMarkers = s => s
               .replace(/\x01PAGE:\d+\x01/g, "")
               .replace(/\u00abSH:[^\u00bb]*\u00bb.*?\u00ab\/SH\u00bb/gs, "")
