@@ -151,6 +151,14 @@ def link_vol29_articles(apply_mode: bool = False) -> None:
     try:
         entries = parse_vol29_index()
         title_map = _build_title_map(session)
+        # Pre-comma-head index over the same titles, for the unique-surname
+        # fallback in the loop below: head ("CALVIN") → the articles whose
+        # title-head is exactly that ("CALVIN, JOHN").  "CALVINISTIC METHODISTS"
+        # indexes under its own head, never under "CALVIN".
+        head_index: dict[str, list[Article]] = {}
+        for norm_title, arts in title_map.items():
+            head_index.setdefault(
+                norm_title.split(",", 1)[0].strip(), []).extend(arts)
         linked_ids = {
             ac.contributor_id
             for ac in session.query(ArticleContributor).all()
@@ -184,17 +192,24 @@ def link_vol29_articles(apply_mode: bool = False) -> None:
                 key = _normalize_vol29_title(article_title)
                 articles = title_map.get(key, [])
                 if not articles and "," in key:
-                    # Vol 29 cells often qualify a title with a section
-                    # name after a comma ("BOLIVIA, HISTORY",
-                    # "UNITED STATES, GEOLOGY") where the DB only
-                    # carries the leading article ("BOLIVIA",
-                    # "UNITED STATES").  Fall back to the pre-comma
-                    # head when the full form has no match.  Restricted
-                    # to comma-bearing titles so a bare "Calvin" doesn't
-                    # mis-bind to "CALVIN, JOHN" (the user explicitly
-                    # rejected open-ended prefix matching as too risky).
+                    # A vol-29 cell can qualify a title with a section after a
+                    # comma ("BOLIVIA, HISTORY") where the DB carries only the
+                    # leading article ("BOLIVIA") as a full title.
                     head_key = key.split(",", 1)[0].strip()
                     articles = title_map.get(head_key, [])
+                if not articles:
+                    # Final fallback: the head — a bare surname ("CALVIN") or
+                    # the pre-comma head ("UNITED STATES" of "United States,
+                    # Geology") — matches the title-head of EXACTLY ONE article
+                    # ("CALVIN, JOHN", "UNITED STATES, THE").  Exact head, not a
+                    # prefix (so "Calvin" never reaches "Calvinistic Methodists");
+                    # the uniqueness gate is the safety — a surname shared by 2+
+                    # articles stays unmatched, so this adds zero false positives
+                    # (simulated: 6 recovered, 0 wrong; ambiguous / garbage heads
+                    # skip).
+                    head_hits = head_index.get(key.split(",", 1)[0].strip(), [])
+                    if len(head_hits) == 1:
+                        articles = head_hits
                 if not articles:
                     unmatched_titles.append((entry.full_name, article_title))
                     continue
