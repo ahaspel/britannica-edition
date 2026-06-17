@@ -511,13 +511,21 @@
       border: none;
       padding: 1px 12px;
     }
-.body-text table:not([class]) img {
+.body-text table:not([class]):not([style*="float"]) img {
       max-height: none !important;
-      width: 100% !important;
       max-width: 100% !important;
       height: auto;
       display: block;
       margin: 0 auto;
+    }
+    /* An image that SHARES its row with a text cell (the chess end-game boards:
+       a position beside its solution) must hold its OWN width.  Left shrinkable
+       by max-width:100%, the auto-layout hands the width to the prose and
+       squeezes the board to nothing; max-width:none makes it non-shrinkable, so
+       the table reserves the board's column and the prose wraps in what's left.
+       A board alone in its cell (:only-child) never hits this. */
+    .body-text table:not([class]):not([style*="float"]) td:not(:only-child) img {
+      max-width: none !important;
     }
     /* PLATE full-bleed: the source's fixed px (e.g. width:1000px, cell images
        at 450px) is the PRINT width.  On a plate page the column cap is gone

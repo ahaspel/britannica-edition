@@ -41,7 +41,6 @@ from britannica.export.article_json import (
     _safe_filename, export_articles_to_json,
 )
 from britannica.pipeline.stages.transform_articles import walk_article
-from britannica.pipeline.stages.resolve_xrefs import build_resolution_index
 
 
 def _find_article(session, title: str, volume: int | None) -> Article | None:
@@ -88,16 +87,18 @@ def render(title: str, volume: int | None = None,
         # manual concatenation, no plate special-case, no transform shim.
         body = walk_article(session, article)
         print(f"[{time.time()-t0:4.1f}s] Walked → {len(body):,} chars")
-        # Resolve this article's «LN» links exactly as production does:
-        # assemble_and_export builds the same corpus index before serializing.
-        idx = build_resolution_index(session.query(Article).all())
+        # No xref resolution.  A single-article re-render is for LOOKING at
+        # layout / producer output, not the cross-reference web — and resolving
+        # «LN» means loading the whole corpus (37k rows) to build the title
+        # index, a 4-minute tax on a 0.4s walk.  Skip it; the export strips the
+        # unresolved «LN» markers to their display text.
     finally:
         session.close()
 
     export_articles_to_json(
         article.volume, out_dir,
         body_override={article.id: body},
-        link_index=idx,
+        link_index=None,   # look-render: skip xref resolution (see above)
         only_article_id=article.id,
     )
     fn = _safe_filename(article, article.title)
