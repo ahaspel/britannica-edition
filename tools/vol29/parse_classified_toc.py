@@ -29,6 +29,7 @@ Sources:
     ## marks Blackletter category headers; everything else is sub-headers
     or article entries.
 """
+import bisect
 import io
 import json
 import re
@@ -85,6 +86,11 @@ def load_meta_toc_entries() -> list[dict]:
                 pass
     if not text:
         return []
+    # Strip page-break boilerplate (running head, {{pagequality}}, the mid-
+    # table </table><table> the scan inserts at each page foot).  Left in, it
+    # glues onto a row's page-number cell ("917<noinclude>...") so the row
+    # (e.g. History > Germany, which straddles the 889/890 break) is dropped.
+    text = re.sub(r"<noinclude>.*?</noinclude>", "", text, flags=re.DOTALL)
 
     entries: list[dict] = []
     current_cat = ""
@@ -174,7 +180,7 @@ def load_meta_toc_entries() -> list[dict]:
 
         # Find page number (last 3-digit number in cells).
         for c in reversed(cells):
-            m2 = re.match(r"^(\d{3})$", c.strip())
+            m2 = re.match(r"^(\d{3})\b", c.strip())
             if m2:
                 page = int(m2.group(1))
                 break
@@ -265,27 +271,6 @@ def load_meta_toc_categories() -> list[dict]:
     return [e for e in entries if e.get("level") == 1]
 
 
-# Flat-in-meta-TOC cats with known body-page sub-headings.
-# Each sub is either a string (leaf sub) or a dict with {name, children}.
-_FLAT_CAT_SUBS: dict[str, list] = {
-    "Anthropology and Ethnology": [
-        "General Subjects and Terms", "Races and Tribes, &c.", "Biographies",
-    ],
-    "Archaeology and Antiquities": ["Subjects", "Biographies"],
-    "Astronomy": ["Subjects", "Biographies"],
-    "Education": ["Subjects", "Biographies"],
-    "Language and Writing": ["General", "Biographies"],
-    "Mathematics": ["Pure", "Applied", "Biographies"],
-    "Military and Naval": ["Subjects", "Biographies"],
-    "Philosophy and Psychology": [
-        "General", "Subjects", "Biographies",
-        {"name": "Psychical Research and Occultism",
-         "children": ["Subjects", "Biographies"]},
-    ],
-    "Sports and Pastimes": ["Subjects", "Biographies"],
-}
-
-
 def build_toc_from_meta(meta_categories: list[dict],
                         meta_entries: list[dict]) -> list[dict]:
     """Build the hierarchical TOC tree from meta-TOC entries."""
@@ -302,26 +287,11 @@ def build_toc_from_meta(meta_categories: list[dict],
         name = c["name"]
         entries = by_cat.get(name, [])
         if not entries:
-            hard_subs = _FLAT_CAT_SUBS.get(name, [])
-            def _make_node(spec, printed_page):
-                if isinstance(spec, str):
-                    return {
-                        "name": spec,
-                        "printed_page": printed_page,
-                        "articles": [],
-                        "children": [],
-                    }
-                return {
-                    "name": spec["name"],
-                    "printed_page": printed_page,
-                    "articles": [],
-                    "children": [
-                        _make_node(ch, printed_page)
-                        for ch in spec.get("children", [])
-                    ],
-                }
-            subs = [_make_node(s, c.get("printed_page")) for s in hard_subs]
-            toc.append({"name": name, "subsections": subs})
+            # Flat in the meta-TOC summary: this category's section names
+            # live only in the body pages.  Start empty; walk_and_attribute
+            # grows the subs from the printed `###` headers (_create_sub).
+            # This is what retired the hard-coded _FLAT_CAT_SUBS.
+            toc.append({"name": name, "subsections": []})
             continue
         subsections: list[dict] = []
         parent_at_level: dict[int, dict] = {}
@@ -331,6 +301,7 @@ def build_toc_from_meta(meta_categories: list[dict],
                 "printed_page": e.get("printed_page"),
                 "articles": [],
                 "children": [],
+                "_meta": True,   # a pp.881-882 skeleton node
             }
             level = e.get("level", 2)
             if level == 2:
@@ -357,6 +328,8 @@ def build_toc_from_meta(meta_categories: list[dict],
 # Known aliases: body-text form → meta-TOC canonical form (normalized).
 _SUB_ALIASES: dict[str, str] = {
     "servia": "serbia",
+    "australasia": "australia",  # History's "Australasia" — meta-TOC typo'd it
+    "britainandirelandancientnames": "britainandirelandancient",
     "mammalia": "mammals",
     "bird": "birds",
     "insect": "insects",
@@ -489,6 +462,8 @@ def walk_and_attribute(toc: list[dict],
         norm = _art_norm(e["title"])
         if norm and norm not in title_lookup:
             title_lookup[norm] = (e["filename"], e["title"])
+    # Sorted title norms for the abbreviated-forename prefix fallback below.
+    sorted_norms = sorted(title_lookup)
 
     # ── Sub matching ──────────────────────────────────────────────
 
@@ -517,6 +492,12 @@ def walk_and_attribute(toc: list[dict],
             return _prefer_relative(lk[norm + "s"], cur)
         if norm.endswith("s") and len(norm) > 3 and norm[:-1] in lk:
             return _prefer_relative(lk[norm[:-1]], cur)
+        # Parenthetical qualifier removed: "India (with lesser Frontier
+        # States)" matches the meta node registered under its bare name
+        # (the meta-TOC sometimes carries a different qualifier or typo).
+        bare = _normalize(_strip_parens(clean))
+        if bare and bare != norm and bare in lk:
+            return _prefer_relative(lk[bare], cur)
         return None
 
     # Sub-sub header names that the classified TOC uses inline under
@@ -595,6 +576,78 @@ def walk_and_attribute(toc: list[dict],
             node = node["children"][0]
         return node
 
+    def _create_sub(cat_name: str, text: str,
+                    cur: dict | None) -> dict | None:
+        """Create + register a sub from a body SECTION header the meta-TOC
+        never carried.  Parses the `Parent : Child` colon form into the
+        right nesting; a bare name becomes a top-level sub.  This is what
+        retires _FLAT_CAT_SUBS — the meta-flat categories now grow their
+        own subs straight from the printed `###` headers."""
+        text = re.sub(r"\s*\(cont\.?\)\s*$", "", text,
+                      flags=re.IGNORECASE).strip()
+        if not text:
+            return None
+        parent = None
+        name = text
+        if ":" in text:
+            x, y = (p.strip() for p in text.split(":", 1))
+            if y and _normalize(x) == _normalize(cat_name):
+                name = y                      # `Cat : Child` re-assertion
+            elif y:
+                parent = _try_sub(cat_name, x, cur)
+                if parent is None:
+                    parent = _create_sub(cat_name, x, cur)  # new Parent
+                name = y
+        elif cur is not None:
+            # A banner re-asserting an existing top-level region ("UNITED
+            # KINGDOM" for "United Kingdom of Great Britain and Ireland",
+            # "Finance" for "Finance and Currency") re-enters it rather than
+            # spawning a stray.
+            _cat = cat_by_norm.get(_normalize(cat_name))
+            _nn = _normalize(name)
+            for ex in (_cat["subsections"] if _cat else []):
+                en = _normalize(ex["name"])
+                if en and _nn and (en.startswith(_nn) or _nn.startswith(en)):
+                    return ex
+            # Otherwise hang off the nearest SKELETON node (never another body
+            # node) so siblings don't chain (`France > [Anglo-Norman, ...]`).
+            nd = cur
+            while nd is not None and not nd.get("_meta"):
+                nd = parent_map.get(id(nd))
+            parent = nd
+        if not name:
+            return None
+        node = {"name": name, "printed_page": None,
+                "articles": [], "children": []}
+        if parent is not None:
+            parent.setdefault("children", []).append(node)
+            parent_map[id(node)] = parent
+        else:
+            cat = cat_by_norm.get(_normalize(cat_name))
+            if cat is None:
+                return None
+            # An abbreviated re-assertion banner ("UNITED KINGDOM" for the
+            # existing "United Kingdom of Great Britain and Ireland") should
+            # re-enter that region, not spawn an empty duplicate top-level sub.
+            nn = _normalize(name)
+            for ex in cat["subsections"]:
+                en = _normalize(ex["name"])
+                if en and nn and (en.startswith(nn) or nn.startswith(en)):
+                    return ex
+            cat["subsections"].append(node)
+            parent_map[id(node)] = None
+        lk = sub_lookup.setdefault(cat_name, {})
+        for form in {name, _strip_parens(name)}:
+            nn = _normalize(form)
+            if nn:
+                lk.setdefault(nn, []).append(node)
+        if parent is not None:
+            compound = (_normalize(_strip_parens(parent["name"]))
+                        + _normalize(_strip_parens(name)))
+            if compound:
+                lk.setdefault(compound, []).append(node)
+        return node
+
     # ── Walk pages ────────────────────────────────────────────────
     cur_cat: str | None = None
     cur_sub: dict | None = None
@@ -643,9 +696,18 @@ def walk_and_attribute(toc: list[dict],
             if re.match(r"^\(\s*(?:see|for)\b", line, re.IGNORECASE):
                 continue
 
-            # Detect ## Blackletter header.
-            is_header = line.startswith("## ")
-            if is_header:
+            # Detect a ## / ### header.  The OCR is inconsistent about the
+            # marker depth (it writes `##` for some sections), so treat both
+            # as headers and disambiguate category-vs-section by the known
+            # category names below, not by the depth.
+            is_header = False
+            hdr3 = False  # a `###` header is ALWAYS a section, never a category
+            if line.startswith("### "):
+                is_header = True
+                hdr3 = True
+                line = line[4:].strip()
+            elif line.startswith("## "):
+                is_header = True
                 line = line[3:].strip()
 
             # Strip **bold** markers first, then detect *italic*.
@@ -661,16 +723,25 @@ def walk_and_attribute(toc: list[dict],
 
             # ── ## line: cat or sub transition ────────────────────
             if is_header:
+                # Drop a trailing cross-reference note so it isn't split into
+                # bogus sub-nodes ("... (See also ASIA: Mountains, above ...)").
+                line = re.sub(r"\s*\((?:see|for)\b.*$", "", line,
+                              flags=re.IGNORECASE).strip()
                 norm = _normalize(line)
-                if norm in cat_by_norm:
+                if not hdr3 and norm in cat_by_norm:
                     cat_dict = cat_by_norm[norm]
                     cur_cat = cat_dict["name"]
                     subs = cat_dict.get("subsections", [])
                     cur_sub = _first_leaf(subs[0]) if subs else None
                     continue
-                # ## line didn't match a cat — try as sub.
+                # Not a category, so it's a SECTION header.  Match it to a
+                # known sub, or — when the body carries a section the meta-TOC
+                # never had (the meta-flat categories) — create and register
+                # it.  A header is consumed, never accumulated as an article.
                 if cur_cat:
                     new_sub = _match_sub(cur_cat, line, cur_sub)
+                    if new_sub is None:
+                        new_sub = _create_sub(cur_cat, line, cur_sub)
                     if new_sub:
                         cur_sub = _first_leaf(new_sub)
                 continue
@@ -711,7 +782,15 @@ def walk_and_attribute(toc: list[dict],
                         leaf = _first_leaf(new_sub)
                         if leaf is not cur_sub:
                             cur_sub = leaf
-                        continue
+                            continue
+                        # leaf IS cur_sub: a "transition" that doesn't move is
+                        # the tell that this line is the section's OWN headword
+                        # article (SCULPTURE under Sculpture), which sits right
+                        # under its header.  Empty bucket => we're at the section
+                        # head, so keep it as the lead; non-empty bucket => a
+                        # mid-section "(cont.)" re-assertion, consume as before.
+                        if raw_entries.get(id(cur_sub)):
+                            continue
 
             # ── Article accumulation ──────────────────────────────
             if cur_sub is not None:
@@ -771,6 +850,24 @@ def walk_and_attribute(toc: list[dict],
                 first_norm = _art_norm(first)
                 if len(first_norm) >= 4:
                     match = title_lookup.get(first_norm)
+
+            if not match and " " in norm:
+                # Abbreviated forename: the printed index clips the last
+                # forename to an initial — "Airy, Sir George B." vs the article
+                # "AIRY, SIR GEORGE BIDDELL".  Accept the OCR name as a token-
+                # prefix of EXACTLY ONE article title (the trailing token an
+                # initial, or a clean token-boundary drop).  Unique-only — it
+                # never guesses between two candidates.
+                lo = bisect.bisect_left(sorted_norms, norm)
+                if lo < len(sorted_norms) and sorted_norms[lo].startswith(norm):
+                    cand = sorted_norms[lo]
+                    unique = (lo + 1 >= len(sorted_norms)
+                              or not sorted_norms[lo + 1].startswith(norm))
+                    last_initial = len(norm.rsplit(" ", 1)[-1]) == 1
+                    token_boundary = (len(cand) > len(norm)
+                                      and cand[len(norm)] == " ")
+                    if unique and (last_initial or token_boundary):
+                        match = title_lookup[cand]
 
             if match:
                 filename, display = match

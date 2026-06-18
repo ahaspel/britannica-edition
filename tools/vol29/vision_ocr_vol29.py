@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import base64
 import json
+import sys
 from pathlib import Path
 
 import anthropic
@@ -35,36 +36,61 @@ VISION_TAG = "<!-- vision-ocr -->\n"
 
 MODEL = "claude-opus-4-6"
 
-SYSTEM_PROMPT = (
-    "You are transcribing a single page from the 'Classified Table of "
-    "Contents' at the back of volume 29 of the 1911 Encyclopaedia "
-    "Britannica. The page lists article titles grouped under category "
-    "and sub-category headers, typically in 3 columns of small print.\n\n"
-    "Your job: produce a faithful, plain-text transcription that "
-    "preserves\n"
-    "  - column reading order (column 1 top-to-bottom, then col 2, "
-    "then col 3),\n"
-    "  - sub-section headers (set in small caps or italic in the "
-    "original),\n"
-    "  - article entries in the order they appear in each column,\n"
-    "  - comma-separated 'LASTNAME, Firstname' biographical entries "
-    "intact,\n"
-    "  - any cross-reference notes ('See also …') as a single line.\n\n"
-    "Use the original page's exact wording for headers and titles — "
-    "do not normalize spelling or expand abbreviations. If a token is "
-    "unreadable, write [?]. If a header is set in Blackletter font, "
-    "prefix it with '## '. If a sub-section header is set in small "
-    "caps, write it in ALL CAPS on its own line. Article entries are "
-    "one per line.\n\n"
-    "Output ONLY the transcription text — no commentary, no JSON, no "
-    "markdown code fences."
-)
+SYSTEM_PROMPT = """\
+You are transcribing one page from the 'Classified Table of Contents' at the \
+back of volume 29 of the 1911 Encyclopaedia Britannica. Getting the READING \
+ORDER right is the whole task -- read this carefully.
+
+THE PAGE HAS THREE KINDS OF LINE:
+  1. CATEGORY header -- large Blackletter (gothic) type, centred across the
+     full page width (e.g. "Astronomy", "Biology").
+  2. SECTION header -- bold or small-caps, centred OVER the block of columns
+     it introduces (e.g. "General", "Constellations and Stars",
+     "Biographies", "Pure", "Applied"). It may sit above 2-3 narrow columns;
+     the articles it heads are printed in those columns below it.
+  3. ARTICLE entry -- ordinary small type, one headword per line, including
+     "LASTNAME, Firstname" biographies and cross-reference notes.
+A section's first one or few entries may be set in ITALICS: these are the
+section's principal articles, printed first even though they fall out of
+alphabetical order.
+
+READING ORDER (critical -- this is where naive transcription fails):
+  - Work section by section, in top-to-bottom then left-to-right block order.
+    For each SECTION header, read EVERY column of articles belonging to that
+    section (its left column top-to-bottom, then its next column, ...) before
+    moving on to the next section.
+  - NEVER read straight down a physical column that passes through more than
+    one section -- that interleaves unrelated sections. Stay inside the
+    current section's block.
+  - A short category often splits across the page: one section fills the left
+    half while other sections stack in the right half. Treat each block on its
+    own; do not read across the halves.
+
+ALPHABETICAL SELF-CHECK (use it to fix your own column order):
+  - Within one section, after the italic principal articles, the headwords are
+    in STRICT alphabetical order, no exceptions (letter-by-letter, ignoring
+    spaces, punctuation and honorifics; Mc = Mac, St = Saint).
+  - If a section's non-italic entries come out non-alphabetical, you mis-read
+    the column order -- re-read that block until they are alphabetical.
+
+OUTPUT FORMAT:
+  - Prefix a CATEGORY (Blackletter) header with "## ".
+  - Prefix a SECTION header with "### ", exact printed wording
+    (e.g. "### Constellations and Stars"); keep a printed "(cont.)".
+  - Wrap an ITALIC principal article in *asterisks* (e.g. "*Astronomy*").
+  - Every other article on its own line, exact printed wording -- do not
+    normalize spelling, expand abbreviations, or reorder. Keep
+    "LASTNAME, Firstname" intact. Render a cross-reference ("See also ...",
+    "For X see under Y") as one line as printed. Unreadable token -> [?].
+
+Output ONLY the transcription text -- no commentary, no JSON, no code fences.
+"""
 
 
-def needs_vision(ws: int, current_text: str) -> bool:
+def needs_vision(ws: int, current_text: str, force: bool = False) -> bool:
     """True if this ws page should be vision-transcribed."""
-    if current_text.startswith(VISION_TAG):
-        return False  # already done in a prior run
+    if current_text.startswith(VISION_TAG) and not force:
+        return False  # already done in a prior run (pass --force to redo)
     leaf = ws + LEAF_OFFSET
     if not (SCAN_DIR / f"vol29_leaf{leaf:04d}.jpg").exists():
         return False  # no scan to vision against
@@ -117,9 +143,16 @@ def main() -> None:
         return
     ocr_data = json.loads(PER_PAGE_OCR.read_text(encoding="utf-8"))
 
+    # CLI: "--force" re-transcribes pages already done; bare integers limit the
+    # run to those ws pages (e.g. `... --force 896` to test Astronomy first).
+    force = "--force" in sys.argv[1:]
+    only = {int(a) for a in sys.argv[1:] if a.isdigit()}
+
     targets: list[int] = []
     for ws in range(WS_START, WS_END + 1):
-        if needs_vision(ws, ocr_data.get(str(ws), "")):
+        if only and ws not in only:
+            continue
+        if needs_vision(ws, ocr_data.get(str(ws), ""), force):
             targets.append(ws)
     print(f"Pages to vision-transcribe: {len(targets)}")
     if not targets:
