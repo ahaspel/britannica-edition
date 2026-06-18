@@ -319,6 +319,23 @@ def build_toc_from_meta(meta_categories: list[dict],
             parent_at_level[level] = node
             for deeper in [k for k in parent_at_level if k > level]:
                 del parent_at_level[deeper]
+        # The meta-TOC numbers each continent's 'Ancient geography' as the last
+        # item in its country list (Turkey in Europe = (22), Ancient geography
+        # = (23)), so it nests under 'Countries' at country level.  But ancient
+        # geography is NOT a country -- it's a continent-level section spanning
+        # the whole continent (the body heads it '### Europe: Ancient Geography',
+        # parallel to Physical features and Countries).  Lift it to a
+        # continent-level sibling of Countries, and fix the meta-TOC's
+        # 'goography' transcription typo while we're moving it.
+        for continent in subsections:
+            for container in continent.get("children", []):
+                promoted = [k for k in container.get("children", [])
+                            if _normalize(k["name"])
+                            in ("ancientgeography", "ancientgoography")]
+                for node in promoted:
+                    container["children"].remove(node)
+                    node["name"] = "Ancient geography"
+                    continent["children"].append(node)
         toc.append({"name": name, "subsections": subsections})
     return toc
 
@@ -338,7 +355,9 @@ _SUB_ALIASES: dict[str, str] = {
     "saint": "saints",
     "indochinafrench": "indochlnafrench",
     "mediterraneanislandsetc": "mediterraneanislandsc",
-    "ancientgeography": "ancientgoography",
+    # The body's page-2 continuation drops "the": "Church History to Council
+    # of Trent" for the skeleton's "Church History to THE Council of Trent".
+    "churchhistorytocounciloftrent": "churchhistorytothecounciloftrent",
     "classicalscholar": "classicalscholars",
     "classics": "classicalgreekandlatin",
     "classical": "classicalgreekandlatin",
@@ -526,6 +545,17 @@ def walk_and_attribute(toc: list[dict],
         "townsetc": ("Towns",),
         "critics": ("Biographies of critics",),
         "general": ("General subjects",),
+        "ancientnames": ("Ancient geography",),
+    }
+
+    # Parent-scoped reconciliation, for body names too common to key on alone.
+    # (parent_norm, body_norm) -> skeleton child name.  "Subjects" is used as
+    # the lead-section name across the whole corpus, so it can't be a global
+    # variant; but Church History to the Council of Trent is the one sub whose
+    # skeleton names that lead "General" (every sibling church-history sub uses
+    # "Subjects"), and the body heads it "...: Subjects" like the rest.
+    _SCOPED_SUBSUB_VARIANTS: dict[tuple[str, str], str] = {
+        ("churchhistorytothecounciloftrent", "subjects"): "General",
     }
 
     def _match_sub(cat_name: str, line: str,
@@ -570,6 +600,13 @@ def walk_and_attribute(toc: list[dict],
                     # child already exists under this parent).
                     for skel_name in _SUBSUB_VARIANTS.get(y_norm, ()):
                         sk_norm = _normalize(skel_name)
+                        for child in parent.get("children", []):
+                            if _normalize(child["name"]) == sk_norm:
+                                return child
+                    parent_norm = _normalize(_strip_parens(parent["name"]))
+                    sk = _SCOPED_SUBSUB_VARIANTS.get((parent_norm, y_norm))
+                    if sk:
+                        sk_norm = _normalize(sk)
                         for child in parent.get("children", []):
                             if _normalize(child["name"]) == sk_norm:
                                 return child
