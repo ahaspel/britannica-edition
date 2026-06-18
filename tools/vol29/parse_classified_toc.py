@@ -350,6 +350,71 @@ def build_toc_from_meta(meta_categories: list[dict],
     return toc
 
 
+# ── Category-aware disambiguation ────────────────────────────────────
+# The classified TOC lists "Beja" twice — as a town under Geography and a
+# people under Anthropology — and the corpus disambiguates the same way, with
+# title qualifiers like BEJA (CITY) / BEJA (TRIBE).  So an ambiguous base name
+# resolves the moment we know the entry's TOC domain.  The keyword sets are
+# grounded in the corpus's own trailing-qualifier vocabulary, not invented.
+_GEO_TERMS = {"town", "city", "province", "river", "county", "state",
+              "department", "island", "islands", "lake", "mountain", "mountains",
+              "bay", "cape", "district", "village", "parish", "canton", "gulf",
+              "sea", "strait", "range", "volcano", "peninsula", "region",
+              "colony", "kingdom", "republic", "territory", "commune", "port"}
+_PLACE_NAMES = {"england", "scotland", "wales", "ireland", "france", "italy",
+                "spain", "germany", "russia", "austria", "switzerland", "belgium",
+                "holland", "portugal", "greece", "york", "jersey", "carolina",
+                "massachusetts", "pennsylvania", "illinois", "ohio", "indiana",
+                "kentucky", "missouri", "virginia", "connecticut", "ontario",
+                "texas", "michigan", "wisconsin", "iowa", "kansas", "minnesota",
+                "maine", "maryland", "georgia", "alabama", "tennessee",
+                "louisiana", "mississippi", "arkansas", "oregon", "california",
+                "quebec", "columbia", "dakota", "florida", "hampshire", "rhode"}
+_PERSON_TERMS = {"poet", "king", "philosopher", "emperor", "painter", "saint",
+                 "pope", "bishop", "general", "composer", "sculptor", "architect",
+                 "writer", "dramatist", "theologian", "historian", "scholar",
+                 "statesman", "queen", "duke", "earl", "baron", "count",
+                 "cardinal", "abbot", "martyr", "musician", "novelist", "engineer",
+                 "physician", "naturalist", "reformer", "soldier", "admiral",
+                 "family", "mathematician", "actor"}
+_ETHNIC_TERMS = {"tribe", "people", "peoples", "race"}
+_NATURE_TERMS = {"bird", "plant", "fish", "animal", "insect", "genus", "tree",
+                 "flower", "mammal", "shrub", "reptile", "mollusc", "fungus"}
+
+
+def _disambig_domain(dis: str) -> str | None:
+    """Domain of a title's trailing qualifier text (BEJA (CITY) -> PLACE)."""
+    words = set(re.findall(r"[a-z]+", dis.lower()))
+    if words & _ETHNIC_TERMS:
+        return "ETHNIC"
+    if words & _NATURE_TERMS:
+        return "NATURE"
+    if words & _PERSON_TERMS:
+        return "PERSON"
+    if words & _GEO_TERMS or words & _PLACE_NAMES:
+        return "PLACE"
+    return None
+
+
+def _node_domain(node_name: str, cat_name: str) -> str | None:
+    """Domain wanted by an entry from its TOC node + category."""
+    nl = (node_name or "").lower()
+    cl = (cat_name or "").lower()
+    if "biograph" in nl or nl == "saints" or "scholars" in nl:
+        return "PERSON"
+    if "tribe" in nl or "races" in nl or "ethnolog" in cl or "anthropolog" in cl:
+        return "ETHNIC"
+    if cl == "biology" or any(w in nl for w in (
+            "birds", "mammals", "fishes", "insects", "plants", "reptiles",
+            "batrachians", "molluscs")):
+        return "NATURE"
+    if cl == "geography" or any(w in nl for w in (
+            "town", "division", "river", "mountain", "physical", "countries",
+            "general list", "island", "states", "lakes")):
+        return "PLACE"
+    return None
+
+
 # ── Walk & attribute ─────────────────────────────────────────────────
 
 # Known aliases: body-text form → meta-TOC canonical form (normalized).
@@ -504,11 +569,19 @@ def walk_and_attribute(toc: list[dict],
     bio_index: dict[str, list[tuple[list[str], tuple[str, str]]]] = {}
     strip_index: dict[str, list[tuple[str, str]]] = {}
     sur_by_first: dict[str, set[str]] = {}
+    # base name (trailing qualifier removed) -> [(filename, title, domain)],
+    # for category-aware disambiguation of an ambiguous base.
+    base_dom: dict[str, list[tuple[str, str, str | None]]] = {}
     for e in article_index:
         if e.get("article_type") != "article":
             continue
         t = e["title"]
         val = (e["filename"], t)
+        qm = re.search(r"\(([^)]*)\)\s*$", t)
+        b2 = _art_norm(re.sub(r"\s*\([^)]*\)\s*$", "", t))
+        if b2:
+            base_dom.setdefault(b2, []).append(
+                (e["filename"], t, _disambig_domain(qm.group(1) if qm else "")))
         base = re.sub(r"\s*\([^)]*\)\s*$", "", t).strip()
         base = re.split(r"\s+(?:and|or)\s+", base)[0].strip()
         bn = _art_norm(base)
@@ -549,11 +622,14 @@ def walk_and_attribute(toc: list[dict],
         return all(_art_norm(b).startswith(_art_norm(a))
                    for a, b in zip(toc_toks, art_toks))
 
-    def _resolve_extra(raw: str) -> tuple[str, str] | None:
+    def _resolve_extra(raw: str,
+                       domain: str | None = None) -> tuple[str, str] | None:
         """Recover the obvious misses the exact cascade leaves — never a guess:
         biographies (surname + forename, surname OCR-tolerant ONLY when the
-        forename confirms it and the result is unique) and structural variants
-        (disambiguator/compound strip, singular/plural, "X or Y")."""
+        forename confirms it and the result is unique), structural variants
+        (disambiguator/compound strip, singular/plural, "X or Y"), and
+        category-aware disambiguation of an ambiguous base (Beja-the-town vs
+        Beja-the-tribe, decided by the entry's TOC domain)."""
         n = _art_norm(raw)
         # _art_norm upper-cases, so the plural suffix must too.
         if n + "S" in title_lookup:
@@ -563,11 +639,25 @@ def walk_and_attribute(toc: list[dict],
         st = strip_index.get(n)
         if st and len({v[0] for v in st}) == 1:
             return st[0]
+        # Ambiguous base: pick the candidate whose qualifier domain matches the
+        # entry's TOC domain (BEJA (CITY) for a town, BEJA (TRIBE) for a people).
+        if domain:
+            dm = [(fn, t) for fn, t, dd in base_dom.get(n, []) if dd == domain]
+            if len(dm) == 1:
+                return dm[0]
         if " or " in raw:
             for part in raw.split(" or "):
                 pn = _art_norm(part)
                 if pn in title_lookup:
                     return title_lookup[pn]
+                u = strip_index.get(pn)
+                if u and len({v[0] for v in u}) == 1:
+                    return u[0]
+                if domain:
+                    dm = [(fn, t) for fn, t, dd in base_dom.get(pn, [])
+                          if dd == domain]
+                    if len(dm) == 1:
+                        return dm[0]
         if "," in raw:
             sur, fore = raw.split(",", 1)
             sn = _art_norm(sur)
@@ -1140,11 +1230,24 @@ def walk_and_attribute(toc: list[dict],
     print(f"\n  Matching {total_raw:,} raw entries against "
           f"{len(title_lookup):,} article titles...")
 
+    # node id -> its top-level category, for category-aware disambiguation.
+    node_to_cat: dict[int, str] = {}
+
+    def _map_cat(node: dict, cat: str):
+        node_to_cat[id(node)] = cat
+        for c in node.get("children", []):
+            _map_cat(c, cat)
+    for cat in toc:
+        for s in cat.get("subsections", []):
+            _map_cat(s, cat["name"])
+
     discovered = 0
     unmatched_entries: list[str] = []
 
     for nid, entries in raw_entries.items():
         node = node_map[nid]
+        node_dom = _node_domain(node.get("name", ""),
+                                node_to_cat.get(id(node), ""))
         seen: set[str] = {
             a.get("filename") for a in node.get("articles", [])
             if a.get("filename")
@@ -1206,7 +1309,7 @@ def walk_and_attribute(toc: list[dict],
             if not match:
                 # Safe recovery of the obvious misses: biographies by surname +
                 # forename, structural disambiguator/compound/plural variants.
-                match = _resolve_extra(raw_name)
+                match = _resolve_extra(raw_name, node_dom)
 
             if not match and "#" in raw_name:
                 # Section link "Country#Section" (Denmark#Literature): resolve
@@ -1238,15 +1341,9 @@ def walk_and_attribute(toc: list[dict],
                     seen.add(filename)
                     discovered += 1
             else:
-                unmatched_entries.append((raw_name, node.get("name", "")))
+                unmatched_entries.append(raw_name)
 
     print(f"  {discovered:,} matched, {len(unmatched_entries):,} unmatched")
-    import os as _os
-    if _os.environ.get("DUMP_UNMATCHED"):
-        from pathlib import Path as _P
-        _P("tools/_scratch").mkdir(parents=True, exist_ok=True)
-        _P("tools/_scratch/unmatched.json").write_text(
-            json.dumps(unmatched_entries, ensure_ascii=False), encoding="utf-8")
 
     # ── Intra-cat dedup ───────────────────────────────────────────
     total_removed = 0
