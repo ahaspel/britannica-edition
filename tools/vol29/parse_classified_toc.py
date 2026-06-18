@@ -494,6 +494,105 @@ def walk_and_attribute(toc: list[dict],
     # Sorted title norms for the abbreviated-forename prefix fallback below.
     sorted_norms = sorted(title_lookup)
 
+    # ── Safe matcher structures (biographies + structural variants) ───
+    # The classified TOC lists REAL articles in abbreviated form, so every
+    # entry has exactly one target.  These indexes recover the obvious misses
+    # WITHOUT fuzzing: biographies key on surname + forename-initials (the
+    # forename confirms even an OCR-garbled surname); structural strips let
+    # "Zug" find "Zug (Canton)" and "Ethnology" find "Ethnology and
+    # Ethnography".
+    bio_index: dict[str, list[tuple[list[str], tuple[str, str]]]] = {}
+    strip_index: dict[str, list[tuple[str, str]]] = {}
+    sur_by_first: dict[str, set[str]] = {}
+    for e in article_index:
+        if e.get("article_type") != "article":
+            continue
+        t = e["title"]
+        val = (e["filename"], t)
+        base = re.sub(r"\s*\([^)]*\)\s*$", "", t).strip()
+        base = re.split(r"\s+(?:and|or)\s+", base)[0].strip()
+        bn = _art_norm(base)
+        if bn:
+            strip_index.setdefault(bn, []).append(val)
+        if "," in t:
+            sur, fore = t.split(",", 1)
+            sn = _art_norm(sur)
+            toks = [w for w in re.split(r"[ .]+", fore) if w]
+            bio_index.setdefault(sn, []).append((toks, val))
+            if sn:
+                sur_by_first.setdefault(sn[:1], set()).add(sn)
+
+    base_by_first: dict[str, list[str]] = {}
+    for bn in strip_index:
+        base_by_first.setdefault(bn[:1], []).append(bn)
+
+    def _lev_le(a: str, b: str, k: int) -> bool:
+        """Levenshtein(a, b) <= k, early-exit."""
+        if abs(len(a) - len(b)) > k:
+            return False
+        prev = list(range(len(b) + 1))
+        for i in range(1, len(a) + 1):
+            cur = [i]
+            for j in range(1, len(b) + 1):
+                cur.append(min(prev[j] + 1, cur[j - 1] + 1,
+                               prev[j - 1] + (a[i - 1] != b[j - 1])))
+            if min(cur) > k:
+                return False
+            prev = cur
+        return prev[-1] <= k
+
+    def _forenames_ok(toc_toks: list[str], art_toks: list[str]) -> bool:
+        """Each TOC forename token is a prefix of the article's (initials OK):
+        "Adolph F. A." confirms "Adolph Francis Alphonse"."""
+        if len(toc_toks) > len(art_toks):
+            return False
+        return all(_art_norm(b).startswith(_art_norm(a))
+                   for a, b in zip(toc_toks, art_toks))
+
+    def _resolve_extra(raw: str) -> tuple[str, str] | None:
+        """Recover the obvious misses the exact cascade leaves — never a guess:
+        biographies (surname + forename, surname OCR-tolerant ONLY when the
+        forename confirms it and the result is unique) and structural variants
+        (disambiguator/compound strip, singular/plural, "X or Y")."""
+        n = _art_norm(raw)
+        # _art_norm upper-cases, so the plural suffix must too.
+        if n + "S" in title_lookup:
+            return title_lookup[n + "S"]
+        if n.endswith("S") and len(n) > 3 and n[:-1] in title_lookup:
+            return title_lookup[n[:-1]]
+        st = strip_index.get(n)
+        if st and len({v[0] for v in st}) == 1:
+            return st[0]
+        if " or " in raw:
+            for part in raw.split(" or "):
+                pn = _art_norm(part)
+                if pn in title_lookup:
+                    return title_lookup[pn]
+        if "," in raw:
+            sur, fore = raw.split(",", 1)
+            sn = _art_norm(sur)
+            toks = [w for w in re.split(r"[ .]+", fore) if w]
+            cands = [v for tk, v in bio_index.get(sn, [])
+                     if _forenames_ok(toks, tk)]
+            if len({v[0] for v in cands}) == 1:
+                return cands[0]
+            ocr = [v for cs in sur_by_first.get(sn[:1], ())
+                   if cs != sn and _lev_le(sn, cs, 2)
+                   for tk, v in bio_index[cs] if _forenames_ok(toks, tk)]
+            if len({v[0] for v in ocr}) == 1:
+                return ocr[0]
+        elif n:
+            # OCR-garbled single name (a place or tribe: "Chukehi" -> CHUKCHI).
+            # A UNIQUE corpus title within edit-distance 1.  No second signal to
+            # confirm, so an occasional wrong link is possible -- acceptable for
+            # a navigation aid (not contributor data); >90% right is a win.
+            cands = [bn for bn in base_by_first.get(n[:1], ())
+                     if bn != n and abs(len(bn) - len(n)) <= 1
+                     and _lev_le(n, bn, 1)]
+            if len({v[0] for bn in cands for v in strip_index[bn]}) == 1:
+                return strip_index[cands[0]][0]
+        return None
+
     def _split_lead(text: str) -> list[str]:
         """Split a lead line the OCR ran together ("Anglo-Norman Literature
         French Literature Provençal Literature") into its constituent article
@@ -1104,6 +1203,11 @@ def walk_and_attribute(toc: list[dict],
                     if unique and (last_initial or token_boundary):
                         match = title_lookup[cand]
 
+            if not match:
+                # Safe recovery of the obvious misses: biographies by surname +
+                # forename, structural disambiguator/compound/plural variants.
+                match = _resolve_extra(raw_name)
+
             if not match and "#" in raw_name:
                 # Section link "Country#Section" (Denmark#Literature): resolve
                 # the article, carry the #anchor to the section.
@@ -1134,9 +1238,15 @@ def walk_and_attribute(toc: list[dict],
                     seen.add(filename)
                     discovered += 1
             else:
-                unmatched_entries.append(raw_name)
+                unmatched_entries.append((raw_name, node.get("name", "")))
 
     print(f"  {discovered:,} matched, {len(unmatched_entries):,} unmatched")
+    import os as _os
+    if _os.environ.get("DUMP_UNMATCHED"):
+        from pathlib import Path as _P
+        _P("tools/_scratch").mkdir(parents=True, exist_ok=True)
+        _P("tools/_scratch/unmatched.json").write_text(
+            json.dumps(unmatched_entries, ensure_ascii=False), encoding="utf-8")
 
     # ── Intra-cat dedup ───────────────────────────────────────────
     total_removed = 0
