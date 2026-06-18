@@ -511,6 +511,20 @@ def walk_and_attribute(toc: list[dict],
             return _prefer_relative(lk[norm + "s"], cur)
         if norm.endswith("s") and len(norm) > 3 and norm[:-1] in lk:
             return _prefer_relative(lk[norm[:-1]], cur)
+        # "Parent (Child)" — a trailing parenthetical that names a SUB of
+        # Parent selects that sub: "Biographies (Latin)" -> Biographies > Latin,
+        # "Biographies (Greek)" -> Greek (not Biographies' first leaf).  Only
+        # fires when BOTH the outer name resolves to a node AND the parenthetical
+        # matches one of its children, so "India (with lesser Frontier States)"
+        # and "Naples (Italy)" fall through to the bare-name strip below.
+        pm = re.match(r"^(.*?)\s*\(([^)]+)\)\s*$", clean)
+        if pm:
+            outer = _try_sub(cat_name, pm.group(1), cur)
+            if outer is not None:
+                bnorm = _normalize(pm.group(2))
+                for child in outer.get("children", []):
+                    if _normalize(child["name"]) == bnorm:
+                        return child
         # Parenthetical qualifier removed: "India (with lesser Frontier
         # States)" matches the meta node registered under its bare name
         # (the meta-TOC sometimes carries a different qualifier or typo).
@@ -546,7 +560,23 @@ def walk_and_attribute(toc: list[dict],
         "critics": ("Biographies of critics",),
         "general": ("General subjects",),
         "ancientnames": ("Ancient geography",),
+        "scholars": ("Classical scholars",),
     }
+
+    def _descendant_by_norm(root: dict, target_norm: str) -> dict | None:
+        """Nearest node in root's subtree whose name normalizes to target_norm
+        (BFS).  Lets a reconciliation target sit a level below the matched
+        parent — "Classics: Scholars" -> Classical > Biographies > Classical
+        scholars."""
+        queue = list(root.get("children", []))
+        while queue:
+            nxt: list[dict] = []
+            for n in queue:
+                if _normalize(n["name"]) == target_norm:
+                    return n
+                nxt.extend(n.get("children", []))
+            queue = nxt
+        return None
 
     # Parent-scoped reconciliation, for body names too common to key on alone.
     # (parent_norm, body_norm) -> skeleton child name.  "Subjects" is used as
@@ -580,12 +610,27 @@ def walk_and_attribute(toc: list[dict],
                 # Try Y as a child of parent (strip cont. and parens).
                 y_clean = re.sub(r"\s*\(cont\.?\)\s*$", "", y,
                                  flags=re.IGNORECASE).strip()
+                # A parenthetical sub-selector ("Biographies (Latin)") resolves
+                # to a DESCENDANT of parent — route there before the parens are
+                # stripped (which would collapse it to "Biographies" and land on
+                # the first leaf).  Scoped: only accept a hit living under parent.
+                if "(" in y_clean:
+                    y_hit = _try_sub(cat_name, y_clean, parent)
+                    _nd = y_hit
+                    while _nd is not None:
+                        if _nd is parent:
+                            return y_hit
+                        _nd = parent_map.get(id(_nd))
                 y_clean = re.sub(r"\s*\(.*?\)", "", y_clean).strip()
                 if y_clean:
                     y_norm = _normalize(y_clean)
                     for child in parent.get("children", []):
+                        # Match full name, parens-stripped, or the leading phrase
+                        # before a comma ("Countries" -> "Countries, general
+                        # list", the America countries node).
                         for form in {child["name"],
-                                     _strip_parens(child["name"])}:
+                                     _strip_parens(child["name"]),
+                                     child["name"].split(",")[0].strip()}:
                             if _normalize(form) == y_norm:
                                 return child
                         # Singular/plural on child name.
@@ -599,10 +644,9 @@ def walk_and_attribute(toc: list[dict],
                     # stray beside it (guarded — only fires when that skeleton
                     # child already exists under this parent).
                     for skel_name in _SUBSUB_VARIANTS.get(y_norm, ()):
-                        sk_norm = _normalize(skel_name)
-                        for child in parent.get("children", []):
-                            if _normalize(child["name"]) == sk_norm:
-                                return child
+                        hit = _descendant_by_norm(parent, _normalize(skel_name))
+                        if hit is not None:
+                            return hit
                     parent_norm = _normalize(_strip_parens(parent["name"]))
                     sk = _SCOPED_SUBSUB_VARIANTS.get((parent_norm, y_norm))
                     if sk:
@@ -838,6 +882,18 @@ def walk_and_attribute(toc: list[dict],
                     if new_sub is None:
                         new_sub = _create_sub(cur_cat, line, cur_sub)
                     if new_sub:
+                        # A flat section (Art's Sculpture) accumulates its own
+                        # articles directly until its FIRST sub-header is seen;
+                        # the body prints that header ("Sculpture: Subjects")
+                        # after the column it heads.  Those articles belong to
+                        # the sub just declared — hand them over so nothing is
+                        # left stranded in the bare section.
+                        par = parent_map.get(id(new_sub))
+                        if (par is not None and id(par) in raw_entries
+                                and par.get("children") == [new_sub]):
+                            raw_entries.setdefault(id(new_sub), []).extend(
+                                raw_entries.pop(id(par)))
+                            node_map[id(new_sub)] = new_sub
                         cur_sub = _first_leaf(new_sub)
                 continue
 
