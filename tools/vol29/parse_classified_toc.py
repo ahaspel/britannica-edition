@@ -336,6 +336,16 @@ def build_toc_from_meta(meta_categories: list[dict],
                     container["children"].remove(node)
                     node["name"] = "Ancient geography"
                     continent["children"].append(node)
+        # Mark skeleton leaves.  In a category whose meta-TOC spells out its
+        # subcategories (Literature: Classical has Subjects/Biographies/...,
+        # but every COUNTRY is a bare leaf), a leaf is TERMINAL: it has no
+        # subcategories, so the body lists its articles directly (France's
+        # *French Literature* is a principal article, not a sub-header).
+        def _mark_terminal(nodes: list[dict]):
+            for n in nodes:
+                _mark_terminal(n.get("children", []))
+                n["_terminal"] = not n.get("children")
+        _mark_terminal(subsections)
         toc.append({"name": name, "subsections": subsections})
     return toc
 
@@ -483,6 +493,30 @@ def walk_and_attribute(toc: list[dict],
             title_lookup[norm] = (e["filename"], e["title"])
     # Sorted title norms for the abbreviated-forename prefix fallback below.
     sorted_norms = sorted(title_lookup)
+
+    def _split_lead(text: str) -> list[str]:
+        """Split a lead line the OCR ran together ("Anglo-Norman Literature
+        French Literature Provençal Literature") into its constituent article
+        titles by greedy longest-prefix.  Returns [text] unchanged unless the
+        WHOLE line consumes into >= 2 known articles (so a single lead, or a
+        normal title, is never half-split)."""
+        toks = text.split()
+        if len(toks) < 2:
+            return [text]
+        pieces: list[str] = []
+        i = 0
+        while i < len(toks):
+            hit = None
+            for j in range(len(toks), i, -1):
+                cand = " ".join(toks[i:j])
+                if _art_norm(cand) in title_lookup:
+                    hit = (cand, j)
+                    break
+            if hit is None:
+                return [text]
+            pieces.append(hit[0])
+            i = hit[1]
+        return pieces if len(pieces) >= 2 else [text]
 
     # ── Sub matching ──────────────────────────────────────────────
 
@@ -879,6 +913,43 @@ def walk_and_attribute(toc: list[dict],
                                 (c for c in pf_owner.get("children", [])
                                  if _normalize(c["name"]) == _normalize(name)),
                                 None) or _create_sub(cur_cat, name, pf_owner)
+                    # A flat Literature classification (every country is a bare
+                    # skeleton leaf) has NO subcategories.  Its ### entries are
+                    # the country's literature ARTICLES — bare "French
+                    # Literature" (split if the OCR ran several together) — or
+                    # SECTION LINKS — colon "Denmark : Literature", i.e. the
+                    # Literature section of the country article (Denmark#Literature).
+                    # Never a sub-header; never a phantom subcategory.
+                    if (cur_cat == "Literature" and cur_sub is not None
+                            and cur_sub.get("_terminal")
+                            and (new_sub is None or new_sub is cur_sub)):
+                        # Section link: the entry leads with the country's OWN
+                        # name + a section mark ("Denmark : Literature").  The
+                        # print's mark reads as colon / comma / section-sign —
+                        # the OCR is inconsistent — so key on the country name
+                        # followed by ANY such punctuation, not a literal ":".
+                        sl = re.match(
+                            re.escape(cur_sub["name"])
+                            + r"\s*[,:;.§–—-]+\s*(.+)$",
+                            line, re.IGNORECASE)
+                        if sl:
+                            sec = re.sub(r"\s*\(cont\.?\)\s*$", "", sl.group(1),
+                                         flags=re.IGNORECASE).strip()
+                            if sec:
+                                raw_entries.setdefault(id(cur_sub), []).append(
+                                    (f"{cur_sub['name']}#{sec}", emphasized))
+                                node_map[id(cur_sub)] = cur_sub
+                                count += 1
+                            continue
+                        if new_sub is None:
+                            # Bare principal article(s) (split a run-together line).
+                            for piece in _split_lead(line):
+                                raw_entries.setdefault(id(cur_sub), []).append(
+                                    (piece, emphasized))
+                                count += 1
+                            node_map[id(cur_sub)] = cur_sub
+                            continue
+                        continue  # re-assertion of the country, no new content
                     if new_sub is None:
                         new_sub = _create_sub(cur_cat, line, cur_sub)
                     if new_sub:
@@ -1033,6 +1104,24 @@ def walk_and_attribute(toc: list[dict],
                     if unique and (last_initial or token_boundary):
                         match = title_lookup[cand]
 
+            if not match and "#" in raw_name:
+                # Section link "Country#Section" (Denmark#Literature): resolve
+                # the article, carry the #anchor to the section.
+                base, anchor = raw_name.split("#", 1)
+                bm = title_lookup.get(_art_norm(base))
+                if bm:
+                    filename, base_disp = bm
+                    if filename not in seen:
+                        node["articles"].append({
+                            "target": raw_name,
+                            "display": anchor.strip() or base_disp,
+                            "filename": filename,
+                            "anchor": anchor.strip(),
+                            "emphasized": emph,
+                        })
+                        seen.add(filename)
+                        discovered += 1
+                    continue
             if match:
                 filename, display = match
                 if filename not in seen:
