@@ -510,6 +510,24 @@ def walk_and_attribute(toc: list[dict],
         "scholars", "critics",
     }
 
+    # Reconciliation table: a printed BODY section name → the authoritative
+    # SKELETON child name it abbreviates.  EB11's body and its pp.881-2 index
+    # spell the same section differently ("Biographies" for "General
+    # Biographies", "Towns, etc." for "Towns", "Critics" for "Biographies of
+    # critics").  Keyed by the normalized body name.  This NEVER fires on its
+    # own — `_match_sub` consults it only after an exact/plural child match
+    # fails, and re-enters the skeleton child ONLY when a child by that exact
+    # name already exists under the matched parent.  So it can't cross parents,
+    # can't match fuzzily, and can't create a node: where the body name IS the
+    # skeleton name (US History's own "Biographies"), the exact match fires
+    # first and this is never reached.
+    _SUBSUB_VARIANTS: dict[str, tuple[str, ...]] = {
+        "biographies": ("General Biographies",),
+        "townsetc": ("Towns",),
+        "critics": ("Biographies of critics",),
+        "general": ("General subjects",),
+    }
+
     def _match_sub(cat_name: str, line: str,
                     cur: dict | None = None) -> dict | None:
         """Try full line, then X:Y split.
@@ -546,6 +564,15 @@ def walk_and_attribute(toc: list[dict],
                             y_norm.endswith("s") and y_norm[:-1] == cn
                         ):
                             return child
+                    # Spelling reconciliation: re-enter an EXISTING skeleton
+                    # child this body name abbreviates, rather than spawning a
+                    # stray beside it (guarded — only fires when that skeleton
+                    # child already exists under this parent).
+                    for skel_name in _SUBSUB_VARIANTS.get(y_norm, ()):
+                        sk_norm = _normalize(skel_name)
+                        for child in parent.get("children", []):
+                            if _normalize(child["name"]) == sk_norm:
+                                return child
                     # Dynamic child creation: Y is a known sub-sub name
                     # and parent has no matching child yet.
                     if y_norm in _DYNAMIC_SUBSUB_NAMES:
