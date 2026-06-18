@@ -803,7 +803,38 @@ def walk_and_attribute(toc: list[dict],
                 # never had (the meta-flat categories) — create and register
                 # it.  A header is consumed, never accumulated as an article.
                 if cur_cat:
+                    # A bare physical-features subsection header (Lakes,
+                    # Mountains, Rivers, Miscellaneous, Deserts, Islands, ...)
+                    # recurs under EVERY continent's "Physical features".  A
+                    # global match binds them all to the first continent walked
+                    # (Europe's), so Asia/Africa/America's lakes and rivers leak
+                    # into Europe's.  When inside a PF node, bind such a
+                    # subsection to OUR PF — but a bare header that resolves to a
+                    # real sub elsewhere (a country) is a genuine transition out.
+                    pf_owner = None
+                    if ":" not in line:
+                        nd = cur_sub
+                        while nd is not None:
+                            if _normalize(nd["name"]) == "physicalfeatures":
+                                pf_owner = nd
+                                break
+                            nd = parent_map.get(id(nd))
                     new_sub = _match_sub(cur_cat, line, cur_sub)
+                    if pf_owner is not None:
+                        mp = parent_map.get(id(new_sub)) if new_sub else None
+                        # A PF subsection: matched nothing, or matched a node
+                        # that is itself a child of SOME "Physical features"
+                        # (Europe's, in the leak).  Re-home it on our PF.
+                        if new_sub is None or (
+                                mp is not None
+                                and _normalize(mp["name"]) == "physicalfeatures"):
+                            name = (new_sub["name"] if new_sub else
+                                    re.sub(r"\s*\(cont\.?\)\s*$", "", line,
+                                           flags=re.IGNORECASE).strip())
+                            new_sub = next(
+                                (c for c in pf_owner.get("children", [])
+                                 if _normalize(c["name"]) == _normalize(name)),
+                                None) or _create_sub(cur_cat, name, pf_owner)
                     if new_sub is None:
                         new_sub = _create_sub(cur_cat, line, cur_sub)
                     if new_sub:
@@ -844,7 +875,20 @@ def walk_and_attribute(toc: list[dict],
                     new_sub = _match_sub(cur_cat, line, cur_sub)
                     if new_sub:
                         leaf = _first_leaf(new_sub)
-                        if leaf is not cur_sub:
+                        # If new_sub is an ANCESTOR of cur_sub we're already
+                        # inside it: this "transition" is the section's
+                        # emphasized headword (*Asia* heading "Asia: Ancient
+                        # Names", *Sculpture* heading its own section) or a
+                        # mid-section re-assertion — NOT a forward move.
+                        # Descending to the ancestor's first leaf would wrongly
+                        # eject us from the section (the ancient-names list then
+                        # piles into Physical features > Lakes).
+                        anc = set()
+                        _n = cur_sub
+                        while _n is not None:
+                            anc.add(id(_n))
+                            _n = parent_map.get(id(_n))
+                        if leaf is not cur_sub and id(new_sub) not in anc:
                             cur_sub = leaf
                             continue
                         # leaf IS cur_sub: a "transition" that doesn't move is
