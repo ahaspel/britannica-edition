@@ -666,6 +666,31 @@ def walk_and_attribute(toc: list[dict],
                      if _forenames_ok(toks, tk)]
             if len({v[0] for v in cands}) == 1:
                 return cands[0]
+            # Surname in corpus but the forename didn't strictly confirm — a
+            # title ("baron de"), a particle ("von"/"van"), a spelling variant,
+            # or a shared surname.  Require the FIRST forename initial to agree
+            # (guards a different same-surname person: Thorpe, John is NOT
+            # Thorpe, Benjamin) and take the UNIQUE best by leading-forename
+            # agreement.
+            same = bio_index.get(sn, [])
+            if same:
+                fi = _art_norm(toks[0])[:1] if toks else ""
+
+                def _fscore(tk: list[str]) -> int:
+                    s = 0
+                    for a, b in zip(toks, tk):
+                        if _art_norm(b).startswith(_art_norm(a)):
+                            s += 1
+                        else:
+                            break
+                    return s
+                scored = [(_fscore(tk), v) for tk, v in same
+                          if not fi or (tk and _art_norm(tk[0])[:1] == fi)]
+                if scored:
+                    best = max(s for s, _ in scored)
+                    top = [v for s, v in scored if s == best]
+                    if len({v[0] for v in top}) == 1:
+                        return top[0]
             ocr = [v for cs in sur_by_first.get(sn[:1], ())
                    if cs != sn and _lev_le(sn, cs, 2)
                    for tk, v in bio_index[cs] if _forenames_ok(toks, tk)]
