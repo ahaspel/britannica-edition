@@ -45,8 +45,6 @@ ARTICLES_INDEX = Path("data/derived/articles/index.json")
 OCR_FILE = Path("data/derived/vol29_ocr.json")
 OUT = Path("data/derived/classified_toc.json")
 
-VOL29_OFFSET = 8  # ws 891 = printed 883
-
 
 def _normalize(s: str) -> str:
     """Lowercase, strip non-alphanumeric. Used for cat/sub matching."""
@@ -60,6 +58,44 @@ def _art_norm(s: str) -> str:
     s = "".join(c for c in s if not unicodedata.combining(c))
     s = re.sub(r"[^A-Z0-9 ]+", " ", s)
     return " ".join(s.split())
+
+
+SECTION_INDEX = Path("data/derived/classified_section_index.json")
+
+
+def load_section_index() -> dict[str, list]:
+    """Unique section titles -> [filename, slug, article_title], harvested from
+    the article files' `sections`.  A specific sub-topic (Barcelona, Charleroi,
+    a tribe) that is a section of a composite article resolves straight to the
+    heading.  Cached; built once from ~37k article files when missing."""
+    if SECTION_INDEX.exists():
+        try:
+            return json.loads(SECTION_INDEX.read_text(encoding="utf-8"))
+        except Exception:
+            pass
+    from collections import defaultdict
+    bucket: dict[str, set] = defaultdict(set)
+    for fn in Path("data/derived/articles").glob("*.json"):
+        try:
+            d = json.loads(fn.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if not isinstance(d, dict):
+            continue
+        for s in d.get("sections") or []:
+            if not isinstance(s, dict):
+                continue
+            t = (s.get("title") or "").strip()
+            if t:
+                bucket[_art_norm(t)].add(
+                    (fn.name, s.get("slug", ""), d.get("title", "")))
+    uniq = {k: list(next(iter(v))) for k, v in bucket.items() if len(v) == 1}
+    try:
+        SECTION_INDEX.write_text(json.dumps(uniq, ensure_ascii=False),
+                                 encoding="utf-8")
+    except Exception:
+        pass
+    return uniq
 
 
 # ── Meta-TOC loading ─────────────────────────────────────────────────
@@ -336,16 +372,6 @@ def build_toc_from_meta(meta_categories: list[dict],
                     container["children"].remove(node)
                     node["name"] = "Ancient geography"
                     continent["children"].append(node)
-        # Mark skeleton leaves.  In a category whose meta-TOC spells out its
-        # subcategories (Literature: Classical has Subjects/Biographies/...,
-        # but every COUNTRY is a bare leaf), a leaf is TERMINAL: it has no
-        # subcategories, so the body lists its articles directly (France's
-        # *French Literature* is a principal article, not a sub-header).
-        def _mark_terminal(nodes: list[dict]):
-            for n in nodes:
-                _mark_terminal(n.get("children", []))
-                n["_terminal"] = not n.get("children")
-        _mark_terminal(subsections)
         toc.append({"name": name, "subsections": subsections})
     return toc
 
@@ -522,32 +548,6 @@ def walk_and_attribute(toc: list[dict],
                 return cand
         return candidates[0]
 
-    # ── Page carryover from meta-TOC anchors ──────────────────────
-    sub_anchors: list[tuple[int, str, dict]] = []
-
-    def _collect_anchors(cat_name: str, nodes: list[dict]):
-        for n in nodes:
-            pp = n.get("printed_page")
-            if pp:
-                sub_anchors.append((pp, cat_name, n))
-            _collect_anchors(cat_name, n.get("children", []))
-
-    for cat in toc:
-        _collect_anchors(cat["name"], cat["subsections"])
-    sub_anchors.sort(key=lambda x: x[0])
-
-    def _carryover(ws: int) -> tuple[str | None, dict | None]:
-        printed = ws - VOL29_OFFSET
-        starts = [(c, n) for pp, c, n in sub_anchors if pp == printed]
-        if starts:
-            return starts[0]
-        active_cat, active_node = None, None
-        for pp, c, n in sub_anchors:
-            if pp > printed:
-                break
-            active_cat, active_node = c, n
-        return active_cat, active_node
-
     # ── Article title index ───────────────────────────────────────
     title_lookup: dict[str, tuple[str, str]] = {}  # _art_norm → (filename, title)
     for e in article_index:
@@ -707,30 +707,6 @@ def walk_and_attribute(toc: list[dict],
             if len({v[0] for bn in cands for v in strip_index[bn]}) == 1:
                 return strip_index[cands[0]][0]
         return None
-
-    def _split_lead(text: str) -> list[str]:
-        """Split a lead line the OCR ran together ("Anglo-Norman Literature
-        French Literature Provençal Literature") into its constituent article
-        titles by greedy longest-prefix.  Returns [text] unchanged unless the
-        WHOLE line consumes into >= 2 known articles (so a single lead, or a
-        normal title, is never half-split)."""
-        toks = text.split()
-        if len(toks) < 2:
-            return [text]
-        pieces: list[str] = []
-        i = 0
-        while i < len(toks):
-            hit = None
-            for j in range(len(toks), i, -1):
-                cand = " ".join(toks[i:j])
-                if _art_norm(cand) in title_lookup:
-                    hit = (cand, j)
-                    break
-            if hit is None:
-                return [text]
-            pieces.append(hit[0])
-            i = hit[1]
-        return pieces if len(pieces) >= 2 else [text]
 
     # ── Sub matching ──────────────────────────────────────────────
 
@@ -925,11 +901,19 @@ def walk_and_attribute(toc: list[dict],
         return None
 
     def _first_leaf(node: dict | None) -> dict | None:
-        """Descend children[0] until leaf. Articles accumulate in leaves."""
+        """Descend children[0] until leaf. Articles accumulate in leaves.
+        Exception: a node whose ONLY child is 'Biographies' keeps its own
+        level — the body lists the section's GENERAL articles before its
+        '### ...: Biographies' header, and those generals are not biographies
+        (Mahommedan Religion leads with Religion/Institutions/Law + the
+        Allah… concept run, then its biographies follow the header)."""
         if node is None:
             return None
         while node.get("children"):
-            node = node["children"][0]
+            kids = node["children"]
+            if len(kids) == 1 and _normalize(kids[0]["name"]) == "biographies":
+                break
+            node = kids[0]
         return node
 
     def _create_sub(cat_name: str, text: str,
@@ -1011,36 +995,84 @@ def walk_and_attribute(toc: list[dict],
     raw_entries: dict[int, list[tuple[str, bool]]] = {}
     node_map: dict[int, dict] = {}
 
+    # Categories run in a FIXED, KNOWN order (the pp.881-2 index).  A banner --
+    # gigantic Blackletter, impossible to miss -- only has to identify the NEXT
+    # category we haven't reached: by name, by a clipped prefix of it (a cropped
+    # banner survives as a legible prefix; "Phy" is Physics the moment Philosophy
+    # is behind us), or, when the clip is too short to use, by a subsection that
+    # belongs to exactly one category (Architecture -> Art).
+    cat_seq = toc
+    cat_norm_seq = [_normalize(c["name"]) for c in cat_seq]
+    cat_idx_by_norm = {n: i for i, n in enumerate(cat_norm_seq)}
+    _sub_cats: dict[str, set] = {}
+
+    def _index_subs(node: dict, ci: int):
+        nm = _normalize(node.get("name", ""))
+        if nm:
+            _sub_cats.setdefault(nm, set()).add(ci)
+        for ch in node.get("children", []):
+            _index_subs(ch, ci)
+    for _ci, _c in enumerate(cat_seq):
+        for _s in _c.get("subsections", []):
+            _index_subs(_s, _ci)
+    distinct_sub = {nm: next(iter(cs)) for nm, cs in _sub_cats.items()
+                    if len(cs) == 1}
+    # ── Phase 1: chop the page stream into the 24 category segments ──
+    # The OCR has already stitched each spread's bands (_assemble), so a
+    # category is contiguous between its banner and the next.  ALL the banner
+    # cleverness lives here, once: reconcile each ## against the fixed order
+    # (exact name / a clipped prefix of the next / a subsection distinctive to
+    # the next when the banner clipped to nothing), and every line from a banner
+    # until the next belongs to that category.
+    segments: list[tuple[str, list[str]]] = [(c["name"], []) for c in cat_seq]
+    ci = -1
     for ws in range(891, 956):
         text = ocr_data.get(str(ws), "")
         if not text.strip():
-            print(f"    ws{ws} ... skipped")
             continue
-
-        # Page carryover from meta-TOC anchors. Used to:
-        # - Bootstrap the first page (cur_cat is None).
-        # - Update cur_sub within the same cat (the meta-TOC knows
-        #   which sub starts on which printed page).
-        # NOT used to switch cats — ## headers in the OCR do that.
-        # Without this guard, carryover would override the OCR
-        # (e.g. Military content on ws947 would be reset to Philosophy
-        # because the meta-TOC anchors Philosophy at printed p.939).
-        co_cat, co_node = _carryover(ws)
-        if co_cat:
-            if cur_cat is None:
-                # Bootstrap.
-                cur_cat = co_cat
-                if co_node is not None:
-                    cur_sub = _first_leaf(co_node)
-            elif co_cat == cur_cat and co_node is not None:
-                # Same cat — update sub anchor.
-                cur_sub = _first_leaf(co_node)
-
-        count = 0
         for raw_line in text.split("\n"):
-            line = raw_line.strip()
-            if not line or line == "<!-- vision-ocr -->":
+            s = raw_line.strip()
+            if not s or s.startswith("<!--"):
                 continue
+            consumed = False
+            if s.startswith("## ") or s.startswith("### "):
+                hdr3 = s.startswith("### ")
+                h = s[(4 if hdr3 else 3):].strip()
+                h = re.sub(r"\*\*([^*]+)\*\*", r"\1", h)
+                h = re.sub(r"\*([^*]+)\*", r"\1", h)
+                h = re.sub(r"\s*[—–]\s*", ": ", h)
+                h = re.sub(r"\s*\((?:see|for)\b.*$", "", h,
+                           flags=re.IGNORECASE).strip()
+                norm = _normalize(h)
+                nxt = ci + 1
+                if not hdr3 and norm in cat_by_norm:
+                    ci = cat_idx_by_norm[norm]
+                    consumed = True
+                elif (not hdr3 and nxt < len(cat_seq) and len(norm) >= 3
+                        and cat_norm_seq[nxt].startswith(norm)):
+                    ci = nxt
+                    consumed = True
+                elif nxt < len(cat_seq):
+                    x = _normalize(h.split(":", 1)[0]) if ":" in h else norm
+                    if distinct_sub.get(x) == nxt or distinct_sub.get(norm) == nxt:
+                        ci = nxt  # seat: advance but KEEP the line in the segment
+            if not consumed and ci >= 0:
+                segments[ci][1].append(raw_line)
+
+    # ── Phase 2: walk each segment in isolation ───────────────────
+    # One category, no banner left to misread.  ### opens a subcategory (matched
+    # into the index skeleton for its name/level, or created when the body
+    # carries one the index never had); an article falls to the node we stand
+    # on; a flat category with no sub holds its own.
+    for cur_cat, seg_lines in segments:
+        cat_dict = cat_by_norm[_normalize(cur_cat)]
+        subs0 = cat_dict.get("subsections", [])
+        cur_sub = _first_leaf(subs0[0]) if subs0 else None
+        count = 0
+        for raw_line in seg_lines:
+            line = raw_line.strip()
+            if not line or line.startswith("<!--"):
+                continue  # blank line or an OCR sentinel (vision-ocr / split-scan)
 
             # Skip cross-reference annotations like `(See also …)` /
             # `(See further under …)` / `(For X see under Y)` — these
@@ -1083,172 +1115,38 @@ def walk_and_attribute(toc: list[dict],
                 # bogus sub-nodes ("... (See also ASIA: Mountains, above ...)").
                 line = re.sub(r"\s*\((?:see|for)\b.*$", "", line,
                               flags=re.IGNORECASE).strip()
-                norm = _normalize(line)
-                if not hdr3 and norm in cat_by_norm:
-                    cat_dict = cat_by_norm[norm]
-                    cur_cat = cat_dict["name"]
-                    subs = cat_dict.get("subsections", [])
-                    cur_sub = _first_leaf(subs[0]) if subs else None
-                    continue
-                # Not a category, so it's a SECTION header.  Match it to a
-                # known sub, or — when the body carries a section the meta-TOC
-                # never had (the meta-flat categories) — create and register
-                # it.  A header is consumed, never accumulated as an article.
+                # Every header inside a segment is a SECTION -- the chop already
+                # consumed the category banners.  Match it into this category's
+                # skeleton, or create one the index never carried.
                 if cur_cat:
-                    # A bare physical-features subsection header (Lakes,
-                    # Mountains, Rivers, Miscellaneous, Deserts, Islands, ...)
-                    # recurs under EVERY continent's "Physical features".  A
-                    # global match binds them all to the first continent walked
-                    # (Europe's), so Asia/Africa/America's lakes and rivers leak
-                    # into Europe's.  When inside a PF node, bind such a
-                    # subsection to OUR PF — but a bare header that resolves to a
-                    # real sub elsewhere (a country) is a genuine transition out.
-                    pf_owner = None
-                    if ":" not in line:
-                        nd = cur_sub
-                        while nd is not None:
-                            if _normalize(nd["name"]) == "physicalfeatures":
-                                pf_owner = nd
-                                break
-                            nd = parent_map.get(id(nd))
                     new_sub = _match_sub(cur_cat, line, cur_sub)
-                    if pf_owner is not None:
-                        mp = parent_map.get(id(new_sub)) if new_sub else None
-                        # A PF subsection: matched nothing, or matched a node
-                        # that is itself a child of SOME "Physical features"
-                        # (Europe's, in the leak).  Re-home it on our PF.
-                        if new_sub is None or (
-                                mp is not None
-                                and _normalize(mp["name"]) == "physicalfeatures"):
-                            name = (new_sub["name"] if new_sub else
-                                    re.sub(r"\s*\(cont\.?\)\s*$", "", line,
-                                           flags=re.IGNORECASE).strip())
-                            new_sub = next(
-                                (c for c in pf_owner.get("children", [])
-                                 if _normalize(c["name"]) == _normalize(name)),
-                                None) or _create_sub(cur_cat, name, pf_owner)
-                    # A flat Literature classification (every country is a bare
-                    # skeleton leaf) has NO subcategories.  Its ### entries are
-                    # the country's literature ARTICLES — bare "French
-                    # Literature" (split if the OCR ran several together) — or
-                    # SECTION LINKS — colon "Denmark : Literature", i.e. the
-                    # Literature section of the country article (Denmark#Literature).
-                    # Never a sub-header; never a phantom subcategory.
-                    if (cur_cat == "Literature" and cur_sub is not None
-                            and cur_sub.get("_terminal")
-                            and (new_sub is None or new_sub is cur_sub)):
-                        # Section link: the entry leads with the country's OWN
-                        # name + a section mark ("Denmark : Literature").  The
-                        # print's mark reads as colon / comma / section-sign —
-                        # the OCR is inconsistent — so key on the country name
-                        # followed by ANY such punctuation, not a literal ":".
-                        sl = re.match(
-                            re.escape(cur_sub["name"])
-                            + r"\s*[,:;.§–—-]+\s*(.+)$",
-                            line, re.IGNORECASE)
-                        if sl:
-                            sec = re.sub(r"\s*\(cont\.?\)\s*$", "", sl.group(1),
-                                         flags=re.IGNORECASE).strip()
-                            if sec:
-                                raw_entries.setdefault(id(cur_sub), []).append(
-                                    (f"{cur_sub['name']}#{sec}", emphasized))
-                                node_map[id(cur_sub)] = cur_sub
-                                count += 1
-                            continue
-                        if new_sub is None:
-                            # Bare principal article(s) (split a run-together line).
-                            for piece in _split_lead(line):
-                                raw_entries.setdefault(id(cur_sub), []).append(
-                                    (piece, emphasized))
-                                count += 1
-                            node_map[id(cur_sub)] = cur_sub
-                            continue
-                        continue  # re-assertion of the country, no new content
                     if new_sub is None:
                         new_sub = _create_sub(cur_cat, line, cur_sub)
                     if new_sub:
-                        # A flat section (Art's Sculpture) accumulates its own
-                        # articles directly until its FIRST sub-header is seen;
-                        # the body prints that header ("Sculpture: Subjects")
-                        # after the column it heads.  Those articles belong to
-                        # the sub just declared — hand them over so nothing is
-                        # left stranded in the bare section.
-                        par = parent_map.get(id(new_sub))
-                        if (par is not None and id(par) in raw_entries
-                                and par.get("children") == [new_sub]):
-                            raw_entries.setdefault(id(new_sub), []).extend(
-                                raw_entries.pop(id(par)))
-                            node_map[id(new_sub)] = new_sub
                         cur_sub = _first_leaf(new_sub)
                 continue
 
-            # ── Plain line: sub transition? ───────────────────────
-            # Special handling for "General list" sections: these are
-            # flat lists of country articles where some names coincide
-            # with sub names. The country name appears twice — first
-            # as an article in the General list, then as a sub-header
-            # introducing the detailed section. Treat the FIRST
-            # occurrence as an article; the SECOND as a sub transition.
-            in_general_list = (
-                cur_sub is not None
-                and "general list" in cur_sub.get("name", "").lower()
-            )
-            if cur_cat and len(line) <= 80:
-                if in_general_list and ":" not in line:
-                    # Check if this line already appeared as an article
-                    # in the current General list bucket. If so, it's a
-                    # sub transition. If not, it's another article.
-                    existing = raw_entries.get(id(cur_sub), [])
-                    seen_here = any(
-                        raw_name.strip().lower() == line.strip().lower()
-                        for raw_name, _ in existing
-                    )
-                    if not seen_here:
-                        pass  # first occurrence — treat as article
-                    else:
-                        new_sub = _match_sub(cur_cat, line, cur_sub)
-                        if new_sub:
-                            leaf = _first_leaf(new_sub)
-                            if leaf is not cur_sub:
-                                cur_sub = leaf
-                            continue
-                else:
-                    new_sub = _match_sub(cur_cat, line, cur_sub)
-                    if new_sub:
-                        leaf = _first_leaf(new_sub)
-                        # If new_sub is an ANCESTOR of cur_sub we're already
-                        # inside it: this "transition" is the section's
-                        # emphasized headword (*Asia* heading "Asia: Ancient
-                        # Names", *Sculpture* heading its own section) or a
-                        # mid-section re-assertion — NOT a forward move.
-                        # Descending to the ancestor's first leaf would wrongly
-                        # eject us from the section (the ancient-names list then
-                        # piles into Physical features > Lakes).
-                        anc = set()
-                        _n = cur_sub
-                        while _n is not None:
-                            anc.add(id(_n))
-                            _n = parent_map.get(id(_n))
-                        if leaf is not cur_sub and id(new_sub) not in anc:
-                            cur_sub = leaf
-                            continue
-                        # leaf IS cur_sub: a "transition" that doesn't move is
-                        # the tell that this line is the section's OWN headword
-                        # article (SCULPTURE under Sculpture), which sits right
-                        # under its header.  Empty bucket => we're at the section
-                        # head, so keep it as the lead; non-empty bucket => a
-                        # mid-section "(cont.)" re-assertion, consume as before.
-                        if raw_entries.get(id(cur_sub)):
-                            continue
-
             # ── Article accumulation ──────────────────────────────
-            if cur_sub is not None:
-                nid = id(cur_sub)
+            tgt = cur_sub
+            if tgt is None and cur_cat:
+                # A flat category's articles sit DIRECTLY under its banner with
+                # no sub-header (Sports: *Athletic Sports*, Ace, ... right after
+                # the banner).  With no leaf they'd drop on the floor -- seat
+                # them in a self-named leaf, created on demand.
+                cd = cat_by_norm.get(_normalize(cur_cat))
+                if cd is not None:
+                    if not cd.get("subsections"):
+                        cd["subsections"] = [{"name": cur_cat, "articles": [],
+                                              "children": []}]
+                    cur_sub = _first_leaf(cd["subsections"][0])
+                    tgt = cur_sub
+            if tgt is not None:
+                nid = id(tgt)
                 raw_entries.setdefault(nid, []).append((line, emphasized))
-                node_map[nid] = cur_sub
+                node_map[nid] = tgt
                 count += 1
 
-        print(f"    ws{ws} ... {count} entries")
+        print(f"    {cur_cat[:40]:40s} {count} entries")
 
     # ── Match accumulated entries against article index ───────────
     total_raw = sum(len(v) for v in raw_entries.values())
@@ -1265,6 +1163,8 @@ def walk_and_attribute(toc: list[dict],
     for cat in toc:
         for s in cat.get("subsections", []):
             _map_cat(s, cat["name"])
+
+    section_index = load_section_index()
 
     discovered = 0
     unmatched_entries: list[str] = []
@@ -1354,8 +1254,43 @@ def walk_and_attribute(toc: list[dict],
                         seen.add(filename)
                         discovered += 1
                     continue
+
+            if not match:
+                # Section match: a UNIQUE section title -> article#slug, accepted
+                # only when the section's article relates to the entry's TOC
+                # context (they share a word).  So a specific sub-topic lands on
+                # its heading (Barcelona under Universities -> UNIVERSITIES
+                # #Barcelona; a tribe; a battle), while a generic word that
+                # happens to be some stray section (Style -> KORAN) is dropped.
+                si = section_index.get(_art_norm(raw_name))
+                if si:
+                    sfile, sslug, sart = si
+                    ctx = set(_art_norm(
+                        node.get("name", "") + " "
+                        + node_to_cat.get(id(node), "")).split())
+                    artwords = [w for w in _art_norm(sart).split() if len(w) >= 4]
+                    if sfile not in seen and any(w in ctx for w in artwords):
+                        node["articles"].append({
+                            "target": f"{sart}#{sslug}",
+                            "display": sart,
+                            "filename": sfile,
+                            "anchor": sslug,
+                            "emphasized": emph,
+                        })
+                        seen.add(sfile)
+                        discovered += 1
+                        continue
+
             if match:
                 filename, display = match
+                # Letter-articles carry a Wikisource disambiguator digit
+                # ("S" → "S1"); the classified TOC printed the clean letter.
+                # Drop a trailing digit when doing so reconciles the title to
+                # what the TOC actually printed.
+                if display and display[-1].isdigit():
+                    bare = display.rstrip("0123456789").strip()
+                    if bare and _art_norm(bare) == _art_norm(raw_name):
+                        display = bare
                 if filename not in seen:
                     node["articles"].append({
                         "target": display,

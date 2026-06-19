@@ -226,10 +226,12 @@
     // inside a category. Level 3+ become collapsible so deep trees
     // (Geography > Europe > Countries > Norway) stay navigable.
     if (level <= 2) {
-      const headTag = `h3`;
+      // A flat category whose single subsection is named after the category
+      // (Sports and Pastimes) renders as a plain list — drop the redundant
+      // header that would just repeat the category title above it.
+      const head = sub.name === pathPrefix ? "" : `<h3>${name}</h3>`;
       return `<div class="subsection subsection-l${level}"${idAttr}>` +
-             `<${headTag}>${name}</${headTag}>` +
-             arts + kids + `</div>`;
+             head + arts + kids + `</div>`;
     }
     // Collapsible deeper node: show article count in summary.
     const counts = countAll(sub);
