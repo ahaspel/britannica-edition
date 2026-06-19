@@ -133,10 +133,18 @@ def _ocr_half(client: anthropic.Anthropic, img_b64: str, ws: int,
 
 def _bands(part: str, cats: list[str]) -> list[list]:
     """Split one half-page into [banner_or_None, [lines]] bands.  The full-width
-    category banner is the one element that crosses the gutter, so it cuts the
-    half into horizontal bands; the first band (above any banner) has None."""
+    banners (category AND continent-section) cross the gutter, so they cut the
+    half into horizontal bands; the first band (above any banner) has None.
+
+    The running page header ("CLASSIFIED LIST OF ARTICLES") is also full-width
+    and the model marks it `## `, but it is furniture, and it sits at a slightly
+    different height in the two halves -- left in, it misaligns the bands and
+    breaks the stitch.  Drop it (and any clip of it) before splitting."""
     segs: list[list] = [[None, []]]
     for line in part.split("\n"):
+        n = _norm(line.lstrip("# "))
+        if len(n) >= 5 and n in "classifiedlistofarticles":
+            continue  # running page header -- furniture, not a banner
         if line.startswith("## "):
             full = _best_category_match(line[3:], cats)
             segs.append([f"## {full}" if full else line, []])
@@ -146,20 +154,36 @@ def _bands(part: str, cats: list[str]) -> list[list]:
 
 
 def _assemble(parts: list[str], cats: list[str]) -> str:
-    """Read the spread BAND-BY-BAND, not page-by-page.  Because the full-width
-    banner cuts both half-pages into the same horizontal bands (the previous
-    category's tail above it, the new category below), band i of the left page
-    and band i of the right page are the same category.  So we emit, per band:
-    the banner once, then the left page's lines, then the right page's -- which
-    keeps a tail spanning both pages (Chemistry's biographies above the
-    Economics banner) together instead of stranding the right half after the
-    new category."""
+    """Read the spread BAND-BY-BAND, not page-by-page.  The full-width banners
+    cut both half-pages into the same horizontal bands (previous category's tail
+    above, new content below), so band i of the left page and band i of the
+    right page are the same band.  Per band we emit the banner once, then the
+    left page's lines, then the right's -- keeping a tail that spans both pages
+    (Chemistry's biographies above the Economics banner) together.
+
+    The banner is itself full-width, so the centre crop splits it and each half
+    holds only its own clip.  A CATEGORY clip is recovered by reconciling it
+    against the 24 known names (_bands does that).  A SECTION banner
+    (Europe—Physical Features) matches no category, so neither clip un-clips
+    alone -- but the left clip is the head and the right clip the tail, cut
+    mid-character with no overlap, so we STITCH them back into the whole header.
+    """
     left = _bands(parts[0], cats)
     right = _bands(parts[1], cats)
+    cat_norms = {_norm(c) for c in cats}
     out: list[str] = []
     for i in range(max(len(left), len(right))):
-        banner = (left[i][0] if i < len(left) and left[i][0]
-                  else right[i][0] if i < len(right) and right[i][0] else None)
+        lb = left[i][0] if i < len(left) else None
+        rb = right[i][0] if i < len(right) else None
+        if lb and _norm(lb[3:]) in cat_norms:
+            banner = lb                      # category, already un-clipped
+        elif rb and _norm(rb[3:]) in cat_norms:
+            banner = rb
+        else:
+            # One clip of a section banner survives the crop; leave it whole
+            # for the parser to reconcile against the continent x section list
+            # (gluing the two halves here is unreliable -- bands don't align).
+            banner = lb or rb
         if banner:
             out.append(banner)
         if i < len(left):
@@ -182,6 +206,14 @@ def transcribe_page(client: anthropic.Anthropic, ws: int,
         im.crop(box).save(buf, format="JPEG", quality=90)
         b64 = base64.standard_b64encode(buf.getvalue()).decode("ascii")
         parts.append(_ocr_half(client, b64, ws, leaf, side))
+    # Diagnostic: keep the RAW half-transcriptions.  The assembled stream drops
+    # one side of every gutter-split header, so reconstructing those banners
+    # needs to see both halves as the model read them, pre-assembly.
+    _dbg = Path("data/derived/vol29_halves_debug.json")
+    _d = (json.loads(_dbg.read_text(encoding="utf-8")) if _dbg.exists() else {})
+    _d[str(ws)] = {"left": parts[0], "right": parts[1]}
+    _dbg.write_text(json.dumps(_d, indent=2, ensure_ascii=False),
+                    encoding="utf-8")
     return _assemble(parts, cats)
 
 
@@ -204,10 +236,17 @@ def main() -> None:
     ocr_data = json.loads(PER_PAGE_OCR.read_text(encoding="utf-8"))
     cats = _known_categories()
 
-    # CLI: "--force" re-transcribes pages already done; bare integers limit the
-    # run to those ws pages (e.g. `... --force 901` to test Economics first).
+    # CLI: "--force" re-transcribes pages already done; bare integers or an
+    # inclusive RANGE ("903-933") limit the run to those ws pages (e.g.
+    # `... --force 903-933` to redo just Geography + History).
     force = "--force" in sys.argv[1:]
-    only = {int(a) for a in sys.argv[1:] if a.isdigit()}
+    only: set[int] = set()
+    for a in sys.argv[1:]:
+        if a.isdigit():
+            only.add(int(a))
+        elif re.fullmatch(r"\d+-\d+", a):
+            lo, hi = map(int, a.split("-"))
+            only.update(range(lo, hi + 1))
 
     targets: list[int] = []
     for ws in range(WS_START, WS_END + 1):

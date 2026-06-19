@@ -900,20 +900,27 @@ def walk_and_attribute(toc: list[dict],
                 return parent  # Y didn't match a child; use X
         return None
 
-    def _first_leaf(node: dict | None) -> dict | None:
-        """Descend children[0] until leaf. Articles accumulate in leaves.
-        Exception: a node whose ONLY child is 'Biographies' keeps its own
-        level — the body lists the section's GENERAL articles before its
-        '### ...: Biographies' header, and those generals are not biographies
-        (Mahommedan Religion leads with Religion/Institutions/Law + the
-        Allah… concept run, then its biographies follow the header)."""
+    def _bucket_target(node: dict | None) -> dict | None:
+        """The node a bucket's links belong to.  A header names a node; every
+        link under it until the next header is ONE bucket and lands here
+        together (atomic — a bucket can't split across leaves).  When the named
+        node is a container, the bucket is its GENERAL/principal list, so seat
+        it on the nearest descendant explicitly holding that list ("General
+        list", "Countries, general list") — or, lacking one, the node itself.
+        Never descend blindly into children[0]: that buried America's country
+        list under Physical Features and scattered a single bucket.  This also
+        subsumes the old Biographies special-case — a node whose only child is
+        'Biographies' has no 'general' descendant, so it keeps its own level,
+        where the section's general articles precede the '### …: Biographies'
+        header."""
         if node is None:
             return None
-        while node.get("children"):
-            kids = node["children"]
-            if len(kids) == 1 and _normalize(kids[0]["name"]) == "biographies":
-                break
-            node = kids[0]
+        queue = [node]
+        while queue:
+            n = queue.pop(0)
+            if "general" in _normalize(n.get("name", "")):
+                return n
+            queue.extend(n.get("children", []))
         return node
 
     def _create_sub(cat_name: str, text: str,
@@ -1017,6 +1024,82 @@ def walk_and_attribute(toc: list[dict],
             _index_subs(_s, _ci)
     distinct_sub = {nm: next(iter(cs)) for nm, cs in _sub_cats.items()
                     if len(cs) == 1}
+
+    # ── Continent-banner reconciliation (Geography / History) ─────────
+    # Their full-width section banners (Europe—Countries, Asia—Physical
+    # Features) are sliced by the gutter into fragments (OUNTRIES, ASIA—PHYSIC,
+    # AL FEATURES).  Both halves of the structure -- the continents and the
+    # section types -- are in the pp.881-2 skeleton, so a fragment rebuilds by
+    # matching its continent part and its section part against that skeleton
+    # (prefix or suffix), filling a missing continent from the one we stand in.
+    # The category-banner trick, one level down.  A country/other header matches
+    # nothing here and falls through to the ordinary matcher.
+    _CONT_TOK = ("europe", "asia", "africa", "america", "australasia",
+                 "australia", "oceans", "unitedkingdom")
+    geo_recon: dict[str, tuple] = {}
+    for _c in cat_seq:
+        _conts = [s for s in _c.get("subsections", [])
+                  if any(_normalize(s["name"]).startswith(t) for t in _CONT_TOK)]
+        if len(_conts) < 2:
+            continue
+        _cnt: dict[str, int] = {}
+        for _cn in _conts:
+            for _ch in _cn.get("children", []):
+                _cnt[_normalize(_ch["name"].split("(")[0])] = (
+                    _cnt.get(_normalize(_ch["name"].split("(")[0]), 0) + 1)
+        _sd = {}
+        for _cn in _conts:
+            for _ch in _cn.get("children", []):
+                k = _normalize(_ch["name"].split("(")[0])
+                if _cnt[k] >= 2:
+                    _sd[k] = _normalize(_ch["name"].split()[0])
+        geo_recon[_c["name"]] = (_conts, _sd)
+
+    def _reconcile_continent(text: str, conts: list, sd: dict, cur):
+        """A gutter-sliced continent-section banner -> (skeleton node, named).
+        `named` is True when the TEXT itself names a continent (a real continent
+        banner the matcher must not pre-empt).  (None, False) for a country or
+        other header, left to _match_sub."""
+        t = re.sub(r"\(cont\.?\)|\*+", "", text, flags=re.IGNORECASE)
+        cont = sect = None
+        named = False
+        for x in re.split(r"\s*[—–:,()-]\s*", t):
+            pn = _normalize(x)
+            if len(pn) < 2:
+                continue
+            if cont is None:
+                hits = [c for c in conts
+                        if _normalize(c["name"]).startswith(pn)
+                        or _normalize(c["name"]).endswith(pn)]
+                if len(hits) == 1:
+                    cont = hits[0]
+                    named = True
+                    continue
+            if sect is None:
+                sh = {k for k, fw in sd.items()
+                      if fw.startswith(pn) or k.startswith(pn)
+                      or (len(pn) >= 4 and k.endswith(pn))}
+                if len(sh) == 1:
+                    sect = next(iter(sh))
+        if cont is None and sect is None:
+            return None, False
+        if cont is None:  # section only -> the continent we are standing in
+            cids = {id(c) for c in conts}
+            nd = cur
+            while nd is not None:
+                if id(nd) in cids:
+                    cont = nd
+                    break
+                nd = parent_map.get(id(nd))
+            if cont is None:
+                return None, False
+        if sect is None:
+            return cont, named
+        for ch in cont.get("children", []):
+            if _normalize(ch["name"]).startswith(sect):
+                return ch, named
+        return cont, named
+
     # ── Phase 1: chop the page stream into the 24 category segments ──
     # The OCR has already stitched each spread's bands (_assemble), so a
     # category is contiguous between its banner and the next.  ALL the banner
@@ -1067,21 +1150,22 @@ def walk_and_attribute(toc: list[dict],
     for cur_cat, seg_lines in segments:
         cat_dict = cat_by_norm[_normalize(cur_cat)]
         subs0 = cat_dict.get("subsections", [])
-        cur_sub = _first_leaf(subs0[0]) if subs0 else None
+        cur_sub = _bucket_target(subs0[0]) if subs0 else None
         count = 0
         for raw_line in seg_lines:
             line = raw_line.strip()
             if not line or line.startswith("<!--"):
                 continue  # blank line or an OCR sentinel (vision-ocr / split-scan)
 
-            # Skip cross-reference annotations like `(See also …)` /
-            # `(See further under …)` / `(For X see under Y)` — these
-            # are inline notes from the printed index, not category
-            # entries. Without this guard, the article-matching
-            # `first-word` fallback strips the leading `(` via
-            # `_art_norm` and resolves `(See` → SEE article, polluting
-            # categories with bogus SEE entries.
-            if re.match(r"^\(\s*(?:see|for)\b", line, re.IGNORECASE):
+            # A cross-reference note from the printed index ("(See also …)",
+            # "(For X see under Y)") or a scope note ("(Excluding …, q.v.)").
+            # It belongs to the heading it sits under, so CARRY it onto the
+            # current node -- the same node articles fall into -- instead of
+            # dropping it.  (Left in the stream it also mis-resolves: `_art_norm`
+            # strips the leading "(" and "(See" matches the SEE article.)
+            if re.match(r"^\(\s*(?:see|for|excluding)\b", line, re.IGNORECASE):
+                (cur_sub or cat_dict).setdefault("notes", []).append(
+                    re.sub(r"\*+", "", line).strip())
                 continue
 
             # Detect a ## / ### header.  The OCR is inconsistent about the
@@ -1097,6 +1181,15 @@ def walk_and_attribute(toc: list[dict],
             elif line.startswith("## "):
                 is_header = True
                 line = line[3:].strip()
+            elif line.startswith("**"):
+                # The model sometimes marks a section header BOLD instead of
+                # `###` -- continent banners (**EUROPE—CO**) and country sub-
+                # sections (**Italy : Towns, etc. (cont.)**), especially on the
+                # right-hand page.  The text is intact, only the marker differs,
+                # so read a bold-led line as a section header too.
+                is_header = True
+                hdr3 = True
+                line = re.sub(r"\*+", "", line).strip()
 
             # Strip **bold** markers first, then detect *italic*.
             line = re.sub(r"\*\*([^*]+)\*\*", r"\1", line)
@@ -1111,19 +1204,47 @@ def walk_and_attribute(toc: list[dict],
 
             # ── ## line: cat or sub transition ────────────────────
             if is_header:
-                # Drop a trailing cross-reference note so it isn't split into
-                # bogus sub-nodes ("... (See also ASIA: Mountains, above ...)").
+                # A trailing cross-reference note ("Asia: Biographies (see also
+                # Persia)") has to come off the header so it can't split into a
+                # bogus sub -- but carry it onto the node the header creates.
+                _m = re.search(r"\((?:see|for)\b.*$", line, re.IGNORECASE)
+                hdr_note = (re.sub(r"\*+", "", _m.group(0)).strip()
+                            if _m else None)
                 line = re.sub(r"\s*\((?:see|for)\b.*$", "", line,
                               flags=re.IGNORECASE).strip()
                 # Every header inside a segment is a SECTION -- the chop already
                 # consumed the category banners.  Match it into this category's
                 # skeleton, or create one the index never carried.
                 if cur_cat:
-                    new_sub = _match_sub(cur_cat, line, cur_sub)
+                    rec = geo_recon.get(cur_cat)
+                    # A BARE section-type banner ("COUNTRIES (cont.)", "Physical
+                    # features") names a continent section but no continent or
+                    # country -- the matcher would bind it to an arbitrary
+                    # continent's section (Europe's, not the America we're
+                    # standing in), so reconcile it against the running continent.
+                    # Everything else: matcher first, reconciliation on failure.
+                    bare = bool(rec and _normalize(
+                        re.sub(r"\(cont\.?\)|\*+", "", line)) in rec[1])
+                    new_sub = (_reconcile_continent(line, rec[0], rec[1], cur_sub)[0]
+                               if bare else None)
+                    if new_sub is None:
+                        new_sub = _match_sub(cur_cat, line, cur_sub)
+                    if new_sub is None and rec:
+                        new_sub = _reconcile_continent(line, rec[0],
+                                                       rec[1], cur_sub)[0]
                     if new_sub is None:
                         new_sub = _create_sub(cur_cat, line, cur_sub)
                     if new_sub:
-                        cur_sub = _first_leaf(new_sub)
+                        cur_sub = _bucket_target(new_sub)
+                        if hdr_note:
+                            new_sub.setdefault("notes", []).append(hdr_note)
+                continue
+
+            # An entry that is itself a pointer ("Crusades : see under Asia") --
+            # a cross-reference, not an article: carry it as a note too.
+            if re.search(r":\s*\*?see\b", line, re.IGNORECASE):
+                (cur_sub or cat_dict).setdefault("notes", []).append(
+                    re.sub(r"\*+", "", line).strip())
                 continue
 
             # ── Article accumulation ──────────────────────────────
@@ -1138,7 +1259,7 @@ def walk_and_attribute(toc: list[dict],
                     if not cd.get("subsections"):
                         cd["subsections"] = [{"name": cur_cat, "articles": [],
                                               "children": []}]
-                    cur_sub = _first_leaf(cd["subsections"][0])
+                    cur_sub = _bucket_target(cd["subsections"][0])
                     tgt = cur_sub
             if tgt is not None:
                 nid = id(tgt)

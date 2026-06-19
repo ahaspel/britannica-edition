@@ -120,6 +120,9 @@
     .article-list a:hover { text-decoration: underline; }
     .article-list .unresolved { color: var(--muted); cursor: default; }
     .article-list .emphasized a { font-weight: bold; }
+    .notes { list-style: none; margin: 4px 0 8px; padding: 0; }
+    .notes li { color: var(--muted); font-style: italic; font-size: 0.85rem;
+      margin: 1px 0; }
     .footer { color: var(--muted); font-size: 0.85rem; margin-top: 20px;
       text-align: center; }
     .intro-wrap { margin: 12px 0 16px; }
@@ -209,6 +212,13 @@
     return false;
   }
 
+  function renderNotes(node) {
+    if (!node.notes || !node.notes.length) return "";
+    return `<ul class="notes">` +
+      node.notes.map(n => `<li>${escapeHtml(n)}</li>`).join("") +
+      `</ul>`;
+  }
+
   function renderSubsection(sub, depth, pathPrefix) {
     if (!hasContent(sub)) return "";
     const level = depth + 2;  // level 2 for top subs
@@ -231,7 +241,7 @@
       // header that would just repeat the category title above it.
       const head = sub.name === pathPrefix ? "" : `<h3>${name}</h3>`;
       return `<div class="subsection subsection-l${level}"${idAttr}>` +
-             head + arts + kids + `</div>`;
+             head + renderNotes(sub) + arts + kids + `</div>`;
     }
     // Collapsible deeper node: show article count in summary.
     const counts = countAll(sub);
@@ -244,7 +254,7 @@
     const openAttr = level <= 3 ? " open" : "";
     return `<details class="sub sub-l${level}"${openAttr}${idAttr}>` +
            `<summary><span class="sub-name">${name}</span>${meta}</summary>` +
-           `<div class="sub-body">${arts}${kids}</div>` +
+           `<div class="sub-body">${renderNotes(sub)}${arts}${kids}</div>` +
            `</details>`;
   }
 
@@ -285,7 +295,7 @@
     }
     return `<details class="category" id="${escapeHtml(cat.name)}">
       <summary>${escapeHtml(cat.name)} ${meta}</summary>
-      ${body}
+      ${renderNotes(cat)}${body}
     </details>`;
   }
 
