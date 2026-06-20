@@ -44,6 +44,56 @@ WS_START, WS_END = 891, 955
 # "(cont.)" / "(*cont.*)" marker -- the tell that it is a repeat, not a new head.
 _CONT_RE = re.compile(r"\(\s*\*?\s*cont\.?\s*\*?\s*\)", re.I)
 
+# Words that make up the gutter-split PAGE RUNNING HEADERS (the category /
+# continent / section label reprinted atop every page).  A header whose edge
+# token is a strict fragment of one of these was cut mid-word by the gutter --
+# a clip, not a whole subcategory header (which uses the whole word).
+_RH_VOCAB = ["EUROPE", "ASIA", "AFRICA", "AMERICA", "AUSTRALASIA", "OCEANIC",
+             "PHYSICAL", "FEATURES", "COUNTRIES", "DIVISIONS", "TOWNS", "ISLANDS",
+             "CONTINENTAL", "GENERAL", "MOUNTAINS", "RIVERS", "LAKES", "ANCIENT",
+             "MISCELLANEOUS", "HISTORY", "GEOGRAPHY", "GREAT", "BRITAIN"]
+
+# Bare section-type words.  At MAJOR-header level (`## `) a header of only these
+# -- no place, no topic -- is a gutter-split running-header label ("DIVISIONS AND
+# TOWNS", "...—COUNTRIES"); a real section-type header is `### ` (### General).
+_SECTION_TYPES = frozenset(
+    {"DIVISIONS", "TOWNS", "COUNTRIES", "AND", "PHYSICAL", "FEATURES"})
+
+
+def _is_clip_header(s: str) -> bool:
+    """True if `s` is a CLIPPED page-running-header fragment, not a whole
+    subcategory header.  Only header lines (`#`/`**`) qualify -- a link or a
+    marginal note is never one.  A clip is INCOMPLETE: it starts mid-word, ends
+    on a dash, leaves a paren unclosed, or its first/last token is a strict
+    fragment of the continent/section vocabulary.  A whole header uses the whole
+    word, so it never trips these."""
+    if not (s.startswith("#") or s.startswith("**")):
+        return False
+    body = re.sub(r"^#+\s*", "", s).strip().strip("*").strip()
+    if not body:
+        return True                              # an empty header is furniture
+    if body[0].islower() or not body[0].isalnum():
+        return True                              # starts mid-word or on punctuation
+    if body.rstrip(").").endswith(("-", "—")):
+        return True                              # ends on a dash -- cut mid-phrase
+    if body.count("(") != body.count(")"):
+        return True                              # an unbalanced paren -- cut across it
+    if "—" in body:
+        tail = re.sub(r"[^A-Za-z]", "", body.rsplit("—", 1)[1])
+        if 0 < len(tail) <= 2:
+            return True                          # a dash + 1-2 char stub -- cut mid-word
+    toks = re.findall(r"[A-Za-z]+", body)
+    if toks:
+        last, first = toks[-1].upper(), toks[0].upper()
+        for w in _RH_VOCAB:
+            if len(last) >= 2 and last != w and w.startswith(last):
+                return True                      # last token a clipped head of a RH word
+            if len(first) >= 2 and first != w and w.endswith(first):
+                return True                      # first token a clipped tail of a RH word
+        if s.startswith("## ") and all(t.upper() in _SECTION_TYPES for t in toks):
+            return True                          # bare section-type at major level
+    return False
+
 # The 24 major categories, in printed order.
 CATEGORIES = [
     "Anthropology and Ethnology", "Archaeology and Antiquities", "Art",
@@ -122,6 +172,8 @@ def _decruft(lines: list[str], openers: list[tuple[str, list[str]]],
     out: list[str] = []
     for line in lines:
         s = line.strip()
+        if not s:
+            continue  # blank line -- spacing furniture, neither header nor link
         n = _norm(s.lstrip("# "))
         if len(n) >= 5 and n in "classifiedlistofarticles":
             continue  # running page header -- furniture
@@ -139,6 +191,8 @@ def _decruft(lines: list[str], openers: list[tuple[str, list[str]]],
                 continue
             if cur >= 0 and _opens(bt, [_norm(openers[cur][0])]):
                 continue  # running-header repeat of the current major category
+        if _is_clip_header(s):
+            continue  # a clipped page-running-header fragment, not a whole header
         out.append(line)
     return out, cur
 
