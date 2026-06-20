@@ -132,14 +132,17 @@ def _ocr_half(client: anthropic.Anthropic, img_b64: str, ws: int,
 
 
 def _bands(part: str, cats: list[str]) -> list[list]:
-    """Split one half-page into [banner_or_None, [lines]] bands.  The full-width
-    banners (category AND continent-section) cross the gutter, so they cut the
-    half into horizontal bands; the first band (above any banner) has None.
+    """Split one half-page into [banner_or_None, [lines]] bands.  Band ONLY on a
+    full-width CATEGORY banner -- every one of the 24 sits dead-centre over the
+    divider, so it cuts BOTH halves at the same height into the same bands, and
+    the two halves stay in step.  The first band (above any banner) has None.
 
-    The running page header ("CLASSIFIED LIST OF ARTICLES") is also full-width
-    and the model marks it `## `, but it is furniture, and it sits at a slightly
-    different height in the two halves -- left in, it misaligns the bands and
-    breaks the stitch.  Drop it (and any clip of it) before splitting."""
+    A `## ` line the model marks that is NOT one of the 24 categories -- a
+    sub-header (Stage and Dancing, Botany) sitting over a single page's columns,
+    or the running "CLASSIFIED LIST OF ARTICLES" furniture -- does NOT span the
+    gutter.  Banding on it makes a band in one half the other half lacks, the
+    halves slip out of alignment, and the spread comes out flipped.  So such a
+    line is kept as ordinary content, never a band boundary."""
     segs: list[list] = [[None, []]]
     for line in part.split("\n"):
         n = _norm(line.lstrip("# "))
@@ -147,10 +150,36 @@ def _bands(part: str, cats: list[str]) -> list[list]:
             continue  # running page header -- furniture, not a banner
         if line.startswith("## "):
             full = _best_category_match(line[3:], cats)
-            segs.append([f"## {full}" if full else line, []])
-        else:
-            segs[-1][1].append(line)
+            if full is not None:
+                segs.append([f"## {full}", []])
+                continue
+        segs[-1][1].append(line)
     return segs
+
+
+def _align_bands(left: list[list], right: list[list],
+                 cats: list[str]) -> tuple[list[list], list[list]]:
+    """Align the two halves' category bands so they zip in step.  A full-width
+    banner cuts both halves into the same bands, but one that lands in only ONE
+    half -- a continuation repeat (`## History` again), or a clip the other half
+    dropped -- leaves that half SHORT one band, and the index-based zip then
+    pairs the wrong bands and spills the next category's content into the
+    previous one.  Insert an EMPTY placeholder band for the missing banner; NEVER
+    drop the banner (dropping shoves the other half's real content past it, into
+    the wrong category -- that truncated Astronomy)."""
+    order = {_norm(c): i for i, c in enumerate(cats)}
+
+    def cat(b):
+        return _norm(b[0][3:]) if b[0] else None
+
+    merged = sorted({cat(b) for b in left[1:]} | {cat(b) for b in right[1:]},
+                    key=lambda c: order.get(c, len(order)))
+
+    def rebuild(bands):
+        by = {cat(b): b for b in bands[1:]}
+        return [bands[0]] + [by.get(c, [None, []]) for c in merged]
+
+    return rebuild(left), rebuild(right)
 
 
 def _assemble(parts: list[str], cats: list[str]) -> str:
@@ -170,6 +199,7 @@ def _assemble(parts: list[str], cats: list[str]) -> str:
     """
     left = _bands(parts[0], cats)
     right = _bands(parts[1], cats)
+    left, right = _align_bands(left, right, cats)
     cat_norms = {_norm(c) for c in cats}
     out: list[str] = []
     for i in range(max(len(left), len(right))):
