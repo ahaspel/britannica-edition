@@ -38,7 +38,13 @@ from pathlib import Path
 HALVES = Path("data/derived/vol29_halves_debug.json")
 OCR = Path("data/derived/vol29_ocr.json")
 OUT = Path("data/derived/toc_category_chunks.json")
+TREE = Path("data/derived/toc_tree.json")
+CLASSIFIED = Path("data/derived/classified_toc.json")
 WS_START, WS_END = 891, 955
+
+# A marginal note is a cross-reference instruction, not a link: it opens with a
+# parenthesis and/or "For"/"See" (a word boundary keeps "Forster" a real link).
+_NOTE_RE = re.compile(r"^\(?\s*\*?\s*(For|See)\b", re.I)
 
 # A section reprinted where it spilled across a page/half break carries a
 # "(cont.)" / "(*cont.*)" marker -- the tell that it is a repeat, not a new head.
@@ -308,6 +314,95 @@ def build_category_chunks(seq, openers):
     return preamble, chunks
 
 
+def _header_level(s: str) -> int:
+    """A header line's depth: `#`=1, `## `=2, `### `=3; a `**bold**` country
+    header sits at sub-section depth (3); anything else (a link, a note) is 0."""
+    if s.startswith("### "):
+        return 3
+    if s.startswith("## "):
+        return 2
+    if s.startswith("# "):
+        return 1
+    if s.startswith("**"):
+        return 3
+    return 0
+
+
+def build_sections(name: str, line_tuples) -> list[dict]:
+    """ONE walk down a category: each subcategory header opens a section, and the
+    links (and marginal notes) that follow drop into it, until the next header.
+    The category's own `## name` wall is the title, not a section.  Anything
+    before the first header (a top-of-category cross-reference) is the lead
+    section (header None).  The stream is already clean -- header / link / link
+    / header -- so the walk needs no lookahead."""
+    lines = [l for _, _, l in line_tuples]
+    if lines and lines[0].strip() == f"## {name}":
+        lines = lines[1:]                      # drop the category title wall
+    sections: list[dict] = []
+    cur = {"header": None, "level": 0, "items": []}
+    for l in lines:
+        s = l.strip()
+        if not s:
+            continue
+        lvl = _header_level(s)
+        if lvl:
+            if cur["header"] is not None or cur["items"]:
+                sections.append(cur)
+            cur = {"header": s, "level": lvl, "items": []}
+        else:
+            cur["items"].append(s)            # a link or a marginal note
+    if cur["header"] is not None or cur["items"]:
+        sections.append(cur)
+    return sections
+
+
+def _clean_header(h: str) -> str:
+    """A header line -> a plain subsection name: drop the `#`/`**` markers and the
+    `*...*` emphasis, collapse whitespace."""
+    return re.sub(r"\s+", " ", re.sub(r"[*#]+", "", h)).strip()
+
+
+def _parse_item(s: str):
+    """One stream line -> ("note", text) for a marginal cross-reference, or
+    ("article", {display, target, emphasized}) for a link.  An italic principal
+    (`*Map*`, a section's chief article printed out of alphabetical order) carries
+    emphasized=True.  `target` is the link text to resolve to an article later."""
+    if _NOTE_RE.match(s):
+        return "note", re.sub(r"\*+", "", s).strip()
+    emphasized = s.startswith("*") and s.endswith("*") and not s.startswith("**")
+    display = re.sub(r"\*+", "", s).strip()
+    return "article", {"display": display, "target": display,
+                       "emphasized": emphasized}
+
+
+def build_classified_toc(tree: list[dict]) -> dict:
+    """Map the section tree onto the topics-viewer shape: categories, each with
+    its lead notes and a flat list of subsections (header -> name, links ->
+    articles, cross-refs -> notes).  Links carry no `filename` yet -- resolving
+    each to its article is the next, separate pass; the viewer renders an
+    unresolved link as plain text until then."""
+    cats: list[dict] = []
+    for t in tree:
+        cat = {"name": t["name"], "notes": [], "subsections": []}
+        for sec in t["sections"]:
+            arts, notes = [], []
+            for it in sec["items"]:
+                kind, val = _parse_item(it)
+                (notes if kind == "note" else arts).append(val)
+            if sec["header"] is None:           # lead: notes head the category
+                cat["notes"].extend(notes)
+                if arts:                        # name == category -> headerless
+                    cat["subsections"].append(
+                        {"name": t["name"], "articles": arts,
+                         "notes": [], "children": []})
+            else:
+                cat["subsections"].append(
+                    {"name": _clean_header(sec["header"]), "articles": arts,
+                     "notes": notes, "children": []})
+        cats.append(cat)
+    return {"categories": cats}
+
+
 def main() -> None:
     openers = category_openers()
     seq = assemble_sequence(openers)
@@ -338,6 +433,32 @@ def main() -> None:
         [{"name": c, "text": "\n".join(l for _, _, l in ls)} for c, ls in chunks],
         ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"wrote {OUT}")
+
+    tree = [{"name": c, "sections": build_sections(c, ls)} for c, ls in chunks]
+    n_sec = sum(len(t["sections"]) for t in tree)
+    n_hdr = sum(1 for t in tree for s in t["sections"] if s["header"])
+    n_item = sum(len(s["items"]) for t in tree for s in t["sections"])
+    body = sum(len(ls) - 1 for _, ls in chunks)  # each chunk's lines minus its wall
+    print(f"\ntree: {n_sec:,} sections ({n_hdr:,} headed), {n_item:,} links/notes")
+    print(f"every body line placed: {n_hdr + n_item == body}  ({n_hdr + n_item:,}/{body:,})")
+    TREE.write_text(json.dumps(tree, ensure_ascii=False, indent=2),
+                    encoding="utf-8")
+    print(f"wrote {TREE}")
+
+    classified = build_classified_toc(tree)
+    n_sub = sum(len(c["subsections"]) for c in classified["categories"])
+    n_art = sum(len(s["articles"]) for c in classified["categories"]
+                for s in c["subsections"])
+    n_note = sum(len(c["notes"]) for c in classified["categories"]) + sum(
+        len(s["notes"]) for c in classified["categories"]
+        for s in c["subsections"])
+    print(f"\nclassified_toc: {n_sub:,} subsections, {n_art:,} article links, "
+          f"{n_note:,} notes")
+    print(f"links + notes = items: {n_art + n_note == n_item}  "
+          f"({n_art + n_note:,}/{n_item:,})")
+    CLASSIFIED.write_text(json.dumps(classified, ensure_ascii=False, indent=2),
+                          encoding="utf-8")
+    print(f"wrote {CLASSIFIED}")
 
 
 if __name__ == "__main__":
