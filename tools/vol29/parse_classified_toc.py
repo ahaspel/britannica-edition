@@ -1115,7 +1115,11 @@ def walk_and_attribute(toc: list[dict],
             continue
         for raw_line in text.split("\n"):
             s = raw_line.strip()
-            if not s or s.startswith("<!--"):
+            # Keep blank lines -- they fall through into the segment.  A bare
+            # heading the model set off with a blank line before AND after (its
+            # large bold type rendered as a paragraph break) is recognised by
+            # that isolation in Phase 2.  Only the OCR sentinel is dropped.
+            if s.startswith("<!--"):
                 continue
             consumed = False
             if s.startswith("## ") or s.startswith("### "):
@@ -1142,6 +1146,15 @@ def walk_and_attribute(toc: list[dict],
             if not consumed and ci >= 0:
                 segments[ci][1].append(raw_line)
 
+    def _under(node: dict, anc: dict) -> bool:
+        """True if `node` sits inside `anc`'s subtree (walk parents up to it)."""
+        nd = node
+        while nd is not None:
+            if nd is anc:
+                return True
+            nd = parent_map.get(id(nd))
+        return False
+
     # ── Phase 2: walk each segment in isolation ───────────────────
     # One category, no banner left to misread.  ### opens a subcategory (matched
     # into the index skeleton for its name/level, or created when the body
@@ -1152,10 +1165,24 @@ def walk_and_attribute(toc: list[dict],
         subs0 = cat_dict.get("subsections", [])
         cur_sub = _bucket_target(subs0[0]) if subs0 else None
         count = 0
-        for raw_line in seg_lines:
+        for i, raw_line in enumerate(seg_lines):
             line = raw_line.strip()
             if not line or line.startswith("<!--"):
                 continue  # blank line or an OCR sentinel (vision-ocr / split-scan)
+            # A bare heading stands ALONE between two blank lines (the model's
+            # rendering of its large bold type) AND is followed by a contiguous
+            # BLOCK of entries -- its run of places.  Both clauses matter: a
+            # set-off single line (a stray isolated entry like a lone division)
+            # is isolated too but has no block under it, so it is NOT a heading.
+            isolated = ((i == 0 or not seg_lines[i - 1].strip())
+                        and (i + 1 >= len(seg_lines)
+                             or not seg_lines[i + 1].strip()))
+            if isolated:
+                _j = i + 1
+                while _j < len(seg_lines) and not seg_lines[_j].strip():
+                    _j += 1
+                isolated = (_j + 1 < len(seg_lines) and seg_lines[_j].strip()
+                            and seg_lines[_j + 1].strip())
 
             # A cross-reference note from the printed index ("(See also …)",
             # "(For X see under Y)") or a scope note ("(Excluding …, q.v.)").
@@ -1190,6 +1217,29 @@ def walk_and_attribute(toc: list[dict],
                 is_header = True
                 hdr3 = True
                 line = re.sub(r"\*+", "", line).strip()
+            elif (geo_recon.get(cur_cat) is not None and re.match(
+                    r"^[^:*]+:\s*\*(?:divisions|towns|states|subjects"
+                    r"|biographies)\b", line, re.IGNORECASE)):
+                # A continuation-column sub-heading the OCR marked with its
+                # italic + "Name: Section" form but DID NOT prefix with `###`:
+                # "Argentina: *Divisions*" is "### Mexico: *Divisions*" minus the
+                # hashes.  Read it as the section header it plainly is -- the
+                # whole line IS the heading text (the italics strip off below).
+                is_header = True
+                hdr3 = True
+            elif (cur_cat == "Geography" and isolated
+                  and not (line.startswith("*") and line.endswith("*"))):
+                # A bare heading set off by a blank line before AND after but no
+                # marker at all -- an unsplit country ("Panama", "Bolivia")
+                # standing over its one flat run of places.  The isolation is the
+                # model's rendering of its large bold type.  Two guards:
+                #  - Geography ONLY -- History's headers are all marked, so a
+                #    blank-isolated line there is just an entry (Ulster, Crusades).
+                #  - NOT fully italic -- a section's emphasized principal articles
+                #    ("*Athletic Sports*") are set off by blanks the same way but
+                #    are LINKS, not headings.  A heading is bare.
+                is_header = True
+                hdr3 = True
 
             # Strip **bold** markers first, then detect *italic*.
             line = re.sub(r"\*\*([^*]+)\*\*", r"\1", line)
@@ -1217,27 +1267,66 @@ def walk_and_attribute(toc: list[dict],
                 # skeleton, or create one the index never carried.
                 if cur_cat:
                     rec = geo_recon.get(cur_cat)
-                    # A BARE section-type banner ("COUNTRIES (cont.)", "Physical
-                    # features") names a continent section but no continent or
-                    # country -- the matcher would bind it to an arbitrary
-                    # continent's section (Europe's, not the America we're
-                    # standing in), so reconcile it against the running continent.
-                    # Everything else: matcher first, reconciliation on failure.
-                    bare = bool(rec and _normalize(
-                        re.sub(r"\(cont\.?\)|\*+", "", line)) in rec[1])
-                    new_sub = (_reconcile_continent(line, rec[0], rec[1], cur_sub)[0]
-                               if bare else None)
-                    if new_sub is None:
+                    if rec is not None:
+                        # ── Skeleton category (Geography / History): the FOUR-RULE
+                        # walk.  The buckets arrive in leaf order; each content
+                        # header opens its OWN leaf, so two buckets can never share
+                        # a node -- a merge is unexpressible, not merely guarded.
+                        conts, sd = rec
+                        is_cont = bool(re.search(r"\(\s*cont", line, re.IGNORECASE))
+                        recon_node, named = _reconcile_continent(
+                            line, conts, sd, cur_sub)
+                        bare_section = _normalize(
+                            re.sub(r"\(cont\.?\)|\*+", "", line)) in sd
+                        if recon_node is not None and (named or bare_section):
+                            # RULE 1 -- a banner MOVES the cursor (no links of its
+                            # own).  A continent opens on its first section (Physical
+                            # features); a section -- including a `(cont.)` of one --
+                            # opens on its general list.  A leaf-level `(cont.)`
+                            # ("France: Towns (cont.)") is NOT a banner, so it falls
+                            # through to Rule 3 and keeps filling its own leaf.
+                            if any(recon_node is c for c in conts):
+                                kids = recon_node.get("children")
+                                cur_sub = _bucket_target(
+                                    kids[0] if kids else recon_node)
+                            else:
+                                cur_sub = _bucket_target(recon_node)
+                        else:
+                            # RULE 2 -- resolve the name and JUMP to that node: a
+                            # country matched WITHIN this continent, else a fresh
+                            # deep leaf (Lakes, Towns) the index never carried.  A
+                            # cross-continent name match is refused, so `### Rivers`
+                            # can't reach another continent.  Crucially a NAMED
+                            # `(cont.)` ("Germany: Biographies (cont.)") resumes its
+                            # OWN bucket by name, wherever in the stream it lands --
+                            # only an UNNAMED continuation falls through to Rule 3.
+                            node = _match_sub(cur_cat, line, cur_sub)
+                            if node is not None and not node.get("_meta"):
+                                here = cur_sub
+                                while here is not None and not any(
+                                        here is c for c in conts):
+                                    here = parent_map.get(id(here))
+                                if here is not None and not _under(node, here):
+                                    node = None
+                            if node is None and is_cont:
+                                pass  # RULE 3 -- UNNAMED continuation: keep the leaf
+                            else:
+                                if node is None:
+                                    node = _create_sub(cur_cat, line, cur_sub)
+                                if node is not None:
+                                    cur_sub = _bucket_target(node)
+                                    if hdr_note:
+                                        node.setdefault("notes",
+                                                        []).append(hdr_note)
+                    else:
+                        # ── Flat category (no skeleton): the matcher, unchanged.
                         new_sub = _match_sub(cur_cat, line, cur_sub)
-                    if new_sub is None and rec:
-                        new_sub = _reconcile_continent(line, rec[0],
-                                                       rec[1], cur_sub)[0]
-                    if new_sub is None:
-                        new_sub = _create_sub(cur_cat, line, cur_sub)
-                    if new_sub:
-                        cur_sub = _bucket_target(new_sub)
-                        if hdr_note:
-                            new_sub.setdefault("notes", []).append(hdr_note)
+                        if new_sub is None:
+                            new_sub = _create_sub(cur_cat, line, cur_sub)
+                        if new_sub:
+                            cur_sub = _bucket_target(new_sub)
+                            if hdr_note:
+                                new_sub.setdefault("notes", []).append(hdr_note)
                 continue
 
             # An entry that is itself a pointer ("Crusades : see under Asia") --
