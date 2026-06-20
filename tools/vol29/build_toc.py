@@ -1,16 +1,33 @@
-"""Divide the vol-29 'Classified List of Articles' into its 24 major categories.
+"""Build the vol-29 'Classified List of Articles' division from the raw scans.
 
-ONE job, nothing else.  Read the assembled per-page OCR stream and cut it into
-exactly 24 category chunks.  The 24 categories print in a fixed, KNOWN order,
-each opened by a full-width banner -- so a wall is pinned by SEQUENCE: a banner
-only ever opens the NEXT category.  An out-of-order or substring-coincidence
-match (Zoology's "Natural History" -> History, a clipped "Phy" -> Geography) is
-not the next category in line, so it can never cut a wall.  A wall is absolute;
-category-mixing is unexpressible.
+ONE job: turn the split-scan OCR into 24 clean, in-order category chunks.
 
-Self-contained by design: imports nothing from the rest of the pipeline.  Input
-is the assembled OCR text (data/derived/vol29_ocr.json); output is the 24 chunks
-(data/derived/toc_category_chunks.json), each a category name + all its bytes.
+This is the basis for everything downstream, so it owns the WHOLE transform and
+reads the raw half-page transcriptions -- not the lossy pre-assembled stream:
+
+  decruft each half  ->  band at the surviving major banners  ->  zip the two
+  halves (left page, then right)  ->  divide into the 24 categories.
+
+The governing fact (user-confirmed, zero exceptions): the ONLY header that
+crosses the gutter we want to keep is a major category's FIRST banner.  Every
+other thing that crosses a page or half boundary is cruft -- the running page
+header, a major category's running-header REPEAT on its later pages, a section
+reprinted with `(cont.)` -- and is removed BEFORE any banding.  Strip the cruft
+and the order fixes itself: a one-sided running header used to split a phantom
+band that shoved one half's content past the other's; with it gone, the two
+halves band in step and read left-then-right.
+
+The 24 print in a fixed, KNOWN order, so a wall is pinned by SEQUENCE: a banner
+only ever opens the NEXT category.  That single rule disambiguates a gutter-clip
+("logy" is Bio- or Geo-logy in the abstract, but after Astronomy it can only be
+Biology) and rejects a coincidence (Zoology's "Natural History" -> History, a
+clipped "Geo" after Geography -> the running header, never the Geology wall).
+
+Self-contained: stdlib only.  Primary input is the saved half-transcriptions
+(data/derived/vol29_halves_debug.json); pages without saved halves fall back to
+the pre-assembled stream (data/derived/vol29_ocr.json), decrufted in place --
+a bridge until every page's halves exist.  Output is the 24 chunks
+(data/derived/toc_category_chunks.json), each a name + all its bytes, in order.
 """
 from __future__ import annotations
 
@@ -18,9 +35,14 @@ import json
 import re
 from pathlib import Path
 
+HALVES = Path("data/derived/vol29_halves_debug.json")
 OCR = Path("data/derived/vol29_ocr.json")
 OUT = Path("data/derived/toc_category_chunks.json")
 WS_START, WS_END = 891, 955
+
+# A section reprinted where it spilled across a page/half break carries a
+# "(cont.)" / "(*cont.*)" marker -- the tell that it is a repeat, not a new head.
+_CONT_RE = re.compile(r"\(\s*\*?\s*cont\.?\s*\*?\s*\)", re.I)
 
 # The 24 major categories, in printed order.
 CATEGORIES = [
@@ -34,7 +56,8 @@ CATEGORIES = [
 ]
 
 # Art prints no full-width banner of its own -- it is a group of sub-arts -- so
-# it opens on the first of THESE sub-art section banners instead of on a name.
+# it opens on the first of THESE sub-art section banners.  Its decrufted boundary
+# is normalized to "## Art", so "art" is an opener too (matched downstream).
 ART_OPENERS = ["Architecture", "Music", "Painting and Engraving",
                "Sculpture", "Minor Arts", "Stage and Dancing"]
 
@@ -49,28 +72,15 @@ def _banner_token(line: str) -> str:
     return _norm(re.sub(r"[*:].*$", "", line.strip()[3:]))
 
 
-def assemble_sequence() -> list[tuple[int, int, str]]:
-    """The per-page reads concatenated in page order -> [(ws, idx, line)].  A
-    category runs start-to-finish before the next begins, so page order is the
-    only sequencing the boundaries need.  No reordering, no tampering."""
-    ocr = json.loads(OCR.read_text(encoding="utf-8"))
-    seq: list[tuple[int, int, str]] = []
-    for ws in range(WS_START, WS_END + 1):
-        text = ocr.get(str(ws))
-        if not text:
-            continue
-        for idx, line in enumerate(text.split("\n")):
-            seq.append((ws, idx, line))
-    return seq
-
-
 def category_openers() -> list[tuple[str, list[str]]]:
     """In printed order, each category and the banner tokens that open it: its
-    own name, except Art, which opens on its sub-art section banners."""
+    own name, except Art, which opens on its sub-art banners (plus "art", the
+    name its decrufted boundary normalizes to)."""
     openers: list[tuple[str, list[str]]] = []
     for c in CATEGORIES:
-        toks = ART_OPENERS if c == "Art" else [c]
-        openers.append((c, [_norm(t) for t in toks]))
+        toks = ([_norm(t) for t in ART_OPENERS] + ["art"]) if c == "Art" \
+            else [_norm(c)]
+        openers.append((c, toks))
     return openers
 
 
@@ -87,36 +97,167 @@ def _opens(banner: str, tokens: list[str]) -> bool:
     return False
 
 
+def _advance(bt: str, openers: list[tuple[str, list[str]]], cur: int) -> int | None:
+    """One step of the known-order walk: if this banner token opens the NEXT
+    category (and is not just a repeat of the current one), return cur+1, else
+    None.  "Geo" after Geography opens Geology AND Geography, so the `not
+    current` clause keeps it a repeat; "Geol" opens only Geology, so it walls."""
+    nxt = cur + 1
+    if (nxt < len(openers) and _opens(bt, openers[nxt][1])
+            and not (cur >= 0 and _opens(bt, openers[cur][1]))):
+        return nxt
+    return None
+
+
+def _decruft(lines: list[str], openers: list[tuple[str, list[str]]],
+             cur: int) -> tuple[list[str], int]:
+    """Strip page furniture and continuation repeats from one half's lines,
+    returning the clean lines and the final known-order category index.
+
+    Removed: the running page header (`CLASSIFIED LIST OF ARTICLES` + clips);
+    HTML-comment furniture (the split-scan tag); a `(cont.)` continuation header;
+    and the running-header REPEAT of the current major category.  KEPT: content,
+    section headers (a continent, a country), and the FIRST banner of each major
+    category -- normalized to its full name so the band split is unambiguous."""
+    out: list[str] = []
+    for line in lines:
+        s = line.strip()
+        n = _norm(s.lstrip("# "))
+        if len(n) >= 5 and n in "classifiedlistofarticles":
+            continue  # running page header -- furniture
+        if s.startswith("<!--"):
+            continue  # html-comment furniture (e.g. the split-scan tag)
+        if _CONT_RE.search(s):
+            continue  # a `(cont.)` marker -- a section reprinted across the break
+            # (any prefix: `### `, `**bold**`, or none -- the model is inconsistent)
+        if s.startswith("## "):
+            bt = _banner_token(line)
+            nxt = _advance(bt, openers, cur)
+            if nxt is not None:
+                cur = nxt
+                out.append(f"## {openers[cur][0]}")  # first appearance -- kept
+                continue
+            if cur >= 0 and _opens(bt, [_norm(openers[cur][0])]):
+                continue  # running-header repeat of the current major category
+        out.append(line)
+    return out, cur
+
+
+def _bands(lines: list[str],
+           openers: list[tuple[str, list[str]]]) -> list[list]:
+    """Split decrufted lines into [banner_or_None, [lines]] bands at each
+    surviving major banner -- now guaranteed a real, first-appearance boundary,
+    so both halves split in step.  The first band (None) holds the incoming
+    category's content."""
+    cat_norms = {_norm(c) for c, _ in openers}
+    segs: list[list] = [[None, []]]
+    for line in lines:
+        s = line.strip()
+        if s.startswith("## ") and _norm(s[3:]) in cat_norms:
+            segs.append([s, []])
+        else:
+            segs[-1][1].append(line)
+    return segs
+
+
+def _align_bands(left: list[list], right: list[list],
+                 openers: list[tuple[str, list[str]]]
+                 ) -> tuple[list[list], list[list]]:
+    """Align the two halves' major-category bands so they zip in step.  A banner
+    one half clipped away entirely leaves that half short a band; insert an EMPTY
+    placeholder for it (never drop the banner -- dropping shoves the other half's
+    content past it, into the wrong category)."""
+    order = {_norm(c): i for i, (c, _) in enumerate(openers)}
+
+    def cat(b):
+        return _norm(b[0][3:]) if b[0] else None
+
+    merged = sorted({cat(b) for b in left[1:]} | {cat(b) for b in right[1:]},
+                    key=lambda c: order.get(c, len(order)))
+
+    def rebuild(bands):
+        by = {cat(b): b for b in bands[1:]}
+        return [bands[0]] + [by.get(c, [None, []]) for c in merged]
+
+    return rebuild(left), rebuild(right)
+
+
+def assemble_spread(left_text: str, right_text: str,
+                    openers: list[tuple[str, list[str]]],
+                    incoming: int) -> tuple[str, int]:
+    """Decruft both halves from the same incoming category, then read the spread
+    BAND-BY-BAND: the surviving major banners cut both halves into the same
+    bands, so per band we emit the banner once, then the left page's lines, then
+    the right's -- a category spanning the gutter stays together and in reading
+    order.  Returns the assembled text and the outgoing category index."""
+    llines, lcur = _decruft(left_text.split("\n"), openers, incoming)
+    rlines, rcur = _decruft(right_text.split("\n"), openers, incoming)
+    left, right = _align_bands(_bands(llines, openers),
+                               _bands(rlines, openers), openers)
+    out: list[str] = []
+    for i in range(max(len(left), len(right))):
+        banner = ((left[i][0] if i < len(left) else None)
+                  or (right[i][0] if i < len(right) else None))
+        if banner:
+            out.append(banner)
+        if i < len(left):
+            out.extend(left[i][1])
+        if i < len(right):
+            out.extend(right[i][1])
+    return "\n".join(out), max(lcur, rcur)
+
+
+def assemble_sequence(openers: list[tuple[str, list[str]]]
+                      ) -> list[tuple[int, int, str]]:
+    """The whole list, page by page in order, decrufted and assembled -> [(ws,
+    idx, line)].  A page with saved halves is assembled clean from them; one
+    without falls back to its pre-assembled stream text, decrufted in place (no
+    re-band -- a bridge until its halves exist).  The known-order category index
+    threads across pages, so each page's incoming category is just what flowed
+    out of the last."""
+    halves = json.loads(HALVES.read_text(encoding="utf-8")) if HALVES.exists() \
+        else {}
+    ocr = json.loads(OCR.read_text(encoding="utf-8")) if OCR.exists() else {}
+    cur = -1
+    seq: list[tuple[int, int, str]] = []
+    for ws in range(WS_START, WS_END + 1):
+        key = str(ws)
+        if key in halves:
+            text, cur = assemble_spread(
+                halves[key]["left"], halves[key]["right"], openers, cur)
+        elif ocr.get(key):
+            lines, cur = _decruft(ocr[key].split("\n"), openers, cur)
+            text = "\n".join(lines)
+        else:
+            continue
+        seq.extend((ws, i, ln) for i, ln in enumerate(text.split("\n")))
+    return seq
+
+
 def build_category_chunks(seq, openers):
-    """Slice the stream into (category, lines) chunks: every line from a
-    category's wall up to the next category's wall.  Advance to the next category
-    ONLY when a banner opens it; everything else (repeats, sub-banners,
-    coincidental matches) stays in the current chunk.  Each line belongs to
-    exactly one category, so the chunks partition the stream -- nothing dropped,
-    nothing shared.  `preamble` holds anything before the first wall."""
+    """Slice the assembled stream into (category, lines) chunks: every line from
+    a category's wall up to the next category's wall.  Advance ONLY when a banner
+    opens the next category; everything else stays in the current chunk.  Each
+    line belongs to exactly one category, so the chunks partition the stream --
+    nothing dropped, nothing shared.  `preamble` holds anything before wall 1."""
     preamble: list[tuple[int, int, str]] = []
     chunks: list[list] = []
     cur = -1
     for ws, idx, line in seq:
         s = line.strip()
-        if s.startswith("## ") and cur + 1 < len(openers):
-            bt = _banner_token(line)
-            # Open the next category ONLY if the banner names the next and NOT
-            # the current.  "Geo" is a prefix of both Geography and Geology, so a
-            # clipped Geography banner ("Geo") is a repeat, never the Geology
-            # wall; the real Geology banner clips to "Geol"/"ogy", which name
-            # Geology alone.  This is the only sound way to seat a clipped wall.
-            if (_opens(bt, openers[cur + 1][1])
-                    and not (cur >= 0 and _opens(bt, openers[cur][1]))):
-                cur += 1
+        if s.startswith("## "):
+            nxt = _advance(_banner_token(line), openers, cur)
+            if nxt is not None:
+                cur = nxt
                 chunks.append([openers[cur][0], []])
         (chunks[cur][1] if cur >= 0 else preamble).append((ws, idx, line))
     return preamble, chunks
 
 
 def main() -> None:
-    seq = assemble_sequence()
-    preamble, chunks = build_category_chunks(seq, category_openers())
+    openers = category_openers()
+    seq = assemble_sequence(openers)
+    preamble, chunks = build_category_chunks(seq, openers)
 
     def asc(x: str) -> str:
         return x.encode("ascii", "backslashreplace").decode()
