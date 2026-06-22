@@ -77,15 +77,45 @@ Exact printed wording; do not normalize spelling, expand abbreviations, or \
 reorder.  Unreadable token -> [?].
 """
 
+# Banding pass.  Read the WHOLE uncropped spread -- the only view in which a
+# full-width banner is intact (the centre crop slices it).  We don't want the
+# columns here (reading across the divider scrambles them); we want only the
+# banners, whole and in printed order, to use as the authority for what the
+# bands are.  The half-page reads supply the in-order content; this supplies the
+# band names the halves can only show in slivers.
+SPREAD_PROMPT = """\
+You are looking at a COMPLETE two-page spread from the 'Classified List of \
+Articles' at the back of volume 29 of the 1911 Encyclopaedia Britannica.  A \
+vertical rule down the centre divides it into two three-column pages.
 
-def needs_vision(ws: int, current_text: str, force: bool = False) -> bool:
-    """True if this ws page should be vision-transcribed."""
-    if current_text.startswith(VISION_TAG) and not force:
-        return False  # already done in a prior run (pass --force to redo)
+Some headings are FULL-WIDTH banners printed ACROSS THE WHOLE SPREAD -- centred \
+over the entire width and crossing the central rule.  These are the large \
+Blackletter CATEGORY names and the continent / section banners beneath them \
+(e.g. "ASIA", "EUROPE (CONTINENTAL) -- PHYSICAL FEATURES").  Every OTHER \
+heading sits over the columns of ONE page only and does NOT cross the rule.
+
+Transcribe ONLY the full-width banners that span the whole spread, crossing the \
+central rule -- one per line, TOP TO BOTTOM in printed order, each prefixed \
+with "## ", exact printed wording.  Do NOT transcribe the article columns, and \
+do NOT transcribe any heading that sits over a single page's columns only.  An \
+unreadable banner -> "## [?]".  Output ONLY these banner lines.
+"""
+
+
+def needs_vision(ws: int, current_text: str, has_spread: bool,
+                 force: bool = False) -> bool:
+    """True if this ws page still needs a vision read.  It needs work if it was
+    never split-scanned (no VISION_TAG) OR it has been but still lacks the whole-
+    spread BAND read -- so a plain run fills in the band pass on pages whose
+    halves are already good, while `--force` redoes everything."""
     leaf = ws + LEAF_OFFSET
     if not (SCAN_DIR / f"vol29_leaf{leaf:04d}.jpg").exists():
         return False  # no scan to vision against
-    return True
+    if force:
+        return True
+    if not current_text.startswith(VISION_TAG):
+        return True   # never split-scanned -- needs the full pass
+    return not has_spread  # split-scanned, but still missing the band read
 
 
 def _norm(s: str) -> str:
@@ -122,6 +152,35 @@ def _ocr_half(client: anthropic.Anthropic, img_b64: str, ws: int,
                 {"type": "text", "text": (
                     f"Transcribe this {side} page of the classified-TOC spread "
                     f"(vol 29, leaf {leaf}, ws {ws}).")},
+            ],
+        }],
+    ) as stream:
+        msg = stream.get_final_message()
+    return "".join(
+        b.text for b in msg.content if getattr(b, "type", None) == "text"
+    ).strip()
+
+
+def _ocr_spread(client: anthropic.Anthropic, img_b64: str, ws: int,
+                leaf: int) -> str:
+    """Whole-spread banding pass: the full-width banners, whole and in order."""
+    with client.messages.stream(
+        model=MODEL,
+        max_tokens=4000,
+        system=[{
+            "type": "text",
+            "text": SPREAD_PROMPT,
+            "cache_control": {"type": "ephemeral"},
+        }],
+        messages=[{
+            "role": "user",
+            "content": [
+                {"type": "image", "source": {
+                    "type": "base64", "media_type": "image/jpeg",
+                    "data": img_b64}},
+                {"type": "text", "text": (
+                    f"List the full-width spanning banners of this spread "
+                    f"(vol 29, leaf {leaf}, ws {ws}), top to bottom.")},
             ],
         }],
     ) as stream:
@@ -224,24 +283,43 @@ def _assemble(parts: list[str], cats: list[str]) -> str:
 
 
 def transcribe_page(client: anthropic.Anthropic, ws: int,
-                    cats: list[str]) -> str:
+                    cats: list[str], force: bool = False) -> str:
     leaf = ws + LEAF_OFFSET
     scan_path = SCAN_DIR / f"vol29_leaf{leaf:04d}.jpg"
     im = Image.open(scan_path).convert("RGB")
     w, h = im.size
     mid = w // 2  # the centre rule that separates the two pages
-    parts = []
-    for side, box in (("left", (0, 0, mid, h)), ("right", (mid, 0, w, h))):
-        buf = io.BytesIO()
-        im.crop(box).save(buf, format="JPEG", quality=90)
-        b64 = base64.standard_b64encode(buf.getvalue()).decode("ascii")
-        parts.append(_ocr_half(client, b64, ws, leaf, side))
-    # Diagnostic: keep the RAW half-transcriptions.  The assembled stream drops
-    # one side of every gutter-split header, so reconstructing those banners
-    # needs to see both halves as the model read them, pre-assembly.
+
     _dbg = Path("data/derived/vol29_halves_debug.json")
     _d = (json.loads(_dbg.read_text(encoding="utf-8")) if _dbg.exists() else {})
-    _d[str(ws)] = {"left": parts[0], "right": parts[1]}
+    prior = {} if force else _d.get(str(ws), {})
+
+    # Half-page WALKS (columns in order).  Reuse if already transcribed -- a run
+    # that only fills in the band read shouldn't re-spend on halves already good.
+    if prior.get("left") and prior.get("right"):
+        parts = [prior["left"], prior["right"]]
+    else:
+        parts = []
+        for side, box in (("left", (0, 0, mid, h)), ("right", (mid, 0, w, h))):
+            buf = io.BytesIO()
+            im.crop(box).save(buf, format="JPEG", quality=90)
+            b64 = base64.standard_b64encode(buf.getvalue()).decode("ascii")
+            parts.append(_ocr_half(client, b64, ws, leaf, side))
+
+    # Whole-spread BAND read (banners whole).  Read the uncropped spread -- the
+    # only view where a full-width banner survives the centre crop.  Reuse if
+    # already present.
+    spread = prior.get("spread")
+    if not spread:
+        sbuf = io.BytesIO()
+        im.save(sbuf, format="JPEG", quality=90)
+        spread_b64 = base64.standard_b64encode(sbuf.getvalue()).decode("ascii")
+        spread = _ocr_spread(client, spread_b64, ws, leaf)
+
+    # All three raw reads.  Neither alone suffices: the halves walk but can't
+    # band (sliver banners); the spread bands but can't walk (scrambled columns).
+    # Downstream bands from `spread` and walks the halves into those bands.
+    _d[str(ws)] = {"left": parts[0], "right": parts[1], "spread": spread}
     _dbg.write_text(json.dumps(_d, indent=2, ensure_ascii=False),
                     encoding="utf-8")
     return _assemble(parts, cats)
@@ -265,6 +343,8 @@ def main() -> None:
         return
     ocr_data = json.loads(PER_PAGE_OCR.read_text(encoding="utf-8"))
     cats = _known_categories()
+    _dbg = Path("data/derived/vol29_halves_debug.json")
+    dbg = (json.loads(_dbg.read_text(encoding="utf-8")) if _dbg.exists() else {})
 
     # CLI: "--force" re-transcribes pages already done; bare integers or an
     # inclusive RANGE ("903-933") limit the run to those ws pages (e.g.
@@ -282,9 +362,10 @@ def main() -> None:
     for ws in range(WS_START, WS_END + 1):
         if only and ws not in only:
             continue
-        if needs_vision(ws, ocr_data.get(str(ws), ""), force):
+        has_spread = bool(dbg.get(str(ws), {}).get("spread"))
+        if needs_vision(ws, ocr_data.get(str(ws), ""), has_spread, force):
             targets.append(ws)
-    print(f"Pages to vision-transcribe (split-scan): {len(targets)}")
+    print(f"Pages to vision-transcribe (band + walk): {len(targets)}")
     if not targets:
         print("Nothing to do.")
         return
@@ -293,7 +374,7 @@ def main() -> None:
     for i, ws in enumerate(targets, 1):
         print(f"  [{i:2d}/{len(targets)}] ws{ws}...", end=" ", flush=True)
         try:
-            text = transcribe_page(client, ws, cats)
+            text = transcribe_page(client, ws, cats, force)
         except Exception as e:
             print(f"ERROR ({type(e).__name__}): {e}")
             continue
