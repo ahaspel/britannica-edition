@@ -6,7 +6,7 @@ skeleton -- the deep-trunk failures of that walk are why we hand-marked the
 boundaries instead.  This builder keeps the one genuinely good half of it --
 the article RESOLVER, lifted here -- and feeds it the marks:
 
-    data/derived/vol29_major_markup.txt   (the <<<< Major >>>> boundaries)
+    docs/vol29_major_markup.txt           (the hand-marked boundaries, git-tracked)
   + data/derived/vol29_halves_debug.json  (the half-page OCR, in reading order)
   -> buckets straight from the printed `###`/`##` section headers
   -> each bucket sorted alphabetically (the source's own order)
@@ -37,7 +37,7 @@ CATEGORIES = [
 
 ARTICLES_INDEX = Path("data/derived/articles/index.json")
 SECTION_INDEX = Path("data/derived/classified_section_index.json")
-MARKUP = Path("data/derived/vol29_major_markup.txt")
+MARKUP = Path("docs/vol29_major_markup.txt")
 HALVES = Path("data/derived/vol29_halves_debug.json")
 OUT = Path("data/derived/classified_toc.json")
 CAT_TOC_DIR = Path("data/derived/cat_toc")
@@ -356,9 +356,11 @@ def _is_hdr(s): return s.startswith("## ") or s.startswith("### ") or s.startswi
 
 # A section header the OCR demoted to a plain entry line (no ##/###) after a
 # clipped page-banner -- "Russia: *Biographies*", "Rumania: *Subjects and
-# Biographies*", "Rome ...: *Biographies (cont.)*".  The "Name: Subjects/
-# Biographies" shape is unmistakable; an article entry never carries that tail.
-_DEMOTED_HDR = re.compile(r"^[^:]{2,60}:\s*\*?(subjects|biographies)\b", re.I)
+# Biographies*", "Argentina: *Divisions*", "Chile: *Towns, etc.*".  The
+# "Name: <section>" shape is unmistakable; an article entry never carries that
+# tail.  History uses Subjects/Biographies; Geography uses Divisions/Towns.
+_DEMOTED_HDR = re.compile(
+    r"^[^:]{2,60}:\s*\*?(subjects|biographies|divisions|towns)\b", re.I)
 
 
 def _is_demoted_hdr(s):
@@ -719,6 +721,28 @@ def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
     # clipped past recognition) carries one continent's general subjects.  Route
     # it by the company it keeps -- the continent of its nearest placed neighbour
     # -- onto that continent's empty "General ..." leaf, never reading the banner.
+    def _cont_target(cont, bare):
+        # The empty leaf inside `cont` this bare run belongs on: first one named
+        # like the run itself ("Lakes" -> Physical features > Lakes), else the
+        # continent's "General ..." leaf (Asia's general subjects).
+        if cont is None:
+            return None
+        queue = list(cont.get("children", []))
+        general = None
+        while queue:
+            nxt = []
+            for n in queue:
+                if n.get("children"):
+                    nxt.extend(n["children"])
+                elif not n.get("articles"):
+                    nn = _normalize(n["name"])
+                    if bare and nn == bare:
+                        return n
+                    if general is None and nn.startswith("general"):
+                        general = n
+            queue = nxt
+        return general
+
     orphans = []
     for bi in orph_idx:
         cont = None
@@ -729,9 +753,7 @@ def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
                     break
             if cont:
                 break
-        target = next((ch for ch in (cont.get("children", []) if cont else [])
-                       if not ch.get("children") and not ch.get("articles")
-                       and _normalize(ch["name"]).startswith("general")), None)
+        target = _cont_target(cont, bbares[bi])
         if target is not None:
             _place(target, [buckets[bi]])
         else:
