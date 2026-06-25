@@ -352,6 +352,20 @@ def _match_major(name: str):
 
 
 def _is_hdr(s): return s.startswith("## ") or s.startswith("### ") or s.startswith("**")
+
+
+# A section header the OCR demoted to a plain entry line (no ##/###) after a
+# clipped page-banner -- "Russia: *Biographies*", "Rumania: *Subjects and
+# Biographies*", "Rome ...: *Biographies (cont.)*".  The "Name: Subjects/
+# Biographies" shape is unmistakable; an article entry never carries that tail.
+_DEMOTED_HDR = re.compile(r"^[^:]{2,60}:\s*\*?(subjects|biographies)\b", re.I)
+
+
+def _is_demoted_hdr(s):
+    return (not s.startswith("#") and not s.startswith("**")
+            and bool(_DEMOTED_HDR.match(s.replace("*", ""))))
+
+
 def _hname(s):
     s = re.sub(r"^#+\s*", "", s).replace("*", "")
     s = re.sub(r"\s*\(\s*cont[^)]*\)?", "", s, flags=re.I)   # drop only "(cont.)"
@@ -402,12 +416,15 @@ def build_buckets(cat: str, lines: list[str]) -> list[dict]:
         s = line.strip()
         if not s:
             continue
-        if _is_hdr(s):
+        if _is_hdr(s) or _is_demoted_hdr(s):
             is_cont = bool(re.search(r"\(\s*\*?\s*cont", s, re.I))
             nm = _hname(s)
             if _is_noise(nm, cat):
                 continue
-            if _continent(s):
+            # A continent band is a `##` full-width banner; a `###` column header
+            # is a country (UK, Asia Minor, Africa Ancient) even when its name
+            # starts with a continent keyword -- never treat it as a band.
+            if s.startswith("## ") and _continent(s):
                 band = nm.split(":")[0].strip()
                 cur_b = None
                 continue
@@ -423,16 +440,39 @@ def build_buckets(cat: str, lines: list[str]) -> list[dict]:
             # A fresh header starts its OWN bucket even when the name repeats in
             # another section -- the top-level "General" and Comparative's
             # "General" are two sections, not one, and must not merge.
-            cur_b = {"name": nm, "band": band, "arts": [], "pr": []}
+            cur_b = {"name": nm, "band": band, "arts": [], "pr": [], "notes": []}
             by_key[key] = cur_b
             order.append(cur_b)
-        elif not s.startswith("("):
+        elif s.startswith("("):
+            # A cross-reference ("(See NETHERLANDS)") is a real leaf that points
+            # elsewhere, not noise -- carry it so an xref leaf (Belgium) is not
+            # read as empty.  Other parenthetical annotations stay dropped.
+            if cur_b is not None and re.match(r"\(\s*see\b", s, re.I):
+                cur_b["notes"].append(s.strip("()").strip())
+        else:
+            base = s.strip("*").strip()
+            if (s.startswith("*") and s.endswith("*")
+                    and _normalize(base) in {"europe", "asia", "africa",
+                                             "america", "australasia", "australia"}):
+                # A continent's general-subjects run is headed only by its name in
+                # italic ("*Africa*"), with no "### Africa: General subjects" line;
+                # without this its bare entries fold into the previous bucket.
+                nm = f"{base}: General subjects"
+                key = (band, _normalize(nm))
+                if key in by_key:
+                    cur_b = by_key[key]
+                else:
+                    cur_b = {"name": nm, "band": band,
+                             "arts": [], "pr": [], "notes": []}
+                    by_key[key] = cur_b
+                    order.append(cur_b)
+                continue
             if cur_b is None:                # articles directly under a band
                 key = (band, "_gen_")
                 cur_b = by_key.get(key)
                 if cur_b is None:
                     cur_b = {"name": band or "General", "band": band,
-                             "arts": [], "pr": []}
+                             "arts": [], "pr": [], "notes": []}
                     by_key[key] = cur_b
                     order.append(cur_b)
             (cur_b["pr"] if (s.startswith("*") and s.endswith("*"))
@@ -509,6 +549,9 @@ def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
             if emph:
                 a["emphasized"] = True
             node.setdefault("articles", []).append(a)
+        for note in (n for b in bs for n in b.get("notes", [])):
+            if note not in node.setdefault("notes", []):
+                node["notes"].append(note)
 
     # Flat category: no nesting at all -> the whole thing is one A-Z list.
     if not seq:
@@ -639,11 +682,15 @@ def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
             assign[bo] = lo
         pb, pn = bi, nj
 
+    # continent (first-level node under the category) each placed bucket lives in
+    bcont = {bi: (seq[nj][1][0] if seq[nj][1] else None)
+             for bi, nj in assign.items()}
+
     # PHASE C -- a leftover continuation rolls into the node just placed.
     place: dict[int, list[int]] = {}
     grafts: list[tuple[dict, int]] = []
     cur = None
-    orphans = []
+    orph_idx = []
     for bi in range(len(buckets)):
         if bi in assign:
             cur = assign[bi]
@@ -654,13 +701,13 @@ def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
             # A real, specific section the index has no leaf for, sitting under a
             # banner (internal) node -- "Hebrew Religion" under Judaism, which the
             # OCR-scrambled index source never seated.  Graft it rather than drop
-            # the links.  Generic leftovers stay surfaced as orphans.
+            # the links.  Generic leftovers fall to the company-routing below.
             cnode = seq[cur][0] if cur is not None else None
             if cnode is not None and cnode.get("children") \
                     and bbares[bi] not in GENERIC:
                 grafts.append((cnode, bi))
             else:
-                orphans.append(buckets[bi])
+                orph_idx.append(bi)
     for nj, bis in place.items():
         _place(seq[nj][0], [buckets[bi] for bi in bis])
     for cnode, bi in grafts:
@@ -668,8 +715,29 @@ def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
                 "notes": [], "children": []}
         cnode["children"].append(leaf)
         _place(leaf, [buckets[bi]])
+    # A leftover continent-level run (a "## AS"/"## FRICA" banner the gutter
+    # clipped past recognition) carries one continent's general subjects.  Route
+    # it by the company it keeps -- the continent of its nearest placed neighbour
+    # -- onto that continent's empty "General ..." leaf, never reading the banner.
+    orphans = []
+    for bi in orph_idx:
+        cont = None
+        for d in range(1, len(buckets)):
+            for nb in (bi + d, bi - d):    # following first: a banner precedes its run
+                if 0 <= nb < len(buckets) and bcont.get(nb):
+                    cont = bcont[nb]
+                    break
+            if cont:
+                break
+        target = next((ch for ch in (cont.get("children", []) if cont else [])
+                       if not ch.get("children") and not ch.get("articles")
+                       and _normalize(ch["name"]).startswith("general")), None)
+        if target is not None:
+            _place(target, [buckets[bi]])
+        else:
+            orphans.append(buckets[bi])
     empty = [(n, path) for i, (n, path) in enumerate(seq)
-             if is_leaf[i] and not n.get("articles")]
+             if is_leaf[i] and not n.get("articles") and not n.get("notes")]
     return orphans, empty
 
 
