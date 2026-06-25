@@ -326,15 +326,14 @@ def transcribe_page(client: anthropic.Anthropic, ws: int,
 
 
 def _known_categories() -> list[str]:
-    """The 24 authoritative top-level classified-TOC category names, from the
-    parser's meta-TOC loader -- used to reconcile banners clipped by the centre
-    crop.  Sourced from the parser so there is ONE definition of the category
-    set, not a copy, and no noise: harvesting `##` lines out of the OCR also
-    picks up section headers the model mis-stamped (e.g. `Comparative Religion
-    and Folklore`), which would make a clipped `Religion and...` ambiguous."""
+    """The 24 authoritative top-level classified-TOC category names -- used to
+    reconcile banners clipped by the centre crop.  Taken from the TOC builder's
+    single definition (not a copy), so a clipped `Religion and...` reconciles
+    cleanly and no mis-stamped section header (e.g. `Comparative Religion and
+    Folklore`) leaks into the set."""
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-    from parse_classified_toc import load_meta_toc_categories
-    return [c["name"] for c in load_meta_toc_categories()]
+    from populate_classified_toc import CATEGORIES
+    return list(CATEGORIES)
 
 
 def main() -> None:

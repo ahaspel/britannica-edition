@@ -174,11 +174,11 @@ uv run python tools/pipeline/annotate_math_markers.py
 
 # --- Phase 6b: Build classified TOC (topics page data) ---
 echo
-echo "=== Phase 6b: Parsing classified TOC (vol 29 topics) [$(elapsed)] ==="
-uv run python tools/vol29/parse_classified_toc.py
+echo "=== Phase 6b: Building classified TOC (vol 29 topics) [$(elapsed)] ==="
+uv run python tools/vol29/populate_classified_toc.py
 
 # --- Phase 6b2: Apply cached topic-disambiguation choices ---
-# parse_classified_toc.py picks one article per ambiguous index entry
+# populate_classified_toc.py picks one article per ambiguous index entry
 # (e.g. ABEL → first match), which is often wrong contextually. The
 # disambiguator (Claude Haiku, cached) chooses the right article per
 # category context (Chemistry > ABEL → Sir Frederick Augustus Abel,

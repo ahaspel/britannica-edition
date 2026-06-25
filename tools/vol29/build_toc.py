@@ -854,6 +854,12 @@ def parse_index() -> dict[str, list[dict]]:
         if _norm(node["name"]) == "law":
             node["name"] = "General"
             break
+    # The index prints the UK's "Division and Towns" singular; it should be plural.
+    for cont in cats.get("Geography", []):
+        if _norm(cont["name"]).startswith("unitedkingdom"):
+            for ch in cont.get("children", []):
+                if _norm(ch["name"]) == "divisionandtowns":
+                    ch["name"] = "Divisions and Towns"
     return cats
 
 
@@ -884,6 +890,8 @@ _NAME_VARIANTS = {
     "churchhistorytocounciloftrent": "churchhistorytothecounciloftrent",
     "classics": "classicalgreekandlatin",
     "finance": "financeandcurrency",
+    "critics": "biographiesofcritics",
+    "scholars": "classicalscholars",
 }
 
 # Section-type leaves the index omits but the body carries: each names a
