@@ -464,7 +464,7 @@ def build_buckets(cat: str, lines: list[str]) -> list[dict]:
                 if key in by_key:
                     cur_b = by_key[key]
                 else:
-                    cur_b = {"name": nm, "band": band,
+                    cur_b = {"name": nm, "band": band, "cgen": True,
                              "arts": [], "pr": [], "notes": []}
                     by_key[key] = cur_b
                     order.append(cur_b)
@@ -679,7 +679,8 @@ def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
     pb = pn = -1
     for bi, nj in backbone + [(len(buckets), len(seq))]:
         gl = [x for x in range(pn + 1, nj) if is_leaf[x] and x not in reserved]
-        gb = [b for b in range(pb + 1, bi) if b not in assign]
+        gb = [b for b in range(pb + 1, bi)
+              if b not in assign and not buckets[b].get("cgen")]
         for bo, lo in zip(gb, gl):
             assign[bo] = lo
         pb, pn = bi, nj
@@ -697,7 +698,8 @@ def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
         if bi in assign:
             cur = assign[bi]
             place.setdefault(cur, []).append(bi)
-        elif cur is not None and (_sig_words(buckets[bi]["name"]) & nwords[cur]):
+        elif cur is not None and not buckets[bi].get("cgen") \
+                and (_sig_words(buckets[bi]["name"]) & nwords[cur]):
             place.setdefault(cur, []).append(bi)
         elif buckets[bi]["pr"] or buckets[bi]["arts"]:
             # A real, specific section the index has no leaf for, sitting under a
@@ -706,7 +708,8 @@ def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
             # the links.  Generic leftovers fall to the company-routing below.
             cnode = seq[cur][0] if cur is not None else None
             if cnode is not None and cnode.get("children") \
-                    and bbares[bi] not in GENERIC:
+                    and bbares[bi] not in GENERIC \
+                    and not buckets[bi].get("cgen"):
                 grafts.append((cnode, bi))
             else:
                 orph_idx.append(bi)
@@ -721,10 +724,12 @@ def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
     # clipped past recognition) carries one continent's general subjects.  Route
     # it by the company it keeps -- the continent of its nearest placed neighbour
     # -- onto that continent's empty "General ..." leaf, never reading the banner.
-    def _cont_target(cont, bare):
+    def _cont_target(cont, bare, allow_general=False):
         # The empty leaf inside `cont` this bare run belongs on: first one named
-        # like the run itself ("Lakes" -> Physical features > Lakes), else the
-        # continent's "General ..." leaf (Asia's general subjects).
+        # like the run itself ("Lakes" -> Physical features > Lakes).  A
+        # continent-general run (cgen) may instead fall back to the continent's
+        # "General ..." leaf; a physical-feature run must NOT -- an unmatched
+        # "Miscellaneous" is not a "General list".
         if cont is None:
             return None
         queue = list(cont.get("children", []))
@@ -738,10 +743,22 @@ def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
                     nn = _normalize(n["name"])
                     if bare and nn == bare:
                         return n
-                    if general is None and nn.startswith("general"):
+                    # "general" need not lead the name -- America files its
+                    # country list under "Countries, general list".
+                    if allow_general and general is None and "general" in nn:
                         general = n
             queue = nxt
         return general
+
+    def _band_continent(band):
+        # A bucket's own banner band ("## ASIA -- PHYSICAL", clipped to
+        # "ASIA?PHYSIC") still names its continent when the neighbour-based
+        # routing can't; map the keyword to the top-level node.
+        kw = _continent(band or "")
+        if not kw:
+            return None
+        return next((n for n in nodes if _normalize(n["name"]).startswith(kw)),
+                    None)
 
     orphans = []
     for bi in orph_idx:
@@ -753,7 +770,11 @@ def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
                     break
             if cont:
                 break
-        target = _cont_target(cont, bbares[bi])
+        cg = bool(buckets[bi].get("cgen"))
+        target = _cont_target(cont, bbares[bi], cg)
+        if target is None:               # neighbour failed -> trust the band
+            target = _cont_target(_band_continent(buckets[bi].get("band")),
+                                  bbares[bi], cg)
         if target is not None:
             _place(target, [buckets[bi]])
         else:
@@ -779,11 +800,14 @@ def main() -> None:
             cat, nodes, build_buckets(cat, content[cat]), resolve)
         n_empty += len(empty)
         n_orph += len(orphans)
-        # intra-category dedup: one copy of an article per category.
-        seen: set[str] = set()
-
+        # Per-leaf dedup: one copy of an article within a single leaf.  NOT per
+        # category -- the source legitimately lists the same article in two
+        # sections (a province under "Divisions" and its capital under "Towns"
+        # share one EB article); collapsing across the category gutted every
+        # such capital from its Towns leaf.
         def _dedup(ns):
             for n in ns:
+                seen: set[str] = set()
                 keep = []
                 for a in n.get("articles", []):
                     fn = a.get("filename")
