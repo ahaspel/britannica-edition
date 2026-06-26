@@ -358,9 +358,10 @@ def _is_hdr(s): return s.startswith("## ") or s.startswith("### ") or s.startswi
 # clipped page-banner -- "Russia: *Biographies*", "Rumania: *Subjects and
 # Biographies*", "Argentina: *Divisions*", "Chile: *Towns, etc.*".  The
 # "Name: <section>" shape is unmistakable; an article entry never carries that
-# tail.  History uses Subjects/Biographies; Geography uses Divisions/Towns.
+# tail.  History uses Subjects/Biographies; Geography uses Divisions/Towns and
+# "Ancient Names" (the index spells it "Ancient geography").
 _DEMOTED_HDR = re.compile(
-    r"^[^:]{2,60}:\s*\*?(subjects|biographies|divisions|towns)\b", re.I)
+    r"^[^:]{2,60}:\s*\*?(subjects|biographies|divisions|towns|ancient)\b", re.I)
 
 
 def _is_demoted_hdr(s):
@@ -620,6 +621,17 @@ def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
     # own; everything else is specific enough that a single match IS the answer.
     GENERIC = {"subjects", "biographies", "general"}
 
+    # A physical-feature run ("Lakes"/"Rivers"/"Mountains"/"Misc") under a
+    # continent banner is placed by its BAND, never by position: the half-read
+    # threads continents together, so positional fill would seat it on a
+    # neighbour's leaf.  Pull these out of positional fill and continuation (as
+    # with cgen); the band router below seats each on its own continent's leaf.
+    PHYS = {"lakes", "rivers", "mountains", "miscellaneous"}
+
+    def _is_phys(bi):
+        return (bbares[bi] in PHYS
+                and bool(_continent(buckets[bi].get("band") or "")))
+
     # PHASE A -- definitive placement BY NAME, independent of reading order.  A
     # qualified header (carries its parent) or a specific bare name that matches
     # exactly one node is placed there outright -- "Classics: Legendary Figures"
@@ -680,7 +692,8 @@ def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
     for bi, nj in backbone + [(len(buckets), len(seq))]:
         gl = [x for x in range(pn + 1, nj) if is_leaf[x] and x not in reserved]
         gb = [b for b in range(pb + 1, bi)
-              if b not in assign and not buckets[b].get("cgen")]
+              if b not in assign and not buckets[b].get("cgen")
+              and not _is_phys(b)]
         for bo, lo in zip(gb, gl):
             assign[bo] = lo
         pb, pn = bi, nj
@@ -688,6 +701,15 @@ def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
     # continent (first-level node under the category) each placed bucket lives in
     bcont = {bi: (seq[nj][1][0] if seq[nj][1] else None)
              for bi, nj in assign.items()}
+
+    def _band_continent(band):
+        # A bucket's own banner band ("## ASIA -- PHYSICAL", clipped to
+        # "ASIA?PHYSIC") still names its continent; map it to the top-level node.
+        kw = _continent(band or "")
+        if not kw:
+            return None
+        return next((n for n in nodes if _normalize(n["name"]).startswith(kw)),
+                    None)
 
     # PHASE C -- a leftover continuation rolls into the node just placed.
     place: dict[int, list[int]] = {}
@@ -699,6 +721,7 @@ def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
             cur = assign[bi]
             place.setdefault(cur, []).append(bi)
         elif cur is not None and not buckets[bi].get("cgen") \
+                and not _is_phys(bi) \
                 and (_sig_words(buckets[bi]["name"]) & nwords[cur]):
             place.setdefault(cur, []).append(bi)
         elif buckets[bi]["pr"] or buckets[bi]["arts"]:
@@ -709,7 +732,8 @@ def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
             cnode = seq[cur][0] if cur is not None else None
             if cnode is not None and cnode.get("children") \
                     and bbares[bi] not in GENERIC \
-                    and not buckets[bi].get("cgen"):
+                    and not buckets[bi].get("cgen") \
+                    and not _is_phys(bi):
                 grafts.append((cnode, bi))
             else:
                 orph_idx.append(bi)
@@ -750,16 +774,6 @@ def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
             queue = nxt
         return general
 
-    def _band_continent(band):
-        # A bucket's own banner band ("## ASIA -- PHYSICAL", clipped to
-        # "ASIA?PHYSIC") still names its continent when the neighbour-based
-        # routing can't; map the keyword to the top-level node.
-        kw = _continent(band or "")
-        if not kw:
-            return None
-        return next((n for n in nodes if _normalize(n["name"]).startswith(kw)),
-                    None)
-
     orphans = []
     for bi in orph_idx:
         cont = None
@@ -771,10 +785,13 @@ def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
             if cont:
                 break
         cg = bool(buckets[bi].get("cgen"))
-        target = _cont_target(cont, bbares[bi], cg)
-        if target is None:               # neighbour failed -> trust the band
-            target = _cont_target(_band_continent(buckets[bi].get("band")),
-                                  bbares[bi], cg)
+        bandc = _band_continent(buckets[bi].get("band"))
+        if _is_phys(bi):                 # a physical run trusts its band FIRST
+            target = (_cont_target(bandc, bbares[bi], cg)      # (interleaving), but
+                      or _cont_target(cont, bbares[bi], cg))   # a British run whose
+        else:                            # band-continent is full falls to neighbour
+            target = (_cont_target(cont, bbares[bi], cg)
+                      or _cont_target(bandc, bbares[bi], cg))
         if target is not None:
             _place(target, [buckets[bi]])
         else:

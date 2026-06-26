@@ -263,6 +263,26 @@ def _descendant_by_norm(root: dict, target: str) -> dict | None:
     return None
 
 
+def _descendant_by_prefix(root: dict, nn: str) -> dict | None:
+    """The longest descendant whose name is a near-prefix of `nn` (within a few
+    characters) -- so a grafted section "Britain and Ireland: Ancient Names"
+    finds the existing "Britain and Ireland, ancient" leaf one level down instead
+    of forking a fresh top-level twin."""
+    best = None
+    queue = list(root.get("children", []))
+    while queue:
+        nxt: list[dict] = []
+        for n in queue:
+            cn = B._norm(n["name"])
+            if (len(cn) >= 12 and (nn.startswith(cn) or cn.startswith(nn))
+                    and abs(len(nn) - len(cn)) <= 6):
+                if best is None or len(B._norm(best["name"])) < len(cn):
+                    best = n
+            nxt.extend(n.get("children", []))
+        queue = nxt
+    return best
+
+
 def _graft_resolved(parent: dict, name: str, parent_map: dict) -> dict:
     """Find the child of `parent` that `name` denotes -- by exact match, variant,
     general-kind, or `X`/`X and Y` prefix -- BEFORE creating one.  Stops a suffix
@@ -286,6 +306,9 @@ def _graft_resolved(parent: dict, name: str, parent_map: dict) -> dict:
         d = _descendant_by_norm(parent, var)  # a level below (Scholars -> Bio-
         if d is not None:                     # graphies > Classical scholars)
             return d
+    d = _descendant_by_prefix(parent, nn)    # a long section name that merely
+    if d is not None:                        # extends an existing leaf IS that leaf
+        return d
     return B._graft(parent, name, parent_map)
 
 
