@@ -99,6 +99,8 @@ def reconciled_skeleton(ws: int) -> list[tuple[str, str]]:
     confirmed = _half_headers(ws)
     out: list[tuple[str, str]] = []
     band = ""
+    in_lead = False               # standing in a band's lead, before its first section
+    lead_done = False
     for line in whole_path(ws).read_text(encoding="utf-8").split("\n"):
         s = line.strip()
         if s.startswith("## "):
@@ -106,6 +108,7 @@ def reconciled_skeleton(ws: int) -> list[tuple[str, str]]:
             if not name.startswith("[") and "classifiedlist" not in B._norm(name):
                 band = name
                 out.append(("band", name))
+                in_lead, lead_done = True, False
         elif s.startswith("### "):
             name = s[4:].strip()
             if name.startswith("["):
@@ -116,6 +119,14 @@ def reconciled_skeleton(ws: int) -> list[tuple[str, str]]:
             qual = B._norm(_clean_name(band) + " " + _clean_name(name))
             if bare in confirmed or qual in confirmed:
                 out.append(("section", name))
+                in_lead = False
+        elif s and not s.startswith("#") and not s.startswith("="):
+            # an article line in the lead region means the band carries its own bare
+            # run -> a filled bucket in its own right (the "Minor Arts" case).  Emit
+            # the FACT, not the scrambled links (those must never enter the index).
+            if in_lead and not lead_done and band:
+                out.append(("lead", band))
+                lead_done = True
     return out
 
 
@@ -149,7 +160,8 @@ def stitch() -> dict[str, list[dict]]:
     def group(ci: int, band: str | None, new: bool) -> dict:
         lst = cats.setdefault(ci, [])
         if new or not lst:
-            lst.append({"band": band, "lead": [], "notes": [], "sections": []})
+            lst.append({"band": band, "lead": [], "notes": [], "sections": [],
+                        "lead_present": False})
         return lst[-1]
 
     def attach(ci: int, kind: str, text: str) -> None:
@@ -182,6 +194,9 @@ def stitch() -> dict[str, list[dict]]:
                     continue
                 group(cur, band=None, new=False)["sections"].append(
                     {"name": name, "links": [], "notes": []})
+            elif kind == "lead":                     # the band's bare run is non-empty
+                if cur >= 0:
+                    group(cur, band=None, new=False)["lead_present"] = True
             else:                                    # link / note
                 attach(cur, kind, name)
     return {B.CATEGORIES[i]: cats[i] for i in sorted(cats)}
@@ -322,8 +337,12 @@ def _top_ancestor(node: dict, parent_map: dict, skeleton: list[dict]) -> dict | 
 
 
 def _resolve_band(lookup: dict, parent_map: dict, skeleton: list[dict],
-                  name: str, cont: dict | None) -> tuple[dict | None, dict | None]:
-    """A band -> (cursor node, its continent).  Tries the exact/compound/variant
+                  name: str, cont: dict | None
+                  ) -> tuple[dict | None, dict | None, dict | None]:
+    """A band -> (cursor node, its continent, anchor).  `anchor` is the band's own
+    entity before a `: Section` tail, so a sibling band the index omits grafts
+    beside it (Belgium beside Balkan Peninsula), not under it.
+    Tries the exact/compound/variant
     match; then a PREFIX match of the band's head against the top-level nodes
     (`United Kingdom` -> "...of Great Britain and Ireland"; `America—Countries`
     -> America, descending to the section child if the tail names one); then, for
@@ -331,9 +350,10 @@ def _resolve_band(lookup: dict, parent_map: dict, skeleton: list[dict],
     the continent we are standing in."""
     node, suffix = B._match(lookup, parent_map, name, cont)
     if node is not None:
+        anchor = node                       # the band's entity, before a section tail
         if suffix:
             node = _graft_resolved(node, suffix, parent_map)
-        return node, _top_ancestor(node, parent_map, skeleton)
+        return node, _top_ancestor(node, parent_map, skeleton), anchor
     parts = re.split(r"\s*[—–:]\s*", name, 1)
     hn = B._norm(parts[0])
     best = None
@@ -349,15 +369,16 @@ def _resolve_band(lookup: dict, parent_map: dict, skeleton: list[dict],
             for ch in best.get("children", []):
                 cn = B._norm(ch["name"])
                 if sec and (cn.startswith(sec) or sec.startswith(cn)):
-                    return ch, best
-        return best, best
+                    return ch, best, best
+        return best, best, best
     if cont is not None:
         node, suffix = _seat(lookup, parent_map, name, cont)
         if node is not None:
+            anchor = node
             if suffix:
                 node = _graft_resolved(node, suffix, parent_map)
-            return node, cont
-    return None, None
+            return node, cont, anchor
+    return None, None, None
 
 
 def _build_flat(groups: list[dict]) -> list[dict]:
@@ -380,10 +401,10 @@ def _build_flat(groups: list[dict]) -> list[dict]:
         siblings.append(node)
         return node
 
-    def place(name: str, links: list, notes: list) -> None:
+    def place(name: str, links: list, notes: list) -> dict | None:
         nm = _clean_name(name)
         if not nm or nm.startswith("("):
-            return
+            return None
         if ":" in nm:                                # explicit Parent: Child -> nest
             x, y = (p.strip() for p in nm.split(":", 1))
             px = add(x, roots)
@@ -393,10 +414,13 @@ def _build_flat(groups: list[dict]) -> list[dict]:
         if node is not None:
             node["articles"].extend(links)
             node["notes"].extend(notes)
+        return node
 
     for g in groups:
         if g["band"]:
-            place(g["band"], g["lead"], g["notes"])
+            node = place(g["band"], g["lead"], g["notes"])
+            if node is not None and g.get("lead_present"):
+                node["lead_filled"] = True           # the band's own bare run = a bucket
         for sec in g["sections"]:
             place(sec["name"], sec["links"], sec["notes"])
     return roots
@@ -439,11 +463,19 @@ def merge() -> tuple[dict, dict]:
             if g["band"]:
                 bn = _clean_name(g["band"])
                 if bn and not bn.startswith("("):
-                    node, top = _resolve_band(lookup, parent_map, skeleton, bn, cont)
+                    node, top, anchor = _resolve_band(lookup, parent_map, skeleton, bn, cont)
                     if node is not None:
                         resolved += 1
                         cursor = node
                         region = parent_map.get(id(node)) or node
+                        # an index-omitted sibling country (Belgium) must graft BESIDE
+                        # its country, not under it -- but ONLY when that country sits
+                        # directly under its continent, so a sub-section (Islands) still
+                        # grafts under its country (Scotland), not floated above it:
+                        rt = _top_ancestor(anchor, parent_map, skeleton)
+                        if anchor is not node and rt is not None \
+                                and parent_map.get(id(anchor)) is rt:
+                            region = rt
                         if top is not None:
                             cont = top
                     else:                          # a region the index omits: graft it
@@ -454,8 +486,10 @@ def merge() -> tuple[dict, dict]:
                         else:
                             deferred.append(bn)
             if cursor is not None:           # the band's wordless lead run pours into
-                (_general_child(cursor) or cursor).setdefault(  # its general-subjects
-                    "articles", []).extend(g["lead"])           # child (else the band)
+                home = _general_child(cursor) or cursor         # its general-subjects
+                home.setdefault("articles", []).extend(g["lead"])   # child (else band)
+                if g.get("lead_present"):    # a real bare run -> a filled bucket of its
+                    home["lead_filled"] = True                  # own (the Minor Arts case)
                 cursor.setdefault("notes", []).extend(g["notes"])
             grp_region = None                # a finer parent a "Region: X" section sets
             for s in g["sections"]:

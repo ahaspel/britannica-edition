@@ -196,16 +196,24 @@
   }
 
   function renderArticle(art) {
+    // An unresolved entry (no linked article) is OUR problem, not the user's --
+    // omit it entirely rather than show a dead greyed-out line.
+    if (!art.filename) return "";
     const display = escapeHtml(art.display || art.target);
     const cls = art.emphasized ? ' class="emphasized"' : '';
-    if (art.filename) {
-      return `<li${cls}><a href="${articleUrl(art.filename)}">${display}</a></li>`;
-    }
-    return `<li${cls}><span class="unresolved" title="not yet linked: ${escapeHtml(art.target)}">${display}</span></li>`;
+    // A "§ Section" reference (Denmark § Literature) links to the article's
+    // section anchor, not the whole article.
+    const href = articleUrl(art.filename) + (art.anchor ? "#" + art.anchor : "");
+    return `<li${cls}><a href="${href}">${display}</a></li>`;
   }
 
   function hasContent(node) {
-    if (node.articles && node.articles.length > 0) return true;
+    // A RESOLVED article is content; so is a note -- an xref-only leaf
+    // ("Belgium (See NETHERLANDS)") renders its note and nothing else, but it
+    // is real content and must claim its header.  Unresolved-only nodes (no
+    // article, no note) render nothing, so they don't.
+    if (node.articles && node.articles.some(a => a.filename)) return true;
+    if (node.notes && node.notes.length) return true;
     if (node.children) {
       for (const c of node.children) if (hasContent(c)) return true;
     }
@@ -232,27 +240,24 @@
       .join("");
     const name = escapeHtml(sub.name);
     const idAttr = ` id="${escapeHtml(path)}"`;
-    // Level 2 stays as a plain heading — it's the primary structure
-    // inside a category. Level 3+ become collapsible so deep trees
-    // (Geography > Europe > Countries > Norway) stay navigable.
-    if (level <= 2) {
-      // A flat category whose single subsection is named after the category
-      // (Sports and Pastimes) renders as a plain list — drop the redundant
-      // header that would just repeat the category title above it.
-      const head = sub.name === pathPrefix ? "" : `<h3>${name}</h3>`;
+    // A flat category whose single subsection is named after the category
+    // (Sports and Pastimes) renders as a plain list — drop the redundant
+    // header that would just repeat the category title above it.
+    if (sub.name === pathPrefix) {
       return `<div class="subsection subsection-l${level}"${idAttr}>` +
-             head + renderNotes(sub) + arts + kids + `</div>`;
+             renderNotes(sub) + arts + kids + `</div>`;
     }
-    // Collapsible deeper node: show article count in summary.
+    // Every subsection is collapsible with an open/close arrow, at EVERY
+    // level — including level 2. Show article count in the summary.
+    // Count only resolved (shown) articles -- the unresolved are hidden.
     const counts = countAll(sub);
-    const metaText = counts.arts === 0 ? "" :
-      counts.arts === counts.resolved ? `${counts.arts}` :
-      `${counts.resolved}/${counts.arts}`;
-    const meta = metaText ? `<span class="sub-meta">${metaText}</span>` : "";
-    // Open by default for level 3 (e.g. Europe inside Geography), closed
-    // for level 4+ (e.g. Countries, then Norway within Countries).
-    const openAttr = level <= 3 ? " open" : "";
-    return `<details class="sub sub-l${level}"${openAttr}${idAttr}>` +
+    const meta = counts.resolved
+      ? `<span class="sub-meta">${counts.resolved}</span>` : "";
+    // Closed by default at EVERY level: opening a category (or any subcat)
+    // shows a compact list of its child headers, so you click straight to the
+    // one you want (Anthropology > Biographies) instead of scrolling past the
+    // previous subcats' entries. "Expand all" overrides when you want the lot.
+    return `<details class="sub sub-l${level}"${idAttr}>` +
            `<summary><span class="sub-name">${name}</span>${meta}</summary>` +
            `<div class="sub-body">${renderNotes(sub)}${arts}${kids}</div>` +
            `</details>`;
@@ -270,29 +275,14 @@
   }
 
   function renderCategory(cat) {
-    let totalArts = 0, resolvedArts = 0;
-    for (const s of cat.subsections) {
-      const c = countAll(s);
-      totalArts += c.arts;
-      resolvedArts += c.resolved;
-    }
-    let meta;
-    if (totalArts === 0) {
-      meta = `<span class="cat-meta">(awaiting transcription)</span>`;
-    } else if (resolvedArts === totalArts) {
-      meta = `<span class="cat-meta">${totalArts} articles</span>`;
-    } else {
-      meta = `<span class="cat-meta">${resolvedArts}/${totalArts} articles</span>`;
-    }
-    let body;
-    if (totalArts > 0) {
-      body = cat.subsections
-        .map(s => renderSubsection(s, 0, cat.name))
-        .filter(Boolean)
-        .join("");
-    } else {
-      body = `<div class="empty-cat">No article entries yet — Wikisource transcription pending.</div>`;
-    }
+    let resolvedArts = 0;
+    for (const s of cat.subsections) resolvedArts += countAll(s).resolved;
+    const meta = resolvedArts
+      ? `<span class="cat-meta">${resolvedArts} articles</span>`
+      : `<span class="cat-meta">(awaiting transcription)</span>`;
+    const body = resolvedArts
+      ? cat.subsections.map(s => renderSubsection(s, 0, cat.name)).filter(Boolean).join("")
+      : `<div class="empty-cat">No article entries yet — Wikisource transcription pending.</div>`;
     return `<details class="category" id="${escapeHtml(cat.name)}">
       <summary>${escapeHtml(cat.name)} ${meta}</summary>
       ${renderNotes(cat)}${body}
@@ -310,18 +300,11 @@
       const html = data.categories.map(renderCategory).join("");
       document.getElementById("categories").innerHTML = html;
       const totalCats = data.categories.length;
-      const transcribed = data.categories.filter(c =>
-        c.subsections.some(s => s.articles.length > 0)).length;
-      const allResolved = data.categories.reduce(
-        (n, c) => n + c.subsections.reduce(
-          (m, s) => m + s.articles.filter(a => a.filename).length, 0), 0
-      );
-      const allArticles = data.categories.reduce(
-        (n, c) => n + c.subsections.reduce(
-          (m, s) => m + s.articles.length, 0), 0
-      );
+      let allResolved = 0;            // countAll recurses, so nested articles count
+      for (const c of data.categories)
+        for (const s of c.subsections) allResolved += countAll(s).resolved;
       document.getElementById("footer").textContent =
-        `${totalCats} categories \u00b7 ${transcribed} transcribed \u00b7 ${allResolved}/${allArticles} article links resolved`;
+        `${totalCats} categories \u00b7 ${allResolved.toLocaleString()} articles`;
       navigateToHash();
     } catch (e) {
       document.getElementById("categories").innerHTML =

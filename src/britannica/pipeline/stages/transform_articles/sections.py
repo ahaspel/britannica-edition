@@ -26,7 +26,10 @@ from britannica.util.strings import section_slug
 # Centered-small-caps heading opener (the inconsistent template set).
 _HEAD_OPEN = re.compile(r"\{\{\s*(csc|center|c)\s*\|", re.IGNORECASE)
 # Caption look-alikes (the element's OWN content says it isn't a section).
-_CAPWORD = re.compile(r"^\s*(?:Fig|Plate|Table|Pl|Diagram)\b", re.IGNORECASE)
+# `Tabular` joins the set so a "Tabular View of …" table title (which `Table\b`
+# misses) is refused as a heading.
+_CAPWORD = re.compile(
+    r"^\s*(?:Fig|Plate|Table|Tabular|Pl|Diagram)\b", re.IGNORECASE)
 # A numeral prefix (roman / single letter / digit + . — -) marks a section
 # regardless of what follows; an UNnumbered heading is a section only if it is
 # not a table caption (see _find_heads).
@@ -46,6 +49,13 @@ _PREHEAD = re.compile(
 # would otherwise read as the bogus heading name `{{lh/88%/…}}`.
 _TMPL_UNWRAP = re.compile(r"\{\{[^{}|]+\|(?:[^{}|]*\|)?([^{}]*)\}\}")
 _MARKER = re.compile(r"«/?[A-Za-z]+(?:\[[^\]]*\])?»")
+# A shoulder-heading template — `{{EB1911 Shoulder Heading[Small…]|…}}` /
+# `{{EB9 Margin Note|…}}` — mirrors the walker's recognizer (`_SHOULDER_HEADING_RE`).
+# A LONE centered heading is a real section only when one of these FOLLOWS it;
+# a caption / one-off has no shoulder children.
+_SHOULDER = re.compile(
+    r"\{\{\s*(?:EB1911\s+shoulder\s+heading\w*|EB9\s+margin\s+note)\s*\|",
+    re.IGNORECASE)
 
 
 def _balanced_end(s: str, i: int) -> int:
@@ -83,9 +93,12 @@ def _visible(inner: str) -> str:
 def _find_heads(raw: str) -> list[tuple[int, str]]:
     """`(start, name)` for the major-section headings — the series, gated.
 
-    Returns `[]` unless at least TWO survive (a lone centered-small-caps block
-    is a one-off / caption, not a section — a false section is worse than a
-    miss)."""
+    Returns `[]` unless at least TWO survive — OR exactly one survives and a
+    shoulder heading follows it.  The ≥2 rule guards against a lone
+    centered-small-caps block that is a one-off / caption (a false section is
+    worse than a miss), but a single heading WITH shoulder children is a real
+    section (Poland's sole "Polish Literature", Norway's "Norwegian Literature",
+    a country's "History")."""
     heads: list[tuple[int, str]] = []
     for m in _HEAD_OPEN.finditer(raw):
         nl = raw.rfind("\n", 0, m.start())
@@ -118,7 +131,12 @@ def _find_heads(raw: str) -> list[tuple[int, str]]:
             if after.startswith("{|") or after.lower().startswith("<table"):
                 continue  # unnumbered + leads a table → table caption
         heads.append((m.start(), name))
-    return heads if len(heads) >= 2 else []
+    if len(heads) >= 2:
+        return heads
+    # A lone heading is a section only if a shoulder heading follows it.
+    if len(heads) == 1 and _SHOULDER.search(raw, heads[0][0]):
+        return heads
+    return []
 
 
 def stamp_sections(raw: str) -> str:
