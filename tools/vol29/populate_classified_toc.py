@@ -493,6 +493,37 @@ import build_toc as _BT
 from complete_index import _general_kind as _gen_kind
 
 
+def load_band_read_content() -> dict[str, list]:
+    """Per-category line tuples, read straight from the half-pages BY BAND: bands off
+    the `spread` field, marked onto each half by aligning it to the whole read
+    (build_toc.assemble_sequence) -- no hand-marking.  Replaces load_segmented_content
+    and the markup file."""
+    openers = _BT.category_openers()
+    seq = _BT.assemble_sequence(openers)
+    _, chunks = _BT.build_category_chunks(seq, openers)
+    return {name: lts for name, lts in chunks}
+
+
+def _sections_to_buckets(sections: list[dict]) -> list[dict]:
+    """A build_toc section -> a pour_category bucket: split each section's items
+    into emphasized principals (`pr`), plain articles (`arts`), and notes."""
+    out = []
+    for sec in sections:
+        arts, pr, notes = [], [], []
+        for s in sec["items"]:
+            kind, val = _BT._parse_item(s)
+            if kind == "note":
+                notes.append(val)
+            elif val["emphasized"]:
+                pr.append(val["target"])
+            else:
+                arts.append(val["target"])
+        name = _BT._clean_header(sec["header"]) if sec["header"] else ""
+        out.append({"name": name, "band": None, "arts": arts,
+                    "pr": pr, "notes": notes})
+    return out
+
+
 def _canon(s: str) -> str:
     """Normalize, then reconcile a BODY spelling to its INDEX spelling through the
     one variant table the index-builder uses (Classics->Classical, Critics->
@@ -558,10 +589,9 @@ def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
 
     # Flat category: no nesting at all -> the whole thing is one A-Z list.
     if not seq:
-        node = {"name": cat, "articles": [], "notes": [], "children": []}
-        _place(node, buckets)
-        nodes.append(node)
-        return [], []
+        # No index nodes for this category at all -> an index GAP (e.g. Sports has
+        # zero nodes).  Surface its buckets as orphans; do NOT invent a node.
+        return list(buckets), []
 
     def _strip_par(s):
         return re.sub(r"\s*\([^)]*\)", "", s).strip()
@@ -713,7 +743,6 @@ def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
 
     # PHASE C -- a leftover continuation rolls into the node just placed.
     place: dict[int, list[int]] = {}
-    grafts: list[tuple[dict, int]] = []
     cur = None
     orph_idx = []
     for bi in range(len(buckets)):
@@ -725,25 +754,11 @@ def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
                 and (_sig_words(buckets[bi]["name"]) & nwords[cur]):
             place.setdefault(cur, []).append(bi)
         elif buckets[bi]["pr"] or buckets[bi]["arts"]:
-            # A real, specific section the index has no leaf for, sitting under a
-            # banner (internal) node -- "Hebrew Religion" under Judaism, which the
-            # OCR-scrambled index source never seated.  Graft it rather than drop
-            # the links.  Generic leftovers fall to the company-routing below.
-            cnode = seq[cur][0] if cur is not None else None
-            if cnode is not None and cnode.get("children") \
-                    and bbares[bi] not in GENERIC \
-                    and not buckets[bi].get("cgen") \
-                    and not _is_phys(bi):
-                grafts.append((cnode, bi))
-            else:
-                orph_idx.append(bi)
+            # A section the index has no leaf for -> an index GAP.  Surface it as
+            # an orphan so the gap is fixed in complete_index.  WE DO NOT GRAFT.
+            orph_idx.append(bi)
     for nj, bis in place.items():
         _place(seq[nj][0], [buckets[bi] for bi in bis])
-    for cnode, bi in grafts:
-        leaf = {"name": buckets[bi]["name"], "articles": [],
-                "notes": [], "children": []}
-        cnode["children"].append(leaf)
-        _place(leaf, [buckets[bi]])
     # A leftover continent-level run (a "## AS"/"## FRICA" banner the gutter
     # clipped past recognition) carries one continent's general subjects.  Route
     # it by the company it keeps -- the continent of its nearest placed neighbour
@@ -804,7 +819,7 @@ def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
 def main() -> None:
     print("Building resolver from the article index...")
     resolve = build_resolver()
-    content = load_segmented_content()
+    content = load_band_read_content()
     print("Loading the reviewed nested index (complete_index)...")
     idx, _ = _C.merge()
 
@@ -813,8 +828,9 @@ def main() -> None:
     out_cats = []
     for cat in CATEGORIES:
         nodes = idx.get(cat, [])
+        sections = _BT.build_sections(cat, content.get(cat, []))
         orphans, empty = pour_category(
-            cat, nodes, build_buckets(cat, content[cat]), resolve)
+            cat, nodes, _sections_to_buckets(sections), resolve)
         n_empty += len(empty)
         n_orph += len(orphans)
         # Per-leaf dedup: one copy of an article within a single leaf.  NOT per

@@ -384,11 +384,36 @@ math measurement).  pytest (378 tests).
 
 ## Topics page (Vol 29 classified TOC)
 
-Category-bounded OCR (`tools/ocr_vol29_classified.py`) +  two-phase walker
-(`tools/parse_classified_toc.py`).  23,050 articles across 24 categories.
-Per-cat refinement: edit `data/derived/cat_ocr/<slug>.txt` or rerun
-`ocr_vol29_classified.py --only='<Cat>'`.  Ambiguity disambiguation via
-Haiku batch (`tools/vol29/disambiguate_toc.py`), cached.
+The classified TOC is built in three steps: the **index** gives the SHAPE (the
+canonical bucket tree), the **band read** gives the CONTENT (ordered groups of
+links), and the **pour** joins them.  65 pages (ws891-955), each OCR'd two ways in
+`data/derived/vol29_halves_debug.json`: a `left`/`right` half-column read (links) and
+a `spread` read (only the full-width banners).
+
+**Band read (`tools/vol29/build_toc.py`).**  Two jobs, both structural -- no
+name-stitching from gutter-clipped fragments (the OCR won't survive it):
+
+1. *Identify the 40 bands* (`band_structure`) straight off the `spread` field.  A
+   spread banner is a band iff its `_band_key` is one of the 40 = 24 major cats +
+   `GEO_BANDS` (11) + `HIST_BANDS` (5).  Governing rule: **no major cat carries a band
+   but itself; only Geography and History have sub-bands.**  The Geo/History sub-band
+   names are pinned constants (buckets like Oceans/Biographies leak into the spread
+   and only the confirmed names filter them).  Europe--General ≡ Europe (one band);
+   UK runs two banner lines.
+2. *Mark the bands onto each half* (`_mark_bands`) by ALIGNING it to the whole read's
+   header track (`whole_tracks` over `vol29_whole_{ws}.txt`, monotonic -- bands only
+   advance, so a running-head banner is furniture).  Each half column is a subsequence
+   of that track; a band whose own banner dropped on the half (~49 pages) is still
+   opened by its first bucket, which names the band in the whole read.  Then reunite
+   the two halves per band, chunk by category (`build_category_chunks`), and bucket
+   each band (`build_sections`: recognize the bucket, everything else is a link).
+
+Self-check `band_check` (user's invariant: N bands on the whole page ⇒ N on each
+half) is at 6/130 half-pages.  Current: 40 bands, 24 categories in printed order,
+bytes conserved, filled-index-node bucket diff +44 (down from +134).  Validation
+tree from the index: `tools/vol29/complete_index.py`.  Pour into the DB:
+`tools/vol29/populate_classified_toc.py`.  Ambiguity disambiguation via Haiku batch
+(`tools/vol29/disambiguate_toc.py`), cached.
 
 ---
 

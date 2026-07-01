@@ -39,7 +39,6 @@ HALVES = Path("data/derived/vol29_halves_debug.json")
 OCR = Path("data/derived/vol29_ocr.json")
 OUT = Path("data/derived/toc_category_chunks.json")
 TREE = Path("data/derived/toc_tree.json")
-CLASSIFIED = Path("data/derived/classified_toc.json")
 WS_START, WS_END = 891, 955
 
 # The printed Classified-TOC index (pp.881-2 = ws 889-890): a marker-tagged
@@ -53,64 +52,6 @@ INDEX_PAGES = (889, 890)
 # parenthesis and/or "For"/"See" (a word boundary keeps "Forster" a real link).
 _NOTE_RE = re.compile(r"^\(?\s*\*?\s*(For|See)\b", re.I)
 
-# A section reprinted where it spilled across a page/half break carries a
-# "(cont.)" / "(*cont.*)" marker -- the tell that it is a repeat, not a new head.
-_CONT_RE = re.compile(r"\(\s*\*?\s*cont\.?\s*\*?\s*\)", re.I)
-
-# Words that make up the gutter-split PAGE RUNNING HEADERS (the category /
-# continent / section label reprinted atop every page).  A header whose edge
-# token is a strict fragment of one of these was cut mid-word by the gutter --
-# a clip, not a whole subcategory header (which uses the whole word).
-_RH_VOCAB = ["EUROPE", "ASIA", "AFRICA", "AMERICA", "AUSTRALASIA", "OCEANIC",
-             "PHYSICAL", "FEATURES", "COUNTRIES", "DIVISIONS", "TOWNS", "ISLANDS",
-             "CONTINENTAL", "GENERAL", "MOUNTAINS", "RIVERS", "LAKES", "ANCIENT",
-             "MISCELLANEOUS", "HISTORY", "GEOGRAPHY", "GREAT", "BRITAIN"]
-
-# Bare section-type words.  At MAJOR-header level (`## `) a header of only these
-# -- no place, no topic -- is a gutter-split running-header label ("DIVISIONS AND
-# TOWNS", "...—COUNTRIES"); a real section-type header is `### ` (### General).
-_SECTION_TYPES = frozenset(
-    {"DIVISIONS", "TOWNS", "COUNTRIES", "AND", "PHYSICAL", "FEATURES"})
-
-
-def _is_clip_header(s: str) -> bool:
-    """True if `s` is a CLIPPED page-running-header fragment, not a whole
-    subcategory header.  Only header lines (`#`/`**`) qualify -- a link or a
-    marginal note is never one.  A clip is INCOMPLETE: it starts mid-word, ends
-    on a dash, leaves a paren unclosed, or its first/last token is a strict
-    fragment of the continent/section vocabulary.  A whole header uses the whole
-    word, so it never trips these."""
-    if not (s.startswith("#") or s.startswith("**")):
-        return False
-    body = re.sub(r"^#+\s*", "", s).strip().strip("*").strip()
-    if not body:
-        return True                              # an empty header is furniture
-    if body[0].islower() or not body[0].isalnum():
-        return True                              # starts mid-word or on punctuation
-    if body.rstrip(").").endswith(("-", "—")):
-        return True                              # ends on a dash -- cut mid-phrase
-    if body.count("(") != body.count(")"):
-        return True                              # an unbalanced paren -- cut across it
-    if "—" in body:
-        tail = re.sub(r"[^A-Za-z]", "", body.rsplit("—", 1)[1])
-        if 0 < len(tail) <= 2:
-            return True                          # a dash + 1-2 char stub -- cut mid-word
-    toks = re.findall(r"[A-Za-z]+", body)
-    if toks:
-        last, first = toks[-1].upper(), toks[0].upper()
-        for w in _RH_VOCAB:
-            # A token that is ITSELF a complete RH word (e.g. "Asia") is a real
-            # word, never a clip -- even though it is a tail of a longer one
-            # ("Australasia").  Only a strict fragment counts as a clip.
-            if (last not in _RH_VOCAB and len(last) >= 2 and last != w
-                    and w.startswith(last)):
-                return True                      # last token a clipped head of a RH word
-            if (first not in _RH_VOCAB and len(first) >= 2 and first != w
-                    and w.endswith(first)):
-                return True                      # first token a clipped tail of a RH word
-        if s.startswith("## ") and all(t.upper() in _SECTION_TYPES for t in toks):
-            return True                          # bare section-type at major level
-    return False
 
 # The 24 major categories, in printed order.
 CATEGORIES = [
@@ -129,17 +70,40 @@ CATEGORIES = [
 ART_OPENERS = ["Architecture", "Music", "Painting and Engraving",
                "Sculpture", "Minor Arts", "Stage and Dancing"]
 
-# The page running header is the work title set in blackletter; the OCR reads the
-# Gothic "History" as "Dis" + "story" across the gutter (the "Hi" ligature scans
-# as "Dis").  "Hist"/"story"/"History" already match "history" as a prefix/suffix
-# and are stripped as the running-header repeat -- but "Dis" matches nothing, so
-# it leaks and step 3 builds it into a bogus node.  Name it here as the History
-# header it actually is, so the same repeat-strip catches it.
-_RH_MISOCR = {"History": ("dis",)}
-
 
 def _norm(s: str) -> str:
     return re.sub(r"[^a-z0-9]+", "", s.lower())
+
+
+_CAT_NORMS = frozenset(_norm(c) for c in CATEGORIES)
+
+# The 40 BANDS, per the source (read off the classified-list pages).  Every major cat
+# is one band; ONLY Geography and History carry sub-bands.  These name the Geo/History
+# sub-bands so the spread's full-width banners can be told from the buckets that leak
+# into it (Oceans, Biographies, Asia: Ancient Names) -- no name-stitching, a lookup.
+GEO_BANDS = [
+    "Europe Physical Features", "Europe Countries",
+    "United Kingdom of Great Britain and Ireland", "Divisions and Towns",
+    "Asia Physical Features", "Asia Countries",
+    "Africa Physical Features", "Africa Countries",
+    "America Physical Features", "America Countries", "America Australasia etc",
+]
+HIST_BANDS = ["Europe General", "Europe", "Asia", "Africa", "America", "Australasia"]
+
+# One band wears two banners: Europe--General and its (cont.) "Europe" are the SAME
+# History band (splitting them breaks the General bucket); the UK band runs two lines
+# (its "(cont.)" reads as a bare "United Kingdom").  Fold each to one key.
+_BAND_ALIASES = {"europegeneral": "europe",
+                 "unitedkingdom": "unitedkingdomofgreatbritainandireland"}
+_BAND_NORMS = (set(_CAT_NORMS) | {_norm(b) for b in GEO_BANDS}
+               | {_norm(b) for b in HIST_BANDS})
+
+
+def _band_key(s: str) -> str:
+    """A banner's canonical band norm: parens/markers off, then fold the two aliased
+    banners onto their band.  A norm not in _BAND_NORMS is not a band (a phantom)."""
+    nm = _norm(re.sub(r"\(.*?\)", "", s).strip().strip("*"))
+    return _BAND_ALIASES.get(nm, nm)
 
 
 def _banner_token(line: str) -> str:
@@ -199,141 +163,6 @@ def _is_caps_banner(s: str) -> bool:
 _CONT_CACHE: dict | None = None
 
 
-def _cat_continents() -> dict:
-    """{category -> [(subcat name, [section child names])]} from the index -- the
-    known continent/section banners to recognise inside each category."""
-    global _CONT_CACHE
-    if _CONT_CACHE is None:
-        _CONT_CACHE = {
-            cat: [(s["name"], [c["name"] for c in s.get("children", [])])
-                  for s in subs]
-            for cat, subs in parse_index().items()}
-    return _CONT_CACHE
-
-
-def _banner_words(s: str) -> list[str]:
-    t = re.sub(r"\(.*?cont.*?\)", "", s, flags=re.I)
-    return [_norm(w) for w in re.split(r"[—–\-\s]+", re.sub(r"[#*]", "", t))
-            if _norm(w)]
-
-
-def _is_subcat_banner(s: str, cat_name: str) -> bool:
-    """True if `s` is a full-width banner naming one of `cat_name`'s index subcats
-    (a continent or section) -- a real subcat to KEEP -- as opposed to a page
-    running-header repeat of the category name itself (Geo / graphy) -- to strip.
-    Clip-tolerant: each banner word may be a prefix/suffix of a target word."""
-    if not _is_caps_banner(s):
-        return False
-    conts = _cat_continents().get(cat_name)
-    if not conts:
-        return False
-    words = [w for w in _banner_words(s) if len(w) >= 3]
-    if not words:
-        return False
-
-    def hit(frag, targets):
-        return any(t.startswith(frag) or frag.startswith(t)
-                   or t.endswith(frag) or frag.endswith(t) for t in targets)
-
-    cat_words = {_norm(w) for w in cat_name.split()} | {_norm(cat_name)}
-    cat_words = {t for t in cat_words if len(t) >= 3}
-    if all(hit(w, cat_words) for w in words):
-        return False                      # a fragment of the category name
-    targets: set[str] = set()
-    for nm, secs in conts:
-        targets |= {_norm(x) for x in nm.split()} | {_norm(nm)}
-        for sc in secs:
-            targets |= {_norm(x) for x in sc.split()} | {_norm(sc)}
-    targets = {t for t in targets if len(t) >= 3}
-    return any(hit(w, targets) for w in words)
-
-
-def _decruft(lines: list[str], openers: list[tuple[str, list[str]]],
-             cur: int) -> tuple[list[str], int]:
-    """Strip page furniture and continuation repeats from one half's lines,
-    returning the clean lines and the final known-order category index.
-
-    Removed: the running page header (`CLASSIFIED LIST OF ARTICLES` + clips);
-    HTML-comment furniture (the split-scan tag); a `(cont.)` continuation header;
-    and the running-header REPEAT of the current major category.  KEPT: content,
-    section headers (a continent, a country), and the FIRST banner of each major
-    category -- normalized to its full name so the band split is unambiguous."""
-    out: list[str] = []
-    for line in lines:
-        s = line.strip()
-        if not s:
-            continue  # blank line -- spacing furniture, neither header nor link
-        n = _norm(s.lstrip("# "))
-        if len(n) >= 5 and n in "classifiedlistofarticles":
-            continue  # running page header -- furniture
-        if s.startswith("<!--"):
-            continue  # html-comment furniture (e.g. the split-scan tag)
-        if _CONT_RE.search(s):
-            continue  # a `(cont.)` marker -- a section reprinted across the break
-            # (any prefix: `### `, `**bold**`, or none -- the model is inconsistent)
-        if s.startswith("## "):
-            bt = _banner_token(line)
-            nxt = _advance(bt, openers, cur)
-            if nxt is not None:
-                cur = nxt
-                out.append(f"## {openers[cur][0]}")  # first appearance -- kept
-                continue
-            if cur >= 0 and (_opens(bt, [_norm(openers[cur][0])])
-                             or bt in _RH_MISOCR.get(openers[cur][0], ())):
-                continue  # running-header repeat of the current major (incl. blackletter mis-OCR)
-            if cur >= 0 and len(bt) == 2 and any(
-                    _fw(c).startswith(bt) or _fw(c).endswith(bt)
-                    for c, _ in _cat_continents().get(openers[cur][0], [])):
-                out.append(line)   # a 2-letter gutter-split continent banner half
-                continue           # ("AS"|"IA" of ASIA) -- KEEP for band recovery
-        if cur >= 0 and _is_subcat_banner(s, openers[cur][0]):
-            out.append(line)  # a continent/section banner -- a real subcat, KEEP
-            continue
-        if _is_clip_header(s):
-            continue  # a clipped page-running-header fragment, not a whole header
-        out.append(line)
-    return out, cur
-
-
-def _bands(lines: list[str],
-           openers: list[tuple[str, list[str]]]) -> list[list]:
-    """Split decrufted lines into [banner_or_None, [lines]] bands at each
-    surviving major banner -- now guaranteed a real, first-appearance boundary,
-    so both halves split in step.  The first band (None) holds the incoming
-    category's content."""
-    cat_norms = {_norm(c) for c, _ in openers}
-    segs: list[list] = [[None, []]]
-    for line in lines:
-        s = line.strip()
-        if s.startswith("## ") and _norm(s[3:]) in cat_norms:
-            segs.append([s, []])
-        else:
-            segs[-1][1].append(line)
-    return segs
-
-
-def _align_bands(left: list[list], right: list[list],
-                 openers: list[tuple[str, list[str]]]
-                 ) -> tuple[list[list], list[list]]:
-    """Align the two halves' major-category bands so they zip in step.  A banner
-    one half clipped away entirely leaves that half short a band; insert an EMPTY
-    placeholder for it (never drop the banner -- dropping shoves the other half's
-    content past it, into the wrong category)."""
-    order = {_norm(c): i for i, (c, _) in enumerate(openers)}
-
-    def cat(b):
-        return _norm(b[0][3:]) if b[0] else None
-
-    merged = sorted({cat(b) for b in left[1:]} | {cat(b) for b in right[1:]},
-                    key=lambda c: order.get(c, len(order)))
-
-    def rebuild(bands):
-        by = {cat(b): b for b in bands[1:]}
-        return [bands[0]] + [by.get(c, [None, []]) for c in merged]
-
-    return rebuild(left), rebuild(right)
-
-
 # --- Cross-gutter band recovery (Geography & History only) -----------------
 # A full-width subcategory banner (CONTINENT -- SECTION) prints across the whole
 # spread, so the half-page crop CUTS IT IN TWO: the left page OCRs the head, the
@@ -350,293 +179,175 @@ _CROSSING_CATS = frozenset({"Geography", "History"})
 _SUBSPINE_CACHE: dict | None = None
 
 
-def _subdivider_spine(cat: str) -> list[tuple[str, str | None]]:
-    """A category's full-width `## ` banner targets, in index order: each
-    continent paired with each of its section children (Physical features,
-    Countries, ...), or the bare continent when it has none."""
-    global _SUBSPINE_CACHE
-    if _SUBSPINE_CACHE is None:
-        _SUBSPINE_CACHE = {}
-        for c, tops in parse_index().items():
-            sp: list[tuple[str, str | None]] = []
-            for top in tops:
-                kids = top.get("children", [])
-                # Only a real continent (one with section children) carries a
-                # cross-gutter banner.  A childless top-level node (General,
-                # Physical features and Oceanography, Meteorology, Biographies)
-                # is a plain bucket -- excluded so a body word like "physical"
-                # can't collide with its name during reconciliation.
-                if kids:
-                    sp.extend((top["name"], ch["name"]) for ch in kids)
-            _SUBSPINE_CACHE[c] = sp
-    return _SUBSPINE_CACHE.get(cat, [])
+_CLA = "classifiedlistofarticles"
 
 
-def _fw(s: str) -> str:
-    """First word of a name, normalized."""
-    parts = s.split()
-    return _norm(parts[0]) if parts else ""
+def _furniture(s: str) -> bool:
+    """The running page-head `CLASSIFIED LIST OF ARTICLES`, with any `[CATEGORY]`
+    tag and however the gutter clipped it -- furniture, dropped."""
+    n = _norm(s.lstrip("#* "))
+    if len(n) >= 5 and n in _CLA:
+        return True
+    return any(_CLA[i:i + 10] in n for i in range(len(_CLA) - 9))
 
 
-def _fuzz(a: str, b: str) -> bool:
-    """Clip-tolerant token match: one a prefix of the other (>=3 chars)."""
-    if not a or not b:
-        return False
-    if len(a) < 3 or len(b) < 3:
-        return a == b
-    return a.startswith(b) or b.startswith(a)
-
-
-def _recon_sub(frag: str, spine: list[tuple[str, str | None]],
-               cur: int) -> int | None:
-    """A clipped `## ` banner fragment -> the spine index it names, or None.
-    Splits on the em-dash gutter: head = continent, tail = section.  A continent-
-    only fragment naming the CURRENT continent is a running-header repeat (-> cur,
-    so the caller sees it as not-new); naming a new continent enters its first
-    section.  A section-only tail (continent half clipped off) takes the next
-    matching section ahead of the cursor."""
-    t = re.sub(r"\(.*?cont.*?\)", "", frag, flags=re.I)
-    t = re.sub(r"[#*():,.]", " ", t)
-    fwords = [w for w in (_norm(x) for x in t.split()) if len(w) >= 2]
-    if not fwords:
-        return None
-
-    def cont_hit(name: str) -> bool:
-        cw = _fw(name)
-        return any(_fuzz(w, cw) for w in fwords)
-
-    def sec_hits(sec: str | None) -> int:
-        if not sec:
-            return 0
-        return sum(1 for x in (_norm(y) for y in sec.split())
-                   if len(x) >= 3 and any(_fuzz(w, x) for w in fwords))
-
-    has_cont = any(cont_hit(c) for c, _ in spine)
-    has_sec = any(sec_hits(s) for _, s in spine)
-    cur_cont = spine[cur][0] if 0 <= cur < len(spine) else None
-    if has_cont and not has_sec:                      # continent-only banner
-        if cur_cont and cont_hit(cur_cont):
-            return cur                                # repeat of current continent
-        for j, (c, _) in enumerate(spine):            # entering a new continent
-            if cont_hit(c):
-                return j
-        return None
-    if not has_sec:
-        return None
-    best = best_key = None
-    for j, (c, s) in enumerate(spine):                # score section coverage
-        sc = sec_hits(s)
-        if sc == 0 or (has_cont and not cont_hit(c)):
-            continue
-        key = (j > cur, sc + (1 if cont_hit(c) else 0), -abs(j - cur))
-        if best_key is None or key > best_key:
-            best, best_key = j, key
-    return best
-
-
-def _is_crossing_frag(s: str, spine: list[tuple[str, str | None]]) -> bool:
-    """True if a `## ` banner is a candidate clipped half of a gutter-crossing
-    band (to be paired with its other half).  Only a COMPLETE continent+section
-    banner (the whole `CONTINENT -- SECTION` printed on one page) is ruled out; a
-    bare continent IS a candidate -- whether it's a clipped head (`EUROPE` with
-    its section sliced onto the other page) or History's real bare name "Europe".
-    The pairing then decides: a continent banner with an actual tail crosses; one
-    with no tail goes unpaired and stays in place, the OCR already ordering it."""
-    b = _norm(s.lstrip("#").strip())
-    if not b:
-        return False
-    for cont, sec in spine:
-        if sec and b == _norm(cont) + _norm(sec):
-            return False
-    return True
-
-
-def _zip_halves(llines: list[str], rlines: list[str],
-                spine: list[tuple[str, str | None]], sub_cur: int
-                ) -> tuple[list[str], int]:
-    """Reorder one spread's two halves around the cross-gutter bands they share.
-
-    A crossing band's banner is sliced by the gutter into a HEAD on A (carrying
-    the continent) and a TAIL on B (carrying the section); either half may be
-    `## ` or `**`-marked and clipped.  We don't pair by position (brittle when a
-    spread stacks several bands or a running-header repeat sits among them) --
-    instead, walking the index's KNOWN ORDER from the cursor, for each band the
-    index expects next we look for a left head (continent matches, section not
-    contradicted) AND a right tail (section matches, continent not contradicted).
-    A band found that way is split as one unit: lead(A+B), banner, A-portion +
-    B-portion.  Heads with no tail (running-header repeats, one-side banners) and
-    everything unmatched stay in place -- the OCR already orders them right."""
-    def words(t: str) -> list[str]:
-        t = re.sub(r"\(.*?cont.*?\)", "", t, flags=re.I)
-        t = re.sub(r"[#*():,.]", " ", t)
-        return [w for w in (_norm(x) for x in t.split()) if len(w) >= 2]
-
-    def cont_hit(frag: str, cont: str) -> bool:
-        cw = _fw(cont)
-        return any(_fuzz(w, cw) for w in words(frag))
-
-    def sec_hit(frag: str, sec: str | None) -> bool:
-        sw = [_norm(x) for x in (sec or "").split() if len(_norm(x)) >= 3]
-        return bool(sw) and any(_fuzz(w, x) for w in words(frag) for x in sw)
-
-    def has_cont(frag: str) -> bool:
-        return any(cont_hit(frag, c) for c, _ in spine)
-
-    _leads = [_fw(s) for _, s in spine if s]
-
-    def unique_sec(sec: str | None) -> bool:
-        # a section type that belongs to only ONE continent (e.g. UK's "Division
-        # and Towns"); "Physical features"/"Countries" repeat, so a section-only
-        # head of those can't be placed without its continent.
-        return bool(sec) and _leads.count(_fw(sec)) == 1
-
-    def head_conflicts(frag: str, sec: str | None) -> bool:
-        # the head names a section OTHER than `sec` and not `sec` itself
-        return any(s and _norm(s) != _norm(sec) and sec_hit(frag, s)
-                   for _, s in spine) and not sec_hit(frag, sec)
-
-    def caps_frags(lines: list[str]) -> list[tuple[int, str]]:
-        out = []
-        for i, l in enumerate(lines):
-            s = l.strip()
-            if ((s.startswith("## ") or s.startswith("**"))
-                    and _is_caps_banner(s) and _is_crossing_frag(s, spine)):
-                out.append((i, s))
-        return out
-
-    lf, rf = caps_frags(llines), caps_frags(rlines)
-    cur = sub_cur
-    real: list[tuple[int, int, int]] = []            # (A-row, B-row, spine node)
-    usedL: set[int] = set()
-    usedR: set[int] = set()
-    for j in range(max(cur + 1, 0), len(spine)):
-        cont, sec = spine[j]
-        if not sec:
-            continue
-        lh = next((li for li, lt in lf if li not in usedL
-                   and (cont_hit(lt, cont) or (sec_hit(lt, sec) and unique_sec(sec)))
-                   and not head_conflicts(lt, sec)), None)
-        rt = next((ri for ri, rtxt in rf if ri not in usedR and sec_hit(rtxt, sec)
-                   and (not has_cont(rtxt) or cont_hit(rtxt, cont))), None)
-        if lh is None and rt is None and (j == 0 or spine[j - 1][0] != cont):
-            # The continent's OWN name straddles the gutter (e.g. "AS"|"IA" =
-            # ASIA): neither half carries it whole, so pair a left fragment that
-            # PREFIXES the continent with a right fragment that COMPLETES it.
-            # Only at a continent entry (its first band).
-            cn = _fw(cont)
-            for li, lt in lf:
-                if li in usedL:
-                    continue
-                lw = "".join(words(lt))
-                if not lw or lw == cn or not cn.startswith(lw):
-                    continue
-                ri = next((r for r, rtxt in rf if r not in usedR
-                           and lw + "".join(words(rtxt)) == cn), None)
-                if ri is not None:
-                    lh, rt = li, ri
-                    break
-        if lh is not None and rt is not None:
-            real.append((lh, rt, j))
-            usedL.add(lh)
-            usedR.add(rt)
-            cur = j
-
-    def advance_complete(c: int) -> int:             # one-side banners, no pairing
-        for l in list(llines) + list(rlines):
-            s = l.strip()
-            if s.startswith("## "):
-                j = _recon_sub(s, spine, c)
-                if j is not None and j > c:
-                    c = j
-        return c
-
-    if not real:                                     # nothing to interleave
-        return list(llines) + list(rlines), advance_complete(sub_cur)
-
-    real.sort(key=lambda r: r[0])
-
-    def carve_at(lines: list[str],
-                 realpos: list[int]) -> tuple[list[str], list[list[str]]]:
-        realset = set(realpos)
-        lead: list[str] = []
-        segs: list[list[str]] = []
-        seg = lead
-        for i, l in enumerate(lines):
-            if i in realset:                         # the matched banner opens a
-                segs.append([])                      # segment; its line is dropped
-                seg = segs[-1]                       # (replaced by the emitted band)
-                continue
-            seg.append(l)                            # unused one-side banners stay
-        return lead, segs                            # so step 3 still reads them
-
-    llead, lsegs = carve_at(llines, [r[0] for r in real])
-    rlead, rsegs = carve_at(rlines, [r[1] for r in real])
-    out: list[str] = list(llead) + list(rlead)
-    for k, (_, _, j) in enumerate(real):
-        cont, sec = spine[j]
-        # ALL-CAPS so step 3's caps-banner recognizer resolves it and moves its
-        # cursor (consumed there, never shown).
-        out.append(f"## {cont.upper()} — {sec.upper()}" if sec
-                   else f"## {cont.upper()}")
-        out.extend(lsegs[k])
-        out.extend(rsegs[k])
-    return out, cur
-
-
-def assemble_spread(left_text: str, right_text: str,
-                    openers: list[tuple[str, list[str]]],
-                    incoming: int, sub_cur: int) -> tuple[str, int, int]:
-    """Decruft both halves from the same incoming category, then read the spread
-    BAND-BY-BAND at the surviving MAJOR banners.  Within a Geography/History
-    band, `_zip_halves` recovers the cross-gutter sub-dividers and reorders the
-    two halves above/below them; every other category keeps the plain left-then-
-    right zip.  Returns the assembled text, the outgoing major index, and the
-    outgoing sub-divider cursor (threaded across spreads of the same category)."""
-    llines, lcur = _decruft(left_text.split("\n"), openers, incoming)
-    rlines, rcur = _decruft(right_text.split("\n"), openers, incoming)
-    left, right = _align_bands(_bands(llines, openers),
-                               _bands(rlines, openers), openers)
-    cat_norms = {_norm(c): i for i, (c, _) in enumerate(openers)}
-    out: list[str] = []
-    cat_idx = incoming
-    for i in range(max(len(left), len(right))):
-        banner = ((left[i][0] if i < len(left) else None)
-                  or (right[i][0] if i < len(right) else None))
-        if banner:
-            out.append(banner)
-            nb = cat_norms.get(_norm(banner[3:].strip()))
-            if nb is not None and nb != cat_idx:      # a new major -> reset subs
-                cat_idx, sub_cur = nb, -1
-        ll = left[i][1] if i < len(left) else []
-        rl = right[i][1] if i < len(right) else []
-        cat_name = openers[cat_idx][0] if 0 <= cat_idx < len(openers) else None
-        if cat_name in _CROSSING_CATS:
-            zl, sub_cur = _zip_halves(ll, rl, _subdivider_spine(cat_name), sub_cur)
-            out.extend(zl)
-        else:
-            out.extend(ll)
-            out.extend(rl)
-    return "\n".join(out), max(lcur, rcur), sub_cur
-
-
-def assemble_sequence(openers: list[tuple[str, list[str]]]
-                      ) -> list[tuple[int, int, str]]:
-    """The whole list, spread by spread in order -> [(ws, idx, line)].  Each
-    spread is BANDED from its whole-spread read and WALKED from its two halves
-    (`spread_combine.combine`): the banner is read where it is whole (the spread),
-    the columns where they are in order (the halves).  Nothing is reconstructed --
-    the band names are read, not rebuilt from slivers.  Downstream the category
-    and continent cursors thread continuations across the spread boundaries."""
-    from spread_combine import combine
-    halves = json.loads(HALVES.read_text(encoding="utf-8")) if HALVES.exists() \
-        else {}
-    seq: list[tuple[int, int, str]] = []
+def band_structure() -> tuple[list[str], list[str], dict[int, list[int]]]:
+    """The BANDS -- the full-width divisions -- straight off the `spread` field: a
+    separate OCR pass of ONLY the banners that cross the gutter, whole (no fragments to
+    stitch).  A spread banner is a band iff its `_band_key` is one of the 40 (majors +
+    Geo/History sub-bands); the rest are buckets that leaked into the spread (Oceans,
+    Biographies, and -- since no other major cat carries a band -- Denmark, Crime and
+    Punishment, ...).  Returns (band walls, their norms, per-page the bands that open)."""
+    H = json.loads(HALVES.read_text(encoding="utf-8")) if HALVES.exists() else {}
+    name2band: dict[str, int] = {}
+    walls: list[str] = []
+    norms: list[str] = []
+    page_bands: dict[int, list[int]] = {}
     for ws in range(WS_START, WS_END + 1):
-        h = halves.get(str(ws))
-        if not h or not h.get("spread"):
-            continue  # every body spread now has all three reads
-        text = "\n".join(combine(h["spread"], h["left"], h["right"]))
-        seq.extend((ws, i, ln) for i, ln in enumerate(text.split("\n")))
+        page_bands[ws] = []
+        for line in H.get(str(ws), {}).get("spread", "").split("\n"):
+            s = line.strip()
+            if not s.startswith("## ") or _furniture(s):
+                continue
+            key = _band_key(s[3:])
+            if key not in _BAND_NORMS:           # a bucket that leaked into the spread
+                continue
+            if key not in name2band:
+                name2band[key] = len(walls)
+                walls.append("## " + re.sub(r"\(.*?\)", "", s[3:]).strip().strip("*").strip())
+                norms.append(key)
+            bi = name2band[key]
+            if not page_bands[ws] or page_bands[ws][-1] != bi:
+                page_bands[ws].append(bi)
+    return walls, norms, page_bands
+
+
+def whole_tracks(norms: list[str]) -> dict[int, list[tuple[bool, str, int]]]:
+    """Per page, the whole read's ordered HEADER TRACK -- every band banner and
+    bucket header in read order, each tagged with the band it falls under.  A band
+    banner (a `## ` whose norm is a known band) advances the open band; every other
+    header (a `## ` bucket the gutter did not slice, or a `### `) inherits it.  The
+    open band carries ACROSS pages, so a page that continues a band starts under it.
+    This track is what marks the halves: a bucket names its band even where the
+    band's own banner was lost in the scan."""
+    band_id = {nm: i for i, nm in enumerate(norms)}
+    tracks: dict[int, list[tuple[bool, str, int]]] = {}
+    cur = -1
+    for ws in range(WS_START, WS_END + 1):
+        tracks[ws] = []
+        p = Path(f"data/derived/vol29_whole_{ws}.txt")
+        if not p.exists():
+            continue
+        for line in p.read_text(encoding="utf-8").split("\n"):
+            s = line.strip()
+            if not s.startswith("#") or _furniture(s) or s[3:].startswith("["):
+                continue
+            if s.startswith("## ") and not s.startswith("### "):
+                nm = _band_key(s[3:])
+                if nm in band_id:
+                    if band_id[nm] > cur:              # bands only ever advance, so a
+                        cur = band_id[nm]              # HIGHER id is a real new band;
+                        tracks[ws].append((True, nm, cur))
+                    continue                           # a <= id is a running head/(cont.)
+                    #                                    -- furniture, never a bucket
+            bn = _norm(re.sub(r"\(.*?\)", "", s.lstrip("#* ")))
+            tracks[ws].append((False, bn, cur))
+    return tracks
+
+
+def _mark_bands(norms, page_bands, H) -> list[tuple[int, int, int, str]]:
+    """MARK the bands onto each half by ALIGNING it to the whole read's header order.
+    Each half column is a subsequence of that page's whole-read track (its headers, in
+    order, each tagged with its band).  Walk the column; for each header find its next
+    match forward in the track -- a band banner by clip (it was gutter-sliced), a bucket
+    by exact norm -- and take that entry's band; a band banner is consumed, a bucket is
+    kept.  So a band whose own banner dropped on this half is still opened by its first
+    bucket, which names the band in the whole read.  The open band carries onto the next
+    page.  Returns every half line tagged (band, ws, side, line)."""
+    tracks = whole_tracks(norms)
+
+    def clip_match(clip: str, band: str) -> bool:
+        return len(clip) >= 3 and (band.startswith(clip) or band.endswith(clip)
+                                   or clip.startswith(band) or clip.endswith(band))
+
+    tagged: list[tuple[int, int, int, str]] = []      # (band, ws, side, line)
+    carry = -1
+    for ws in range(WS_START, WS_END + 1):
+        h = H.get(str(ws))
+        if not h:
+            continue
+        track = tracks.get(ws, [])
+        for side, key in enumerate(("left", "right")):
+            cur, ptr = carry, 0
+            for line in h.get(key, "").split("\n"):
+                s = line.strip()
+                if not s or _furniture(s):
+                    continue
+                if s.startswith("#"):
+                    banner = s.startswith("## ") and not s.startswith("### ")
+                    clip = _norm(re.sub(r"\(.*?\)", "", s.lstrip("#* ")))
+                    hit = None
+                    for j in range(ptr, len(track)):
+                        is_band, nm, bd = track[j]
+                        if (clip_match(clip, nm) if is_band else nm == clip):
+                            hit = j
+                            break
+                    if hit is not None:
+                        cur, ptr = track[hit][2], hit + 1
+                        if track[hit][0]:              # a band banner is not content
+                            continue
+                    elif banner:
+                        continue                       # an unmatched banner = furniture
+                tagged.append((cur, ws, side, line))
+        if page_bands.get(ws):
+            carry = page_bands[ws][-1]                 # the page's last band carries on
+    return tagged
+
+
+def band_check(norms, page_bands, H) -> list[tuple[int, str, set, set]]:
+    """The user's self-check: N bands on the whole page => N on each half.  For each
+    page, the whole read's distinct bands must equal the bands each half gets marked
+    with; a half short a band is a missed mark (its banner lost in the scan)."""
+    tracks = whole_tracks(norms)
+    tagged = _mark_bands(norms, page_bands, H)
+    half: dict[tuple[int, int], set] = {}
+    for band, ws, side, _ in tagged:
+        half.setdefault((ws, side), set()).add(band)
+    out = []
+    for ws in range(WS_START, WS_END + 1):
+        whole = {b for _, _, b in tracks.get(ws, [])}
+        if not whole:
+            continue
+        for side, name in ((0, "left"), (1, "right")):
+            hb = half.get((ws, side), set())
+            if hb != whole:
+                out.append((ws, name, whole - hb, hb - whole))
+    return out
+
+
+def assemble_sequence(openers) -> list[tuple[int, int, str]]:
+    """READ BY BAND.  The whole read MARKS the bands onto each half: a page's band
+    sequence (from that page's whole read) is walked down each half, opening a band
+    where the half's clipped banner matches the next expected one; the page's last
+    band carries onto the next page.  Then a band's two halves reunite: group by band,
+    emit in whole-read order, reading order within (page by page, left then right).
+    Majors fall out for free -- a major cat is merely a band."""
+    walls, norms, page_bands = band_structure()
+    H = json.loads(HALVES.read_text(encoding="utf-8")) if HALVES.exists() else {}
+    tagged = _mark_bands(norms, page_bands, H)
+    by: dict[int, list[tuple[int, int, str]]] = {}
+    for band, ws, side, line in tagged:
+        by.setdefault(band, []).append((ws, side, line))
+    seq: list[tuple[int, int, str]] = []
+    idx = 0
+    for band in sorted(by):                           # bands in whole-read order
+        if band < 0:
+            continue
+        seq.append((0, idx, walls[band]))
+        idx += 1
+        for ws, side, line in by[band]:               # reading order within the band
+            seq.append((ws, idx, line))
+            idx += 1
     return seq
 
 
@@ -674,13 +385,57 @@ def _header_level(s: str) -> int:
     return 0
 
 
+def _principal_of(heading: str, header: str | None) -> bool:
+    """A heading line that is really the open bucket's PRINCIPAL link, not a new
+    bucket: its words are all drawn from the bucket's own title, so it is a chief
+    article named at the section head (`### Painting`, `### Engraving` under
+    `## Painting and Engraving: *Subjects*`) -- an emphasized link the source
+    prints out of alphabetical order.  A well-set principal is whole-italic
+    (`*Geography*`) and reads as a link already; this catches only the ones the
+    OCR bolded into a heading, which would otherwise masquerade as a bucket."""
+    if not header:
+        return False
+
+    def words(t: str) -> set:
+        return {w for w in (_norm(x) for x in
+                re.split(r"[\s:—–-]+", re.sub(r"[#*]", "", t))) if w}
+
+    hw = words(heading)
+    return bool(hw) and hw <= words(header)
+
+
+def _principal_header(h: str | None) -> bool:
+    """A section whose header is a BARE principal (`### *Literature*`) -- the real
+    bucket header was missing on the page, so its own chief article stands in.  A
+    `(cont.)` naming the real bucket then belongs to it, however differently named."""
+    t = re.sub(r"[#\s]+", "", h) if h else ""
+    return len(t) > 2 and t.startswith("*") and t.endswith("*") and t.count("*") == 2
+
+
+def _base(h: str | None) -> str:
+    """A header's bucket-name key: drop the markers, any `(cont.)` or other
+    parenthetical, and normalize colon spacing and case -- so `General`,
+    `General (cont.)` and `General (*cont.*)` are one bucket, and `Finance`
+    prefix-matches `Finance and Currency`."""
+    if not h:
+        return ""
+    h = re.sub(r"\(?\s*\*?\s*cont[^)]*\)?", "", h, flags=re.I)
+    h = re.sub(r"\(.*?\)", "", h)
+    h = re.sub(r"[#*]", "", h)
+    h = re.sub(r"\s*:\s*", ":", h)
+    return re.sub(r"\s+", " ", h).strip().lower()
+
+
 def build_sections(name: str, line_tuples) -> list[dict]:
-    """ONE walk down a category: each subcategory header opens a section, and the
-    links (and marginal notes) that follow drop into it, until the next header.
-    The category's own `## name` wall is the title, not a section.  Anything
-    before the first header (a top-of-category cross-reference) is the lead
-    section (header None).  The stream is already clean -- header / link / link
-    / header -- so the walk needs no lookahead."""
+    """ONE walk down a category, on ONE rule: recognize the bucket; everything
+    else is a link.  A bucket header opens a section; the links that follow drop
+    into it until the next bucket.  A header stacked at a bucket's HEAD, before its
+    plain run begins, is that bucket's PRINCIPAL -- an emphasized link (chief
+    article) the source prints out of order, `### Commerce` under `### General`,
+    `### Painting` under `Painting and Engraving` -- not a new bucket.  A `(cont.)`
+    of the open bucket folds back in (a bucket's run spans pages/columns).  After a
+    caps BAND banner the next header is a bucket, not a principal, unless it echoes
+    the banner (its own chief article).  Nothing is dropped."""
     lines = [l for _, _, l in line_tuples]
     # Drop the category title wall AND every running-header repeat of it: the
     # whole-spread band read re-emits "## {name}" atop each of the category's
@@ -691,17 +446,33 @@ def build_sections(name: str, line_tuples) -> list[dict]:
                      and _norm(re.sub(r"[#*]", "", l)) == _norm(name))]
     sections: list[dict] = []
     cur = {"header": None, "level": 0, "items": []}
+    run = False                               # has the open bucket's run begun?
     for l in lines:
         s = l.strip()
         if not s:
             continue
         lvl = _header_level(s)
         if lvl:
+            b, cb = _base(s), _base(cur["header"])
+            if cur["header"] is not None and (
+                    b == cb                              # the open bucket's own header
+                    or ("cont" in s.lower() and (        # repeated, or a (cont.) of it:
+                        b.startswith(cb) or cb.startswith(b)   # same / abbreviated name,
+                        or _principal_header(cur["header"])))):  # or names a bare-principal
+                continue                                 # bucket -- keep it open
+            if (cur["header"] is not None and not run and not _is_caps_banner(s)
+                    and "cont" not in s.lower()          # a continuation is never a
+                    and (not _is_caps_banner(cur["header"])   # principal
+                         or _principal_of(s, cur["header"]))):
+                cur["items"].append(s)        # a PRINCIPAL: an emphasized link at the
+                continue                      # bucket head, not a new bucket
             if cur["header"] is not None or cur["items"]:
-                sections.append(cur)
+                sections.append(cur)          # a real new bucket -- close the open one
             cur = {"header": s, "level": lvl, "items": []}
+            run = False
         else:
-            cur["items"].append(s)            # a link or a marginal note
+            cur["items"].append(s)            # a link -- plain, or a whole-italic
+            run = True                        # principal; either way the head is past
     if cur["header"] is not None or cur["items"]:
         sections.append(cur)
     return sections
@@ -715,26 +486,17 @@ def _clean_header(h: str) -> str:
 
 def _parse_item(s: str):
     """One stream line -> ("note", text) for a marginal cross-reference, or
-    ("article", {display, target, emphasized}) for a link.  An italic principal
-    (`*Map*`, a section's chief article printed out of alphabetical order) carries
-    emphasized=True.  `target` is the link text to resolve to an article later."""
+    ("article", {display, target, emphasized}) for a link.  A principal -- a
+    section's chief article printed out of alphabetical order -- carries
+    emphasized=True, whether the source set it italic (`*Map*`) or the OCR bolded
+    it into a heading (`### Painting`); a plain link wears no markup at all.
+    `target` is the link text to resolve to an article later."""
     if _NOTE_RE.match(s):
-        return "note", re.sub(r"\*+", "", s).strip()
-    emphasized = s.startswith("*") and s.endswith("*") and not s.startswith("**")
-    display = re.sub(r"\*+", "", s).strip()
+        return "note", re.sub(r"[#*]+", "", s).strip()
+    emphasized = s.startswith("#") or (s.startswith("*") and s.endswith("*"))
+    display = re.sub(r"[#*]+", "", s).strip()
     return "article", {"display": display, "target": display,
                        "emphasized": emphasized}
-
-
-def _split_header(name: str) -> tuple[str, str | None]:
-    """A subsection nests by its NAME, not the model's noisy `##`/`###` level:
-    "Country: Section" -> (Country, Section), so "Germany: Subjects" and
-    "Germany: Biographies" gather under Germany even when one was stamped `##` and
-    the other `###`.  No colon -> a standalone section: (name, None)."""
-    if ":" in name:
-        parent, child = name.split(":", 1)
-        return parent.strip(), child.strip()
-    return name, None
 
 
 def _index_rows() -> list[str]:
@@ -863,15 +625,6 @@ def parse_index() -> dict[str, list[dict]]:
     return cats
 
 
-def _items(sec: dict) -> tuple[list, list]:
-    """A section's lines -> (article links, cross-reference notes)."""
-    arts, notes = [], []
-    for it in sec["items"]:
-        kind, val = _parse_item(it)
-        (notes if kind == "note" else arts).append(val)
-    return arts, notes
-
-
 def _strip_parens(s: str) -> str:
     return re.sub(r"\s*\([^)]*\)", "", s).strip()
 
@@ -992,194 +745,6 @@ def _graft(parent: dict, name: str, parent_map: dict) -> dict:
     return node
 
 
-def _node_path(node: dict, parent_map: dict) -> str:
-    parts: list[str] = []
-    nd: dict | None = node
-    while nd is not None:
-        parts.append(nd["name"])
-        nd = parent_map.get(id(nd))
-    return " > ".join(reversed(parts))
-
-
-def _phys_slot(cont: dict | None) -> dict | None:
-    """The "Physical features" node the index hangs under a continent (or the
-    continent itself when it IS the physical-features section).  The index
-    answers where Physical Features lives -- we never invent it."""
-    if cont is None:
-        return None
-    for ch in cont.get("children", []):
-        if _norm(ch["name"]) == "physicalfeatures":
-            return ch
-    if _norm(cont["name"]).startswith("physicalfeatures"):
-        return cont
-    return None
-
-
-def _resolve_banner(line: str, skeleton: list[dict],
-                    cur_cont: dict | None) -> tuple[dict | None, dict | None]:
-    """A full-width banner -> (continent node, section node) it names.  A pure
-    continent banner (joined norm is a prefix of a continent name) returns just
-    the continent; a "Continent-Section" banner returns both; a continent-less
-    section fragment (AL FEATURES) takes the continent we are standing in."""
-    t = re.sub(r"\(.*?cont.*?\)", "", line, flags=re.I)
-    t = re.sub(r"[#*]", "", t).strip()
-    parts = [p.strip() for p in re.split(r"[—–\-]", t) if p.strip()]
-    joined = _norm(t)
-    for s in skeleton:                                  # pure continent banner
-        cn = _norm(s["name"])
-        if joined and len(joined) >= 3 and cn.startswith(joined):
-            return s, None
-    cont = None
-    if parts:
-        cf = _norm(parts[0])
-        for s in skeleton:
-            cn = _norm(s["name"])
-            if cf and len(cf) >= 3 and (cn.startswith(cf) or cn.endswith(cf)):
-                cont = s
-                break
-    use = cont if cont is not None else cur_cont
-    sec = None
-    if use is not None and parts:
-        sf = _norm(parts[-1])
-        if len(sf) >= 3:
-            for ch in use.get("children", []):
-                scn = _norm(ch["name"])
-                lead = _norm(ch["name"].split()[0])
-                if (scn.startswith(sf) or scn.endswith(sf)
-                        or sf.startswith(lead) or lead.startswith(sf)):
-                    sec = ch
-                    break
-    return cont, sec
-
-
-def _general_child(node: dict) -> dict:
-    """The 'general list' descendant a continent's lead content belongs to (BFS),
-    else the node itself -- so the run of articles right under a continent banner
-    lands on its general list, not piled on the continent node."""
-    queue = [node]
-    while queue:
-        n = queue.pop(0)
-        if "general" in _norm(n.get("name", "")):
-            return n
-        queue.extend(n.get("children", []))
-    return node
-
-
-def _merge_structured(name: str, skeleton: list[dict],
-                      sections: list[dict]) -> tuple[dict, list]:
-    """Graft the body's flat sections onto the index trunk for one category.
-
-    A KNOWN-ORDER WALK: a full-width banner that ADVANCES the continent/section
-    moves the cursor there; a banner that repeats the current one is a running
-    header -- the cursor stays put and its trailing content continues the current
-    subcat (the same dedup build_toc already does for the 24 major banners).  A
-    normal header is a subcat matched into the trunk by NAME (a name match never
-    moves the continent -- only banners do), or, when the index never carried it,
-    built beneath the current continent (a physical-feature leaf fills that
-    continent's Physical features slot).
-
-    INVARIANT: the skeleton's top-level nodes are the ONLY top-level subsections;
-    everything is built BENEATH them via _graft, and no item is ever dropped."""
-    lookup, parent_map = _index_lookup(skeleton)
-    cat = {"name": name, "notes": [], "subsections": skeleton}
-    created: list[str] = []
-
-    cur_cont: dict | None = None         # current continent (moved only by banners)
-    cur_sec: dict | None = None          # current section within the continent
-    phys_home = next(                    # where loose physical-feature leaves land
-        (s for s in skeleton if _norm(s["name"]).startswith("physicalfeatures")),
-        None)
-    cursor: dict | None = None           # last subcat -- holds continuing content
-
-    for sec in sections:
-        arts, notes = _items(sec)
-        if sec["header"] is None:                 # lead matter heads the cat
-            cat["notes"].extend(notes)
-            if arts and skeleton:
-                skeleton[0]["articles"].extend(arts)
-            continue
-        raw = sec["header"]
-        if _is_caps_banner(raw):                  # a continent/section delimiter
-            cont, secnode = _resolve_banner(raw, skeleton, cur_cont)
-            if cont is not None and cont is not cur_cont:        # new continent
-                cur_cont, cur_sec = cont, secnode
-                phys_home = _phys_slot(cont) or phys_home
-                cursor = secnode or _general_child(cont)
-            elif secnode is not None and secnode is not cur_sec:  # new section
-                cur_sec, cursor = secnode, secnode
-            # else: a running-header repeat -- cursor unchanged, content continues
-            target = cursor or cur_sec or cur_cont or (skeleton[0] if skeleton
-                                                       else None)
-            if target is not None:
-                target["articles"].extend(arts)
-                target["notes"].extend(notes)
-            continue
-        hname = _clean_header(raw)
-        node, suffix = _match(lookup, parent_map, hname, cursor)
-        if node is not None:
-            target = _graft(node, suffix, parent_map) if suffix else node
-            cursor = target                       # a NAME match does not move cont
-        else:
-            if _norm(hname) in _PHYS_TYPES:
-                home = phys_home or cur_cont or skeleton[0]
-            else:                                 # a place the index missed
-                home = cur_cont or skeleton[0]
-            target = _graft(home, hname, parent_map)
-            cursor = target
-            created.append(_node_path(target, parent_map))
-        target["articles"].extend(arts)
-        target["notes"].extend(notes)
-
-    return cat, created
-
-
-def _merge_flat(name: str, sections: list[dict]) -> dict:
-    """An index-flat category: the body's headers ARE the subcats, a flat list
-    (these categories do not nest)."""
-    cat = {"name": name, "notes": [], "subsections": []}
-    for sec in sections:
-        arts, notes = _items(sec)
-        if sec["header"] is None:
-            cat["notes"].extend(notes)
-            if arts:
-                cat["subsections"].append(
-                    {"name": name, "articles": arts, "notes": [],
-                     "children": []})
-            continue
-        cat["subsections"].append(
-            {"name": _clean_header(sec["header"]), "articles": arts,
-             "notes": notes, "children": []})
-    return cat
-
-
-def _strip_index_flags(nodes: list[dict]):
-    for n in nodes:
-        n.pop("_index", None)
-        n.pop("printed_page", None)
-        _strip_index_flags(n.get("children", []))
-
-
-def build_classified_toc(tree: list[dict]) -> tuple[dict, list]:
-    """Build the nested classified TOC.  A category with an index trunk gets the
-    body's sections grafted beneath that trunk by name (the authoritative shape
-    plus the body's leaves + links); an index-flat category takes the body's
-    headers as a flat subcat list.  Returns (tree, per-cat report of grafted
-    nodes -- the sections the index did not already carry)."""
-    index = parse_index()
-    cats: list[dict] = []
-    report: list[tuple[str, list]] = []
-    for t in tree:
-        skeleton = index.get(t["name"])
-        if skeleton:
-            cat, created = _merge_structured(t["name"], skeleton, t["sections"])
-            report.append((t["name"], created))
-        else:
-            cat = _merge_flat(t["name"], t["sections"])
-        cats.append(cat)
-    _strip_index_flags([s for c in cats for s in c["subsections"]])
-    return {"categories": cats}, report
-
-
 def main() -> None:
     openers = category_openers()
     seq = assemble_sequence(openers)
@@ -1206,6 +771,16 @@ def main() -> None:
           f"({'all accounted for' if accounted == total else 'LOSS'})")
     print(f"all 24, in printed order: {[c for c, _ in chunks] == CATEGORIES}")
 
+    _, norms, page_bands = band_structure()
+    H = json.loads(HALVES.read_text(encoding="utf-8")) if HALVES.exists() else {}
+    bad = band_check(norms, page_bands, H)
+    print(f"\nband self-check (whole N => each half N): "
+          f"{'PASS' if not bad else f'{len(bad)} half-pages short'}")
+    for ws, side, miss, extra in bad:
+        tag = (f"missing {sorted(miss)}" if miss else "") + (
+              f" extra {sorted(extra)}" if extra else "")
+        print(f"  ws{ws} {side:5s}: {tag}")
+
     OUT.write_text(json.dumps(
         [{"name": c, "text": "\n".join(l for _, _, l in ls)} for c, ls in chunks],
         ensure_ascii=False, indent=2), encoding="utf-8")
@@ -1221,43 +796,6 @@ def main() -> None:
     TREE.write_text(json.dumps(tree, ensure_ascii=False, indent=2),
                     encoding="utf-8")
     print(f"wrote {TREE}")
-
-    classified, merge_report = build_classified_toc(tree)
-    def _arts(n):
-        return len(n["articles"]) + sum(_arts(ch) for ch in n["children"])
-
-    def _notes(n):
-        return len(n["notes"]) + sum(_notes(ch) for ch in n["children"])
-
-    cc = classified["categories"]
-    n_sub = sum(len(c["subsections"]) for c in cc)
-    n_art = sum(_arts(s) for c in cc for s in c["subsections"])
-    n_note = sum(len(c["notes"]) for c in cc) + sum(
-        _notes(s) for c in cc for s in c["subsections"])
-    print(f"\nclassified_toc: {n_sub:,} subsections, {n_art:,} article links, "
-          f"{n_note:,} notes")
-    print(f"links + notes = items: {n_art + n_note == n_item}  "
-          f"({n_art + n_note:,}/{n_item:,})")
-
-    # INVARIANT: a structured category's top-level subcats are EXACTLY the index's
-    # -- everything the body adds was grafted beneath, never beside.
-    index = parse_index()
-    by_name = {c["name"]: c for c in cc}
-    bad = []
-    for cat, skel in index.items():
-        if not skel:
-            continue
-        want = [_norm(s["name"]) for s in skel]
-        got = [_norm(s["name"]) for s in by_name[cat]["subsections"]]
-        if want != got:
-            bad.append(cat)
-    print(f"top-level invariant holds for all structured cats: {not bad}"
-          + (f"  VIOLATED: {bad}" if bad else ""))
-    grafted = sum(len(c) for _, c in merge_report)
-    print(f"grafted {grafted:,} body sections beneath the index trunk")
-    CLASSIFIED.write_text(json.dumps(classified, ensure_ascii=False, indent=2),
-                          encoding="utf-8")
-    print(f"wrote {CLASSIFIED}")
 
 
 if __name__ == "__main__":

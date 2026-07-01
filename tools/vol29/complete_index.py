@@ -121,10 +121,15 @@ def reconciled_skeleton(ws: int) -> list[tuple[str, str]]:
                 out.append(("section", name))
                 in_lead = False
         elif s and not s.startswith("#") and not s.startswith("="):
-            # an article line in the lead region means the band carries its own bare
-            # run -> a filled bucket in its own right (the "Minor Arts" case).  Emit
-            # the FACT, not the scrambled links (those must never enter the index).
-            if in_lead and not lead_done and band:
+            if B._NOTE_RE.match(s):
+                # a (For/See ...) cross-reference is whole and unscrambled, unlike the
+                # column links -- memorialize it here, where we have it in full, so the
+                # index carries its own notes (no special second pass to recover them).
+                out.append(("note", s))
+            elif in_lead and not lead_done and band:
+                # an article line in the lead region means the band carries its own bare
+                # run -> a filled bucket in its own right (the "Minor Arts" case).  Emit
+                # the FACT, not the scrambled links (those must never enter the index).
                 out.append(("lead", band))
                 lead_done = True
     return out
@@ -535,6 +540,60 @@ def merge() -> tuple[dict, dict]:
         report[cat] = {"flat": False, "resolved": resolved,
                        "grafted": grafted, "deferred": deferred}
     return index, report
+
+
+_REDIRECT = re.compile(r"^\(?\s*See\s+\w", re.I)
+
+
+def _is_pointer(notes: list[str]) -> bool:
+    """True when a node's own content is just a bare cross-reference -- `(See X)` /
+    `(See under X)` -- NOT a supplementary `(See also X)` / `(See further ...)` /
+    `(For ... see ...)`, which sits on a section that has content of its own."""
+    for nt in notes:
+        low = nt.lower()
+        if _REDIRECT.match(nt) and "also" not in low and "further" not in low:
+            return True
+    return False
+
+
+def _mark_filled(nodes: list[dict]) -> None:
+    """Stamp ONE property on every node -- filled or unfilled.  No leaf concept: a
+    container is unfilled, a pointer is unfilled, a bare-run node (leaf or not) is
+    filled, and a terminal bucket the pour fills is filled."""
+    for n in nodes:
+        kids = n.get("children", [])
+        if n.get("lead_filled"):
+            n["filled"] = True                       # carries its own bare run
+        elif kids:
+            n["filled"] = False                      # a container; content is in children
+        elif _is_pointer(n.get("notes", [])):
+            n["filled"] = False                      # only a (See X) redirect -> a pointer
+        else:
+            n["filled"] = True                       # a terminal bucket the pour fills
+        _mark_filled(kids)
+
+
+def index_tree() -> list[dict]:
+    """The index as ONE uniform tree of nodes: the 24 categories are its top row, each
+    filled/unfilled like any node beneath it.  A flat category that is nothing but a
+    wordless bare run (Sports) carries that run on the category node itself -- so the
+    category node, not a child, is the filled one."""
+    idx, _ = merge()
+    trunk = B.parse_index()
+    cats = stitch()
+    roots = []
+    for cat in B.CATEGORIES:
+        node = {"name": cat, "children": idx.get(cat, []),
+                "articles": [], "notes": []}
+        if not trunk.get(cat):                       # flat: the body IS the structure
+            for g in cats.get(cat, []):
+                if not g["band"] and g.get("lead_present"):
+                    node["lead_filled"] = True       # the category's own bare run (Sports)
+                    node["articles"].extend(g["lead"])
+                    node["notes"].extend(g["notes"])
+        roots.append(node)
+    _mark_filled(roots)
+    return roots
 
 
 def _coverage() -> tuple[list[int], list[int]]:
