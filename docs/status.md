@@ -409,11 +409,26 @@ name-stitching from gutter-clipped fragments (the OCR won't survive it):
    each band (`build_sections`: recognize the bucket, everything else is a link).
 
 Self-check `band_check` (user's invariant: N bands on the whole page ⇒ N on each
-half) is at 6/130 half-pages.  Current: 40 bands, 24 categories in printed order,
-bytes conserved, filled-index-node bucket diff +44 (down from +134).  Validation
+half) **PASSES on all 130 half-pages** (2026-07-01; was 6 short).  The section walk
+(`build_sections`) accounts for every body line: 37,274 placed + 121 furniture
+absorbed (repeated/`(cont.)` headers, split-header tails — carried per-section in
+`absorbed`), invariant `every body line placed: True`.  Current: 40 bands, 24
+categories in printed order, bytes conserved.  The 2026-07-01 build fixes: `_base`
+keeps discriminating parentheticals (`Biographies (ancient)`≠`(modern)`; Italy
+ancient/modern towns, Classics Greek/Byzantine/Latin un-merged); cont-marks require
+the paren (bare "Cont" in "Continental" is not a continuation); OCR-split headers
+join at a trailing colon; a caps banner's echo is its chief-article principal
+(MAHOMMEDAN RELIGION's link recovered); `_mark_bands` matches clipped banners by
+TEXT not dressing (`**UNITED KINGDOM OF GRE**`), treats cont-marked caps fragments
+naming an open band as running heads BEFORE the forward search (ws916-right's whole
+Africa run was misbanded into AMERICA—PHYSICAL FEATURES via a `L FEATURES (cont.)`
+suffix hit), and matches a band's FULL banner text as well as its canonical key
+(`## -GENERAL` → EUROPE—GENERAL, whose key is just "europe").  Validation
 tree from the index: `tools/vol29/complete_index.py`.  Pour into the DB:
-`tools/vol29/populate_classified_toc.py`.  Ambiguity disambiguation via Haiku batch
-(`tools/vol29/disambiguate_toc.py`), cached.
+`tools/vol29/populate_classified_toc.py` — currently 347/372 leaves filled, 25
+empty, 14 orphans; the pour/index stages are the open frontier (recurring
+per-category `Biographies` orphans = index gaps; positional-fill shifts).
+Ambiguity disambiguation via Haiku batch (`tools/vol29/disambiguate_toc.py`), cached.
 
 ---
 
