@@ -384,51 +384,51 @@ math measurement).  pytest (378 tests).
 
 ## Topics page (Vol 29 classified TOC)
 
-The classified TOC is built in three steps: the **index** gives the SHAPE (the
-canonical bucket tree), the **band read** gives the CONTENT (ordered groups of
-links), and the **pour** joins them.  65 pages (ws891-955), each OCR'd two ways in
-`data/derived/vol29_halves_debug.json`: a `left`/`right` half-column read (links) and
-a `spread` read (only the full-width banners).
+Three steps.  **Step 1 — the index** (`complete_index.py`) is authoritative for ONE
+thing per major cat: HOW MANY filled nodes it has and in what ORDER.  Its node *names*
+are NOT a matching key — they differ from what the read produces, so nothing keys on
+them.  **Step 2 — the build** (`build_toc.py`) reads the content buckets, in order,
+from the half-page OCR.  **Step 3 — the pour** (`populate_classified_toc.py`) seats each
+bucket on its node by position.  65 pages (ws891-955), each OCR'd two ways in
+`data/derived/vol29_halves_debug.json`: `left`/`right` half-column reads (the article
+links) and a `spread` read (the full-width band banners); plus per-page whole reads
+(`vol29_whole_{ws}.txt`) for the band structure.
 
-**Band read (`tools/vol29/build_toc.py`).**  Two jobs, both structural -- no
-name-stitching from gutter-clipped fragments (the OCR won't survive it):
+**The build (step 2) is graded ONLY two ways — never the pour, never names:**
+- **census** — per major cat, the number of link-bearing build buckets equals the
+  index's filled-node count, in order.  The real scoreboard.
+- **conservation** — every one of the 36,829 source links lands in some bucket;
+  nothing vanishes.  The cardinal invariant.
 
-1. *Identify the 40 bands* (`band_structure`) straight off the `spread` field.  A
-   spread banner is a band iff its `_band_key` is one of the 40 = 24 major cats +
-   `GEO_BANDS` (11) + `HIST_BANDS` (5).  Governing rule: **no major cat carries a band
-   but itself; only Geography and History have sub-bands.**  The Geo/History sub-band
-   names are pinned constants (buckets like Oceans/Biographies leak into the spread
-   and only the confirmed names filter them).  Europe--General ≡ Europe (one band);
-   UK runs two banner lines.
-2. *Mark the bands onto each half* (`_mark_bands`) by ALIGNING it to the whole read's
-   header track (`whole_tracks` over `vol29_whole_{ws}.txt`, monotonic -- bands only
-   advance, so a running-head banner is furniture).  Each half column is a subsequence
-   of that track; a band whose own banner dropped on the half (~49 pages) is still
-   opened by its first bucket, which names the band in the whole read.  Then reunite
-   the two halves per band, chunk by category (`build_category_chunks`), and bucket
-   each band (`build_sections`: recognize the bucket, everything else is a link).
+*Band read.*  `band_structure` identifies the 40 bands off the `spread` field (24 major
+cats + `GEO_BANDS` 11 + `HIST_BANDS` 5; no major cat carries a band but itself, only
+Geo/History have sub-bands).  `_mark_bands` marks them onto each half by aligning to the
+whole read's header track (`whole_tracks`, monotonic), reunites the two halves per band,
+chunks by category.  Two fixes this arc: a whole-italic continent principal (`*Asia*`)
+opens its History band where the `## ASIA` banner was lost on the half; and a `###`
+bucket header is NEVER consumed as a band just because its clip prefixes the band name
+(`### Africa: Biographies` was being eaten as the AFRICA band, merging the biographies
+into the general run).
 
-Self-check `band_check` (user's invariant: N bands on the whole page ⇒ N on each
-half) **PASSES on all 130 half-pages** (2026-07-01; was 6 short).  The section walk
-(`build_sections`) accounts for every body line: 37,274 placed + 121 furniture
-absorbed (repeated/`(cont.)` headers, split-header tails — carried per-section in
-`absorbed`), invariant `every body line placed: True`.  Current: 40 bands, 24
-categories in printed order, bytes conserved.  The 2026-07-01 build fixes: `_base`
-keeps discriminating parentheticals (`Biographies (ancient)`≠`(modern)`; Italy
-ancient/modern towns, Classics Greek/Byzantine/Latin un-merged); cont-marks require
-the paren (bare "Cont" in "Continental" is not a continuation); OCR-split headers
-join at a trailing colon; a caps banner's echo is its chief-article principal
-(MAHOMMEDAN RELIGION's link recovered); `_mark_bands` matches clipped banners by
-TEXT not dressing (`**UNITED KINGDOM OF GRE**`), treats cont-marked caps fragments
-naming an open band as running heads BEFORE the forward search (ws916-right's whole
-Africa run was misbanded into AMERICA—PHYSICAL FEATURES via a `L FEATURES (cont.)`
-suffix hit), and matches a band's FULL banner text as well as its canonical key
-(`## -GENERAL` → EUROPE—GENERAL, whose key is just "europe").  Validation
-tree from the index: `tools/vol29/complete_index.py`.  Pour into the DB:
-`tools/vol29/populate_classified_toc.py` — currently 347/372 leaves filled, 25
-empty, 14 orphans; the pour/index stages are the open frontier (recurring
-per-category `Biographies` orphans = index gaps; positional-fill shifts).
-Ambiguity disambiguation via Haiku batch (`tools/vol29/disambiguate_toc.py`), cached.
+*Bucket read.*  `build_sections` reads buckets from the SOURCE structure, recognizing
+every boundary the mangled scan drops or invents: a container principal (`*Sculpture*`)
+opening a general-subjects run with no explicit header; a whole-italic `### *X*` that is
+a chief-article LINK, not a bucket (folded); a country name delimited only by BLANK LINES
+(`_promote_isolated`, guarded to a contiguous run so a blank-*separated* list — Military
+terms, a continent's lakes — is not split); a parenthetical note-tail dressed as a heading
+(folded, not opened); a page-turn running-head fragment wedged between a bucket and its
+`(cont.)` (folded so the continuation rejoins).  A flat major cat with no sub-nodes
+(Sports) carries its run on the category node itself.
+
+**State (2026-07-02): census 378/380, 21 of 24 categories exact; conservation holds.**
+Each remainder is one specific spot: Geography −2 and Literature −2 (sub-section merges —
+two nodes' links share one bucket where a sub-header was lost, e.g. `Germany`+`German
+Literature`) and Religion +2 (two `(cont.)` splits dividing a node's links across two
+buckets).  `band_check` (`build_toc.main`) still checks band-LAYER structure (halves
+agree, contiguous, start-page) but is NOT a correctness proof — every bucket-level error
+this arc fixed passed it; the census above is the correctness instrument.
+
+Ambiguity disambiguation via Haiku batch (`disambiguate_toc.py`), cached.
 
 ---
 

@@ -90,6 +90,13 @@ GEO_BANDS = [
 ]
 HIST_BANDS = ["Europe General", "Europe", "Asia", "Africa", "America", "Australasia"]
 
+# A History continent's general run is headerless -- its ONLY marker on the half is
+# the continent's own chief article, set whole-italic (`*Asia*`), where the gutter ate
+# the "## ASIA" banner.  These norms let _mark_bands read that principal as the band
+# opener (Europe excluded: EUROPE--GENERAL keeps its own banner, and *Europe* recurs
+# inside it).
+_HIST_CONT_NORMS = {_norm(x) for x in ("Asia", "Africa", "America", "Australasia")}
+
 # One band wears two banners: Europe--General and its (cont.) "Europe" are the SAME
 # History band (splitting them breaks the General bucket); the UK band runs two lines
 # (its "(cont.)" reads as a bare "United Kingdom").  Fold each to one key.
@@ -277,6 +284,41 @@ def _caps_frag(s: str) -> bool:
     return bool(letters) and sum(c.isupper() for c in letters) / len(letters) > 0.7
 
 
+def _promote_isolated(raw: list[str]) -> list[str]:
+    """The source delimits some bucket headers -- the compact country lists -- by a BLANK
+    line above AND below, not a `### ` (every `### ` header is blank-isolated too; the OCR
+    merely also marked those).  The blank-drop in the band walk would erase that boundary,
+    merging the headerless countries into the one above (`Nicaragua` swallowing Panama..
+    Chile), so a content line alone between two blanks becomes a `### ` header first."""
+    out: list[str] = []
+    n = len(raw)
+
+    def run_after(i: int) -> int:
+        """Length of the contiguous non-blank run that begins at the next non-blank
+        line after i.  A country header is followed by a solid block of towns; a
+        merely blank-SEPARATED list (Military terms, a continent's lakes) has a blank
+        between every item, so its 'run' is length 1 -- not a header."""
+        j = i + 1
+        while j < n and not raw[j].strip():
+            j += 1
+        k = j
+        while k < n and raw[k].strip():
+            k += 1
+        return k - j
+
+    for i, line in enumerate(raw):
+        s = line.strip()
+        if (s and not s.startswith(("#", "*", "(")) and not _NOTE_RE.match(s)
+                and s.count(")") <= s.count("(")          # not a split note/header tail
+                and (i == 0 or not raw[i - 1].strip())
+                and (i == n - 1 or not raw[i + 1].strip())
+                and run_after(i) >= 2):
+            out.append("### " + s)
+        else:
+            out.append(line)
+    return out
+
+
 def _mark_bands(walls, norms, page_bands, H) -> list[tuple[int, int, int, str]]:
     """MARK the bands onto each half by ALIGNING it to the whole read's header order.
     Each half column is a subsequence of that page's whole-read track (its headers, in
@@ -295,6 +337,21 @@ def _mark_bands(walls, norms, page_bands, H) -> list[tuple[int, int, int, str]]:
     # canonical key: EUROPE--GENERAL keys to "europe" (one band with Europe),
     # so its right-half clip "-GENERAL" can match nothing but the full name.
     fulls = [_norm(re.sub(r"[#*]", "", w)) for w in walls]
+    # The History continent bands (europe + Asia/Africa/America/Australasia): a
+    # continent principal advances the band ONLY when we already stand in this
+    # region, so a Geography `*Asia*` never leaps forward into History.
+    hist_ids = {i for i, nm in enumerate(norms)
+                if nm in ({"europe"} | _HIST_CONT_NORMS)}
+    # Per band, the bucket norms the whole reads gave it -- so a bucket a half
+    # column continues at its TOP can be recognized as the carried band's, even
+    # where THIS page's whole read never covered that continuation (a band that
+    # ends mid-column: Biology's `Biographies` runs off the foot of ws899 into
+    # the top of ws900, whose whole read starts fresh at Chemistry).
+    band_buckets: dict[int, set[str]] = {}
+    for tr in tracks.values():
+        for is_band, nm, bd in tr:
+            if not is_band:
+                band_buckets.setdefault(bd, set()).add(nm)
 
     def clip_match(clip: str, band: str) -> bool:
         return len(clip) >= 3 and (band.startswith(clip) or band.endswith(clip)
@@ -309,11 +366,25 @@ def _mark_bands(walls, norms, page_bands, H) -> list[tuple[int, int, int, str]]:
         track = tracks.get(ws, [])
         for side, key in enumerate(("left", "right")):
             cur, ptr = carry, 0
-            for line in h.get(key, "").split("\n"):
+            for line in _promote_isolated(h.get(key, "").split("\n")):
                 s = line.strip()
                 if not s or _furniture(s):
                     continue
                 capsish = _caps_frag(s)
+                # A whole-italic continent principal opens its History band even where
+                # the "## ASIA" banner was lost on this half -- advance to that band by
+                # its norm and re-seat the track pointer; keep the line (it is a link).
+                if (s.startswith("*") and s.endswith("*") and s.count("*") == 2
+                        and _norm(s.strip("*")) in _HIST_CONT_NORMS
+                        and cur in hist_ids):
+                    tgt = next((i for i, nm in enumerate(norms)
+                                if nm == _norm(s.strip("*"))), None)
+                    if tgt is not None and tgt > cur:
+                        cur = tgt
+                        ptr = next((j for j in range(len(track))
+                                    if track[j][2] >= tgt), len(track))
+                    tagged.append((cur, ws, side, line))
+                    continue
                 if s.startswith("#") or capsish:
                     banner = (s.startswith("## ") and not s.startswith("### ")) \
                         or capsish
@@ -328,11 +399,32 @@ def _mark_bands(walls, norms, page_bands, H) -> list[tuple[int, int, int, str]]:
                             and any(clip in norms[b] or clip in fulls[b]
                                     for b in range(cur + 1))):
                         continue
+                    # A cont-marked BUCKET at a column top, before this half has
+                    # advanced past the band it carried in (cur == carry), that
+                    # names a bucket of that carry band: it continues the band
+                    # that ran off the previous page's foot, NOT the identically-
+                    # named bucket of the NEXT band the forward search would hit
+                    # (ws900's Biology `Biographies (cont.)` vs Chemistry's own
+                    # `Biographies`).  Fold to carry; leave ptr so the real band
+                    # banner below still seats its buckets.
+                    if (not banner and _CONT_RE.search(s) and cur == carry
+                            and carry >= 0 and clip in band_buckets.get(carry, ())):
+                        tagged.append((cur, ws, side, line))
+                        continue
                     hit = None
                     for j in range(ptr, len(track)):
                         is_band, nm, bd = track[j]
-                        if (clip_match(clip, nm) or clip_match(clip, fulls[bd])
-                                if is_band else nm == clip):
+                        if is_band:
+                            # ONLY a real banner (a `## ` line or a gutter-clipped caps
+                            # fragment) may match a BAND entry.  A `### Africa: Biographies`
+                            # bucket header must NOT be eaten as the AFRICA band just
+                            # because its clip starts with the band name -- that drops the
+                            # header and merges the bucket into the band's general run.
+                            if banner and (clip_match(clip, nm)
+                                           or clip_match(clip, fulls[bd])):
+                                hit = j
+                                break
+                        elif nm == clip:
                             hit = j
                             break
                     if hit is not None:
@@ -351,24 +443,60 @@ def _mark_bands(walls, norms, page_bands, H) -> list[tuple[int, int, int, str]]:
     return tagged
 
 
-def band_check(walls, norms, page_bands, H) -> list[tuple[int, str, set, set]]:
-    """The user's self-check: N bands on the whole page => N on each half.  For each
-    page, the whole read's distinct bands must equal the bands each half gets marked
-    with; a half short a band is a missed mark (its banner lost in the scan)."""
+def band_check(walls, norms, page_bands, H) -> list[tuple[str, str]]:
+    """The user's self-check, made exact: the bands are read properly iff the
+    half marks agree with the whole-read STRUCTURE (band order + each band's
+    start page) on three counts.  The whole read gives structure; the halves
+    give content; these are how the two must reconcile.
+
+      1. LEFT and RIGHT halves of a page carry the SAME bands.  A full-width
+         banner is centred over the gutter, so it cuts BOTH pages at one height
+         -- neither half can hold a band the other lacks.
+      2. A page's bands are CONTIGUOUS in band order.  A page spans an unbroken
+         run of adjacent bands; a gap (bands 4 and 6 without 5) means a band
+         vanished mid-page.
+      3. Each band is marked on a CONTIGUOUS page range that BEGINS at the whole
+         read's start page for it.  A band appears exactly where its banner is
+         and runs unbroken; its tail may SPILL one page past the next band's
+         banner (band 4's biographies run onto the page where band 5 opens), and
+         that one-page overlap is the only sharing between adjacent bands -- it
+         needs no banner, because the whole read fixes the band's start and the
+         half supplies the spilled content.
+
+    NB: comparing each half against `{whole-read bands on this page}` is WRONG --
+    a carried band that spills onto a page has NO banner there, so it is absent
+    from that page's whole-read track though its content (and mark) is present.
+    That is a property of the STRUCTURE (the band carries), not a missed mark.
+    Returns (scope, detail) violations; empty == the read is sound."""
     tracks = whole_tracks(norms)
     tagged = _mark_bands(walls, norms, page_bands, H)
+    start: dict[int, int] = {}
+    for ws in range(WS_START, WS_END + 1):
+        for _isb, _nm, bd in tracks.get(ws, []):
+            start.setdefault(bd, ws)
     half: dict[tuple[int, int], set] = {}
+    bandpages: dict[int, set] = {}
     for band, ws, side, _ in tagged:
         half.setdefault((ws, side), set()).add(band)
-    out = []
+        bandpages.setdefault(band, set()).add(ws)
+    out: list[tuple[str, str]] = []
     for ws in range(WS_START, WS_END + 1):
-        whole = {b for _, _, b in tracks.get(ws, [])}
-        if not whole:
+        l, r = half.get((ws, 0), set()), half.get((ws, 1), set())
+        if not l and not r:
             continue
-        for side, name in ((0, "left"), (1, "right")):
-            hb = half.get((ws, side), set())
-            if hb != whole:
-                out.append((ws, name, whole - hb, hb - whole))
+        if l != r:                                   # (1) halves disagree
+            out.append((f"ws{ws}", f"left {sorted(l)} != right {sorted(r)}"))
+        s = sorted(l | r)
+        if s != list(range(s[0], s[-1] + 1)):        # (2) band gap on the page
+            out.append((f"ws{ws}", f"bands not contiguous: {s}"))
+    for b in sorted(bandpages):                      # (3) each band's page range
+        pgs = sorted(bandpages[b])
+        if pgs != list(range(pgs[0], pgs[-1] + 1)):
+            out.append((f"band {b} {norms[b]}", f"pages not contiguous: {pgs}"))
+        elif pgs[0] != start.get(b):
+            out.append((f"band {b} {norms[b]}",
+                        f"first marked ws{pgs[0]} != whole-read start "
+                        f"ws{start.get(b)}"))
     return out
 
 
@@ -451,6 +579,16 @@ def _principal_of(heading: str, header: str | None) -> bool:
     return bool(hw) and hw <= words(header)
 
 
+def _italic_principal(s: str) -> str | None:
+    """A header that is a whole-italic-wrapped link the OCR bolded into a heading
+    (`### *Literature*`, `*Map*`) -> its inner text; else None.  A real bucket header
+    keeps its NAME un-italic (`### Spain : *Subjects*`), so it is never caught here."""
+    t = re.sub(r"^#+\s*", "", s).strip()
+    if len(t) > 2 and t.startswith("*") and t.endswith("*") and t.count("*") == 2:
+        return t.strip("*").strip()
+    return None
+
+
 def _principal_header(h: str | None) -> bool:
     """A section whose header is a BARE principal (`### *Literature*`) -- the real
     bucket header was missing on the page, so its own chief article stands in.  A
@@ -481,7 +619,8 @@ def _base(h: str | None) -> str:
     return re.sub(r"\s+", " ", h).strip().lower()
 
 
-def build_sections(name: str, line_tuples) -> list[dict]:
+def build_sections(name: str, line_tuples, general_bucket=None,
+                   node_norms=None) -> list[dict]:
     """ONE walk down a category, on ONE rule: recognize the bucket; everything
     else is a link.  A bucket header opens a section; the links that follow drop
     into it until the next bucket.  A header stacked at a bucket's HEAD, before its
@@ -510,7 +649,16 @@ def build_sections(name: str, line_tuples) -> list[dict]:
     while i < len(lines):
         s = lines[i].strip()
         nxt = lines[i + 1].strip() if i + 1 < len(lines) else ""
-        if (_header_level(s) and s.rstrip("*# ").endswith(":")
+        if (_header_level(s) and _CONT_RE.search(s)
+                and _header_level(nxt) and _CONT_RE.search(nxt)):
+            # A section running head reprinted at a page turn (`Church History to the
+            # Council of Trent (cont.`) immediately above a bucket continuation
+            # (`Biographies (cont.)`): the first is furniture.  Emit the real
+            # continuation; carry the running head as absorbed so it can't wedge the
+            # (cont.) away from its base.
+            joined.append((nxt, lines[i]))
+            i += 2
+        elif (_header_level(s) and s.rstrip("*# ").endswith(":")
                 and _header_level(nxt)):
             joined.append((s + " " + re.sub(r"^#+\s*", "", nxt), lines[i + 1]))
             i += 2
@@ -525,6 +673,30 @@ def build_sections(name: str, line_tuples) -> list[dict]:
             continue
         lvl = _header_level(s)
         if lvl:
+            ip = _italic_principal(s)
+            if ip is not None and node_norms is not None:
+                xn = _norm(ip)
+                if (general_bucket and xn in general_bucket
+                        and _base(cur["header"]) != _base(general_bucket[xn])):
+                    if cur["header"] is not None or cur["items"]:
+                        sections.append(cur)          # container principal (`### *Asia*`)
+                    cur = {"header": general_bucket[xn], "level": 3,   # opens its general
+                           "items": [s], "absorbed": []}               # bucket
+                    run = True
+                    if tail is not None:
+                        cur["absorbed"].append(tail)
+                    continue
+                if xn not in node_norms:
+                    cur["items"].append(s)            # names no node -> a chief-article
+                    run = True                        # LINK the OCR bolded, not a bucket
+                    if tail is not None:
+                        cur["absorbed"].append(tail)
+                    continue
+            if s.count(")") > s.count("("):           # a split-off parenthetical tail
+                cur["absorbed"].append(s)             # (`### ature ... countries)`) the OCR
+                if tail is not None:                  # dressed as a heading -> a NOTE
+                    cur["absorbed"].append(tail)      # fragment, not a bucket; folding it
+                continue                              # keeps it from wedging a (cont.) fold
             b, cb = _base(s), _base(cur["header"])
             # A caps banner's ECHO at its head is the banner's own chief article
             # (`### Mahommedan Religion` under `## MAHOMMEDAN RELIGION`) -- a
@@ -548,10 +720,29 @@ def build_sections(name: str, line_tuples) -> list[dict]:
             else:                             # bucket head, not a new bucket
                 if cur["header"] is not None or cur["items"]:
                     sections.append(cur)      # a real new bucket -- close the open one
-                cur = {"header": s, "level": lvl, "items": [], "absorbed": []}
+                hdr = s
+                if general_bucket and _is_caps_banner(s):
+                    bn = _norm(re.sub(r"\(.*?\)", "", s.lstrip("#* ")))
+                    if bn in general_bucket:   # a bare "## ASIA" banner names the
+                        hdr = general_bucket[bn]   # continent's general-subjects run
+                cur = {"header": hdr, "level": lvl, "items": [], "absorbed": []}
                 run = False
         else:
-            cur["items"].append(s)            # a link -- plain, or a whole-italic
+            xn = (_norm(s.strip("*")) if s.startswith("*") and s.endswith("*")
+                  and s.count("*") == 2 else "")
+            if (general_bucket and xn in general_bucket
+                    and _base(cur["header"]) != _base(general_bucket[xn])):
+                # A whole-italic CONTAINER principal (`*Sculpture*`, `*Asia*`) heads a
+                # new general-subjects run that carries NO explicit "X: Subjects" banner
+                # -- open its bucket, do not fold it into the section above.  (When the
+                # banner DID fire, we are already in that bucket, so this is just its
+                # first emphasized link -- the _base guard lets it fall through.)
+                if cur["header"] is not None or cur["items"]:
+                    sections.append(cur)
+                cur = {"header": general_bucket[xn], "level": 3,
+                       "items": [s], "absorbed": []}
+            else:
+                cur["items"].append(s)        # a link -- plain, or a within-bucket
             run = True                        # principal; either way the head is past
         if tail is not None:
             cur["absorbed"].append(tail)      # the split-header's consumed 2nd line
@@ -856,12 +1047,10 @@ def main() -> None:
     walls, norms, page_bands = band_structure()
     H = json.loads(HALVES.read_text(encoding="utf-8")) if HALVES.exists() else {}
     bad = band_check(walls, norms, page_bands, H)
-    print(f"\nband self-check (whole N => each half N): "
-          f"{'PASS' if not bad else f'{len(bad)} half-pages short'}")
-    for ws, side, miss, extra in bad:
-        tag = (f"missing {sorted(miss)}" if miss else "") + (
-              f" extra {sorted(extra)}" if extra else "")
-        print(f"  ws{ws} {side:5s}: {tag}")
+    print(f"\nband self-check (halves agree with whole-read structure): "
+          f"{'PASS' if not bad else f'{len(bad)} violations'}")
+    for scope, detail in bad:
+        print(f"  {scope}: {detail}")
 
     OUT.write_text(json.dumps(
         [{"name": c, "text": "\n".join(l for _, _, l in ls)} for c, ls in chunks],

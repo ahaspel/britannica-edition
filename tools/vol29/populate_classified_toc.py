@@ -504,10 +504,49 @@ def load_band_read_content() -> dict[str, list]:
     return {name: lts for name, lts in chunks}
 
 
-def _sections_to_buckets(sections: list[dict]) -> list[dict]:
+def _general_bucket_map(nodes) -> dict:
+    """{norm(container) -> 'Container: Subjects'} for every index container that owns a
+    general-subjects child.  Lets build_sections open (and correctly name) the general
+    run a whole-italic principal (`*Sculpture*`, `*Asia*`) or a bare "## ASIA" banner
+    heads with no explicit "X: Subjects" header -- so the pour seats it on that child
+    instead of the run folding into the section above."""
+    m: dict[str, str] = {}
+
+    def walk(ns):
+        for n in ns:
+            for c in n.get("children", []):
+                if _gen_kind(c["name"]) == "subjects":
+                    m[_normalize(_BT._strip_parens(n["name"]))] = n["name"] + ": Subjects"
+                    break
+            walk(n.get("children", []))
+    walk(nodes)
+    return m
+
+
+def _node_norms(nodes) -> set:
+    """Every index node name (+ its parens-stripped form), normalized -- the set a
+    whole-italic heading must hit to be a real bucket; miss it and it is a link."""
+    s: set = set()
+
+    def walk(ns):
+        for n in ns:
+            s.add(_normalize(n["name"]))
+            s.add(_normalize(_BT._strip_parens(n["name"])))
+            walk(n.get("children", []))
+    walk(nodes)
+    return s
+
+
+def _sections_to_buckets(sections: list[dict]) -> tuple[list[dict], list[str]]:
     """A build_toc section -> a pour_category bucket: split each section's items
-    into emphasized principals (`pr`), plain articles (`arts`), and notes."""
-    out = []
+    into emphasized principals (`pr`), plain articles (`arts`), and notes.
+    A headerless, link-free section is NOT a bucket: it is the category's own
+    marginal cross-reference, printed under the banner before the first section
+    head ("(For ancient anthropology see ARCHAEOLOGY ...)").  Minted as a bucket
+    it occupied a positional slot, shifted every later bucket by one, and
+    orphaned each category's last bucket (the recurring Biographies orphans).
+    Its notes are returned separately, to carry on the category itself."""
+    out, cat_notes = [], []
     for sec in sections:
         arts, pr, notes = [], [], []
         for s in sec["items"]:
@@ -519,9 +558,12 @@ def _sections_to_buckets(sections: list[dict]) -> list[dict]:
             else:
                 arts.append(val["target"])
         name = _BT._clean_header(sec["header"]) if sec["header"] else ""
+        if not name and not arts and not pr:
+            cat_notes.extend(notes)
+            continue
         out.append({"name": name, "band": None, "arts": arts,
                     "pr": pr, "notes": notes})
-    return out
+    return out, cat_notes
 
 
 def _canon(s: str) -> str:
@@ -828,9 +870,23 @@ def main() -> None:
     out_cats = []
     for cat in CATEGORIES:
         nodes = idx.get(cat, [])
-        sections = _BT.build_sections(cat, content.get(cat, []))
-        orphans, empty = pour_category(
-            cat, nodes, _sections_to_buckets(sections), resolve)
+        sections = _BT.build_sections(cat, content.get(cat, []),
+                                      _general_bucket_map(nodes), _node_norms(nodes))
+        buckets, cat_notes = _sections_to_buckets(sections)
+        orphans, empty = pour_category(cat, nodes, buckets, resolve)
+        flat_arts = None
+        if not nodes and buckets:
+            # A flat major cat is itself a BAND with links directly beneath it (Sports):
+            # no sub-node exists to pour into, so its run fills the category node.
+            prs = [a for b in buckets for a in b["pr"]]
+            plain = sorted({a for b in buckets for a in b["arts"]}, key=_normalize)
+            flat_arts = []
+            for title, emph in [(a, True) for a in prs] + [(a, False) for a in plain]:
+                a = resolve(title, None, set())
+                if emph:
+                    a["emphasized"] = True
+                flat_arts.append(a)
+            orphans = []
         n_empty += len(empty)
         n_orph += len(orphans)
         # Per-leaf dedup: one copy of an article within a single leaf.  NOT per
@@ -864,7 +920,15 @@ def main() -> None:
                     n_res += 1 if a.get("filename") else 0
                 _count(ch)
         _count(nodes)
-        out_cats.append({"name": cat, "subsections": nodes})
+        cat_obj = {"name": cat, "subsections": nodes}
+        if flat_arts is not None:
+            cat_obj["articles"] = flat_arts
+            for a in flat_arts:
+                n_arts += 1
+                n_res += 1 if a.get("filename") else 0
+        if cat_notes:
+            cat_obj["notes"] = cat_notes      # the category's own marginal note
+        out_cats.append(cat_obj)
 
     out_obj = {"categories": out_cats}
     try:
