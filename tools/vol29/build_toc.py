@@ -710,6 +710,8 @@ def build_sections(name: str, line_tuples, general_bucket=None,
                     b == cb                              # the open bucket's own header
                     or (_CONT_RE.search(s) and (         # repeated, or a (cont.) of it:
                         b.startswith(cb) or cb.startswith(b)   # same / abbreviated name,
+                        or (cb in ("subjects", "biographies", "general")   # a bare general
+                            and len(b) > len(cb) and b.endswith(cb))        # base, full cont.
                         or _principal_header(cur["header"])))):  # or names a bare-principal
                 cur["absorbed"].append(s)                # bucket -- keep it open
             elif (cur["header"] is not None and not run and not _is_caps_banner(s)

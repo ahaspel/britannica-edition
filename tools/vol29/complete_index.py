@@ -89,6 +89,88 @@ def _half_headers(ws: int) -> set:
     return out
 
 
+_ITALIC: set | None = None
+
+
+def _italic_link_names() -> set:
+    """Names the halves mark as a whole-italic `*X*` -- emphasized LINKS the source
+    keeps as links, never headers.  A `### X` the OCR bolded from one of these
+    (`### German Literature` on ws943 vs `*German Literature*` on ws938) is a mis-read
+    link, not a section, and must NOT graft an index node -- the perennial
+    link-vs-header problem, here in the index builder."""
+    global _ITALIC, _HALVES
+    if _ITALIC is None:
+        if _HALVES is None:
+            _HALVES = json.loads(Path(
+                "data/derived/vol29_halves_debug.json").read_text(encoding="utf-8"))
+        s: set = set()
+        for h in _HALVES.values():
+            for side in ("left", "right"):
+                for line in h.get(side, "").split("\n"):
+                    t = line.strip()
+                    if re.match(r"^\*[^*]+\*$", t):
+                        nm = B._norm(_clean_name(t.replace("*", "")))
+                        if nm:
+                            s.add(nm)
+        _ITALIC = s
+    return _ITALIC
+
+
+_POS: dict | None = None
+
+
+def _half_positions(ws: int) -> dict:
+    """{norm(header) -> (side, line)} for the halves -- a section's COLUMN and height.
+    side 0 = left column, 1 = right; so sorting by (side, line) reads left column
+    top-to-bottom, then right -- the body's reading order, the same one the build
+    walks.  This is how we un-scramble the whole read, which is ordered by vertical
+    HEIGHT across both columns (right only by luck)."""
+    global _HALVES
+    if _HALVES is None:
+        _HALVES = json.loads(Path(
+            "data/derived/vol29_halves_debug.json").read_text(encoding="utf-8"))
+    h = _HALVES.get(str(ws), {})
+    pos: dict = {}
+    for side, key in enumerate(("left", "right")):
+        for i, line in enumerate(h.get(key, "").split("\n")):
+            s = line.strip()
+            if s.startswith(("### ", "## ", "**")):
+                nm = B._norm(s)
+                if nm and nm not in pos:
+                    pos[nm] = (side, i)
+    return pos
+
+
+def _order_by_column(events: list, ws: int) -> list:
+    """Re-sequence the SECTIONS within each band by half-read COLUMN order (left column
+    top-to-bottom, then right), replacing the whole read's vertical-height interleave.
+    Bands, and each band's lead/notes, keep their place; only the section run is sorted.
+    Unknown names sort last but stay stable, so nothing is lost."""
+    pos = _half_positions(ws)
+
+    def key(name):
+        return pos.get(B._norm(name), (2, 10 ** 9))
+
+    out: list = []
+    i = 0
+    while i < len(events):
+        if events[i][0] != "band":
+            out.append(events[i])
+            i += 1
+            continue
+        out.append(events[i])
+        i += 1
+        seg = []
+        while i < len(events) and events[i][0] != "band":
+            seg.append(events[i])
+            i += 1
+        out.extend(e for e in seg if e[0] == "lead")
+        out.extend(sorted((e for e in seg if e[0] == "section"),
+                          key=lambda e: key(e[1])))
+        out.extend(e for e in seg if e[0] == "note")
+    return out
+
+
 def reconciled_skeleton(ws: int) -> list[tuple[str, str]]:
     """The whole read's band/section headers -- the band STRUCTURE only, NEVER the
     links.  The dense six-column page scrambles entries across bucket boundaries, so
@@ -117,7 +199,8 @@ def reconciled_skeleton(ws: int) -> list[tuple[str, str]]:
             # half may qualify it ("Sculpture: Subjects"), so confirm either form.
             bare = B._norm(_clean_name(name))
             qual = B._norm(_clean_name(band) + " " + _clean_name(name))
-            if bare in confirmed or qual in confirmed:
+            if ((bare in confirmed or qual in confirmed)
+                    and bare not in _italic_link_names()):
                 out.append(("section", name))
                 in_lead = False
         elif s and not s.startswith("#") and not s.startswith("="):
@@ -132,7 +215,7 @@ def reconciled_skeleton(ws: int) -> list[tuple[str, str]]:
                 # the FACT, not the scrambled links (those must never enter the index).
                 out.append(("lead", band))
                 lead_done = True
-    return out
+    return _order_by_column(out, ws)
 
 
 def _banner_token(name: str) -> str:
