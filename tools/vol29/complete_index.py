@@ -162,11 +162,12 @@ def _clean_name(name: str) -> str:
 
 def _general_kind(name: str) -> str | None:
     """The general-section KIND a node label denotes, collapsing the source's
-    synonyms for one bucket: `General` / `Subjects` / `General subjects` -> one
-    (`subjects`); `Biographies` / `General Biographies` -> one (`biographies`).
-    A `General X` of any other X keeps X.  Not a general node -> None."""
+    synonyms for one bucket: `General` / `Subjects` / `General subjects` /
+    `General list` (Geography's country-band catch-all) -> one (`subjects`);
+    `Biographies` / `General Biographies` -> one (`biographies`).
+    A `General X` of any OTHER X keeps X.  Not a general node -> None."""
     n = B._norm(name)
-    if n in ("general", "subjects", "generalsubjects"):
+    if n in ("general", "subjects", "generalsubjects", "generallist"):
         return "subjects"
     if n in ("biographies", "generalbiographies"):
         return "biographies"
@@ -397,6 +398,37 @@ def _build_flat(groups: list[dict]) -> list[dict]:
 _GRAFT_TRACE = None                              # diagnostic: collect grafted (unresolved) sections
 
 
+def _is_descendant(node: dict, anc: dict, parent_map: dict) -> bool:
+    """True if `node` sits under `anc` in the (possibly grafted) index tree."""
+    n = node
+    while n is not None:
+        if id(n) == id(anc):
+            return True
+        n = parent_map.get(id(n))
+    return False
+
+
+def _child_of(node: dict, home: dict, parent_map: dict) -> dict | None:
+    """Walk up from `node` to the direct child of `home` (None if not under it) --
+    the reading-order predecessor a fresh graft should slot in behind."""
+    n = node
+    while n is not None:
+        par = parent_map.get(id(n))
+        if par is home:
+            return n
+        n = par
+    return None
+
+
+# NAMED EXCEPTION -- the lexical concession in an otherwise structural merge.  History
+# prints "Belgium" and "Holland" as their own "(see NETHERLANDS)" cross-ref headings, each
+# a bare banner right after some country's "X: Subjects" bucket -- structurally identical to
+# a sub-section (only the word tells us it is a country), so no structural rule can tell
+# either from `Islands`.  A bare graft named here is seated on the continent beside its
+# siblings, not adopted into the open region.  Grow it only under the same proof.
+_BARE_SIBLING_EXCEPTION = {"belgium", "holland"}
+
+
 def merge() -> tuple[dict, dict]:
     """Graft the whole-read headers onto the index trunk, category by category.
 
@@ -463,6 +495,7 @@ def merge() -> tuple[dict, dict]:
                 home.setdefault("articles", []).extend(g["lead"])   # child (else band)
                 cursor.setdefault("notes", []).extend(g["notes"])
             grp_region = None                # a finer parent a "Region: X" section sets
+            prev = None                      # previous section's node -> reading-order graft
             for s in g["sections"]:
                 _xm = _XREF_NOTE.search(s["name"])      # a (see …) baked into the header is a
                 xnote = _xm.group(0).replace("*", "").strip() if _xm else None  # note, not a name
@@ -481,6 +514,10 @@ def merge() -> tuple[dict, dict]:
                     continue
                 node, suffix = _seat(lookup, parent_map, sn, home)
                 if node is None:
+                    if B._norm(sn) in _BARE_SIBLING_EXCEPTION and cont is not None:
+                        home = cont          # named exception: a bare country the source
+                        #  prints like a sub-section -> seat it beside its siblings on the
+                        #  continent, not under the open region (see _BARE_SIBLING_EXCEPTION)
                     # the index stopped short here -> graft below the band (the
                     # completion: Lakes under Physical features, Biographies where
                     # the index drew none).  A bandless section has no home.
@@ -492,12 +529,27 @@ def merge() -> tuple[dict, dict]:
                                              home["name"], sn, ":" in s["name"], bool(s["links"])))
                     node = _graft_resolved(home, sn, parent_map)
                     grafted += 1
+                    kids = home.get("children", [])
+                    if prev is not None and kids and kids[-1] is node:
+                        # a graft appends, but the trunk children are pre-placed in index
+                        # order -- slot it right after its reading-order predecessor, so
+                        # Malay Peninsula follows Malay Archipelago, not the last country
+                        anchor = _child_of(prev, home, parent_map)
+                        if anchor is not None:
+                            ai = next((i for i, c in enumerate(kids) if c is anchor), None)
+                            if ai is not None and ai < len(kids) - 1:
+                                kids.pop()                 # the just-appended graft ...
+                                kids.insert(ai + 1, node)  # ... re-slotted into reading order
                 elif suffix:
                     grp_region = node            # "Ireland: Divisions" -> Ireland, so a
                     node = _graft_resolved(node, suffix, parent_map)  # bare "Islands" next
                     grafted += 1                 # seats under Ireland, not the UK band
                 else:
                     resolved += 1
+                    if grp_region is not None and not _is_descendant(node, grp_region, parent_map):
+                        grp_region = None      # resolved a FRESH sibling -> we've left the
+                        #  last X:Y's sub-region; a later bare graft belongs on the cursor,
+                        #  not adopted into a stale country (Malay Peninsula, not under India)
                     k = _general_kind(node["name"])        # ONLY a general node is renamed,
                     tail = sn.split(":")[-1].strip()       # to the page's plain word -- so
                     if k in ("subjects", "biographies") and \
@@ -515,6 +567,7 @@ def merge() -> tuple[dict, dict]:
                 node.setdefault("notes", []).extend(s["notes"])
                 if xnote:
                     node["notes"].append(xnote)
+                prev = node
         collisions = [(nd["name"], sorted(names))
                       for _id, (nd, names) in hits.items() if len(names) > 1]
         report[cat] = {"flat": False, "resolved": resolved, "grafted": grafted,

@@ -89,7 +89,11 @@ GEO_BANDS = [
     "United Kingdom of Great Britain and Ireland", "Divisions and Towns",
     "Asia Physical Features", "Asia Countries",
     "Africa Physical Features", "Africa Countries",
-    "America Physical Features", "America Countries", "America Australasia etc",
+    "America Physical Features", "America Countries",
+    # NOT a band: "AMERICA, AUSTRALASIA, *etc.*" is a spread running-head, not a
+    # section division.  Australasia resolves by its own bucket header + the index,
+    # so leaving it out of _BAND_NORMS lets the running-head leak (ignored) instead
+    # of dragging the whole spread -- Australasia's bare run included -- under America.
 ]
 HIST_BANDS = ["Europe General", "Europe", "Asia", "Africa", "America", "Australasia"]
 
@@ -390,6 +394,13 @@ def _mark_bands(walls, norms, page_bands, H) -> list[tuple[int, int, int, str]]:
         if not h:
             continue
         track = tracks.get(ws, [])
+        # this spread's own running-heads (its `## ` banners) -- so a gutter-clipped
+        # FRAGMENT of one (`## Geog`/`raphy` of ## Geography, `AMERICA, AU` of the
+        # "AMERICA, AUSTRALASIA, etc." head) can be told from a real section header the
+        # whole read never carried (`## AUSTRALASIA`, a middle word of that head).
+        spread_norms = [_norm(re.sub(r"\(.*?\)", "", ln.strip()[3:]))
+                        for ln in h.get("spread", "").split("\n")
+                        if ln.strip().startswith("## ")]
         for side, key in enumerate(("left", "right")):
             cur, ptr = carry, 0
             for line in _promote_isolated(h.get(key, "").split("\n")):
@@ -460,9 +471,20 @@ def _mark_bands(walls, norms, page_bands, H) -> list[tuple[int, int, int, str]]:
                             clip in norms[b] or clip in fulls[b]
                             for b in range(cur + 1)):
                         continue          # a running-head repeat of an open/past band
-                    elif banner and ":" not in s:
-                        continue                # an unmatched BARE banner = furniture;
-                        #                         a `## X: Subjects` bucket keeps its colon
+                    # A bare banner that clip-matches an open/past BAND or one of this
+                    # spread's running-heads is a gutter-clipped fragment of that banner
+                    # (a repeated `## Geog`/`raphy` of ## Geography; `AMERICA, AU` of the
+                    # "AMERICA, AUSTRALASIA, etc." head) -- furniture, drop it.
+                    elif banner and ":" not in s and (
+                            len(clip) < 4                        # a 1-3 char scrap ("AS"|"IA"
+                            or any(clip_match(clip, norms[b])    # of ASIA, a stray "Hi"/"Dis")
+                                   or clip_match(clip, fulls[b])   # is never a real section name
+                                   for b in range(cur + 1))
+                            or any(clip_match(clip, sn) for sn in spread_norms)):
+                        continue
+                    # A bare banner matching NEITHER is a real SECTION bucket the whole read
+                    # never carried (`## AUSTRALASIA`, a middle word of the combined head) --
+                    # KEEP it, so its bare run and Physical Features seat under it.
                 tagged.append((cur, ws, side, line))
         if page_bands.get(ws):
             carry = page_bands[ws][-1]                 # the page's last band carries on
@@ -948,8 +970,6 @@ _NAME_VARIANTS = {
     "indochinafrench": "indochlnafrench",
     "mediterraneanislandsetc": "mediterraneanislandsc",
     "ancientnames": "ancientgeography",
-    "holland": "netherlands",
-    "belize": "britishhonduras",
     "australasia": "australia",            # History lists it as Australia
     "divisionsandtowns": "divisionandtowns",
     "churchhistorytocounciloftrent": "churchhistorytothecounciloftrent",
