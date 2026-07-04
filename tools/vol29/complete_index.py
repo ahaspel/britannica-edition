@@ -55,245 +55,107 @@ def skeleton(text: str) -> list[tuple[str, str]]:
     return out
 
 
-_HALVES: dict | None = None
-
-
-def _half_headers(ws: int) -> set:
-    """The column headers the HALF reads give for this spread, normalized.  The
-    halves are the authority for which `###` are real: they don't shred a column
-    header, and they keep an emphasized link as *italic* rather than a header.
-    They mark a header in ANY of three styles -- `### Spain : *Subjects*` (left
-    page), bold `**Switzerland :** *Subjects*` (right page), or over-levelled to
-    `## Sculpture: *Subjects*` -- so read all three, or a header is silently missed
-    and its section falsely dropped."""
-    global _HALVES
-    if _HALVES is None:
-        _HALVES = json.loads(Path(
-            "data/derived/vol29_halves_debug.json").read_text(encoding="utf-8"))
-    h = _HALVES.get(str(ws), {})
-    out = set()
-    for side in ("left", "right"):
-        for line in h.get(side, "").split("\n"):
-            s = line.strip()
-            if s.startswith("### "):
-                hdr = s[4:]
-            elif s.startswith("## "):
-                hdr = s[3:]
-            elif s.startswith("**"):
-                hdr = s
-            else:
+def _band_slices(lts, cat):
+    """Split a category's band-read line tuples into (band_name, buffer) at the
+    page-0 band openers -- the same band segmentation the builder walks."""
+    catn = B._norm(cat)
+    out, band, buf = [], None, []
+    for t in lts:
+        if str(t[0]) == "0":
+            nm = re.sub(r"[#*]", "", t[-1]).strip()
+            if B._norm(nm) == catn:
                 continue
-            nm = B._norm(_clean_name(hdr.replace("*", "")))
-            if nm:
-                out.add(nm)
+            if buf:
+                out.append((band, buf))
+            band, buf = nm, []
+        else:
+            buf.append(t)
+    if buf:
+        out.append((band, buf))
     return out
 
 
-_ITALIC: set | None = None
+def _general_map(nodes: list[dict]) -> dict:
+    """{norm(container) -> 'Container: Subjects'} so build_sections opens a general
+    run onto its node -- the same map the builder passes."""
+    m: dict[str, str] = {}
+
+    def walk(ns):
+        for n in ns:
+            for c in n.get("children", []):
+                if _general_kind(c["name"]) == "subjects":
+                    m[B._norm(B._strip_parens(n["name"]))] = n["name"] + ": Subjects"
+                    break
+            walk(n.get("children", []))
+    walk(nodes)
+    return m
 
 
-def _italic_link_names() -> set:
-    """Names the halves mark as a whole-italic `*X*` -- emphasized LINKS the source
-    keeps as links, never headers.  A `### X` the OCR bolded from one of these
-    (`### German Literature` on ws943 vs `*German Literature*` on ws938) is a mis-read
-    link, not a section, and must NOT graft an index node -- the perennial
-    link-vs-header problem, here in the index builder."""
-    global _ITALIC, _HALVES
-    if _ITALIC is None:
-        if _HALVES is None:
-            _HALVES = json.loads(Path(
-                "data/derived/vol29_halves_debug.json").read_text(encoding="utf-8"))
-        s: set = set()
-        for h in _HALVES.values():
-            for side in ("left", "right"):
-                for line in h.get(side, "").split("\n"):
-                    t = line.strip()
-                    if re.match(r"^\*[^*]+\*$", t):
-                        nm = B._norm(_clean_name(t.replace("*", "")))
-                        if nm:
-                            s.add(nm)
-        _ITALIC = s
-    return _ITALIC
+def _node_norms(nodes: list[dict]) -> set:
+    """Every index node name (+ parens-stripped), normalized -- lets build_sections
+    tell a real bucket header from an emphasized link."""
+    s: set = set()
 
-
-_POS: dict | None = None
-
-
-def _half_positions(ws: int) -> dict:
-    """{norm(header) -> (side, line)} for the halves -- a section's COLUMN and height.
-    side 0 = left column, 1 = right; so sorting by (side, line) reads left column
-    top-to-bottom, then right -- the body's reading order, the same one the build
-    walks.  This is how we un-scramble the whole read, which is ordered by vertical
-    HEIGHT across both columns (right only by luck)."""
-    global _HALVES
-    if _HALVES is None:
-        _HALVES = json.loads(Path(
-            "data/derived/vol29_halves_debug.json").read_text(encoding="utf-8"))
-    h = _HALVES.get(str(ws), {})
-    pos: dict = {}
-    for side, key in enumerate(("left", "right")):
-        for i, line in enumerate(h.get(key, "").split("\n")):
-            s = line.strip()
-            if s.startswith(("### ", "## ", "**")):
-                nm = B._norm(s)
-                if nm and nm not in pos:
-                    pos[nm] = (side, i)
-    return pos
-
-
-def _order_by_column(events: list, ws: int) -> list:
-    """Re-sequence the SECTIONS within each band by half-read COLUMN order (left column
-    top-to-bottom, then right), replacing the whole read's vertical-height interleave.
-    Bands, and each band's lead/notes, keep their place; only the section run is sorted.
-    Unknown names sort last but stay stable, so nothing is lost."""
-    pos = _half_positions(ws)
-
-    def key(name):
-        return pos.get(B._norm(name), (2, 10 ** 9))
-
-    out: list = []
-    i = 0
-    while i < len(events):
-        if events[i][0] != "band":
-            out.append(events[i])
-            i += 1
-            continue
-        out.append(events[i])
-        i += 1
-        seg = []
-        while i < len(events) and events[i][0] != "band":
-            seg.append(events[i])
-            i += 1
-        out.extend(e for e in seg if e[0] == "lead")
-        out.extend(sorted((e for e in seg if e[0] == "section"),
-                          key=lambda e: key(e[1])))
-        out.extend(e for e in seg if e[0] == "note")
-    return out
-
-
-def reconciled_skeleton(ws: int) -> list[tuple[str, str]]:
-    """The whole read's band/section headers -- the band STRUCTURE only, NEVER the
-    links.  The dense six-column page scrambles entries across bucket boundaries, so
-    buckets and their links are read from the half pages, not here.  `##` bands are
-    kept (the halves shred them); a `###` is kept only when the halves confirm it as
-    a real header, matched bare or band-qualified -- phantoms (Theatre, a stray
-    Subjects) drop out."""
-    confirmed = _half_headers(ws)
-    out: list[tuple[str, str]] = []
-    band = ""
-    in_lead = False               # standing in a band's lead, before its first section
-    lead_done = False
-    for line in whole_path(ws).read_text(encoding="utf-8").split("\n"):
-        s = line.strip()
-        if s.startswith("## "):
-            name = s[3:].strip()
-            if not name.startswith("[") and "classifiedlist" not in B._norm(name):
-                band = name
-                out.append(("band", name))
-                in_lead, lead_done = True, False
-        elif s.startswith("### "):
-            name = s[4:].strip()
-            if name.startswith("["):
-                continue
-            # the whole read writes a section bare ("Subjects") under its band; the
-            # half may qualify it ("Sculpture: Subjects"), so confirm either form.
-            bare = B._norm(_clean_name(name))
-            qual = B._norm(_clean_name(band) + " " + _clean_name(name))
-            if ((bare in confirmed or qual in confirmed)
-                    and bare not in _italic_link_names()):
-                out.append(("section", name))
-                in_lead = False
-        elif s and not s.startswith("#") and not s.startswith("="):
-            if B._NOTE_RE.match(s):
-                # a (For/See ...) cross-reference is whole and unscrambled, unlike the
-                # column links -- memorialize it here, where we have it in full, so the
-                # index carries its own notes (no special second pass to recover them).
-                out.append(("note", s))
-            elif in_lead and not lead_done and band:
-                # an article line in the lead region means the band carries its own bare
-                # run -> a filled bucket in its own right (the "Minor Arts" case).  Emit
-                # the FACT, not the scrambled links (those must never enter the index).
-                out.append(("lead", band))
-                lead_done = True
-    return _order_by_column(out, ws)
-
-
-def _banner_token(name: str) -> str:
-    """A band name -> its category-name token (drop any `: Subjects` / `*..*`
-    tail), normalized -- what the sequence-walk matches against the openers."""
-    return B._norm(re.sub(r"[*:].*$", "", name))
-
-
-def _openers() -> list[tuple[str, list[str]]]:
-    """In printed order, each category and its own name token.  Unlike
-    build_toc's category_openers (which opens Art on its sub-arts because the
-    half reads shred the 'Art' banner), the whole read gives a real '## Art', so
-    Art opens on its name -- and its sub-arts (Architecture, Music, ...) stay
-    sub-bands instead of being read as running-header repeats of the category."""
-    return [(c, [B._norm(c)]) for c in B.CATEGORIES]
+    def walk(ns):
+        for n in ns:
+            s.add(B._norm(n["name"]))
+            s.add(B._norm(B._strip_parens(n["name"])))
+            walk(n.get("children", []))
+    walk(nodes)
+    return s
 
 
 def stitch() -> dict[str, list[dict]]:
-    """All whole reads, in ws order -> {category: [groups]}.  A group is
-    {'band': name|None, 'lead': [links], 'notes': [...], 'sections': [section]}
-    and a section is {'name', 'links': [...], 'notes': [...]}.  A link/note lands
-    in the open section, or in the band's `lead` if no section has opened yet (the
-    wordless run).  band=None is the category's own leaves before any continent
-    banner (the flat categories).  The 24 are pinned by sequence; a running-header
-    repeat of the open category is dropped."""
-    openers = _openers()
-    cur = -1
-    cats: dict[int, list[dict]] = {}
+    """{category: [groups]}, read BY BAND off the HALF-page reads -- the buckets in
+    proper order, each carrying its LINKS and notes.  A group is {'band', 'lead',
+    'notes', 'sections'}; a section is {'name', 'links', 'notes'}.  This is the read
+    tree the merge grafts onto the printed index; the
+    halves already order the buckets, so nothing here reorders or marks anything."""
+    content = B.band_read_content()
+    trunk = B.parse_index()
+    _, norms, _ = B.band_structure()
+    _, band_notes = B.whole_tracks(norms)          # the whole read's band-notes, uncut
+    cats: dict[str, list[dict]] = {}
+    for cat in B.CATEGORIES:
+        ct = trunk.get(cat, [])
+        gb, nn = _general_map(ct), _node_norms(ct)
+        groups: list[dict] = []
+        for band, buf in _band_slices(content.get(cat, []), cat):
+            g = {"band": band, "lead": [], "notes": [], "sections": []}
+            for sec in B.build_sections(cat, buf, gb, nn):
+                links, secnotes = [], []
+                for it in sec["items"]:
+                    kind, val = B._parse_item(it)
+                    (secnotes if kind == "note" else links).append(val)
+                name = B._clean_header(sec["header"]) if sec["header"] else ""
+                if not name:
+                    g["lead"].extend(links)          # a band's headerless run (the whole
+                    #                                  read carries its sheared notes)
+                else:
+                    g["sections"].append({"name": name, "links": links,
+                                          "notes": secnotes})
+            groups.append(g)
+        # hang the WHOLE read's band-notes on each band node, minus any a bucket already
+        # carries as a finer column note (the bucket's copy wins).
+        col = {n for g in groups for s in g["sections"] for n in s["notes"]}
+        for g in groups:
+            key = B._norm(g["band"]) if g["band"] else B._norm(cat)
+            g["notes"] = [n for n in band_notes.get(key, []) if n not in col]
+        cats[cat] = groups
+    return cats
 
-    def group(ci: int, band: str | None, new: bool) -> dict:
-        lst = cats.setdefault(ci, [])
-        if new or not lst:
-            lst.append({"band": band, "lead": [], "notes": [], "sections": [],
-                        "lead_present": False})
-        return lst[-1]
 
-    def attach(ci: int, kind: str, text: str) -> None:
-        if ci < 0:
-            return
-        g = group(ci, band=None, new=False)
-        if g["sections"]:
-            g["sections"][-1]["links" if kind == "link" else "notes"].append(text)
-        else:
-            g["lead" if kind == "link" else "notes"].append(text)
-
-    for ws in range(B.WS_START, B.WS_END + 1):
-        if not whole_path(ws).exists():
-            continue
-        for kind, name in reconciled_skeleton(ws):
-            if kind == "band":
-                bt = _banner_token(name)
-                nxt = B._advance(bt, openers, cur)
-                if nxt is not None:                  # opens the NEXT category
-                    cur = nxt
-                    cats.setdefault(cur, [])
-                    continue                         # the category banner itself
-                if cur < 0:
-                    continue
-                if B._opens(bt, openers[cur][1]):    # re-states current -> running hdr
-                    continue
-                group(cur, band=name, new=True)      # a continent / section band
-            elif kind == "section":
-                if cur < 0:
-                    continue
-                group(cur, band=None, new=False)["sections"].append(
-                    {"name": name, "links": [], "notes": []})
-            elif kind == "lead":                     # the band's bare run is non-empty
-                if cur >= 0:
-                    group(cur, band=None, new=False)["lead_present"] = True
-            else:                                    # link / note
-                attach(cur, kind, name)
-    return {B.CATEGORIES[i]: cats[i] for i in sorted(cats)}
+_XREF_NOTE = re.compile(r"\(\s*\*?\s*[^)]*?(?:\bsee\b|§)[^)]*\)", re.I)
 
 
 def _clean_name(name: str) -> str:
     """Drop the OCR's emphasis/continuation furniture from a band/section name,
-    leaving the bare header text the resolver matches on."""
+    leaving the bare header text the resolver matches on.  A cross-reference note
+    baked into a header -- `Biographies (see also § Saints)` -- is a NOTE, not part of
+    the name; strip it so the bucket matches its own `(cont.)` continuation.  Only a
+    `see`/`§` parenthetical goes; a real discriminator (`(Greek)`, `(U.S.A.)`) stays."""
     s = re.sub(r"\(\s*\*?\s*cont\.?\s*\*?\s*\)", "", name, flags=re.I)
+    s = _XREF_NOTE.sub("", s)
     s = s.replace("*", "").strip().rstrip(".").strip().strip(":").strip()
     return s
 
@@ -320,6 +182,12 @@ def _general_child(node: dict) -> dict | None:
     return None
 
 
+_GENERAL_ALIASES = {                             # the page's interchangeable general
+    "subjects": ("general", "subjects", "generalsubjects"),   # labels -- one kind each
+    "biographies": ("biographies", "generalbiographies"),
+}
+
+
 def _augment_general(skeleton: list[dict], lookup: dict) -> None:
     """Register each general node under `<parent> + kind`, so the page's word
     resolves ONTO it and folds -- the source's two labels for one bucket collapse
@@ -332,6 +200,10 @@ def _augment_general(skeleton: list[dict], lookup: dict) -> None:
             if k and parent is not None:
                 comp = B._norm(B._strip_parens(parent["name"])) + k
                 lookup.setdefault(comp, []).append(n)
+            elif k:                              # a TOP-LEVEL general node has no parent
+                for syn in _GENERAL_ALIASES.get(k, (k,)):   # to compound; the page's
+                    if syn != B._norm(n["name"]):           # General / Subjects / General
+                        lookup.setdefault(syn, []).append(n)  # Subjects all fold onto it
             walk(n.get("children", []), n)
     walk(skeleton, None)
 
@@ -404,6 +276,16 @@ def _graft_resolved(parent: dict, name: str, parent_map: dict) -> dict:
         if kind and _general_kind(ch["name"]) == kind:
             return ch
         if len(nn) >= 5 and len(cn) >= 5 and (cn.startswith(nn) or nn.startswith(cn)):
+            # `Biographies (Greek)` prefix-matches the `Biographies` container -- but its
+            # (Greek) discriminator names an actual child; descend so the band's run lands
+            # on `Greek`, leaving the container the empty grouping the body says it is.
+            if nn.startswith(cn):
+                m = re.search(r"\(([^)]+)\)", name)
+                if m:
+                    gc = next((c for c in ch.get("children", [])
+                               if B._norm(c["name"]) == B._norm(m.group(1))), None)
+                    if gc is not None:
+                        return gc
             return ch
     if var:                                  # the variant may name a node nested
         d = _descendant_by_norm(parent, var)  # a level below (Scholars -> Bio-
@@ -506,12 +388,13 @@ def _build_flat(groups: list[dict]) -> list[dict]:
 
     for g in groups:
         if g["band"]:
-            node = place(g["band"], g["lead"], g["notes"])
-            if node is not None and g.get("lead_present"):
-                node["lead_filled"] = True           # the band's own bare run = a bucket
+            place(g["band"], g["lead"], g["notes"])
         for sec in g["sections"]:
             place(sec["name"], sec["links"], sec["notes"])
     return roots
+
+
+_GRAFT_TRACE = None                              # diagnostic: collect grafted (unresolved) sections
 
 
 def merge() -> tuple[dict, dict]:
@@ -544,6 +427,7 @@ def merge() -> tuple[dict, dict]:
         lookup, parent_map = B._index_lookup(skeleton)
         _augment_general(skeleton, lookup)
         resolved, grafted, deferred = 0, 0, []
+        hits: dict = {}              # id(node) -> [node, {bucket names}]; >1 == a collision
         cont = None                  # current continent (top-level), persists across bands
         region = None                # the level the current sibling-bands live at
         for g in groups:
@@ -555,6 +439,7 @@ def merge() -> tuple[dict, dict]:
                     if node is not None:
                         resolved += 1
                         cursor = node
+                        hits.setdefault(id(cursor), [cursor, set()])[1].add(B._norm(bn))
                         region = parent_map.get(id(node)) or node
                         # an index-omitted sibling country (Belgium) must graft BESIDE
                         # its country, not under it -- but ONLY when that country sits
@@ -576,11 +461,11 @@ def merge() -> tuple[dict, dict]:
             if cursor is not None:           # the band's wordless lead run pours into
                 home = _general_child(cursor) or cursor         # its general-subjects
                 home.setdefault("articles", []).extend(g["lead"])   # child (else band)
-                if g.get("lead_present"):    # a real bare run -> a filled bucket of its
-                    home["lead_filled"] = True                  # own (the Minor Arts case)
                 cursor.setdefault("notes", []).extend(g["notes"])
             grp_region = None                # a finer parent a "Region: X" section sets
             for s in g["sections"]:
+                _xm = _XREF_NOTE.search(s["name"])      # a (see …) baked into the header is a
+                xnote = _xm.group(0).replace("*", "").strip() if _xm else None  # note, not a name
                 sn = _clean_name(s["name"])
                 if not sn:
                     continue
@@ -602,6 +487,9 @@ def merge() -> tuple[dict, dict]:
                     if home is None:
                         deferred.append(sn)
                         continue
+                    if _GRAFT_TRACE is not None:
+                        _GRAFT_TRACE.append((cat, cursor["name"] if cursor else None,
+                                             home["name"], sn, ":" in s["name"], bool(s["links"])))
                     node = _graft_resolved(home, sn, parent_map)
                     grafted += 1
                 elif suffix:
@@ -618,49 +506,26 @@ def merge() -> tuple[dict, dict]:
                         m = re.search(r"\(([^)]+)\)", tail)  # never swallowing a note
                         if m:
                             node.setdefault("notes", []).append("(" + m.group(1) + ")")
+                if any(c.isalpha() for c in sn) and sn == sn.upper():
+                    grp_region = node            # a caps CONTAINER header (JUDAISM, BIBLE...) sets
+                    # the nesting context, so its bare children graft under it -- as a qualified
+                    # `X: Y` already does.  The trunk still wins for a known sibling (a country).
+                hits.setdefault(id(node), [node, set()])[1].add(B._norm(sn))
                 node.setdefault("articles", []).extend(s["links"])
                 node.setdefault("notes", []).extend(s["notes"])
-        report[cat] = {"flat": False, "resolved": resolved,
-                       "grafted": grafted, "deferred": deferred}
+                if xnote:
+                    node["notes"].append(xnote)
+        collisions = [(nd["name"], sorted(names))
+                      for _id, (nd, names) in hits.items() if len(names) > 1]
+        report[cat] = {"flat": False, "resolved": resolved, "grafted": grafted,
+                       "deferred": deferred, "collisions": collisions}
     return index, report
 
 
-_REDIRECT = re.compile(r"^\(?\s*See\s+\w", re.I)
-
-
-def _is_pointer(notes: list[str]) -> bool:
-    """True when a node's own content is just a bare cross-reference -- `(See X)` /
-    `(See under X)` -- NOT a supplementary `(See also X)` / `(See further ...)` /
-    `(For ... see ...)`, which sits on a section that has content of its own."""
-    for nt in notes:
-        low = nt.lower()
-        if _REDIRECT.match(nt) and "also" not in low and "further" not in low:
-            return True
-    return False
-
-
-def _mark_filled(nodes: list[dict]) -> None:
-    """Stamp ONE property on every node -- filled or unfilled.  No leaf concept: a
-    container is unfilled, a pointer is unfilled, a bare-run node (leaf or not) is
-    filled, and a terminal bucket the pour fills is filled."""
-    for n in nodes:
-        kids = n.get("children", [])
-        if n.get("lead_filled"):
-            n["filled"] = True                       # carries its own bare run
-        elif kids:
-            n["filled"] = False                      # a container; content is in children
-        elif _is_pointer(n.get("notes", [])):
-            n["filled"] = False                      # only a (See X) redirect -> a pointer
-        else:
-            n["filled"] = True                       # a terminal bucket the pour fills
-        _mark_filled(kids)
-
-
 def index_tree() -> list[dict]:
-    """The index as ONE uniform tree of nodes: the 24 categories are its top row, each
-    filled/unfilled like any node beneath it.  A flat category that is nothing but a
-    wordless bare run (Sports) carries that run on the category node itself -- so the
-    category node, not a child, is the filled one."""
+    """The index as ONE uniform tree of nodes: the 24 categories are its top row.  A
+    flat category that is nothing but a wordless bare run (Sports) carries that run on
+    the category node itself."""
     idx, _ = merge()
     trunk = B.parse_index()
     cats = stitch()
@@ -668,14 +533,12 @@ def index_tree() -> list[dict]:
     for cat in B.CATEGORIES:
         node = {"name": cat, "children": idx.get(cat, []),
                 "articles": [], "notes": []}
-        if not trunk.get(cat):                       # flat: the body IS the structure
-            for g in cats.get(cat, []):
-                if not g["band"] and g.get("lead_present"):
-                    node["lead_filled"] = True       # the category's own bare run (Sports)
-                    node["articles"].extend(g["lead"])
-                    node["notes"].extend(g["notes"])
+        for g in cats.get(cat, []):
+            if not g["band"]:                        # the category's own band node --
+                node["notes"].extend(g["notes"])     # its band-notes (from the whole);
+                if not trunk.get(cat):               # a flat cat also carries its own
+                    node["articles"].extend(g["lead"])   # bare run (Sports)
         roots.append(node)
-    _mark_filled(roots)
     return roots
 
 

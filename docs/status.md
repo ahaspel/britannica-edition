@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-06-14.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-07-04.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -384,51 +384,52 @@ math measurement).  pytest (378 tests).
 
 ## Topics page (Vol 29 classified TOC)
 
-Three steps.  **Step 1 — the index** (`complete_index.py`) is authoritative for ONE
-thing per major cat: HOW MANY filled nodes it has and in what ORDER.  Its node *names*
-are NOT a matching key — they differ from what the read produces, so nothing keys on
-them.  **Step 2 — the build** (`build_toc.py`) reads the content buckets, in order,
-from the half-page OCR.  **Step 3 — the pour** (`populate_classified_toc.py`) seats each
-bucket on its node by position.  65 pages (ws891-955), each OCR'd two ways in
-`data/derived/vol29_halves_debug.json`: `left`/`right` half-column reads (the article
-links) and a `spread` read (the full-width band banners); plus per-page whole reads
-(`vol29_whole_{ws}.txt`) for the band structure.
+The "Classified List of Articles" (vol 29) as a browsable topic index --
+`data/derived/classified_toc.json`, rendered by `topics.html`.  **The index needs both
+ORDER and STRUCTURE, and no single read has both:** the whole-page OCR keeps the
+full-width band banners and gutter-spanning notes whole but scrambles its columns; the
+half-page OCR keeps the columns (so the buckets and links) in reading order but shears
+the banners at the gutter.  Each is sourced from the read that holds it, and merged:
 
-**The build (step 2) is graded ONLY two ways — never the pour, never names:**
-- **census** — per major cat, the number of link-bearing build buckets equals the
-  index's filled-node count, in order.  The real scoreboard.
-- **conservation** — every one of the 36,829 source links lands in some bucket;
-  nothing vanishes.  The cardinal invariant.
+    read tree = whole bands + their notes  +  halves' ordered buckets + links + notes
+    merge     = graft the read tree onto the printed index (parse_index), by name
+    resolve   = resolve the links already on the tree, in place
 
-*Band read.*  `band_structure` identifies the 40 bands off the `spread` field (24 major
-cats + `GEO_BANDS` 11 + `HIST_BANDS` 5; no major cat carries a band but itself, only
-Geo/History have sub-bands).  `_mark_bands` marks them onto each half by aligning to the
-whole read's header track (`whole_tracks`, monotonic), reunites the two halves per band,
-chunks by category.  Two fixes this arc: a whole-italic continent principal (`*Asia*`)
-opens its History band where the `## ASIA` banner was lost on the half; and a `###`
-bucket header is NEVER consumed as a band just because its clip prefixes the band name
-(`### Africa: Biographies` was being eaten as the AFRICA band, merging the biographies
-into the general run).
+**Four pieces, nothing else load-bearing:**
 
-*Bucket read.*  `build_sections` reads buckets from the SOURCE structure, recognizing
-every boundary the mangled scan drops or invents: a container principal (`*Sculpture*`)
-opening a general-subjects run with no explicit header; a whole-italic `### *X*` that is
-a chief-article LINK, not a bucket (folded); a country name delimited only by BLANK LINES
-(`_promote_isolated`, guarded to a contiguous run so a blank-*separated* list — Military
-terms, a continent's lakes — is not split); a parenthetical note-tail dressed as a heading
-(folded, not opened); a page-turn running-head fragment wedged between a bucket and its
-`(cont.)` (folded so the continuation rejoins).  A flat major cat with no sub-nodes
-(Sports) carries its run on the category node itself.
+1. **Whole read** -- `band_structure` reads the 40 bands off the `spread` field (24
+   majors + `GEO_BANDS` 11 + `HIST_BANDS` 5; only Geo/History carry sub-bands).
+   `whole_tracks` reads `vol29_whole_{ws}.txt` for the header track that marks the
+   halves, and returns the band-notes whole (the halves shear them at the gutter).
+2. **Half read** -- `assemble_sequence` marks the bands onto each half (`_mark_bands`
+   aligns every column to the whole read's header track; `band_check` = 0 violations)
+   and reads the buckets in reading order; `build_sections` recognizes each bucket and
+   its links + column notes.
+3. **Merge** -- `complete_index.stitch` builds the read tree off the halves (bands
+   carrying their band-notes; ordered buckets carrying links + column notes); `merge`
+   grafts it onto the printed-index trunk by NAME -- a bucket that matches a trunk node
+   seats on it, one the index omitted grafts under its band (bare leaves like Lakes
+   under Physical features, kept on their parent by `grp_region`).  Every node is one
+   shape `{name, notes, articles, children}` -- no filled/marking flags, no
+   pointer/xref kinds.  A bare banner the index disambiguates by position is renamed
+   (`_BAND_WALL`: the UK's bare `PHYSICAL FEATURES` -> `United Kingdom ...: Physical
+   Features`); a read/index spelling gap goes in `_NAME_VARIANTS` (`...Syriac
+   Literature` -> the index's `Hebrew, Armenian and Syriac`).
+4. **Link resolution** -- `populate.build_resolver` + `resolve_tree` resolve each seated
+   link to its article file (a coarse cascade, ~5% unresolved).  Cached ambiguity
+   disambiguations applied at rebuild (pipeline 6b2, `disambiguate_toc.py`).
 
-**State (2026-07-02): census 378/380, 21 of 24 categories exact; conservation holds.**
-Each remainder is one specific spot: Geography −2 and Literature −2 (sub-section merges —
-two nodes' links share one bucket where a sub-header was lost, e.g. `Germany`+`German
-Literature`) and Religion +2 (two `(cont.)` splits dividing a node's links across two
-buckets).  `band_check` (`build_toc.main`) still checks band-LAYER structure (halves
-agree, contiguous, start-page) but is NOT a correctness proof — every bucket-level error
-this arc fixed passed it; the census above is the correctness instrument.
+`populate.main` is the sole writer of `classified_toc.json`: load the completed index
+tree (`complete_index.index_tree`), resolve its links in place, dedup per leaf, write.
+**There is no pour** -- the read tree carries the links through the merge, so nothing is
+seated positionally.
 
-Ambiguity disambiguation via Haiku batch (`disambiguate_toc.py`), cached.
+**State (2026-07-04): DONE.**  24 categories, **36,395 articles / 95% resolved**.  Built
+from the two-read model above, replacing the old index-count + positional-pour scheme;
+the pour, the filled/unfilled marking, and the `_whole_content` single-read chain were
+deleted (net ~570 fewer lines).  Output reproducible (stable sort tiebreak).  Small
+known residue, both parked: two band-level sibling-vs-child grafts (`Belgium` under
+`Balkan Peninsula`, `Malay Peninsula` under `India`); link resolution is coarse.
 
 ---
 

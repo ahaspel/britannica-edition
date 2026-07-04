@@ -50,7 +50,10 @@ INDEX_PAGES = (889, 890)
 
 # A marginal note is a cross-reference instruction, not a link: it opens with a
 # parenthesis and/or "For"/"See" (a word boundary keeps "Forster" a real link).
-_NOTE_RE = re.compile(r"^\(?\s*\*?\s*(For|See)\b", re.I)
+# A cross-reference note is ALWAYS parenthetical -- "(See ...)" / "(For ...)".  The
+# opening paren is REQUIRED: a bare "See" is the article (an ecclesiastical see), not
+# a note, and must stay a link -- as must a bare "For".
+_NOTE_RE = re.compile(r"^\(\s*\*?\s*(For|See)\b", re.I)
 
 
 # The 24 major categories, in printed order.
@@ -104,6 +107,15 @@ _BAND_ALIASES = {"europegeneral": "europe",
                  "unitedkingdom": "unitedkingdomofgreatbritainandireland"}
 _BAND_NORMS = (set(_CAT_NORMS) | {_norm(b) for b in GEO_BANDS}
                | {_norm(b) for b in HIST_BANDS})
+
+# The UK's physical-features banner is a BARE "PHYSICAL FEATURES", relying on the
+# "UNITED KINGDOM" banner above it for context.  A second consecutive band with that
+# bare name resolves ambiguously (it matches Europe's Physical features).  Instead,
+# NAME the UK band for the section its content fills -- the merge then nests it under
+# UK > Physical features by the "X: Y" rule, and the bare banner stays an ignored leak.
+# {band norm -> the wall (resolution name) to emit in place of the spread banner}.
+_BAND_WALL = {"unitedkingdomofgreatbritainandireland":
+              "United Kingdom of Great Britain and Ireland: Physical Features"}
 
 
 def _band_key(s: str) -> str:
@@ -232,7 +244,9 @@ def band_structure() -> tuple[list[str], list[str], dict[int, list[int]]]:
                 continue
             if key not in name2band:
                 name2band[key] = len(walls)
-                walls.append("## " + re.sub(r"\(.*?\)", "", s[3:]).strip().strip("*").strip())
+                wall = _BAND_WALL.get(
+                    key, re.sub(r"\(.*?\)", "", s[3:]).strip().strip("*").strip())
+                walls.append("## " + wall)
                 norms.append(key)
             bi = name2band[key]
             if not page_bands[ws] or page_bands[ws][-1] != bi:
@@ -240,16 +254,23 @@ def band_structure() -> tuple[list[str], list[str], dict[int, list[int]]]:
     return walls, norms, page_bands
 
 
-def whole_tracks(norms: list[str]) -> dict[int, list[tuple[bool, str, int]]]:
+def whole_tracks(norms: list[str]) -> tuple[
+        dict[int, list[tuple[bool, str, int]]], dict[str, list[str]]]:
     """Per page, the whole read's ordered HEADER TRACK -- every band banner and
     bucket header in read order, each tagged with the band it falls under.  A band
     banner (a `## ` whose norm is a known band) advances the open band; every other
     header (a `## ` bucket the gutter did not slice, or a `### `) inherits it.  The
     open band carries ACROSS pages, so a page that continues a band starts under it.
     This track is what marks the halves: a bucket names its band even where the
-    band's own banner was lost in the scan."""
+    band's own banner was lost in the scan.
+
+    ALSO returns the full-width cross-reference NOTES, keyed by the band they fall
+    under -- a note spans the gutter, so the whole read carries it WHOLE while the
+    halves shear it; this one band-tracking walk is the notes' only clean source.
+    The track itself is unchanged, so the marking is unaffected."""
     band_id = {nm: i for i, nm in enumerate(norms)}
     tracks: dict[int, list[tuple[bool, str, int]]] = {}
+    band_notes: dict[str, list[str]] = {}
     cur = -1
     for ws in range(WS_START, WS_END + 1):
         tracks[ws] = []
@@ -258,6 +279,11 @@ def whole_tracks(norms: list[str]) -> dict[int, list[tuple[bool, str, int]]]:
             continue
         for line in p.read_text(encoding="utf-8").split("\n"):
             s = line.strip()
+            if _NOTE_RE.match(s):                     # a full-width cross-ref note the whole
+                if cur >= 0:                          # read carries uncut (the halves shear
+                    txt = re.sub(r"[#*]+", "", s).strip()   # it) -- attach to the open band
+                    band_notes.setdefault(norms[cur], []).append(txt)
+                continue
             if not s.startswith("#") or _furniture(s) or s[3:].startswith("["):
                 continue
             if s.startswith("## ") and not s.startswith("### "):
@@ -270,7 +296,7 @@ def whole_tracks(norms: list[str]) -> dict[int, list[tuple[bool, str, int]]]:
                     #                                    -- furniture, never a bucket
             bn = _norm(re.sub(r"\(.*?\)", "", s.lstrip("#* ")))
             tracks[ws].append((False, bn, cur))
-    return tracks
+    return tracks, band_notes
 
 
 def _caps_frag(s: str) -> bool:
@@ -332,7 +358,7 @@ def _mark_bands(walls, norms, page_bands, H) -> list[tuple[int, int, int, str]]:
     So a band whose own banner dropped on this half is still opened by its first
     bucket, which names the band in the whole read.  The open band carries onto the
     next page.  Returns every half line tagged (band, ws, side, line)."""
-    tracks = whole_tracks(norms)
+    tracks, _ = whole_tracks(norms)
     # A band's clip must also match the banner's FULL text, not only its
     # canonical key: EUROPE--GENERAL keys to "europe" (one band with Europe),
     # so its right-half clip "-GENERAL" can match nothing but the full name.
@@ -386,8 +412,7 @@ def _mark_bands(walls, norms, page_bands, H) -> list[tuple[int, int, int, str]]:
                     tagged.append((cur, ws, side, line))
                     continue
                 if s.startswith("#") or capsish:
-                    banner = (s.startswith("## ") and not s.startswith("### ")) \
-                        or capsish
+                    banner = (s.startswith("## ") and not s.startswith("### ")) or capsish
                     clip = _norm(re.sub(r"\(.*?\)", "", s.lstrip("#* ")))
                     # A cont-marked caps fragment naming a band ALREADY OPEN is
                     # that band's running head ("## L FEATURES (*cont.*)" atop a
@@ -435,8 +460,9 @@ def _mark_bands(walls, norms, page_bands, H) -> list[tuple[int, int, int, str]]:
                             clip in norms[b] or clip in fulls[b]
                             for b in range(cur + 1)):
                         continue          # a running-head repeat of an open/past band
-                    elif banner:
-                        continue                       # an unmatched banner = furniture
+                    elif banner and ":" not in s:
+                        continue                # an unmatched BARE banner = furniture;
+                        #                         a `## X: Subjects` bucket keeps its colon
                 tagged.append((cur, ws, side, line))
         if page_bands.get(ws):
             carry = page_bands[ws][-1]                 # the page's last band carries on
@@ -468,7 +494,7 @@ def band_check(walls, norms, page_bands, H) -> list[tuple[str, str]]:
     from that page's whole-read track though its content (and mark) is present.
     That is a property of the STRUCTURE (the band carries), not a missed mark.
     Returns (scope, detail) violations; empty == the read is sound."""
-    tracks = whole_tracks(norms)
+    tracks, _ = whole_tracks(norms)
     tagged = _mark_bands(walls, norms, page_bands, H)
     start: dict[int, int] = {}
     for ws in range(WS_START, WS_END + 1):
@@ -544,6 +570,17 @@ def build_category_chunks(seq, openers):
                 chunks.append([openers[cur][0], []])
         (chunks[cur][1] if cur >= 0 else preamble).append((ws, idx, line))
     return preamble, chunks
+
+
+def band_read_content(openers=None) -> dict[str, list]:
+    """Per-category line tuples read from the HALF-pages BY BAND (assemble_sequence):
+    each band's `## ` wall once, then its buckets and links in reading order.  The
+    read tree's content source -- the half-page twin of band_structure.  No band
+    folding: assemble_sequence already emits each band exactly once."""
+    if openers is None:
+        openers = category_openers()
+    _, chunks = build_category_chunks(assemble_sequence(openers), openers)
+    return {name: lts for name, lts in chunks}
 
 
 def _header_level(s: str) -> int:
@@ -920,6 +957,8 @@ _NAME_VARIANTS = {
     "finance": "financeandcurrency",
     "critics": "biographiesofcritics",
     "scholars": "classicalscholars",
+    "hebrewarmenianandsyriacliterature": "hebrewarmenianandsyriac",  # read banner adds
+    #   the redundant category word "Literature"; the index node omits it
 }
 
 # Section-type leaves the index omits but the body carries: each names a

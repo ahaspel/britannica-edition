@@ -277,11 +277,18 @@
   function renderCategory(cat) {
     let resolvedArts = 0;
     for (const s of cat.subsections) resolvedArts += countAll(s).resolved;
+    // A flat major (Sports) carries its links directly on the category as
+    // `articles`, with no subsections -- render them as a plain list.
+    const flatArts = (cat.articles || []).filter(a => a.filename).length;
+    resolvedArts += flatArts;
+    const flatBody = (cat.articles && cat.articles.length)
+      ? `<ul class="article-list">${cat.articles.map(renderArticle).join("")}</ul>`
+      : "";
     const meta = resolvedArts
       ? `<span class="cat-meta">${resolvedArts} articles</span>`
       : `<span class="cat-meta">(awaiting transcription)</span>`;
     const body = resolvedArts
-      ? cat.subsections.map(s => renderSubsection(s, 0, cat.name)).filter(Boolean).join("")
+      ? cat.subsections.map(s => renderSubsection(s, 0, cat.name)).filter(Boolean).join("") + flatBody
       : `<div class="empty-cat">No article entries yet — Wikisource transcription pending.</div>`;
     return `<details class="category" id="${escapeHtml(cat.name)}">
       <summary>${escapeHtml(cat.name)} ${meta}</summary>
@@ -301,8 +308,10 @@
       document.getElementById("categories").innerHTML = html;
       const totalCats = data.categories.length;
       let allResolved = 0;            // countAll recurses, so nested articles count
-      for (const c of data.categories)
+      for (const c of data.categories) {
         for (const s of c.subsections) allResolved += countAll(s).resolved;
+        allResolved += (c.articles || []).filter(a => a.filename).length;
+      }
       document.getElementById("footer").textContent =
         `${totalCats} categories \u00b7 ${allResolved.toLocaleString()} articles`;
       navigateToHash();

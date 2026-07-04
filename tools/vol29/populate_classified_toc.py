@@ -338,20 +338,8 @@ def build_resolver():
 # ── Buckets straight from the marks ───────────────────────────────────────
 _CONT_KW = ["unitedkingdom", "britain", "asia", "africa", "australasia",
             "america", "oceania", "ocean", "europe"]
-_CONT = re.compile(r"\(\s*\*?\s*cont", re.I)
 _MARK = re.compile(r"^<<<<\s*(.*?)\s*>>>>\s*$")
 _catnorm = {_normalize(c): c for c in CATEGORIES}
-
-
-def _match_major(name: str):
-    n = _normalize(name)
-    return _catnorm.get(n) or next(
-        (c for c in CATEGORIES
-         if n and (_normalize(c).startswith(n) or n.startswith(_normalize(c)))),
-        None)
-
-
-def _is_hdr(s): return s.startswith("## ") or s.startswith("### ") or s.startswith("**")
 
 
 # A section header the OCR demoted to a plain entry line (no ##/###) after a
@@ -364,126 +352,6 @@ _DEMOTED_HDR = re.compile(
     r"^[^:]{2,60}:\s*\*?(subjects|biographies|divisions|towns|ancient)\b", re.I)
 
 
-def _is_demoted_hdr(s):
-    return (not s.startswith("#") and not s.startswith("**")
-            and bool(_DEMOTED_HDR.match(s.replace("*", ""))))
-
-
-def _hname(s):
-    s = re.sub(r"^#+\s*", "", s).replace("*", "")
-    s = re.sub(r"\s*\(\s*cont[^)]*\)?", "", s, flags=re.I)   # drop only "(cont.)"
-    return s.strip().rstrip(":").strip()
-def _continent(s):
-    n = _normalize(s)
-    return next((k for k in _CONT_KW if n.startswith(k)), None)
-def _is_noise(nm, major):
-    n = _normalize(nm)
-    if len(n) < 2:
-        return True
-    if len(n) >= 4 and n in "classifiedlistofarticles":
-        return True
-    mn = _normalize(major)
-    return len(n) < len(mn) and (mn.startswith(n) or mn.endswith(n))
-
-
-def load_segmented_content() -> dict[str, list[str]]:
-    """Cut the half-page OCR into the 24 majors at the human <<<< >>>> marks."""
-    lines = MARKUP.read_text(encoding="utf-8").split("\n")
-    content = {c: [] for c in CATEGORIES}
-    cur = None
-    for line in lines:
-        s = line.strip()
-        if s.startswith("#") and not s.startswith("##"):
-            continue                       # instruction comment, not an OCR header
-        m = _MARK.match(s)
-        if m:
-            cur = _match_major(m.group(1))
-            continue
-        if s.startswith("=====") or not s:
-            continue
-        if cur:
-            content[cur].append(line)
-    return content
-
-
-def build_buckets(cat: str, lines: list[str]) -> list[dict]:
-    """Ordered buckets for one category, from its printed headers.  A
-    continent banner sets the band; a `(cont.)` folds into the prior bucket of
-    the same name; OCR banner-fragments (the clipped major name, page furniture)
-    are skipped, not made into stray dividers."""
-    band = None
-    by_key: dict[tuple, dict] = {}
-    order: list[dict] = []
-    cur_b = None
-    for line in lines:
-        s = line.strip()
-        if not s:
-            continue
-        if _is_hdr(s) or _is_demoted_hdr(s):
-            is_cont = bool(re.search(r"\(\s*\*?\s*cont", s, re.I))
-            nm = _hname(s)
-            if _is_noise(nm, cat):
-                continue
-            # A continent band is a `##` full-width banner; a `###` column header
-            # is a country (UK, Asia Minor, Africa Ancient) even when its name
-            # starts with a continent keyword -- never treat it as a band.
-            if s.startswith("## ") and _continent(s):
-                band = nm.split(":")[0].strip()
-                cur_b = None
-                continue
-            if not nm:
-                continue
-            key = (band, _normalize(nm))
-            if is_cont:
-                if key in by_key:
-                    cur_b = by_key[key]      # a continuation rejoins its bucket
-                    continue                 # across the gutter,
-                if cur_b is not None:
-                    continue                 # or the one immediately above it.
-            # A fresh header starts its OWN bucket even when the name repeats in
-            # another section -- the top-level "General" and Comparative's
-            # "General" are two sections, not one, and must not merge.
-            cur_b = {"name": nm, "band": band, "arts": [], "pr": [], "notes": []}
-            by_key[key] = cur_b
-            order.append(cur_b)
-        elif s.startswith("("):
-            # A cross-reference ("(See NETHERLANDS)") is a real leaf that points
-            # elsewhere, not noise -- carry it so an xref leaf (Belgium) is not
-            # read as empty.  Other parenthetical annotations stay dropped.
-            if cur_b is not None and re.match(r"\(\s*see\b", s, re.I):
-                cur_b["notes"].append(s.strip("()").strip())
-        else:
-            base = s.strip("*").strip()
-            if (s.startswith("*") and s.endswith("*")
-                    and _normalize(base) in {"europe", "asia", "africa",
-                                             "america", "australasia", "australia"}):
-                # A continent's general-subjects run is headed only by its name in
-                # italic ("*Africa*"), with no "### Africa: General subjects" line;
-                # without this its bare entries fold into the previous bucket.
-                nm = f"{base}: General subjects"
-                key = (band, _normalize(nm))
-                if key in by_key:
-                    cur_b = by_key[key]
-                else:
-                    cur_b = {"name": nm, "band": band, "cgen": True,
-                             "arts": [], "pr": [], "notes": []}
-                    by_key[key] = cur_b
-                    order.append(cur_b)
-                continue
-            if cur_b is None:                # articles directly under a band
-                key = (band, "_gen_")
-                cur_b = by_key.get(key)
-                if cur_b is None:
-                    cur_b = {"name": band or "General", "band": band,
-                             "arts": [], "pr": [], "notes": []}
-                    by_key[key] = cur_b
-                    order.append(cur_b)
-            (cur_b["pr"] if (s.startswith("*") and s.endswith("*"))
-             else cur_b["arts"]).append(
-                s.strip("*").strip() if s.startswith("*") else s)
-    return order
-
-
 # ── Pour the buckets into the REVIEWED nested index ───────────────────────
 # The structure is `complete_index`'s tree (the one we reviewed, with its full
 # nesting: Geography > Europe > Countries > France > Towns).  We do NOT invent a
@@ -491,36 +359,6 @@ def build_buckets(cat: str, lines: list[str]) -> list[dict]:
 import complete_index as _C
 import build_toc as _BT
 from complete_index import _general_kind as _gen_kind
-
-
-def load_band_read_content() -> dict[str, list]:
-    """Per-category line tuples, read straight from the half-pages BY BAND: bands off
-    the `spread` field, marked onto each half by aligning it to the whole read
-    (build_toc.assemble_sequence) -- no hand-marking.  Replaces load_segmented_content
-    and the markup file."""
-    openers = _BT.category_openers()
-    seq = _BT.assemble_sequence(openers)
-    _, chunks = _BT.build_category_chunks(seq, openers)
-    return {name: lts for name, lts in chunks}
-
-
-def _general_bucket_map(nodes) -> dict:
-    """{norm(container) -> 'Container: Subjects'} for every index container that owns a
-    general-subjects child.  Lets build_sections open (and correctly name) the general
-    run a whole-italic principal (`*Sculpture*`, `*Asia*`) or a bare "## ASIA" banner
-    heads with no explicit "X: Subjects" header -- so the pour seats it on that child
-    instead of the run folding into the section above."""
-    m: dict[str, str] = {}
-
-    def walk(ns):
-        for n in ns:
-            for c in n.get("children", []):
-                if _gen_kind(c["name"]) == "subjects":
-                    m[_normalize(_BT._strip_parens(n["name"]))] = n["name"] + ": Subjects"
-                    break
-            walk(n.get("children", []))
-    walk(nodes)
-    return m
 
 
 def _node_norms(nodes) -> set:
@@ -537,363 +375,49 @@ def _node_norms(nodes) -> set:
     return s
 
 
-def _sections_to_buckets(sections: list[dict]) -> tuple[list[dict], list[str]]:
-    """A build_toc section -> a pour_category bucket: split each section's items
-    into emphasized principals (`pr`), plain articles (`arts`), and notes.
-    A headerless, link-free section is NOT a bucket: it is the category's own
-    marginal cross-reference, printed under the banner before the first section
-    head ("(For ancient anthropology see ARCHAEOLOGY ...)").  Minted as a bucket
-    it occupied a positional slot, shifted every later bucket by one, and
-    orphaned each category's last bucket (the recurring Biographies orphans).
-    Its notes are returned separately, to carry on the category itself."""
-    out, cat_notes = [], []
-    for sec in sections:
-        arts, pr, notes = [], [], []
-        for s in sec["items"]:
-            kind, val = _BT._parse_item(s)
-            if kind == "note":
-                notes.append(val)
-            elif val["emphasized"]:
-                pr.append(val["target"])
-            else:
-                arts.append(val["target"])
-        name = _BT._clean_header(sec["header"]) if sec["header"] else ""
-        if not name and not arts and not pr:
-            cat_notes.extend(notes)
-            continue
-        out.append({"name": name, "band": None, "arts": arts,
-                    "pr": pr, "notes": notes})
-    return out, cat_notes
-
-
-def _canon(s: str) -> str:
-    """Normalize, then reconcile a BODY spelling to its INDEX spelling through the
-    one variant table the index-builder uses (Classics->Classical, Critics->
-    Biographies of critics, Servia->Serbia ...).  Lets the pour match a header to
-    its node when the page and the index spell the same subcat differently."""
-    n = _normalize(s)
-    return _BT._NAME_VARIANTS.get(n, n)
-
-
-def _gk(parent: str, name: str) -> str:
-    """Leaf key: parent + name, with General/Subjects/Biographies folded so the
-    body's 'General' lands on the index's renamed 'Subjects', etc."""
-    g = _gen_kind(name)
-    return _normalize(parent) + (g if g else _normalize(name))
-
-
 # Words too generic to prove a leftover bucket *continues* the leaf above it.
-_ROLLUP_STOP = {"subjects", "biographies", "general", "towns", "divisions",
-                "cont", "list", "articles", "classified", "various", "names",
-                "countries", "modern", "ancient", "with", "and", "the", "etc"}
 
 
-def _sig_words(s: str) -> set[str]:
-    """Distinctive (>=4-char, non-generic) words of a header/leaf name."""
-    return {w for w in re.sub(r"[^a-z0-9]+", " ", s.lower()).split()
-            if len(w) >= 4} - _ROLLUP_STOP
-
-
-def pour_category(cat: str, nodes: list[dict], buckets: list[dict], resolve):
-    """Align the half-read bucket stream to the index, the way a complete index
-    permits.  Targets are EVERY node in pre-order, not only leaves: an internal
-    node carries its own direct list (a "Minor Arts" general list sits on the
-    Minor Arts node, above its Furniture/Biographies children).  ANCHOR on the
-    buckets whose header reads cleanly (qualified name equals a node's, in order)
-    -- this homes leaves and internal-node lists alike -- then fill each gap BY
-    POSITION onto the LEAF nodes only, because containers carry nothing and the
-    count must step over them.  A leftover bucket that continues the node just
-    placed (a "Painting"/"Engraving" sub-list under "Painting and Engraving:
-    Subjects") rolls into it when they share a distinctive word; otherwise it is
-    surfaced as an orphan, never folded.  A flat category (no nesting, e.g.
-    Sports) pours into one node.  Returns (orphans, empty_leaves)."""
-    seq: list[tuple[dict, list]] = []          # every node, pre-order
-
-    def walk(ns, path):
-        for n in ns:
-            seq.append((n, path))
-            walk(n.get("children", []), path + [n])
-    walk(nodes, [])
-
-    def _place(node, bs):
+def resolve_tree(node: dict, cat: str, resolve) -> None:
+    """Resolve every link already sitting on the tree, node by node, in place --
+    walking the finished merge (there is no separate pour any more).  Unresolved
+    link records ({target, emphasized}) become resolved articles; plain links sort
+    A-Z, principals keep their printed order first."""
+    raw = node.get("articles", [])
+    if raw:
+        pr = [d["target"] for d in raw if d.get("emphasized")]
+        arts = [d["target"] for d in raw if not d.get("emphasized")]
         nd = _node_domain(node["name"], cat)
         ctx = set(_art_norm(node["name"] + " " + cat).split())
-        prs = [a for b in bs for a in b["pr"]]
-        arts = sorted({a for b in bs for a in b["arts"]}, key=_normalize)
-        for title, emph in [(a, True) for a in prs] + [(a, False) for a in arts]:
+        node["articles"] = []
+        for title, emph in ([(a, True) for a in pr]
+                            + [(a, False) for a in sorted(set(arts),
+                               key=lambda t: (_normalize(t), t))]):   # stable tiebreak
             a = resolve(title, nd, ctx)
             if emph:
                 a["emphasized"] = True
-            node.setdefault("articles", []).append(a)
-        for note in (n for b in bs for n in b.get("notes", [])):
-            if note not in node.setdefault("notes", []):
-                node["notes"].append(note)
-
-    # Flat category: no nesting at all -> the whole thing is one A-Z list.
-    if not seq:
-        # No index nodes for this category at all -> an index GAP (e.g. Sports has
-        # zero nodes).  Surface its buckets as orphans; do NOT invent a node.
-        return list(buckets), []
-
-    def _strip_par(s):
-        return re.sub(r"\s*\([^)]*\)", "", s).strip()
-
-    def _bsplit(nm):
-        for sep in (":", "?"):          # "?" is a misread colon in OCR'd headers
-            if sep in nm:
-                par, lf = nm.split(sep, 1)
-                return par.strip(), lf.strip()
-        return "", nm.strip()
-
-    nkey = [_gk(path[-1]["name"] if path else "", n["name"]) for n, path in seq]
-    # paren-stripped alias key, so "Free Churches: Subjects" can reach the node
-    # named "Free Churches (British Empire ...) > Subjects" -- used only as a
-    # FALLBACK, so a distinguishing paren (Italy "Towns (modern)"/"(ancient)")
-    # stays decisive through the exact key above.
-    skey = [_gk(_strip_par(path[-1]["name"]) if path else "", _strip_par(n["name"]))
-            for n, path in seq]
-    is_leaf = [not n.get("children") for n, path in seq]
-    nwords = [_sig_words(" ".join([p["name"] for p in path] + [n["name"]]))
-              for n, path in seq]
-
-    # A bare entry like "Egypt" never carries its parent ("Africa > Countries"),
-    # so it can't match a qualified key -- but a country name is unique, so its
-    # own name pins it to one node.
-    from collections import Counter
-    nbare = [_normalize(_strip_par(n["name"])) for n, path in seq]
-    bare_count = Counter(nbare)
-
-    def _bqk(b):
-        par, lf = _bsplit(b["name"])
-        g = _gen_kind(lf)
-        return _canon(par) + (g if g else _canon(lf))
-
-    def _bbare(b):
-        return _canon(_strip_par(_bsplit(b["name"])[1]))
-    bkeys = [_bqk(b) for b in buckets]
-    bbares = [_bbare(b) for b in buckets]
-
-    # 1. Each bucket gets at most one candidate node -- exact qualified key, else
-    #    a unique paren-stripped key, else a unique bare name -- then keep the
-    #    longest globally CONSISTENT chain (both indices increasing) as anchors.
-    #    That is what stops a single out-of-order name (the gutter scramble) from
-    #    jumping the pointer and stranding every leaf behind it: the stray one
-    #    drops to positional fill, the rest stand.
-    by_key: dict[str, list[int]] = {}
-    for nj, k in enumerate(nkey):
-        by_key.setdefault(k, []).append(nj)
-    by_skey: dict[str, list[int]] = {}
-    for nj, k in enumerate(skey):
-        by_skey.setdefault(k, []).append(nj)
-    by_bare: dict[str, list[int]] = {}
-    for nj, b in enumerate(nbare):
-        by_bare.setdefault(b, []).append(nj)
-
-    # Generic names repeat under every section, so they identify nothing on their
-    # own; everything else is specific enough that a single match IS the answer.
-    GENERIC = {"subjects", "biographies", "general"}
-
-    # A physical-feature run ("Lakes"/"Rivers"/"Mountains"/"Misc") under a
-    # continent banner is placed by its BAND, never by position: the half-read
-    # threads continents together, so positional fill would seat it on a
-    # neighbour's leaf.  Pull these out of positional fill and continuation (as
-    # with cgen); the band router below seats each on its own continent's leaf.
-    PHYS = {"lakes", "rivers", "mountains", "miscellaneous"}
-
-    def _is_phys(bi):
-        return (bbares[bi] in PHYS
-                and bool(_continent(buckets[bi].get("band") or "")))
-
-    # PHASE A -- definitive placement BY NAME, independent of reading order.  A
-    # qualified header (carries its parent) or a specific bare name that matches
-    # exactly one node is placed there outright -- "Classics: Legendary Figures"
-    # read first still lands on "Classical ... > Legendary Figures".  We also note
-    # which placements can serve as POSITION boundaries: a qualified header or a
-    # section banner (an internal node) fences a region; a bare leaf name may have
-    # been read out of order, so it is placed but does not fence anything.
-    assign: dict[int, int] = {}
-    reserved: set[int] = set()
-    bounds: list[tuple[int, int]] = []
-    for bi in range(len(buckets)):
-        par, _lf = _bsplit(buckets[bi]["name"])
-        nj = None
-        bound = False
-        if par:
-            ks = by_key.get(bkeys[bi], [])
-            if len(ks) == 1:
-                nj = ks[0]
-                bound = True
-            else:
-                sk = by_skey.get(bkeys[bi], [])
-                if len(sk) == 1:
-                    nj = sk[0]
-                    bound = True
-        if nj is None and bbares[bi] and bbares[bi] not in GENERIC \
-                and bare_count.get(bbares[bi], 0) == 1:
-            nj = by_bare[bbares[bi]][0]
-            bound = not is_leaf[nj]
-        if nj is not None and nj not in reserved:
-            assign[bi] = nj
-            reserved.add(nj)
-            if bound:
-                bounds.append((bi, nj))
-
-    # PHASE B -- everything else (generic names, unmatched headers) BY POSITION,
-    # into the leaves the definitives left free, fenced by the longest consistent
-    # chain of the trustworthy bounds so a generic stays inside its own section.
-    import bisect
-    tails: list[int] = []
-    tails_ci: list[int] = []
-    back = [-1] * len(bounds)
-    for ci, (bi, nj) in enumerate(bounds):
-        p = bisect.bisect_left(tails, nj)
-        back[ci] = tails_ci[p - 1] if p > 0 else -1
-        if p == len(tails):
-            tails.append(nj)
-            tails_ci.append(ci)
-        else:
-            tails[p] = nj
-            tails_ci[p] = ci
-    backbone: list[tuple[int, int]] = []
-    ci = tails_ci[-1] if tails_ci else -1
-    while ci != -1:
-        backbone.append(bounds[ci])
-        ci = back[ci]
-    backbone.reverse()
-    pb = pn = -1
-    for bi, nj in backbone + [(len(buckets), len(seq))]:
-        gl = [x for x in range(pn + 1, nj) if is_leaf[x] and x not in reserved]
-        gb = [b for b in range(pb + 1, bi)
-              if b not in assign and not buckets[b].get("cgen")
-              and not _is_phys(b)]
-        for bo, lo in zip(gb, gl):
-            assign[bo] = lo
-        pb, pn = bi, nj
-
-    # continent (first-level node under the category) each placed bucket lives in
-    bcont = {bi: (seq[nj][1][0] if seq[nj][1] else None)
-             for bi, nj in assign.items()}
-
-    def _band_continent(band):
-        # A bucket's own banner band ("## ASIA -- PHYSICAL", clipped to
-        # "ASIA?PHYSIC") still names its continent; map it to the top-level node.
-        kw = _continent(band or "")
-        if not kw:
-            return None
-        return next((n for n in nodes if _normalize(n["name"]).startswith(kw)),
-                    None)
-
-    # PHASE C -- a leftover continuation rolls into the node just placed.
-    place: dict[int, list[int]] = {}
-    cur = None
-    orph_idx = []
-    for bi in range(len(buckets)):
-        if bi in assign:
-            cur = assign[bi]
-            place.setdefault(cur, []).append(bi)
-        elif cur is not None and not buckets[bi].get("cgen") \
-                and not _is_phys(bi) \
-                and (_sig_words(buckets[bi]["name"]) & nwords[cur]):
-            place.setdefault(cur, []).append(bi)
-        elif buckets[bi]["pr"] or buckets[bi]["arts"]:
-            # A section the index has no leaf for -> an index GAP.  Surface it as
-            # an orphan so the gap is fixed in complete_index.  WE DO NOT GRAFT.
-            orph_idx.append(bi)
-    for nj, bis in place.items():
-        _place(seq[nj][0], [buckets[bi] for bi in bis])
-    # A leftover continent-level run (a "## AS"/"## FRICA" banner the gutter
-    # clipped past recognition) carries one continent's general subjects.  Route
-    # it by the company it keeps -- the continent of its nearest placed neighbour
-    # -- onto that continent's empty "General ..." leaf, never reading the banner.
-    def _cont_target(cont, bare, allow_general=False):
-        # The empty leaf inside `cont` this bare run belongs on: first one named
-        # like the run itself ("Lakes" -> Physical features > Lakes).  A
-        # continent-general run (cgen) may instead fall back to the continent's
-        # "General ..." leaf; a physical-feature run must NOT -- an unmatched
-        # "Miscellaneous" is not a "General list".
-        if cont is None:
-            return None
-        queue = list(cont.get("children", []))
-        general = None
-        while queue:
-            nxt = []
-            for n in queue:
-                if n.get("children"):
-                    nxt.extend(n["children"])
-                elif not n.get("articles"):
-                    nn = _normalize(n["name"])
-                    if bare and nn == bare:
-                        return n
-                    # "general" need not lead the name -- America files its
-                    # country list under "Countries, general list".
-                    if allow_general and general is None and "general" in nn:
-                        general = n
-            queue = nxt
-        return general
-
-    orphans = []
-    for bi in orph_idx:
-        cont = None
-        for d in range(1, len(buckets)):
-            for nb in (bi + d, bi - d):    # following first: a banner precedes its run
-                if 0 <= nb < len(buckets) and bcont.get(nb):
-                    cont = bcont[nb]
-                    break
-            if cont:
-                break
-        cg = bool(buckets[bi].get("cgen"))
-        bandc = _band_continent(buckets[bi].get("band"))
-        if _is_phys(bi):                 # a physical run trusts its band FIRST
-            target = (_cont_target(bandc, bbares[bi], cg)      # (interleaving), but
-                      or _cont_target(cont, bbares[bi], cg))   # a British run whose
-        else:                            # band-continent is full falls to neighbour
-            target = (_cont_target(cont, bbares[bi], cg)
-                      or _cont_target(bandc, bbares[bi], cg))
-        if target is not None:
-            _place(target, [buckets[bi]])
-        else:
-            orphans.append(buckets[bi])
-    empty = [(n, path) for i, (n, path) in enumerate(seq)
-             if is_leaf[i] and not n.get("articles") and not n.get("notes")]
-    return orphans, empty
+            node["articles"].append(a)
+    for ch in node.get("children", []):
+        resolve_tree(ch, cat, resolve)
 
 
 def main() -> None:
     print("Building resolver from the article index...")
     resolve = build_resolver()
-    content = load_band_read_content()
-    print("Loading the reviewed nested index (complete_index)...")
-    idx, _ = _C.merge()
+    print("Loading the completed index (complete_index)...")
+    roots = {r["name"]: r for r in _C.index_tree()}
 
-    n_arts = n_res = 0
-    n_leaves = n_empty = n_orph = 0
+    n_arts = n_res = n_leaves = 0
     out_cats = []
     for cat in CATEGORIES:
-        nodes = idx.get(cat, [])
-        sections = _BT.build_sections(cat, content.get(cat, []),
-                                      _general_bucket_map(nodes), _node_norms(nodes))
-        buckets, cat_notes = _sections_to_buckets(sections)
-        orphans, empty = pour_category(cat, nodes, buckets, resolve)
-        flat_arts = None
-        if not nodes and buckets:
-            # A flat major cat is itself a BAND with links directly beneath it (Sports):
-            # no sub-node exists to pour into, so its run fills the category node.
-            prs = [a for b in buckets for a in b["pr"]]
-            plain = sorted({a for b in buckets for a in b["arts"]}, key=_normalize)
-            flat_arts = []
-            for title, emph in [(a, True) for a in prs] + [(a, False) for a in plain]:
-                a = resolve(title, None, set())
-                if emph:
-                    a["emphasized"] = True
-                flat_arts.append(a)
-            orphans = []
-        n_empty += len(empty)
-        n_orph += len(orphans)
+        root = roots.get(cat) or {"name": cat, "children": []}
+        nodes = root.get("children", [])
+        resolve_tree(root, cat, resolve)      # links already seated by the merge; resolve in place
+
         # Per-leaf dedup: one copy of an article within a single leaf.  NOT per
-        # category -- the source legitimately lists the same article in two
-        # sections (a province under "Divisions" and its capital under "Towns"
-        # share one EB article); collapsing across the category gutted every
-        # such capital from its Towns leaf.
+        # category -- the source legitimately lists the same article in two sections
+        # (a province under "Divisions", its capital under "Towns") sharing one EB
+        # article; collapsing across the category gutted every such capital.
         def _dedup(ns):
             for n in ns:
                 seen: set[str] = set()
@@ -907,7 +431,7 @@ def main() -> None:
                     keep.append(a)
                 n["articles"] = keep
                 _dedup(n.get("children", []))
-        _dedup(nodes)
+        _dedup([root])
 
         def _count(ns):
             nonlocal n_arts, n_res, n_leaves
@@ -919,15 +443,13 @@ def main() -> None:
                     n_arts += 1
                     n_res += 1 if a.get("filename") else 0
                 _count(ch)
-        _count(nodes)
+        _count([root])
+
         cat_obj = {"name": cat, "subsections": nodes}
-        if flat_arts is not None:
-            cat_obj["articles"] = flat_arts
-            for a in flat_arts:
-                n_arts += 1
-                n_res += 1 if a.get("filename") else 0
-        if cat_notes:
-            cat_obj["notes"] = cat_notes      # the category's own marginal note
+        if root.get("articles"):
+            cat_obj["articles"] = root["articles"]   # a flat category's own run (Sports)
+        if root.get("notes"):
+            cat_obj["notes"] = root["notes"]          # category/band notes carried on the node
         out_cats.append(cat_obj)
 
     out_obj = {"categories": out_cats}
@@ -947,8 +469,7 @@ def main() -> None:
     pct = (100 * n_res // n_arts) if n_arts else 0
     print(f"Wrote {OUT}")
     print(f"  24 categories (nested), {n_arts} articles, {n_res} resolved ({pct}%)")
-    print(f"  leaves filled {n_leaves - n_empty}/{n_leaves}, "
-          f"{n_empty} empty, {n_orph} orphan buckets surfaced")
+    print(f"  {n_leaves} leaves total")
 
 
 if __name__ == "__main__":
