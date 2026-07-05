@@ -1773,21 +1773,34 @@
     let collectedSections = [];
     let wideTableCounter = 0;
     const wideTableSources = {};
+    // Colliding anchor ids — a «SH» sharing a slug with a «SEC» (ALPS's
+    // "Western Alps" is BOTH a major section and a later shoulder heading):
+    // the first anchor per slug keeps `section-<slug>`, each reuse gets a `-N`
+    // suffix.  Applied in the SAME document order in BOTH the TOC scan and the
+    // body id-emit (below), so a TOC link lands on its OWN anchor instead of
+    // the first same-slug one.  ONE rule, two callers.
+    function dedupeAnchorId(seen, id) {
+      seen[id] = (seen[id] || 0) + 1;
+      return seen[id] === 1 ? id : `${id}-${seen[id]}`;
+    }
     // Build the TOC mechanically by walking the anchors the producer placed,
     // in document order: «SEC:slug|name» (L1) and «SH:slug»…«/SH» (L2).  Both
     // carry their own slug — nothing is recomputed here, nothing is guessed.
     function detectSections(paragraphs) {
       collectedSections = [];
+      const seen = Object.create(null);
       const ANCHOR_RE = /«SEC:([^|»]*)\|([^»]*)»|«SH:([^»]*)»([\s\S]*?)«\/SH»/g;
       for (const p of paragraphs) {
         ANCHOR_RE.lastIndex = 0;
         let m;
         while ((m = ANCHOR_RE.exec(p)) !== null) {
           if (m[1] !== undefined) {              // «SEC» — major section (L1)
-            collectedSections.push({ id: `section-${m[1]}`, title: m[2], level: 1 });
+            collectedSections.push(
+              { id: dedupeAnchorId(seen, `section-${m[1]}`), title: m[2], level: 1 });
           } else {                               // «SH:slug» — shoulder (L2)
             const display = m[4].replace(/«\/?[A-Za-z]+(?:\[[^\]]*\])?»/g, "").trim();
-            collectedSections.push({ id: `section-${m[3]}`, title: display, level: 2 });
+            collectedSections.push(
+              { id: dedupeAnchorId(seen, `section-${m[3]}`), title: display, level: 2 });
           }
         }
       }
@@ -2975,7 +2988,13 @@
               i++;
             }
             detectSections(mergedParas);
-            const bodyHtml = mergedParas.map((p, idx) => renderParagraph(p, mergedParas[idx + 1])).join("");
+            let bodyHtml = mergedParas.map((p, idx) => renderParagraph(p, mergedParas[idx + 1])).join("");
+            // De-dup colliding section/shoulder ids in the SAME document order
+            // detectSections used, so each TOC link resolves to its own anchor
+            // (the first same-slug anchor keeps section-<slug>, reuses get -N).
+            const _idSeen = Object.create(null);
+            bodyHtml = bodyHtml.replace(/id="(section-[^"]+)"/g,
+              (mm, id) => `id="${dedupeAnchorId(_idSeen, id)}"`);
             const level1 = collectedSections.filter(s => s.level === 1);
             const level2 = collectedSections.filter(s => s.level === 2);
             let tocHtml = "";
