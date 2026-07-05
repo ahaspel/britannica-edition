@@ -35,7 +35,14 @@
   // filename → link URL. isLocal controls local dev vs. production.
   function filenameToUrl(filename, isLocal) {
     if (isLocal) {
-      return `viewer.html?article=/data/derived/articles/${encodeURIComponent(filename)}`;
+      // Encode the WHOLE path value, matching what viewer.html's on-load
+      // URLSearchParams.set("article", …) produces.  A link with literal
+      // slashes makes that set() re-encode them, i.e. change the URL via
+      // replaceState during load -- which breaks the scroll to a
+      // #section-<slug> fragment (the direct-link bug).  Same encoding as the
+      // rewrite => the rewrite is a no-op => the fragment jump survives, so a
+      // clicked link behaves exactly like reloading the (already-rewritten) URL.
+      return `viewer.html?article=${encodeURIComponent("/data/derived/articles/" + filename)}`;
     }
     const { stableId, title, base } = parseFilename(filename);
     if (stableId) {

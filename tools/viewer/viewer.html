@@ -3050,6 +3050,9 @@
         // In both cases, preserve q / match params so search-result
         // links (viewer.html?article=…&q=term&match=3) survive the
         // rewrite and can drive the in-article search below.
+        // Capture the #section-<slug> fragment BEFORE the URL rewrite below
+        // strips it -- we still need it to scroll, and to keep in the URL.
+        const hash = window.location.hash;
         const existingParams = new URLSearchParams(window.location.search);
         const preserved = new URLSearchParams();
         for (const k of ["q", "match"]) {
@@ -3060,7 +3063,7 @@
         if (!IS_LOCAL) {
           const cleanUrl = BritannicaUrls.jsonPathToCleanUrl(path, suffix);
           if (cleanUrl) {
-            window.history.replaceState({}, "", cleanUrl);
+            window.history.replaceState({}, "", cleanUrl + hash);
           }
         } else {
           const url = new URL(window.location.href);
@@ -3068,7 +3071,23 @@
           // Delete + re-set preserved params so order is stable.
           for (const k of ["q", "match"]) url.searchParams.delete(k);
           for (const [k, v] of preserved) url.searchParams.set(k, v);
-          window.history.replaceState({}, "", url);
+          window.history.replaceState({}, "", url);   // URL object keeps the hash
+        }
+
+        // Re-fire the browser's NATIVE fragment jump.  Its load-time attempt
+        // ran against an empty page, and the URL rewrite above (a replaceState
+        // during load) cancels the still-pending scroll.  Defer ONE frame so
+        // layout is computed -- doing it synchronously here lands nowhere
+        // (getBoundingClientRect is 0 before layout).  Then re-navigate to the
+        // fragment: location.hash already equals it, so blank it via
+        // replaceState (no scroll, no history entry) and reassign, an instant
+        // native jump identical to the in-article TOC's <a href="#section-…">.
+        if (hash && document.getElementById(hash.slice(1))) {
+          const id = hash.slice(1);
+          requestAnimationFrame(() => {
+            history.replaceState(null, "", location.pathname + location.search);
+            location.hash = id;
+          });
         }
       } catch (error) {
         renderError(`Could not load article JSON from \"${path}\". ${error.message}`);

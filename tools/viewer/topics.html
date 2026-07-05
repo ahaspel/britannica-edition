@@ -204,8 +204,10 @@
     const display = escapeHtml(art.display || art.target);
     const cls = art.emphasized ? ' class="emphasized"' : '';
     // A "§ Section" reference (Denmark § Literature) links to the article's
-    // section anchor, not the whole article.
-    const href = articleUrl(art.filename) + (art.anchor ? "#" + art.anchor : "");
+    // section anchor, not the whole article.  The article viewer stamps
+    // section anchors as id="section-<slug>" (see viewer.html), so the href
+    // must match that -- a bare "#<slug>" lands at the article top.
+    const href = articleUrl(art.filename) + (art.anchor ? "#section-" + art.anchor : "");
     return `<li${cls}><a href="${href}">${display}</a></li>`;
   }
 
