@@ -217,6 +217,12 @@ else is faithful rendering of broken source.  [[feedback_dont_flag_honesty]]
   current build; keep only what still reproduces.
 - **Viewer registration for `«XL»` / `«ANCHOR»`** (deferred from the LINK ARC) before any
   deploy.
+- **Relocate `_SPACER_NAMES` to `_spacer.py`** (clean version of the 2026-07-05
+  orphan-control-marker fix).  The set is the SPACER producer's own vocabulary but
+  currently lives in `_classifier.py`; the minimal fix has `_spacer` import it back
+  (works, no cycle).  Clean: move the set into `_spacer.py`, have the classifier
+  import it from there — the dependency then points classifier→producer, the natural
+  direction.  [[feedback_classifier_returns_only_label]]
 - **Fresh full rebuild + deploy** to ship the campaign.
 - **Resolve the readers-guide regeneration** (commit or discard).
 - A few pre-campaign infra items still worth re-triage (now in `status_history.md`):
