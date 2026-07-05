@@ -134,12 +134,6 @@
       position: relative;
     }
 
-    .body-text abbr {
-      text-decoration: none;
-      border-bottom: 1px dotted #8b7355;
-      cursor: help;
-    }
-
     @media (max-width: 900px) {
       .body-text {
         margin-right: 0;
@@ -260,9 +254,8 @@
     /* Math-system layout — flex with reserved label space so wide
        math can never overlap the (N) label.  The math-rows column
        claims the remaining space (flex:1 with min-width:0 so it can
-       shrink below its content's natural width) and clips overflow;
-       scaleDisplayMath() shrinks the math via zoom on top to make
-       the full formula visible at smaller size.  Earlier grid layout
+       shrink below its content's natural width) and clips overflow.
+       Earlier grid layout
        (`minmax(0,1fr) auto minmax(0,1fr)`) let the auto math column
        eat the 1fr label gutter when math was wider than the line. */
     .body-text .math-system {
@@ -2567,8 +2560,13 @@
       // stripped).  Done BEFORE the decoder so we strip the raw «…» markers,
       // not the HTML they would become.
       html = html.replace(/«SH:([^»]*)»(.*?)«\/SH»/gs, (_m, slug, content) => {
+        // `content` is ALREADY escaped — `html` was escapeHtml'd at renderParagraph's
+        // entry — so DON'T re-escape (cf. formatFootnoteText).  Re-escaping double-
+        // encodes a raw source `&`: "MSS., &c." → "&amp;c." in the body while the TOC
+        // (detectSections, which never re-escapes) stays correct — the here-but-not-
+        // there mismatch.  Strip markers, emit the already-escaped text as-is.
         const display = content.replace(/«\/?[A-Za-z]+(?:\[[^\]]*\])?»/g, "").trim();
-        return `<span class="shoulder-heading" id="section-${slug}">${escapeHtml(display)}</span>`;
+        return `<span class="shoulder-heading" id="section-${slug}">${display}</span>`;
       });
       // Everything else inline goes through the ONE shared decoder — VERSE, FN,
       // IMG, and the full invariant set (MIRROR, B/I/SC, SS/SR, sizes, BAR, DHR,
@@ -3061,9 +3059,6 @@
         const fnMatch = path.match(/([^/]+\.json)$/);
         if (fnMatch) article.filename = fnMatch[1];
         renderArticle(article);
-        // applyAbbreviations();  // Disabled: index abbreviations (Fr.=France)
-        // differ from article abbreviations (Fr.=French). Needs a
-        // context-aware or article-specific abbreviation list.
 
         // Update URL: production uses clean /article/{id}/{slug}, local uses ?article=
         // In both cases, preserve q / match params so search-result
@@ -3117,63 +3112,6 @@
     const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
     const DATA_BASE = IS_LOCAL ? "/data/derived/articles" : "/data/articles";
     const TOC_URL = IS_LOCAL ? "/data/derived/classified_toc.json" : "/data/classified_toc.json";
-
-    // ── Abbreviation tooltips ──────────────────────────────────
-    const ABBREV_URL = IS_LOCAL ? "/data/derived/abbreviations.json" : "/data/abbreviations.json";
-    let abbrevsLoaded = null;  // Promise<Map<string,string>>
-    function loadAbbreviations() {
-      if (abbrevsLoaded) return abbrevsLoaded;
-      abbrevsLoaded = fetch(ABBREV_URL)
-        .then(r => r.ok ? r.json() : {})
-        .then(obj => {
-          // Build regex: sort keys longest-first, escape for regex.
-          const keys = Object.keys(obj).sort((a, b) => b.length - a.length);
-          const escaped = keys.map(k => k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
-          // Match at word boundary or start of token, followed by
-          // non-alphanumeric (punctuation/space/end).
-          const pattern = new RegExp("(?<=\\s|^|>)(" + escaped.join("|") + ")(?=\\s|[,;:)\"<]|$)", "g");
-          return { map: obj, pattern };
-        })
-        .catch(() => null);
-      return abbrevsLoaded;
-    }
-
-    function applyAbbreviations() {
-      loadAbbreviations().then(abbr => {
-        if (!abbr) return;
-        const bodyEl = document.querySelector(".body-text");
-        if (!bodyEl) return;
-        // Walk text nodes only — don't touch tags or existing <abbr>.
-        const walker = document.createTreeWalker(bodyEl, NodeFilter.SHOW_TEXT);
-        const nodes = [];
-        while (walker.nextNode()) nodes.push(walker.currentNode);
-        for (const node of nodes) {
-          // Skip nodes inside <abbr>, <a>, <code>, <pre>
-          const parent = node.parentElement;
-          if (parent && /^(ABBR|A|CODE|PRE|SCRIPT)$/i.test(parent.tagName)) continue;
-          const text = node.textContent;
-          if (!abbr.pattern.test(text)) continue;
-          abbr.pattern.lastIndex = 0;
-          const frag = document.createDocumentFragment();
-          let lastIdx = 0;
-          let m;
-          while ((m = abbr.pattern.exec(text)) !== null) {
-            if (m.index > lastIdx) {
-              frag.appendChild(document.createTextNode(text.slice(lastIdx, m.index)));
-            }
-            const abbrEl = document.createElement("abbr");
-            abbrEl.title = abbr.map[m[1]];
-            abbrEl.textContent = m[1];
-            frag.appendChild(abbrEl);
-            lastIdx = m.index + m[0].length;
-          }
-          if (lastIdx < text.length) {
-            frag.appendChild(document.createTextNode(text.slice(lastIdx)));
-          }
-          node.parentNode.replaceChild(frag, node);
-        }
-      });
-    }
 
     // Reverse-index of classified_toc.json: filename → [{category, path}].
     // `path` is the full sub-tree trail (["Zoology","Systematic","Invertebrata"])
