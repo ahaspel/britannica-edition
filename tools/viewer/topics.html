@@ -63,19 +63,24 @@
     .subsection-l2 > h3 { margin: 12px 0 6px;
       border-bottom: 1px solid var(--border); padding-bottom: 3px; }
     .subsection-l3 > h3, details.sub-l3 > summary > .sub-name {
-      font-size: 0.95rem; font-variant: small-caps; letter-spacing: 0.04em;
+      font-size: 0.9rem; font-variant: small-caps; letter-spacing: 0.04em;
       color: var(--muted); font-weight: bold;
     }
     .subsection-l3 > h3 { margin: 10px 0 4px; }
     .subsection-l4 > h4, details.sub-l4 > summary > .sub-name {
-      font-size: 0.9rem; font-variant: small-caps; letter-spacing: 0.03em;
-      color: var(--muted); font-weight: normal; font-style: italic;
+      font-size: 0.9rem; font-variant: small-caps; letter-spacing: 0.04em;
+      color: var(--muted); font-weight: bold;
     }
     .subsection-l4 > h4 { margin: 8px 0 3px; }
     .subsection-l5 > h4, details.sub-l5 > summary > .sub-name {
-      font-size: 0.85rem; font-variant: small-caps; color: var(--muted);
-      font-style: italic;
+      font-size: 0.9rem; font-variant: small-caps; letter-spacing: 0.04em;
+      color: var(--muted); font-weight: bold;
     }
+    /* Level 2's body was the only one left un-indented, so its level-3
+       children sat flush with the level-2 headers and read as the same
+       level.  A plain indent (no rail -- level 2 stays a lightweight header,
+       level 3+ keep the boxed rails) steps the children clearly under it. */
+    details.sub-l2 > .sub-body { margin-left: 16px; }
     .subsection-l3, details.sub-l3 > .sub-body { margin-left: 16px;
       padding: 4px 12px 10px;
       border-left: 3px solid var(--border); background: rgba(123, 63, 0, 0.02); }
@@ -121,7 +126,7 @@
     .article-list .unresolved { color: var(--muted); cursor: default; }
     .article-list .emphasized a { font-weight: bold; }
     .notes { list-style: none; margin: 4px 0 8px; padding: 0; }
-    .note-link { font-style: normal; color: #2a5db0; text-decoration: none; }
+    .note-link { font-style: normal; color: var(--link); text-decoration: none; }
     .note-link:hover { text-decoration: underline; }
     .notes li { color: var(--muted); font-style: italic; font-size: 0.85rem;
       margin: 1px 0; }
@@ -235,7 +240,11 @@
         for (const lk of links) {
           if (lk.start < pos) continue;                 // drop an overlapping span
           out += escapeHtml(text.slice(pos, lk.start));
-          const disp = escapeHtml(text.slice(lk.start, lk.end));
+          // The source is inconsistent about a comma before the § section
+          // divider ("LITERATURE, § Hebrew" vs "RELIGION § Comparative"):
+          // drop it so every pointer reads "X § Y".
+          const disp = escapeHtml(
+            text.slice(lk.start, lk.end).replace(/,\s*(§+)/g, " $1"));
           const href = lk.anchor.startsWith("art:")
             ? articleUrl(lk.anchor.slice(4))            // a cross-ref to an ARTICLE
             : "#" + encodeURIComponent(lk.anchor);      // a cross-ref to a TOPIC NODE
