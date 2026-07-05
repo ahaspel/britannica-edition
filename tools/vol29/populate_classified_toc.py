@@ -186,6 +186,28 @@ def build_resolver():
 
     section_index = load_section_index()
 
+    # Articles like "RUSSIAN LITERATURE" keyed by last word -> [(prefix, fn, title)], so an
+    # "X § Literature" bucket ref can find a DEDICATED "{demonym} Literature" article.
+    tail_arts: dict[str, list] = {}
+    for e in article_index:
+        if e.get("article_type") != "article":
+            continue
+        parts = e["title"].split()
+        if len(parts) >= 2:
+            tail_arts.setdefault(_art_norm(parts[-1]), []).append(
+                (_art_norm(" ".join(parts[:-1])), e["filename"], e["title"]))
+    _sec_cache: dict[str, list] = {}
+
+    def _article_sections(fn: str) -> list:
+        if fn not in _sec_cache:
+            try:
+                d = json.loads((Path("data/derived/articles") / fn).read_text(encoding="utf-8"))
+                _sec_cache[fn] = [(s.get("title", ""), s.get("slug", ""))
+                                  for s in d.get("sections") or [] if isinstance(s, dict)]
+            except Exception:
+                _sec_cache[fn] = []
+        return _sec_cache[fn]
+
     def _lev_le(a: str, b: str, k: int) -> bool:
         if abs(len(a) - len(b)) > k:
             return False
@@ -272,9 +294,55 @@ def build_resolver():
                 return strip_index[cands[0]][0]
         return None
 
+    _SECT_RE = re.compile(r"^(.*?)[\s,(]*§+\s*(.+?)[\s).]*$")
+
+    def _resolve_sect(raw: str):
+        """`X § Y` -> a DEDICATED `{demonym} Y` article (Russia § Lit -> RUSSIAN
+        LITERATURE), else Y as a SECTION of X (Denmark § Lit -> Denmark#literature;
+        Sweden § Lit -> Sweden#swedish-literature).  None -> let the cascade fall back
+        to the bare country article (Poland, whose Lit section the scan has but the
+        transcript lacks)."""
+        m = _SECT_RE.match(raw)
+        if not m:
+            return None
+        x = m.group(1).strip().rstrip(",(").strip()
+        y = m.group(2).strip()
+        xn, yn = _art_norm(x), _art_norm(y)
+        if not (xn and yn):
+            return None
+        for pre, fn, title in tail_arts.get(yn, []):          # a dedicated article
+            if pre and (pre.startswith(xn) or xn.startswith(pre)
+                        or (len(pre) >= 4 and len(xn) >= 4 and pre[:4] == xn[:4])):
+                return {"target": title, "display": title, "filename": fn}
+        xm = title_lookup.get(xn) or _resolve_extra(x, None)  # else a section OF X
+        if xm:
+            xfn, xdisp = xm
+
+            def _score(t):
+                tn = _art_norm(re.sub(r"^[ivxlc]+\.\s*", "", t, flags=re.I))
+                if tn == yn:
+                    return (0, len(tn))
+                if tn.endswith(yn):
+                    return (1, len(tn))
+                if yn in tn:
+                    return (2, len(tn))
+                return (9, 0)
+            best = min(((_score(t), t, sl) for t, sl in _article_sections(xfn)
+                        if yn in _art_norm(t)), default=None, key=lambda z: z[0])
+            if best and best[0][0] < 9:
+                _, t, sl = best
+                tc = re.sub(r"^[ivxlc]+\.\s*", "", t, flags=re.I).strip("—. ")
+                return {"target": f"{xdisp}#{sl}", "display": f"{xdisp} — {tc}",
+                        "filename": xfn, "anchor": sl}
+        return None
+
     def resolve(raw_name: str, node_dom: str | None, ctx: set):
         """The full 10-step cascade -> article dict (with filename) or an
         unresolved dict (display/target only)."""
+        if "§" in raw_name:
+            sr = _resolve_sect(raw_name)
+            if sr:
+                return sr
         norm = _art_norm(raw_name)
         match = title_lookup.get(norm)
         if not match:
@@ -378,6 +446,142 @@ def _node_norms(nodes) -> set:
 # Words too generic to prove a leftover bucket *continues* the leaf above it.
 
 
+# ── Note pointers -> topic nodes (internal cross-refs, NOT articles) ──────────
+_NOTE_STOP = {"see", "for", "the", "a", "an", "also", "under", "article", "articles",
+              "and", "or", "not", "following", "in", "of", "on", "to", "but", "this",
+              "these", "below", "above", "list", "section", "sections"}
+_N_CATSECT = re.compile(r"([A-Z][A-Za-z]{2,})\s*,?\s*§+\s*([A-Z][a-zA-Z]+)")
+_N_BARESECT = re.compile(r"§+\s*([A-Z][a-zA-Z]+)")
+_N_TOKEN = re.compile(r"[A-Z][A-Za-z]{2,}(?:[ ,]+(?:and |or )?[A-Z][A-Za-z]{2,})*")
+_N_WORD = re.compile(r"[A-Z][A-Za-z]{2,}")
+
+
+def build_note_resolver(roots, article_resolve):
+    """A note's `See X` / `X § Y` points to a TOPIC NODE (a node in the TOC itself),
+    not an article.  Index every node by name -> its path (== the viewer's element id),
+    resolve each note's named/§ pointers disambiguated by the note's own category, with an
+    article fallback for `see the article X` and no match for prose.  -> resolve_note()."""
+    node_by_name: dict[str, list] = {}
+    cat_alias: dict[str, str] = {}
+
+    def _index(node, path, cat):
+        for ch in node.get("children", []):
+            p = path + [ch["name"]]
+            node_by_name.setdefault(_art_norm(ch["name"]), []).append((" > ".join(p), cat))
+            _index(ch, p, cat)
+    for r in roots:
+        node_by_name.setdefault(_art_norm(r["name"]), []).append((r["name"], r["name"]))
+        cat_alias[_art_norm(r["name"])] = r["name"]
+        for w in r["name"].split():
+            if len(w) >= 4:
+                cat_alias.setdefault(_art_norm(w), r["name"])
+        _index(r, [r["name"]], r["name"])
+    norms = sorted(node_by_name)
+
+    def _prefer(cands, cat):
+        if len(cands) == 1:
+            return cands[0][0]                       # unique name -> link even cross-category
+        same = [c for c in cands if c[1] == cat]
+        return same[0][0] if same else None          # ambiguous, no same-cat -> don't guess
+
+    def _lookup(n, cat):
+        if n in node_by_name:
+            return _prefer(node_by_name[n], cat)
+        if n in cat_alias:
+            return cat_alias[n]
+        v = _BT._NAME_VARIANTS.get(n.lower())
+        if v and _art_norm(v) in node_by_name:
+            return _prefer(node_by_name[_art_norm(v)], cat)
+        return None
+
+    def _node(t, cat):
+        n = _art_norm(t)
+        if len(n) < 3:
+            return None
+        return _lookup(n, cat)          # topic nodes ONLY -- no loose prefix, no article guess
+
+    def _sect(catword, sub, cat):
+        catname = cat_alias.get(_art_norm(catword)) or _node(catword, cat)
+        if isinstance(catname, str) and not catname.startswith("art:"):
+            v = _BT._NAME_VARIANTS.get(sub.lower())
+            for cand in [_art_norm(sub)] + ([_art_norm(v)] if v else []):
+                if len(cand) < 3:
+                    continue
+                i = bisect.bisect_left(norms, cand)
+                while i < len(norms) and norms[i].startswith(cand):
+                    for path, _c in node_by_name[norms[i]]:
+                        if path.startswith(catname):
+                            return path
+                    i += 1
+        a = article_resolve(sub, None, set())   # a § section that lives in an article (Palestine)
+        return ("art:" + a["filename"]) if a.get("filename") else None
+
+    def resolve_note(note, cat):
+        """-> [(start, end, anchor)] for the note's resolvable pointers; [] for prose."""
+        spans = []
+        for m in _N_CATSECT.finditer(note):                    # X § Y  (section of category X)
+            r = _sect(m.group(1), m.group(2), cat)
+            if r:
+                spans.append((m.start(), m.end(), r))
+        for m in _N_BARESECT.finditer(note):                   # bare § Y (of the note's category)
+            if any(s <= m.start() < e for s, e, _ in spans):
+                continue
+            r = _sect(cat, m.group(1), cat)
+            if r:
+                spans.append((m.start(), m.end(), r))
+        for am in re.finditer(r"\bthe\s+articles?\b", note, re.I):  # "see the article(s) X, Y"
+            run = re.match(r"\s*[A-Z][A-Za-z]+(?:[, ]+(?:and |or )?[A-Z][A-Za-z]+)*",
+                           note[am.end():])           # only the caps run RIGHT AFTER, not to ')'
+            if not run:
+                continue
+            for wm in _N_WORD.finditer(run.group(0)):
+                a = article_resolve(wm.group(0), None, set())      # -> the ARTICLE (the exception)
+                if a.get("filename"):
+                    spans.append((am.end() + wm.start(), am.end() + wm.end(),
+                                  "art:" + a["filename"]))
+        # the SUBJECT of a "For <subject> see …" clause is not a pointer -- exclude it
+        subj = [(m.start(1), m.end(1)) for m in re.finditer(r"\bfor\b(.*?)\bsee\b", note, re.I | re.S)]
+        taken = [(s, e) for s, e, _ in spans]
+        for m in _N_TOKEN.finditer(note):                      # plain named pointers -> nodes
+            parts = [(w.group(0), m.start() + w.start(), m.start() + w.end())
+                     for w in _N_WORD.finditer(m.group(0))
+                     if w.group(0).lower() not in _NOTE_STOP
+                     and not any(s <= m.start() + w.start() < e for s, e in taken)
+                     and not any(s <= m.start() + w.start() < e for s, e in subj)]
+            i = 0
+            while i < len(parts):
+                hit = None
+                for j in range(len(parts), i, -1):
+                    r = _node(" ".join(p[0] for p in parts[i:j]), cat)
+                    if r:
+                        hit = (parts[i][1], parts[j - 1][2], r, j)
+                        break
+                if hit:
+                    spans.append(hit[:3])
+                    i = hit[3]
+                else:
+                    i += 1
+        return sorted(set(spans))
+
+    return resolve_note
+
+
+def resolve_notes(node: dict, cat: str, resolve_note) -> None:
+    """Turn each plain-string note into {text, links:[{start,end,display,anchor}]} in place."""
+    if node.get("notes"):
+        out = []
+        for note in node["notes"]:
+            if not isinstance(note, str):
+                out.append(note)
+                continue
+            links = [{"start": s, "end": e, "display": note[s:e], "anchor": a}
+                     for s, e, a in resolve_note(note, cat)]
+            out.append({"text": note, "links": links})
+        node["notes"] = out
+    for ch in node.get("children", []):
+        resolve_notes(ch, cat, resolve_note)
+
+
 def resolve_tree(node: dict, cat: str, resolve) -> None:
     """Resolve every link already sitting on the tree, node by node, in place --
     walking the finished merge (there is no separate pour any more).  Unresolved
@@ -406,6 +610,7 @@ def main() -> None:
     resolve = build_resolver()
     print("Loading the completed index (complete_index)...")
     roots = {r["name"]: r for r in _C.index_tree()}
+    resolve_note = build_note_resolver(list(roots.values()), resolve)
 
     n_arts = n_res = n_leaves = 0
     out_cats = []
@@ -413,6 +618,7 @@ def main() -> None:
         root = roots.get(cat) or {"name": cat, "children": []}
         nodes = root.get("children", [])
         resolve_tree(root, cat, resolve)      # links already seated by the merge; resolve in place
+        resolve_notes(root, cat, resolve_note)   # note pointers -> topic-node anchors, in place
 
         # Per-leaf dedup: one copy of an article within a single leaf.  NOT per
         # category -- the source legitimately lists the same article in two sections

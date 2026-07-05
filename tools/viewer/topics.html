@@ -121,6 +121,8 @@
     .article-list .unresolved { color: var(--muted); cursor: default; }
     .article-list .emphasized a { font-weight: bold; }
     .notes { list-style: none; margin: 4px 0 8px; padding: 0; }
+    .note-link { font-style: normal; color: #2a5db0; text-decoration: none; }
+    .note-link:hover { text-decoration: underline; }
     .notes li { color: var(--muted); font-style: italic; font-size: 0.85rem;
       margin: 1px 0; }
     .footer { color: var(--muted); font-size: 0.85rem; margin-top: 20px;
@@ -223,7 +225,24 @@
   function renderNotes(node) {
     if (!node.notes || !node.notes.length) return "";
     return `<ul class="notes">` +
-      node.notes.map(n => `<li>${escapeHtml(n)}</li>`).join("") +
+      node.notes.map(n => {
+        if (typeof n === "string") return `<li>${escapeHtml(n)}</li>`;   // legacy plain note
+        const text = n.text || "";
+        const links = (n.links || []).slice().sort((a, b) => a.start - b.start);
+        let out = "", pos = 0;
+        for (const lk of links) {
+          if (lk.start < pos) continue;                 // drop an overlapping span
+          out += escapeHtml(text.slice(pos, lk.start));
+          const disp = escapeHtml(text.slice(lk.start, lk.end));
+          const href = lk.anchor.startsWith("art:")
+            ? articleUrl(lk.anchor.slice(4))            // a cross-ref to an ARTICLE
+            : "#" + encodeURIComponent(lk.anchor);      // a cross-ref to a TOPIC NODE
+          out += `<a href="${href}" class="note-link">${disp}</a>`;
+          pos = lk.end;
+        }
+        out += escapeHtml(text.slice(pos));
+        return `<li>${out}</li>`;
+      }).join("") +
       `</ul>`;
   }
 
