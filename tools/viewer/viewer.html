@@ -504,12 +504,18 @@
       border: none;
       padding: 1px 12px;
     }
+    /* An image carries NO layout of its own — its placement is its surrounding
+       context (a «CTR» block, line-breaks, the table cell), per markers.py: "an
+       image's layout is ... never a property of the image".  These are ONLY
+       responsive caps.  Do NOT re-add display:block / margin:auto here — that made
+       centering a property of the IMAGE, block-centering EVERY class-less-table
+       image and so breaking inline glyphs (ABBREVIATIONS' per-symbol dropped onto
+       its own centered line).  renderImg already centers align=center; the
+       surrounding context centers the rest. */
 .body-text table:not([class]):not([style*="float"]) img {
       max-height: none !important;
       max-width: 100% !important;
       height: auto;
-      display: block;
-      margin: 0 auto;
     }
     /* An image that SHARES its row with a text cell (the chess end-game boards:
        a position beside its solution) must hold its OWN width.  Left shrinkable
