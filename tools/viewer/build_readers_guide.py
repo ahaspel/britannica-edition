@@ -1082,6 +1082,8 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
       <div style="font-size: 0.9rem;">
         <a href="/ancillary.html">Ancillary</a>
         &nbsp;&middot;&nbsp;
+        <a href="/download.html">Download</a>
+        &nbsp;&middot;&nbsp;
         <a href="/index.html">Articles</a>
       </div>
     </div>
@@ -1176,6 +1178,8 @@ PART_TEMPLATE = """<!DOCTYPE html>
       <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/readers-guide.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
       <div style="font-size: 0.9rem;">
         <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/download.html">Download</a>
         &nbsp;&middot;&nbsp;
         <a href="/index.html">Articles</a>
       </div>
@@ -1274,6 +1278,8 @@ INDEX_TEMPLATE = """<!DOCTYPE html>
       <h1 style="margin: 0; font-size: 1.3rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="32" height="32" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.06em;">Reader's Guide</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.02em;">&mdash; 11th Edition</span></a></h1>
       <div style="font-size: 0.9rem;">
         <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/download.html">Download</a>
         &nbsp;&middot;&nbsp;
         <a href="/index.html">Articles</a>
       </div>

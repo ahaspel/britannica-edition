@@ -300,6 +300,7 @@ if [ -z "$NO_DEPLOY" ]; then
   aws s3 cp tools/viewer/ancillary-index-preface.html s3://britannica11.org/ancillary-index-preface.html
   aws s3 cp tools/viewer/ancillary-abbreviations.html s3://britannica11.org/ancillary-abbreviations.html
   aws s3 cp tools/viewer/about.html s3://britannica11.org/about.html
+  aws s3 cp tools/viewer/download.html s3://britannica11.org/download.html
 
   echo "  Uploading Reader's Guide (72 pages + 1 image)..."
   for f in tools/viewer/readers-guide.html \

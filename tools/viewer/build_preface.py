@@ -575,6 +575,8 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
           <a href="/topics.html">Topics</a>
           &nbsp;&middot;&nbsp;
           <a href="/ancillary.html">Ancillary</a>
+          &nbsp;&middot;&nbsp;
+          <a href="/download.html">Download</a>
         </div>
       </div>
       <div class="meta">By <a href="/contributors.html?q=Hugh+Chisholm" style="color: var(--muted);">Hugh Chisholm</a> &middot; London, December 10, 1910 &middot; <a href="scans.html?vol=1&start=17&end=30&label=Editorial+Preface&back=ancillary.html" style="color: var(--muted);">View source scans &rarr;</a></div>

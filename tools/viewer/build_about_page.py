@@ -362,6 +362,8 @@ PAGE_TEMPLATE = """\
         <a href="/topics.html">Topics</a>
         &nbsp;&middot;&nbsp;
         <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/download.html">Download</a>
       </div>
     </div>
   </div>
