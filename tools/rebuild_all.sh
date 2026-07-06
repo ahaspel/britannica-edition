@@ -195,15 +195,17 @@ echo "=== Phase 6c: Detecting fm first-content pages [$(elapsed)] ==="
 uv run python tools/diagnostics/detect_fm_blank_pages.py
 
 # --- Phase 6d: Rebuild generated site pages ---
-# All four ancillary pages auto-rebuild from source: about.html
-# (editor's intro from docs/about.txt — user-editable, changes most
-# often), and the three frozen-content pages preface.html /
+# Generated site pages auto-rebuild from source: about.html and
+# download.html (editor-authored prose from docs/about.txt and
+# docs/download.txt — user-editable, changes most often), and the
+# three frozen-content pages preface.html /
 # ancillary-prefatory-note.html / ancillary-index-preface.html /
 # ancillary-abbreviations.html (1910 print transcriptions via
 # corrections.json + raw wikitext / vol29_ancillary.json).
 echo
 echo "=== Phase 6d: Rebuilding generated site pages [$(elapsed)] ==="
 uv run python tools/viewer/build_about_page.py
+uv run python tools/viewer/build_download_page.py
 uv run python tools/viewer/build_ancillary_pages.py
 uv run python tools/viewer/build_preface.py
 

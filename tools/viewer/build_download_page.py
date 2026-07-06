@@ -1,9 +1,30 @@
-<!DOCTYPE html>
+"""Build download.html from docs/download.txt (rebuilt in Phase 6d).
+
+Markup, deliberately minimal:
+  first line          the page title (shown in the header)
+  blank line          paragraph break
+  ---Shoulder.---     margin heading (shoulder-heading), auto-anchored by slug
+  *italic*            <em>
+  [text](url)         a link — explicit, since this page's links aren't articles
+  first letter        drop-cap on paragraph one
+
+No article auto-linking or contributor resolution (cf. build_about_page.py) — the
+download page's links (the archive, Hugging Face, the source note) are all explicit.
+"""
+from __future__ import annotations
+
+import re
+from pathlib import Path
+
+SRC = Path("docs/download.txt")
+OUT = Path("tools/viewer/download.html")
+
+SHELL = """<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Encyclop&aelig;dia Britannica, 11th Edition &mdash; Download</title>
+  <title>Encyclop&aelig;dia Britannica, 11th Edition &mdash; %%TITLE%%</title>
   <style>
     :root {
       --bg: #f5f1eb;
@@ -89,7 +110,7 @@
 <div class="page">
   <div class="card">
     <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">Download</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">%%TITLE%%</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
       <div style="font-size: 0.9rem;">
         <a href="/index.html">Articles</a>
         &nbsp;&middot;&nbsp;
@@ -104,13 +125,59 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <div class="body">
-<p><span class="drop-cap">B</span>eyond the website, this edition is published in three forms, described below. The corpus itself is free; the electronic book and the programmatic interface are offered for a modest fee.</p>
-<p><span class="shoulder-heading" id="the-data">The data.</span> The complete text is available as a <a href="/download/eb1911-corpus.tar.gz">bulk download</a> or on <a href="https://huggingface.co/datasets/britannica11/eb1911">Hugging Face</a>, free of charge, under the terms of its <a href="ancillary-prefatory-note.html">Wikisource source</a>. Each of the 37,000 articles is one record—its text as Markdown, with its metadata, sections, and cross-references. The download also carries three indexes that no other edition of the 1911 Britannica provides, because they do not exist in the source and had to be rebuilt: the <em>cross-reference graph</em>, joining every article to those it names; the <em>subject index</em>, classifying all 37,000 articles into their topics; and the <em>authorship graph</em>, binding each article to the scholars who wrote it, their initials resolved to names and credentials. For most purposes these indexes are the point—the plain text can be had anywhere.</p>
-<p><span class="shoulder-heading" id="the-book">The book.</span> The whole encyclopedia is available as a single <a href="#">electronic book</a>, for reading on any e-reader: faithful to the original, fully cross-linked, the topic index its table of contents.</p>
-<p><span class="shoulder-heading" id="the-interface">The interface.</span> For those who would rather query the corpus than download it, a <a href="#">programmatic interface</a>—full-text search, article retrieval, and traversal of the three indexes above—is in preparation.</p>
+%%BODY%%
     </div>
   </div>
 </div>
 <script data-goatcounter="https://britannica11.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
+"""
+
+
+def _slug(text: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
+
+
+def _render(source: str) -> tuple[str, str]:
+    lines = source.strip().split("\n")
+    title = lines[0].strip() if lines else "Download"
+    parts: list[str] = []
+    para: list[str] = []
+    first = True
+
+    def flush() -> None:
+        nonlocal first
+        if not para:
+            return
+        raw = " ".join(para)
+        para.clear()
+        raw = re.sub(r"-{3}(.+?)-{3}",
+                     lambda m: (f'<span class="shoulder-heading" '
+                                f'id="{_slug(m.group(1).strip())}">'
+                                f'{m.group(1).strip()}</span>'), raw)
+        raw = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', raw)
+        raw = re.sub(r"\*([^*]+)\*", r"<em>\1</em>", raw)
+        if first:
+            raw = re.sub(r"^(\w)", r'<span class="drop-cap">\1</span>', raw.strip())
+            first = False
+        parts.append(f"<p>{raw.strip()}</p>")
+
+    for line in lines[1:]:
+        if line.strip():
+            para.append(line.strip())
+        else:
+            flush()
+    flush()
+    return title, "\n".join(parts)
+
+
+def main() -> None:
+    title, body = _render(SRC.read_text(encoding="utf-8"))
+    OUT.write_text(SHELL.replace("%%TITLE%%", title).replace("%%BODY%%", body),
+                   encoding="utf-8")
+    print(f"Wrote {OUT}")
+
+
+if __name__ == "__main__":
+    main()
