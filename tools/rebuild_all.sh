@@ -282,6 +282,12 @@ if [ -z "$NO_DEPLOY" ]; then
   aws s3 cp data/derived/fm_first_content.json s3://britannica11.org/data/fm_first_content.json
   aws s3 cp data/derived/volumes.json s3://britannica11.org/data/volumes.json
 
+  echo "  Uploading download bundle (agent JSONL + graphs)..."
+  aws s3 cp data/derived/eb1911-corpus.tar.gz s3://britannica11.org/download/eb1911-corpus.tar.gz
+  aws s3 cp data/derived/eb1911-corpus.tar.gz.sha256 s3://britannica11.org/download/eb1911-corpus.tar.gz.sha256
+  aws s3 cp data/derived/download/manifest.json s3://britannica11.org/download/manifest.json
+  aws s3 cp data/derived/download/README.md s3://britannica11.org/download/README.md
+
   echo "  Uploading viewer..."
   aws s3 cp tools/viewer/viewer.html s3://britannica11.org/viewer.html
   aws s3 cp tools/viewer/index.html s3://britannica11.org/index.html
