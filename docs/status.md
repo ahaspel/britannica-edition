@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-07-04.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-07-06.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,13 +46,49 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-06-13)
+## CURRENT STATE (2026-07-06)
 
 The recursive architecture is in place corpus-wide; this session closed out the
 remaining scaffolding (the catch-all preprocess stage, the title double-decider, the
 viewer's layout-guessing) and drained several whole leak classes.  **Three principles**
 above still govern; every change below is one of *recurse to the end* / *carry the
 source* / *render what we carry*.
+
+### Session 2026-07-06 — SHIPPED to production · distribution products live · contributors closed
+
+**Full rebuild + deploy (66 min, exit 0) — first production deploy since 2026-05-17.**
+One consistent `--skip-import` re-export ships the entire recursive-architecture campaign,
+the LINK ARC, the banked MATH `display` / `«BR»` producer work, the vol-29 classified-TOC
+rebuild, and this session's spacer / table-cell / shoulder-heading producers.  Phase 9
+preflight clean (all hard refs reachable); search re-indexed across 37,226 articles.
+**Rule banked ([[feedback_never_partial_rebuild]]):** never a partial rebuild/deploy — I
+nearly pushed a viewer-only deploy against a stale corpus and the user stopped it; the
+full rebuild also removes the "where did my change land?" tracking burden entirely.
+Corollary banked ([[feedback_tune_dont_fork]]): a shared job = one owning function tuned
+with a parameter, never two divergent copies.
+
+**Distribution products (the HN asks: download · API · EPUB) — core audience = agent-feeders.**
+Shipped the **free download**: `articles.jsonl` (Markdown records) + `xref_edges.jsonl` +
+`topics.json` + `contributors.json`.  The three knowledge graphs are the moat —
+reconstructed from the edition + vol-29 index, not extractable from Wikisource.  Live at
+`s3://britannica11.org/download/eb1911-corpus.tar.gz` (self-describing: manifest +
+checksums + schema + validation) **and on Hugging Face**
+(huggingface.co/datasets/britannica11/eb1911, CC-BY-SA 4.0).  New: `body_to_markdown`
+(`export/markdown.py`, marker→Markdown sibling of `markers_to_text`), `export/download.py`
+(assembler), Phase 6h, `tools/publish_hf.py`.  Download page generated from
+`docs/download.txt` → `build_download_page.py` (about.txt pattern).  Model: **free data,
+paid EPUB + API** (both in preparation; commerce layer still to build).  See the
+Distribution section below.
+
+**Contributors closed — 41 → 0.**  The "41 authorless contributors" were index-attributable
+all along: phase 3b2 (vol-29 article linker, which runs *after* the 3b front-matter
+fallback) mops up exactly the residue.  Confirmed at the artifact level — both
+`articles/contributors.json` and `download/contributors.json` carry all **1507**.  The
+investigation surfaced the real residue: three initials-matchers doing one job with
+divergent normalizers (`_normalize_initials` rich · `_ws_normalize_initials` whitespace-
+only · raw `.strip()`); the roster is *stored* folded, so the weaker two can only miss.
+Two stragglers left (`W. AY.` Wilfrid Airy, `T. G. BR.`).  Fix = collapse to the one
+normalizer; queued with the div-gate batch (below).
 
 ### Session 2026-06-14 — figures render block · MATH display carry · dead-relic deletion
 
@@ -150,17 +186,13 @@ next deploy.  Full notes in `status_history.md`.  [[project_wikilink_backlog]]
 ### Build & deploy state
 
 - **Suite:** 378 green (last run 2026-06-13).
-- **Last *deployed* rebuild:** 2026-05-17 (Phase A — see `status_history.md`).  Many
-  local `--no-deploy` rebuilds since; **the campaign output has not shipped** — a fresh
-  full rebuild + deploy is owed to put all of the above (and the LINK ARC) into
-  production.
-- **Uncommitted working tree:**
-  - *Producer (banked 2026-06-14, awaiting a rebuild to land):* the `«BR»` inline-image fix
-    (`_walker.py`), the MATH `display` carry (`_leaf.py`/`__init__.py`/
-    `annotate_math_markers.py`), the dead-relic deletion (`_walker.py` + the `_tables.py`
-    stale-comment trim), and 5 rebaselined transform snapshots.  Suite 378 green.
-  - 22 regenerated `tools/viewer/readers-guide-*.html` — article-ID sequence-suffix shifts
-    only (e.g. `26-1031-s3`→`s4`), a rebuild byproduct.  Decision pending: bank or discard.
+- **Last *deployed* rebuild: 2026-07-06** — full `--skip-import` rebuild + deploy, 66 min,
+  exit 0, preflight clean.  **The campaign is now in production**, shipped as one consistent
+  re-export: recursive architecture + LINK ARC + MATH/`«BR»` producer work + vol-29
+  classified-TOC + the 2026-07-06 spacer/table-cell/shoulder-heading producers + the
+  download bundle.  (Prior deployed rebuild: 2026-05-17.)
+- **Working tree:** clean — all banked.  The 2026-06-14 producer work and the readers-guide
+  regeneration that were "awaiting a rebuild to land" have landed.
 
 ### Leak audit (re-audited 2026-06-14, `tools/diagnostics/leak_audit.py`, full corpus)
 
@@ -191,6 +223,22 @@ else is faithful rendering of broken source.  [[feedback_dont_flag_honesty]]
 
 ### Open frontier / next
 
+**Active queue (2026-07-06), in order:**
+- **nowrap/`{{left}}` + `html_tag` div gate** — contained producer/classifier recognition
+  gap: `{{nowrap}}`/`{{left}}` cell templates and span/div `html_tag` leaks.  Fix the
+  recognition gate upstream; changes export → rides a rebuild.  **Batch the contributor
+  normalizer collapse into this** (one canonical `_normalize_initials`; delete
+  `_ws_normalize_initials` + the raw-`.strip()` front-matter lookup; recovers the `W. AY.`/
+  `T. G. BR.` stragglers — [[feedback_tune_dont_fork]]).
+- **The `\n\n` viewer restructuring** — the invasive one (touches every article's render):
+  the viewer splits body on `\n\n` then re-merges with two heuristics (continuation-merge at
+  ~2958 = the viewer fixing an OCR *source error*, a flagged no-no; SH-absorb at ~2976).
+  Root = producer paragraph-delimiting; the cure is producer-owned `«P»` boundaries + a
+  mechanical viewer split, *deleting* the heuristics.  **Trace why the producer emits those
+  `\n\n` seams before deleting anything**; treat with the snapshot/audit net (protect the
+  ~36k working mass).  See [[feedback_viewer_mechanical]], [[feedback_viewer_not_source_errors]].
+
+**Standing frontier (pre-2026-07-06 campaign):**
 - **THE VIEWER campaign — make it mechanical; "get out of the way and let the markup
   do its job" (user).**  Plan: [`docs/plan_viewer_mechanical.md`](plan_viewer_mechanical.md).
   **WS1 (headings/sections/TOC) ✅ DONE 2026-06-14** — recognition moved to
@@ -217,8 +265,9 @@ else is faithful rendering of broken source.  [[feedback_dont_flag_honesty]]
   current build; keep only what still reproduces.
 - **Viewer registration for `«XL»` / `«ANCHOR»`** (deferred from the LINK ARC) before any
   deploy.
-- **Fresh full rebuild + deploy** to ship the campaign.
-- **Resolve the readers-guide regeneration** (commit or discard).
+- **Fresh full rebuild + deploy** — ✅ **DONE 2026-07-06** (see Session 2026-07-06 /
+  Build & deploy state).
+- **Resolve the readers-guide regeneration** — ✅ shipped in the 2026-07-06 rebuild.
 - A few pre-campaign infra items still worth re-triage (now in `status_history.md`):
   viewer-deploy `aws s3 sync` instead of per-file enumeration, shared viewer page shell,
   genuinely-fast `rebuild_volume`.
@@ -314,10 +363,11 @@ math measurement).  pytest (378 tests).
 **4c. Annotate math markers from refreshed cache.**
 5. Export front matter.
 6b. Parse classified TOC; 6b2. apply cached disambiguations; 6c. detect fm
-   first-content pages; 6d. rebuild generated site pages; 6e. build Reader's
-   Guide.
-7. Deploy (S3 sync articles + images + scans + JSON + viewer; CloudFront
-   invalidate; index search on EC2).
+   first-content pages; 6d. rebuild generated site pages (incl. about/download
+   from `docs/*.txt`); 6e. build Reader's Guide; 6h. build the download bundle
+   (JSONL + 3 graphs).
+7. Deploy (S3 sync articles + images + scans + JSON + viewer + download bundle;
+   CloudFront invalidate; index search on EC2).
 8. Quality report.
 9. Deploy preflight (check_deploy_refs.py).
 
@@ -379,6 +429,35 @@ math measurement).  pytest (378 tests).
   (`ec2-44-222-119-72.compute-1.amazonaws.com`), port 7700.
 - **Raw wikitext** backed up to `s3://britannica11.org/raw/` (28 zips, 139 MB).
 - **IA page scans** — 29 volumes (~30 GB), `data/raw/ia_scans/`.
+
+---
+
+## Distribution (download · API · EPUB)
+
+Three deliverables from the HN launch; core audience = agent-feeders.  Model: **free data,
+paid book + interface.**
+
+- **Download (free, LIVE 2026-07-06).**  `s3://britannica11.org/download/eb1911-corpus.tar.gz`
+  and **huggingface.co/datasets/britannica11/eb1911** (CC-BY-SA 4.0, matching Wikisource).
+  Contents: `articles.jsonl` (one record/article — Markdown text + metadata + sections +
+  denormalized categories/xrefs/contributors), `xref_edges.jsonl` (cross-reference graph),
+  `topics.json` (vol-29 subject taxonomy), `contributors.json` (authorship roster), plus
+  `manifest.json` (counts + SHA-256), `schema.json`, `LICENSE`, `README.md`.  **The three
+  graphs are the moat** — reconstructed from the edition + printed vol-29 index + contributor
+  tables, not extractable from Wikisource.  Images carried as *references* (`file`), not
+  binaries, to stay light for text pipelines.  Built by `src/britannica/export/download.py`
+  (+ `body_to_markdown` in `export/markdown.py`), rebuild **Phase 6h**, uploaded in Phase 7;
+  published to HF by `tools/publish_hf.py`.  Page authored in `docs/download.txt` →
+  `tools/viewer/build_download_page.py` → `download.html` (the `about.txt` pattern).
+  Manifest counts (2026-07-06): 37,226 articles · 32,730 xref edges · 519 topic nodes ·
+  1,507 contributors.
+- **EPUB (paid, in prep).**  The whole encyclopedia as a single e-book; reuses the marker
+  decoder against an HTML target, topic index as its TOC.  Pricing plan: ~$20 direct /
+  ~$55 on Amazon (KDP 35% royalty tier above $9.99; Amazon = discovery channel, direct =
+  margin channel).
+- **API (paid, in prep).**  Full-text search + article retrieval + traversal of the three
+  graphs.
+- **Commerce layer** (checkout for the EPUB, API keys + metering + billing) — still to build.
 
 ---
 
