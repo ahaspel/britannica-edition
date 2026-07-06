@@ -214,6 +214,17 @@ echo
 echo "=== Phase 6e: Building Reader's Guide [$(elapsed)] ==="
 uv run python tools/viewer/build_readers_guide.py all > /dev/null
 
+# --- Phase 6h: Build the public download bundle (agent JSONL + 3 graphs) ---
+# The corpus and its three knowledge graphs re-rendered for download:
+# articles.jsonl (Markdown records), xref_edges.jsonl (reference graph),
+# topics.json (subject taxonomy), contributors.json (authorship roster).
+# Pure REASSEMBLY of already-derived data (article JSONs + classified_toc) — a
+# few minutes, no DB, no recompute.  MUST run after Phase 6b2 so it reads the
+# DISAMBIGUATED classified_toc.json (ABEL→right Abel, Zürich town vs canton).
+echo
+echo "=== Phase 6h: Building download bundle [$(elapsed)] ==="
+uv run python -m britannica.export.download
+
 # --- Phase 6f: Pre-deploy quality report (visibility only) ---
 # Runs the report before deploy so we can see the numbers in the log,
 # but does NOT block the deploy — the site is currently broken, so
