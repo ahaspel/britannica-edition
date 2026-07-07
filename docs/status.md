@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-07-06.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-07-07.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,13 +46,53 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-07-06)
+## CURRENT STATE (2026-07-07)
 
 The recursive architecture is in place corpus-wide; this session closed out the
 remaining scaffolding (the catch-all preprocess stage, the title double-decider, the
 viewer's layout-guessing) and drained several whole leak classes.  **Three principles**
 above still govern; every change below is one of *recurse to the end* / *carry the
 source* / *render what we carry*.
+
+### Session 2026-07-07 — {{=}} leak closed · tooltips carry-unless-furniture · normalizer collapse · EPUB arc mapped
+
+**Shipped (full rebuild + deploy, 66:25, exit 0, preflight clean).**  The div-gate (html_tag=92,
+the top quality leak) turned out to be the MediaWiki `{{=}}` equals-escape, NOT `{{nowrap}}`:
+`<span style{{=}}"…" title{{=}}"…">` leaked as raw text because the three opener regexes key on a
+literal `=`.  Fix = one shared `_ATTR_EQ` (`=` OR `{{=}}`) fed to `_SPAN_TITLE_OPEN_RE` /
+`_STYLED_WRAPPER_RE` / `_OPENER_HINT_RE`; classifier + producers reuse those regexes, so one edit
+fixed the whole chain.  Content `{{=}}` (~1130, math) stays SPACER's post-walk decode — a
+context-sensitive decode belongs to the producer that owns the opener context
+([[feedback_context_sensitive_is_producer]]); `process_html_style` decodes `{{=}}` in its own
+attrs for style-carry.  Live: **0 `style{{=}}` leaks, 0 amended-from leaks** (was ~80 articles).
+
+**Tooltips: carry-unless-furniture.**  `process_span_title` flipped from a Greek/Hebrew
+content-proxy to a furniture-title test (`_FURNITURE_TITLE_RE`).  The proxy binned 343
+translations + ~100 retroactive death-years along with "amended from" furniture; now every title
+gloss carries except transcription furniture — **11,981 tooltips live on hover**
+([[feedback_when_in_doubt_carry]]).  Death years render as the faithful `(1838–)` with the year on
+hover (tooltip = text unchanged + obviously anachronistic = no fidelity cost, user's call).
+
+**Contributor normalizer collapse — stragglers recovered.**  Unified the three initials-matchers to
+the one rich `_normalize_initials`; deleted `_ws_normalize_initials` + the raw-field front-matter
+lookup.  Confirmed at the rebuild: `contributors not in DB: 2 → 0` (`W. AY.` Wilfrid Airy + `T. G.
+BR.` now fold and match).  Roster 1507 ([[feedback_tune_dont_fork]]).
+
+**Dead code + tests.**  Killed `_TRANSLIT_CONTENT_RE` (dead after the flip) + three false
+`strip_attributions` comments (a deleted function describing a superseded footer design —
+[[feedback_dead_is_wrong]]).  18 transform snapshots rebaselined the *correct* way
+(`_clean_and_heal` on the frozen input, fixtures untouched — NOT `capture`, which drifts input +
+double-mangles BRACHIOPODA's quote-run).  Two stale unit tests updated to the current design
+(unknown template → `DOUBLE_BRACE_LEAK`, not raise; fuzzy exact-skip was a non-invariant).
+**Suite 331 green.**
+
+**NEXT ARC mapped: render-to-Python / EPUB** ([[project_render_to_python]]).  EPUB is easier than the
+API (static artifact vs perpetual service).  It forces marker→rich-HTML rendering into Python: ONE
+parser + per-target emitters (site-HTML / EPUB-XHTML / MD / text), viewer → thin interactive shell.
+Viewer audit: **~49% of the ~2,291 JS lines port mechanically**, ~7% (`\n\n` heuristics) dies,
+math→MathML is the one genuinely-new bit, and tables decompose into recursive markers (closing the
+"quasi-recursive" hole: today recurses cell content but flattens structure to HTML + re-parses via
+DOMParser).  First move: the verifiable Python render of the current viewer output (corpus diff).
 
 ### Session 2026-07-06 — SHIPPED to production · distribution products live · contributors closed
 
@@ -185,14 +225,12 @@ next deploy.  Full notes in `status_history.md`.  [[project_wikilink_backlog]]
 
 ### Build & deploy state
 
-- **Suite:** 378 green (last run 2026-06-13).
-- **Last *deployed* rebuild: 2026-07-06** — full `--skip-import` rebuild + deploy, 66 min,
-  exit 0, preflight clean.  **The campaign is now in production**, shipped as one consistent
-  re-export: recursive architecture + LINK ARC + MATH/`«BR»` producer work + vol-29
-  classified-TOC + the 2026-07-06 spacer/table-cell/shoulder-heading producers + the
-  download bundle.  (Prior deployed rebuild: 2026-05-17.)
-- **Working tree:** clean — all banked.  The 2026-06-14 producer work and the readers-guide
-  regeneration that were "awaiting a rebuild to land" have landed.
+- **Suite:** 331 green (2026-07-07).
+- **Last *deployed* rebuild: 2026-07-07** — full `--skip-import` rebuild + deploy, 66:25,
+  exit 0, preflight clean.  Ships the `{{=}}` opener-recognition, carry-unless-furniture
+  tooltips, `process_html_style` style-decode, and the contributor normalizer collapse
+  (`not in DB` 2→0).  (Prior deploys: 2026-07-06 campaign + distribution; 2026-05-17 before.)
+- **Working tree:** clean — all banked (`e5695f2` batch + `e288377` test fixes).
 
 ### Leak audit (re-audited 2026-06-14, `tools/diagnostics/leak_audit.py`, full corpus)
 
@@ -223,20 +261,19 @@ else is faithful rendering of broken source.  [[feedback_dont_flag_honesty]]
 
 ### Open frontier / next
 
-**Active queue (2026-07-06), in order:**
-- **nowrap/`{{left}}` + `html_tag` div gate** — contained producer/classifier recognition
-  gap: `{{nowrap}}`/`{{left}}` cell templates and span/div `html_tag` leaks.  Fix the
-  recognition gate upstream; changes export → rides a rebuild.  **Batch the contributor
-  normalizer collapse into this** (one canonical `_normalize_initials`; delete
-  `_ws_normalize_initials` + the raw-`.strip()` front-matter lookup; recovers the `W. AY.`/
-  `T. G. BR.` stragglers — [[feedback_tune_dont_fork]]).
-- **The `\n\n` viewer restructuring** — the invasive one (touches every article's render):
-  the viewer splits body on `\n\n` then re-merges with two heuristics (continuation-merge at
-  ~2958 = the viewer fixing an OCR *source error*, a flagged no-no; SH-absorb at ~2976).
-  Root = producer paragraph-delimiting; the cure is producer-owned `«P»` boundaries + a
-  mechanical viewer split, *deleting* the heuristics.  **Trace why the producer emits those
-  `\n\n` seams before deleting anything**; treat with the snapshot/audit net (protect the
-  ~36k working mass).  See [[feedback_viewer_mechanical]], [[feedback_viewer_not_source_errors]].
+**Active queue (2026-07-07):**
+- **`{{=}}` div gate · carry-unless-furniture tooltips · contributor normalizer collapse** —
+  ✅ **DONE, shipped 2026-07-07** (Session 2026-07-07).  The div gate was the `{{=}}` escape,
+  not `{{nowrap}}`; the normalizer collapse recovered the `W. AY.`/`T. G. BR.` stragglers.
+- **NEXT ARC → render-to-Python / EPUB** ([[project_render_to_python]]) — the primary direction.
+  Move marker→rich-HTML rendering into Python (ONE parser + per-target emitters: site-HTML /
+  EPUB-XHTML / MD / text); the viewer becomes a thin interactive shell.  First move: the
+  verifiable Python render of the current viewer output (corpus diff, UNEXPECTED=0).  This arc
+  **subsumes** several standing items below — it *is* the viewer-mechanical campaign (collapse
+  the per-context decoders into one), it *deletes* the `\n\n` paragraph heuristics (producer owns
+  `«P»`; continuation-merge ~2958 + SH-absorb ~2976 go), and it forces the table decision
+  (recursive markers vs raw-HTML+lxml — closing the "quasi-recursive" hole).  math→MathML is the
+  one genuinely-new piece.
 
 **Standing frontier (pre-2026-07-06 campaign):**
 - **THE VIEWER campaign — make it mechanical; "get out of the way and let the markup
