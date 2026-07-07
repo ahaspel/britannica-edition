@@ -8,12 +8,18 @@
 // own verification (Phase 2 / the shell).  The only stubs are the interactive/network
 // layer we are NOT porting: fetch, katex, article-urls.js's BritannicaUrls, search.
 //
+// The golden is generated from FROZEN input (tests/snapshots/render/<stem>.input.json,
+// a copy of the export) — never the live export — so it stays paired to a fixed input:
+// a golden diff means the renderer changed, not that the export drifted (the
+// transform-snapshot rule).  --freeze (re)populates the frozen inputs from the export.
+//
 // Usage (from repo root):
-//   node tools/render/reference.js --seeds             # the transform-snapshot seed set
-//   node tools/render/reference.js <stem> [<stem>…]    # specific article stems
+//   node tools/render/reference.js --freeze [<stem>…]  # copy export JSON -> frozen .input.json
+//   node tools/render/reference.js --seeds             # render the seed set from frozen input
+//   node tools/render/reference.js <stem> [<stem>…]    # render specific frozen stems
 //   node tools/render/reference.js --check [<stem>]    # reused-window vs fresh-window equality
 //
-// Writes tests/snapshots/render/<stem>.html.
+// Writes tests/snapshots/render/<stem>.input.json (--freeze) and <stem>.html (render).
 
 const fs = require('fs');
 const path = require('path');
@@ -36,13 +42,24 @@ const SEEDS = [
 ];
 
 function render(win, stem) {
-  const json = JSON.parse(fs.readFileSync(path.join(EXPORT, stem + '.json'), 'utf-8'));
+  // Frozen input — paired with the golden, immune to export drift (see header).
+  const json = JSON.parse(fs.readFileSync(path.join(OUT, stem + '.input.json'), 'utf-8'));
   win.renderArticle(json);
   return win.document.getElementById('app').innerHTML;
 }
 
 function main() {
   const args = process.argv.slice(2);
+
+  if (args[0] === '--freeze') {
+    const stems = args.length > 1 ? args.slice(1) : SEEDS;
+    fs.mkdirSync(OUT, { recursive: true });
+    for (const stem of stems) {
+      fs.copyFileSync(path.join(EXPORT, stem + '.json'), path.join(OUT, stem + '.input.json'));
+    }
+    console.log(`froze ${stems.length} seed input(s) -> ${path.relative(REPO, OUT)}/<stem>.input.json`);
+    return;
+  }
 
   if (args[0] === '--check') {
     const stem = args[1] || '18-0684-s2-MOLECULE';   // footnote-heavy: exposes counter carry
