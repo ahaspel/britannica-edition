@@ -13,14 +13,10 @@ dependencies = [
   "requests>=2.33.0",
   "mwparserfromhell>=0.7.2",
   "wikitextparser>=0.56.4",
-]
-
-[project.optional-dependencies]
-# Dev-only.  html5lib is the HTML5-spec (parse5-equivalent) normalizer the render
-# port's verify harness uses to compare Python output against the jsdom golden on
-# equal footing (browser tree-construction: <p> auto-close, nesting, entities).
-# NOT a product runtime dep — promote it only if EPUB emit needs runtime normalization.
-dev = [
+  # HTML5-spec parser/serializer (parse5-equivalent).  The render port parses the producer's
+  # HTML-table wire format to recurse cells, and normalizes rendered output to browser-
+  # equivalent HTML (golden diff + EPUB XHTML).  Would return to dev-only if tables were
+  # decomposed into recursive «TABLE»/«TR»/«TD» markers (a later producer arc).
   "html5lib>=1.1",
 ]
 
