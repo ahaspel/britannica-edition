@@ -1116,10 +1116,15 @@
       color: var(--text);
       box-shadow: 0 2px 8px rgba(0,0,0,0.15);
       z-index: 200;
+      /* Full context reset: a title-footnote popup lives inside the h1's «B» (bold)
+         + small-caps + letter-spacing, yet the note must read as ordinary footnote
+         prose.  letter-spacing was the last leak — the h1's 0.06em spread made the
+         note look heavier ("bold") though its weight is already normal (confirmed via
+         getComputedStyle: weight 400, only letterSpacing differed). */
       font-style: normal;
       font-variant: normal;
       font-weight: normal;
-      font-size: 0.85rem;
+      letter-spacing: normal;
       text-indent: 0;
       text-transform: none;
     }
