@@ -1997,8 +1997,13 @@
       // TOC scan above (which matches «SEC»/«SH» only), so it stays a pure target.
       h = h.replace(/«(?:SEC|ANCHOR):([^|»]*)\|[^»]*»/g,
           (_m, slug) => `<span id="section-${slug}" class="section-anchor"></span>`);
-      // Restore the shielded inline images.
-      h = h.replace(/\x00IMG(\d+)\x00/g, (_m, idx) => imgHtml[+idx]);
+      // Restore the shielded inline images.  Guard on length: a NESTED decode (a footnote
+      // body via formatFootnoteText) inherits the OUTER call's placeholders in its text but
+      // has its OWN empty imgHtml — without the guard it restored them against nothing,
+      // turning an image inside a footnote into the literal "undefined" (ALPHABET's pict50 /
+      // pict37).  Guarded, the placeholder survives the inner call and the outer restore fills it.
+      if (imgHtml.length)
+        h = h.replace(/\x00IMG(\d+)\x00/g, (_m, idx) => imgHtml[+idx]);
       return h;
     }
 
