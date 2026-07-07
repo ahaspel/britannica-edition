@@ -37,6 +37,7 @@ from britannica.db.models import (
 )
 from britannica.db.models.contributor import ContributorInitials
 from britannica.db.session import SessionLocal
+from britannica.pipeline.stages.extract_contributors import _normalize_initials
 
 
 def _name_tokens(name: str) -> frozenset[str]:
@@ -52,12 +53,6 @@ def _name_tokens(name: str) -> frozenset[str]:
     folded = "".join(c for c in folded if not unicodedata.combining(c))
     toks = re.findall(r"[A-Za-z]+", folded.lower())
     return frozenset(t for t in toks if t not in drop and len(t) > 1)
-
-
-def _ws_normalize_initials(s: str) -> str:
-    """Normalize whitespace; preserve `*`/`.`/case (vol 29 uses these
-    distinctions intentionally)."""
-    return re.sub(r"\s+", " ", s.strip())
 
 
 def _normalize_vol29_title(t: str) -> str:
@@ -107,7 +102,7 @@ def _find_contributor(
 
     Returns None if no resolution is unambiguous.
     """
-    init_key = _ws_normalize_initials(entry.initials)
+    init_key = _normalize_initials(entry.initials)
     candidates_by_init = by_initials.get(init_key, [])
     target = _name_tokens(entry.full_name)
     if candidates_by_init:
@@ -171,7 +166,7 @@ def link_vol29_articles(apply_mode: bool = False) -> None:
         for ci in session.query(ContributorInitials).all():
             c = by_id.get(ci.contributor_id)
             if c is not None:
-                by_initials.setdefault(_ws_normalize_initials(ci.initials),
+                by_initials.setdefault(_normalize_initials(ci.initials),
                                        []).append(c)
 
         created = 0

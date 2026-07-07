@@ -28,7 +28,9 @@ sys.path.insert(0, os.path.abspath(
 # Articles whose raw bears one of the migrated templates — full output is kept
 # for these so their diffs are inspectable.  (Loose/over-inclusive is fine.)
 _AFFECTED = re.compile(
-    r"<del\b|<ins\b|\[\[\s*1911\s+[Ee]ncyclop",
+    # any HTML opener with a `title` attr (the tooltip carry/drop flip) OR a
+    # `{{=}}`-escaped attribute (the opener-recognition change)
+    r"<[a-zA-Z][^>]*(?:\btitle\b|\{\{\s*=\s*\}\})",
     re.IGNORECASE)
 
 

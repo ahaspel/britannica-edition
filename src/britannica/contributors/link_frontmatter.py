@@ -13,6 +13,7 @@ from pathlib import Path
 
 from britannica.db.models import Article, ArticleContributor, Contributor, ContributorInitials
 from britannica.db.session import SessionLocal
+from britannica.pipeline.stages.extract_contributors import _normalize_initials
 
 _ENTRY_PATTERN = re.compile(
     r"\{\{EB1911 contributor table/entry(.*?)\}\}",
@@ -46,7 +47,7 @@ def link_from_frontmatter():
         # Build initials -> contributor_id lookup
         initials_to_contrib = {}
         for ci in session.query(ContributorInitials).all():
-            initials_to_contrib[ci.initials] = ci.contributor_id
+            initials_to_contrib[_normalize_initials(ci.initials)] = ci.contributor_id
 
         # Build article title -> article_id lookup
         title_map = {}
@@ -70,7 +71,7 @@ def link_from_frontmatter():
                     if not initials:
                         continue
 
-                    contrib_id = initials_to_contrib.get(initials)
+                    contrib_id = initials_to_contrib.get(_normalize_initials(initials))
                     if contrib_id is None or contrib_id in linked_ids:
                         continue  # already linked or unknown
 
