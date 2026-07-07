@@ -39,6 +39,7 @@ const SEEDS = [
   '06-0411-cithara-CITHARA', '08-0783-dynamics-DYNAMICS', '14-0147-hydromedusae-HYDROMEDUSAE',
   '14-0737-s2-INTERPOLATION', '18-0684-s2-MOLECULE', '20-0215-s3-ORDNANCE',
   '25-0840-s3-STEAM_ENGINE', '26-0933-s2-THUCYDIDES',
+  '20-0023-odo-of-bayeux-ODO_OF_BAYEUX',   // title footnote (#1) — render-specific guard
 ];
 
 function render(win, stem) {
