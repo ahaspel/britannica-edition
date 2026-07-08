@@ -2858,11 +2858,14 @@
             const level1 = collectedSections.filter(s => s.level === 1);
             const level2 = collectedSections.filter(s => s.level === 2);
             let tocHtml = "";
-            if (level1.length >= 2 && level2.length >= 1) {
+            if (level1.length >= 1 && level2.length >= 1) {
               // Interleaved: major sections with shoulder headings
               // nested below. Level-2 items appearing before any
               // level-1 (orphans) render as standalone top-level items
-              // so the HTML structure stays valid.
+              // so the HTML structure stays valid.  A SINGLE major section
+              // counts (>= 1): a lone «SEC» among shoulders (AFGHANISTAN's
+              // `History`, POLAND's `Polish Literature`) must appear in the
+              // TOC, not fall to the shoulder-only branch below.
               let tocInner = "";
               let inSub = false;
               let seenLevel1 = false;
