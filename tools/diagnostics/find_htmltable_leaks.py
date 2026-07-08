@@ -15,7 +15,7 @@ for f in sorted(glob.glob("data/derived/articles/*.json")):
         continue
     body = a.get("body", "")
     for ht in re.findall(
-        r"\u00abHTMLTABLE:(.*?)\u00ab/HTMLTABLE\u00bb",
+        r"\u00abTABLE:(.*?)\u00ab/TABLE\u00bb",
         body, re.DOTALL,
     ):
         stripped = re.sub(

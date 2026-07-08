@@ -189,17 +189,17 @@ def test_surface_not_in_body_skipped() -> None:
 def test_htmltable_span_is_not_wrapped_inside() -> None:
     target = _make_article(11, 1, 1, "thing", "THING")
     session = _FakeSession({11: target})
-    # Target word sits inside an HTMLTABLE span; the surface happens
+    # Target word sits inside a «TABLE[…]» span; the surface happens
     # to match the whole thing, but we must refuse to wrap inside.
     body = (
-        "prose «HTMLTABLE:<table><tr><td>See Thing.</td></tr></table>"
-        "«/HTMLTABLE» more prose"
+        "prose «TABLE[cols:1|class:data-table]»«TR»«TD»See Thing.«/TD»«/TR»«/TABLE»"
+        " more prose"
     )
     xref = _make_xref("see", "See Thing.", "THING", target_id=11)
     out = _wrap_resolved_xrefs_in_body(body, [xref], "99-9999-xyz", session)
     assert "«LN:" not in out
     # Original table content is intact.
-    assert "See Thing.</td>" in out
+    assert "«TD»See Thing.«/TD»" in out
 
 
 def test_multiple_xrefs_each_wrapped_once() -> None:

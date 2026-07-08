@@ -130,12 +130,12 @@ class TestRealTables:
 
     def test_table_attributes_stripped(self):
         """Cell attributes must not leak OUTSIDE table markers.  Inside the
-        «HTMLTABLE» they are CARRIED as `<td style=…>` — that's the contract;
-        only a leak into surrounding prose is a bug."""
+        «TABLE[…]» they are CARRIED in the quote-free «TD[…]» payload — that's the
+        contract; only a leak into surrounding prose is a bug."""
         raw = _load_page(3, 76)
         result = _transform(raw, volume=3, page_number=76)
         outside = re.sub(r"\{\{TABLE.*?\}TABLE\}", "", result, flags=re.DOTALL)
-        outside = re.sub(r"«HTMLTABLE:.*?«/HTMLTABLE»", "", outside,
+        outside = re.sub(r"«TABLE\[.*?«/TABLE»", "", outside,
                          flags=re.DOTALL)
         for attr in ["colspan=", "rowspan=", 'align="', 'style="']:
             assert attr not in outside, f"Leaked attribute: {attr}"
@@ -328,10 +328,10 @@ class TestRealMultiElement:
         """No HTML tags should survive in the output (except in markers)."""
         raw = _load_page(3, 76)
         result = _transform(raw, volume=3, page_number=76)
-        # «HTMLTABLE» carries literal <table>/<tr>/<td> as its payload (the
-        # viewer decodes it) — strip it (and the other markers) before
-        # checking that no RAW html leaked into the surrounding prose.
-        clean = re.sub(r"«HTMLTABLE:.*?«/HTMLTABLE»", "", result, flags=re.DOTALL)
+        # «TABLE[…]» carries the table as recursive «TR»/«TD» markers with cell
+        # content (carried <sub>/<br>) inside — strip the whole span (and the other
+        # markers) before checking that no RAW html leaked into the surrounding prose.
+        clean = re.sub(r"«TABLE\[.*?«/TABLE»", "", result, flags=re.DOTALL)
         clean = re.sub(r"«[^«»]*»", "", clean)
         clean = re.sub(r"\{\{(?:IMG|TABLE|VERSE).*?\}\}", "", clean, flags=re.DOTALL)
         html_tags = re.findall(r"<[a-z]+[^>]*>", clean, re.IGNORECASE)

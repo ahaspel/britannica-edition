@@ -43,9 +43,9 @@ def main() -> int:
         if not body:
             continue
 
-        # Strip HTMLTABLE / MATH for noise-stripped checks (mirrors
+        # Strip TABLE / MATH for noise-stripped checks (mirrors
         # quality_report.py's logic).
-        clean = re.sub(r"«HTMLTABLE:.*?«/HTMLTABLE»",
+        clean = re.sub(r"«TABLE\[.*?«/TABLE»",
                        "", body, flags=re.DOTALL)
         clean = re.sub(r"«MATH:.*?«/MATH»",
                        "", clean, flags=re.DOTALL)
@@ -101,7 +101,7 @@ def main() -> int:
             )
 
         # leaked_html_attr: cell-table attribute names leaking outside
-        check = re.sub(r"«HTMLTABLE:.*?«/HTMLTABLE»",
+        check = re.sub(r"«TABLE\[.*?«/TABLE»",
                        "", body, flags=re.DOTALL)
         m = re.search(r"nowrap|colspan|rowspan|cellpadding", check)
         if m:

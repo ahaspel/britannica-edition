@@ -199,19 +199,18 @@ class TestTableProcessing:
     def test_simple_table(self):
         text = '{|\n|A\n|B\n|-\n|C\n|D\n|}'
         result = process_elements(text, ElementContext())
-        assert "«HTMLTABLE:" in result and "«/HTMLTABLE»" in result
+        assert "«TABLE[" in result and "«/TABLE»" in result
         for cell in ("A", "B", "C", "D"):
-            assert f">{cell}</td>" in result
+            assert f"«TD»{cell}«/TD»" in result
 
     def test_table_carries_cell_styles(self):
-        """Cell attributes are CARRIED into `<td style=…>` (the faithful
-        contract), not stripped: `align="right"` → text-align:right, inline
-        `style=` preserved."""
+        """Cell attributes are CARRIED into the quote-free `«TD[…]»` payload (the
+        faithful contract), not stripped: `align="right"` → text-align:right,
+        inline `style=` preserved."""
         text = '{|\n|align="right"|100\n|style="color:red"|hello\n|}'
         result = process_elements(text, ElementContext())
-        assert ">100</td>" in result and ">hello</td>" in result
-        assert "text-align:right" in result
-        assert "color:red" in result
+        assert "«TD[style:text-align:right]»100«/TD»" in result
+        assert "«TD[style:color:red]»hello«/TD»" in result
 
     def test_table_with_footnote(self):
         """Footnote inside table cell should be clean in output."""
@@ -241,9 +240,9 @@ class TestTableProcessing:
 
 class TestChemistryLayout:
     """A {|\u2026|} laid out as a 2-D chemical-reaction scheme (atom-label
-    cells, \u27e8/\u27e9 bracket images, rowspan brackets) is detected and
-    rendered through the chemistry path \u2014 a structure-preserving \u00abCHEM:\u2026\u00bb
-    block \u2014 not flattened to {{TABLE:\u2026}TABLE} by _process_table."""
+    cells, \u27e8/\u27e9 bracket images, rowspan brackets) is detected and emits the
+    SAME `\u00abTABLE[\u2026]\u00bb` markers as any table, tagged with the `chem-grid` class
+    (so the CSS drops the table chrome) \u2014 not flattened to {{TABLE:\u2026}TABLE}."""
 
     def test_fulminic_acid_competing_formulae(self):
         # FULMINIC ACID's table of the four competing structural
@@ -260,11 +259,11 @@ class TestChemistryLayout:
             '|}'
         )
         result = process_elements(table, ElementContext())
-        # Its own marker \u2014 not the flattened {{TABLE:}} path.
-        assert "\u00abCHEM:" in result
+        # A \u00abTABLE[\u2026]\u00bb tagged chem-grid \u2014 not the flattened {{TABLE:}} path.
+        assert "\u00abTABLE[" in result and "chem-grid" in result
         assert "{{TABLE:" not in result
-        # 2-D structure preserved: the rowspan bracket survives.
-        assert 'rowspan="2"' in result
+        # 2-D structure preserved: the rowspan bracket survives (quote-free payload).
+        assert "rowspan:2" in result
         # Cell content survives intact.
         assert "C : N\u00b7OH" in result
         assert "Steiner" in result and "Nef" in result
@@ -277,10 +276,11 @@ class TestChemistryLayout:
         assert "{{IMG:Langle.svg" in result
 
     def test_plain_table_unaffected(self):
-        # A normal data table with NO angle-bracket image is untouched.
+        # A normal data table with NO angle-bracket image is a plain \u00abTABLE[\u2026]\u00bb,
+        # NOT tagged chem-grid.
         table = '{|\n|A\n|B\n|-\n|C\n|D\n|}'
         result = process_elements(table, ElementContext())
-        assert "\u00abCHEM:" not in result
-        assert "\u00abHTMLTABLE:" in result
+        assert "chem-grid" not in result
+        assert "\u00abTABLE[" in result
 
 

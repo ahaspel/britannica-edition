@@ -75,10 +75,10 @@ RULES: list[tuple[str, str, re.Pattern]] = [
     (
         "internal_marker_leak",
         "Internal element marker (``«MATH:``, ``«FN:``, ``«SEC:``, "
-        "``«PRE:``, ``«LN:``, ``«HTMLTABLE:``, ``«SH»``) survived to "
+        "``«PRE:``, ``«LN:``, ``«TABLE[``, ``«SH»``) survived to "
         "rendered HTML. These are pipeline-internal and the viewer "
         "should render every one.",
-        re.compile(r"\u00ab(?:MATH|FN|SEC|PRE|LN|HTMLTABLE|/HTMLTABLE|SH|/SH):?"),
+        re.compile(r"\u00ab(?:MATH|FN|SEC|PRE|LN|TABLE|/TABLE|TR|/TR|TD|/TD|SH|/SH):?"),
     ),
     (
         "format_marker_leak",

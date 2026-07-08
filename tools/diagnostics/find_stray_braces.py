@@ -16,7 +16,7 @@ for f in sorted(glob.glob("data/derived/articles/*.json")):
         continue
     body = a.get("body", "")
     clean = re.sub(
-        r"\u00abHTMLTABLE:.*?\u00ab/HTMLTABLE\u00bb", "",
+        r"\u00abTABLE:.*?\u00ab/TABLE\u00bb", "",
         body, flags=re.DOTALL)
     clean = re.sub(
         r"\u00abMATH:.*?\u00ab/MATH\u00bb", "", clean, flags=re.DOTALL)

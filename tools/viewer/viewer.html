@@ -1997,6 +1997,28 @@
       // TOC scan above (which matches «SEC»/«SH» only), so it stays a pure target.
       h = h.replace(/«(?:SEC|ANCHOR):([^|»]*)\|[^»]*»/g,
           (_m, slug) => `<span id="section-${slug}" class="section-anchor"></span>`);
+      // Recursive table markers — «TABLE[…]»/«TR[…]»/«TD[…]»/«TH[…]»/«CAPTION».  The
+      // producer carried the table AS markers (no HTML on the wire), so this is pure
+      // independent token substitution: the cell text was escaped above and its carried
+      // <sub>/<br> restored, the inner stylers already decoded, and a nested table is just
+      // more markers decoded in this same pass — NO DOMParser re-walk.  The quote-free
+      // key:value payload re-gains its quotes here, exactly as «SPAN[style:…]» does; `cols`
+      // is the block layer's wide-table metadata (already read off the opener), so it drops.
+      h = h.replace(/«(TABLE|TR|TD|TH)\[([^\]]*)\]»/g, (_m, tag, payload) => {
+        let attrs = "";
+        for (const field of payload.split("|")) {
+          const i = field.indexOf(":");
+          const k = i < 0 ? field : field.slice(0, i);
+          if (k === "cols") continue;            // render metadata, not an HTML attr
+          attrs += ` ${k}="${i < 0 ? "" : field.slice(i + 1)}"`;
+        }
+        return `<${tag.toLowerCase()}${attrs}>`;
+      });
+      h = h.replace(/«TR»/g, "<tr>").replace(/«\/TR»/g, "</tr>")
+           .replace(/«TD»/g, "<td>").replace(/«\/TD»/g, "</td>")
+           .replace(/«TH»/g, "<th>").replace(/«\/TH»/g, "</th>")
+           .replace(/«CAPTION»/g, "<caption>").replace(/«\/CAPTION»/g, "</caption>")
+           .replace(/«\/TABLE»/g, "</table>");
       // Restore the shielded inline images.  Guard on length: a NESTED decode (a footnote
       // body via formatFootnoteText) inherits the OUTER call's placeholders in its text but
       // has its OWN empty imgHtml — without the guard it restored them against nothing,
@@ -2014,20 +2036,8 @@
         .replace(/^-|-$/g, "");
     }
 
-    // Walk forward from ``start`` (which must point at ``«HTMLTABLE:``)
-    // and return the index just past the matching ``«/HTMLTABLE»``,
-    // respecting nesting.  Returns -1 if unbalanced (caller falls back
-    // to leaving the markers visible).
-    const HTMLTABLE_OPEN = "\u00abHTMLTABLE:";
-    const HTMLTABLE_CLOSE = "\u00ab/HTMLTABLE\u00bb";
-    // Chemistry-layout marker \u2014 same wire format as HTMLTABLE (content
-    // is an HTML <table>) but a distinct class so the viewer drops the
-    // data-table chrome (borders, padding) for the 2-D chemical-
-    // reaction schemes that classify as CHEMISTRY_LAYOUT (FULMINIC
-    // ACID, POLYMETHYLENES, PURIN, INDAZOLES, \u2026).  Emit side:
-    // _process_chemistry_layout in _tables.py.
-    const CHEM_OPEN = "\u00abCHEM:";
-    const CHEM_CLOSE = "\u00ab/CHEM\u00bb";
+    const TABLE_OPEN = "\u00abTABLE[";
+    const TABLE_CLOSE = "\u00ab/TABLE\u00bb";
     const TITLE_OPEN = "\u00abTITLE:";
     const TITLE_CLOSE = "\u00ab/TITLE\u00bb";
     function findMarkerEnd(str, start, openMarker, closeMarker) {
@@ -2047,9 +2057,6 @@
       }
       return -1;
     }
-    function findHtmlTableEnd(str, start) {
-      return findMarkerEnd(str, start, HTMLTABLE_OPEN, HTMLTABLE_CLOSE);
-    }
     // «DIV[style:…]»…«/DIV» — the open marker carries a variable `[style:…]`
     // payload, but `«DIV[` is a stable prefix, so the balanced walker keys on
     // it (depth-counting needs only to recognize opens/closes, not parse the
@@ -2058,34 +2065,6 @@
     const DIV_CLOSE = "«/DIV»";
     function findDivEnd(str, start) {
       return findMarkerEnd(str, start, DIV_OPEN, DIV_CLOSE);
-    }
-    function findChemEnd(str, start) {
-      return findMarkerEnd(str, start, CHEM_OPEN, CHEM_CLOSE);
-    }
-    // Strip every ``«HTMLTABLE:``/``«/HTMLTABLE»`` marker in ``s`` —
-    // used on the inside of a balanced block so nested tables render
-    // as plain nested ``<table>`` elements.
-    function stripHtmlTableMarkers(s) {
-      return s.split(HTMLTABLE_OPEN).join("").split(HTMLTABLE_CLOSE).join("");
-    }
-    function stripChemMarkers(s) {
-      return s.split(CHEM_OPEN).join("").split(CHEM_CLOSE).join("");
-    }
-    // Add a class to the FIRST <table> tag, preserving any class the
-    // producer already carried (e.g. the source's own `wikitable` — the
-    // faithful border signal).  Robust to bare `<table>`, `<table
-    // class="…">`, `<table style="…">`, and both together; the old
-    // `replace("<table>", …)` matched only a BARE opener, so every
-    // styled/classed table silently escaped the class.
-    function mergeTableClass(html, cls) {
-      return html.replace(/<table\b([^>]*)>/, (m, attrs) => {
-        const cm = attrs.match(/\sclass="([^"]*)"/);
-        if (cm) {
-          if (cm[1].split(/\s+/).includes(cls)) return m;
-          return `<table${attrs.replace(cm[0], ` class="${cm[1]} ${cls}"`)}>`;
-        }
-        return `<table class="${cls}"${attrs}>`;
-      });
     }
 
     // Math-only paragraph: optional leading PAGE markers, one MATH
@@ -2124,7 +2103,7 @@
     // inline letterform image and wrapped the fragments in separate `<p>`s,
     // forcing the image onto its own line (ALPHABET's β/λ/σ glyphs).
     const BLOCK_MARKER_SCAN_RE =
-      /\{\{TABLEH?(?:\[style:[^\]]*\])?:[\s\S]*?\}TABLE\}|\{\{VERSE(?:\[style:[^\]]*\])?:[\s\S]*?\}VERSE\}|\{\{LEGEND:[\s\S]*?\}LEGEND\}|«OUTLINE:[\s\S]*?«\/OUTLINE»|«PLATE_OUTLINE:[\s\S]*?«\/PLATE_OUTLINE»|«HTMLTABLE:[\s\S]*?«\/HTMLTABLE»|«CHEM:[\s\S]*?«\/CHEM»|«TITLE:[\s\S]*?«\/TITLE»/g;
+      /\{\{TABLEH?(?:\[style:[^\]]*\])?:[\s\S]*?\}TABLE\}|\{\{VERSE(?:\[style:[^\]]*\])?:[\s\S]*?\}VERSE\}|\{\{LEGEND:[\s\S]*?\}LEGEND\}|«OUTLINE:[\s\S]*?«\/OUTLINE»|«PLATE_OUTLINE:[\s\S]*?«\/PLATE_OUTLINE»|«TABLE\[[\s\S]*?«\/TABLE»|«TITLE:[\s\S]*?«\/TITLE»/g;
 
     function renderParagraph(p, nextPara) {
       // Mixed-paragraph split: if this paragraph contains a block
@@ -2136,26 +2115,20 @@
       {
         BLOCK_MARKER_SCAN_RE.lastIndex = 0;
         const rawMatches = [...p.matchAll(BLOCK_MARKER_SCAN_RE)];
-        // Repair HTMLTABLE/CHEM matches: the scan regex matches them
-        // NON-greedily (`«HTMLTABLE:[\s\S]*?«/HTMLTABLE»`), so a figure
-        // table whose cell holds another table (St Gall's Fig. 3 ground-
-        // plan key) stops at the FIRST inner «/HTMLTABLE» — its tail
-        // (`</td></tr></table>«/HTMLTABLE»`) would then split off as a
-        // prose piece and leak the raw markers. Recompute the TRUE
-        // balanced end with the same walker the pure-block path uses, and
-        // drop any later match the regex spuriously found inside the
-        // extended span.
+        // Repair TABLE matches: the scan regex matches them NON-greedily
+        // (`«TABLE\[[\s\S]*?«/TABLE»`), so a figure table whose cell holds
+        // another table (St Gall's Fig. 3 ground-plan key) stops at the FIRST
+        // inner «/TABLE» — its tail (`«/TD»«/TR»«/TABLE»`) would then split off
+        // as a prose piece and leak the raw markers. Recompute the TRUE balanced
+        // end with the same walker the pure-block path uses, and drop any later
+        // match the regex spuriously found inside the extended span.
         const blocks = [];
         let guard = 0;
         for (const m of rawMatches) {
           if (m.index < guard) continue;
           let text = m[0];
-          const isHT = text.startsWith(HTMLTABLE_OPEN);
-          const isCH = text.startsWith(CHEM_OPEN);
-          if (isHT || isCH) {
-            const end = isCH
-              ? findChemEnd(p, m.index)
-              : findHtmlTableEnd(p, m.index);
+          if (text.startsWith(TABLE_OPEN)) {
+            const end = findMarkerEnd(p, m.index, TABLE_OPEN, TABLE_CLOSE);
             if (end !== -1) {
               text = p.slice(m.index, end);
               guard = end;
@@ -2382,144 +2355,48 @@
         });
         return `<aside class="figure-legend">${parts.join("")}</aside>`;
       }
-      // Render complex HTML tables (rowspan/colspan preserved).
-      // Use balanced-match so an HTMLTABLE whose cell contains another
-      // HTMLTABLE (e.g. INTERPOLATION's Everett-formula layout table)
-      // doesn't stop at the inner ``«/HTMLTABLE»``.  ``«CHEM:`` is
-      // the same wire format as HTMLTABLE; render through the same
-      // pipeline but tag the outer ``<table>`` with ``chem-grid`` so
-      // CSS can drop borders/padding for chemistry layouts.
-      let htmlTableHit = null;
-      let isChem = false;
-      if (p.startsWith(HTMLTABLE_OPEN)) {
-        const end = findHtmlTableEnd(p, 0);
+      // Complex table — «TABLE[…]».  Recursive markers now, so it decodes through
+      // the SAME sequence as prose (escape → page markers → decodeInlineMarkers):
+      // the ONE decoder owns the marker→tag substitution for the table structure AND
+      // any nested table, in a single pass — no DOMParser re-walk, no strip/merge.
+      // `cols` (off the opener, computed at classify) drives the wide-table wrap;
+      // balanced-match the close so a table whose cell holds another isn't truncated.
+      if (p.startsWith(TABLE_OPEN)) {
+        const end = findMarkerEnd(p, 0, TABLE_OPEN, TABLE_CLOSE);
         if (end !== -1) {
-          htmlTableHit = {
-            block: p.substring(0, end),
-            trailing: p.substring(end).trim(),
-            inner: p.substring(HTMLTABLE_OPEN.length, end - HTMLTABLE_CLOSE.length),
-          };
-        }
-      } else if (p.startsWith(CHEM_OPEN)) {
-        const end = findChemEnd(p, 0);
-        if (end !== -1) {
-          isChem = true;
-          htmlTableHit = {
-            block: p.substring(0, end),
-            trailing: p.substring(end).trim(),
-            inner: p.substring(CHEM_OPEN.length, end - CHEM_CLOSE.length),
-          };
-        }
-      }
-      if (htmlTableHit) {
-        const tableBlock = htmlTableHit.block;
-        const trailing = htmlTableHit.trailing;
-        // Strip any nested HTMLTABLE/CHEM markers so nested tables
-        // render as native nested ``<table>`` elements.
-        const inner = stripChemMarkers(
-          stripHtmlTableMarkers(htmlTableHit.inner));
-        const outerClass = isChem ? "chem-grid" : "data-table";
-        // Render the table with the class the PRODUCER carried — `data-table`
-        // when the source was a wikitable/bordered grid (its reference markup),
-        // and NO class for a figure `{|` (layout, not data).  Forcing
-        // `data-table` here re-imposed the figtable taxonomy the producer
-        // deliberately dropped: the figure then matched `.data-table` (width
-        // without !important) instead of `table:not([class])` (width:100%
-        // !important / float→50%), so its carried print width (e.g.
-        // `width:390px`) won and it never filled the column.  Only chem needs a
-        // viewer-applied class.
-        let t = isChem ? mergeTableClass(inner, "chem-grid") : inner;
-        // Process <caption> contents through formatCell so internal
-        // markers (italic, small-caps, links) render as HTML rather
-        // than leaking their «…» form.
-        t = t.replace(/<caption>([\s\S]*?)<\/caption>/g,
-          (_m, content) => `<caption>${decodeInlineMarkers(content, { escape: true, dhrInline: true })}</caption>`);
-        // Hoist any page markers inside cells to the row level — render
-        // them as a floated span at the start of the row's first cell so
-        // they land in the left margin alongside body-paragraph markers,
-        // instead of disrupting cell-content alignment.
-        const makePageSpan = (pg) => {
-          const unproofed = pg in unproofedPages;
-          const cls = unproofed ? "page-marker unproofed" : "page-marker";
-          const title = unproofed
-            ? `Volume ${currentVolume}, page ${pg} (unproofed source) — click to view scan`
-            : `Volume ${currentVolume}, page ${pg} — click to view scan`;
-          const href = `${currentScanUrl}&pinit=${pg}`;
-          return `<a class="${cls}" data-page="${pg}" title="${title}" href="${href}">${currentVolume}:${pg}</a>`;
-        };
-        // Parse as DOM so nested <table>s don't confuse the row/cell
-        // walk — regex can't bracket-match. Walk only the OUTER
-        // table's direct cell descendants and format their text-node
-        // content (leaving nested table DOM untouched).
-        let maxCols = 0;
-        {
-          const doc = new DOMParser().parseFromString(t, "text/html");
-          const outer = doc.querySelector(`table.${outerClass}`) || doc.querySelector("table");
-          if (outer) {
-            // Walk all descendants of a cell and format its text
-            // nodes through formatCell. Nested tables get the same
-            // treatment — their cells' markers (MATH/FN/IMG/etc.)
-            // need rendering too. The HTMLTABLE placeholder stripping
-            // earlier in render() collapsed nested «HTMLTABLE»
-            // markers to bare <table> elements, so their content is
-            // still unformatted raw marker text.
-            function formatCellNode(node, pageMarkers) {
-              // ONE path: format the cell's whole DOM-serialized innerHTML, which
-              // is render-safe (carried <sub>/<i>/<small>/<br>, nested tables, and
-              // re-encoded entities all intact).  formatCell resolves the markers
-              // in place WITHOUT escaping — identical to the prose path — so a
-              // «VERSE»/«CTR»/«BR» spanning carried inline HTML stays balanced,
-              // nested-table cell markers decode too, and a carried &mdash;/<small>
-              // renders instead of being re-escaped.  (The old text+<br> fast path
-              // fed DOM-DECODED nodeValue, which only worked because formatCell
-              // re-escaped; with no escape it must read innerHTML.)
-              const inner = node.innerHTML.replace(
-                /\x01PAGE:(\d+)\x01/g,
-                (_x, pg) => { pageMarkers.push(pg); return ""; });
-              node.innerHTML = decodeInlineMarkers(inner, { dhrInline: true });
-            }
-            for (const tr of Array.from(outer.rows)) {
-              const pageMarkers = [];
-              const cells = Array.from(tr.children).filter(
-                c => c.tagName === "TD" || c.tagName === "TH");
-              let rowCols = 0;
-              for (const cell of cells) {
-                const cs = cell.getAttribute("colspan");
-                rowCols += cs ? parseInt(cs, 10) : 1;
-                formatCellNode(cell, pageMarkers);
-              }
-              if (rowCols > maxCols) maxCols = rowCols;
-              if (pageMarkers.length > 0 && cells.length > 0) {
-                const spans = pageMarkers.map(makePageSpan).join("");
-                const tmp = document.createElement("span");
-                tmp.innerHTML = spans;
-                while (tmp.firstChild) cells[0].insertBefore(
-                  tmp.firstChild, cells[0].firstChild);
-              }
-            }
-            t = outer.outerHTML;
+          const cm = p.match(/^«TABLE\[cols:(\d+)/);
+          const cols = cm ? parseInt(cm[1], 10) : 0;
+          let t = escapeHtml(p.substring(0, end));
+          // Page markers in cells render IN PLACE (left-margin float), like prose —
+          // no hoist to the row's first cell (that was the DOMParser walk's job).
+          t = t.replace(/\x01PAGE:(\d+)\x01/g, (match, page) => {
+            const isUnproofed = page in unproofedPages;
+            const cls = isUnproofed ? "page-marker unproofed" : "page-marker";
+            const title = isUnproofed
+              ? `Volume ${currentVolume}, page ${page} (unproofed source) — click to view scan`
+              : `Volume ${currentVolume}, page ${page} — click to view scan`;
+            return `<a class="${cls}" data-page="${page}" title="${title}" href="${currentScanUrl}&pinit=${page}">${currentVolume}:${page}</a>`;
+          });
+          // Cell context: dhrInline; skipMath default false so a cell's «MATH» decodes
+          // INLINE to the «MATHPH» stub (katex renders it live in the browser).
+          t = decodeInlineMarkers(t, { dhrInline: true });
+          // Any text after the close in the same paragraph (e.g. Lighthouse Table VII's
+          // footnote-asterisk note) renders as a sibling paragraph and rides into the modal.
+          const trailing = p.substring(end).trim();
+          const trailingHtml = trailing ? renderParagraph(trailing) : "";
+          // Wide table (≥10 columns): renders inline but gains an "Expand" button to a
+          // full-viewport modal.
+          let rendered;
+          if (cols >= 10) {
+            const tableId = `wt-${++wideTableCounter}`;
+            wideTableSources[tableId] = { table: t, trailing: trailingHtml };
+            rendered = `<figure class="wide-table-wrap"><button class="expand-table-btn" data-wt="${tableId}" title="Open full-width view">⤢ Expand (${cols} columns)</button><div class="wide-table-inline">${t}</div></figure>`;
+          } else {
+            rendered = t;
           }
+          if (trailingHtml) rendered += trailingHtml;
+          return rendered;
         }
-        // Any text that follows the closing marker in the same paragraph
-        // (e.g. Lighthouse Table VII's footnote-asterisk explanation) —
-        // render it as a sibling paragraph, and also include it in the
-        // modal's expanded view (the original print laid it out with the
-        // table, so it belongs in the expanded view too).
-        const trailingHtml = trailing ? renderParagraph(trailing) : "";
-
-        // Wrap wide tables (≥10 effective columns) so they can be opened in
-        // a full-viewport modal.  The table still renders inline, but an
-        // "Expand" button lets the reader see it uncramped.
-        let rendered;
-        if (maxCols >= 10) {
-          const tableId = `wt-${++wideTableCounter}`;
-          wideTableSources[tableId] = { table: t, trailing: trailingHtml };
-          rendered = `<figure class="wide-table-wrap"><button class="expand-table-btn" data-wt="${tableId}" title="Open full-width view">⤢ Expand (${maxCols} columns)</button><div class="wide-table-inline">${t}</div></figure>`;
-        } else {
-          rendered = t;
-        }
-        if (trailingHtml) rendered += trailingHtml;
-        return rendered;
       }
 
 
@@ -2539,38 +2416,8 @@
         const href = `${currentScanUrl}&pinit=${page}`;
         return `<a class="${cls}" data-page="${page}" title="${title}" href="${href}">${currentVolume}:${page}</a>`;
       });
-      // Render inline complex HTML tables.  Uses balanced-match so
-      // nested ``«HTMLTABLE:`` (layout table with a sub-table in one
-      // cell) doesn't truncate at the inner close.
-      {
-        let out = "";
-        let i = 0;
-        while (i < html.length) {
-          const openIdx = html.indexOf(HTMLTABLE_OPEN, i);
-          if (openIdx === -1) {
-            out += html.substring(i);
-            break;
-          }
-          out += html.substring(i, openIdx);
-          const endIdx = findHtmlTableEnd(html, openIdx);
-          if (endIdx === -1) {
-            // Unbalanced — emit the rest as-is and let escaping visibly
-            // mark the problem.
-            out += html.substring(openIdx);
-            break;
-          }
-          let content = html.substring(
-            openIdx + HTMLTABLE_OPEN.length,
-            endIdx - HTMLTABLE_CLOSE.length
-          );
-          content = stripHtmlTableMarkers(content);
-          let t = mergeTableClass(content, "data-table");
-          t = decodeInlineMarkers(t);
-          out += t;
-          i = endIdx;
-        }
-        html = out;
-      }
+      // (An inline «TABLE[…]» mid-prose needs no special handling now — it decodes
+      // to a <table> in decodeInlineMarkers below, like every other marker.)
       // Shoulder headings carry their own slug («SH:slug»…«/SH»): stamp the
       // anchor id straight off it and show the label as plain text (markers
       // stripped).  Done BEFORE the decoder so we strip the raw «…» markers,
@@ -2826,27 +2673,27 @@
             // that isn't a real one — prev ends mid-clause, next starts lowercase.
             // NON_TEXT_PREFIX keeps a structural block from being merged; the margin
             // strip ignores page / shoulder-heading markers when judging the seam.
-            const NON_TEXT_PREFIX = /^(?:\{\{(?:TABLE|LEGEND|IMG|VERSE)|\u00abHTMLTABLE|\u00abSEC:|\u00abSH:|\u00abANCHOR:|\u00abOUTLINE:|\u00abPLATE_OUTLINE:|\u00abTITLE:)/;
+            const NON_TEXT_PREFIX = /^(?:\{\{(?:TABLE|LEGEND|IMG|VERSE)|\u00abTABLE\[|\u00abSEC:|\u00abSH:|\u00abANCHOR:|\u00abOUTLINE:|\u00abPLATE_OUTLINE:|\u00abTITLE:)/;
             const stripMarginMarkers = s => s
               .replace(/\x01PAGE:\d+\x01/g, "")
               .replace(/\u00abSH:[^\u00bb]*\u00bb.*?\u00ab\/SH\u00bb/gs, "")
               .trim();
-            // Collapse ``\n\n`` inside balanced ``«HTMLTABLE:`` blocks to
+            // Collapse ``\n\n`` inside balanced ``«TABLE[…]»`` blocks to
             // ``\n`` so paragraph-splitting doesn't slice a nested
-            // HTMLTABLE (e.g. SHIP's per-nationality subtables, whose
+            // table (e.g. SHIP's per-nationality subtables, whose
             // cells contain VERSE blocks with embedded blank lines)
             // into fragments that each fail the balanced-close check.
             {
               let collapsed = "";
               let i = 0;
               while (i < markedBody.length) {
-                const openIdx = markedBody.indexOf(HTMLTABLE_OPEN, i);
+                const openIdx = markedBody.indexOf(TABLE_OPEN, i);
                 if (openIdx === -1) {
                   collapsed += markedBody.substring(i);
                   break;
                 }
                 collapsed += markedBody.substring(i, openIdx);
-                const endIdx = findHtmlTableEnd(markedBody, openIdx);
+                const endIdx = findMarkerEnd(markedBody, openIdx, TABLE_OPEN, TABLE_CLOSE);
                 if (endIdx === -1) {
                   collapsed += markedBody.substring(openIdx);
                   break;
@@ -2905,7 +2752,6 @@
               /\{\{LEGEND:[\s\S]*?\}LEGEND\}/g,
               /«OUTLINE:[\s\S]*?«\/OUTLINE»/g,
               /«PLATE_OUTLINE:[\s\S]*?«\/PLATE_OUTLINE»/g,
-              /«CHEM:[\s\S]*?«\/CHEM»/g,
             ];
             for (const re of _BLOCK_MARKER_RES) {
               markedBody = markedBody.replace(re,

@@ -54,8 +54,8 @@ SEED_FILENAMES: tuple[str, ...] = (
     "01-0042-s5-ABBEY",              # multi-poem-cell external-image legend
     "01-0127-s3-ACACIA",             # simple captioned figure
     "01-0157-s2-ACCUMULATOR",        # captioned figures (GLUED_BR)
-    "01-0426-agriculture-AGRICULTURE",  # DATA_TABLE per-cell align + |+ caption + HTMLTABLE
-    "01-0358-africa-AFRICA",         # BRUTAL HTMLTABLE case — currently leaks child
+    "01-0426-agriculture-AGRICULTURE",  # DATA_TABLE per-cell align + |+ caption + TABLE
+    "01-0358-africa-AFRICA",         # BRUTAL TABLE case — currently leaks child
                                      # placeholders (#2 target; the leak is captured,
                                      # not hidden — see _normalize_for_compare)
     "01-0571-s4-ALDEHYDES",          # chemistry-layout / Langle bracket tables

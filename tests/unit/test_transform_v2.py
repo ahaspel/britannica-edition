@@ -98,19 +98,18 @@ class TestFootnotes:
 
 
 class TestTables:
-    """Tables produce full-style «HTMLTABLE» markers."""
+    """Tables produce recursive «TABLE[…]» markers."""
 
     def test_simple_table(self):
         result = _transform_v2("{|\n|A\n|B\n|-\n|C\n|D\n|}")
-        assert "«HTMLTABLE:" in result and "«/HTMLTABLE»" in result
+        assert "«TABLE[" in result and "«/TABLE»" in result
         for cell in ("A", "B", "C", "D"):
-            assert f">{cell}</td>" in result
+            assert f"«TD»{cell}«/TD»" in result
 
     def test_table_carries_cell_styles(self):
-        # Cell attributes are CARRIED into <td style=…> now, not stripped.
+        # Cell attributes are CARRIED into the quote-free «TD[…]» payload, not stripped.
         result = _transform_v2('{|\n|align="right"|100\n|200\n|}')
-        assert ">100</td>" in result and ">200</td>" in result
-        assert "text-align:right" in result
+        assert "«TD[style:text-align:right]»100«/TD»" in result and "«TD»200«/TD»" in result
 
 
 class TestScores:

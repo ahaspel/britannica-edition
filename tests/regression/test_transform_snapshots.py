@@ -68,8 +68,8 @@ def _normalize_for_compare(text: str) -> str:
       * `\\x03ELEM:NN\\x03` → `\\x03ELEM\\x03`  (placeholder-number stabilise)
 
     The last one is NOT hiding a bug — it's the opposite.  A LEAKED child
-    placeholder (a producer that built HTML without substituting a child —
-    e.g. AFRICA's HTMLTABLE) is non-deterministic because the placeholder
+    placeholder (a producer that built output without substituting a child —
+    e.g. AFRICA's table) is non-deterministic because the placeholder
     counter is process-global; stabilising the NUMBER lets us snapshot the
     brutal case so the leak's PRESENCE is captured and grep-able (`\\x03ELEM`).
     When the producer/renderer split (#2) fixes the leak, the markers vanish

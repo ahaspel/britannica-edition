@@ -38,7 +38,7 @@ PATTERNS: dict[str, str] = {
     "LEGEND":  r"\{\{LEGEND:[\s\S]*?\}LEGEND\}",
     "VERSE":   r"\{\{VERSE(?:\[style:[^\]]*\])?:[\s\S]*?\}VERSE\}",
     "OUTLINE": r"«OUTLINE:[\s\S]*?«/OUTLINE»",
-    "CHEM":    r"«CHEM:[\s\S]*?«/CHEM»",
+    "TABLE":   r"«TABLE\[[\s\S]*?«/TABLE»",
 }
 
 # Articles where the inner block marker sits inside a `{{TABLE:` cell —
@@ -71,13 +71,12 @@ def _apply_viewer_protection(body: str) -> str:
     marker doesn't fragment.  See viewer.html's `_BLOCK_MARKER_RES`.
     """
     protections = [
-        r"«HTMLTABLE:[\s\S]*?«/HTMLTABLE»",
+        r"«TABLE\[[\s\S]*?«/TABLE»",
         r"\{\{TABLEH?(?:\[style:[^\]]*\])?:[\s\S]*?\}TABLE\}",
         r"\{\{VERSE(?:\[style:[^\]]*\])?:[\s\S]*?\}VERSE\}",
         r"\{\{LEGEND:[\s\S]*?\}LEGEND\}",
         r"«OUTLINE:[\s\S]*?«/OUTLINE»",
         r"«PLATE_OUTLINE:[\s\S]*?«/PLATE_OUTLINE»",
-        r"«CHEM:[\s\S]*?«/CHEM»",
     ]
     for pat in protections:
         body = re.sub(pat, lambda m: re.sub(r"\n\n+", "\n", m.group(0)), body)
@@ -104,8 +103,7 @@ _BLOCK_MARKER_SCAN_RE = re.compile(
     r"|\{\{IMG:[^}]*\}\}"
     r"|«OUTLINE:[\s\S]*?«/OUTLINE»"
     r"|«PLATE_OUTLINE:[\s\S]*?«/PLATE_OUTLINE»"
-    r"|«HTMLTABLE:[\s\S]*?«/HTMLTABLE»"
-    r"|«CHEM:[\s\S]*?«/CHEM»"
+    r"|«TABLE\[[\s\S]*?«/TABLE»"
 )
 
 

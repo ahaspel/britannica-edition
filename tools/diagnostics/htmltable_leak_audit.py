@@ -1,19 +1,19 @@
-"""Catalog articles with HTMLTABLE-leak markers (html_tag /
+"""Catalog articles with TABLE-leak markers (html_tag /
 leaked_html_attr categories from quality_report.py).
 
 The leaks generally fall into a few shapes:
 
 1. **Incomplete wrapper** — content like `</td><td>...</td>` or
-   `colspan=N` appears outside any `«HTMLTABLE:…«/HTMLTABLE»` block.
+   `colspan=N` appears outside any `«TABLE[…]»…«/TABLE»` block.
    The transformer captured part of the table but not all.
-2. **Multiple adjacent HTMLTABLE blocks** that should have been one.
+2. **Multiple adjacent TABLE blocks** that should have been one.
 3. **Mixed wiki/html table** — wikitable markup (`{|`/`|}`) interleaved
    with HTML tags.
 4. **Outside-wrapper trailing chunk** — table ended cleanly but a
    stranded `</td></tr>` shows up after the wrapper close.
 
 For each flagged file: show context around the first leak, plus a
-quick summary of HTMLTABLE block counts and whether the leak is
+quick summary of TABLE block counts and whether the leak is
 inside or outside any wrapper.
 
 Usage:
@@ -30,8 +30,8 @@ sys.stdout.reconfigure(encoding="utf-8")
 
 ARTICLES_DIR = Path("data/derived/articles")
 
-_HTMLTABLE_BLOCK_RE = re.compile(
-    r"«HTMLTABLE:.*?«/HTMLTABLE»",
+_TABLE_BLOCK_RE = re.compile(
+    r"«TABLE\[.*?«/TABLE»",
     re.DOTALL,
 )
 _HTML_TAG_RE = re.compile(
@@ -48,8 +48,8 @@ def _excerpt(body: str, idx: int, span: int = 100) -> str:
 
 
 def _classify_leak(body: str, idx: int) -> str:
-    """Determine if the leak position is inside an HTMLTABLE block."""
-    for m in _HTMLTABLE_BLOCK_RE.finditer(body):
+    """Determine if the leak position is inside an TABLE block."""
+    for m in _TABLE_BLOCK_RE.finditer(body):
         if m.start() <= idx < m.end():
             return "inside-htmltable"
     return "outside-htmltable"
@@ -68,12 +68,12 @@ def main() -> int:
         if not body:
             continue
 
-        # Mirror quality_report.py exactly: strip HTMLTABLE / MATH /
+        # Mirror quality_report.py exactly: strip TABLE / MATH /
         # IMG (length-preserving so positions stay aligned with the
         # original body for context excerpts) then look for leaks.
         def _blank(m):
             return " " * len(m.group(0))
-        stripped = re.sub(r"«HTMLTABLE:.*?«/HTMLTABLE»",
+        stripped = re.sub(r"«TABLE\[.*?«/TABLE»",
                           _blank, body, flags=re.DOTALL)
         stripped = re.sub(r"«MATH:.*?«/MATH»",
                           _blank, stripped, flags=re.DOTALL)
@@ -95,12 +95,12 @@ def main() -> int:
                 leak_idx = attr_match.start()
             leak_kind.append("leaked_html_attr")
 
-        # Count HTMLTABLE blocks
-        n_blocks = len(_HTMLTABLE_BLOCK_RE.findall(body))
-        # Distance from leak to nearest HTMLTABLE block boundary
+        # Count TABLE blocks
+        n_blocks = len(_TABLE_BLOCK_RE.findall(body))
+        # Distance from leak to nearest TABLE block boundary
         nearest_dist = float("inf")
         nearest_side = "?"
-        for m in _HTMLTABLE_BLOCK_RE.finditer(body):
+        for m in _TABLE_BLOCK_RE.finditer(body):
             if leak_idx < m.start():
                 d = m.start() - leak_idx
                 side = "before-block"
