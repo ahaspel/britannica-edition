@@ -25,10 +25,11 @@ sys.path.insert(0, os.path.dirname(__file__))
 sys.path.insert(0, os.path.abspath(
     os.path.join(os.path.dirname(__file__), "..", "..", "src")))
 
-# Articles whose raw bears a table — full output is kept for these so the
-# table-refactor before/after diff is inspectable.  (Loose/over-inclusive is fine:
-# the md5 is stored for EVERY article regardless, so any change anywhere is caught.)
-_AFFECTED = re.compile(r"\{\||<table\b", re.IGNORECASE)
+# Articles whose raw bears a paired-wrapper (CENTER family: `{{c/s}}`,
+# `{{EB1911 fine print/s}}`, `{{fine block/s}}`, …) — full output is kept for these
+# so the _process_center un-leafing before/after diff is inspectable.  (Loose is
+# fine: the md5 is stored for EVERY article, so any change anywhere is caught.)
+_AFFECTED = re.compile(r"\{\{[^{}|]*?/s\s*\}\}", re.IGNORECASE)
 
 
 def _work(item):
