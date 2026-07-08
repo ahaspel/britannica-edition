@@ -1561,8 +1561,8 @@
       let s = "max-width:100%;height:auto;vertical-align:middle;";
       if (meta.width)  s += `width:${meta.width}px;`;
       if (meta.height) s += `height:${meta.height}px;`;
-      if      (meta.align === "right")  s += "float:right;margin:.3em 0 .4em 1.2em;";
-      else if (meta.align === "left")   s += "float:left;margin:.3em 1.2em .4em 0;";
+      if      (meta.align === "right")  s += "float:right;margin:.4em 0 .5em 1.8em;";
+      else if (meta.align === "left")   s += "float:left;margin:.4em 1.8em .5em 0;";
       else if (meta.align === "center") s += "display:block;margin:0 auto;";
       return `<img src="${url}" alt="${escapeHtml(alt)}" loading="lazy" style="${s}" />`;
     }

@@ -25,13 +25,10 @@ sys.path.insert(0, os.path.dirname(__file__))
 sys.path.insert(0, os.path.abspath(
     os.path.join(os.path.dirname(__file__), "..", "..", "src")))
 
-# Articles whose raw bears one of the migrated templates — full output is kept
-# for these so their diffs are inspectable.  (Loose/over-inclusive is fine.)
-_AFFECTED = re.compile(
-    # any HTML opener with a `title` attr (the tooltip carry/drop flip) OR a
-    # `{{=}}`-escaped attribute (the opener-recognition change)
-    r"<[a-zA-Z][^>]*(?:\btitle\b|\{\{\s*=\s*\}\})",
-    re.IGNORECASE)
+# Articles whose raw bears a table — full output is kept for these so the
+# table-refactor before/after diff is inspectable.  (Loose/over-inclusive is fine:
+# the md5 is stored for EVERY article regardless, so any change anywhere is caught.)
+_AFFECTED = re.compile(r"\{\||<table\b", re.IGNORECASE)
 
 
 def _work(item):
