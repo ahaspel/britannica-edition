@@ -58,13 +58,14 @@ class TestImageCaptions:
         assert "{{IMG:Foo.jpg}}" in result
 
     def test_cithara_real_data(self):
-        """CITHARA's `{{img float}}` is a CAPTIONED_FIGURE — image + recursed
-        caption floating as one inline `«SPAN[style:…]»` unit, NOT a synthesized
-        table and NOT flattened into the IMG marker."""
+        """CITHARA's `{{img float}}` is an IMAGE with a caption — image + recursed
+        caption as one inline-float `«SPAN[float:…;text-align:center]»` unit (floated to
+        the side, caption centred directly below the plate), NOT a synthesized table and
+        NOT flattened into the IMG marker."""
         raw = _load_page(6, 411)
         result = _transform_v2(raw, volume=6, page_number=411)
-        assert re.search(r"«SPAN\[style:[^\]]*\]»\{\{IMG:", result), \
-            "figure should be an inline float span wrapping the image leaf"
+        assert re.search(r"«SPAN\[style:[^\]]*text-align:center[^\]]*\]»\{\{IMG:", result), \
+            "figure should be an inline-float span wrapping the image leaf, caption centred"
         assert 'class="figtable"' not in result
         # The Nero image is a pure leaf \u2014 no caption bundled into the marker.
         assert not re.search(r"\{\{IMG:[^|}]*\|[^}]*Nero", result)
