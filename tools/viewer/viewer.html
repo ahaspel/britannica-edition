@@ -2057,26 +2057,6 @@
       }
       return -1;
     }
-    // «DIV[style:…]»…«/DIV» — the open marker carries a variable `[style:…]`
-    // payload, but `«DIV[` is a stable prefix, so the balanced walker keys on
-    // it (depth-counting needs only to recognize opens/closes, not parse the
-    // style).  Styled divs can nest, so this must be balanced.
-    const DIV_OPEN = "«DIV[";
-    const DIV_CLOSE = "«/DIV»";
-    function findDivEnd(str, start) {
-      return findMarkerEnd(str, start, DIV_OPEN, DIV_CLOSE);
-    }
-
-    // Math-only paragraph: optional leading PAGE markers, one MATH
-    // marker, optional trailing punctuation, optional `(N)` label,
-    // optional trailing punctuation. Capture groups:
-    //   [1] leading page markers
-    //   [2] the «MATH:…«/MATH» marker
-    //   [3] the label content WITHOUT parens (e.g. "6", "2a"),
-    //       undefined when the equation is unlabeled.
-    const MATH_PARA_RE = /^\s*((?:\x01PAGE:\d+\x01\s*)*)(«MATH(?:\[[^\]]*\])?:[\s\S]*?«\/MATH»)\s*[.,;:]?\s*(?:\(([^)]+)\)\s*)?\s*[.,;:]?\s*$/s;
-    const EQNGROUP_OPEN = "«EQNGROUP»";
-    const EQNGROUP_CLOSE = "«/EQNGROUP»";
     // Single labeled equation block, emitted by the {{ne}} template
     // handler. Wraps both math-marker and inline-text equation
     // content (the EB1911 source uses both for `{{ne||...|(N)}}`).
@@ -2103,7 +2083,7 @@
     // inline letterform image and wrapped the fragments in separate `<p>`s,
     // forcing the image onto its own line (ALPHABET's β/λ/σ glyphs).
     const BLOCK_MARKER_SCAN_RE =
-      /\{\{TABLEH?(?:\[style:[^\]]*\])?:[\s\S]*?\}TABLE\}|\{\{VERSE(?:\[style:[^\]]*\])?:[\s\S]*?\}VERSE\}|\{\{LEGEND:[\s\S]*?\}LEGEND\}|«OUTLINE:[\s\S]*?«\/OUTLINE»|«PLATE_OUTLINE:[\s\S]*?«\/PLATE_OUTLINE»|«TABLE\[[\s\S]*?«\/TABLE»|«TITLE:[\s\S]*?«\/TITLE»/g;
+      /\{\{TABLEH?(?:\[style:[^\]]*\])?:[\s\S]*?\}TABLE\}|\{\{VERSE(?:\[style:[^\]]*\])?:[\s\S]*?\}VERSE\}|\{\{LEGEND:[\s\S]*?\}LEGEND\}|«OUTLINE:[\s\S]*?«\/OUTLINE»|«PLATE_OUTLINE:[\s\S]*?«\/PLATE_OUTLINE»|«TABLE\[[\s\S]*?«\/TABLE»|«EQN:[^»]*»[\s\S]*?«\/EQN»|«TITLE:[\s\S]*?«\/TITLE»/g;
 
     function renderParagraph(p, nextPara) {
       // Mixed-paragraph split: if this paragraph contains a block
@@ -2177,19 +2157,14 @@
         return `<h1>${h}</h1>`;
       }
 
-      // Numbered display-math block (single equation OR an equation
-      // system bundled at the merge phase).  Format:
-      //   \u00abEQNGROUP\u00bb<row1>\n<row2>\n\u2026\u00ab/EQNGROUP\u00bb
-      // where each row matches MATH_PARA_RE.  Exactly one row carries
-      // a label; the rest are bare math.  The CSS grid centres the
-      // label vertically against the math stack so a 6-row system
-      // shows the label beside the visual middle, not the top.
-      if (p.startsWith(EQNGROUP_OPEN) && p.endsWith(EQNGROUP_CLOSE)) {
-        const inner = p.substring(
-          EQNGROUP_OPEN.length, p.length - EQNGROUP_CLOSE.length);
-        const rows = inner.split("\n");
-        let labelText = null;
-        const rowHtmls = [];
+      // Numbered display-math block \u2014 a self-contained \u00abEQN:label\u00bbcontent\u00ab/EQN\u00bb.  It renders
+      // its own math plus its label in the right margin (the `math-system` CSS grid), the SAME
+      // HTML the render-time \u00abEQNGROUP\u00bb wrapper produced for a lone equation \u2014 which is EVERY
+      // equation: a group never carried a second numbered row (a 2nd label broke the old
+      // bundling loop).  The label rides inside the marker; no wrapper, no `\n\n` grouping.
+      const eqm = p.match(EQN_PARA_RE);
+      if (eqm) {
+        const labelText = eqm[2];
         // Render a LaTeX string as KaTeX displayMode with the same
         // entity decoding and whitespace normalisation as the prose
         // math path uses below.
@@ -2201,8 +2176,7 @@
             .replace(/[\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u00a0\u200b]/g, " ");
           const { popout, fsPct } = parseMathHint(hint);
           if (popout) {
-            // EQNGROUP rows are always display-math context — the
-            // popout link belongs in the math column, not inline.
+            // Display-math context — the popout link belongs in the math column, not inline.
             return renderMathPopout(raw, true);
           }
           try {
@@ -2228,55 +2202,25 @@
             const href = `${currentScanUrl}&pinit=${page}`;
             return `<a class="${cls}" data-page="${page}" title="${title}" href="${href}">${currentVolume}:${page}</a>`;
           });
-        for (const row of rows) {
-          // EQN row (from {{ne||content|(N)}}): label sits in the
-          // marker, content may be a single MATH marker (KaTeX
-          // display) OR inline-text equation (formatCell handles
-          // italic/bold/MATH/link substitutions for things like
-          // `\u00abI\u00bbpv\u00ab/I\u00bb=RT`).
-          const em = row.match(EQN_PARA_RE);
-          if (em) {
-            labelText = em[2];
-            const pageMarkers = em[1] || "";
-            const content = em[3].trim();
-            const mathOnly = content.match(/^\u00abMATH(?:\[([^\]]*)\])?:([\s\S]*?)\u00ab\/MATH\u00bb\s*[.,;:]?\s*$/);
-            const contentHtml = mathOnly
-              ? renderDisplayMath(mathOnly[2], mathOnly[1])
-              : decodeInlineMarkers(content, { escape: true, dhrInline: true });
-            rowHtmls.push(
-              `<div class="math-system-row">${renderPageMarkers(pageMarkers)}${contentHtml}</div>`);
-            continue;
-          }
-          // MATH row: bare \u00abMATH:eq\u00ab/MATH\u00bb (with optional `[hint]`
-          // attribute), optionally with `(label)` appended (the
-          // wikitable rowspan-label path).
-          const rm = row.match(MATH_PARA_RE);
-          if (!rm) continue;
-          if (rm[3] !== undefined) labelText = rm[3];
-          const pageMarkers = rm[1] || "";
-          // Parse `[hint]` and extract pure latex
-          const marker = rm[2];
-          const hintMatch = marker.match(/^\u00abMATH(?:\[([^\]]*)\])?:([\s\S]*?)\u00ab\/MATH\u00bb$/);
-          const hint = hintMatch ? hintMatch[1] : null;
-          const latex = hintMatch ? hintMatch[2] : marker.substring(
-            "\u00abMATH:".length, marker.length - "\u00ab/MATH\u00bb".length);
-          rowHtmls.push(
-            `<div class="math-system-row">${renderPageMarkers(pageMarkers)}${renderDisplayMath(latex, hint)}</div>`);
-        }
+        // Content may be a single MATH marker (KaTeX display) OR an inline-text equation
+        // (decodeInlineMarkers handles \u00abI\u00bb/\u00abB\u00bb/\u00abMATH\u00bb/link \u2014 e.g. `\u00abI\u00bbpv\u00ab/I\u00bb=RT`).
+        const content = eqm[3].trim();
+        const mathOnly = content.match(/^\u00abMATH(?:\[([^\]]*)\])?:([\s\S]*?)\u00ab\/MATH\u00bb\s*[.,;:]?\s*$/);
+        const contentHtml = mathOnly
+          ? renderDisplayMath(mathOnly[2], mathOnly[1])
+          : decodeInlineMarkers(content, { escape: true, dhrInline: true });
+        const rowHtml =
+          `<div class="math-system-row">${renderPageMarkers(eqm[1] || "")}${contentHtml}</div>`;
         const labelHtml = labelText
           ? `<div class="math-system-label">(${escapeHtml(labelText)})</div>`
           : "";
         return `<div class="math-system">` +
-          `<div class="math-system-rows">${rowHtmls.join("")}</div>` +
+          `<div class="math-system-rows">${rowHtml}</div>` +
           labelHtml +
           `</div>`;
       }
-      // Single \u00abEQN:\u2026\u00ab/EQN\u00bb paragraphs are wrapped into \u00abEQNGROUP\u00bb
-      // by the merge phase above so they share the multi-row
-      // renderer and pick up any bare-MATH continuation rows.
-      // Section-heading detection (SEC marker + standalone/with-body
-      // SC variants) is handled by the detectSections pre-pass \u2014 see
-      // the early-return guard at the top of this function.
+      // Section-heading detection (SEC marker + standalone/with-body SC variants) is handled by
+      // the detectSections pre-pass \u2014 see the early-return guard at the top of this function.
       const imgMatch = p.match(IMG_PARTS_RE_ANCHORED);
       if (imgMatch)
         return renderImg(imgMatch[1], parseImgMeta(imgMatch[2]), imgMatch[3] || "");
@@ -2669,186 +2613,13 @@
             // the centered-figure spacing.)
 
 
-            // Plain-text continuation merge (below): re-join a paragraph break
-            // that isn't a real one — prev ends mid-clause, next starts lowercase.
-            // NON_TEXT_PREFIX keeps a structural block from being merged; the margin
-            // strip ignores page / shoulder-heading markers when judging the seam.
-            const NON_TEXT_PREFIX = /^(?:\{\{(?:TABLE|LEGEND|IMG|VERSE)|\u00abTABLE\[|\u00abSEC:|\u00abSH:|\u00abANCHOR:|\u00abOUTLINE:|\u00abPLATE_OUTLINE:|\u00abTITLE:)/;
-            const stripMarginMarkers = s => s
-              .replace(/\x01PAGE:\d+\x01/g, "")
-              .replace(/\u00abSH:[^\u00bb]*\u00bb.*?\u00ab\/SH\u00bb/gs, "")
-              .trim();
-            // Collapse ``\n\n`` inside balanced ``«TABLE[…]»`` blocks to
-            // ``\n`` so paragraph-splitting doesn't slice a nested
-            // table (e.g. SHIP's per-nationality subtables, whose
-            // cells contain VERSE blocks with embedded blank lines)
-            // into fragments that each fail the balanced-close check.
-            {
-              let collapsed = "";
-              let i = 0;
-              while (i < markedBody.length) {
-                const openIdx = markedBody.indexOf(TABLE_OPEN, i);
-                if (openIdx === -1) {
-                  collapsed += markedBody.substring(i);
-                  break;
-                }
-                collapsed += markedBody.substring(i, openIdx);
-                const endIdx = findMarkerEnd(markedBody, openIdx, TABLE_OPEN, TABLE_CLOSE);
-                if (endIdx === -1) {
-                  collapsed += markedBody.substring(openIdx);
-                  break;
-                }
-                collapsed += markedBody
-                  .substring(openIdx, endIdx)
-                  .replace(/\n\n+/g, "\n");
-                i = endIdx;
-              }
-              markedBody = collapsed;
-            }
-            // Same balanced protection for «DIV[style:…]»…«/DIV» blocks: a
-            // styled <div> can wrap MULTI-paragraph content (CHESS's post-
-            // board Fine-Print analysis has a blank line between the prose and
-            // the move list).  Without this the paragraph split lands the
-            // opener and «/DIV» in different paragraphs, the inline «DIV»
-            // decoder can't pair them, and both markers leak raw.  Balanced
-            // (divs nest) via the `«DIV[` prefix walker.
-            {
-              let collapsed = "";
-              let i = 0;
-              while (i < markedBody.length) {
-                const openIdx = markedBody.indexOf(DIV_OPEN, i);
-                if (openIdx === -1) {
-                  collapsed += markedBody.substring(i);
-                  break;
-                }
-                collapsed += markedBody.substring(i, openIdx);
-                const endIdx = findDivEnd(markedBody, openIdx);
-                if (endIdx === -1) {
-                  collapsed += markedBody.substring(openIdx);
-                  break;
-                }
-                collapsed += markedBody
-                  .substring(openIdx, endIdx)
-                  .replace(/\n\n+/g, "\n");
-                i = endIdx;
-              }
-              markedBody = collapsed;
-            }
-            // Same protection for the other block-element markers
-            // (TABLE/VERSE/LEGEND/OUTLINE/PLATE_OUTLINE/PRE/CHEM): each
-            // is rendered by a paragraph-anchored regex, so any
-            // internal ``\n\n`` (from cell-content transforms that
-            // unwrap centred/fine-print prose, page-break artefacts,
-            // or genuine multi-paragraph cell content) would fragment
-            // the marker at the viewer's paragraph split and leak the
-            // marker text.  Collapse internal ``\n\n+`` to ``\n``
-            // BEFORE splitting so the marker reaches its renderer as
-            // one atomic span.  These markers don't nest within
-            // themselves so a non-greedy regex is sufficient (no
-            // balanced-walker needed like HTMLTABLE).
-            const _BLOCK_MARKER_RES = [
-              /\{\{TABLEH?(?:\[style:[^\]]*\])?:[\s\S]*?\}TABLE\}/g,
-              /\{\{VERSE(?:\[style:[^\]]*\])?:[\s\S]*?\}VERSE\}/g,
-              /\{\{LEGEND:[\s\S]*?\}LEGEND\}/g,
-              /«OUTLINE:[\s\S]*?«\/OUTLINE»/g,
-              /«PLATE_OUTLINE:[\s\S]*?«\/PLATE_OUTLINE»/g,
-            ];
-            for (const re of _BLOCK_MARKER_RES) {
-              markedBody = markedBody.replace(re,
-                m => m.replace(/\n\n+/g, "\n"));
-            }
-            const rawParas = markedBody.split("\n\n");
-            const mergedParas = [];
-            let i = 0;
-            while (i < rawParas.length) {
-              const cur = rawParas[i];
-              // Math equation systems: a labeled math paragraph plus
-              // any unlabeled bare-math paragraphs that immediately
-              // follow it form one visual block.  In the EB1911 source
-              // this comes from `{|style="margin:auto;"|<math>…</math>
-              // |rowspan="N" |(N)|-|<math>…</math>|-|…|}` — the rowspan
-              // label is conceptually centred beside the whole stack.
-              // Bundle the run into a single «EQNGROUP» paragraph so
-              // renderParagraph can lay out the label at the visual
-              // middle of the rows.  An UNLABELED solo math paragraph
-              // is left alone (renders fine as its own display block);
-              // an unlabeled multi-equation system (e.g. METEOROLOGY
-              // Margules trio) likewise renders as separate display
-              // blocks — only the presence of a label triggers the
-              // grouped layout.
-              {
-                // Two flavours of "labeled equation paragraph":
-                //   - «EQN:label»content«/EQN»  (from {{ne}} template,
-                //     content is math OR inline-text)
-                //   - «MATH:eq«/MATH» (label)   (from a wikitable
-                //     equation system whose rowspan label cell got
-                //     appended to the first row by _process_equation_layout)
-                // Either kind triggers bundling: any bare-MATH
-                // paragraphs that immediately follow are absorbed as
-                // continuation rows of the same visual block.
-                const eqnHit = EQN_PARA_RE.test(cur);
-                const mathHit = MATH_PARA_RE.exec(cur);
-                const isLabeled = eqnHit || (mathHit && mathHit[3] !== undefined);
-                if (isLabeled) {
-                  const runRows = [cur];
-                  let scan = i + 1;
-                  while (scan < rawParas.length) {
-                    const next = rawParas[scan];
-                    if (EQN_PARA_RE.test(next)) break; // new labeled block
-                    const nm = next.match(MATH_PARA_RE);
-                    if (!nm || nm[3] !== undefined) break;
-                    runRows.push(next);
-                    scan++;
-                  }
-                  mergedParas.push(
-                    EQNGROUP_OPEN + runRows.join("\n") + EQNGROUP_CLOSE);
-                  i = scan;
-                  continue;
-                }
-              }
-              // No mid-paragraph figure merge.  A block figure renders in place
-              // (its own block, where the producer put it); the viewer does NOT
-              // float it into the surrounding prose.  Killed the round trip:
-              // producer leaves the IMG in prose, the IMG-normalization injected
-              // a blank-line break to isolate it, this merge re-floated it back.
-              // Plain-text continuation merge: prev ends mid-sentence
-              // (no terminator) + next starts lowercase. Handles
-              // OCR-induced paragraph breaks that aren't really
-              // paragraph breaks.
-              if (mergedParas.length > 0 && !NON_TEXT_PREFIX.test(cur)) {
-                const prev = mergedParas[mergedParas.length - 1];
-                if (!NON_TEXT_PREFIX.test(prev)) {
-                  const pt = stripMarginMarkers(prev);
-                  const ct = stripMarginMarkers(cur);
-                  if (pt && ct &&
-                      /[,;]$/.test(pt) &&
-                      /^[a-z]/.test(ct)) {
-                    mergedParas[mergedParas.length - 1] = prev + " " + cur;
-                    i++;
-                    continue;
-                  }
-                }
-              }
-              if (cur.startsWith("\u00abSH:")) {
-                // Shoulder heading: attach to previous, then absorb next
-                const sh = cur;
-                if (mergedParas.length > 0) {
-                  mergedParas[mergedParas.length - 1] += " " + sh;
-                } else {
-                  mergedParas.push(sh);
-                }
-                // Also absorb the next paragraph (continuation of sentence)
-                if (i + 1 < rawParas.length && !rawParas[i + 1].startsWith("\u00abSH:")) {
-                  mergedParas[mergedParas.length - 1] += " " + rawParas[i + 1];
-                  i++;
-                }
-              } else {
-                mergedParas.push(cur);
-              }
-              i++;
-            }
-            detectSections(mergedParas);
-            let bodyHtml = mergedParas.map((p, idx) => renderParagraph(p, mergedParas[idx + 1])).join("");
+            // Paragraph structure is CARRIED, not re-inferred: prose breaks ride as «P»
+            // (→<p>, the browser auto-closes) and each numbered equation is a self-delimiting
+            // «EQN» block.  No blank-line split, no merge pass, no balanced-collapse to protect a
+            // split — render the whole body once; renderParagraph's block scan peels every block
+            // («TABLE»/«EQN»/VERSE/…) in place and the prose runs through «P»→<p>.
+            detectSections([markedBody]);
+            let bodyHtml = renderParagraph(markedBody, null);
             // De-dup colliding section/shoulder ids in the SAME document order
             // detectSections used, so each TOC link resolves to its own anchor
             // (the first same-slug anchor keeps section-<slug>, reuses get -N).
