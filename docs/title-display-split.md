@@ -106,9 +106,13 @@ This re-keys identity, so it is a real migration, not a patch:
   half — how many currently-unresolved xrefs a canonical index would rescue — needs the
   persisted table above (unresolved targets aren't recorded today). Falls out for free
   once resolution is persisted.
-- **Primary-headword extraction** has edge cases: compound names ("BARGAIN AND SALE"),
-  names that *are* the qualifier, corrupted `«TITLE»` markers (a handful). Needs its own
-  small spec + snapshot tests.
+- **Primary-headword extraction — DONE** (`britannica.util.strings.primary_headword`,
+  22 unit cases). Validated across all 36,688 corpus headings: 88% single-word, **0**
+  leftover brackets/commas, **0** empties; persons → surname, regnals → name+numeral,
+  genuine multi-word titles (`ACTS OF THE APOSTLES`) kept whole.  **Viability result:
+  the re-slug is a clean sweep** — headwords extract tidily, so the migration's URLs
+  come out clean (`algebra`, `aarssens`, `william-ii`). This was the open risk on
+  whether the migration is even worth doing; it isn't a blocker.
 - **Redirect coverage** must be exhaustive; a re-slug with a gap breaks live links (the
   exact churn we've been guarding against).
 - **Tiebreak stability:** position-based `-2` is stable only while per-page segmentation
