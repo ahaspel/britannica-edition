@@ -1215,6 +1215,9 @@
       margin: 1em 0;
       padding-left: 0;
     }
+    ul.outline.outline-indent {
+      padding-left: 1.6em;      /* a plain `:`-indented list keeps its source indentation */
+    }
     ul.outline li {
       margin: 0.15em 0;
     }
@@ -2499,182 +2502,63 @@
       return `${base}?vol=${article.volume}&start=${start}&end=${end}&label=${encodeURIComponent(article.title)}&back=${back}`;
     }
 
+    function hydrateMath(root) {
+      // Python emits math as `.tex-math` placeholders carrying the LaTeX + display mode; run KaTeX
+      // over them after the page is inserted — the same engine and cleaning the inline render used.
+      // Popout links and the fs-scaling wrapper are already in the baked HTML; this fills the math.
+      root.querySelectorAll(".tex-math").forEach(el => {
+        const display = el.dataset.display === "1";
+        const tmp = document.createElement("textarea");
+        tmp.innerHTML = el.textContent;
+        let raw = tmp.value.replace(/\\mbox\b/g, "\\text");
+        // Display math also normalizes carried unicode spaces (the old renderDisplayMath did; the
+        // inline path did NOT) — keep the split so production math stays byte-identical.
+        if (display) raw = raw.replace(/[          ​]/g, " ");
+        let html;
+        try {
+          html = (typeof katex === "undefined")
+            ? `<code class="math-fallback">${escapeHtml(raw)}</code>`
+            : katex.renderToString(raw, { throwOnError: false, displayMode: display });
+        } catch (e) {
+          html = `<code class="math-fallback">${escapeHtml(raw)}</code>`;
+        }
+        el.outerHTML = html;
+      });
+    }
+
+    function fixScanHrefs(root, article) {
+      // The scan `back` param is location.href — a runtime value, not bakeable — so Python bakes a
+      // placeholder and we set the real scan href here.  Page markers carry data-page → &pinit=N;
+      // the card's scan link is the bare base.
+      const su = scanUrl(article);
+      root.querySelectorAll('a[href*="scans.html"]').forEach(a => {
+        const page = a.dataset.page;
+        a.setAttribute("href", page ? `${su}&pinit=${page}` : su);
+      });
+    }
+
+    function captureWideTables(root) {
+      // The expand-table modal reads wideTableSources; with Python rendering the figure, populate
+      // it from the DOM — the `.wide-table-inline` holds the full table.
+      root.querySelectorAll(".wide-table-wrap").forEach(fig => {
+        const btn = fig.querySelector(".expand-table-btn");
+        const inline = fig.querySelector(".wide-table-inline");
+        if (btn && inline) wideTableSources[btn.dataset.wt] = { table: inline.innerHTML, trailing: "" };
+      });
+    }
+
     function renderArticle(article) {
       currentVolume = article.volume || "?";
       currentScanUrl = scanUrl(article);
       unproofedPages = (article.source_quality && article.source_quality.unproofed_pages) ? article.source_quality.unproofed_pages : {};
-      // Plate pages carry no marginal furniture (no page-number margin,
-      // no shoulder headers) — drop the reading-column cap and give the
-      // whole viewport to the display (see body.plate-page CSS).
+      // Plate pages carry no marginal furniture — drop the reading-column cap (see body.plate-page CSS).
       document.body.classList.toggle("plate-page", article.article_type === "plate");
-      const segments = Array.isArray(article.segments) ? article.segments : [];
-      const xrefs = (Array.isArray(article.xrefs) ? article.xrefs : [])
-        .slice().sort((a, b) => (a.normalized_target || "").localeCompare(b.normalized_target || ""));
-      const contributors = Array.isArray(article.contributors) ? article.contributors : [];
-      const plates = Array.isArray(article.plates) ? article.plates : [];
-
-      const xrefHtml = xrefs.length
-        ? `
-          <ul class="xref-list">
-            ${xrefs.map(xref => {
-              const normalized = xref.normalized_target || "";
-              const resolved = (xref.status || "") === "resolved";
-
-              return `
-                <li class="xref-item ${resolved ? "resolved" : "unresolved"}">
-                  ${resolved
-                    ? `<a href="${buildXrefHref(xref)}">${escapeHtml(normalized)}</a>`
-                    : escapeHtml(normalized)}
-                </li>`;
-            }).join("")}
-          </ul>`
-        : "";
-
-      const segmentHtml = "";
-
-      app.innerHTML = `
-        <div class="card">
-          ${(() => {
-            // The title is an ordinary «TITLE» element at the head of the body.
-            // Reset the footnote/section stream HERE — before the title renders,
-            // the first thing on the page — so the title's own footnote is #1 in
-            // document order, numbered and collected exactly like a body
-            // footnote.  Then render the title block through renderParagraph, the
-            // same path the body uses: no bespoke title render, no separate
-            // footnote stream.  (Plates and any title-less body fall back to the
-            // flattened article.title.)
-            footnoteCounter = 0; namedFnNumbers.clear(); fnAnchorInstance = 0; collectedFootnotes = []; collectedSections = []; wideTableCounter = 0; for (const k in wideTableSources) delete wideTableSources[k];
-            const tm = (article.body || "").match(/^«TITLE:[\s\S]*?«\/TITLE»/);
-            return tm ? renderParagraph(tm[0], null)
-                      : `<h1>${renderTitleMarkers(article.title || "Untitled")}</h1>`;
-          })()}
-          <div style="font-size: 0.85rem; color: #6b5e4f; font-style: italic; margin-bottom: 6px;">
-            <a href="${scanUrl(article)}" style="color: #6b5e4f;">vol. ${escapeHtml(article.volume ?? "?")}, ${article.page_start !== article.page_end ? `pp. ${escapeHtml(article.page_start ?? "")}–${escapeHtml(article.page_end ?? "")}` : `p. ${escapeHtml(article.page_start ?? "")}`}</a>
-            ${article.word_count ? `&middot; ${article.word_count.toLocaleString()} words` : ""}
-          </div>
-          ${article.parent_article ? `<div style="margin-bottom: 8px; font-size: 0.95rem;">Plate for <a href="${articleUrl(article.parent_article.filename)}">${renderTitleMarkers(article.parent_article.title)}</a></div>` : ""}
-          ${contributors.length ? `<div class="contributors">By ${contributors.map(c => `<a href="/contributors.html?q=${encodeURIComponent(c.full_name)}" style="color: var(--muted);">${escapeHtml(c.full_name)}</a> <span style="color: var(--muted); font-size: 0.85em;">(${escapeHtml(c.initials)})</span>`).join(", ")}</div>` : ""}
-          ${(() => {
-            const topics = topicMap && article.filename
-              ? (topicMap[article.filename] || []) : [];
-            if (!topics.length) return "";
-            const sep = ` <span style="color:var(--muted);">›</span> `;
-            const topicsBase = IS_LOCAL ? "topics.html" : "/topics.html";
-            const linkSeg = (full, label) =>
-              `<a href="${topicsBase}#${encodeURIComponent(full)}" style="color:var(--link);">${escapeHtml(label)}</a>`;
-            const list = topics.map(t => {
-              const segs = [t.category, ...(t.path || [])];
-              // Drop a sole 'General' path (the catch-all for cats
-              // without a real subdivision) — showing 'History › General'
-              // adds noise. Keep General when nested deeper.
-              if (segs.length === 2 && segs[1] === "General") segs.pop();
-              const links = [];
-              for (let i = 0; i < segs.length; i++) {
-                const full = segs.slice(0, i + 1).join(" > ");
-                links.push(linkSeg(full, segs[i]));
-              }
-              return links.join(sep);
-            }).join("; ");
-            return `<div class="contributors">In: ${list}</div>`;
-          })()}
-          ${(() => {
-            const roman = ["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV"];
-            return (plates.length && article.article_type !== "plate") ? `<div class="contributors">Plates: ${plates.map((p, i) => `<a href="${articleUrl(p.filename)}">Plate ${roman[i] || i+1}</a>`).join(", ")}</div>` : "";
-          })()}
-          ${article.source_quality && article.source_quality.lowest_level <= 1
-            ? `<div style="text-align: center; margin: 10px 0;">
-                 <div style="background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 6px 14px; font-size: 0.9rem; display: inline-block;">
-                   <strong>Source quality notice:</strong> This article spans pages with unproofread transcriptions.
-                 </div>
-               </div>`
-            : ""}
-          ${(() => {
-            // The title block above already reset the footnote/section stream
-            // and rendered the «TITLE» element as the H1.  Strip that leading
-            // block here so the body continues the SAME stream (title footnote
-            // = #1, body footnotes #2+) instead of re-rendering the title.
-
-            // Page markers (\x01PAGE:N\x01) are embedded directly in the
-            // body text by the transform stage.  If none are present
-            // (e.g. single-page articles), inject one for page_start.
-            let markedBody = (article.body || "").replace(/^«TITLE:[\s\S]*?«\/TITLE»/, "");
-            if (markedBody.indexOf("\x01PAGE:") === -1 && article.page_start) {
-              markedBody = `\x01PAGE:${article.page_start}\x01` + markedBody;
-            }
-
-            // Images render WHERE the source puts them: inline in prose, or as
-            // their own paragraph when the source isolated them on a blank line.
-            // No viewer-side "every figure onto its own paragraph" normalization —
-            // that layout decision belongs to the producer's structure («CTR»/«BR»
-            // for a centered figure, align= for a float), not to a regex here that
-            // also shreds the «CTR» figure it splits across.  (This split keyed on
-            // align=inline to spare glyphs; with that mark gone it split EVERY
-            // image, blocking ALPHABET's mid-prose letterforms and likely breaking
-            // the centered-figure spacing.)
-
-
-            // Paragraph structure is CARRIED, not re-inferred: prose breaks ride as «P»
-            // (→<p>, the browser auto-closes) and each numbered equation is a self-delimiting
-            // «EQN» block.  No blank-line split, no merge pass, no balanced-collapse to protect a
-            // split — render the whole body once; renderParagraph's block scan peels every block
-            // («TABLE»/«EQN»/VERSE/…) in place and the prose runs through «P»→<p>.
-            detectSections([markedBody]);
-            let bodyHtml = renderParagraph(markedBody, null);
-            // De-dup colliding section/shoulder ids in the SAME document order
-            // detectSections used, so each TOC link resolves to its own anchor
-            // (the first same-slug anchor keeps section-<slug>, reuses get -N).
-            const _idSeen = Object.create(null);
-            bodyHtml = bodyHtml.replace(/id="(section-[^"]+)"/g,
-              (mm, id) => `id="${dedupeAnchorId(_idSeen, id)}"`);
-            const level1 = collectedSections.filter(s => s.level === 1);
-            const level2 = collectedSections.filter(s => s.level === 2);
-            let tocHtml = "";
-            if (level1.length >= 1 && level2.length >= 1) {
-              // Interleaved: major sections with shoulder headings
-              // nested below. Level-2 items appearing before any
-              // level-1 (orphans) render as standalone top-level items
-              // so the HTML structure stays valid.  A SINGLE major section
-              // counts (>= 1): a lone «SEC» among shoulders (AFGHANISTAN's
-              // `History`, POLAND's `Polish Literature`) must appear in the
-              // TOC, not fall to the shoulder-only branch below.
-              let tocInner = "";
-              let inSub = false;
-              let seenLevel1 = false;
-              for (const s of collectedSections) {
-                if (s.level === 1) {
-                  if (inSub) { tocInner += "</ul></li>"; inSub = false; }
-                  else if (seenLevel1) { tocInner += "</li>"; }
-                  tocInner += `<li><a href="#${s.id}">${escapeHtml(s.title)}</a>`;
-                  seenLevel1 = true;
-                } else if (!seenLevel1) {
-                  // Orphan level-2: render as standalone top-level item
-                  tocInner += `<li><a href="#${s.id}">${escapeHtml(s.title)}</a></li>`;
-                } else {
-                  if (!inSub) { tocInner += "<ul>"; inSub = true; }
-                  tocInner += `<li><a href="#${s.id}">${escapeHtml(s.title)}</a></li>`;
-                }
-              }
-              if (inSub) tocInner += "</ul></li>";
-              else if (seenLevel1) tocInner += "</li>";
-              tocHtml = `<div class="toc"><h3>Contents</h3><ul class="toc-contents">${tocInner}</ul></div>`;
-            } else if (level1.length >= 2) {
-              // Major sections only — unnumbered
-              tocHtml = `<div class="toc"><h3>Contents</h3><ul class="toc-contents">${level1.map(s => `<li><a href="#${s.id}">${escapeHtml(s.title)}</a></li>`).join("")}</ul></div>`;
-            } else if (level2.length >= 3) {
-              // Shoulder headings only — numbered
-              tocHtml = `<div class="toc"><h3>Sections</h3><ol>${level2.map(s => `<li><a href="#${s.id}">${escapeHtml(s.title)}</a></li>`).join("")}</ol></div>`;
-            }
-            return tocHtml + `<div class="body-text">${bodyHtml}</div>`;
-          })()}
-          ${collectedFootnotes.length ? `<div class="footnotes"><h3>Notes</h3><ol>${collectedFootnotes.map(fn => `<li id="fn-${fn.num}" value="${fn.num}"><a onclick="var el=document.getElementById('fnref-${fn.num}');if(el)el.scrollIntoView({behavior:'instant',block:'start'});return false;" href="#">${fn.num}.</a> ${formatFootnoteText(fn.text)}</li>`).join("")}</ol></div>` : ""}
-        </div>
-
-        ${xrefHtml ? `<div class="card">
-          <h2>Cross-references</h2>
-          ${xrefHtml}
-        </div>` : ""}
-
-      `;
+      // Python is the sole renderer now: insert its pre-rendered HTML, then hydrate math (KaTeX
+      // over `.tex-math`) and fix up the runtime-only scan `back`.  The marker→HTML JS below is dead.
+      app.innerHTML = article.rendered_html || "";
+      hydrateMath(app);
+      fixScanHrefs(app, article);
+      captureWideTables(app);
       ScanMode.onArticleRendered(article);
     }
 

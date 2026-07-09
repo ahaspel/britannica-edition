@@ -175,11 +175,21 @@ def _extract_outlines(
             break
 
         non_empty = [ln for ln in block_lines if ln.strip()]
-        if (
-            len(non_empty) >= 4
-            and len(depths) >= 2
-            and has_emphasis
-        ):
+        # A run of literal `:`-prefixed lines is UNAMBIGUOUS MediaWiki indentation — always an
+        # outline, however short / flat / plain (ARISTOTLE's `:(1) :(2) :(3)`).  The strict
+        # 4+/2-depths/emphasis gate exists only to keep the HEURISTIC signals (bare-emphasis
+        # labels, {{em}}/entity indent, range headers) from false-matching prose; a genuine
+        # `:`-indent needs no such corroboration.
+        stripped = [_strip_leading_placeholder(ln) for ln in non_empty]
+        colon_run = (
+            bool(non_empty)
+            and all(re.match(r"^:+", cl) for cl in stripped)
+            # a genuine `:`-indented LIST — ≥2 items with real content.  A lone `:` (empty
+            # indent) or a SINGLE `:`-line is ambiguous — often a mid-sentence continuation the
+            # author began with `:` (ALPHABET's "…Alphabet: Greek). The vowel…") — leave those
+            # to ride as prose; only a multi-item run is unambiguous indentation.
+            and sum(1 for cl in stripped if re.sub(r"^:+", "", cl).strip()) >= 2)
+        if colon_run or (len(non_empty) >= 4 and len(depths) >= 2 and has_emphasis):
             block_text = "\n".join(block_lines).rstrip()
             placeholder = registry.add("OUTLINE", block_text)
             out.append(placeholder)
