@@ -18,6 +18,12 @@
 
 set -euo pipefail
 
+# Force UTF-8 on every Python subprocess's stdout/stderr.  On a cp1252 Windows
+# console a non-ASCII character in a log line (e.g. the "→" in the xref-persist
+# message) raises UnicodeEncodeError, which under `set -e` aborts the ENTIRE
+# rebuild mid-flight.  This makes the pipeline robust to its own log output.
+export PYTHONIOENCODING=utf-8
+
 # Truncate the log file so old output doesn't cause confusion
 : > rebuild.log 2>/dev/null || true
 
