@@ -105,102 +105,83 @@ def _extract_outlines(
     text: str,
     registry: ElementRegistry,
 ) -> str:
-    """Find runs of visually-indented hierarchical content and replace
-    each with an OUTLINE placeholder.
+    """Replace each `:`-anchored indent block with an OUTLINE placeholder, copying
+    every other byte of `text` VERBATIM.  This is BOUNDS ONLY — the block's item and
+    level splitting is the decomposer's job (`recognize_outline`), not this scan's.
 
-    Detection signal:
-      • 4+ consecutive non-empty lines, each carrying a visual-indent
-        marker (`:`-prefix, `{{em|N}}` / `{{gap}}` template, or
-        leading `&emsp;`/`&nbsp;` entity run) OR being a bare-emphasis
-        hierarchy label (`'''Foo.'''`, `''Bar.''`, `{{sc|Baz.}}`)
-      • 2+ DISTINCT indent depths in the run (it's hierarchical, not
-        a flat list — a flat list renders fine as a table or `<ol>`)
-      • at least one bold/italic/sc emphasis token in the run
-
-    `<poem>` / `<math>` / `<ref>` content is already placeholdered by
-    the time this runs, so verse stanzas with `{{em|N}}` indent and
-    multi-line math expressions don't trigger detection.
-
-    Captures: ARACHNIDA Tabular Classification, ZOOLOGY taxonomies
-    (~10 pages in vol 28), botanical/lichen taxonomies, BIBLE Apocrypha
-    listing, SANSKRIT phonology, EYE disease classification, etc. —
-    ~30 pages corpus-wide.
+    `:` is the unambiguous anchor: a block that contains ANY `:`-prefixed line is an
+    outline (a lone `:` line included — that is the leak fix); a run with no `:` (pure
+    {{em}}/&emsp;/bare-emphasis) is left as prose, since those signals only mean
+    "level" INSIDE a `:`-anchored outline, where the decomposer reads them.  `_skip`
+    steps over a construct whole, so a raw multi-line <math>/<poem> around a `:` line
+    neither fools the scan nor ends a logical line early.
     """
-    lines = text.split("\n")
     out: list[str] = []
-    i = 0
-    while i < len(lines):
-        if not _outline_is_list_shaped(lines[i]):
-            out.append(lines[i])
-            i += 1
-            continue
-
-        block_start = i
-        block_lines: list[str] = []
-        depths: set[int] = set()
-        has_emphasis = False
-        while i < len(lines):
-            line = lines[i]
-            if _outline_is_list_shaped(line):
-                d = _outline_indent_depth(line)
-                if d is None:
-                    # Bare-emphasis line — top-level (depth 0).
-                    depths.add(0)
-                else:
-                    depths.add(d)
-                block_lines.append(line)
-                _ll = line.lower()
-                if (
-                    "'''" in line or "''" in line
-                    or "«B»" in line or "«I»" in line
-                    or "{{sc|" in _ll or "{{csc|" in _ll
-                    or "{{asc|" in _ll or "{{small-caps|" in _ll
-                    or "{{uc|" in _ll or "{{lc|" in _ll
-                    or "<i>" in _ll or "<b>" in _ll or "<em>" in _ll
-                ):
-                    has_emphasis = True
-                i += 1
+    n = len(text)
+    pos = 0
+    while pos < n:
+        le = _logical_line_end(text, pos)
+        if _outline_is_list_shaped(text[pos:le]):
+            end, has_colon = _indent_block_extent(text, pos)
+            if has_colon:
+                out.append(registry.add("OUTLINE", text[pos:end]))
+                pos = end
                 continue
-            stripped = line.rstrip()
-            if not stripped:
-                # Blank line: continue if the next non-blank rejoins.
-                j = i + 1
-                while j < len(lines) and not lines[j].rstrip():
-                    j += 1
-                if j < len(lines) and _outline_is_list_shaped(lines[j]):
-                    block_lines.extend(lines[i:j])
-                    i = j
-                    continue
-                break
-            break
+        seg_end = le + 1 if le < n else n           # this line and its newline, verbatim
+        out.append(text[pos:seg_end])
+        pos = seg_end
+    return "".join(out)
 
-        non_empty = [ln for ln in block_lines if ln.strip()]
-        # A run of literal `:`-prefixed lines is UNAMBIGUOUS MediaWiki indentation — always an
-        # outline, however short / flat / plain (ARISTOTLE's `:(1) :(2) :(3)`).  The strict
-        # 4+/2-depths/emphasis gate exists only to keep the HEURISTIC signals (bare-emphasis
-        # labels, {{em}}/entity indent, range headers) from false-matching prose; a genuine
-        # `:`-indent needs no such corroboration.
-        stripped = [_strip_leading_placeholder(ln) for ln in non_empty]
-        colon_run = (
-            bool(non_empty)
-            and all(re.match(r"^:+", cl) for cl in stripped)
-            # a genuine `:`-indented LIST — ≥2 items with real content.  A lone `:` (empty
-            # indent) or a SINGLE `:`-line is ambiguous — often a mid-sentence continuation the
-            # author began with `:` (ALPHABET's "…Alphabet: Greek). The vowel…") — leave those
-            # to ride as prose; only a multi-item run is unambiguous indentation.
-            and sum(1 for cl in stripped if re.sub(r"^:+", "", cl).strip()) >= 2)
-        if colon_run or (len(non_empty) >= 4 and len(depths) >= 2 and has_emphasis):
-            block_text = "\n".join(block_lines).rstrip()
-            placeholder = registry.add("OUTLINE", block_text)
-            out.append(placeholder)
-        else:
-            out.extend(block_lines)
-            if i == block_start:
-                if not block_lines:
-                    out.append(lines[i])
-                    i += 1
 
-    return "\n".join(out)
+def _logical_line_end(text: str, i: int) -> int:
+    """Index of the newline ending the logical line at `i` (or `len(text)`).  A newline
+    INSIDE a construct doesn't count — `_skip` steps over `{{…}}`/`[[…]]`/`<math>`/
+    `{|…|}` whole."""
+    from britannica.pipeline.stages.elements._table_fold import _skip
+    n = len(text)
+    while i < n:
+        j = _skip(text, i)
+        if j > i:
+            i = j
+            continue
+        if text[i] == "\n":
+            return i
+        i += 1
+    return n
+
+
+def _indent_block_extent(text: str, start: int) -> tuple[int, bool]:
+    """From an indent line at `start`, return `(end, has_colon)` — the end index of the
+    maximal run of contiguous indent lines (a blank line continues the run only if an
+    indent line resumes after it) and whether any line in the run is `:`-prefixed."""
+    def _is_colon(line: str) -> bool:
+        return bool(re.match(r"^:+", _strip_leading_placeholder(line)))
+
+    n = len(text)
+    le = _logical_line_end(text, start)
+    has_colon = _is_colon(text[start:le])
+    end = le
+    pos = le + 1 if le < n else n
+    while pos < n:
+        le = _logical_line_end(text, pos)
+        line = text[pos:le]
+        if _outline_is_list_shaped(line):
+            has_colon = has_colon or _is_colon(line)
+            end = le
+            pos = le + 1 if le < n else n
+            continue
+        if not line.strip():                        # blank — continue only if the run resumes
+            q = pos
+            while q < n:
+                lq = _logical_line_end(text, q)
+                if text[q:lq].strip():
+                    break
+                q = lq + 1 if lq < n else n
+            if q < n and _outline_is_list_shaped(text[q:_logical_line_end(text, q)]):
+                pos = q
+                continue
+        break
+    return end, has_colon
 
 
 def _process_outline(inner: str) -> str:
@@ -274,3 +255,79 @@ def _process_outline(inner: str) -> str:
 
     body = "\n".join(f"{d}|{c}" for d, c in items)
     return f"«OUTLINE:\n{body}\n«/OUTLINE»"
+
+
+# ── Recursive recognition — the balanced-markup replacement ──────────────────
+# `recognize_outline` is the twin of `_split_cells`: walk the block, jump every
+# construct WHOLE via `_skip` (so a multi-line <math> on an indented line stays
+# inside its item instead of shattering), and open a new item at each logical
+# line's indent signal.  Depth is the existing colon-primary `_outline_indent_
+# depth`.  No gate, no flatten — the classifier nests and recurses these items
+# exactly as it does a table's rows and cells.
+
+_INDENT_MARKER_RE = re.compile(
+    r"^\s*(?::+|\{\{em(?:\|[0-9.]+)?\}\}|\{\{gap\}\}"
+    r"|(?:&(?:emsp|ensp|nbsp|thinsp);)+|\s)+")
+
+
+def _split_logical_lines(block: str) -> list[str]:
+    """Split `block` on newlines EXCEPT those inside a construct — `_skip` steps
+    over `{{…}}`/`[[…]]`/`<math>`/`{|…|}` whole, so a multi-line math expression
+    on an indented line stays ONE logical line rather than many."""
+    from britannica.pipeline.stages.elements._table_fold import _skip
+    n, start, i, lines = len(block), 0, 0, []
+    while i < n:
+        j = _skip(block, i)
+        if j > i:
+            i = j
+            continue
+        if block[i] == "\n":
+            lines.append(block[start:i])
+            start = i + 1
+        i += 1
+    if start < n:
+        lines.append(block[start:])
+    return lines
+
+
+def _outline_item_depth(line: str) -> int:
+    """An outline item's nesting depth = the SUM of its leading indent units — each
+    `:`, each `&emsp;`/`&ensp;`/`&nbsp;`/`&thinsp;`, and `{{em|N}}` as N.  Summing, not
+    first-signal, is what lets a `:&emsp;&emsp;&emsp;` sub-case nest UNDER its plain-`:`
+    sibling even where the source mixes colon and entity indent (ALGEBRA's (b) rows)."""
+    m = _INDENT_MARKER_RE.match(_strip_leading_placeholder(line))
+    if not m:
+        return 1
+    s = m.group(0)
+    em = len(re.findall(r"&(?:emsp|ensp|nbsp|thinsp);", s))       # undecoded entities
+    em += sum(1 for c in s if ord(c) in (0x2003, 0x2002, 0x00a0, 0x2009))     # decoded em/en/nbsp/thin
+    for m2 in re.finditer(r"\{\{em\|([0-9.]+)\}\}", s):
+        em += max(1, int(float(m2.group(1))))
+    em += len(re.findall(r"\{\{(?:em|gap)\}\}", s))               # bare {{em}}/{{gap}} = 1 each
+    return max(s.count(":"), 1) + (1 if em >= 2 else 0)
+
+
+def recognize_outline(block: str) -> list[tuple[int, str]]:
+    """Chop an indent block into `[(depth, content)]` items — the twin of
+    `recognize_table`'s cell split.  A line carrying an indent signal opens an
+    item at its depth; a bare-emphasis line is a depth-0 label; a signal-less
+    line is a continuation of the item above.  Content keeps its raw markers so
+    the classifier can recurse them (a `:<math>…` item's math becomes a child)."""
+    items: list[tuple[int, str]] = []
+    for line in _split_logical_lines(block):
+        if not line.strip():
+            continue
+        depth = _outline_indent_depth(line)
+        if depth is None:
+            if _outline_is_bare_emphasis(line):
+                items.append((0, line.strip()))
+            elif items:                       # continuation of the item above
+                d, c = items[-1]
+                items[-1] = (d, (c + "\n" + line.strip()).strip())
+            else:
+                items.append((0, line.strip()))
+        else:
+            # `depth` (first-signal) only told us this IS an indent line; the NESTING
+            # depth is the SUM of the leading units, so :&emsp;&emsp;&emsp; sub-cases nest.
+            items.append((_outline_item_depth(line), _INDENT_MARKER_RE.sub("", line).strip()))
+    return items
