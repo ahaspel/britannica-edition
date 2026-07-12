@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-07-07.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-07-12.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,13 +46,48 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-07-07)
+## CURRENT STATE (2026-07-12)
 
 The recursive architecture is in place corpus-wide; this session closed out the
 remaining scaffolding (the catch-all preprocess stage, the title double-decider, the
 viewer's layout-guessing) and drained several whole leak classes.  **Three principles**
 above still govern; every change below is one of *recurse to the end* / *carry the
 source* / *render what we carry*.
+
+### Session 2026-07-12 — styler composite · article-wide footnote gather · images+scans off is_local
+
+**Styler producer un-flattened to a COMPOSITE.**  `{{center|…}}`/`{{block center|…}}`/`{{Fine
+block|…}}`/… recursed their content to a *marker string* via `process_elements` and returned a
+childless leaf — a producer-side flattener, so a nested block (verse/outline/table) inside a styler
+was a re-parsed span.  The pipe-form styler is now a composite: `_classify_strip_composite`
+decomposes the content into child nodes; `process_strip` substitutes + strips the ASSEMBLED content
+(like `_process_cell` — `{{em}}`/`{{spaces}}` padding trims post-produce, an all-empty styler drops).
+Body byte-identical corpus-wide; the tree carries styler-nested blocks as real nodes.
+
+**Footnotes gathered ONCE per article.**  `resolve_ref_bodies` is an article-wide gather, but its
+only call site (`process_elements_tree`) re-enters at every nesting level, so it ran *per subtree*
+with a fragment-local map — the flattener-era footnote scope, silently dropping reuses/continuations
+inside table cells and stylers.  Hoisted to a single article pass: it walks the whole tree (recursing
+`inner_registry`), and nested `process_elements` INHERIT the finished map via a `ref_bodies=None`
+sentinel (`render_fn_marker` already dedups by name).  Recovers dropped footnote anchors/bodies in
+**230 articles** (all named/follow-ref) — AGRICULTURE's table-cell `US1` reuses, ALGEBRAIC FORMS /
+NEW YORK styler reuses, PEACE CONFERENCES / PO follow-body merges.
+
+**Images: one location-agnostic path.**  Images are extracted source assets, not derived data — so
+`data/derived/images/` was a misfiling, and the render's `is_local` branch (`/data/derived/images/`
+local vs `/data/images/` web) was a *self-inflicted split* that went imageless locally once the Python
+render baked the web path at export.  Unified: files moved to `data/images/`, render always
+`/data/images/`, `is_local` dropped from `commons_url`/`render_img`/`_shield_img`.
+
+**Scans: bare anchor.**  Same split a layer down — `_scan_url` baked a full scan URL that
+`fixScanHrefs` overwrites wholesale at load (the `back` param is `location.href`, runtime-only).
+`_scan_url` + `back_href` deleted; page markers + scan card emit `href="scans.html"`, the JS rebuilds
+it.  **`is_local` now steers only article links** (the jsdom-golden stub vs the prod clean URL) — a
+real local-vs-web difference, and the only one left on it.
+
+Commits: `26999b4` (styler+footnote), `0aa87b0` (images), `c97d863` (scans); on `50d34ed` (outline
+unification — the `:`→OUTLINE recognizer, adjudicated faithful: it honors the author's markup, and
+OLD's literal-`:` leak was the actual defect).  Full corpus rebuild in progress to prep the deploy.
 
 ### Session 2026-07-07 — {{=}} leak closed · tooltips carry-unless-furniture · normalizer collapse · EPUB arc mapped
 
@@ -225,12 +260,16 @@ next deploy.  Full notes in `status_history.md`.  [[project_wikilink_backlog]]
 
 ### Build & deploy state
 
-- **Suite:** 331 green (2026-07-07).
-- **Last *deployed* rebuild: 2026-07-07** — full `--skip-import` rebuild + deploy, 66:25,
-  exit 0, preflight clean.  Ships the `{{=}}` opener-recognition, carry-unless-furniture
-  tooltips, `process_html_style` style-decode, and the contributor normalizer collapse
-  (`not in DB` 2→0).  (Prior deploys: 2026-07-06 campaign + distribution; 2026-05-17 before.)
-- **Working tree:** clean — all banked (`e5695f2` batch + `e288377` test fixes).
+- **Suite:** green except the **3 outline render fixtures** (ARACHNIDA/DYNAMICS/HYDROMEDUSAE) whose
+  frozen `.input.json` still holds the OLD `«OUTLINE:` marker format — they regenerate in the
+  in-progress rebuild.  Transform + image/scan render goldens were rebaselined this session.
+- **Rebuild: IN PROGRESS (2026-07-12)** — local `--skip-import --no-deploy` (tee `rebuild.log`) to
+  regenerate the corpus under this session's changes + refresh the 3 render fixtures, then review →
+  deploy.  Deploy is a full rebuild (230 articles' footnotes change) — nothing partial.
+- **Last *deployed* rebuild: 2026-07-07** — full `--skip-import` rebuild + deploy, 66:25, exit 0,
+  preflight clean.  (Prior deploys: 2026-07-06 campaign + distribution; 2026-05-17 before.)
+- **Working tree:** clean — HEAD `c97d863` (scans) atop `0aa87b0` (images), `26999b4`
+  (styler+footnote), `50d34ed` (outline).
 
 ### Leak audit (re-audited 2026-06-14, `tools/diagnostics/leak_audit.py`, full corpus)
 
@@ -261,7 +300,35 @@ else is faithful rendering of broken source.  [[feedback_dont_flag_honesty]]
 
 ### Open frontier / next
 
-**Active queue (2026-07-07):**
+**Active queue (2026-07-12):**
+- **NEXT ARC → article identity: number = id, title = name, description = meaning.**  Article names
+  are built from the raw-wiki SECTION SLUG, not the real title.  ALGEBRA runs across a column break,
+  Wikisource names the continuation section `AlgebraB`, and the pipeline takes *that* as the name — so
+  the article is "ALGEBRAB" (`01-0639-algebrab`).  Surface harm (ugly search dropdown + URL); deep
+  harm: the biographical clusters (WILLIAM, ALEXANDER, PHILIP, HENRY) are all named identically, so a
+  reader can't find "William the Conqueror," AND xref disambiguation resolves against those ambiguous
+  names — ODO OF BAYEUX names "William the Conqueror" in plain text but `resolve_one` has only
+  "WILLIAM" × N to match and picks the wrong one.  **Fix — separate three concerns that fight over one
+  string:**
+  1. **number = identity.**  The stable number already carries the article's position on the page, so
+     it's ALWAYS unique — even same-title/same-page.  The name owes it *zero* uniqueness; `algebrab` is
+     self-inflicted disambiguation.  The readable half is free to be the true title (ALGEBRA, WILLIAM).
+  2. **description = meaning (the payoff).**  Carry the opening clause as a first-class DESCRIPTION
+     field (`body_start` already exists for the index dropdown — promote + generalize it).  SHOW it
+     under the title in search (the eye disambiguates the Williams); FEED it to `resolve_one` — match
+     the surface's qualifier ("the Conqueror") against candidates' *descriptions*, not just their
+     titles.  That's the "much cleaner xrefs" — information we already compute but neither show nor use.
+     Levers: the description must REACH the identifying clause (not stop on dates/filler), and the
+     resolver must actually consume it.
+  3. **stable URLs via NUMBER-ROUTING (the plan; redirect table is the fallback).**  Route on the
+     NUMBER — the stable identity — and treat the slug as cosmetic.  An old URL then resolves on its
+     number no matter what the slug says, so there's nothing to redirect and, crucially, nothing to
+     *maintain forever*; any future name-strategy change is free (the number never moves, the slug just
+     re-canonicalizes).  One-time structural choice that then costs nothing — vs a redirect map that
+     grows with every rebuild.  The only transition cost is bridging the *current* slug-based URLs
+     once (they encode identity as `vol-page-slug`, not the number, so multi-article pages need a
+     slug→position map at the cut-over).  *Fallback* if number-routing can't be adopted: a
+     deterministic, append-only-*forever* redirect table (every id ever published resolves for good).
 - **`{{=}}` div gate · carry-unless-furniture tooltips · contributor normalizer collapse** —
   ✅ **DONE, shipped 2026-07-07** (Session 2026-07-07).  The div gate was the `{{=}}` escape,
   not `{{nowrap}}`; the normalizer collapse recovered the `W. AY.`/`T. G. BR.` stragglers.
