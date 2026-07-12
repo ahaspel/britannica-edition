@@ -34,7 +34,6 @@ from britannica.render.inline import decode_inline, escape_html, render_fn_marke
 # set, not a regex over the stream: the walker already told us what each node is.
 _BLOCK_LABELS = {
     "TABLE", "OUTLINE", "PLATE_OUTLINE", "EQN", "TITLE", "VERSE", "LEGEND",
-    "CENTER", "HTML_STYLE", "CHART2", "SCORE", "CHEMISTRY_LAYOUT",
 }
 
 
@@ -75,6 +74,10 @@ def _emit_ref(ce, ctx) -> str:
     marker rather than hung on the tree as a child, so when there are no children we take
     the content from the marker's own `«FN»` inner.  (Threading named-ref bodies onto the
     tree as real children is the follow-up that makes even this path pure structure.)"""
+    from britannica.pipeline.stages.elements._ref import _ref_attrs
+    if _ref_attrs(ce.raw)[1]:      # a `<ref follow=X>` continuation has NO anchor of its
+        return ""                 # own — its body is merged into X by resolve_ref_bodies,
+                                  # exactly as the flat producer emits nothing for it.
     m = _FN_NAME_RE.match(ce.marker or "")
     name = m.group(1) if m else None
     content = _render_content(ce, ctx)
@@ -173,8 +176,8 @@ def render_tree(tree, ctx) -> str:
 
     def flush():
         if para:
-            joined = "".join(para)
-            if joined.strip():
+            joined = "".join(para).strip()   # flat render renders each piece stripped
+            if joined:
                 out.append(f"<p>{joined}</p>")
             para.clear()
 

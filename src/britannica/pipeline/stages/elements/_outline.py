@@ -4,8 +4,8 @@ Recognizes indented prose blocks that the source treats as hierarchical
 lists (`:`-prefix runs, `{{em|N}}` templates, `&emsp;` runs) and emits
 an OUTLINE marker that the viewer renders as nested ``<ul>``.
 
-Public dispatch entry: ``_extract_outlines`` (called during extraction),
-``_process_outline`` (called during reassembly).
+Public entry points: ``_extract_outlines`` (bounds recognition, mints the
+«OUTLINE» placeholder) and ``recognize_outline`` (the decomposer's item split).
 """
 
 from __future__ import annotations
@@ -182,79 +182,6 @@ def _indent_block_extent(text: str, start: int) -> tuple[int, bool]:
                 continue
         break
     return end, has_colon
-
-
-def _process_outline(inner: str) -> str:
-    """Convert a `:`-indented outline block into an OUTLINE marker.
-
-    Output format:
-        «OUTLINE:
-        N|content
-        N|content
-        …
-        «/OUTLINE»
-
-    where ``N`` is the source indent depth (number of leading `:` —
-    bare emphasis lines get depth 0).  Content's inline markers (italic/
-    bold/sc/footnotes, links) were extracted by the walker and ride
-    through as placeholders that ``produce_tree`` substitutes.  Viewer.html maps the marker to a nested
-    ``<ul>`` keyed on indent depth (densely re-ranked so 0/2/3/4/6/8
-    source depths become 0/1/2/3/4/5 nesting levels).
-    """
-    items: list[tuple[int, str]] = []
-    for raw_line in inner.split("\n"):
-        line = raw_line.rstrip()
-        if not line:
-            continue
-        # Lift any leading element placeholder so it survives in the
-        # rendered item — a page break landing at a list-line start is
-        # itself a PAGE element now — but doesn't interfere with the
-        # indent-prefix stripping below.
-        page_marker = ""
-        pm = _LEADING_PLACEHOLDER_RE.match(line)
-        if pm:
-            page_marker = pm.group(0)
-            line = line[pm.end():]
-        depth = _outline_indent_depth(line)
-        if depth is None:
-            # Bare-emphasis line (top-level hierarchy label).
-            depth = 0
-            content = line.strip()
-        else:
-            # Strip the indent marker(s) from the content.
-            content = re.sub(r"^:+", "", line)
-            content = re.sub(
-                r"^\s*(?:\{\{em\|[0-9.]+\}\}|\{\{(?:em|gap)\}\})\s*",
-                "", content,
-            )
-            content = re.sub(
-                r"^\s*(?:&(?:emsp|nbsp|ensp|thinsp);)+\s*",
-                "", content,
-            )
-            content = content.lstrip()
-        # Strip trailing `<br>` line-end (typesetter break, not
-        # visible content) — applies to both branches.
-        content = re.sub(r"<br\s*/?>\s*$", "", content, flags=re.IGNORECASE)
-        content = content.rstrip()
-        content = page_marker + content
-        if not content:
-            continue
-        # Run content through the inline-marker transform so italic /
-        # bold / sc / fn / link templates become «I»…«/I» / «B»… etc.
-        # Don't run `_clean_text` — that would strip the markers we
-        # want the viewer to convert to <i>/<b>/<span class="sc">.
-        rendered = content.strip()
-        if not rendered:
-            continue
-        # Collapse trailing `\n` and inner whitespace runs.
-        rendered = re.sub(r"\s+", " ", rendered)
-        items.append((depth, rendered))
-
-    if not items:
-        return ""
-
-    body = "\n".join(f"{d}|{c}" for d, c in items)
-    return f"«OUTLINE:\n{body}\n«/OUTLINE»"
 
 
 # ── Recursive recognition — the balanced-markup replacement ──────────────────
