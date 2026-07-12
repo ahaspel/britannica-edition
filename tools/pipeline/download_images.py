@@ -32,7 +32,7 @@ if sys.stdout.encoding != "utf-8":
 if sys.stderr.encoding != "utf-8":
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
-IMAGE_DIR = Path("data/derived/images")
+IMAGE_DIR = Path("data/images")
 ARTICLES_DIR = Path("data/derived/articles")
 DELAY = 3  # seconds between requests
 BATCH_SIZE = 350  # requests before cooldown

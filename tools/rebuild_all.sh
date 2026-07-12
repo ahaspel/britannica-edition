@@ -273,7 +273,7 @@ if [ -z "$NO_DEPLOY" ]; then
   # Don't pass --content-type for the images dir — files are mixed
   # jpg/png/gif and the sync command would force one type for all.
   # aws s3 sync auto-detects content-type from extension by default.
-  aws s3 sync data/derived/images/ s3://britannica11.org/data/images/ \
+  aws s3 sync data/images/ s3://britannica11.org/data/images/ \
     --size-only \
     --cache-control "public, max-age=300, must-revalidate"
   echo "  Uploading scans to S3..."

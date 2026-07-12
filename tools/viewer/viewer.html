@@ -1512,8 +1512,8 @@
       name = name.replace(/["<>|?*]/g, "_");
       // SVGs are rasterized to .svg.png by the download script
       if (name.toLowerCase().endsWith(".svg")) name += ".png";
-      const local = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-      if (local) return `/data/derived/images/${encodeURIComponent(name)}`;
+      // One path, local and web: the files sit in data/images/ locally and deploy to the
+      // same /data/images/ on S3, so there's no local-vs-web branch to adapt at runtime.
       return `/data/images/${encodeURIComponent(name)}`;
     }
 

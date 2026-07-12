@@ -38,8 +38,8 @@ if sys.stderr.encoding != "utf-8":
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
 RAW_DIR = Path("data/raw/wikisource")
-IMAGE_DIR = Path("data/derived/images")
-CACHE_DIR = Path("data/derived/images/.djvu_cache")
+IMAGE_DIR = Path("data/images")
+CACHE_DIR = Path("data/images/.djvu_cache")
 DELAY = 3  # seconds between requests
 RATE_LIMIT_WAIT = 3600  # 1 hour on 429
 
