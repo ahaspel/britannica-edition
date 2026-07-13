@@ -242,8 +242,8 @@ class TestTableProcessing:
 class TestChemistryLayout:
     """A {|\u2026|} laid out as a 2-D chemical-reaction scheme (atom-label
     cells, \u27e8/\u27e9 bracket images, rowspan brackets) is detected and emits the
-    SAME `\u00abTABLE[\u2026]\u00bb` markers as any table, tagged with the `chem-grid` class
-    (so the CSS drops the table chrome) \u2014 not flattened to {{TABLE:\u2026}TABLE}."""
+    SAME `«TABLE[…]»` markers as any table, through the one unified
+    table engine — not flattened to {{TABLE:…}TABLE}."""
 
     def test_fulminic_acid_competing_formulae(self):
         # FULMINIC ACID's table of the four competing structural
@@ -260,20 +260,18 @@ class TestChemistryLayout:
             '|}'
         )
         result = process_elements(table, ElementContext())
-        # A \u00abTABLE[\u2026]\u00bb tagged chem-grid \u2014 not the flattened {{TABLE:}} path.
-        assert "\u00abTABLE[" in result and "chem-grid" in result
+        # A «TABLE[…]» table — not the flattened {{TABLE:}} path.
+        assert "«TABLE[" in result
         assert "{{TABLE:" not in result
         # 2-D structure preserved: the rowspan bracket survives (quote-free payload).
         assert "rowspan:2" in result
         # Cell content survives intact.
         assert "C : N\u00b7OH" in result
         assert "Steiner" in result and "Nef" in result
-        # The angle-bracket image is recursed (the CHEM cell is a wrapper, not a
-        # leaf) \u2014 the raw `[[File:Langle.svg|10px]]` becomes a proper `{{IMG:\u2026}}`
-        # image marker the viewer renders, instead of leaking as a raw wiki link.
-        # (When the walker lifts the bracket image into the registry, the
-        # `_CHEM_SENTINEL` path renders it as the \u276e glyph instead; that path is
-        # unaffected \u2014 its sentinel rides through the recursion untouched.)
+        # The angle-bracket image is recursed (the cell is a wrapper, not a leaf) —
+        # the raw `[[File:Langle.svg|10px]]` becomes a proper `{{IMG:…}}` image
+        # marker the viewer renders (the edition uses the bracket images inline;
+        # there are no chevron glyphs).
         assert "{{IMG:Langle.svg" in result
 
     def test_plain_table_unaffected(self):
