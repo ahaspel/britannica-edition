@@ -1808,6 +1808,50 @@
       });
     }
 
+    // The article's topic memberships are a client-side overlay: they come from a
+    // reverse-lookup of classified_toc.json (topicMap), NOT from the article JSON, so
+    // Python's render can't emit them.  The render-unification (059a5a0) moved the header
+    // to Python and dropped this line with the old JS header; re-add it here, in its
+    // original slot (after the "By …" byline), from the surviving topicMap.
+    function injectTopics(app, article) {
+      const topics = (topicMap && article.filename) ? (topicMap[article.filename] || []) : [];
+      if (!topics.length) return;
+      const card = app.querySelector(".card");
+      if (!card) return;
+      const sep = ` <span style="color:var(--muted);">›</span> `;
+      const topicsBase = IS_LOCAL ? "topics.html" : "/topics.html";
+      const linkSeg = (full, label) =>
+        `<a href="${topicsBase}#${encodeURIComponent(full)}" style="color:var(--link);">${escapeHtml(label)}</a>`;
+      const list = topics.map(t => {
+        const segs = [t.category, ...(t.path || [])];
+        // Drop a sole 'General' path (the catch-all for cats without a real
+        // subdivision) — 'History › General' is noise; keep General when nested deeper.
+        if (segs.length === 2 && segs[1] === "General") segs.pop();
+        const links = [];
+        for (let i = 0; i < segs.length; i++) {
+          const full = segs.slice(0, i + 1).join(" > ");
+          links.push(linkSeg(full, segs[i]));
+        }
+        return links.join(sep);
+      }).join("; ");
+      const div = document.createElement("div");
+      div.className = "contributors";
+      div.innerHTML = "In: " + list;
+      // Original slot: right after the "By …" contributors line.  If the article has no
+      // byline, fall back to just under the vol/pages metadata row (h1's next sibling).
+      const byline = Array.from(card.querySelectorAll(".contributors"))
+        .find(d => /^\s*By\b/.test(d.textContent || ""));
+      if (byline) {
+        byline.after(div);
+      } else {
+        const h1 = card.querySelector("h1");
+        const meta = h1 && h1.nextElementSibling;
+        if (meta) meta.after(div);
+        else if (h1) h1.after(div);
+        else card.prepend(div);
+      }
+    }
+
     function renderArticle(article) {
       currentVolume = article.volume || "?";
       currentScanUrl = scanUrl(article);
@@ -1817,6 +1861,7 @@
       // Python is the sole renderer now: insert its pre-rendered HTML, then hydrate math (KaTeX
       // over `.tex-math`) and fix up the runtime-only scan `back`.  The marker→HTML JS below is dead.
       app.innerHTML = article.rendered_html || "";
+      injectTopics(app, article);
       hydrateMath(app);
       fixScanHrefs(app, article);
       captureWideTables(app);
