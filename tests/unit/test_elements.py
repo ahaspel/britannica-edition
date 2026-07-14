@@ -222,15 +222,14 @@ class TestTableProcessing:
         assert "Tidal wave" in result
 
     def test_table_br_preserved_in_cell(self):
-        """`<br>` is preserved losslessly in a cell — carried as HTML for the
-        viewer to decode, exactly as `<sub>`/`<sup>` are (the renderable bucket).
-        The cell recurses, but `<br>` rides through verbatim; it is NOT rewritten
-        to «BR» — that's the styled-wrapper rule (where the body producer would
-        otherwise collapse the break to a space), not the cell rule."""
+        """`<br>` is preserved losslessly in a cell — carried as the canonical break
+        marker «BR».  The walker OWNS every `<br>`, recognizing it uniformly wherever
+        it appears; the cell recurses and its break rides through as «BR», never
+        dropped or collapsed to a space."""
         text = '{|\n|Houses<br />destroyed.\n|Deaths.\n|}'
         result = process_elements(text, ElementContext())
         assert "Houses" in result and "destroyed." in result
-        assert "<br />" in result  # carried verbatim, renderable — not «BR»
+        assert "«BR»" in result  # walker-owned break marker (no longer a literal <br>)
 
     def test_table_with_image(self):
         """Image inside table is extracted as separate element."""
