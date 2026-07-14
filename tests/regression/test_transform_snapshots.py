@@ -114,7 +114,7 @@ def test_transform_snapshot(stem, input_path, body_path):
     # from a source typo (BRACHIOPODA).  Production runs the full pass on raw.
     actual_raw = process_elements(
         _clean_and_heal(raw_wikitext),
-        ElementContext(volume=volume, page_number=page_number))
+        ElementContext(volume=volume))
 
     expected = _normalize_for_compare(expected_raw)
     actual = _normalize_for_compare(actual_raw)

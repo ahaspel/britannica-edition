@@ -188,7 +188,7 @@ class TestRealData:
     def test_score_in_table_biniou(self):
         """BINIOU score tags inside tables should become image markers."""
         raw = self._load_page(3, 971)
-        context = ElementContext(volume=3, page_number=971)
+        context = ElementContext(volume=3)
         result = process_elements(_clean_and_heal(raw), context)
         assert "<score>" not in result, "Raw score tags survived"
         assert "\\new Staff" not in result, "LilyPond code survived"

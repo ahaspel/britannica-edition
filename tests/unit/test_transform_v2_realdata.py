@@ -38,7 +38,7 @@ def _transform(raw, volume=1, page_number=1):
     from britannica.pipeline.stages.elements import ElementContext, process_elements
     return process_elements(
         preprocess(_convert_quote_runs(raw)),
-        ElementContext(volume=volume, page_number=page_number))
+        ElementContext(volume=volume))
 
 
 # ── Element Types ──────────────────────────────────────────────────────

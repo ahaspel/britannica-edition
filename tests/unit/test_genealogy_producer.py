@@ -13,7 +13,7 @@ from britannica.pipeline.stages.elements import ElementContext, process_elements
 
 def _walk(raw: str, volume: int) -> str:
     # The producer keys the crop lookup on volume; page is irrelevant.
-    return process_elements(raw, ElementContext(volume=volume, page_number=1))
+    return process_elements(raw, ElementContext(volume=volume))
 
 
 def test_chart2_block_becomes_its_cropped_image():
