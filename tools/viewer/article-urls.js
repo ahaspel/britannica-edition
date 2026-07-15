@@ -1,90 +1,59 @@
 // Canonical filename ↔ URL helpers, shared across all viewer pages.
 //
-// Article JSON filenames follow a stable pattern:
-//   {VV}-{PPPP}-{section-slug}-{TITLE}.json
-// where VV is a 2-digit volume, PPPP a 4-digit page, section-slug is
-// lowercase letters / digits / hyphens, and TITLE begins with any
-// character that can NOT start a section-slug (uppercase letter,
-// accented capital, digit, underscore, modifier apostrophe ʼʽʿ, …).
-//
-// Example: "02-0775-s4-_ASHER_BEN_YEHIEL.json"
-//          stable-id = "02-0775-s4", title = "_ASHER_BEN_YEHIEL"
-//
-// The public URL form is /article/{stable-id}/{title-lowercased}.
-//
-// Five viewer pages were previously duplicating this regex inline,
-// and the duplicates had drifted: fixes for apostrophe-prefix titles
-// had been applied to index.html + viewer.html but not contributors /
-// topics / preface, so any link with an underscore or modifier-
-// apostrophe title first character 403'd.  One source of truth here
-// prevents that class of drift.
+// Article JSON filenames are TITLE-INDEPENDENT now: `{stable_id}.json`, where the stable_id
+// is `{VV}-{PPPP}-{hash6}` — a 6-hex hash of the section slug.  The readable article name is a
+// COSMETIC slug in the URL's second segment: ignored on routing, so a renamed article keeps
+// its URL and the id alone resolves.  Old `{VV}-{PPPP}-{section-slug}` URLs are rewritten to
+// the hash form by the CloudFront forwarder (which recomputes the same hash), so in production
+// this module only ever sees hash ids.
 
 (function () {
-  // Title first char is the complement of the section-slug char set,
-  // so deterministically "not a section-slug continuation".
-  const FILENAME_RE =
-    /^(\d{2}-\d{4}-[a-z0-9][a-z0-9-]*?)-([^a-z0-9-].*)$/u;
+  // Cosmetic, readable slug from a title.  Purely decorative (routing is the id), so it keeps
+  // accented letters; lowercased, runs of non-letter/digit collapsed to a single hyphen.
+  function slugify(s) {
+    return String(s || "")
+      .toLowerCase()
+      .replace(/[^\p{L}\p{N}]+/gu, "-")
+      .replace(/^-+|-+$/g, "");
+  }
+
+  // filename → stable id (filename minus .json).
+  function stableIdOf(filename) {
+    return String(filename || "").replace(/\.json$/, "");
+  }
 
   function parseFilename(filename) {
-    const base = String(filename || "").replace(/\.json$/, "");
-    const m = base.match(FILENAME_RE);
-    if (m) return { stableId: m[1], title: m[2], base };
-    return { stableId: null, title: null, base };
+    const base = stableIdOf(filename);
+    return { stableId: base, base };
   }
 
-  // filename → link URL. isLocal controls local dev vs. production.
-  function filenameToUrl(filename, isLocal) {
+  // filename (+ optional title for a cosmetic slug) → link URL.  isLocal keeps the dev
+  // `?article=` form (loads the file directly); production is clean `/article/{id}[/name]`.
+  function filenameToUrl(filename, isLocal, title) {
     if (isLocal) {
-      // Encode the WHOLE path value, matching what viewer.html's on-load
-      // URLSearchParams.set("article", …) produces.  A link with literal
-      // slashes makes that set() re-encode them, i.e. change the URL via
-      // replaceState during load -- which breaks the scroll to a
-      // #section-<slug> fragment (the direct-link bug).  Same encoding as the
-      // rewrite => the rewrite is a no-op => the fragment jump survives, so a
-      // clicked link behaves exactly like reloading the (already-rewritten) URL.
       return `viewer.html?article=${encodeURIComponent("/data/derived/articles/" + filename)}`;
     }
-    const { stableId, title, base } = parseFilename(filename);
-    if (stableId) {
-      return `/article/${stableId}/${title.toLowerCase()}`;
-    }
-    // Legacy numeric-ID fallback for pre-stable-id bookmarks.
-    const page = base.replace(/^0+/, "").split("-")[0];
-    const slug = base.substring(base.indexOf("-") + 1).toLowerCase();
-    return `/article/${page}/${slug}`;
+    const id = stableIdOf(filename);
+    return "/article/" + id + (title ? "/" + slugify(title) : "");
   }
 
-  // /article/{stable-id}/{slug}  →  {dataBase}/{stable-id}-{SLUG}.json
+  // /article/{id}[/cosmetic] → {dataBase}/{id}.json.  Routes on the id (first path segment
+  // after /article/), ignoring the cosmetic slug; old two-segment URLs resolve the same way.
   function pathnameToJsonPath(pathname, dataBase) {
-    let m = pathname.match(/^\/article\/(\d{2}-\d{4}-[a-z0-9-]+)\/(.+)$/);
-    if (m) {
-      const id = m[1];
-      const slug = decodeURIComponent(m[2]).toUpperCase();
-      return `${dataBase}/${id}-${slug}.json`;
-    }
-    m = pathname.match(/^\/article\/(\d+)\/(.+)$/);
-    if (m) {
-      const id = m[1];
-      const slug = decodeURIComponent(m[2]).toUpperCase();
-      return `${dataBase}/${id}-${slug}.json`;
-    }
-    return null;
+    const m = pathname.match(/^\/article\/([^/?#]+)/);
+    if (!m) return null;
+    return `${dataBase}/${decodeURIComponent(m[1])}.json`;
   }
 
-  // JSON path  →  clean /article/... URL (used by history.replaceState
-  // after viewer.html loads an article via ?article=… or a redirect).
-  function jsonPathToCleanUrl(jsonPath, suffix) {
+  // json path (+ the loaded title) → clean /article/{id}/{cosmetic} for the address bar.
+  function jsonPathToCleanUrl(jsonPath, suffix, title) {
     suffix = suffix || "";
     const m = jsonPath.match(/\/([^/]+)\.json$/);
     if (!m) return null;
-    const url = filenameToUrl(m[1] + ".json", false);
-    return url + suffix;
+    return filenameToUrl(m[1] + ".json", false, title) + suffix;
   }
 
   window.BritannicaUrls = {
-    parseFilename,
-    filenameToUrl,
-    pathnameToJsonPath,
-    jsonPathToCleanUrl,
+    parseFilename, filenameToUrl, pathnameToJsonPath, jsonPathToCleanUrl, slugify,
   };
 })();

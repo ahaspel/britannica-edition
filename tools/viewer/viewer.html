@@ -1901,7 +1901,9 @@
         }
         const suffix = preserved.toString() ? "?" + preserved.toString() : "";
         if (!IS_LOCAL) {
-          const cleanUrl = BritannicaUrls.jsonPathToCleanUrl(path, suffix);
+          // The cosmetic name slug comes from the loaded (corrected) title — routing is the
+          // hash id, so the slug is decorative and free to show the real name with accents.
+          const cleanUrl = BritannicaUrls.jsonPathToCleanUrl(path, suffix, article.title);
           if (cleanUrl) {
             window.history.replaceState({}, "", cleanUrl + hash);
           }

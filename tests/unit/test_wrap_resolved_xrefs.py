@@ -6,7 +6,8 @@ markers so prose mentions render as links, not just the xref panel
 at the bottom.
 """
 from britannica.db.models import Article, CrossReference
-from britannica.export.article_json import _wrap_resolved_xrefs_in_body
+from britannica.export.article_json import (
+    _wrap_resolved_xrefs_in_body, _safe_filename, stable_id)
 
 
 class _FakeSession:
@@ -49,7 +50,7 @@ def test_wraps_qv_target_in_body() -> None:
         "qv", "those at Sparta (q.v.)", "SPARTA", target_id=1,
     )
     out = _wrap_resolved_xrefs_in_body(body, [xref], "02-0390-s5", session)
-    assert "«LN:25-0630-sparta-SPARTA.json|SPARTA|Sparta«/LN»" in out
+    assert f"«LN:{_safe_filename(target)}|SPARTA|Sparta«/LN»" in out
     # The rest of the body is untouched.
     assert "those at " in out
     assert "(q.v.) here" in out
@@ -63,7 +64,7 @@ def test_wraps_see_target_in_parenthetical() -> None:
         "see", "(See Aeronautics.)", "AERONAUTICS", target_id=2,
     )
     out = _wrap_resolved_xrefs_in_body(body, [xref], "02-0483-s2", session)
-    assert "(See «LN:01-0295-s2-AERONAUTICS.json|AERONAUTICS|Aeronautics«/LN».)" in out
+    assert f"(See «LN:{_safe_filename(target)}|AERONAUTICS|Aeronautics«/LN».)" in out
 
 
 def test_wraps_see_also_target() -> None:
@@ -134,7 +135,7 @@ def test_self_reference_not_wrapped() -> None:
     body = "Archytas himself wrote that (See Archytas.)"
     xref = _make_xref("see", "(See Archytas.)", "ARCHYTAS", target_id=7)
     # self_stable_id matches the target's stable id — skip.
-    out = _wrap_resolved_xrefs_in_body(body, [xref], "02-0483-s2", session)
+    out = _wrap_resolved_xrefs_in_body(body, [xref], stable_id(target), session)
     assert "«LN:" not in out
 
 
