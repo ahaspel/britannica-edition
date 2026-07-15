@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-07-12.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-07-15.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,13 +46,46 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-07-12)
+## CURRENT STATE (2026-07-15)
 
 The recursive architecture is in place corpus-wide; this session closed out the
 remaining scaffolding (the catch-all preprocess stage, the title double-decider, the
 viewer's layout-guessing) and drained several whole leak classes.  **Three principles**
 above still govern; every change below is one of *recurse to the end* / *carry the
 source* / *render what we carry*.
+
+### Session 2026-07-15 — render collapse: render_paragraph → the mechanical decode_inline
+
+**The body render is now mechanical.**  `render_paragraph` was a flattener — it re-found blocks with
+a balanced descent and re-split prose — beside `_split_lines_keep_spans`, which re-derived verse
+lines from a flattened string.  Both re-inferred structure the markers already carry.  Fix: move the
+block-vs-inline decision UP to the producer.  A sticky `ctx.inline` flag (threaded by `produce_tree`,
+set for a TABLE/REF subtree — decoded wholesale by `decode_inline`) lets verse/outline/DHR emit the
+form directly — `{{VERSE}}`/`«OUTLINE»`/`«DHR»` at top level, `{{IVERSE}}`/`«IOUTLINE»`/`«DHRI»`
+inside a cell/footnote.  The render is then pure token substitution: `decode_inline(body_blocks=True)`
+owns every block form in place (page markers, `«SH»`, `«EQN»` grids, `«VERSE»`→blockquote, `«OUTLINE»`,
+cols≥10 wide-table wrap) and the browser closes the open-only `«P»`.  No block re-scan, no line
+re-split, no span-match regex.
+
+**Deleted** (render): `render_paragraph`, `_find_blocks`, `_fn_span_ranges`, `find_marker_end`,
+`_BLOCK_OPENERS`, `_render_outline_block`, `_EQN_PARA_RE`, `_VERSE_BLOCK_RE`, `_IMG_ANCHORED_RE`,
+`TABLE_OPEN/CLOSE`, `_TABLE_COLS_RE`, the dormant `dhr_inline` param, and `render/tree.py` (the dead
+tree-emitter twin, render_paragraph's only other caller).  Added `_render_title_h1` for the
+head-of-body `«TITLE»`.  This is the core of the render-to-Python arc — the `\n\n`-heuristic deletion
++ the viewer-mechanical collapse ([[project_render_rewrite]]).
+
+**Verified.**  Full `--skip-import` rebuild clean (54:45) — corpus render-leak floor UNCHANGED
+(`render_leak_marker` 3→3, `render_leak_template` 27→27); suite **419 green**.  Transform snapshots
+rebaselined (DHR↔DHRI, adjudicated identical otherwise); render snapshots refrozen from the rebuilt
+corpus + regoldened (content preserved by char count, zero leaked markers).  Banked; **rebuild done
+`--no-deploy`, deploy pending.**
+
+**Surfaced → queued: footnote popup can't hold block content.**  AGRICULTURE has a table in a
+footnote — renders correctly in Notes (block context) but the popup (`<span class="fn-popup">` in a
+`<sup>` in a `<p>`) can't hold a `<table>`, so the browser foster-parents it out → empty popup + loose
+inline table.  PRE-EXISTING (both old and new render); a popup-DELIVERY bug, NOT a source-render bug
+(the marker→HTML render is correct — Notes proves it).  Fix = carry the note body inertly (template /
+data payload rendered into a positioned overlay).  [[project_footnote_popup_block_content]]
 
 ### Session 2026-07-12 — styler composite · article-wide footnote gather · images+scans off is_local
 
@@ -260,16 +293,15 @@ next deploy.  Full notes in `status_history.md`.  [[project_wikilink_backlog]]
 
 ### Build & deploy state
 
-- **Suite:** green except the **3 outline render fixtures** (ARACHNIDA/DYNAMICS/HYDROMEDUSAE) whose
-  frozen `.input.json` still holds the OLD `«OUTLINE:` marker format — they regenerate in the
-  in-progress rebuild.  Transform + image/scan render goldens were rebaselined this session.
-- **Rebuild: IN PROGRESS (2026-07-12)** — local `--skip-import --no-deploy` (tee `rebuild.log`) to
-  regenerate the corpus under this session's changes + refresh the 3 render fixtures, then review →
-  deploy.  Deploy is a full rebuild (230 articles' footnotes change) — nothing partial.
+- **Suite:** **419 green** (render + transform + inline snapshots all rebaselined this session).
+- **Rebuild: DONE 2026-07-15** — local `--skip-import --no-deploy` (54:45, clean); corpus render-leak
+  floor unchanged (`render_leak_marker` 3→3).  Render-collapse commit banked; **deploy pending** — ship
+  the already-built corpus + viewer, nothing partial.
 - **Last *deployed* rebuild: 2026-07-07** — full `--skip-import` rebuild + deploy, 66:25, exit 0,
   preflight clean.  (Prior deploys: 2026-07-06 campaign + distribution; 2026-05-17 before.)
-- **Working tree:** clean — HEAD `c97d863` (scans) atop `0aa87b0` (images), `26999b4`
-  (styler+footnote), `50d34ed` (outline).
+- **Working tree:** render collapse banked atop the 2026-07-12 commits (`c97d863`/`0aa87b0`/`26999b4`/
+  `50d34ed`).  A pre-existing readers-guide HTML diff (25 files) is unrelated to the collapse and
+  un-banked.
 
 ### Leak audit (re-audited 2026-06-14, `tools/diagnostics/leak_audit.py`, full corpus)
 
@@ -300,47 +332,53 @@ else is faithful rendering of broken source.  [[feedback_dont_flag_honesty]]
 
 ### Open frontier / next
 
-**Active queue (2026-07-12):**
-- **NEXT ARC → article identity: number = id, title = name, description = meaning.**  Article names
-  are built from the raw-wiki SECTION SLUG, not the real title.  ALGEBRA runs across a column break,
-  Wikisource names the continuation section `AlgebraB`, and the pipeline takes *that* as the name — so
-  the article is "ALGEBRAB" (`01-0639-algebrab`).  Surface harm (ugly search dropdown + URL); deep
-  harm: the biographical clusters (WILLIAM, ALEXANDER, PHILIP, HENRY) are all named identically, so a
-  reader can't find "William the Conqueror," AND xref disambiguation resolves against those ambiguous
-  names — ODO OF BAYEUX names "William the Conqueror" in plain text but `resolve_one` has only
-  "WILLIAM" × N to match and picks the wrong one.  **Fix — separate three concerns that fight over one
-  string:**
-  1. **number = identity.**  The stable number already carries the article's position on the page, so
-     it's ALWAYS unique — even same-title/same-page.  The name owes it *zero* uniqueness; `algebrab` is
-     self-inflicted disambiguation.  The readable half is free to be the true title (ALGEBRA, WILLIAM).
-  2. **description = meaning (the payoff).**  Carry the opening clause as a first-class DESCRIPTION
-     field (`body_start` already exists for the index dropdown — promote + generalize it).  SHOW it
-     under the title in search (the eye disambiguates the Williams); FEED it to `resolve_one` — match
-     the surface's qualifier ("the Conqueror") against candidates' *descriptions*, not just their
-     titles.  That's the "much cleaner xrefs" — information we already compute but neither show nor use.
-     Levers: the description must REACH the identifying clause (not stop on dates/filler), and the
-     resolver must actually consume it.
-  3. **stable URLs via NUMBER-ROUTING (the plan; redirect table is the fallback).**  Route on the
-     NUMBER — the stable identity — and treat the slug as cosmetic.  An old URL then resolves on its
-     number no matter what the slug says, so there's nothing to redirect and, crucially, nothing to
-     *maintain forever*; any future name-strategy change is free (the number never moves, the slug just
-     re-canonicalizes).  One-time structural choice that then costs nothing — vs a redirect map that
-     grows with every rebuild.  The only transition cost is bridging the *current* slug-based URLs
-     once (they encode identity as `vol-page-slug`, not the number, so multi-article pages need a
-     slug→position map at the cut-over).  *Fallback* if number-routing can't be adopted: a
-     deterministic, append-only-*forever* redirect table (every id ever published resolves for good).
+**Active queue (2026-07-15):**
+- **Render collapse (render_paragraph → mechanical decode_inline)** — ✅ **DONE 2026-07-15, deploy
+  pending** (Session 2026-07-15 above).
+- **QUEUED → footnote popup can't hold block content** — a footnote with a `<table>` renders in Notes
+  but not the popup (block content foster-parented out of the inline `.fn-popup` span), leaving the
+  table loose inline.  Pre-existing; a popup-DELIVERY fix (carry the note body inertly → positioned
+  overlay), NOT a source-render fix.  [[project_footnote_popup_block_content]]
+- **QUEUED → MEMORY.md over its load limit** (~58 KB > ~24 KB) — tail entries silently dropped on load;
+  needs a compaction pass to one terse line per entry.
+- **NEXT ARC → article DISPLAY + URL** (refined 2026-07-15 — NOT an identity/boundary problem; the
+  article is fine and complete).  ALGEBRA is ONE correct article; only its *displayed name* and its
+  *URL* are wrong (it shows "ALGEBRAB", URL `01-0639-algebrab`).  Three OUTPUT-layer fixes, no pipeline
+  surgery:
+  1. **Title display — DELETE `recover_title_from_section`.**  It substitutes the Wikisource `<section>`
+     id for the printed headword whenever the id starts-with-and-is-longer than the captured heading
+     (`ALGEBRA` + section `AlgebraB` → `ALGEBRAB`; `PolandB`→`POLANDB`).  It never *recovers* — it
+     *replaces* the 1911-print title authority with transcriber scaffolding, so it wrecks every title it
+     touches (even the "good" `TISIO`→`TISIO BENVENUTO` re-spells + de-punctuates the printed form).  The
+     `<section>` id is cruft; the title is content-only.  Delete it; fix genuine partial captures
+     (`TISIO`) in `_title_span`, never from the id.
+  2. **Description — sharpen + CONSUME `body_start`.**  The data largely exists: `WILLIAM I., KING OF
+     ENGLAND`'s `body_start` already reads "…surnamed the Conqueror."  Two gaps: (a) it leads with the
+     parenthetical (`(c. 1036–1097)`), so a long date/etymology prefix eats the budget before the
+     identifying clause — start it at the defining appositive instead; (b) **nobody consumes it** —
+     `resolve_one` matches TITLES only.  Feed the surface reference's leftover qualifier ("the
+     Conqueror") against candidate *descriptions* (fixes ODO OF BAYEUX → the right William; same for the
+     ALEXANDER / PHILIP / HENRY clusters) and SHOW it under the title in search.  Promote `body_start` to
+     a first-class per-article field so the resolver can read every candidate.  "Information we already
+     compute but neither show nor use."
+  3. **URL — NUMBER-ROUTING.**  The number is anchored to the ORIGINAL SCANNED PAGES (not boundary
+     detection), so it is stable + unique BY CONSTRUCTION — routing by it is 100 %-safe forever and any
+     future name change is free.  Route on the number, slug purely cosmetic; keys become `{number}.json`
+     (title lives inside the JSON).  Old slug-based URLs resolve via a **frozen, one-time**
+     `old-stable-id → number` bridge, buildable NOW from the current corpus (which still carries both
+     coordinates) — append-only-forever for safety, but it never regenerates.  Client-side bridge +
+     `<link rel="canonical">` fits the thin shell; edge-301 only if SEO demands.  Its own deploy, after
+     the collapse.
 - **`{{=}}` div gate · carry-unless-furniture tooltips · contributor normalizer collapse** —
   ✅ **DONE, shipped 2026-07-07** (Session 2026-07-07).  The div gate was the `{{=}}` escape,
   not `{{nowrap}}`; the normalizer collapse recovered the `W. AY.`/`T. G. BR.` stragglers.
-- **NEXT ARC → render-to-Python / EPUB** ([[project_render_to_python]]) — the primary direction.
-  Move marker→rich-HTML rendering into Python (ONE parser + per-target emitters: site-HTML /
-  EPUB-XHTML / MD / text); the viewer becomes a thin interactive shell.  First move: the
-  verifiable Python render of the current viewer output (corpus diff, UNEXPECTED=0).  This arc
-  **subsumes** several standing items below — it *is* the viewer-mechanical campaign (collapse
-  the per-context decoders into one), it *deletes* the `\n\n` paragraph heuristics (producer owns
-  `«P»`; continuation-merge ~2958 + SH-absorb ~2976 go), and it forces the table decision
-  (recursive markers vs raw-HTML+lxml — closing the "quasi-recursive" hole).  math→MathML is the
-  one genuinely-new piece.
+- **NEXT ARC → render-to-Python / EPUB** ([[project_render_to_python]]).  The **site-HTML render is
+  DONE**: Python `render_article` is the sole renderer (viewer = thin shell), and the **2026-07-15
+  collapse finished the mechanical part** — render_paragraph + the `\n\n`/block-scan paragraph
+  heuristics deleted, the per-context decoders subsumed into one `decode_inline`, tables decomposed to
+  recursive markers (the "quasi-recursive" hole closed).  **Remaining:** the EPUB-XHTML target
+  (per-target emitter — a static artifact, easier than the API) and math→MathML (the one
+  genuinely-new piece).
 
 **Standing frontier (pre-2026-07-06 campaign):**
 - **THE VIEWER campaign — make it mechanical; "get out of the way and let the markup
