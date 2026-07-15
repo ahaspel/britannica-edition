@@ -26,7 +26,18 @@ echo "  Started: $(date '+%Y-%m-%d %H:%M:%S')"
 echo "============================================"
 
 echo "  Uploading articles to S3..."
-aws s3 sync "$EXPORT_DIR" s3://britannica11.org/data/articles/ --delete
+# Cache policy is load-bearing here: article JSONs are content-addressed ({hash}.json,
+# immutable — a hash's bytes never change) so they cache hard; but index.json /
+# contributors.json are rewritten every deploy, so they MUST revalidate (no-cache).
+# Shipping them cacheable is what broke navigation for returning users on 2026-07-15: browsers held
+# the pre-deploy index/contributors and resolved every link to a now-deleted old filename.
+aws s3 sync "$EXPORT_DIR" s3://britannica11.org/data/articles/ --delete \
+  --cache-control "public, max-age=31536000, immutable" \
+  --exclude "index.json" --exclude "contributors.json"
+aws s3 cp "$EXPORT_DIR/index.json" s3://britannica11.org/data/articles/index.json \
+  --cache-control "no-cache" --content-type "application/json"
+aws s3 cp "$EXPORT_DIR/contributors.json" s3://britannica11.org/data/articles/contributors.json \
+  --cache-control "no-cache" --content-type "application/json"
 
 # Images and scans are static assets.  Always upload with a sensible
 # Cache-Control so a re-uploaded scan (splice, vol-20 quality swap)
@@ -47,13 +58,13 @@ aws s3 sync data/derived/scans/ s3://britannica11.org/data/scans/ \
   --cache-control "public, max-age=300, must-revalidate" \
   --content-type "image/jpeg"
 
-echo "  Uploading derived JSON (printed pages, scan map, classified TOC)..."
-aws s3 cp data/derived/printed_pages.json s3://britannica11.org/data/printed_pages.json
-aws s3 cp data/derived/printed_pages_leaf.json s3://britannica11.org/data/printed_pages_leaf.json
-aws s3 cp data/derived/scan_map.json s3://britannica11.org/data/scan_map.json
-aws s3 cp data/derived/classified_toc.json s3://britannica11.org/data/classified_toc.json
-aws s3 cp data/derived/fm_first_content.json s3://britannica11.org/data/fm_first_content.json
-aws s3 cp data/derived/volumes.json s3://britannica11.org/data/volumes.json
+echo "  Uploading derived JSON (printed pages, scan map, classified TOC) — no-cache..."
+# Regenerated every deploy and read client-side to build links/pages, so they MUST
+# revalidate (no-cache) — a stale copy of these is how returning users broke on 2026-07-15.
+for j in printed_pages printed_pages_leaf scan_map classified_toc fm_first_content volumes; do
+  aws s3 cp "data/derived/$j.json" "s3://britannica11.org/data/$j.json" \
+    --content-type "application/json" --cache-control "no-cache"
+done
 
 echo "  Uploading download bundle (agent JSONL + graphs)..."
 aws s3 cp data/derived/eb1911-corpus.tar.gz s3://britannica11.org/download/eb1911-corpus.tar.gz
@@ -61,25 +72,23 @@ aws s3 cp data/derived/eb1911-corpus.tar.gz.sha256 s3://britannica11.org/downloa
 aws s3 cp data/derived/download/manifest.json s3://britannica11.org/download/manifest.json
 aws s3 cp data/derived/download/README.md s3://britannica11.org/download/README.md
 
-echo "  Uploading viewer..."
-aws s3 cp tools/viewer/viewer.html s3://britannica11.org/viewer.html
-aws s3 cp tools/viewer/index.html s3://britannica11.org/index.html
-aws s3 cp tools/viewer/search.html s3://britannica11.org/search.html
-aws s3 cp tools/viewer/scans.html s3://britannica11.org/scans.html
-aws s3 cp tools/viewer/search-api.js s3://britannica11.org/search-api.js
-aws s3 cp tools/viewer/article-urls.js s3://britannica11.org/article-urls.js
-aws s3 cp tools/viewer/typeahead.js s3://britannica11.org/typeahead.js
-aws s3 cp tools/viewer/favicon.svg s3://britannica11.org/favicon.svg --content-type "image/svg+xml"
-aws s3 cp tools/viewer/contributors.html s3://britannica11.org/contributors.html
-aws s3 cp tools/viewer/home.html s3://britannica11.org/home.html
-aws s3 cp tools/viewer/preface.html s3://britannica11.org/preface.html
-aws s3 cp tools/viewer/topics.html s3://britannica11.org/topics.html
-aws s3 cp tools/viewer/ancillary.html s3://britannica11.org/ancillary.html
-aws s3 cp tools/viewer/ancillary-prefatory-note.html s3://britannica11.org/ancillary-prefatory-note.html
-aws s3 cp tools/viewer/ancillary-index-preface.html s3://britannica11.org/ancillary-index-preface.html
-aws s3 cp tools/viewer/ancillary-abbreviations.html s3://britannica11.org/ancillary-abbreviations.html
-aws s3 cp tools/viewer/about.html s3://britannica11.org/about.html
-aws s3 cp tools/viewer/download.html s3://britannica11.org/download.html
+echo "  Uploading viewer (HTML + JS = no-cache; content isn't hashed yet, so revalidate)..."
+# HTML shell + generated pages: no-cache so a deploy is never served stale. A cached shell/JS
+# against a fresh corpus resolves every link to a deleted old filename — the 2026-07-15 regression.
+# (The heavy stuff — article JSONs, images, scans — still caches hard; only these small files
+# revalidate. Permanent fix is content-hashed asset names → immutable; see the queued item.)
+for f in viewer index search scans contributors home preface topics \
+         ancillary ancillary-prefatory-note ancillary-index-preface ancillary-abbreviations \
+         about download; do
+  aws s3 cp "tools/viewer/$f.html" "s3://britannica11.org/$f.html" \
+    --content-type "text/html; charset=utf-8" --cache-control "no-cache"
+done
+for f in search-api article-urls typeahead; do
+  aws s3 cp "tools/viewer/$f.js" "s3://britannica11.org/$f.js" \
+    --content-type "application/javascript" --cache-control "no-cache"
+done
+aws s3 cp tools/viewer/favicon.svg s3://britannica11.org/favicon.svg \
+  --content-type "image/svg+xml" --cache-control "public, max-age=86400"
 
 echo "  Uploading Reader's Guide (72 pages + 1 image)..."
 for f in tools/viewer/readers-guide.html \
@@ -87,7 +96,7 @@ for f in tools/viewer/readers-guide.html \
          tools/viewer/readers-guide-ch*.html; do
   aws s3 cp "$f" "s3://britannica11.org/$(basename "$f")" \
     --content-type "text/html; charset=utf-8" \
-    --cache-control "public, max-age=300"
+    --cache-control "no-cache"
 done
 aws s3 cp tools/viewer/readers-guide-i_008.jpg s3://britannica11.org/readers-guide-i_008.jpg
 
