@@ -25,6 +25,7 @@ import unicodedata
 from pathlib import Path
 
 from britannica.xrefs.normalizer import normalize_xref_target
+from britannica.xrefs.resolver import build_core_maps
 from britannica.xrefs.scoring import find_fuzzy_match
 from britannica.xrefs.disambiguation import body_opening, pick_by_kind
 
@@ -146,27 +147,22 @@ def build_resolver():
     # normalizes titles, so find_fuzzy_match's strategies line up.  `by_norm`
     # keeps every collision (ZURICH canton + city); `tmap`/`title_by_fn` are
     # the first-wins fast paths the fuzzy matcher needs.
-    by_norm: dict[str, list[tuple[str, str]]] = {}
     by_base: dict[str, list[tuple[str, str]]] = {}   # paren stripped: BARI <- BARI (TRIBE)
-    tmap: dict[str, str] = {}
-    title_by_fn: dict[str, str] = {}
 
     def _base_of(s: str) -> str:
         return normalize_xref_target(re.sub(r"\s*\([^)]*\)\s*$", "", s))
 
-    for e in article_index:
-        if e.get("article_type") != "article":
-            continue
-        fn, title = e["filename"], e["title"]
-        title_by_fn[fn] = title
-        k = normalize_xref_target(title)
-        if not k:
-            continue
-        by_norm.setdefault(k, []).append((fn, title))
-        tmap.setdefault(k, fn)
-        b = _base_of(title)
+    arts = [e for e in article_index if e.get("article_type") == "article"]
+    # `by_norm` (collision-keeping) + `tmap` (first-wins fn) via the shared core
+    # ([[project_resolver_consolidation]]) — was a hand-rolled copy of it.
+    by_norm, tmap = build_core_maps(
+        ((e["title"], (e["filename"], e["title"])) for e in arts),
+        value_of=lambda ft: ft[0])
+    title_by_fn = {e["filename"]: e["title"] for e in arts}
+    for e in arts:
+        b = _base_of(e["title"])
         if b:
-            by_base.setdefault(b, []).append((fn, title))
+            by_base.setdefault(b, []).append((e["filename"], e["title"]))
 
     section_index = load_section_index()
 
