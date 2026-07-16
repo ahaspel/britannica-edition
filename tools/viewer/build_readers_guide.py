@@ -23,7 +23,7 @@ from urllib.parse import quote_plus
 
 sys.path.insert(0, "src")
 from britannica.contributors.resolver import ContributorResolver
-from britannica.export.sections import match_section_slug
+from britannica.export.sections import match_section
 from britannica.xrefs.normalizer import normalize_xref_target
 from britannica.xrefs.resolver import build_core_maps
 from britannica.xrefs.scoring import find_fuzzy_match
@@ -60,7 +60,8 @@ def _resolve_subsection_slug(filename: str, subsection: str) -> str | None:
     """The slug whose section title matches ``subsection`` for the article in
     ``filename`` — the shared precise section matcher (abstains on ambiguity;
     [[project_resolver_consolidation]])."""
-    return match_section_slug(_load_sections(filename), subsection, aggressive=False)
+    sec = match_section(_load_sections(filename), subsection, aggressive=False)
+    return sec.get("slug") if sec else None
 OUT_DIR = Path("tools/viewer")
 
 # --- Title → URL map -------------------------------------------------

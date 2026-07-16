@@ -24,6 +24,7 @@ import sys
 import unicodedata
 from pathlib import Path
 
+from britannica.export.sections import match_section
 from britannica.xrefs.normalizer import normalize_xref_target
 from britannica.xrefs.resolver import build_core_maps
 from britannica.xrefs.scoring import find_fuzzy_match
@@ -182,8 +183,7 @@ def build_resolver():
         if fn not in _sec_cache:
             try:
                 d = json.loads((Path("data/derived/articles") / fn).read_text(encoding="utf-8"))
-                _sec_cache[fn] = [(s.get("title", ""), s.get("slug", ""))
-                                  for s in d.get("sections") or [] if isinstance(s, dict)]
+                _sec_cache[fn] = [s for s in d.get("sections") or [] if isinstance(s, dict)]
             except Exception:
                 _sec_cache[fn] = []
         return _sec_cache[fn]
@@ -233,20 +233,11 @@ def build_resolver():
         xm = _resolve_plain(x)                                # else a section OF X
         if xm:
             xfn, xdisp = xm
-
-            def _score(t):
-                tn = _art_norm(re.sub(r"^[ivxlc]+\.\s*", "", t, flags=re.I))
-                if tn == yn:
-                    return (0, len(tn))
-                if tn.endswith(yn):
-                    return (1, len(tn))
-                if yn in tn:
-                    return (2, len(tn))
-                return (9, 0)
-            best = min(((_score(t), t, sl) for t, sl in _article_sections(xfn)
-                        if yn in _art_norm(t)), default=None, key=lambda z: z[0])
-            if best and best[0][0] < 9:
-                _, t, sl = best
+            # Shared section matcher, recall-tuned (best substring on a tie)
+            # ([[project_resolver_consolidation]]).
+            sec = match_section(_article_sections(xfn), y, aggressive=True)
+            if sec:
+                sl, t = sec.get("slug", ""), sec.get("title", "")
                 tc = re.sub(r"^[ivxlc]+\.\s*", "", t, flags=re.I).strip("—. ")
                 return {"target": f"{xdisp}#{sl}", "display": f"{xdisp} — {tc}",
                         "filename": xfn, "anchor": sl}
