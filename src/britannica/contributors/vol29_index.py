@@ -43,10 +43,12 @@ VISION_TAG = "<!-- vision-ocr -->"
 # "(Mrs. Edward Wilde)", "F.R.S.(Edin.)" — so it allows balanced parens, not
 # just non-paren chars; otherwise such a header fails the match and the whole
 # entry is swallowed into the PREVIOUS entry's article list, mis-attributing
-# the swallowed articles.  Name/credential split is done by
-# `_split_name_creds` after the match.
+# the swallowed articles.  The initials group's closing `)` is optional for
+# the same reason: when OCR drops it ("...ANTOON. (H. A. L." for Lorentz) the
+# header must still match, or Lorentz's articles bleed into the prior entry.
+# Name/credential split is done by `_split_name_creds` after the match.
 _HEADER_RE = re.compile(
-    r"^([A-Z](?:[^()]|\([^)]*\))*?)\s*\(([^)]{1,30})\)\s*\.?\s*$"
+    r"^([A-Z](?:[^()]|\([^)]*\))*?)\s*\(([^)]{1,30})\)?\s*\.?\s*$"
 )
 
 # Article-list line: starts with `:` (vision prompt enforces this).

@@ -14,6 +14,8 @@ from pathlib import Path
 from britannica.db.models import Article, ArticleContributor, Contributor, ContributorInitials
 from britannica.db.session import SessionLocal
 from britannica.pipeline.stages.extract_contributors import _normalize_initials
+from britannica.xrefs.normalizer import normalize_xref_target
+from britannica.xrefs.resolver import build_core_maps
 
 _ENTRY_PATTERN = re.compile(
     r"\{\{EB1911 contributor table/entry(.*?)\}\}",
@@ -49,10 +51,16 @@ def link_from_frontmatter():
         for ci in session.query(ContributorInitials).all():
             initials_to_contrib[_normalize_initials(ci.initials)] = ci.contributor_id
 
-        # Build article title -> article_id lookup
-        title_map = {}
-        for a in session.query(Article).all():
-            title_map[a.title.upper()] = a.id
+        # Article resolution via the shared INDEX core ([[project_resolver_consolidation]]),
+        # but NOT the fuzzy cascade: contributor linking is the zero-false-positive
+        # context ([[feedback_contributor_zero_false_positives]]), and the cascade's
+        # entity-altering strategies mis-bind distinct people/places (STEPHEN, ST →
+        # SIR JAMES STEPHEN; WOLFF, CHRISTIAN → CASPAR WOLFF; ZÜRICH canton+town → one).
+        by_norm, _ = build_core_maps(
+            ((a.title, a.id) for a in session.query(Article).all()
+             if a.article_type == "article"),
+            value_of=lambda x: x,
+        )
 
         # Parse front matter for subject lists
         raw_dir = Path("data/raw/wikisource")
@@ -96,13 +104,10 @@ def link_from_frontmatter():
         matched_contribs = set()
         for contrib_id, subjects in contrib_subjects.items():
             for subject in subjects:
-                article_id = title_map.get(subject)
-                if not article_id:
-                    # Try prefix match
-                    article_id = next(
-                        (aid for t, aid in title_map.items() if t.startswith(subject)),
-                        None,
-                    )
+                # Unique normalized-exact only; abstain on an ambiguous collision
+                # (binding to either candidate would be a 50%-wrong credit).
+                cands = by_norm.get(normalize_xref_target(subject))
+                article_id = cands[0] if cands and len(cands) == 1 else None
                 if article_id:
                     existing = (
                         session.query(ArticleContributor)

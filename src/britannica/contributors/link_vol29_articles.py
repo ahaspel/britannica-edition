@@ -14,16 +14,20 @@ ArticleContributor rows) and get filtered out of contributors.json
 by the export's "contributors with at least one article" rule.
 
 This script consumes `parse_vol29_index()` directly: for each entry
-that resolves to a contributor with no existing article links, look
-up each article in entry.articles by title and create the binding.
+that resolves to a contributor, look up each article in entry.articles
+by title and create the binding.
 
-Conservative by default: only fills contributors who have ZERO
-ArticleContributor rows.  Mirrors `link_contributors_from_frontmatter.py`
-in that regard so we don't double-bind partial-coverage contributors.
+Vol 29 is EB1911's own authoritative record of who wrote what, so we
+credit a contributor with EVERY article it lists for them — not just
+the ones otherwise orphaned.  A footer signature on two of a
+contributor's three articles is no reason to discard the third: the
+per-link dedup below (the `existing` check) prevents any double-bind,
+so a partial-coverage contributor is *supplemented*, never duplicated.
 
 Run AFTER `extract-contributors` (footer matching) and AFTER
-`link_contributors_from_frontmatter.py` (front-matter fallback) so
-the orphan set is fully filtered before vol 29 fills it in.
+`link_contributors_from_frontmatter.py` (front-matter fallback), so the
+footer- and front-matter-derived links already exist and this step adds
+only what vol 29 asserts beyond them.
 """
 from __future__ import annotations
 
@@ -92,7 +96,14 @@ def _find_contributor(
       1. Exact initials match — the strongest signal. Babelon lives at
          `E. B.*` in DB and vol 29; that match holds even when name
          spellings disagree (`Edmond` vs `Edward`, abbreviated middle
-         names, etc.).
+         names, etc.) — SO LONG AS the names still share a token.  When
+         the sole initials-owner's name shares ZERO tokens with the
+         entry, the initials are corrupt: vol 29's OCR dropped a
+         distinguishing mark (Bell's `L. Bl.` read as `L. Be.`; a lost
+         `*` on `V. C.*` / `J. T. M.*`), colliding the entry onto the
+         wrong neighbour (Bénédite, Chirol, Milton).  We don't trust
+         that — we fall through to name resolution, which finds the true
+         owner under their own correct key.
       2. Name-token equality (Unicode-folded so `François` matches
          `Francois`) — catches contributors who share initials with
          someone else (rare) or whose initials drifted between vol 29
@@ -105,9 +116,39 @@ def _find_contributor(
     init_key = _normalize_initials(entry.initials)
     candidates_by_init = by_initials.get(init_key, [])
     target = _name_tokens(entry.full_name)
+
+    def _by_name():
+        """The unique corpus contributor whose name-tokens match the entry
+        (exact, else subset either direction), or None if not unambiguous."""
+        if not target:
+            return None
+        exact = [c for c in all_contribs if _name_tokens(c.full_name) == target]
+        if len(exact) == 1:
+            return exact[0]
+        if not exact:
+            subsets = [
+                c for c in all_contribs
+                if _name_tokens(c.full_name) and
+                (target.issubset(_name_tokens(c.full_name))
+                 or _name_tokens(c.full_name).issubset(target))
+            ]
+            if len(subsets) == 1:
+                return subsets[0]
+        return None
+
     if candidates_by_init:
         if len(candidates_by_init) == 1:
-            return candidates_by_init[0]
+            cand = candidates_by_init[0]
+            if not target or (_name_tokens(cand.full_name) & target):
+                return cand
+            # Names share zero tokens — vol 29's OCR likely dropped a
+            # distinguishing mark (Bell `L. Bl.`→`L. Be.`, a lost `*` on
+            # `V. C.*` / `J. T. M.*`), colliding this entry onto the wrong
+            # neighbour.  Prefer a distinct contributor the ENTRY's name
+            # resolves to; if it resolves nowhere else this is mere spelling
+            # drift (McNaught/M'Naught) — keep the initials owner.
+            named = _by_name()
+            return named if named is not None else cand
         # Multiple contributors at this initials key — pick the name match.
         if target:
             name_match = [c for c in candidates_by_init
@@ -124,21 +165,7 @@ def _find_contributor(
                 return subset_match[0]
         return None
     # No initials match — fall back to name match across the corpus.
-    if not target:
-        return None
-    exact = [c for c in all_contribs if _name_tokens(c.full_name) == target]
-    if len(exact) == 1:
-        return exact[0]
-    if not exact:
-        subsets = [
-            c for c in all_contribs
-            if _name_tokens(c.full_name) and
-            (target.issubset(_name_tokens(c.full_name))
-             or _name_tokens(c.full_name).issubset(target))
-        ]
-        if len(subsets) == 1:
-            return subsets[0]
-    return None
+    return _by_name()
 
 
 def link_vol29_articles(apply_mode: bool = False) -> None:
@@ -154,10 +181,6 @@ def link_vol29_articles(apply_mode: bool = False) -> None:
         for norm_title, arts in title_map.items():
             head_index.setdefault(
                 norm_title.split(",", 1)[0].strip(), []).extend(arts)
-        linked_ids = {
-            ac.contributor_id
-            for ac in session.query(ArticleContributor).all()
-        }
         # Pre-build a (initials → list[Contributor]) lookup so the
         # per-entry resolver doesn't re-scan the table 1457 times.
         all_contribs = session.query(Contributor).all()
@@ -181,8 +204,6 @@ def link_vol29_articles(apply_mode: bool = False) -> None:
             if c is None:
                 no_contributor.append(entry)
                 continue
-            if c.id in linked_ids:
-                continue  # has at least one footer- or fm-bound row
             for article_title in entry.articles:
                 key = _normalize_vol29_title(article_title)
                 articles = title_map.get(key, [])
