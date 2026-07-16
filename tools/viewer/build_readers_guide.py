@@ -23,6 +23,9 @@ from urllib.parse import quote_plus
 
 sys.path.insert(0, "src")
 from britannica.contributors.resolver import ContributorResolver
+from britannica.export.sections import match_section_slug
+from britannica.xrefs.normalizer import normalize_xref_target
+from britannica.xrefs.resolver import build_core_maps
 from britannica.xrefs.scoring import find_fuzzy_match
 
 SOURCE_HTML = Path("data/raw/readers_guide/source.html")
@@ -35,14 +38,6 @@ CONTRIBUTORS_JSON = Path("data/derived/articles/contributors.json")
 # Populated on first lookup; one disk read per article that gets a
 # subsection reference in the Reader's Guide.
 _SECTIONS_CACHE: dict[str, list[dict]] = {}
-
-
-def _normalize_for_match(text: str) -> str:
-    """Lowercase, alphanumerics only — collapses punctuation/spacing
-    so 'History of Astronomy' matches 'historyofastronomy'.  Mirrors
-    `sectionKey` in viewer.html and `_section_key` in
-    britannica.export.sections."""
-    return re.sub(r"[^a-z0-9]+", "", text.lower())
 
 
 def _load_sections(filename: str) -> list[dict]:
@@ -62,44 +57,10 @@ def _load_sections(filename: str) -> list[dict]:
 
 
 def _resolve_subsection_slug(filename: str, subsection: str) -> str | None:
-    """Find the slug whose section title matches ``subsection`` for the
-    article in ``filename``.  Returns the slug on a single best match,
-    or None on miss/ambiguity (skip rather than emit a wrong link).
-    """
-    sections = _load_sections(filename)
-    if not sections:
-        return None
-    norm = _normalize_for_match(subsection)
-    if not norm:
-        return None
-    # Exact match wins. Then prefer Roman-prefixed full titles whose
-    # post-prefix portion equals norm (e.g. 'history' → 'i-history').
-    # Fall back to substring match.
-    exact = []
-    prefix_strip = []
-    contained = []
-    for sec in sections:
-        title_norm = _normalize_for_match(sec.get("title", ""))
-        if not title_norm:
-            continue
-        if title_norm == norm:
-            exact.append(sec)
-            continue
-        # Strip leading Roman numeral block from the section title and
-        # compare again (matches "History" against "I. History").
-        stripped = re.sub(r"^[ivxlcdm]+", "", title_norm)
-        if stripped == norm:
-            prefix_strip.append(sec)
-            continue
-        if norm in title_norm:
-            contained.append(sec)
-    for bucket in (exact, prefix_strip, contained):
-        if len(bucket) == 1:
-            return bucket[0].get("slug") or None
-        if len(bucket) > 1:
-            # Ambiguous — skip rather than guess.
-            return None
-    return None
+    """The slug whose section title matches ``subsection`` for the article in
+    ``filename`` — the shared precise section matcher (abstains on ambiguity;
+    [[project_resolver_consolidation]])."""
+    return match_section_slug(_load_sections(filename), subsection, aggressive=False)
 OUT_DIR = Path("tools/viewer")
 
 # --- Title → URL map -------------------------------------------------
@@ -113,23 +74,24 @@ def load_article_indexes() -> tuple[dict[str, str], dict[int, list[dict]]]:
     Reader's Guide text.
     """
     data = json.loads(INDEX_JSON.read_text(encoding="utf-8"))
-    title_map: dict[str, str] = {}
+    arts = [e for e in data
+            if e.get("article_type", "article") == "article"
+            and e.get("title") and e.get("filename")]
+    # title → filename via the shared core keying (normalize_xref_target), so
+    # the Guide's title resolver shares the xref index's canonical key space
+    # ([[project_resolver_consolidation]]).  `tmap` is first-wins on collisions,
+    # like the old setdefault map.
+    _, title_map = build_core_maps(
+        ((e["title"], e["filename"]) for e in arts), value_of=lambda fn: fn)
     by_volume: dict[int, list[dict]] = {}
-    for entry in data:
-        if entry.get("article_type", "article") != "article":
-            continue
-        title = entry.get("title")
-        filename = entry.get("filename")
-        if not title or not filename:
-            continue
-        title_map.setdefault(title.upper().strip(), filename)
+    for entry in arts:
         vol = entry.get("volume")
         ps = entry.get("page_start")
         pe = entry.get("page_end") or ps
         if isinstance(vol, int) and isinstance(ps, int):
             by_volume.setdefault(vol, []).append({
-                "title": title.upper().strip(),
-                "filename": filename,
+                "title": entry["title"].upper().strip(),
+                "filename": entry["filename"],
                 "page_start": ps,
                 "page_end": pe,
             })
@@ -222,19 +184,12 @@ def resolve_article_title(
     plain = re.sub(r"\s+", " ", raw).strip()
     if not plain:
         return None
-    target = plain.upper()
-    # Exact match first
+    # Shared canonical key (Æ→AE now lives in normalize_xref_target); exact
+    # then the shared fuzzy matcher.  Values are opaque filenames — pass the
+    # str map and get the str back.
+    target = normalize_xref_target(plain)
     if target in title_map:
         return title_map[target]
-    # Handle Palæobotany -> Palaeobotany (not currently in scoring.py;
-    # cheap to pre-normalise here).
-    if "Æ" in target or "æ" in plain:
-        alt = target.replace("Æ", "AE")
-        if alt in title_map:
-            return title_map[alt]
-    # Delegate to the shared fuzzy matcher. It accepts a str->int map
-    # by type annotation, but the values are opaque — pass the str
-    # filename and we get the same str back on match.
     return find_fuzzy_match(target, title_map)  # type: ignore[arg-type]
 
 
