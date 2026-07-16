@@ -33,30 +33,15 @@ from __future__ import annotations
 
 import re
 import sys
-import unicodedata
+from collections import defaultdict
 
+from britannica.contributors.resolver import ContributorIndex
 from britannica.contributors.vol29_index import Vol29Entry, parse_vol29_index
 from britannica.db.models import (
     Article, ArticleContributor, Contributor,
 )
 from britannica.db.models.contributor import ContributorInitials
 from britannica.db.session import SessionLocal
-from britannica.pipeline.stages.extract_contributors import _normalize_initials
-
-
-def _name_tokens(name: str) -> frozenset[str]:
-    """Lowercased ASCII tokens from a name, dropping honorifics that
-    vol 29 keeps but per-volume tables drop (or vice versa).  Unicode
-    is folded to ASCII so 'François' matches 'Francois' (vol 29's OCR
-    drops the cedilla)."""
-    drop = {"prof", "rev", "sir", "lord", "mrs", "dr", "hon",
-            "rt", "very", "right", "ven", "bart", "jr", "sr",
-            "captain", "col", "colonel", "major", "lt", "lieut",
-            "general", "admiral", "baron", "viscount"}
-    folded = unicodedata.normalize("NFKD", name)
-    folded = "".join(c for c in folded if not unicodedata.combining(c))
-    toks = re.findall(r"[A-Za-z]+", folded.lower())
-    return frozenset(t for t in toks if t not in drop and len(t) > 1)
 
 
 def _normalize_vol29_title(t: str) -> str:
@@ -85,89 +70,6 @@ def _build_title_map(session) -> dict[str, list[Article]]:
     return out
 
 
-def _find_contributor(
-    session, entry: Vol29Entry,
-    by_initials: dict[str, list[Contributor]],
-    all_contribs: list[Contributor],
-) -> Contributor | None:
-    """Resolve a vol 29 entry to a Contributor row.
-
-    Order of preference:
-      1. Exact initials match — the strongest signal. Babelon lives at
-         `E. B.*` in DB and vol 29; that match holds even when name
-         spellings disagree (`Edmond` vs `Edward`, abbreviated middle
-         names, etc.) — SO LONG AS the names still share a token.  When
-         the sole initials-owner's name shares ZERO tokens with the
-         entry, the initials are corrupt: vol 29's OCR dropped a
-         distinguishing mark (Bell's `L. Bl.` read as `L. Be.`; a lost
-         `*` on `V. C.*` / `J. T. M.*`), colliding the entry onto the
-         wrong neighbour (Bénédite, Chirol, Milton).  We don't trust
-         that — we fall through to name resolution, which finds the true
-         owner under their own correct key.
-      2. Name-token equality (Unicode-folded so `François` matches
-         `Francois`) — catches contributors who share initials with
-         someone else (rare) or whose initials drifted between vol 29
-         and per-volume tables.
-      3. Name-token subset match (either direction) — catches `Prof.
-         James George Frazer` ↔ `James George Frazer`.
-
-    Returns None if no resolution is unambiguous.
-    """
-    init_key = _normalize_initials(entry.initials)
-    candidates_by_init = by_initials.get(init_key, [])
-    target = _name_tokens(entry.full_name)
-
-    def _by_name():
-        """The unique corpus contributor whose name-tokens match the entry
-        (exact, else subset either direction), or None if not unambiguous."""
-        if not target:
-            return None
-        exact = [c for c in all_contribs if _name_tokens(c.full_name) == target]
-        if len(exact) == 1:
-            return exact[0]
-        if not exact:
-            subsets = [
-                c for c in all_contribs
-                if _name_tokens(c.full_name) and
-                (target.issubset(_name_tokens(c.full_name))
-                 or _name_tokens(c.full_name).issubset(target))
-            ]
-            if len(subsets) == 1:
-                return subsets[0]
-        return None
-
-    if candidates_by_init:
-        if len(candidates_by_init) == 1:
-            cand = candidates_by_init[0]
-            if not target or (_name_tokens(cand.full_name) & target):
-                return cand
-            # Names share zero tokens — vol 29's OCR likely dropped a
-            # distinguishing mark (Bell `L. Bl.`→`L. Be.`, a lost `*` on
-            # `V. C.*` / `J. T. M.*`), colliding this entry onto the wrong
-            # neighbour.  Prefer a distinct contributor the ENTRY's name
-            # resolves to; if it resolves nowhere else this is mere spelling
-            # drift (McNaught/M'Naught) — keep the initials owner.
-            named = _by_name()
-            return named if named is not None else cand
-        # Multiple contributors at this initials key — pick the name match.
-        if target:
-            name_match = [c for c in candidates_by_init
-                          if _name_tokens(c.full_name) == target]
-            if len(name_match) == 1:
-                return name_match[0]
-            subset_match = [
-                c for c in candidates_by_init
-                if _name_tokens(c.full_name) and
-                (target.issubset(_name_tokens(c.full_name))
-                 or _name_tokens(c.full_name).issubset(target))
-            ]
-            if len(subset_match) == 1:
-                return subset_match[0]
-        return None
-    # No initials match — fall back to name match across the corpus.
-    return _by_name()
-
-
 def link_vol29_articles(apply_mode: bool = False) -> None:
     session = SessionLocal()
     try:
@@ -181,16 +83,14 @@ def link_vol29_articles(apply_mode: bool = False) -> None:
         for norm_title, arts in title_map.items():
             head_index.setdefault(
                 norm_title.split(",", 1)[0].strip(), []).extend(arts)
-        # Pre-build a (initials → list[Contributor]) lookup so the
-        # per-entry resolver doesn't re-scan the table 1457 times.
-        all_contribs = session.query(Contributor).all()
-        by_id = {c.id: c for c in all_contribs}
-        by_initials: dict[str, list[Contributor]] = {}
+        # The single contributor resolver
+        # ([[project_contributor_resolver_consolidation]]): (name, initials) → id
+        # over the whole DB, surname-aware, never guessing.
+        inits: dict[int, list[str]] = defaultdict(list)
         for ci in session.query(ContributorInitials).all():
-            c = by_id.get(ci.contributor_id)
-            if c is not None:
-                by_initials.setdefault(_normalize_initials(ci.initials),
-                                       []).append(c)
+            inits[ci.contributor_id].append(ci.initials)
+        idx = ContributorIndex((c.id, c.full_name, inits.get(c.id, []))
+                               for c in session.query(Contributor).all())
 
         created = 0
         bound_contribs: set[int] = set()
@@ -200,8 +100,8 @@ def link_vol29_articles(apply_mode: bool = False) -> None:
         for entry in entries:
             if not entry.articles:
                 continue
-            c = _find_contributor(session, entry, by_initials, all_contribs)
-            if c is None:
+            cid = idx.resolve(name=entry.full_name, initials=entry.initials)
+            if cid is None:
                 no_contributor.append(entry)
                 continue
             for article_title in entry.articles:
@@ -234,18 +134,18 @@ def link_vol29_articles(apply_mode: bool = False) -> None:
                 target = max(articles, key=lambda a: len(a.body or ""))
                 existing = (session.query(ArticleContributor)
                             .filter(ArticleContributor.article_id == target.id,
-                                    ArticleContributor.contributor_id == c.id)
+                                    ArticleContributor.contributor_id == cid)
                             .first())
                 if existing:
                     continue
                 if apply_mode:
                     session.add(ArticleContributor(
                         article_id=target.id,
-                        contributor_id=c.id,
+                        contributor_id=cid,
                         sequence=99,
                     ))
                 created += 1
-                bound_contribs.add(c.id)
+                bound_contribs.add(cid)
 
         if apply_mode:
             session.commit()

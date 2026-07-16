@@ -47,6 +47,18 @@ def main():
         check=True,
     )
 
+    # Step 2c: Backfill per-volume bios that step 2's initials-grouping lost to
+    # a shared-initials collision (Muir's 'Demonstrator…' bucketed under
+    # Muther's `R. Mr.`, leaving his `R. Mr.*` record bio-less).  Runs AFTER the
+    # linker so identities are final; resolves each entry's (name, initials)
+    # through the shared ContributorIndex to fill the right record.
+    print("\nBackfilling contributor bios lost to initials collisions...")
+    subprocess.run(
+        ["uv", "run", "python",
+         "tools/pipeline/build_contributor_table.py", "--backfill-bios"],
+        check=True,
+    )
+
     # Step 3: Re-link article footers
     print("\nRe-linking article footers...")
     for vol in range(1, 29):

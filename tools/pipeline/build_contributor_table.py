@@ -282,5 +282,80 @@ def build_contributor_table():
         session.close()
 
 
+def backfill_bios(apply_mode: bool = True):
+    """Attach per-volume contributor bios that build_contributor_table()'s
+    initials-grouping lost to a shared-initials collision — Muir's
+    'Demonstrator of Pathological…' got bucketed with Muther under `R. Mr.`,
+    so his separate `R. Mr.*` record shipped bio-less.
+
+    Runs AFTER the identities are final (post vol29_linker): re-resolves each
+    front-matter entry's (name, initials) through the shared ContributorIndex,
+    which splits Muir from Muther by SURNAME, and fills the description /
+    credentials of any contributor still missing them.  Only fills blanks —
+    never overwrites.  See [[project_contributor_resolver_consolidation]]."""
+    from britannica.contributors.resolver import ContributorIndex
+
+    session = SessionLocal()
+    try:
+        inits = defaultdict(list)
+        for ci in session.query(ContributorInitials).all():
+            inits[ci.contributor_id].append(ci.initials)
+        contribs = {c.id: c for c in session.query(Contributor).all()}
+        idx = ContributorIndex(
+            (c.id, c.full_name, inits.get(c.id, [])) for c in contribs.values())
+
+        best: dict[int, tuple[str, str]] = {}  # cid -> (credentials, description)
+        for vol_dir in sorted(Path("data/raw/wikisource").iterdir()):
+            if not vol_dir.is_dir():
+                continue
+            try:
+                volume = int(vol_dir.name.split("_", 1)[1])
+            except (IndexError, ValueError):
+                continue
+            for path in sorted(vol_dir.glob("*.json")):
+                with open(path, encoding="utf-8") as f:
+                    raw = apply_corrections(json.load(f).get("raw_text", ""), volume)
+                for content in _iter_entries(raw):
+                    name, creds = _clean_name(_parse_field(content, "name"))
+                    desc = _clean_description(_parse_field(content, "description"))
+                    if not (desc or creds):
+                        continue
+                    cid = idx.resolve(
+                        name=name,
+                        initials=_normalize_initials(_parse_field(content, "initials")))
+                    if cid is None:
+                        continue
+                    cur_creds, cur_desc = best.get(cid, ("", ""))
+                    best[cid] = (
+                        creds if len(creds) > len(cur_creds) else cur_creds,
+                        desc if len(desc) > len(cur_desc) else cur_desc,
+                    )
+
+        filled = 0
+        for cid, (creds, desc) in best.items():
+            c = contribs[cid]
+            changed = False
+            if desc and not c.description:
+                c.description = desc
+                changed = True
+            if creds and not c.credentials:
+                c.credentials = creds
+                changed = True
+            if changed:
+                filled += 1
+        if apply_mode:
+            session.commit()
+        else:
+            session.rollback()
+        verb = "Backfilled" if apply_mode else "Would backfill"
+        print(f"{verb} bio for {filled} contributors that lost it to an "
+              f"initials collision." + ("" if apply_mode else "  (dry-run)"))
+    finally:
+        session.close()
+
+
 if __name__ == "__main__":
-    build_contributor_table()
+    if "--backfill-bios" in sys.argv:
+        backfill_bios()
+    else:
+        build_contributor_table()

@@ -1,19 +1,23 @@
-"""Link unlinked contributors to articles using front matter subject lists.
+"""Credit contributors with articles from the per-volume front-matter tables.
 
-Fallback for contributors whose footer initials didn't match.
-Reads subject1/lnksubject1 fields from front matter entries and
-creates article-contributor links.
+Each volume's `{{EB1911 contributor table/entry}}` lists a contributor's
+subjects (subject1/lnksubject1…); this binds every one that resolves to an
+article.  Like the vol 29 master index
+([[project_vol29_contributor_attributions]]) this is an authoritative
+per-volume record, so we credit a contributor with ALL their resolved
+subjects — not only contributors who are otherwise orphaned; the per-link
+dedup below prevents any double-bind.
 
-Run AFTER extract-contributors (footer matching) has completed for all volumes.
+Run AFTER extract-contributors (footer matching).
 """
 import json
 import re
 from collections import defaultdict
 from pathlib import Path
 
+from britannica.contributors.resolver import ContributorIndex
 from britannica.db.models import Article, ArticleContributor, Contributor, ContributorInitials
 from britannica.db.session import SessionLocal
-from britannica.pipeline.stages.extract_contributors import _normalize_initials
 from britannica.xrefs.normalizer import normalize_xref_target
 from britannica.xrefs.resolver import build_core_maps
 
@@ -30,26 +34,19 @@ def _parse_field(content, field_name):
     return m.group(1).strip() if m else ""
 
 
-def link_from_frontmatter():
+def link_from_frontmatter(apply_mode: bool = False):
     session = SessionLocal()
     try:
-        # Find contributors with no article links
-        linked_ids = {
-            ac.contributor_id
-            for ac in session.query(ArticleContributor).all()
-        }
-        all_contributors = session.query(Contributor).all()
-        unlinked = [c for c in all_contributors if c.id not in linked_ids]
-        print(f"Unlinked contributors: {len(unlinked)}")
-
-        if not unlinked:
-            print("Nothing to do.")
-            return
-
-        # Build initials -> contributor_id lookup
-        initials_to_contrib = {}
+        # The single contributor resolver
+        # ([[project_contributor_resolver_consolidation]]): the entry's name AND
+        # initials → id, surname-aware.  The front-matter table gives both, so
+        # this replaces the old name-discarding last-wins initials map (which
+        # mis-credited Muir's PATHOLOGY to Muther and Babelon to Breck).
+        inits = defaultdict(list)
         for ci in session.query(ContributorInitials).all():
-            initials_to_contrib[_normalize_initials(ci.initials)] = ci.contributor_id
+            inits[ci.contributor_id].append(ci.initials)
+        idx = ContributorIndex((c.id, c.full_name, inits.get(c.id, []))
+                               for c in session.query(Contributor).all())
 
         # Article resolution via the shared INDEX core ([[project_resolver_consolidation]]),
         # but NOT the fuzzy cascade: contributor linking is the zero-false-positive
@@ -78,10 +75,14 @@ def link_from_frontmatter():
                     initials = _parse_field(content, "initials").strip()
                     if not initials:
                         continue
+                    name = _parse_field(content, "name")
+                    name = re.sub(r"\[\[[^\]|]*\|([^\]]+)\]\]", r"\1", name)
+                    name = re.sub(r"\[\[([^\]]+)\]\]", r"\1", name)
+                    name = re.sub(r"<[^>]+>", "", name).strip()
 
-                    contrib_id = initials_to_contrib.get(_normalize_initials(initials))
-                    if contrib_id is None or contrib_id in linked_ids:
-                        continue  # already linked or unknown
+                    contrib_id = idx.resolve(name=name, initials=initials)
+                    if contrib_id is None:
+                        continue  # unresolved
 
                     # Collect all lnksubject fields
                     for n in range(1, 20):
@@ -126,16 +127,20 @@ def link_from_frontmatter():
                         created += 1
                         matched_contribs.add(contrib_id)
 
-        session.commit()
-        print(f"Created {created} article-contributor links for {len(matched_contribs)} contributors.")
-
-        # Report remaining unlinked
-        still_unlinked = len(unlinked) - len(matched_contribs)
-        print(f"Still unlinked: {still_unlinked}")
+        if apply_mode:
+            session.commit()
+        else:
+            session.rollback()
+        verb = "Created" if apply_mode else "Would create"
+        print(f"{verb} {created} article-contributor links "
+              f"for {len(matched_contribs)} contributors.")
+        if not apply_mode:
+            print("(dry-run; pass --apply to commit)")
 
     finally:
         session.close()
 
 
 if __name__ == "__main__":
-    link_from_frontmatter()
+    import sys
+    link_from_frontmatter(apply_mode="--apply" in sys.argv)
