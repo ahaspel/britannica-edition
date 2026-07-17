@@ -30,6 +30,14 @@ from britannica.xrefs.resolver import build_core_maps
 from britannica.xrefs.scoring import find_fuzzy_match
 from britannica.xrefs.disambiguation import body_opening, pick_by_kind
 
+# A2 broadening (reach past the exact collision to a leading-token candidate) is
+# safe ONLY where the bucket wants a PHYSICAL FEATURE filed as a variant of the
+# bare name -- Zürich -> ZÜRICH, LAKE OF; Delaware -> DELAWARE RIVER.  Elsewhere
+# the exact-named thing IS the target and broadening grabs a same-prefix
+# impostor: a settlement (Nevada -> NEVADA CITY), a hyphenated natural-history
+# compound (Bird -> BIRD-LOUSE), or the wrong same-surname person.  Allowlist.
+_BROADEN_KINDS = {"lake", "river", "mountain", "island"}
+
 # The 24 authoritative top-level category names, in printed order.
 CATEGORIES = [
     "Anthropology and Ethnology", "Archaeology and Antiquities", "Art",
@@ -165,6 +173,22 @@ def build_resolver():
         if b:
             by_base.setdefault(b, []).append((e["filename"], e["title"]))
 
+    _sorted_norms = sorted(by_norm)   # normalized titles, for leading-token broadening
+
+    def _leading_token_cands(ref):
+        """(filename, title) candidates whose normalized title LEADS with `ref`
+        as a whole token (ZURICH -> ZURICH, ZURICH LAKE OF; never AURICH).  For
+        A2's kind-gated broadening when the exact collision holds no candidate of
+        the wanted kind ([[project_resolver_consolidation]])."""
+        out = []
+        i = bisect.bisect_left(_sorted_norms, ref)
+        while i < len(_sorted_norms) and _sorted_norms[i].startswith(ref):
+            k = _sorted_norms[i]
+            if k == ref or k[len(ref)] in ",- ":
+                out.extend(by_norm[k])
+            i += 1
+        return out
+
     section_index = load_section_index()
 
     # Articles like "RUSSIAN LITERATURE" keyed by last word -> [(prefix, fn, title)], so an
@@ -255,15 +279,23 @@ def build_resolver():
         n = normalize_xref_target(raw_name)
         cands = by_norm.get(n) or by_base.get(_base_of(raw_name))
         if cands:                                             # exact title (or paren base)
-            if len(cands) > 1:                                # collision -> pick by kind
-                pick = pick_by_kind(cands, want[0] if want else None, _opening)
-                fn, title = (next(c for c in cands if c[0] == pick) if pick
-                             else cands[0])                   # else first-wins (no regression)
-                out = {"target": title, "display": title, "filename": fn}
-                if pick:
-                    out["disambig"] = "kind"
-                return out
-            fn, title = cands[0]
+            want_kind = want[0] if want else None
+            if want_kind:
+                pick = pick_by_kind(cands, want_kind, _opening)
+                if pick is None and want_kind in _BROADEN_KINDS:
+                    # A2: no exact candidate IS the wanted physical-feature kind
+                    # -> broaden to whole-word leading-token candidates and retry.
+                    # A hard constraint reaching the feature-variant article
+                    # (ZURICH, LAKE OF -- never in the exact ZURICH collision)
+                    # rather than first-winsing onto a wrong-kind candidate (which
+                    # mis-tagged the canton `lake`).  Allowlisted kinds only (see
+                    # _BROADEN_KINDS) so it can't grab a same-prefix impostor.
+                    pick = pick_by_kind(_leading_token_cands(n), want_kind, _opening)
+                if pick is not None:
+                    title = title_by_fn[pick]
+                    return {"target": title, "display": title, "filename": pick,
+                            "disambig": "kind"}
+            fn, title = cands[0]                              # no kind / unresolved -> first-wins
             return {"target": title, "display": title, "filename": fn}
         fn = find_fuzzy_match(n, tmap, aggressive=True)        # shared fuzzy cascade
         if fn:
