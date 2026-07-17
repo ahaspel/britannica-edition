@@ -225,6 +225,18 @@ echo
 echo "=== Phase 6b4: Resolving inline xrefs post-export [$(elapsed)] ==="
 uv run python tools/pipeline/resolve_xrefs_post.py
 
+# --- Phase 6b5: Resolve contributor attributions post-export ---
+# ALL contributor binding (signatures + front-matter + vol-29) now lives here,
+# after the kind index (6b3), so vol-29 credits are disambiguated by the
+# contributor's kind FOOTPRINT + the credit's own hint — a kind-mismatched
+# homonym (Adams-the-township for the historian) is abstained, not bound.
+# Patches each article JSON's `contributors` + rebuilds contributors.json, so it
+# MUST run before any consumer of contributors (6e Reader's Guide, 6h download
+# bundle, the search index).  [[project_resolver_consolidation]]
+echo
+echo "=== Phase 6b5: Resolving contributor attributions post-export [$(elapsed)] ==="
+uv run python tools/pipeline/resolve_contributors_post.py
+
 # --- Phase 6c: Detect first-content fm scan per volume ---
 echo
 echo "=== Phase 6c: Detecting fm first-content pages [$(elapsed)] ==="

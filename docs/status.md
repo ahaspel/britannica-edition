@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-07-15.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-07-17.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,7 +46,63 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-07-15)
+## CURRENT STATE (2026-07-17)
+
+### Session 2026-07-17 — resolver + contributor consolidation, migrated post-export
+
+The name→article resolution arc consolidated onto ONE kind-aware picker, and the
+keystone move: everything that needs the **kind index** (built in Phase 6b3, after
+the export) migrated to **post-export patch phases** (the F pattern).  A full local
+rebuild (Rebuild 2) is materializing all of the below.
+
+- **F — inline xrefs post-export (Phase 6b4).** The export defers xref resolution
+  (`defer_xrefs`): writes raw producer `«LN»` markers + no `rendered_html`;
+  `resolve_xrefs_post.py` runs the same resolve→bake→render tail over the exported
+  JSONs, AFTER the kind index.  A reorder, not a rewrite; 6b4 replays
+  `register_stable_id_dedup` (separate process).
+- **C-full — kind-index disambiguation.** `pick_by_kind` gains a `kinds_of`
+  supplement (a candidate's topic-bucket kinds ∪ its live lead), threaded through
+  `disambiguate_among`→`build_index`; a collision candidate whose opening misleads
+  ("on the river X"→river) still qualifies by its bucket.  Degrades to C-core when
+  the index is absent.  Adjudicated (agent): the A–E xref changes are **89.8%
+  improvement / 5.5% fixable-regression** (residual: fine qualifiers — regnal+realm,
+  tribe/place, person-epithet).
+- **A2 kind-gate.** A typed topic bucket (Economics>Biographies wants `person`) no
+  longer first-wins onto a kind-mismatched decoy when `pick_by_kind` abstains — Léon
+  Say / Dover fell to the SAY/DOVER *town*; now a MISS, not a false link.
+- **Dirty-title strip.** 24 titles were raw `[[Author:X|NAME]]` / `[[Portal:…]]`
+  (the link straddled the title↔body cut, so `_AUTHORLINK` couldn't fire).
+  `produce_title` strips the orphaned opening + its orphan `]]`.  Closes the 30
+  panel render-leaks AND unblocks DOVER's surname (`GEORGE AGAR ELLIS|DOVER`→`DOVER`).
+- **BOGÓ re-slug.** `section_slug` drops accents, so BOGÓ collided with BOG → an
+  un-routable `-2`.  `register_stable_id_dedup` now re-slugs the loser on its accent
+  FOLD (`Bogó`→`bogo`→`04-0131-c03c3a`, forwarder-routable); numeric suffix only if
+  the fold ALSO collides.  Blast radius = 1 article.
+- **6b5 — unified post-export contributor resolution.** ALL contributor binding
+  moved out of assemble into one post-export phase (after 6b3): signatures (from the
+  exported bodies) → **FOOTPRINT** (each contributor's kind profile, from the
+  authoritative binds ONLY, so never circular) → vol-29 credits, kind-VALIDATED by
+  `contributors/vol29_kind_match.py` (the credit's own disambiguator ∪ the footprint
+  pick the article; a kind-mismatched homonym ABSTAINS).  Fixes the ~96 wrong-article
+  vol-29 binds a review agent found (Adams-township←historian, Buffalo-city←zoologist,
+  Cleveland, Rhea-bird←classicist); Adams *recovered* to CHARLES FRANCIS, Buffalo→the
+  animal (via Lydekker's 108-nature footprint), Say J.-B. vs Léon disambiguated.
+  140 vol-29 bound, 1155 abstained (miss > false link).
+- **Search rewrite (viewer).** One ranked Meilisearch query, accent-folded (shared
+  `fold`+`titleRank`+`rankHits` in `search-api.js`), consumed identically by the
+  dropdown (top-16) and the full page — so they can't diverge.  Fixes zurich↛ZÜRICH
+  and PLATOON-above-PLATO; `home.html` gained a `searchClient` (was title-only).
+- **HuggingFace publish is a SEPARATE step** from `deploy.sh`: after a
+  content-changing rebuild, also `uv run python tools/publish_hf.py britannica11/eb1911`.
+
+**Pending after Rebuild 2:** bracketed forenames in name-match (SAY, [JEAN BAPTISTE]
+LÉON → still bare SAY) + person-broadening (bare surname → the person, now safe under
+the kind-gate); the 567 fine-qualifier regressions; a possible contributor-abstain
+refinement (1155 is conservative).
+
+---
+
+## RENDER STATE (2026-07-15)
 
 The recursive architecture is in place corpus-wide; this session closed out the
 remaining scaffolding (the catch-all preprocess stage, the title double-decider, the
