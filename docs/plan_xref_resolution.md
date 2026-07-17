@@ -188,14 +188,43 @@ unresolved xrefs resolved (famous, high-traffic articles), **0 false positives**
 (`Lew`→`Lewis`) and 2-edit spelling middles (`Eliot`/`Elliott`) abstain — safe
 misses, not regressions.
 
-**F — structural home (the bigger lift, stage last).**  All cross-corpus
-resolution belongs in ONE post-export phase, because it needs the full article
-index + the kind index + the topic classification.  Topics already run there and
-the kind index is post-export, so **inline-xref resolution must migrate
-post-export** to consume it (today it resolves at phase 3a and bakes targets at
-export 4).  Follow the topic resolver's proven pattern: read the exported
-articles → resolve → patch the article JSONs.  A–D already improve the
-post-export topic surface immediately, so this can stage after them.
+**F — structural home + C-full (the bigger lift, IN PROGRESS 2026-07-17).**  All
+cross-corpus resolution belongs in ONE post-export phase; xref resolution +
+disambiguation + baking currently run *inside* export (`assemble` builds
+`build_index` in-memory → `export_articles_to_json` extracts each `«LN»`, calls
+`resolve_one`, and rewrites `«LN:target|display»` → `«LN:filename|…»` **and**
+re-renders `rendered_html` from the decorated body + panel).  To consume the
+post-export kind index, all of that moves after Phase 6b3.
+
+**Scoping findings (2026-07-17):**
+- **Reuse, don't reimplement.**  The DB session survives export, so the new phase
+  reuses `_xrefs_from_body` + the panel loop + `_link_xrefs_in_body` unchanged —
+  F moves *when* they run, not *what*.
+- **Render once, at the end.**  `rendered_html` is a pure function of the
+  *resolved* payload (decorated body + panel), so it doesn't belong in export at
+  all — it renders ONCE in 6b4, after resolution (no double-render).  So export
+  DROPS the render call, not just the resolution.
+- **Clean separation.**  Export = assemble the article *data* (title, undecorated
+  body, `sections` — which key on `«SEC»`/`«SH»`, untouched by xref decoration —,
+  contributors, images, quality); no resolution, no `rendered_html`.  6b4 =
+  resolve → decorate body → build panel → render once → write.  Export gets
+  *smaller*.  The `defer_xrefs` flag simply skips the whole xref+render tail.
+
+**Decomposition (each step gated by a local rebuild, per the user):**
+1. Refactor the export xref tail into a reusable `decorate_and_render(payload,
+   article, session, link_index, …)` + a `defer_xrefs` flag.  Verify byte-identical.
+2. New **Phase 6b4 resolve-xrefs**: open a session, build a kind-aware
+   `link_index`, load each deferred JSON, `decorate_and_render`, patch (body,
+   `xrefs`, `rendered_html`, counts), write `xref_resolution.jsonl`.  Verify
+   byte-identical to the pre-F decorated corpus (no kind index yet).
+3. **C-full**: `disambiguate_among` reads `kind_index` (candidate→kinds — catches
+   atypical-lead persons live-lead misses) instead of live `lead_kind`; adds
+   **subject-domain** (candidate topic category from `classified_toc`) and
+   **place-of** (geography tree) for the 603 deferred hints; retire
+   `matches_disambiguator`.  Net = `xref_resolution.jsonl` before/after (finally
+   runnable standalone).
+4. Switch export → `defer_xrefs`, wire 6b4 into `rebuild_all.sh`, full local
+   rebuild + reference checks (`check_deploy_refs.py`).
 
 ### Calibration (per surface — the `aggressive` knob is already wired)
 - **Topic** — recall / aggressive; a finding tool, FPs cheap.

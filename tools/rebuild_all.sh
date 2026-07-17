@@ -213,6 +213,18 @@ echo
 echo "=== Phase 6b3: Building kind index [$(elapsed)] ==="
 uv run python tools/vol29/build_kind_index.py
 
+# --- Phase 6b4: Resolve inline xrefs post-export ---
+# The export deferred xref resolution (defer_xrefs) so the collision-picker can
+# consult the topic resolution + kind index built above.  This phase runs the
+# REORDERED tail — resolve, bake «LN» markers into each body, render — patching
+# every article JSON in place and (re)writing xref_resolution.jsonl.  MUST run
+# before any consumer of the decorated bodies / rendered_html / xref graph
+# (6e Reader's Guide, 6h download bundle, the search index).
+# [[project_resolver_consolidation]] F.
+echo
+echo "=== Phase 6b4: Resolving inline xrefs post-export [$(elapsed)] ==="
+uv run python tools/pipeline/resolve_xrefs_post.py
+
 # --- Phase 6c: Detect first-content fm scan per volume ---
 echo
 echo "=== Phase 6c: Detecting fm first-content pages [$(elapsed)] ==="

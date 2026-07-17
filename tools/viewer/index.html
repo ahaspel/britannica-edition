@@ -640,16 +640,6 @@
       return { items, total: totalHitParas };
     }
 
-    // Count exact-substring occurrences of query in body (case-insens).
-    function ftCountMatches(body, query) {
-      if (!body || !query) return 0;
-      const bLow = body.toLowerCase();
-      const qLow = query.toLowerCase();
-      let n = 0, i = 0;
-      while ((i = bLow.indexOf(qLow, i)) !== -1) { n++; i += qLow.length; }
-      return n;
-    }
-
     async function searchFulltext(query) {
       hideAllResults();
       resultsCard.style.display = "block"; resultsDivider.style.display = "block";
@@ -662,28 +652,13 @@
 
       try {
         const parsed = parseQuery(query);
-        const searchBody = {
-          q: parsed.query,
-          limit: 50,
-          // Retrieve the full body so we can do exact-substring
-          // matching client-side. Meili's highlighter does fuzzy/
-          // prefix matching which the user explicitly doesn't want.
-          attributesToRetrieve: ["title", "volume", "page_start", "page_end", "body_start", "body_length", "filename", "contributors", "body"],
-          matchingStrategy: "all",
-        };
-        if (parsed.filter) searchBody.filter = parsed.filter;
-
-        const resp = await fetch(`${MEILI_URL}/indexes/articles/search`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${MEILI_KEY}`,
-          },
-          body: JSON.stringify(searchBody),
+        // THE shared ranked search — the dropdown shows the top 16 of this exact
+        // list, so the two views cannot differ.  One Meilisearch query, one
+        // ranking (search-api.js): folded so "zurich" matches "ZÜRICH", tiered so
+        // PLATO precedes PLATOON precedes CAMBRIDGE PLATONISTS, body-only last.
+        let hits = await searchClient.rankedSearch(parsed.query, {
+          filter: parsed.filter,
         });
-
-        const data = await resp.json();
-        let hits = data.hits || [];
 
         if (parsed.excludes.length) {
           hits = hits.filter(hit => {
@@ -701,31 +676,6 @@
           if (seen.has(hit.filename)) return false;
           seen.add(hit.filename);
           return true;
-        });
-
-        // Drop hits where the query doesn't actually appear as a
-        // substring (Meili's fuzzy/prefix matching can return things
-        // like ADAMS for "adamas" — we only want exact substring
-        // matches). Title matches count alongside body matches so a
-        // query that appears only in the title (e.g. "aetius" on the
-        // AETIUS articles) is still returned.
-        for (const hit of hits) {
-          hit._bodyMatches = ftCountMatches(hit.body || "", parsed.query);
-          hit._titleMatches = ftCountMatches(hit.title || "", parsed.query);
-          hit._matchCount = hit._bodyMatches + hit._titleMatches;
-        }
-        hits = hits.filter(h => h._matchCount > 0);
-        // Ordering:
-        //   1. Title matches first (regardless of count)
-        //   2. Then by body match count, descending
-        //   3. Tie-break alphabetically by title
-        hits.sort((a, b) => {
-          const at = a._titleMatches > 0 ? 1 : 0;
-          const bt = b._titleMatches > 0 ? 1 : 0;
-          if (at !== bt) return bt - at;
-          const bc = (b._bodyMatches || 0) - (a._bodyMatches || 0);
-          if (bc !== 0) return bc;
-          return (a.title || "").localeCompare(b.title || "");
         });
         setResultCount(hits.length);
 

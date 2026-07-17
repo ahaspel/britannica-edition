@@ -16,13 +16,23 @@ import urllib.request
 # markers.py is pure-stdlib and is shipped to ~ next to this script by the
 # rebuild deploy step, so search indexing uses the SAME marker->text converter
 # as the export (britannica.markers) -- no separate EC2 copy of the strip logic.
+# Locally (running from the repo) there is no shipped copy, so fall back to the
+# real module on `src`.
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from markers import markers_to_text
+try:
+    from markers import markers_to_text
+except ModuleNotFoundError:
+    sys.path.insert(0, os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "..", "..", "src"))
+    from britannica.markers import markers_to_text
 
-MEILI_URL = "http://localhost:7700"
+# Env-overridable so ONE indexer serves both EC2 (defaults) and a local reindex:
+#   MEILI_MASTER_KEY=britannica-dev-key ARTICLES_DIR=data/derived/articles \
+#     uv run python tools/pipeline/index_search_ec2.py
+MEILI_URL = os.environ.get("MEILI_URL", "http://localhost:7700")
 MEILI_KEY = os.environ.get("MEILI_MASTER_KEY", "gibbon-winters-lewis")
 INDEX_NAME = "articles"
-ARTICLES_DIR = os.path.expanduser("~/articles")
+ARTICLES_DIR = os.environ.get("ARTICLES_DIR", os.path.expanduser("~/articles"))
 BATCH_SIZE = 500
 
 HEADERS = {

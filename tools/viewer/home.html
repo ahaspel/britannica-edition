@@ -232,6 +232,14 @@
     const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
     const DATA_BASE = IS_LOCAL ? "/data/derived/articles" : "/data/articles";
 
+    // The typeahead runs the SAME ranked Meilisearch as index.html, so the
+    // landing-page dropdown matches the full search you land on.
+    const MEILI_URL = IS_LOCAL ? "http://localhost:7700" : "/search-api";
+    const MEILI_KEY = IS_LOCAL
+      ? "britannica-dev-key"
+      : "24e84cf3ca3b70fe166637d797cbbdd0593ba3a27a47a9ed76b552c821199579";
+    const searchClient = createSearchClient(MEILI_URL, MEILI_KEY);
+
     let articles = [];
 
     fetch(`${DATA_BASE}/index.json`).then(r => r.json()).then(data => {
@@ -247,7 +255,6 @@
     initTypeahead({
       inputEl: document.getElementById("search"),
       dropdownEl: document.getElementById("search-typeahead"),
-      getArticles: () => articles,
     });
   </script>
 <script data-goatcounter="https://britannica11.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>

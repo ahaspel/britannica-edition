@@ -26,13 +26,11 @@
 function initTypeahead({
   inputEl,
   dropdownEl,
-  getArticles,
   shouldSkip = () => false,
   onSubmitNoSelection,
   onInputAlso,
 }) {
   let selected = -1;
-  let lastTitleHits = [];
   let ftToken = 0;
   let ftDebounce = null;
 
@@ -42,15 +40,6 @@ function initTypeahead({
       .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
   }
 
-  function titleRank(title, q) {
-    const t = title.toLowerCase();
-    if (t === q) return 0;
-    const words = t.split(/[\s,.'’()\-]+/).filter(Boolean);
-    if (words[0] === q) return 1;
-    if (words.includes(q)) return 2;
-    if (t.startsWith(q)) return 3;
-    return 4;
-  }
 
   function makeSnippet(body, q) {
     if (!body) return "";
@@ -111,50 +100,32 @@ function initTypeahead({
     });
   }
 
-  async function runFulltext(q, myToken) {
-    if (q.length < 3 || typeof searchClient === "undefined") return;
+  // The dropdown is the top 16 of the SAME ranked list the full-results page
+  // shows — one Meilisearch query, one ranking (search-api.js).  No separate
+  // title source, so the two lists cannot diverge.
+  async function runSearch(q, myToken) {
+    if (typeof searchClient === "undefined") return;
     try {
-      const hits = await searchClient.searchFulltext(q, {
-        limit: 8,
-        excludeFilenames: new Set(lastTitleHits.map(a => a.filename)),
-      });
+      const hits = await searchClient.rankedSearch(q, { limit: 50 });
       if (myToken !== ftToken) return;
-      const ftHits = hits
-        .map(h => ({
-          title: h.title,
-          filename: h.filename,
-          _kind: "fulltext",
-          _snippet: makeSnippet(h.body || "", q),
-          _query: q,
-        }))
-        .slice(0, 8);
-      renderTypeahead([...lastTitleHits, ...ftHits]);
-    } catch (e) { /* keep title-only list */ }
+      const items = hits.slice(0, 16).map(h => ({
+        title: h.title,
+        filename: h.filename,
+        body_start: h.body_start,
+        _kind: h._titleMatches > 0 ? "title" : "fulltext",
+        _snippet: h._titleMatches > 0 ? "" : makeSnippet(h.body || "", q),
+        _query: q,
+      }));
+      renderTypeahead(items);
+    } catch (e) { /* leave the previous list up */ }
   }
 
   inputEl.addEventListener("input", () => {
     const q = inputEl.value.trim();
-    const qLower = q.toLowerCase();
     if (!q || shouldSkip()) { dropdownEl.style.display = "none"; return; }
-    const articles = getArticles() || [];
-    const titleMatches = articles
-      .filter(a => (a.article_type || "article") === "article")
-      .filter(a => a.title.toLowerCase().includes(qLower));
-    titleMatches.sort((a, b) => {
-      const ra = titleRank(a.title, qLower);
-      const rb = titleRank(b.title, qLower);
-      return ra - rb || a.title.localeCompare(b.title);
-    });
-    lastTitleHits = titleMatches.slice(0, 8).map(a => ({
-      title: a.title,
-      filename: a.filename,
-      body_start: a.body_start,
-      _kind: "title",
-    }));
-    renderTypeahead(lastTitleHits);
     if (ftDebounce) clearTimeout(ftDebounce);
     const myToken = ++ftToken;
-    ftDebounce = setTimeout(() => runFulltext(q, myToken), 250);
+    ftDebounce = setTimeout(() => runSearch(q, myToken), 120);
     if (onInputAlso) onInputAlso(q);
   });
 

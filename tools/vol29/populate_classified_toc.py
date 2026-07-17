@@ -28,7 +28,8 @@ from britannica.export.sections import match_section
 from britannica.xrefs.normalizer import normalize_xref_target
 from britannica.xrefs.resolver import build_core_maps
 from britannica.xrefs.scoring import find_fuzzy_match
-from britannica.xrefs.disambiguation import body_opening, pick_by_kind
+from britannica.xrefs.disambiguation import (
+    body_opening, kind_qualifies, lead_kind, pick_by_kind)
 
 # A2 broadening (reach past the exact collision to a leading-token candidate) is
 # safe ONLY where the bucket wants a PHYSICAL FEATURE filed as a variant of the
@@ -295,8 +296,15 @@ def build_resolver():
                     title = title_by_fn[pick]
                     return {"target": title, "display": title, "filename": pick,
                             "disambig": "kind"}
-            fn, title = cands[0]                              # no kind / unresolved -> first-wins
-            return {"target": title, "display": title, "filename": fn}
+            # First-wins fallback — but NEVER onto a kind-mismatched decoy in a
+            # typed bucket.  Léon Say has no clean match, but cands[0] is the SAY
+            # *town*: binding it is a FALSE LINK where a miss is the honest
+            # answer (the user's rule).  Bind cands[0] only when it is
+            # kind-consistent (or the bucket is untyped); otherwise fall through
+            # to the fuzzy cascade, then to an unresolved entry.
+            fn, title = cands[0]
+            if not want_kind or kind_qualifies(lead_kind(_opening(fn)), want_kind):
+                return {"target": title, "display": title, "filename": fn}
         fn = find_fuzzy_match(n, tmap, aggressive=True)        # shared fuzzy cascade
         if fn:
             title = title_by_fn[fn]
