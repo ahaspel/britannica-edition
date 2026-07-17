@@ -205,6 +205,14 @@ echo
 echo "=== Phase 6b2: Applying cached TOC disambiguations [$(elapsed)] ==="
 uv run python tools/vol29/disambiguate_toc.py --apply-only
 
+# --- Phase 6b3: Build the kind index (filename -> [kinds]) ---
+# Reads the FINISHED classified_toc (post-6b2) and each article's lead_kind to
+# emit data/derived/kind_index.json — the general form of the person set,
+# consumed by the xref collision-picker.  [[project_resolver_consolidation]] B.
+echo
+echo "=== Phase 6b3: Building kind index [$(elapsed)] ==="
+uv run python tools/vol29/build_kind_index.py
+
 # --- Phase 6c: Detect first-content fm scan per volume ---
 echo
 echo "=== Phase 6c: Detecting fm first-content pages [$(elapsed)] ==="
