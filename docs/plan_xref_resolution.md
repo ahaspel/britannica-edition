@@ -160,10 +160,27 @@ first-wins with **salience** — the prominent article (longest / most incoming
 links / the un-qualified primary title over its comma-qualified variants).  Cheap,
 principled, no context needed.  Bare refs never broaden.
 
-**E — canonicalization (independent, biggest volume).**  Compose **inversion +
-diacritic-fold** so `Rene Descartes` (un-accented) → `DESCARTES, RENÉ` — today
-they're separate passes in `find_fuzzy_match` that never chain.  Kind-agnostic;
-targets the ~5,534 no-match pool.  A1 rides along.
+**E — name canonicalization.**  ✅ **DONE 2026-07-16.**  `find_fuzzy_match`
+strategy **10b** retries the name strategies in the diacritic-**folded** title
+space, so:
+  - a fold COMPOSES with inversion (`RENE DESCARTES` → `DESCARTES, RENÉ` — the
+    two passes never chained before).  *Correct but small: 2 refs — the
+    inversion+accent combo is rare because sources keep the accent.  My "biggest
+    volume" framing was wrong.*
+  - **invert-then-prefix**: a forward name → a UNIQUE `LAST, FIRST…` title keyed
+    on surname + first given name, **gated on middle-name consistency** — every
+    target middle (surname particles dropped) must match some matched given word
+    (equal / initial / prefix / one edit), else abstain.  Resolves the fuller
+    filed name (`Tycho Brahe → BRAHE, TYCHO`; `Charles Darwin → DARWIN, CHARLES
+    ROBERT`; `Victor Hugo`; `von Harnack`; `de Rémusat`) but **never crosses to a
+    same-first-name relative** (`John WILLIS Clark` abstains, not `CLARK, JOHN
+    BATES`; the two Coleridges / Kembles / Thompsons).
+
+Additive (10b fires only after strategies 1–10 fail).  **34** previously-
+unresolved xrefs resolved (famous, high-traffic articles), **0 false positives**
+(the 5 relative-collisions abstain); suite 419.  Deferred: nickname-first
+(`Lew`→`Lewis`) and 2-edit spelling middles (`Eliot`/`Elliott`) abstain — safe
+misses, not regressions.
 
 **F — structural home (the bigger lift, stage last).**  All cross-corpus
 resolution belongs in ONE post-export phase, because it needs the full article
