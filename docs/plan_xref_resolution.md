@@ -155,10 +155,16 @@ and **place-of** (`Greece`/`Massachusetts`→ containing region, the geography
 tree) — both read from the post-export topic data.  Then retire
 `matches_disambiguator`.
 
-**D — salience tiebreak (the ~697 bare exact-collisions).**  Replace dict-order
-first-wins with **salience** — the prominent article (longest / most incoming
-links / the un-qualified primary title over its comma-qualified variants).  Cheap,
-principled, no context needed.  Bare refs never broaden.
+**D — salience tiebreak (the ~697 bare exact-collisions).**  ✅ **DONE
+2026-07-16.**  `disambiguate_among` Rule 3 (the fallback when a collision has no
+kind hint, or the hint didn't resolve) picked the dict-order first candidate —
+arbitrary.  Now picks the most PROMINENT article — the **longest body** (the main
+subject over a same-named stub) — order-independently and deterministically
+(`max` keeps the first on a length tie, degrading to the old first-wins when
+bodies match).  Bare `Zürich` → the city (body 24 791) over the canton (4 651).
+Suite 419.  (In-degree / most-linked would be sharper but needs the resolved
+xref graph — not available at resolution time; body length is the self-contained
+proxy.)
 
 **E — name canonicalization.**  ✅ **DONE 2026-07-16.**  `find_fuzzy_match`
 strategy **10b** retries the name strategies in the diacritic-**folded** title
