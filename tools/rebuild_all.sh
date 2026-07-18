@@ -95,21 +95,13 @@ echo "  Done."
   # Note: S3 bucket is NOT cleared here — s3 sync --delete in Phase 7
   # handles cleanup. This keeps the site live during the rebuild.
 
-# --- Phase 1b: Build contributor table from front matter ---
-echo
-echo "=== Phase 1b: Building contributor table [$(elapsed)] ==="
-uv run python tools/pipeline/build_contributor_table.py
-
-# --- Phase 1c: Apply vol 29 contributor linker ---
-# Adds contributors that vol 29's master Index lists but per-volume
-# tables don't, plus paired re-keys / duplicate-initials resolutions.
-# Must run AFTER 1b (so the linker sees the post-corrections.json
-# contributor table) and BEFORE the Phase-4 contributor harvest (so the
-# footer matcher sees the new ContributorInitials rows).  Conservative:
-# NEEDS_REVIEW items are reported but not auto-applied.
-echo
-echo "=== Phase 1c: Applying vol 29 contributor linker [$(elapsed)] ==="
-uv run python tools/pipeline/link_vol29_contributors.py --apply
+# NOTE: the contributor ROSTER is no longer built here.  It used to be Phase 1b
+# (build_contributor_table) + Phase 1c (vol-29 linker), PRE-walk — but its only
+# walk-time consumer was the [[Author:]] signature render, which is now deferred
+# (the walk emits a neutral «AL» marker).  So Phase 6b4 (resolve_contributors_post)
+# builds the roster from footers + front matter + vol-29 and THEN resolves the
+# ambiguous [[Author:]] links against the finished roster — for both binding and
+# render.  ([[project_roster_from_author_links]])
 
 # --- Phase 2: Per-volume pipeline ---
 echo
@@ -213,29 +205,32 @@ echo
 echo "=== Phase 6b3: Building kind index [$(elapsed)] ==="
 uv run python tools/vol29/build_kind_index.py
 
-# --- Phase 6b4: Resolve inline xrefs post-export ---
-# The export deferred xref resolution (defer_xrefs) so the collision-picker can
-# consult the topic resolution + kind index built above.  This phase runs the
-# REORDERED tail — resolve, bake «LN» markers into each body, render — patching
-# every article JSON in place and (re)writing xref_resolution.jsonl.  MUST run
-# before any consumer of the decorated bodies / rendered_html / xref graph
-# (6e Reader's Guide, 6h download bundle, the search index).
-# [[project_resolver_consolidation]] F.
-echo
-echo "=== Phase 6b4: Resolving inline xrefs post-export [$(elapsed)] ==="
-uv run python tools/pipeline/resolve_xrefs_post.py
-
-# --- Phase 6b5: Resolve contributor attributions post-export ---
+# --- Phase 6b4: Resolve contributor attributions post-export ---
 # ALL contributor binding (signatures + front-matter + vol-29) now lives here,
 # after the kind index (6b3), so vol-29 credits are disambiguated by the
 # contributor's kind FOOTPRINT + the credit's own hint — a kind-mismatched
 # homonym (Adams-the-township for the historian) is abstained, not bound.
-# Patches each article JSON's `contributors` + rebuilds contributors.json, so it
-# MUST run before any consumer of contributors (6e Reader's Guide, 6h download
-# bundle, the search index).  [[project_resolver_consolidation]]
+# Patches each article JSON's `contributors` + rebuilds contributors.json.
+# MUST run BEFORE 6b5 (render): the "By …" byline is baked into rendered_html
+# from the `contributors` field, so binding has to happen first or every article
+# renders author-less.  Also before any other contributor consumer (6e Reader's
+# Guide, 6h download bundle, the search index).  [[project_resolver_consolidation]]
 echo
-echo "=== Phase 6b5: Resolving contributor attributions post-export [$(elapsed)] ==="
+echo "=== Phase 6b4: Resolving contributor attributions post-export [$(elapsed)] ==="
 uv run python tools/pipeline/resolve_contributors_post.py
+
+# --- Phase 6b5: Resolve inline xrefs + render post-export ---
+# The export deferred xref resolution (defer_xrefs) so the collision-picker can
+# consult the topic resolution + kind index built above.  This phase runs the
+# REORDERED tail — resolve, bake «LN» markers into each body, render — patching
+# every article JSON in place and (re)writing xref_resolution.jsonl.  RENDER IS
+# LAST: it reads the `contributors` bound in 6b4 so the byline appears.  MUST run
+# before any consumer of the decorated bodies / rendered_html / xref graph
+# (6e Reader's Guide, 6h download bundle, the search index).
+# [[project_resolver_consolidation]] F.
+echo
+echo "=== Phase 6b5: Resolving inline xrefs + rendering post-export [$(elapsed)] ==="
+uv run python tools/pipeline/resolve_xrefs_post.py
 
 # --- Phase 6c: Detect first-content fm scan per volume ---
 echo

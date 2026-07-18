@@ -281,6 +281,11 @@ def build_contributor_table():
     finally:
         session.close()
 
+    # The raw (initials, name, description) observations — one per front-matter
+    # occurrence, PRE-dedup — so the caller can fold each spelling into the
+    # step-5 canonical-name vote ([[feedback_accrete_first_canonicalize_last]]).
+    return entries
+
 
 def backfill_bios(apply_mode: bool = True):
     """Attach per-volume contributor bios that build_contributor_table()'s
