@@ -814,6 +814,12 @@
       user-select: none;
       text-decoration: none;
     }
+    /* The 'vol:page' label is generated content, so it is excluded from
+       in-article / browser find and from textContent — the marker is furniture,
+       not searchable text (a search for 'an oath' matches across the break). */
+    .page-marker::after {
+      content: attr(data-vol) ":" attr(data-page);
+    }
     a.page-marker:hover {
       color: var(--link);
       text-decoration: underline;
@@ -1798,6 +1804,21 @@
       });
     }
 
+    function fixArticleHrefs(root) {
+      // Inline «LN» links, the xref panel, and plate/parent links are baked with the
+      // PRODUCTION scheme `/article/{id}` (Python renders is_local=False), which the local
+      // static server can't route — no /article/* rewrite layer — so they 404.  Rewrite them
+      // to the dev `?article=` form here, the same adaptation filenameToUrl(…, IS_LOCAL) already
+      // does for search/index/contributor links.  Local-only; production keeps the clean paths.
+      if (!IS_LOCAL) return;
+      root.querySelectorAll('a[href^="/article/"]').forEach(a => {
+        const m = a.getAttribute("href").match(/^\/article\/([^/?#]+)(?:\/[^?#]*)?(#.*)?$/);
+        if (!m) return;
+        a.setAttribute("href",
+          BritannicaUrls.filenameToUrl(decodeURIComponent(m[1]) + ".json", true) + (m[2] || ""));
+      });
+    }
+
     function captureWideTables(root) {
       // The expand-table modal reads wideTableSources; with Python rendering the figure, populate
       // it from the DOM — the `.wide-table-inline` holds the full table.
@@ -1864,6 +1885,7 @@
       injectTopics(app, article);
       hydrateMath(app);
       fixScanHrefs(app, article);
+      fixArticleHrefs(app);
       captureWideTables(app);
       ScanMode.onArticleRendered(article);
     }

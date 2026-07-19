@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-07-17.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-07-19.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,7 +46,30 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-07-17)
+## CURRENT STATE (2026-07-19)
+
+### Session 2026-07-19 — topic-link resolver redesign (LANDED), 99.3% / 98.6%
+
+Rebuilt `populate_classified_toc.build_resolver.resolve` as FILL / FISH / LOOSEN
+([`docs/topic_resolver_redesign.md`](topic_resolver_redesign.md)); wired in and
+re-materialized `classified_toc.json`.  **99.3% resolved (was 95%), 98.6% accuracy**
+(calibration-corrected against 50 human blind marks).
+- **The fisher is where ALL disambiguation lives** (the keystone — see
+  [[feedback_fill_dumb_fish_smart]]): bucket CONTEXT (`topic_geo.py` country/state/
+  nationality + `topic_subject.py` field/profession — the bucket NAMES the attribute
+  and the lead STATES it, a fact not a proxy) → kind → embedding (`topic_fisher.py`
+  + `embeddings.py`, fastembed bge-small).  Splits same-name places AND people.
+- **Recall is dumb + broad:** word-set FILL, then LOOSEN by the FIRST-WORD rule (any
+  article whose title contains the topic's first word → bag → fish).  Coverage
+  95%→99%, ZERO regressions; empties 1669→238.
+- lead_kind veto (dropped ~150 correct bios) replaced by a deterministic PEERAGE
+  detector; ethnic/nature buckets never bind a place.  Deleted dead alias-form code.
+- New modules `src/britannica/{embeddings,topic_fisher,topic_geo,topic_subject}.py`
+  (+ deps fastembed, numpy).  Cache `data/derived/lead_embeddings.npz` gitignored,
+  regenerable via `python -m britannica.embeddings`.
+- **Optional leftovers** (user: "the rest is tail-chasing"): the LLM arbiter for the
+  tiny same-field residue; 238 unresolved (mostly correct peerage refusals + stray
+  section-header entries); a full corpus rebuild + deploy to ship the new TOC.
 
 ### Session 2026-07-17 — resolver + contributor consolidation, migrated post-export
 
