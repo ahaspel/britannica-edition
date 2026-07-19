@@ -18,6 +18,11 @@ dependencies = [
   # equivalent HTML (golden diff + EPUB XHTML).  Would return to dev-only if tables were
   # decomposed into recursive «TABLE»/«TR»/«TD» markers (a later producer arc).
   "html5lib>=1.1",
+  # Local ONNX embeddings (BAAI/bge-small-en-v1.5) for the topic-link fisher's
+  # semantic score: cosine(article-lead, bucket-path).  Build-time only, no key,
+  # deterministic; pulls numpy + onnxruntime.  See docs/topic_resolver_redesign.md.
+  "fastembed>=0.3",
+  "numpy>=1.26",
 ]
 
 [project.scripts]
