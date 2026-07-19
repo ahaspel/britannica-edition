@@ -26,12 +26,12 @@ from pathlib import Path
 
 from britannica.export.sections import match_section
 from britannica.xrefs.normalizer import normalize_xref_target
-from britannica.xrefs.resolver import build_core_maps
 from britannica.xrefs.scoring import find_fuzzy_match
 from britannica.xrefs.disambiguation import (
     body_opening, kind_qualifies, lead_kind, pick_by_kind)
 from britannica.embeddings import LeadEmbeddings, build_cache
 from britannica.topic_fisher import Fisher
+from britannica.name_index import NameIndex
 
 # A2 broadening (reach past the exact collision to a leading-token candidate) is
 # safe ONLY where the bucket wants a PHYSICAL FEATURE filed as a variant of the
@@ -152,19 +152,8 @@ def wanted_kinds(path_segments: list[str]) -> tuple[str, ...]:
 
 
 # ── word-set + bucket-context resolution (docs/topic_resolver_redesign.md) ────
-_TOK = re.compile(r"[^\W_]+", re.UNICODE)
-
-
-def _fold(s: str) -> str:
-    return "".join(c for c in unicodedata.normalize("NFKD", s) if not unicodedata.combining(c))
-
-
-def _wordset(s: str) -> frozenset:
-    return frozenset(w.upper() for w in _TOK.findall(s))
-
-
-def _wordset_f(s: str) -> frozenset:          # diacritic-folded
-    return frozenset(w.upper() for w in _TOK.findall(_fold(s)))
+# The tokenizers (_TOK/_fold/_wordset/_wordset_f) and the FILL cascade now live in
+# the shared britannica.name_index.NameIndex; build_resolver constructs one.
 
 
 # A peerage topic ('Bristol, 2nd earl of') must land on a biographical title, not
@@ -200,24 +189,12 @@ def _topic_alternates(raw: str) -> list:
 def build_resolver():
     article_index = json.loads(ARTICLES_INDEX.read_text(encoding="utf-8"))
     arts = [e for e in article_index if e.get("article_type") == "article"]
-    title_by_fn = {e["filename"]: e["title"] for e in arts}
-    # Shared name->fn map, now used ONLY by the fuzzy loosen rung + `_resolve_sect`.
-    by_norm, tmap = build_core_maps(
-        ((e["title"], (e["filename"], e["title"])) for e in arts),
-        value_of=lambda ft: ft[0])
-    # Word-SET indices: FILL (exact set), FOLD (diacritic), SUBSET (topic ⊂ title).
-    by_ws: dict[frozenset, list] = {}
-    by_wsf: dict[frozenset, list] = {}
-    fn_ws: dict[str, frozenset] = {}
-    word_fns: dict[str, set] = {}
-    for e in arts:
-        fn, title = e["filename"], e["title"]
-        by_ws.setdefault(_wordset(title), []).append((fn, title))
-        wf = _wordset_f(title)
-        by_wsf.setdefault(wf, []).append((fn, title))
-        fn_ws[fn] = wf
-        for w in wf:
-            word_fns.setdefault(w, set()).add(fn)
+    # The shared FILL substrate — word-set / fold / subset / first-word / fuzzy
+    # (src/britannica/name_index.py).  Picking (fisher) and gating stay here.
+    # by_norm/tmap serve _resolve_plain + _resolve_sect.
+    idx = NameIndex(arts)
+    title_by_fn = idx.title_by_fn
+    by_norm, tmap = idx.by_norm, idx.tmap
 
     section_index = load_section_index()
 
@@ -305,14 +282,6 @@ def build_resolver():
         _emb = LeadEmbeddings.load()
     fisher = Fisher(_emb, _opening)
 
-    def _subset_cands(ws):
-        """Articles whose folded word-set ⊇ the topic's (topic words ⊂ title)."""
-        if not ws:
-            return []
-        sets = [word_fns.get(w, set()) for w in ws]
-        common = set.intersection(*sets) if all(sets) else set()
-        return [(fn, title_by_fn[fn]) for fn in common if ws <= fn_ws[fn]]
-
     def resolve(raw_name: str, want, ctx: set, path=None):
         """Topic -> article dict (or an unresolved dict).  Four stages
         (docs/topic_resolver_redesign.md): (1) `§` sections, (2) exact word-set
@@ -353,15 +322,14 @@ def build_resolver():
             if sr:
                 return sr
         # 2. fill — exact word-set
-        ws = _wordset(raw_name)
-        hits = by_ws.get(ws, [])
+        hits = idx.exact(raw_name)
         # 2a. feature-kind broadening: a Rivers/Lakes bucket wants the feature
         #     variant (ALABAMA -> ALABAMA RIVER; ZUG -> ZUG, LAKE OF), which the
         #     bare word-set misses.  Reach it via subset + kind when the bare match
         #     isn't already that feature kind.
         if want_kind in _BROADEN_KINDS and not (
                 len(hits) == 1 and kind_qualifies(lead_kind(_opening(hits[0][0])), want_kind)):
-            pick = pick_by_kind(_subset_cands(_wordset_f(raw_name)), want_kind, _opening)
+            pick = pick_by_kind(idx.subset(raw_name), want_kind, _opening)
             if pick is not None:
                 return _res(pick, "broaden")
         if len(hits) == 1:
@@ -372,21 +340,21 @@ def build_resolver():
                 return _res(fn, "fish:" + m)
         # 4. loosen empty bags (recall only, tightest first, then fish; kind-gated)
         for alt in _topic_alternates(raw_name):               # topic-side or/paren alts
-            h = by_ws.get(_wordset(alt), [])
+            h = idx.exact(alt)
             if len(h) == 1 and _kind_ok(h[0][0]):
                 return _res(h[0][0], "loosen:alt")
             if len(h) >= 2:
                 r = _fish_gated(h, "loosen:alt-fish")
                 if r:
                     return r
-        h = by_wsf.get(_wordset_f(raw_name), [])              # diacritic fold
+        h = idx.fold_match(raw_name)                          # diacritic fold
         if len(h) == 1 and _kind_ok(h[0][0]):
             return _res(h[0][0], "loosen:fold")
         if len(h) >= 2:
             r = _fish_gated(h, "loosen:fold-fish")
             if r:
                 return r
-        h = _subset_cands(_wordset_f(raw_name))               # subset (topic ⊂ title)
+        h = idx.subset(raw_name)                               # subset (topic ⊂ title)
         if h:
             r = _fish_gated(h, "loosen:subset")
             if r:
@@ -395,18 +363,14 @@ def build_resolver():
         # ('Pergolesi, G. B.' -> PERGOLESI...; 'Abercorn, 1st earl of' -> ABERCORN,
         # JAMES HAMILTON).  The surname/mainword is almost always in the target
         # title, so this fills the bag; the fisher (bucket context) then picks.
-        fw = _TOK.findall(_fold(raw_name))
-        if fw:
-            hh = word_fns.get(fw[0].upper())
-            if hh:
-                h = [(f, title_by_fn[f]) for f in hh]
-                if len(h) == 1 and _kind_ok(h[0][0]):
-                    return _res(h[0][0], "loosen:firstword")
-                if len(h) >= 2:
-                    r = _fish_gated(h, "loosen:firstword-fish")
-                    if r:
-                        return r
-        fn = find_fuzzy_match(normalize_xref_target(raw_name), tmap, aggressive=True)
+        h = idx.firstword(raw_name)
+        if len(h) == 1 and _kind_ok(h[0][0]):
+            return _res(h[0][0], "loosen:firstword")
+        if len(h) >= 2:
+            r = _fish_gated(h, "loosen:firstword-fish")
+            if r:
+                return r
+        fn = idx.fuzzy(raw_name)
         if fn and _kind_ok(fn):
             return _res(fn, "loosen:fuzzy")
         # section-pointer fallbacks (raw '#anchor', then the name IS a section title)
