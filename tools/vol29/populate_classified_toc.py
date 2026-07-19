@@ -30,6 +30,8 @@ from britannica.xrefs.resolver import build_core_maps
 from britannica.xrefs.scoring import find_fuzzy_match
 from britannica.xrefs.disambiguation import (
     body_opening, kind_qualifies, lead_kind, pick_by_kind)
+from britannica.embeddings import LeadEmbeddings, build_cache
+from britannica.topic_fisher import Fisher
 
 # A2 broadening (reach past the exact collision to a leading-token candidate) is
 # safe ONLY where the bucket wants a PHYSICAL FEATURE filed as a variant of the
@@ -149,113 +151,73 @@ def wanted_kinds(path_segments: list[str]) -> tuple[str, ...]:
     return ()
 
 
-# ── Resolver indexes (built once from the article index) ──────────────────
-# EB parks a subject's alternate spellings in its title, almost always bracketed:
-# 'THORPE [or Thorp], JOHN', 'AGOSTINO, or AGOSTINI [AUGUSTINUS], PAOLO',
-# 'BACONTHORPE [BACON, BACO, BACCONIUS], JOHN', 'CARAVAGGIO, … (or MERIGI) DA'.  A
-# topic cites ONE of those spellings, so the article must be findable under each —
-# not just the head.  These are straight-up resolver misses: the article exists,
-# it was only ever keyed under the raw (variant-laden) title.
-_VARIANT_BRACKET_RE = re.compile(r"\s*\[[^\]]*\]|\s*\([^)]*\)")
-_OR_ALT_RE = re.compile(r",?\s+or\s+([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ'’.\-]*)", re.I)
-_BRACKET_CONTENT_RE = re.compile(r"[\[(]([^\])]*)[\])]")
-# On a place/thing title (no given name) a paren is a DISAMBIGUATOR — 'BARI
-# (TRIBE)', 'MIAMI (people)' — NOT an alias; stripping it collapses the tribe
-# onto the town's key.  So outside a biography we strip only '(…or…)' parens.
-_OR_PAREN_RE = re.compile(r"\s*\([^)]*\bor\b[^)]*\)", re.I)
+# ── word-set + bucket-context resolution (docs/topic_resolver_redesign.md) ────
+_TOK = re.compile(r"[^\W_]+", re.UNICODE)
 
 
-def _head_surnames(head: str) -> list[str]:
-    """Every surname spelling packed into a title's head: the primary (variant
-    markup stripped) plus each bracketed / 'or' alternate, comma-split so a
-    multi-alias bracket ('[BACON, BACO, BACCONIUS]') yields all three."""
-    out = []
-    prim = (_OR_ALT_RE.sub("", _VARIANT_BRACKET_RE.sub("", head))
-            .strip().rstrip(",").strip())
-    if prim:
-        out.append(prim)
-    for m in _BRACKET_CONTENT_RE.finditer(head):          # [or Thorp], [AUGUSTINUS], …
-        content = re.sub(r"^\s*or\s+", "", m.group(1), flags=re.I)
-        for part in content.split(","):
-            part = part.strip()
-            if len(part) >= 2 and re.search(r"[A-Za-zÀ-ÿ]", part):
-                out.append(part)
-    for m in _OR_ALT_RE.finditer(_VARIANT_BRACKET_RE.sub("", head)):   # ', or AGOSTINI'
-        alt = m.group(1).strip()
-        if len(alt) >= 2:
-            out.append(alt)
-    return out
+def _fold(s: str) -> str:
+    return "".join(c for c in unicodedata.normalize("NFKD", s) if not unicodedata.combining(c))
 
 
-def _title_forms(title: str) -> list[str]:
-    """The keys a variant-laden EB title should be findable under: the raw title,
-    plus '<surname spelling>, <given>' for every surname alias in the head.
-    Display always stays the raw title — only the resolution key expands."""
-    forms = {title}
-    head, sep, given = title.rpartition(",")
-    if not sep:                                   # place/thing: brackets + '(…or…)' only
-        t = _OR_PAREN_RE.sub("", re.sub(r"\s*\[[^\]]*\]", "", title))
-        forms.add(re.sub(r"\s+", " ", t).strip())
-        return [f for f in forms if f]
-    given_p = re.sub(r"\s+", " ", _VARIANT_BRACKET_RE.sub("", given)).strip()
-    for s in _head_surnames(head):
-        forms.add(f"{s}, {given_p}")
-    return [f for f in forms if f]
+def _wordset(s: str) -> frozenset:
+    return frozenset(w.upper() for w in _TOK.findall(s))
+
+
+def _wordset_f(s: str) -> frozenset:          # diacritic-folded
+    return frozenset(w.upper() for w in _TOK.findall(_fold(s)))
+
+
+# A peerage topic ('Bristol, 2nd earl of') must land on a biographical title, not
+# the bare toponym; a person/tribe bucket never binds a clear place article.
+_PEERAGE = re.compile(
+    r",\s*(?:\d+(?:st|nd|rd|th)\s+)?(?:earl|baron|viscount|marquess|marquis|duke|"
+    r"duchess|countess|count|comte|comtesse|lord|lady|baronet|prince|princess|"
+    r"landgrave|margrave)\b", re.I)
+_PICK_PLACE = {"town", "city", "division", "lake", "river", "mountain", "island"}
+_WANT_PLACE = {"division", "town", "lake", "river", "mountain", "island"}
+_OR_SPLIT = re.compile(r"\s+or\s+", re.I)
+_PAREN_RE = re.compile(r"\s*\(([^)]*)\)")
+
+
+def _topic_alternates(raw: str) -> list:
+    """A topic's own alternate spellings: 'Agaiambo or Agaumbu' -> both;
+    'Afars (Danakil)' -> 'Afars' and 'Danakil'.  Recall only."""
+    m = _PAREN_RE.search(raw)
+    outs = [_PAREN_RE.sub("", raw).strip()]
+    if m:
+        outs.append(m.group(1).strip())
+    for part in outs[:]:
+        if _OR_SPLIT.search(part):
+            outs.extend(p.strip() for p in _OR_SPLIT.split(part))
+    seen, uniq = set(), []
+    for o in outs:
+        if o and o.lower() not in seen:
+            seen.add(o.lower())
+            uniq.append(o)
+    return uniq
 
 
 def build_resolver():
     article_index = json.loads(ARTICLES_INDEX.read_text(encoding="utf-8"))
-
-    # Core name->article index, keyed the SAME way the shared resolver
-    # normalizes titles, so find_fuzzy_match's strategies line up.  `by_norm`
-    # keeps every collision (ZURICH canton + city); `tmap`/`title_by_fn` are
-    # the first-wins fast paths the fuzzy matcher needs.
-    by_base: dict[str, list[tuple[str, str]]] = {}   # paren stripped: BARI <- BARI (TRIBE)
-
-    def _base_of(s: str) -> str:
-        return normalize_xref_target(re.sub(r"\s*\([^)]*\)\s*$", "", s))
-
     arts = [e for e in article_index if e.get("article_type") == "article"]
-    # `by_norm` (collision-keeping) + `tmap` (first-wins fn) via the shared core
-    # ([[project_resolver_consolidation]]) — was a hand-rolled copy of it.
+    title_by_fn = {e["filename"]: e["title"] for e in arts}
+    # Shared name->fn map, now used ONLY by the fuzzy loosen rung + `_resolve_sect`.
     by_norm, tmap = build_core_maps(
         ((e["title"], (e["filename"], e["title"])) for e in arts),
         value_of=lambda ft: ft[0])
-    title_by_fn = {e["filename"]: e["title"] for e in arts}
+    # Word-SET indices: FILL (exact set), FOLD (diacritic), SUBSET (topic ⊂ title).
+    by_ws: dict[frozenset, list] = {}
+    by_wsf: dict[frozenset, list] = {}
+    fn_ws: dict[str, frozenset] = {}
+    word_fns: dict[str, set] = {}
     for e in arts:
-        b = _base_of(e["title"])
-        if b:
-            by_base.setdefault(b, []).append((e["filename"], e["title"]))
-    # EB parks alternate spellings in the title itself ('THORPE [or Thorp], JOHN').
-    # Index those under each spelling — but in a SEPARATE map kept OUT of by_norm/
-    # tmap/_sorted_norms, so an alias can supply an exact match a topic missed yet
-    # never perturb a primary exact match nor widen the FUZZY search (which
-    # otherwise hijacked bare 'Hanno' onto 'ANNO, or HANNO, SAINT').  Consulted
-    # after by_norm/by_base and BEFORE fuzzy, through the same kind gate (below).
-    alias_map: dict[str, list[tuple[str, str]]] = {}
-    for e in arts:
-        for form in _title_forms(e["title"]):
-            if form == e["title"]:
-                continue
-            k = normalize_xref_target(form)
-            if k:
-                alias_map.setdefault(k, []).append((e["filename"], e["title"]))
-
-    _sorted_norms = sorted(by_norm)   # normalized titles, for leading-token broadening
-
-    def _leading_token_cands(ref):
-        """(filename, title) candidates whose normalized title LEADS with `ref`
-        as a whole token (ZURICH -> ZURICH, ZURICH LAKE OF; never AURICH).  For
-        A2's kind-gated broadening when the exact collision holds no candidate of
-        the wanted kind ([[project_resolver_consolidation]])."""
-        out = []
-        i = bisect.bisect_left(_sorted_norms, ref)
-        while i < len(_sorted_norms) and _sorted_norms[i].startswith(ref):
-            k = _sorted_norms[i]
-            if k == ref or k[len(ref)] in ",- ":
-                out.extend(by_norm[k])
-            i += 1
-        return out
+        fn, title = e["filename"], e["title"]
+        by_ws.setdefault(_wordset(title), []).append((fn, title))
+        wf = _wordset_f(title)
+        by_wsf.setdefault(wf, []).append((fn, title))
+        fn_ws[fn] = wf
+        for w in wf:
+            word_fns.setdefault(w, set()).add(fn)
 
     section_index = load_section_index()
 
@@ -335,56 +297,127 @@ def build_resolver():
                         "filename": xfn, "anchor": sl}
         return None
 
-    def resolve(raw_name: str, want, ctx: set):
-        """Index entry -> article dict (with filename) or an unresolved dict.
-        Core name->article is the shared resolver (exact then find_fuzzy_match);
-        a same-title collision is settled by the bucket's wanted-kind; the
-        `§`, `#`-anchor and section-title layers are TOC-specific."""
+    # Embeddings for the fisher's semantic rung (built once, cached; regenerable).
+    try:
+        _emb = LeadEmbeddings.load()
+    except Exception:
+        build_cache()
+        _emb = LeadEmbeddings.load()
+    fisher = Fisher(_emb, _opening)
+
+    def _subset_cands(ws):
+        """Articles whose folded word-set ⊇ the topic's (topic words ⊂ title)."""
+        if not ws:
+            return []
+        sets = [word_fns.get(w, set()) for w in ws]
+        common = set.intersection(*sets) if all(sets) else set()
+        return [(fn, title_by_fn[fn]) for fn in common if ws <= fn_ws[fn]]
+
+    def resolve(raw_name: str, want, ctx: set, path=None):
+        """Topic -> article dict (or an unresolved dict).  Four stages
+        (docs/topic_resolver_redesign.md): (1) `§` sections, (2) exact word-set
+        FILL, (3) FISH a collision by bucket context (geo + field) / kind /
+        embedding, (4) LOOSEN empty bags (recall, then fish), gated so a typed
+        bucket never binds a wrong-kind article."""
+        want_kind = want[0] if want else None
+        path = path or []
+
+        def _kind_ok(fn):
+            # Reject only where reliable: ethnic/nature never bind a place; a
+            # peerage topic must land on a biographical title, not a bare toponym.
+            # lead_kind mislabels bios that open with a birthplace, so it does NOT
+            # veto ordinary person buckets.
+            if not want_kind or want_kind in _WANT_PLACE:
+                return True
+            if want_kind in ("ethnic", "nature"):
+                return lead_kind(_opening(fn)) not in _PICK_PLACE
+            if _PEERAGE.search(raw_name):
+                t = title_by_fn.get(fn, "")
+                return ("," in t) or bool(_PEERAGE.search(t))
+            return True
+
+        def _res(fn, disambig=None):
+            title = title_by_fn[fn]
+            d = {"target": title, "display": title, "filename": fn}
+            if disambig:
+                d["disambig"] = disambig
+            return d
+
+        def _fish_gated(cands, tag):
+            fn, _, m = fisher.fish(raw_name, cands, path, want_kind)
+            return _res(fn, tag + ":" + m) if (fn and _kind_ok(fn)) else None
+
+        # 1. sections
         if "§" in raw_name:
             sr = _resolve_sect(raw_name)
             if sr:
                 return sr
-        n = normalize_xref_target(raw_name)
-        cands = (by_norm.get(n) or by_base.get(_base_of(raw_name))
-                 or alias_map.get(n))                         # alias = post-primary, pre-fuzzy
-        if cands:                                             # exact title (or paren base)
-            want_kind = want[0] if want else None
-            if want_kind:
-                pick = pick_by_kind(cands, want_kind, _opening)
-                if pick is None and want_kind in _BROADEN_KINDS:
-                    # A2: no exact candidate IS the wanted physical-feature kind
-                    # -> broaden to whole-word leading-token candidates and retry.
-                    # A hard constraint reaching the feature-variant article
-                    # (ZURICH, LAKE OF -- never in the exact ZURICH collision)
-                    # rather than first-winsing onto a wrong-kind candidate (which
-                    # mis-tagged the canton `lake`).  Allowlisted kinds only (see
-                    # _BROADEN_KINDS) so it can't grab a same-prefix impostor.
-                    pick = pick_by_kind(_leading_token_cands(n), want_kind, _opening)
-                if pick is not None:
-                    title = title_by_fn[pick]
-                    return {"target": title, "display": title, "filename": pick,
-                            "disambig": "kind"}
-            # First-wins fallback — but NEVER onto a kind-mismatched decoy in a
-            # typed bucket.  Léon Say has no clean match, but cands[0] is the SAY
-            # *town*: binding it is a FALSE LINK where a miss is the honest
-            # answer (the user's rule).  Bind cands[0] only when it is
-            # kind-consistent (or the bucket is untyped); otherwise fall through
-            # to the fuzzy cascade, then to an unresolved entry.
-            fn, title = cands[0]
-            if not want_kind or kind_qualifies(lead_kind(_opening(fn)), want_kind):
-                return {"target": title, "display": title, "filename": fn}
-        fn = find_fuzzy_match(n, tmap, aggressive=True)        # shared fuzzy cascade
-        if fn:
-            title = title_by_fn[fn]
-            return {"target": title, "display": title, "filename": fn}
-        if "#" in raw_name:                                   # raw anchor "Base#Section"
+        # 2. fill — exact word-set
+        ws = _wordset(raw_name)
+        hits = by_ws.get(ws, [])
+        # 2a. feature-kind broadening: a Rivers/Lakes bucket wants the feature
+        #     variant (ALABAMA -> ALABAMA RIVER; ZUG -> ZUG, LAKE OF), which the
+        #     bare word-set misses.  Reach it via subset + kind when the bare match
+        #     isn't already that feature kind.
+        if want_kind in _BROADEN_KINDS and not (
+                len(hits) == 1 and kind_qualifies(lead_kind(_opening(hits[0][0])), want_kind)):
+            pick = pick_by_kind(_subset_cands(_wordset_f(raw_name)), want_kind, _opening)
+            if pick is not None:
+                return _res(pick, "broaden")
+        if len(hits) == 1:
+            return _res(hits[0][0], "unique")
+        if len(hits) >= 2:                                    # collision -> fish
+            fn, _, m = fisher.fish(raw_name, hits, path, want_kind)
+            if fn:
+                return _res(fn, "fish:" + m)
+        # 4. loosen empty bags (recall only, tightest first, then fish; kind-gated)
+        for alt in _topic_alternates(raw_name):               # topic-side or/paren alts
+            h = by_ws.get(_wordset(alt), [])
+            if len(h) == 1 and _kind_ok(h[0][0]):
+                return _res(h[0][0], "loosen:alt")
+            if len(h) >= 2:
+                r = _fish_gated(h, "loosen:alt-fish")
+                if r:
+                    return r
+        h = by_wsf.get(_wordset_f(raw_name), [])              # diacritic fold
+        if len(h) == 1 and _kind_ok(h[0][0]):
+            return _res(h[0][0], "loosen:fold")
+        if len(h) >= 2:
+            r = _fish_gated(h, "loosen:fold-fish")
+            if r:
+                return r
+        h = _subset_cands(_wordset_f(raw_name))               # subset (topic ⊂ title)
+        if h:
+            r = _fish_gated(h, "loosen:subset")
+            if r:
+                return r
+        # first word: any article whose title contains the topic's FIRST word
+        # ('Pergolesi, G. B.' -> PERGOLESI...; 'Abercorn, 1st earl of' -> ABERCORN,
+        # JAMES HAMILTON).  The surname/mainword is almost always in the target
+        # title, so this fills the bag; the fisher (bucket context) then picks.
+        fw = _TOK.findall(_fold(raw_name))
+        if fw:
+            hh = word_fns.get(fw[0].upper())
+            if hh:
+                h = [(f, title_by_fn[f]) for f in hh]
+                if len(h) == 1 and _kind_ok(h[0][0]):
+                    return _res(h[0][0], "loosen:firstword")
+                if len(h) >= 2:
+                    r = _fish_gated(h, "loosen:firstword-fish")
+                    if r:
+                        return r
+        fn = find_fuzzy_match(normalize_xref_target(raw_name), tmap, aggressive=True)
+        if fn and _kind_ok(fn):
+            return _res(fn, "loosen:fuzzy")
+        # section-pointer fallbacks (raw '#anchor', then the name IS a section title)
+        if "#" in raw_name:
             base, anchor = raw_name.split("#", 1)
             bm = _resolve_plain(base)
             if bm:
                 bfn, bdisp = bm
                 return {"target": raw_name, "display": anchor.strip() or bdisp,
                         "filename": bfn, "anchor": anchor.strip()}
-        si = section_index.get(_art_norm(raw_name))           # the name IS a section title
+        si = section_index.get(_art_norm(raw_name))
         if si:
             sfile, sslug, sart = si
             artwords = [w for w in _art_norm(sart).split() if len(w) >= 4]
@@ -592,7 +625,7 @@ def resolve_tree(node: dict, cat: str, resolve, path=None) -> None:
         for title, emph in ([(a, True) for a in pr]
                             + [(a, False) for a in sorted(set(arts),
                                key=lambda t: (_normalize(t), t))]):   # stable tiebreak
-            a = resolve(title, want, ctx)
+            a = resolve(title, want, ctx, cur)
             if emph:
                 a["emphasized"] = True
             node["articles"].append(a)
