@@ -150,6 +150,59 @@ def wanted_kinds(path_segments: list[str]) -> tuple[str, ...]:
 
 
 # ── Resolver indexes (built once from the article index) ──────────────────
+# EB parks a subject's alternate spellings in its title, almost always bracketed:
+# 'THORPE [or Thorp], JOHN', 'AGOSTINO, or AGOSTINI [AUGUSTINUS], PAOLO',
+# 'BACONTHORPE [BACON, BACO, BACCONIUS], JOHN', 'CARAVAGGIO, … (or MERIGI) DA'.  A
+# topic cites ONE of those spellings, so the article must be findable under each —
+# not just the head.  These are straight-up resolver misses: the article exists,
+# it was only ever keyed under the raw (variant-laden) title.
+_VARIANT_BRACKET_RE = re.compile(r"\s*\[[^\]]*\]|\s*\([^)]*\)")
+_OR_ALT_RE = re.compile(r",?\s+or\s+([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ'’.\-]*)", re.I)
+_BRACKET_CONTENT_RE = re.compile(r"[\[(]([^\])]*)[\])]")
+# On a place/thing title (no given name) a paren is a DISAMBIGUATOR — 'BARI
+# (TRIBE)', 'MIAMI (people)' — NOT an alias; stripping it collapses the tribe
+# onto the town's key.  So outside a biography we strip only '(…or…)' parens.
+_OR_PAREN_RE = re.compile(r"\s*\([^)]*\bor\b[^)]*\)", re.I)
+
+
+def _head_surnames(head: str) -> list[str]:
+    """Every surname spelling packed into a title's head: the primary (variant
+    markup stripped) plus each bracketed / 'or' alternate, comma-split so a
+    multi-alias bracket ('[BACON, BACO, BACCONIUS]') yields all three."""
+    out = []
+    prim = (_OR_ALT_RE.sub("", _VARIANT_BRACKET_RE.sub("", head))
+            .strip().rstrip(",").strip())
+    if prim:
+        out.append(prim)
+    for m in _BRACKET_CONTENT_RE.finditer(head):          # [or Thorp], [AUGUSTINUS], …
+        content = re.sub(r"^\s*or\s+", "", m.group(1), flags=re.I)
+        for part in content.split(","):
+            part = part.strip()
+            if len(part) >= 2 and re.search(r"[A-Za-zÀ-ÿ]", part):
+                out.append(part)
+    for m in _OR_ALT_RE.finditer(_VARIANT_BRACKET_RE.sub("", head)):   # ', or AGOSTINI'
+        alt = m.group(1).strip()
+        if len(alt) >= 2:
+            out.append(alt)
+    return out
+
+
+def _title_forms(title: str) -> list[str]:
+    """The keys a variant-laden EB title should be findable under: the raw title,
+    plus '<surname spelling>, <given>' for every surname alias in the head.
+    Display always stays the raw title — only the resolution key expands."""
+    forms = {title}
+    head, sep, given = title.rpartition(",")
+    if not sep:                                   # place/thing: brackets + '(…or…)' only
+        t = _OR_PAREN_RE.sub("", re.sub(r"\s*\[[^\]]*\]", "", title))
+        forms.add(re.sub(r"\s+", " ", t).strip())
+        return [f for f in forms if f]
+    given_p = re.sub(r"\s+", " ", _VARIANT_BRACKET_RE.sub("", given)).strip()
+    for s in _head_surnames(head):
+        forms.add(f"{s}, {given_p}")
+    return [f for f in forms if f]
+
+
 def build_resolver():
     article_index = json.loads(ARTICLES_INDEX.read_text(encoding="utf-8"))
 
@@ -173,6 +226,20 @@ def build_resolver():
         b = _base_of(e["title"])
         if b:
             by_base.setdefault(b, []).append((e["filename"], e["title"]))
+    # EB parks alternate spellings in the title itself ('THORPE [or Thorp], JOHN').
+    # Index those under each spelling — but in a SEPARATE map kept OUT of by_norm/
+    # tmap/_sorted_norms, so an alias can supply an exact match a topic missed yet
+    # never perturb a primary exact match nor widen the FUZZY search (which
+    # otherwise hijacked bare 'Hanno' onto 'ANNO, or HANNO, SAINT').  Consulted
+    # after by_norm/by_base and BEFORE fuzzy, through the same kind gate (below).
+    alias_map: dict[str, list[tuple[str, str]]] = {}
+    for e in arts:
+        for form in _title_forms(e["title"]):
+            if form == e["title"]:
+                continue
+            k = normalize_xref_target(form)
+            if k:
+                alias_map.setdefault(k, []).append((e["filename"], e["title"]))
 
     _sorted_norms = sorted(by_norm)   # normalized titles, for leading-token broadening
 
@@ -278,7 +345,8 @@ def build_resolver():
             if sr:
                 return sr
         n = normalize_xref_target(raw_name)
-        cands = by_norm.get(n) or by_base.get(_base_of(raw_name))
+        cands = (by_norm.get(n) or by_base.get(_base_of(raw_name))
+                 or alias_map.get(n))                         # alias = post-primary, pre-fuzzy
         if cands:                                             # exact title (or paren base)
             want_kind = want[0] if want else None
             if want_kind:
