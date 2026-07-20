@@ -34,8 +34,18 @@ echo "  Uploading articles to S3..."
 aws s3 sync "$EXPORT_DIR" s3://britannica11.org/data/articles/ --delete \
   --cache-control "public, max-age=31536000, immutable" \
   --exclude "index.json" --exclude "contributors.json"
-aws s3 cp "$EXPORT_DIR/index.json" s3://britannica11.org/data/articles/index.json \
-  --cache-control "no-cache" --content-type "application/json"
+# index.json (~18.6MB) exceeds CloudFront's 10MB on-the-fly gzip cap, so it was
+# shipping RAW — an 18.6MB download on the render path of the index page + the
+# typeahead everywhere (~3s at 50Mbps).  Pre-compress it: a stored gzip object
+# is not subject to the size cap, Content-Encoding: gzip is honoured by every
+# HTTP client, and fetch().json() decompresses transparently — no viewer change.
+# ~18.6MB -> ~2.6MB.  Keeps no-cache (the object is still rewritten every deploy).
+gzip -9 -c "$EXPORT_DIR/index.json" > "$EXPORT_DIR/index.json.gz"
+aws s3 cp "$EXPORT_DIR/index.json.gz" s3://britannica11.org/data/articles/index.json \
+  --cache-control "no-cache" --content-type "application/json" \
+  --content-encoding "gzip"
+rm -f "$EXPORT_DIR/index.json.gz"
+# contributors.json (1.9MB) is under the cap → CloudFront already brotli's it.
 aws s3 cp "$EXPORT_DIR/contributors.json" s3://britannica11.org/data/articles/contributors.json \
   --cache-control "no-cache" --content-type "application/json"
 
