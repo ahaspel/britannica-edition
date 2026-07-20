@@ -644,8 +644,11 @@ math measurement).  pytest (378 tests).
 - `tools/diagnostics/quality_report.py` — body-wide metrics (run before every
   deploy).
 - `tools/diagnostics/measure_math_widths.py` — refresh math-width cache.
-- `tools/pipeline/annotate_math_markers.py` — re-annotate exported MATH
-  markers from refreshed cache.
+- `tools/pipeline/post_export.py` — the post-export pass (Phase 6b4): ONE load
+  of the corpus, math hints → contributors → xrefs + render, ONE write.  Each
+  transform is also runnable alone via its own module's `main()`
+  (`annotate_math_markers.py`, `resolve_contributors_post.py`,
+  `resolve_xrefs_post.py`).
 - `tools/deploy_html.sh` — upload viewer HTML + invalidate CloudFront.
 - `tools/pipeline/start_services.sh` — start/stop local Postgres, Meilisearch,
   web server.

@@ -98,7 +98,7 @@ echo "  Done."
 # NOTE: the contributor ROSTER is no longer built here.  It used to be Phase 1b
 # (build_contributor_table) + Phase 1c (vol-29 linker), PRE-walk — but its only
 # walk-time consumer was the [[Author:]] signature render, which is now deferred
-# (the walk emits a neutral «AL» marker).  So Phase 6b4 (resolve_contributors_post)
+# (the walk emits a neutral «AL» marker).  So the post-export pass (Phase 6b4)
 # builds the roster from footers + front matter + vol-29 and THEN resolves the
 # ambiguous [[Author:]] links against the finished roster — for both binding and
 # render.  ([[project_roster_from_author_links]])
@@ -169,16 +169,9 @@ echo
 echo "=== Phase 4b: Measuring math widths [$(elapsed)] ==="
 uv run python tools/diagnostics/measure_math_widths.py
 
-# --- Phase 4c: Annotate math markers with refreshed hints ---
-# Walks every article JSON and rewrites `«MATH:` markers with the
-# `[fs=N]` / `[popout]` annotation drawn from the just-refreshed
-# cache.  Pure text transform — no re-rendering required.  Lets the
-# rebuild emerge with every math marker correctly hinted, even
-# though Phase 4's export ran with a (potentially) stale cache for
-# newly added or changed LaTeX.
-echo
-echo "=== Phase 4c: Annotating math markers [$(elapsed)] ==="
-uv run python tools/pipeline/annotate_math_markers.py
+# (Math-marker annotation from the refreshed cache is no longer its own phase —
+# it is the first transform of the merged post-export pass, Phase 6b4 below, so
+# the corpus is read and written once instead of three times.)
 
 # --- Phase 6b: Build classified TOC (topics page data) ---
 echo
@@ -205,32 +198,26 @@ echo
 echo "=== Phase 6b3: Building kind index [$(elapsed)] ==="
 uv run python tools/vol29/build_kind_index.py
 
-# --- Phase 6b4: Resolve contributor attributions post-export ---
-# ALL contributor binding (signatures + front-matter + vol-29) now lives here,
-# after the kind index (6b3), so vol-29 credits are disambiguated by the
-# contributor's kind FOOTPRINT + the credit's own hint — a kind-mismatched
-# homonym (Adams-the-township for the historian) is abstained, not bound.
-# Patches each article JSON's `contributors` + rebuilds contributors.json.
-# MUST run BEFORE 6b5 (render): the "By …" byline is baked into rendered_html
-# from the `contributors` field, so binding has to happen first or every article
-# renders author-less.  Also before any other contributor consumer (6e Reader's
-# Guide, 6h download bundle, the search index).  [[project_resolver_consolidation]]
+# --- Phase 6b4: Post-export pass (math hints + contributors + xrefs + render) ---
+# ONE load of the ~37k article JSONs, every corpus-wide transform, ONE write —
+# was three separate phases (4c math, 6b4 contributors, 6b5 xrefs+render), each
+# re-reading and rewriting the whole corpus and each replaying the stable_id
+# dedup in its own process.  The order inside is the DEPENDENCY order:
+#   math hints   — must be on the body before the render reads it;
+#   contributors — the "By …" byline is baked into rendered_html, so binding
+#                  must precede the render or every article renders author-less;
+#                  runs after the kind index (6b3) so vol-29 credits are
+#                  disambiguated by the contributor's kind FOOTPRINT;
+#   xrefs+render — the export deferred resolution (defer_xrefs) so the picker can
+#                  consult the topic resolution built above; (re)writes
+#                  xref_resolution.jsonl.
+# MUST run before any consumer of the decorated bodies / rendered_html / xref
+# graph / contributors (6e Reader's Guide, 6h download bundle, the search index).
+# Each transform is still runnable alone via its own module's main().
+# [[project_resolver_consolidation]]
 echo
-echo "=== Phase 6b4: Resolving contributor attributions post-export [$(elapsed)] ==="
-uv run python tools/pipeline/resolve_contributors_post.py
-
-# --- Phase 6b5: Resolve inline xrefs + render post-export ---
-# The export deferred xref resolution (defer_xrefs) so the collision-picker can
-# consult the topic resolution + kind index built above.  This phase runs the
-# REORDERED tail — resolve, bake «LN» markers into each body, render — patching
-# every article JSON in place and (re)writing xref_resolution.jsonl.  RENDER IS
-# LAST: it reads the `contributors` bound in 6b4 so the byline appears.  MUST run
-# before any consumer of the decorated bodies / rendered_html / xref graph
-# (6e Reader's Guide, 6h download bundle, the search index).
-# [[project_resolver_consolidation]] F.
-echo
-echo "=== Phase 6b5: Resolving inline xrefs + rendering post-export [$(elapsed)] ==="
-uv run python tools/pipeline/resolve_xrefs_post.py
+echo "=== Phase 6b4: Post-export pass (math · contributors · xrefs · render) [$(elapsed)] ==="
+uv run python tools/pipeline/post_export.py
 
 # --- Phase 6c: Detect first-content fm scan per volume ---
 echo
