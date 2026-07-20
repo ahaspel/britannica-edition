@@ -137,11 +137,6 @@ def _wipe_everything(volume: int) -> None:
         stmts = [
             f"DELETE FROM article_contributors WHERE article_id IN "
             f"(SELECT id FROM articles WHERE volume = {volume})",
-            f"UPDATE cross_references SET target_article_id = NULL, "
-            f"status = 'unresolved' WHERE target_article_id IN "
-            f"(SELECT id FROM articles WHERE volume = {volume})",
-            f"DELETE FROM cross_references WHERE article_id IN "
-            f"(SELECT id FROM articles WHERE volume = {volume})",
             f"DELETE FROM article_segments WHERE article_id IN "
             f"(SELECT id FROM articles WHERE volume = {volume}) "
             f"OR source_page_id IN "

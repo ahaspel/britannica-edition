@@ -5,9 +5,10 @@ propagates them into the body text as «LN:filename|target|display«/LN»
 markers so prose mentions render as links, not just the xref panel
 at the bottom.
 """
-from britannica.db.models import Article, CrossReference
+from britannica.db.models import Article
 from britannica.export.article_json import (
     _wrap_resolved_xrefs_in_body, _safe_filename, stable_id)
+from britannica.xrefs.reference import Xref
 
 
 class _FakeSession:
@@ -30,7 +31,7 @@ def _make_article(id_, volume, page, section, title):
 
 
 def _make_xref(xref_type, surface, target, target_id=None, status="resolved"):
-    return CrossReference(
+    return Xref(
         article_id=999,
         surface_text=surface,
         normalized_target=target,

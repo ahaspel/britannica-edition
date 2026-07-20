@@ -24,7 +24,6 @@ args = ap.parse_args()
 # imported raw) LAST so --keep-source-pages can drop it from the list.
 tables = [
     "article_contributors",
-    "cross_references",
     "article_segments",
     "articles",
     "contributor_initials",
