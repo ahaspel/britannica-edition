@@ -1372,15 +1372,9 @@
     // Math too wide to scale into the column at any usable font-size
     // (~6 markers corpus-wide; ALGEBRAIC FORMS big determinants,
     // NUMBER, RAILWAYS, DIFFERENCES — see
-    // `tools/diagnostics/measure_math_widths.py`).  Render a compact
-    // clickable placeholder in the body; the click opens a modal
-    // that re-renders the math at a font-size that fits the viewport
-    // (no scrollbar inside the modal — the math is scaled to fit).
-    //
-    // Each placeholder gets a unique id so the click handler can
-    // recover the LaTeX without serialising it into HTML attributes.
-    const _MATH_POPOUT_LATEX = {};
-    let _mathPopoutCounter = 0;
+    // `tools/diagnostics/measure_math_widths.py`).  The Python render bakes a
+    // compact clickable placeholder carrying its LaTeX in `data-latex`; the
+    // click opens a modal that renders the math at natural size.
     // Parse a MATH marker's `[hint]` slot — a comma-separated list of
     // build-time directives the producer baked in: `display` (block vs
     // inline, carried from the source `<math display="block">` / `\begin{…}`),
@@ -1388,8 +1382,8 @@
     // tokenizer so a combined hint (`display,fs=80`) parses everywhere; the
     // viewer reads displayMode off the carried token instead of guessing from
     // paragraph context.
-    function openMathPopout(id) {
-      const latex = _MATH_POPOUT_LATEX[id];
+    function openMathPopout(el) {
+      const latex = el && el.dataset ? el.dataset.latex : "";
       if (!latex) return;
       const modal = document.createElement("div");
       modal.className = "math-popout-modal";
