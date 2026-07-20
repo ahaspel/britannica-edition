@@ -539,5 +539,30 @@
       "from": "{{nodent|{{dropinitial|E|4em}}{{larger|LSEWHERE}} in these volumes, under the heading of",
       "to": "{{nodent|{{dropinitial|I|4em}}{{larger|n}} the Prefatory Note the history of the production of the successive editions of the ''Encyclopædia Britannica'' has been briefly told; and elsewhere in these volumes, under the heading of"
     }
-  ]
+  ],
+  "1:642": [
+    {
+      "from": "4 × 3 ℔＝3 × 4 ℔.</math>}}",
+      "to": "4 × 3 ℔＝3 × 4 ℔.}}"
+    }
+  ],
+  "9:233": [
+    {
+      "from": " a constant.</math>}}",
+      "to": " a constant.}}"
+    }
+  ],
+  "19:884": [
+    {
+      "from": "𝑐 ) (x,\\ y)^2</math>",
+      "to": "𝑐 ) <math>(x,\\ y)^2</math>"
+    }
+  ],
+  "26:851": [
+    {
+      "from": "<math>(\\theta_0,v), <math>",
+      "to": "<math>(\\theta_0,v)</math>, <math>"
+    }
+  ],
+  "_math_tag_note": "1:642 / 9:233 / 19:884 / 26:851 — unbalanced <math> tags in the transcription. 1:642 (ALGEBRA) and 9:233 carry an ORPHAN </math> with no opener, which rendered as literal text in the prose; 19:884 lost the OPENING <math> before (x,\\ y)^2 (the transcriber typed the closer); 26:851 opens <math> twice without closing the first. Source transcription errors, not producer bugs — the producer handles <Math> case-insensitively, so the two other 'unbalanced' pages the audit flagged (10:776, 25:677) were the AUDIT being case-sensitive, and are correct as-is."
 }

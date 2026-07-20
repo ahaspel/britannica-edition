@@ -320,7 +320,13 @@ def bind_contributors(session, payloads: dict) -> bool:
             name, disp = m.group(1), m.group(2)
             if _normalize_initials(disp.strip("() ")) in known_inits:
                 return disp
-            return f"«LN:{name}|{disp}«/LN»"
+            # NOT a signoff → a reference to a PERSON.  Leave the «AL» standing:
+            # rewriting it to «LN» here erased the one fact 6b5 needs, and the
+            # article ladder then matched these given-name-first citations
+            # against surname-first EB titles (JOHN VENN → McADAM, JOHN LOUDON).
+            # 6b5 resolves it on the person tier and bakes/strips it there, so
+            # no «AL» survives the pipeline — the invariant just moves one phase.
+            return m.group(0)
         return _AL_RE.sub(_repl, text)
 
     binds_by_article: dict[int, list[int]] = defaultdict(list)
