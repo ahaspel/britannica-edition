@@ -8,17 +8,19 @@ Markup conventions:
   - [link, transcribe] -> link to ancillary page
 """
 import io
-import json
 import re
 import sys
 from pathlib import Path
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                               errors="replace")
+sys.path.insert(0, "src")
+
+from britannica.link_resolver import LinkResolver          # noqa: E402
+from britannica.render.inline import _article_url as article_url  # noqa: E402
 
 SRC = Path("docs/about.txt")
 OUT = Path("tools/viewer/about.html")
-ARTICLES_INDEX = Path("data/derived/articles/index.json")
 
 SKIP_CAPS = {
     "THE", "AND", "OR", "IN", "OF", "IT", "AN", "AS", "BY", "AT",
@@ -26,14 +28,19 @@ SKIP_CAPS = {
     "GPT", "AARON HASPEL",
 }
 
-# Explicit link targets for bare surnames that would otherwise
-# match the wrong person in the index.
+# Explicit link targets for references that would otherwise land on the
+# wrong same-named article.  A value is a canonical title (resolved through
+# the shared resolver) or, where even the title collides (four ROMEs), a
+# direct filename pin.
 ARTICLE_OVERRIDES = {
     "FIELDING": "FIELDING, HENRY",
     "RICHARDSON": "RICHARDSON, SAMUEL",
     "CHESTERFIELD": "CHESTERFIELD, PHILIP DORMER STANHOPE",
     "JOHNSON": "JOHNSON, SAMUEL",
     "ORCHID": "ORCHIDS",
+    "ROUSSEAU": "ROUSSEAU, JEAN JACQUES",
+    "HENRY JAMES": "JAMES, HENRY",
+    "ROME": "23-0614-249f3b.json",     # the book-length treatise, not the US towns
 }
 
 # Explicit link targets for {{display}} contributor references
@@ -42,79 +49,53 @@ CONTRIBUTOR_OVERRIDES = {
     "Sir Leslie": "STEPHEN, SIR LESLIE",
     "Lyman Abbott": "ABBOTT, LYMAN",
     "James Clerk Maxwell": "MAXWELL, JAMES CLERK",
+    "Lord Macaulay": "MACAULAY, THOMAS BABINGTON MACAULAY",
 }
 
 
-def _build_article_lookup():
-    """Map UPPER TITLE -> (filename, title). Also build a reverse
-    name index: FIRSTNAME LASTNAME -> LASTNAME, FIRSTNAME entry."""
-    if not ARTICLES_INDEX.exists():
-        return {}, {}
-    articles = json.loads(ARTICLES_INDEX.read_text(encoding="utf-8"))
-    lookup = {}
-    reverse = {}  # "EDWARD GIBBON" -> "GIBBON, EDWARD"
-    for a in articles:
-        if a.get("article_type") != "article":
-            continue
-        upper = a["title"].strip().upper()
-        if upper not in lookup:
-            lookup[upper] = (a["filename"], a["title"])
-        # Build reverse: "GIBBON, EDWARD" -> also findable as "EDWARD GIBBON"
-        if ", " in upper:
-            parts = upper.split(", ", 1)
-            reversed_name = f"{parts[1]} {parts[0]}"
-            if reversed_name not in reverse:
-                reverse[reversed_name] = upper
-    return lookup, reverse
+def _resolve(name, resolver, prose=""):
+    """name -> (filename, title) through the ONE LinkResolver: tight fill
+    rungs only (exact / alternate / diacritic-fold / name-in-title subset —
+    the subset rung subsumes the old bespoke reverse-name and surname-comma
+    lookups), the surrounding paragraph as the fisher's prose context.  A
+    single-word subset keeps the old comma-inverted semantics (FIELDING binds
+    only FIELDING, …), so a bare caps word can't wander onto a compound
+    title.  None -> leave the text unlinked."""
+    if name.endswith(".json"):                      # a direct override pin
+        title = resolver.title_by_fn.get(name)
+        return (name, title) if title else None
+    bag, tag = resolver.candidates(name)
+    if not bag or tag not in ("exact", "alt", "fold", "subset"):
+        return None
+    if tag == "subset" and " " not in name.strip():
+        nm = name.strip().upper()
+        bag = [c for c in bag if c[1].upper().startswith(nm + ",")
+               or c[1].upper().startswith(nm + " ")]
+        if not bag:
+            return None
+    if len(bag) == 1:
+        return bag[0]
+    # A name that IS one candidate's verbatim title picks it — 'JAMES, HENRY'
+    # over the word-set-tied 'HENRY, JAMES'.
+    exact_t = [c for c in bag if c[1].strip().upper() == name.strip().upper()]
+    if len(exact_t) == 1:
+        return exact_t[0]
+    fn, title, _ = resolver.fish(name, bag, prose=prose)
+    return (fn, title) if fn else None
 
 
-def _article_url(filename):
-    base = filename.replace(".json", "")
-    # Stable-ID filename: "NN-NNNN-section-TITLE". Section slug is
-    # lowercase+digits+hyphens; title starts at the first Unicode
-    # uppercase character after the prefix.
-    prefix_m = re.match(r"^(\d{2}-\d{4}-)", base)
-    if prefix_m:
-        for i in range(prefix_m.end(), len(base)):
-            c = base[i]
-            if c.isupper() and i > 0 and base[i - 1] == "-":
-                stable = base[:i - 1]
-                title = base[i:]
-                return f"/article/{stable}/{title.lower()}"
-    # Legacy fallback for numeric-only IDs.
-    idx = base.index("-")
-    page = base[:idx].lstrip("0") or "0"
-    slug = base[idx + 1:].lower()
-    return f"/article/{page}/{slug}"
-
-
-def _make_link(title, lookup, reverse):
+def _make_link(title, resolver, prose=""):
     """Try to resolve an ALL CAPS title to an article link."""
     clean = title.rstrip(".,;:!?")
     suffix = title[len(clean):]
-    # Explicit override.
-    if clean in ARTICLE_OVERRIDES:
-        target = ARTICLE_OVERRIDES[clean]
-        if target in lookup:
-            fn, _ = lookup[target]
-            return f'<a href="{_article_url(fn)}">{clean}</a>{suffix}'
-    # Direct lookup.
-    if clean in lookup:
-        fn, _ = lookup[clean]
-        return f'<a href="{_article_url(fn)}">{clean}</a>{suffix}'
-    # Reverse name: EDWARD GIBBON -> GIBBON, EDWARD
-    if clean in reverse:
-        fn, _ = lookup[reverse[clean]]
-        return f'<a href="{_article_url(fn)}">{clean}</a>{suffix}'
-    # Single word: try "WORD," prefix match (FIELDING -> FIELDING, HENRY)
-    if " " not in clean:
-        for key, (fn, _) in lookup.items():
-            if key.startswith(clean + ","):
-                return f'<a href="{_article_url(fn)}">{clean}</a>{suffix}'
+    hit = _resolve(ARTICLE_OVERRIDES.get(clean, clean), resolver, prose)
+    if hit:
+        return (f'<a href="{article_url(hit[0], is_local=False)}">'
+                f'{clean}</a>{suffix}')
     return None
 
 
-def _render(text, lookup, reverse):
+def _render(text, resolver):
     lines = text.strip().split("\n")
     if lines and lines[0].strip() == "About this Edition":
         lines = lines[1:]
@@ -129,6 +110,7 @@ def _render(text, lookup, reverse):
         if not paragraphs:
             return
         raw = " ".join(paragraphs)
+        prose = raw  # the paragraph itself — the fisher's context for its links
         paragraphs.clear()
 
         # Shoulder headers: ---text--- -> margin note
@@ -140,26 +122,16 @@ def _render(text, lookup, reverse):
                     f'{heading_text}</span>')
         raw = re.sub(r"-{3}(.+?)-{3}", replace_shoulder, raw)
 
-        # {{contributor}} links
+        # {{contributor}} links — the forward name resolves through the same
+        # fill (subset: EDWARD GIBBON ⊆ GIBBON, EDWARD); overrides pin the
+        # displays that don't carry the surname.
         def replace_contributor(m):
             name = m.group(1).strip()
-            # Explicit override
-            if name in CONTRIBUTOR_OVERRIDES:
-                target = CONTRIBUTOR_OVERRIDES[name]
-                if target in lookup:
-                    fn, _ = lookup[target]
-                    return f'<a href="{_article_url(fn)}">{name}</a>'
-            words = name.split()
-            # Try exact
-            upper = name.upper()
-            if upper in lookup:
-                fn, _ = lookup[upper]
-                return f'<a href="{_article_url(fn)}">{name}</a>'
-            # Try surname match
-            surname = words[-1].upper() if words else ""
-            for key, (fn, _) in lookup.items():
-                if key.startswith(surname + ",") or key == surname:
-                    return f'<a href="{_article_url(fn)}">{name}</a>'
+            hit = _resolve(CONTRIBUTOR_OVERRIDES.get(name, name),
+                           resolver, prose)
+            if hit:
+                return (f'<a href="{article_url(hit[0], is_local=False)}">'
+                        f'{name}</a>')
             return name
         raw = re.sub(r"\{\{([^}]+)\}\}", replace_contributor, raw)
 
@@ -170,13 +142,25 @@ def _render(text, lookup, reverse):
             title = m.group(0).strip()
             if title in SKIP_CAPS:
                 return title
-            link = _make_link(title, lookup, reverse)
+            link = _make_link(title, resolver, prose)
             return link if link else title
+        # Protect the links already made (contributors) — the caps scan must
+        # not re-match inside them ({{J.B. Bury}}'s J and B are not the
+        # letter articles).
+        stashed = []
+
+        def _stash(m):
+            stashed.append(m.group(0))
+            return f"\x02{len(stashed) - 1}\x02"
+        raw = re.sub(r"<a [^>]*>.*?</a>", _stash, raw)
         # Match ALL CAPS words/phrases (possibly hyphenated, with
-        # apostrophes or spaces). Period excluded to avoid grabbing
-        # across sentences.
-        raw = re.sub(r"\b[A-Z][A-Z'-]*(?:\s[A-Z][A-Z'.-]*)*\b",
+        # apostrophes or spaces); first token needs 2+ letters so a stray
+        # initial never links to a letter article. Period excluded to avoid
+        # grabbing across sentences.
+        raw = re.sub(r"\b[A-Z][A-Z'-]+(?:\s[A-Z][A-Z'.-]*)*\b",
                      replace_article, raw)
+        raw = re.sub(r"\x02(\d+)\x02",
+                     lambda m: stashed[int(m.group(1))], raw)
 
         # *italic*
         raw = re.sub(r"\*([^*]+)\*", r"<em>\1</em>", raw)
@@ -382,10 +366,10 @@ PAGE_TEMPLATE = """\
 
 def main():
     text = SRC.read_text(encoding="utf-8")
-    lookup, reverse = _build_article_lookup()
-    print(f"Article lookup: {len(lookup)} entries, {len(reverse)} reverse names")
+    resolver = LinkResolver()
+    print(f"LinkResolver over {len(resolver.title_by_fn)} articles")
 
-    body_html = _render(text, lookup, reverse)
+    body_html = _render(text, resolver)
 
     # Build TOC from collected shoulder headings
     if _render.toc_entries:

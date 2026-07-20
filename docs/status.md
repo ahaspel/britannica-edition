@@ -48,6 +48,43 @@ agent's memory directory and are not duplicated here.
 
 ## CURRENT STATE (2026-07-19)
 
+### Session 2026-07-19 (later) — article xrefs through LinkResolver; old cascade retired
+
+The article-xref consolidation ([`docs/xref_resolution_strategy.md`](xref_resolution_strategy.md))
+is IN PRODUCTION: Phase 6b5 (`resolve_xrefs_post.py`) resolves every inline xref through the ONE
+`LinkResolver` (fill + prose-fish), and the old `xrefs/resolver.py` cascade
+(`resolve`/`build_index`/`disambiguate_among`, the LLM xref cache, `hint_kind`/
+`matches_disambiguator`, the `resolve_xrefs` stage shim) is DELETED — `build_core_maps` is that
+module's one survivor.  **Rebuild-gated** (materializes on the next full rebuild + deploy).
+
+- **Trusted tier (link/q.v.) — always pick.**  `resolve_xref`: Bible/colon target forms, then the
+  fill rungs in two tiers (TIGHT exact/alt/fold/subset/superset before LOOSE firstword/fuzzy) over
+  BOTH target and display, **more-specific name first**; the fisher keys on a ±140-char prose
+  window; the old self-reference rule kept.
+- **Untrusted tier (see/see also/cf) — abstain by default.**  `resolve_see`: only a SUBSTANTIAL
+  tight match (exact/alt/fold, or subset covering ≥2 content words) that shares the SOURCE
+  article's classified-TOC category binds; the shared category doubles as the fisher's bucket.
+  The fisher's cosine abstain gate (`trusted=False`) is banked as the resolution-side backstop.
+- **Superset guard:** reverse containment (title ⊂ link) needs ≥2 covered content words — kills
+  the 1-word component class (BATTLE ⊂ 'Saratoga, Battles of'); 1-word names recover via
+  firstword.
+- **A/B over the 38,817 materialized records** (production path vs live resolution): link
+  **+1,535 gains / −49** (losses dominantly the guard dropping work-title→component junk:
+  COMPLEAT ANGLER→ANGLER; ~a dozen diacritic/spelling-variant true losses remain);
+  OLD-better changes **88→26**; see survivors **583** clean source-topic binds with **3,618**
+  always-pick junk see links dropped.  Topic path untouched by construction (superset/trusted
+  are xref-only).  Suite: no new failures (9 pre-existing stale-golden snapshots at HEAD,
+  refreeze rides the rebuild).
+- **About page folded onto the same resolver + the ONE URL builder** (`render/inline._article_url`)
+  — its bespoke lookup fork produced dead `/article/8/0221-e994bf`-style URLs (predates hashed
+  stable-ids) and the caps scan split links by re-matching inside them (J.B. Bury, T.H. Huxley) —
+  both fixed; SADDLERY→SADDLERY AND HARNESS; collisions pinned (ROUSSEAU, JEAN JACQUES; JAMES,
+  HENRY; the ROME treatise).  Verified link-for-link against the old page.
+- **Known residue (queued):** singular/plural fill gap (RAILWAY→ATMOSPHERIC RAILWAY over
+  RAILWAYS; OILS, BIRD, LIBRARIES — the fill has no stemming, fuzzy fires too late); a few
+  paren-alt mis-orders (Senegal→COLONY); ~a dozen diacritic-variant losses (ʽOMAR KHAYYĀM,
+  ṢŪFĪISM, MAHOMMEDAN/MOHAMMEDAN).
+
 ### Session 2026-07-19 — topic-link resolver redesign (LANDED), 99.3% / 98.6%
 
 Rebuilt `populate_classified_toc.build_resolver.resolve` as FILL / FISH / LOOSEN
