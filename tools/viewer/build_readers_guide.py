@@ -24,14 +24,23 @@ from urllib.parse import quote_plus
 sys.path.insert(0, "src")
 from britannica.contributors.resolver import ContributorResolver
 from britannica.export.sections import match_section
-from britannica.xrefs.normalizer import normalize_xref_target
-from britannica.xrefs.resolver import build_core_maps
-from britannica.xrefs.scoring import find_fuzzy_match
+from britannica.link_resolver import LinkResolver
+from britannica.render.inline import _article_url
+from reference_overrides import REFERENCE_OVERRIDES
 
 SOURCE_HTML = Path("data/raw/readers_guide/source.html")
 INDEX_JSON = Path("data/derived/articles/index.json")
 ARTICLES_DIR = Path("data/derived/articles")
 CONTRIBUTORS_JSON = Path("data/derived/articles/contributors.json")
+
+
+def _prose_context(html: str, pos: int) -> str:
+    """The enclosing paragraph as the fisher's disambiguation context — the
+    Guide's prose around the reference (tags stripped)."""
+    s = html.rfind("<p", 0, pos)
+    e = html.find("</p>", pos)
+    seg = html[s if s >= 0 else max(0, pos - 600):e if e >= 0 else pos + 600]
+    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", seg)).strip()
 
 
 # Lazy cache of article sections: filename -> list of {title, slug, ...}
@@ -66,84 +75,6 @@ OUT_DIR = Path("tools/viewer")
 
 # --- Title → URL map -------------------------------------------------
 
-def load_article_indexes() -> tuple[dict[str, str], dict[int, list[dict]]]:
-    """Return (title_map, by_volume).
-
-    title_map: uppercase-title -> first-filename.
-    by_volume: volume -> list of {title, filename, page_start, page_end}
-    for looking up articles by (Vol. N, p. M) annotations in the
-    Reader's Guide text.
-    """
-    data = json.loads(INDEX_JSON.read_text(encoding="utf-8"))
-    arts = [e for e in data
-            if e.get("article_type", "article") == "article"
-            and e.get("title") and e.get("filename")]
-    # title → filename via the shared core keying (normalize_xref_target), so
-    # the Guide's title resolver shares the xref index's canonical key space
-    # ([[project_resolver_consolidation]]).  `tmap` is first-wins on collisions,
-    # like the old setdefault map.
-    _, title_map = build_core_maps(
-        ((e["title"], e["filename"]) for e in arts), value_of=lambda fn: fn)
-    by_volume: dict[int, list[dict]] = {}
-    for entry in arts:
-        vol = entry.get("volume")
-        ps = entry.get("page_start")
-        pe = entry.get("page_end") or ps
-        if isinstance(vol, int) and isinstance(ps, int):
-            by_volume.setdefault(vol, []).append({
-                "title": entry["title"].upper().strip(),
-                "filename": entry["filename"],
-                "page_start": ps,
-                "page_end": pe,
-            })
-    return title_map, by_volume
-
-
-def lookup_by_vol_page(
-    by_volume: dict[int, list[dict]],
-    vol: int,
-    page: int,
-    hint_title: str | None = None,
-) -> str | None:
-    """Return the filename of the article at (vol, page).
-
-    If multiple articles overlap the page boundary, pick the one whose
-    title best matches `hint_title` (case-insensitive substring in
-    either direction). Falls back to the first overlap if no hint.
-    """
-    candidates = [
-        a for a in by_volume.get(vol, [])
-        if a["page_start"] <= page <= a["page_end"]
-    ]
-    if not candidates:
-        return None
-    if len(candidates) == 1 or not hint_title:
-        return candidates[0]["filename"]
-    # Score by Jaccard similarity of title words against hint words —
-    # favours tight matches over titles with extra disambiguator words.
-    # E.g. for hint "JOHN SMITH" at v25 p264, candidates include
-    # SMITH, JOHN (perfect match) and SMITH, HENRY JOHN STEPHEN
-    # (partial); Jaccard correctly picks the former.
-    hint = hint_title.upper().strip()
-    hint_words = set(re.findall(r"[A-Z]{2,}", hint))
-    if not hint_words:
-        return candidates[0]["filename"]
-    scored = []
-    for a in candidates:
-        title_words = set(re.findall(r"[A-Z]{2,}", a["title"]))
-        if not title_words:
-            continue
-        inter = len(hint_words & title_words)
-        union = len(hint_words | title_words)
-        jaccard = inter / union if union else 0.0
-        scored.append((jaccard, inter, a))
-    if not scored:
-        return candidates[0]["filename"]
-    # Sort by Jaccard desc, then by intersection size desc as tiebreaker
-    scored.sort(key=lambda t: (t[0], t[1]), reverse=True)
-    return scored[0][2]["filename"]
-
-
 def load_contributor_resolver() -> ContributorResolver:
     """Build a ContributorResolver from contributors.json."""
     if not CONTRIBUTORS_JSON.is_file():
@@ -173,35 +104,17 @@ _BY_AUTHOR_RE = re.compile(
 )
 
 
-def resolve_article_title(
-    raw: str, title_map: dict[str, str]
-) -> str | None:
-    """Resolve an article reference to a filename using the same fuzzy
-    matching used for corpus xrefs — name inversion, prefix match,
-    plural/singular, trailing article/period/qualifier, etc.
-
-    See src/britannica/xrefs/scoring.py for the full strategy list.
-    """
-    plain = re.sub(r"\s+", " ", raw).strip()
+def resolve_ref(raw: str, resolver: LinkResolver, prose: str = "") -> str | None:
+    """Resolve a Guide article reference to a filename through the ONE shared
+    ``LinkResolver.resolve_reference`` — the same path the about page uses.  A
+    ``GUIDE_OVERRIDES`` entry pins the handful the tight rungs can't recall.
+    ``None`` -> leave unlinked (abstain beats a wrong link)."""
+    plain = re.sub(r"\s+", " ", raw).strip().rstrip(".,;:")
     if not plain:
         return None
-    # Shared canonical key (Æ→AE now lives in normalize_xref_target); exact
-    # then the shared fuzzy matcher.  Values are opaque filenames — pass the
-    # str map and get the str back.
-    target = normalize_xref_target(plain)
-    if target in title_map:
-        return title_map[target]
-    return find_fuzzy_match(target, title_map)  # type: ignore[arg-type]
-
-
-def filename_to_url(filename: str) -> str | None:
-    """Mirror of article-urls.js filenameToUrl() (prod path)."""
-    base = filename.removesuffix(".json")
-    m = re.match(r"^(\d{2}-\d{4}-[a-z0-9][a-z0-9-]*?)-([^a-z0-9-].*)$", base)
-    if not m:
-        return None
-    stable_id, title = m.group(1), m.group(2)
-    return f"/article/{stable_id}/{title.lower()}"
+    hit = resolver.resolve_reference(
+        REFERENCE_OVERRIDES.get(plain.upper(), plain), prose=prose)
+    return hit[0] if hit else None
 
 
 # --- Chapter extraction ----------------------------------------------
@@ -561,10 +474,9 @@ def link_contributors(
 
 def transform_content(
     html: str,
-    title_map: dict[str, str],
+    resolver: LinkResolver,
     chapter_lists: dict[str, str] | None = None,
     contributor_resolver: ContributorResolver | None = None,
-    by_volume: dict[int, list[dict]] | None = None,
 ) -> tuple[str, list[tuple[str, str]]]:
     """Clean Gutenberg markup and resolve article references to links.
 
@@ -622,17 +534,10 @@ def transform_content(
         html = _XREF_LIST_RE.sub(splice_list, html)
 
     # Inline article references: <span class="sc">Name</span> or <b>Name</b>.
-    # The Guide follows many references with "(Vol. N, p. M)" —
-    # sometimes right after the span, sometimes with intervening
-    # quotes / pseudonyms / parentheticals ("Wind Instruments (mouth
-    # blown) (Vol. 28, p. 709)"). We scan ~140 chars forward to catch
-    # those. The <b> variant covers section-header-style article refs
-    # like "<b>Stringed Instruments</b> (Vol. 25, p. 1038)".
-    _tail_vol_page = re.compile(
-        r'^.{0,140}?\(Vol\.\s*(\d+),\s*pp?\.\s*(\d+)[^)]*\)',
-        re.DOTALL,
-    )
-
+    # Resolved through the ONE shared LinkResolver (the about page's path), with
+    # the enclosing paragraph as the fisher's context.  The Guide's "(Vol. N,
+    # p. M)" annotations are display-only prose — they DON'T drive resolution
+    # (the printed page numbers don't index our corpus; the reference TEXT does).
     def repl_ref(m: re.Match[str]) -> str:
         nonlocal linked, missed
         inner = m.group(1).strip()
@@ -640,23 +545,9 @@ def transform_content(
         plain = re.sub(r"<[^>]+>", "", inner)
         plain = plain.replace("&amp;", "&").replace("&mdash;", "—")
         plain = re.sub(r"\s+", " ", plain).strip()
-        tail = m.string[m.end():m.end() + 180]
-        vp_match = _tail_vol_page.match(tail)
-        # 1. Exact title (most definitive when present)
-        fn = title_map.get(plain.upper())
-        # 2. (Vol, page) annotation — authoritative structural pointer
-        if not fn and by_volume is not None and vp_match:
-            try:
-                vol = int(vp_match.group(1))
-                page = int(vp_match.group(2))
-                fn = lookup_by_vol_page(by_volume, vol, page, plain)
-            except (ValueError, TypeError):
-                pass
-        # 3. Fuzzy title match (heuristic, last resort)
-        if not fn:
-            fn = resolve_article_title(plain, title_map)
+        fn = resolve_ref(plain, resolver, _prose_context(m.string, m.start()))
         if fn:
-            url = filename_to_url(fn)
+            url = _article_url(fn, is_local=False)
             if url:
                 linked += 1
                 if tag == "sc":
@@ -681,11 +572,10 @@ def transform_content(
         nonlocal linked, missed
         name = re.sub(r"\s+", " ", m.group(1)).strip()
         # Handle "Name or Alias" format — try main before alias
-        parts = re.split(r"\s+or\s+", name, maxsplit=1)
-        for p in parts:
-            fn = resolve_article_title(p.strip(), title_map)
+        for p in re.split(r"\s+or\s+", name, maxsplit=1):
+            fn = resolve_ref(p.strip(), resolver, name)
             if fn:
-                url = filename_to_url(fn)
+                url = _article_url(fn, is_local=False)
                 if url:
                     linked += 1
                     return f'<li class="c018"><a href="{url}">{name}</a></li>'
@@ -810,18 +700,13 @@ def transform_content(
     deep_linked = 0
     deep_skipped = 0
 
-    # Build a reverse index from stable_id to filename so we don't have
-    # to parse `<a href>` URLs back to filenames each time.
-    stable_to_filename: dict[str, str] = {}
-    for fn in title_map.values():
-        # Filename shape: `{stable_id}-{TITLE}.json`; stable_id can
-        # contain hyphens, but TITLE is uppercase + underscore, so the
-        # last `-` before `_…` segments separates them.  Cheaper:
-        # match `{NN-NNNN(?:-...)?}` prefix where the suffix is the
-        # title.  Full stable_id matches the URL form `/article/<id>/`.
-        m_stable = re.match(r"^([0-9]{2}-[0-9]{4}(?:-[a-zA-Z0-9-]+?)?)-[A-Z0-9_]+\.json$", fn)
-        if m_stable:
-            stable_to_filename.setdefault(m_stable.group(1), fn)
+    # Reverse index stable_id -> filename so we don't parse `<a href>` URLs
+    # back each time.  Filenames are `{stable_id}.json` and the article URL is
+    # `/article/{stable_id}` (see _article_url), so the stable_id is the bare
+    # filename stem.
+    stable_to_filename: dict[str, str] = {
+        fn.removesuffix(".json"): fn for fn in resolver.title_by_fn
+    }
 
     def _deep_link(m: re.Match[str]) -> str:
         nonlocal deep_linked, deep_skipped
@@ -835,7 +720,7 @@ def transform_content(
         subsection = re.sub(r"<[^>]+>", "", subsection_html)
         subsection = subsection.replace("&amp;", "&").replace("&mdash;", "—")
         subsection = re.sub(r"\s+", " ", subsection).strip()
-        url_match = re.match(r"^/article/([^/]+)/", href)
+        url_match = re.match(r"^/article/([^/#]+)", href)
         if not url_match:
             deep_skipped += 1
             return m.group(0)
@@ -1329,10 +1214,10 @@ def main() -> int:
         return 1
 
     source = SOURCE_HTML.read_text(encoding="utf-8")
-    title_map, by_volume = load_article_indexes()
+    resolver = LinkResolver(aliases=True)
     contributor_resolver = load_contributor_resolver()
     print(
-        f"loaded {len(title_map)} article titles, "
+        f"loaded {len(resolver.title_by_fn)} article titles, "
         f"{len(contributor_resolver._canonical)} contributors",
         file=sys.stderr,
     )
@@ -1362,8 +1247,8 @@ def main() -> int:
             print(f"  (skip) Chapter {roman} not found", file=sys.stderr)
             continue
         build_chapter(
-            roman, all_chapters, chapter_lists, title_map,
-            contributor_resolver, by_volume,
+            roman, all_chapters, chapter_lists, resolver,
+            contributor_resolver,
         )
 
     # Build the Part landing pages and the top-level Guide TOC when
@@ -1386,9 +1271,8 @@ def build_chapter(
     roman: str,
     all_chapters: dict[str, tuple[str, str]],
     chapter_lists: dict[str, str],
-    title_map: dict[str, str],
+    resolver: LinkResolver,
     contributor_resolver: ContributorResolver,
-    by_volume: dict[int, list[dict]],
 ) -> None:
     title_up, inner = all_chapters[roman]
     print(f"Chapter {roman}: {title_up}", file=sys.stderr)
@@ -1422,7 +1306,7 @@ def build_chapter(
         inner = inner[sub_m.end():]
 
     transformed, toc_entries = transform_content(
-        inner, title_map, chapter_lists, contributor_resolver, by_volume,
+        inner, resolver, chapter_lists, contributor_resolver,
     )
 
     # Pretty-case the chapter title (source is uppercase)

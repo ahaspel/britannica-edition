@@ -144,6 +144,10 @@
     {
       "from": "| 792 || 66 || 22 || 1 || {{EB1911 tfrac|10 || {{EB1911 tfrac|80}}",
       "to": "| 792 || 66 || 22 || 1 || {{EB1911 tfrac|10}} || {{EB1911 tfrac|80}}"
+    },
+    {
+      "from": "{{sc|Weight (Avoirdupois)\n|-",
+      "to": "{{sc|Weight (Avoirdupois)}}\n|-"
     }
   ],
   "_27:30_note": "TOOL page 30 is unproofed OCR (wikisource quality level 1). Figs 4-7 are on Commons? NO — Figs 4, 5, 6, 7 are NOT uploaded as individual crops (gap in the 66-image TOOL set on Commons). Instead, use the full-page DjVu raster {{raw image|...djvu/30}} once at the top of the figure region, with all four captions+legends stacked beneath it. Also fix two body-prose splits caused by image intrusion: 'straightE'/'forward' (should be 'straightforward') and 'But in all other'/'respects'. Fractions like '⅛ in.' for OCR-misread '%' glyphs. 'er' typo in 'Narrow cross-cut er cape' → 'or'.",
@@ -564,5 +568,130 @@
       "to": "<math>(\\theta_0,v)</math>, <math>"
     }
   ],
-  "_math_tag_note": "1:642 / 9:233 / 19:884 / 26:851 — unbalanced <math> tags in the transcription. 1:642 (ALGEBRA) and 9:233 carry an ORPHAN </math> with no opener, which rendered as literal text in the prose; 19:884 lost the OPENING <math> before (x,\\ y)^2 (the transcriber typed the closer); 26:851 opens <math> twice without closing the first. Source transcription errors, not producer bugs — the producer handles <Math> case-insensitively, so the two other 'unbalanced' pages the audit flagged (10:776, 25:677) were the AUDIT being case-sensitive, and are correct as-is."
+  "_math_tag_note": "1:642 / 9:233 / 19:884 / 26:851 — unbalanced <math> tags in the transcription. 1:642 (ALGEBRA) and 9:233 carry an ORPHAN </math> with no opener, which rendered as literal text in the prose; 19:884 lost the OPENING <math> before (x,\\ y)^2 (the transcriber typed the closer); 26:851 opens <math> twice without closing the first. Source transcription errors, not producer bugs — the producer handles <Math> case-insensitively, so the two other 'unbalanced' pages the audit flagged (10:776, 25:677) were the AUDIT being case-sensitive, and are correct as-is.",
+  "_note_unclosed_templates": "Batch (leak audit): unclosed templates in raw wikitext — an author dropped the closing }} before a cell/row/block boundary, so the opener rendered raw ({{nowrap|/{{sc|/{{smaller|/{{sm|/{{left|/{{center|/{{EB1911 fine print|/{{fine block|). Each adds the }} where the template semantically closes. Verified through process_elements: 0 residual leaks.",
+  "1:924": [
+    {
+      "from": "{{EB1911 fine print|{{center|{{sc|Fig. 23}}.—6-pr. Q.F. Cartridge.}}\n|}",
+      "to": "{{EB1911 fine print|{{center|{{sc|Fig. 23}}.—6-pr. Q.F. Cartridge.}}}}\n|}"
+    }
+  ],
+  "3:983": [
+    {
+      "from": "{{smaller| ''ty'', Tympanic cavity.\n|-",
+      "to": "{{smaller| ''ty'', Tympanic cavity.}}\n|-"
+    }
+  ],
+  "3:984": [
+    {
+      "from": "{{smaller|''sa'', Supra-angular or coronoid.\n|-",
+      "to": "{{smaller|''sa'', Supra-angular or coronoid.}}\n|-"
+    }
+  ],
+  "7:652": [
+    {
+      "from": "{{nowrap|Darius, great king, king of kings . . . son of Hystaspes. . . .\n|-",
+      "to": "{{nowrap|Darius, great king, king of kings . . . son of Hystaspes. . . .}}\n|-"
+    }
+  ],
+  "9:76": [
+    {
+      "from": "{{nowrap|, ''ḥz''(''z'').\n|}",
+      "to": "{{nowrap|, ''ḥz''(''z'').}}\n|}"
+    },
+    {
+      "from": "{{nowrap|,&nbsp;''ỉb'',&nbsp;“heart,”\n|}",
+      "to": "{{nowrap|,&nbsp;''ỉb'',&nbsp;“heart,”}}\n|}"
+    },
+    {
+      "from": "{{nowrap|,&nbsp;''ḥr'',&nbsp;“face,”&nbsp;&c.\n|}",
+      "to": "{{nowrap|,&nbsp;''ḥr'',&nbsp;“face,”&nbsp;&c.}}\n|}"
+    },
+    {
+      "from": "{{nowrap|&nbsp;is ''św'', “he,”\n|}",
+      "to": "{{nowrap|&nbsp;is ''św'', “he,”}}\n|}"
+    }
+  ],
+  "9:147": [
+    {
+      "from": "{{nowrap|Telegraphs{{gap}}\n|{",
+      "to": "{{nowrap|Telegraphs{{gap}}}}\n|{"
+    }
+  ],
+  "9:947": [
+    {
+      "from": "{{nowrap|&nbsp;1881–1890.<ref>From the ''Fifth Report of the United States Department of Agriculture'',\nDivision of Statistics, Miscellaneous Series, p. 13.</ref>&nbsp;\n|{",
+      "to": "{{nowrap|&nbsp;1881–1890.<ref>From the ''Fifth Report of the United States Department of Agriculture'',\nDivision of Statistics, Miscellaneous Series, p. 13.</ref>&nbsp;}}\n|{"
+    }
+  ],
+  "10:679": [
+    {
+      "from": "{{nowrap|&nbsp;Round mine timbers&nbsp;\n|a",
+      "to": "{{nowrap|&nbsp;Round mine timbers&nbsp;}}\n|a"
+    }
+  ],
+  "15:389": [
+    {
+      "from": "{{EB1911 fine print|{{sc|Fig. 3.}}\n|\n",
+      "to": "{{EB1911 fine print|{{sc|Fig. 3.}}}}\n|\n"
+    }
+  ],
+  "19:715": [
+    {
+      "from": "{{nowrap|Exile under police supervision in European Russia{{gap}}||1",
+      "to": "{{nowrap|Exile under police supervision in European Russia{{gap}}}}||1"
+    }
+  ],
+  "21:265": [
+    {
+      "from": "{{nowrap|''New Persian.''\n|-",
+      "to": "{{nowrap|''New Persian.''}}\n|-"
+    },
+    {
+      "from": "{{nowrap|''New Persian''.\n|-",
+      "to": "{{nowrap|''New Persian''.}}\n|-"
+    }
+  ],
+  "22:58": [
+    {
+      "from": "{{sm|(After Braem.)\n|-",
+      "to": "{{sm|(After Braem.)}}\n|-"
+    }
+  ],
+  "25:19": [
+    {
+      "from": "{{nowrap|Farms and monopolies (spirits, gambling, &c.)&nbsp;||a",
+      "to": "{{nowrap|Farms and monopolies (spirits, gambling, &c.)&nbsp;}}||a"
+    }
+  ],
+  "28:1005": [
+    {
+      "from": "{{nowrap|7. Infant Heracles strangling the&nbsp;\n|&",
+      "to": "{{nowrap|7. Infant Heracles strangling the&nbsp;}}\n|&"
+    }
+  ],
+  "1:905": [
+    {
+      "from": "{{left|<p {{Ts|sm|lh11|pl1}}>Redrawn from Braun, ''Liturgische Gewandung''.</p>{{center|{{EB1911 Fine Print|{{sc|Fig. 2}}.—Medieval Method of putting on the Amice.}}}}\n|}",
+      "to": "{{left|<p {{Ts|sm|lh11|pl1}}>Redrawn from Braun, ''Liturgische Gewandung''.</p>{{center|{{EB1911 Fine Print|{{sc|Fig. 2}}.—Medieval Method of putting on the Amice.}}}}}}\n|}"
+    }
+  ],
+  "5:289": [
+    {
+      "from": "{{EB1911 Fine Print|{{sc|Fig.}} 1.—Lotus<br />Capital from Karnak.\n|{",
+      "to": "{{EB1911 Fine Print|{{sc|Fig.}} 1.—Lotus<br />Capital from Karnak.}}\n|{"
+    }
+  ],
+  "22:662": [
+    {
+      "from": "{{center|[[File:EB1911 - Pump - Fig. 1v2.png|110px|Fig. 1.]]<br>\n{{csc|Fig. 1.}}\n|}",
+      "to": "{{center|[[File:EB1911 - Pump - Fig. 1v2.png|110px|Fig. 1.]]<br>\n{{csc|Fig. 1.}}}}\n|}"
+    }
+  ],
+  "24:221": [
+    {
+      "from": "{{fine block|\nSee the particulars collected in Denison’s “Notice of the Author”\nprefixed to ''De sacra eucharistia''. {{Fs|108%|{{EB1911 footer initials|Alexander Gordon (1841–1931)|A. Go.*}}}}\n\n<",
+      "to": "{{fine block|\nSee the particulars collected in Denison’s “Notice of the Author”\nprefixed to ''De sacra eucharistia''. {{Fs|108%|{{EB1911 footer initials|Alexander Gordon (1841–1931)|A. Go.*}}}}}}\n\n<"
+    }
+  ]
 }

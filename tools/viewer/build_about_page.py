@@ -18,6 +18,7 @@ sys.path.insert(0, "src")
 
 from britannica.link_resolver import LinkResolver          # noqa: E402
 from britannica.render.inline import _article_url as article_url  # noqa: E402
+from reference_overrides import REFERENCE_OVERRIDES as ARTICLE_OVERRIDES  # noqa: E402
 
 SRC = Path("docs/about.txt")
 OUT = Path("tools/viewer/about.html")
@@ -28,20 +29,9 @@ SKIP_CAPS = {
     "GPT", "AARON HASPEL",
 }
 
-# Explicit link targets for references that would otherwise land on the
-# wrong same-named article.  A value is a canonical title (resolved through
-# the shared resolver) or, where even the title collides (four ROMEs), a
-# direct filename pin.
-ARTICLE_OVERRIDES = {
-    "FIELDING": "FIELDING, HENRY",
-    "RICHARDSON": "RICHARDSON, SAMUEL",
-    "CHESTERFIELD": "CHESTERFIELD, PHILIP DORMER STANHOPE",
-    "JOHNSON": "JOHNSON, SAMUEL",
-    "ORCHID": "ORCHIDS",
-    "ROUSSEAU": "ROUSSEAU, JEAN JACQUES",
-    "HENRY JAMES": "JAMES, HENRY",
-    "ROME": "23-0614-249f3b.json",     # the book-length treatise, not the US towns
-}
+# Article-link overrides live in data/reference_link_overrides.json, shared with
+# the Reader's Guide (imported above as ARTICLE_OVERRIDES).  Contributor-display
+# overrides stay here — they're about-page-specific.
 
 # Explicit link targets for {{display}} contributor references
 # where the display text doesn't contain the surname.
@@ -54,34 +44,10 @@ CONTRIBUTOR_OVERRIDES = {
 
 
 def _resolve(name, resolver, prose=""):
-    """name -> (filename, title) through the ONE LinkResolver: tight fill
-    rungs only (exact / alternate / diacritic-fold / name-in-title subset —
-    the subset rung subsumes the old bespoke reverse-name and surname-comma
-    lookups), the surrounding paragraph as the fisher's prose context.  A
-    single-word subset keeps the old comma-inverted semantics (FIELDING binds
-    only FIELDING, …), so a bare caps word can't wander onto a compound
-    title.  None -> leave the text unlinked."""
-    if name.endswith(".json"):                      # a direct override pin
-        title = resolver.title_by_fn.get(name)
-        return (name, title) if title else None
-    bag, tag = resolver.candidates(name)
-    if not bag or tag not in ("exact", "alt", "fold", "subset"):
-        return None
-    if tag == "subset" and " " not in name.strip():
-        nm = name.strip().upper()
-        bag = [c for c in bag if c[1].upper().startswith(nm + ",")
-               or c[1].upper().startswith(nm + " ")]
-        if not bag:
-            return None
-    if len(bag) == 1:
-        return bag[0]
-    # A name that IS one candidate's verbatim title picks it — 'JAMES, HENRY'
-    # over the word-set-tied 'HENRY, JAMES'.
-    exact_t = [c for c in bag if c[1].strip().upper() == name.strip().upper()]
-    if len(exact_t) == 1:
-        return exact_t[0]
-    fn, title, _ = resolver.fish(name, bag, prose=prose)
-    return (fn, title) if fn else None
+    """name -> (filename, title) via the shared ``LinkResolver.resolve_reference``
+    — the ONE prose-reference resolver the Reader's Guide also uses.  None ->
+    leave the text unlinked."""
+    return resolver.resolve_reference(name, prose=prose)
 
 
 def _make_link(title, resolver, prose=""):
