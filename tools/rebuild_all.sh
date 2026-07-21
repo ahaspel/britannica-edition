@@ -103,34 +103,59 @@ echo "  Done."
 # ambiguous [[Author:]] links against the finished roster — for both binding and
 # render.  ([[project_roster_from_author_links]])
 
-# --- Phase 2: Per-volume pipeline ---
+# --- Phase 2: Per-volume pipeline (bounded-parallel) ---
+# The volumes are INDEPENDENT: detect-boundaries wipes+rebuilds only its OWN
+# volume's rows (wipe_articles filters Article.volume; no cross-volume delete,
+# no shared global state — Postgres sequences give unique ids concurrently), so
+# the walk fans out.  Bounded (PHASE2_PAR, default 6) so 28 writers don't swamp
+# Postgres/CPU.  A failure in ANY volume aborts the rebuild — never ship a
+# partial corpus ([[feedback_never_partial_rebuild]]).  Each volume's output is
+# captured to a per-volume log and printed on completion/failure (parallel
+# stdout would interleave).  detect-boundaries ALWAYS runs (derived from
+# source_pages, changes with code); --skip-import only spares the page IMPORT.
+PHASE2_PAR=${PHASE2_PAR:-6}
 echo
-echo "=== Phase 2: Running pipeline for each volume ==="
-for vol in $VOLUMES; do
+echo "=== Phase 2: Running pipeline for each volume (parallel x$PHASE2_PAR) ==="
+P2_DIR=$(mktemp -d)
+
+walk_volume() {
+  local vol="$1" PADDED RUN_DIR LOG
   PADDED=$(printf "%02d" "$vol")
   RUN_DIR="data/raw/wikisource/vol_${PADDED}"
-
-  echo
-  echo "--- Volume $vol [$(elapsed)] ---"
-
-  if [ -z "$SKIP_IMPORT" ]; then
-    echo "  Importing pages..."
-    uv run python tools/fetch/import_wikisource_pages.py \
-      --indir "$RUN_DIR" \
-      --volume "$vol"
+  LOG="$P2_DIR/vol_${vol}.log"
+  # subshell owns its own set -e: import (if any) must succeed before detect.
+  if ( set -e
+       [ -n "$SKIP_IMPORT" ] || uv run python tools/fetch/import_wikisource_pages.py --indir "$RUN_DIR" --volume "$vol"
+       uv run britannica detect-boundaries "$vol"
+     ) > "$LOG" 2>&1
+  then
+    echo ok > "$P2_DIR/vol_${vol}.status"
+    echo "  Volume $vol complete. [$(elapsed)]"
   else
-    echo "  Reusing imported pages (--skip-import)."
+    echo fail > "$P2_DIR/vol_${vol}.status"
+    echo "  !! Volume $vol FAILED [$(elapsed)] — log follows:"
+    cat "$LOG"
   fi
+}
 
-  # detect-boundaries ALWAYS runs: it's derived from source_pages (re-created
-  # each rebuild) and changes with code.  --skip-import only spares the immutable
-  # page IMPORT above.  (Contributor harvest + linking now ride corpus-export's
-  # single assemble walk — Phase 4 — so there's no per-volume extract pass.)
-  echo "  Detecting boundaries..."
-  uv run britannica detect-boundaries "$vol"
-
-  echo "  Volume $vol complete. [$(elapsed)]"
+for vol in $VOLUMES; do
+  walk_volume "$vol" &
+  # throttle: never more than PHASE2_PAR walks in flight.  `|| true` so a failed
+  # job's non-zero wait doesn't trip set -e mid-collect — failures are tallied below.
+  while [ "$(jobs -r | wc -l)" -ge "$PHASE2_PAR" ]; do wait -n || true; done
 done
+wait || true
+
+P2_FAILS=0
+for vol in $VOLUMES; do
+  [ "$(cat "$P2_DIR/vol_${vol}.status" 2>/dev/null)" = "ok" ] \
+    || { echo "  volume $vol did not complete"; P2_FAILS=$((P2_FAILS + 1)); }
+done
+rm -rf "$P2_DIR"
+if [ "$P2_FAILS" -ne 0 ]; then
+  echo "=== Phase 2 FAILED: $P2_FAILS volume(s) did not complete — aborting rebuild ==="
+  exit 1
+fi
 
 # --- Phase 3c: Rebuild printed-page mapping (ws→printed / leaf→printed) ---
 # MUST run before Phase 4's re-export: the article exporter consults
