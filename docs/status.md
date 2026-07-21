@@ -46,7 +46,67 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-07-19)
+## CURRENT STATE (2026-07-20)
+
+### Session 2026-07-20 — xref-by-KIND · «AL» leak · footnote «template» · perf; SHIPPED + production-verified
+
+The residual xref false-positives root-caused and fixed by resolving each reference by its KIND, plus
+a leak fix and two perf wins; a full rebuild (59:08) + deploy landed the whole set on britannica11.org,
+**verified on production** (not a local re-render).
+
+- **Xrefs resolve by reference KIND, not one ladder.** The «LN» marker collapsed six raw link forms
+  into one, so 6b5 ran a single name-match over embedded wikilinks, `[[Author:]]` citations, and
+  asserted EB links alike; `firstword` ("any title CONTAINING the name's first word") then matched
+  given-name-first citations against surname-first EB titles (JOHN VENN → McADAM, JOHN LOUDON).
+  Measured: 1,075 loose-rung binds, ~89% wrong, 59% naming something EB never covered — so forced-pick
+  guaranteed a wrong link.
+  - **Embedded links get safe canonicalizations only** (`_XREF_LINK_LOOSE = (fuzzy,)`, no firstword);
+    q.v. keeps the loose ladder (EB's own cue asserts an EB target).
+  - **Person tier for `[[Author:]]` refs** — 6b4 stops rewriting «AL»→«LN»; the extractor tags them
+    `author`; `resolve_person` matches a SURNAME against EB's surname-first titles (particles: Charles
+    de Rémusat → RÉMUSAT; initials: W. M. Ramsay → RAMSAY, SIR WILLIAM MITCHELL; richest form only;
+    first-given must agree) and ABSTAINS rather than binding a given name. The kind index can't help —
+    the dangerous collision IS person-to-person (a modern author's given name vs the saint/monarch of
+    that name: BERNARD BERENSON → BERNARD, SAINT).
+  - **Self-reference is terminal** unless it carries a section anchor (intra-article jump): 267 → 118,
+    all 118 anchored.
+  - **Hand-adjudicated ledger** `data/xref_adjudications.json` (git-tracked, accreted like
+    `corrections.json`): ONLY `by:user` entries resolve (model verdicts are regression fixtures). Work
+    titles → their AUTHOR (Wealth of Nations → SMITH, ADAM; Vanity Fair → THACKERAY) — unreachable in
+    code, the link text names no author. Score 81/81.
+  - `NameIndex.fuzzy` takes `aggressive` again (was hardcoding the TOC's OCR pass onto inline xrefs,
+    296a34a); `superset` binds a single contained word on EB's `Head, Qualifier` inversion (UNIFORMS,
+    NAVAL AND MILITARY → UNIFORMS) but NOT without the comma (WEALTH OF NATIONS → WEALTH stays dead).
+    **Topic path byte-identical** (populate A/B, all session edits).
+- **«AL» leak fixed.** The «AL»→«LN» bake regex used «LN»'s flat `[^«]*` display slot, which stops at
+  the first nested marker — so 82 author signatures (`«SC»r. v. h.«/SC»`) never baked and leaked
+  through render (which knows «LN» open/close but not «AL»). Widened the three «AL» regexes to 6b4's
+  `(.*?)` DOTALL. Corpus: **0 surviving «AL»** (was 82); marker leaks back to the baseline 3.
+- **Footnote popup → inert «template».** A footnote body that is a `<table>` (AGRICULTURE fn5) put
+  block content in the inline `<sup>`/`<span class="fn-popup">` in the body `<p>`; the parser closed
+  the `<p>` at the `<table>` start tag — emptying the popup AND foster-parenting the table loose inline
+  (two symptoms, one cause). `render_fn_marker` emits the popup content in an inert `<template>` (its
+  own fragment, never closes the `<p>`); `toggleFnPopup` clones it into a positioned popup on demand.
+  16 render goldens rebaselined (span→template only). Verified in-browser + on production.
+- **Perf — the two laggy pages (user observed ~1s each).** (1) Contributor page fetched + PARSED the
+  18.6MB index.json then never read it (a half-finished refactor to contributors.json); dropped the
+  dead fetch → renders from contributors.json (1.9MB) only. (2) index.json (18.6MB) exceeds
+  CloudFront's **10MB auto-gzip cap** → shipped RAW; `deploy.sh` now pre-gzips it (a stored gzip object
+  bypasses the cap; `Content-Encoding: gzip` transparent to `fetch().json()`) → **18.6MB → 2.57MB on
+  the wire, verified live**. Article pages were always instant (index.json is off their critical path).
+- **SHIPPED + production-verified:** «AL» gone, footnote template live, index.json 2.57MB gzipped
+  (7.2×), contributor dead-fetch gone. HuggingFace bundle pushed manually.
+
+**Queued — the leak-cleanup arc (EPUB PRECONDITION).** Residual render-leak tail (51 occ / 0.08%) is
+ALL ours; **every leak is a failure to recurse** — `render_leaks.py` reframed as a READ-FLAT detector
+([[feedback_leaks_are_core_recursion_bugs]], [[project_leaked_markup_queue]]). Three venues:
+section-title→TOC link (`_toc_link`/`_build_toc` do `escape_html(title)` without decoding a title that
+is a «LN» — fix: `markers_to_text`); table-cell content not recursed («BAR», `{{nowrap}}`, `{{sc}}`);
+link display/target not recursed (`{{sc}}` in `href`/`title`). Then the **EPUB arc** —
+`src/britannica/epub/build.py` + `render_article(target="epub")` already produce a valid book (thin
+slice); remaining: MathML spike (resolve the Kindle/KF8 risk EARLY — target still emits `«MATHPH»`
+placeholder), internal xref links (currently absolute site URLs), topic-TOC nav (only volume browse),
+full-corpus build + epubcheck + packaging call. [[project_render_to_python]].
 
 ### Session 2026-07-19 (later) — article xrefs through LinkResolver; old cascade retired
 
