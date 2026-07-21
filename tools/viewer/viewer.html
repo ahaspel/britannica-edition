@@ -1313,12 +1313,22 @@
       // ref reuses (``fnpop-${num}-${instance}``). Numeric form keeps
       // existing call paths working.
       const id = (typeof popupId === "number") ? ('fnpop-' + popupId) : popupId;
-      const popup = document.getElementById(id);
-      if (!popup) return;
-      const wasVisible = popup.classList.contains('visible');
-      // Close all open popups
-      document.querySelectorAll('.fn-popup.visible').forEach(p => p.classList.remove('visible'));
-      if (!wasVisible) popup.classList.add('visible');
+      // Popups are instantiated ON DEMAND from the inert <template> beside the
+      // marker (render_fn_marker), so a footnoted <table> parses cleanly.  Only
+      // one open at a time: remove any open popup first, then re-open unless the
+      // click just closed this same one.
+      const open = document.querySelector('.fn-popup.visible');
+      const wasThis = open && open.id === id;
+      document.querySelectorAll('.fn-popup.visible').forEach(p => p.remove());
+      if (wasThis) return;
+      const sup = event.target.closest('.footnote-ref');
+      const tpl = sup && sup.querySelector('template.fn-popup-tpl');
+      if (!tpl) return;
+      const popup = document.createElement('span');
+      popup.className = 'fn-popup visible';
+      popup.id = id;
+      popup.appendChild(tpl.content.cloneNode(true));
+      sup.appendChild(popup);
     }
 
     // Close popups when clicking elsewhere
@@ -1329,7 +1339,7 @@
         openWideTableModal(expandBtn.dataset.wt);
         return;
       }
-      document.querySelectorAll('.fn-popup.visible').forEach(p => p.classList.remove('visible'));
+      document.querySelectorAll('.fn-popup.visible').forEach(p => p.remove());
     });
 
     function openWideTableModal(id) {
