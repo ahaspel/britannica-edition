@@ -1,0 +1,32 @@
+{
+  "_doc": "Editor-prose reference → article-link overrides, shared by the about page (build_about_page.py) and the Reader's Guide (build_readers_guide.py). Keyed by the UPPERCASE reference text as it appears in the prose; value is a canonical article title (resolved through the shared LinkResolver.resolve_reference) or a direct '{stable_id}.json' filename pin where even the title collides. For the handful the resolver's TIGHT rungs can't recall — an ambiguous same-name that the fisher can't split from prose, a plural/variant/hyphenation the prose spells differently from the title, an Æ-fold the fold rung misses. The loose rungs are deliberately NOT bulk-applied (firstword grabs the wrong same-surname person). Accretes as found, like corrections.json.",
+
+  "FIELDING": "FIELDING, HENRY",
+  "RICHARDSON": "RICHARDSON, SAMUEL",
+  "CHESTERFIELD": "CHESTERFIELD, PHILIP DORMER STANHOPE",
+  "PRIOR": "PRIOR, MATTHEW",
+  "JOHNSON": "JOHNSON, SAMUEL",
+  "ORCHID": "ORCHIDS",
+  "ROUSSEAU": "ROUSSEAU, JEAN JACQUES",
+  "HENRY JAMES": "JAMES, HENRY",
+  "ROME": "23-0614-249f3b.json",
+
+  "MAPS": "MAP",
+  "ANGELS": "ANGEL",
+  "MOLECULES": "MOLECULE",
+  "CARPETS": "CARPET",
+  "MINIATURES": "MINIATURE",
+  "TUNNELS": "TUNNEL",
+  "CATSKILLS": "CATSKILL",
+  "AETHELBERHT": "ÆTHELBERHT",
+  "AETHELWULF": "ÆTHELWULF",
+  "TYRTÆUS": "TYRTAEUS",
+  "TERRA COTTA": "TERRACOTTA",
+  "FIBERS": "FIBRES",
+  "STRIKES AND LOCKOUTS": "STRIKES AND LOCK-OUTS",
+  "INCUBATORS": "INCUBATION AND INCUBATORS",
+  "BREEDING": "BREEDS AND BREEDING",
+  "MACKINTOSH, CHARLES": "MACINTOSH, CHARLES",
+  "COTTON MANUFACTURING": "COTTON",
+  "ALFRED THE GREAT": "ALFRED"
+}
