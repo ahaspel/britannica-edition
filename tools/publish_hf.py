@@ -34,7 +34,7 @@ def main(repo_id: str, private: bool = False) -> None:
         folder_path=str(BUNDLE),
         commit_message="Publish Encyclopædia Britannica 1911 corpus + knowledge graphs",
     )
-    print(f"Published → https://huggingface.co/datasets/{repo_id}")
+    print(f"Published -> https://huggingface.co/datasets/{repo_id}")
 
 
 if __name__ == "__main__":

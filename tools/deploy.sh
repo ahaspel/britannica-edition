@@ -141,7 +141,7 @@ uv run python tools/diagnostics/check_deploy_refs.py
 # One command instead of a forgotten second step.  Kept non-fatal because the
 # SITE is already live by this point — an HF auth/network hiccup must never fail
 # a deploy whose site push already succeeded.  `--with huggingface_hub` supplies
-# the package; auth is a cached `huggingface-cli login` (WRITE token) or $HF_TOKEN.
+# the package; auth is a cached `hf auth login` (WRITE token) or $HF_TOKEN.
 echo
 echo "=== HuggingFace dataset mirror [$(elapsed)] ==="
 if uv run --with huggingface_hub python tools/publish_hf.py britannica11/eb1911; then
@@ -149,7 +149,7 @@ if uv run --with huggingface_hub python tools/publish_hf.py britannica11/eb1911;
 else
   echo "  WARNING: HuggingFace publish failed — the site deploy above still SUCCEEDED."
   echo "  Auth once with a WRITE token, then run just the publish (no full redeploy):"
-  echo "    uv run --with huggingface_hub huggingface-cli login"
+  echo "    uv run --with huggingface_hub hf auth login   # --force to replace a read-only token"
   echo "    uv run --with huggingface_hub python tools/publish_hf.py britannica11/eb1911"
 fi
 
