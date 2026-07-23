@@ -41,6 +41,8 @@ Thumbs.db
 dist/
 build/
 *.egg-info/
+# generated EPUB editions + math spikes — build outputs, never source
+*.epub
 
 # Logs
 *.log

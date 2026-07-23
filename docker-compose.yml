@@ -1,6 +1,11 @@
 services:
   postgres:
     image: postgres:16
+    # Come back by themselves after a reboot — Docker Desktop starts at logon, but
+    # without a policy the containers stay Exited and every reboot needs a manual
+    # `docker compose up`.  `unless-stopped` restarts them on daemon start yet still
+    # honours a deliberate `docker compose stop`.
+    restart: unless-stopped
     environment:
       POSTGRES_DB: britannica
       POSTGRES_USER: postgres
@@ -12,6 +17,7 @@ services:
 
   meilisearch:
     image: getmeili/meilisearch:v1.6
+    restart: unless-stopped
     environment:
       MEILI_NO_ANALYTICS: "true"
       MEILI_MASTER_KEY: "britannica-dev-key"

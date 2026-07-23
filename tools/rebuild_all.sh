@@ -292,6 +292,19 @@ echo
 echo "=== Phase 6f: Pre-deploy quality report (no gate) [$(elapsed)] ==="
 uv run python tools/diagnostics/quality_report.py
 
+# The quality report is the LEAK side: it reads `rendered_html` and asks what
+# survived raw into the output.  It is structurally blind to LOSS — something the
+# SOURCE had and the output silently lacks never appears in it, because it never
+# reads the source ([[feedback_loss_vs_leak]]).  Every defect the 2026-07 unpaired-
+# styler arc turned up was of that kind: an unpaired `{{fine print/s}}` produced
+# the empty string, and a `{{…/e}}` sitting in a page footer was deleted with the
+# `<noinclude>` before the walker ever ran.  Neither leaks; neither was visible for
+# as long as it existed.  This audit is the missing half — it reads RAW source and
+# counts the construct halves that cannot pair (dangling) and the spans that cross
+# (which no tree can bound).  `--refresh` because the corpus pickle is stale by
+# definition on a fresh rebuild.  No gate: it is a standing number to watch move.
+uv run python tools/diagnostics/overlap_audit.py --refresh --examples 6
+
 # --- Phase 6g: Pre-deploy contributor-dedup gate ---
 # Produces a candidate list at sim ≥ 0.85 and aborts (via set -e) if
 # anything isn't already covered by data/contributor_aliases.json's

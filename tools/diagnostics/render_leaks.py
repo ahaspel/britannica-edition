@@ -56,7 +56,7 @@ def main():
 
     print(f"RENDER-LEAK REPORT — {len(files)} articles, {dirty} dirty "
           f"({100 * dirty / max(1, len(files)):.2f}%)")
-    for cat in ("marker", "template", "wikilink", "sentinel"):
+    for cat in ("marker", "template", "wikilink", "attr", "tag", "sentinel"):
         print(f"  {cat:9} {cat_arts[cat]:4} articles, {cat_occ[cat]:5} occurrences")
     print(f"  detail -> {OUT}")
     return 1 if dirty else 0

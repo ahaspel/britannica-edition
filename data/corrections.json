@@ -1,5 +1,12 @@
 {
   "_doc": "Targeted text corrections applied to raw wikisource text during transform. Keys are 'vol:page' (zero-padded vol, ws page number). Each entry is a list of {from, to} replacements applied literally to raw_text before any other processing. Use sparingly — for transcription typos only, not for rendering issues.",
+  "_1:660_note": "Vol 1 ALGEBRAIC FORMS title is wrapped in {{mono}} — the ONLY {{mono}} occurrence in the entire corpus. EB1911 display titles are never monospace, so this is a Wikisource transcription artifact, not presentation. Strip the {{mono|…}} wrapper; keep the {{fs|108%}} title sizing.",
+  "1:660": [
+    {
+      "from": "{{mono|{{fs|108%|ALGEBRAIC FORMS}}}}",
+      "to": "{{fs|108%|ALGEBRAIC FORMS}}"
+    }
+  ],
   "_1:775_note": "Vol 1 ALPHABET page 775 places each Table caption BEFORE its `{{Css image crop}}` (leading-caption order — vol 1 ALPHABET is the only place in the corpus this happens; 3 crops out of 218). Every other djvu crop in the corpus pairs caption AFTER, which is what the walker's `_DJVU_CROP_RE` absorbs (`{{Css image crop|…}}` + optional trailing `{{center|cap}}` / `{{csc|cap}}`). Without this fix Table I.'s `{{csc|}}` caption sits orphaned in body text and crop 1 absorbs Table II.'s caption instead, so crop 0 gets the wrong label and crop 1 has no caption at all. The fix swaps each caption with the crop that follows it so each crop carries its OWN caption trailing.",
   "1:775": [
     {
