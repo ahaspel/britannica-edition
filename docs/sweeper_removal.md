@@ -51,20 +51,48 @@ are individually addressable) → delete the repair → diff.
 
 ### Misplaced transforms — construct conversion in preprocess (relocate to producers)
 
-**J3. `_normalize_bdo`** — `pipeline/stages/preprocess.py` (`_BDO_OPEN`, `_BDO_CLOSE`).
-`<bdo dir=X>` → `<span style="unicode-bidi:bidi-override;direction:X">`.
+**J3. `_normalize_bdo`** — ✅ **DONE 2026-07-23.**  `<bdo>` is now a walker-lifted
+TAG-IMPLIED styler: lifts ungated like `<ins>` (`_TAG_STYLER_RE`), routes to
+HTML_STYLE, and `_html_style_peel` derives `unicode-bidi:bidi-override;
+direction:X` from the tag — the same shape as an attr style.  Preprocess
+conversion deleted; ledger shrunk.
 
-**J4. `_normalize_size_tags`** — `pipeline/stages/preprocess.py`
-(`_SMALL_OPEN`, `_BIG_OPEN`, `_SIZE_TAG_CLOSE`).
-`<small>`/`<big>` → `<span style="font-size:smaller|larger">`.
+**J4. `_normalize_size_tags`** — ✅ **DONE 2026-07-23.**  `<small>`/`<big>` ride the
+same TAG-IMPLIED styler path (`font-size:smaller/larger` derived in the peel).
+Verified the honest way (below).  Two findings along the way:
+  * **`walk_article`-based A/B is VACUOUS for preprocess changes** — it joins
+    stored `ArticleSegment.segment_text`, which was cut from the OLD-preprocessed
+    stream, so both sides walk already-converted text.  The first "251/251
+    byte-identical" was this trap ([[feedback_verify_the_counter]]).  The honest
+    per-item harness: RAW page → corrections+quote-runs → OLD chain (deleted
+    conversions replicated verbatim) vs NEW `_clean_and_heal` → `process_elements`
+    → byte-compare.  All 176 affected raw pages identical except two FRONT-MATTER
+    pages (vol14 p8 / vol27 p10, below each volume's ARTICLE_WS_RANGE start; the
+    diff is inside a raw-carried `{{EB1911 contributor table/entry}}` arg, and no
+    front-matter consumer runs preprocess — Phase 1b parses raw wikitext).
+  * **Bounder/peeler mismatch fixed** (SLOVENES, `<small caps>A.D.</small caps>`):
+    the walker's balanced matcher accepts a junk-attred close tag, but
+    `_html_style_peel`'s trailing strip (`</tag\s*>$`) did not — the consumed
+    closer survived into the recursed inner and re-emitted as a stray `«/SPAN»`.
+    Strip now `</tag\b[^>]*>$`, matching what the bounder bounded.  This was
+    latent for `</span junk>` too.
+  * The walker's `_OPENER_HINT_RE` must list every liftable opener — the first cut
+    omitted `<bdo`/`<small`/`<big` and the lift silently never fired (caught by
+    the transform snapshots, NOT by the vacuous A/B).
 
-**J5. `_resolve_param_defaults`** — `pipeline/stages/preprocess.py` (`_PARAM_DEFAULT`).
-`{{{name|default}}}` → `default`.
-
-All three are context-free AND conversions, so preprocess was always the wrong home.
-The walker already has a styled-span path; these belong on it (or a producer).
-Method: move recognition to the walker/producer → assert the diff is empty or
-confined to that construct's own articles.
+**J5. `_resolve_param_defaults`** — ✅ **DONE 2026-07-23.**  Corpus survey: 11
+`{{{name|default}}}` instances, ZERO bare `{{{name}}}`.  Every ARTICLE-space
+instance is in ALGEBRA's one table (ws 01-0640), ALL inside attr slots — so the
+decode moved to `_table_fold.fold_cell_attrs` (the slot's producer, like the
+`{{=}}` attr-decode); the other 4 instances are vol 1 front matter (ws 3–4,
+outside ARTICLE_WS_RANGE, no preprocess consumer).  Plus the landmine the
+harness itself tripped: a PROSE `{{{name|default}}}` CRASHED the classifier
+(the generic `{{` matcher bounds it two-of-three; `_derive_double_brace_label`
+raises on the un-template-like raw) — against [[feedback_honesty_surface_failures]].
+Fixed properly: `_PARAM_REF_RE` bounds the construct whole in the walker →
+classifier routes `PARAM_DEFAULT` (recurse-slot family) → producer renders the
+recursed default / carries a bare one literally (faithful leak, never a crash).
+Verified: ALGEBRA + both front-matter pages byte-identical old-chain vs new.
 
 ### Render-layer
 
@@ -261,7 +289,51 @@ labeled.  Pinned by `tests/unit/test_signoff_recognition.py`.  This is the ONE
 function both the harvest (now) and the producers (next) use — "do the same here" is
 the same code, so the candidate set is provably identical when it relocates.
 
-NEXT SLICE — coupled, land together:
+LIVENESS CORRECTED + CONTRIBUTOR HALF DELETED (2026-07-23, repo-wide grep — the
+earlier "BOTH RE-SCAN FUNCTIONS ARE DEAD" claim was HALF-wrong; its grep was scoped
+to `src/` and the pipeline's phase drivers live in `tools/pipeline/`):
+
+  * **Contributor half: DEAD, now DELETED.**  `_harvest_signature_contributors` had
+    zero callers anywhere (src/, tools/, tests/); `recognize_signoff_initials`,
+    `_SIGNATURE_RE`, `_SIG_MARKER_RE` served only it.  All four deleted from
+    `extract_contributors.py` + `tests/unit/test_signoff_recognition.py` removed
+    (brick 1 reverted).  Suite 472 green (478 − the 6 signoff tests, exactly).
+    The user's account stands for THIS half: the body-signoff harvest was attempted
+    and rejected as too error-prone; the live binding is roster/index consensus
+    (23fbea4, 72c14a4).  `_normalize_initials` STAYS — many live callers
+    (vol29_linker, author_links, resolver, build_contributor_table, 6b4).
+  * **Xref half: LIVE — not deletable.**  `_wrap_resolved_xrefs_in_body` (the fn the
+    doc called `_wrap_body_xrefs`) runs on EVERY article in production:
+    `tools/pipeline/resolve_xrefs_post.py:74` (Phase 6b5) → `_link_xrefs_in_body`
+    (article_json.py:544) → `_wrap_resolved_xrefs_in_body` (line 627).  Its helpers
+    are live through the same chain: `_looks_bibliographic` / `_protected_ranges` /
+    `_clean_surface_for_matching` (body_postprocess.py), and `extract_xrefs`'s
+    `_QV_PATTERN` / `_extract_qv_target` / `_PAREN_SEE_*` via `_xrefs_from_body`
+    (6b5 line 61) — which also feeds the xref PANEL.  Nothing on that list is dead.
+  * So J7's xref half REVERTS to the original analysis: a live double re-scan
+    (`extract_xrefs` finds the q.v./see sites; `_wrap_resolved_xrefs_in_body`
+    re-finds them with heuristic gates) to be RELOCATED per the target end state —
+    producers emit `«QV:term»` at the site, the late pass reads markers and only
+    resolves.  It stays on the inventory as a relocation, sequenced AFTER J3–J5
+    (it is the hardest item: coupled to the panel + the 6b5 bake order).
+  * The three-scope design + the regex discriminator (below) STAY, and now have
+    live instances again.  LESSON, twice paid: grep the WHOLE repo for callers —
+    the pipeline's entry points are in `tools/pipeline/`, not `src/`.
+
+--- original SIG plan, retained for reference; it targets DEAD code, do not build it ---
+
+STALE-PREMISE CORRECTION (2026-07-23, found right after brick 1): the SIG plan
+below was built on `_harvest_signature_contributors`, but that function is UNCALLED
+— `recognize_signoff_initials` / `initials_map` / the harvest are referenced ONLY
+inside `extract_contributors.py`, nowhere else in `src/`.  The live signoff-binding
+was folded into corpus-export (commit 23fbea4 "fold contributor harvest + linking
+into corpus-export"; 72c14a4 "one phase builds the roster, binds, and names").
+So brick 1's `recognize_signoff_initials` is a valid reusable recognizer, but the
+harvest it was lifted from is dead.  BEFORE the SIG slice, FIND THE LIVE PATH in
+corpus-export / the roster phase — the recognizer must land THERE, not in the dead
+harvest.  (Do NOT theorize the plan onto a function's name again — grep the caller.)
+
+NEXT SLICE — coupled, land together (retarget onto the LIVE path first):
   1. `_process_contributor_footer` emits `«SIG:name|initials»` (it already parses both)
      instead of prose `(initials)`.
   2. body producer calls `recognize_signoff_initials` on bare `(…)` in its run → `«SIG?:initials»`.
@@ -274,6 +346,23 @@ hold ([[feedback_contributor_zero_false_positives]]).  After this, q.v. is the t
 
 ## Current state (2026-07-23)
 
+* **J7 audit CLOSED**: contributor re-scan chain deleted (dead); xref re-scan is
+  LIVE via 6b5 and reclassified as a relocation, sequenced after J3–J5.
+* **J3 + J4 + J5 DONE** — all three misplaced transforms are OUT of preprocess:
+  `<bdo>`/`<small>`/`<big>` are walker-lifted TAG-IMPLIED stylers; the
+  param-default decode lives in `fold_cell_attrs` (attr context) + a
+  `PARAM_DEFAULT` element (prose context).  `_JUNK` ledger down to
+  {close_unclosed_attr_quotes} — J2 is the only chain junk left; then J1
+  (inside `strip_noinclude_blocks`), J6 (`_contain`), J8 (owner's call), and
+  the J7 xref relocation.
+* **Verified** by the raw-page walk-equivalence harness: old chain (deleted
+  passes replicated verbatim) vs new, `corrections+quote-runs → clean → walk`,
+  over the union of ALL affected raw pages (179) — byte-identical everywhere
+  except the 2 front-matter pages no preprocess consumer can reach.  473 green.
+* Two real fixes shipped alongside: the bounder/peeler close-tag mismatch
+  (stray «/SPAN» on junk-attred closers, SLOVENES) and the prose
+  `{{{…|…}}}` classifier crash → faithful PARAM_DEFAULT element.
+* NEXT: J6 (resolve the `_contain` escape question), then J1/J2 sweepers.
 * `source_cleanup.py` reverted to the plain strip; `_contain` restored to working;
   464 tests pass.  The `context_sensitive_is_producer` memory loophole is closed.
 * `data/derived` holds the CLEAN rebuild (source_cleanup reverted): 37226 articles,
