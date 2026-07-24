@@ -586,7 +586,8 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
       <div class="preface-body">{TOC}{BODY}{FOOTNOTES}</div>
     </div>
   </div>
-<script data-goatcounter="https://britannica11.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script src="/gc-gate.js"></script>
+<script data-goatcounter="https://britannica11.goatcounter.com/count" async src="//gc.zgo.at/count.js" onload="if(window.__gcReady)__gcReady()"></script>
 </body>
 </html>
 """

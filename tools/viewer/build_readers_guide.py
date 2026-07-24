@@ -939,7 +939,8 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
     </div>
   </div>
 </div>
-<script data-goatcounter="https://britannica11.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script src="/gc-gate.js"></script>
+<script data-goatcounter="https://britannica11.goatcounter.com/count" async src="//gc.zgo.at/count.js" onload="if(window.__gcReady)__gcReady()"></script>
 </body>
 </html>
 """
@@ -1036,7 +1037,8 @@ PART_TEMPLATE = """<!DOCTYPE html>
     </ul>
   </div>
 </div>
-<script data-goatcounter="https://britannica11.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script src="/gc-gate.js"></script>
+<script data-goatcounter="https://britannica11.goatcounter.com/count" async src="//gc.zgo.at/count.js" onload="if(window.__gcReady)__gcReady()"></script>
 </body>
 </html>
 """
@@ -1139,7 +1141,8 @@ INDEX_TEMPLATE = """<!DOCTYPE html>
     Article and contributor citations are linked to the main encyclop&aelig;dia.
   </div>
 </div>
-<script data-goatcounter="https://britannica11.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script src="/gc-gate.js"></script>
+<script data-goatcounter="https://britannica11.goatcounter.com/count" async src="//gc.zgo.at/count.js" onload="if(window.__gcReady)__gcReady()"></script>
 </body>
 </html>
 """

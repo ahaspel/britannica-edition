@@ -93,7 +93,7 @@ for f in viewer index search scans contributors home preface topics \
   aws s3 cp "tools/viewer/$f.html" "s3://britannica11.org/$f.html" \
     --content-type "text/html; charset=utf-8" --cache-control "no-cache"
 done
-for f in search-api article-urls typeahead; do
+for f in search-api article-urls typeahead gc-gate; do
   aws s3 cp "tools/viewer/$f.js" "s3://britannica11.org/$f.js" \
     --content-type "application/javascript" --cache-control "no-cache"
 done
