@@ -106,7 +106,11 @@ class TestProcessing:
         result = process_elements(text, ElementContext())
         assert "\u00abFN:" in result
         assert "\u00ab/FN\u00bb" in result
-        assert "See also Wikipedia" in result
+        # The see-cue stamps its window even inside a footnote (J7 slice 2):
+        # cue text stays prose, the window rides as an \u00abLN[see_also]\u00bb stamp
+        # (an unresolved stamp strips back to the bare text at bake).
+        assert "See also" in result
+        assert "\u00abLN[see_also]:Wikipedia|Wikipedia\u00ab/LN\u00bb" in result
         assert "<ref>" not in result
 
     def test_image_clean_caption(self):

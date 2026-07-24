@@ -384,8 +384,48 @@ two points:
         consumer); 482 green.
      1. q.v. (window stamp + resolver extent-pick) — ✅ **BUILT 2026-07-24,
         A/B'd on all 74 q.v.-bearing articles (89 sites)**; details below.
-     2. see/cf family;
+     2. see/cf family — ✅ **BUILT 2026-07-24, A/B'd on 40 sampled articles**;
+        details below;
      3. delete the dead extraction/wrap layer; panel reads markers.
+        (`_wrap_resolved_xrefs_in_body` is now a NO-OP for every type: qv
+        records no longer exist and a resolved see's surface IS its stamped
+        marker, which the already-linked check skips — deletion is mechanical.)
+
+SLICE 2 (2026-07-24): `_stamp_see_windows` (runs after the q.v. stamp) —
+cue `[Ss]ee( also)?` / `[Cc]f.` / `[Cc]ompare` (+ optional "the article on"
+lead), FORWARD clause-bounded window, TWO lexical gates replacing the whole
+old armory: capital-led window (the verb "see" points at lowercase clauses)
+and segment-split on `,`/` and ` (each capital-led segment its own stamp).
+«I» as a boundary char = the `_is_bibliographic` gate FOR FREE (cited works
+are italicized → empty window → no stamp).  Kind `[see]`/`[see_also]` routes
+`resolve_see(window=True)`: all contiguous SPANS (a see target sits at either
+end), a PARTIAL span needs ≥2 content words (binding JAMES out of "Sir James
+Stephen" is the given-name junk class), same minimal-span/coverage pick, self
+stays TERMINAL.  DELETED: `_PAREN_SEE_*`, `_SEE_*` (all six), `_CF_PATTERN`,
+`_COMPARE_PATTERN`, `_TARGET_TAIL`, `_is_bibliographic`,
+`_clean_paren_see_target`, `_strip_markers`, `_MARKER_PLACEHOLDER`.
+
+**STALE-BASELINE CORRECTION** ([[feedback_audit_fresh_baseline]], violated
+then caught): the first see A/B diffed against
+`.xref_consolidation_baseline/xref_resolution.baseline.jsonl` — the
+PRE-consolidation cascade snapshot (3,931 resolved sees, the junk world the
+2026-07-19 rework already dropped) — and read 52 "losses" that were the junk
+staying dead.  The honest reference is the last rebuild's OWN
+`data/derived/xref_resolution.jsonl` (525 see + 38 see_also resolved).  The
+q.v. adjudication is unaffected (qv rows identical in both files).
+
+Against the honest reference (40 sampled sources, 58 resolved sees):
+**54 recovered · 2 real losses · 2 junk losses that are WINS** (production had
+bound the anaphor "AS TO THE LATTER", and "see Aubin" — a manuscript copyist
+— to AUBIN the French town) · **4 good new binds** (UTE, ESKIMO, IODINE, and
+"SALICYLIC ACID RESPECTIVELY" span-cut to SALICYLIC ACID) · 1 junk new bind
+(DIEGO DE → GONDOMAR, particle counted as content — refine later).  Known
+residual class: `(See «LN:Geometry», «SC»Analytical«SC».)` — a cue followed
+by an existing link + small-caps qualifier never opens a window (the old path
+assembled GEOMETRY, ANALYTICAL); marker-stream adjacency work if the rebuild
+diff shows the class matters.  13 transform snapshots rebaselined (adjudicated
+first: unstamping the new output reproduced every old baseline byte-for-byte —
+60 stamps, nothing else).  485 green.
 
 SLICE 1 (2026-07-24): `_produce_body` stamps `«LN[w]:window|window«/LN»` at
 `(q.v.)` sites (dumb: literal token + clause-bounded span; a site directly
