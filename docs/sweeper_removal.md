@@ -423,6 +423,28 @@ articles).  The 723 single-word exacts (GIBBON good / LIFE junk) stay
 abstained — that class needs the banked fisher-cosine backstop, its own
 probe.  485 green.
 
+SLICE 2c (2026-07-24, user: τ=0.65): **the fisher-cosine backstop for
+single-word tight topic-disjoint sees.**  The kind-gate design was probed
+FIRST and lost on data: requiring a prose-derived kind kills 334/335 existing
+good binds (prose near a see-cue states no kind); nearest-noun derivation is
+noise ("SHAKESPEARE want=king"); explicit-only yields 8, half circular.  The
+candidate-side kind (its own lead) was never the problem — the REFERENCE-side
+expectation is unstatable discretely, so it is computed continuously:
+cosine(SOURCE article's lead embedding, candidate's lead embedding) — the
+article-to-article kind match, finer-grained than the 26-noun vocabulary ("a
+rhetoric article wants an orator").  `_cosine_pick`: the ONE candidate
+clearing τ=0.65 AND the runner-up by 0.05, else abstain (the user's
+uniqueness posture, embedding as the second criterion); the caller's
+terminal-self rule still applies (a self-match cosines at 1.0 — the SOUND
+probe artifact).  Junk class ("see Plate" = a figure plate; CODE, HALL) sits
+≤0.62 — excluded.  Corpus-wide with 2b: **+283 previously-abstained sees now
+bind** (CICERO from seven rhetoric articles, PLUTARCH, QUINTILIAN, EDDIUS,
+PHILIPPI + the 223 full-name class); previously-resolved 563: 525 unchanged,
+38 different — IDENTICAL to the 2b regression set (37 junk + 1 pipe target);
+the backstop changes NO existing bind by construction (fires only on an empty
+topic filter).  The 0.60–0.65 band (~100 more, mixed) remains for a later
+adjudicated loosening.  485 green.
+
 **STALE-BASELINE CORRECTION** ([[feedback_audit_fresh_baseline]], violated
 then caught): the first see A/B diffed against
 `.xref_consolidation_baseline/xref_resolution.baseline.jsonl` — the
