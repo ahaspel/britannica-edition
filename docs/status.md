@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-07-19.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-07-24.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,7 +46,77 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-07-20)
+## CURRENT STATE (2026-07-24)
+
+### Sessions 2026-07-23/24 — SWEEPER-REMOVAL CAMPAIGN COMPLETE; SHIPPED + production-verified
+
+The junk-removal campaign ([`docs/sweeper_removal.md`](sweeper_removal.md) — the full
+per-item ledger) is CLOSED, rebuilt (55:26, exit 0), DEPLOYED, and verified on
+production.  Every inventory item resolved:
+
+- **J1 noinclude `{|`/`|}` rescue DELETED** — the guarded extractor bug died with the
+  whole-volume architecture; the rescue itself was silently swallowing whole pages
+  (LIBRARIES ws 573/584 — **recovered, production-verified**) and chopping cross-page
+  tables (INDIANS 19→10 spans).  83-article A/B: zero loss.
+- **J2 `close_unclosed_attr_quotes` DELETED** — unterminated-attr-quote tolerance moved
+  to the attr READERS (`_KV_RE`, `_SPAN_TITLE_OPEN_RE`: a value never crosses its tag's
+  `>`); the repair had been injecting quote chars into OCR prose.
+- **J3/J4/J5 preprocess conversions RELOCATED** — `<bdo>`/`<small>`/`<big>` are
+  walker-lifted TAG-IMPLIED stylers; `{{{name|default}}}` decodes in `fold_cell_attrs`
+  (attr context) + a PARAM_DEFAULT element (prose).  **The preprocess discipline ledger
+  is CLOSED: chain == VETTED** (J8 `_decode_entities` ruled VETTED — transport decoding),
+  enforced live by `test_preprocess_discipline`.
+- **J6 `_contain` ACQUITTED** — browser-verified real (unclosed opens nest the xref card
+  inside the article card; mid-body stray closes spill 47/63 paragraphs out of
+  `.body-text`); it IS the minimal byte-preserving balancer.
+- **J7 xref re-scan GONE end-to-end** — recognition producer-stamped at the site
+  (`«LN[w]:window»` at `(q.v.)`, `«LN[see/see_also]:window»` at see-cues; windows =
+  UNASSERTED extents the resolver cuts against the title index — tier-major spans,
+  minimal-cut-per-candidate, window-coverage pick, grow-to-title display);
+  `_wrap_resolved_xrefs_in_body` + `_looks_bibliographic` + `_protected_ranges` + the
+  whole extraction armory DELETED.  Resolution upgrades (all data-adjudicated):
+  tight-multi sees bind topic-free (+223), fisher-cosine backstop for single-word sees at
+  τ=0.65 (+60), qv folded into link policy (its loose ladder produced only junk).
+  **Xref ledger vs prior production: link +86 · see +386 (525→911) · see_also +62 ·
+  author ±0 · net +429 resolved, −37 junk binds dropped.**
+- **Rebuild adjudication**: zero visible content loss (54 nominal losers all dissected —
+  panel deltas, 2 byline homonym relocations, J1/J2 junk-chrome removal); render-leak
+  floor IMPROVED (template 27→23, tag 22→20, attr 5→4); topic index 99.995% identical
+  (2 fuzzy-tier coin-flips, both pre-existing-wrong; pins queued).
+- **Leak audit instrument REPAIRED** (had crashed on every article since `page_number`
+  left ElementContext; verse mask predated `{{IVERSE:}}`): honest reading **BROKEN 159
+  in 56 articles (0.15%)** — ~135 OCR pseudo-tags, 9 unpaired styler names missing from
+  the paired-wrapper registry (queued), 2 `<chem>` (parked).
+
+**Also this session:**
+- **Wide tables by MEASUREMENT** — the cols≥10 proxy (wrong ~60%: 180 false wraps, 615
+  missed overflows incl. CONSTELLATION) replaced by the math-style pipeline:
+  `measure_table_widths.py` (browser-measured vs the fixed 590px body column, hash-keyed
+  cache) → `annotate_table_markers.py` stamps `«TABLE[cols:N|wide|`, wired into
+  post_export → render keys on the fact.  886 wide tables; 434+49 articles re-rendered.
+  **Ships NEXT deploy** (finished after this deploy's sync).
+- **Vol 7 scan-leaf fix** (user-reported): leaves 33-34 = CONSTELLATION Plates I/II →
+  UNNUMBERED_LEAVES + TRUSTED_RUNS[7]=(35,13,41,19), scan-verified; leaf-side only
+  (36,691 baked citations, 0 mismatches); **live on production**.
+- **`tools/serve.py` speaks production's URL space** (merged; runs as the
+  `britannica-webserver` logon task): `/` → home, root-level pages, `/article/{sid}`
+  deep links, byline links, `/search-api/*` → local Meili.  Local navigation now works
+  like the live site.  QUEUED ARC: serve the space verbatim (200-rewrite, /data alias)
+  then ELIMINATE every `is_local`/`IS_LOCAL` fork from render + viewer.
+- **GoatCounter bot-gating** (user): `gc-gate.js` counts on first human input; deployed.
+- HF publish now runs inside deploy.sh automatically (write key cached).
+
+**Production-verified (all six):** LIBRARIES recovery · SILESIA's Breslau + Seven
+Years' War (q.v.) links · FROISSART see-bind in panel · vol 7 scan leaves · gc-gate.js ·
+SAMARA byline on the government article.
+
+**Queued (new, small):** paired-wrapper registry names (`left margin`, `outdent`,
+`dent`, `flex wrap centre`) · MARCH/BEJA TOC disambiguation pins · GEOMETRY-ANALYTICAL
+see class (cue followed by link + «SC» qualifier) · DIEGO particle-count refinement ·
+0.60–0.65 cosine band (~100 sees, needs adjudication) · is_local/IS_LOCAL elimination
+arc (above).
+
+## PREVIOUS STATE (2026-07-20)
 
 ### Session 2026-07-20 — xref-by-KIND · «AL» leak · footnote «template» · perf; SHIPPED + production-verified
 
@@ -469,15 +539,13 @@ next deploy.  Full notes in `status_history.md`.  [[project_wikilink_backlog]]
 
 ### Build & deploy state
 
-- **Suite:** **419 green** (render + transform + inline snapshots all rebaselined this session).
-- **Rebuild: DONE 2026-07-15** — local `--skip-import --no-deploy` (54:45, clean); corpus render-leak
-  floor unchanged (`render_leak_marker` 3→3).  Render-collapse commit banked; **deploy pending** — ship
-  the already-built corpus + viewer, nothing partial.
-- **Last *deployed* rebuild: 2026-07-07** — full `--skip-import` rebuild + deploy, 66:25, exit 0,
-  preflight clean.  (Prior deploys: 2026-07-06 campaign + distribution; 2026-05-17 before.)
-- **Working tree:** render collapse banked atop the 2026-07-12 commits (`c97d863`/`0aa87b0`/`26999b4`/
-  `50d34ed`).  A pre-existing readers-guide HTML diff (25 files) is unrelated to the collapse and
-  un-banked.
+- **Suite:** **472 green** (transform + render snapshots rebaselined through the campaign,
+  each adjudicated before writing).
+- **Last *deployed* rebuild: 2026-07-24** — the campaign rebuild (55:26, exit 0), deployed by the
+  user, **production-verified** (six-point checklist above).  HF publish rode the deploy.
+- **Pending for next deploy:** the wide-table measurement work (886 tables re-annotated +
+  re-rendered locally after this deploy's sync passed).
+- **Working tree:** clean at ship; per-item commits banked throughout the campaign.
 
 ### Leak audit (re-audited 2026-06-14, `tools/diagnostics/leak_audit.py`, full corpus)
 

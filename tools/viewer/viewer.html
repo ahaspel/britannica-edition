@@ -132,6 +132,12 @@
       margin-left: 6.5em;
       margin-right: 160px;
       position: relative;
+      /* Contain floats: a float-right contributor signoff after a final
+         TABLE has no following prose to sit beside, and without a BFC it
+         hangs below the body block into the notes bar (CONSTELLATION).
+         flow-root contains it without clipping the absolutely-positioned
+         margin page-numbers (overflow:hidden would). */
+      display: flow-root;
     }
 
     @media (max-width: 900px) {
