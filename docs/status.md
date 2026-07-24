@@ -119,6 +119,36 @@ production.  Every inventory item resolved:
   (zero console errors; address bar canonicalizes).  Viewer pages ship next deploy.
 - **GoatCounter bot-gating** (user): `gc-gate.js` counts on first human input; deployed.
 - HF publish now runs inside deploy.sh automatically (write key cached).
+- **MAPS ARC, slice 1 LANDED** (2026-07-24, user's revised spec — Map link like Plates,
+  double-click inline thumbnail, Perthes maps also linked to Stieler originals, both
+  colour versions in the download):
+  · `data/maps.json` — hand-curated registry (like corrections.json): 15 confirmed
+    EB1911 Perthes plates bound to 17 articles (england_and_wales → ENGLAND+WALES,
+    north/south_america → also AMERICA), plus unbound russia (Stieler Bl. 1+2) and
+    china rows awaiting confirmation the printed volumes carried those plates.
+  · `tools/maps/process_stieler.py` — Rumsey zips (data/raw/maps/, NOT deploy-synced)
+    → page-cropped display (~3200px) + full-res JPGs in data/images/maps/.  Crops are
+    HAND-TUNED fractions per map, each verified against _previews/ overlays (auto-crop
+    was defeated by content-dark maps + the bright fore-edge stack); 9 masters done —
+    8 atlas photos + the Australia composite (already edge-to-edge).
+  · `maps.html` — mechanical registry viewer: #id → EB1911 plate + "the Stieler
+    original" (multi-sheet aware, russia shows Bl. 1+2); no hash → gallery of the 15
+    confirmed maps (unbound rows hidden until adjudicated); europe's broken plate
+    falls back to the Stieler with a "good scan wanted" notice.
+  · viewer.html — Map link is a client-side overlay from the registry (topic-overlay
+    precedent, no rebuild needed): "Map: Switzerland" in the Plates slot; double-click
+    on the inline thumbnail (SOUTH AFRICA only, per inline_file) → maps.html#id.
+  · Download: `build_maps_bundle()` (export/download.py) → eb1911-maps.tar.gz
+    (228MB, 35 files + maps.json as manifest; every referenced file must exist or it
+    raises).  Kept SEPARATE from the corpus bundle (agent dataset stays lean).
+    deploy.sh ships the bundle + maps.html + /data/maps.json; download page rewritten
+    (docs/download.txt "The maps." section) and regenerated.
+  · Playwright-verified locally: gallery 15 · #switzerland both images · Map line on
+    SWITZERLAND + WALES (shared plate) · SOUTH AFRICA dblclick lands on #south_africa.
+  · REMAINS: confirm russia/china plates (then bind articles); better europe plate +
+    the missing pristine encbr11 scans (user fetching from Rumsey); Emery Walker
+    colour maps (the non-Perthes rest) — registry rows as scans land; production
+    verification after next deploy.
 
 **Production-verified (all six):** LIBRARIES recovery · SILESIA's Breslau + Seven
 Years' War (q.v.) links · FROISSART see-bind in panel · vol 7 scan leaves · gc-gate.js ·

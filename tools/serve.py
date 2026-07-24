@@ -85,7 +85,9 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             path = "/data/derived/articles/" + path[len("/data/articles/"):]
         elif path.startswith("/data/scans/"):
             path = "/data/derived/scans/" + path[len("/data/scans/"):]
-        elif _DATA_JSON_RE.match(path):
+        elif _DATA_JSON_RE.match(path) and path != "/data/maps.json":
+            # /data/{name}.json serves from data/derived/ — except maps.json,
+            # which is hand-curated SOURCE living at data/maps.json itself.
             path = "/data/derived/" + path[len("/data/"):]
         elif path.startswith("/download/eb1911-corpus"):
             path = "/data/derived/" + path[len("/download/"):]

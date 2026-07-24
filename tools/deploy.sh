@@ -75,10 +75,15 @@ for j in printed_pages printed_pages_leaf scan_map classified_toc fm_first_conte
   aws s3 cp "data/derived/$j.json" "s3://britannica11.org/data/$j.json" \
     --content-type "application/json" --cache-control "no-cache"
 done
+# maps.json is hand-curated source (lives at data/maps.json, not data/derived/)
+aws s3 cp data/maps.json s3://britannica11.org/data/maps.json \
+  --content-type "application/json" --cache-control "no-cache"
 
 echo "  Uploading download bundle (agent JSONL + graphs)..."
 aws s3 cp data/derived/eb1911-corpus.tar.gz s3://britannica11.org/download/eb1911-corpus.tar.gz
 aws s3 cp data/derived/eb1911-corpus.tar.gz.sha256 s3://britannica11.org/download/eb1911-corpus.tar.gz.sha256
+aws s3 cp data/derived/eb1911-maps.tar.gz s3://britannica11.org/download/eb1911-maps.tar.gz
+aws s3 cp data/derived/eb1911-maps.tar.gz.sha256 s3://britannica11.org/download/eb1911-maps.tar.gz.sha256
 aws s3 cp data/derived/download/manifest.json s3://britannica11.org/download/manifest.json
 aws s3 cp data/derived/download/README.md s3://britannica11.org/download/README.md
 
@@ -87,7 +92,7 @@ echo "  Uploading viewer (HTML + JS = no-cache; content isn't hashed yet, so rev
 # against a fresh corpus resolves every link to a deleted old filename — the 2026-07-15 regression.
 # (The heavy stuff — article JSONs, images, scans — still caches hard; only these small files
 # revalidate. Permanent fix is content-hashed asset names → immutable; see the queued item.)
-for f in viewer index search scans contributors home preface topics \
+for f in viewer index search scans maps contributors home preface topics \
          ancillary ancillary-prefatory-note ancillary-index-preface ancillary-abbreviations \
          about download; do
   aws s3 cp "tools/viewer/$f.html" "s3://britannica11.org/$f.html" \

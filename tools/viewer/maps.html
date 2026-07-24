@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Colour Maps - Encyclopaedia Britannica, 11th Edition</title>
+<style>
+  :root { --bg: #f5f0e8; --text: #2c2416; --muted: #6b5d4d; --link: #8b4513; }
+  body { font-family: Georgia, serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; }
+  .back-bar { margin-bottom: 12px; }
+  .back-bar a { color: var(--link); text-decoration: none; }
+  .back-bar a:hover { text-decoration: underline; }
+  .header { text-align: center; margin-bottom: 20px; }
+  .header h1 { font-size: 1.3rem; margin: 0; }
+  .header .subtitle { color: var(--muted); font-size: 0.9rem; }
+  .map-view { text-align: center; }
+  .map-view img { max-width: 100%; border: 1px solid #ccc; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+  .map-view .caption { color: var(--muted); font-size: 0.9rem; margin: 10px 0 24px; }
+  .map-view .caption a { color: var(--link); }
+  .gallery { max-width: 900px; margin: 0 auto; }
+  .gallery li { margin: 6px 0; }
+  .gallery a { color: var(--link); }
+  .gallery .muted { color: var(--muted); font-size: 0.9rem; }
+  .notice { color: var(--muted); font-style: italic; text-align: center; padding: 30px; }
+  a { color: var(--link); }
+</style>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<script src="/article-urls.js"></script>
+</head>
+<body>
+<div class="back-bar">
+  <a id="backLink" href="/index.html">&larr; Back to index</a>
+</div>
+<div class="header">
+  <h1 id="title">Colour Maps</h1>
+  <div class="subtitle" id="subtitle"></div>
+</div>
+<div id="content" class="map-view"></div>
+<script>
+  // Mechanical registry viewer: /data/maps.json says what exists, this page
+  // just shows it.  #<id> → single map (the EB1911 colour plate, with a link
+  // to the Stieler original where we have it); no hash → gallery of all maps.
+  const IMG_BASE = "/data/images/maps/";
+  const content = document.getElementById("content");
+  const esc = s => String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+  function articleLinks(row, index) {
+    return (row.articles || []).map(stem => {
+      const meta = index.get(stem);
+      const title = meta ? meta.title : stem;
+      return `<a href="${BritannicaUrls.filenameToUrl(stem + ".json", title)}">${esc(title)}</a>`;
+    }).join(", ");
+  }
+
+  function stielerSheets(st) {
+    return (st.sheets && st.sheets.length) ? st.sheets : [st];
+  }
+
+  function renderMap(row, index) {
+    document.getElementById("title").textContent = row.title;
+    const arts = articleLinks(row, index);
+    document.getElementById("subtitle").innerHTML = arts ? "Map for " + arts : "";
+    const parts = [];
+    const eb = row.eb1911;
+    if (eb && eb.quality !== "broken") {
+      const full = IMG_BASE + encodeURIComponent(eb.full || eb.file);
+      parts.push(`<a href="${full}" title="Open full resolution"><img src="${IMG_BASE + encodeURIComponent(eb.file)}" alt="${esc(row.title)} — EB1911 colour map"></a>`);
+      parts.push(`<div class="caption">The colour map as printed in the Eleventh Edition` +
+        ` &middot; <a href="${full}">full resolution</a></div>`);
+    }
+    const st = row.stieler;
+    if (st) {
+      // `derived: false` = the plate was drawn specially for Britannica, not
+      // from Stieler — the Stieler is then a companion map, not "the original".
+      const rel = st.derived === false
+        ? "The Stieler map of the same region"
+        : "The Stieler original";
+      for (const sheet of stielerSheets(st)) {
+        const full = IMG_BASE + encodeURIComponent(sheet.full || sheet.file);
+        parts.push(`<a href="${full}" title="Open full resolution"><img src="${IMG_BASE + encodeURIComponent(sheet.file)}" alt="Stieler ${esc(sheet.title)}"></a>`);
+        parts.push(`<div class="caption">${rel}: <i>${esc(sheet.title)}</i>,` +
+          ` Stielers Hand-Atlas No. ${esc(sheet.nr)} (Gotha: Justus Perthes)` +
+          ` &middot; <a href="${full}">full resolution</a></div>`);
+      }
+    }
+    if (eb && eb.quality === "broken" && st) {
+      parts.push(`<div class="notice">A good scan of the EB1911 printing of this map is still wanted;` +
+        ` the Stieler original above is shown in the meantime.</div>`);
+    }
+    if (!parts.length) {
+      parts.push(`<div class="notice">No scan of this map is on hand yet.</div>`);
+    }
+    content.innerHTML = parts.join("\n");
+  }
+
+  function renderGallery(maps, index) {
+    document.getElementById("subtitle").textContent =
+      "The full-colour fold-out maps of the Eleventh Edition";
+    const items = maps
+      // Unbound rows (no articles) are assets awaiting confirmation that the
+      // Eleventh Edition carried the plate — not yet listed as its maps.
+      .filter(m => (m.articles || []).length)
+      .filter(m => (m.eb1911 && m.eb1911.quality !== "broken") || m.stieler)
+      .map(m => {
+        const bits = [];
+        if (m.eb1911 && m.eb1911.quality !== "broken") bits.push("EB1911 colour map");
+        if (m.stieler) bits.push(m.stieler.derived === false ? "Stieler companion" : "Stieler original");
+        const arts = articleLinks(m, index);
+        return `<li><a href="#${encodeURIComponent(m.id)}">${esc(m.title)}</a>` +
+          ` <span class="muted">— ${bits.join(" + ")}${arts ? " · " + arts : ""}</span></li>`;
+      });
+    content.innerHTML = `<ul class="gallery">${items.join("\n")}</ul>`;
+  }
+
+  async function main() {
+    const [reg, idx] = await Promise.all([
+      fetch("/data/maps.json").then(r => r.json()).catch(() => ({ maps: [] })),
+      fetch("/data/articles/index.json").then(r => r.json()).catch(() => []),
+    ]);
+    const index = new Map();
+    for (const a of idx) {
+      index.set(String(a.filename || "").replace(/\.json$/, ""), a);
+    }
+    const maps = reg.maps || [];
+    function route() {
+      const id = decodeURIComponent((location.hash || "").replace(/^#/, ""));
+      const row = maps.find(m => m.id === id);
+      if (row) renderMap(row, index);
+      else {
+        document.getElementById("title").textContent = "Colour Maps";
+        renderGallery(maps, index);
+      }
+      window.scrollTo(0, 0);
+    }
+    window.addEventListener("hashchange", route);
+    route();
+  }
+  main();
+</script>
+</body>
+</html>

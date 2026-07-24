@@ -1,0 +1,164 @@
+{
+  "_comment": "Hand-curated registry of the full-colour fold-out maps (like corrections.json). One row per map. `articles` = stable-id stems of the articles that carried the map (the Map link + double-click affordances bind there). `eb1911` = the colour plate as printed in EB1911 (file/full live in data/images/maps/; quality: good | reduced | broken). `stieler` = the Stieler Hand-Atlas map from the Rumsey masters (display + _full crop emitted by tools/maps/process_stieler.py); `derived: false` marks a plate NOT based on Stieler (Australia and England/Wales were drawn specially for Britannica) so the Stieler shows as a companion map of the region, never as 'the original'. Rows with empty `articles` are assets on hand awaiting confirmation that EB1911 carried the plate. Coverage grows as files land.",
+  "maps": [
+    {
+      "id": "africa",
+      "title": "Africa",
+      "maker": "perthes",
+      "articles": ["01-0358-294f88"],
+      "inline_file": null,
+      "eb1911": {"file": "encbr11_africa.jpg", "quality": "reduced"},
+      "stieler": {"file": "stieler_africa.jpg", "full": "stieler_africa_full.jpg", "nr": "68", "title": "Afrika"}
+    },
+    {
+      "id": "asia",
+      "title": "Asia",
+      "maker": "perthes",
+      "articles": ["02-0801-420571"],
+      "inline_file": null,
+      "eb1911": {"file": "encbr11_asia.jpg", "quality": "reduced"},
+      "stieler": null
+    },
+    {
+      "id": "australia",
+      "title": "Australia",
+      "maker": "perthes",
+      "articles": ["02-0991-cf0286"],
+      "inline_file": null,
+      "eb1911": {"file": "encbr11_australia.jpg", "quality": "reduced"},
+      "stieler": {"file": "stieler_australia.jpg", "full": "stieler_australia_full.jpg", "nr": "77-80", "title": "Australien (Commonwealth of Australia)", "derived": false}
+    },
+    {
+      "id": "england_and_wales",
+      "title": "England and Wales",
+      "maker": "perthes",
+      "articles": ["09-0433-b6ce68", "28-0274-bf2c01"],
+      "inline_file": null,
+      "eb1911": {"file": "encbr11_england_and_wales.jpg", "quality": "reduced"},
+      "stieler": null
+    },
+    {
+      "id": "europe",
+      "title": "Europe",
+      "maker": "perthes",
+      "articles": ["09-0939-534e99"],
+      "inline_file": null,
+      "eb1911": {"file": "encbr11_europe.jpg", "quality": "broken"},
+      "stieler": {"file": "stieler_europe.jpg", "full": "stieler_europe_full.jpg", "nr": "7", "title": "Europa"}
+    },
+    {
+      "id": "india_southern_part",
+      "title": "India, Southern Part",
+      "maker": "perthes",
+      "articles": ["14-0394-e07413"],
+      "note": "India was a TWO-sheet plate (this sheet says 'see Northern sheet'); India, Northern Part is the 16th plate of the core set and is not yet on disk.",
+      "inline_file": null,
+      "eb1911": {"file": "encbr11_india_southern_part.jpg", "full": "encbr11_india_southern_part_s.jpg", "quality": "good"},
+      "stieler": {"file": "stieler_india.jpg", "full": "stieler_india_full.jpg", "nr": "63", "title": "Vorder-Indien und Inner-Asien (Südliches Blatt)"}
+    },
+    {
+      "id": "ireland",
+      "title": "Ireland",
+      "maker": "perthes",
+      "articles": ["14-0774-ce9415"],
+      "inline_file": null,
+      "eb1911": {"file": "encbr11_ireland.jpg", "quality": "reduced"},
+      "stieler": null
+    },
+    {
+      "id": "japan_and_korea",
+      "title": "Japan and Korea",
+      "maker": "perthes",
+      "articles": ["15-0172-ea94cb"],
+      "inline_file": null,
+      "eb1911": {"file": "encbr11_japan_and_korea.jpg", "quality": "reduced"},
+      "stieler": {"file": "stieler_japan_and_korea.jpg", "full": "stieler_japan_and_korea_full.jpg", "nr": "65", "title": "Japan, Korea und Ost-China"}
+    },
+    {
+      "id": "new_zealand",
+      "title": "New Zealand",
+      "maker": "perthes",
+      "articles": ["19-0650-979668"],
+      "inline_file": null,
+      "eb1911": {"file": "encbr11_new_zealand.jpg", "quality": "reduced"},
+      "stieler": null
+    },
+    {
+      "id": "north_america",
+      "title": "North America",
+      "maker": "perthes",
+      "articles": ["19-0787-87a5ef", "01-0851-ad61ee"],
+      "inline_file": null,
+      "eb1911": {"file": "encbr11_north_america.jpg", "quality": "reduced"},
+      "stieler": null
+    },
+    {
+      "id": "scotland",
+      "title": "Scotland",
+      "maker": "perthes",
+      "articles": ["24-0430-588a73"],
+      "inline_file": null,
+      "eb1911": {"file": "encbr11_scotland.jpg", "quality": "reduced"},
+      "stieler": null
+    },
+    {
+      "id": "south_africa",
+      "title": "South Africa",
+      "maker": "perthes",
+      "articles": ["25-0479-73e1a9"],
+      "inline_file": "South Africa map EB1911 reduced.png",
+      "eb1911": {"file": "encbr11_south_africa.jpg", "quality": "reduced"},
+      "stieler": null
+    },
+    {
+      "id": "south_america",
+      "title": "South America",
+      "maker": "perthes",
+      "articles": ["25-0502-34fcdf", "01-0851-ad61ee"],
+      "inline_file": null,
+      "eb1911": {"file": "encbr11_south_america.jpg", "quality": "reduced"},
+      "stieler": null
+    },
+    {
+      "id": "switzerland",
+      "title": "Switzerland",
+      "maker": "perthes",
+      "articles": ["26-0257-bbe956"],
+      "inline_file": null,
+      "eb1911": {"file": "encbr11_switzerland.jpg", "full": "encbr11_switzerland_s.jpg", "quality": "good"},
+      "stieler": {"file": "stieler_switzerland.jpg", "full": "stieler_switzerland_full.jpg", "nr": "14", "title": "Schweiz (Alpenländer, Westliches Blatt)"}
+    },
+    {
+      "id": "united_states_of_america",
+      "title": "United States of America",
+      "maker": "perthes",
+      "articles": ["27-0635-082dc7"],
+      "inline_file": null,
+      "eb1911": {"file": "encbr11_united_states_of_america.jpg", "quality": "reduced"},
+      "stieler": null
+    },
+    {
+      "id": "russia",
+      "title": "Russia",
+      "maker": "perthes",
+      "articles": [],
+      "note": "Stieler masters (Bl. 1 + 2) on hand; EB1911 plate not yet on disk and the plate's presence in the printed volume is unconfirmed — bind 23-0912-c70526 when confirmed.",
+      "inline_file": null,
+      "eb1911": null,
+      "stieler": {"file": "stieler_russia_1.jpg", "full": "stieler_russia_1_full.jpg", "nr": "44", "title": "Russland, Bl. 1", "sheets": [
+        {"file": "stieler_russia_1.jpg", "full": "stieler_russia_1_full.jpg", "nr": "44", "title": "Russland, Bl. 1"},
+        {"file": "stieler_russia_2.jpg", "full": "stieler_russia_2_full.jpg", "nr": "45", "title": "Russland, Bl. 2"}
+      ]}
+    },
+    {
+      "id": "china",
+      "title": "China",
+      "maker": "perthes",
+      "articles": [],
+      "note": "Stieler master on hand; EB1911 plate not yet on disk and the plate's presence in the printed volume is unconfirmed — bind 06-0179-3ab938 when confirmed.",
+      "inline_file": null,
+      "eb1911": null,
+      "stieler": {"file": "stieler_china.jpg", "full": "stieler_china_full.jpg", "nr": "64", "title": "China"}
+    }
+  ]
+}
