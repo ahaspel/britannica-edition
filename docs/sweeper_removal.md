@@ -62,12 +62,29 @@ and the rescue itself was causing production content loss.**
     overstates loss where an article boundary would split a kept pair —
     production truth was established by probing the shipped bodies directly.
 
-**J2. `close_unclosed_attr_quotes`** — `pipeline/stages/source_cleanup.py`.
-Repairs a tag with an odd number of `"` by inserting one before the `>`.  Upstream
-bug: the missing quote makes the figtable DOMParser swallow the rest of the cell
-(ABBEY Fig. 10).  363 corpus-wide — a class, not a typo list.
-Method: route the class through a producer (or `data/corrections.json` if instances
-are individually addressable) → delete the repair → diff.
+**J2. `close_unclosed_attr_quotes`** — ✅ **DONE 2026-07-23: DELETED; the
+tolerance moved to the attr READERS.**
+  * **The guarded consumer is gone** (the figtable DOMParser died in the
+    render collapse), but naive deletion failed the A/B: 9 pages CRASHED
+    (`_SPAN_TITLE_OPEN_RE`'s quoted value `[^"]*` ran past the tag's `>` into
+    the NEXT span's quote — walker matched the full text, classifier
+    re-matched the bounded raw, disagreement → raise; CARMAGNOLE vol5 p368),
+    title glosses dropped, proofreading furniture leaked as styled spans, and
+    `_KV_RE`'s bare-token fallback tore multi-declaration values
+    (`position: relative` → `position:;`).
+  * **The principle, owned by the readers**: an attribute value can never cross
+    its own tag's `>`, so an unterminated quote ends at the tag close — the
+    exact semantics the sweeper's inserted quote gave.  Two one-char-class
+    edits: `_KV_RE` value `"([^"]*)"?` (every cell/row/table/styled-wrapper
+    attr slot) and `_SPAN_TITLE_OPEN_RE` value `"([^">]*)"?` (title spans).
+  * **A/B over all 148 affected pages** (repair vs no-repair+tolerance):
+    0 crashes, 126 byte-identical, and all 22 diffs are the repair's OWN junk
+    disappearing — it had been INSERTING quote characters into visible OCR
+    prose (`>` → `">` in vol 25/27/29 math/index scannos) and even minting a
+    visible word (`</poem` → `</poem">` leaked the token "poem", vol29 p971).
+    Equal or strictly better everywhere; zero content loss.
+  * Pinned by `tests/unit/test_attr_quote_tolerance.py` (the ABBEY Fig. 10
+    attr shape, the torn multi-declaration value, the CARMAGNOLE crash).
 
 ### Misplaced transforms — construct conversion in preprocess (relocate to producers)
 
@@ -405,9 +422,16 @@ hold ([[feedback_contributor_zero_false_positives]]).  After this, q.v. is the t
 * **J1 DONE — noinclude table-marker rescue DELETED** (see the J1 entry: the
   guarded bug died with the old architecture; the rescue itself was silently
   dropping LIBRARIES ws 573/584 from production and chopping cross-page
-  tables).  83-article A/B: zero loss, 473 green.  The rebuild will RECOVER
+  tables).  83-article A/B: zero loss.  The rebuild will RECOVER
   the two swallowed LIBRARIES pages — verify in the rebuild diff.
-* NEXT: J2 (`close_unclosed_attr_quotes`) — the last chain-ledger sweeper.
+* **J2 DONE — `close_unclosed_attr_quotes` DELETED**; unterminated-quote
+  tolerance owned by the attr readers (`_KV_RE`, `_SPAN_TITLE_OPEN_RE`).
+  148-page A/B equal-or-better everywhere; 476 green.
+* **THE `_JUNK` LEDGER IS EMPTY.**  The pre-walker chain is now VETTED +
+  `_decode_entities` (UNDECIDED — J8, owner's call).  Remaining campaign work:
+  J7 xref relocation (`«QV:term»`), J8 decision, then the FINAL CLEAN REBUILD
+  (corpus-wide proof; expect GAINS: LIBRARIES pages recovered, continuous
+  tables, OCR prose without injected quotes).
 * `source_cleanup.py` reverted to the plain strip; `_contain` restored to working;
   464 tests pass.  The `context_sensitive_is_producer` memory loophole is closed.
 * `data/derived` holds the CLEAN rebuild (source_cleanup reverted): 37226 articles,
