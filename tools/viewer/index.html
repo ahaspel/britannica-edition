@@ -276,16 +276,10 @@
   <!-- NOT deferred: inline scripts below call createSearchClient() /
        BritannicaUrls at module load time, so these must finish loading
        first. -->
-  <script>
-    (function() {
-      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-      var base = isLocal ? "/tools/viewer/" : "/";
-      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
-      document.write('<scr' + 'ipt src="' + base + 'article-urls.js"></scr' + 'ipt>');
-      document.write('<scr' + 'ipt src="' + base + 'search-api.js"></scr' + 'ipt>');
-      document.write('<scr' + 'ipt src="' + base + 'typeahead.js"></scr' + 'ipt>');
-    })();
-  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <script src="/article-urls.js"></script>
+  <script src="/search-api.js"></script>
+  <script src="/typeahead.js"></script>
 </head>
 <body>
   <div class="page">
@@ -378,10 +372,11 @@
   </div>
 
   <script>
-    const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-    const DATA_BASE = IS_LOCAL ? "/data/derived/articles" : "/data/articles";
-    const MEILI_URL = IS_LOCAL ? "http://localhost:7700" : "/search-api";
-    const MEILI_KEY = IS_LOCAL ? "britannica-dev-key" : "24e84cf3ca3b70fe166637d797cbbdd0593ba3a27a47a9ed76b552c821199579";
+    // Production URL space, one form everywhere — locally tools/serve.py maps
+    // these paths onto the working tree (and swaps the search key in its proxy).
+    const DATA_BASE = "/data/articles";
+    const MEILI_URL = "/search-api";
+    const MEILI_KEY = "24e84cf3ca3b70fe166637d797cbbdd0593ba3a27a47a9ed76b552c821199579";
     // Shared Meilisearch client — see /search-api.js.  Both
     // index.html's main-search typeahead and viewer.html's in-article
     // typeahead call the same code path.
@@ -418,7 +413,7 @@
     }
 
     function viewerUrl(filename) {
-      return BritannicaUrls.filenameToUrl(filename, IS_LOCAL);
+      return BritannicaUrls.filenameToUrl(filename);
     }
 
     function getMode() {
@@ -976,7 +971,7 @@
     Promise.all([
       fetch(`${DATA_BASE}/index.json`).then(r => r.json()),
       fetch(`${DATA_BASE}/contributors.json`).then(r => r.json()).catch(() => []),
-      fetch(IS_LOCAL ? "/data/derived/volumes.json" : "/data/volumes.json").then(r => r.json()).catch(() => []),
+      fetch("/data/volumes.json").then(r => r.json()).catch(() => []),
     ]).then(([articleData, contribData, volumesData]) => {
       articles = articleData;
       contributors = contribData;

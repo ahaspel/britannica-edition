@@ -1,18 +1,21 @@
 """Verify every static asset referenced by deployed HTML is reachable on britannica11.org.
 
 Scans tools/viewer/*.html for asset references — `<script src=...>`,
-`<link href=...>`, document.write-injected scripts, `IS_LOCAL ? : `
-ternaries, and `${BASE}/file.json` template literals — then HEAD-checks
-each one against the live site. Catches the "shipped HTML that
-references a file we forgot to upload" bug class (the article-urls.js
-near-miss on 2026-04-22).
+`<link href=...>`, `<img src=...>`, `/data/...` fetch literals, and
+`${BASE}/file.json` template literals — then HEAD-checks each one against
+the live site. Catches the "shipped HTML that references a file we forgot
+to upload" bug class (the article-urls.js near-miss on 2026-04-22).
+
+The pages carry NO local/production switches (tools/serve.py speaks the
+production URL space locally), so every reference is checked verbatim —
+including any `/data/derived/` path, which would be a dev path leaking
+into shipped HTML and rightly 404s here.
 
 References are split into two classes:
-  - HARD  — <script>, <link>, <img>, document.write injections.
-            A missing one of these breaks page rendering. Failure
-            here exits non-zero so rebuild_all.sh's `set -e` suppresses
-            the success banner.
-  - SOFT  — fetch() literals and ternary data paths. Production code
+  - HARD  — <script>, <link>, <img> tags. A missing one of these breaks
+            page rendering. Failure here exits non-zero so rebuild_all.sh's
+            `set -e` suppresses the success banner.
+  - SOFT  — fetch() literals and template data paths. Production code
             wraps these in `.catch(() => …)` so the page still loads
             when missing. Failures here print as warnings only.
 """
@@ -39,26 +42,15 @@ _TAG_RE = re.compile(
     r"""<(?:script|link|img)\s[^>]*?(?:src|href)\s*=\s*["']([^"']+)["']""",
     re.IGNORECASE,
 )
-_DOCWRITE_BASE_RE = re.compile(
-    r"""['"]\s*\+\s*base\s*\+\s*['"]([^'"]+)['"]""",
-)
 _DATA_LITERAL_RE = re.compile(
     r"""["'](/data/[^"'\s]+?)["']""",
 )
-_TERNARY_PROD_RE = re.compile(
-    r"""IS_LOCAL\w*\s*\?\s*(?:"[^"]*"|'[^']*'|`[^`]*`)\s*:\s*(?:"([^"]+)"|'([^']+)'|`([^`]+)`)""",
-)
 _VAR_DECL_RE = re.compile(
-    r"""(?:const|let|var)\s+(\w+)\s*=\s*IS_LOCAL\w*\s*\?\s*(?:"[^"]*"|'[^']*'|`[^`]*`)\s*:\s*(?:"([^"]+)"|'([^']+)'|`([^`]+)`)""",
+    r"""(?:const|let|var)\s+(\w+)\s*=\s*(?:"(/[^"]+)"|'(/[^']+)'|`(/[^`]+)`)""",
 )
 _TEMPLATE_REF_RE = re.compile(
     r"""`\$\{(\w+)\}([^`$]+)`""",
 )
-
-_LOCAL_TO_PROD = [
-    ("/data/derived/articles/", "/data/articles/"),
-    ("/data/derived/", "/data/"),
-]
 
 
 def is_external(url: str) -> bool:
@@ -69,13 +61,6 @@ def has_dynamic(url: str) -> bool:
     return "${" in url or "{{" in url
 
 
-def to_prod(url: str) -> str:
-    for src, dst in _LOCAL_TO_PROD:
-        if url.startswith(src):
-            return dst + url[len(src):]
-    return url
-
-
 def has_static_ext(url: str) -> bool:
     base = url.split("?", 1)[0].split("#", 1)[0].lower()
     return base.endswith(_STATIC_EXT)
@@ -83,7 +68,6 @@ def has_static_ext(url: str) -> bool:
 
 def normalize(url: str) -> str:
     url = url.split("?", 1)[0].split("#", 1)[0]
-    url = to_prod(url)
     if not url.startswith("/"):
         url = "/" + url
     return re.sub(r"/+", "/", url)
@@ -102,47 +86,32 @@ def collect_refs(html_path: Path) -> tuple[set[str], set[str]]:
             continue
         hard.add(url)
 
-    # HARD: document.write('...' + base + 'NAME...')
-    for m in _DOCWRITE_BASE_RE.finditer(text):
-        name = m.group(1).strip().lstrip('/"\\').rstrip('"\\')
-        name = name.split('"', 1)[0].split("'", 1)[0]
-        if name and not has_dynamic(name):
-            hard.add("/" + name)
-
-    # SOFT: collect all IS_LOCAL prod sides per declared name
-    var_prods: dict[str, list[str]] = {}
+    # Path-shaped const declarations, for template-literal joins below.
+    var_paths: dict[str, list[str]] = {}
     for m in _VAR_DECL_RE.finditer(text):
         name = m.group(1)
-        prod = m.group(2) or m.group(3) or m.group(4) or ""
-        if prod and not has_dynamic(prod):
-            var_prods.setdefault(name, []).append(prod)
-
-    # SOFT: inline ternary production side
-    for m in _TERNARY_PROD_RE.finditer(text):
-        prod = m.group(1) or m.group(2) or m.group(3) or ""
-        if (prod and not has_dynamic(prod) and prod.startswith("/")
-                and has_static_ext(prod)):
-            soft.add(prod)
+        path = m.group(2) or m.group(3) or m.group(4) or ""
+        if path and not has_dynamic(path):
+            var_paths.setdefault(name, []).append(path)
 
     # SOFT: template-literal fetches `${VAR}/file.json` against /data/-shaped
-    # prefixes only. Other prefixes (e.g. base="index.html") are not
-    # directories and would synthesize bogus paths.
+    # prefixes only. Other prefixes (e.g. "/index.html") are not directories
+    # and would synthesize bogus paths.
     for m in _TEMPLATE_REF_RE.finditer(text):
         name, suffix = m.group(1), m.group(2)
         if not suffix:
             continue
-        for prefix in var_prods.get(name, []):
+        for prefix in var_paths.get(name, []):
             if not prefix.startswith("/data/"):
                 continue
             joined = prefix.rstrip("/") + "/" + suffix.lstrip("/")
             if has_static_ext(joined):
                 soft.add(joined)
 
-    # SOFT: bare /data/... literals other than dev-only paths
+    # SOFT: bare /data/... literals
     for m in _DATA_LITERAL_RE.finditer(text):
         url = m.group(1)
-        if (has_dynamic(url) or not has_static_ext(url)
-                or url.startswith("/data/derived/")):
+        if has_dynamic(url) or not has_static_ext(url):
             continue
         soft.add(url)
 

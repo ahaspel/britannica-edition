@@ -162,13 +162,7 @@ def _page_template(title: str, back_label: str, back_href: str,
     .footer {{ color: var(--muted); font-size: 0.85rem; margin-top: 20px;
       text-align: center; }}
   </style>
-  <script>
-    (function() {{
-      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-      var base = isLocal ? "/tools/viewer/" : "/";
-      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
-    }})();
-  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
 <body>
 <div class="page">

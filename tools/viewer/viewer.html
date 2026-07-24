@@ -1262,19 +1262,12 @@
   <!-- NOT deferred: inline scripts below call createSearchClient() /
        BritannicaUrls at module load time, so these must finish loading
        first. -->
-  <script>
-    // viewer.html is served from both "/viewer.html" and "/article/<id>/<slug>"
-    // in production, so a relative src resolves differently depending on
-    // URL depth. Pick the right absolute path synchronously (document.write
-    // blocks parsing — the inline script below depends on these).
-    (function() {
-      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-      var base = isLocal ? "/tools/viewer/" : "/";
-      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
-      document.write('<scr' + 'ipt src="' + base + 'article-urls.js"></scr' + 'ipt>');
-      document.write('<scr' + 'ipt src="' + base + 'search-api.js"></scr' + 'ipt>');
-    })();
-  </script>
+  <!-- Absolute srcs: viewer.html is served from both "/viewer.html" and
+       "/article/<id>/<slug>", so a relative src would resolve differently
+       depending on URL depth. -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <script src="/article-urls.js"></script>
+  <script src="/search-api.js"></script>
 </head>
 <body>
   <div class="page">
@@ -1598,10 +1591,7 @@
 
       function loadMap() {
         if (loadingPromise) return loadingPromise;
-        const url = IS_LOCAL
-          ? "/data/derived/printed_pages_leaf.json"
-          : "/data/printed_pages_leaf.json";
-        loadingPromise = fetch(url)
+        loadingPromise = fetch("/data/printed_pages_leaf.json")
           .then(r => r.ok ? r.json() : Promise.reject(r.statusText))
           .then(d => { leafMap = d; })
           .catch(() => { leafMap = {}; });
@@ -1625,7 +1615,7 @@
         const padVol = String(vol).padStart(2, "0");
         const padLeaf = String(leaf).padStart(4, "0");
         const name = `vol${padVol}_leaf${padLeaf}.jpg`;
-        return IS_LOCAL ? `/data/derived/scans/${name}` : `/data/scans/${name}`;
+        return `/data/scans/${name}`;
       }
 
       function showLeaf(leaf) {
@@ -1764,7 +1754,7 @@
     }
 
     function articleUrl(filename) {
-      return BritannicaUrls.filenameToUrl(filename, IS_LOCAL);
+      return BritannicaUrls.filenameToUrl(filename);
     }
 
     function renderError(message) {
@@ -1773,7 +1763,7 @@
 
     function scanUrl(article) {
       const back = encodeURIComponent(location.href);
-      const base = IS_LOCAL ? 'scans.html' : '/scans.html';
+      const base = '/scans.html';
       const start = article.leaf_start;
       const end = article.leaf_end;
       return `${base}?vol=${article.volume}&start=${start}&end=${end}&label=${encodeURIComponent(article.title)}&back=${back}`;
@@ -1814,21 +1804,6 @@
       });
     }
 
-    function fixArticleHrefs(root) {
-      // Inline «LN» links, the xref panel, and plate/parent links are baked with the
-      // PRODUCTION scheme `/article/{id}` (Python renders is_local=False), which the local
-      // static server can't route — no /article/* rewrite layer — so they 404.  Rewrite them
-      // to the dev `?article=` form here, the same adaptation filenameToUrl(…, IS_LOCAL) already
-      // does for search/index/contributor links.  Local-only; production keeps the clean paths.
-      if (!IS_LOCAL) return;
-      root.querySelectorAll('a[href^="/article/"]').forEach(a => {
-        const m = a.getAttribute("href").match(/^\/article\/([^/?#]+)(?:\/[^?#]*)?(#.*)?$/);
-        if (!m) return;
-        a.setAttribute("href",
-          BritannicaUrls.filenameToUrl(decodeURIComponent(m[1]) + ".json", true) + (m[2] || ""));
-      });
-    }
-
     function captureWideTables(root) {
       // The expand-table modal reads wideTableSources; with Python rendering the figure, populate
       // it from the DOM — the `.wide-table-inline` holds the full table.
@@ -1850,7 +1825,7 @@
       const card = app.querySelector(".card");
       if (!card) return;
       const sep = ` <span style="color:var(--muted);">›</span> `;
-      const topicsBase = IS_LOCAL ? "topics.html" : "/topics.html";
+      const topicsBase = "/topics.html";
       const linkSeg = (full, label) =>
         `<a href="${topicsBase}#${encodeURIComponent(full)}" style="color:var(--link);">${escapeHtml(label)}</a>`;
       const list = topics.map(t => {
@@ -1895,7 +1870,6 @@
       injectTopics(app, article);
       hydrateMath(app);
       fixScanHrefs(app, article);
-      fixArticleHrefs(app);
       captureWideTables(app);
       ScanMode.onArticleRendered(article);
     }
@@ -1932,20 +1906,11 @@
           if (v !== null) preserved.set(k, v);
         }
         const suffix = preserved.toString() ? "?" + preserved.toString() : "";
-        if (!IS_LOCAL) {
-          // The cosmetic name slug comes from the loaded (corrected) title — routing is the
-          // hash id, so the slug is decorative and free to show the real name with accents.
-          const cleanUrl = BritannicaUrls.jsonPathToCleanUrl(path, suffix, article.title);
-          if (cleanUrl) {
-            window.history.replaceState({}, "", cleanUrl + hash);
-          }
-        } else {
-          const url = new URL(window.location.href);
-          url.searchParams.set("article", path);
-          // Delete + re-set preserved params so order is stable.
-          for (const k of ["q", "match"]) url.searchParams.delete(k);
-          for (const [k, v] of preserved) url.searchParams.set(k, v);
-          window.history.replaceState({}, "", url);   // URL object keeps the hash
+        // The cosmetic name slug comes from the loaded (corrected) title — routing is the
+        // hash id, so the slug is decorative and free to show the real name with accents.
+        const cleanUrl = BritannicaUrls.jsonPathToCleanUrl(path, suffix, article.title);
+        if (cleanUrl) {
+          window.history.replaceState({}, "", cleanUrl + hash);
         }
 
         // Re-fire the browser's NATIVE fragment jump.  Its load-time attempt
@@ -1969,9 +1934,10 @@
     }
 
     // Determine article path: local uses ?article= param, production uses /article/{id}/{slug}
-    const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-    const DATA_BASE = IS_LOCAL ? "/data/derived/articles" : "/data/articles";
-    const TOC_URL = IS_LOCAL ? "/data/derived/classified_toc.json" : "/data/classified_toc.json";
+    // Production URL space, one form everywhere — locally tools/serve.py maps
+    // these paths onto the working tree.
+    const DATA_BASE = "/data/articles";
+    const TOC_URL = "/data/classified_toc.json";
 
     // Reverse-index of classified_toc.json: filename → [{category, path}].
     // `path` is the full sub-tree trail (["Zoology","Systematic","Invertebrata"])
@@ -2006,8 +1972,8 @@
       return topicMap;
     }
     let initialPath = new URLSearchParams(window.location.search).get("article");
-    if (!initialPath && !IS_LOCAL) {
-      // Production: /article/16-0670-lighthouse/LIGHTHOUSE ->
+    if (!initialPath) {
+      // Clean URL: /article/16-0670-lighthouse/LIGHTHOUSE ->
       //   /data/articles/16-0670-lighthouse-LIGHTHOUSE.json
       // (stable IDs: {vol:02d}-{page:04d}-{section-slug}, durable across rebuilds)
       initialPath = BritannicaUrls.pathnameToJsonPath(
@@ -2233,8 +2199,7 @@
 
       async function ensureIndex() {
         if (articles) return;
-        const base = IS_LOCAL ? "/data/derived/articles" : "/data/articles";
-        const resp = await fetch(`${base}/index.json`);
+        const resp = await fetch(`${DATA_BASE}/index.json`);
         const data = await resp.json();
         articles = data
           .filter(a => a.article_type === "article")
@@ -2275,10 +2240,8 @@
       }
 
       // Full-text search state (async, debounced)
-      const MEILI_URL = IS_LOCAL ? "http://localhost:7700" : "/search-api";
-      const MEILI_KEY = IS_LOCAL
-        ? "britannica-dev-key"
-        : "24e84cf3ca3b70fe166637d797cbbdd0593ba3a27a47a9ed76b552c821199579";
+      const MEILI_URL = "/search-api";
+      const MEILI_KEY = "24e84cf3ca3b70fe166637d797cbbdd0593ba3a27a47a9ed76b552c821199579";
       // Shared Meilisearch client — see /search-api.js.
       const searchClient = createSearchClient(MEILI_URL, MEILI_KEY);
       let ftToken = 0;
@@ -2402,8 +2365,7 @@
             const q = input.value.trim();
             if (q) {
               input.blur();
-              const base = IS_LOCAL ? "index.html" : "/index.html";
-              location.href = `${base}?q=${encodeURIComponent(q)}`;
+              location.href = `/index.html?q=${encodeURIComponent(q)}`;
             }
           }
         }

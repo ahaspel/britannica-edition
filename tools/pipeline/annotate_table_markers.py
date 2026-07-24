@@ -92,7 +92,7 @@ def main() -> None:
             continue
         d["body"] = new
         if d.get("rendered_html"):
-            d["rendered_html"] = render_article(d, is_local=False,
+            d["rendered_html"] = render_article(d,
                                                 target="site")
         f.write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
         changed += 1

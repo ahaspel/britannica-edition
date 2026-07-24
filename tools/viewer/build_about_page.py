@@ -56,7 +56,7 @@ def _make_link(title, resolver, prose=""):
     suffix = title[len(clean):]
     hit = _resolve(ARTICLE_OVERRIDES.get(clean, clean), resolver, prose)
     if hit:
-        return (f'<a href="{article_url(hit[0], is_local=False)}">'
+        return (f'<a href="{article_url(hit[0])}">'
                 f'{clean}</a>{suffix}')
     return None
 
@@ -96,7 +96,7 @@ def _render(text, resolver):
             hit = _resolve(CONTRIBUTOR_OVERRIDES.get(name, name),
                            resolver, prose)
             if hit:
-                return (f'<a href="{article_url(hit[0], is_local=False)}">'
+                return (f'<a href="{article_url(hit[0])}">'
                         f'{name}</a>')
             return name
         raw = re.sub(r"\{\{([^}]+)\}\}", replace_contributor, raw)
@@ -291,13 +291,7 @@ PAGE_TEMPLATE = """\
       user-select: none;
     }
   </style>
-  <script>
-    (function() {
-      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-      var base = isLocal ? "/tools/viewer/" : "/";
-      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
-    })();
-  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
 <body>
 <div class="page">

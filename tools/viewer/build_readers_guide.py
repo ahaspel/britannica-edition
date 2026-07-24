@@ -547,7 +547,7 @@ def transform_content(
         plain = re.sub(r"\s+", " ", plain).strip()
         fn = resolve_ref(plain, resolver, _prose_context(m.string, m.start()))
         if fn:
-            url = _article_url(fn, is_local=False)
+            url = _article_url(fn)
             if url:
                 linked += 1
                 if tag == "sc":
@@ -575,7 +575,7 @@ def transform_content(
         for p in re.split(r"\s+or\s+", name, maxsplit=1):
             fn = resolve_ref(p.strip(), resolver, name)
             if fn:
-                url = _article_url(fn, is_local=False)
+                url = _article_url(fn)
                 if url:
                     linked += 1
                     return f'<li class="c018"><a href="{url}">{name}</a></li>'
@@ -907,13 +907,7 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
       margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
     }}
   </style>
-  <script>
-    (function() {{
-      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-      var base = isLocal ? "/tools/viewer/" : "/";
-      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
-    }})();
-  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
 <body>
 <div class="page">
@@ -1005,13 +999,7 @@ PART_TEMPLATE = """<!DOCTYPE html>
       margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none;
     }}
   </style>
-  <script>
-    (function() {{
-      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-      var base = isLocal ? "/tools/viewer/" : "/";
-      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
-    }})();
-  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
 <body>
 <div class="page">
@@ -1106,13 +1094,7 @@ INDEX_TEMPLATE = """<!DOCTYPE html>
       text-align: center;
     }}
   </style>
-  <script>
-    (function() {{
-      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-      var base = isLocal ? "/tools/viewer/" : "/";
-      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
-    }})();
-  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 </head>
 <body>
 <div class="page">

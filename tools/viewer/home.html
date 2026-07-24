@@ -195,16 +195,10 @@
     }
 
   </style>
-  <script>
-    (function() {
-      var isLocal = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-      var base = isLocal ? "/tools/viewer/" : "/";
-      document.write('<link rel="icon" type="image/svg+xml" href="' + base + 'favicon.svg">');
-      document.write('<scr' + 'ipt src="' + base + 'article-urls.js"></scr' + 'ipt>');
-      document.write('<scr' + 'ipt src="' + base + 'search-api.js"></scr' + 'ipt>');
-      document.write('<scr' + 'ipt src="' + base + 'typeahead.js"></scr' + 'ipt>');
-    })();
-  </script>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <script src="/article-urls.js"></script>
+  <script src="/search-api.js"></script>
+  <script src="/typeahead.js"></script>
 </head>
 <body>
   <nav>
@@ -229,15 +223,12 @@
     <div class="hero-caption" id="caption">Fully searchable, cross-referenced, and annotated</div>
   </div>
   <script>
-    const IS_LOCAL = location.hostname === "localhost" || location.hostname === "127.0.0.1";
-    const DATA_BASE = IS_LOCAL ? "/data/derived/articles" : "/data/articles";
+    const DATA_BASE = "/data/articles";
 
     // The typeahead runs the SAME ranked Meilisearch as index.html, so the
     // landing-page dropdown matches the full search you land on.
-    const MEILI_URL = IS_LOCAL ? "http://localhost:7700" : "/search-api";
-    const MEILI_KEY = IS_LOCAL
-      ? "britannica-dev-key"
-      : "24e84cf3ca3b70fe166637d797cbbdd0593ba3a27a47a9ed76b552c821199579";
+    const MEILI_URL = "/search-api";
+    const MEILI_KEY = "24e84cf3ca3b70fe166637d797cbbdd0593ba3a27a47a9ed76b552c821199579";
     const searchClient = createSearchClient(MEILI_URL, MEILI_KEY);
 
     let articles = [];

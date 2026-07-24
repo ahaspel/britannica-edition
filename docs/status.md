@@ -98,11 +98,25 @@ production.  Every inventory item resolved:
 - **Vol 7 scan-leaf fix** (user-reported): leaves 33-34 = CONSTELLATION Plates I/II →
   UNNUMBERED_LEAVES + TRUSTED_RUNS[7]=(35,13,41,19), scan-verified; leaf-side only
   (36,691 baked citations, 0 mismatches); **live on production**.
-- **`tools/serve.py` speaks production's URL space** (merged; runs as the
-  `britannica-webserver` logon task): `/` → home, root-level pages, `/article/{sid}`
-  deep links, byline links, `/search-api/*` → local Meili.  Local navigation now works
-  like the live site.  QUEUED ARC: serve the space verbatim (200-rewrite, /data alias)
-  then ELIMINATE every `is_local`/`IS_LOCAL` fork from render + viewer.
+- **`tools/serve.py` speaks production's URL space VERBATIM + is_local ELIMINATED**
+  (2026-07-24, user-requested): serve.py 200-serves viewer.html for `/article/*`
+  (CloudFront-style rewrite, was a 302 to `?article=`), aliases `/data/articles|scans/*`
+  + `/data/*.json` → data/derived, `/download/*` → data/derived/download, and the
+  `/search-api/*` proxy REWRITES Authorization to the local dev key (clients always send
+  the prod key).  Then every local/production switch died: `filenameToUrl` lost its
+  isLocal param; all `IS_LOCAL ?` ternaries (DATA_BASE/MEILI/TOC/scans/nav bases) went
+  to the production form; the `document.write` base-injection head snippets became
+  static tags (hand pages + all 5 page builders, generated pages regenerated);
+  viewer.html's `fixArticleHrefs` rewrite layer DELETED and the history fork reduced to
+  the clean-URL branch (the `?article=` dev form still loads and canonicalizes);
+  Python render dropped `is_local` end-to-end (`_article_url`/RenderContext/
+  render_article/_build_xref_href + callers) — the production output is byte-identical
+  (`/article/{stem}` was already the baked form), so NO rebuild needed; goldens
+  rebaselined (adjudicated: 180 changed lines, every one exactly `.json`-in-href
+  removal, +2 inline records); check_deploy_refs.py simplified (ternary/doc.write
+  parsing gone; `/data/derived/` in shipped HTML now rightly 404s as a leak).
+  472 tests pass; server restarted; curl 18-point + Playwright 6-page smoke all green
+  (zero console errors; address bar canonicalizes).  Viewer pages ship next deploy.
 - **GoatCounter bot-gating** (user): `gc-gate.js` counts on first human input; deployed.
 - HF publish now runs inside deploy.sh automatically (write key cached).
 
@@ -113,8 +127,7 @@ SAMARA byline on the government article.
 **Queued (new, small):** paired-wrapper registry names (`left margin`, `outdent`,
 `dent`, `flex wrap centre`) · MARCH/BEJA TOC disambiguation pins · GEOMETRY-ANALYTICAL
 see class (cue followed by link + «SC» qualifier) · DIEGO particle-count refinement ·
-0.60–0.65 cosine band (~100 sees, needs adjudication) · is_local/IS_LOCAL elimination
-arc (above).
+0.60–0.65 cosine band (~100 sees, needs adjudication).
 
 ## PREVIOUS STATE (2026-07-20)
 

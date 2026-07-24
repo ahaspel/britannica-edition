@@ -27,12 +27,9 @@
     return { stableId: base, base };
   }
 
-  // filename (+ optional title for a cosmetic slug) → link URL.  isLocal keeps the dev
-  // `?article=` form (loads the file directly); production is clean `/article/{id}[/name]`.
-  function filenameToUrl(filename, isLocal, title) {
-    if (isLocal) {
-      return `viewer.html?article=${encodeURIComponent("/data/derived/articles/" + filename)}`;
-    }
+  // filename (+ optional title for a cosmetic slug) → clean `/article/{id}[/name]` URL.
+  // One form everywhere: the local server speaks production's URL space (tools/serve.py).
+  function filenameToUrl(filename, title) {
     const id = stableIdOf(filename);
     return "/article/" + id + (title ? "/" + slugify(title) : "");
   }
@@ -50,7 +47,7 @@
     suffix = suffix || "";
     const m = jsonPath.match(/\/([^/]+)\.json$/);
     if (!m) return null;
-    return filenameToUrl(m[1] + ".json", false, title) + suffix;
+    return filenameToUrl(m[1] + ".json", title) + suffix;
   }
 
   window.BritannicaUrls = {

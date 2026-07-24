@@ -4,7 +4,7 @@
 // for that case).
 //
 // Required global helpers — load them BEFORE this script:
-//   article-urls.js  →  BritannicaUrls.filenameToUrl(filename, isLocal)
+//   article-urls.js  →  BritannicaUrls.filenameToUrl(filename)
 //   search-api.js    →  searchClient.searchFulltext(q, opts)  (optional;
 //                       full-text typeahead is skipped if absent)
 //
@@ -56,9 +56,7 @@ function initTypeahead({
   }
 
   function navigateTo(item) {
-    const isLocal = location.hostname === "localhost"
-                 || location.hostname === "127.0.0.1";
-    let url = BritannicaUrls.filenameToUrl(item.filename, isLocal);
+    let url = BritannicaUrls.filenameToUrl(item.filename);
     if (item._kind === "fulltext") {
       const q = encodeURIComponent(item._query || "");
       url += (url.includes("?") ? "&" : "?") + `q=${q}&match=1`;

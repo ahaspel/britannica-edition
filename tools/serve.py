@@ -3,33 +3,41 @@
 
 Two jobs in one server:
 
-1. DETACHED OPERATION (the original serve.py): registered as the
-   `britannica-webserver` scheduled task (at logon), running under
-   `pythonw.exe`.  With no console there is no valid stderr, so
-   `http.server`'s per-request log write would raise and kill the connection
-   mid-response — logging goes to a real file instead, and never raises.
-   It serves the repo root regardless of inherited working directory.
+1. DETACHED OPERATION: registered as the `britannica-webserver` scheduled
+   task (at logon), running under `pythonw.exe`.  With no console there is
+   no valid stderr, so `http.server`'s per-request log write would raise and
+   kill the connection mid-response — logging goes to a real file instead,
+   and never raises.  It serves the repo root regardless of inherited
+   working directory.
 
-2. PRODUCTION URL SPACE (merged from serve_local.py, 2026-07-24): the
-   deployed site's URLs are shaped by CloudFront + the S3 layout — pages at
-   the bucket root, `/article/{stable-id}[/{slug}]` routed to the viewer,
-   `/search-api/*` proxied to Meilisearch.  A bare static server 404s every
-   production-shaped href (main-page nav, Reader's Guide deep links, byline
-   links).  This server maps that space onto the working tree:
+2. PRODUCTION URL SPACE, VERBATIM: the deployed site's URLs are shaped by
+   CloudFront + the S3 layout (see tools/deploy.sh for the mapping).  This
+   server maps that space onto the working tree so the viewer pages carry
+   ZERO local/production switches — every href and fetch is written in the
+   production form and works in both worlds:
 
      /                        → tools/viewer/home.html
      /{page}.html, /{asset}   → tools/viewer/{...} when it exists there
-     /article/{sid}[/{slug}]  → 302 to /viewer.html?article=/data/derived/articles/{sid}.json
-                                (the IS_LOCAL viewer reads ?article=; the slug
-                                is cosmetic exactly as in production)
-     /search-api/*            → proxied to Meilisearch at 127.0.0.1:7700
-                                (start via tools/pipeline/start_services.sh)
-     everything else          → repo-root relative (/data/derived/…, scans, …)
+     /article/{sid}[/{slug}]  → tools/viewer/viewer.html  (the CloudFront
+                                article-rewrite: 200-serve the SPA shell;
+                                the client routes on location.pathname)
+     /data/articles/*         → data/derived/articles/*
+     /data/scans/*            → data/derived/scans/*
+     /data/{name}.json        → data/derived/{name}.json
+     /data/images/*           → data/images/*  (same path; no rewrite)
+     /download/eb1911-corpus… → data/derived/eb1911-corpus…
+     /download/*              → data/derived/download/*
+     /search-api/*            → proxied to Meilisearch at 127.0.0.1:7700,
+                                Authorization REWRITTEN to the local dev key
+                                (clients always send the production key)
+     everything else          → repo-root relative (dev conveniences like
+                                /tools/viewer/… and /data/derived/… still work)
 
 Run by hand the same way the task does:  uv run python tools/serve.py [port]
 """
 import http.server
 import os
+import re
 import socketserver
 import sys
 import tempfile
@@ -41,9 +49,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 VIEWER = ROOT / "tools" / "viewer"
 MEILI = "http://127.0.0.1:7700"
+MEILI_LOCAL_KEY = "britannica-dev-key"
 PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8000
 LOG = Path(os.environ.get("LOCALAPPDATA") or tempfile.gettempdir()) / \
     "britannica-webserver.log"
+
+_DATA_JSON_RE = re.compile(r"^/data/([^/]+\.json)$")
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):
@@ -60,32 +71,27 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             pass
 
     # ── production-shaped routing ────────────────────────────────────────
-    def _route(self) -> bool:
-        """Handle the production-only URL shapes.  True = fully handled."""
-        path, _, query = self.path.partition("?")
-
-        if path.startswith("/article/"):
-            # /article/{stable-id}[/{slug}] — the CloudFront article-rewrite.
-            sid = path.split("/")[2]
-            target = f"/viewer.html?article=/data/derived/articles/{sid}.json"
-            if query:
-                target += "&" + query
-            self.send_response(302)
-            self.send_header("Location", target)
-            self.end_headers()
-            return True
-
-        if path.startswith("/search-api/"):
-            self._proxy_meili(path[len("/search-api"):], query)
-            return True
-
-        return False
-
     def _rewrite_path(self) -> None:
-        """Map bucket-root paths onto the working tree (in place)."""
+        """Map the production URL space onto the working tree (in place)."""
         path, sep, query = self.path.partition("?")
+
         if path == "/":
             path = "/home.html"
+        elif path.startswith("/article/"):
+            # The CloudFront article-rewrite: serve the SPA shell; the client
+            # routes on the id in location.pathname.
+            path = "/tools/viewer/viewer.html"
+        elif path.startswith("/data/articles/"):
+            path = "/data/derived/articles/" + path[len("/data/articles/"):]
+        elif path.startswith("/data/scans/"):
+            path = "/data/derived/scans/" + path[len("/data/scans/"):]
+        elif _DATA_JSON_RE.match(path):
+            path = "/data/derived/" + path[len("/data/"):]
+        elif path.startswith("/download/eb1911-corpus"):
+            path = "/data/derived/" + path[len("/download/"):]
+        elif path.startswith("/download/"):
+            path = "/data/derived/download/" + path[len("/download/"):]
+
         # A bucket-root file that lives in tools/viewer/ locally.
         candidate = path.lstrip("/")
         if "/" not in candidate and (VIEWER / candidate).is_file():
@@ -96,10 +102,13 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def _proxy_meili(self, subpath: str, query: str, body: bytes | None = None):
         url = MEILI + subpath + (f"?{query}" if query else "")
         req = urllib.request.Request(url, data=body, method=self.command)
-        for h in ("Content-Type", "Authorization"):
-            v = self.headers.get(h)
-            if v:
-                req.add_header(h, v)
+        ct = self.headers.get("Content-Type")
+        if ct:
+            req.add_header("Content-Type", ct)
+        # Clients send the PRODUCTION search key (there is no local fork);
+        # the local Meilisearch only knows the dev master key — swap it in.
+        if self.headers.get("Authorization"):
+            req.add_header("Authorization", f"Bearer {MEILI_LOCAL_KEY}")
         try:
             with urllib.request.urlopen(req, timeout=30) as resp:
                 data = resp.read()
@@ -128,13 +137,17 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
     # ── verbs ────────────────────────────────────────────────────────────
     def do_GET(self):
-        if self._route():
+        path, _, query = self.path.partition("?")
+        if path.startswith("/search-api/"):
+            self._proxy_meili(path[len("/search-api"):], query)
             return
         self._rewrite_path()
         super().do_GET()
 
     def do_HEAD(self):
-        if self._route():
+        path, _, query = self.path.partition("?")
+        if path.startswith("/search-api/"):
+            self._proxy_meili(path[len("/search-api"):], query)
             return
         self._rewrite_path()
         super().do_HEAD()
