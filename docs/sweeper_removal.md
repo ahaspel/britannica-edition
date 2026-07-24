@@ -386,10 +386,18 @@ two points:
         A/B'd on all 74 q.v.-bearing articles (89 sites)**; details below.
      2. see/cf family — ✅ **BUILT 2026-07-24, A/B'd on 40 sampled articles**;
         details below;
-     3. delete the dead extraction/wrap layer; panel reads markers.
-        (`_wrap_resolved_xrefs_in_body` is now a NO-OP for every type: qv
-        records no longer exist and a resolved see's surface IS its stamped
-        marker, which the already-linked check skips — deletion is mechanical.)
+     3. ✅ **DONE 2026-07-24** — the wrap layer is deleted:
+        `_wrap_resolved_xrefs_in_body` (+ its 14 tests) and the WHOLE
+        `export/body_postprocess.py` module (`_looks_bibliographic`,
+        `_protected_ranges`, `_clean_surface_for_matching` — its only
+        consumers were the wrap).  It had become a no-op by construction (qv
+        records no longer exist; a resolved see's surface IS its stamped
+        marker, skipped by the already-linked check) — proven by byte-identical
+        bakes on SILESIA / SCEPTICISM / SERPENTINE pre- vs post-deletion.
+        The wrap-last ordering constraint in `_link_xrefs_in_body` dies with
+        it.  471 green (485 − the 14 wrap tests).  THE J7 DOUBLE RE-SCAN IS
+        GONE: recognition is producer-stamped at the site, the late pass reads
+        markers and only resolves — the original design target, reached.
 
 SLICE 2 (2026-07-24): `_stamp_see_windows` (runs after the q.v. stamp) —
 cue `[Ss]ee( also)?` / `[Cc]f.` / `[Cc]ompare` (+ optional "the article on"
