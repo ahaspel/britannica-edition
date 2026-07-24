@@ -405,6 +405,24 @@ stays TERMINAL.  DELETED: `_PAREN_SEE_*`, `_SEE_*` (all six), `_CF_PATTERN`,
 `_COMPARE_PATTERN`, `_TARGET_TAIL`, `_is_bibliographic`,
 `_clean_paren_see_target`, `_strip_markers`, `_MARKER_PLACEHOLDER`.
 
+SLICE 2b (2026-07-24, user-approved): **tight multi-word binds without topic
+agreement.**  The headroom map over the 7,701 abstained sees: 2,500 no
+candidates (scripture/non-EB, correctly dead) · 4,019 not substantial
+(bibliographic surnames, correctly dead) · 1,056 topic-disjoint — of which
+205 were TIGHT MULTI-WORD (exact/alt/fold on ≥2 content words): full personal
+names folding onto their inverted titles (JEAN FROISSART → FROISSART, JEAN;
+ROBERT BURNS; WASHINGTON IRVING), abstained only because the coarse vol-29
+topic map didn't intersect (targets often uncategorized).  For that class the
+name match IS the guard the topic gate stood in for → `_see_pass` binds it
+topic-free (self-check + ambiguity-fishing kept); the uncategorized-SOURCE
+early-abort dropped too.  Measured: **+223 new binds** over the abstained
+rows (uniformly full-name gold on inspection); previously-resolved 563:
+**525 unchanged · 1 shifted (a pipe-corrupted target) · 37 dropped — all
+junk** ("§ 5", "PLATE I. FIG. 62", "AS TO THE LATTER" bound to random
+articles).  The 723 single-word exacts (GIBBON good / LIFE junk) stay
+abstained — that class needs the banked fisher-cosine backstop, its own
+probe.  485 green.
+
 **STALE-BASELINE CORRECTION** ([[feedback_audit_fresh_baseline]], violated
 then caught): the first see A/B diffed against
 `.xref_consolidation_baseline/xref_resolution.baseline.jsonl` — the
