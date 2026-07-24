@@ -58,7 +58,12 @@ _SENTINELS = (("\x01", "ctrl"), ("\x03", "placeholder"),
 
 _MARKER_RE = re.compile(r"«[^»]*»")
 _IMG_MARKER_RE = re.compile(r"\{\{IMG:[^{}]*\}\}", re.IGNORECASE)
-_VERSE_MARKER_RE = re.compile(r"\{\{verse:.*?\}\}", re.IGNORECASE | re.DOTALL)
+# Both verse marker forms: block `{{VERSE:…}VERSE}` and the inline
+# `{{IVERSE:…}IVERSE}` the render collapse introduced (a cell/footnote-context
+# verse).  The closer is `}NAME}`, not `}}` — match it exactly so the mask
+# neither under-runs (flagging the marker as a template leak) nor over-runs.
+_VERSE_MARKER_RE = re.compile(
+    r"\{\{(i?verse):.*?\}\1\}", re.IGNORECASE | re.DOTALL)
 _PAGE_RE = re.compile(r"\x01PAGE:\d+\x01")
 
 # HTML tags the viewer decodes as-is — surviving them is cosmetic, not breakage.
@@ -155,8 +160,10 @@ def _work(item):
         # DB.  Without this, anything preprocess cleans (e.g. `<del>` proofreading
         # corrections) shows as a phantom leak when the cached segments predate
         # that preprocess step.
+        # (`page_number` left ElementContext in the context slimming; the
+        # walk needs only the volume here.)
         out = process_elements(preprocess(raw),
-                               ElementContext(volume=vol, page_number=pg))
+                               ElementContext(volume=vol))
     except Exception as e:  # a crash is the most broken leak of all
         return aid, Counter({f"crash:{type(e).__name__}": 1})
     return aid, find_leaks(out)
