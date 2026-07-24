@@ -382,9 +382,80 @@ two points:
         `«LN[` in the 37k-article corpus (grep-proven).  Pinned by
         `tests/unit/test_ln_kind_grammar.py` (both forms through every
         consumer); 482 green.
-     1. q.v. (window stamp + adjacency upgrade + resolver extent-pick);
+     1. q.v. (window stamp + resolver extent-pick) — ✅ **BUILT 2026-07-24,
+        A/B'd on all 74 q.v.-bearing articles (89 sites)**; details below.
      2. see/cf family;
      3. delete the dead extraction/wrap layer; panel reads markers.
+
+SLICE 1 (2026-07-24): `_produce_body` stamps `«LN[w]:window|window«/LN»` at
+`(q.v.)` sites (dumb: literal token + clause-bounded span; a site directly
+after a link gets no stamp — boundary chars make the window empty).  The
+extractor reads `[w]` off the marker (windows BYPASS `_is_plausible_target` —
+junk windows are filtered by the index, not extraction heuristics);
+`_QV_PATTERN` / `_extract_qv_target` / `_QV_LINK_PATTERN` / `_SENTENCE_STARTERS`
+are DELETED.  `resolve_xref(window=True)` runs tier-major suffix cuts; the bake
+splits the display at the bound cut and an unresolved window strips WHOLE (no
+WS fallback — the window is our guess, not the author's page name).
+The extent-pick that survived adjudication (three iterations, each falsified
+by the 89-site table):
+  * per candidate, the MINIMAL binding cut (subset binds at every longer cut
+    — only the shortest is informative);
+  * candidate choice by WINDOW COVERAGE of the bound title (MACDONNELL,
+    SORLEY BOY covers 3 window words, ANTRIM, RANDAL MACDONNELL covers 1),
+    tie-broken toward the cut NEAREST THE CUE (kills the PERIOD/CAUCASUS/
+    POTOMAC far-end junk class);
+  * a self-naming cut SKIPS, never terminal (SICILY's own name mid-window
+    must not veto "patrician (q.v.)" beside it) — and this FIXED a baseline
+    bug: SEMPILL's "of Beltrees (q.v.)" had been linked to ITSELF (BELTREES
+    has no article; the old alias bound the source article);
+  * `_grow_cut` extends the display leftward while each word belongs to the
+    bound title ("BOY MACDONNELL" → "SORLEY BOY MACDONNELL"; "OF ALCIBIADES"
+    never grows).
+Result on the 89 sites: **85 resolved / 4 correct abstentions**; beats
+baseline on specific titles (SEVEN YEARS' WAR over WAR, SEVEN DAYS' BATTLE
+over BATTLE, WATERLOO CAMPAIGN over CAMPAIGN); large coverage gain (the old
+extractor had found only ~3 of SWITZERLAND's 23 sites).  Residual: ~3
+wrong-person homonym binds (MASON, ROUSSEAU, the DE LUC brothers) — the
+pre-existing person-fisher residual class, unchanged in kind.  Baked-body
+verified: prefix returns to prose, link wraps the cut with original casing,
+zero residual «LN[w] post-bake.  482 green.
+NOTE: `_wrap_resolved_xrefs_in_body`'s qv leg is now dead (no qv records
+exist); the see leg still runs until slice 2.  Corpus-wide proof rides the
+campaign rebuild's xref_resolution diff (expect: qv rows gone, ~85+ window
+links appearing as type link, junk qv binds dropped).
+
+SIMPLIFIED AGAIN (2026-07-24, user): **no `[qv]` kind and no adjacency logic.**
+Measured on all 108 corpus q.v. records: qv-policy vs link-policy resolve
+identically on 104; the 4 divergences are the qv LOOSE ladder binding
+given-name junk (SOLOMON GESNER→SOLOMON, JOSEPH BONAPARTE→JOSEPH, CONRAD
+FERDINAND MEYER→CONRAD, JOSEPH GIANVILL→JOSEPH) — the exact 2026-07-20
+failure class, surviving inside the qv tier; link policy returns None on all
+four and the baseline's correct binds come from machinery link policy also has.
+So: the producer stamps `«LN[w]:window|window«/LN»` at `(q.v.)` sites (only
+where not already linked — a link followed by `(q.v.)` is just a link);
+`[see]` carries the abstain-default that killed 3,618 junk links.  Accepted
+side effect: ~108 panel/xref_edges records re-type qv→link.
+
+UNIFORM CUTTING FALSIFIED (2026-07-24, probe before build): running the cut
+ladder over ALL link targets ("a tight target degenerates to itself — one code
+path") changed 892 of 13,657 baseline resolutions, heavily junk: SIXTUS IV cut
+to 'IV'; JESUS OF NAZARETH → 'OF NAZARETH' → NAZARETH (baseline: JESUS
+CHRIST); LIFE OF CHRIST → 'OF CHRIST'; ROLLO AT WORK → WORK; person citations
+cut to bare surnames past the first-given guards.  THE LINE: a wikilink's
+target is an ASSERTED extent (the author committed to those words — never
+cut); a stamped window's extent is UNASSERTED (cutting is the point).  That
+one bit rides the marker as `[w]` — NOT a policy kind (stamped windows resolve
+under the same trusted link policy; the no-[qv] simplification stands).
+resolve_xref grew `window=` (cuts gated on it; default False = byte-identical
+to pre-change, 482 green) and returns the bound cut for the bake's display
+split (`Xref.matched_cut`).
+Marker grammar so far: plain «LN» (asserted extent, link policy) ·
+«LN[w]» (window extent, link policy) · «LN[see]» (window extent, abstain
+policy — will cut PREFIXES, its window runs forward).
+Fuzzy-tier audit (the "should baked LNs be forced to choose" question): only
+125 of 28k resolved links depend on the loose (fuzzy) tier at all, and the
+sample is uniformly the GOOD class (GOSPELS→GOSPEL, AELFRIC→ÆLFRIC,
+plural/diacritic variants, all matching baseline) — always-pick stays.
 
 ## Build progress — contributor recognition relocation (J7 first target)
 
