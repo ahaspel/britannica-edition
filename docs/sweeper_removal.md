@@ -31,16 +31,36 @@ violation show as a regression, not to write more rules ([[feedback_sweepers_hid
 
 ### Sweepers — compensate for a downstream bug (fix upstream FIRST, then delete)
 
-**J1. `{|`/`|}` rescue** — `pipeline/stages/source_cleanup.py`
-(`_NOINCLUDE_KEEP_OPENER_RE`, `_NOINCLUDE_KEEP_CLOSER_RE`, the kept-token branch of
-`_replace_noinclude`).
-Preserves wikitable delimiters found inside `<noinclude>`.  Upstream bug (named in
-its own comment): the balanced-table extractor pairs a `{|` on one page with a `|}`
-many pages later, swallowing all intervening prose — ate Climate / Fauna /
-Population from UNITED STATES, THE.  `<noinclude>` is NOT transcluded; MediaWiki
-drops both halves and the table is one continuous span in mainspace, so the correct
-end state drops them too.
-Method: fix the extractor's cross-page pairing → delete the rescue → prove by diff.
+**J1. `{|`/`|}` rescue** — ✅ **DONE 2026-07-23: DELETED, no extractor fix needed —
+and the rescue itself was causing production content loss.**
+`strip_noinclude_blocks` is now the plain wholesale strip.  Findings, in order:
+  * **The upstream bug is already dead.**  The "extractor pairs a `{|` with a
+    `|}` many pages later, swallowing prose" failure belonged to the pre-stream
+    architecture; the whole-volume preprocess + the ONE balanced matcher pair a
+    continuous cross-page table correctly.  A/B over ALL 83 affected articles
+    (116 noinclude-table-marker pages; article-scope raw-stream walk, rescue vs
+    plain strip): **plain strip loses ZERO words anywhere** — including UNITED
+    STATES, THE (Climate/Fauna/Population intact, the original pin).
+  * **The rescue was the loser.**  Wikisource wraps some pages in a 2-column
+    layout table (`{|cellpadding…` in the header noinclude, `|}` in the footer
+    — print-mimicry for the standalone page view).  The kept opener wrapped the
+    page's MAINSPACE PROSE in a bogus table whose parse dropped it whole.
+    Production-verified: **LIBRARIES is missing ws pages 573 and 584 from the
+    shipped body** (probed all 116 pages against the shipped corpus; those 2 are
+    the only full-page losses — elsewhere the article boundary happens to split
+    the kept pair and the lone halves fail open).  The A/B also shows the rescue
+    dropping table content in ~25 more articles at page seams; exact per-article
+    recovery lands in the rebuild diff.
+  * **The rescue also chopped structure**: a continuous table re-closed/reopened
+    at every page seam (INDIANS, NORTH AMERICAN's 13-page table: 19 «TABLE»
+    spans → 10; FRANCE 57→54; JAPAN 69→65).
+  * Sweeper poetry ([[feedback_sweepers_hide_bugs]]): the guard written to stop
+    content loss was, by 2026, the only thing CAUSING content loss.
+  * Pin updated: `test_noinclude_halves_are_not_transcluded` now asserts table
+    delimiters strip with the rest (the old carve-out is disproven and gone).
+  * Harness note: article-scope A/B joins WHOLE raw pages, so its A-side
+    overstates loss where an article boundary would split a kept pair —
+    production truth was established by probing the shipped bodies directly.
 
 **J2. `close_unclosed_attr_quotes`** — `pipeline/stages/source_cleanup.py`.
 Repairs a tag with an odd number of `"` by inserting one before the `>`.  Upstream
@@ -96,20 +116,34 @@ Verified: ALGEBRA + both front-matter pages byte-identical old-chain vs new.
 
 ### Render-layer
 
-**J6. `_contain`** — `render/article.py` (`_contain`, `_WRAP_TAG_RE`; called in
-`_render_body`).
-A regex reimplementation of HTML tag-balancing — a fork of `render/normalize.py`
-(`normalize_html`, html5lib).  Introduced THIS session to contain the unbalanced
-HTML that the new `STYLE_OPEN`/`WRAP_OPEN` marks emit for unpaired source spans, so
-a stray `</div>` can't escape the `body-text`/`card` wrapper.
-NOT replaceable by `normalize_html`: verified it re-serializes everything
-(`&middot;`→`·`), changing all 37k articles' bytes.  Scope of the actual need is
-only ~30 articles (those with genuinely unpaired source spans).
-OPEN QUESTION to resolve first: is the escape a real, visible problem?  It has only
-been shown via html5lib `parseFragment`, not a real browser and not against the
-actual `body-text` CSS.  If it is cosmetic-only, delete `_contain` with no
-replacement.  If real, build a minimal byte-preserving div/span balancer (NOT a
-regex fork, NOT full normalize).
+**J6. `_contain`** — ✅ **RESOLVED 2026-07-23: KEEP — acquitted, off the junk list.**
+The open question is answered empirically: **the escape is REAL and VISIBLE in a
+real browser against the production CSS.**  Method: the actual `viewer.html`
+served locally, article JSONs re-rendered with `_contain` patched to identity,
+headless Chromium (Playwright), DOM + computed-layout + screenshot comparison.
+The 46 unbalanced articles (corpus scan of «DIV»/«SPAN» marks) split three ways:
+  * **32 unclosed opens** — without `_contain`, `body-text`'s own close tag is
+    consumed by the stray div, and the Cross-references / notes cards after it
+    parse as CHILDREN of the article card: visible box-in-box nesting, no card
+    gap (screenshot-verified on CONTINUED FRACTIONS).
+  * **5 mid-body stray closes** — the worst class: everything after the stray
+    spills out of `.body-text` and loses its layout.  Measured on AURORA
+    POLARIS: 47 of 63 paragraphs land outside `.body-text`, shifted 112px left
+    (LIBRARIES has 194k chars after its stray).
+  * **11 tail stray closes** — benign either way (only whitespace text nodes
+    shift; DOM effectively identical).  (48 strays across the 46 articles —
+    QUEENSLAND carries three.)
+So deletion is off the table, and no replacement is needed either: `_contain`
+already IS the "minimal byte-preserving div/span balancer" this item's fallback
+specified — a 15-line depth counter with exactly the HTML5 fragment-parsing
+semantics (drop a depth-0 close, close standing opens at the end), applied at
+the `body-text` boundary where the styling contract lives.  It is legitimate
+whole-body containment, not a sweeper: "is there a matching open?" is context no
+producer can have ([[feedback_recursion_cannot_provide_context]]), and it is
+blind to WHY a half is unpaired — that stays the producer's business.  EPUB
+never needed it (`to_xhtml_body`'s html5lib parse applies the same semantics),
+but it is harmless there.  Pinned by
+`test_unpaired_styler_marks.py::test_body_fragment_cannot_close_its_own_container`.
 
 ### Unaudited — may add items
 
@@ -240,8 +274,11 @@ One item per change, never bundled.
 
 ### Per-removal pins (capture from the clean corpus, then assert)
 
-* **J1** — pin UNITED STATES, THE's Climate / Fauna / Population section word
-  content; after extractor-fix + rescue-deletion its `words LOST` must be 0.
+* **J1** — ✅ satisfied: the 83-article A/B showed `words LOST` = 0 everywhere,
+  UNITED STATES included; the standing pin is the updated
+  `test_noinclude_halves_are_not_transcluded`.  At the rebuild, EXPECT content
+  GAINS (LIBRARIES ws 573/584 recovered) — a gain is the fix landing, not a
+  regression.
 * **J2** — pin ABBEY's Fig. 10 cell content; after routing the malformed-quote
   class its `words LOST` must be 0.
 
@@ -362,7 +399,15 @@ hold ([[feedback_contributor_zero_false_positives]]).  After this, q.v. is the t
 * Two real fixes shipped alongside: the bounder/peeler close-tag mismatch
   (stray «/SPAN» on junk-attred closers, SLOVENES) and the prose
   `{{{…|…}}}` classifier crash → faithful PARAM_DEFAULT element.
-* NEXT: J6 (resolve the `_contain` escape question), then J1/J2 sweepers.
+* **J6 RESOLVED — `_contain` acquitted** (browser-verified: the escape is real
+  and visible; `_contain` is the minimal balancer its own fallback specified;
+  see the J6 entry).  No code change.
+* **J1 DONE — noinclude table-marker rescue DELETED** (see the J1 entry: the
+  guarded bug died with the old architecture; the rescue itself was silently
+  dropping LIBRARIES ws 573/584 from production and chopping cross-page
+  tables).  83-article A/B: zero loss, 473 green.  The rebuild will RECOVER
+  the two swallowed LIBRARIES pages — verify in the rebuild diff.
+* NEXT: J2 (`close_unclosed_attr_quotes`) — the last chain-ledger sweeper.
 * `source_cleanup.py` reverted to the plain strip; `_contain` restored to working;
   464 tests pass.  The `context_sensitive_is_producer` memory loophole is closed.
 * `data/derived` holds the CLEAN rebuild (source_cleanup reverted): 37226 articles,
