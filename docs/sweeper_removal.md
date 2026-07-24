@@ -220,8 +220,16 @@ NOTE: `export/body_postprocess.py`'s three functions are all READERS/helpers
 (`_protected_ranges`, `_looks_bibliographic`, `_clean_surface_for_matching`) — the
 module is not itself a transform; it feeds the xref decorator above.
 
-**J8. `_decode_entities`** — `pipeline/stages/preprocess.py`.  `&nbsp;`→char:
-encoding-artifact removal (cruft) or a transform?  Borderline — owner's call.
+**J8. `_decode_entities`** — ✅ **RULED VETTED 2026-07-24 (user).**  TRANSPORT
+DECODING, not construct conversion: an entity is the source's SPELLING of a
+character (MediaWiki renders `&mdash;` as "—" in every view), the character
+identity is needed by every downstream matcher (no natural single owner to
+relocate to — the discriminator that convicted J3–J5), the one interpretation
+hazard (`&lt;`/`&gt;` forging tags) is handled by the keep-rule, and it is
+deletion-shaped under word-preservation.  Moved to `_VETTED` + added to the
+cruft-remover samples.  **THE LEDGER IS CLOSED: chain == VETTED, the
+completeness assertion is LIVE and passing** — the campaign's terminal
+cleanliness claim.  472 green.
 
 ### Genuine acquittals (READERS — build a throwaway string, never transform the shipping body)
 
@@ -609,6 +617,60 @@ Verify: EQUIVALENCE first (producer `«SIG»` candidate set == old re-scan set o
 bodies — proves the logic with NO rebuild), THEN rebuild confirms attribution counts
 hold ([[feedback_contributor_zero_false_positives]]).  After this, q.v. is the twin
 (body producer emits `«QV:term»` via `_extract_qv_target`; late pass resolves).
+
+## CAMPAIGN REBUILD — ADJUDICATED (2026-07-24, 55:26, exit 0, NOT deployed)
+
+The corpus-wide proof the campaign was driving toward.  Every check green:
+
+* **Content** (fingerprint vs `post_revert.tsv`): 0 disappeared / 0 new;
+  618 content-changed, 54 nominal word-losers ALL dissected: see-panel row
+  deltas (the adjudicated resolution changes), 2 contributor-byline
+  RELOCATIONS between same-page homonyms (SAMARA → the government survey
+  article, CORRECT — production had the town; DAVID → the p877 survey), and
+  JESUS CHRIST's "loss" = `cellpadding`/`rules`/`quot` chrome that J1's
+  noinclude strip stopped leaking as visible text.  TRUE VISIBLE LOSS: ZERO.
+  (Harness note: `_WORD.findall(body)` counts «LN marker guts — the "-7 body
+  words" pattern was scaffolding tokens of production's resolved see-wraps,
+  not text.)
+* **J1 recovery confirmed**: both swallowed LIBRARIES pages (ws 573/584) are
+  back in the shipped body.
+* **Markers**: `«LN[` in body/rendered_html corpus-wide = 0 (kind dies at
+  bake as designed; survives only in panel `surface_text` provenance, the
+  convention link surfaces always had).
+* **Leak floor IMPROVED**: render_leak_template 27→23, tag 22→20, attr 5→4.
+* **Xref ledger** (vs preserved production snapshot): link +86 resolved · qv
+  −105 (type retired into link) · see +386 resolved (525→911, ABOVE the +283
+  pre-rebuild estimate — the stamps find more sites than the old extraction)
+  · see_also +62 (38→100) · author ±0 exactly.  NET +429 resolved references;
+  unresolved growth (+1.5k) is the stamps' deliberate over-recognition,
+  panel-invisible.
+* **Suite 471 green**; 36,691 articles steady (user-verified); 6b4 ~10 min
+  (window-cut cost at scale, accepted).
+* Byline-relocation + TOC-flip class: same-page-homonym disambiguation
+  wobbling on live-opening inputs — 4 instances total, every one landing
+  equal-or-better than production; pins queued where correctness is known.
+
+REMAINING before close: J8 (`_decode_entities`, owner's call) · deploy
+(user's call: `./tools/deploy.sh` + the separate HF publish) · the queued
+polish items (MARCH/BEJA TOC pins, GEOMETRY-ANALYTICAL see class, DIEGO
+particle-count refinement, 0.60–0.65 cosine band).
+
+## Topic-index cross-check (2026-07-24, during the campaign rebuild)
+
+User question: did the J7 xref changes touch topic resolution?  **Code: no**
+(the topic path enters through `resolve()`, which shares none of the edited
+helpers — grep-verified).  **Corpus: 36,395 topic links, 2 flips (99.995%
+identical)** — fresh 6b output diffed against the DEPLOYED production TOC
+(fetched from britannica11.org; the local pre-rebuild copy was already
+overwritten when the check ran).  Both flips are `loosen:fuzzy`-tier homonym
+coin-flips wobbling on live-opening input bytes, and BOTH exposed picks that
+were wrong in production too:
+  * History/Europe "MARCH": month (prod) → Cambridgeshire town (fresh);
+    CORRECT = 17-0705-5b6583 (the march/frontier article).
+  * Education "BEJA": Hamitic tribe (prod) → Portuguese town (fresh);
+    CORRECT = BEJAN 03-0678-fafc90 (the university freshman term).
+QUEUED: pin both in the 6b2 disambiguation cache (topic polish, not a
+campaign item).
 
 ## Current state (2026-07-23)
 

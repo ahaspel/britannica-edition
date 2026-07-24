@@ -145,6 +145,13 @@ TRUSTED_RUNS: dict[int, list[tuple[int, int, int, int]]] = {
     # that are now 793-onward content.  Pair with VOL_RANGE[6] end
     # at leaf 1032 and the +2 hocr-leaf offset in _ia_confident_pins.
     6: [(829, 791, 830, 792)],
+    # Vol 7: leaves 35-41 = pp. 13-19, scan-verified (leaf 35 prints 13
+    # [CONSTELLATION table], leaf 41 prints 19 [CONSUL], leaf 42 prints 20).
+    # A confident-looking IA pin mid-gap had pulled the +1 walk two leaves
+    # early, numbering the CONSTELLATION plates (leaves 33-34, in
+    # UNNUMBERED_LEAVES) as 13-14 and leaving the real pp. 18-19 leaves
+    # unnumbered.  User-reported 2026-07-24.
+    7: [(35, 13, 41, 19)],
     8: [(207, 183, 207, 183)],
     10: [(637, 603, 637, 603)],
     14: [(303, 281, 303, 281)],
@@ -235,8 +242,13 @@ UNNUMBERED_LEAVES: dict[int, list[int]] = {
     # scan-view range would extend three leaves past where it should.
     6: [20, 21, 22],
     # Vol 7: fm 14 is a blank between the last front-matter content
-    # (fm 13 / leaf 19) and the first article (leaf 21).
-    7: [20],
+    # (fm 13 / leaf 19) and the first article (leaf 21).  Leaves 33-34 are
+    # the CONSTELLATION Plates I/II (star charts, binder's mark "VII. 12." =
+    # insert after p. 12) — user-reported 2026-07-24, scan-verified: leaf 32
+    # prints 12, leaf 35 prints 13, leaf 41 prints 19 (CONSUL), leaf 42
+    # prints 20.  Without this pin the walk numbered the plates 13-14 and
+    # left the real pp. 18-19 leaves (40-41) unnumbered.
+    7: [20, 33, 34],
     # Vol 12: fm 14 is a blank between the last front-matter content
     # (fm 13 / leaf 19) and the first article (leaf 21).
     12: [20],
