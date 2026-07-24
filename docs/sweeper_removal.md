@@ -333,6 +333,59 @@ local.  Heuristic QUALITY (e.g. "Council of Trent" → "Trent") is a separate, o
 axis that travels WITH the logic to the producer — it is not a reason to keep
 anything late, and placement vs quality must never be conflated again.
 
+SUPERSEDED (2026-07-24, designed with the user) — the plan above is refined on
+two points:
+
+1. **No new tags.**  A q.v./see reference is the same ELEMENT as a link; only
+   its resolution POLICY differs, and kind must survive (the 2026-07-20 lesson:
+   collapsing kinds into bare «LN» caused the JOHN VENN→McADAM class).  Kind is
+   an ATTRIBUTE: `«LN[qv]:…»` / `«LN[see]:…»`, the `«MATH[fs=N]` pattern.  Every
+   consumer that knows «LN» keeps working after ONE grammar widening (the
+   optional `[kind]` slot) — no new marker contract for render/EPUB/markdown/
+   panel/audits.  «AL» stays as-is for now (it already is this idea).
+2. **The producer stamps a TOTAL WINDOW; the RESOLVER picks the extent** (user's
+   keystone call: extent selection IS disambiguation → it belongs in the ONE
+   picker, fill-dumb-fish-smart).  The site token (`(q.v.)`, `See`, `cf.`) is
+   structural and crisp; "where does the title end" is a guess ONLY without the
+   title index — against the index it is a lookup ("which suffix/prefix of this
+   window IS an EB title": no title `ALCHEMY AS GEBER`; `GEBER` exists).  So:
+     * producer: find token, stamp `«LN[qv]:window|window-verbatim«/LN»` (dumb,
+       total — the window is the plain-prose run back/forward to the clause
+       boundary; it never contains element placeholders by construction, only
+       inline «B»/«I» marks, which resolution already strips);
+     * bake (6b5): resolver returns (extent, target) together, TIER-MAJOR over
+       window cuts (an exact match on a short cut beats a loose match on a long
+       one — mirrors tight-before-loose); the chosen words become the link
+       display, the unchosen prefix returns to prose, an unresolved marker
+       strips to its verbatim display (= original text restored, provisional
+       stamps are free);
+     * adjacency (`«/LN» (q.v.)`): NO window stamp — the bake does a one-token
+       peek at the marker's own boundary and UPGRADES the preceding link's kind
+       to qv.  Marker-stream reading, no prose re-scan, no gates.
+   `_extract_qv_target` / `_TARGET_TAIL` / the stop-word armor DISSOLVE into
+   the resolver's extent-pick; they do not move to the producer.
+   What then deletes: `_wrap_resolved_xrefs_in_body`, `_looks_bibliographic`,
+   `_protected_ranges`, `_clean_surface_for_matching`, the extractor's prose
+   patterns, the wrap-last bake choreography.
+   Slices, each gated on the `xref_resolution.jsonl` A/B (candidate set +
+   resolution outcome vs `.xref_consolidation_baseline/`):
+     0. «LN» grammar widening everywhere — ✅ **DONE 2026-07-24.**  The
+        `[kind]` slot (`(?:\[[a-z_]*\])?`) is tolerated at every pre-bake «LN»
+        parse site: `markers_to_text`, `body_to_markdown`, `link_resolver`'s
+        display strip, `render/inline._LN_OPEN_RE`, the 6b5 2-part bake +
+        `_LN_DISPLAY_RE` + the already-linked check, `_protected_ranges`, the
+        extractor's five patterns, `index.html`'s JS strip.  KIND DIES AT BAKE
+        (6b5 writes the plain 3-part form or strips), so post-bake bodies never
+        carry it and downstream consumers (downloads, search, resolved-form
+        snapshot normalizers, leak grammars — which correctly FLAG a surviving
+        «LN[ as a leak) need nothing.  Byte-identical by construction: zero
+        `«LN[` in the 37k-article corpus (grep-proven).  Pinned by
+        `tests/unit/test_ln_kind_grammar.py` (both forms through every
+        consumer); 482 green.
+     1. q.v. (window stamp + adjacency upgrade + resolver extent-pick);
+     2. see/cf family;
+     3. delete the dead extraction/wrap layer; panel reads markers.
+
 ## Build progress — contributor recognition relocation (J7 first target)
 
 BRICK 1 — DONE (2026-07-23, 478 green).  `recognize_signoff_initials(part)` extracted

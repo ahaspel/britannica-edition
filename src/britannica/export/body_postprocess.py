@@ -29,7 +29,7 @@ from britannica.markers import strip_page_markers
 # are intentionally NOT protected — their prose deserves the same
 # cross-reference treatment as the main body.
 _PROTECTED_SPAN_RES = (
-    re.compile(r"«LN:.*?«/LN»", re.DOTALL),
+    re.compile(r"«LN(?:\[[a-z_]*\])?:.*?«/LN»", re.DOTALL),
     re.compile(r"«TABLE\[.*?«/TABLE»", re.DOTALL),
     re.compile(r"«MATH:.*?«/MATH»", re.DOTALL),
     re.compile(r"«OUTLINE:.*?«/OUTLINE»", re.DOTALL),

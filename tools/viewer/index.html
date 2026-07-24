@@ -587,7 +587,7 @@
     function ftCleanMarkup(s) {
       let h = s.replace(/\x01PAGE:\d+\x01/g, "");
       h = h.replace(/\u00abFN(?:\[[^\]]+\])?:.*?\u00ab\/FN\u00bb/gs, "");
-      h = h.replace(/\u00abLN:[^|]*\|(?:[^|«]*\|)?([^«]*)\u00ab\/LN\u00bb/g, "$1");
+      h = h.replace(/\u00abLN(?:\[[a-z_]*\])?:[^|]*\|(?:[^|«]*\|)?([^«]*)\u00ab\/LN\u00bb/g, "$1");
       h = h.replace(/\u00ab\/?[A-Z]+\u00bb/g, "");
       return h;
     }
