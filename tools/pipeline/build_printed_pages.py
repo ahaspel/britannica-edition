@@ -203,6 +203,15 @@ TRUSTED_RUNS: dict[int, list[tuple[int, int, int, int]]] = {
 # labeled an unnumbered leaf with a page number, we add the leaf
 # here.  Never edit the generated JSON directly (a rebuild would
 # overwrite it) — always add the anchor here so the fix survives.
+#
+# POST-REBUILD MAP FIXES need one more step: this tool runs in Phase 3c,
+# BEFORE the export bakes each article's `leaf_start`/`leaf_end` (via
+# `_leaf_for_ws`) into the article JSONs + index.json.  Re-running the map
+# alone leaves those anchors stale (the vol-7 plate fix shipped a correct
+# map with stale article anchors).  After regenerating, re-anchor:
+#   recompute `_leaf_for_ws(vol, ws_page_start/end)` per article and patch
+#   the changed JSONs + their index.json rows.  A full rebuild does this
+#   automatically.
 # Override of the first front-matter content leaf per volume when the
 # auto-detection (fm_first_content + fm01-leaf match) disagrees with
 # human inspection of the actual scans. Values are confirmed leaf
