@@ -26,9 +26,11 @@ for f in "$@"; do
     exit 1
   fi
   base="$(basename "$f")"
+  # no-cache to match tools/deploy.sh: a cached shell against a fresh corpus
+  # is the 2026-07-15 stale-link regression; HTML always revalidates.
   aws s3 cp "$f" "s3://${BUCKET}/${base}" \
     --content-type "text/html; charset=utf-8" \
-    --cache-control "public, max-age=300"
+    --cache-control "no-cache"
   if [[ -z "$paths_json" ]]; then
     paths_json="\"/${base}\""
   else

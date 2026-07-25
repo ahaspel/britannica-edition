@@ -190,6 +190,25 @@ production.  Every inventory item resolved:
     baked bodies stripped 11,474 articles' window displays mid-arc; recovered
     by re-running Phase 4+; DB was never at risk).
   · rebuild_all.sh Phase 6h also rebuilds the maps bundle now.
+- **Post-deploy page fixes (2026-07-25, deployed via deploy_html.sh + verified)**:
+  · index.html volume legend/label agreement — volumes.json's first_title/
+    last_title are ORPHANED stale fields (no pipeline writer; vol 9 said "E");
+    ONE shared derivation now (volArticles + volRangeWords, first word of
+    first/last page-ordered titles, both display sites).  volumes.json's title
+    fields now unread → cleanup-campaign candidate.
+  · Maps relocated per user: ancillary.html gains a "The Colour Maps" panel
+    (registry-driven list); maps.html is a single-map display surface in the
+    site card chrome; hashless → ancillary.html#maps.  download.txt edited by
+    user + regenerated.  deploy_html.sh now ships no-cache (was max-age=300,
+    against the 2026-07-15 rule).
+  · **Homonym-link survey** (user-approved follow-up work item): 1,998 baked
+    links land in ≥2-member same-title families; lead-cosine oracle: 1,353
+    agree · 293 close · 352 decisive disagreements (UPPER bound — includes
+    intentional hatnote cross-links like COLOPHON→COLOPHON).  CONCERT→ALLIANCE
+    binds the Ohio town on production (confirmed wrong).  Proposed fix: route
+    family ties through the fisher WITH prose context; adjudicate a sample of
+    the 352 first.  Artifacts: family_links_survey.json / family_map_survey.json /
+    family_disagreements_survey.json (repo root).
   · 472 tests green throughout.  **DEPLOYED 2026-07-25 + PRODUCTION-VERIFIED**:
     maps.html gallery (15) · #switzerland both images · Map line on SWITZERLAND ·
     SOUTH AFRICA dblclick → #south_africa · eb1911-maps.tar.gz (228MB) served ·
