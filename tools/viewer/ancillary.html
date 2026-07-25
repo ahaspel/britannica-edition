@@ -133,6 +133,20 @@
       </div>
     </div>
 
+    <div class="item" id="maps">
+      <h2>The Colour Maps</h2>
+      <p>The edition's full-colour fold-out maps, engraved by Justus Perthes of
+        Gotha&mdash;shown as printed in 1911 and, where we have them, alongside
+        the Stieler Hand-Atlas originals they were engraved from, at full
+        resolution.</p>
+      <div class="item-links" id="maps-list" style="line-height: 2;">
+        <!-- populated from /data/maps.json — the one registry -->
+      </div>
+      <div class="item-links" style="margin-top: 8px;">
+        <a href="/download/eb1911-maps.tar.gz">Download all maps (228&nbsp;MB) &rarr;</a>
+      </div>
+    </div>
+
     <div class="item">
       <h2>Reader's Guide to the Encyclop&aelig;dia Britannica</h2>
       <p>A 65-chapter companion volume to the 11th edition, organised as
@@ -152,6 +166,20 @@
     transcriptions are generated from Internet Archive scans via vision-LLM.
   </div>
 </div>
+<script>
+  // The Colour Maps item lists the maps from the registry (one source of
+  // truth; a row appears here as soon as it is bound to articles).
+  fetch("/data/maps.json").then(r => r.json()).then(reg => {
+    const el = document.getElementById("maps-list");
+    if (!el) return;
+    const esc = s => String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    el.innerHTML = (reg.maps || [])
+      .filter(m => (m.articles || []).length)
+      .filter(m => (m.eb1911 && m.eb1911.quality !== "broken") || m.stieler)
+      .map(m => `<a href="/maps.html#${encodeURIComponent(m.id)}">${esc(m.title)}</a>`)
+      .join("");
+  }).catch(() => {});
+</script>
 <script src="/gc-gate.js"></script>
 <script data-goatcounter="https://britannica11.goatcounter.com/count" async src="//gc.zgo.at/count.js" onload="if(window.__gcReady)__gcReady()"></script>
 </body>

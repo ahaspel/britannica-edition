@@ -190,7 +190,14 @@ production.  Every inventory item resolved:
     baked bodies stripped 11,474 articles' window displays mid-arc; recovered
     by re-running Phase 4+; DB was never at risk).
   · rebuild_all.sh Phase 6h also rebuilds the maps bundle now.
-  · 472 tests green throughout.  READY TO DEPLOY (user runs tools/deploy.sh).
+  · 472 tests green throughout.  **DEPLOYED 2026-07-25 + PRODUCTION-VERIFIED**:
+    maps.html gallery (15) · #switzerland both images · Map line on SWITZERLAND ·
+    SOUTH AFRICA dblclick → #south_africa · eb1911-maps.tar.gz (228MB) served ·
+    ASIA byline on the continent (T.H.H./P.La/R.S./C.El), stub empty · Aurora
+    plates ↔ AURORA POLARIS both directions · CONSTELLATION leaves 31–36 + all
+    3 expand buttons (probe note: label is "Expand (N columns)" WITH parens) ·
+    ORION → mythology PLEIADES · SAMARKAND byline on the signed sibling ·
+    zero console errors.
 
 **Production-verified (all six):** LIBRARIES recovery · SILESIA's Breslau + Seven
 Years' War (q.v.) links · FROISSART see-bind in panel · vol 7 scan leaves · gc-gate.js ·

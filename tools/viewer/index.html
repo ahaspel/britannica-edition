@@ -782,12 +782,13 @@
       return `${iaUrl(vol)}/page/n${page}`;
     }
 
-    function browseVolume(vol) {
-      browsingVolume = vol;
-      resultsCard.style.display = "none";
-
-      const meta = volumesMeta.find(v => v.volume === vol) || {};
-      const volArts = articles
+    // ONE page-ordered article list per volume — the range shown anywhere
+    // (volume-bar button, volume header) derives from THIS list, never from
+    // volumes.json's first_title/last_title (stale orphaned data: it said
+    // vol 9 = "E"–"Evangelical Association" while the corpus starts at
+    // EDWARDES; no pipeline stage writes those fields).
+    function volArticles(vol) {
+      return articles
         .filter(a => a.volume === vol && (a.article_type || "article") === "article")
         .sort((a, b) => {
           const sa = a.ws_page_start || a.page_start;
@@ -800,9 +801,22 @@
           // "View volume scans" loses the trailing leaves.
           return (a.ws_page_end || a.page_end) - (b.ws_page_end || b.page_end);
         });
+    }
 
-      const firstTitle = meta.first_title || (volArts[0] || {}).title || "";
-      const lastTitle = meta.last_title || (volArts[volArts.length - 1] || {}).title || "";
+    // First word of the first and last titles ("EDWARDES–EVANGELICAL").
+    function volRangeWords(volArts) {
+      const word = a => ((a || {}).title || "").split(",")[0].split(" ")[0];
+      return volArts.length
+        ? `${word(volArts[0])}–${word(volArts[volArts.length - 1])}`
+        : "";
+    }
+
+    function browseVolume(vol) {
+      browsingVolume = vol;
+      resultsCard.style.display = "none";
+
+      const meta = volumesMeta.find(v => v.volume === vol) || {};
+      const volArts = volArticles(vol);
       const fmPages = (meta.front_matter_pages || []);
       const iaLink = meta.ia_url || iaUrl(vol);
 
@@ -811,7 +825,7 @@
       const fmContent = document.getElementById("frontmatter-content");
       fmCard.style.display = "block";
       fmContent.innerHTML = `
-        <h2 style="margin-top:0; font-size:1.2rem;">Volume ${vol}: ${escapeHtml(firstTitle)}\u2013${escapeHtml(lastTitle)}</h2>
+        <h2 style="margin-top:0; font-size:1.2rem;">Volume ${vol}: ${escapeHtml(volRangeWords(volArts))}</h2>
         ${fmPages.length
           ? `<div style="color: var(--muted); font-size: 0.9rem;">
                Front matter: pages 1\u2013${fmPages[fmPages.length - 1]}
@@ -986,16 +1000,9 @@
       const volBar = document.getElementById("volume-bar");
 
       for (const v of volumes) {
-        const volArts = articles
-          .filter(a => a.volume === v && (a.article_type || "article") === "article")
-          .sort((a, b) => (a.ws_page_start || a.page_start) - (b.ws_page_start || b.page_start));
-
-        let label = `Vol ${v}`;
-        if (volArts.length > 0) {
-          const first = volArts[0].title.split(",")[0].split(" ")[0];
-          const last = volArts[volArts.length - 1].title.split(",")[0].split(" ")[0];
-          label = `${v}. ${first}\u2013${last}`;
-        }
+        const volArts = volArticles(v);
+        const range = volRangeWords(volArts);
+        const label = range ? `${v}. ${range}` : `Vol ${v}`;
 
         const btn = document.createElement("button");
         btn.className = "vol-btn";
