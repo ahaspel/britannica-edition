@@ -11,8 +11,12 @@ also the hint-stripper, so re-annotation is idempotent (the math annotator's
 pattern).
 
 Pure text transform on the exported body — no re-render here; the caller
-re-renders (post_export renders after annotating; the standalone main()
-re-renders only the articles whose markers changed).
+re-renders.  INVARIANT: the cache keys on the span's BYTES, so annotation
+must see the FINAL body form — post_export applies ``annotate_body`` as the
+``decorate`` hook inside resolve_and_render (after the «LN» targets bake,
+before the render); annotating a pre-resolution body silently cache-misses
+every table that contains a link.  The standalone main() operates on the
+on-disk corpus, which is post-resolution by construction.
 
   uv run python tools/pipeline/annotate_table_markers.py
 """
@@ -54,20 +58,6 @@ def annotate_body(body: str, cache: dict) -> str:
         if new != span:
             out = out[:a] + new + out[a + len(span):]
     return out
-
-
-def annotate_payloads(payloads: dict) -> int:
-    """The post-export hook: annotate every payload body in place.
-    Returns the number of articles whose body changed."""
-    cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
-    n = 0
-    for d in payloads.values():
-        body = d.get("body") or ""
-        new = annotate_body(body, cache)
-        if new != body:
-            d["body"] = new
-            n += 1
-    return n
 
 
 def main() -> None:

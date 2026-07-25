@@ -62,9 +62,12 @@ def _build_title_map(session) -> dict[str, list[Article]]:
     Multiple articles can share a title across volumes (MAN, BANK,
     etc.); the caller picks the best one (or all of them) per
     attribution."""
+    from britannica.export.article_json import article_sort_key
     out: dict[str, list[Article]] = {}
-    for a in session.query(Article).filter(
-            Article.article_type != "plate"):
+    # Content order, not DB heap order: the caller's longest-body pick breaks
+    # exact-length ties by list position.
+    for a in sorted(session.query(Article).filter(
+            Article.article_type != "plate").all(), key=article_sort_key):
         key = _normalize_vol29_title(a.title)
         out.setdefault(key, []).append(a)
     return out

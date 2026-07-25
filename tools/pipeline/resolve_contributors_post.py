@@ -96,7 +96,10 @@ def bind_contributors(session, payloads: dict) -> bool:
 
     NOTE the caller must have replayed ``register_stable_id_dedup`` first — every
     ``_safe_filename`` below depends on it."""
-    arts = session.query(Article).filter(Article.article_type != "plate").all()
+    from britannica.export.article_json import article_sort_key
+    arts = sorted(
+        session.query(Article).filter(Article.article_type != "plate").all(),
+        key=article_sort_key)
     sid_of = {a.id: stable_id(a) for a in arts}
     title_of = {a.id: a.title for a in arts}
     kind_index = json.loads(
@@ -239,15 +242,21 @@ def bind_contributors(session, payloads: dict) -> bool:
         for credit in entry.articles:
             cands = candidate_ids(credit, title_map, comma_index,
                                   lambda i: given_of.get(i, ""))
+            # A credit whose contributor is ALREADY bound to any candidate
+            # (the authoritative footer/author-link harvest) is a
+            # CORROBORATION of that bind, never a mandate to bind a
+            # different homonym — the sorted candidate order otherwise
+            # flipped "David" from confirming the biblical DAVID (signed
+            # W. R. S.) to minting a credit on the unsigned Welsh princes.
+            if cands and (session.query(ArticleContributor)
+                          .filter(ArticleContributor.article_id.in_(cands),
+                                  ArticleContributor.contributor_id == cid)
+                          .first()):
+                continue
             target = pick_article(cands, kinds_of,
                                   credit_expected_kinds(credit), fp)
             if target is None:
                 n_abstain += 1
-                continue
-            exists = (session.query(ArticleContributor)
-                      .filter(ArticleContributor.article_id == target,
-                              ArticleContributor.contributor_id == cid).first())
-            if exists:
                 continue
             session.add(ArticleContributor(
                 article_id=target, contributor_id=cid, sequence=99))
@@ -329,9 +338,16 @@ def bind_contributors(session, payloads: dict) -> bool:
             return m.group(0)
         return _AL_RE.sub(_repl, text)
 
+    # Byline order: signature position where we have it (`sequence` from the
+    # author-link harvest), then a CONTENT tie-break — the vol-29 binds all
+    # carry sequence=99 and would otherwise order by DB heap (ASIA's byline
+    # reversed between identical-code rebuilds).
     binds_by_article: dict[int, list[int]] = defaultdict(list)
-    for ac in (session.query(ArticleContributor)
-               .order_by(ArticleContributor.sequence).all()):
+    def _bind_key(ac):
+        c = cred_of.get(ac.contributor_id)
+        return (ac.sequence, (c.full_name or "") if c else "",
+                _canon_init(ac.contributor_id) if c else "")
+    for ac in sorted(session.query(ArticleContributor).all(), key=_bind_key):
         binds_by_article[ac.article_id].append(ac.contributor_id)
 
     # STEP 5 diagnostic — what the mode changes vs. the build-time name, and

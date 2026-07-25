@@ -147,8 +147,10 @@ def link_from_frontmatter(apply_mode: bool = False, kind_of=None):
         # context ([[feedback_contributor_zero_false_positives]]), and the cascade's
         # entity-altering strategies mis-bind distinct people/places (STEPHEN, ST →
         # SIR JAMES STEPHEN; WOLFF, CHRISTIAN → CASPAR WOLFF; ZÜRICH canton+town → one).
+        from britannica.export.article_json import article_sort_key
         by_norm, _ = build_core_maps(
-            ((a.title, a.id) for a in session.query(Article).all()
+            ((a.title, a.id) for a in
+             sorted(session.query(Article).all(), key=article_sort_key)
              if a.article_type == "article"),
             value_of=lambda x: x,
         )
@@ -203,19 +205,36 @@ def link_from_frontmatter(apply_mode: bool = False, kind_of=None):
         # "Philo (philosopher)" resolve to nothing and their authors go uncredited.
         created = 0
         matched_contribs = set()
-        for contrib_id, subjects in contrib_subjects.items():
-            for subject in subjects:
+        # Sorted iteration on BOTH levels: `subjects` is a string set (hash-
+        # randomized order per process) and the footprint disambiguator scores
+        # against the binds created EARLIER IN THIS LOOP — unsorted, the same
+        # code binds different homonyms run to run (the SAMARA town/government
+        # flip, 2026-07-25 determinism adjudication).
+        for contrib_id, subjects in sorted(contrib_subjects.items()):
+            for subject in sorted(subjects):
                 article_id = None
                 for variant in _subject_variants(subject):
                     cands = by_norm.get(normalize_xref_target(variant)) or []
+                    if not cands:
+                        continue
+                    # A subject naming an article this contributor is ALREADY
+                    # bound to (their footer signature, or an earlier subject)
+                    # is a CORROBORATION of that bind — never a mandate to
+                    # bind a different homonym (same principle as the vol-29
+                    # credit binder in resolve_contributors_post).
+                    if (session.query(ArticleContributor)
+                            .filter(ArticleContributor.article_id.in_(cands),
+                                    ArticleContributor.contributor_id
+                                    == contrib_id).first()):
+                        article_id = None
+                        break
                     if len(cands) == 1:
                         article_id = cands[0]
                         break
-                    if len(cands) > 1:
-                        article_id = _disambiguate_by_footprint(
-                            session, contrib_id, cands, kind_of)
-                        if article_id:
-                            break
+                    article_id = _disambiguate_by_footprint(
+                        session, contrib_id, cands, kind_of)
+                    if article_id:
+                        break
                 if article_id:
                     existing = (
                         session.query(ArticleContributor)

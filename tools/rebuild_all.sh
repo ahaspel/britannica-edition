@@ -281,6 +281,9 @@ uv run python tools/viewer/build_readers_guide.py all > /dev/null
 echo
 echo "=== Phase 6h: Building download bundle [$(elapsed)] ==="
 uv run python -m britannica.export.download
+# The maps bundle (colour plates + Stieler originals) rebuilds too so a registry
+# or image change never ships a stale archive; validates maps.json's file refs.
+uv run python -m britannica.export.download maps
 
 # --- Phase 6f: Pre-deploy quality report (visibility only) ---
 # Runs the report before deploy so we can see the numbers in the log,

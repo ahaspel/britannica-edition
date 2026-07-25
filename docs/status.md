@@ -149,6 +149,48 @@ production.  Every inventory item resolved:
     the missing pristine encbr11 scans (user fetching from Rumsey); Emery Walker
     colour maps (the non-Perthes rest) — registry rows as scans land; production
     verification after next deploy.
+- **DETERMINISM ARC (2026-07-25, user-directed: "fix determinism first, then
+  redeploy") — PROVEN: two consecutive Phase 4→6b4 builds fingerprint-IDENTICAL
+  (37,226 articles, 0 diffs).**  The 2026-07-24 rebuild adjudication caught xref
+  targets, plate parents, and bylines flipping between identical-code rebuilds —
+  parallel Phase 2 changes DB heap order and row ids, and every positional
+  tie-break inherited it.
+  · `article_sort_key` (export/article_json.py) — ONE content-derived total order
+    (volume, page range, title, section slug = the stable-id's own hash source) —
+    applied at every seam a chooser feeds from: the export loop (→ index.json →
+    every LinkResolver candidate list), global title→filename maps (uniform
+    deterministic FIRST-wins), stable-id dedup (was keyed on per-rebuild row ids),
+    xref/contributor post-phase feeds, the vol-29 roster title map, and the
+    frontmatter linker (whose subject SETS also iterated hash-randomized and whose
+    footprint disambiguator scores against binds made earlier in its own loop —
+    the SAMARA town/government flip).
+  · Semantics still decide wherever semantics exist: the fisher is order-
+    independent (verified: PLEIADES-from-ORION picks mythology with the bag
+    reversed); order only breaks true dead-heats.  The ORION flip traced to the
+    TOPIC MAP (an upstream resolution output) gating the fisher off via the
+    single-match short-circuit — deterministic inputs now keep the gate stable.
+  · CORROBORATION PRINCIPLE (vol-29 credit binder + frontmatter linker): a credit
+    naming an article its contributor is ALREADY bound to (footer signature =
+    segment-ownership ground truth) is a corroboration of that bind, never a
+    mandate to bind a different homonym.  Adjudicated effect: bylines moved to
+    the SIGNED sibling across ~60 homonym families — ASIA's three authors off
+    the 214-word Roman-province stub onto the 36k-word continent; BRAZIL, ANNE,
+    SAMARA/SAMARKAND/KURSK/IONIA all verified same pattern (footer seqs on the
+    keeper, guessed credits absorbed).  DAVID false-positive (Welsh princes
+    minted W. R. Smith's biblical-David credit) caught by adjudication and
+    killed by the same rule.
+  · Aurora plates re-parented to AURORA POLARIS via a NEW image-name signal tier
+    in plate_parent.py (Commons "1911 Britannica - <Article> - …" filenames name
+    the parent; the running head says only "Aurora" — five same-page articles).
+  · Wide-table annotation moved INSIDE the resolve→render loop as a `decorate`
+    hook on the FINAL baked body (the width cache keys on span bytes; annotating
+    before «LN» targets bake silently cache-missed every linky table — the
+    13-article gap).  post_export gained a ONE-SHOT guard: zero extracted xrefs
+    on a full corpus = already-baked bodies → RAISE before writing (a re-run on
+    baked bodies stripped 11,474 articles' window displays mid-arc; recovered
+    by re-running Phase 4+; DB was never at risk).
+  · rebuild_all.sh Phase 6h also rebuilds the maps bundle now.
+  · 472 tests green throughout.  READY TO DEPLOY (user runs tools/deploy.sh).
 
 **Production-verified (all six):** LIBRARIES recovery · SILESIA's Breslau + Seven
 Years' War (q.v.) links · FROISSART see-bind in panel · vol 7 scan leaves · gc-gate.js ·
