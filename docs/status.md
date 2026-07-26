@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-07-24.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-07-26.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,7 +46,68 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-07-24)
+## CURRENT STATE (2026-07-26)
+
+### Session 2026-07-26 — EPUB single book: chunk-packed, gated, epubcheck-CLEAN at full scale
+
+**The whole edition builds as ONE valid EPUB.**  `eb1911.epub`: 37,226 articles in 878
+~300KB chunks, 10,660 images, 1.44GB — **epubcheck 5.1.0: 0 fatals / 0 errors / 0
+warnings**, all four build gates green.  The vol-1 control artifact (`eb1911-vol01.epub`,
+65.5MB, 31 chunks) is equally clean — the scale-vs-markup comparison artifact.  Both at
+repo root, built by `python -m britannica.epub.build --volume 1 | --all [--target kindle]`.
+
+- **Chunk packing (`epub/pack.py`, NEW).**  Articles pack in spine order (volume → page →
+  title → stem, the article_sort_key order) into ~300KB chunks; every article opens at
+  `id="a{stem}"`; ALL per-article ids/fragment-hrefs namespaced `a{stem}-…` so articles
+  share files without collisions.  An oversized article (>450KB) splits at section
+  boundaries — `split_article` is a pure function of the staged bytes, so the plan and
+  emit passes agree by construction; each footnote aside travels with its noteref's piece
+  (popups stay same-document); FRANCE spans c0303–c0307 with inbound section links landing
+  mid-article.  The seam is a TOKEN CONTRACT: the render's EPUB link policy
+  (`epub_bundled=LINK_TOKENS`, an object now, not a set) emits `epublink:{stem}#section-…`
+  / `epubcontrib:{slug}`; the PACKER — the only stage that knows chunk assignment —
+  materializes real hrefs at chunk close, presence-aware (absent stem → live-site URL).
+- **Gates (all hard, before zip):** every article anchored exactly-once (37,226) · no
+  duplicate ids per file · every internal href resolves to a real file#id · text
+  preservation (`split_invariant` = ordered non-aside text + aside multiset; chunk
+  resolution = exact text equality).  Missing/remote images placeholder + LOUD log —
+  **69 corpus-referenced images absent from data/images + ~11 remote Wikimedia score
+  hotlinks: queued for mirroring** (source-side gaps, the site shows the same).
+- **Nav at scale:** two-level — 28 volume entries (labels derived first–last, e.g.
+  "Volume 1 · A – ANDRONICUS") + A–Z letter-index pages + the contributors appendix
+  packed like articles (4 files, byline links resolve to the right one).  878 manifest
+  chunk items instead of 37k per-article files.
+- **XHTML5 conformance layer for already-baked bodies** (`xhtml5_sanitize` + ET-pass
+  fixups; every class regression-tested): legacy table attrs → `data-*` (incl. td@scope,
+  non-cell colspan, border∉{"",1}); style-attr filtering that is ENTITY-SAFE (`&quot;`
+  ends in `;` — naive decl splits cut inside it, the fatal class) and drops junk decls
+  (`width:;`, `width=5%`, brace-leaks, odd-`&quot;` values, EPUB-banned direction/
+  unicode-bidi → `dir` attr); `ul`-under-`ul` → into previous li; block-in-phrasing →
+  `display:block` span (p/div) or wrapper→`display:inline` div (table/list/heading, an
+  `a`'s href carried as data-href); invalid XML attr names dropped at the ET boundary;
+  junk-suffixed image names (`….jpg_‎`) bundled under cleaned names; page-marker spans
+  baked inside a «TR» attr slot lifted out pre-parse (1 corpus instance, vol 23 p. 704 —
+  the site carries the same junk attrs silently; pipeline fix queued).
+- **Producer fixes (materialize next rebuild):** `fold_cell_attrs` empty-value guard
+  (`width=` → nothing, was `width:;`); `_EPUB_SEC_HEAD_RE` TEMPERED (a heading whose
+  «/SC»«/CTR» close is malformed falls back to the generic decode instead of swallowing
+  following paragraphs into the h3 — CONTINUED FRACTIONS); footnote/section target checks
+  widened `== "epub"` → `in ("epub","kindle")` (Kindle strips JS — site-form popups would
+  LOSE footnote content in the kindle build).
+- **Math:** collect→generate→render; 5,188 unique equations corpus-wide, SVG inline
+  (epub) / PNG (kindle target, exists but unexercised this session).  epubcheck jar in
+  scratchpad; java 11 local.
+- **THE PRODUCT FINDING — the book is IMAGE-BOUND:** text chunks 349MB raw (≈120MB
+  deflated) vs images 1.3GB.  A no-image edition fits Send-to-Kindle's 200MB gate;
+  the with-images book (1.44GB) does not.  Image policy = user decision (downscale /
+  no-image edition / both).
+- Suite **487 green** (14 new pack/conformance tests + 1 fold test).  Site render
+  byte-untouched (`bundled=None` paths identical; suite proves it).
+- **REMAINS (validation ladder):** reader tests on real hardware — Thorium/Calibre open
+  time + TOC + cross-chunk links + math SVG + FRANCE page-flow; Kindle Previewer / Send-
+  to-Kindle / Kobo (user's devices); image-diet decision; mirror the 69+11 missing/remote
+  images; the vol-23 attr-slot page-marker pipeline fix.
+
 
 ### Sessions 2026-07-23/24 — SWEEPER-REMOVAL CAMPAIGN COMPLETE; SHIPPED + production-verified
 
