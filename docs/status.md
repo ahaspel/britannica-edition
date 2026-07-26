@@ -97,16 +97,38 @@ repo root, built by `python -m britannica.epub.build --volume 1 | --all [--targe
 - **Math:** collect→generate→render; 5,188 unique equations corpus-wide, SVG inline
   (epub) / PNG (kindle target, exists but unexercised this session).  epubcheck jar in
   scratchpad; java 11 local.
-- **THE PRODUCT FINDING — the book is IMAGE-BOUND:** text chunks 349MB raw (≈120MB
-  deflated) vs images 1.3GB.  A no-image edition fits Send-to-Kindle's 200MB gate;
-  the with-images book (1.44GB) does not.  Image policy = user decision (downscale /
-  no-image edition / both).
-- Suite **487 green** (14 new pack/conformance tests + 1 fold test).  Site render
-  byte-untouched (`bundled=None` paths identical; suite proves it).
-- **REMAINS (validation ladder):** reader tests on real hardware — Thorium/Calibre open
-  time + TOC + cross-chunk links + math SVG + FRANCE page-flow; Kindle Previewer / Send-
-  to-Kindle / Kobo (user's devices); image-diet decision; mirror the 69+11 missing/remote
-  images; the vol-23 attr-slot page-marker pipeline fix.
+- **IMAGE DIET (user-directed same session; the "per-volume / no-image" fork was a
+  false choice — one book, all images, display resolution).**  `epub/images.py`:
+  long side capped 1000px (retina at the ~590px column), best-of encode per image
+  (JPEG q60 for halftones vs 64/128-colour palette PNG for line art), grayscale only
+  when the plate IS monochrome (colour plates keep colour), original kept when smaller;
+  content-keyed cache `data/derived/epub_img_cache/` (math-assets pattern — rebuilds
+  re-encode only new/changed).  Bundled extension may differ from source; manifest
+  media-type keys on the bundled name.  Quality eyeballed: line art crisp; the dense
+  state-map class readable at county/town level (densest hamlet names soften — the
+  site's full-res remains the archival copy; per-class cap bump is a one-liner if
+  device tests want it).  **Result: images 1,368MB → ~150MB in-book; the FULL book
+  1,440MB → 543MB** — inside KDP's 650MB upload limit (200MB was only ever the
+  Send-to-Kindle personal-docs cap, not a sale channel).  `--images full` keeps the
+  archival build.
+- **Titles are now findable by reader search** (user caught it in Thorium: body text
+  matched, titles didn't).  The site's drop-cap span SPLITS the h1's text node
+  ("D"+"YNAMICS") — invisible on the site (Meilisearch), fatal in a book whose only
+  search is the reader's text search.  EPUB targets render the h1 as one plain text
+  node; the A–Z letter index is the browse surface.  Verified in the shipped bytes.
+- **Thorium at full scale (user, real hardware): the 1.44GB pre-diet book imported in
+  seconds and reads fine** — the single-book question's first hardware answer is YES.
+- Suite **488 green** (16 new pack/conformance/diet tests + 1 fold test).  Site render
+  byte-untouched (`bundled=None` + target="site" paths identical; suite proves it).
+- **FINAL ARTIFACTS (repo root, both epubcheck 0/0/0):** `eb1911.epub` — 37,226
+  articles / 870 chunks / 10,660 images / **543MB**; `eb1911-vol01.epub` — 15.3MB
+  control.
+- **REMAINS (validation ladder):** the rest of the hardware ladder — Calibre, Kindle
+  Previewer conversion, Kobo sideload (first-open pagination + FRANCE page-turns),
+  Send-to-Kindle only if that channel matters (543MB exceeds its 200MB cap; KDP is
+  the Kindle sale channel); mirror the 69 absent + ~11 remote score images into
+  data/images; the vol-23 attr-slot page-marker pipeline fix; image-cap tuning per
+  class if device tests ask.
 
 
 ### Sessions 2026-07-23/24 — SWEEPER-REMOVAL CAMPAIGN COMPLETE; SHIPPED + production-verified
