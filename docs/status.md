@@ -116,13 +116,20 @@ repo root, built by `python -m britannica.epub.build --volume 1 | --all [--targe
   ("D"+"YNAMICS") — invisible on the site (Meilisearch), fatal in a book whose only
   search is the reader's text search.  EPUB targets render the h1 as one plain text
   node; the A–Z letter index is the browse surface.  Verified in the shipped bytes.
+- **A–Z index is two-level, the site's browse model** (user: one flat letter page =
+  ~20 page-turns to FRANCE).  index.xhtml lists each letter's ~100-article ranges
+  (site PAGE_SIZE=100; labels = first-3-chars of first/last titles, "FOX–FRA"), each
+  range its own small page — one click into any article's neighbourhood; 385 range
+  pages.  Ranges sort by ACCENT-FOLDED title, not spine position (print quirks put
+  FRANCE, PLATE III after FYZABAD in reading order; labels display raw forms like
+  HĀJ/CÆS exactly as the site slices raw titles).
 - **Thorium at full scale (user, real hardware): the 1.44GB pre-diet book imported in
   seconds and reads fine** — the single-book question's first hardware answer is YES.
 - Suite **488 green** (16 new pack/conformance/diet tests + 1 fold test).  Site render
   byte-untouched (`bundled=None` + target="site" paths identical; suite proves it).
-- **FINAL ARTIFACTS (repo root, both epubcheck 0/0/0):** `eb1911.epub` — 37,226
-  articles / 870 chunks / 10,660 images / **543MB**; `eb1911-vol01.epub` — 15.3MB
-  control.
+- **FINAL ARTIFACTS (repo root, both epubcheck 0/0/0, ranged A–Z index in):**
+  `eb1911.epub` — 37,226 articles / 870 chunks / 10,660 images / **543MB**;
+  `eb1911-vol01.epub` — 15.3MB control.
 - **REMAINS (validation ladder):** the rest of the hardware ladder — Calibre, Kindle
   Previewer conversion, Kobo sideload (first-open pagination + FRANCE page-turns),
   Send-to-Kindle only if that channel matters (543MB exceeds its 200MB cap; KDP is
