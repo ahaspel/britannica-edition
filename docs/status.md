@@ -149,6 +149,28 @@ repo root, built by `python -m britannica.epub.build --volume 1 | --all [--targe
   no SVG — the documented reason the kindle target exists) and/or scale.  Ladder:
   `eb1911-vol01-kindle.epub` (`--target kindle`, PNG math) through Previewer first
   to separate format from scale.
+- **KINDLE ROOT CAUSE FOUND (2026-07-27, a day of black-box forensics): vol-1 now
+  converts, Enhanced Typesetting SUPPORTED.**  The killer: `.mirror-h { transform:
+  scaleX(-1) }` — ONE stylesheet rule, 18 mirrored letterforms, ALL in ALPHABET.
+  Amazon's ET pipeline rasterizes every transformed node (PhantomJS); its rasterizer
+  cannot size bare mirrored text → E00192 ×8 → the whole book "Not Supported" (the
+  GUI shows "internal error", the log "conversion successful" — neither names the
+  node).  PROVEN by capturing the rasterizer's worklist mid-conversion (phantomjs
+  cmdline → workListFile → 18 node items = the book's 18 mirror-h spans exactly).
+  Kindle css drops the rule (letterforms unmirrored there — ET's own mirror path IS
+  the crash; site/EPUB keep true mirroring).  En route, real classes fixed: brace
+  scaleY→font-size, scripted page off kindle, apostrophe image names (Amazon doesn't
+  XML-decode manifest hrefs), explicit img width/height attrs, per-equation-resilient
+  math PNG generation, per-target css.  FALSE TRAILS (each refuted by measurement):
+  duplicate titles, nested tables, monster tables, math PNGs, and a phantom
+  ALEXANDER-I boundary invented by a FLAKY ORACLE — orphaned KPR_NCD.exe daemons
+  (Previewer is single-instance; broken $_-mangled kills left zombies) made
+  bisection verdicts unreliable; protocol now: taskkill KPR_NCD between runs,
+  timeout counts as choke, verdict files (conversionLog.csv + conv_temp/
+  {errorInfo,featureInfo,metrics}.json + conversionReport.ion) read EVERY run —
+  ~100 signals instead of 1 bit.  KP CLI: `"Kindle Previewer 3.exe" book.epub
+  -convert -output DIR -locale en` — headless probes, no GUI clicking.
+  Full 37k kindle book: building + converting (in flight at session close).
 - **DIET ALPHA BUG (user: "the full epub blacks out inline glyphs in A") — v1 diet
   DROPPED the alpha channel**: `convert("L"/"RGB")` composites transparent glyph
   backgrounds onto BLACK — the A letterforms shipped as solid-black 140-byte

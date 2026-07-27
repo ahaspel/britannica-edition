@@ -232,3 +232,43 @@ def test_diet_preserves_alpha(tmp_path):
         Image.new("RGBA", got.size, (255, 255, 255, 255)), got).convert("L")
     vals = sorted(set(comp.getdata()))
     assert vals[0] < 100 and vals[-1] > 200                # strokes AND background
+
+
+def test_kindle_style_transforms():
+    # Kindle blocks CSS transforms (Previewer publish errors, vol-1 c0010 braces).
+    brace = '<span style="display:inline-block; transform:scaleY(8); transform-origin:center">{</span>'
+    out = pack.kindle_style_transforms(brace)
+    assert "transform" not in out
+    assert "font-size:6em" in out                    # capped stretch approximation
+    cond = '<span style="transform:scaleX(0.8);display:inline-block">x</span>'
+    out = pack.kindle_style_transforms(cond)
+    assert "transform" not in out and "font-size" not in out   # fractional: dropped
+    assert 'style="display:inline-block"' in out
+    plain = '<td style="width:25%">y</td>'
+    assert pack.kindle_style_transforms(plain) == plain        # untouched fast path
+
+
+def test_stamp_img_dims(tmp_path):
+    # E00192: ET's rasterizer dies on an image node with no computed dimensions.
+    import os
+    from PIL import Image
+    from britannica.epub.build import stamp_img_dims
+    os.makedirs(tmp_path / "images", exist_ok=True)
+    Image.new("RGB", (300, 120), (200, 200, 200)).save(tmp_path / "images" / "fig.jpg")
+    cache = {}
+    out = stamp_img_dims('<p><img src="images/fig.jpg" alt="f" style="max-width:100%"/></p>'
+                         '<img src="images/fig.jpg" width="10" height="4"/>'
+                         '<img src="https://x/y.png"/>', str(tmp_path), cache)
+    assert 'src="images/fig.jpg" alt="f" style="max-width:100%" width="300" height="120"/>' in out
+    assert 'width="10" height="4"' in out                      # existing attrs untouched
+    assert out.count('width="300"') == 1
+    assert '<img src="https://x/y.png"/>' in out               # non-local: untouched
+
+
+def test_kindle_css_carries_no_transforms():
+    # .mirror-h's stylesheet transform sent ALPHABET's 18 mirrored letterforms to
+    # Amazon's rasterizer, which dies on bare mirrored text (E00192) and takes the
+    # whole book out of Enhanced Typesetting.
+    from britannica.epub.build import epub_css
+    assert "transform" in epub_css("epub")          # site/epub readers mirror correctly
+    assert "transform" not in epub_css("kindle")
