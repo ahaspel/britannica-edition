@@ -122,17 +122,63 @@ repo root, built by `python -m britannica.epub.build --volume 1 | --all [--targe
   range its own small page — one click into any article's neighbourhood; 385 range
   pages.  Ranges sort by ACCENT-FOLDED title, not spine position (print quirks put
   FRANCE, PLATE III after FYZABAD in reading order; labels display raw forms like
-  HĀJ/CÆS exactly as the site slices raw titles).
+  HĀJ/CÆS exactly as the site slices raw titles).  **The NAV TOC nests the same
+  model** (user: a flat volume entry gave Thorium nothing to expand): each of the
+  28 volume entries carries its spine-ordered ~100-article ranges as a second nav
+  level — and each range entry opens a HUB PAGE listing its ~100 article links
+  (user: a range that jumps into the TEXT leaves ~50 page-turns to the target; the
+  site model shows the TITLE LIST).  **3 clicks to any article**: volume → range
+  hub → article.  The volume link itself opens its first hub (NAV-011: nav targets
+  must be monotone in spine order — back matter rides in nav order: browse hubs →
+  search → topics → A–Z → contributors).
+- **TOPICS (user requirement): the classified TOC as nav + hub pages.**  519 nodes,
+  depth 4, 36,193 entries (35,955 resolved) from classified_toc.json: one page per
+  node in DFS preorder (breadcrumb + notes + child links + article links; notes'
+  offset-links resolve to topic pages via a first-wins name map; unresolved index
+  entries render unlinked — faithful, no fake binds); the full tree nests under
+  "Topics" in the Contents panel.
+- **TITLE SEARCH (user: reader search scans ~500MB linearly, unusable order — the
+  format has no index).  A SCRIPTED search page** (EPUB3 scripted content,
+  `properties="scripted"`; Thorium runs it): embedded [title, href] table (~1.7MB,
+  all 37,226), ranking = the site's fold + titleRank tiers PORTED from
+  search-api.js (one ordering spec) — instant, Meilisearch-ordered title lookup.
+  Script-stripping readers (Kindle) see a fallback pointing at the A–Z index.
+  Full-text ranked search stays the site's job (a text index would rival the book).
+- **Kindle Previewer rejects the epub-target book** (user: hangs "preparing", fails
+  despite "conversion successful" log) — diagnosis: inline SVG math (Kindle renders
+  no SVG — the documented reason the kindle target exists) and/or scale.  Ladder:
+  `eb1911-vol01-kindle.epub` (`--target kindle`, PNG math) through Previewer first
+  to separate format from scale.
+- **DIET ALPHA BUG (user: "the full epub blacks out inline glyphs in A") — v1 diet
+  DROPPED the alpha channel**: `convert("L"/"RGB")` composites transparent glyph
+  backgrounds onto BLACK — the A letterforms shipped as solid-black 140-byte
+  1000px rectangles (the user's fine-looking "vol 1" was a pre-diet import in
+  Thorium's library; both r6 books actually carried the same black bytes —
+  byte-compare proved it before the theory).  Fix: alpha-bearing images keep
+  alpha — no JPEG, FASTOCTREE palette PNG; params tag bumped `a1` → full cache
+  re-encode; regression test (transparency + strokes + background all survive).
 - **Thorium at full scale (user, real hardware): the 1.44GB pre-diet book imported in
   seconds and reads fine** — the single-book question's first hardware answer is YES.
 - Suite **488 green** (16 new pack/conformance/diet tests + 1 fold test).  Site render
   byte-untouched (`bundled=None` + target="site" paths identical; suite proves it).
-- **FINAL ARTIFACTS (repo root, both epubcheck 0/0/0, ranged A–Z index in):**
-  `eb1911.epub` — 37,226 articles / 870 chunks / 10,660 images / **543MB**;
-  `eb1911-vol01.epub` — 15.3MB control.
+- **FOUR-BRANCH NAV (user spec): Contents = Volumes · Topics · Title Search (A–Z
+  as child) · Contributors (A–G/G–M/M–S/S–W).**  "Volumes" is a span group header;
+  branch order follows spine order per variant (NAV-011).  Search page gained a
+  TAPPABLE LETTER ROW (user: Thorium swallows keyboard input into content docs —
+  clicks always work); lookup pages are FRONT MATTER (user: buried below 28
+  volume rows).  `dcterms:modified` = BUILD TIME now — a fixed constant made every
+  revision the same publication identity, so reader libraries silently kept OLD
+  imports (the missing-topics and glyph false-trails both traced to this).
+- **FINAL ARTIFACTS (repo root, ALL epubcheck 0/0/0, r10):** `eb1911.epub` —
+  37,226 articles / 870 chunks / 10,660 images / **559MB** / 942 nav links;
+  `eb1911-fullnav.epub` — the EXPERIMENT: all 37,226 articles as a third nav
+  level (38,168 links, 2.3MB nav) — decides whether Thorium's native panel
+  search replaces the scripted page; `eb1911-vol01.epub` — 17.6MB control;
+  `eb1911-vol01-kindle.epub` — 21.6MB (PNG math, Kindle Previewer ladder).
+  Suite 489.
 - **REMAINS (validation ladder):** the rest of the hardware ladder — Calibre, Kindle
   Previewer conversion, Kobo sideload (first-open pagination + FRANCE page-turns),
-  Send-to-Kindle only if that channel matters (543MB exceeds its 200MB cap; KDP is
+  Send-to-Kindle only if that channel matters (559MB exceeds its 200MB cap; KDP is
   the Kindle sale channel); mirror the 69 absent + ~11 remote score images into
   data/images; the vol-23 attr-slot page-marker pipeline fix; image-cap tuning per
   class if device tests ask.

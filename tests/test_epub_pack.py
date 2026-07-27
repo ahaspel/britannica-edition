@@ -207,3 +207,28 @@ def test_epub_title_is_one_searchable_text_node():
     m = "«TITLE:DYNAMICS«/TITLE»"
     assert "<span" in _render_title_h1(m, site)
     assert _render_title_h1(m, epub) == "<h1>DYNAMICS</h1>"
+
+
+def test_diet_preserves_alpha(tmp_path):
+    # v1 dropped the alpha channel (convert composites transparency onto BLACK) —
+    # the A article's letterform glyphs shipped as solid-black 140-byte rectangles.
+    import io as _io
+    import random
+    from PIL import Image
+    from britannica.epub import images as IMG
+    im = Image.new("RGBA", (1400, 500), (0, 0, 0, 0))
+    px = im.load()
+    rnd = random.Random(7)
+    for _ in range(20000):        # noisy strokes so the file exceeds the 12KB skip
+        px[rnd.randrange(1400), rnd.randrange(500)] = (10, 10, 10, 255)
+    p = tmp_path / "glyph.png"
+    im.save(p, "PNG")
+    assert p.stat().st_size > 12 * 1024
+    out, ext = IMG.diet_image(str(p))
+    assert ext == ".png"
+    got = Image.open(_io.BytesIO(out)).convert("RGBA")
+    assert min(a for *_x, a in got.getdata()) < 128        # transparency survived
+    comp = Image.alpha_composite(
+        Image.new("RGBA", got.size, (255, 255, 255, 255)), got).convert("L")
+    vals = sorted(set(comp.getdata()))
+    assert vals[0] < 100 and vals[-1] > 200                # strokes AND background
