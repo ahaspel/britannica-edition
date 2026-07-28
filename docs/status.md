@@ -158,7 +158,10 @@ repo root, built by `python -m britannica.epub.build --volume 1 | --all [--targe
   node).  PROVEN by capturing the rasterizer's worklist mid-conversion (phantomjs
   cmdline → workListFile → 18 node items = the book's 18 mirror-h spans exactly).
   Kindle css drops the rule (letterforms unmirrored there — ET's own mirror path IS
-  the crash; site/EPUB keep true mirroring).  En route, real classes fixed: brace
+  the crash; site/EPUB keep true mirroring).  QUEUED (user-agreed): restore fidelity
+  by pre-rendering the 18 mirrored glyphs as sized PNGs at build (Playwright, the
+  math-PNG machinery's shape) — kindle shows TRUE mirroring as inline images, no
+  transform for ET to choke on; rides the next kindle build round.  En route, real classes fixed: brace
   scaleY→font-size, scripted page off kindle, apostrophe image names (Amazon doesn't
   XML-decode manifest hrefs), explicit img width/height attrs, per-equation-resilient
   math PNG generation, per-target css.  FALSE TRAILS (each refuted by measurement):
@@ -170,7 +173,20 @@ repo root, built by `python -m britannica.epub.build --volume 1 | --all [--targe
   {errorInfo,featureInfo,metrics}.json + conversionReport.ion) read EVERY run —
   ~100 signals instead of 1 bit.  KP CLI: `"Kindle Previewer 3.exe" book.epub
   -convert -output DIR -locale en` — headless probes, no GUI clicking.
-  Full 37k kindle book: building + converting (in flight at session close).
+  **SCALE: local Previewer cannot convert past somewhere in (21MB, 249MB]** — full
+  (578MB) and half (249MB) both die SILENTLY pre-rasterizer ("successful" 2-row log,
+  GB of intermediates, empty outputs); the 3GB `-Xmx3072m` heap was overridden to
+  12g via `_JAVA_OPTIONS` (env opts are processed last → win) and the half STILL
+  died → the ceiling is native/hardcoded, NOT Java heap.  CONCLUSION: Previewer
+  verifies CONTENT, KDP's server verifies SCALE (the only untested variable).
+  User verdict (vol-1 kindle GUI): opens, looks good, behaves well — tables, math,
+  glyphs all fine (mirroring pending its PNG upgrade).  **COVER added (user req):
+  build-time drawn 1600×2560 in the site mark's language (cream #f5f1eb, ink
+  #2c2416, double-rule frame, EB medallion, Georgia, auto-fit title), per-book
+  subtitle, cover-image property + kindle legacy meta, cover.xhtml first in spine.**
+  Overnight chain (in flight): all artifacts rebuilt with covers + kindle
+  content-verification batches vols 2–28 in threes → full content coverage
+  locally; then the KDP draft upload is the single remaining test.
 - **DIET ALPHA BUG (user: "the full epub blacks out inline glyphs in A") — v1 diet
   DROPPED the alpha channel**: `convert("L"/"RGB")` composites transparent glyph
   backgrounds onto BLACK — the A letterforms shipped as solid-black 140-byte

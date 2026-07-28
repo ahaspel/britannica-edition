@@ -272,3 +272,25 @@ def test_kindle_css_carries_no_transforms():
     from britannica.epub.build import epub_css
     assert "transform" in epub_css("epub")          # site/epub readers mirror correctly
     assert "transform" not in epub_css("kindle")
+
+
+def test_kindle_table_fixes():
+    from britannica.epub.build import to_xhtml_body
+    # overlapping colspan clamps to the free run (ET rejects the book otherwise)
+    html = ('<table><tbody>'
+            '<tr><td rowspan="2">a</td><td>b</td><td rowspan="2">c</td></tr>'
+            '<tr><td colspan="2">overlap</td></tr>'
+            '</tbody></table>')
+    out = to_xhtml_body(html, "kindle")
+    assert 'colspan="2"' not in out and 'colspan="1">overlap' in out
+    assert to_xhtml_body(html, "epub").count('colspan="2"') == 1   # epub untouched
+    # giant table splits at row boundaries under the 20k ceiling
+    rows = "".join(f'<tr><td>{"x" * 400}</td></tr>' for _ in range(80))
+    out = to_xhtml_body(f'<table class="t"><tbody>{rows}</tbody></table>', "kindle")
+    import re as _re
+    tables = _re.findall(r"<table[^>]*>", out)
+    assert len(tables) > 1
+    assert all(len(seg) < 20000 for seg in out.split("</table>")[:-1])
+    from britannica.epub import pack as _p
+    single = to_xhtml_body(f'<table class="t"><tbody>{rows}</tbody></table>', "epub")
+    assert _p.text_of(out) == _p.text_of(single)                   # nothing lost
