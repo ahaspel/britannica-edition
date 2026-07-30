@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-07-26.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-07-29.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,7 +46,43 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-07-26)
+## CURRENT STATE (2026-07-29)
+
+### Session 2026-07-27→29 — Kindle campaign: oracle solved, CASTANETS refuted, converter is non-deterministic
+
+**Oracle root cause (SOLVED, supersedes every daemon/cache/settle theory of 07-27/28):
+Kindle Previewer launched as a child of the sandboxed bash shell self-exits in ~2s** —
+clean exit, rc=0, no Summary, arguments never processed (`-help` is equally mute); its
+own log (`~/.kindle/KPR/log/KPR.Log`) shows init → "Logger Terminated" per invocation.
+**Launched detached via PowerShell `Start-Process`, the same book+args convert
+reliably.**  Every mute-era verdict is void.  Protocol now: PowerShell runner, ONE
+exclusive queue, unique file copy per conversion, poll `-output` for Summary_Log.csv,
+Stop-Process the lingering app between runs (single-instance).
+
+- **Vol-1 kindle: "Supported" again** (third clean pass; also user-GUI-validated r16).
+- **CASTANETS 2×2 replication (user demanded: real or bogus?): BOGUS.**  Identical
+  bytes of the original vol-5 probe: run1 Not Supported, run2 **Supported**; shifted
+  probe: Supported ×2.  **Amazon's ET check is NON-DETERMINISTIC on identical input.**
+  The "positional/byte-offset bug" was sampled noise; `--nudge` retained only as a
+  harmless rebuild knob.  Corollary: any single Not-Supported verdict is meaningless —
+  measure pass RATES; a passing conversion (the KPF) is what ships.
+- **Full-book ET verdict: IMPOSSIBLE — Amazon gates ET on a per-book entity-count
+  ceiling (2026-07-30 scale bisection, 11 books).**  Full book fails 4/4 in 5-6min
+  (fast structural reject; a real conversion takes 27-40min).  Ladder: vols 1-3
+  (58MB) Supported · 1-4 Supported · 1-5 (91MB) fast-fail — then axis kills:
+  1-3 FULL-images (198MB!) Supported → SIZE dead; 1-5 @600KB-chunks (spine 758 <
+  every passing book) fast-fail → SPINE dead; 1-4 @40KB-chunks (manifest 4,285 ≈
+  failing 4,291) Supported → MANIFEST dead.  Surviving axes, perfectly monotone:
+  **images ≤1,470 pass / ≥1,866 fail; articles ≤6,582 pass / ≥7,902 fail**
+  (correlated — exact constant unresolved, product-irrelevant: the full book is
+  ~6× beyond either).  Undocumented (KDP help checked).  **Product consequence:
+  the complete single book ships as a STANDARD-format Kindle book (conversion
+  "Success" every run — renders on all Kindles, just without ET niceties);
+  ET stays a per-volume property (any single volume is far under the ceiling —
+  vol-1 sampler proven).  `--chunk-target` flag added to build.py (bisection
+  tool; also the knob if Amazon's ceilings ever move).**
+- Castanets probe article restored byte-identical after replication builds
+  (`castanets.orig.json` hash-verified earlier in the arc).
 
 ### Session 2026-07-26 — EPUB single book: chunk-packed, gated, epubcheck-CLEAN at full scale
 
@@ -187,6 +223,20 @@ repo root, built by `python -m britannica.epub.build --volume 1 | --all [--targe
   Overnight chain (in flight): all artifacts rebuilt with covers + kindle
   content-verification batches vols 2–28 in threes → full content coverage
   locally; then the KDP draft upload is the single remaining test.
+- **THE POSITIONAL CONVERTER BUG (2026-07-28, CASTANETS) — the last and strangest
+  class.**  Vol-5 bisected (11 monotone rounds) to a 254-word pure-prose stub;
+  probe series: body-swap passes · Greek-xlit-removed passes · **the IDENTICAL
+  span shifted ~100 bytes passes** → Amazon's ET rejection is BYTE-OFFSET-
+  dependent (chars common corpus-wide; no power-of-two file-offset correlation —
+  the sensitive offsets live in their internal transforms).  Undetectable
+  locally, ~1 strike per few hundred MB, any global byte shift dislodges it.
+  Operational fix: `--nudge N` shifts every chunk's offsets; protocol = convert →
+  silent Not-Supported (EMPTY errorInfo) → rebuild nudge+1 → reconvert.  Also:
+  table SPLITS now respect rowspan extents (a cut through a span left dangling
+  rowspans = silent reject, 3 self-inflicted; belt-clamp + boundary rule,
+  regression-tested).  Full-book nudge-retry conversion IN FLIGHT.  Also en
+  route: single-vol probes PASSED vols 6,7 (giant-table + overlap fixes proven);
+  vol-1 + cover passes; suite 495.
 - **DIET ALPHA BUG (user: "the full epub blacks out inline glyphs in A") — v1 diet
   DROPPED the alpha channel**: `convert("L"/"RGB")` composites transparent glyph
   backgrounds onto BLACK — the A letterforms shipped as solid-black 140-byte

@@ -294,3 +294,27 @@ def test_kindle_table_fixes():
     from britannica.epub import pack as _p
     single = to_xhtml_body(f'<table class="t"><tbody>{rows}</tbody></table>', "epub")
     assert _p.text_of(out) == _p.text_of(single)                   # nothing lost
+
+
+def test_split_respects_rowspans():
+    # a split cutting through a rowspan leaves a dangling span pointing past its
+    # table's end — a malformed table ET silently rejects
+    from britannica.epub.build import to_xhtml_body
+    import re as _re
+    from xml.etree import ElementTree as ET
+    rows = []
+    for i in range(60):
+        if i % 10 == 0:
+            rows.append(f'<tr><td rowspan="5">{"g" * 300}</td><td>{"x" * 300}</td></tr>')
+        else:
+            rows.append(f'<tr><td>{"x" * 300}</td></tr>')
+    out = to_xhtml_body(f'<table><tbody>{"".join(rows)}</tbody></table>', "kindle")
+    root = ET.fromstring("<r>" + out + "</r>")
+    tables = list(root.iter("table"))
+    assert len(tables) > 1
+    for table in tables:
+        trs = list(table.iter("tr"))
+        for ri, tr in enumerate(trs):
+            for cell in tr:
+                if cell.tag in ("td", "th"):
+                    assert ri + int(cell.get("rowspan", "1")) <= len(trs)
