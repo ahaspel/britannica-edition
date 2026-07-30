@@ -84,6 +84,30 @@ Stop-Process the lingering app between runs (single-instance).
 - Castanets probe article restored byte-identical after replication builds
   (`castanets.orig.json` hash-verified earlier in the arc).
 
+### Session 2026-07-30 — EPUB front matter · Reader's Guide · flat TOC
+
+**Front matter (epub/front_matter.py):** Introduction (docs/introduction.txt — plain
+text, `#`-comments, page omitted while empty; SEEDED from the site About essay for
+the user to adapt) · the 1910 Editorial Preface · the Index Preface — both extracted
+from the static site pages (script-attrs dropped, footnote back-links retargeted to
+real `#fnref-N` anchors, site-relative hrefs absolutized, wiki-indent colons
+stripped), then through `to_xhtml_body` like every baked body.  **Reader's Guide
+(epub/readers_guide.py):** hub → 6 parts → 65 chapters as back matter; article
+citations (`/article/{stem}`) resolve presence-aware against the anchor map (absent
+→ site URL); analytics `<script>` tags stripped at extraction (they ride INSIDE the
+chapter pages' content div — 124 epubcheck errors); the one guide illustration
+bundled; **8 malformed source hrefs dropped (a literal `<a href=` nested inside
+`contributors.html?q=` — build_readers_guide.py generator bug, LIVE ON THE SITE,
+site-side fix queued)**.  **Flat TOC (user: 1,000+ nav lines unusable, ~70 fine;
+collapse can't be relied on across readers):** top-levels only — Title Search ·
+prefaces · 28 flat volume entries · top topic categories · contributor A–Z quarters
+· Guide parts; ALL detail behind click-through hubs (NEW volume-NN.xhtml hub =
+volume's range list; ranges/topic subtrees/chapters excluded from nav).  **Volume
+labels = printed-spine ranges** (accent-folded alphanumeric first-word min/max,
+ligatures expanded, plate CAPTIONS excluded): "Volume 1 · A – ANDROPHAGI" (page-order
+last stem gave ANDRONICUS — wrong).  Vol-1 control: **epubcheck 0/0/0** with all of
+it.  Full EPUB + kindle rebuilds IN FLIGHT (first with cover page on the epub).
+
 ### Session 2026-07-26 — EPUB single book: chunk-packed, gated, epubcheck-CLEAN at full scale
 
 **The whole edition builds as ONE valid EPUB.**  `eb1911.epub`: 37,226 articles in 878

@@ -457,16 +457,24 @@ def link_contributors(
         compiled.append((pattern, query))
 
     def pass2(text: str) -> str:
+        # Anchors made by an EARLIER pattern must be invisible to LATER ones —
+        # a later unique-surname pattern otherwise matches inside the earlier
+        # anchor's href/text and nests a link into the URL (the ch. XLI
+        # "Rev.+Owen+<a href=" corruption).  Stash each product immediately.
         nonlocal linked
+        made: list[str] = []
+
         for pattern, query in compiled:
             def link(m: re.Match[str]) -> str:
                 nonlocal linked
                 linked += 1
-                return (
+                made.append(
                     f'<a href="/contributors.html?q={query}">{m.group(0)}</a>'
                 )
+                return f"\x00Q{len(made) - 1}\x00"
             text = pattern.sub(link, text)
-        return text
+        return re.sub(r"\x00Q(\d+)\x00",
+                      lambda m: made[int(m.group(1))], text)
 
     html = _protect_and_run(html, pass2)
     return html, linked
