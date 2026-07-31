@@ -84,6 +84,37 @@ Stop-Process the lingering app between runs (single-instance).
 - Castanets probe article restored byte-identical after replication builds
   (`castanets.orig.json` hash-verified earlier in the arc).
 
+### Session 2026-07-31 — cover scan · site-mirrored labels · link policy · FTS
+
+- **Cover (complete edition):** the site's Volume I title-page photograph cropped to
+  the FLAT printed page (no leaf edges/backdrop; `_TITLE_PAGE_CROP` fractions),
+  scaled to 2560px; volume builds keep the drawn mark.
+- **Volume TOC labels: the site's rule VERBATIM** (index.html volArticles/
+  volRangeWords — user: 100% correct): plain articles only, ws_page order with
+  ws_page_end tiebreak, first word of first/last titles.  All 28 book labels match
+  the site byte-for-byte.  (Two invented heuristics — folded min/max, plate/ligature
+  patches — were WRONG; mirror the working implementation, don't invent.)
+- **Link policy (user: internal-first):** unresolved «LN» xrefs render as PLAIN TEXT
+  in book targets (href-less `<a>`; no site search-box dead ends — 618→0); guide/
+  preface contributor citations rewrite to the in-book appendix on exact canonical-
+  name match (2,041 site links → 17 honest misses).  KEPT: Wikisource 784, Wikipedia
+  18, Gutenberg 3, title-page provenance link.
+- **Title search: token-set matching** — multi-word queries need every token to
+  match a title word (whole-word, else prefix), ANY ORDER: "HENRY JAMES" now finds
+  "JAMES, HENRY" (print inverts names); single-token queries keep the site tiers
+  exactly; shorter-title tiebreak.  Plate captions excluded from the search table
+  (`article_type == "article"`, 36,691 rows).
+- **FULL-TEXT SEARCH (epub/fts.py — the ebook's big win):** whole-corpus inverted
+  index embedded as `fts-data.js` (~30MB, +5% book): 36,691 docs / 387k folded
+  terms / 12.9M postings, delta+varint in a 64-char CDATA-safe alphabet; terms in
+  >27% of docs dropped and ignored in queries.  Own page (`fulltext.xhtml`, TOC
+  entry after Title Search) so title lookup stays instant; AND-of-words, article
+  granularity, title-boosted ordering; NO phrases/snippets (positions would 3-5×
+  the bytes — Meilisearch keeps those).  Node harness drives the REAL asset:
+  encode→decode→intersect proven.  Kindle: excluded with the rest of the scripted
+  UI (native search is already fast).  Thorium keyboard note: app-level key grab
+  = reader limitation; the tap letter row is the accommodation.
+
 ### Session 2026-07-30 — EPUB front matter · Reader's Guide · flat TOC
 
 **Front matter (epub/front_matter.py):** Introduction (docs/introduction.txt — plain
