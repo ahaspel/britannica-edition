@@ -86,6 +86,20 @@ Stop-Process the lingering app between runs (single-instance).
 
 ### Session 2026-07-31 — cover scan · site-mirrored labels · link policy · FTS
 
+**Per-article topic references (user caught the gap):** the site's "In: Category ›
+Sub" line is a client-side overlay — the BOOK bakes it: topic tree + page names
+precomputed BEFORE pass 1 (one owner — the topics section reuses them), each staged
+article appends a `topic-refs` section, every path element linked to its topic page.
+Full book: **34,468 articles carry refs** (≈ the toc's ~95% link-resolution rate;
+residual = resolver tail, not book loss).  Works on BOTH targets (plain links).
+**PUBLICATION CANDIDATES: eb1911.epub 550MB 0/0/0 · eb1911-kindle.epub 554MB.**
+
+**TOC top restructure (user spec, LANDED):** `Introduction` group (To This Edition —
+the user's REVISED introduction.txt · Editorial Preface · **Historical Preface** =
+the Prefatory Note) then `Search` group (Title · Full-Text), then Volumes/Topics/
+Contributors/Guide.  **Preface to the Index REMOVED** (user: the book's own indices
+supersede it).  Payhip file cap verified: 5GB/file — the ~550MB EPUB is fine.
+
 - **Cover (complete edition):** the site's Volume I title-page photograph cropped to
   the FLAT printed page (no leaf edges/backdrop; `_TITLE_PAGE_CROP` fractions),
   scaled to 2560px; volume builds keep the drawn mark.
