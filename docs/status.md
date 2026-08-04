@@ -86,6 +86,22 @@ Stop-Process the lingering app between runs (single-instance).
 
 ### Session 2026-07-31 — cover scan · site-mirrored labels · link policy · FTS
 
+**LAUNCH (2026-07-31 evening):** full site rebuild (53:43, all gates green — materialized
+the ported xref strategy, vol-29 contributor credits, fold_cell_attrs, repaired guide
+pages) → deploy (17 min, S3+CloudFront+Meili 37,226 docs+HF) → **VERIFIED LIVE**:
+download.html sells the EPUB at $39.99 via Payhip (payhip.com/b/ifyaR), fresh build
+(549.6MB) swapped in, production search answers.  **KINDLE: the full book NEVER
+converted — anywhere.**  Local "Conversion Status: Success" was HOLLOW (vol-1 Success
+→ real 78MB KPF; every full-book Success → EMPTY output path, no artifact; cloud KDP
+rejects with a generic error).  Lesson re-learned at cost: DEMAND THE ARTIFACT, never
+a status string.  KDP support ticket ESCALATED (answer promised ~2 days); options if
+"no": vol-1 sampler (proven KPF) or 4-6-part series under the proven ceiling
+(≤ ~6,582 articles / ~1,470 images per book).  HN follow-up post: first attempt
+dupe-swallowed (same URL, 3-month-old 353-pt thread), download.html attempt flagged;
+mod email sent, second-chance pool expected.  Store assets: eb1911-cover.jpg
+(portrait/KDP) + eb1911-cover-square.jpg (ink ground/Payhip).  Titlepage count now
+36,691 plain articles (535 plates excluded; user matched all copy to the home page).
+
 **Per-article topic references (user caught the gap):** the site's "In: Category ›
 Sub" line is a client-side overlay — the BOOK bakes it: topic tree + page names
 precomputed BEFORE pass 1 (one owner — the topics section reuses them), each staged
