@@ -105,10 +105,20 @@ def capture(tag: str, vol_filter: str) -> int:
             sid = f"{vol:02d}-{page_start:04d}-{slug}"
             joined = _build_joined_raw(segs)
             try:
-                body = process_elements(joined, ElementContext(volume=vol, page_number=segs[0][1]))
+                body = process_elements(joined, ElementContext(volume=vol))
             except Exception as exc:  # noqa: BLE001 — record, don't abort the net
                 body = f"\x00TRANSFORM-ERROR\x00{type(exc).__name__}: {exc}"
                 err += 1
+            if err and done == 0:
+                # A net that fails on EVERY article still printed "DONE" and wrote
+                # a full manifest of identical error-placeholder hashes, so a diff
+                # against it read as all-clean.  This sat dead from the day
+                # `page_number` left ElementContext — the same break `leak_audit`
+                # was repaired for, in its twin.  Fail on the first article
+                # instead: a broken net must never look like a passing one.
+                raise SystemExit(
+                    "capture aborting: the FIRST article failed to transform — "
+                    f"the net is broken, not the corpus.\n  {body[:200]}")
             sha = hashlib.sha256(body.encode("utf-8")).hexdigest()[:16]
             vdir = body_dir / str(vol)
             vdir.mkdir(exist_ok=True)
