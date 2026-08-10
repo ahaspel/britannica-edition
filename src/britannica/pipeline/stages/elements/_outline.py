@@ -15,17 +15,55 @@ import re
 from britannica.pipeline.stages.elements._registry import ElementRegistry
 
 
-_LEADING_PLACEHOLDER_RE = re.compile(r"^\x03ELEM:\d+\x03")  # leading extracted-element placeholder (the page break is now a PAGE element)
+# Both are consumed ONLY via `.match(line, pos)` in `_split_leading_noncontent`,
+# which anchors at `pos` — so neither carries a `^` (a `^` binds to the true string
+# start and would never match at an offset, stopping the scan at the first prefix).
+_LEADING_PLACEHOLDER_RE = re.compile(r"\x03ELEM:\d+\x03")   # extracted-element placeholder
+# Leading NON-CONTENT that must not count as indent: the raw page-position
+# sentinel and `{{nop}}`, the no-op a transcriber writes to force the break.
+_LEADING_NONCONTENT_RE = re.compile(r"\x01PAGE:\d+\x01|\{\{\s*nop\s*\}\}")
 
 
 def _strip_leading_placeholder(line: str) -> str:
-    """Drop a leading extracted-element placeholder so indent detection
-    sees the visible content.  A page break that falls at a list-line
-    start is now a PAGE element, so the line begins with that element's
-    placeholder; the recognizer steps past it to reach the `:` exactly
-    as it would past any element a line happens to begin with.  The
-    placeholder rides through untouched and is substituted back after."""
-    return _LEADING_PLACEHOLDER_RE.sub("", line)
+    """Drop leading NON-CONTENT so indent detection sees the visible content.
+
+    A page break at a list-line start must not change the line's indent profile.
+    The outline is the one shape that reads its structure FROM that profile, so a
+    position marker sitting in front of the `:` makes the line unrecognizable and
+    the mark renders as literal text — BIRD p.978's `:::` above "Sub-order 7", and
+    16 more like it (GASTROPODA's `:Fam. 29.`, FUNGI's `: Class II.`).
+
+    Three forms of the same nothing, and all three occur:
+      * an extracted-element PLACEHOLDER — when this runs after extraction;
+      * the raw PAGE SENTINEL — `_walk_outline` runs this scan as a PRE-PASS on
+        raw text, before the balanced walk extracts anything, so at that point
+        the page break has not become a placeholder yet;
+      * `{{nop}}` — MediaWiki's force-a-break no-op, which a transcriber puts
+        immediately before a page break for exactly that reason.
+    They stack (`{{nop}}` then sentinel), so strip to a fixed point.  This decides
+    only what the recognizer LOOKS at; it moves no bytes."""
+    return _split_leading_noncontent(line)[1]
+
+
+def _split_leading_noncontent(line: str) -> tuple[str, str]:
+    """`(non-content prefix, rest)`.  ONE splitter for both jobs — deciding what
+    the recognizer looks at (rest), and rebuilding an item's content
+    (prefix + rest) — so the inspect path and the mutate path cannot disagree
+    about where content starts.
+
+    The prefix is CARRIED, never dropped: it holds the page-position sentinel that
+    anchors the scan link for that page.  Stripping it to make the colons reachable
+    would trade a broken outline for a lost page marker."""
+    i, n = 0, len(line)
+    while i < n:
+        for rx in (_LEADING_PLACEHOLDER_RE, _LEADING_NONCONTENT_RE):
+            m = rx.match(line, i)
+            if m and m.end() > i:
+                i = m.end()
+                break
+        else:
+            break
+    return line[:i], line[i:]
 
 
 def _outline_indent_depth(line: str) -> int | None:
@@ -256,5 +294,14 @@ def recognize_outline(block: str) -> list[tuple[int, str]]:
         else:
             # `depth` (first-signal) only told us this IS an indent line; the NESTING
             # depth is the SUM of the leading units, so :&emsp;&emsp;&emsp; sub-cases nest.
-            items.append((_outline_item_depth(line), _INDENT_MARKER_RE.sub("", line).strip()))
+            # Strip the indent markers from the CONTENT side only, then put the
+            # non-content prefix back: the page sentinel rides INSIDE the item's
+            # text, at the point the break occurs, and still renders its scan
+            # link.  Dropping the prefix would lose the page marker; leaving it
+            # in FRONT of the colons would leave them unstripped (the marker
+            # regex is `^`-anchored), and the item would re-classify as an
+            # outline of itself — an infinite descent.
+            prefix, rest = _split_leading_noncontent(line)
+            items.append((_outline_item_depth(line),
+                          (prefix + _INDENT_MARKER_RE.sub("", rest)).strip()))
     return items

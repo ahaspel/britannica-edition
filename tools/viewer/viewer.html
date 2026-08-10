@@ -807,8 +807,17 @@
 
 
     .page-marker {
-      float: left;
-      margin-left: -7em;
+      /* ABSOLUTE, not float — the twin of `.shoulder-heading` on the other
+         margin.  A float is re-contained by whatever block it lands in, so a
+         marker for a page that begins mid-table was trapped inside its `<td>`
+         and could never reach the margin.  Positioned against `.body-text`
+         (already `position: relative`, and its `flow-root` comment already
+         says it must not clip "the absolutely-positioned margin page-numbers"),
+         the DOM position now sets only the VERTICAL placement, so the marker
+         can sit exactly where the break falls — mid-table included — and still
+         render in the margin beside that row. */
+      position: absolute;
+      left: -7em;
       width: 5.5em;
       text-align: right;
       font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;

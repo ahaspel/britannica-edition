@@ -45,11 +45,16 @@ ROOT = Path("data/derived/_flip_snap")
 
 
 def _build_joined_raw(segs: list[tuple[str, int]]) -> str:
-    """Mirror transform_articles' faithful segment re-join: concatenate the
-    segments with NO separator, reproducing the article's slice of the clean
-    stream exactly.  Each segment already carries its «PAGE» marker (stamped at
-    detection) and the seam was healed upstream — dry-run-must-mirror-prod."""
-    return "".join(txt or "" for txt, pg in segs)
+    """Mirror transform_articles' faithful segment re-join: join the segments with
+    a NEWLINE, reproducing the article's slice of the clean stream exactly.  Each
+    segment already carries its «PAGE» marker (stamped at detection).
+
+    The separator is the one MediaWiki's `<pages>` uses and detection's
+    `.strip()` drops; see the note at the production join for why `\\n` is the
+    token that serves prose, dehyphenation and line-level marks alike.  This
+    docstring used to claim the seam "was healed upstream" — it never was, and the
+    claim hid a class of leaked `:` marks.  dry-run-must-mirror-prod."""
+    return "\n".join(txt or "" for txt, pg in segs)
 
 
 def _load_segments_by_article(s) -> dict[int, list[tuple[str, int]]]:
