@@ -56,7 +56,13 @@ def main():
 
     print(f"RENDER-LEAK REPORT — {len(files)} articles, {dirty} dirty "
           f"({100 * dirty / max(1, len(files)):.2f}%)")
-    for cat in ("marker", "template", "wikilink", "attr", "tag", "sentinel"):
+    # Enumerate what the DETECTOR actually reported, not a list copied from it.
+    # The hardcoded tuple silently omitted `indent` the day that category was
+    # added: the dirty COUNT rose (47 -> 58) while every printed line stayed the
+    # same, so the report looked unchanged and 14 articles' worth of leaked wiki
+    # indent went unnamed.  A summary that can go stale against its own source is
+    # the same class of blind spot the detector exists to remove.
+    for cat in sorted(set(cat_arts) | set(cat_occ)):
         print(f"  {cat:9} {cat_arts[cat]:4} articles, {cat_occ[cat]:5} occurrences")
     print(f"  detail -> {OUT}")
     return 1 if dirty else 0
