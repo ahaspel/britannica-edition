@@ -2,7 +2,7 @@
 attribution for the great majority of binds.
 
 EB1911 signs an article three ways, and the first two carry the NAME and
-INITIALS together, in the article's own raw wikitext (``ArticleSegment.segment_text``):
+INITIALS together, in the article's own raw wikitext (``Article.body``):
 
   1. ``{{EB1911 footer initials|Full Name|Initials}}`` — the footer template.
   2. ``[[Author:Full Name|Initials]]``                — the signature wikilink,
@@ -27,7 +27,7 @@ from __future__ import annotations
 import re
 from collections import defaultdict
 
-from britannica.db.models import Contributor, ContributorInitials, ArticleSegment
+from britannica.db.models import Article, Contributor, ContributorInitials
 from britannica.contributors.resolver import _fold, _name_core_tokens
 from britannica.pipeline.stages.elements._contributor import (
     _SHORTCUT_RE, _expand_initials_shortcut)
@@ -38,17 +38,17 @@ _AUTHOR_LINK_RE = re.compile(r"\[\[Author:([^\]|]+)\|([^\]]+)\]\]", re.IGNORECAS
 
 
 def raw_wikitext_by_article(session) -> dict[int, str]:
-    """Each article's own raw wikitext: its segments concatenated in order."""
-    parts: dict[int, list[str]] = defaultdict(list)
-    for aid, _seq, text in (
-        session.query(ArticleSegment.article_id,
-                      ArticleSegment.sequence_in_article,
-                      ArticleSegment.segment_text)
-        .order_by(ArticleSegment.article_id,
-                  ArticleSegment.sequence_in_article)
-    ):
-        parts[aid].append(text or "")
-    return {aid: "\n".join(chunks) for aid, chunks in parts.items()}
+    """Each article's own raw wikitext — ``Article.body``, whole.
+
+    This used to fetch the per-page segments and join them with ``"\\n"``, which
+    meant contributor harvesting read a DIFFERENT article text than the walker
+    did (``transform_articles`` glued the same pieces with ``""``).  Two stages,
+    two reassemblies, silently disagreeing at every page seam.  The body is not
+    cut up any more, so there is one text and one answer
+    ([[project_page_position_out_of_band]]).
+    """
+    return {aid: (body or "")
+            for aid, body in session.query(Article.id, Article.body)}
 
 
 def harvest_author_links(session, cidx, article_ids=None):

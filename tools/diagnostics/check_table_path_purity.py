@@ -20,7 +20,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="repla
 
 from sqlalchemy import or_
 from britannica.db.session import SessionLocal
-from britannica.db.models import Article, ArticleSegment
+from britannica.db.models import Article
 from britannica.pipeline.stages.elements._classifier import classify_article
 from britannica.pipeline.stages.elements._tables import (
     _table_grid, _chem_row_is_reaction,
@@ -63,11 +63,12 @@ def shape(ce):
 
 def main():
     s = SessionLocal()
+    # Filter on the body itself — the segments hold page KEYS now, not text
+    # ([[project_page_position_out_of_band]]).  No join, no DISTINCT.
     arts = (s.query(Article)
-            .join(ArticleSegment, ArticleSegment.article_id == Article.id)
-            .filter(or_(ArticleSegment.segment_text.like("%{|%"),
-                        ArticleSegment.segment_text.like("%<table%")))
-            .distinct().order_by(Article.volume, Article.page_start).all())
+            .filter(or_(Article.body.like("%{|%"),
+                        Article.body.like("%<table%")))
+            .order_by(Article.volume, Article.page_start).all())
     by = Counter()
     ex = {}
     cur = None
@@ -77,9 +78,7 @@ def main():
         if a.volume != cur:
             cur = a.volume
             print(f"  vol {cur}", flush=True)
-        segs = (s.query(ArticleSegment).filter_by(article_id=a.id)
-                .order_by(ArticleSegment.sequence_in_article).all())
-        body = "\n\n".join(x.segment_text or "" for x in segs)
+        body = a.body or ""
         try:
             _ph, tree = classify_article(body)
         except Exception:

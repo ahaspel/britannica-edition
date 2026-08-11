@@ -16,7 +16,7 @@ import sys
 import time
 
 from britannica.db.session import SessionLocal
-from britannica.db.models import Article, ArticleSegment, SourcePage
+from britannica.db.models import Article
 from britannica.pipeline.stages.transform_articles import produce_title
 import britannica.pipeline.stages.transform_articles.sections as S
 
@@ -76,11 +76,9 @@ def main():
     t0 = time.time()
     before_only, no_shoulder = [], []
     for i, a in enumerate(arts):
-        segs = (s.query(ArticleSegment)
-                .join(SourcePage, ArticleSegment.source_page_id == SourcePage.id)
-                .filter(ArticleSegment.article_id == a.id)
-                .order_by(ArticleSegment.sequence_in_article).all())
-        joined = "".join(seg.segment_text or "" for seg in segs)
+        # Stored whole — read, don't rebuild
+        # ([[project_page_position_out_of_band]]).
+        joined = a.body or ""
         if not joined:
             continue
         body, _ = produce_title(joined, a.section_name)

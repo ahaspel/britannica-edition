@@ -810,12 +810,19 @@
       /* ABSOLUTE, not float — the twin of `.shoulder-heading` on the other
          margin.  A float is re-contained by whatever block it lands in, so a
          marker for a page that begins mid-table was trapped inside its `<td>`
-         and could never reach the margin.  Positioned against `.body-text`
-         (already `position: relative`, and its `flow-root` comment already
-         says it must not clip "the absolutely-positioned margin page-numbers"),
-         the DOM position now sets only the VERTICAL placement, so the marker
-         can sit exactly where the break falls — mid-table included — and still
-         render in the margin beside that row. */
+         and could never reach the margin.  The DOM position now sets only the
+         VERTICAL placement, so the marker can sit exactly where the break falls
+         — mid-table included — and still render in the margin beside that row.
+
+         It resolves against its nearest POSITIONED ancestor, which is
+         `.body-text` only when the marker sits between blocks; in a paragraph
+         it is `.body-text p`, and in a wide table `.wide-table-wrap`.  All
+         three share `.body-text`'s left content edge (`p` has `margin-left: 0`,
+         `.wide-table-wrap` has `margin: 1em 0`), so `-7em` lands in the same
+         margin whichever one wins.  `.body-text`'s `flow-root` comment already
+         says it must not clip "the absolutely-positioned margin page-numbers";
+         `.wide-table-inline`'s `overflow-x` does not clip either, because the
+         containing block is its PARENT, outside the scroll box. */
       position: absolute;
       left: -7em;
       width: 5.5em;
@@ -1838,10 +1845,12 @@
       const linkSeg = (full, label) =>
         `<a href="${topicsBase}#${encodeURIComponent(full)}" style="color:var(--link);">${escapeHtml(label)}</a>`;
       const list = topics.map(t => {
+        // The bucket the article is actually in — no special-casing.  A sole
+        // 'General' used to be dropped as noise, which was inconsistent (the
+        // equally generic 'Subjects', 15 of them, and 'General list' stayed) and
+        // it lied about where the article sits: 'Astronomy › General' is a real
+        // bucket on the topics page, and the tag is a link to it.
         const segs = [t.category, ...(t.path || [])];
-        // Drop a sole 'General' path (the catch-all for cats without a real
-        // subdivision) — 'History › General' is noise; keep General when nested deeper.
-        if (segs.length === 2 && segs[1] === "General") segs.pop();
         const links = [];
         for (let i = 0; i < segs.length; i++) {
           const full = segs.slice(0, i + 1).join(" > ");
@@ -2033,6 +2042,15 @@
           }
         }
         for (const cat of data.categories || []) {
+          // A CATEGORY is a bucket too.  Articles hang off it directly when it
+          // has no subdivision — Sports and Pastimes has 264 articles and 0
+          // subsections — and entering the walk only from `subsections` left
+          // every one of them with no topic tag at all.
+          for (const art of cat.articles || []) {
+            if (!art.filename) continue;
+            (topicMap[art.filename] = topicMap[art.filename] || [])
+              .push({ category: cat.name, path: [] });
+          }
           for (const sub of cat.subsections || []) {
             walk(cat.name, sub, []);
           }

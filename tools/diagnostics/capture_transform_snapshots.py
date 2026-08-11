@@ -3,9 +3,8 @@ set of seed articles, used by `tests/regression/test_transform_snapshots.py`
 to lock in current behaviour during the `_transform_text_v2`
 decomposition.
 
-For each seed article, queries the live DB for its segments + page
-numbers, builds the SAME ``joined_raw`` input that
-``transform_articles`` builds during a real run, and writes:
+For each seed article, reads the SAME raw body that ``transform_articles``
+reads during a real run — `Article.body`, stored whole — and writes:
 
   tests/snapshots/transform/<stable_id>.input.txt
   tests/snapshots/transform/<stable_id>.body.txt
@@ -35,7 +34,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                               errors="replace")
 
-from britannica.db.models import Article, ArticleSegment, SourcePage  # noqa: E402
+from britannica.db.models import Article  # noqa: E402
 from britannica.db.session import SessionLocal  # noqa: E402
 from britannica.pipeline.stages.elements import (  # noqa: E402
     ElementContext, process_elements)
@@ -82,14 +81,16 @@ SNAPSHOT_DIR = Path("tests/snapshots/transform")
 EXPORT_DIR = Path("data/derived/articles")
 
 
-def build_joined_raw(segments: list) -> str:
-    """Mirror the FAITHFUL re-join in `transform_articles`: concatenate the
-    segments with NO separator.  Each segment already carries its «PAGE» marker
-    (stamped at detection) and is a slice of the preprocess-healed stream, so
-    there is nothing to re-stamp and nothing to re-heal; re-inserting a ``\\n``
-    between segments would invent a page-seam newline production no longer has.
-    Matches ``snapshot_corpus._build_joined_raw`` and production exactly."""
-    return "".join(seg.segment_text or "" for seg, page_number in segments)
+def raw_body(article) -> str:
+    """The article's raw body — read, not rebuilt.
+
+    This function used to MIRROR the re-join in `transform_articles`, and its
+    docstring argued at length about whether to put a ``\\n`` between the
+    segments.  That argument existed only because the body had been cut up; it is
+    stored whole now, so there is no join to get right
+    ([[project_page_position_out_of_band]]).  Matches production by reading the
+    same bytes production reads, not by imitating it."""
+    return article.body or ""
 
 
 def _find_article(session, stable_id: str):
@@ -135,19 +136,10 @@ def capture_one(session, filename_stem: str) -> tuple[str, str]:
     if article.article_type == "plate":
         return ("SKIP", "plate articles use parse_plate, not _transform_text_v2")
 
-    segments = (
-        session.query(ArticleSegment)
-        .join(SourcePage, ArticleSegment.source_page_id == SourcePage.id)
-        .filter(ArticleSegment.article_id == article.id)
-        .order_by(ArticleSegment.sequence_in_article)
-        .add_columns(SourcePage.page_number)
-        .all()
-    )
-    if not segments:
-        return ("MISSING", "no segments found")
-
-    joined_raw = build_joined_raw(segments)
-    first_page = segments[0][1]
+    joined_raw = raw_body(article)
+    if not joined_raw:
+        return ("MISSING", "article has no body")
+    first_page = article.page_start
 
     # IMPORTANT: snapshot the IMMEDIATE output of `_transform_text_v2`,
     # not the eventually-exported article body.  The exported body
@@ -159,7 +151,7 @@ def capture_one(session, filename_stem: str) -> tuple[str, str]:
     # Mirror production/ingest + the regression test: produce from the
     # `preprocess()`-cleaned input (idempotent on already-clean segments).
     body = process_elements(preprocess(joined_raw),
-                            ElementContext(volume=article.volume, page_number=first_page))
+                            ElementContext(volume=article.volume))
 
     # The `.body.txt` IS the snapshot; `.input.txt` is its fixture.  No
     # per-seed meta file: the test parses volume + page from the `NN-NNNN-…`

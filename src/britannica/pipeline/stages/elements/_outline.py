@@ -15,33 +15,31 @@ import re
 from britannica.pipeline.stages.elements._registry import ElementRegistry
 
 
-# Both are consumed ONLY via `.match(line, pos)` in `_split_leading_noncontent`,
-# which anchors at `pos` — so neither carries a `^` (a `^` binds to the true string
-# start and would never match at an offset, stopping the scan at the first prefix).
+# Consumed ONLY via `.match(line, pos)` in `_split_leading_noncontent`, which
+# anchors at `pos` — so it carries no `^` (a `^` binds to the true string start and
+# would never match at an offset, stopping the scan at the first prefix).
 _LEADING_PLACEHOLDER_RE = re.compile(r"\x03ELEM:\d+\x03")   # extracted-element placeholder
-# Leading NON-CONTENT that must not count as indent: the raw page-position
-# sentinel and `{{nop}}`, the no-op a transcriber writes to force the break.
-_LEADING_NONCONTENT_RE = re.compile(r"\x01PAGE:\d+\x01|\{\{\s*nop\s*\}\}")
+# Leading NON-CONTENT that must not count as indent: `{{nop}}`, the no-op a
+# transcriber writes to force a page break.  The PAGE SENTINEL used to be the
+# other alternative here — it no longer exists in the stream
+# ([[project_page_position_out_of_band]]), so an outline line now simply begins
+# with its own indent.
+_LEADING_NONCONTENT_RE = re.compile(r"\{\{\s*nop\s*\}\}")
 
 
 def _strip_leading_placeholder(line: str) -> str:
     """Drop leading NON-CONTENT so indent detection sees the visible content.
 
-    A page break at a list-line start must not change the line's indent profile.
-    The outline is the one shape that reads its structure FROM that profile, so a
-    position marker sitting in front of the `:` makes the line unrecognizable and
-    the mark renders as literal text — BIRD p.978's `:::` above "Sub-order 7", and
-    16 more like it (GASTROPODA's `:Fam. 29.`, FUNGI's `: Class II.`).
-
-    Three forms of the same nothing, and all three occur:
+    The outline is the one shape that reads its structure FROM the indent profile,
+    so anything sitting in front of the `:` makes the line unrecognizable and the
+    mark renders as literal text.  A PAGE BREAK used to be the main offender —
+    BIRD p.978's `:::` above "Sub-order 7", GASTROPODA's `:Fam. 29.`, FUNGI's
+    `: Class II.` and 14 more — and this function existed to reach around it.
+    Page position is no longer in the stream, so what remains is:
       * an extracted-element PLACEHOLDER — when this runs after extraction;
-      * the raw PAGE SENTINEL — `_walk_outline` runs this scan as a PRE-PASS on
-        raw text, before the balanced walk extracts anything, so at that point
-        the page break has not become a placeholder yet;
-      * `{{nop}}` — MediaWiki's force-a-break no-op, which a transcriber puts
-        immediately before a page break for exactly that reason.
-    They stack (`{{nop}}` then sentinel), so strip to a fixed point.  This decides
-    only what the recognizer LOOKS at; it moves no bytes."""
+      * `{{nop}}` — MediaWiki's force-a-break no-op.
+    They can stack, so strip to a fixed point.  This decides only what the
+    recognizer LOOKS at; it moves no bytes."""
     return _split_leading_noncontent(line)[1]
 
 
@@ -51,9 +49,9 @@ def _split_leading_noncontent(line: str) -> tuple[str, str]:
     (prefix + rest) — so the inspect path and the mutate path cannot disagree
     about where content starts.
 
-    The prefix is CARRIED, never dropped: it holds the page-position sentinel that
-    anchors the scan link for that page.  Stripping it to make the colons reachable
-    would trade a broken outline for a lost page marker."""
+    The prefix is still CARRIED rather than dropped: a `{{nop}}` or an element
+    placeholder in front of the indent belongs to the item, and rebuilding without
+    it would move content."""
     i, n = 0, len(line)
     while i < n:
         for rx in (_LEADING_PLACEHOLDER_RE, _LEADING_NONCONTENT_RE):

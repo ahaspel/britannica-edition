@@ -146,9 +146,12 @@ def main() -> None:
         )
         if not segs:
             continue
-        # Fingerprint the FIRST segment only — multi-page plates have
-        # the structural variety in their first page.
-        raw = segs[0].segment_text or ""
+        # Fingerprint the FIRST page only — multi-page plates have the structural
+        # variety in their first page.  The segments are page KEYS now, so the
+        # first page is `body[:second_key.offset]`
+        # ([[project_page_position_out_of_band]]).
+        body = art.body or ""
+        raw = body[:segs[1].offset] if len(segs) > 1 else body
         fp = fingerprint(raw)
         sig = signature(fp, multipage=len(segs) > 1)
         sig_counts[sig] += 1

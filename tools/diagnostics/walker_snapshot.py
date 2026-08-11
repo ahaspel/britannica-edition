@@ -37,7 +37,7 @@ def _work(item):
     from britannica.pipeline.stages.elements import (
         ElementContext, process_elements)
     try:
-        out = process_elements(raw, ElementContext(volume=vol, page_number=pg))
+        out = process_elements(raw, ElementContext(volume=vol))
     except Exception as e:                      # a crash is a change we must see
         out = f"__CRASH__{type(e).__name__}: {e}"
     h = hashlib.md5(out.encode("utf-8", "replace")).hexdigest()

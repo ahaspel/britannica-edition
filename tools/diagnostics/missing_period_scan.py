@@ -32,7 +32,6 @@ import os
 import re
 import sys
 
-from britannica.markers import strip_page_markers
 
 
 # Words that DO NOT typically end a sentence — finding one immediately
@@ -116,7 +115,6 @@ def find_hits(body: str) -> list[tuple[int, str]]:
     """Return list of (offset, context) for every likely missing-period
     site in ``body``.  Each context is ~70 chars surrounding the hit
     so the caller can verify by eye."""
-    body = strip_page_markers(body)
     body = re.sub(r"«[^«»]+»", "", body)
     out: list[tuple[int, str]] = []
     for m in PATTERN.finditer(body):
@@ -129,7 +127,6 @@ def find_hits(body: str) -> list[tuple[int, str]]:
 
 
 def word_count(body: str) -> int:
-    body = strip_page_markers(body)
     body = re.sub(r"«[^«»]+»", "", body)
     return len(body.split())
 

@@ -28,7 +28,6 @@ import anthropic
 from anthropic.types.message_create_params import MessageCreateParamsNonStreaming
 from anthropic.types.messages.batch_create_params import Request
 
-from britannica.markers import strip_page_markers
 
 CACHE_FILE = Path("data/derived/toc_disambiguation_cache.json")
 TOC_FILE = Path("data/derived/classified_toc.json")
@@ -61,7 +60,6 @@ def _norm(s: str) -> str:
 
 
 def _clean_body(text: str, length: int = 240) -> str:
-    text = strip_page_markers(text)
     text = re.sub(r"\u00ab[^\u00bb]*\u00bb", "", text)
     text = re.sub(r"\{\{IMG:[^}]*\}\}", "", text)
     text = re.sub(r"\{\{TABLE[A-Z]?:.*?\}TABLE\}", "", text, flags=re.DOTALL)

@@ -2,7 +2,7 @@
 production-exported body as the baseline.
 
 For each named article stem, pulls:
-  * the raw segments from the DB (snapshot input)
+  * the raw body from the DB (snapshot input)
   * the article metadata (volume, page numbers)
   * the *previously-exported* JSON body from
     ``data/derived/articles/<stem>.json`` (snapshot baseline)
@@ -36,7 +36,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                                errors="replace")
 
-from britannica.db.models import Article, ArticleSegment, SourcePage  # noqa: E402
+from britannica.db.models import Article  # noqa: E402
 from britannica.db.session import SessionLocal  # noqa: E402
 
 
@@ -44,12 +44,15 @@ SNAPSHOT_DIR = Path("tests/snapshots/transform")
 EXPORT_DIR = Path("data/derived/articles")
 
 
-def _build_joined_raw(segments: list) -> str:
-    """Same join used by `transform_articles` and `capture_transform_snapshots`:
-    concatenate the segments with NO separator.  Each segment already carries its
-    `\\x01PAGE:N\\x01` marker (stamped at detection) and the seam was healed
-    upstream — nothing to re-stamp, nothing to re-heal."""
-    return "".join(seg.segment_text or "" for seg, page_number in segments)
+def _raw_body(article: Article) -> str:
+    """The article's raw body — read, not rebuilt.
+
+    Was a segment fetch plus a join that MIRRORED what `transform_articles` did.
+    Mirroring a reassembly is only necessary while there is a reassembly, and the
+    body is now stored whole, exactly as sliced from the clean volume stream
+    ([[project_page_position_out_of_band]]).  Nothing here can join it wrongly
+    because nothing here joins."""
+    return article.body or ""
 
 
 def add_one(session, stem: str) -> tuple[str, str]:
@@ -67,19 +70,10 @@ def add_one(session, stem: str) -> tuple[str, str]:
     if article.article_type == "plate":
         return ("SKIP", "plate articles use parse_plate, not _transform_text_v2")
 
-    segments = (
-        session.query(ArticleSegment)
-        .join(SourcePage, ArticleSegment.source_page_id == SourcePage.id)
-        .filter(ArticleSegment.article_id == article.id)
-        .order_by(ArticleSegment.sequence_in_article)
-        .add_columns(SourcePage.page_number)
-        .all()
-    )
-    if not segments:
-        return ("MISSING", "no segments found")
-
-    joined_raw = _build_joined_raw(segments)
-    first_page = segments[0][1]
+    joined_raw = _raw_body(article)
+    if not joined_raw:
+        return ("MISSING", "article has no body")
+    first_page = article.page_start
     body = art_json.get("body", "")
 
     SNAPSHOT_DIR.mkdir(parents=True, exist_ok=True)
@@ -94,7 +88,6 @@ def add_one(session, stem: str) -> tuple[str, str]:
             "page_number": first_page,
             "page_start": article.page_start,
             "page_end": article.page_end,
-            "segments": len(segments),
             "input_bytes": len(joined_raw),
             "body_bytes": len(body),
             "body_source": "json_export",

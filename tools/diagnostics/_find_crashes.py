@@ -30,7 +30,7 @@ def work(item):
     from britannica.pipeline.stages.preprocess import preprocess
     try:
         process_elements(preprocess(raw),
-                         ElementContext(volume=vol, page_number=pg))
+                         ElementContext(volume=vol))
         return None
     except Exception as e:  # noqa: BLE001 — we WANT every throw
         return (aid, vol, pg, type(e).__name__, str(e), traceback.format_exc())

@@ -28,7 +28,7 @@ import re
 import sys
 import time
 
-from britannica.db.models import Article, ArticleSegment, SourcePage
+from britannica.db.models import Article
 from britannica.db.session import SessionLocal
 from britannica.pipeline.stages.elements import ElementContext, process_elements
 
@@ -50,15 +50,13 @@ KNOWN_NESTED_IN_TABLE: set[str] = {
 
 
 def _retransform(session, article: Article) -> str | None:
-    segs = (session.query(ArticleSegment, SourcePage.page_number)
-            .join(SourcePage, ArticleSegment.source_page_id == SourcePage.id)
-            .filter(ArticleSegment.article_id == article.id)
-            .order_by(ArticleSegment.sequence_in_article).all())
-    if not segs:
+    # The body is stored whole — read it, don't rebuild it from segments
+    # ([[project_page_position_out_of_band]]).
+    raw = article.body or ""
+    if not raw:
         return None
-    raw = "".join(seg.segment_text or "" for seg, pn in segs)
     try:
-        return process_elements(raw, ElementContext(volume=article.volume, page_number=segs[0][1]))
+        return process_elements(raw, ElementContext(volume=article.volume))
     except Exception as e:
         sys.stdout.buffer.write(
             f"  EXCEPTION {article.title}: {e}\n".encode("utf-8"))

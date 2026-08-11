@@ -44,38 +44,17 @@ from britannica.util.strings import section_slug  # noqa: E402
 ROOT = Path("data/derived/_flip_snap")
 
 
-def _build_joined_raw(segs: list[tuple[str, int]]) -> str:
-    """Mirror transform_articles' faithful segment re-join: join the segments with
-    a NEWLINE, reproducing the article's slice of the clean stream exactly.  Each
-    segment already carries its «PAGE» marker (stamped at detection).
+def _bodies_by_article(s) -> dict[int, str]:
+    """One bulk query → {article_id: Article.body}.
 
-    The separator is the one MediaWiki's `<pages>` uses and detection's
-    `.strip()` drops; see the note at the production join for why `\\n` is the
-    token that serves prose, dehyphenation and line-level marks alike.  This
-    docstring used to claim the seam "was healed upstream" — it never was, and the
-    claim hid a class of leaked `:` marks.  dry-run-must-mirror-prod."""
-    return "\n".join(txt or "" for txt, pg in segs)
-
-
-def _load_segments_by_article(s) -> dict[int, list[tuple[str, int]]]:
-    """One bulk query → {article_id: [(segment_text, page_number), ...]}
-    in sequence order.  Avoids 36k per-article round-trips."""
-    rows = (
-        s.query(
-            ArticleSegment.article_id,
-            ArticleSegment.sequence_in_article,
-            ArticleSegment.segment_text,
-            SourcePage.page_number,
-        )
-        .join(SourcePage, ArticleSegment.source_page_id == SourcePage.id)
-        .order_by(ArticleSegment.article_id,
-                  ArticleSegment.sequence_in_article)
-        .all()
-    )
-    by_art: dict[int, list[tuple[str, int]]] = defaultdict(list)
-    for art_id, _seq, text, page in rows:
-        by_art[art_id].append((text, page))
-    return by_art
+    Was a segment fetch plus a re-join that had to MIRROR what
+    `transform_articles` did — and mirroring a reassembly is only necessary when
+    there is a reassembly.  The body is stored whole now, exactly as sliced from
+    the clean volume stream, so the net reads the same bytes production does with
+    no reconstruction to get wrong ([[project_page_position_out_of_band]]).
+    """
+    return {aid: (body or "")
+            for aid, body in s.query(Article.id, Article.body)}
 
 
 def capture(tag: str, vol_filter: str) -> int:
@@ -93,13 +72,13 @@ def capture(tag: str, vol_filter: str) -> int:
             q = q.filter(Article.volume == int(vol_filter))
         arts = q.order_by(Article.volume, Article.page_start).all()
         print(f"capturing {len(arts)} articles → {tag_dir}", flush=True)
-        segs_by_art = _load_segments_by_article(s)
+        bodies = _bodies_by_article(s)
 
         out = manifest.open("w", encoding="utf-8")
         done = err = 0
         for art_id, vol, title, page_start, section_name in arts:
-            segs = segs_by_art.get(art_id)
-            if not segs:
+            joined = bodies.get(art_id)
+            if not joined:
                 continue
             # Key on the DURABLE stable_id (vol+page_start+section_slug), NOT the
             # autoincrement PK — the PK is reassigned on every re-detect, which
@@ -108,7 +87,6 @@ def capture(tag: str, vol_filter: str) -> int:
             if not slug:
                 slug = section_slug(title)
             sid = f"{vol:02d}-{page_start:04d}-{slug}"
-            joined = _build_joined_raw(segs)
             try:
                 body = process_elements(joined, ElementContext(volume=vol))
             except Exception as exc:  # noqa: BLE001 — record, don't abort the net

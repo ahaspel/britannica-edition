@@ -90,7 +90,7 @@ def _compute_hunks(stem: str) -> dict:
       * `hunks`             list[Hunk] non-equal opcodes
     """
     raw, body, meta = _load(stem)
-    actual = process_elements(raw, ElementContext(volume=meta["volume"], page_number=meta["page_number"]))
+    actual = process_elements(raw, ElementContext(volume=meta["volume"]))
     expected_n = _normalize(body)
     actual_n = _normalize(actual)
 

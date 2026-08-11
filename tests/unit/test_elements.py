@@ -5,7 +5,7 @@ from britannica.pipeline.stages.elements import (
     ElementContext,
     process_elements,
 )
-from britannica.pipeline.stages.preprocess import _clean_and_heal
+from britannica.pipeline.stages.preprocess import _source_clean
 from britannica.pipeline.stages.elements._shapes import (
     SHAPE_BODY,
     SHAPE_BRACE_PIPE,
@@ -193,7 +193,7 @@ class TestRealData:
         """BINIOU score tags inside tables should become image markers."""
         raw = self._load_page(3, 971)
         context = ElementContext(volume=3)
-        result = process_elements(_clean_and_heal(raw), context)
+        result = process_elements(_source_clean(raw), context)
         assert "<score>" not in result, "Raw score tags survived"
         assert "\\new Staff" not in result, "LilyPond code survived"
 

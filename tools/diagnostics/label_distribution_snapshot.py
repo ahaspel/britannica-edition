@@ -34,7 +34,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
 
 from britannica.db.session import SessionLocal  # noqa: E402
-from britannica.db.models import Article, ArticleSegment  # noqa: E402
+from britannica.db.models import Article  # noqa: E402
 from britannica.pipeline.stages.elements._classifier import (  # noqa: E402
     classify_article,
 )
@@ -78,15 +78,11 @@ def main() -> int:
                 print(f"  {i}/{len(articles)} "
                       f"({elapsed:.0f}s, ~{eta:.0f}s left)", flush=True)
 
-            segs = (
-                session.query(ArticleSegment)
-                .filter_by(article_id=art.id)
-                .order_by(ArticleSegment.sequence_in_article)
-                .all()
-            )
-            if not segs:
+            # Stored whole — read, don't rebuild
+            # ([[project_page_position_out_of_band]]).
+            body = art.body or ""
+            if not body:
                 continue
-            body = "\n\n".join(s.segment_text or "" for s in segs)
 
             try:
                 _ph, tree = classify_article(body)

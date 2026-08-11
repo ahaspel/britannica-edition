@@ -21,7 +21,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="repla
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 from britannica.db.session import SessionLocal
-from britannica.db.models import Article, ArticleSegment
+from britannica.db.models import Article
 from britannica.pipeline.stages.elements import ElementContext, process_elements
 
 # Viewer handler vocabulary: « markers and {{ markers it references in source.
@@ -46,11 +46,11 @@ def main() -> None:
     for i, a in enumerate(arts):
         if i and i % 40 == 0:
             print(f"  …{i}/{len(arts)}", flush=True)
-        segs = (s.query(ArticleSegment).filter_by(article_id=a.id)
-                .order_by(ArticleSegment.sequence_in_article).all())
-        raw = "\n\n".join(x.segment_text or "" for x in segs)
+        # Stored whole — read, don't rebuild
+        # ([[project_page_position_out_of_band]]).
+        raw = a.body or ""
         try:
-            out = process_elements(raw, ElementContext(volume=a.volume, page_number=a.page_start))
+            out = process_elements(raw, ElementContext(volume=a.volume))
         except Exception:
             continue
         emitted.update(re.findall(r"«([A-Z][A-Za-z0-9]*)»", out))   # opening « markers in FINAL output
