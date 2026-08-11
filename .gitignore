@@ -49,3 +49,9 @@ build/
 
 # Item-collection files for temporary testing
 *.tsv*.epub.sha256
+
+# Corpus fingerprint for the viewer article-cache bust — build output, a hash of
+# data/derived/articles (which is itself untracked).  A committed copy could not be
+# verified from the repo and would go stale against the local corpus; deploy.sh
+# regenerates it immediately before upload.
+tools/viewer/build-stamp.js

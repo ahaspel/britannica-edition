@@ -91,6 +91,21 @@ aws s3 cp eb1911-vol01.epub.sha256 s3://britannica11.org/download/eb1911-vol01.e
 aws s3 cp data/derived/download/manifest.json s3://britannica11.org/download/manifest.json
 aws s3 cp data/derived/download/README.md s3://britannica11.org/download/README.md
 
+# Regenerate the corpus fingerprint HERE, immediately before shipping it, so the
+# stamp provably describes the bytes this deploy uploaded.  Generating it only in
+# the rebuild would let a deploy run against a corpus changed since — and because
+# this script has no `set -e`, a missing or stale stamp would not stop the
+# deploy: S3 would keep the PREVIOUS stamp, pinning every reader to the previous
+# build's `?v=` and restoring the exact immutable-cache staleness the stamp
+# exists to defeat.  It costs ~5s and is deterministic, so running it twice
+# (rebuild + here) yields the same value.
+echo "  Stamping corpus fingerprint..."
+uv run python tools/viewer/build_stamp.py || {
+  echo "FATAL: could not stamp the corpus fingerprint — refusing to deploy," >&2
+  echo "       because shipping the previous stamp silently serves stale articles." >&2
+  exit 1
+}
+
 echo "  Uploading viewer (HTML + JS = no-cache; content isn't hashed yet, so revalidate)..."
 # HTML shell + generated pages: no-cache so a deploy is never served stale. A cached shell/JS
 # against a fresh corpus resolves every link to a deleted old filename — the 2026-07-15 regression.
@@ -102,7 +117,11 @@ for f in viewer index search scans maps contributors home preface topics \
   aws s3 cp "tools/viewer/$f.html" "s3://britannica11.org/$f.html" \
     --content-type "text/html; charset=utf-8" --cache-control "no-cache"
 done
-for f in search-api article-urls typeahead gc-gate; do
+# build-stamp.js carries the corpus fingerprint the viewer appends to article
+# fetches as `?v=`.  It MUST stay no-cache: a stale stamp would keep pointing at
+# the previous build's URL, which is precisely the immutable-cache staleness the
+# stamp exists to defeat.
+for f in search-api article-urls typeahead gc-gate build-stamp; do
   aws s3 cp "tools/viewer/$f.js" "s3://britannica11.org/$f.js" \
     --content-type "application/javascript" --cache-control "no-cache"
 done
