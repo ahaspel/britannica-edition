@@ -184,6 +184,17 @@ TRUSTED_RUNS: dict[int, list[tuple[int, int, int, int]]] = {
     # OCR and heading data place page numbers on the right leaves
     # rather than clustering them at gap starts.
     24: [
+        # SCOTLAND's Justus Perthes map: a TWO-PAGE map with a blank either
+        # side, inserted after p. 412 (user-verified against the scans,
+        # 2026-08-10).  Wikisource transcribes the whole insert as ONE ws page
+        # (ws431), so ws-space numbering was already right and only the LEAF
+        # walk went wrong: it numbered the four insert leaves 413-416, so every
+        # scan link for pp. 413-418 landed four leaves early — on the map and
+        # its blanks instead of the text.  The error absorbed itself at p. 419
+        # (leaf 449) because the SECOND insert then got six leaves instead of
+        # two, which is why nothing outside 413-418 was ever wrong.
+        # Pair with the four leaves in UNNUMBERED_LEAVES[24].
+        (441, 413, 446, 418),
         (1035, 955, 1035, 955),
         (1048, 966, 1048, 966),
         (1054, 968, 1054, 968),
@@ -194,6 +205,34 @@ TRUSTED_RUNS: dict[int, list[tuple[int, int, int, int]]] = {
     ],
     26: [(354, 324, 354, 324)],
     28: [(466, 440, 466, 440)],
+}
+
+
+# Transcriber typos in the WIKISOURCE running header, in WS space: the page
+# itself prints the wrong number, so there is nothing structural to key on and
+# the extractor faithfully reads what is written.  Values here are visually
+# verified against the scans and REPLACE the heading outright.
+#
+# `data/corrections.json` cannot reach these: it is applied in `preprocess`,
+# while this tool reads `SourcePage.wikitext` / the raw page JSON directly.
+#
+# A typo here is not cosmetic — the value becomes the printed page for that ws,
+# which sets `page_start`/`page_end` on every article touching it AND the label
+# on its margin marker.
+HEADING_OVERRIDE: dict[int, dict[int, int]] = {
+    23: {
+        # RICHMOND (user-verified 2026-08-10): ws323 prints 306 and ws325
+        # prints 308, so these two are 307 and 309.  The source reads 387/389
+        # — a zero typed as an eight, twice, by the same transcriber.  Left
+        # uncorrected they gave NINE articles a wrong page range (RICHMOND,
+        # EARLS AND DUKES OF displayed 306-387 instead of 306-307) and printed
+        # "23:387" in the margin, on a marker that is otherwise correctly
+        # seated.  The automatic `_reject_heading_typos` guard cannot catch
+        # them: the two bad pages are near-neighbours with a consistent
+        # offset, so each vindicates the other.
+        324: 307,
+        326: 309,
+    },
 }
 
 
@@ -308,7 +347,11 @@ UNNUMBERED_LEAVES: dict[int, list[int]] = {
         989, 990,
     ],
     # SHIPBUILDING (vol 24) confirmed unnumbered leaves:
-    24: [1045, 1049, 1052, 1055, 1061, 1062],
+    # 437-440: the SCOTLAND two-page map + its two flanking blanks, inserted
+    # after p. 412.  See the paired TRUSTED_RUNS[24] anchor (441, 413, 446, 418)
+    # — dropping these four alone leaves pp. 413-416 mapped to NO leaf, because
+    # UNNUMBERED_LEAVES only removes and never renumbers what follows.
+    24: [437, 438, 439, 440, 1045, 1049, 1052, 1055, 1061, 1062],
     # Note: leaves 1056-1058 between 1054 (968) and 1059 (969) are
     # plates/blanks; the monotonic walk correctly leaves them null
     # so they don't need explicit entries here.
@@ -418,6 +461,19 @@ def _printed_from_rh(raw_text: str, max_page: int = 1200) -> int | None:
     if not cells or len(cells) < 3:
         return None
     side_cells = (cells[0], cells[-1])
+
+    def _is_section_label(v: str) -> bool:
+        """A running-TITLE cell, not a page number.
+
+        EB1911 brackets the section label that runs opposite the page number —
+        `918–991]` on a recto, `[516–851` / `[RESTORATION PERIOD` on a verso —
+        and a page-number cell NEVER carries the bracket.  That is the only
+        thing separating `918–991]` from `471` when both are letter-free, so
+        the alpha test below cannot do it: vol 9 ENGLISH HISTORY scored 597,
+        851 and 918 from regnal date ranges that beat the real page number in
+        the opposite cell.  Keyed on the source's own marker rather than on a
+        statistical property of the digits."""
+        return "[" in v or "]" in v
     # First pass: cells with no alphabetic chars (after unwrapping
     # single-arg formatting templates like ``{{x-larger|N}}``, spacing
     # templates, and HTML entities).  These are the page-number-shaped
@@ -426,14 +482,43 @@ def _printed_from_rh(raw_text: str, max_page: int = 1200) -> int | None:
     # trigger the alpha check — vol 9 ws 502
     # ``{{x-larger|470&emsp; }}`` is the canonical case.
     for val in side_cells:
-        bare = re.sub(r"\{\{[^{}|]+\|([^{}]*)\}\}", r"\1", val)
-        bare = _SPACING_TEMPLATE_RE.sub("", bare)
+        if _is_section_label(val):
+            continue
+        # Strip spacing templates FIRST, then unwrap to a fixed point — the
+        # same order `_int_in_range` uses.  Doing it the other way round (one
+        # unwrap pass, then strip) cannot see through a NESTED wrapper:
+        # `{{x-larger|{{em|3.5}}631}}` unwraps only its inner `{{em|…}}`, leaving
+        # `{{x-larger|3.5631}}`, whose "x-larger" trips the alpha check.  Both
+        # side cells then failed the preference and the fallback below took the
+        # LEFT cell — which on a RECTO page is the running title, so vol 9
+        # ENGLISH LITERATURE scored "18" from `18{{sc|th}} CENTURY]` instead of
+        # 631, and vol 11 FRENCH LITERATURE "15"/"16"/"17" from `15th CENTURY`.
+        # Verso pages carry the number on the LEFT, so the same fallback
+        # happened to be right there — which is why only recto pages were wrong.
+        # ONE unwrap pass, and only after the spacing strip.  Unwrapping to a
+        # FIXED POINT was tried and is wrong: it reduces a subhead like
+        # `{{x-smaller|1793–97]}}` to `1793–97]`, which passes the no-alpha test
+        # and hands `_int_in_range` a YEAR fragment — the vol 20 PAPACY hazard
+        # this preference exists to avoid.  Measured: 90 stored values changed,
+        # including vol 9 ws519 487 -> 1200 (the max_page cap).  Single-pass
+        # keeps that conservatism; the reorder alone fixes the nesting.
+        bare = _SPACING_TEMPLATE_RE.sub("", val)
+        bare = re.sub(r"\{\{[^{}|]+\|([^{}]*)\}\}", r"\1", bare)
         bare = re.sub(r"&[a-z]+;|&#\d+;", "", bare, flags=re.IGNORECASE)
         if not re.search(r"[A-Za-z]", bare):
             n = _int_in_range(val, max_page=max_page)
             if n is not None:
                 return n
-    # Fallback: any side cell, any in-range integer.
+    # Fallback: any NON-LABEL side cell, any in-range integer.
+    for val in side_cells:
+        if _is_section_label(val):
+            continue
+        n = _int_in_range(val, max_page=max_page)
+        if n is not None:
+            return n
+    # Last resort — both cells look like labels.  Unchanged behaviour, so a
+    # header we do not understand degrades exactly as it does today rather
+    # than returning nothing.
     for val in side_cells:
         n = _int_in_range(val, max_page=max_page)
         if n is not None:
@@ -503,6 +588,10 @@ def _harvest_headings(vol: int, all_ws: list[int]) -> dict[int, int]:
         try:
             d = json.loads(f.read_text(encoding="utf-8"))
         except Exception:
+            continue
+        override = HEADING_OVERRIDE.get(vol, {}).get(ws)
+        if override is not None:
+            result[ws] = override
             continue
         printed = _printed_from_heading(d.get("raw_text", ""),
                                         max_page=max_page)
