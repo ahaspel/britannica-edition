@@ -22,6 +22,7 @@ from britannica.db.models import Article, ArticleContributor, Contributor, Contr
 from britannica.db.session import SessionLocal
 from britannica.xrefs.normalizer import normalize_xref_target
 from britannica.xrefs.resolver import build_core_maps
+from britannica.util.strings import strip_html_tags
 
 _ENTRY_MARKER = "{{EB1911 contributor table/entry"
 
@@ -62,7 +63,7 @@ def _clean_subject(v):
     v = re.sub(r"\[\[([^\]]+)\]\]", r"\1", v)
     v = re.sub(r"\{\{[^{}|]*\|?", "", v)
     v = v.replace("}}", "").replace("''", "")
-    v = re.sub(r"<[^>]+>", "", v)
+    v = strip_html_tags(v)
     return v.strip()
 
 
@@ -175,7 +176,7 @@ def link_from_frontmatter(apply_mode: bool = False, kind_of=None):
                     name = _parse_field(content, "name")
                     name = re.sub(r"\[\[[^\]|]*\|([^\]]+)\]\]", r"\1", name)
                     name = re.sub(r"\[\[([^\]]+)\]\]", r"\1", name)
-                    name = re.sub(r"<[^>]+>", "", name).strip()
+                    name = strip_html_tags(name).strip()
 
                     contrib_id = idx.resolve(name=name, initials=initials)
                     if contrib_id is None:
@@ -192,7 +193,7 @@ def link_from_frontmatter(apply_mode: bool = False, kind_of=None):
                         # Clean wiki markup
                         lnk = re.sub(r"\[\[[^\]|]*\|([^\]]+)\]\]", r"\1", lnk)
                         lnk = re.sub(r"\[\[([^\]]+)\]\]", r"\1", lnk)
-                        lnk = re.sub(r"<[^>]+>", "", lnk)
+                        lnk = strip_html_tags(lnk)
                         lnk = lnk.strip()
                         if lnk:
                             contrib_subjects[contrib_id].add(lnk.upper())

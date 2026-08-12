@@ -43,6 +43,7 @@ except AttributeError:
     pass
 
 from render_article import Renderer, DEFAULT_ARTICLE_PATH  # type: ignore  # noqa: E402
+from britannica.util.strings import strip_html_tags
 
 
 # ---------------------------------------------------------------------------
@@ -145,7 +146,7 @@ def _ctx(html: str, start: int, end: int, width: int = 60) -> str:
     s = max(0, start - width)
     e = min(len(html), end + width)
     snippet = html[s:e]
-    snippet = re.sub(r"<[^>]+>", " ", snippet)
+    snippet = strip_html_tags(snippet, " ")
     snippet = re.sub(r"\s+", " ", snippet).strip()
     return snippet
 

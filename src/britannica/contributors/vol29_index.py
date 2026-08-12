@@ -33,6 +33,7 @@ import re
 import unicodedata
 from dataclasses import dataclass, field
 from pathlib import Path
+from britannica.util.strings import strip_html_tags
 
 OCR_FILE = Path("data/derived/vol29_contributors_ocr.json")
 VISION_TAG = "<!-- vision-ocr -->"
@@ -157,7 +158,7 @@ def _clean_initials(raw: str) -> str:
     only stray brackets and HTML.  Vol 29's print convention treats
     `(E. B.)` and `(E. B.*)` as DIFFERENT signatures — never collapse
     them."""
-    s = re.sub(r"<[^>]+>", "", raw).strip()
+    s = strip_html_tags(raw).strip()
     s = re.sub(r"\s+", " ", s).strip()
     return s.rstrip(",")
 

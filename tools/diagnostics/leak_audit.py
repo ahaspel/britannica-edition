@@ -46,7 +46,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="repla
 sys.path.insert(0, os.path.dirname(__file__))
 sys.path.insert(0, os.path.abspath(
     os.path.join(os.path.dirname(__file__), "..", "..", "src")))
-from _corpus_cache import load_corpus  # noqa: E402
+from _corpus_cache import iter_raw_articles  # noqa: E402
 
 _PRODUCER_PREFIX = ("img:", "table", "verse:")
 _TEMPLATE_RE = re.compile(r"\{\{\s*([^|}\n]{1,40})")
@@ -183,7 +183,7 @@ def main() -> None:
                     help="per-article BROKEN-count distribution (gaps vs misses)")
     args = ap.parse_args()
 
-    corpus = [it for it in load_corpus()
+    corpus = [it for it in iter_raw_articles()
               if args.volume is None or it[1] == args.volume]
     if args.limit:
         corpus = corpus[:args.limit]

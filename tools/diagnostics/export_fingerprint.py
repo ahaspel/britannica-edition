@@ -22,6 +22,7 @@ import sys
 
 from britannica.markers import strip_marker_tokens
 from concurrent.futures import ProcessPoolExecutor
+from britannica.util.strings import HTML_TAG_RE
 
 sys.stdout.reconfigure(encoding="utf-8")
 ART = "data/derived/articles"
@@ -39,7 +40,7 @@ SKIP = {"index.json", "contributors.json"}
 # risks — the `{|`/`|}` swallow eating intervening prose, a dropped table cell — is
 # a content change and shows up as words LOST.  Sequence, not a bag: a swallow
 # removes a run of words in place, and comparing order catches a reordering too.
-_TAG = re.compile(r"<[^>]+>")
+_TAG = HTML_TAG_RE
 _WORD = re.compile(r"[0-9A-Za-zÀ-ÖØ-öø-ÿ]+")
 
 

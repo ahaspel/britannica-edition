@@ -22,6 +22,7 @@ from britannica.db.session import SessionLocal
 from britannica.pipeline.stages.elements import ElementContext, process_elements
 from britannica.pipeline.stages.extract_contributors import _normalize_initials
 from britannica.pipeline.stages.preprocess import preprocess
+from britannica.util.strings import strip_html_tags
 
 _ENTRY_START_PATTERN = re.compile(
     r"\{\{EB1911 contributor table/entry",
@@ -83,7 +84,7 @@ def _clean_name(raw_name):
     # Strip unclosed templates (keep their content after the last |)
     name = re.sub(r"\{\{[^{}|]*\|", "", name)
     # Strip HTML
-    name = re.sub(r"<[^>]+>", "", name)
+    name = strip_html_tags(name)
     # Decode entities
     name = name.replace("&thinsp;", "").replace("&nbsp;", " ")
     # Strip death date and status annotations: (d. 1907), (d.), (late), (late R.A.)

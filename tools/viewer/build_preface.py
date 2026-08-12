@@ -41,6 +41,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
 # detect_boundaries / transform_articles already rely on.
 from britannica.corrections import apply_corrections
 from britannica.pipeline.stages.quote_runs import _convert_quote_runs
+from britannica.util.strings import strip_html_tags
 
 VOL = 1
 # Per-page (key is `vol:page`) corrections.json patches need apply
@@ -325,7 +326,7 @@ def convert_html_tags(text: str) -> str:
 
 def slugify(s: str) -> str:
     s = re.sub(r"&[a-z]+;|&#x[0-9a-f]+;", " ", s, flags=re.IGNORECASE)
-    s = re.sub(r"<[^>]+>", "", s)
+    s = strip_html_tags(s)
     return section_slug(s)
 
 

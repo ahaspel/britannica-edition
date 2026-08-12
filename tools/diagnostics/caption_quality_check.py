@@ -16,6 +16,7 @@ import json
 import os
 import re
 import sys
+from britannica.util.strings import HTML_TAG_RE
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                               errors="replace")
@@ -28,7 +29,7 @@ SUSPECT_PATTERNS = {
     "wikilink": re.compile(r"\[\[|\]\]"),
     "double_close_artifact": re.compile(r"\)\)"),
     "stray_pipe": re.compile(r" \| "),
-    "html_tag": re.compile(r"<[^>]+>"),
+    "html_tag": HTML_TAG_RE,
     "ref_tag": re.compile(r"&(?:amp|nbsp|lt|gt);"),
 }
 

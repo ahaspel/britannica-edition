@@ -18,7 +18,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="repla
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(ROOT / "src"))
-from _corpus_cache import load_corpus
+from _corpus_cache import iter_raw_articles
 SCRATCH = ROOT / "tools" / "_scratch"
 
 
@@ -67,7 +67,7 @@ def main():
         diff(sys.argv[2], sys.argv[3])
         return
     tag = sys.argv[1]
-    corpus = list(load_corpus())
+    corpus = list(iter_raw_articles())
     with Pool(max(1, cpu_count() - 1)) as pool:
         parts = pool.map(_work, corpus, chunksize=16)
     total: Counter = Counter()

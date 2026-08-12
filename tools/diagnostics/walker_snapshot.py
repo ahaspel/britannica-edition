@@ -46,10 +46,10 @@ def _work(item):
 
 def save(outfile):
     from multiprocessing import Pool, cpu_count
-    from _corpus_cache import load_corpus
+    from _corpus_cache import iter_raw_articles
     res = {}
     with Pool(max(1, cpu_count() - 1)) as pool:
-        for aid, h, out in pool.imap_unordered(_work, load_corpus(), chunksize=64):
+        for aid, h, out in pool.imap_unordered(_work, iter_raw_articles(), chunksize=64):
             res[aid] = [h, out]
     json.dump(res, open(outfile, "w", encoding="utf-8"), ensure_ascii=False)
     aff = sum(1 for v in res.values() if v[1] is not None)

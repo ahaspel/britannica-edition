@@ -31,12 +31,13 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
 sys.stdout.reconfigure(encoding="utf-8")
+from britannica.export.corpus import NON_ARTICLE             # noqa: E402
 from britannica.outputs import outputs_for                   # noqa: E402
 from britannica.markers import marker_names                  # noqa: E402
 from britannica.render.leaks import find_leaks                # noqa: E402
 
 ART = "data/derived/articles"
-SKIP = ("index.json", "contributors.json", "maps.json", "volumes.json")
+
 OUT = Path("data/derived/quality_reports/output_leaks.tsv")
 CONSUMERS = ("rendered_html", "markdown", "search_text", "title",
              "contributor_bio")
@@ -48,7 +49,7 @@ def main():
     args = ap.parse_args()
 
     files = [f for f in sorted(glob.glob(f"{ART}/*.json"))
-             if os.path.basename(f) not in SKIP]
+             if os.path.basename(f) not in NON_ARTICLE]
     if args.limit:
         files = files[:args.limit]
 

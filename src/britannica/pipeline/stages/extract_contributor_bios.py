@@ -11,6 +11,7 @@ from pathlib import Path
 
 from britannica.db.models import Contributor
 from britannica.db.session import SessionLocal
+from britannica.util.strings import strip_html_tags
 
 
 _RAW_DIRS = [Path("data/raw/wikisource")]
@@ -43,7 +44,7 @@ def _parse_entry(content: str) -> dict[str, str]:
         import html as html_mod
         value = html_mod.unescape(value)
         # Strip any remaining HTML tags
-        value = re.sub(r"<[^>]+>", "", value)
+        value = strip_html_tags(value)
         value = value.replace("\xa0", " ")  # non-breaking space
         value = " ".join(value.split()).strip().rstrip(".")
         if value:

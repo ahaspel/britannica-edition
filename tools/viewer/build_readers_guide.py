@@ -28,6 +28,7 @@ from britannica.export.sections import match_section
 from britannica.link_resolver import LinkResolver
 from britannica.render.inline import _article_url
 from reference_overrides import REFERENCE_OVERRIDES
+from britannica.util.strings import strip_html_tags
 
 SOURCE_HTML = Path("data/raw/readers_guide/source.html")
 INDEX_JSON = Path("data/derived/articles/index.json")
@@ -41,7 +42,7 @@ def _prose_context(html: str, pos: int) -> str:
     s = html.rfind("<p", 0, pos)
     e = html.find("</p>", pos)
     seg = html[s if s >= 0 else max(0, pos - 600):e if e >= 0 else pos + 600]
-    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", seg)).strip()
+    return re.sub(r"\s+", " ", strip_html_tags(seg, " ")).strip()
 
 
 # Lazy cache of article sections: filename -> list of {title, slug, ...}
@@ -550,7 +551,7 @@ def transform_content(
         nonlocal linked, missed
         inner = m.group(1).strip()
         tag = m.group(0)[1:3] if m.group(0).startswith("<b") else "sc"
-        plain = re.sub(r"<[^>]+>", "", inner)
+        plain = strip_html_tags(inner)
         plain = plain.replace("&amp;", "&").replace("&mdash;", "—")
         plain = re.sub(r"\s+", " ", plain).strip()
         fn = resolve_ref(plain, resolver, _prose_context(m.string, m.start()))
@@ -725,7 +726,7 @@ def transform_content(
         subsection_html = m.group(5)
         # Strip any nested tags inside the italic (rare; source mostly
         # has plain text there).
-        subsection = re.sub(r"<[^>]+>", "", subsection_html)
+        subsection = strip_html_tags(subsection_html)
         subsection = subsection.replace("&amp;", "&").replace("&mdash;", "—")
         subsection = re.sub(r"\s+", " ", subsection).strip()
         url_match = re.match(r"^/article/([^/#]+)", href)
