@@ -32,7 +32,7 @@ from pathlib import Path
 sys.path.insert(0, "src")
 
 from britannica.export.corpus import load_corpus            # noqa: E402
-from britannica.render.leaks import find_render_leaks       # noqa: E402
+from britannica.render.leaks import find_leaks       # noqa: E402
 
 RAW_GLOB = "data/raw/wikisource/vol_{vol:02d}/*.json"
 
@@ -114,7 +114,7 @@ def main() -> int:
     n_art = 0
     for path, d in sorted(payloads.items()):
         html = d.get("rendered_html") or ""
-        leaks = find_render_leaks(html)
+        leaks = find_leaks(html)
         if not leaks:
             continue
         n_art += 1

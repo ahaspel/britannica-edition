@@ -271,7 +271,7 @@ def bind_contributors(session, payloads: dict) -> bool:
 
     # Front-matter spellings vote too — one per occurrence, attributed to the
     # final roster via the same index vol-29 used.
-    for _fi, _fn, _fd in fm_entries:
+    for _fi, _fn, _fd, _fv in fm_entries:
         _fc = cidx.resolve(name=_clean_name(_fn)[0],
                            initials=_normalize_initials(_fi))
         if _fc is not None:

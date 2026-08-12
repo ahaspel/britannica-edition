@@ -19,7 +19,9 @@ from britannica.contributors.aliases import canonical_name
 from britannica.corrections import apply_corrections
 from britannica.db.models import Contributor, ContributorInitials
 from britannica.db.session import SessionLocal
+from britannica.pipeline.stages.elements import ElementContext, process_elements
 from britannica.pipeline.stages.extract_contributors import _normalize_initials
+from britannica.pipeline.stages.preprocess import preprocess
 
 _ENTRY_START_PATTERN = re.compile(
     r"\{\{EB1911 contributor table/entry",
@@ -106,53 +108,36 @@ def _clean_name(raw_name):
     return base_name, credentials
 
 
-def _clean_description(raw_desc):
-    """Clean description text."""
-    import html as html_mod
-    desc = raw_desc
-    # Preserve article-link templates as `«BIOLINK:target|display«/BIOLINK»`
-    # markers (unique sentinel so the wikilink + template strippers below
-    # don't touch them).  `_resolve_bio_articles` at export time parses
-    # the marker to resolve peerage-style cases (St. Cyres → Iddesleigh)
-    # where simple surname-inversion can't find the biographical article.
-    # The viewer hides the description's "See the biographical article…"
-    # sentence entirely and renders a real link from `bio_article_filename`.
-    desc = re.sub(
-        r"\{\{EB1911 (?:article link|lkpl)\|([^}|]+)\|([^}]+)\}\}",
-        r"«BIOLINK:\1|\2«/BIOLINK»", desc, flags=re.IGNORECASE,
-    )
-    desc = re.sub(
-        r"\{\{EB1911 (?:article link|lkpl)\|([^}|]+)\}\}",
-        r"«BIOLINK:\1|\1«/BIOLINK»", desc, flags=re.IGNORECASE,
-    )
-    # Unclosed variants — best-effort target capture.
-    desc = re.sub(
-        r"\{\{EB1911 (?:article link|lkpl)\|([^}|]+)(?:\|[^}|]*)*$",
-        r"«BIOLINK:\1|\1«/BIOLINK»", desc, flags=re.IGNORECASE,
-    )
-    # Strip wiki links (including long 1911 Encyclopædia paths, closed and unclosed)
-    desc = re.sub(r"\[\[[^\]|]+\|([^\]]+)\]\]", r"\1", desc)
-    desc = re.sub(r"\[\[([^\]]+)\]\]", r"\1", desc)
-    desc = re.sub(r"\[\[[^\]]*$", "", desc)
-    # Unwrap formatting templates (sc, asc, font-variant, etc.)
-    prev = None
-    while desc != prev:
-        prev = desc
-        desc = re.sub(r"\{\{[^{}|]*\|([^{}]*)\}\}", r"\1", desc)
-    # Strip remaining closed templates
-    prev = None
-    while desc != prev:
-        prev = desc
-        desc = re.sub(r"\{\{[^{}]*\}\}", "", desc)
-    # Strip unclosed templates and fragments
-    desc = re.sub(r"\{\{[^{}]*$", "", desc)
-    desc = re.sub(r"^\s*\|[^|]*$", "", desc, flags=re.MULTILINE)
-    desc = desc.replace("'''", "").replace("''", "")
-    desc = re.sub(r"<[^>]+>", "", desc)
-    desc = html_mod.unescape(desc)
-    desc = desc.replace("\xa0", " ")
-    desc = " ".join(desc.split()).strip().rstrip(".")
-    return desc
+def _clean_description(raw_desc, volume=0):
+    """Raw front-matter description → the MARKER STREAM the article body carries.
+
+    A description is wikitext like any other, so it takes the two steps the body
+    takes and nothing else: ``preprocess`` (corrections, quote runs, entity decode)
+    then the walk.  It returns MARKERS, not text — the description is canonicalized
+    at emit by ``export.article_json._description_text``, which is what lets
+    ``_resolve_bio_articles`` still read the link out of it
+    ([[feedback_accrete_first_canonicalize_last]]).
+
+    This replaces ~25 lines of private regex that were a SECOND recogniser for
+    wikilinks, formatting templates, raw HTML and entities — and for
+    ``{{EB1911 article link|…}}``, which it turned into a private ``«BIOLINK»``
+    purely so its own template-stripper wouldn't eat it.  That fork disagreed with
+    the real producer about which argument is the target, swallowed named params
+    (`nosc=yes`), and split on flat rather than top-level pipes.  A bio link is an
+    ORDINARY article link; `_link.py::_wrap_article_link` already owns the template
+    and emits «LN» ([[feedback_tune_dont_fork]]).
+
+    Measured over all 5172 front-matter descriptions: 4343 identical, 790 bio links
+    that used to ship a raw marker, 14 en-dashes RESTORED (`{{–}}` in a date range,
+    which the old stripper deleted outright — `1857{{–}}1881` became `18571881`),
+    18 junk template-param lines that are garbage under either, and 7 stray
+    apostrophes where the source's `'''` is unbalanced and the walk is faithful to
+    it rather than deleting every quote ([[feedback_viewer_not_source_errors]]).
+    Markers surviving into the output: 790 before, 0 after.
+    """
+    marked = process_elements(preprocess(raw_desc, volume),
+                              ElementContext(volume=volume))
+    return " ".join(marked.split()).strip()
 
 
 def build_contributor_table():
@@ -185,27 +170,30 @@ def build_contributor_table():
                     continue
                 raw_name = _parse_field(content, "name")
                 raw_desc = _parse_field(content, "description")
-                entries.append((initials, raw_name, raw_desc))
+                # The VOLUME rides along: `_clean_description` walks the description
+                # through the same preprocess+walk the article body takes, and both
+                # are volume-keyed (corrections, and the element context).
+                entries.append((initials, raw_name, raw_desc, volume))
 
     print(f"Parsed {len(entries)} front matter entries.")
 
     # Step 2: Deduplicate to unique (initials, name) pairs
     pairs = set()
-    for initials, raw_name, raw_desc in entries:
+    for initials, raw_name, raw_desc, _vol in entries:
         pairs.add((initials, raw_name))
     print(f"Unique (initials, name) pairs: {len(pairs)}")
 
     # Step 3: Group by initials → each group is one person with name variants
-    by_initials = defaultdict(list)  # initials -> [(raw_name, raw_desc)]
-    for initials, raw_name, raw_desc in entries:
-        by_initials[initials].append((raw_name, raw_desc))
+    by_initials = defaultdict(list)  # initials -> [(raw_name, raw_desc, volume)]
+    for initials, raw_name, raw_desc, volume in entries:
+        by_initials[initials].append((raw_name, raw_desc, volume))
 
     # For each initials group, pick canonical name (longest cleaned name)
     # and best credentials/description
     initials_groups = {}  # initials -> {name, credentials, description}
     for initials, name_desc_list in by_initials.items():
         names_and_creds = [_clean_name(nd[0]) for nd in name_desc_list]
-        descs = [_clean_description(nd[1]) for nd in name_desc_list if nd[1]]
+        descs = [_clean_description(nd[1], nd[2]) for nd in name_desc_list if nd[1]]
 
         best_name = max((nc[0] for nc in names_and_creds), key=len)
         best_creds = max((nc[1] for nc in names_and_creds), key=len) if any(nc[1] for nc in names_and_creds) else ""
@@ -322,7 +310,10 @@ def backfill_bios(apply_mode: bool = True):
                     raw = apply_corrections(json.load(f).get("raw_text", ""), volume)
                 for content in _iter_entries(raw):
                     name, creds = _clean_name(_parse_field(content, "name"))
-                    desc = _clean_description(_parse_field(content, "description"))
+                    # SAME producer as build_contributor_table's own pass — a second
+                    # cleaner here is how the fork would grow back.
+                    desc = _clean_description(
+                        _parse_field(content, "description"), volume)
                     if not (desc or creds):
                         continue
                     cid = idx.resolve(
