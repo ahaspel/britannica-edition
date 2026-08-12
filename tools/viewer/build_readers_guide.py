@@ -22,6 +22,7 @@ from pathlib import Path
 from urllib.parse import quote_plus
 
 sys.path.insert(0, "src")
+from britannica.util.strings import section_slug
 from britannica.contributors.resolver import ContributorResolver
 from britannica.export.sections import match_section
 from britannica.link_resolver import LinkResolver
@@ -505,8 +506,7 @@ def transform_content(
     used_ids: set[str] = set()
 
     def _slug(text: str) -> str:
-        s = re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
-        return s
+        return section_slug(text)
 
     def _reserve_id(text: str, fallback: str) -> str:
         slug = _slug(text)
@@ -1328,7 +1328,7 @@ def build_chapter(
 
 
 def _chapter_filename(roman: str, pretty_title: str) -> str:
-    slug = re.sub(r"[^a-z0-9]+", "-", pretty_title.lower()).strip("-")
+    slug = section_slug(pretty_title)
     return f"readers-guide-ch{roman.lower()}-{slug}.html"
 
 

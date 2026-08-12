@@ -19,6 +19,8 @@ import json
 import os
 import re
 import sys
+
+from britannica.markers import strip_marker_tokens
 from concurrent.futures import ProcessPoolExecutor
 
 sys.stdout.reconfigure(encoding="utf-8")
@@ -38,12 +40,11 @@ SKIP = {"index.json", "contributors.json"}
 # a content change and shows up as words LOST.  Sequence, not a bag: a swallow
 # removes a run of words in place, and comparing order catches a reordering too.
 _TAG = re.compile(r"<[^>]+>")
-_MARK = re.compile(r"«[^«»]*»")
 _WORD = re.compile(r"[0-9A-Za-zÀ-ÖØ-öø-ÿ]+")
 
 
 def content_tokens(rendered_html):
-    txt = _MARK.sub(" ", _TAG.sub(" ", rendered_html or ""))
+    txt = strip_marker_tokens(_TAG.sub(" ", rendered_html or ""))
     return _WORD.findall(html.unescape(txt))
 
 

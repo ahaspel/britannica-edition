@@ -27,6 +27,9 @@ from pathlib import Path
 import anthropic
 from PIL import Image
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
+from britannica.export.sections import section_key  # noqa: E402
+
 SCAN_DIR = Path("data/derived/scans")
 PER_PAGE_OCR = Path("data/derived/vol29_ocr.json")
 LEAF_OFFSET = 6
@@ -119,7 +122,7 @@ def needs_vision(ws: int, current_text: str, has_spread: bool,
 
 
 def _norm(s: str) -> str:
-    return re.sub(r"[^a-z0-9]+", "", s.lower())
+    return section_key(s)
 
 
 def _best_category_match(frag: str, cats: list[str]) -> str | None:

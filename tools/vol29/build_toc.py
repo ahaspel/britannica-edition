@@ -33,6 +33,8 @@ from __future__ import annotations
 
 import json
 import re
+
+from britannica.export.sections import section_key
 from pathlib import Path
 
 HALVES = Path("data/derived/vol29_halves_debug.json")
@@ -75,7 +77,7 @@ ART_OPENERS = ["Architecture", "Music", "Painting and Engraving",
 
 
 def _norm(s: str) -> str:
-    return re.sub(r"[^a-z0-9]+", "", s.lower())
+    return section_key(s)
 
 
 _CAT_NORMS = frozenset(_norm(c) for c in CATEGORIES)

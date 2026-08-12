@@ -32,7 +32,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
 sys.stdout.reconfigure(encoding="utf-8")
 from britannica.outputs import outputs_for                   # noqa: E402
-from britannica.render.leaks import find_leaks, marker_names  # noqa: E402
+from britannica.markers import marker_names                  # noqa: E402
+from britannica.render.leaks import find_leaks                # noqa: E402
 
 ART = "data/derived/articles"
 SKIP = ("index.json", "contributors.json", "maps.json", "volumes.json")

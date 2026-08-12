@@ -26,6 +26,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 sys.path.insert(0, "src")
+from britannica.export.sections import section_key
 from britannica.contributors.link_frontmatter import link_from_frontmatter
 from britannica.contributors.resolver import ContributorIndex
 from britannica.contributors.vol29_index import parse_vol29_index
@@ -70,7 +71,7 @@ def _name_fold(s: str) -> str:
     and accents.  Punctuation and spacing are dropped so only letters vote."""
     s = unicodedata.normalize("NFKD", s)
     s = "".join(c for c in s if not unicodedata.combining(c))
-    return re.sub(r"[^a-z0-9]+", "", s.lower())
+    return section_key(s)
 
 
 def _display_name(full_name: str) -> str:

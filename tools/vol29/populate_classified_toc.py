@@ -20,6 +20,8 @@ matching.  This is the SOLE writer of classified_toc.json.
 import bisect
 import json
 import re
+
+from britannica.export.sections import section_key
 import sys
 import unicodedata
 from pathlib import Path
@@ -48,7 +50,7 @@ CAT_TOC_DIR = Path("data/derived/cat_toc")
 
 
 def _normalize(s: str) -> str:
-    return re.sub(r"[^a-z0-9]+", "", s.lower())
+    return section_key(s)
 
 
 

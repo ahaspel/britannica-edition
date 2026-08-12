@@ -12,6 +12,8 @@ Run AFTER extract-contributors (footer matching).
 """
 import json
 import re
+
+from britannica.markers import strip_marker_tokens
 from collections import defaultdict
 from pathlib import Path
 
@@ -79,7 +81,7 @@ def _subject_variants(subject):
 
 
 def _word_count(body):
-    return len(re.sub(r"«[^»]*»", " ", body or "").split())
+    return len(strip_marker_tokens(body).split())
 
 
 def _disambiguate_by_footprint(session, contrib_id, cand_ids, kind_of):

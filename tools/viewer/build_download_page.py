@@ -14,6 +14,8 @@ download page's links (the archive, Hugging Face, the source note) are all expli
 from __future__ import annotations
 
 import re
+
+from britannica.util.strings import section_slug
 from pathlib import Path
 
 SRC = Path("docs/download.txt")
@@ -131,7 +133,7 @@ SHELL = """<!DOCTYPE html>
 
 
 def _slug(text: str) -> str:
-    return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
+    return section_slug(text)
 
 
 def _render(source: str) -> tuple[str, str]:

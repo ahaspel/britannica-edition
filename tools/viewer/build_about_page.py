@@ -15,6 +15,7 @@ from pathlib import Path
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                               errors="replace")
 sys.path.insert(0, "src")
+from britannica.util.strings import section_slug
 
 from britannica.link_resolver import LinkResolver          # noqa: E402
 from britannica.render.inline import _article_url as article_url  # noqa: E402
@@ -82,7 +83,7 @@ def _render(text, resolver):
         # Shoulder headers: ---text--- -> margin note
         def replace_shoulder(m):
             heading_text = m.group(1).strip()
-            slug = re.sub(r"[^a-z0-9]+", "-", heading_text.lower()).strip("-")
+            slug = section_slug(heading_text)
             toc_entries.append((slug, heading_text))
             return (f'<span class="shoulder-heading" id="{slug}">'
                     f'{heading_text}</span>')
