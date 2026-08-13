@@ -20,13 +20,14 @@ import os
 import re
 import sys
 
+from britannica.export.corpus import NON_ARTICLE as SKIP
 from britannica.markers import strip_marker_tokens
 from concurrent.futures import ProcessPoolExecutor
 from britannica.util.strings import HTML_TAG_RE
 
 sys.stdout.reconfigure(encoding="utf-8")
 ART = "data/derived/articles"
-SKIP = {"index.json", "contributors.json"}
+
 
 # The TEXT-content signature.  Reduce rendered HTML to its visible word sequence —
 # strip every tag whole (so attribute text, hrefs, styles all go), strip any
