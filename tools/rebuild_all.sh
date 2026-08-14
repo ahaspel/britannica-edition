@@ -324,6 +324,16 @@ echo
 echo "=== Phase 6i: Mangled-marker gate [$(elapsed)] ==="
 uv run python tools/diagnostics/mangled_markers.py
 
+# The census is 6i's other half: 6i proves we invented no mangled markers,
+# the census proves resolved links did not go DOWN vs production.  A link that
+# stops resolving dies silently — the bake strips it to plain text, and no
+# marker-level check can tell that from a link that legitimately never bound
+# (the 2026-08-14 «LN» grammar fork lost ~370 links invisibly).  Counts real
+# `class="article-link"` anchors in a ~250-article production sample.
+echo
+echo "=== Phase 6i2: Resolved-link census gate [$(elapsed)] ==="
+uv run python tools/diagnostics/link_census.py 250 --gate
+
 # --- Phase 6g: Pre-deploy contributor-dedup gate ---
 # Produces a candidate list at sim ≥ 0.85 and aborts (via set -e) if
 # anything isn't already covered by data/contributor_aliases.json's
