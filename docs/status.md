@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-07-29.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-08-14.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,7 +46,58 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-07-29)
+## CURRENT STATE (2026-08-14)
+
+### Session 2026-08-14 — rebuild adjudicated; two link regressions; the mangled-marker gate
+
+**REBUILD PENDING RE-RUN — the corpus on disk carries four known defects, all fixed
+in code, none deployed.**  `./tools/rebuild_all.sh` then `./tools/deploy.sh`.
+
+**Adjudicated the 2026-08-13 rebuild** (453 articles changed: 34 gained, 214 same
+word-count, 205 lost).  195 losers came in under the ceiling their own links could
+account for; the other 10 were settled EXACTLY by fetching the pre-rebuild JSON from
+production — the deploy had not run, so the live site *was* the old corpus.  Eight are
+the link fix working (`Munzinger, Werner`→`Werner Munzinger`, `Cope, Edward Drinker`
+→`Cope`).  Two were regressions:
+
+1. **The swap printed Wikisource's spelling over EB1911's.**  STILT's
+   `{{1911link|Oystercatcher|Oyster-catcher}}` files the wiki page first and the
+   printed words second; our titles come FROM EB1911, so the side matching a filed
+   title is the printed side (`OYSTER-CATCHER`, vol 20 p 462).  Length cannot
+   discriminate — the hyphen alone makes the printed spelling one character longer.
+   40 links / 28 pairs, all EB1911 compounds (`Bag-pipe`, `Tread-mill`, `Ear-ring`)
+   rendering as modern closed-up forms.  Fold-equal now keeps the target and shows the
+   filed spelling; the decision moved out of the closure into `swapped_link()`.
+2. **`subpage_target` mangled markers.**  It split link targets on `/`, and a close
+   marker's slash is not a path separator: `«/I»`→`«#I»`, which fails the 3-part «LN»
+   opener grammar (`[^|«]*`), so the marker collapsed to its 2-part reading and 17
+   links rendered with the filename in the href and a raw pipe in the anchor text.
+   Path work now holds markers aside.
+
+**THE MANGLED-MARKER GATE (`tools/diagnostics/mangled_markers.py`, Phase 6i).**  The
+leak oracle is structurally blind here: `find_leaks` matches WELL-FORMED markers, and
+a mangled marker is not one, so `«#I»` read as clean everywhere.  The gate compares
+each output's unaccounted guillemets against the article's own RAW SOURCE — zero false
+positives, no baseline, nothing to keep current, because the source is static.  It
+found the 12 `«#I»` articles plus two standing bugs no one had seen:
+
+3. **`_render_eqn` read its label to the first `»`**, so `«EQN:«BR»(15)»` gave the
+   label `«BR` — equation number lost, mangled marker shipped.  The `«EQN:LABEL»`
+   contract (plain text; the renderer owns the parens) is now enforced in the one
+   producer every «EQN» passes through.  Also fixes MECHANICS' `((8))`/`((9))`.
+4. TIMOTHY's duplicated footnote text turned out to be BY DESIGN (inline + Notes), and
+   killed the count-based comparison — hence signatures, not counts.
+
+**Guillemets, settled.**  Of 253 unaccounted in the corpus, 17 were ours (all of the
+above); the other 108 in 25 articles are **Wikisource's own mojibake**, proven by
+fetching the live page — byte-identical to our copy, `108Â° 38' E.` and all.  None are
+French quotation marks: there is no legitimate bare `«` in EB1911's text.  The wider
+class is 677 sequences in 58 articles (0.16%), 91% in twenty, almost all volume 25
+unproofread math.  **A blanket `Â°`→`°` repair is a trap** — `(957Â°)` is 9570,
+`(173Â°)` is 1730, `t0 lÂ° wer` is "lower"; the encoding repair would be right and the
+character still wrong.  Per-instance `corrections.json`, deferred quality bucket.
+
+Suite 527 → **573**.
 
 ### Session 2026-07-27→29 — Kindle campaign: oracle solved, CASTANETS refuted, converter is non-deterministic
 

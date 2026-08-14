@@ -312,6 +312,18 @@ uv run python tools/diagnostics/quality_report.py
 # definition on a fresh rebuild.  No gate: it is a standing number to watch move.
 uv run python tools/diagnostics/overlap_audit.py --refresh --examples 6
 
+# A guillemet is our marker delimiter, so one standing outside a well-formed
+# token is either a marker WE mangled or one the SOURCE already had.  The leak
+# oracle cannot tell — it matches well-formed markers, and a mangled marker is
+# not one, which is how `«#I»` (a link target split on a close marker's slash)
+# and `«BR)` (an equation label read to the wrong `»`) both shipped unseen.
+# Comparing against the raw source separates them exactly and needs no baseline:
+# 24 articles carry Wikisource's own `Â«` mojibake and stay silent; anything we
+# invent aborts the build.  A GATE, not a report — this class is never benign.
+echo
+echo "=== Phase 6i: Mangled-marker gate [$(elapsed)] ==="
+uv run python tools/diagnostics/mangled_markers.py
+
 # --- Phase 6g: Pre-deploy contributor-dedup gate ---
 # Produces a candidate list at sim ≥ 0.85 and aborts (via set -e) if
 # anything isn't already covered by data/contributor_aliases.json's
