@@ -31,7 +31,10 @@ def is_blank(path: Path) -> bool:
     try:
         img = Image.open(path).convert("L")
         img.thumbnail((400, 400))
-        pixels = list(img.getdata())
+        # `tobytes()`, not `getdata()`: the latter is deprecated (Pillow 14 drops
+        # it) and materializes 160,000 ints into a Python list.  For mode "L" the
+        # raw buffer IS the pixel sequence, one byte each, unpadded.
+        pixels = img.tobytes()
         if not pixels:
             return True
         # Ink is typically below 80 (0=black, 255=white). Paper/shadow

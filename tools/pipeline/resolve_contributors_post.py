@@ -36,7 +36,8 @@ from britannica.db.models import (
     Article, ArticleContributor, Contributor, ContributorInitials)
 from britannica.db.session import SessionLocal
 from britannica.export.article_json import (
-    _resolve_bio_articles, _safe_filename, register_stable_id_dedup, stable_id)
+    _description_text, _resolve_bio_articles, _safe_filename,
+    register_stable_id_dedup, stable_id)
 from britannica.contributors.author_links import (
     accrete_author_link_contributors, harvest_author_links)
 from britannica.pipeline.stages.extract_contributors import _normalize_initials
@@ -318,6 +319,28 @@ def bind_contributors(session, payloads: dict) -> bool:
             return max(v.items(), key=lambda kv: (kv[1], -len(kv[0]), kv[0]))[0]
         return (all_inits.get(cid) or [""])[0]
 
+    def _contributor_record(cid, c) -> dict:
+        """ONE contributor record, for BOTH outputs.
+
+        This phase writes contributors twice — into each article payload and into
+        `contributors.json` — which is legitimate fan-out to two files. Building the
+        record twice is not: the two expressions sat eleven lines apart and had
+        already drifted, one passing `credentials` through and the other coercing it
+        with `or ""`, so 334 of 1,290 per-article records shipped `null` where the
+        roster shipped `""`. The description conversion is applied here for the same
+        reason — a converter that has to be remembered at each write site eventually
+        isn't ([[feedback_tune_dont_fork]]).
+
+        Nested so it closes over `_canon_init`/`_canon_name`; the roster entry is this
+        record plus its `articles` list.
+        """
+        return {"initials": _canon_init(cid),
+                "full_name": _canon_name(cid),
+                "credentials": c.credentials or "",
+                "description": _description_text(c.description)}
+
+
+
     # Resolve the deferred [[Author:]] render markers now that the roster is
     # FINAL: «AL:name|disp» → the bare-initials signoff when `disp` is a known
     # contributor's initials, else an «LN» xref for 6b5 to bake.  Consistent
@@ -380,22 +403,15 @@ def bind_contributors(session, payloads: dict) -> bool:
         aid = d.get("id")
         d["body"] = _resolve_author_markers(d.get("body", ""))
         cids = binds_by_article.get(aid, [])
-        d["contributors"] = [
-            {"initials": _canon_init(cid),
-             "full_name": _canon_name(cid),
-             "credentials": cred_of[cid].credentials,
-             "description": cred_of[cid].description}
-            for cid in cids if cid in cred_of]
+        d["contributors"] = [_contributor_record(cid, cred_of[cid])
+                             for cid in cids if cid in cred_of]
         n_patched += 1
         for cid in cids:
             c = cred_of.get(cid)
             if not c:
                 continue
-            e = contrib_map.setdefault(cid, {
-                "full_name": _canon_name(cid),
-                "initials": _canon_init(cid),
-                "credentials": c.credentials or "",
-                "description": c.description or "", "articles": []})
+            e = contrib_map.setdefault(
+                cid, dict(_contributor_record(cid, c), articles=[]))
             if aid is not None:
                 a = next((x for x in arts if x.id == aid), None)
                 if a:

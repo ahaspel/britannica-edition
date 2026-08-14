@@ -227,10 +227,10 @@ def test_diet_preserves_alpha(tmp_path):
     out, ext = IMG.diet_image(str(p))
     assert ext == ".png"
     got = Image.open(_io.BytesIO(out)).convert("RGBA")
-    assert min(a for *_x, a in got.getdata()) < 128        # transparency survived
+    assert min(a for *_x, a in got.get_flattened_data()) < 128        # transparency survived
     comp = Image.alpha_composite(
         Image.new("RGBA", got.size, (255, 255, 255, 255)), got).convert("L")
-    vals = sorted(set(comp.getdata()))
+    vals = sorted(set(comp.get_flattened_data()))
     assert vals[0] < 100 and vals[-1] > 200                # strokes AND background
 
 
