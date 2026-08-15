@@ -29,10 +29,15 @@
   // client must fold identically or it scores those hits 0 and buries/drops them.
 
   // Lowercased, diacritics stripped: "ZÜRICH" -> "zurich", so an un-accented
-  // query matches an accented title/body.
+  // query matches an accented title/body.  Double quotes are DELIMITERS, not
+  // content — `"battle of hastings"` is the documented exact-order syntax, and
+  // Meilisearch reads it as a phrase, but this fold feeds the client-side
+  // substring gate/ranking, where the literal `"` characters matched nothing
+  // and every phrase-quoted query died at zero results.  Straight and curly
+  // both fold away (bodies print curly).
   function fold(s) {
     return String(s || "").toLowerCase().normalize("NFD")
-      .replace(/[̀-ͯ]/g, "");
+      .replace(/[̀-ͯ]/g, "").replace(/["“”]/g, "");
   }
 
   // Match-quality tier for a title against a query (lower = better):
@@ -88,8 +93,15 @@
         const limit = options.limit || 50;
         const excludeFilenames = options.excludeFilenames || new Set();
         const excludePlates = options.excludePlates !== false;  // default true
+        // by:Name — a contributor restriction.  The server has no substring
+        // filter operator, so the restriction is a client post-filter on the
+        // hit's own contributors field (retrieved below).  A BARE by:Name (no
+        // query text) instead SEARCHES the contributors attribute — an empty-q
+        // placeholder search would return arbitrary documents and the
+        // post-filter would sieve a meaningless page.
+        const by = options.by || null;
         const body = {
-          q: q,
+          q: q || by || "",
           limit: limit,
           matchingStrategy: "all",
           // Full display set so BOTH views render straight from the hit — no
@@ -105,6 +117,7 @@
         if (options.filter) clauses.push(options.filter);
         if (clauses.length === 1) body.filter = clauses[0];
         else if (clauses.length > 1) body.filter = clauses;
+        if (by && !q) body.attributesToSearchOn = ["contributors"];
         const resp = await fetch(
           `${meiliUrl}/indexes/articles/search`,
           {
@@ -117,8 +130,11 @@
           });
         const data = await resp.json();
         return (data.hits || [])
-          .filter(h =>
-            ftCountMatches(h.body, q) > 0 || ftCountMatches(h.title, q) > 0)
+          // The substring gate only applies to a TEXT query — a bare by:Name
+          // has no q, and its match lives in the contributors field.
+          .filter(h => !q
+            || ftCountMatches(h.body, q) > 0 || ftCountMatches(h.title, q) > 0)
+          .filter(h => !by || fold(h.contributors || "").includes(fold(by)))
           .filter(h => !excludeFilenames.has(h.filename));
     }
 

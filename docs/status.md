@@ -133,8 +133,50 @@ first, so the failure bought archaeology instead of a checked prediction.
    6g→7.5 7→8); all ~40 code references updated — grep for `6b4`/`6b5` in
    *.py now finds nothing.  Docs/memory keep historical numbering; the
    decoder translates.  Own bank.
-4. Fold `_resolve_bio_articles` onto the resolver (bind-for-bind simulation first).
-5. The prearc worktree (0a39f49) can go once deploy confirms.
+4. **Two user-caught bugs FIXED 2026-08-15, not yet shipped:**
+   * `by:` search operator NEVER worked: the client sent `contributors CONTAINS`
+     — an operator no deployed Meilisearch supports (400 → shown as zero
+     results) — and search-api.js's substring gate dropped every hit of a bare
+     `by:Name` anyway (empty q).  Now: client post-filter on the hit's own
+     `contributors` field; bare `by:Name` searches the contributors attribute
+     (`attributesToSearchOn`).  Verified in-browser locally: `by:Bury` → 10,
+     `empire by:Bury` → ROMAN EMPIRE, LATER.  Ships with the next deploy
+     (viewer JS only).  NOTE: the LOCAL Meilisearch index is stale (10 Bury
+     credits); reindex locally with `MEILI_MASTER_KEY=britannica-dev-key
+     ARTICLES_DIR=data/derived/articles uv run python
+     tools/pipeline/index_search_ec2.py`.
+     **Operator-only queries are a BROWSE (user spec 2026-08-15)**: `min:10000`
+     alone now answers with EVERY qualifying article (632, paginated) via the
+     client-side index — the dead `searchTitle` (never called since the mode
+     collapsed to fulltext-only) refit as `browseOperators`, reading STRUCTURED
+     operator values from `parseQuery` instead of regexing its own filter
+     string.  `by:` (no contributors column in index.json) stays on the server
+     path, limit 1000 when bare.  Also killed en route: `type:plate` always
+     returned empty — parseQuery emitted `article_type = "plate"` while
+     search-api.js appended its default `NOT plate` (plates-only AND not-plate
+     = nothing); index.html now passes `excludePlates:false` and parseQuery's
+     filter owns the plate default.  Verified: `min:10000` → 632/7 pages,
+     `type:plate vol:4` → 14 plates, `empire by:Bury` → 1.
+     **Quoted phrase queries also never worked (user)**: Meilisearch reads
+     `"battle of hastings"` as a phrase and returns hits, but the client's
+     substring gate/ranking counted the RAW query — quote characters included —
+     against body text, so every phrase query died at zero.  Quotes are
+     delimiters: `fold()` (the one equivalence owner — gate, ranking,
+     typeahead) now folds straight+curly double quotes away like accents, and
+     the snippet extractor / viewer forward link get the unquoted phrase.
+     Verified: `"battle of hastings"` → 17 results, highlighted snippets.
+   * The h1 DROP-CAP split an HTML entity: `"SURVILLE, CLOTILDE DE,"` (the
+     quotes are EB1911's own — the persona is apocryphal) escapes to
+     `&quot;…`, and wrapping the first CHARACTER produced `<span>&</span>quot;…`
+     — a big ampersand and literal `quot;` on the page.  The drop-cap unit is
+     now one rendered glyph (whole entity); test in
+     `tests/unit/test_title_dropcap.py`.  RENDER change → lands in
+     rendered_html on the NEXT REBUILD (1 article affected; the other two
+     escaping-first-char titles are `'''AMPHITHEATRE'''`/`'''Plate II.'''`
+     plates — raw wiki bold in plate titles, belongs to the title-extraction
+     arc).
+5. Fold `_resolve_bio_articles` onto the resolver (bind-for-bind simulation first).
+6. The prearc worktree (0a39f49) can go once deploy confirms.
 
 ### Session 2026-08-14 (later) — THE LINK ARC REGRESSED.  CAUSE FOUND, NOT FIXED.  DO NOT DEPLOY.
 

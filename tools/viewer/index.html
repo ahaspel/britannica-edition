@@ -435,55 +435,35 @@
       </div>`;
     }
 
-    // ── Title search ──
-    function searchTitle(query) {
-      const parsed = parseQuery(query);
-      const q = parsed.query.toLowerCase();
+    // ── Operator-only browse ──
+    // An operator query with no text ("min:10000", "vol:15 type:plate") is a
+    // BROWSE: the answer is EVERY article satisfying the operators, and the
+    // client-side index answers that completely — a capped server page cannot
+    // (631 articles clear min:10000; a 50-hit page shows 50 of them and calls
+    // it the result).  Renders through the title-results list, which already
+    // paginates.  `by:` is the one operator the index cannot answer (no
+    // contributors column) — those queries go to the server path.
+    function browseOperators(parsed) {
+      const o = parsed.ops;
       lastFiltered = articles
         .filter(a => {
-          if ((a.article_type || "article") !== "article") return false;
-          if (!q) return true;  // operators only, no text query
-          return a.title.toLowerCase().includes(q)
-            || (a.body_start || "").toLowerCase().includes(q);
-        })
-        .filter(a => {
-          // Apply parsed filters client-side
-          if (parsed.filter) {
-            const f = parsed.filter;
-            if (/volume = (\d+)/.test(f) && a.volume !== parseInt(f.match(/volume = (\d+)/)[1])) return false;
-            if (/body_length >= (\d+)/.test(f) && (a.body_length || 0) < parseInt(f.match(/body_length >= (\d+)/)[1])) return false;
-            if (/body_length <= (\d+)/.test(f) && (a.body_length || 0) > parseInt(f.match(/body_length <= (\d+)/)[1])) return false;
-          }
+          const type = a.article_type || "article";
+          if (o.type !== null ? type !== o.type : type === "plate") return false;
+          if (o.vol !== null && a.volume !== o.vol) return false;
+          if (o.min !== null && (a.body_length || 0) < o.min) return false;
+          if (o.max !== null && (a.body_length || 0) > o.max) return false;
+          if (o.page !== null
+              && !(a.page_start <= o.page && o.page <= a.page_end)) return false;
           if (parsed.excludes.length) {
             const text = (a.title + " " + (a.body_start || "")).toLowerCase();
             if (parsed.excludes.some(ex => text.includes(ex))) return false;
           }
           return true;
         })
-        .sort((a, b) => {
-          const ra = rankTitle(a, q);
-          const rb = rankTitle(b, q);
-          if (ra !== rb) return ra - rb;
-          return a.title.localeCompare(b.title);
-        });
+        .sort((a, b) => a.title.localeCompare(b.title));
 
       currentPage = 0;
       showTitleResults();
-    }
-
-    function rankTitle(a, q) {
-      const t = a.title.toLowerCase();
-      if (t === q) return 0;
-      // First-word exact match, whitespace-separated (non-bio form):
-      // "ALEXANDER I", "ALEXANDER SEVERUS" for query "ALEXANDER".
-      const wsFirst = t.split(/\s/)[0];
-      if (wsFirst === q) return 1;
-      // First-word exact match, comma-separated (bio-form "LAST, FIRST"):
-      // "ALEXANDER, JOHN" ranks after the whitespace form.
-      const commaFirst = t.split(/,/)[0].trim();
-      if (commaFirst === q) return 2;
-      if (t.includes(q)) return 3;
-      return 4;
     }
 
     function updatePagination(prefix, totalPages) {
@@ -522,59 +502,60 @@
     }
 
     // ── Query parser for search operators ──
+    // The operators are parsed into STRUCTURED values exactly once; the
+    // Meilisearch filter string is derived from them.  (The old shape pushed
+    // filter strings directly, and the client-side browse then re-parsed its
+    // own serialization with regexes.)
     function parseQuery(raw) {
       let q = raw;
-      const filters = [];
       const excludes = [];
+      const ops = { vol: null, min: null, max: null, page: null, type: null, by: null };
 
-      // vol:N — filter by volume
-      q = q.replace(/\bvol:(\d+)\b/gi, (m, n) => { filters.push(`volume = ${n}`); return ""; });
+      q = q.replace(/\bvol:(\d+)\b/gi, (m, n) => { ops.vol = parseInt(n); return ""; });
+      q = q.replace(/\bmin:(\d+)\b/gi, (m, n) => { ops.min = parseInt(n); return ""; });
+      q = q.replace(/\bmax:(\d+)\b/gi, (m, n) => { ops.max = parseInt(n); return ""; });
+      q = q.replace(/\btype:(\w+)\b/gi, (m, t) => { ops.type = t.toLowerCase(); return ""; });
+      q = q.replace(/\bpage:(\d+)\b/gi, (m, n) => { ops.page = parseInt(n); return ""; });
 
-      // min:N — minimum word count
-      q = q.replace(/\bmin:(\d+)\b/gi, (m, n) => { filters.push(`body_length >= ${n}`); return ""; });
-
-      // max:N — maximum word count
-      q = q.replace(/\bmax:(\d+)\b/gi, (m, n) => { filters.push(`body_length <= ${n}`); return ""; });
-
-      // type:article or type:plate
-      let _typeSpecified = false;
-      q = q.replace(/\btype:(\w+)\b/gi, (m, t) => {
-        _typeSpecified = true;
-        filters.push(`article_type = "${t}"`);
-        return "";
-      });
-      // Default: exclude plate-type articles from full-text search.
-      // Plates inherit their parent's title (e.g. SHIPBUILDING), so
-      // searching "SHIPBUILDING" would otherwise return the main
-      // article plus 6 plate duplicates.  Plates are navigated via
-      // their parent's article page.  Use negation to include
-      // records where ``article_type`` is null (our regular articles
-      // store null, not "article" — the "article" default is applied
-      // client-side only).
-      if (!_typeSpecified) {
-        filters.push(`NOT article_type = "plate"`);
-      }
-
-      // page:N — articles containing that page
-      q = q.replace(/\bpage:(\d+)\b/gi, (m, n) => {
-        filters.push(`page_start <= ${n}`);
-        filters.push(`page_end >= ${n}`);
-        return "";
-      });
-
-      // by:Name — filter by contributor
-      q = q.replace(/\bby:(\S+)\b/gi, (m, name) => {
-        filters.push(`contributors CONTAINS "${name}"`);
-        return "";
-      });
+      // by:Name — filter by contributor.  NOT a Meilisearch filter: the
+      // server's filter engine has no substring operator (`CONTAINS` was
+      // rejected with invalid_search_filter, which the page showed as zero
+      // results), and `contributors` is a joined string of full names that a
+      // surname can never `=`-match.  The client post-filters the hit's own
+      // contributors field instead (search-api.js), and a bare `by:Name`
+      // searches the contributors attribute directly.
+      q = q.replace(/\bby:(\S+)\b/gi, (m, name) => { ops.by = name; return ""; });
 
       // -word — exclude (post-filter, Meilisearch doesn't support NOT)
       q = q.replace(/(?:^|\s)-(\S+)/g, (m, word) => { excludes.push(word.toLowerCase()); return ""; });
+
+      const filters = [];
+      if (ops.vol !== null) filters.push(`volume = ${ops.vol}`);
+      if (ops.min !== null) filters.push(`body_length >= ${ops.min}`);
+      if (ops.max !== null) filters.push(`body_length <= ${ops.max}`);
+      if (ops.type !== null) filters.push(`article_type = "${ops.type}"`);
+      // Default: exclude plate-type articles.  Plates inherit their parent's
+      // title (e.g. SHIPBUILDING), so searching "SHIPBUILDING" would otherwise
+      // return the main article plus 6 plate duplicates.  Negation includes
+      // records where ``article_type`` is null (regular articles store null).
+      // THIS clause is the plate default for index.html — the search call
+      // passes excludePlates:false, else `type:plate` contradicts the client
+      // default (plates-only AND not-plate = always empty, the standing bug).
+      else filters.push(`NOT article_type = "plate"`);
+      if (ops.page !== null) {
+        filters.push(`page_start <= ${ops.page}`);
+        filters.push(`page_end >= ${ops.page}`);
+      }
 
       return {
         query: q.trim(),
         filter: filters.length ? filters.join(" AND ") : undefined,
         excludes,
+        ops,
+        by: ops.by,
+        // Operators the client-side INDEX can answer — everything but by:.
+        indexOps: ops.vol !== null || ops.min !== null || ops.max !== null
+          || ops.page !== null || ops.type !== null || excludes.length > 0,
       };
     }
 
@@ -653,6 +634,14 @@
         // PLATO precedes PLATOON precedes CAMBRIDGE PLATONISTS, body-only last.
         let hits = await searchClient.rankedSearch(parsed.query, {
           filter: parsed.filter,
+          by: parsed.by,
+          // parseQuery's filter owns the plate default here — letting the
+          // client add its own `NOT plate` made `type:plate` self-contradict
+          // (plates-only AND not-plate = always empty).
+          excludePlates: false,
+          // A bare by:Name browses a contributor's whole œuvre — the default
+          // 50 would silently cap it (Chisholm signs hundreds).
+          limit: parsed.by && !parsed.query ? 1000 : undefined,
         });
 
         if (parsed.excludes.length) {
@@ -695,9 +684,13 @@
           // see the article once, not "SHIPBUILDING" followed by six
           // SHIPBUILDING text-hit lines.
           const titleHit = (hit._titleMatches || 0) > 0;
+          // The quotes in a phrase query are delimiters — the occurrence
+          // extractor and the viewer's in-article highlight both match the
+          // PHRASE, never the literal quote characters.
+          const phrase = parsed.query.replace(/["“”]/g, "");
           const occ = titleHit
             ? { items: [], total: 0 }
-            : ftExtractOccurrences(hit.body || "", parsed.query, MAX_OCC);
+            : ftExtractOccurrences(hit.body || "", phrase, MAX_OCC);
           const count = hit._matchCount;
           const countBadge = (!titleHit && count > 0)
             ? ` <span class="ft-count">${count} match${count === 1 ? "" : "es"}</span>`
@@ -705,7 +698,7 @@
           let occHtml = "";
           if (occ.items.length) {
             const url = viewerUrl(hit.filename);
-            const q = encodeURIComponent(parsed.query);
+            const q = encodeURIComponent(phrase);
             const liHtml = occ.items.map(item => {
               const href = `${url}${url.includes("?") ? "&" : "?"}q=${q}&match=${item.matchIdx}`;
               return `<li><a href="${href}" class="ft-occ-link">${item.html}</a></li>`;
@@ -911,7 +904,13 @@
       // Deselect volume buttons
       document.querySelectorAll(".vol-btn").forEach(b => b.classList.remove("active"));
 
-      if (mode === "fulltext") searchFulltext(query);
+      if (mode === "fulltext") {
+        // Operators with no text query and no by: → the full-index browse
+        // (complete answer); anything with text or by: → the server search.
+        const parsed = parseQuery(query);
+        if (!parsed.query && !parsed.by && parsed.indexOps) browseOperators(parsed);
+        else searchFulltext(query);
+      }
       else if (mode === "contributors") searchContributors(query);
     }
 
