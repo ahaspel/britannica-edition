@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-08-14.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-08-15.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,7 +46,127 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-08-14)
+## CURRENT STATE (2026-08-15)
+
+### Session 2026-08-15 — CENSUS GREEN.  The corpus resolves every link production does, +1.  DEPLOYABLE.
+
+**All gates pass.**  The one-reader rebuild (commit 4091691, log
+`rebuild_20260814_lnreader.log`) is on disk; Phase 6i clean at `INVENTED BY US: 0`;
+Phase 6g clean (8 candidates, all acknowledged-distinct); the census gate, corrected
+(below), passes at **202 → 203 resolved links, 0 losers, 1 gainer** over the 250
+sample.  Record-level check agrees: 186 → 187 resolved panel entries.  The ~370-loss
+regression is gone.  Not yet deployed — corpus awaits the user's call.
+
+**The first gate run "failed" at −4, and every one of the four was a counting
+artifact, not a lost link.**  The census counted `class="article-link"` anchors,
+which conflates two classes: resolved `/article/…` links and the renderer's
+`/search.html?q=` fallback for an UNRESOLVED «LN» left in a baked body.
+Production's bake left unresolved markers in place (→ search anchors); the current
+bake never does — Wikisource external link if the page exists, else plain text.
+The four "losses": three citations became **better** links (WS pages of the cited
+books — *Ancient Stone Implements*, *Researches into the Early History of
+Mankind*), one (a DNB citation with no WS page) became honest plain text.  The
+census now counts `href="/article/…"` — resolution, the thing it exists to measure.
+
+**Zero gains was the CORRECT result — "expect gains to appear" was wrong at its
+root.**  The resolver port and its +1,535 A/B date to **2026-07-19**
+([[project_xref_strategy]]); production was deployed **Aug 11 19:45**, so
+production already CONTAINS the port's gains.  And production predates the entire
+Aug 12–14 link arc — including 6a04a10, the commit that first put markers INTO
+displays — so it never had the display regression either.  Both sides of last
+session's prediction dissolve: no gains to appear (they shipped weeks ago), no
+losses to recover (production never lost them; only our local corpus did).  The
+honest expected census was "parity, ±the fallback-policy delta", which is exactly
+what measured.  What the Aug 12–14 arc nets vs production: **+1 link / 250
+articles** plus correctness — TARAFA-class links now file EB1911's target with
+the printed display (production has the slots swapped), and displays carry their
+source markup.
+
+**Two blind diagnostics fixed while adjudicating:**
+* Quality report said `Xrefs: 0 resolved, 0 unresolved` — it read
+  `xref_count`/`resolved_count` from index.json, which Phase-F (`defer_xrefs`)
+  stamps (0, 0) at export since resolution moved to 6b4; nothing back-fills.  The
+  fields had ONE consumer, so: fields deleted from the index (18.6 MB client file,
+  dead weight), report now reads `data/derived/xref_resolution.jsonl` — the resolve
+  phase's own output, where both resolved (30,321) and unresolved (11,044) exist.
+* Overlap audit printed `aid=` (DB autoincrement) for its worst-article examples —
+  un-followable after any reimport (the two 08-14 logs show identical output with
+  every aid shifted).  It now resolves the printed few to titles.
+
+**Process lesson (user's call-out, correct):** most of this was knowable BEFORE
+the 45-minute rebuild.  The fallback-policy delta was readable in `_resolve_link`;
+the index zeros were a data-contract grep; the gate's anchor-count conflation was
+in the census I wrote.  I attached a gate without deriving its expected value
+first, so the failure bought archaeology instead of a checked prediction.
+[[feedback_audit_fresh_baseline]] — deduce the result, then measure.
+
+**Next, in order:**
+1. Deploy (`./tools/deploy.sh`) — user's call.  Corpus proven ≥ production.
+2. Phase relabel of `tools/rebuild_all.sh` (user-approved: the serious work is
+   phases 4 and 6; name the steps, drop the letter soup).  Own bank.
+3. Fold `_resolve_bio_articles` onto the resolver (bind-for-bind simulation first).
+4. The prearc worktree (0a39f49) can go once deploy confirms.
+
+### Session 2026-08-14 (later) — THE LINK ARC REGRESSED.  CAUSE FOUND, NOT FIXED.  DO NOT DEPLOY.
+
+**The corpus on disk loses ~370 links relative to production.  Production is the
+better site.  Nothing has been deployed.**
+
+**Cause (established, with evidence).**  The `«LN»` marker grammar is written out
+in at least three places, and only ONE was fixed:
+
+    extractor.py:95            «LN…:([^|]*)\|([^«]*)«/LN»     <- still the old grammar
+    article_json._resolve_ln_markers                          <- fixed (scan)
+    markers._LINK_RE                                          <- unchecked
+
+A display containing ANY marker (`«SC»Parasitic Diseases«/SC»` — a cross-reference
+set in small caps) does not match `([^«]*)`, so the extractor produces NO xref for
+it; with no xref there is no `target_article_id`; with no bound target the bake
+strips the link to plain text.  Silently, because a missing xref is
+indistinguishable from a link that legitimately does not resolve.
+
+    SCARLET FEVER  walker : «LN:Parasitic Diseases|«SC»Parasitic Diseases«/SC»«/LN»
+                   xrefs  : 0
+                   bake   : (no «LN» left)
+
+This is ONE cause for both symptoms.  The losses are marked-up cross-references.
+The zero gains are the same thing: the 255 marked-up displays "recovered" in
+`_resolve_link` were fixed in the SECOND half of the path while the first half
+still drops them, so not one could ever reach the corpus.  And the
+inverted-argument rule moved markup INTO 21 displays deliberately, converting
+working links into ones the extractor cannot see (TARAFA).
+
+**The fix**: the `«LN»` marker must be recognised in exactly ONE place, extractor
+included.  Verification is the CENSUS, not a marker diff.
+
+**Why it took six probes.**  Every measurement I took was at a level the pipeline
+does not use — marker diffs, title-index membership, and bare `resolve_xref`
+calls (which default to `embedded=False, trusted=True` and take a LOOSER tier
+than the pipeline's `embedded=True`).  All of them said the arc was working.  The
+first honest number was the census.  See [[feedback_measure_at_decision_site]].
+
+**Established along the way (keep):**
+* The resolver is NOT at fault — a pre-arc worktree (0a39f49) gives byte-identical
+  embedded results.  Comma fold and alias abstention are both exonerated.
+* The embedded tier declines comma-inverted targets (`SOMALILAND BRITISH`,
+  `GROUPS THEORY OF`) with `by_norm cands=0` — PRE-EXISTING, not this arc.  Those
+  census "losses" may be a route that stopped being taken, not a regression.
+* Phase 6i (mangled-marker gate) is clean at `INVENTED BY US: 0`.
+
+**The census is the missing gate** (`scratchpad/link_census.py`): sample
+production vs local, count `class="article-link"`.  It belongs beside Phase 6i —
+mangled markers must be zero AND resolved links must not go down.
+
+**Next session, in order:**
+1. One `«LN»` reader, extractor included; check whether the panel is a fourth.
+2. Re-run the census — expect losses → 0 and the gains to finally appear.  This is
+   a hypothesis; four predictions were wrong today.
+3. Then rebuild, then deploy.
+4. Only then: fold `_resolve_bio_articles` onto the resolver (see below).
+
+**Do not kill a rebuild past Phase 4** — that phase clears `data/derived/articles`,
+so stopping there destroys the corpus rather than pausing it.  A `prearc` worktree
+at 0a39f49 is on disk under the scratchpad; keep it until this closes.
 
 ### Session 2026-08-14 — rebuild adjudicated; two link regressions; the mangled-marker gate
 
