@@ -243,7 +243,7 @@ HEADING_OVERRIDE: dict[int, dict[int, int]] = {
 # here.  Never edit the generated JSON directly (a rebuild would
 # overwrite it) — always add the anchor here so the fix survives.
 #
-# POST-REBUILD MAP FIXES need one more step: this tool runs in Phase 3c,
+# POST-REBUILD MAP FIXES need one more step: this tool runs in Phase 3.1,
 # BEFORE the export bakes each article's `leaf_start`/`leaf_end` (via
 # `_leaf_for_ws`) into the article JSONs + index.json.  Re-running the map
 # alone leaves those anchors stale (the vol-7 plate fix shipped a correct

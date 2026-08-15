@@ -14,7 +14,7 @@ not "nothing may change".
     uv run python tools/diagnostics/link_census.py 250          # report
     uv run python tools/diagnostics/link_census.py 250 --gate   # exit 1 on net loss
 
-`--gate` runs beside the Phase 6i mangled-marker gate: mangled markers must be
+`--gate` runs beside the Phase 7.3 mangled-marker gate: mangled markers must be
 zero AND resolved links must not go down.  It needs production reachable; a
 sample where most fetches fail is a FAILED gate, not a passed one.
 """

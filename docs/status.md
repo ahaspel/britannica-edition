@@ -101,11 +101,40 @@ first, so the failure bought archaeology instead of a checked prediction.
 [[feedback_audit_fresh_baseline]] — deduce the result, then measure.
 
 **Next, in order:**
-1. Deploy (`./tools/deploy.sh`) — user's call.  Corpus proven ≥ production.
-2. Phase relabel of `tools/rebuild_all.sh` (user-approved: the serious work is
-   phases 4 and 6; name the steps, drop the letter soup).  Own bank.
-3. Fold `_resolve_bio_articles` onto the resolver (bind-for-bind simulation first).
-4. The prearc worktree (0a39f49) can go once deploy confirms.
+1. ~~Deploy~~ **DONE + VERIFIED 2026-08-15** (`deploy_20260815.log`, 18:56):
+   production census 203 = 203 zero-delta; TARAFA's corrected slots live; HF
+   mirror + Meili reindex clean.  ALSO: the HF dataset card now stamps
+   **"Corpus build: YYYY-MM-DD"** ({{GENERATED}} placeholder in
+   `download_assets/README.md`, filled by `export/download.py` with the
+   manifest's own instant — user: the HF page had no visible update date);
+   bundle regenerated + re-uploaded (S3 tar.gz/sha256/manifest/README) +
+   republished to HF the same day.
+2. ~~Rebuild the EPUBs~~ **DONE 2026-08-15** (`epub_rebuild_20260815.log`):
+   sampler 20.0MB/32 chunks + full book 576.5MB/889 chunks/10,664 images, BOTH
+   epubcheck 0/0/0; fresh sampler + sha256 uploaded to S3; **eb1911.epub in the
+   repo root awaits the user's Payhip swap** ("corrected editions free to
+   purchasers").  **NO Kindle build** — the full book never converts to KPF,
+   WITH OR WITHOUT Enhanced Typesetting (user, 2026-08-15: ET was already
+   disabled and the full corpus still wouldn't load — the blocker is NOT the ET
+   check).  The only known bracket: one volume converts (real 78MB KPF), the
+   full corpus doesn't; the limit between is UNMEASURED, so a parts edition has
+   an unknown part count until someone bisects volumes.  **KDP ticket DEAD
+   (2026-08-15)** — final answer: "too complex, takes too long to process" (a
+   converter timeout called "corruption"); their own tech team couldn't open
+   the file; no limit named, no escalation left.  The Kindle decision (parts /
+   sampler-only / skip, + the download.html "ready shortly" sentence) is wholly
+   ours now.  Queued
+   structural fix: deploy.sh ships the sampler from the repo root as-is — fold
+   the sampler build into the rebuild so it can't go stale.
+3. ~~Phase relabel~~ **DONE 2026-08-15**: 1 Clean · 2 Walk · 3 Page map ·
+   4 Export · 5 Resolve · 6 Site · 7 Gates · 8 Deploy, sub-steps N.M in
+   execution order (the old letters ran 6h before 6f, 6g after 6i2).  Decoder
+   comment for old logs at the top of the script (3c→3.1 … 6b4/6b5→5.4 …
+   6g→7.5 7→8); all ~40 code references updated — grep for `6b4`/`6b5` in
+   *.py now finds nothing.  Docs/memory keep historical numbering; the
+   decoder translates.  Own bank.
+4. Fold `_resolve_bio_articles` onto the resolver (bind-for-bind simulation first).
+5. The prearc worktree (0a39f49) can go once deploy confirms.
 
 ### Session 2026-08-14 (later) — THE LINK ARC REGRESSED.  CAUSE FOUND, NOT FIXED.  DO NOT DEPLOY.
 

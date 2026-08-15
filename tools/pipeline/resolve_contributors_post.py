@@ -1,7 +1,7 @@
-"""Phase 6b5: resolve ALL contributor attributions post-export.
+"""Phase 5.4: resolve ALL contributor attributions post-export.
 
 One phase owns the whole contributor story, in confidence order, AFTER the kind
-index (6b3) so the footprint can consult it:
+index (5.3) so the footprint can consult it:
 
   1. SIGNATURES  — the footer `(initials)` sign-offs harvested from each exported
      body (the source's own attribution; the authoritative anchor).
@@ -44,7 +44,7 @@ from britannica.pipeline.stages.extract_contributors import _normalize_initials
 
 ART = Path("data/derived/articles")
 # Deferred [[Author:]] render marker: the walk emits «AL:name|display» neutrally
-# and 6b4 resolves it against the FINISHED roster ([[project_roster_from_author_links]]).
+# and 5.4 resolves it against the FINISHED roster ([[project_roster_from_author_links]]).
 _AL_RE = re.compile(r"«AL:([^|»]*)\|(.*?)«/AL»", re.DOTALL)
 
 # A contributor's name string flattens THREE attributes (the user's decomposition):
@@ -343,7 +343,7 @@ def bind_contributors(session, payloads: dict) -> bool:
 
     # Resolve the deferred [[Author:]] render markers now that the roster is
     # FINAL: «AL:name|disp» → the bare-initials signoff when `disp` is a known
-    # contributor's initials, else an «LN» xref for 6b5 to bake.  Consistent
+    # contributor's initials, else an «LN» xref for 5.4 to bake.  Consistent
     # with the binding gate (a signature's display IS a known contributor's
     # initials); no «AL» survives past here.  ([[project_roster_from_author_links]])
     known_inits = {i for inits in all_inits.values() for i in inits}
@@ -354,10 +354,10 @@ def bind_contributors(session, payloads: dict) -> bool:
             if _normalize_initials(disp.strip("() ")) in known_inits:
                 return disp
             # NOT a signoff → a reference to a PERSON.  Leave the «AL» standing:
-            # rewriting it to «LN» here erased the one fact 6b5 needs, and the
+            # rewriting it to «LN» here erased the one fact 5.4 needs, and the
             # article ladder then matched these given-name-first citations
             # against surname-first EB titles (JOHN VENN → McADAM, JOHN LOUDON).
-            # 6b5 resolves it on the person tier and bakes/strips it there, so
+            # 5.4 resolves it on the person tier and bakes/strips it there, so
             # no «AL» survives the pipeline — the invariant just moves one phase.
             return m.group(0)
         return _AL_RE.sub(_repl, text)

@@ -1,4 +1,4 @@
-"""Build download.html from docs/download.txt (rebuilt in Phase 6d).
+"""Build download.html from docs/download.txt (rebuilt in Phase 6.2).
 
 Markup, deliberately minimal:
   first line          the page title (shown in the header)

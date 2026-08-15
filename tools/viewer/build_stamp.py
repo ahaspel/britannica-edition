@@ -21,7 +21,7 @@ breaking the A/B-identical property the determinism arc established
 ([[project_determinism_arc]]).  So the fingerprint is a hash of the article
 JSONs themselves: it moves if and only if what we serve moves.
 
-Run from the repo root (rebuild_all.sh Phase 6d, AFTER post-export has patched
+Run from the repo root (rebuild_all.sh Phase 6.2, AFTER post-export has patched
 the JSONs)::
 
     uv run python tools/viewer/build_stamp.py

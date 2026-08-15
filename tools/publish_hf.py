@@ -24,7 +24,7 @@ def main(repo_id: str, private: bool = False) -> None:
     from huggingface_hub import HfApi
 
     if not (BUNDLE / "README.md").exists():
-        sys.exit(f"No bundle at {BUNDLE}/ — run a rebuild (Phase 6h) first.")
+        sys.exit(f"No bundle at {BUNDLE}/ — run a rebuild (Phase 6.4) first.")
 
     api = HfApi()
     api.create_repo(repo_id, repo_type="dataset", private=private, exist_ok=True)
