@@ -37,8 +37,15 @@ CACHE = Path("data/derived/table_widths.json")
 _OPEN_RE = re.compile(r"«TABLE\[cols:(\d+)(\|wide)?")
 
 
-def annotate_body(body: str, cache: dict) -> str:
-    """Stamp/strip the `wide` param on every table span per the cache."""
+def annotate_body(body: str, cache: dict, plate: bool = False) -> str:
+    """Stamp/strip the `wide` param on every table span per the cache.
+
+    ``plate=True`` forces the STRIP side for every span: a plate page's
+    tables are strictly a LAYOUT device (they grid the figure legends), the
+    plate already owns the full margins, and the Expand treatment measured
+    against the 590px body column means nothing there — a plate table is
+    never wide, whatever the cache measured.
+    """
     sys.path.insert(0, "tools/diagnostics")
     from measure_table_widths import _balanced_spans, span_key
     out = body
@@ -50,7 +57,7 @@ def annotate_body(body: str, cache: dict) -> str:
         spans.append((a, span))
         i = a + len(span)
     for a, span in reversed(spans):
-        entry = cache.get(span_key(span))
+        entry = None if plate else cache.get(span_key(span))
         wide = bool(entry and entry.get("wide"))
         new = _OPEN_RE.sub(
             lambda m: f"«TABLE[cols:{m.group(1)}" + ("|wide" if wide else ""),
@@ -77,7 +84,8 @@ def main() -> None:
             continue
         scanned += 1
         body = d.get("body") or ""
-        new = annotate_body(body, cache)
+        new = annotate_body(body, cache,
+                            plate=d.get("article_type") == "plate")
         if new == body:
             continue
         d["body"] = new

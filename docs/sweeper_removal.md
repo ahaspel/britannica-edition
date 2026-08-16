@@ -74,10 +74,26 @@ popup verified working in-browser post-deletion).  `test_viewer_parity`
 inverted: the JS slug copy it EXECUTED against Python is gone (anchors
 come baked), so the pin is now the copy's ABSENCE.
 
-**K4. `extract_contributor_bios` template-stripping — OPEN (survey first).**
-Iteratively deletes whole `{{…}}` templates from bio VALUES — a
-mini-flattener in a metadata field ([[feedback_flatteners_drop_content]]);
-survey what the stripped templates actually contain before deciding.
+**K4. `extract_contributor_bios` — ✅ DELETED WHOLE 2026-08-16 (dead code).**
+The survey acquitted the flattener by proving the MODULE dead: its closed-
+template strip never fires (0 closed `{{…}}` in any of the 5,178 entries'
+values), its «B»/«I» strips CANNOT fire (it reads raw wikisource JSON,
+which never carries guillemet markers), and the bios it would harvest are
+harvested by `build_contributor_table` (5.4, "Parsed 5176 front matter
+entries"), which the rebuild actually runs.  Its only caller was a CLI
+command nothing invokes — the one-true-path audit had it flagged
+"[FIX-FIRST: verify, then drop]"; verified, dropped (module + command).
+
+**K5. Plate tables measured for the Expand treatment — ✅ FIXED 2026-08-16
+(user-caught, rebuild-gated).**  The wide-table annotator stamped every
+article JSON including plates: 123 of 535 plates carried `|wide` on the
+live corpus, offering the Expand treatment on pages that own their full
+margins — a plate's tables are strictly a LAYOUT device (legend grids).
+`annotate_body(plate=True)` now forces the strip side (verified: AEGEAN
+CIVILIZATION PLATE I 2→0); `resolve_and_render`'s decorate hook passes the
+payload so decorations can key on article facts; `measure_table_widths`
+skips plates at harvest (browser time on spans no consumer reads).  The
+corpus heals at the next full rebuild.
 
 ---
 

@@ -85,7 +85,11 @@ def _viewer_css() -> str:
 
 
 def collect() -> dict[str, dict]:
-    """hash -> {span, cols, samples} over the whole corpus."""
+    """hash -> {span, cols, samples} over the whole corpus.
+
+    Plates are skipped whole: their tables are a LAYOUT device (legend
+    grids on a full-margin page), never annotated wide, so measuring them
+    is browser time spent on spans no consumer reads."""
     out: dict[str, dict] = {}
     for f in ARTS.glob("*.json"):
         try:
@@ -93,6 +97,8 @@ def collect() -> dict[str, dict]:
         except Exception:
             continue
         if not isinstance(d, dict):
+            continue
+        if d.get("article_type") == "plate":
             continue
         for span in _balanced_spans(d.get("body") or ""):
             k = span_key(span)

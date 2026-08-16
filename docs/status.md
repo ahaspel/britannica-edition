@@ -194,7 +194,14 @@ first, so the failure bought archaeology instead of a checked prediction.
    now carried), EXCEPT shoulder headings (narrow-measure inserts) which
    vote contiguously ("Differentiation", stable slug).  corrections.json
    +20:229 (`lo-in`→`10-in.`).  16+1 snapshots adjudicated + rebaselined;
-   628 green.  OPEN: K4 (bio-value template flattener — survey first);
+   628 green.  **K4 CLOSED 2026-08-16** — the survey proved the whole module
+   dead (`extract_contributor_bios`: strips never fire, bios come from
+   build_contributor_table, CLI-only caller nothing invokes) → deleted, and
+   the one-true-path audit's FIX-FIRST entry resolved.  **K5 (user-caught):
+   plate tables were measured/stamped `wide`** — 123/535 plates offered the
+   Expand treatment on full-margin pages; annotator now forces the strip
+   side for plates (decorate hook passes the payload; measurer skips plates)
+   — heals at next full rebuild.  STILL OPEN:
    capture_transform_snapshots.py broken (no meta.json, hash-stem
    filenames) — repair queued.
 6. Fold `_resolve_bio_articles` onto the resolver (bind-for-bind simulation first).
