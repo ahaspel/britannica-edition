@@ -209,8 +209,18 @@ first, so the failure bought archaeology instead of a checked prediction.
    converter).  631 green.  STILL OPEN:
    capture_transform_snapshots.py broken (no meta.json, hash-stem
    filenames) — repair queued.
-6. Fold `_resolve_bio_articles` onto the resolver (bind-for-bind simulation first).
-7. The prearc worktree (0a39f49) can go once deploy confirms.
+6. **EPUB wide math + tables (2026-08-16, epub.css only):** display-math
+   SVGs (ex-sized; widest ~100ex) had NO width clamp — narrow readers CLIP —
+   now `svg.math-display { max-width:100%; height:auto }`, the shrink-to-fit
+   guarantee kindle PNGs already had; measured-wide tables (the
+   `wide-table-wrap` figure every target already carries) step down to
+   0.75em (`.wide-table-inline table`) since reflowable readers don't scroll
+   overflow.  Vol-1 sampler rebuilt, rules + classes verified in-artifact,
+   epubcheck 0/0/0.  The SHIPPED sampler/Payhip book predate this — next
+   EPUB refresh picks it up; narrow-screen reader testing remains the open
+   verification.
+7. Fold `_resolve_bio_articles` onto the resolver (bind-for-bind simulation first).
+8. The prearc worktree (0a39f49) can go once deploy confirms.
 
 ### Session 2026-08-14 (later) — THE LINK ARC REGRESSED.  CAUSE FOUND, NOT FIXED.  DO NOT DEPLOY.
 
