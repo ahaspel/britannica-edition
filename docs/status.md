@@ -219,8 +219,27 @@ first, so the failure bought archaeology instead of a checked prediction.
    epubcheck 0/0/0.  The SHIPPED sampler/Payhip book predate this — next
    EPUB refresh picks it up; narrow-screen reader testing remains the open
    verification.
-7. Fold `_resolve_bio_articles` onto the resolver (bind-for-bind simulation first).
-8. The prearc worktree (0a39f49) can go once deploy confirms.
+7. **2026-08-16 REBUILD (hyphens + K5 + corrections) — BUILT, ADJUDICATED,
+   AWAITING DEPLOY.**  44:05, gates green (run twice — see below).  Content
+   diff vs `fingerprint_pre_rebuild_20260816.tsv`: 0 disappeared/new, 5,113
+   CONTENT changed, words LOST 125 — ALL adjudicated: plate Expand chrome
+   leaving (user-confirmed count), plus a handful of legitimate NEW wrap
+   joins (the separator rule UNSHADOWED wrap pairs the contiguous match used
+   to consume first: `soda-contain- ing`→`soda-containing`).  Spot-verified:
+   AFRICA `table-land`/`sea-board` back, ORDNANCE `10-in.`, plates
+   wide-stamped: 0.  **FOUND + REPAIRED EN ROUTE: the width cache keys on
+   span BYTES, so tables whose interior text re-hyphenated cache-missed and
+   SILENTLY lost legitimate Expand hints** (INSTRUMENTATION −2 buttons) —
+   ran `measure_table_widths` (194 changed spans; cache now covers all
+   10,308) + `annotate_table_markers` (24 articles re-annotated +
+   re-rendered), INSTRUMENTATION verified healed, BOTH gates re-run green
+   on the final corpus.  STRUCTURAL (queued): the uncached-span→silent-strip
+   channel — an unmeasured span should keep its prior hint or count LOUDLY;
+   and measure→annotate isn't a rebuild phase, so any content-changing
+   rebuild can re-open this hole.
+8. Fold `_resolve_bio_articles` onto the resolver (bind-for-bind simulation first).
+9. ~~The prearc worktree (0a39f49)~~ REMOVED 2026-08-16 after the deploy
+   verified — the «LN» arc's last piece of scaffolding.
 
 ### Session 2026-08-14 (later) — THE LINK ARC REGRESSED.  CAUSE FOUND, NOT FIXED.  DO NOT DEPLOY.
 
