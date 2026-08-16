@@ -47,8 +47,11 @@ build/
 # Logs
 *.log
 
-# Item-collection files for temporary testing
-*.tsv*.epub.sha256
+# Item-collection files for temporary testing.  (These were one fused line,
+# `*.tsv*.epub.sha256` — a pattern matching nothing — which is why both kinds
+# kept surfacing as untracked.)
+*.tsv
+*.epub.sha256
 
 # Corpus fingerprint for the viewer article-cache bust — build output, a hash of
 # data/derived/articles (which is itself untracked).  A committed copy could not be
