@@ -201,7 +201,12 @@ first, so the failure bought archaeology instead of a checked prediction.
    plate tables were measured/stamped `wide`** — 123/535 plates offered the
    Expand treatment on full-margin pages; annotator now forces the strip
    side for plates (decorate hook passes the payload; measurer skips plates)
-   — heals at next full rebuild.  STILL OPEN:
+   — heals at next full rebuild.  **K-RATCHET LIVE 2026-08-16**
+   (`test_marker_op_ratchet.py`): marker string-ops outside the OWNERS
+   ledger fail the suite; viewer JS pinned at zero; ghost-pruning +
+   vacuous-pass guards; live-fired red.  Flagged en route:
+   `disambiguation.py`'s private token-strip → `markers_to_text` (the one
+   converter).  631 green.  STILL OPEN:
    capture_transform_snapshots.py broken (no meta.json, hash-stem
    filenames) — repair queued.
 6. Fold `_resolve_bio_articles` onto the resolver (bind-for-bind simulation first).

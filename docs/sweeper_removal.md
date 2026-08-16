@@ -84,6 +84,22 @@ entries"), which the rebuild actually runs.  Its only caller was a CLI
 command nothing invokes — the one-true-path audit had it flagged
 "[FIX-FIRST: verify, then drop]"; verified, dropped (module + command).
 
+**THE K-RATCHET — ✅ LIVE 2026-08-16 (`tests/unit/test_marker_op_ratchet.py`).**
+The closed state is now a standing invariant, the J-doc's "make the
+discipline executable" applied to the edges: any line in shipping code that
+both names a marker token and performs a string op (`re.sub`/`.replace`/
+`re.compile`; regex methods in JS) must belong to a file in the OWNERS
+ledger, each entry carrying its reason.  Viewer JS is pinned at ZERO.  A
+ghost-pruning test keeps the ledger honest (an owner with no ops left must
+be removed); a vacuous-pass guard requires the scan to find markers.py;
+live-fired (a planted `re.compile(r"«B»")` in a builder went red — after
+the FIRST plant dodged the instrument via `__import__("re")`, a reminder
+the scanner is a line heuristic, not a parser: it catches the disease's
+natural form, not adversarial spellings).  En route it flagged
+`xrefs/disambiguation.py`'s private token-strip — a mini `markers_to_text`
+fork with the documented payload-stranding hazard — now routed through the
+one converter.
+
 **K5. Plate tables measured for the Expand treatment — ✅ FIXED 2026-08-16
 (user-caught, rebuild-gated).**  The wide-table annotator stamped every
 article JSON including plates: 123 of 535 plates carried `|wide` on the
