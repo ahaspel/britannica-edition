@@ -140,11 +140,13 @@ first, so the failure bought archaeology instead of a checked prediction.
      `by:Name` anyway (empty q).  Now: client post-filter on the hit's own
      `contributors` field; bare `by:Name` searches the contributors attribute
      (`attributesToSearchOn`).  Verified in-browser locally: `by:Bury` → 10,
-     `empire by:Bury` → ROMAN EMPIRE, LATER.  Ships with the next deploy
-     (viewer JS only).  NOTE: the LOCAL Meilisearch index is stale (10 Bury
-     credits); reindex locally with `MEILI_MASTER_KEY=britannica-dev-key
-     ARTICLES_DIR=data/derived/articles uv run python
-     tools/pipeline/index_search_ec2.py`.
+     `empire by:Bury` → ROMAN EMPIRE, LATER.  SHIPPED (2026-08-15 second
+     deploy) and verified on production.  `by:Bury` → 10 is CORRECT — user
+     confirmed it against the contributor index (binding is conservative:
+     signed articles only, never guesses); an earlier "local index is stale"
+     note here was wrong.  Local reindex when wanted:
+     `MEILI_MASTER_KEY=britannica-dev-key ARTICLES_DIR=data/derived/articles
+     uv run python tools/pipeline/index_search_ec2.py`.
      **Operator-only queries are a BROWSE (user spec 2026-08-15)**: `min:10000`
      alone now answers with EVERY qualifying article (632, paginated) via the
      client-side index — the dead `searchTitle` (never called since the mode
@@ -175,8 +177,28 @@ first, so the failure bought archaeology instead of a checked prediction.
      escaping-first-char titles are `'''AMPHITHEATRE'''`/`'''Plate II.'''`
      plates — raw wiki bold in plate titles, belongs to the title-extraction
      arc).
-5. Fold `_resolve_bio_articles` onto the resolver (bind-for-bind simulation first).
-6. The prearc worktree (0a39f49) can go once deploy confirms.
+5. **Sweeper campaign K-series (2026-08-15, ledger in docs/sweeper_removal.md):**
+   K2 (index.html JS mini-decoders over provably-plain inputs) and K3 (five
+   dead pre-port render functions in viewer.html, incl. renderImg's
+   payload-eating alt sweep) DELETED + browser-verified; `test_viewer_parity`
+   inverted to pin the ABSENCE of a JS slug copy.  **K1 DISSOLVED 2026-08-16**
+   (full detail in the ledger): both ancillary builders now render through
+   the ONE pipeline (`ancillary_render.render_pages`); one «AL» reader
+   (K1.0) rewired extractor/bake/contributor-pass; preface + prefatory-note
+   pages regenerated, browser-verified (links, TOC, footnotes, drop-cap via
+   ::first-letter).  EN ROUTE, TWO PIPELINE FIXES THAT NEED THE NEXT FULL
+   REBUILD: (a) dehyphenator ASCII-fragment bug — accented words were voted
+   by ANOTHER pair's key (`arrièrepensée` ships in 24-0508); one Unicode
+   alphabet + map rebuilt; (b) USER RULING: the hyphen vote repairs BREAKS
+   only — contiguous hyphens are print (10,540 sites across 4,971 articles
+   now carried), EXCEPT shoulder headings (narrow-measure inserts) which
+   vote contiguously ("Differentiation", stable slug).  corrections.json
+   +20:229 (`lo-in`→`10-in.`).  16+1 snapshots adjudicated + rebaselined;
+   628 green.  OPEN: K4 (bio-value template flattener — survey first);
+   capture_transform_snapshots.py broken (no meta.json, hash-stem
+   filenames) — repair queued.
+6. Fold `_resolve_bio_articles` onto the resolver (bind-for-bind simulation first).
+7. The prearc worktree (0a39f49) can go once deploy confirms.
 
 ### Session 2026-08-14 (later) — THE LINK ARC REGRESSED.  CAUSE FOUND, NOT FIXED.  DO NOT DEPLOY.
 

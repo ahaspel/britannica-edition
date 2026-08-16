@@ -1,5 +1,86 @@
 # Junk-removal campaign — master plan and full inventory
 
+## K-SERIES (opened 2026-08-15) — the sweepers OUTSIDE the preprocess chain
+
+The J-campaign closed the preprocess ledger; the K-series applies the same
+discriminators (string-ops that TRANSFORM the marker stream outside the
+marker's producer or a sanctioned decoder) to the edges: viewer JS and the
+generated-page builders.  Surveyed 2026-08-15 by grepping every `re.sub`/
+`.replace` touching `«` in shipping paths; acquitted on inspection: the
+markdown.py emitter tables (the sanctioned tree-reading decoder), producer-
+owned peels (`_title.py` single-letter slot, sub/sup's documented B/I drop,
+TITLE peels in classifier/shapes/render), reader copies (`detect_boundaries`
+heading comparison, `extract_contributor_bios` field parser — the J-era
+"re-confirm not stored as body" is now CLOSED: it parses contributor-table
+fields, never the body).
+
+**K1. The ancillary builders' parallel mini-pipelines — ✅ DISSOLVED 2026-08-16.**
+`build_preface.py` and `build_ancillary_pages.py` each owned a private regex
+chain (noinclude strip, template unwrappers, a catch-all `{{…}}` strip, a
+bare `.replace("}}","")`, paired-regex marker decoders).  Both now render
+wikitext through `ancillary_render.render_pages` — the REAL
+`stream_with_keys → process_elements → decode_inline` (target="epub" = the
+no-JS render; site link policy via `epub_bundled=None`) — with page-specific
+policy staying in the builders (leaf selection, corrections, masthead-title
+drop, «AL»→contributors links, interwiki `w:`→Wikipedia «XL», shell/TOC/
+Notes assembly; `footnotes_html` one owner).  A/B word-diffs: every diff an
+old-builder bug fixed (display-first link slots shown wrong, leaked wiki
+indent `:`/`::`, flattened author/Wikipedia links restored).  The vol-29
+vision-OCR pages keep `_vision_to_html` (different input language, no
+markers); dead `build_editorial_introduction` deleted.
+  Slices and discoveries en route:
+  * **K1.0 — one «AL» reader** (`markers.iter_al_markers`/`sub_al_markers` +
+    `sub_ln_markers`): the grammar was spelled privately in the extractor,
+    the 5.4 bake, and the contributor pass — the pre-4091691 «LN» disease.
+    All rewired; byte-identical on real markers; `test_al_reader.py`.
+  * **Dehyphenator ASCII-fragment bug (SHIPPING)**: `[A-Za-z]` fragmented
+    accented words and applied ANOTHER pair's vote — `arrière-pensée` read
+    as `re-pens`→drop (24-0508 ships `arrièrepensée`), `des-Prés`→`desPrés`.
+    One Unicode alphabet (`strings.LETTER`) both sides; map rebuilt (129
+    fragment keys gone, 86 honest accented pairs added, 0 flips).
+  * **Contiguous hyphens are PRINT (user ruling, scan-verified)**: the vote
+    applies only across a real separator; break-agnostic application was
+    rewriting 10,540 printed hyphens across 4,971 articles.  EXCEPTION, also
+    user-ruled: a SHOULDER HEADING is a narrow-measure insert, so its
+    producer votes `contiguous=True` before minting the slug
+    ("Differentiation", stable anchor).  `test_dehyphenate_alphabet.py`;
+    16+1 transform snapshots adjudicated (every diff the intended shape)
+    and rebaselined; `lo-in`→`10-in.` was a source typo → corrections.json
+    20:229.
+  * Capture tool `capture_transform_snapshots.py` is BROKEN (no .meta.json
+    on disk; export filenames moved to hash stems) — rebaseline done from
+    frozen inputs; repair queued.
+
+**K2. `index.html` JS mini-decoders — ✅ DELETED 2026-08-15.**
+`formatPreview`'s marker regexes and `ftCleanMarkup` (which carried the
+`([^«]*)` «LN» display bug in JS) guarded inputs that are ALREADY PLAIN:
+`body_start`, the indexed `body`, and `title` all pass through
+`markers_to_text` at the producer — corpus-proven (zero `«`, zero `\x01`
+in all 37,226 body_starts and sampled index docs).  A marker reaching the
+page now SURFACES as a visible leak instead of being swept — the honest
+posture; the fix would belong in `markers_to_text`.  Search page verified
+in-browser post-deletion (phrase query, snippets, highlights).
+
+**K3. `viewer.html` dead pre-port render JS — ✅ DELETED 2026-08-15.**
+`renderImg` (whose alt-text sweep `«[^»]*»` had the documented
+payload-eating shape) + `parseImgMeta`, `articleFileNameFromTarget`,
+`gardinerToUnicode`, `sectionSlug` — five functions with zero callers,
+fossils of the pre-baked-render viewer.  Liveness established three ways
+before deletion: in-file reference count (catching `escOnce`, a named
+function expression that IS referenced — kept), Python-render emission
+grep (`openMathPopout` is emitted in baked onclick — kept), and baked-
+corpus sampling (`toggleFnPopup` in 40/373 articles — kept; footnote
+popup verified working in-browser post-deletion).  `test_viewer_parity`
+inverted: the JS slug copy it EXECUTED against Python is gone (anchors
+come baked), so the pin is now the copy's ABSENCE.
+
+**K4. `extract_contributor_bios` template-stripping — OPEN (survey first).**
+Iteratively deletes whole `{{…}}` templates from bio VALUES — a
+mini-flattener in a metadata field ([[feedback_flatteners_drop_content]]);
+survey what the stripped templates actually contain before deciding.
+
+---
+
 Opened 2026-07-23.  This is the ONLY active work: no builds, no deploy, nothing
 shipped until every item below is gone.  Each removal is verified in isolation and
 one at a time; a single clean rebuild at the end is the corpus-wide proof.

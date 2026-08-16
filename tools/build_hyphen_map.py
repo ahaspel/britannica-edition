@@ -29,10 +29,15 @@ from pathlib import Path
 
 from britannica.db.session import SessionLocal
 from britannica.db.models import SourcePage
+from britannica.util.strings import LETTER as _L
 
-_SOLID = re.compile(r"[A-Za-z]{2,}")
-_HYPH = re.compile(r"([A-Za-z]{2,})-([A-Za-z]{2,})")              # contiguous = genuine
-_WRAP = re.compile(r"([A-Za-z]{2,})-\s*(?:<br[^>]*>|\n)\s*([A-Za-z]{2,})", re.I)
+# `strings.LETTER` (any Unicode letter), the SAME alphabet the runtime
+# `_HYPHEN_RE` uses — an ASCII class here voted only ASCII fragments, and the
+# ASCII runtime class then applied those votes to fragments of ACCENTED words
+# (`arrière-pensée` keyed as `re-pens`).  One alphabet, honest keys both sides.
+_SOLID = re.compile(rf"{_L}{{2,}}")
+_HYPH = re.compile(rf"({_L}{{2,}})-({_L}{{2,}})")              # contiguous = genuine
+_WRAP = re.compile(rf"({_L}{{2,}})-\s*(?:<br[^>]*>|\n)\s*({_L}{{2,}})", re.I)
 
 OUT = Path("data/hyphen_map.json")
 

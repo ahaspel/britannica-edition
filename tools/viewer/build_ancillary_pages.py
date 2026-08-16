@@ -4,6 +4,14 @@ Produces:
   tools/viewer/ancillary-prefatory-note.html   (from vol 1 ws6-9 wikitext)
   tools/viewer/ancillary-index-preface.html    (from vol29_ancillary.json)
   tools/viewer/ancillary-abbreviations.html    (from vol29_ancillary.json)
+
+The WIKITEXT page (Prefatory Note) renders through
+`ancillary_render.render_pages` — the same preprocess → walker → renderer
+the corpus goes through (it used to own a private regex chain with a
+catch-all `{{…}}` strip and a bare `.replace("}}","")`; sweeper-campaign
+item K1).  The two vol-29 pages are VISION-OCR transcriptions — a different
+input language with no wikitext and no markers — and keep their own small
+`_vision_to_html`.
 """
 import io
 import json
@@ -14,50 +22,12 @@ from pathlib import Path
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                               errors="replace")
 
+from ancillary_render import footnotes_html, render_pages
+from britannica.corrections import apply_corrections
+
 VIEWER_DIR = Path("tools/viewer")
 VOL1_DIR = Path("data/raw/wikisource/vol_01")
 ANCILLARY_JSON = Path("data/derived/vol29_ancillary.json")
-
-
-def _wiki_to_html(text: str) -> str:
-    """Convert wikitext to simple HTML paragraphs."""
-    # Strip noinclude, running headers, section tags
-    text = re.sub(r"<noinclude>.*?</noinclude>", "", text,
-                  flags=re.DOTALL | re.IGNORECASE)
-    text = re.sub(r"\{\{rh\|[^}]*\}\}", "", text)
-    text = re.sub(r"<section[^>]*>", "", text, flags=re.IGNORECASE)
-    # Drop initial caps template
-    text = re.sub(r"\{\{dropinitial\|(\w)\|[^}]*\}\}", r"\1", text)
-    text = re.sub(r"\{\{dropinitial\|(\w)\}\}", r"\1", text)
-    # No-indent template
-    text = re.sub(r"\{\{nodent\|", "", text)
-    # Strip {{c|...}} centering
-    text = re.sub(r"\{\{c\|([^}]*)\}\}", r"\1", text)
-    # Strip {{x-larger|...}} etc.
-    text = re.sub(r"\{\{(?:x-larger|xx-larger|xxx-larger|larger|smaller)\|([^}]*)\}\}",
-                  r"\1", text)
-    # {{sc|...}} small caps
-    text = re.sub(r"\{\{sc\|([^}]*)\}\}", r'<span style="font-variant:small-caps">\1</span>', text)
-    # {{asc|...}} all small caps
-    text = re.sub(r"\{\{asc\|([^}]*)\}\}", r'<span style="font-variant:small-caps">\1</span>', text)
-    # Wikilinks: [[w:Name|Display]] or [[Name|Display]] or [[Name]]
-    text = re.sub(r"\[\[w:[^|]*\|([^\]]+)\]\]", r"\1", text)
-    text = re.sub(r"\[\[[^|\]]*\|([^\]]+)\]\]", r"\1", text)
-    text = re.sub(r"\[\[([^\]]+)\]\]", r"\1", text)
-    # Bold/italic
-    text = re.sub(r"'''([^']+)'''", r"<b>\1</b>", text)
-    text = re.sub(r"''([^']+)''", r"<em>\1</em>", text)
-    # Remaining templates: strip
-    for _ in range(3):
-        text = re.sub(r"\{\{[^{}|]*\|([^{}]*)\}\}", r"\1", text)
-    text = re.sub(r"\{\{[^{}]*\}\}", "", text)
-    # Stray closing braces
-    text = text.replace("}}", "").replace("{{", "")
-    # HTML cleanup
-    text = re.sub(r"<br\s*/?>", " ", text, flags=re.IGNORECASE)
-    # Paragraphs
-    paras = [p.strip() for p in text.split("\n\n") if p.strip()]
-    return "\n".join(f"<p>{p}</p>" for p in paras)
 
 
 def _vision_to_html(text: str) -> str:
@@ -155,6 +125,14 @@ def _page_template(title: str, back_label: str, back_href: str,
       line-height: 0.9; padding: 3px 6px 0 0; font-weight: bold; }}
     .shoulder {{ color: var(--muted); font-style: italic; font-size: 0.85rem;
       text-align: right; margin: 4px 0; }}
+    .centered {{ text-align: center; font-style: italic;
+      margin: 1.2em 0 0.5em; text-indent: 0; }}
+    .small-caps {{ font-variant: small-caps; }}
+    .footnote-ref a {{ color: var(--link); text-decoration: none;
+      font-weight: 700; padding: 0 2px; }}
+    .footnotes {{ border-top: 1px solid var(--border); margin-top: 24px;
+      padding-top: 12px; font-size: 0.88rem; color: var(--muted); }}
+    .footnotes ol {{ padding-left: 24px; list-style: none; }}
     .abbrev-table {{ width: 100%; border-collapse: collapse; margin: 12px 0; }}
     .abbrev-table td {{ padding: 2px 12px 2px 0; vertical-align: top;
       border-bottom: 1px solid var(--border); font-size: 0.9rem; }}
@@ -187,13 +165,14 @@ def _page_template(title: str, back_label: str, back_href: str,
 
 
 def build_prefatory_note():
-    text = ""
+    raw_pages = []
     for ws in range(6, 10):
         p = VOL1_DIR / f"vol01-page{ws:04d}.json"
         if p.exists():
             d = json.loads(p.read_text(encoding="utf-8"))
-            text += d.get("raw_text", "") + "\n\n"
-    html = _wiki_to_html(text)
+            raw_pages.append((ws, apply_corrections(d.get("raw_text", ""), 1)))
+    doc = render_pages(raw_pages, volume=1, drop_leading_title=True)
+    html = doc.body_html + footnotes_html(doc.footnotes)
     page = _page_template(
         title="Prefatory Note",
         back_label="Ancillary",
@@ -202,26 +181,6 @@ def build_prefatory_note():
         body_html=html,
     )
     out = VIEWER_DIR / "ancillary-prefatory-note.html"
-    out.write_text(page, encoding="utf-8")
-    print(f"  {out}")
-
-
-def build_editorial_introduction():
-    text = ""
-    for ws in range(10, 24):
-        p = VOL1_DIR / f"vol01-page{ws:04d}.json"
-        if p.exists():
-            d = json.loads(p.read_text(encoding="utf-8"))
-            text += d.get("raw_text", "") + "\n\n"
-    html = _wiki_to_html(text)
-    page = _page_template(
-        title="Editorial Introduction",
-        back_label="Ancillary",
-        back_href="ancillary.html",
-        scan_href="scans.html?vol=1&start=11&end=24&prefix=page&label=Editorial+Introduction&back=ancillary.html",
-        body_html=html,
-    )
-    out = VIEWER_DIR / "ancillary-editorial-introduction.html"
     out.write_text(page, encoding="utf-8")
     print(f"  {out}")
 

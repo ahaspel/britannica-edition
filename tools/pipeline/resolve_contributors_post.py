@@ -27,6 +27,7 @@ from pathlib import Path
 
 sys.path.insert(0, "src")
 from britannica.export.sections import section_key
+from britannica.markers import sub_al_markers
 from britannica.contributors.link_frontmatter import link_from_frontmatter
 from britannica.contributors.resolver import ContributorIndex
 from britannica.contributors.vol29_index import parse_vol29_index
@@ -45,7 +46,7 @@ from britannica.pipeline.stages.extract_contributors import _normalize_initials
 ART = Path("data/derived/articles")
 # Deferred [[Author:]] render marker: the walk emits «AL:name|display» neutrally
 # and 5.4 resolves it against the FINISHED roster ([[project_roster_from_author_links]]).
-_AL_RE = re.compile(r"«AL:([^|»]*)\|(.*?)«/AL»", re.DOTALL)
+# Read through THE «AL» reader (`markers.iter_al_markers`) — one grammar, no fork.
 
 # A contributor's name string flattens THREE attributes (the user's decomposition):
 # the NAME PROPER, an honorific/TITLE prefix, and a (DATE) disambiguator.  The
@@ -350,7 +351,7 @@ def bind_contributors(session, payloads: dict) -> bool:
 
     def _resolve_author_markers(text: str) -> str:
         def _repl(m):
-            name, disp = m.group(1), m.group(2)
+            disp = m.display
             if _normalize_initials(disp.strip("() ")) in known_inits:
                 return disp
             # NOT a signoff → a reference to a PERSON.  Leave the «AL» standing:
@@ -359,8 +360,8 @@ def bind_contributors(session, payloads: dict) -> bool:
             # against surname-first EB titles (JOHN VENN → McADAM, JOHN LOUDON).
             # 5.4 resolves it on the person tier and bakes/strips it there, so
             # no «AL» survives the pipeline — the invariant just moves one phase.
-            return m.group(0)
-        return _AL_RE.sub(_repl, text)
+            return text[m.start:m.end]
+        return sub_al_markers(text, _repl)
 
     # Byline order: signature position where we have it (`sequence` from the
     # author-link harvest), then a CONTENT tie-break — the vol-29 binds all

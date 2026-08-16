@@ -516,7 +516,7 @@
        responsive caps.  Do NOT re-add display:block / margin:auto here — that made
        centering a property of the IMAGE, block-centering EVERY class-less-table
        image and so breaking inline glyphs (ABBREVIATIONS' per-symbol dropped onto
-       its own centered line).  renderImg already centers align=center; the
+       its own centered line).  the baked render already centers align=center; the
        surrounding context centers the rest. */
 .body-text table:not([class]):not([style*="float"]) img {
       max-height: none !important;
@@ -1522,18 +1522,6 @@
       "N35A":"N35","N35B":"N35","V10A":"V10", // variants
     };
 
-    function gardinerToUnicode(code) {
-      if (code.includes("*")) code = code.split("*")[0];
-      // Try MdC abbreviation first
-      if (MDC_TO_GARDINER[code]) code = MDC_TO_GARDINER[code];
-      const m = code.match(/^([A-Z]a?)(\d+)$/);
-      if (!m) return null;
-      const base = GARDINER_BASES[m[1]];
-      if (base == null) return null;
-      const cp = base + parseInt(m[2]) - 1;
-      return (cp >= 0x13000 && cp <= 0x1342F) ? cp : null;
-    }
-
     function commonsUrl(filename) {
       // Full URLs (e.g. score images from upload.wikimedia.org) pass through
       if (filename.startsWith("http://") || filename.startsWith("https://")) return filename;
@@ -1549,26 +1537,6 @@
       return `/data/images/${encodeURIComponent(name)}`;
     }
 
-    // THE one image render: an image is just an <img>, and the surrounding context
-    // — a «CTR» block, fencing «BR»s, a <td> — does the layout, exactly as it does
-    // for text.  Carried width is honored and capped to the column (max-width:100%);
-    // a bare image renders at natural size.  align=right/left floats it; align=center
-    // centers a standalone one; vertical-align:middle kills the inline-image baseline
-    // gap so a caption sits tight under a centered figure.  No <figure>, no glyph-vs-
-    // figure split — the producer carried the layout, we just emit the <img>.
-    function renderImg(filename, meta, caption) {
-      const fn  = unescapeHtml(filename);
-      const url = fn.startsWith("http") ? fn : commonsUrl(fn);
-      const alt = (caption || fn).replace(/«[^»]*»/g, "");
-      let s = "max-width:100%;height:auto;vertical-align:middle;";
-      if (meta.width)  s += `width:${meta.width}px;`;
-      if (meta.height) s += `height:${meta.height}px;`;
-      if      (meta.align === "right")  s += "float:right;margin:.4em 0 .5em 1.8em;";
-      else if (meta.align === "left")   s += "float:left;margin:.4em 1.8em .5em 0;";
-      else if (meta.align === "center") s += "display:block;margin:0 auto;";
-      return `<img src="${url}" alt="${escapeHtml(alt)}" loading="lazy" style="${s}" />`;
-    }
-
     // Block image marker grammar — mirrors britannica.markers.IMG_PARTS_RE.
     //   {{IMG:filename[|align=center|left|right][|width=N][|height=N][|caption]}}
     // group 1 filename, group 2 meta-block, group 3 caption.  The article
@@ -1580,18 +1548,6 @@
     const IMG_PARTS_RE_G = new RegExp(IMG_PARTS_SRC, "g");        // replace / exec-all
     const IMG_PARTS_RE = new RegExp(IMG_PARTS_SRC);              // first match anywhere
     const IMG_PARTS_RE_ANCHORED = new RegExp("^" + IMG_PARTS_SRC + "$");
-
-    function parseImgMeta(metaBlock) {
-      const out = {};
-      if (metaBlock) {
-        const re = /(align|width|height)=([^|]+)/g;
-        let m;
-        while ((m = re.exec(metaBlock)) !== null)
-          out[m[1]] = m[1] === "align" ? m[2] : parseInt(m[2], 10);
-      }
-      return out;
-    }
-
 
     // Named refs (`«FN[NAME]:body«/FN»`) share a footnote number across
     // all anchors with the same name, matching Wikisource convention
@@ -1741,18 +1697,6 @@
     })();
     let unproofedPages = {};
     const wideTableSources = {};
-    // Colliding anchor ids — a «SH» sharing a slug with a «SEC» (ALPS's
-    // "Western Alps" is BOTH a major section and a later shoulder heading):
-    // the first anchor per slug keeps `section-<slug>`, each reuse gets a `-N`
-    // suffix.  Applied in the SAME document order in BOTH the TOC scan and the
-    // body id-emit (below), so a TOC link lands on its OWN anchor instead of
-    // the first same-slug one.  ONE rule, two callers.
-    function sectionSlug(name) {
-      return name.trim().toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/^-|-$/g, "");
-    }
-
     const TITLE_OPEN = "\u00abTITLE:";
     const TITLE_CLOSE = "\u00ab/TITLE\u00bb";
 
@@ -1771,10 +1715,6 @@
     // already expresses.  Listing it here chopped the prose around every
     // inline letterform image and wrapped the fragments in separate `<p>`s,
     // forcing the image onto its own line (ALPHABET's β/λ/σ glyphs).
-
-    function articleFileNameFromTarget(target) {
-      return `${String(target || "").trim().toLowerCase()}.json`;
-    }
 
     function articleUrl(filename) {
       return BritannicaUrls.filenameToUrl(filename);

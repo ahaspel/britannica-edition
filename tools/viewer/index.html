@@ -402,15 +402,13 @@
       return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
 
-    function formatPreview(s) {
-      let h = escapeHtml(s).replace(/\x01PAGE:\d+\x01/g, "");
-      h = h.replace(/\u00abB\u00bb(.*?)\u00ab\/B\u00bb/gs, "<b>$1</b>");
-      h = h.replace(/\u00abI\u00bb(.*?)\u00ab\/I\u00bb/gs, "<i>$1</i>");
-      h = h.replace(/\u00abSC\u00bb(.*?)\u00ab\/SC\u00bb/gs, '<span style="font-variant:small-caps">$1</span>');
-      h = h.replace(/\u00abFN(?:\[[^\]]+\])?:.*?\u00ab\/FN\u00bb/gs, "");
-      h = h.replace(/\u00ab\/?[A-Z]+\u00bb/g, "");
-      return h;
-    }
+    // (formatPreview / ftCleanMarkup are DELETED \u2014 they were marker-stripping
+    // armor over inputs that are already plain: `body_start` and the indexed
+    // `body`/`title` all pass through markers_to_text at the PRODUCER, and a
+    // corpus scan found zero marker tokens and zero \x01 page sentinels in any
+    // of them.  If a marker ever DOES reach here it now shows as a visible
+    // leak instead of being silently swept \u2014 the honest posture; the fix
+    // belongs in markers_to_text, not in a JS regex.)
 
     function viewerUrl(filename) {
       return BritannicaUrls.filenameToUrl(filename);
@@ -431,7 +429,7 @@
       const lenLabel = len > 1000 ? `${(len/1000).toFixed(1)}k words` : `${len} words`;
       return `<div class="result">
         <div class="result-title"><a href="${viewerUrl(a.filename)}">${escapeHtml(a.title)}</a> <span style="color:var(--muted);font-size:0.78rem;font-weight:normal;">${lenLabel}</span></div>
-        ${a.body_start ? `<div class="result-snippet">${formatPreview(a.body_start)}</div>` : ""}
+        ${a.body_start ? `<div class="result-snippet">${escapeHtml(a.body_start)}</div>` : ""}
       </div>`;
     }
 
@@ -560,14 +558,6 @@
     }
 
     // ── Full-text search ──
-    function ftCleanMarkup(s) {
-      let h = s.replace(/\x01PAGE:\d+\x01/g, "");
-      h = h.replace(/\u00abFN(?:\[[^\]]+\])?:.*?\u00ab\/FN\u00bb/gs, "");
-      h = h.replace(/\u00abLN(?:\[[a-z_]*\])?:[^|]*\|(?:[^|«]*\|)?([^«]*)\u00ab\/LN\u00bb/g, "$1");
-      h = h.replace(/\u00ab\/?[A-Z]+\u00bb/g, "");
-      return h;
-    }
-
     function ftEscapeHtml(s) {
       return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
@@ -582,9 +572,8 @@
     // lands on the exact highlight.
     function ftExtractOccurrences(body, query, max) {
       if (!body || !query) return { items: [], total: 0 };
-      const cleaned = ftCleanMarkup(body);
       const qLow = query.toLowerCase();
-      const paras = cleaned.split(/\n+/).map(s => s.trim()).filter(Boolean);
+      const paras = body.split(/\n+/).map(s => s.trim()).filter(Boolean);
       const CTX = 50;
       const items = [];
       const qEscRe = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -676,7 +665,7 @@
           const fmt = hit._formatted || {};
           // No title highlighting — only article body text matches.
           const titleRaw = hit.title || "";
-          const titleEsc = ftEscapeHtml(ftCleanMarkup(titleRaw));
+          const titleEsc = ftEscapeHtml(titleRaw);
           const pr = hit.page_start === hit.page_end
             ? `p.${hit.page_start}` : `pp.${hit.page_start}\u2013${hit.page_end}`;
           // When the query matched the article title, skip the body
