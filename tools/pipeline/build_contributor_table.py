@@ -16,6 +16,7 @@ from pathlib import Path
 sys.path.insert(0, "src")
 
 from britannica.contributors.aliases import canonical_name
+from britannica.contributors.frontmatter import iter_entries, parse_field
 from britannica.corrections import apply_corrections
 from britannica.db.models import Contributor, ContributorInitials
 from britannica.db.session import SessionLocal
@@ -23,46 +24,6 @@ from britannica.pipeline.stages.elements import ElementContext, process_elements
 from britannica.pipeline.stages.extract_contributors import _normalize_initials
 from britannica.pipeline.stages.preprocess import preprocess
 from britannica.util.strings import strip_html_tags
-
-_ENTRY_START_PATTERN = re.compile(
-    r"\{\{EB1911 contributor table/entry",
-)
-
-
-def _iter_entries(text: str):
-    """Yield the inner content of each `{{EB1911 contributor table/entry
-    …}}` template, counting braces so that nested templates (like
-    `brace = {{brace2|…}}`) don't prematurely terminate the match.
-
-    The old non-greedy regex stopped at the first `}}` inside a nested
-    template, dropping every entry that used one — about 93 entries,
-    including Gertrude Bell, Hilda Murray, and others whose signatures
-    we later found in article footers but couldn't resolve.
-    """
-    for m in _ENTRY_START_PATTERN.finditer(text):
-        start = m.end()
-        depth = 1  # we've entered the outer {{
-        i = start
-        while i < len(text) - 1:
-            pair = text[i : i + 2]
-            if pair == "{{":
-                depth += 1
-                i += 2
-            elif pair == "}}":
-                depth -= 1
-                if depth == 0:
-                    yield text[start:i]
-                    break
-                i += 2
-            else:
-                i += 1
-
-
-def _parse_field(content, field_name):
-    m = re.search(
-        rf"\|\s*{field_name}\s*=\s*(.*?)(?=\n\s*\||\Z)", content, re.DOTALL
-    )
-    return m.group(1).strip() if m else ""
 
 
 def _clean_name(raw_name):
@@ -157,7 +118,7 @@ def build_contributor_table():
             with open(path, encoding="utf-8") as f:
                 data = json.load(f)
             raw = apply_corrections(data.get("raw_text", ""), volume)
-            for content in _iter_entries(raw):
+            for content in iter_entries(raw):
                 # Normalize before the length filter — entries whose
                 # raw initials field uses HTML-entity spacing (e.g.
                 # vol 6's `J.&thinsp;D.&thinsp;v.&thinsp;d.&thinsp;W.`
@@ -166,11 +127,11 @@ def build_contributor_table():
                 # signatures.  The same normalizer used at lookup
                 # time is applied here so storage and lookup share
                 # one canonical form.
-                initials = _normalize_initials(_parse_field(content, "initials"))
+                initials = _normalize_initials(parse_field(content, "initials"))
                 if not initials or len(initials) > 20:
                     continue
-                raw_name = _parse_field(content, "name")
-                raw_desc = _parse_field(content, "description")
+                raw_name = parse_field(content, "name")
+                raw_desc = parse_field(content, "description")
                 # The VOLUME rides along: `_clean_description` walks the description
                 # through the same preprocess+walk the article body takes, and both
                 # are volume-keyed (corrections, and the element context).
@@ -309,17 +270,17 @@ def backfill_bios(apply_mode: bool = True):
             for path in sorted(vol_dir.glob("*.json")):
                 with open(path, encoding="utf-8") as f:
                     raw = apply_corrections(json.load(f).get("raw_text", ""), volume)
-                for content in _iter_entries(raw):
-                    name, creds = _clean_name(_parse_field(content, "name"))
+                for content in iter_entries(raw):
+                    name, creds = _clean_name(parse_field(content, "name"))
                     # SAME producer as build_contributor_table's own pass — a second
                     # cleaner here is how the fork would grow back.
                     desc = _clean_description(
-                        _parse_field(content, "description"), volume)
+                        parse_field(content, "description"), volume)
                     if not (desc or creds):
                         continue
                     cid = idx.resolve(
                         name=name,
-                        initials=_normalize_initials(_parse_field(content, "initials")))
+                        initials=_normalize_initials(parse_field(content, "initials")))
                     if cid is None:
                         continue
                     cur_creds, cur_desc = best.get(cid, ("", ""))

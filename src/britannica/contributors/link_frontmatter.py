@@ -17,44 +17,13 @@ from britannica.markers import strip_marker_tokens
 from collections import defaultdict
 from pathlib import Path
 
+from britannica.contributors.frontmatter import iter_entries, parse_field
 from britannica.contributors.resolver import ContributorIndex
 from britannica.db.models import Article, ArticleContributor, Contributor, ContributorInitials
 from britannica.db.session import SessionLocal
 from britannica.xrefs.normalizer import normalize_xref_target
 from britannica.xrefs.resolver import build_core_maps
 from britannica.util.strings import strip_html_tags
-
-_ENTRY_MARKER = "{{EB1911 contributor table/entry"
-
-
-def _iter_entries(raw):
-    """Yield the brace-balanced inner content of each contributor-table entry.
-
-    Entries embed inner templates ({{brace2}}, {{fwn}}, {{EB1911 Article Link}}),
-    so a non-greedy ``(.*?)}}`` stops at the FIRST inner ``}}`` and drops every
-    subject after it — which silently truncated ~2/3 of all entries and
-    suppressed thousands of front-matter binds.  Count braces and stop at the
-    entry's OWN closing ``}}`` instead.
-    """
-    i = 0
-    while True:
-        j = raw.find(_ENTRY_MARKER, i)
-        if j < 0:
-            return
-        depth, k, n = 0, j, len(raw)
-        while k < n:
-            if raw[k:k + 2] == "{{":
-                depth += 1
-                k += 2
-            elif raw[k:k + 2] == "}}":
-                depth -= 1
-                k += 2
-                if depth == 0:
-                    break
-            else:
-                k += 1
-        yield raw[j + len(_ENTRY_MARKER):k - 2]
-        i = k
 
 
 def _clean_subject(v):
@@ -124,13 +93,6 @@ def _disambiguate_by_footprint(session, contrib_id, cand_ids, kind_of):
     return None
 
 
-def _parse_field(content, field_name):
-    m = re.search(
-        rf"\|\s*{field_name}\s*=\s*(.*?)(?=\n\s*\||\Z)", content, re.DOTALL
-    )
-    return m.group(1).strip() if m else ""
-
-
 def link_from_frontmatter(apply_mode: bool = False, kind_of=None):
     session = SessionLocal()
     try:
@@ -169,11 +131,11 @@ def link_from_frontmatter(apply_mode: bool = False, kind_of=None):
                 with open(path, encoding="utf-8") as f:
                     data = json.load(f)
                 raw = data.get("raw_text", "")
-                for content in _iter_entries(raw):
-                    initials = _parse_field(content, "initials").strip()
+                for content in iter_entries(raw):
+                    initials = parse_field(content, "initials").strip()
                     if not initials:
                         continue
-                    name = _parse_field(content, "name")
+                    name = parse_field(content, "name")
                     name = re.sub(r"\[\[[^\]|]*\|([^\]]+)\]\]", r"\1", name)
                     name = re.sub(r"\[\[([^\]]+)\]\]", r"\1", name)
                     name = strip_html_tags(name).strip()
@@ -184,10 +146,10 @@ def link_from_frontmatter(apply_mode: bool = False, kind_of=None):
 
                     # Collect all lnksubject fields
                     for n in range(1, 20):
-                        lnk = _parse_field(content, f"lnksubject{n}")
+                        lnk = parse_field(content, f"lnksubject{n}")
                         if not lnk:
                             # Try plain subject
-                            lnk = _parse_field(content, f"subject{n}")
+                            lnk = parse_field(content, f"subject{n}")
                         if not lnk:
                             break
                         # Clean wiki markup

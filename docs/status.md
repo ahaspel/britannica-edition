@@ -99,16 +99,44 @@ exact clone groups; the `dup_constants` baseline re-accepted, dropping 17 stale
 entries (the duplicated «TABLE» regex plus 16 the earlier passes had already
 retired) so none can return silently.
 
-**Next by stakes** (the ranking this session worked from): `_parse_field`
-(contributor front-matter, duplicated between `link_frontmatter` and
-`build_contributor_table`, both in rebuild phase 5.4) → `_mint_ph`/`_new_placeholder`
+**Then `_parse_field` — and it was a four-copy brace walk, not a two-copy regex.**
+The ranked item was one function duplicated between `link_frontmatter` and
+`build_contributor_table` (both rebuild phase 5.4).  Grepping the CONCEPT found
+the family: each also had its own `_iter_entries` and its own spelling of the
+entry marker, and two neighbours had written the same brace counter again —
+`extract_contributors._iter_footers` and `detect_boundaries._extract_template_content`.
+All four exist because a non-greedy `\{\{.*?\}\}` truncates at the first INNER
+close, and all four paid for that lesson separately (~2/3 of entries dropped;
+Pitcher's `C. {{sc|Wi}}.` truncated to `C.` and collided with Crewe;
+`{{x-larger|{{uc|TITLE}}}}` cut at the inner brace).
+
+- **`britannica.wikitext`** (new) — the SOURCE-side lexicon, companion to
+  `markers`: `template_end` + `iter_template_bodies`.
+- **`contributors.frontmatter`** (new) — the `{{EB1911 contributor table/entry}}`
+  grammar: `ENTRY_OPEN`, `iter_entries`, `parse_field`.  Both phase-5.4 readers
+  import it; the tool imports the library, as before.
+- The twins **had already drifted at the edge**: for an unterminated template
+  `link_frontmatter` yielded a garbage slice (rest-of-text minus 2 chars) where
+  its twin yielded nothing.  Proved it never fires on the corpus, then made
+  "skip it" the single behaviour.  `tests/unit/test_wikitext.py` pins that edge.
+
+Proof: 49,445 rows byte-identical over all 28,780 raw pages — 5,178 entries read
+by BOTH readers, every field the callers parse (initials/name/description/
+subject1-11/lnksubject1-11), 8,228 footer bodies, 14,030 plate-title reads.
+`dup_functions` 10 → 9; the `_parse_field` regex left the constants baseline.
+
+**Next by stakes**: `_mint_ph`/`_new_placeholder`
 (placeholder minting, classifier vs walker, core of the walk) → `_normalize_name`
 (the contributor-dedup gate and the audit that checks it each have their own copy,
-so the audit can disagree with the gate it audits) → `_balanced_end`'s last two
-copies (`export/markdown.py` takes a REGEX opener, `_ordered_list.py` scans braces
-and returns len(text) on unbalanced — a GUESSED close, which is the thing
-`markdown`'s own docstring warns against; reconciling the three sentinels is the
-work, and it needs its own corpus proof).
+so the audit can disagree with the gate it audits) → the last balanced-scan
+copies: `export/markdown._balanced_end` (marker tokens, REGEX opener, -1 on
+unbalanced) and `elements/_ordered_list._balanced_end` (braces, returns
+len(text) — it GUESSES a close and hands back the rest of the document, the
+thing `markdown`'s own docstring warns against).  Both are behaviour questions,
+not moves: reconciling the sentinels needs its own corpus evidence.  Also open,
+found while grepping: the **split-on-top-level-pipe** family — `plate_parent`,
+`detect_boundaries` (twice), `_dual_line`, `_link`, `build_printed_pages` each
+walk depth to split a template's args.
 
 ### Session 2026-08-15 — CENSUS GREEN.  The corpus resolves every link production does, +1.  DEPLOYABLE.
 
