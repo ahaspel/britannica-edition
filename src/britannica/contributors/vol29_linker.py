@@ -36,7 +36,6 @@ actions:
 from __future__ import annotations
 
 import re
-import unicodedata
 from collections import defaultdict
 from dataclasses import dataclass, field
 
@@ -44,6 +43,7 @@ from britannica.contributors.aliases import canonical_name
 from britannica.contributors.vol29_index import Vol29Entry
 from britannica.db.models import ArticleContributor, Contributor, ContributorInitials
 from britannica.pipeline.stages.extract_contributors import _normalize_initials
+from britannica.util.strings import fold_accents
 
 
 # --- Action types -----------------------------------------------------------
@@ -99,10 +99,7 @@ def fold_name(s: str) -> str:
     s = canonical_name(s)
     s = re.sub(r"\s*\([^)]*\)", " ", s)
     s = s.split(",", 1)[0]
-    s = "".join(
-        c for c in unicodedata.normalize("NFKD", s)
-        if not unicodedata.combining(c)
-    )
+    s = fold_accents(s)
     while True:
         s2 = _HONORIFIC.sub("", s)
         if s2 == s:

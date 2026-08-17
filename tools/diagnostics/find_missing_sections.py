@@ -10,20 +10,19 @@ sys.stdout.reconfigure(encoding="utf-8")
 
 from britannica.db.models import Article
 from britannica.db.session import SessionLocal
+from britannica.util.strings import fold_accents
 
 s = SessionLocal()
 # Map (vol, normalized_title) → True for every article in the corpus.
 # An article is "missing" only when its section name normalized to
 # title form doesn't match any actual article title in its volume.
-import unicodedata
 def _norm(name: str) -> str:
     # Strip parenthetical and bracketed qualifiers ("ALPHEGE [Ælfheah]",
     # "BARBON (Barebone or Barebones)") so section-name comparison
     # matches the DB title variants. Also fold diacritics (É→E, Ö→O)
     # so "BLANCHE, JACQUES ÉMILE" matches "Blanche, Jacques Emile".
     s = re.sub(r"\([^)]*\)|\[[^\]]*\]", " ", name)
-    s = unicodedata.normalize("NFKD", s)
-    s = "".join(c for c in s if not unicodedata.combining(c))
+    s = fold_accents(s)
     return re.sub(r"[^A-Z0-9]+", " ", s.upper()).strip()
 by_title = set()
 for a in s.query(Article).all():

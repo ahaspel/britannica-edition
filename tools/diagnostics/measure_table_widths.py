@@ -23,7 +23,6 @@ cache, and the render wraps exactly the tables that measured wide.
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import re
 import sys
@@ -33,50 +32,15 @@ sys.path.insert(0, "src")
 sys.stdout.reconfigure(encoding="utf-8") if hasattr(
     sys.stdout, "reconfigure") else None
 
+from britannica.markers import (  # noqa: E402
+    iter_table_spans, strip_table_wide, table_cols)
+from britannica.table_widths import CACHE_PATH as CACHE, span_key  # noqa: E402
+
 ARTS = Path("data/derived/articles")
-CACHE = Path("data/derived/table_widths.json")
 VIEWER_HTML = Path("tools/viewer/viewer.html")
 
 BODY_WIDTH = 590        # px — .body-text content width (fixed at all viewports)
 TOLERANCE = 2           # px — sub-pixel/border slack before "doesn't fit"
-
-TABLE_OPEN, TABLE_CLOSE = "«TABLE[", "«/TABLE»"
-_WIDE_PARAM_RE = re.compile(r"(«TABLE\[cols:\d+)\|wide")
-
-
-def _balanced_spans(body: str):
-    """Top-level «TABLE[…]…«/TABLE» spans (balanced, nested-safe)."""
-    i = 0
-    while True:
-        a = body.find(TABLE_OPEN, i)
-        if a == -1:
-            return
-        depth, j = 0, a
-        n = len(body)
-        end = None
-        while j < n:
-            if body.startswith(TABLE_OPEN, j):
-                depth += 1
-                j += len(TABLE_OPEN)
-            elif body.startswith(TABLE_CLOSE, j):
-                depth -= 1
-                j += len(TABLE_CLOSE)
-                if depth == 0:
-                    end = j
-                    break
-            else:
-                j += 1
-        if end is None:
-            return
-        yield body[a:end]
-        i = end
-
-
-def span_key(span: str) -> str:
-    """Cache identity: the span with any `wide` annotation stripped, so
-    re-measuring an annotated corpus is idempotent."""
-    return hashlib.sha256(
-        _WIDE_PARAM_RE.sub(r"\1", span).encode("utf-8")).hexdigest()
 
 
 def _viewer_css() -> str:
@@ -100,13 +64,11 @@ def collect() -> dict[str, dict]:
             continue
         if d.get("article_type") == "plate":
             continue
-        for span in _balanced_spans(d.get("body") or ""):
+        for _a, span in iter_table_spans(d.get("body") or ""):
             k = span_key(span)
-            e = out.setdefault(k, {"span": _WIDE_PARAM_RE.sub(r"\1", span),
+            e = out.setdefault(k, {"span": strip_table_wide(span),
                                    "cols": 0, "samples": []})
-            m = re.match(r"«TABLE\[cols:(\d+)", span)
-            if m:
-                e["cols"] = int(m.group(1))
+            e["cols"] = table_cols(span) or e["cols"]
             if len(e["samples"]) < 3:
                 e["samples"].append(f.name)
     return out

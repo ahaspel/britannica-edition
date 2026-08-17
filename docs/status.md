@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-08-15.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-08-17.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,7 +46,69 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-08-15)
+## CURRENT STATE (2026-08-17)
+
+### Session 2026-08-17 — consolidation: the measured-width caches get one owner each
+
+**Both content-addressed measurement caches — math widths and table widths — now
+have a single owner for their key and their path, and the «TABLE» grammar four
+sites were spelling independently now lives in the lexicon.  Provably inert:
+19,788 measured facts identical across the change, 636 tests green.**
+
+The class of bug: a cache WRITTEN by a build tool and READ by the pipeline, with
+each side spelling its own key function and its own path.  Nothing fails loudly
+when the pair drifts — the reader looks up keys the writer never wrote, finds
+nothing, and every hint silently vanishes.  That is what emptied 194 tables'
+Expand hints on 2026-08-16 (item 7 below), and the same latent duplicate sat in
+the math path (`math_widths._hash` vs `measure_math_widths._hash`).
+
+What moved:
+
+- **`util.strings.content_digest`** — THE content address (`sha256[:16]`, `n=None`
+  for the full digest).  Five sites spelled it inline; each keeps its own
+  composition (what goes INTO the key) at the call site.  No `or ""` guard on
+  purpose: a `None` keying as the empty string is a silent wrong-entry hit.
+- **`math_widths.cache_key` / `CACHE_PATH`** — owned by the reader, imported by
+  `measure_math_widths`.  Both sides now hold the SAME object.
+- **`britannica.table_widths`** (new, mirrors `math_widths`) — `CACHE_PATH` +
+  `span_key`.  `post_export` used to reach into a *diagnostics* script through a
+  CWD-relative `sys.path` hack to borrow the key; that inversion is gone.
+- **The «TABLE[cols:N|wide]» grammar → `markers`** (`iter_table_spans`,
+  `balanced_end`, `table_cols`, `table_is_wide`, `set_table_wide`,
+  `strip_table_wide`).  Four sites spelled it: the render's Expand wrapper, the
+  annotator that stamps `wide`, the cache key that strips it, the measurer's
+  `cols` read — two carrying the same regex source verbatim.  `annotate_table_markers`
+  now spells no marker at all and came OFF the marker-op OWNERS ledger.
+  `_balanced_end` went 3 copies → 2 (the lexicon's is shared by the render).
+
+**Proof (the part that matters).**  Before/after over the real corpus, byte-identical
+across 19,788 rows: 4,649 math keys + every `scale_hint` answer; 10,792 table span
+keys + cache hit-rates (947 math / 10,984 table entries still hit at the same
+rates); `annotate_body`'s output for every article carrying a table; and
+`_wrap_wide_tables`' output + Expand counter for all of them (720 stamps → 720
+figures, unchanged).  Corroborated end-to-end: 468 articles (all 68 «EQN» ones +
+400 random table ones) re-render byte-identical to their stored `rendered_html`.
+The EPUB math-asset key was proved separately — 9,298 keys identical, 4,650 SVG
+cache hits either way.
+
+**Standing invariant, not a one-shot:** `tests/unit/test_width_cache_identity.py`
+asserts writer and reader hold the same key/path OBJECT (equality would permit
+exactly the state just removed), that `span_key` is stable under annotation, and
+that nested/unterminated spans walk by depth.  Instruments: `dup_functions` 11 → 10
+exact clone groups; the `dup_constants` baseline re-accepted, dropping 17 stale
+entries (the duplicated «TABLE» regex plus 16 the earlier passes had already
+retired) so none can return silently.
+
+**Next by stakes** (the ranking this session worked from): `_parse_field`
+(contributor front-matter, duplicated between `link_frontmatter` and
+`build_contributor_table`, both in rebuild phase 5.4) → `_mint_ph`/`_new_placeholder`
+(placeholder minting, classifier vs walker, core of the walk) → `_normalize_name`
+(the contributor-dedup gate and the audit that checks it each have their own copy,
+so the audit can disagree with the gate it audits) → `_balanced_end`'s last two
+copies (`export/markdown.py` takes a REGEX opener, `_ordered_list.py` scans braces
+and returns len(text) on unbalanced — a GUESSED close, which is the thing
+`markdown`'s own docstring warns against; reconciling the three sentinels is the
+work, and it needs its own corpus proof).
 
 ### Session 2026-08-15 — CENSUS GREEN.  The corpus resolves every link production does, +1.  DEPLOYABLE.
 
@@ -117,13 +179,24 @@ first, so the failure bought archaeology instead of a checked prediction.
    WITH OR WITHOUT Enhanced Typesetting (user, 2026-08-15: ET was already
    disabled and the full corpus still wouldn't load — the blocker is NOT the ET
    check).  The only known bracket: one volume converts (real 78MB KPF), the
-   full corpus doesn't; the limit between is UNMEASURED, so a parts edition has
-   an unknown part count until someone bisects volumes.  **KDP ticket DEAD
-   (2026-08-15)** — final answer: "too complex, takes too long to process" (a
-   converter timeout called "corruption"); their own tech team couldn't open
-   the file; no limit named, no escalation left.  The Kindle decision (parts /
-   sampler-only / skip, + the download.html "ready shortly" sentence) is wholly
-   ours now.  Queued
+   full corpus doesn't.  **KDP ticket DEAD (2026-08-15)** — final answer: "too
+   complex, takes too long to process" (a converter timeout called
+   "corruption"); their own tech team couldn't open the file; no limit named,
+   no escalation left.  **KINDLE CLOSED — NO HOPE (user's verdict,
+   2026-08-16).**  The half-corpus probe settled it: vols 1-14 kindle target
+   (18,476 articles / 5,352 images / 250.7 MB) behaves EXACTLY like the full
+   book — Previewer reaches "enhancing for Kindle reader" (the ET stage) then
+   bombs with a hollow "Book conversion successful" and NO artifact; a
+   parallel detached CLI run wrote no output directory at all.  Predictable
+   from July's bisection (≤6,582 articles pass / ≥7,902 fail; half is 2.3×
+   over) — that arithmetic belonged BEFORE the build, not after
+   ([[feedback_audit_fresh_baseline]]).  Those ceilings against real
+   per-volume counts give **7 parts by articles, ~8 by images** (1-4 / 5-9 /
+   10-14 / 15-18 / 19-23 / 24-27 / 28), each shedding ~half its
+   cross-references to live-site URLs; the user's bar was two.  DO NOT
+   re-probe, build a kindle target, or propose a parts edition.  The user is
+   editing docs/download.txt's "Kindle edition ready shortly" line themselves.
+   Queued
    structural fix: deploy.sh ships the sampler from the repo root as-is — fold
    the sampler build into the rebuild so it can't go stale.
 3. ~~Phase relabel~~ **DONE 2026-08-15**: 1 Clean · 2 Walk · 3 Page map ·

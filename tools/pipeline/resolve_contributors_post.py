@@ -21,7 +21,6 @@ import json
 import os
 import re
 import sys
-import unicodedata
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -42,6 +41,7 @@ from britannica.export.article_json import (
 from britannica.contributors.author_links import (
     accrete_author_link_contributors, harvest_author_links)
 from britannica.pipeline.stages.extract_contributors import _normalize_initials
+from britannica.util.strings import fold_accents
 
 ART = Path("data/derived/articles")
 # Deferred [[Author:]] render marker: the walk emits «AL:name|display» neutrally
@@ -71,8 +71,7 @@ def _name_fold(s: str) -> str:
     `M'lennan` / `M'LENNAN` and `Léon` / `Leon` count as ONE spelling.  The vote
     picks the winning spelling by this key; the emit then restores real casing
     and accents.  Punctuation and spacing are dropped so only letters vote."""
-    s = unicodedata.normalize("NFKD", s)
-    s = "".join(c for c in s if not unicodedata.combining(c))
+    s = fold_accents(s)
     return section_key(s)
 
 

@@ -23,7 +23,6 @@ on-disk corpus, which is post-resolution by construction.
 from __future__ import annotations
 
 import json
-import re
 import sys
 from pathlib import Path
 
@@ -31,10 +30,10 @@ sys.path.insert(0, "src")
 sys.stdout.reconfigure(encoding="utf-8") if hasattr(
     sys.stdout, "reconfigure") else None
 
-ARTS = Path("data/derived/articles")
-CACHE = Path("data/derived/table_widths.json")
+from britannica.markers import iter_table_spans, set_table_wide  # noqa: E402
+from britannica.table_widths import CACHE_PATH as CACHE, span_key  # noqa: E402
 
-_OPEN_RE = re.compile(r"«TABLE\[cols:(\d+)(\|wide)?")
+ARTS = Path("data/derived/articles")
 
 
 def annotate_body(body: str, cache: dict, plate: bool = False) -> str:
@@ -46,22 +45,11 @@ def annotate_body(body: str, cache: dict, plate: bool = False) -> str:
     against the 590px body column means nothing there — a plate table is
     never wide, whatever the cache measured.
     """
-    sys.path.insert(0, "tools/diagnostics")
-    from measure_table_widths import _balanced_spans, span_key
     out = body
-    # Process spans back-to-front so replacements don't shift later offsets.
-    spans = []
-    i = 0
-    for span in _balanced_spans(body):
-        a = out.index(span, i)
-        spans.append((a, span))
-        i = a + len(span)
-    for a, span in reversed(spans):
+    # Back-to-front, so an earlier replacement can't shift a later offset.
+    for a, span in reversed(list(iter_table_spans(body))):
         entry = None if plate else cache.get(span_key(span))
-        wide = bool(entry and entry.get("wide"))
-        new = _OPEN_RE.sub(
-            lambda m: f"«TABLE[cols:{m.group(1)}" + ("|wide" if wide else ""),
-            span, count=1)
+        new = set_table_wide(span, bool(entry and entry.get("wide")))
         if new != span:
             out = out[:a] + new + out[a + len(span):]
     return out

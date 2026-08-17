@@ -23,7 +23,6 @@ Usage::
 """
 from __future__ import annotations
 
-import hashlib
 import io
 import re
 import sys
@@ -39,7 +38,7 @@ from britannica.db.models import Article, ArticleSegment, SourcePage  # noqa: E4
 from britannica.db.session import SessionLocal  # noqa: E402
 from britannica.pipeline.stages.elements import (  # noqa: E402
     ElementContext, process_elements)
-from britannica.util.strings import section_slug  # noqa: E402
+from britannica.util.strings import content_digest, section_slug  # noqa: E402
 
 ROOT = Path("data/derived/_flip_snap")
 
@@ -102,7 +101,7 @@ def capture(tag: str, vol_filter: str) -> int:
                 raise SystemExit(
                     "capture aborting: the FIRST article failed to transform — "
                     f"the net is broken, not the corpus.\n  {body[:200]}")
-            sha = hashlib.sha256(body.encode("utf-8")).hexdigest()[:16]
+            sha = content_digest(body)
             vdir = body_dir / str(vol)
             vdir.mkdir(exist_ok=True)
             (vdir / f"{sid}.txt").write_text(body, encoding="utf-8")

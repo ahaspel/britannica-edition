@@ -119,9 +119,8 @@ _MIN_FOOTPRINT = 5   # below this a footprint is too thin / circular to trust
 
 
 def _fold(s: str) -> str:
-    import unicodedata
-    return "".join(c for c in unicodedata.normalize("NFKD", s.upper())
-                   if not unicodedata.combining(c))
+    from britannica.util.strings import fold_accents
+    return fold_accents(s.upper())
 
 
 def _tok_compat(c: str, a: str) -> bool:

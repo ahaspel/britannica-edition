@@ -13,7 +13,6 @@ moved, which is what makes a rebuild a TAGGED DIFF rather than a wholesale
 rebaseline ([[feedback_no_wholesale_rebaseline]]).
 """
 import glob
-import hashlib
 import html
 import json
 import os
@@ -23,7 +22,7 @@ import sys
 from britannica.export.corpus import NON_ARTICLE as SKIP
 from britannica.markers import strip_marker_tokens
 from concurrent.futures import ProcessPoolExecutor
-from britannica.util.strings import HTML_TAG_RE
+from britannica.util.strings import HTML_TAG_RE, content_digest
 
 sys.stdout.reconfigure(encoding="utf-8")
 ART = "data/derived/articles"
@@ -51,7 +50,7 @@ def content_tokens(rendered_html):
 
 
 def _h(s):
-    return hashlib.sha256((s or "").encode("utf-8")).hexdigest()[:16]
+    return content_digest(s or "")   # a payload may carry either field as null
 
 
 def _one(path):
