@@ -8,9 +8,13 @@ now a MEASURED FACT:
 
   * each unique table span renders via the REAL `decode_inline` inside a
     590px `.body-text` host carrying the viewer's own stylesheet
-    (590px = the fixed .body-text content width at every desktop viewport);
-  * the BROWSER's table layout decides "fits": a table it can compress into
-    the column is not wide, one it can't (unbreakable content) is;
+    (590px = the .body-text content box at every desktop viewport);
+  * the BROWSER's table layout decides the WIDTH: what a table cannot compress
+    below is a fact about it, and that fact — `w` — is all this stores.  Whether
+    the width costs the reader anything is policy, and it lives with the cache's
+    owner (`table_widths.is_wide`, limit 751px = the card's content edge, past
+    which the page really does clip).  Measuring against the 590px box instead
+    put an Expand button on 471 of 920 spans that lost the reader nothing;
   * results cache by span hash (`data/derived/table_widths.json`) — the
     source is static, so subsequent runs measure only new/changed tables.
 
@@ -34,13 +38,15 @@ sys.stdout.reconfigure(encoding="utf-8") if hasattr(
 
 from britannica.markers import (  # noqa: E402
     iter_table_spans, strip_table_wide, table_cols)
-from britannica.table_widths import CACHE_PATH as CACHE, span_key  # noqa: E402
+from britannica.table_widths import (  # noqa: E402
+    CACHE_PATH as CACHE, WIDE_LIMIT, is_wide, span_key)
 
 ARTS = Path("data/derived/articles")
 VIEWER_HTML = Path("tools/viewer/viewer.html")
 
-BODY_WIDTH = 590        # px — .body-text content width (fixed at all viewports)
-TOLERANCE = 2           # px — sub-pixel/border slack before "doesn't fit"
+BODY_WIDTH = 590        # px — the .body-text content box the span renders into.
+                        # NOT the wide threshold: what the page can actually SHOW
+                        # is `table_widths.WIDE_LIMIT` (751px, the card edge).
 
 
 def _viewer_css() -> str:
@@ -137,7 +143,10 @@ def main() -> None:
                      return Math.max(w, over);
                    })""", htmls)
             for (k, e), w in zip(chunk, widths):
-                cache[k] = {"w": w, "wide": w > BODY_WIDTH + TOLERANCE,
+                # Store the MEASUREMENT only.  Whether it counts as wide is
+                # policy (`table_widths.is_wide`), and policy must not be
+                # frozen into a cache that costs a browser run to rebuild.
+                cache[k] = {"w": w,
                             "cols": e["cols"], "samples": e["samples"]}
             measured += len(chunk)
             if measured % 400 == 0 or measured == len(items):
@@ -150,13 +159,14 @@ def main() -> None:
 
 def _summarize(cache: dict, tables: dict) -> None:
     in_corpus = [cache[k] for k in tables if k in cache]
-    wide = [e for e in in_corpus if e["wide"]]
+    wide = [e for e in in_corpus if is_wide(e)]
     was_wide = [e for e in in_corpus if e["cols"] >= 10]
-    flips_off = sum(1 for e in in_corpus if e["cols"] >= 10 and not e["wide"])
-    flips_on = sum(1 for e in in_corpus if e["cols"] < 10 and e["wide"])
+    flips_off = sum(1 for e in in_corpus if e["cols"] >= 10 and not is_wide(e))
+    flips_on = sum(1 for e in in_corpus if e["cols"] < 10 and is_wide(e))
     print(f"measured {len(in_corpus)} corpus tables: {len(wide)} wide "
-          f"(cols-proxy said {len(was_wide)}); proxy fixed: "
-          f"{flips_off} narrow-but-cols>=10, {flips_on} wide-but-cols<10")
+          f"at WIDE_LIMIT={WIDE_LIMIT}px (cols-proxy said {len(was_wide)}); "
+          f"proxy fixed: {flips_off} narrow-but-cols>=10, "
+          f"{flips_on} wide-but-cols<10")
 
 
 if __name__ == "__main__":

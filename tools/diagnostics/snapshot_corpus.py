@@ -38,7 +38,24 @@ from britannica.db.models import Article, ArticleSegment, SourcePage  # noqa: E4
 from britannica.db.session import SessionLocal  # noqa: E402
 from britannica.pipeline.stages.elements import (  # noqa: E402
     ElementContext, process_elements)
-from britannica.util.strings import content_digest, section_slug  # noqa: E402
+from britannica.export.article_json import (  # noqa: E402
+    register_stable_id_dedup, stable_id)
+from britannica.util.strings import content_digest  # noqa: E402
+
+
+class _id_view:
+    """The five fields `stable_id` reads, without loading 36k ORM rows twice.
+
+    The capture deliberately fetches columns plus one bulk body map; the id
+    functions only touch id/volume/page_start/section_name/title, so a view over
+    those is enough to ask the ONE owner for the answer."""
+
+    __slots__ = ("id", "volume", "title", "page_start", "section_name")
+
+    def __init__(self, id, volume, title, page_start, section_name):
+        self.id, self.volume, self.title = id, volume, title
+        self.page_start, self.section_name = page_start, section_name
+
 
 ROOT = Path("data/derived/_flip_snap")
 
@@ -73,19 +90,38 @@ def capture(tag: str, vol_filter: str) -> int:
         print(f"capturing {len(arts)} articles → {tag_dir}", flush=True)
         bodies = _bodies_by_article(s)
 
+        # Prime the collision overrides ONCE over the full corpus, exactly as
+        # the exporter does before any id is baked.
+        n_dedup = register_stable_id_dedup(
+            [_id_view(*row) for row in arts])
+        if n_dedup:
+            print(f"  {n_dedup} article(s) re-slugged for id collisions",
+                  flush=True)
+        seen: dict[str, str] = {}
         out = manifest.open("w", encoding="utf-8")
         done = err = 0
         for art_id, vol, title, page_start, section_name in arts:
             joined = bodies.get(art_id)
             if not joined:
                 continue
-            # Key on the DURABLE stable_id (vol+page_start+section_slug), NOT the
-            # autoincrement PK — the PK is reassigned on every re-detect, which
-            # would break any cross-rebuild diff (the whole point of the net).
-            slug = section_slug(section_name) if section_name else ""
-            if not slug:
-                slug = section_slug(title)
-            sid = f"{vol:02d}-{page_start:04d}-{slug}"
+            # Key on the EXPORTER's stable_id — the one owner of article identity
+            # ([[project_bogo_url_reslug]]).  This used to rebuild the id here as
+            # `{vol}-{page}-{section_slug}`, which is what the durable id USED to
+            # be; the exporter has since hashed the slug and taught
+            # `register_stable_id_dedup` to break ties on the accent fold.  The
+            # local copy kept the old lossy form, so BOG and BOGÓ — same volume,
+            # same page, and `section_slug` drops the accent — produced ONE key,
+            # the second silently overwrote the first, and every capture wrote
+            # 36,690 rows for 36,691 articles.  A net that loses an article
+            # without saying so is worse than no net.
+            sid = stable_id(_id_view(art_id, vol, title, page_start, section_name))
+            if sid in seen:
+                raise SystemExit(
+                    f"capture aborting: DUPLICATE key {sid!r} — "
+                    f"{seen[sid]!r} and {title!r} claim the same stable_id.  "
+                    "Identity is ambiguous; fix the id owner rather than let a "
+                    "capture drop an article.")
+            seen[sid] = title
             try:
                 body = process_elements(joined, ElementContext(volume=vol))
             except Exception as exc:  # noqa: BLE001 — record, don't abort the net

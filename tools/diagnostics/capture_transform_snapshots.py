@@ -38,7 +38,7 @@ from britannica.db.models import Article  # noqa: E402
 from britannica.db.session import SessionLocal  # noqa: E402
 from britannica.pipeline.stages.elements import (  # noqa: E402
     ElementContext, process_elements)
-from britannica.pipeline.stages.preprocess import preprocess  # noqa: E402
+from britannica.pipeline.stages.preprocess import _source_clean  # noqa: E402
 from britannica.util.strings import section_slug  # noqa: E402
 
 
@@ -93,46 +93,45 @@ def raw_body(article) -> str:
     return article.body or ""
 
 
-def _find_article(session, stable_id: str):
-    """Resolve an article by its DURABLE stable_id (``vol-page-slug``), NOT the
-    autoincrement PK — the PK is reassigned on every re-detect, so a seed JSON's
-    stored ``id`` goes stale after any rebuild.  Mirrors the stable_id
-    construction in ``snapshot_corpus`` / the exporter."""
-    parts = stable_id.split("-", 2)
-    if len(parts) < 3:
+def _article_for_stem(session, filename_stem: str):
+    """Resolve a seed from its FILENAME — `NN-NNNN-slug-TITLE`.
+
+    Both older routes are gone and neither failed loudly: the `.meta.json`
+    sidecars were removed (the test parses volume/page from the stem instead),
+    and the export-JSON fallback keys on a filename the exporter stopped using
+    when it went to hash suffixes (`01-0032-86f7e4.json`).  So every seed
+    resolved to MISSING, this tool quietly stopped refreshing anything, and the
+    fixtures kept a `\\x01PAGE:N\\x01` token the stream had long since stopped
+    carrying ([[project_page_sentinel_leftovers]]).
+
+    The stem itself carries what the lookup needs — volume, page, and the
+    section slug — so it is the durable key, no sidecar required.  The slug is
+    matched as a prefix of the remainder because the TITLE tail may hold its own
+    hyphens (`03-0219-s5-BAG-PIPE`); the longest matching slug wins.
+    """
+    try:
+        vol, page = int(filename_stem[:2]), int(filename_stem[3:7])
+    except ValueError:
         return None
-    vol, page, slug = int(parts[0]), int(parts[1]), parts[2]
+    rest = filename_stem[8:]
+    best = None
     for a in (session.query(Article)
               .filter(Article.volume == vol, Article.page_start == page,
                       Article.article_type != "plate").all()):
-        s = section_slug(a.section_name) if a.section_name else ""
-        if not s:
-            s = section_slug(a.title)
-        if s == slug:
-            return a
-    return None
+        slug = section_slug(a.section_name) if a.section_name else ""
+        if not slug:
+            slug = section_slug(a.title)
+        if rest == slug or rest.startswith(slug + "-"):
+            if best is None or len(slug) > best[0]:
+                best = (len(slug), a)
+    return best[1] if best else None
 
 
 def capture_one(session, filename_stem: str) -> tuple[str, str]:
-    """Capture input/body/meta for a seed, located by its durable stable_id.
-    The stable_id comes from the existing snapshot meta (falls back to the
-    export JSON) — robust to PK reassignment across rebuilds."""
-    meta_path = SNAPSHOT_DIR / f"{filename_stem}.meta.json"
-    stable_id = None
-    if meta_path.exists():
-        stable_id = json.loads(meta_path.read_text(encoding="utf-8")).get("stable_id")
-    if not stable_id:
-        json_path = EXPORT_DIR / f"{filename_stem}.json"
-        if not json_path.exists():
-            return ("MISSING", f"no meta/JSON to resolve stable_id for {filename_stem}")
-        stable_id = json.loads(json_path.read_text(encoding="utf-8")).get("stable_id")
-    if not stable_id:
-        return ("MISSING", "no stable_id available")
-
-    article = _find_article(session, stable_id)
+    """Capture input + body for a seed, located by its filename stem."""
+    article = _article_for_stem(session, filename_stem)
     if not article:
-        return ("MISSING", f"no DB row for stable_id={stable_id}")
-    art_json = {"stable_id": stable_id}
+        return ("MISSING", f"no DB row matching stem {filename_stem}")
     if article.article_type == "plate":
         return ("SKIP", "plate articles use parse_plate, not _transform_text_v2")
 
@@ -148,9 +147,12 @@ def capture_one(session, filename_stem: str) -> tuple[str, str]:
     # ws-page numbers to printed-page numbers; per-article qualifier
     # strip) that are not part of the transform under test.  Locking
     # those in would defeat the snapshot's purpose.
-    # Mirror production/ingest + the regression test: produce from the
-    # `preprocess()`-cleaned input (idempotent on already-clean segments).
-    body = process_elements(preprocess(joined_raw),
+    # Produce EXACTLY as `test_transform_snapshots` does — `_source_clean`, the
+    # re-appliable half of `preprocess`, NOT the full pass.  The full pass
+    # re-runs quote-run over already-converted markup; the test says so and
+    # computes the other way, so a fixture captured through `preprocess` would
+    # disagree with its own check the moment the two diverged.
+    body = process_elements(_source_clean(joined_raw),
                             ElementContext(volume=article.volume))
 
     # The `.body.txt` IS the snapshot; `.input.txt` is its fixture.  No

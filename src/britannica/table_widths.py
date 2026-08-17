@@ -39,3 +39,36 @@ def span_key(span: str) -> str:
     been keyed this way and its 10,984 measured entries depend on it.
     """
     return content_digest(strip_table_wide(span), n=None)
+
+
+# Where a table starts costing the reader something.  Measured in the real
+# viewer (viewport 1280, `/article/…`), NOT in a reconstruction of it:
+#
+#     .body-text content box .................. 590px
+#     room before the card clips anything ..... 751px
+#     what else occupies that right margin .... nothing
+#
+# `.body-text` carries `margin-right: 160px` of furniture space for the marginal
+# page numbers, and nothing clips it (`flow-root` contains floats; it does not
+# hide overflow).  A table wider than the 590px column therefore loses NOTHING
+# until it reaches the card's content edge at 751px — it simply spills into empty
+# margin and stays whole and readable.
+#
+# Measuring against 590 gave 471 of 920 measured-wide spans (51%) an Expand
+# button for an overflow that cost the reader nothing — and made them WORSE:
+# PURIN's four chem tables (743/650/633/588px) render complete and readable
+# unwrapped, while the treatment puts three into 588px scroll boxes and squeezes
+# the fourth to fit.  Expand is a LAST RESORT (user, 2026-08-17); it is for a
+# table the page genuinely cannot show.
+WIDE_LIMIT = 751
+
+
+def is_wide(entry: "dict | None") -> bool:
+    """Does this measured span actually overflow what the page can show?
+
+    THE policy, and it lives apart from the measurement on purpose: the cache
+    stores `w`, a FACT about a span, so re-tuning this line never means
+    re-rendering 10,984 tables in a browser — the same reason the width and the
+    hint are separate in the math path.
+    """
+    return bool(entry) and (entry.get("w") or 0) > WIDE_LIMIT

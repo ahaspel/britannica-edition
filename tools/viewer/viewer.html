@@ -1230,41 +1230,27 @@
       margin-top: 10px;
     }
 
-    /* Hierarchical taxonomic / classificatory outline (ARACHNIDA
-       Tabular Classification, ZOOLOGY taxonomies, &c.).  Plain
-       <ul>/<li> with reduced bullet weight; CSS controls the indent. */
-    ul.outline,
-    ul.outline ul {
-      list-style-type: none;
-      padding-left: 1.6em;
+    /* Lists the SOURCE marks as lists — `#`, <ol>, {{ordered list}} (EGYPT's
+       population groups, HERCULES's twelve labours, GEOLOGY's A/B/C, ALBUMIN's
+       roman-numbered proteins).  The marker carries the numbering as the list's
+       own `list-style-type`, so the browser numbers the items: the numeral is
+       structure, not text.  It used to be MINTED into the item ("I. ", "A. ")
+       and the list drawn with `list-style-type:none`, which made the numeral
+       prose and the list not a list.  A `:`-indented paragraph is NOT here — it
+       is an indent, carried as one. */
+    .body-text ol,
+    .body-text ul {
+      margin: 1em 0;
+      padding-left: 2.2em;
+    }
+    .body-text ol ol,
+    .body-text ol ul,
+    .body-text ul ul,
+    .body-text ul ol {
       margin: 0.2em 0;
     }
-    ul.outline {
-      margin: 1em 0;
-      padding-left: 0;
-    }
-    ul.outline.outline-indent {
-      padding-left: 1.6em;      /* a plain `:`-indented list keeps its source indentation */
-    }
-    ul.outline li {
+    .body-text li {
       margin: 0.15em 0;
-    }
-    /* Plate-caption variant: smaller, italic, compressed — used for
-       single-image plates whose source numbered-caption block becomes
-       an OUTLINE rather than an inline IMG caption (GEMS PLATE I/II). */
-    ul.outline.plate-outline,
-    ul.outline.plate-outline ul {
-      font-size: 0.85em;
-      font-style: italic;
-      line-height: 1.25;
-      padding-left: 1.2em;
-    }
-    ul.outline.plate-outline {
-      padding-left: 0;
-      margin: 0.5em 0 1.2em 0;
-    }
-    ul.outline.plate-outline li {
-      margin: 0;
     }
 
     .contributors {

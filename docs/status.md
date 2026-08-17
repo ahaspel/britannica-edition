@@ -125,10 +125,70 @@ by BOTH readers, every field the callers parse (initials/name/description/
 subject1-11/lnksubject1-11), 8,228 footer bodies, 14,030 plate-title reads.
 `dup_functions` 10 → 9; the `_parse_field` regex left the constants baseline.
 
-**Next by stakes**: `_mint_ph`/`_new_placeholder`
-(placeholder minting, classifier vs walker, core of the walk) → `_normalize_name`
-(the contributor-dedup gate and the audit that checks it each have their own copy,
-so the audit can disagree with the gate it audits) → the last balanced-scan
+**Then the element placeholder — 2 ranked copies, 7 real ones.**  `\x03ELEM:N\x03`
+is the token the walk hands between its own passes.  THREE sites minted it
+(`ElementRegistry.add`, `_walker._new_placeholder`, `_classifier._mint_ph`) and
+FOUR matched it — and two of the matchers wrote the `\x03` delimiter as a
+LITERAL instead of asking for `_PH`, so a change to the delimiter would have
+silently stopped them matching.  The failure is not loud: a mint the matcher no
+longer recognizes means a producer builds output without substituting a child
+and the raw token ships as bytes in an article body (AFRICA's territorial table
+did exactly that).  `_registry` now owns `new_placeholder()` + `PLACEHOLDER_RE`;
+callers compose their own anchoring (`^\s*…\s*$` in `_center_wrap`,
+`.match(line, pos)` in the outline splitter) instead of respelling the token.
+The regression net's number-stabiliser imports the pattern too — its job is to
+match whatever a placeholder IS.  NOT a member, by reading: `_tables.py` matches
+any `_PH`-delimited span for pipe protection and never spells `ELEM:`.
+
+Proof: `snapshot_corpus` ph_before → ph_after, **36,690 articles, 0 changed / 0
+added / 0 removed** through the real walk (the before-tag was ~93% complete
+before the first edit landed, and an imported module is not reloaded, so it is
+old-code output).  `tests/unit/test_placeholder_identity.py` pins mint and
+matcher by OBJECT identity plus the round trip — what the registry mints, the
+matcher matches.  Suite 642 → 647; `dup_functions` 9 → 8.
+
+**Two page-sentinel leftovers found while answering "isn't that an artifact?"**
+(user's question, and largely right — see [[project_page_position_out_of_band]]):
+1. **The transform-snapshot fixtures are STALE.**  All 42 files under
+   `tests/snapshots/transform/` carry `\x01PAGE:N\x01` — in their INPUTS, not
+   just their expected bodies — while live `Article.body` has ZERO (6,000
+   sampled) and the walked corpus has ZERO (4,000 sampled).  So the test's
+   `_PAGE_MARKER_RE` is not dead code; it is alive because the fixtures are.
+   That net exercises the walk on an input shape production stopped producing.
+   Self-consistent, so it passes — which is why nobody noticed.  Re-capturing is
+   a REBASELINE ([[feedback_no_wholesale_rebaseline]]): tagged diff + sign-off.
+2. **`_outline._split_leading_noncontent` is NOT inert — it holds one article
+   up.**  Both its comments named the page sentinel as the reason it exists, so
+   it read as a leftover.  Decisive test: neuter the splitter to identity,
+   re-walk the corpus, diff — **1 of 36,691 articles changed**.  PATAGONIA (vol
+   20 p.961) writes `{{nop}}:2. Patagonian Molasse.` inside a three-item
+   geological series; without the strip the `:` is invisible, item 2 falls out
+   of the list as literal text (leading colon and all) and item 3 opens a second
+   «OUTLINE».  Branch by branch over 12.8M calls: `{{nop}}` matched 6,334 times
+   and decides that one output; the PLACEHOLDER branch matched 639 times and
+   decides NOTHING — every hit is a line that is only a placeholder, which
+   recognizes the same stripped or not.  Kept as the guard it is, now documented
+   as measured rather than assumed.  Comments corrected (one asserted "an outline
+   line now simply begins with its own indent", which PATAGONIA falsifies), and
+   `tests/unit/test_outline_leading_noncontent.py` pins both facts so neither
+   branch gets deleted on the strength of the stale rationale.
+
+**Next by stakes**: the contributor-dedup gate and its audit — and they have
+ALREADY diverged.  `tools/db/dedup_contributors.py` (merges rows) and
+`tools/diagnostics/contributor_dup_audit.py` (checks for remaining dupes)
+duplicate the whole identification, not just `_normalize_name`: `_TITLE_RE`,
+`_normalize_name`, `_normalize_initials_token`, `_signature`, the first-letter
+bucketing AND the pairwise SequenceMatcher loop — **and the thresholds differ,
+gate 0.85 vs audit 0.92**.  The audit is blind to the band the gate merges in,
+while the gate's docstring says its pairs are "identified via the
+combined-signature audit".  One `candidate_pairs(…, threshold)` finder both
+call is the move; WHICH threshold each should use is a policy question for the
+user, not a mechanical fix.  (Also: the gate rejects known false positives via
+`aliases.json`'s `distinct` list and the audit appears not to.)  Three OTHER
+`_TITLE_RE`s exist and are NOT copies — `resolver.py` and
+`resolve_contributors_post.py` carry different honorific vocabularies, anchoring
+and purpose; that they disagree about what an honorific is, is its own question.
+Then → the last balanced-scan
 copies: `export/markdown._balanced_end` (marker tokens, REGEX opener, -1 on
 unbalanced) and `elements/_ordered_list._balanced_end` (braces, returns
 len(text) — it GUESSES a close and hands back the rest of the document, the
@@ -137,6 +197,186 @@ not moves: reconciling the sentinels needs its own corpus evidence.  Also open,
 found while grepping: the **split-on-top-level-pipe** family — `plate_parent`,
 `detect_boundaries` (twice), `_dual_line`, `_link`, `build_printed_pages` each
 walk depth to split a template's args.
+
+### Session 2026-08-17 (last) — THREE NETS WERE LYING.  All three repaired; pre-rebuild checks green.
+
+Found while proving other work, which is the point: a net that fails quietly is
+found only when something else is being measured.
+
+1. **`capture_transform_snapshots` resolved ZERO seeds** — it looked up
+   `.meta.json` sidecars (deleted when the test started parsing vol/page from
+   the stem) and fell back to export filenames that predate hash suffixes.  Every
+   seed reported MISSING in a line nobody read, so it refreshed NOTHING for
+   weeks and all 21 transform fixtures kept a `\x01PAGE:N\x01` token the stream
+   had stopped carrying.  Repaired with a stem-based resolver; also aligned its
+   body computation with the TEST's (`_source_clean`, not full `preprocess` —
+   they had diverged, so a fresh capture would have disagreed with its own
+   check).  Re-captured all 21: 0 non-marker words lost in 20 of 21; ORDNANCE's
+   one change is `lo-in.` → `10-in.`, the 08-16 OCR fix.  Both dead
+   normalisations then removed (`\x01PAGE`, and the `\x03ELEM` stabiliser whose
+   AFRICA leak is gone — keeping it would ABSORB the next leak).
+2. **`snapshot_corpus` dropped an article on every capture.**  It rebuilt the key
+   as `{vol}-{page}-{section_slug}` — what the durable stable_id USED to be —
+   so BOG and BOGÓ collided and one silently overwrote the other: 36,690 rows
+   for 36,691 articles, and one row of every diff comparing BOG to BOGÓ.  Now it
+   calls the ONE owner (`register_stable_id_dedup` + `stable_id`) and RAISES on a
+   duplicate key.  Verified: 36,691 rows, 36,691 unique ids, BOG `04-0131-7ae7a2`
+   and BOGÓ `04-0131-c03c3a` both present.  NOTE: tags captured before this use
+   the old key form and cannot be diffed against new ones; `ids_fixed` is the
+   baseline going forward.
+3. **The unmeasured-span channel** (queued since 08-16) is CLOSED.  Today's body
+   changes give 35 table spans new cache keys (an indent DIV or list marker
+   inside a table moves its bytes), 9 of them in articles that had a wide table —
+   which would have silently lost their Expand hints exactly as 194 did on 08-16.
+   An unmeasured span now KEEPS its existing hint and the count is reported, by
+   the standalone tool and by `post_export` in the rebuild log.
+
+**Pre-rebuild checks, all green:** fingerprint captured
+(`fingerprint_pre_rebuild_20260817.tsv`, 37,226 articles — but HERCULES / BIRD /
+GEOGRAPHY were locally re-rendered for inspection and are already in the new
+state); the leak oracle consults no known-marker manifest, so «OL»/«LI» need no
+registration and decode leak-free; lists render inside table cells and outside
+`body_blocks` (dropping «IOUTLINE» was safe); no viewer JS touches `.outline`.
+
+**Post-rebuild, before deploy:** `measure_table_widths` → `annotate_table_markers`
+(the log now says whether it is needed); regenerate the 3 render fixtures from the
+rebuilt payloads and re-baseline their goldens.  The EPUB is a separate build and
+its stylesheet has not been checked against `<ol>`/`<li>` or the indent DIVs.
+
+### Session 2026-08-17 (later) — WIDE-TABLE THRESHOLD WAS MEASURED AGAINST THE WRONG BOX.  61% of Expand buttons deleted.  BUILT, AWAITS THE REBUILD.
+
+**User: "the expand is completely useless chrome … Expand is a last resort and
+should be used as sparingly as possible."**  Reported via PURIN, whose chem
+formula tables carried four Expand buttons.
+
+**The defect.**  `measure_table_widths` decided `wide` by rendering each span
+into a host forced to `width:590px` — `.body-text`'s CONTENT box.  Measured in
+the REAL viewer (`tools/serve.py`, viewport 1280, `/article/…`, not a
+reconstruction): `.body-text` is 590px, but **nothing is clipped until the card's
+content edge at 751px**, because `margin-right:160px` is furniture space for the
+marginal page numbers that nothing occupies and nothing clips.  Every table
+between 590 and 751 therefore got an Expand button for an overflow that cost the
+reader NOTHING — and was made worse by it: PURIN's four (743/650/633/588px as
+served) render complete and readable unwrapped, while the treatment puts three
+into 588px scroll boxes and squeezes the fourth to fit.  The two-column one has
+no scrollbar because, as the user put it, there is no additional content to lose.
+
+**The fix, and where it lives.**  `table_widths.WIDE_LIMIT = 751` +
+`is_wide(entry)` — the POLICY, moved out of the measurement.  The cache now
+stores `w` ALONE (a fact about the span); the measurer, the annotator and the
+summary all ask `is_wide`.  Re-tuning the line no longer costs a browser run over
+10,984 tables — the same separation the math path has between width and hint.
+
+**Verified:** stamps 720 → **281 (−439) across 228 articles**.  PURIN 4 → 0
+(every span 590–744px).  CONSTELLATION 3 → 2: its 1110px and 871px tables keep
+the treatment — the 871px case is the one that motivated the measurement switch
+in the first place ([[project_wide_table_threshold]]) — and its 663px table
+correctly loses it.  Takes effect at the next rebuild (or a standalone
+`annotate_table_markers` pass), then a FULL deploy.
+
+**Method note, paid for in this session:** I first blamed a `float:right` table
+for squeezing the figures to 265px.  That was an artifact of a shell I hand-built
+where `.card` computed to 590px instead of 864px; in the real viewer the boxes
+are 588px and the float is 700px above them.  The user caught it ("What has that
+float got to do with anything?").  Measure in the real viewer, never in a
+reconstruction of it ([[feedback_measure_at_decision_site]]).
+
+### Session 2026-08-17 (later) — THE OUTLINE TAXONOMY IS GONE.  `:` is carried as an indent.  BUILT, CORPUS DIFF PENDING.
+
+**User's call: "the outline shape is probably just wrong, and should be abandoned
+… treat the ::: as indent markup, and simply carry the markup, as we do in
+general.  If the raw source marks a list, then we treat it as a list.  If the raw
+source marks indents, then we treat them as indents."**  ([[project_outline_arc]]
+— the 2026-08-11 leaning became a decision.)
+
+**The argument the corpus made: the imposed taxonomy was INVISIBLE.**
+`ul.outline` renders `list-style-type: none` + `padding-left: 1.6em` per level —
+so the bounds scan, the item split, the depth-summing rule, the bare-emphasis
+"label" items, the range headers and the sparse→dense remap all built a tree that
+the CSS then drew as a plain indent, which is exactly what the colon count
+already stated.  Not "the producer is buggy": the machinery was aimed at the
+wrong marks.
+
+**What the source actually marks** (36,691 articles, read straight from
+`Article.body`): `:` 2,012 lines / 154 articles · `{{em|N}}`+entity runs 879 ·
+`#` (wikitext ORDERED LIST) 79 lines / 13 articles with **no producer at all —
+87 literal `#` characters sit in the rendered text today** · `*` 272 lines which
+are NOT lists (footnote asterisks, linguistic reconstructions, OCR noise) ·
+`{{ordered list}}` 1 article · literal `:` leaking today: 2.  We imposed a
+taxonomy where the source marks an indent, and ignored the mark that states a
+list.
+
+**Landed (slice A).**  `_outline.py` deleted; `_indent.py` replaces it as the
+sibling of `_hanging.py` — same shape (a source-stated indent + recursed
+content), same carry: `«DIV[style:padding-left:{1.6*depth}em]»`.  Depth is the
+colon count, LITERAL (`:::` → 4.8em; no densifying).  A `{{nop}}` before the
+colons is read past and left in the content (PATAGONIA); an unmarked following
+line CONTINUES the paragraph (ALKALOID's wrap); a blank or furniture-only line
+ends it.  **ALKALOID and BIRD are both dissolved** — with no block to bound,
+there is nothing to fracture.  `«OUTLINE»`/`«OLI»`/`build_outline_ul` SURVIVE,
+re-aimed at `{{ordered list}}` and `<ol>`.  `plate-outline` was dead (only caller
+passed `plate=None`, zero articles carried the class) — deleted with its param.
+Suite 644 green; site+EPUB render the indent, the markdown dataset sheds it as it
+already sheds every presentational DIV.
+
+**CORPUS PROOF (`snapshot_corpus` ph_after → indent_carry): 161 changed, 0 added,
+0 removed; 2,083 «OLI» items became 2,040 indent DIVs; and the content gate is
+clean — 158 of 161 are WORD-IDENTICAL** (marker-free token lists equal, so every
+byte of growth is marker overhead).  The three exceptions, each adjudicated:
+
+* `04-0131-bog` — NOT a change: the snapshot NET has a colliding key.  BOG and
+  BOGÓ are both v4 p131 and `section_slug` drops the accent, so they share a sid
+  and one overwrites the other — which is also why every capture writes 36,690
+  rows for 36,691 articles.  Pre-existing instrument bug ([[project_bogo_url_reslug]],
+  [[feedback_verify_the_counter]]); one row of every corpus diff is meaningless
+  until it is fixed.
+* ARITHMETIC and MENSURATION — **+2 words each, both literal `:` CARRIED that the
+  old code deleted.**  The source writes a `: :` line; the old `_INDENT_MARKER_RE`
+  ate colons and whitespace alike (a sweeper shape) and emitted an EMPTY «OLI»,
+  while the new peel takes the mark and keeps the second colon as the content it
+  is — which is what MediaWiki renders ([[feedback_when_in_doubt_carry]]).
+
+Still pending: the 3 seed snapshots (ARACHNIDA / HYDROMEDUSAE / ORDNANCE), each
+inspected and each the intended conversion (`«OLI:2»` → `padding-left:3.2em`),
+whose re-baseline needs sign-off ([[feedback_no_wholesale_rebaseline]]).
+
+**SLICE B, now scoped by the user's reading — "all we have left is lists
+(numbered or not) and groups of indented lines.  Neither is an outline."**  So
+the OUTLINE producer goes ALTOGETHER, not just its `:` path.  The reason the
+survivors looked worth keeping does not hold: `_walk_html_list` turns an `<ol>`
+into `(depth, "label. text")` rows and `build_outline_ul` emits
+`<ul class="outline">`, which the CSS renders `list-style-type: none` — so a
+source-stated NUMBERED list ships unnumbered, with "1."/"I." baked into the item
+TEXT as characters.  Same imposed taxonomy, one layer down.  Scan-checked by the
+user: GEOLOGY p658, ALBUMIN p553, HERCULES p361, THEOSOPHY p828 all PRINT their
+numerals, so the numbering is the source's fact.
+
+**LANDED.**  Two producers, no taxonomy: **INDENT** (`:` → `«DIV[padding-left]»`)
+and **LIST** (`«OL[type:…]»`/`«UL»` + nested `«LI»`) fed by all three list marks.
+The nesting is the source's (a sublist rides inside its parent `«LI»`); the
+numbering is the source's (`type` on the open tag, the browser numbering it); and
+EVERY level carries its own `type` — GEOGRAPHY states one at all four
+(upper-roman → lower-alpha → decimal → lower-roman), and a root-only answer
+printed `1.` where the source says `a.`  Retired with the concept:
+`build_outline_ul`, `_render_outlines`, `_outline_body`, `_outline_items`, the
+OUTLINE_ITEM ladder, the sparse→dense remap, `markdown.py`'s mirror,
+«OUTLINE»/«IOUTLINE»/«OLI» in the marker registry and the drop-regex, and the
+`ul.outline` CSS.  «IOUTLINE» went too: `<ol><li>` needs no in-cell variant.
+
+**Corpus proof: 16 changed, 0 added, 0 removed** — and every token accounted for:
+63 free-standing `#` left the text, 16 `#`-glued tokens returned as clean words
+(`#What`→`What`), 51 minted numerals became list structure.  No prose lost.
+HERCULES's twelve labours are ONE list of 12; GEOLOGY's A/B/C is 3; ALBUMIN 5
+nested lists / 26 items; GEOGRAPHY 6 lists / 22 items.  Literal `#` in the
+rendered text: 87 → 0.  (Those numerals were indexed as search words and no
+longer are — correct, but a change to the index.)
+
+**Suite 644 green + 3 RED, and the red is honest:**
+`tests/snapshots/render/*.input.json` are frozen EXPORT payloads whose bodies
+still carry «OUTLINE»/«OLI» from before slice A; re-baselining their HTML from
+those would freeze a LEAK into the goldens.  They regenerate only from payloads
+the REBUILD produces.  Sequence: land → rebuild → regenerate those three →
+FULL deploy.
 
 ### Session 2026-08-15 — CENSUS GREEN.  The corpus resolves every link production does, +1.  DEPLOYABLE.
 

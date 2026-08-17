@@ -31,12 +31,14 @@ sys.stdout.reconfigure(encoding="utf-8") if hasattr(
     sys.stdout, "reconfigure") else None
 
 from britannica.markers import iter_table_spans, set_table_wide  # noqa: E402
-from britannica.table_widths import CACHE_PATH as CACHE, span_key  # noqa: E402
+from britannica.table_widths import (  # noqa: E402
+    CACHE_PATH as CACHE, is_wide, span_key)
 
 ARTS = Path("data/derived/articles")
 
 
-def annotate_body(body: str, cache: dict, plate: bool = False) -> str:
+def annotate_body(body: str, cache: dict, plate: bool = False,
+                  stats: "dict | None" = None) -> str:
     """Stamp/strip the `wide` param on every table span per the cache.
 
     ``plate=True`` forces the STRIP side for every span: a plate page's
@@ -48,8 +50,19 @@ def annotate_body(body: str, cache: dict, plate: bool = False) -> str:
     out = body
     # Back-to-front, so an earlier replacement can't shift a later offset.
     for a, span in reversed(list(iter_table_spans(body))):
+        if not plate and span_key(span) not in cache:
+            # UNMEASURED — the cache keys on the span's BYTES, so a table whose
+            # interior text moved (a re-hyphenation, an indent marker landing
+            # inside it) is a cache MISS, not a narrow table.  Stripping here is
+            # how the 2026-08-16 rebuild silently lost 194 Expand hints: the
+            # span keeps whatever it already states, and the caller is told, so
+            # a missing measurement is a number someone reads rather than a
+            # button that quietly disappears ([[feedback_honesty_surface_failures]]).
+            if stats is not None:
+                stats["unmeasured"] = stats.get("unmeasured", 0) + 1
+            continue
         entry = None if plate else cache.get(span_key(span))
-        new = set_table_wide(span, bool(entry and entry.get("wide")))
+        new = set_table_wide(span, is_wide(entry))
         if new != span:
             out = out[:a] + new + out[a + len(span):]
     return out
@@ -63,6 +76,7 @@ def main() -> None:
         print("no table_widths.json cache — run measure_table_widths.py first")
         return
     changed = scanned = 0
+    stats: dict = {}
     for f in ARTS.glob("*.json"):
         try:
             d = json.loads(f.read_text(encoding="utf-8"))
@@ -72,7 +86,7 @@ def main() -> None:
             continue
         scanned += 1
         body = d.get("body") or ""
-        new = annotate_body(body, cache,
+        new = annotate_body(body, cache, stats=stats,
                             plate=d.get("article_type") == "plate")
         if new == body:
             continue
@@ -85,6 +99,9 @@ def main() -> None:
         if changed % 200 == 0:
             print(f"  annotated + re-rendered {changed}…", flush=True)
     print(f"scanned {scanned} articles; annotated + re-rendered {changed}")
+    if stats.get("unmeasured"):
+        print(f"  {stats['unmeasured']} table span(s) had NO measurement and kept "
+              f"their existing hint — run measure_table_widths.py")
 
 
 if __name__ == "__main__":

@@ -34,7 +34,7 @@ PRODUCER_MODULES: set[str] = {
     "_tables",       # data / html / compound table producers
     "_leaf",         # math / poem / score producers
     "_ref",          # footnote producer (+ article-scoped resolution)
-    "_outline",      # outline producer
+    "_indent",       # indent producer
     "_figure_decompose",  # ICL figure-component extractor (cleans caption/
                           # legend content it produces — analog of _table_decompose)
 }

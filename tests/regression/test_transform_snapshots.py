@@ -8,19 +8,17 @@ Snapshots come from two sources:
 
 1. ``capture_transform_snapshots.py`` writes the IMMEDIATE output of
    `_transform_text_v2` for a fixed seed list — pre-downstream form,
-   with `\\x01PAGE:N\\x01` markers carrying ws-page numbers and
-   `«LN:Title|alt«/LN»` markers in their unresolved shape.
+   with `«LN:Title|alt«/LN»` markers in their unresolved shape.
 
 2. ``add_snapshot_from_production.py`` writes the previously-exported
-   JSON body verbatim — post-downstream form, with printed-page
-   numbers in the PAGE markers and resolved `«LN:NN-NNNN-stem.json|
-   Title|alt«/LN»` xref markers.  This is how we add arbitrary
+   JSON body verbatim — post-downstream form, with resolved
+   `«LN:NN-NNNN-stem.json|Title|alt«/LN»` xref markers.  This is how we add arbitrary
    existing articles to the suite quickly: the production export IS
    the baseline.
 
 To support both, the test normalises BOTH the captured body and the
 freshly-recomputed `_transform_text_v2` output for the downstream-
-phase differences before comparing.  Pre-downstream snapshots are
+phase difference (xref resolution) before comparing.  Pre-downstream snapshots are
 unaffected by the normalise (it's an identity on them); post-
 downstream snapshots collapse to the pre-downstream form.  Either
 way, the comparison is downstream-phase-invariant.
@@ -47,38 +45,37 @@ SNAPSHOT_DIR = Path("tests/snapshots/transform")
 
 # ── Downstream-phase normalisation ────────────────────────────────────
 #
-# Two transformations get applied AFTER `_transform_text_v2` during
-# the article-export pipeline.  They're not part of the transform
-# under test, but post-downstream JSON exports carry their effects.
-# Normalising both sides erases the difference.
-
-_PAGE_MARKER_RE = re.compile(r"\x01PAGE:\d+\x01")
+# ONE transformation gets applied AFTER `_transform_text_v2` during the
+# article-export pipeline: xref resolution rewrites a link's target.  It is not
+# part of the transform under test, but a snapshot captured from a production
+# export carries it, so both sides are normalised past it.
+#
+# TWO other normalisations stood here and both are gone, because both had
+# stopped normalising anything:
+#
+#   * `\x01PAGE:NN\x01` — page position left the marker stream
+#     ([[project_page_position_out_of_band]]), so no body can contain the token.
+#     It survived only because the FIXTURES did: `capture_transform_snapshots`
+#     could not resolve a single seed (its `.meta.json` sidecars were deleted and
+#     its export-filename fallback predates hash suffixes), so it silently
+#     refreshed nothing for weeks while every seed reported MISSING.  The tool is
+#     repaired and the fixtures re-captured; 0 of 21 bodies carry the token.
+#   * `\x03ELEM:NN\x03` — the placeholder stabiliser, added when AFRICA's table
+#     leaked a child placeholder.  That leak is gone: 0 of 21 bodies carry one.
+#     Keeping it would be worse than useless — it would ABSORB the next leak
+#     into a stable snapshot instead of failing the test, which is the opposite
+#     of what a net is for ([[feedback_sweepers_hide_bugs]]).
 _LN_RESOLVED_RE = re.compile(
     r"«LN:\d{2}-\d{4}-[^|]+\.json\|([^|]+)\|")
-_ELEM_PH_RE = re.compile(r"\x03ELEM:\d+\x03")
 
 
 def _normalize_for_compare(text: str) -> str:
-    """Strip downstream-phase artefacts so pre- and post-downstream
-    snapshot bodies compare equivalent.
+    """Erase the one downstream-phase artefact so a snapshot captured from a
+    production export compares equal to a freshly-transformed body:
 
-    Normalisations:
-      * `\\x01PAGE:NN\\x01` → `\\x01PAGE:N\\x01`  (ws ↔ printed page renumber)
       * `«LN:NN-NNNN-stem.json|Title|…»` → `«LN:Title|…»`  (xref resolution)
-      * `\\x03ELEM:NN\\x03` → `\\x03ELEM\\x03`  (placeholder-number stabilise)
-
-    The last one is NOT hiding a bug — it's the opposite.  A LEAKED child
-    placeholder (a producer that built output without substituting a child —
-    e.g. AFRICA's table) is non-deterministic because the placeholder
-    counter is process-global; stabilising the NUMBER lets us snapshot the
-    brutal case so the leak's PRESENCE is captured and grep-able (`\\x03ELEM`).
-    When the producer/renderer split (#2) fixes the leak, the markers vanish
-    from the snapshot — the diff is the proof of the fix.
     """
-    text = _PAGE_MARKER_RE.sub("\x01PAGE:N\x01", text)
-    text = _LN_RESOLVED_RE.sub(r"«LN:\1|", text)
-    text = _ELEM_PH_RE.sub("\x03ELEM\x03", text)
-    return text
+    return _LN_RESOLVED_RE.sub(r"«LN:\1|", text)
 
 
 def _snapshot_pairs() -> list[tuple[str, Path, Path]]:
