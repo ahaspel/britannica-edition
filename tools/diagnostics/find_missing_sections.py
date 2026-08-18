@@ -27,11 +27,17 @@ WHAT THE RESIDUAL TURNED OUT TO BE: name discrepancies, not swallowed articles.
 Seventeen are the article under a differently-spelled name (`Canitz, Frederich`
 vs `CANITZ, FRIEDRICH`; `Erroll, Francis Hay, 9th Earl of` vs `ERROLL (or
 ERROL), FRANCIS HAY`).  The three with no first-word match at all — `Bāanffy,
-Dezsö`, `Chasseriau, Theodore`, `Congelton, Henry Brooke Parnell` — are all
-present too, and one of them is a find in the other direction: the section name
-is right and the HEADWORD is the typo (`CHASSÉSRIAU` for Chassériau), so the
-article ships under a misspelt title.  That is corrections.json work
-([[feedback_corrections_json]]).
+Dezsö`, `Chasseriau, Theodore`, `Congelton, Henry Brooke Parnell` — are present
+too, under headwords that differ from their section names (`BÁNFFY, DEZSÖ`,
+`CHASSÉSRIAU, THÉODORE`, `CONGLETON, HENRY BROOKE PARNELL`).
+
+A DISAGREEMENT IS NOT A VERDICT ON WHICH SIDE IS WRONG, and this tool must not
+imply one.  The headword is what the transcription gives us and what we carry, so
+the article is correct as it ships ([[feedback_viewer_not_source_errors]]); the
+section name is Wikisource editorial metadata that never reaches a reader.  Only
+the printed scan can say which spelling the volume actually carries, and nothing
+here consults it.  So the output says "unresolved", names both spellings, and
+stops.
 
 KNOWN LIMIT, stated because it bounds the claim: a `Head, Qualifier` section
 counts as present when a bare `Head` article exists, so two sections sharing one
@@ -127,15 +133,19 @@ def main() -> int:
                     matched[rung] += 1
                     break
             else:
-                # The OCR rung, reported SEPARATELY and never silently: the
-                # residual is dominated by typos in the section NAME —
-                # `Canitz, Frederich` for `CANITZ, FRIEDRICH`, `Clanricarde,
-                # Ulrick` for `ULICK`, `Chuchill` for `CHURCHILL`.  Folding those
-                # into "matched" would hide a real transcription defect; leaving
+                # The OCR rung, reported SEPARATELY and never silently.  These
+                # are pairs only an edit-distance match bridges — `Canitz,
+                # Frederich` against `CANITZ, FRIEDRICH`, `Clanricarde, Ulrick`
+                # against `ULICK`, `Chuchill` against `CHURCHILL`.  Folding them
+                # into "matched" would hide a real spelling disagreement; leaving
                 # them in "unresolved" would bury the genuine gaps this tool
                 # exists to find.  So they get their own bucket
                 # ([[feedback_fill_dumb_fish_smart]] — recall broadly, then let
                 # the report do the discriminating).
+                #
+                # The bucket names the disagreement, not a culprit.  Which side
+                # is misspelt is a question for the printed scan, and an
+                # edit-distance match is not evidence either way.
                 if ix.fuzzy(name, aggressive=True):
                     fuzzy.setdefault((page.volume, name), []).append(page.page)
                     continue
@@ -152,13 +162,14 @@ def main() -> int:
     print("comma-form tested      : %d" % tested)
     for rung in _RUNGS:
         print("  matched %6d  by %s" % (matched[rung], rung))
-    print("  matched %6d  by fuzzy (OCR) - section-name typos, listed below"
-          % sum(len(v) for v in fuzzy.values()))
+    print("  matched %6d  by fuzzy (OCR) - spelling differs, listed below "
+          "(%d after page-span dedup)"
+          % (sum(len(v) for v in fuzzy.values()), len(fuzzy)))
     print("UNRESOLVED sections    : %d  (%d marker(s) before page-span dedup)"
           % (len(unresolved), sum(len(v) for v in unresolved.values())))
     print()
-    print("-- section names that only an OCR-tolerant match resolves "
-          "(%d) --" % len(fuzzy))
+    print("-- section name vs headword: spellings only an OCR-tolerant match "
+          "bridges (%d) --" % len(fuzzy))
     for (vol, name), pgs in sorted(fuzzy.items()):
         span = "ws%d" % pgs[0] if len(pgs) == 1 else "ws%d-%d" % (pgs[0], pgs[-1])
         near = idx[vol].firstword(name)[:2]

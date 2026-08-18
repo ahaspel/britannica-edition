@@ -42,6 +42,7 @@ import html
 import re
 import sys
 from collections import Counter, defaultdict
+from pathlib import Path
 
 sys.path.insert(0, "src")
 sys.stdout.reconfigure(encoding="utf-8")
@@ -52,6 +53,7 @@ from britannica.export.corpus import load_corpus            # noqa: E402
 from britannica.render.leaks import find_leaks              # noqa: E402
 from britannica.source_pages import load_pages              # noqa: E402
 from britannica.util.strings import HTML_TAG_RE             # noqa: E402
+from britannica.wikitext import mask_non_template           # noqa: E402
 
 PRODUCER, SOURCE = "PRODUCER", "SOURCE"
 
@@ -63,16 +65,13 @@ _ATTR = re.compile(
 # A colon run that OPENS content.  The lookbehind drops a CSS colon
 # (`padding-left:1.6em`) belonging to one of our own tags caught in the window.
 _COLONS = re.compile(r"(?<![A-Za-z]):+")
+# HTML void elements: they never take a closing tag, so a `</br>` in the source
+# is a stray by definition rather than one half of a pair.
+_VOID_ELEMENTS = frozenset({"br", "hr", "img", "wbr", "col", "input", "meta", "link"})
+
 _BRACES = (r"\{\{", r"\}\}")
-
-
-def _mask_nontemplate(text):
-    """Blank math bodies and `{{{param}}}` so their braces cannot be read as
-    template delimiters (LaTeX `x^{y^{z}}` ends in `}}`)."""
-    s = re.sub(r"<math\b.*?</math\s*>", lambda m: " " * len(m.group(0)),
-               text, flags=re.DOTALL | re.IGNORECASE)
-    return re.sub(r"\{\{\{.*?\}\}\}", lambda m: " " * len(m.group(0)), s,
-                  flags=re.DOTALL)
+# Sentinel pair meaning "unmatched by definition" — no counting required.
+_VOID = ("VOID", "VOID")
 
 
 def _every_occurrence_closes(src, opener):
@@ -85,7 +84,7 @@ def _every_occurrence_closes(src, opener):
     and a count that was off by one across its five pages called it a source
     error.  -> True / False / None if the opener is not present.
     """
-    s = _mask_nontemplate(src)
+    s = mask_non_template(src)
     i = s.find(opener)
     if i < 0:
         return None
@@ -114,6 +113,13 @@ def probe(cat, snippet):
         if not m:
             return None, None, False
         slash, name = m.group(1), m.group(2)
+        # A VOID element has no closing tag, so any `</br>` is unmatched BY
+        # DEFINITION and no count can say otherwise.  Pairing `<br` against
+        # `</br` made CONGO FREE STATE's `<br/>treaty of</br/>cession.` look
+        # balanced — one open, one close — and blamed us for a transcription typo
+        # MediaWiki also shows literally.
+        if slash and name.lower() in _VOID_ELEMENTS:
+            return "<" + slash + name, _VOID, True
         return ("<" + slash + name,
                 (r"<" + name + r"\b", r"</" + name + r"\b"), bool(slash))
     if cat == "template":
@@ -156,6 +162,10 @@ def classify(cat, snippet, src):
     if pair is None:
         return PRODUCER, cat + ": `" + found + "` is in the source and ordinary — we leaked it"
 
+    if pair is _VOID:
+        return SOURCE, (cat + ": `" + found + "` closes a VOID element — the "
+                        "transcription wrote a close tag that cannot exist")
+
     if pair is _BRACES and found is not None:
         if _every_occurrence_closes(src, found):
             return PRODUCER, cat + ": `" + found + "` closes at every site — the leak is ours"
@@ -166,7 +176,7 @@ def classify(cat, snippet, src):
     # closes, a leaked open needs surplus opens.  Direction is the whole test —
     # an imbalance the wrong way round cannot have produced this fragment.
     o, c = pair
-    masked = _mask_nontemplate(src)
+    masked = mask_non_template(src)
     surplus = len(re.findall(c, masked)) - len(re.findall(o, masked))
     name = "`" + (found or "{{ }}") + "`"
     if leaked_close and surplus > 0:
@@ -221,6 +231,22 @@ def main():
 
     # COVERAGE, stated: the classification is total, so these numbers must add up
     # and the report says so rather than leaving a reader to assume it.
+    # THE VERDICTS ARE ONLY VALID IF BOTH SIDES ARE THE SAME VINTAGE.  The leak
+    # comes from `rendered_html`; the excuse comes from the raw source WITH
+    # corrections applied.  Write a correction and the source balances while the
+    # render still carries the leak — so every fixed site silently flips from
+    # SOURCE to PRODUCER and the tool blames us for what we just fixed.  That
+    # happened the moment 29 corrections landed: 39 SOURCE became 10.  A net that
+    # inverts its own answer without saying so is the failure this arc is about.
+    corr = Path("data/corrections.json")
+    newest = max((p.stat().st_mtime for p in list(payloads)[:2000]), default=0)
+    if corr.exists() and corr.stat().st_mtime > newest:
+        print("*" * 78)
+        print("WARNING: data/corrections.json is NEWER than the rendered corpus.")
+        print("  SOURCE verdicts are unreliable until a full rebuild: a corrected")
+        print("  source now balances while rendered_html still carries the leak,")
+        print("  so already-fixed sites report as PRODUCER.  Rebuild, then re-run.")
+        print("*" * 78)
     print("articles scanned : %d" % len(payloads))
     print("leaking articles : %d" % n_art)
     print("leak sites       : %d   (%s)"

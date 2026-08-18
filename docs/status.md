@@ -48,6 +48,137 @@ agent's memory directory and are not duplicated here.
 
 ## CURRENT STATE (2026-08-18)
 
+### Session 2026-08-18 — OUR OWN errors: five classes, 14 of 17 articles clean
+
+With the source side settled, the PRODUCER verdicts.  40 leak hits over 17
+articles turned out to be 27 distinct constructs and only four causes — the hit
+count over-states, because `find_leaks` scores a leaked `{{X}}` twice (its `{{`
+and its `}}`) and an escaped `<i>…</i>` pair likewise.  A fifth, larger defect
+was found while looking and does not leak at all.
+
+**Centring, 108 wrappers — the biggest, and invisible to the leak oracle because
+dropping styling leaks nothing.**  `_center_wrap` skipped any paragraph that was
+a lone placeholder, on the reasoning that a block "centres itself" — true of a
+`width:100%` table, whose cell TEXT would otherwise be centred.  But once CENTER
+became a composite, prose collapsed to a single BODY placeholder too, and the
+exemption swallowed the case it existed to serve.  The test is now the child's
+LABEL against `TABLE_LABELS`.  Measured over all 483 wrappers: 57 BODY, 13 STRIP,
+12 nested CENTER, 11 POEM, 10 IMAGE, 3 MATH, 2 HTML_STYLE now centre, and the
+exemption fires ZERO times — recorded in the docstring so nobody reads it as
+load-bearing.  ALGEBRA shipped two consecutive displayed equations, both
+`{{c/s}}`-wrapped, one centred and the next flush left.  The unit test asserting
+the old behaviour called it "carried through losslessly": the content was
+lossless, the ATTRIBUTE was dropped ([[feedback_forks_are_dropped_attributes]]).
+
+**Paired halves — seven names, not the three that leaked visibly.**
+`_process_wrap_half` carries an unregistered name raw BY DESIGN, but
+`_SPACER_NAMES` already declared six of them content-less and those entries were
+unreachable: `_WRAP_HALF_RE` allows no argument, so `{{outdent/s|2}}` fell past it
+to SPACER and vanished while the argument-less `{{outdent/e}}` was claimed here
+and leaked.  ONE PAIR, TWO ANSWERS, decided by whether the half carried an
+argument.  Each spec was read off the Wikisource template, not guessed —
+`outdent` is `text-indent:-Nem; margin-left:Nem`, `ti` is `text-indent:{W|2em}`,
+`dent` is `margin-left`/`text-indent`, `x-smaller` is 69% (the same stylesheet
+gives `smaller` 83%, corroborating the entry we already had).  Three of them have
+INLINE homes as well, so registering the paired spelling hijacked
+`{{ti|1em|text}}` from PARAM — caught by a test, fixed with `paired_only`.
+
+**Escaped source HTML.**  `<i>Metaphysical
+materialism</i>` spans a line break.
+Line-scoping mirrors MediaWiki's `doQuotes`, which does split on `
+` — but that
+is the APOSTROPHE algorithm; `<i>`/`<em>` go through the HTML sanitizer, which
+spans lines.  The newline is held the same way `<ref>` is masked, so
+mwparserfromhell's structural pairing survives and a lone `<Secundus>` still
+stays literal.  `<includeonly>` is transclusion chrome and joins the noinclude
+strip; `<chem>` is EB1911 PRESENTATION, so the preprocess-discipline ratchet
+correctly refused it there and it rides `_INLINE_TAG_MARKERS` with an empty
+marker pair instead — tags consumed, formula kept, subscripts a STATED loss.
+
+**Attribute residue.**  `{{fine block|…|style=line-height:112%}}` puts its named
+param LAST and only the leading form was pulled.  Same params, same CSS, one
+function — stricter at the tail (mappable keys only), so prose ending
+`|word=value` is not eaten.
+
+**Indent marks.**  ARITHMETIC's `|⁠: || : ⃝ : || :` is a row of vertical-ellipsis
+cells; each body starts with `:` but follows a `||`, so Wikisource shows `: :`
+and only we wrapped it.  The rule is context-FREE and exactly MediaWiki's: AN
+INDENT MARK IS PRECEDED BY A NEWLINE.  MENSURATION's `:⃝:` lines keep their
+indent — those ARE line-initial, so we match Wikisource.
+
+**PURIN — user's hint, different answer.**  Its ws679/680 are pagequality=1, so
+"unproofread, maybe a source error" was worth checking; but `{|` and `|}` balance
+on every PURIN page.  The cause was ours: `_decode_entities` turned `&vert;` into
+`|` BEFORE the table was parsed.  `&vert;` is what an editor writes for a literal
+bar inside a cell, where a bare `|` is a CELL SEPARATOR — the pipe's analogue of
+`&lt;`, which the keep-rule already protects for exactly this reason.  PURIN
+draws its chemistry bonds with it, so the decode forged separators and spat
+`rowspan=3` and a column of loose bars into the prose (and that is why PURIN and
+not FULMINIC ACID).  Keeping it was only half: the render escapes the `&`, so it
+now survives the walk and is decoded ONCE after structural parsing — the moment
+an escape is for.  255 corpus-wide, 206 inside wikitables.
+
+**Result: 14 of 17 clean.**  The three left are source errors — CONGO's `</br/>`
+(a VOID element cannot have a close tag, so triage now says SOURCE instead of
+pairing `<br` against `</br`), TRIGONOMETRY's OCR debris, and ROME's
+`|width=7.5(2)` loose inside a `<ref>` with no enclosing template.  Two ORACLE
+false positives surfaced once the producers behaved: `<td>` was an indent anchor
+(flagging ARITHMETIC's cells the moment they rendered right), and `>:</div>` — a
+block whose whole content is a colon — read as an unpeeled mark.
+
+STILL OPEN: the `attr` triage rule needs the enclosure test the tag rule got (it
+still says "found in source -> ours"), and ROME + CONGO want corrections entries.
+Everything here is PENDING A REBUILD, alongside the 29 corrections.  Suite 653.
+
+### Session 2026-08-18 — 29 source corrections, cut from the source not typed
+
+Taking triage's SOURCE verdicts to `data/corrections.json`.  27 of the 32 SOURCE
+articles are fixable by literal replacement; the other 5 (SLAVS, SPHERICAL
+HARMONICS, TIDE, TRIGONOMETRY, VARIATIONS CALCULUS OF) are OCR debris inside math
+on unproofread pages, where "correcting" means transcribing the mathematics —
+Wikisource-side work, not a replacement ([[project_unproofed_math_impact]]).
+
+`tools/pipeline/propose_brace_corrections.py` generates them.  **Every `from` is
+CUT from the source, never typed** — a hand-transcribed context is a second
+chance to introduce the typo being fixed, and `apply_corrections` is a plain
+`str.replace`, so a near-miss silently does nothing.  **Uniqueness is the safety
+property**: keys are `vol:page` but lookup is by VOLUME prefix, so each context
+grows until it occurs exactly once in the whole volume, and the tool refuses
+rather than emitting an ambiguous one.  29 proposals, 0 refused, 0 ambiguous.
+
+Four shapes, and only two are deletions.  15 orphan `}}` and 5 stray
+`</a>`/`</poem>` are deleted.  Six `</table>` become **`|}`** — they close
+WIKItables that are otherwise never terminated (LAMPROPHYRES has `{|` once and
+`|}` never), so this repairs a table extent every consumer is currently guessing.
+Two are restorations: MINERALOGY's `HV2}}O.` is a mangled `H{{sub|2}}O.` — the
+water in Apophyllite's +4½H₂O — and PORTSMOUTH's `{Ts|ar}}` is missing one brace
+of its open.
+
+**The `</table>` rule was wrong twice before it was right.** A hand list would
+have turned all seven into `|}`; MALAY ARCHIPELAGO's sits INSIDE a table that
+closes 7,000 characters later (our render already ends it correctly), so a `|}`
+there injects a second close.  The first automatic rule — "is there any later
+`|}`" — then flipped all of MAGNETISM, TERRESTRIAL's to delete, because in a
+21-table article some `|}` follows every position.  The rule is now a depth walk
+at the site: does depth ever fall BELOW the level this stray sits at
+([[feedback_measure_at_decision_site]]).
+
+VERIFIED AT THE DECISION SITE, not against my own reader.  `load_pages` applies
+corrections per PAGE, but the pipeline applies them in `preprocess` on the joined
+stream from `make_stream`, which rides `PAGE:N` scaffolding at every page
+join — so a context spanning a page break would match in my tool and fail in
+production.  Rebuilt the real stream from `SourcePage` and checked: **29/29 match
+exactly once and all apply.**
+
+`render_article.py` is NOT a check for this: it starts from `Article.body`, the
+marker stream already in the DB, which is downstream of preprocess — so a
+corrections change is invisible to it.  Re-rendering EXEDRA still showed
+`Exhedra }}`, which is the tool working correctly, not the correction failing.
+No `--reimport` is needed either: corrections enter at `preprocess`, inside the
+per-volume walk that runs on every rebuild.  PENDING a full rebuild to ship; the
+three articles re-rendered while checking are byte-identical to the rebuild
+fingerprint, so the local corpus is unchanged.
+
 ### Session 2026-08-18 — INSTRUMENT ARC, slice 3: the RAW source gets one reader too
 
 Two tools were named for inspection — `triage_render_leaks` and
@@ -64,11 +195,30 @@ whole VOLUME into one string (a template opened on p.100 "closes" on p.900) and
 died on a `UnicodeEncodeError` before printing its last section.  Rewritten to
 probe the SOURCE FORM of the construct inside the article's own page range, with
 balance scanned PER OCCURRENCE and a DIRECTION test — a leaked close is excused
-only by a source carrying surplus closes.  Now: **83 sites, 45 PRODUCER + 38
-SOURCE**, four verdicts hand-checked against source before the numbers were
-trusted.  The 38 are real transcription errors (`{{sc|Exhedra}}}}`,
+only by a source carrying surplus closes.  Now: **83 sites**, four verdicts hand-checked against source before the numbers were
+trusted.  The 39 are real transcription errors (`{{sc|Exhedra}}}}`,
 `solution}}<section end=`, CONSTANTINOPLE's `</ref></a>` with zero `<a`) and are
 corrections.json work ([[project_leaked_markup_queue]] updated).
+
+**Both verdicts then tested against the two oracles that can overrule them.**
+Widening the brace window by 2 and 5 preceding pages leaves all 18 orphan `}}`
+unmatched, so no earlier `{{` explains them; and Wikisource's own render shows the
+same `}}` in the same place, so our render is faithful and the fix is a
+corrections.json choice rather than a bug.  Checked in PRODUCTION, not locally
+([[feedback_live_site_integrity]]): all 18 leak on britannica11.org and match
+local exactly.  That round found a real tool bug — SOCIETIES, LEARNED classified
+PRODUCER because its source carries `<!--{{EB1911 fine print|-->` and the counter
+believed the commented-out open.  MediaWiki strips comments BEFORE expansion, so
+the mask must model what the PARSER sees; `wikitext.blank_comments` now owns that,
+and the three byte-identical `<!--.*?-->` copies in `_classifier` and
+`super_walker` point at it instead of a fourth being written.  **79 sites, 40
+PRODUCER + 39 SOURCE** — and the PRODUCER hits are 27 distinct constructs in 17
+articles with only four root causes, because `find_leaks` scores a leaked
+`{{X}}` twice (its `{{` and its `}}`).  Four more were the oracle crying wolf:
+`_INDENT_RE` anchored on any `</a>`, and EB writes xrefs as `TOPIC: Subhead`
+(`…Germany</a>:<i>Literature</i>`), so four ordinary cross-references read as
+leaked indent markup.  The anchor is now the page-marker anchor, which is
+distinguishable by being EMPTY.
 
 **`find_missing_sections` reported 67 missing articles and every one I checked
 was present.**  It hand-rolled a substring matcher, and EB1911 titles carry an
@@ -77,9 +227,14 @@ alternate spelling INSIDE the name — `Alecsandri, Vasile` vs
 of them read as missing.  `NameIndex` already answers this exactly; the tool now
 asks it, with `single_head_ok` for EB's `Head, Qualifier` inversion and a
 separately-reported OCR rung.  **7,123 tested → 7,099 matched → 20 unresolved**,
-printed in full with each one's nearest article.  All 20 are name discrepancies,
-not gaps — and one is a find in the other direction: CHASSÉSRIAU is a misspelt
-HEADWORD, so the article ships under the wrong title.
+printed in full with each one's nearest article.  All 20 are name discrepancies
+between a section name and a headword, not gaps — **and the headword side is not
+presumed wrong.**  I first wrote up `CHASSÉSRIAU, THÉODORE` as a misspelt title
+the article "ships under"; it is the transcription's headword, we carry it
+faithfully, and the article is correct as it stands
+([[feedback_viewer_not_source_errors]]).  Only the printed scan could say which
+spelling the volume carries, and this tool does not consult scans — so it reports
+the disagreement, names both spellings, and draws no conclusion.
 
 **The class behind both:** the raw source had no single reader.  Nine modules
 spelled the walk themselves in four postures (`except Exception: continue`,
