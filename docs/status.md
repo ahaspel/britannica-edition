@@ -126,9 +126,26 @@ false positives surfaced once the producers behaved: `<td>` was an indent anchor
 (flagging ARITHMETIC's cells the moment they rendered right), and `>:</div>` — a
 block whose whole content is a colon — read as an unpeeled mark.
 
-STILL OPEN: the `attr` triage rule needs the enclosure test the tag rule got (it
-still says "found in source -> ours"), and ROME + CONGO want corrections entries.
-Everything here is PENDING A REBUILD, alongside the 29 corrections.  Suite 653.
+CLOSED before the rebuild.  The `attr` rule got the enclosure test the tag rule
+had: an attribute residue is OURS only if a template or wikitable encloses it —
+`{{fine block|…|style=…}}` is an argument we failed to take, while ROME's
+`|width=7.5(2)` sits loose in a `<ref>` where nothing was ever going to consume
+it.  Without that the rule read "the text is in the source, therefore we leaked
+it", which convicts us of every stray attribute the transcription contains.
+CONGO's `</br/>` and ROME's `|width=7.5` are now corrections (31 total), cut from
+source and uniqueness-checked like the rest; ROME keeps its `(2)` because
+"Ranke iv.(2) 285" is a plausible volume/part/page citation and nothing proves
+otherwise ([[feedback_when_in_doubt_carry]]).
+
+**16 of 17 articles clean.**  TRIGONOMETRY's four are OCR debris inside
+unproofread math, deliberately left ([[project_unproofed_math_impact]]).
+
+Re-verifying every correction against the stream `make_stream` actually builds
+also audited the PRE-EXISTING ones: 149 entries, all sound.  Four looked wrong
+and adjudicated clean — three fire TWICE because the same typo genuinely occurs
+twice (vol 2's `⨯` image in one sentence, vol 28's stray `{` in two table rows,
+vol 21's unclosed `nowrap` in two headers), and vol 11's is insertion-shaped, so
+its `from` survives the replace by design.  PENDING A REBUILD.  Suite 653.
 
 ### Session 2026-08-18 — 29 source corrections, cut from the source not typed
 

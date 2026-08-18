@@ -72,6 +72,8 @@ _VOID_ELEMENTS = frozenset({"br", "hr", "img", "wbr", "col", "input", "meta", "l
 _BRACES = (r"\{\{", r"\}\}")
 # Sentinel pair meaning "unmatched by definition" — no counting required.
 _VOID = ("VOID", "VOID")
+# Sentinel pair meaning "decide by what ENCLOSES it in the source".
+_ATTR_ENCLOSURE = ("ATTR", "ATTR")
 
 
 def _every_occurrence_closes(src, opener):
@@ -98,6 +100,31 @@ def _every_occurrence_closes(src, opener):
             return False
         i = s.find(opener, i + 1)
     return True
+
+
+def encloses(src, pos):
+    """What construct contains ``pos`` — "template", "wikitable", or None.
+
+    An attribute residue is OURS only if it sits inside something we were
+    supposed to CONSUME.  A `{{fine block|…|style=…}}` named argument is one we
+    failed to take, so that leak is a producer bug — but ROME's
+    `See Ranke iv.|width=7.5(2) 285` sits loose inside a `<ref>` with no
+    enclosing construct at all, and MediaWiki has nothing to consume it either,
+    so a Wikisource reader sees the same text.
+
+    Without this the rule was "the text is in the source, therefore we leaked
+    it", which convicts us of every stray attribute the transcription contains
+    ([[feedback_source_is_the_only_excuse]]).
+    """
+    if pos < 0:
+        return None
+    masked = mask_non_template(src)[:pos]
+    if len(re.findall(r"\{\{", masked)) > len(re.findall(r"\}\}", masked)):
+        return "template"
+    if (len(re.findall(r"^\{\|", masked, re.M))
+            > len(re.findall(r"^\|\}", masked, re.M))):
+        return "wikitable"
+    return None
 
 
 def probe(cat, snippet):
@@ -129,7 +156,7 @@ def probe(cat, snippet):
         return (m.group(0) if m else None), _BRACES, (m is None)
     if cat == "attr":
         m = _ATTR.search(snippet)
-        return (m.group(0) if m else None), None, False
+        return (m.group(0) if m else None), _ATTR_ENCLOSURE, False
     if cat == "indent":
         # The rendered mark plus the words after it, which survive the render
         # unchanged and so pin the line in the source.
@@ -161,6 +188,15 @@ def classify(cat, snippet, src):
         return PRODUCER, cat + ": `" + found + "` is not in the article's source at all"
     if pair is None:
         return PRODUCER, cat + ": `" + found + "` is in the source and ordinary — we leaked it"
+
+    if pair is _ATTR_ENCLOSURE:
+        where = encloses(src, src.find(found))
+        if where is None:
+            return SOURCE, (cat + ": `" + found + "` is loose in the source — no "
+                            "template or table encloses it, so nothing was ever "
+                            "going to consume it")
+        return PRODUCER, (cat + ": `" + found + "` is an argument of a " + where +
+                          " we failed to consume")
 
     if pair is _VOID:
         return SOURCE, (cat + ": `" + found + "` closes a VOID element — the "

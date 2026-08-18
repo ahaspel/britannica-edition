@@ -70,7 +70,19 @@ STRAY_TAG = {"BUDGELL, EUSTACE": "poem", "CONSTANTINOPLE": "a",
 WIKITABLE_CLOSE = ["LAMPROPHYRES", "MAGNETISM", "MAGNETISM, TERRESTRIAL",
                    "MALAY ARCHIPELAGO"]
 ONE_OFFS = [("MINERALOGY", "HV2}}O.", "H{{sub|2}}O."),
-            ("PORTSMOUTH", "|{Ts|ar}}|", "|{{Ts|ar}}|")]
+            ("PORTSMOUTH", "|{Ts|ar}}|", "|{{Ts|ar}}|"),
+            # `</br/>` — `<br>` is a VOID element, so a close tag cannot exist.
+            # CONGO's shoulder heading is three lines ("The new / treaty of /
+            # cession.") and the second break was typed as a close.
+            ("CONGO FREE STATE", "treaty of</br/>cession.",
+             "treaty of<br/>cession."),
+            # `|width=7.5` is debris from an `{{EB1911 Shoulder Heading|width=7.5|…}}`
+            # — ROME uses exactly that template elsewhere — pasted into the middle
+            # of a `<ref>`, where nothing encloses it.  ONLY the demonstrable
+            # debris goes: `(2)` stays, because "Ranke iv.(2) 285" is a plausible
+            # volume/part/page citation and I cannot prove otherwise
+            # ([[feedback_when_in_doubt_carry]]).
+            ("ROME", "iv.|width=7.5(2) 285", "iv.(2) 285")]
 
 # Left alone on purpose: SLAVS, SPHERICAL HARMONICS, TIDE, TRIGONOMETRY,
 # VARIATIONS CALCULUS OF.  Their unmatched `<t` / `<I` / `<s` / `<Q` are OCR
