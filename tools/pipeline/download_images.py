@@ -18,7 +18,6 @@ Usage:
 
 import argparse
 import io
-import json
 
 from britannica.export.corpus import load_corpus
 import sys

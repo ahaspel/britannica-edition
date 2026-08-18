@@ -7,19 +7,17 @@ contributors and contributor_initials tables.
 Run AFTER truncate (clean DB) and BEFORE extract-contributors (which
 links initials to articles via the contributor_initials table).
 """
-import json
 import re
 import sys
 from collections import defaultdict
-from pathlib import Path
 
 sys.path.insert(0, "src")
 
 from britannica.contributors.aliases import canonical_name
 from britannica.contributors.frontmatter import iter_entries, parse_field
-from britannica.corrections import apply_corrections
 from britannica.db.models import Contributor, ContributorInitials
 from britannica.db.session import SessionLocal
+from britannica.source_pages import load_pages
 from britannica.pipeline.stages.elements import ElementContext, process_elements
 from britannica.pipeline.stages.extract_contributors import _normalize_initials
 from britannica.pipeline.stages.preprocess import preprocess
@@ -103,39 +101,30 @@ def _clean_description(raw_desc, volume=0):
 
 
 def build_contributor_table():
-    raw_dir = Path("data/raw/wikisource")
-
-    # Step 1: Parse all (initials, name, credentials, description) entries
+    # Step 1: Parse all (initials, name, credentials, description) entries.
+    # The one raw reader applies corrections itself, which is what this pass had
+    # to remember to do by hand ([[feedback_dissolve_dont_fix]]).
     entries = []  # (raw_initials, raw_name, description_text)
-    for vol_dir in sorted(raw_dir.iterdir()):
-        if not vol_dir.is_dir():
-            continue
-        try:
-            volume = int(vol_dir.name.split("_", 1)[1])
-        except (IndexError, ValueError):
-            continue
-        for path in sorted(vol_dir.glob("*.json")):
-            with open(path, encoding="utf-8") as f:
-                data = json.load(f)
-            raw = apply_corrections(data.get("raw_text", ""), volume)
-            for content in iter_entries(raw):
-                # Normalize before the length filter — entries whose
-                # raw initials field uses HTML-entity spacing (e.g.
-                # vol 6's `J.&thinsp;D.&thinsp;v.&thinsp;d.&thinsp;W.`
-                # for Van Der Waals) blow well past 20 chars in raw
-                # form, but normalize cleanly to short canonical
-                # signatures.  The same normalizer used at lookup
-                # time is applied here so storage and lookup share
-                # one canonical form.
-                initials = _normalize_initials(parse_field(content, "initials"))
-                if not initials or len(initials) > 20:
-                    continue
-                raw_name = parse_field(content, "name")
-                raw_desc = parse_field(content, "description")
-                # The VOLUME rides along: `_clean_description` walks the description
-                # through the same preprocess+walk the article body takes, and both
-                # are volume-keyed (corrections, and the element context).
-                entries.append((initials, raw_name, raw_desc, volume))
+    for page in load_pages()[0]:
+        volume, raw = page.volume, page.text
+        for content in iter_entries(raw):
+            # Normalize before the length filter — entries whose
+            # raw initials field uses HTML-entity spacing (e.g.
+            # vol 6's `J.&thinsp;D.&thinsp;v.&thinsp;d.&thinsp;W.`
+            # for Van Der Waals) blow well past 20 chars in raw
+            # form, but normalize cleanly to short canonical
+            # signatures.  The same normalizer used at lookup
+            # time is applied here so storage and lookup share
+            # one canonical form.
+            initials = _normalize_initials(parse_field(content, "initials"))
+            if not initials or len(initials) > 20:
+                continue
+            raw_name = parse_field(content, "name")
+            raw_desc = parse_field(content, "description")
+            # The VOLUME rides along: `_clean_description` walks the description
+            # through the same preprocess+walk the article body takes, and both
+            # are volume-keyed (corrections, and the element context).
+            entries.append((initials, raw_name, raw_desc, volume))
 
     print(f"Parsed {len(entries)} front matter entries.")
 
@@ -260,34 +249,26 @@ def backfill_bios(apply_mode: bool = True):
             (c.id, c.full_name, inits.get(c.id, [])) for c in contribs.values())
 
         best: dict[int, tuple[str, str]] = {}  # cid -> (credentials, description)
-        for vol_dir in sorted(Path("data/raw/wikisource").iterdir()):
-            if not vol_dir.is_dir():
-                continue
-            try:
-                volume = int(vol_dir.name.split("_", 1)[1])
-            except (IndexError, ValueError):
-                continue
-            for path in sorted(vol_dir.glob("*.json")):
-                with open(path, encoding="utf-8") as f:
-                    raw = apply_corrections(json.load(f).get("raw_text", ""), volume)
-                for content in iter_entries(raw):
-                    name, creds = _clean_name(parse_field(content, "name"))
-                    # SAME producer as build_contributor_table's own pass — a second
-                    # cleaner here is how the fork would grow back.
-                    desc = _clean_description(
-                        parse_field(content, "description"), volume)
-                    if not (desc or creds):
-                        continue
-                    cid = idx.resolve(
-                        name=name,
-                        initials=_normalize_initials(parse_field(content, "initials")))
-                    if cid is None:
-                        continue
-                    cur_creds, cur_desc = best.get(cid, ("", ""))
-                    best[cid] = (
-                        creds if len(creds) > len(cur_creds) else cur_creds,
-                        desc if len(desc) > len(cur_desc) else cur_desc,
-                    )
+        for page in load_pages()[0]:
+            volume, raw = page.volume, page.text
+            for content in iter_entries(raw):
+                name, creds = _clean_name(parse_field(content, "name"))
+                # SAME producer as build_contributor_table's own pass — a second
+                # cleaner here is how the fork would grow back.
+                desc = _clean_description(
+                    parse_field(content, "description"), volume)
+                if not (desc or creds):
+                    continue
+                cid = idx.resolve(
+                    name=name,
+                    initials=_normalize_initials(parse_field(content, "initials")))
+                if cid is None:
+                    continue
+                cur_creds, cur_desc = best.get(cid, ("", ""))
+                best[cid] = (
+                    creds if len(creds) > len(cur_creds) else cur_creds,
+                    desc if len(desc) > len(cur_desc) else cur_desc,
+                )
 
         filled = 0
         for cid, (creds, desc) in best.items():

@@ -10,8 +10,6 @@ Usage:
 import argparse
 import io
 import json
-import os
-import re
 import sys
 import zipfile
 from pathlib import Path
@@ -19,7 +17,6 @@ from pathlib import Path
 from PIL import Image
 
 SCAN_DIR = Path("data/raw/ia_scans")
-RAW_DIR = Path("data/raw/wikisource")
 OUT_DIR = Path("data/derived/scans")
 
 # leaf = ws_page + LEAF_OFFSET[vol]

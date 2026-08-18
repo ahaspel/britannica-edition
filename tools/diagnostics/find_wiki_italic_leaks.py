@@ -1,8 +1,6 @@
 """List articles with stray '' wiki italic markers."""
-import glob
 
 from britannica.export.corpus import load_corpus
-import json
 import re
 import sys
 

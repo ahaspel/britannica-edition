@@ -1,7 +1,5 @@
-import glob
 
 from britannica.export.corpus import load_corpus
-import json
 import re
 import sys
 

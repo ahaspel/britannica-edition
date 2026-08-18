@@ -1,8 +1,6 @@
 """List articles flagged by the unhandled_marker_in_htmltable check."""
-import glob
 
 from britannica.export.corpus import load_corpus
-import json
 import re
 import sys
 

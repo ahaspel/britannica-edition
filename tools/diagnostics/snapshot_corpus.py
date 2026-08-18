@@ -24,7 +24,6 @@ Usage::
 from __future__ import annotations
 
 import io
-import re
 import sys
 from collections import defaultdict
 from difflib import unified_diff
@@ -34,7 +33,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                               errors="replace")
 
-from britannica.db.models import Article, ArticleSegment, SourcePage  # noqa: E402
+from britannica.db.models import Article  # noqa: E402
 from britannica.db.session import SessionLocal  # noqa: E402
 from britannica.pipeline.stages.elements import (  # noqa: E402
     ElementContext, process_elements)

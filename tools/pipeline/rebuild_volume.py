@@ -65,7 +65,6 @@ from britannica.db.models import Article
 from britannica.db.session import SessionLocal
 from britannica.export.article_json import (
     _safe_filename,
-    export_articles_to_json,
 )
 from britannica.pipeline.stages.detect_boundaries import (
     persist_articles,

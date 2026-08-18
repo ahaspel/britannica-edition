@@ -30,7 +30,6 @@ from pathlib import Path
 
 import anthropic
 
-WIKISOURCE_DIR = Path("data/raw/wikisource/vol_29")
 SCAN_DIR = Path("data/derived/scans")
 PER_PAGE_OCR = Path("data/derived/vol29_contributors_ocr.json")
 # Vol 29 contributor index runs ws 956 → leaf 963 through ws 982 →

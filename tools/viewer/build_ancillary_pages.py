@@ -23,10 +23,9 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                               errors="replace")
 
 from ancillary_render import footnotes_html, render_pages
-from britannica.corrections import apply_corrections
+from britannica.source_pages import load_pages
 
 VIEWER_DIR = Path("tools/viewer")
-VOL1_DIR = Path("data/raw/wikisource/vol_01")
 ANCILLARY_JSON = Path("data/derived/vol29_ancillary.json")
 
 
@@ -165,12 +164,9 @@ def _page_template(title: str, back_label: str, back_href: str,
 
 
 def build_prefatory_note():
-    raw_pages = []
-    for ws in range(6, 10):
-        p = VOL1_DIR / f"vol01-page{ws:04d}.json"
-        if p.exists():
-            d = json.loads(p.read_text(encoding="utf-8"))
-            raw_pages.append((ws, apply_corrections(d.get("raw_text", ""), 1)))
+    # The one raw reader: it applies corrections and RAISES on a page of this
+    # named range that is missing, rather than quietly emitting a short note.
+    raw_pages = [(p.page, p.text) for p in load_pages(1, pages=range(6, 10))[0]]
     doc = render_pages(raw_pages, volume=1, drop_leading_title=True)
     html = doc.body_html + footnotes_html(doc.footnotes)
     page = _page_template(

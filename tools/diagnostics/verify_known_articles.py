@@ -21,7 +21,6 @@ articles_*.tsv pattern.  Exits nonzero if any fixture article is
 missing from the DB.
 """
 import csv
-import re
 import sys
 from collections import defaultdict
 from pathlib import Path

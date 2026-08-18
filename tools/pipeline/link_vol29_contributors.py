@@ -22,7 +22,7 @@ sys.path.insert(0, "src")
 
 from britannica.contributors.vol29_index import parse_vol29_index
 from britannica.contributors.vol29_linker import (
-    INSERT, ADD_INITIALS, RE_KEY_INITIALS, NEEDS_REVIEW, NO_OP,
+    INSERT, ADD_INITIALS, RE_KEY_INITIALS, NEEDS_REVIEW,
     apply_action, bucket, build_plan, format_plan, snapshot_db,
 )
 from britannica.db.session import SessionLocal

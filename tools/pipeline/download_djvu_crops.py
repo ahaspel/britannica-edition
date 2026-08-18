@@ -26,10 +26,10 @@ from urllib.parse import quote
 
 import requests
 from PIL import Image
-from io import BytesIO
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
 from britannica.pipeline.stages.elements._image import crop_filename
+from britannica.source_pages import load_pages
 
 # Force UTF-8 output on Windows
 if sys.stdout.encoding != "utf-8":
@@ -37,7 +37,6 @@ if sys.stdout.encoding != "utf-8":
 if sys.stderr.encoding != "utf-8":
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
-RAW_DIR = Path("data/raw/wikisource")
 IMAGE_DIR = Path("data/images")
 CACHE_DIR = Path("data/images/.djvu_cache")
 DELAY = 3  # seconds between requests
@@ -135,34 +134,27 @@ def scan_full_page_refs() -> list[dict]:
                             }
         except Exception:
             pass
-    for vol_dir in sorted(RAW_DIR.iterdir()):
-        if not vol_dir.is_dir():
-            continue
-        for page_file in sorted(vol_dir.glob("*.json")):
-            try:
-                data = json.loads(page_file.read_text(encoding="utf-8"))
-            except Exception:
+    for src in load_pages()[0]:
+        raw = src.text
+        for m in list(_RAW_IMAGE_DJVU_RE.finditer(raw)) + list(
+                _CSS_CROP_DJVU_RE.finditer(raw)):
+            djvu_file = re.sub(r"\s+", " ", m.group(1)).strip() + ".djvu"
+            # The regex captured `.djvu` with no leading space; the
+            # group ends at `.djvu`, then we add it back.
+            djvu_file = m.group(1).strip()
+            if not djvu_file.lower().endswith(".djvu"):
+                djvu_file += ".djvu"
+            page = int(m.group(2))
+            vol_match = re.search(r"Volume (\d+)", djvu_file)
+            if not vol_match:
                 continue
-            raw = data.get("raw_text", "")
-            for m in list(_RAW_IMAGE_DJVU_RE.finditer(raw)) + list(
-                    _CSS_CROP_DJVU_RE.finditer(raw)):
-                djvu_file = re.sub(r"\s+", " ", m.group(1)).strip() + ".djvu"
-                # The regex captured `.djvu` with no leading space; the
-                # group ends at `.djvu`, then we add it back.
-                djvu_file = m.group(1).strip()
-                if not djvu_file.lower().endswith(".djvu"):
-                    djvu_file += ".djvu"
-                page = int(m.group(2))
-                vol_match = re.search(r"Volume (\d+)", djvu_file)
-                if not vol_match:
-                    continue
-                key = (djvu_file, page)
-                if key not in found:
-                    found[key] = {
-                        "djvu_file": djvu_file,
-                        "page": page,
-                        "volume": int(vol_match.group(1)),
-                    }
+            key = (djvu_file, page)
+            if key not in found:
+                found[key] = {
+                    "djvu_file": djvu_file,
+                    "page": page,
+                    "volume": int(vol_match.group(1)),
+                }
     return list(found.values())
 
 
@@ -222,30 +214,26 @@ def scan_wikitext() -> list[dict]:
     crop.
     """
     found = []
-    for vol_dir in sorted(RAW_DIR.iterdir()):
-        if not vol_dir.is_dir():
-            continue
-        for page_file in sorted(vol_dir.glob("*.json")):
-            data = json.loads(page_file.read_text(encoding="utf-8"))
-            raw = data.get("raw_text", "")
-            for m in _CSS_CROP_PATTERN.finditer(raw):
-                body = m.group(1)
-                image = _parse_param(body, "Image")
-                if not image.endswith(".djvu"):
-                    continue
-                page_str = _parse_param(body, "Page")
-                if not page_str:
-                    continue
-                found.append({
-                    "djvu_file": image,
-                    "page": int(page_str),
-                    "bSize": int(_parse_param(body, "bSize") or "600"),
-                    "cWidth": int(_parse_param(body, "cWidth") or "600"),
-                    "cHeight": int(_parse_param(body, "cHeight") or "600"),
-                    "oTop": int(_parse_param(body, "oTop") or "0"),
-                    "oLeft": int(_parse_param(body, "oLeft") or "0"),
-                    "volume": data["volume"],
-                })
+    for src in load_pages()[0]:
+        raw = src.text
+        for m in _CSS_CROP_PATTERN.finditer(raw):
+            body = m.group(1)
+            image = _parse_param(body, "Image")
+            if not image.endswith(".djvu"):
+                continue
+            page_str = _parse_param(body, "Page")
+            if not page_str:
+                continue
+            found.append({
+                "djvu_file": image,
+                "page": int(page_str),
+                "bSize": int(_parse_param(body, "bSize") or "600"),
+                "cWidth": int(_parse_param(body, "cWidth") or "600"),
+                "cHeight": int(_parse_param(body, "cHeight") or "600"),
+                "oTop": int(_parse_param(body, "oTop") or "0"),
+                "oLeft": int(_parse_param(body, "oLeft") or "0"),
+                "volume": src.volume,
+            })
     return found
 
 
@@ -258,20 +246,12 @@ def scan_non_djvu_crop_sources() -> list[str]:
     Returns deduped list of Commons filenames.
     """
     seen: set[str] = set()
-    for vol_dir in sorted(RAW_DIR.iterdir()):
-        if not vol_dir.is_dir():
-            continue
-        for page_file in sorted(vol_dir.glob("*.json")):
-            try:
-                data = json.loads(
-                    page_file.read_text(encoding="utf-8"))
-            except Exception:
-                continue
-            raw = data.get("raw_text", "")
-            for m in _CSS_CROP_PATTERN.finditer(raw):
-                image = _parse_param(m.group(1), "Image")
-                if image and not image.endswith(".djvu"):
-                    seen.add(image)
+    for src in load_pages()[0]:
+        raw = src.text
+        for m in _CSS_CROP_PATTERN.finditer(raw):
+            image = _parse_param(m.group(1), "Image")
+            if image and not image.endswith(".djvu"):
+                seen.add(image)
     return sorted(seen)
 
 

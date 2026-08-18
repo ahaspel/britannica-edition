@@ -41,6 +41,7 @@ def main():
     )
     dist = {}
     cur = None
+    _walk_failures = []
     for a in arts:
         if a.article_type == "plate":
             continue  # production routes plates to parse_plate, not here
@@ -50,7 +51,12 @@ def main():
         body = a.body or ""
         try:
             _ph, tree = classify_article(body)
-        except Exception:
+        except Exception as exc:
+            # A walk failure is DATA about the corpus, not a broken net, so
+            # it is COUNTED rather than raised — but never silently dropped:
+            # an article missing from a distribution report is one the report
+            # says nothing about ([[feedback_honesty_surface_failures]]).
+            _walk_failures.append((getattr(a, 'title', '?'), repr(exc)[:90]))
             continue
         for node, label in walk(tree, ""):
             dist[f"{a.volume:02d}/{a.page_start:04d}/{node}"] = label
@@ -58,6 +64,11 @@ def main():
     with out.open("w", encoding="utf-8") as f:
         for k in sorted(dist):
             f.write(json.dumps({"k": k, "l": dist[k]}) + "\n")
+    if _walk_failures:
+        print(f"  WARNING: {len(_walk_failures)} article(s) failed to walk "
+              f"and are ABSENT from this report:", flush=True)
+        for _t, _why in _walk_failures[:5]:
+            print(f"    {_t}: {_why}", flush=True)
     print(f"wrote {len(dist)} labels -> {out}", flush=True)
 
 

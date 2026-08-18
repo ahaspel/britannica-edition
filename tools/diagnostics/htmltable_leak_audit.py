@@ -21,7 +21,6 @@ Usage:
 """
 from __future__ import annotations
 
-import json
 
 from britannica.export.corpus import load_corpus
 import re

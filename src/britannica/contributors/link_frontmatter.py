@@ -10,17 +10,16 @@ dedup below prevents any double-bind.
 
 Run AFTER extract-contributors (footer matching).
 """
-import json
 import re
 
 from britannica.markers import strip_marker_tokens
 from collections import defaultdict
-from pathlib import Path
 
 from britannica.contributors.frontmatter import iter_entries, parse_field
 from britannica.contributors.resolver import ContributorIndex
 from britannica.db.models import Article, ArticleContributor, Contributor, ContributorInitials
 from britannica.db.session import SessionLocal
+from britannica.source_pages import load_pages
 from britannica.xrefs.normalizer import normalize_xref_target
 from britannica.xrefs.resolver import build_core_maps
 from britannica.util.strings import strip_html_tags
@@ -120,45 +119,41 @@ def link_from_frontmatter(apply_mode: bool = False, kind_of=None):
             value_of=lambda x: x,
         )
 
-        # Parse front matter for subject lists
-        raw_dir = Path("data/raw/wikisource")
+        # Parse front matter for subject lists.  One reader for the raw source: a
+        # page it cannot read RAISES rather than dropping the contributors listed
+        # on it, which would look exactly like a volume with fewer contributors
+        # ([[feedback_honesty_surface_failures]]).
         contrib_subjects = defaultdict(set)  # contributor_id -> set of article titles
 
-        for vol_dir in sorted(raw_dir.iterdir()):
-            if not vol_dir.is_dir():
-                continue
-            for path in sorted(vol_dir.glob("*.json")):
-                with open(path, encoding="utf-8") as f:
-                    data = json.load(f)
-                raw = data.get("raw_text", "")
-                for content in iter_entries(raw):
-                    initials = parse_field(content, "initials").strip()
-                    if not initials:
-                        continue
-                    name = parse_field(content, "name")
-                    name = re.sub(r"\[\[[^\]|]*\|([^\]]+)\]\]", r"\1", name)
-                    name = re.sub(r"\[\[([^\]]+)\]\]", r"\1", name)
-                    name = strip_html_tags(name).strip()
+        for page in load_pages()[0]:
+            for content in iter_entries(page.text):
+                initials = parse_field(content, "initials").strip()
+                if not initials:
+                    continue
+                name = parse_field(content, "name")
+                name = re.sub(r"\[\[[^\]|]*\|([^\]]+)\]\]", r"\1", name)
+                name = re.sub(r"\[\[([^\]]+)\]\]", r"\1", name)
+                name = strip_html_tags(name).strip()
 
-                    contrib_id = idx.resolve(name=name, initials=initials)
-                    if contrib_id is None:
-                        continue  # unresolved
+                contrib_id = idx.resolve(name=name, initials=initials)
+                if contrib_id is None:
+                    continue  # unresolved
 
-                    # Collect all lnksubject fields
-                    for n in range(1, 20):
-                        lnk = parse_field(content, f"lnksubject{n}")
-                        if not lnk:
-                            # Try plain subject
-                            lnk = parse_field(content, f"subject{n}")
-                        if not lnk:
-                            break
-                        # Clean wiki markup
-                        lnk = re.sub(r"\[\[[^\]|]*\|([^\]]+)\]\]", r"\1", lnk)
-                        lnk = re.sub(r"\[\[([^\]]+)\]\]", r"\1", lnk)
-                        lnk = strip_html_tags(lnk)
-                        lnk = lnk.strip()
-                        if lnk:
-                            contrib_subjects[contrib_id].add(lnk.upper())
+                # Collect all lnksubject fields
+                for n in range(1, 20):
+                    lnk = parse_field(content, f"lnksubject{n}")
+                    if not lnk:
+                        # Try plain subject
+                        lnk = parse_field(content, f"subject{n}")
+                    if not lnk:
+                        break
+                    # Clean wiki markup
+                    lnk = re.sub(r"\[\[[^\]|]*\|([^\]]+)\]\]", r"\1", lnk)
+                    lnk = re.sub(r"\[\[([^\]]+)\]\]", r"\1", lnk)
+                    lnk = strip_html_tags(lnk)
+                    lnk = lnk.strip()
+                    if lnk:
+                        contrib_subjects[contrib_id].add(lnk.upper())
 
         # Match subjects to articles and create links.  Try the subject in
         # progressively more forgiving forms (_subject_variants: exact →

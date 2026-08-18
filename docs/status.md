@@ -46,7 +46,105 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-08-17)
+## CURRENT STATE (2026-08-18)
+
+### Session 2026-08-18 — INSTRUMENT ARC, slice 3: the RAW source gets one reader too
+
+Two tools were named for inspection — `triage_render_leaks` and
+`find_missing_sections` — on the grounds that both still swallowed a raw-page
+read.  The swallows turned out to be **inert** (all 29,688 raw files parse and
+carry `raw_text`), and both tools were broken in ways that mattered far more.
+
+**`triage_render_leaks` answered nothing, and said so as `PRODUCER: 0`.**  It
+searched raw source for the leaked snippet's first 24 characters — but a leaked
+snippet is RENDERED output, so those characters are `{{dent/e}}<p>Observe`, and
+no raw page contains a `<p>` we emitted.  Every lookup missed; every site landed
+in UNKNOWN; the summary read as a clean bill over 83 leak sites.  It also glued a
+whole VOLUME into one string (a template opened on p.100 "closes" on p.900) and
+died on a `UnicodeEncodeError` before printing its last section.  Rewritten to
+probe the SOURCE FORM of the construct inside the article's own page range, with
+balance scanned PER OCCURRENCE and a DIRECTION test — a leaked close is excused
+only by a source carrying surplus closes.  Now: **83 sites, 45 PRODUCER + 38
+SOURCE**, four verdicts hand-checked against source before the numbers were
+trusted.  The 38 are real transcription errors (`{{sc|Exhedra}}}}`,
+`solution}}<section end=`, CONSTANTINOPLE's `</ref></a>` with zero `<a`) and are
+corrections.json work ([[project_leaked_markup_queue]] updated).
+
+**`find_missing_sections` reported 67 missing articles and every one I checked
+was present.**  It hand-rolled a substring matcher, and EB1911 titles carry an
+alternate spelling INSIDE the name — `Alecsandri, Vasile` vs
+`ALECSANDRI, or ALEXANDRI, VASILE` — so neither string contains the other and all
+of them read as missing.  `NameIndex` already answers this exactly; the tool now
+asks it, with `single_head_ok` for EB's `Head, Qualifier` inversion and a
+separately-reported OCR rung.  **7,123 tested → 7,099 matched → 20 unresolved**,
+printed in full with each one's nearest article.  All 20 are name discrepancies,
+not gaps — and one is a find in the other direction: CHASSÉSRIAU is a misspelt
+HEADWORD, so the article ships under the wrong title.
+
+**The class behind both:** the raw source had no single reader.  Nine modules
+spelled the walk themselves in four postures (`except Exception: continue`,
+`except (OSError, json.JSONDecodeError): continue`, `if p.exists():`, no guard),
+across two globs, and three of them had to remember to re-apply `corrections.json`
+by hand while the rest silently skipped it — the exact disease `corrections.py`
+names in its own docstring.  `src/britannica/source_pages.py` is now the one
+reader: total, loud, corrections applied, with a filename↔field cross-check that
+catches a page filed under the wrong number.  **A requested page that is missing
+is a FAILURE**, which is what the `if p.exists():` callers had no way to say.
+
+All nine converted and each verified against its pre-conversion output:
+`alias_table` 2,703 aliases identical · `build_contributor_table` 5,176 entries
+identical · `download_djvu_crops` 120/211/1 identical · `_harvest_headings`
+identical on vols 1/6/20 · `preface.html` byte-identical.  The one intended
+change: `link_frontmatter` had been reading contributor initials UNCORRECTED
+while the footer path read them corrected (`G. Sh.`→`G. Sn.`, `W. B*.`→`W. Ba.`,
+`J. C. van D.`→`J. C. Van D.` on 8 front-matter pages); the two paths now agree,
+measured at +0/-0 links against the current DB, with any gain landing at the next
+full rebuild.
+
+Also: `render/leaks.py` windowed its snippet 30 chars past the match START, so an
+`indent` hit on `<div style="padding-left:1.6em">:` reported a snippet that
+stopped before the leaked `:` — the evidence cut out of the finding.  Anchored on
+the match END.  `src/britannica/sources/` (dead since June, orphan `.pyc` only)
+and two dead constants in `build_toc` deleted.
+
+**Locked in:** the corpus-read ratchet now guards BOTH collections from one rule,
+and reads CODE not prose (its first version accused the raw reader of reading the
+exported corpus because a docstring mentioned it).  Ghost-checked: removing a
+ledger entry makes it fire.  `util/loading.py` gives both readers one error
+posture — the dup-constants ratchet caught the shared literal, which is how the
+duplicated PROCEDURE showed up.  Suite **652**.
+
+### Session 2026-08-18 — INSTRUMENT ARC, slice 2: a corpse is not an instrument
+
+Finishing the sweep turned up a THIRD way an instrument lies, after "skips
+silently" and "reports less than it was given": **it does not run at all, while a
+document says it does.**
+
+`check_table_path_purity.py` and `layout_wrapper_contents.py` were listed in
+`docs/one-true-path-audit.md` under "Standing QA / regression net (no caller but
+prized)".  Both had been dead on IMPORT since the chem sub-classification they
+audited was deleted — they import `_chem_row_is_reaction` / `_has_chem_brackets`
+from `_tables`, and those names are gone.  I found it only by RUNNING them, after
+carefully editing both to be more honest: I had been making corpses truthful.
+Deleted (git keeps them) and the audit doc's claim corrected — a document
+asserting a net is not evidence the net runs.
+
+The remaining `except Exception: continue` sites were walk failures, not read
+skips, so the honest answer there is COUNT rather than raise: `table_label_dist`,
+`layout_wrapper_contents` (deleted) and `label_distribution_snapshot` now report
+"N article(s) failed to walk and are ABSENT from this report".  A distribution
+that quietly omits what it could not classify is a distribution of the easy cases.
+
+`add_snapshot_from_production` was flagged as having the same resolver rot as its
+sibling.  It does NOT: it takes real export stems, states its coverage
+(`Added ok/N (skipped, missing)`) and exits non-zero on a miss.  Verified 400/400
+export ids resolve against the rebuilt DB.  The flag was wrong.
+
+**Locked in:** `tests/unit/test_tools_import_ratchet.py` — every
+`from britannica… import X` in every tool must still resolve.  Importing to check
+is impractical (most tools do their work at module level, so import means "scan
+the corpus"), but the failure is static and the check runs in a second across 87
+tool files.  Suite 650.
 
 ### Session 2026-08-17 (after deploy) — INSTRUMENT ARC, slice 1: the corpus has ONE reader
 

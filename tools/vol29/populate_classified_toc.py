@@ -22,8 +22,6 @@ import json
 import re
 
 from britannica.export.sections import section_key
-import sys
-import unicodedata
 from pathlib import Path
 
 from britannica.link_resolver import build_resolver, _art_norm
@@ -133,7 +131,6 @@ _DEMOTED_HDR = re.compile(
 # flat structure; we drop each bucket's articles onto the index leaf it names.
 import complete_index as _C
 import build_toc as _BT
-from complete_index import _general_kind as _gen_kind
 
 
 def _node_norms(nodes) -> set:

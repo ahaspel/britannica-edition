@@ -24,7 +24,6 @@ Editorial Preface content is frozen (1910).  Build once, commit.
 from __future__ import annotations
 
 import io
-import json
 import sys
 from pathlib import Path
 
@@ -32,24 +31,21 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                               errors="replace")
 
 from ancillary_render import footnotes_html, render_pages  # noqa: E402
-from britannica.corrections import apply_corrections  # noqa: E402
+from britannica.source_pages import load_pages
 
 VOL = 1
 # Editorial Preface only; pp.6-9 are the Prefatory Note.  Per-page (`vol:page`)
 # corrections.json patches apply at the SAME granularity as the article
 # pipeline, i.e. per source page before the stream join.
 PAGES = range(10, 24)
-RAW_DIR = Path("data/raw/wikisource/vol_01")
 OUTPUT = Path("tools/viewer/preface.html")
 
 
-def load_pages() -> list[tuple[int, str]]:
-    out = []
-    for p in PAGES:
-        raw = json.loads((RAW_DIR / f"vol01-page{p:04d}.json")
-                         .read_text(encoding="utf-8"))["raw_text"]
-        out.append((p, apply_corrections(raw, VOL)))
-    return out
+def preface_pages() -> list[tuple[int, str]]:
+    """The preface leaves, through the one raw reader — which applies the
+    per-page corrections and RAISES if a leaf of this named range is missing,
+    rather than silently emitting a preface with a hole in it."""
+    return [(p.page, p.text) for p in load_pages(VOL, pages=PAGES)[0]]
 
 
 PAGE_TEMPLATE = """<!DOCTYPE html>
@@ -164,7 +160,7 @@ def build_toc_html(toc: list[tuple[str, str]]) -> str:
 
 
 def main() -> int:
-    doc = render_pages(load_pages(), VOL, drop_leading_title=True)
+    doc = render_pages(preface_pages(), VOL, drop_leading_title=True)
     page = PAGE_TEMPLATE.format(
         TOC=build_toc_html(doc.toc),
         BODY=doc.body_html,

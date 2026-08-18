@@ -13,6 +13,8 @@ Usage:
 """
 import io
 import json
+
+from britannica.export.corpus import load_corpus
 import os
 import re
 import sys
@@ -41,12 +43,10 @@ def audit() -> None:
     total_img_markers = 0
     total_with_caption = 0
 
-    for fname in sorted(os.listdir(ART_DIR)):
-        if not fname.endswith(".json") or fname in ("index.json", "contributors.json"):
-            continue
-        path = os.path.join(ART_DIR, fname)
-        with open(path, encoding="utf-8") as f:
-            d = json.load(f)
+    # Through the one reader: it owns the exclusion list (hand-spelled here) and
+    # raises on a payload it cannot read.
+    for _p, d in sorted(load_corpus()[0].items()):
+        path = str(_p)
         body = d.get("body") or ""
         if "{{IMG:" not in body:
             continue

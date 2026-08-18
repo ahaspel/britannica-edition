@@ -51,6 +51,7 @@ def walk(tree, path):
 
 
 def main() -> int:
+    _walk_failures = []
     if len(sys.argv) != 2:
         print("usage: label_distribution_snapshot.py TAG", file=sys.stderr)
         return 2
@@ -86,7 +87,12 @@ def main() -> int:
 
             try:
                 _ph, tree = classify_article(body)
-            except Exception:
+            except Exception as exc:
+                # A walk failure is DATA about the corpus, not a broken net, so it is
+                # COUNTED rather than raised — but never silently dropped: an article
+                # absent from a distribution report is one the report says nothing
+                # about ([[feedback_honesty_surface_failures]]).
+                _walk_failures.append(repr(exc)[:90])
                 continue
 
             for elem_path, label in walk(tree, ""):
@@ -109,6 +115,9 @@ def main() -> int:
     with out.open("w", encoding="utf-8") as f:
         for key in sorted(distribution):
             f.write(json.dumps({"k": key, "l": distribution[key]}) + "\n")
+    if _walk_failures:
+        print(f"  WARNING: {len(_walk_failures)} article(s) failed to walk "
+              f"and are ABSENT from this report", flush=True)
     print(f"Written: {out}", flush=True)
     return 0
 

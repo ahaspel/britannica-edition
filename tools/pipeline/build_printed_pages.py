@@ -20,6 +20,7 @@ from pathlib import Path
 
 from britannica.db.models import SourcePage
 from britannica.db.session import SessionLocal
+from britannica.source_pages import load_pages
 
 SCAN_DIR = Path("data/derived/scans")
 
@@ -52,7 +53,6 @@ def _fm01_leaf(vol: int) -> int | None:
             return leaf
     return None
 
-RAW_DIR = Path("data/raw/wikisource")
 IA_DIR = Path("data/raw/ia_scans")
 OCR_FILE = Path("data/derived/ocr_page_numbers.json")
 FM_FIRST_CONTENT_FILE = Path("data/derived/fm_first_content.json")
@@ -573,7 +573,6 @@ def _printed_from_heading(raw_text: str,
 
 def _harvest_headings(vol: int, all_ws: list[int]) -> dict[int, int]:
     """Scan every ws page's raw wikitext for a heading-embedded printed page."""
-    vol_dir = RAW_DIR / f"vol_{vol:02d}"
     # Cap accepted page numbers at the volume's actual last printed page
     # (with a small headroom for OCR slop).  The default 1200 was loose
     # enough that vol 20 PAPACY recto pages misread the year ``1087``
@@ -581,22 +580,17 @@ def _harvest_headings(vol: int, all_ws: list[int]) -> dict[int, int]:
     vol_range = VOL_RANGE.get(vol)
     max_page = (vol_range[3] + 5) if vol_range else 1200
     result: dict[int, int] = {}
-    for ws in all_ws:
-        f = vol_dir / f"vol{vol:02d}-page{ws:04d}.json"
-        if not f.exists():
-            continue
-        try:
-            d = json.loads(f.read_text(encoding="utf-8"))
-        except Exception:
-            continue
-        override = HEADING_OVERRIDE.get(vol, {}).get(ws)
+    # `all_ws` is this volume's page list, so every one of them must be there;
+    # the reader raises rather than dropping a page whose printed number would
+    # then be interpolated from its neighbours as if it had never existed.
+    for page in load_pages(vol, pages=all_ws)[0]:
+        override = HEADING_OVERRIDE.get(vol, {}).get(page.page)
         if override is not None:
-            result[ws] = override
+            result[page.page] = override
             continue
-        printed = _printed_from_heading(d.get("raw_text", ""),
-                                        max_page=max_page)
+        printed = _printed_from_heading(page.text, max_page=max_page)
         if printed is not None:
-            result[ws] = printed
+            result[page.page] = printed
     return result
 
 

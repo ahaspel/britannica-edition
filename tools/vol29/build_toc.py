@@ -35,6 +35,7 @@ import json
 import re
 
 from britannica.export.sections import section_key
+from britannica.source_pages import load_pages
 from pathlib import Path
 
 HALVES = Path("data/derived/vol29_halves_debug.json")
@@ -47,7 +48,6 @@ WS_START, WS_END = 891, 955
 # wikitable that carries the AUTHORITATIVE upper structure of every category --
 # levels 1-3 (sometimes 4), but no article links.  We graft the body's flat
 # sections beneath these nodes; we never add a top-level sibling the index lacks.
-INDEX_DIR = Path("data/raw/wikisource/vol_29")
 INDEX_PAGES = (889, 890)
 
 # A marginal note is a cross-reference instruction, not a link: it opens with a
@@ -195,12 +195,6 @@ _CONT_CACHE: dict | None = None
 # the legal sub-dividers are a small fixed set (the index), so we RECONCILE each
 # clipped fragment against it by known order, exactly as the 24 majors reconcile
 # against CATEGORIES.  The recovered band then splits BOTH halves at its row:
-# everything above it (both pages) precedes it, everything below (both pages)
-# follows -- a content-preserving reorder, never a stitch, so no link is dropped
-# or moved between buckets.  Scoped to the two categories whose continent/section
-# structure actually carries these bands; every other category keeps the plain
-# left-then-right zip untouched.
-_CROSSING_CATS = frozenset({"Geography", "History"})
 _SUBSPINE_CACHE: dict | None = None
 
 
@@ -839,11 +833,7 @@ def _index_rows() -> list[str]:
     """The index pages, concatenated and split into wikitable rows.  Both pages
     read as one stream so a category whose subtree straddles the 889/890 break
     keeps its running parent context."""
-    text = ""
-    for ws in INDEX_PAGES:
-        p = INDEX_DIR / f"vol29-page{ws:04d}.json"
-        if p.exists():
-            text += json.loads(p.read_text(encoding="utf-8")).get("raw_text", "")
+    text = "".join(p.text for p in load_pages(29, pages=INDEX_PAGES)[0])
     text = re.sub(r"<noinclude>.*?</noinclude>", "", text, flags=re.DOTALL)
     return re.split(r"^\|-\s*$", text, flags=re.MULTILINE)
 
@@ -982,16 +972,6 @@ _NAME_VARIANTS = {
     "hebrewarmenianandsyriacliterature": "hebrewarmenianandsyriac",  # read banner adds
     #   the redundant category word "Literature"; the index node omits it
 }
-
-# Section-type leaves the index omits but the body carries: each names a
-# physical feature (not a place), so it fills the continent's "Physical
-# features" slot -- Miscellaneous included (user-confirmed: it sits there beside
-# Lakes / Mountains / Rivers).
-_PHYS_TYPES = frozenset({
-    "lakes", "mountains", "rivers", "mountainsandhills", "deserts",
-    "islands", "miscellaneous", "physicalfeatures",
-})
-
 
 def _index_lookup(skeleton: list[dict]) -> tuple[dict, dict]:
     """For one category's skeleton: {norm name -> [nodes]} and {id(node)->parent}.

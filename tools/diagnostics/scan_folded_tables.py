@@ -11,16 +11,14 @@ Output: one line per affected page with a count of folded rows found.
 from __future__ import annotations
 
 import io
-import json
-import os
 import re
 import sys
 from collections import defaultdict
+from britannica.source_pages import load_pages
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                               errors="replace")
 
-RAW_DIR = "data/raw/wikisource"
 BR_RE = re.compile(r"<br\s*/?>", re.IGNORECASE)
 TABLE_RE = re.compile(r"\{\|[\s\S]*?\n\|\}", re.MULTILINE)
 ROW_SPLIT_RE = re.compile(r"^\|-[^\n]*$", re.MULTILINE)
@@ -132,36 +130,19 @@ def main() -> int:
     per_page: dict[tuple[int, int], list] = {}
     total_rows = 0
     total_pages = 0
-    for volname in sorted(os.listdir(RAW_DIR)):
-        vol_dir = os.path.join(RAW_DIR, volname)
-        if not os.path.isdir(vol_dir):
+    for src in load_pages()[0]:
+        vol, page, raw = src.volume, src.page, src.text
+        if "<br" not in raw or "{|" not in raw:
             continue
-        try:
-            vol = int(volname.replace("vol_", ""))
-        except ValueError:
-            continue
-        for fname in sorted(os.listdir(vol_dir)):
-            if not fname.endswith(".json"):
-                continue
-            path = os.path.join(vol_dir, fname)
-            try:
-                with open(path, encoding="utf-8") as f:
-                    data = json.load(f)
-            except (OSError, json.JSONDecodeError):
-                continue
-            raw = data.get("raw_text") or ""
-            if "<br" not in raw or "{|" not in raw:
-                continue
-            page_rows = []
-            for m in TABLE_RE.finditer(raw):
-                hits = scan_table(m.group(0))
-                page_rows.extend(hits)
-            if page_rows:
-                page = data.get("page_number") or 0
-                per_vol[vol] += len(page_rows)
-                per_page[(vol, page)] = page_rows
-                total_rows += len(page_rows)
-                total_pages += 1
+        page_rows = []
+        for m in TABLE_RE.finditer(raw):
+            hits = scan_table(m.group(0))
+            page_rows.extend(hits)
+        if page_rows:
+            per_vol[vol] += len(page_rows)
+            per_page[(vol, page)] = page_rows
+            total_rows += len(page_rows)
+            total_pages += 1
 
     print(f"Folded rows found: {total_rows}")
     print(f"Pages affected: {total_pages}")
