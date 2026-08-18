@@ -131,21 +131,22 @@ def word_count(body: str) -> int:
     return len(body.split())
 
 
-def scan_article(path: str, *, min_words: int = 1500
+def scan_article(path: str, d: dict, *, min_words: int = 1500
                  ) -> tuple[int, int, str, int, int, int] | None:
     """Score one article.  Returns
     ``(hits, words, title, volume, lowest_level, n_unproofed)`` or
     None if the article is filtered (religious title or too short).
+
+    Takes the already-loaded payload: reading it here meant an UNREADABLE
+    article and a legitimately FILTERED one both came back as None, so a corrupt
+    file counted as "nothing to report".  The read belongs to the caller, which
+    reads the corpus through `load_corpus` and cannot skip.
 
     ``lowest_level`` is wikisource's lowest page-quality level across
     the article's pages (1=unproofread OCR, 2=problematic,
     3=proofread, 4=validated).  ``n_unproofed`` is the count of
     pages at level 1.
     """
-    try:
-        d = json.load(open(path, encoding="utf-8"))
-    except Exception:
-        return None
     if d.get("article_type") == "plate":
         return None
     body = d.get("body", "")
@@ -202,8 +203,10 @@ def main() -> None:
         return
 
     rows: list[tuple[int, int, str, int, int, int]] = []
-    for f in sorted(glob.glob("data/derived/articles/[0-2]*.json")):
-        r = scan_article(f, min_words=args.min_words)
+    from britannica.export.corpus import load_corpus
+    for _p, _d in sorted(load_corpus()[0].items()):
+        f = str(_p)
+        r = scan_article(f, _d, min_words=args.min_words)
         if r is None:
             continue
         n, w, t, v, lvl, unproof = r

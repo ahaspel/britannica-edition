@@ -19,6 +19,8 @@ Usage:
 import argparse
 import io
 import json
+
+from britannica.export.corpus import load_corpus
 import sys
 import time
 from pathlib import Path
@@ -101,10 +103,9 @@ def _harvest_image_filenames() -> list[str]:
     from britannica.markers import IMG_PARTS_RE
 
     names: set[str] = set()
-    for path in sorted(ARTICLES_DIR.glob("*.json")):
-        data = json.loads(path.read_text(encoding="utf-8"))
-        if not isinstance(data, dict):
-            continue  # skip index files (contributors.json, …) — per-article objects only
+    # Total read: an article this cannot parse RAISES rather than having its
+    # images quietly go undownloaded.
+    for path, data in sorted(load_corpus()[0].items()):
         for m in IMG_PARTS_RE.finditer(data.get("body") or ""):
             fn = (m.group(1) or "").strip()
             if fn:

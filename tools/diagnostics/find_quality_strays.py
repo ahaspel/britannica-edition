@@ -10,6 +10,8 @@ Usage:
 from __future__ import annotations
 
 import json
+
+from britannica.export.corpus import load_corpus
 import re
 import sys
 from collections import defaultdict
@@ -30,14 +32,9 @@ def main() -> int:
     by_issue: dict[str, list[tuple[str, str, str]]] = defaultdict(list)
     # (filename, title, excerpt)
 
-    for path in ARTICLES_DIR.glob("*.json"):
-        # Skip the index.json / contributors.json / etc.
-        if path.name.startswith(("index", "contributors", "front_matter")):
-            continue
-        try:
-            data = json.loads(path.read_text(encoding="utf-8"))
-        except Exception:
-            continue
+    # The loader owns the exclusion list AND the failure policy: a stray-hunter
+    # that skips an unreadable article reports it clean.
+    for path, data in sorted(load_corpus()[0].items()):
         body = data.get("body", "") or ""
         title = data.get("title", "")
         if not body:

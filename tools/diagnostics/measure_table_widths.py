@@ -38,6 +38,7 @@ sys.stdout.reconfigure(encoding="utf-8") if hasattr(
 
 from britannica.markers import (  # noqa: E402
     iter_table_spans, strip_table_wide, table_cols)
+from britannica.export.corpus import load_corpus  # noqa: E402
 from britannica.table_widths import (  # noqa: E402
     CACHE_PATH as CACHE, WIDE_LIMIT, is_wide, span_key)
 
@@ -61,13 +62,10 @@ def collect() -> dict[str, dict]:
     grids on a full-margin page), never annotated wide, so measuring them
     is browser time spent on spans no consumer reads."""
     out: dict[str, dict] = {}
-    for f in ARTS.glob("*.json"):
-        try:
-            d = json.loads(f.read_text(encoding="utf-8"))
-        except Exception:
-            continue
-        if not isinstance(d, dict):
-            continue
+    # TOTAL read: a file this cannot parse RAISES rather than vanishing from the
+    # measurement — an unmeasured span is a cache miss downstream, and a cache
+    # miss is what silently stripped 194 Expand hints on 2026-08-16.
+    for f, d in sorted(load_corpus(ARTS)[0].items()):
         if d.get("article_type") == "plate":
             continue
         for _a, span in iter_table_spans(d.get("body") or ""):

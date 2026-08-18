@@ -1,18 +1,19 @@
 """List articles with stray '' wiki italic markers."""
 import glob
+
+from britannica.export.corpus import load_corpus
 import json
 import re
 import sys
 
 sys.stdout.reconfigure(encoding="utf-8")
 
-for f in sorted(glob.glob("data/derived/articles/*.json")):
-    if "index.json" in f or "contributors.json" in f:
-        continue
-    try:
-        a = json.load(open(f, encoding="utf-8"))
-    except Exception:
-        continue
+# Read through the corpus loader, which is TOTAL: it applies NON_ARTICLE
+# itself and RAISES on a file it cannot read, instead of skipping it.  A
+# leak finder that skips an article reports it clean — the one failure a
+# leak oracle must never have ([[feedback_honesty_surface_failures]]).
+for _path, a in sorted(load_corpus()[0].items()):
+    f = str(_path)
     body = a.get("body", "")
     clean = re.sub(
         r"\u00abTABLE:.*?\u00ab/TABLE\u00bb", "",

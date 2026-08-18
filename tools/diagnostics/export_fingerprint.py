@@ -53,11 +53,16 @@ def _h(s):
     return content_digest(s or "")   # a payload may carry either field as null
 
 
+
+
 def _one(path):
     try:
         d = json.loads(open(path, encoding="utf-8").read())
-    except Exception:
-        return None
+    except Exception as e:                    # carried back, never swallowed
+        # A failed read has NO stem — carried back with its reason instead of a
+        # bare None row the caller would drop without being able to say what
+        # went missing.
+        return (None, path, f"{type(e).__name__} reading it: {e}")
     body, rh = d.get("body") or "", d.get("rendered_html") or ""
     toks = content_tokens(rh)
     return (os.path.basename(path)[:-5], _h(body), _h(rh),
@@ -65,9 +70,6 @@ def _one(path):
             str(len(rh)), str(d.get("title") or ""))
 
 
-def capture(out):
-    files = [f for f in glob.glob(f"{ART}/*.json")
-             if os.path.basename(f) not in SKIP]
 _COLS = ("body_sha", "render_sha", "content_sha", "content_len",
          "render_len", "title")
 
@@ -75,14 +77,30 @@ _COLS = ("body_sha", "render_sha", "content_sha", "content_len",
 def capture(out):
     files = [f for f in glob.glob(f"{ART}/*.json")
              if os.path.basename(f) not in SKIP]
+    unreadable = []
     with ProcessPoolExecutor() as ex, open(out, "w", encoding="utf-8") as fh:
         fh.write("stem\t" + "\t".join(_COLS) + "\n")
         n = 0
         for row in ex.map(_one, files, chunksize=200):
-            if row:
-                fh.write("\t".join(row) + "\n")
-                n += 1
-    print(f"fingerprinted {n} articles -> {out}")
+            if row[0] is None:                 # a failed read has no stem
+                unreadable.append(row[1:])
+                continue
+            fh.write("\t".join(row) + "\n")
+            n += 1
+    # COVERAGE IS THE POINT.  This file is what a rebuild is adjudicated
+    # against, and an article missing from BOTH fingerprints is not "changed"
+    # or "disappeared" — it is INVISIBLE ([[feedback_audit_against_source]]).
+    # A partial fingerprint therefore reads as a clean diff, which is worse
+    # than no fingerprint at all.  The old code dropped unreadable files with
+    # `if row:` and printed only the success count, so nobody could tell.
+    if unreadable:
+        for path, why in unreadable[:10]:
+            print(f"  UNREADABLE {path}: {why}")
+        raise SystemExit(
+            f"fingerprint aborting: {len(unreadable)} of {len(files)} articles "
+            f"could not be read.  A fingerprint that does not cover the corpus "
+            f"makes the next rebuild diff lie.")
+    print(f"fingerprinted {n} of {len(files)} articles -> {out}")
 
 
 def _read(p):

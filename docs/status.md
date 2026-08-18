@@ -48,6 +48,68 @@ agent's memory directory and are not duplicated here.
 
 ## CURRENT STATE (2026-08-17)
 
+### Session 2026-08-17 (after deploy) — INSTRUMENT ARC, slice 1: the corpus has ONE reader
+
+**The rule this session earned:** a net must state its coverage.  Three lied today
+(capture tool resolving 0 seeds · corpus net dropping an article per capture ·
+an unmeasured span stripping its hint), all found by accident while proving
+something else, all the same shape — *processed less than it was given, said
+nothing*.
+
+**The worst one was the adjudicator itself.**  `export_fingerprint._one` returned
+`None` on any unreadable file and the caller dropped it with `if row:`, printing
+only the SUCCESS count.  A fingerprint covering 36,000 of 37,226 would have
+announced "fingerprinted 36,000" — and the diff would read CLEAN, because an
+article missing from BOTH fingerprints is neither changed nor disappeared, it is
+invisible ([[feedback_audit_against_source]]).  It now carries the failure back
+with its reason and ABORTS: a fingerprint that does not cover the corpus makes
+the next rebuild diff lie.  Output byte-identical to the deployed one.
+
+**13 instruments routed through `export.corpus.load_corpus`** — the loud reader
+that already owned both the `NON_ARTICLE` exclusion and the failure policy
+("a file missing them is a FAILURE, not a silent skip").  Each had hand-rolled
+the same three lines: a glob, a hand-spelled exclusion list, and
+`except Exception: continue`.  Converted: the six leak finders, `quality_report`
+(a GATE), `measure_table_widths`, `annotate_table_markers`,
+`snapshot_article_index`, `find_quality_strays`, `htmltable_leak_audit`,
+`download_images`, `missing_period_scan` — the last also stopped conflating an
+UNREADABLE article with a legitimately FILTERED one (both were `None`).  Every
+one verified byte-identical in output; the quality gate reports "(no changes)"
+against its pre-conversion run.
+
+**Locked in:** `tests/unit/test_corpus_read_ratchet.py` fails any new module that
+globs the article directory, plus a guard-on-the-guard that `load_corpus` still
+raises.  It caught one stray I had missed the moment it was written.  Suite 649.
+
+NOTE: none of this was losing anything today — 37,226 files, 0 failures.  That is
+exactly the state `snapshot_corpus` was in for weeks before BOGÓ collided.  The
+defect is never the loss; it is that the instrument cannot tell you.
+
+### SHIPPED 2026-08-17 17:07 — rebuild + deploy, PRODUCTION-VERIFIED
+
+Rebuild 48:52 (commit `c73675f`), deploy 17:50: 37,226 articles to S3, CloudFront
+invalidated, Meilisearch reindexed 37,226, preflight 8/8 hard refs reachable,
+HuggingFace mirror published.  All five gates green (mangled-marker INVENTED BY
+US 0 · link census 203→203, 0 losers · contributor dedup 8 candidates, all
+acknowledged).
+
+**Adjudicated** against `fingerprint_pre_rebuild_20260817.tsv`: 0 disappeared, 0
+new, 290 content-changed, EVERY word difference accounted for — Expand chrome
+(720 → 281 buttons × 3 words: AGRICULTURE's 12→5 IS its −21), ALBUMIN's 26 minted
+numerals becoming structure, 63 literal `#`, the leaked `{{left margin/e}}`.
+
+**Verified on PRODUCTION** (curl + exact counts, not a local re-render, not
+WebFetch — which summarises truncated content and undercounted BIRD 59→2):
+HERCULES 12 list items · GEOGRAPHY upper-roman→lower-alpha→decimal→lower-roman ·
+CONSTELLATION keeps its 2 (13-col, 8-col) · PURIN 0 (was 4) · BIRD 59 indent DIVs,
+0 `ul.outline`, 0 left-margin leaks · BOGÓ resolves at `04-0131-c03c3a` · zero raw
+guillemets in any payload · shell 200.
+
+**The guard paid on first use:** post_export reported 26 spans with no width
+measurement that KEPT their existing hint; measuring them confirmed all 26 and
+annotate re-rendered 0 articles.  The same situation silently stripped 194 hints
+on 08-16.
+
 ### Session 2026-08-17 — consolidation: the measured-width caches get one owner each
 
 **Both content-addressed measurement caches — math widths and table widths — now

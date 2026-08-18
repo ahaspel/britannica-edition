@@ -22,6 +22,8 @@ Usage:
 from __future__ import annotations
 
 import json
+
+from britannica.export.corpus import load_corpus
 import re
 import sys
 from pathlib import Path
@@ -57,13 +59,8 @@ def _classify_leak(body: str, idx: int) -> str:
 
 def main() -> int:
     flagged: list[dict] = []
-    for path in ARTICLES_DIR.glob("*.json"):
-        if path.name.startswith(("index", "contributors", "front_matter")):
-            continue
-        try:
-            data = json.loads(path.read_text(encoding="utf-8"))
-        except Exception:
-            continue
+    # Total read — an unexamined article must never look like a clean one.
+    for path, data in sorted(load_corpus()[0].items()):
         body = data.get("body", "") or ""
         if not body:
             continue

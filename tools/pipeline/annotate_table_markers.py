@@ -30,6 +30,7 @@ sys.path.insert(0, "src")
 sys.stdout.reconfigure(encoding="utf-8") if hasattr(
     sys.stdout, "reconfigure") else None
 
+from britannica.export.corpus import load_corpus  # noqa: E402
 from britannica.markers import iter_table_spans, set_table_wide  # noqa: E402
 from britannica.table_widths import (  # noqa: E402
     CACHE_PATH as CACHE, is_wide, span_key)
@@ -77,13 +78,9 @@ def main() -> None:
         return
     changed = scanned = 0
     stats: dict = {}
-    for f in ARTS.glob("*.json"):
-        try:
-            d = json.loads(f.read_text(encoding="utf-8"))
-        except Exception:
-            continue
-        if not isinstance(d, dict) or "body" not in d:
-            continue
+    # TOTAL read — an article this cannot parse RAISES rather than going
+    # un-annotated, which would look exactly like a table that measured narrow.
+    for f, d in sorted(load_corpus(ARTS)[0].items()):
         scanned += 1
         body = d.get("body") or ""
         new = annotate_body(body, cache, stats=stats,
