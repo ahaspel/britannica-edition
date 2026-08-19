@@ -48,6 +48,57 @@ agent's memory directory and are not duplicated here.
 
 ## CURRENT STATE (2026-08-18)
 
+### Session 2026-08-19 — wide tables become a VIEWER question; the cache is deleted
+
+The rebuild kept warning that 47 table spans had no width measurement, and the
+remedy was a manual browser run.  The user's question — "shouldn't there be a
+mechanism in the rebuild itself, rather than this separate tampering?" — has the
+better answer: there should be no mechanism, because the question is not the
+build's to answer.
+
+WHY IT KEPT GOING STALE.  `table_widths.json` keyed on the SPAN'S BYTES, so any
+producer change that rewrote a table invalidated it — 194 hints lost in the
+2026-08-16 rebuild (recorded in the module's own docstring), 47 more here from
+the `&vert;` and `</table>` fixes.  Centralising the key in 2026-08-16 fixed
+writer/reader DRIFT but not this: the key is *supposed* to move when the content
+does.  And it answered at ONE viewport — measured against a 590px desktop column
+— so on a phone every one of those tables overflowed and none of them said so.
+
+Whether a table overflows is a LAYOUT fact the browser owns.  The viewer now
+decides per element and per viewport (`wrapWideTables`): unwrap, compare each
+top-level body table's laid-out width against the CARD's content edge — which is
+what the old 751px constant meant — and wrap the ones that pass it.  Measured
+from the elements, so there is no constant, and re-decided on debounced resize.
+
+VERIFIED IN THE REAL BROWSER through `serve.py`, against the corpus that still
+carries the baked wraps (so the unwrap path is exercised too):
+
+    desktop 1280   18 wraps   0 tables clipping unwrapped
+    laptop  1024   18 wraps   0
+    phone    390   28 wraps   0
+
+18 at desktop is EXACTLY what the build-time measurement produced for ORDNANCE,
+so nothing regresses where the cache was right; 28 on a phone is ten tables that
+have been silently clipping since the feature shipped.  Resize round-trips
+(390 -> 1280 -> 390 gives 28 -> 18 -> 28) and the Expand modal still opens from a
+viewer-created button.
+
+DELETED: `table_widths.py`, `measure_table_widths.py`, `annotate_table_markers.py`,
+the 11,010-entry 1.5 MB cache, `_wrap_wide_tables`, the post-export annotate hook,
+the unmeasured-span warning, three marker accessors, two tests.  The six render
+snapshots were adjudicated before rebaselining: every diff is exactly the wrapper
+coming out, `<table>` counts identical in all six.
+
+MATH STAYS BAKED, and the difference is the point: its cache keys on the LATEX —
+which comes from the static source, not from our output — so it cannot decay the
+way the table cache did, and the EPUB/Kindle targets have no JS and genuinely
+need the hint.  (`fs=` is applied for every target, not just the site.)
+
+Near-miss worth recording: removing the three wide accessors by cutting from
+`def` to the next `def` swallowed a module-level constant between them and
+`RENDERED_GUILLEMET_MARKER_NAMES` vanished from `markers.py`.  Caught by a test
+collection error, restored from git, redone by explicit line range.  Suite 651.
+
 ### Session 2026-08-18 — rebuild #1 adjudicated: three regressions the GATES missed
 
 Rebuild ran clean — 48:15, exit 0, link census 203->203 with zero losers,

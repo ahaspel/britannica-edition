@@ -1753,15 +1753,72 @@
       });
     }
 
+    // WHETHER A TABLE OVERFLOWS IS A LAYOUT FACT, AND THE BROWSER IS THE ONLY
+    // THING THAT KNOWS IT.  Python used to bake a `|wide` flag from a build-time
+    // measurement cached by span bytes — so every producer change that rewrote a
+    // table invalidated the cache silently (194 spans lost their hint in August,
+    // 47 more in the rebuild before this one), and the answer was measured once
+    // against a 590px desktop column, which is simply wrong on a phone, where
+    // every one of these tables overflows and none of them said so.
+    //
+    // A table clips when its right edge passes the CARD's content edge — which
+    // is what the old 751px constant meant. Measured from the elements
+    // themselves, so it needs no constant and is right at every viewport.
+    let wideTableSeq = 0;
+
+    function wrapWideTables(root) {
+      const card = root.querySelector(".card");
+      if (!card) return;
+
+      // Unwrap first: a viewport that grew may no longer need the treatment, and
+      // measuring a table already inside an `overflow-x` box reads the box, not
+      // the table.
+      root.querySelectorAll(".wide-table-wrap").forEach(fig => {
+        const inline = fig.querySelector(".wide-table-inline");
+        if (inline && inline.firstElementChild) fig.replaceWith(inline.firstElementChild);
+      });
+
+      const cs = getComputedStyle(card);
+      const cardRight = card.getBoundingClientRect().right - parseFloat(cs.paddingRight);
+      root.querySelectorAll(".body-text table").forEach(t => {
+        if (t.parentElement && t.parentElement.closest("table")) return;   // top level only
+        const left = t.getBoundingClientRect().left;
+        if (t.offsetWidth <= cardRight - left) return;                     // fits; spilling into
+                                                                           // the empty margin is fine
+        const cols = t.rows && t.rows[0] ? t.rows[0].cells.length : 0;
+        const fig = document.createElement("figure");
+        fig.className = "wide-table-wrap";
+        const id = "wt-" + (++wideTableSeq);
+        fig.innerHTML = '<button class="expand-table-btn" data-wt="' + id +
+                        '" title="Open full-width view">⤡ Expand' +
+                        (cols ? " (" + cols + " columns)" : "") + '</button>' +
+                        '<div class="wide-table-inline"></div>';
+        t.replaceWith(fig);
+        fig.querySelector(".wide-table-inline").appendChild(t);
+      });
+    }
+
     function captureWideTables(root) {
-      // The expand-table modal reads wideTableSources; with Python rendering the figure, populate
-      // it from the DOM — the `.wide-table-inline` holds the full table.
+      // The expand-table modal reads wideTableSources; populate it from whatever
+      // `wrapWideTables` just decided.
       root.querySelectorAll(".wide-table-wrap").forEach(fig => {
         const btn = fig.querySelector(".expand-table-btn");
         const inline = fig.querySelector(".wide-table-inline");
         if (btn && inline) wideTableSources[btn.dataset.wt] = { table: inline.innerHTML, trailing: "" };
       });
     }
+
+    // Re-decide on resize (and orientation change): the answer is per-viewport.
+    let _wtResizeTimer = null;
+    window.addEventListener("resize", () => {
+      clearTimeout(_wtResizeTimer);
+      _wtResizeTimer = setTimeout(() => {
+        const app = document.getElementById("app");
+        if (!app) return;
+        wrapWideTables(app);
+        captureWideTables(app);
+      }, 150);
+    });
 
     // The article's topic memberships are a client-side overlay: they come from a
     // reverse-lookup of classified_toc.json (topicMap), NOT from the article JSON, so
@@ -1883,6 +1940,7 @@
       injectMapLink(app, article);
       hydrateMath(app);
       fixScanHrefs(app, article);
+      wrapWideTables(app);
       captureWideTables(app);
       ScanMode.onArticleRendered(article);
     }
