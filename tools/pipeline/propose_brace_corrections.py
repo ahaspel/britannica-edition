@@ -21,15 +21,15 @@ Four defect shapes, and only two of them are deletions:
                                close whose open was deleted / commented out.
   * stray ``</a>``/``</poem>`` -> delete.  Nothing opened them; MediaWiki shows
                                them literally too.
-  * stray ``</table>``       -> ``|}`` when the wikitable it sits in is never
-                               closed (LAMPROPHYRES has `{|` once and `|}` never,
-                               so every consumer is guessing that table's extent),
-                               DELETED when the table closes later on its own.
-                               Which one is decided by a depth walk at the site,
-                               never by a hand list: MALAY ARCHIPELAGO's sits
-                               inside a table that closes 7,000 characters on —
-                               our render already ends it in the right place — so
-                               a `|}` there would inject a second close.
+  * stray ``</table>``       -> ``|}``, always.  A `</table>` inside a wikitable
+                               is an attempt to CLOSE it, whatever appears later.
+                               A first version deleted it when some `|}` followed;
+                               MALAY ARCHIPELAGO's follows 7,000 characters and a
+                               page of prose later, so deleting left the table
+                               running through that prose and the parser gave up,
+                               rendering `{|align="center" cellpadding=…` as
+                               literal text.  A distant `|}` is not proof the
+                               table was fine.
   * two one-offs             -> MINERALOGY's `HV2}}O.` is a mangled `H{{sub|2}}O.`
                                (the water in Apophyllite's +4½H₂O), and
                                PORTSMOUTH's `{Ts|ar}}` is missing one brace of its
@@ -198,7 +198,14 @@ def main() -> int:
             # inject a second close.  With no later `|}` the table is genuinely
             # unterminated (LAMPROPHYRES has `{|` once and `|}` never) and every
             # consumer is guessing its extent — there, `|}` is the repair.
-            later = enclosing_closes_later(pos)
+            # ALWAYS `|}`.  A `</table>` INSIDE a wikitable is an attempt to
+            # close it, whatever comes later — MALAY ARCHIPELAGO's `|}` is 7,000
+            # characters and a page of prose further on, so deleting the
+            # `</table>` left the table running through that prose and our parser
+            # gave up on it entirely, rendering `{|align="center" cellpadding=…`
+            # as literal text.  The "does the enclosing table close later" rule
+            # read that distant `|}` as proof the table was fine; it is not.
+            later = False
             add(title,
                 "delete stray </table> (wikitable closes later)" if later
                 else "</table> -> |} (wikitable is unterminated)",

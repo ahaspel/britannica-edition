@@ -48,6 +48,57 @@ agent's memory directory and are not duplicated here.
 
 ## CURRENT STATE (2026-08-18)
 
+### Session 2026-08-18 — rebuild #1 adjudicated: three regressions the GATES missed
+
+Rebuild ran clean — 48:15, exit 0, link census 203->203 with zero losers,
+contributor dedup clean, `INVENTED BY US: 0`.  **Every gate passed on a build
+with three regressions in it.**  What found them was diffing the LETTERS-ONLY
+stream against production, article by article, over the 53 whose content changed.
+
+The fingerprint read: 0 disappeared, 0 new, 120 renders changed, 53 contents
+changed, 39 "words lost".  All 39 were markup being consumed — `&lt;i&gt;` was
+literally contributing the word "i", `small=y` contributing "small" and "y",
+`</table>` contributing "table"; `iMetaphysicalmaterialismi` became
+`Metaphysicalmaterialism` with the text intact, and EGYPT came out at 165,337 =
+165,337 letters with words merely split differently across page markers.  The
+losses were fine.  THE REGRESSIONS ADDED LETTERS, which is why a loss-shaped gate
+could not see them ([[feedback_loss_vs_leak]]).
+
+**MALAY ARCHIPELAGO — my own correction broke a table.**  The delete-vs-repair
+rule said a stray `</table>` whose wikitable "closes later" is stray text; MALAY's
+`|}` is 7,000 characters and a page of prose further on, and that `</table>` WAS
+the intended close.  Deleting it left the table running through the prose and the
+parser gave up entirely, rendering `{|align="center" cellpadding=…` as literal
+text.  A `</table>` inside a wikitable is an attempt to close it, whatever appears
+later; it is `|}` unconditionally now, and the applied entry was rewritten.
+
+**INDIGO — my trailing-param rule ate a nested template's close.**  Anchored at
+`$`, the value pattern `[^|]*?` ran straight through the `}}` of a nested
+template: `{{nowrap|…{{dual line|A|B|style=…;}}}}` had the inner close consumed
+and its style hoisted onto the nowrap, leaving `{{dual line|A|B` unterminated and
+visible.  The marker said so plainly — `«SPAN[style:white-space:nowrap;…;}}]»`.
+A CSS value never contains a brace, so the value excludes them.
+
+**PHOTOGRAPHY — found only by checking indent DEPTHS, not counts.**  The user
+asked how we knew the indentation work was sound; the honest answer was that a
+count check cannot see a depth collapse.  `render_sha` is unchanged for 37,106 of
+37,226 articles, so only the 120 changed renders can differ — and comparing every
+one of them on padding WIDTH and on the text inside each indent gave: 111
+byte-identical, **0 width changes anywhere in the corpus**, 9 with different
+wrapped content.  Two of the nine are the fixes landing (FORAMINIFERA's
+`{{outdent/s|2}}` block, MAGNETISM's `:A.`/`:B.` lines).  The rest were cell
+glyphs correctly dropped — except PHOTOGRAPHY, whose figure legend is a cell
+written `|`⏎`:a, Hood of finder.`⏎`:b, …`.  `split_wiki_row` strips the cell, so
+the leading newline vanished, item (a) landed at offset 0 and lost its indent
+while b–e kept theirs — a visibly ragged list, and the same for CRYSTALLOGRAPHY
+and GEOMETRY.  The rule now keys on what SURVIVES the strip: a cell body
+containing newlines has line structure, a single-line one does not.
+
+Still to do before the next deploy: 47 table spans have no width measurement and
+kept their old hint (the `&vert;` and `</table>` fixes moved their bytes), which
+is why SHIP and UNITED STATES lost `Expand` buttons — run
+`measure_table_widths.py` then `annotate_table_markers.py`.  Suite 653.
+
 ### Session 2026-08-18 — OUR OWN errors: five classes, 14 of 17 articles clean
 
 With the source side settled, the PRODUCER verdicts.  40 leak hits over 17
