@@ -25,6 +25,20 @@ echo "  Deploy to britannica11.org"
 echo "  Started: $(date '+%Y-%m-%d %H:%M:%S')"
 echo "============================================"
 
+# BUILD WHAT WE SHIP, at ship time — the same argument the corpus fingerprint
+# below makes for itself.  The sampler used to be uploaded from whatever happened
+# to be on disk, and drifted four days behind the corpus it sits beside on the
+# download page: built Aug 16, shipped Aug 19 next to a corpus carrying 31 source
+# corrections and five producer fixes it did not contain, under a freshly
+# computed sha256 that made it look current.
+#
+# FIRST, before any upload: the build carries hard gates (every article anchored
+# once, no duplicate ids, every href resolves, per-chunk text preservation) and
+# `set -e` aborts on them — and aborting before the first `aws s3` call is what
+# keeps a failed sampler from becoming a partial deploy.  ~80s.
+echo "  Building vol-1 sampler EPUB [$(elapsed)]..."
+uv run python -m britannica.epub.build --volume 1 --out eb1911-vol01.epub
+
 echo "  Uploading articles to S3..."
 # Cache policy is load-bearing here: article JSONs are content-addressed ({hash}.json,
 # immutable — a hash's bytes never change) so they cache hard; but index.json /
@@ -84,7 +98,7 @@ aws s3 cp data/derived/eb1911-corpus.tar.gz s3://britannica11.org/download/eb191
 aws s3 cp data/derived/eb1911-corpus.tar.gz.sha256 s3://britannica11.org/download/eb1911-corpus.tar.gz.sha256
 aws s3 cp data/derived/eb1911-maps.tar.gz s3://britannica11.org/download/eb1911-maps.tar.gz
 aws s3 cp data/derived/eb1911-maps.tar.gz.sha256 s3://britannica11.org/download/eb1911-maps.tar.gz.sha256
-echo "  Uploading vol-1 sampler EPUB..."
+echo "  Uploading vol-1 sampler EPUB (built above)..."
 sha256sum eb1911-vol01.epub | awk '{print $1}' > eb1911-vol01.epub.sha256
 aws s3 cp eb1911-vol01.epub s3://britannica11.org/download/eb1911-vol01.epub
 aws s3 cp eb1911-vol01.epub.sha256 s3://britannica11.org/download/eb1911-vol01.epub.sha256

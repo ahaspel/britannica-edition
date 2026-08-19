@@ -1508,33 +1508,6 @@
       "N35A":"N35","N35B":"N35","V10A":"V10", // variants
     };
 
-    function commonsUrl(filename) {
-      // Full URLs (e.g. score images from upload.wikimedia.org) pass through
-      if (filename.startsWith("http://") || filename.startsWith("https://")) return filename;
-      let name = filename.replace(/ /g, "_");
-      // Match the sanitization done by download_images.py when saving
-      // to disk: characters illegal in Windows filenames are replaced
-      // with `_`.  Keeps the viewer URL aligned with what's on S3.
-      name = name.replace(/["<>|?*]/g, "_");
-      // SVGs are rasterized to .svg.png by the download script
-      if (name.toLowerCase().endsWith(".svg")) name += ".png";
-      // One path, local and web: the files sit in data/images/ locally and deploy to the
-      // same /data/images/ on S3, so there's no local-vs-web branch to adapt at runtime.
-      return `/data/images/${encodeURIComponent(name)}`;
-    }
-
-    // Block image marker grammar — mirrors britannica.markers.IMG_PARTS_RE.
-    //   {{IMG:filename[|align=center|left|right][|width=N][|height=N][|caption]}}
-    // group 1 filename, group 2 meta-block, group 3 caption.  The article
-    // encodes this; the renderer is the sole decoder (see markers.py).
-    const IMG_PARTS_SRC =
-      "\\{\\{IMG:([^|}]+)" +
-      "((?:\\|(?:align=(?:center|left|right)|width=\\d+|height=\\d+))*)" +
-      "(?:\\|([^{}]*))?\\}\\}";
-    const IMG_PARTS_RE_G = new RegExp(IMG_PARTS_SRC, "g");        // replace / exec-all
-    const IMG_PARTS_RE = new RegExp(IMG_PARTS_SRC);              // first match anywhere
-    const IMG_PARTS_RE_ANCHORED = new RegExp("^" + IMG_PARTS_SRC + "$");
-
     // Named refs (`«FN[NAME]:body«/FN»`) share a footnote number across
     // all anchors with the same name, matching Wikisource convention
     // (one entry in the footer list, N superscripts in body text).

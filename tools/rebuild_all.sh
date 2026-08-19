@@ -365,6 +365,19 @@ uv run python tools/db/dedup_contributors.py \
   --report data/derived/quality_reports/dedup_candidates.json
 uv run python tools/diagnostics/check_dedup_candidates.py
 
+# --- Phase 7.6: Image-coverage gate ---
+# Every `<img>` the corpus renders must resolve to a file in data/images/.
+# Nothing checked this, and 69 references across 18 articles pointed at nothing
+# — concentrated, not spread: CARNIVORA lost ALL seven of its figures,
+# CARYOPHYLLACEAE all three, MAP 16 of 62.  The only place it was ever reported
+# was a line in the EPUB build log, which appears when somebody builds a 576MB
+# artifact.  Needs no network and no browser: the exported corpus and a
+# directory listing.  Fetchable ones -> download_images.py; genuinely-absent
+# ones are acknowledged in data/image_exceptions.json with a reason.
+echo
+echo "=== Phase 7.6: Image-coverage gate [$(elapsed)] ==="
+uv run python tools/diagnostics/check_image_coverage.py
+
 # --- Phase 8: Deploy (OPT-IN) ---
 # The full deploy + preflight now live in tools/deploy.sh, so the exact same push runs
 # whether we deploy here (--deploy) or ship a reviewed build later (./tools/deploy.sh).
