@@ -35,16 +35,12 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 sys.stdout.reconfigure(encoding="utf-8")
 from britannica.markers import _LINK_RE  # the ONE link-node pattern  # noqa: E402
+from britannica.export.article_json import stable_id_from_filename   # noqa: E402
 
 ART = ROOT / "data" / "derived" / "articles"
 FRAME = ROOT / "data" / "derived" / "quality_reports" / "homonym_frame.json"
 SURVEY = ROOT / "family_disagreements_survey.json"
 WINDOW = 300
-
-
-def _stem(filename: str) -> str:
-    """Xref targets are stored as `{stable_id}.json`; the stem IS the URL id."""
-    return filename[:-5] if filename.endswith(".json") else filename
 
 
 def _link_fields(inner: str) -> tuple[str, str]:
@@ -86,7 +82,7 @@ def build_frame() -> dict:
             if not head.endswith(".json"):
                 continue                                 # unresolved — no target
             target, display = _link_fields(inner)
-            links.append({"src": stem, "dst": _stem(head),
+            links.append({"src": stem, "dst": stable_id_from_filename(head),
                           "target_text": target, "display": display})
 
     by_title: dict[str, list[str]] = defaultdict(list)

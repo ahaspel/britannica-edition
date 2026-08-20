@@ -43,17 +43,6 @@ SNAPSHOT_DIR = Path("tests/snapshots/transform")
 EXPORT_DIR = Path("data/derived/articles")
 
 
-def _raw_body(article: Article) -> str:
-    """The article's raw body — read, not rebuilt.
-
-    Was a segment fetch plus a join that MIRRORED what `transform_articles` did.
-    Mirroring a reassembly is only necessary while there is a reassembly, and the
-    body is now stored whole, exactly as sliced from the clean volume stream
-    ([[project_page_position_out_of_band]]).  Nothing here can join it wrongly
-    because nothing here joins."""
-    return article.body or ""
-
-
 def add_one(session, stem: str) -> tuple[str, str]:
     json_path = EXPORT_DIR / f"{stem}.json"
     if not json_path.exists():
@@ -69,7 +58,7 @@ def add_one(session, stem: str) -> tuple[str, str]:
     if article.article_type == "plate":
         return ("SKIP", "plate articles use parse_plate, not _transform_text_v2")
 
-    joined_raw = _raw_body(article)
+    joined_raw = article.body or ""
     if not joined_raw:
         return ("MISSING", "article has no body")
     first_page = article.page_start

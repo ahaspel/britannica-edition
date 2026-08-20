@@ -23,6 +23,7 @@ from __future__ import annotations
 
 
 from britannica.export.corpus import load_corpus
+from britannica.util.strings import excerpt   # noqa: E402
 import re
 import sys
 from pathlib import Path
@@ -40,12 +41,6 @@ _HTML_TAG_RE = re.compile(
     re.IGNORECASE,
 )
 _LEAKED_ATTR_RE = re.compile(r"nowrap|colspan|rowspan|cellpadding")
-
-
-def _excerpt(body: str, idx: int, span: int = 100) -> str:
-    start = max(0, idx - span)
-    end = min(len(body), idx + span)
-    return body[start:end].replace("\n", " ").replace("\r", "")
 
 
 def _classify_leak(body: str, idx: int) -> str:
@@ -121,7 +116,7 @@ def main() -> int:
             "kinds": leak_kind,
             "n_htmltable_blocks": n_blocks,
             "leak_location": location,
-            "excerpt": _excerpt(body, leak_idx) if leak_idx >= 0 else "",
+            "excerpt": excerpt(body, leak_idx, span=100) if leak_idx >= 0 else "",
             "body_size": len(body),
         })
 

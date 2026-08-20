@@ -11,6 +11,7 @@ from __future__ import annotations
 
 
 from britannica.export.corpus import load_corpus
+from britannica.util.strings import excerpt   # noqa: E402
 import re
 import sys
 from collections import defaultdict
@@ -19,12 +20,6 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8")
 
 ARTICLES_DIR = Path("data/derived/articles")
-
-
-def _excerpt(body: str, idx: int, span: int = 60) -> str:
-    start = max(0, idx - span)
-    end = min(len(body), idx + span)
-    return body[start:end].replace("\n", " ").replace("\r", "")
 
 
 def main() -> int:
@@ -52,7 +47,7 @@ def main() -> int:
         ):
             idx = clean.find("{{")
             by_issue["stray_braces"].append(
-                (path.name, title, _excerpt(clean, idx))
+                (path.name, title, excerpt(clean, idx))
             )
 
         # stray_close_braces: }} but not from known markers
@@ -60,14 +55,14 @@ def main() -> int:
                 "IMG:" not in clean and "VERSE}" not in clean:
             idx = clean.find("}}")
             by_issue["stray_close_braces"].append(
-                (path.name, title, _excerpt(clean, idx))
+                (path.name, title, excerpt(clean, idx))
             )
 
         # stray_wiki_italic
         if "''" in clean:
             idx = clean.find("''")
             by_issue["stray_wiki_italic"].append(
-                (path.name, title, _excerpt(clean, idx))
+                (path.name, title, excerpt(clean, idx))
             )
 
         # html_tag (strip IMG markers first since they legitimately use HTML)
@@ -78,7 +73,7 @@ def main() -> int:
         )
         if m:
             by_issue["html_tag"].append(
-                (path.name, title, _excerpt(tag_clean, m.start()))
+                (path.name, title, excerpt(tag_clean, m.start()))
             )
 
         # pipe_leak
@@ -102,7 +97,7 @@ def main() -> int:
         m = re.search(r"nowrap|colspan|rowspan|cellpadding", check)
         if m:
             by_issue["leaked_html_attr"].append(
-                (path.name, title, _excerpt(check, m.start()))
+                (path.name, title, excerpt(check, m.start()))
             )
 
         # stray_control_x06
@@ -112,7 +107,7 @@ def main() -> int:
                 idx = body.find(chr(i))
                 by_issue[f"stray_control_x0{i}"].append(
                     (path.name, title,
-                     _excerpt(body, idx).replace(chr(i), "\\x0" + str(i)))
+                     excerpt(body, idx).replace(chr(i), "\\x0" + str(i)))
                 )
                 break
 

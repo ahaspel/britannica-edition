@@ -79,18 +79,6 @@ SNAPSHOT_DIR = Path("tests/snapshots/transform")
 EXPORT_DIR = Path("data/derived/articles")
 
 
-def raw_body(article) -> str:
-    """The article's raw body — read, not rebuilt.
-
-    This function used to MIRROR the re-join in `transform_articles`, and its
-    docstring argued at length about whether to put a ``\\n`` between the
-    segments.  That argument existed only because the body had been cut up; it is
-    stored whole now, so there is no join to get right
-    ([[project_page_position_out_of_band]]).  Matches production by reading the
-    same bytes production reads, not by imitating it."""
-    return article.body or ""
-
-
 def _article_for_stem(session, filename_stem: str):
     """Resolve a seed from its FILENAME — `NN-NNNN-slug-TITLE`.
 
@@ -133,7 +121,7 @@ def capture_one(session, filename_stem: str) -> tuple[str, str]:
     if article.article_type == "plate":
         return ("SKIP", "plate articles use parse_plate, not _transform_text_v2")
 
-    joined_raw = raw_body(article)
+    joined_raw = article.body or ""
     if not joined_raw:
         return ("MISSING", "article has no body")
     first_page = article.page_start
