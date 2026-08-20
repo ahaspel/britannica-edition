@@ -30,6 +30,7 @@ from PIL import Image
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
 from britannica.pipeline.stages.elements._image import crop_filename
 from britannica.source_pages import load_pages
+from britannica.wikitext import template_param   # noqa: E402
 
 # Force UTF-8 output on Windows
 if sys.stdout.encoding != "utf-8":
@@ -59,12 +60,6 @@ SESSION.headers["User-Agent"] = (
 _CSS_CROP_PATTERN = re.compile(
     r"\{\{Css image crop\s*(.*?)\}\}", re.DOTALL | re.IGNORECASE
 )
-
-
-def _parse_param(body: str, name: str) -> str:
-    """Extract a named parameter from a template body."""
-    m = re.search(rf"\|{name}\s*=\s*([^\n|]*)", body, re.IGNORECASE)
-    return m.group(1).strip() if m else ""
 
 
 _RAW_IMAGE_DJVU_RE = re.compile(
@@ -218,20 +213,20 @@ def scan_wikitext() -> list[dict]:
         raw = src.text
         for m in _CSS_CROP_PATTERN.finditer(raw):
             body = m.group(1)
-            image = _parse_param(body, "Image")
+            image = template_param(body, "Image")
             if not image.endswith(".djvu"):
                 continue
-            page_str = _parse_param(body, "Page")
+            page_str = template_param(body, "Page")
             if not page_str:
                 continue
             found.append({
                 "djvu_file": image,
                 "page": int(page_str),
-                "bSize": int(_parse_param(body, "bSize") or "600"),
-                "cWidth": int(_parse_param(body, "cWidth") or "600"),
-                "cHeight": int(_parse_param(body, "cHeight") or "600"),
-                "oTop": int(_parse_param(body, "oTop") or "0"),
-                "oLeft": int(_parse_param(body, "oLeft") or "0"),
+                "bSize": int(template_param(body, "bSize") or "600"),
+                "cWidth": int(template_param(body, "cWidth") or "600"),
+                "cHeight": int(template_param(body, "cHeight") or "600"),
+                "oTop": int(template_param(body, "oTop") or "0"),
+                "oLeft": int(template_param(body, "oLeft") or "0"),
                 "volume": src.volume,
             })
     return found
@@ -249,7 +244,7 @@ def scan_non_djvu_crop_sources() -> list[str]:
     for src in load_pages()[0]:
         raw = src.text
         for m in _CSS_CROP_PATTERN.finditer(raw):
-            image = _parse_param(m.group(1), "Image")
+            image = template_param(m.group(1), "Image")
             if image and not image.endswith(".djvu"):
                 seen.add(image)
     return sorted(seen)

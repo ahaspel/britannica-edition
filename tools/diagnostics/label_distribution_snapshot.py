@@ -39,15 +39,8 @@ from britannica.pipeline.stages.elements._classifier import (  # noqa: E402
     classify_article,
 )
 
-
-def walk(tree, path):
-    """Yield (path, label) for every element in the tree."""
-    for idx, (_ph, ce) in enumerate(tree.items()):
-        node_path = f"{path}/{idx}" if path else str(idx)
-        if ce.label:
-            yield node_path, ce.label
-        if ce.inner_registry:
-            yield from walk(ce.inner_registry, node_path)
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _ast_shapes import walk_labels          # noqa: E402
 
 
 def main() -> int:
@@ -95,7 +88,7 @@ def main() -> int:
                 _walk_failures.append(repr(exc)[:90])
                 continue
 
-            for elem_path, label in walk(tree, ""):
+            for elem_path, label in walk_labels(tree, ""):
                 # Include art.id: multiple articles can share (volume,
                 # page_start) (e.g. GERMANTOWN + GERMANY both at 11/825),
                 # so a vol/page/path key COLLIDES and silently overwrites —

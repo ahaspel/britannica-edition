@@ -19,14 +19,8 @@ from britannica.db.session import SessionLocal
 from britannica.db.models import Article
 from britannica.pipeline.stages.elements._classifier import classify_article
 
-
-def walk(tree, path):
-    for idx, (_ph, ce) in enumerate(tree.items()):
-        node = f"{path}/{idx}" if path else str(idx)
-        if ce.label:
-            yield node, ce.label
-        if ce.inner_registry:
-            yield from walk(ce.inner_registry, node)
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _ast_shapes import walk_labels          # noqa: E402
 
 
 def main():
@@ -58,7 +52,7 @@ def main():
             # says nothing about ([[feedback_honesty_surface_failures]]).
             _walk_failures.append((getattr(a, 'title', '?'), repr(exc)[:90]))
             continue
-        for node, label in walk(tree, ""):
+        for node, label in walk_labels(tree, ""):
             dist[f"{a.volume:02d}/{a.page_start:04d}/{node}"] = label
     out = Path(f"tools/_scratch/tld.{tag}.jsonl")
     with out.open("w", encoding="utf-8") as f:

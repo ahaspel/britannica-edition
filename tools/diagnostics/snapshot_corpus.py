@@ -40,6 +40,7 @@ from britannica.pipeline.stages.elements import (  # noqa: E402
 from britannica.export.article_json import (  # noqa: E402
     register_stable_id_dedup, stable_id)
 from britannica.util.strings import content_digest  # noqa: E402
+from britannica.contributors.author_links import raw_wikitext_by_article   # noqa: E402
 
 
 class _id_view:
@@ -59,19 +60,6 @@ class _id_view:
 ROOT = Path("data/derived/_flip_snap")
 
 
-def _bodies_by_article(s) -> dict[int, str]:
-    """One bulk query → {article_id: Article.body}.
-
-    Was a segment fetch plus a re-join that had to MIRROR what
-    `transform_articles` did — and mirroring a reassembly is only necessary when
-    there is a reassembly.  The body is stored whole now, exactly as sliced from
-    the clean volume stream, so the net reads the same bytes production does with
-    no reconstruction to get wrong ([[project_page_position_out_of_band]]).
-    """
-    return {aid: (body or "")
-            for aid, body in s.query(Article.id, Article.body)}
-
-
 def capture(tag: str, vol_filter: str) -> int:
     tag_dir = ROOT / tag
     body_dir = tag_dir / "b"
@@ -87,7 +75,7 @@ def capture(tag: str, vol_filter: str) -> int:
             q = q.filter(Article.volume == int(vol_filter))
         arts = q.order_by(Article.volume, Article.page_start).all()
         print(f"capturing {len(arts)} articles → {tag_dir}", flush=True)
-        bodies = _bodies_by_article(s)
+        bodies = raw_wikitext_by_article(s)
 
         # Prime the collision overrides ONCE over the full corpus, exactly as
         # the exporter does before any id is baked.
