@@ -43,33 +43,15 @@ from britannica.db.models import (  # noqa: E402
     ContributorInitials,
 )
 from britannica.db.session import SessionLocal  # noqa: E402
-
-
-_TITLE_RE = re.compile(
-    r"\b(?:Prof|Professor|Dr|Sir|Lord|Lady|Miss|Mrs|Mr|Rev|Reverend|"
-    r"Hon|Honourable|Gen|General|Col|Colonel|Capt|Captain|Maj|Major|"
-    r"Lt|Lieutenant|Adml|Admiral)"
-    r"\.?\s+",
-    re.IGNORECASE,
-)
-
-
-def _normalize_name(name: str) -> str:
-    s = _TITLE_RE.sub("", name or "")
-    s = re.sub(r"[^\w\s]", "", s)
-    s = re.sub(r"\s+", " ", s).strip().lower()
-    return s
-
-
-def _normalize_initials_token(initials: str) -> str:
-    return re.sub(r"[^\w]", "", initials or "").lower()
+from britannica.contributors.names import (      # noqa: E402
+    normalize_initials_token, normalize_name)
 
 
 def _signature(name: str, initials_set: set[str]) -> str:
-    name_n = _normalize_name(name)
+    name_n = normalize_name(name)
     inits = sorted({
-        _normalize_initials_token(i) for i in initials_set
-        if _normalize_initials_token(i)
+        normalize_initials_token(i) for i in initials_set
+        if normalize_initials_token(i)
     })
     return f"{name_n}|{' '.join(inits)}"
 

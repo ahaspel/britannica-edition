@@ -16,19 +16,11 @@ from pathlib import Path
 
 from PIL import Image
 
+sys.path.insert(0, "src")
+from britannica.export.pages import leaf_for_ws   # noqa: E402
+
 SCAN_DIR = Path("data/raw/ia_scans")
 OUT_DIR = Path("data/derived/scans")
-
-# leaf = ws_page + LEAF_OFFSET[vol]
-# Computed from page headings: a known WS page's printed page number
-# is looked up in the IA page_numbers.json to find its leaf.
-LEAF_OFFSET = {
-    1: 7, 2: 7, 3: 9, 4: 9, 5: 12, 6: 12, 7: 7, 8: 7,
-    9: 9, 10: 10, 11: 8, 12: 7, 13: 7, 14: 6, 15: 17, 16: 6,
-    17: 9, 18: 6, 19: 7, 20: 0, 21: 6, 22: 6, 23: 7, 24: 4,
-    25: 8, 26: 4, 27: 6, 28: 5, 29: 6,
-}
-
 
 def _ia_identifier(vol: int) -> str:
     if vol in (3, 5, 6, 7, 8, 9, 11, 12, 13):
@@ -82,62 +74,14 @@ def extract_leaf(vol: int, leaf: int, out_name: str, width: int = 1200) -> Path 
         return None
 
 
-def _load_scan_map() -> dict:
-    """Load the WS page → leaf mapping."""
-    map_file = Path("data/derived/scan_map.json")
-    if map_file.exists():
-        return json.loads(map_file.read_text(encoding="utf-8"))
-    return {}
-
-_SCAN_MAP = None
-
-def _get_scan_map():
-    global _SCAN_MAP
-    if _SCAN_MAP is None:
-        _SCAN_MAP = _load_scan_map()
-    return _SCAN_MAP
-
-
 def extract_page(vol: int, ws_page: int, width: int = 1200) -> Path | None:
     """Extract a single page scan by WS page number. Returns output path or None."""
-    # Try scan_map first (precise), fall back to offset
-    scan_map = _get_scan_map()
-    vol_map = scan_map.get(str(vol), {})
-    leaf = vol_map.get(str(ws_page))
-    if leaf is None:
-        offset = LEAF_OFFSET.get(vol)
-        if offset is None:
-            print(f"  No leaf offset for volume {vol}", file=sys.stderr)
-            return None
-        leaf = ws_page + offset
-
+    # The ws -> leaf translation is the exporter's (`export.pages.leaf_for_ws`):
+    # the leaf a scan is extracted at must be the leaf the article JSON already
+    # claims in its `leaf_start`/`leaf_end`, and two copies cannot promise that.
+    leaf = leaf_for_ws(vol, ws_page)
     out_name = f"vol{vol:02d}_leaf{leaf:04d}.jpg"
     return extract_leaf(vol, leaf, out_name, width)
-
-    zip_path = _find_zip(vol)
-    if not zip_path:
-        print(f"  No JP2 zip for volume {vol}", file=sys.stderr)
-        return None
-
-    OUT_DIR.mkdir(parents=True, exist_ok=True)
-
-    try:
-        z = zipfile.ZipFile(zip_path)
-        ident = zip_path.stem.replace("_jp2", "")
-        jp2_name = f"{ident}_jp2/{ident}_{leaf:04d}.jp2"
-        if jp2_name not in z.namelist():
-            print(f"  Leaf {leaf} not in {zip_path.name}", file=sys.stderr)
-            return None
-        jp2_data = z.read(jp2_name)
-        img = Image.open(io.BytesIO(jp2_data))
-        if img.width > width:
-            ratio = width / img.width
-            img = img.resize((width, int(img.height * ratio)), Image.LANCZOS)
-        img.save(out, "JPEG", quality=85)
-        return out
-    except Exception as e:
-        print(f"  Failed: {e}", file=sys.stderr)
-        return None
 
 
 def main():
