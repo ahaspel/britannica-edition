@@ -21,6 +21,7 @@ from pathlib import Path
 from britannica.db.models import SourcePage
 from britannica.db.session import SessionLocal
 from britannica.source_pages import load_pages
+from britannica.wikitext import TEMPLATE_CLOSE, split_top_pipes, template_end
 
 SCAN_DIR = Path("data/derived/scans")
 
@@ -418,30 +419,12 @@ def _template_cells(raw_text: str, opener_re: re.Pattern) -> list[str] | None:
     m = opener_re.search(raw_text[:600])
     if not m:
         return None
-    i = m.end()
-    cells: list[str] = []
-    cur: list[str] = []
-    depth = 1
-    while i < len(raw_text):
-        if raw_text[i:i + 2] == "{{":
-            depth += 1
-            cur.append("{{")
-            i += 2
-        elif raw_text[i:i + 2] == "}}":
-            depth -= 1
-            if depth == 0:
-                cells.append("".join(cur))
-                return cells
-            cur.append("}}")
-            i += 2
-        elif raw_text[i] == "|" and depth == 1:
-            cells.append("".join(cur))
-            cur = []
-            i += 1
-        else:
-            cur.append(raw_text[i])
-            i += 1
-    return None
+    # The opener is looked for in the first 600 chars but the template is walked
+    # over the WHOLE text — a running head can run past that window.
+    end = template_end(raw_text, m.start())
+    if end is None:
+        return None
+    return split_top_pipes(raw_text[m.end():end - len(TEMPLATE_CLOSE)])
 
 
 def _printed_from_rh(raw_text: str, max_page: int = 1200) -> int | None:

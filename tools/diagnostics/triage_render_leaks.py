@@ -53,7 +53,7 @@ from britannica.export.corpus import load_corpus            # noqa: E402
 from britannica.render.leaks import find_leaks              # noqa: E402
 from britannica.source_pages import load_pages              # noqa: E402
 from britannica.util.strings import HTML_TAG_RE             # noqa: E402
-from britannica.wikitext import mask_non_template           # noqa: E402
+from britannica.wikitext import mask_non_template, template_end           # noqa: E402
 
 PRODUCER, SOURCE = "PRODUCER", "SOURCE"
 
@@ -91,12 +91,7 @@ def _every_occurrence_closes(src, opener):
     if i < 0:
         return None
     while i >= 0:
-        depth = 0
-        for m in re.finditer(r"\{\{|\}\}", s[i:]):
-            depth += 1 if m.group(0) == "{{" else -1
-            if depth == 0:
-                break
-        else:
+        if template_end(s, i) is None:
             return False
         i = s.find(opener, i + 1)
     return True

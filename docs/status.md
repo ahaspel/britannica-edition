@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-08-17.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-08-20.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,7 +46,174 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-08-18)
+## CURRENT STATE (2026-08-20)
+
+### Session 2026-08-20 — CARNIVORA's captions, and the scoreboard the campaign never got
+
+CARNIVORA rendered seven figures with no legend under any of them.  Not a missing
+image and not a producer crash: `{{figure |image=… |bottomcaption=…}}` was read by
+a parser that knew `cap=` and `caption=` but not `bottomcaption=`, so the caption
+came back EMPTY and the image producer — correctly — emitted a bare plate.
+
+WHO ADDED HALF A FIX.  `parsers/img_float.py`'s own comment says it: "Accepting
+both vocabularies here recovers the ~50 `{{figure|image=…}}` figures the
+`file=`-only pattern dropped".  Somebody added `image=` to `_FILE_RE` to bring
+those figures back and did not add the matching caption synonym.  The images
+returned; the captions did not.  Every gate stayed green, because a coverage
+count sees seven figures present.
+
+AND THE PATTERN WAS FAKE RECURSION.  `_CAPTION_RE` spelled TWO levels of `{{…}}`
+by hand, so a three-deep legend — which is what EB1911 writes,
+`{{c|{{Fs|92%|{{sc|Fig}}. 3.—Skull of ''Eupleres goudoti''.}}}}` — matched
+nothing at all.  The caption is read by SPLITTING the parameter list now; there is
+no depth to exceed.  53 figures corpus-wide gain their legends, none lose.
+
+THE MEASURE THAT WAS NEVER BUILT.  `canonical_path.md` names this class in its
+plan — "**16 fake-recursion regexes** -> one shared balanced scanner", with
+`tools/diagnostics/fake_recursion_audit.py` as the scoreboard and
+`fake_recursion_audit = 0` in the proof-of-done — and that file had never
+existed, in any commit.  So the one class with no scoreboard is the one still
+producing defects, while every class that HAD one (`strip_scan` -> 0, and
+`_strip_templates` deleted behind it) closed and stayed closed.  User's framing,
+and it is the right one: it goes on forever exactly where nobody built the measure.
+
+The audit exists now, reads CODE not prose, and grades by how the failure
+presents:
+
+  TRUNCATING         `\{\{.*?\}\}` — cut at the first inner close, silently.
+  ENUMERATED         emulated balance; past the last level written, no match.
+  BOUNDED_ITERATION  `for _ in range(N)` around a rewrite — a depth with a
+                     number in it.  The loop VARIABLE must be unused: `for i in
+                     range(9)` that uses `i` is an ordinary loop, and flagging
+                     `find_quality_strays`'s control-character scan was the
+                     detector's error, not the code's.
+  HAND_WALK          a `depth += 1` brace walk — `template_end` re-derived.
+  FIXED_SHAPE        one known composite; fails to MATCH rather than truncating,
+                     so it leaks visibly.  Reported, never gated.
+
+ALTERNATION IS NOT NESTING, and the first run got that wrong: counting two opens
+called `\{\{TABLE…\}\}|\{\{IMG:…\}\}` a nested pattern.  `_alternatives` splits a
+regex on its own top-level `|` and judges each branch alone.  The census went
+16 -> 13 -> 9, and only then meant anything ([[feedback_verify_the_counter]]).
+
+DRAINED TO ZERO — 20 queued items, none left.  Every conversion diffed old
+against new over all 29,688 raw pages before it was believed, and the diffs are
+where the value turned out to be:
+
+  * PLATE PARENT SIGNALS: **89 plates that had no signal at all now name their
+    parent**, and 116 more that produced an unusable string now produce a name —
+    `{{X-LARGER|BRISTOL, }}1ST{{X-LARGER| EARL OF}}` reads `BRISTOL, 1ST EARL OF`.
+    A head that STYLES PARTS of a name could not be unwrapped by a rule that only
+    unwraps a whole-slot wrapper.  One loss, `'2.1'`, an `{{em}}` artifact.
+  * vol 18 p18's MEDAL plate gains its number: three modules read running heads
+    and only ONE of them knew the `{{running header}}` spelling.  One
+    `wikitext.page_head_fields` owns the name set for all of them now.
+  * vol 12 p226 and vol 27 p575 gain folios (209, 556) that sit in the CENTRE
+    slot.  Two apparent regressions on the way there were real and chased down: a
+    stray `]` in the source had made the OLD splitter mis-split in a way that
+    accidentally worked, and the first centre-fallback read `1` out of vol 29's
+    "…instructions given on Page 1." — the centre must reduce to a BARE number.
+  * `_balanced_end` and `_strip_chrome_furniture` both returned "the rest of the
+    document" when braces never balanced; they say `None` now.
+
+ONE OWNER, several times over: `wikitext.split_top_pipes` (the two pipe-splitters
+were each blind where the other could see — one tracked `[[…]]`, the other held
+`<math>` opaque, and 14 modules inherited whichever they happened to import),
+`wikitext.first_template_body`, `wikitext.page_head_fields`,
+`util.strings.until_stable`, `_registry.substitute_placeholders`.
+
+HONEST ABOUT WHAT DID **NOT** BITE.  The child-substitution cap of 5 was measured
+before it was removed: deepest chain over 3,791 articles is ONE pass.  The
+walker's `# template (≤3 deep)` cap: 106 templates nest deeper, but boundaries
+were compared across all 29 volumes and **36,691 articles, zero moved**.  Both are
+duplication and latent-cap removals, not bug fixes, and are not to be read as wins.
+
+TWICE THE RATCHETS CAUGHT ME MAKING THE DISEASE I WAS CURING: a duplicate
+`PAGE_HEAD_RE` left behind after adding the owner, and a stray f-string pair —
+both from `dup_constants`.  And a comparison that reported 29,270 `_heading_text`
+differences was my REPLICA missing five prefix substitutions, not the code; the
+faithful replica gives zero ([[feedback_audit_code_discipline]]).
+
+State: suite 653, audit exit 0, 5 permanent acknowledgements (4 patterns proven
+unable to bite, each with its corpus count; 1 IS the owner).  Nothing here is on
+the site — the rebuild is owed, and it carries the captions, the plate signals,
+and the image arc that is committed but not deployed.
+
+### Session 2026-08-19 — every figure resolves locally; the image name had four owners
+
+The site was serving 69 broken figures across 18 articles, and the damage was
+concentrated rather than spread: CARNIVORA lost ALL seven of its figures,
+CARYOPHYLLACEAE all three, MAP 16 of 62, CARPENTRY 13 of 34.  A 0.6% corpus-wide
+rate hid eight articles that had lost most of what they illustrate
+([[feedback_content_integrity_over_count]]).
+
+ONE QUESTION, FOUR ANSWERS.  "What is this image stored as" was spelled in four
+places: `image_assets.local_image_filename`, the downloader's `_local_filename`,
+the render's `commons_url`, and a JS copy in `viewer.html`.  The render's even
+carried the comment "match download_images.py disk sanitization" while doing one
+thing MORE than it — collapsing spaces to underscores, which is Commons' own
+equivalence.  The downloader is handed the MARKER name, so
+`Albite Britannica.png` went to disk while the site asked for
+`Albite_Britannica.png`.  Re-running the downloader could never fix it: it was
+never blind to those images, it fetched them under the other spelling.  Same
+shape as the width-cache identity bug, one artifact over
+([[feedback_tune_dont_fork]]).
+
+THE SCORE IMAGES WERE NEVER MISSING EITHER.  Eleven musical-notation figures in
+BAG-PIPE, BINIOU and CITTERN hotlinked `upload.wikimedia.org` — somebody else's
+host, leaking a reader's IP, with nothing noticing if it stopped.  The PNGs had
+been in `data/images/` all along, because the downloader has always peeled a URL
+to its last segment (`ta4vp64m.png`) and the render never did.  The EPUB then
+substituted `_missing.png` for every one, its comment reading "until they're
+mirrored into the image store" — they were mirrored.  A $39.99 product shipped
+placeholders for figures we held.
+
+Fixing `commons_url` alone appeared to do NOTHING, and the reason is worth
+keeping: `render_img` carried its own `fn.startswith("http")` and never called it
+for a URL.  Rendering the article and looking at the actual `<img src>` is what
+found the fourth copy ([[feedback_measure_at_decision_site]]).
+
+PALLIUM was the last one, and it was not a producer bug: `EB1911 - Volume
+20.djvu-694.png` is absent from Commons and present on en.wikisource, and the
+downloader only ever asked one host.  It asks both now, quietly on the first,
+since which wiki holds a file is not something the corpus records.  (What we held
+locally, `djvu_vol20_page0694.jpg`, is the FULL PAGE — a different image, which is
+why it was never a substitute.)
+
+LANDED
+  * `local_image_filename` is total over a bare name OR a full URL; the other
+    three copies are gone, including 27 dead lines of JS (`commonsUrl`,
+    `IMG_PARTS_*`) left over from when the viewer rendered markers client-side
+    — it consumes baked `rendered_html` now.
+  * The EPUB's remote-src placeholder branch is deleted with the remote srcs it
+    existed for; those eleven figures now bundle like any other image.
+  * `check_image_coverage.py` — NEW gate, rebuild phase 7.6 and ahead of the
+    sampler build in `deploy.sh`.  Every rendered `<img>` must resolve in the
+    store; an external src fails too, because with nothing legitimately remote
+    one is a defect rather than a standing condition
+    ([[feedback_sweepers_hide_bugs]]).  Genuinely-absent images are acknowledged
+    by name in `data/image_exceptions.json` — same contract as contributor
+    dedup: fix it, or say why it stays.  Needs no network and no browser, just
+    the export and a directory listing.  The only report this ever had was a log
+    line printed inside a 576 MB EPUB build, which is not a schedule.
+
+VERIFIED: gate exits 0, 11,101 references, zero external, zero missing.  Suite
+651.  One snapshot moved — BAG-PIPE — adjudicated before rebaselining: blank
+every `<img src>` and golden and actual are byte-identical, letters-only
+identical, 18 images in and 18 out, four srcs changed and nothing else.
+
+OPEN: nothing in the image path.  The 150 duplicate files (26.6 MB) that the
+two spellings left in `data/images/` are cleared.
+
+DIAGNOSTIC (user, 2026-08-19): **"pretty much every time we find a bug these days
+there's a shadow path or several at its root."**  Borne out here — four owners of
+the image name, `render_img` shadowing `commons_url`, the JS copy, and one artifact
+over, the width cache shadowing the browser's own layout.  There is a reason it is
+the signature of THIS stage: a logic bug in the recursive path gets dissolved, but
+a duplicate survives because both copies work until they drift, and the drift is
+invisible until something downstream disagrees.  So the first move on a new bug is
+not to read the failing function — it is to ask who ELSE answers this question, and
+`dup_functions.py` is the instrument that names them.
 
 ### Session 2026-08-19 — wide tables become a VIEWER question; the cache is deleted
 
