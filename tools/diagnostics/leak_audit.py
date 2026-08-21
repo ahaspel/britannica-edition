@@ -51,7 +51,21 @@ from _corpus_cache import iter_raw_articles  # noqa: E402
 _PRODUCER_PREFIX = ("img:", "table", "verse:")
 _TEMPLATE_RE = re.compile(r"\{\{\s*([^|}\n]{1,40})")
 _WIKILINK_RE = re.compile(r"\[\[\s*([^\]|\n]{1,30})")
-_HTMLTAG_RE = re.compile(r"</?([a-zA-Z][a-zA-Z0-9]*)\b")
+# KEYED ON THE TAG NAME SET, shared with `render.leaks` — the same
+# real-tag-vs-garbage discrimination, so the two leak instruments cannot disagree
+# about what a tag IS.  This was `</?([a-zA-Z][a-zA-Z0-9]*)\b`, anything
+# tag-shaped, which counted `<j>` and `<t>` (OCR-mangled phi on unproofread
+# mathematics pages), `<secundus>`, `<praetor>` and `<consul>` (PLINY's prose) as
+# BROKEN: 133 of 134, the transcribers' damage under our name.
+#
+# Importing the NAME SET does not weaken this module's standalone contract.  That
+# contract is about not letting the code being AUDITED define what counts as a
+# leak — deleting a producer must never blind the audit.  A static vocabulary of
+# HTML tag names is not that: it is what a tag is, and `util.strings` already
+# points at `render.leaks` as its owner.
+from britannica.render.leaks import KNOWN_TAG_NAMES   # noqa: E402
+
+_HTMLTAG_RE = re.compile(r"</?(" + KNOWN_TAG_NAMES + r")\b", re.IGNORECASE)
 _ENTITY_RE = re.compile(r"&([a-zA-Z]{2,}|#\d+);")
 _SENTINELS = (("\x01", "ctrl"), ("\x03", "placeholder"),
               ("\x05", "FMT"), ("\x06", "LNK"), ("\x07", "SH"))
