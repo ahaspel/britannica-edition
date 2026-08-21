@@ -36,6 +36,14 @@ echo "============================================"
 # once, no duplicate ids, every href resolves, per-chunk text preservation) and
 # `set -e` aborts on them — and aborting before the first `aws s3` call is what
 # keeps a failed sampler from becoming a partial deploy.  ~80s.
+# BEFORE ANYTHING ELSE: is this corpus the output of a rebuild that finished its
+# gates, and has anything written to it since?  The header above asks a human to
+# run this "ONLY right after a clean FULL rebuild you have reviewed" — an
+# instruction judged in the moment by whoever wants to ship.  This is that
+# instruction as a check.  ~40ms.
+echo "  Verifying the corpus against the last completed rebuild..."
+uv run python tools/diagnostics/corpus_stamp.py --check
+
 echo "  Building vol-1 sampler EPUB [$(elapsed)]..."
 uv run python -m britannica.epub.build --volume 1 --out eb1911-vol01.epub
 

@@ -378,6 +378,15 @@ echo
 echo "=== Phase 7.6: Image-coverage gate [$(elapsed)] ==="
 uv run python tools/diagnostics/check_image_coverage.py
 
+# --- Phase 7.7: Stamp the corpus ---
+# Written LAST, after every gate above has passed, so the stamp means "a full
+# rebuild finished GREEN" rather than "a rebuild ran".  deploy.sh refuses to ship
+# a corpus whose files have been touched since — the check that makes
+# [[feedback_never_partial_rebuild]] mechanical instead of advisory.
+echo
+echo "=== Phase 7.7: Stamping the corpus [$(elapsed)] ==="
+uv run python tools/diagnostics/corpus_stamp.py --write
+
 # --- Phase 8: Deploy (OPT-IN) ---
 # The full deploy + preflight now live in tools/deploy.sh, so the exact same push runs
 # whether we deploy here (--deploy) or ship a reviewed build later (./tools/deploy.sh).
