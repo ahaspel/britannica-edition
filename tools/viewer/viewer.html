@@ -707,42 +707,15 @@
        marginal status notes). */
     .float-right { float: right; margin-left: 1em; }
     .float-left  { float: left;  margin-right: 1em; }
-    .underline { text-decoration: underline; }
 
-    /* Sans-serif metalinguistic letter — source uses
-       `{{sans-serif|…}}` to mark single letters being discussed AS
-       LETTERS (alphabetic typography convention).  Distinguishes
-       the letter "A" qua letter from the running word "A". */
-    .sans-serif {
-      font-family: "Helvetica", "Arial", sans-serif;
-    }
-
-    /* Explicit serif — `{{Serif|I}}` is the mirror of `{{sans-serif|…}}`.
-       Mostly equivalent to default body font; the explicit class lets
-       the viewer override if body font is ever changed. */
-    .explicit-serif {
-      font-family: "Georgia", "Times New Roman", serif;
-    }
-
-    /* Math-typography sizing: source uses `{{xx-larger|(}}` (200%) and
-       `{{x-larger|[}}` (150%) for math grouping characters scaled up
-       in tall equations (STEAM_ENGINE / ORDNANCE).  CSS scales the
-       character without affecting line-height. */
-    .size-xxl {
-      font-size: 200%;
-      line-height: 0.7;
-    }
-    .size-xl {
-      font-size: 150%;
-      line-height: 0.8;
-    }
-    /* Down-steps + plain larger — the symmetric other half of the size
-       scale ({{smaller}}/{{sm}}→sm, {{x-smaller}}→xs, {{xx-smaller}}→xxs,
-       {{larger}}→lg).  Inline citations / sub-captions / plate footers. */
-    .size-lg  { font-size: 120%; }
-    .size-sm  { font-size: 85%; }
-    .size-xs  { font-size: 75%; }
-    .size-xxs { font-size: 62%; }
+    /* A whole styling vocabulary is GONE, measured at 0 uses across 37,226
+       rendered articles: `.sans-serif` / `.explicit-serif` (the «SS»/«SR»
+       markers), the six `.size-*` steps (the «XXS»…«XXL»/«FS»/«LH» family),
+       `.underline` («U»), `.brace2` («BRACE2»).  Nothing was lost with them —
+       every one of those source constructs is still carried, by the STYLE-SPAN
+       path, which arrives as an inline `style` carrying the source's own value
+       ({{x-larger}} → font-size:144%) instead of a bucket name we had to invent.
+       See markers.py for the full list and the measurement. */
 
     /* Horizontal rule — `{{bar|N}}` renders an N-em underline,
        typically for column-sum underlines in tables (AFRICA / GREAT
@@ -750,19 +723,6 @@
     .inline-bar {
       display: inline-block;
       border-bottom: 1px solid currentColor;
-      vertical-align: middle;
-    }
-
-    /* Multi-row brace — `{{brace2|N|side}}` is the printed-source's
-       N-row-tall vertical brace inside a table cell.  Render as the
-       Unicode brace char scaled to roughly the cell's row height.
-       Hypothesis pending (task #31) whether brace2-containing tables
-       are actually outlines in disguise — until that's settled we
-       preserve the brace as visible typography. */
-    .brace2 {
-      display: inline-block;
-      font-size: 1.5em;
-      line-height: 0.9;
       vertical-align: middle;
     }
 

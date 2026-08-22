@@ -22,16 +22,10 @@ function refBody(h) {
   h = h.replace(/«B»(.*?)«\/B»/gs, "<b>$1</b>");
   h = h.replace(/«I»(.*?)«\/I»/gs, "<i>$1</i>");
   h = h.replace(/«SC»(.*?)«\/SC»/gs, '<span class="small-caps">$1</span>');
-  h = h.replace(/«SS»(.*?)«\/SS»/gs, '<span class="sans-serif">$1</span>');
-  h = h.replace(/«SR»(.*?)«\/SR»/gs, '<span class="explicit-serif">$1</span>');
   h = applySizeMarkers(h);
   h = h.replace(/«BAR\[(\d+)\]»/g, (_m, n) => `<span class="inline-bar" style="width:${n}em">&nbsp;</span>`);
   h = h.replace(/«DHR(?:\[[^\]]*\])?»/g, '<span class="dhr-block"></span>');
   h = h.replace(/«CTR»([\s\S]*?)«\/CTR»/g, '<div class="centered">$1</div>');
-  h = h.replace(/«BRACE2\[(\d+)\|([lrud])\]»/g, (_m, _n, side) => {
-    const g = side === 'l' ? '⎧' : side === 'r' ? '⎫' : side === 'u' ? '⏞' : '⏟';
-    return `<span class="brace2 brace2-${side}">${g}</span>`;
-  });
   h = h.replace(/\[hieroglyph:\s*([^\]]+)\]/g, (match, codes) => {
     const r = codes.trim().split(/[:\s\-]+/).map(code => {
       code = code.replace(/\\/g, "");
@@ -53,18 +47,14 @@ function refBody(h) {
 
 const corpus = [
   "«B»bold«/B» «I»it«/I» «SC»sc«/SC»",
-  "«SS»ss«/SS» «SR»sr«/SR»",
-  "«SM»sm«/SM» «XL»xl«/XL» «XXL»xxl«/XXL» «LG»lg«/LG» «XS»xs«/XS» «XXS»xxs«/XXS»",
-  "«FS[120%]»fs«/FS» «LH[88%]»lh«/LH»",
   "«BAR[3]» and «DHR» and «DHR[50%]»",
   "«CTR»centered«/CTR»",
-  "«BRACE2[2|l]» «BRACE2[3|r]»",
   "«MIRROR:Z«/MIRROR»",
   "[hieroglyph: A1:B2-C3]",
   "«LN:24-x.json|SCHLIEMANN|Schliemann«/LN»",
   "«LN:Formalin|Formalin«/LN»",
-  "«CTR»«LH[88%]»«SC»Fig. 4.«/SC»— MIDDLE MINOAN VASE.<br />«SM»«I»B. S. A.«/I» ix.«/SM»«/LH»«/CTR»",
-  "«CTR»«SC»Plate I.«/SC»«/CTR» «SM»Cf. «I»J.H.S.«/I»«/SM»",
+  "«CTR»«SC»Fig. 4.«/SC»— MIDDLE MINOAN VASE.<br />«I»B. S. A.«/I» ix.«/CTR»",
+  "«CTR»«SC»Plate I.«/SC»«/CTR» Cf. «I»J.H.S.«/I»",
 ];
 let diffs = 0, leaks = 0;
 for (const s of corpus) {

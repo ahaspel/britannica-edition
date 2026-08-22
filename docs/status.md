@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-08-20.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-08-22.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,7 +46,124 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-08-20)
+## CURRENT STATE (2026-08-22)
+
+### Session 2026-08-22 — author links stop going through search; the TOC arc closes by MEASUREMENT, not by a rule
+
+**SHIPPED** (rebuild 49:17, all gates green, deployed 2026-08-22).
+
+**Author links resolve to the contributor, not to a search box.**  A byline linked
+to `/contributors.html?q=<full name>` — putting a known identity back through a
+substring filter over 1,508 names and hoping it came out again.  It lands on a
+filtered LIST, not an entry, and returns several people whenever one name contains
+another.  Now `/contributors.html#<signature slug>`: **7,681 bylines, all on
+`#slug`, zero left on `?q=`.**
+
+THE SIGNATURE IS THE IDENTITY (user's call, and it was right).  EB1911 attributes
+by initials and kept them unique deliberately — where two contributors would have
+collided it starred one (`L. D.` and `L. D.*` are different men).  So the slug
+needed no invention.  What it DID need was to preserve the three ways the rolls
+separate initials, because all three distinguish real people:
+
+    space    J. F. K.    j-f-k   James Furman Kemp
+    hyphen   J. F.-K.    j-f_k   James Fitzmaurice-Kelly
+    nothing  A. Sp.      a-sp    Archibald Sharp
+             A. S.-P.    a-s_p   Anthyme St Paul
+
+The first slugifier folded all three to `-` and merged four pairs of real people.
+`contributor_slug` is therefore NOT `normalize_initials_token` sitting next to it:
+that is a DEDUP key, lossy on purpose, and a slug has the opposite contract.  A
+test pins that the two disagree, so neither can be "simplified" into the other.
+
+**1,507 distinct slugs over 1,508 rows** — and the single collision was real.
+`L. D.*` was claimed by two roster rows for ONE man: Louis Duchesne, entered once
+bare and once as `Monseigneur Louis Marie Olivier Duchesne`, both citing the same
+biographical article and both claiming ADRIAN, BONIFACE, CLEMENT, DAMASUS.  An
+article carries one signature; two rows holding it are two spellings of one
+person.  Merged through `contributor_aliases.json` (the extract-time channel, so
+it survives the phase-1 truncate).  **Roster 1,508 → 1,507 on the rebuild.**  The
+dedup GATE could not have caught it — it scores name similarity, and those two
+names are far apart.  Uniqueness is now an invariant, failing the build before any
+write; proven to fire by running the real 5.4 path with a rigged slug function.
+
+Also: `Monseigneur` and `Prince` joined the honorific vocabulary, re-enumerated
+from the rolls.  NOT `St` — it leads four names and is a GIVEN name in every one
+(`St George Jackson Mivart`).
+
+**THE ARTICLE TOC: audited in full, then LEFT ALONE.**  The level-1 rule infers a
+section from centred small caps, which the source also uses for quoted
+inscriptions and table titles.  Three gates were built to discriminate — a lead-in
+colon, a numbered-series exemption, an «ANCHOR» demotion — and **all three were
+reverted**.  The census is why: 1,246 entries in 340 articles, 1,185 displayed,
+**874 heading blocks of 1,500+ words**.  The lead-in colon I generalised from
+CATACOMB's inscriptions describes **13 of 1,246** and does not separate the classes
+at all — GEOLOGY's `Part I.` and AVERAGE's `Rule I.` are introduced by the same
+`:—`.  Two of its nine demotions (RECORD, DAIRY) dropped the HEAD of a list and
+kept its members, manufacturing the gap-in-a-series it was meant to prevent.
+
+User, mid-implementation: *"we don't know yet exactly what we want at the top
+level.  We might end up hurting more than helping if we start imposing rules"*;
+then, on the residue, *"Not a perfect job, but a perfect job isn't possible here
+and we shouldn't aim at it."*  Recorded as CLOSED with the numbers
+([[toc-promotion-audit-closed]], [[toc-characterize-before-ruling]]) — the leftover
+wrong entries are the accepted steady state, not a queue item.  Reopen only with a
+measurement over the whole 1,246.
+
+What DID ship from that arc: `title_case` for a small-caps heading carrying no
+capital of its own — `{{csc|polish literature}}` listed itself in lower case beside
+73 Title-Case siblings.  Three headings; `POLISH LITERATURE` now reads
+`Polish Literature`.  Slugs unmoved.
+
+**TWO QUEUE ITEMS STRUCK OFF BY MEASURING, both mine and both wrong.**  "8 plate
+captions promoted as sections" — 0 in the corpus; the number came from calling
+`_heading_name` directly instead of the real stamping path, counting candidates
+the `«TABLE»` exclusion already rejects.  "Wrapped headwords, 35 articles, OPEN" —
+landed in `487cd19` and shipped; ROBESPIERRE …ISIDORE **DE** verified in the
+corpus.
+
+**TEI-XML EXPORT: designed, not built** — `docs/tei_export.md`.  Reader requests.
+The argument that matters is internal: the bundle's only text export is
+`body_to_markdown`, whose own policy line reads *"presentation (SHED to content)"*
+for `«SC»`, `«CTR»`, `«DIV»`, `«SPAN»`, `«FL»`, `«FR»`, `«MIRROR»` and the size
+family.  Markdown cannot hold small caps, so we carry those distinctions through
+the entire walk and drop them at the last step.  **TEI is the first output format
+capable of carrying what we already carry** — principle 3, finally reaching a
+reader.  Decided (user): `@rendition` over `@rend` (the distinctions become
+enumerable in the header instead of scattered across 37k files), and NO invented
+semantic markup — no `<persName>`/`<placeName>`/`<date>`, because we do not have
+that information and inferring it is an assertion in our own voice.
+
+PROVENANCE IS THREE-VALUED and our model has two slots.  `<span title=Pyrphóros>`
+is hand-written into the wikitext by a transcriber — it cannot be EB1911's, a
+printed page has no hover.  12,512 instances.  Sorted by the right test — *does it
+add text that was not printed?* — the transcription's habits split cleanly:
+`[[Author:]]` (3,227), `{{EB1911 article link}}` (8,217) and `{{polytonic}}` (205)
+add none; the title-glosses do.  Resolution: attribute, don't launder and don't
+drop — and add the `<respStmt>` crediting the Wikisource transcribers that we owe
+regardless.
+
+**THE DAY'S REAL LESSON: two findings of mine dissolved under measurement, both
+the same way.**  I reported `<del>` as leaking into body text — it does not; it is
+cut in preprocessing with its content, and CLARETIE reads "February 1889".  I had
+called `process_elements` on raw wikitext, skipping preprocess: measuring off the
+decision site ([[feedback_measure_at_decision_site]]).  I reported `«SS»`/`«SR»` →
+`<sub>`/`<sup>` in `markdown.py` as a shipped bug corrupting the alphabet
+articles — it is unreachable: **0 occurrences in 37,226 bodies, 0
+`class="sans-serif"` in 37,226 rendered HTML**.  The source construct is alive
+(`{{sans-serif}}` on 20 pages) and carried correctly by the style-span path
+(`«SPAN[style:font-family:sans-serif]»`, 117 in ALPHABET).  Both times I read code
+and believed it instead of asking the corpus — which is exactly what
+[[feedback_dead_is_wrong]] predicts dead code will do to whoever reads it next.
+The leak-audit "blind spot" inferred from the first has zero real instances:
+`<section>` is consumed, `<bdo>` is handled.  **The 11 BROKEN stands.**
+
+QUEUED from that: delete the vestigial `«SS»`/`«SR»` pair in all five places
+(`markers.py` registry, two `render/inline.py` decoder lines, the `markdown.py`
+`_WRAP` entries, two `viewer.html` CSS rules, the `inline_ref.json` fixture case).
+
+State: suite 660, all phase-7 gates green (0 markers invented by us; link census
+203→203 net 0; contributor dedup 0 unreviewed; image coverage clean), corpus
+stamped `e5efdc70`, deployed.
 
 ### Session 2026-08-20 — CARNIVORA's captions, and the scoreboard the campaign never got
 
