@@ -1,70 +1,73 @@
 {
-  "_doc": "Variant→canonical contributor-name mappings to deduplicate at extract time. Loaded by britannica.contributors.aliases.canonical_name(). Curly-quote vs straight-quote variants are handled automatically by Unicode normalization (NFKC + smart-quote folding) and DON'T need explicit entries here. Use this file only for variants where the names differ in spelling, punctuation other than quotes, honorific prefix, or word substitution. Keys are canonical forms; values list the known variants. The `distinct` list records pairs that the dedup candidate-finder flags as similar but which are actually different people — used by tools/diagnostics/check_dedup_candidates.py to suppress acknowledged false positives so the pre-deploy gate only blocks on unreviewed candidates.",
-  "aliases": {
-    "Viscount St. Cyres": [
-      "Viscount St Cyres"
-    ],
-    "Rev. Owen Charles Whitehouse": [
-      "Owen Charles Whitehouse"
-    ],
-    "Sir Charles Norton Edgecumbe Eliot": [
-      "Sir Charles Norton Edgcumbe Eliot"
-    ],
-    "Rev. George Edmundson": [
-      "George Edmundson"
-    ],
-    "Jacobus Henricus Van't Hoff": [
-      "Jacobus Hendricus van't Hoff"
-    ],
-    "J. A. M'Naught": [
-      "J. A McNaught"
-    ],
-    "Lawrence F. Abbott": [
-      "Laurence Abbott"
-    ],
-    "H. Hamilton Fyfe": [
-      "Hamilton Fyfe"
-    ],
-    "Ralph Stockman Tarr": [
-      "Ralph Stockman"
-    ]
-  },
-  "distinct": [
-    [
-      "Otto Hehner, Ph.D",
-      "Otto Henker, Ph.D"
-    ],
-    [
-      "Sir Charles James Lyall",
-      "Rev. Charles James Ball"
-    ],
-    [
-      "William Henry Hadow",
-      "William Henry Howell"
-    ],
-    [
-      "Robert Muir",
-      "Robert Munro"
-    ],
-    [
-      "Rev. James Sibree",
-      "James Sime"
-    ],
-    [
-      "John Macdonald",
-      "Sir John Macdonell"
-    ],
-    [
-      "Sir John Murray",
-      "John Muir"
-    ],
-    [
-      "James Alexander Manson",
-      "Rev. James Alexander Paterson"
-    ],
-    [
-      "Colonel Sir Henry Yule",
-      "Major-General Henry Wylie"
-    ]
+ "_doc": "Variant→canonical contributor-name mappings to deduplicate at extract time. Loaded by britannica.contributors.aliases.canonical_name(). Curly-quote vs straight-quote variants are handled automatically by Unicode normalization (NFKC + smart-quote folding) and DON'T need explicit entries here. Use this file only for variants where the names differ in spelling, punctuation other than quotes, honorific prefix, or word substitution. Keys are canonical forms; values list the known variants. The `distinct` list records pairs that the dedup candidate-finder flags as similar but which are actually different people — used by tools/diagnostics/check_dedup_candidates.py to suppress acknowledged false positives so the pre-deploy gate only blocks on unreviewed candidates.",
+ "aliases": {
+  "Viscount St. Cyres": [
+   "Viscount St Cyres"
+  ],
+  "Rev. Owen Charles Whitehouse": [
+   "Owen Charles Whitehouse"
+  ],
+  "Sir Charles Norton Edgecumbe Eliot": [
+   "Sir Charles Norton Edgcumbe Eliot"
+  ],
+  "Rev. George Edmundson": [
+   "George Edmundson"
+  ],
+  "Jacobus Henricus Van't Hoff": [
+   "Jacobus Hendricus van't Hoff"
+  ],
+  "J. A. M'Naught": [
+   "J. A McNaught"
+  ],
+  "Lawrence F. Abbott": [
+   "Laurence Abbott"
+  ],
+  "H. Hamilton Fyfe": [
+   "Hamilton Fyfe"
+  ],
+  "Ralph Stockman Tarr": [
+   "Ralph Stockman"
+  ],
+  "Monseigneur Louis Marie Olivier Duchesne": [
+   "Louis Duchesne"
   ]
+ },
+ "distinct": [
+  [
+   "Otto Hehner, Ph.D",
+   "Otto Henker, Ph.D"
+  ],
+  [
+   "Sir Charles James Lyall",
+   "Rev. Charles James Ball"
+  ],
+  [
+   "William Henry Hadow",
+   "William Henry Howell"
+  ],
+  [
+   "Robert Muir",
+   "Robert Munro"
+  ],
+  [
+   "Rev. James Sibree",
+   "James Sime"
+  ],
+  [
+   "John Macdonald",
+   "Sir John Macdonell"
+  ],
+  [
+   "Sir John Murray",
+   "John Muir"
+  ],
+  [
+   "James Alexander Manson",
+   "Rev. James Alexander Paterson"
+  ],
+  [
+   "Colonel Sir Henry Yule",
+   "Major-General Henry Wylie"
+  ]
+ ]
 }

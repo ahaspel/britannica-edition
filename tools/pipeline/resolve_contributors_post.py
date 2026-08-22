@@ -40,6 +40,7 @@ from britannica.export.article_json import (
     register_stable_id_dedup, stable_id)
 from britannica.contributors.author_links import (
     accrete_author_link_contributors, harvest_author_links)
+from britannica.contributors.names import contributor_slug
 from britannica.pipeline.stages.extract_contributors import _normalize_initials
 from britannica.util.strings import fold_accents
 
@@ -335,6 +336,7 @@ def bind_contributors(session, payloads: dict) -> bool:
         record plus its `articles` list.
         """
         return {"initials": _canon_init(cid),
+                "slug": contributor_slug(_canon_init(cid)),
                 "full_name": _canon_name(cid),
                 "credentials": c.credentials or "",
                 "description": _description_text(c.description)}
@@ -393,6 +395,41 @@ def bind_contributors(session, payloads: dict) -> bool:
             print(f"[step5:watch] db={cred_of[_wc].full_name!r} "
                   f"canon={_canon_name(_wc)!r} "
                   f"votes={dict(name_votes.get(_wc, {}))}")
+    # ONE SIGNATURE, ONE CONTRIBUTOR — an invariant, checked here on the BOUND
+    # roster, before anything is written and inside the dry run.
+    #
+    # An article is signed with one set of initials, so two roster rows carrying
+    # the same canonical signature are two spellings of one person, never two
+    # people: EB1911 kept signatures unique on purpose and starred the collisions
+    # itself (`L. D.` and `L. D.*` are different men).  The signature is also the
+    # contributor's URL now, so a duplicate quietly sends two entries to one
+    # address — the kind of thing that is free to fix here and invisible once
+    # shipped, which is why it fails the build instead of warning
+    # ([[feedback_honesty_surface_failures]]).
+    #
+    # The remedy is always an alias in `data/contributor_aliases.json`, the
+    # extract-time merge channel that makes the two variants ONE DB row. Never a
+    # suffix invented here: that would paper over the duplicate — the roster would
+    # still credit one man's articles to two people — and hand out an unstable URL
+    # besides, since which row got the suffix would depend on iteration order.
+    arts_by_cid: Counter = Counter(
+        cid for cids in binds_by_article.values() for cid in cids)
+    by_slug: dict[str, list[int]] = defaultdict(list)
+    for cid in bound_cids:
+        if cid in cred_of:
+            by_slug[contributor_slug(_canon_init(cid))].append(cid)
+    clashes = {s: cids for s, cids in by_slug.items() if len(cids) > 1}
+    if clashes:
+        for s, cids in sorted(clashes.items()):
+            print(f"[step5] SLUG COLLISION {s!r} — one signature, "
+                  f"{len(cids)} roster rows:", file=sys.stderr)
+            for cid in cids:
+                print(f"          {_canon_init(cid)!r:<14} {_canon_name(cid)} "
+                      f"({arts_by_cid[cid]} articles)", file=sys.stderr)
+        raise SystemExit(
+            f"contributor slugs are not unique ({len(clashes)} collision(s)); "
+            "merge the duplicates in data/contributor_aliases.json")
+
     if os.environ.get("STEP5_DRYRUN"):
         print("[step5] DRY RUN — no JSONs written")
         return False

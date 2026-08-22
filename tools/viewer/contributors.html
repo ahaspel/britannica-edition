@@ -80,6 +80,18 @@
 
     .contributor {
       margin-bottom: 24px;
+      scroll-margin-top: 16px;
+    }
+
+    /* The entry an article byline linked to.  A rule and a tint rather than a
+       jump alone: the reader arrives mid-list and needs to see WHICH of the
+       1,508 entries answered the link. */
+    .contributor.targeted {
+      border-left: 3px solid var(--link);
+      padding-left: 12px;
+      margin-left: -15px;
+      background: var(--panel);
+      border-radius: 0 4px 4px 0;
     }
 
     .contributor-name {
@@ -216,7 +228,7 @@
         }
 
         return `
-          <div class="contributor">
+          <div class="contributor" id="${escapeHtml(c.slug || "")}">
             <span class="contributor-name">${escapeHtml(c.display_name || c.full_name)}</span>
             <span class="contributor-initials">(${escapeHtml(c.initials)})</span>
             <div style="color: var(--muted); font-size: 0.9rem;">${creds ? escapeHtml(creds.substring(2)) : ""}${creds ? " \u00b7 " : ""}${c.articles.length} article${c.articles.length !== 1 ? "s" : ""}</div>
@@ -227,7 +239,25 @@
       }).join("");
     }
 
+    // An article byline links straight here: /contributors.html#<signature slug>.
+    // The list is built after the fetch, so the element the browser wanted to jump
+    // to did not exist when it tried — we do the jump ourselves once it does, and
+    // again on hashchange (arriving from a byline while the page is already open).
+    // An unknown slug is left alone: an old bookmark then shows the full roster
+    // rather than an error, and the legacy ?q= links still prefill the search box.
+    function focusHash() {
+      const slug = decodeURIComponent((location.hash || "").slice(1));
+      document.querySelectorAll(".contributor.targeted")
+        .forEach(el => el.classList.remove("targeted"));
+      if (!slug) return;
+      const el = document.getElementById(slug);
+      if (!el) return;
+      el.classList.add("targeted");
+      el.scrollIntoView({ block: "start" });
+    }
+
     searchInput.addEventListener("input", render);
+    window.addEventListener("hashchange", focusHash);
 
     // Load contributor data.  contributors.json is self-contained — this page
     // renders entirely from it — so we fetch ONLY that.  (Previously this also
@@ -243,8 +273,9 @@
         const totalArticles = contributorData.reduce((s, c) => s + c.articles.length, 0);
         statsEl.textContent = `${contributorData.length} contributors · ${totalArticles} attributed articles`;
         const urlQ = new URLSearchParams(location.search).get("q");
-        if (urlQ) searchInput.value = urlQ;
+        if (urlQ && !location.hash) searchInput.value = urlQ;
         render();
+        focusHash();
       })
       .catch(err => {
         statsEl.textContent = `Failed to load: ${err.message}`;
