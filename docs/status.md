@@ -121,7 +121,14 @@ the `«TABLE»` exclusion already rejects.  "Wrapped headwords, 35 articles, OPE
 landed in `487cd19` and shipped; ROBESPIERRE …ISIDORE **DE** verified in the
 corpus.
 
-**TEI-XML EXPORT: designed, not built** — `docs/tei_export.md`.  Reader requests.
+**TEI-XML EXPORT: SLICE 1 LANDED** (`src/britannica/export/tei.py`; design in
+`docs/tei_export.md`).  3,000 sampled articles → 3,000 well-formed, 0 malformed,
+13 surviving markers, all unbalanced spans in the SOURCE.  Content preservation
+proven: the TEI carries MORE than `markers_to_text`, which drops footnotes for
+the search index.  SLICE 2 LANDED: **37,225/37,225 validate against the TEI
+Consortium's own schema** (vendored `tools/schema/tei_all.rng`), gated at rebuild
+phase 7.7.  Next: the bundle ([[project_tei_export]]).
+Reader requests.
 The argument that matters is internal: the bundle's only text export is
 `body_to_markdown`, whose own policy line reads *"presentation (SHED to content)"*
 for `«SC»`, `«CTR»`, `«DIV»`, `«SPAN»`, `«FL»`, `«FR»`, `«MIRROR»` and the size

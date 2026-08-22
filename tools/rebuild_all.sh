@@ -28,7 +28,8 @@
 #   6  Site       6.1 fm first-content scan · 6.2 generated pages + stamp
 #                 6.3 Reader's Guide · 6.4 download bundles
 #   7  Gates      7.1 quality report · 7.2 overlap audit (reports)
-#                 7.3 mangled-marker · 7.4 link census · 7.5 contributor-dedup (gates)
+#                 7.3 mangled-marker · 7.4 link census · 7.5 contributor-dedup
+#                 7.6 image coverage · 7.7 TEI validation (gates) · 7.8 stamp
 #   8  Deploy     opt-in (--deploy); default is build-only
 #
 # Relabeled 2026-08-15.  Decoder for pre-relabel logs/docs (old → new):
@@ -378,13 +379,28 @@ echo
 echo "=== Phase 7.6: Image-coverage gate [$(elapsed)] ==="
 uv run python tools/diagnostics/check_image_coverage.py
 
+# --- Phase 7.7: TEI validation gate ---
+# Every article's TEI must validate against the TEI Consortium's OWN schema
+# (tools/schema/tei_all.rng, vendored so a build never depends on tei-c.org).
+# This is a genuinely INDEPENDENT net: a leak scan finds markers we failed to
+# convert, while validation finds structure we converted WRONGLY — a <cell>
+# outside a <row>, a <p> inside an inline element, a <formula> with element
+# content, a duplicate @xml:id, a stray close tag from OCR-damaged source.
+# It found nine distinct defect classes the day it was first run, none of which
+# leaves a marker behind for any other check to notice.
+# lxml is fetched on demand rather than added as a project dependency — the same
+# pattern the HuggingFace publish uses in deploy.sh.  ~105s over 37k articles.
+echo
+echo "=== Phase 7.7: TEI validation gate [$(elapsed)] ==="
+uv run --with lxml python tools/diagnostics/tei_validate.py
+
 # --- Phase 7.7: Stamp the corpus ---
 # Written LAST, after every gate above has passed, so the stamp means "a full
 # rebuild finished GREEN" rather than "a rebuild ran".  deploy.sh refuses to ship
 # a corpus whose files have been touched since — the check that makes
 # [[feedback_never_partial_rebuild]] mechanical instead of advisory.
 echo
-echo "=== Phase 7.7: Stamping the corpus [$(elapsed)] ==="
+echo "=== Phase 7.8: Stamping the corpus [$(elapsed)] ==="
 uv run python tools/diagnostics/corpus_stamp.py --write
 
 # --- Phase 8: Deploy (OPT-IN) ---
