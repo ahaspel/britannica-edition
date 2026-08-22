@@ -29,8 +29,67 @@ VIEWER_DIR = Path("tools/viewer")
 ANCILLARY_JSON = Path("data/derived/vol29_ancillary.json")
 
 
+_ALLCAPS_LINE = re.compile(r"[A-Z][A-Z .ÆŒ'’-]{2,40}")
+
+
+def _strip_running_heads(text: str) -> str:
+    """Remove the printed page's RUNNING HEADS, rejoining the prose they split.
+
+    The transcription records the page exactly as it reads, so the header at the
+    top of each printed page lands in the middle of whatever sentence spans the
+    page break: "To help the reader to find / PREFACE / what he wants in the
+    quickest and easiest way".  Three of them in the Index preface, one more in
+    the abbreviations — every one cutting a sentence in half.
+
+    THE DISCRIMINATOR IS REPETITION, not a list of words.  A standalone all-caps
+    line that has already appeared is the page furniture; its first appearance is
+    the real heading.  That keeps `INDEX` / `VOLUME XXIX` / `PREFACE` at the top,
+    keeps `LIST OF ABBREVIATIONS` where it is first used as a heading, and — the
+    case a word list would have got wrong — keeps the signatures
+    `JANET E. HOGARTH.` and `J. MALCOLM MITCHELL.`, which are all-caps, stand
+    alone, and are content.
+
+    Removing the line is not enough: it sits between two blank lines, so deleting
+    it alone leaves the sentence split across two paragraphs.  The surrounding
+    break is closed as well, which is what rejoins the prose.
+    """
+    lines = text.split("\n")
+    seen: set[str] = set()
+    drop: set[int] = set()
+    for i, raw in enumerate(lines):
+        s = raw.strip()
+        if not s or not _ALLCAPS_LINE.fullmatch(s):
+            continue
+        if s in seen:
+            drop.add(i)
+        else:
+            seen.add(s)
+    if not drop:
+        return text
+    out: list[str] = []
+    i = 0
+    while i < len(lines):
+        if i in drop:
+            # swallow the blank line before and after, so the prose closes up
+            while out and not out[-1].strip():
+                out.pop()
+            j = i + 1
+            while j < len(lines) and not lines[j].strip():
+                j += 1
+            if out and j < len(lines):
+                out[-1] = out[-1].rstrip() + " " + lines[j].lstrip()
+                i = j + 1
+                continue
+            i = j
+            continue
+        out.append(lines[i])
+        i += 1
+    return "\n".join(out)
+
+
 def _vision_to_html(text: str) -> str:
     """Convert vision-OCR transcription to HTML."""
+    text = _strip_running_heads(text)
     # Bold markers **text**
     text = re.sub(r"\*\*([^*]+)\*\*", r"<b>\1</b>", text)
     # Italic markers *text*
@@ -80,7 +139,24 @@ def _vision_to_html(text: str) -> str:
         elif block.startswith("<h"):
             output.append(block)
         else:
-            output.append(f"<p>{block}</p>")
+            # A SHOULDER NOTE IS MARGINAL, so it must not sit INSIDE the
+            # paragraph.  In print it stands in the margin beside the text; the
+            # transcription records it at the point it appears, which is usually
+            # mid-sentence ("...a title such as the / Concordance ideal avoided.
+            # / earldom of Derby").  Emitted in place it became a <div> inside a
+            # <p> — invalid, and it broke the sentence across three lines on the
+            # page.  Lift it out, then join what is left, so the prose reads
+            # continuously and the note sits beside it.  4 of the 14 landed this
+            # way; the other 10 happened to fall on a paragraph boundary and
+            # looked fine, which is why this went unnoticed.
+            notes = re.findall(r'<div class="shoulder">.*?</div>', block, re.S)
+            if notes:
+                for n in notes:
+                    block = block.replace(n, " ")
+                block = re.sub(r"\s+", " ", block).strip()
+                output.extend(notes)
+            if block:
+                output.append(f"<p>{block}</p>")
     return "\n".join(output)
 
 

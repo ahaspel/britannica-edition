@@ -134,10 +134,10 @@
     </div>
 
     <div class="item" id="maps">
-      <h2>The Colour Maps</h2>
-      <p>The edition's full-colour fold-out maps, engraved by Justus Perthes of
-        Gotha&mdash;shown as printed in 1911 and, where we have them, alongside
-        the Stieler Hand-Atlas originals they were engraved from, at full
+      <h2>The Color Maps</h2>
+      <p>The edition's famous seventeen full-color fold-out maps, engraved by
+        Justus Perthes of Gotha&mdash;as printed in 1911 and, where available,
+        with the Stieler Hand-Atlas originals they were engraved from, at full
         resolution.</p>
       <div class="item-links" id="maps-list" style="line-height: 2;">
         <!-- populated from /data/maps.json — the one registry -->
@@ -149,7 +149,7 @@
 
     <div class="item">
       <h2>Reader's Guide to the Encyclop&aelig;dia Britannica</h2>
-      <p>A 65-chapter companion volume to the 11th edition, organised as
+      <p>A 65-chapter companion volume to the 11th edition, organized as
         courses of reading for different occupations, fields of study, and
         interests. Each chapter's article citations are linked to the main
         encyclop&aelig;dia, and author mentions are linked to the
@@ -167,7 +167,7 @@
   </div>
 </div>
 <script>
-  // The Colour Maps item lists the maps from the registry (one source of
+  // The Color Maps item lists the maps from the registry (one source of
   // truth; a row appears here as soon as it is bound to articles).
   fetch("/data/maps.json").then(r => r.json()).then(reg => {
     const el = document.getElementById("maps-list");

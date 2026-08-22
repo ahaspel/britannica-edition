@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "eb1911": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--directory",
+        "D:\\work\\britannica-edition",
+        "--with",
+        "mcp",
+        "python",
+        "tools/mcp/eb1911_mcp.py"
+      ]
+    }
+  }
+}

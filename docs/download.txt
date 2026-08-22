@@ -1,22 +1,22 @@
 Download
 
-Beyond the website, this edition is published in several forms. The data, free; the e-book, for a modest price. Everything here is drawn from the same corpus and rebuilt together, so no download is ever a version behind another.
+Beyond the website, this edition is published in several forms. The data, free; the e-book, for a modest price.
 
----The data.--- The complete text, free, under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), from its [source](https://en.wikisource.org/wiki/1911_Encyclopædia_Britannica). The plain text can of course be had anywhere; what is unique to this edition is the structure around it — and, in the TEI edition, the typography of the printed page.
+---The data.--- The complete text, under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), from its [source](https://en.wikisource.org/wiki/1911_Encyclopædia_Britannica). The plain text can of course be had anywhere. What is unique is its organization, in three indexes: the *cross-reference graph*, joining every article to those it names; the *topic index*, classifying more than 90% of the articles by subject; and the *contributor graph*, resolving each author's initials to names, credentials and a biographical article where available. The topic index is faithfully reproduced from the original; the other two exist only in this edition.
 
-* [Corpus bundle](/download/eb1911-corpus.tar.gz) :: tar.gz, 94 MB :: Each of the 36,691 articles as one record, its text in Markdown, with metadata, sections and cross-references. Includes three indexes: the *cross-reference graph*, joining every article to those it names; the *topic index*, classifying more than 90% of the articles by subject; and the *contributor graph*, resolving each author's initials to names, credentials and a biographical article where available. The topic index is faithfully reproduced from the original; the other two are unique to this edition.
+* [Corpus bundle](/download/eb1911-corpus.tar.gz) :: tar.gz, 94 MB :: Each of the 36,691 articles as one record, its text in Markdown, with metadata, sections and cross-references.
 
-* [TEI-P5 edition](/download/eb1911-tei.tar.gz) :: tar.gz, 101 MB :: The scholarly encoding: 37,225 TEI documents, one per article, plus a corpus catalogue. This is the only form that carries what the printed page did — small caps, centring, rules and floats, tables and figures as structure rather than prose, mathematics as TeX. Every document validates against the TEI Consortium's own schema, checked on every build. Transliterations added by the transcribers are attributed rather than merged silently into the text.
+* [TEI-P5 edition](/download/eb1911-tei.tar.gz) :: tar.gz, 101 MB :: The scholarly encoding: 37,225 TEI documents, one per article, plus a corpus catalog. This is the only form that carries what the printed page did — small caps, centring, rules and floats, tables and figures as structure rather than prose, mathematics as TeX. Every document validates against the TEI Consortium's own schema, checked on every build. Transliterations added by the transcribers are attributed rather than merged silently into the text.
 
 * [Hugging Face dataset](https://huggingface.co/datasets/britannica11/eb1911) :: hosted :: The corpus bundle's records, for anyone who would rather load it than download it.
 
-* [Maps bundle](/download/eb1911-maps.tar.gz) :: tar.gz, 229 MB :: The edition's full-colour fold-out maps — the celebrated Perthes maps among them — as printed in 1911 and, where we have them, the Stieler Hand-Atlas originals they were engraved from, at full resolution. The same maps can be browsed [here](/ancillary.html).
+* [Maps bundle](/download/eb1911-maps.tar.gz) :: tar.gz, 228 MB :: The edition's full-color fold-out maps — the celebrated Perthes maps among them — as printed in 1911 and, where available, the Stieler Hand-Atlas originals they were engraved from, at full resolution. The same maps can be browsed [here](/ancillary.html).
 
----The book.--- The entire encyclopedia as a DRM-free EPUB: all 36,691 articles and more than 10,000 illustrations in one file, with maximum fidelity to the original. Fully cross-linked, browsable by topic and by volume, with instant search of the corpus — full-text and by title — and no connection required.
+---The book.--- The entire encyclopedia as a DRM-free EPUB: all 36,691 articles and more than 10,000 illustrations in one file, with maximum fidelity to the original. Fully cross-linked, browsable by topic and by volume, with instant search of the corpus — full-text and by title, with no connection required.
 
 * [The complete edition](https://payhip.com/b/ifyaR) :: EPUB, $39.99 :: Corrected editions free to purchasers.
 
-* [Volume 1](/download/eb1911-vol01.epub) :: EPUB, free :: The same book, one volume of it, to try before buying.
+* [Volume 1](/download/eb1911-vol01.epub) :: EPUB, free :: The first volume of the same book.
 
 Amazon Kindle's .kpf format, unfortunately, refuses an EPUB of this size and complexity. Single-volume .kpfs would be possible, but not terribly useful.
 

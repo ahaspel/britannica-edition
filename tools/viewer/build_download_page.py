@@ -92,7 +92,7 @@ SHELL = """<!DOCTYPE html>
       }
     }
     /* The download list.  There are now six things to download, in three
-       licences and four formats; as running prose the reader had to parse a
+       licenses and four formats; as running prose the reader had to parse a
        paragraph to find out whether the thing they wanted existed. */
     .dl-list { list-style: none; margin: 0.6em 0 0.2em; padding: 0; }
     .dl-list li {
@@ -185,7 +185,7 @@ def _render(source: str) -> tuple[str, str]:
         parts.append(f"<p>{raw.strip()}</p>")
 
     # A run of `* ` lines is a DOWNLOAD LIST, not a paragraph.  Each item is
-    #     * [Name](url) :: format, size, licence :: what it is
+    #     * [Name](url) :: format, size, license :: what it is
     # — the three fields a reader actually scans for.  Any of the last two may be
     # omitted.  Inline rules (links, italics) apply inside each field.
     items: list[str] = []

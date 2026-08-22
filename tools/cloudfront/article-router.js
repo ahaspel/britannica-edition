@@ -20,9 +20,43 @@ var crypto = require('crypto');
 var HEX6 = /^[0-9a-f]{6}$/;
 var ARTICLE_RE = /^\/article\/(\d{2}-\d{4})-([^\/]+)(\/[^?#]*)?$/;
 
+// Query-string rebuild, shared by both redirect paths below.
+function queryString(qs) {
+  var parts = [];
+  for (var k in qs) {
+    if (qs[k].multiValue) {
+      for (var i = 0; i < qs[k].multiValue.length; i++) parts.push(k + '=' + qs[k].multiValue[i].value);
+    } else {
+      parts.push(qs[k].value === '' ? k : k + '=' + qs[k].value);
+    }
+  }
+  return parts.length ? '?' + parts.join('&') : '';
+}
+
 function handler(event) {
   var request = event.request;
   var uri = request.uri;
+
+  // ── www → apex, 301 ────────────────────────────────────────────────────────
+  // The published download bundle and the HuggingFace dataset carry
+  // `https://www.britannica11.org/article/<id>` in all 37,225 records, and that
+  // host had NO DNS record at all — every URL an outside consumer followed was
+  // NXDOMAIN.  Pointing `www` at this distribution fixes copies ALREADY
+  // downloaded, which changing the generator cannot; redirecting rather than
+  // serving both keeps ONE canonical address, so search engines and citations
+  // do not split between two spellings of the site.
+  //
+  // Needs, alongside this function: `www.britannica11.org` added to the
+  // distribution's alternate domain names, and an ALIAS record for it in the
+  // Route 53 zone.  The ACM certificate already carries it as a SAN.
+  var host = request.headers && request.headers.host ? request.headers.host.value : '';
+  if (host.indexOf('www.') === 0) {
+    return {
+      statusCode: 301,
+      statusDescription: 'Moved Permanently',
+      headers: { 'location': { value: 'https://' + host.slice(4) + uri + queryString(request.querystring) } }
+    };
+  }
 
   var m = uri.match(ARTICLE_RE);
   if (!m) {
@@ -43,19 +77,7 @@ function handler(event) {
 
   // Legacy slug → recompute the hash, 301 to the canonical URL (preserving the query string).
   var hash = crypto.createHash('sha1').update(tail).digest('hex').substring(0, 6);
-  var qs = request.querystring;
-  var query = '';
-  if (qs) {
-    var parts = [];
-    for (var k in qs) {
-      if (qs[k].multiValue) {
-        for (var i = 0; i < qs[k].multiValue.length; i++) parts.push(k + '=' + qs[k].multiValue[i].value);
-      } else {
-        parts.push(qs[k].value === '' ? k : k + '=' + qs[k].value);
-      }
-    }
-    if (parts.length) query = '?' + parts.join('&');
-  }
+  var query = queryString(request.querystring);   // one spelling, shared with the www redirect
 
   return {
     statusCode: 301,

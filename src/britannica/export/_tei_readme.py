@@ -9,7 +9,7 @@ TEI_README = """# Encyclopaedia Britannica, 11th Edition — a TEI P5 edition
 {n:,} articles, one TEI document each, named by the article's stable id — the
 same id as its URL: https://britannica11.org/article/<id>
 
-`teiCorpus.xml` is a CATALOGUE: a TEI corpus header plus an XInclude for every
+`teiCorpus.xml` is a CATALOG: a TEI corpus header plus an XInclude for every
 member. Every member validates on its own against the TEI Consortium's `tei_all`
 schema. That is checked for all {n:,} on every build, and the build fails if any
 one of them does not.

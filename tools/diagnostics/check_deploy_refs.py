@@ -1,4 +1,4 @@
-"""Verify every static asset referenced by deployed HTML is reachable on britannica11.org.
+"""Verify the deployed PAGES, and every static asset they reference, are reachable.
 
 Scans tools/viewer/*.html for asset references — `<script src=...>`,
 `<link href=...>`, `<img src=...>`, `/data/...` fetch literals, and
@@ -10,6 +10,13 @@ The pages carry NO local/production switches (tools/serve.py speaks the
 production URL space locally), so every reference is checked verbatim —
 including any `/data/derived/` path, which would be a dev path leaking
 into shipped HTML and rightly 404s here.
+
+THE PAGES THEMSELVES ARE CHECKED FIRST.  This tool used to verify only what a
+page pulls IN, never the page.  On 2026-08-22 a CloudFront round-trip stripped
+the S3 origin's OAC; every HTML object returned AccessDenied while the article
+JSONs kept serving from edge cache, so the site was down and every asset check
+still passed.  HTML ships no-cache and must revalidate, which makes a page the
+one request that proves the origin path works end to end.
 
 References are split into two classes:
   - HARD  — <script>, <link>, <img> tags. A missing one of these breaks
@@ -121,6 +128,31 @@ def collect_refs(html_path: Path) -> tuple[set[str], set[str]]:
     )
 
 
+DEPLOY_SH = ROOT / "tools" / "deploy.sh"
+_VIEWER_LOOP_RE = re.compile(
+    r"for f in ((?:[^;]|\n)*?); do\s*\n\s*aws s3 cp \"tools/viewer/\$f\.html\"")
+
+
+def deployed_pages() -> set[str]:
+    """The pages the deploy actually ships, read from `deploy.sh` itself.
+
+    NOT a glob of tools/viewer/*.html — that directory also holds pages the
+    deploy does not upload (the 72 Reader's Guide chapters go by another path,
+    and `leaf_check.html` is a dev page), so a glob would fail on files that were
+    never meant to be live.  And NOT a hand-kept list here, which would be a
+    second declaration of what ships and would drift from the first.  deploy.sh
+    is where that decision is made; this reads it ([[feedback_tune_dont_fork]]).
+    """
+    m = _VIEWER_LOOP_RE.search(DEPLOY_SH.read_text(encoding="utf-8"))
+    if not m:
+        raise SystemExit(
+            "check_deploy_refs: could not read the viewer page list out of "
+            f"{DEPLOY_SH}. The loop it parses has changed shape; fix this reader "
+            "rather than letting the page check silently cover nothing.")
+    names = m.group(1).replace("\\", " ").split()
+    return {f"/{n}.html" for n in names}
+
+
 def check_url(path: str) -> tuple[str, int | str]:
     url = SITE + path
     req = urllib.request.Request(url, method="HEAD")
@@ -159,6 +191,18 @@ def main() -> int:
         soft_all.update(s)
         for p in h | s:
             sources.setdefault(p, set()).add(f.name)
+    # THE PAGES THEMSELVES, not only what they reference.  This tool checked
+    # every <script>, <link> and <img> a page pulls in — and never once fetched
+    # the page.  On 2026-08-22 a CloudFront config round-trip stripped the
+    # origin's OAC: S3 returned AccessDenied for every HTML object while the
+    # article JSONs kept serving from edge cache, so the site was down and every
+    # asset check still passed.  A page is the one request that proves the origin
+    # path works end to end, because HTML ships no-cache and must revalidate.
+    pages = deployed_pages()
+    hard_all |= pages
+    for p in pages:
+        sources.setdefault(p, set()).add("deploy.sh (page itself)")
+
     # If a path appears in both, treat it as hard (stronger constraint wins)
     soft_all -= hard_all
 
@@ -181,11 +225,13 @@ def main() -> int:
         report("soft", soft_all, soft_fail, sources, sys.stdout)
 
     if hard_fail:
-        print("FAIL: missing hard (script/link/img) references:", file=sys.stderr)
+        print("FAIL: unreachable deployed page(s) or hard "
+              "(script/link/img) reference(s):", file=sys.stderr)
         report("hard", hard_all, hard_fail, sources, sys.stderr)
         return 1
 
-    print(f"OK: all {len(hard_all)} hard references reachable"
+    print(f"OK: all {len(pages)} deployed pages and "
+          f"{len(hard_all) - len(pages)} hard references reachable"
           + (f" ({len(soft_fail)} soft warnings above)" if soft_fail else "")
           + ".")
     return 0

@@ -1852,7 +1852,7 @@
           const src = img.getAttribute("src") || "";
           if (!src.endsWith(tail)) return;
           img.style.cursor = "zoom-in";
-          img.title = "Double-click to open the full colour map";
+          img.title = "Double-click to open the full color map";
           img.addEventListener("dblclick", () => {
             location.href = `/maps.html#${encodeURIComponent(m.id)}`;
           });
