@@ -25,6 +25,10 @@ once per file, and `section-history` in every article that has such a section).
 This is ordinary for a file-per-member TEI corpus. Process members individually,
 or rewrite ids on assembly.
 
+`eb1911.odd.xml` is the TEI customisation: which part of TEI this edition uses,
+what each rendition means, and how identifiers are scoped. It is derived from the
+emitted corpus rather than from intention, and is itself valid TEI.
+
 ## What is encoded
 
 Only what the source marks. There is no `persName`, `placeName` or `date` markup:

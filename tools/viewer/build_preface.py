@@ -27,8 +27,14 @@ import io
 import sys
 from pathlib import Path
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
-                              errors="replace")
+# IDEMPOTENT.  Both this module and build_ancillary_pages force UTF-8 here,
+# and build_ancillary_pages imports build_toc_html from this one — so the
+# second rewrap wrapped an already-wrapped stdout and closed the first,
+# turning every later print into "I/O operation on closed file".  Wrap only
+# if the stream is not already UTF-8.
+if (sys.stdout.encoding or "").lower().replace("-", "") != "utf8":
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
+                                  errors="replace")
 
 from ancillary_render import footnotes_html, render_pages  # noqa: E402
 from britannica.source_pages import load_pages

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  The ODD for this edition: which part of TEI it uses, and why.
+
+  DERIVED FROM THE EMITTED CORPUS, not written from intention.  The element and
+  attribute list below was taken by scanning 4,000 generated documents; that is
+  also how `<list rend="numbered">` was caught contradicting the @rendition
+  decision while not being a rendition at all (it is now @type).  A customisation
+  written from what the author MEANT to emit describes a different edition from
+  the one in the archive.
+
+  This documents the subset.  It is not what validates the corpus: every document
+  is checked against the TEI Consortium's own `tei_all` schema
+  (tools/schema/tei_all.rng, vendored), because a schema generated from our own
+  output could only restate what the writer already does.  The external standard
+  is the check; this is the description.
+-->
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:lang="en">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Encyclopædia Britannica, Eleventh Edition — TEI customisation (ODD)</title>
+        <respStmt xml:id="wikisource">
+          <resp>transcription</resp>
+          <orgName>the contributors to Wikisource</orgName>
+        </respStmt>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>britannica11.org</publisher>
+        <availability status="free">
+          <licence target="https://creativecommons.org/licenses/by-sa/4.0/"/>
+        </availability>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Encyclopædia Britannica, 11th edition, Cambridge University Press,
+        1910–1911, transcribed at Wikisource and encoded from that
+        transcription.</p>
+      </sourceDesc>
+    </fileDesc>
+  </teiHeader>
+
+  <text>
+    <body>
+      <div type="section">
+        <head>Scope</head>
+        <p>One TEI document per article — 37,225 of them — named by the article's
+        stable identifier, which is also the tail of its URL at
+        britannica11.org. <gi>teiCorpus</gi> is a catalogue binding them with
+        XInclude; members are self-contained and are meant to be processed
+        individually.</p>
+        <p>The encoding carries what the printed page carried and nothing more.
+        There is no <gi>persName</gi>, <gi>placeName</gi>, <gi>orgName</gi> (in
+        the text), <gi>date</gi> or other entity markup: the Encyclopædia does
+        not mark its persons and places, so producing them would mean inferring
+        them, and an inferred entity is an assertion in the editor's voice about
+        a source that made no such claim.</p>
+      </div>
+
+      <div type="section">
+        <head>Provenance is three-valued</head>
+        <p>The text is the Encyclopædia's; the transcription is the Wikisource
+        contributors', credited in every <gi>respStmt</gi>; the encoding is this
+        edition's. Where the transcribers added something the printed page does
+        not contain — chiefly transliterations of Greek — it is carried as
+        <gi>note</gi> with <att>type</att> <val>transliteration</val> and
+        <att>resp</att> pointing at the Wikisource <gi>respStmt</gi>, so a
+        consumer can tell the 1911 page from a later editor. Pages whose
+        transcription is unproofread carry a warning in
+        <gi>editorialDecl</gi>.</p>
+      </div>
+
+      <div type="section">
+        <head>Presentation</head>
+        <p>Presentational distinctions the source makes are carried with
+        <att>rendition</att>, declared once per document in <gi>tagsDecl</gi>,
+        so the set is enumerable in the header rather than scattered through the
+        corpus. Distinctions carrying a VALUE rather than a class — a font size,
+        a line height, a transform — ride in <att>style</att> as CSS, because the
+        value is the source's own and bucketing it would discard it.</p>
+        <p>The declared renditions are: <val>sc</val> (small capitals),
+        <val>bold</val>, <val>center</val>, <val>float-left</val>,
+        <val>float-right</val>, <val>mirror</val>, <val>rule-block</val>,
+        <val>rule-inline</val>, <val>bar</val>, <val>verse</val>,
+        <val>sub</val>, <val>sup</val>.</p>
+      </div>
+
+      <div type="section">
+        <head>The elements used</head>
+        <p>Structure: <gi>TEI</gi>, <gi>teiHeader</gi>, <gi>fileDesc</gi>,
+        <gi>titleStmt</gi>, <gi>title</gi>, <gi>author</gi>, <gi>respStmt</gi>,
+        <gi>resp</gi>, <gi>orgName</gi>, <gi>publicationStmt</gi>,
+        <gi>publisher</gi>, <gi>availability</gi>, <gi>licence</gi>,
+        <gi>idno</gi>, <gi>sourceDesc</gi>, <gi>biblStruct</gi>,
+        <gi>monogr</gi>, <gi>edition</gi>, <gi>imprint</gi>, <gi>pubPlace</gi>,
+        <gi>date</gi>, <gi>biblScope</gi>, <gi>encodingDesc</gi>,
+        <gi>projectDesc</gi>, <gi>editorialDecl</gi>, <gi>tagsDecl</gi>,
+        <gi>rendition</gi>, <gi>revisionDesc</gi>, <gi>change</gi>,
+        <gi>text</gi>, <gi>body</gi>, <gi>div</gi>, <gi>head</gi>,
+        <gi>p</gi>.</p>
+        <p>Content: <gi>hi</gi>, <gi>emph</gi>, <gi>seg</gi>, <gi>lb</gi>,
+        <gi>milestone</gi>, <gi>anchor</gi>, <gi>ref</gi>, <gi>note</gi>,
+        <gi>formula</gi>, <gi>figure</gi>, <gi>graphic</gi>, <gi>table</gi>,
+        <gi>row</gi>, <gi>cell</gi>, <gi>list</gi>, <gi>item</gi>,
+        <gi>lg</gi>, <gi>l</gi>.</p>
+        <p>A <gi>div</gi> carries <att>type</att> <val>entry</val> for the
+        article, <val>section</val> for a major division and
+        <val>subsection</val> for a shoulder heading. A <gi>list</gi> carries
+        <att>type</att> <val>ordered</val> or <val>bulleted</val> — whether a
+        list is numbered is something the source states, not a rendition.</p>
+      </div>
+
+      <div type="section">
+        <head>Identifiers</head>
+        <p>Every <att>xml:id</att> is unique WITHIN its document and not across
+        the corpus: each member declares its own <gi>respStmt</gi> and its own
+        renditions so that it can be read, validated and cited alone. Resolving
+        every XInclude into a single tree therefore produces duplicate
+        identifiers. Process members individually, or rewrite identifiers on
+        assembly.</p>
+        <p>Section identifiers take the form <val>section-slug</val>, and are the
+        same anchors the website uses, so a TEI identifier and a URL fragment
+        name the same place.</p>
+      </div>
+    </body>
+  </text>
+</TEI>

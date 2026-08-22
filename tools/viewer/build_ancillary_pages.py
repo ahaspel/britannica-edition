@@ -19,10 +19,18 @@ import re
 import sys
 from pathlib import Path
 
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
-                              errors="replace")
+# IDEMPOTENT.  Both this module and build_ancillary_pages force UTF-8 here,
+# and build_ancillary_pages imports build_toc_html from this one — so the
+# second rewrap wrapped an already-wrapped stdout and closed the first,
+# turning every later print into "I/O operation on closed file".  Wrap only
+# if the stream is not already UTF-8.
+if (sys.stdout.encoding or "").lower().replace("-", "") != "utf8":
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
+                                  errors="replace")
 
 from ancillary_render import footnotes_html, render_pages
+from build_preface import build_toc_html
+from britannica.util.strings import section_slug
 from britannica.source_pages import load_pages
 
 VIEWER_DIR = Path("tools/viewer")
@@ -87,8 +95,13 @@ def _strip_running_heads(text: str) -> str:
     return "\n".join(out)
 
 
-def _vision_to_html(text: str) -> str:
-    """Convert vision-OCR transcription to HTML."""
+def _vision_to_html(text: str) -> tuple[str, list]:
+    """Convert vision-OCR transcription to (html, toc).
+
+    The toc is `(section_id, label)` per shoulder heading, the same shape
+    `build_preface.build_toc_html` consumes — one contents-list builder for
+    both prefaces rather than a second one here."""
+    toc: list = []
     text = _strip_running_heads(text)
     # Bold markers **text**
     text = re.sub(r"\*\*([^*]+)\*\*", r"<b>\1</b>", text)
@@ -117,9 +130,20 @@ def _vision_to_html(text: str) -> str:
             else:
                 result.append("</table>")
                 in_abbrev_list = False
-        # Shoulder notes (>> prefix)
+        # SHOULDER NOTES, on the Editorial Preface's model: a positioned SPAN
+        # inside the paragraph, not a block pulled out of it.  In print the note
+        # stands in the margin beside the sentence it annotates; an absolutely
+        # positioned span sits exactly there and interrupts nothing, which is
+        # both more faithful and simpler than lifting it out.  (Emitting a <div>
+        # inside a <p> was the original bug — invalid, and it split sentences
+        # across three lines.)  Anchored by slug so the contents list can link
+        # to it, exactly as `build_preface` does.
         if stripped.startswith(">> "):
-            result.append(f'<div class="shoulder">{stripped[3:]}</div>')
+            label = re.sub(r"<[^>]+>", "", stripped[3:]).strip().rstrip(".")
+            sid = f"section-{section_slug(label)}"
+            toc.append((sid, label))
+            result.append(
+                f'<span class="shoulder-heading" id="{sid}">{stripped[3:]}</span>')
             continue
         result.append(stripped)
     if in_abbrev_list:
@@ -139,29 +163,28 @@ def _vision_to_html(text: str) -> str:
         elif block.startswith("<h"):
             output.append(block)
         else:
-            # A SHOULDER NOTE IS MARGINAL, so it must not sit INSIDE the
-            # paragraph.  In print it stands in the margin beside the text; the
-            # transcription records it at the point it appears, which is usually
-            # mid-sentence ("...a title such as the / Concordance ideal avoided.
-            # / earldom of Derby").  Emitted in place it became a <div> inside a
-            # <p> — invalid, and it broke the sentence across three lines on the
-            # page.  Lift it out, then join what is left, so the prose reads
-            # continuously and the note sits beside it.  4 of the 14 landed this
-            # way; the other 10 happened to fall on a paragraph boundary and
-            # looked fine, which is why this went unnoticed.
-            notes = re.findall(r'<div class="shoulder">.*?</div>', block, re.S)
-            if notes:
-                for n in notes:
-                    block = block.replace(n, " ")
-                block = re.sub(r"\s+", " ", block).strip()
-                output.extend(notes)
-            if block:
-                output.append(f"<p>{block}</p>")
-    return "\n".join(output)
+            # The shoulder span stays IN the paragraph — the CSS lifts it into
+            # the margin, and it must be inside for `position: absolute` to
+            # anchor against `p { position: relative }`.  But it is hoisted to
+            # the FRONT of the paragraph, which is where the Editorial Preface
+            # always has it: that source marks the note at a paragraph boundary,
+            # while this OCR transcription records it wherever the eye met it in
+            # the margin — sometimes mid-sentence ("a title such as the /
+            # Concordance ideal avoided. / earldom of Derby").  Leading the
+            # paragraph puts the note beside the passage it labels, exactly as
+            # in print, AND leaves the prose unbroken for reading aloud, copying
+            # and search, which an interleaved span does not.
+            notes = re.findall(r'<span class="shoulder-heading".*?</span>', block, re.S)
+            for n in notes:
+                block = block.replace(n, " ", 1)
+            block = re.sub(r"\s+", " ", block).strip()
+            if block or notes:
+                output.append(f"<p>{''.join(notes)}{block}</p>")
+    return "\n".join(output), toc
 
 
 def _page_template(title: str, back_label: str, back_href: str,
-                   scan_href: str, body_html: str) -> str:
+                   scan_href: str, body_html: str, toc_html: str = "") -> str:
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -185,7 +208,7 @@ def _page_template(title: str, back_label: str, back_href: str,
       color: var(--text);
       line-height: 1.7;
     }}
-    .page {{ max-width: 720px; margin: 0 auto; padding: 24px; }}
+    .page {{ max-width: 960px; margin: 0 auto; padding: 24px; }}
     .card {{ background: var(--panel); border: 1px solid var(--border);
       border-radius: 2px; padding: 24px 32px; margin-bottom: 20px; }}
     h1 {{ margin-top: 0; font-size: 1.6rem; font-variant: small-caps;
@@ -194,8 +217,31 @@ def _page_template(title: str, back_label: str, back_href: str,
     .nav-link:hover {{ text-decoration: underline; }}
     .nav-row {{ display: flex; justify-content: space-between; margin-bottom: 16px;
       font-size: 0.9rem; }}
-    .body p {{ margin: 0 0 12px; text-indent: 1.5em; }}
+    /* Margin headings, on the Editorial Preface's model: the body is inset and
+       the note is lifted into the gap, beside the sentence it annotates.  Both
+       prefaces carry shoulder headings, so both should read the same way. */
+    .body {{ margin-right: 160px; position: relative; }}
+    .body p {{ margin: 0 0 12px; text-indent: 1.5em; position: relative; }}
     .body p:first-child {{ text-indent: 0; }}
+    .shoulder-heading {{
+      position: absolute; right: -170px; width: 150px;
+      font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
+      font-size: 0.65rem; font-style: italic; color: #8b7355;
+      padding-right: 0.6em; text-align: left; text-indent: 0;
+    }}
+    @media (max-width: 900px) {{
+      .body {{ margin-right: 0; }}
+      .shoulder-heading {{
+        position: static; display: block; width: auto;
+        margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
+      }}
+    }}
+    .toc {{ background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; font-size: 0.9rem; }}
+    .toc h3 {{ margin: 0 0 8px 0; font-size: 0.95rem; color: var(--muted); }}
+    .toc ol {{ margin: 0; padding-left: 20px; columns: 2; column-gap: 24px; }}
+    .toc li {{ margin-bottom: 3px; }}
+    .toc a {{ color: var(--text); font-size: 0.88rem; }}
     .body p:first-child::first-letter {{ font-size: 2em; float: left;
       line-height: 0.9; padding: 3px 6px 0 0; font-weight: bold; }}
     .shoulder {{ color: var(--muted); font-style: italic; font-size: 0.85rem;
@@ -225,6 +271,7 @@ def _page_template(title: str, back_label: str, back_href: str,
       <a class="nav-link" href="{scan_href}">View source scans &rarr;</a>
     </div>
     <h1>{title}</h1>
+{toc_html}
     <div class="body">
 {body_html}
     </div>
@@ -259,8 +306,9 @@ def build_prefatory_note():
 
 def build_index_preface():
     data = json.loads(ANCILLARY_JSON.read_text(encoding="utf-8"))
-    html = _vision_to_html(data["index_preface"])
+    html, toc = _vision_to_html(data["index_preface"])
     page = _page_template(
+        toc_html=build_toc_html(toc),
         title="Preface to the Index",
         back_label="Ancillary",
         back_href="ancillary.html",
@@ -274,8 +322,12 @@ def build_index_preface():
 
 def build_abbreviations():
     data = json.loads(ANCILLARY_JSON.read_text(encoding="utf-8"))
-    html = _vision_to_html(data["rules_and_abbreviations"])
+    # No shoulder headings on this one, so no contents list — build_toc_html
+    # returns "" for an empty toc, which is the right answer rather than an
+    # empty box.
+    html, toc = _vision_to_html(data["rules_and_abbreviations"])
     page = _page_template(
+        toc_html=build_toc_html(toc),
         title="Rules and Abbreviations",
         back_label="Ancillary",
         back_href="ancillary.html",
