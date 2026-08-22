@@ -106,6 +106,9 @@ aws s3 cp data/derived/eb1911-corpus.tar.gz s3://britannica11.org/download/eb191
 aws s3 cp data/derived/eb1911-corpus.tar.gz.sha256 s3://britannica11.org/download/eb1911-corpus.tar.gz.sha256
 aws s3 cp data/derived/eb1911-maps.tar.gz s3://britannica11.org/download/eb1911-maps.tar.gz
 aws s3 cp data/derived/eb1911-maps.tar.gz.sha256 s3://britannica11.org/download/eb1911-maps.tar.gz.sha256
+# The TEI-P5 edition — its own bundle for its own audience (see export/download.py).
+aws s3 cp data/derived/eb1911-tei.tar.gz s3://britannica11.org/download/eb1911-tei.tar.gz
+aws s3 cp data/derived/eb1911-tei.tar.gz.sha256 s3://britannica11.org/download/eb1911-tei.tar.gz.sha256
 echo "  Uploading vol-1 sampler EPUB (built above)..."
 sha256sum eb1911-vol01.epub | awk '{print $1}' > eb1911-vol01.epub.sha256
 aws s3 cp eb1911-vol01.epub s3://britannica11.org/download/eb1911-vol01.epub

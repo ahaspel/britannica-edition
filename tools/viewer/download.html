@@ -68,6 +68,25 @@
         color: var(--text);
       }
     }
+    /* The download list.  There are now six things to download, in three
+       licences and four formats; as running prose the reader had to parse a
+       paragraph to find out whether the thing they wanted existed. */
+    .dl-list { list-style: none; margin: 0.6em 0 0.2em; padding: 0; }
+    .dl-list li {
+      padding: 0.75em 0 0.75em 0;
+      border-top: 1px solid var(--border);
+      text-indent: 0;
+    }
+    .dl-list li:last-child { border-bottom: 1px solid var(--border); }
+    .dl-list .dl-name { font-size: 1.06rem; }
+    .dl-list .dl-meta {
+      display: block;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: 0.1em 0 0.35em;
+    }
+    .dl-list .dl-desc { display: block; font-size: 0.97rem; }
     .header-divider {
       text-align: center;
       color: #8b7355;
@@ -98,11 +117,13 @@
   <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
   <div class="card">
     <div class="body">
-<p><span class="drop-cap">B</span>eyond the website, this edition is published in three forms. The data, free; the e-book and the programmatic interface, for a modest price.</p>
-<p><span class="shoulder-heading" id="the-data">The data.</span> The complete text is available as a <a href="/download/eb1911-corpus.tar.gz">bulk download</a> or on <a href="https://huggingface.co/datasets/britannica11/eb1911">Hugging Face</a>, under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, from its <a href="https://en.wikisource.org/wiki/1911_Encyclopædia_Britannica">source</a>. Each of the 36,691 articles is one record. Its text is in Markdown, with metadata, sections, and cross-references. The download includes three indexes: the <em>cross-reference graph</em>, joining every article to those it names; the <em>topic index</em>, classifying more than 90% of the articles by subject; and the <em>contributor graph</em>, resolving each author's initials to names, credentials, and a biographical article, where available. The topic index is faithfully reproduced from the original; the other two are unique to this edition. The plain text can of course be had anywhere.</p>
-<p><span class="shoulder-heading" id="the-book">The book.</span> The entire encyclopedia is available as <a href="https://payhip.com/b/ifyaR">a single e-book</a>: all 36,691 articles and the more than 10,000 illustrations in one DRM-free EPUB, with maximum fidelity to the original. It is fully cross-linked, can be browsed by topic and by volume, and includes instant search of the corpus, full-text and by title, with no connection required. $39.99; corrected editions free to purchasers. Volume 1 is <a href="/download/eb1911-vol01.epub">free</a>. (Amazon Kindle's .kpf format, unfortunately, refuses an EPUB of this size and complexity. Single-volume .kpfs would be possible, but not terribly useful.)</p>
-<p><span class="shoulder-heading" id="the-interface">The interface.</span> A programmatic interface, which will include full-text search, article retrieval, and traversal of the topics, contributors, and cross-references, is in preparation.</p>
-<p><span class="shoulder-heading" id="the-maps">The maps.</span> The edition's full-color fold-out maps — the celebrated Perthes maps among them — are collected in a separate <a href="/download/eb1911-maps.tar.gz">maps bundle</a>, free of charge: the plates as printed in 1911 and, where we have them, the Stieler Hand-Atlas originals they were engraved from, at full resolution. The same maps can be browsed <a href="/ancillary.html">here</a>.</p>
+<p><span class="drop-cap">B</span>eyond the website, this edition is published in several forms. The data, free; the e-book, for a modest price. Everything here is drawn from the same corpus and rebuilt together, so no download is ever a version behind another.</p>
+<p><span class="shoulder-heading" id="the-data">The data.</span> The complete text, free, under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, from its <a href="https://en.wikisource.org/wiki/1911_Encyclopædia_Britannica">source</a>. The plain text can of course be had anywhere; what is unique to this edition is the structure around it — and, in the TEI edition, the typography of the printed page.</p>
+<ul class="dl-list"><li><span class="dl-name"><a href="/download/eb1911-corpus.tar.gz">Corpus bundle</a></span><span class="dl-meta">tar.gz, 94 MB</span><span class="dl-desc">Each of the 36,691 articles as one record, its text in Markdown, with metadata, sections and cross-references. Includes three indexes: the <em>cross-reference graph</em>, joining every article to those it names; the <em>topic index</em>, classifying more than 90% of the articles by subject; and the <em>contributor graph</em>, resolving each author's initials to names, credentials and a biographical article where available. The topic index is faithfully reproduced from the original; the other two are unique to this edition.</span></li><li><span class="dl-name"><a href="/download/eb1911-tei.tar.gz">TEI-P5 edition</a></span><span class="dl-meta">tar.gz, 101 MB</span><span class="dl-desc">The scholarly encoding: 37,225 TEI documents, one per article, plus a corpus catalogue. This is the only form that carries what the printed page did — small caps, centring, rules and floats, tables and figures as structure rather than prose, mathematics as TeX. Every document validates against the TEI Consortium's own schema, checked on every build. Transliterations added by the transcribers are attributed rather than merged silently into the text.</span></li><li><span class="dl-name"><a href="https://huggingface.co/datasets/britannica11/eb1911">Hugging Face dataset</a></span><span class="dl-meta">hosted</span><span class="dl-desc">The corpus bundle's records, for anyone who would rather load it than download it.</span></li><li><span class="dl-name"><a href="/download/eb1911-maps.tar.gz">Maps bundle</a></span><span class="dl-meta">tar.gz, 229 MB</span><span class="dl-desc">The edition's full-colour fold-out maps — the celebrated Perthes maps among them — as printed in 1911 and, where we have them, the Stieler Hand-Atlas originals they were engraved from, at full resolution. The same maps can be browsed <a href="/ancillary.html">here</a>.</span></li></ul>
+<p><span class="shoulder-heading" id="the-book">The book.</span> The entire encyclopedia as a DRM-free EPUB: all 36,691 articles and more than 10,000 illustrations in one file, with maximum fidelity to the original. Fully cross-linked, browsable by topic and by volume, with instant search of the corpus — full-text and by title — and no connection required.</p>
+<ul class="dl-list"><li><span class="dl-name"><a href="https://payhip.com/b/ifyaR">The complete edition</a></span><span class="dl-meta">EPUB, $39.99</span><span class="dl-desc">Corrected editions free to purchasers.</span></li><li><span class="dl-name"><a href="/download/eb1911-vol01.epub">Volume 1</a></span><span class="dl-meta">EPUB, free</span><span class="dl-desc">The same book, one volume of it, to try before buying.</span></li></ul>
+<p>Amazon Kindle's .kpf format, unfortunately, refuses an EPUB of this size and complexity. Single-volume .kpfs would be possible, but not terribly useful.</p>
+<p><span class="shoulder-heading" id="the-interface">The interface.</span> A programmatic interface, which will include full-text search, article retrieval, and traversal of the topics, contributors and cross-references, is in preparation.</p>
     </div>
   </div>
 </div>

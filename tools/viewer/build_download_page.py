@@ -91,6 +91,25 @@ SHELL = """<!DOCTYPE html>
         color: var(--text);
       }
     }
+    /* The download list.  There are now six things to download, in three
+       licences and four formats; as running prose the reader had to parse a
+       paragraph to find out whether the thing they wanted existed. */
+    .dl-list { list-style: none; margin: 0.6em 0 0.2em; padding: 0; }
+    .dl-list li {
+      padding: 0.75em 0 0.75em 0;
+      border-top: 1px solid var(--border);
+      text-indent: 0;
+    }
+    .dl-list li:last-child { border-bottom: 1px solid var(--border); }
+    .dl-list .dl-name { font-size: 1.06rem; }
+    .dl-list .dl-meta {
+      display: block;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: var(--muted);
+      margin: 0.1em 0 0.35em;
+    }
+    .dl-list .dl-desc { display: block; font-size: 0.97rem; }
     .header-divider {
       text-align: center;
       color: #8b7355;
@@ -143,6 +162,12 @@ def _render(source: str) -> tuple[str, str]:
     para: list[str] = []
     first = True
 
+    def inline(raw: str) -> str:
+        """Links and italics — the rules shared by paragraphs and list items.
+        One owner, because a second copy is how the two drift apart."""
+        raw = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', raw)
+        return re.sub(r"\*([^*]+)\*", r"<em>\1</em>", raw)
+
     def flush() -> None:
         nonlocal first
         if not para:
@@ -153,19 +178,46 @@ def _render(source: str) -> tuple[str, str]:
                      lambda m: (f'<span class="shoulder-heading" '
                                 f'id="{_slug(m.group(1).strip())}">'
                                 f'{m.group(1).strip()}</span>'), raw)
-        raw = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2">\1</a>', raw)
-        raw = re.sub(r"\*([^*]+)\*", r"<em>\1</em>", raw)
+        raw = inline(raw)
         if first:
             raw = re.sub(r"^(\w)", r'<span class="drop-cap">\1</span>', raw.strip())
             first = False
         parts.append(f"<p>{raw.strip()}</p>")
 
+    # A run of `* ` lines is a DOWNLOAD LIST, not a paragraph.  Each item is
+    #     * [Name](url) :: format, size, licence :: what it is
+    # — the three fields a reader actually scans for.  Any of the last two may be
+    # omitted.  Inline rules (links, italics) apply inside each field.
+    items: list[str] = []
+
+    def flush_items() -> None:
+        if not items:
+            return
+        lis = []
+        for raw in items:
+            fields = [f.strip() for f in raw.split("::")]
+            name = inline(fields[0])
+            meta = f'<span class="dl-meta">{inline(fields[1])}</span>' if len(fields) > 1 else ""
+            desc = f'<span class="dl-desc">{inline(fields[2])}</span>' if len(fields) > 2 else ""
+            lis.append(f'<li><span class="dl-name">{name}</span>{meta}{desc}</li>')
+        items.clear()
+        parts.append(f'<ul class="dl-list">{"".join(lis)}</ul>')
+
     for line in lines[1:]:
-        if line.strip():
-            para.append(line.strip())
+        stripped = line.strip()
+        if stripped.startswith("* "):
+            flush()
+            items.append(stripped[2:].strip())
+        elif stripped:
+            flush_items()
+            para.append(stripped)
         else:
+            # A blank line separates items for readability in the SOURCE; it does
+            # not end the list.  Only prose does.  (Six one-item lists is what
+            # happens otherwise, and the rules between entries disappear.)
             flush()
     flush()
+    flush_items()
     return title, "\n".join(parts)
 
 

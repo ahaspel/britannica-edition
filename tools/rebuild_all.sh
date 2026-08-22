@@ -26,7 +26,7 @@
 #   5  Resolve    5.1 classified TOC · 5.2 TOC disambiguations · 5.3 kind index
 #                 5.4 post-export pass (math · contributors · xrefs · render)
 #   6  Site       6.1 fm first-content scan · 6.2 generated pages + stamp
-#                 6.3 Reader's Guide · 6.4 download bundles
+#                 6.3 Reader's Guide · 6.4 download bundles (corpus · maps · TEI)
 #   7  Gates      7.1 quality report · 7.2 overlap audit (reports)
 #                 7.3 mangled-marker · 7.4 link census · 7.5 contributor-dedup
 #                 7.6 image coverage · 7.7 TEI validation (gates) · 7.8 stamp
@@ -307,6 +307,12 @@ uv run python -m britannica.export.download
 # The maps bundle (colour plates + Stieler originals) rebuilds too so a registry
 # or image change never ships a stale archive; validates maps.json's file refs.
 uv run python -m britannica.export.download maps
+# The TEI-P5 edition ships as its OWN bundle (eb1911-tei.tar.gz, ~100MB): a
+# reader who wants articles.jsonl for text-mining does not want a 37,000-file XML
+# tree, and the TEI audience does not want the JSONL.  Separation also lets it
+# carry its own DOI if deposited (Zenodo / TAPAS / the Oxford Text Archive).
+# Validity is gated separately in 7.7, against the TEI Consortium's own schema.
+uv run python -m britannica.export.download tei
 
 # --- Phase 7.1: Quality report (visibility, no gate) ---
 # The standing numbers, printed to the log so a regression is visible in the
