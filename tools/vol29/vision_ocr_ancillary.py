@@ -69,6 +69,16 @@ SECTIONS = [
         "leaves": [15, 16],
         "prompt": ABBREV_PROMPT,
     },
+    {
+        # The editors' introduction to the Classified Table of Contents,
+        # pp. 879-880, signed "THE EDITORS" and dated London, May 31, 1911.
+        # It belongs with the Topics page rather than the ancillary list: it
+        # explains the classification the Topics page IS.
+        "key": "classified_toc_intro",
+        "label": "Introduction to the Classified Table of Contents",
+        "leaves": [893, 894],
+        "prompt": PROSE_PROMPT,
+    },
 ]
 
 

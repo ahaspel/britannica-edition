@@ -10,12 +10,11 @@ The WIKITEXT page (Prefatory Note) renders through
 the corpus goes through (it used to own a private regex chain with a
 catch-all `{{…}}` strip and a bare `.replace("}}","")`; sweeper-campaign
 item K1).  The two vol-29 pages are VISION-OCR transcriptions — a different
-input language with no wikitext and no markers — and keep their own small
-`_vision_to_html`.
+input language with no wikitext and no markers — read by `vision_text`, which
+the Topics page also uses for the Classified Table of Contents introduction.
 """
 import io
 import json
-import re
 import sys
 from pathlib import Path
 
@@ -29,162 +28,23 @@ if (sys.stdout.encoding or "").lower().replace("-", "") != "utf8":
                                   errors="replace")
 
 from ancillary_render import footnotes_html, render_pages
+from vision_text import _vision_to_html
 from build_preface import build_toc_html
-from britannica.util.strings import section_slug
 from britannica.source_pages import load_pages
 
 VIEWER_DIR = Path("tools/viewer")
 ANCILLARY_JSON = Path("data/derived/vol29_ancillary.json")
 
 
-_ALLCAPS_LINE = re.compile(r"[A-Z][A-Z .ÆŒ'’-]{2,40}")
+def _page_template(title: str, scan_href: str, body_html: str,
+                   toc_html: str = "", byline: str = "") -> str:
+    """The Editorial Preface's shell, for the transcription pages.
 
-
-def _strip_running_heads(text: str) -> str:
-    """Remove the printed page's RUNNING HEADS, rejoining the prose they split.
-
-    The transcription records the page exactly as it reads, so the header at the
-    top of each printed page lands in the middle of whatever sentence spans the
-    page break: "To help the reader to find / PREFACE / what he wants in the
-    quickest and easiest way".  Three of them in the Index preface, one more in
-    the abbreviations — every one cutting a sentence in half.
-
-    THE DISCRIMINATOR IS REPETITION, not a list of words.  A standalone all-caps
-    line that has already appeared is the page furniture; its first appearance is
-    the real heading.  That keeps `INDEX` / `VOLUME XXIX` / `PREFACE` at the top,
-    keeps `LIST OF ABBREVIATIONS` where it is first used as a heading, and — the
-    case a word list would have got wrong — keeps the signatures
-    `JANET E. HOGARTH.` and `J. MALCOLM MITCHELL.`, which are all-caps, stand
-    alone, and are content.
-
-    Removing the line is not enough: it sits between two blank lines, so deleting
-    it alone leaves the sentence split across two paragraphs.  The surrounding
-    break is closed as well, which is what rejoins the prose.
+    The `&larr; Ancillary` back-link is gone deliberately: the model page has no
+    such affordance, carrying `Ancillary` in the nav row instead, and these
+    pages are meant to be indistinguishable from it.
     """
-    lines = text.split("\n")
-    seen: set[str] = set()
-    drop: set[int] = set()
-    for i, raw in enumerate(lines):
-        s = raw.strip()
-        if not s or not _ALLCAPS_LINE.fullmatch(s):
-            continue
-        if s in seen:
-            drop.add(i)
-        else:
-            seen.add(s)
-    if not drop:
-        return text
-    out: list[str] = []
-    i = 0
-    while i < len(lines):
-        if i in drop:
-            # swallow the blank line before and after, so the prose closes up
-            while out and not out[-1].strip():
-                out.pop()
-            j = i + 1
-            while j < len(lines) and not lines[j].strip():
-                j += 1
-            if out and j < len(lines):
-                out[-1] = out[-1].rstrip() + " " + lines[j].lstrip()
-                i = j + 1
-                continue
-            i = j
-            continue
-        out.append(lines[i])
-        i += 1
-    return "\n".join(out)
-
-
-def _vision_to_html(text: str) -> tuple[str, list]:
-    """Convert vision-OCR transcription to (html, toc).
-
-    The toc is `(section_id, label)` per shoulder heading, the same shape
-    `build_preface.build_toc_html` consumes — one contents-list builder for
-    both prefaces rather than a second one here."""
-    toc: list = []
-    text = _strip_running_heads(text)
-    # Bold markers **text**
-    text = re.sub(r"\*\*([^*]+)\*\*", r"<b>\1</b>", text)
-    # Italic markers *text*
-    text = re.sub(r"\*([^*]+)\*", r"<em>\1</em>", text)
-    # Section headings (ALL CAPS lines)
-    lines = text.split("\n")
-    result = []
-    in_abbrev_list = False
-    for line in lines:
-        stripped = line.strip()
-        if not stripped:
-            result.append("")
-            continue
-        # Detect abbreviation list entries (tab-separated)
-        if "\t" in stripped and not in_abbrev_list:
-            # Start of abbreviation table
-            result.append('<table class="abbrev-table">')
-            in_abbrev_list = True
-        if in_abbrev_list:
-            if "\t" in stripped:
-                parts = stripped.split("\t", 1)
-                result.append(f'<tr><td class="abbr">{parts[0]}</td>'
-                              f'<td>{parts[1]}</td></tr>')
-                continue
-            else:
-                result.append("</table>")
-                in_abbrev_list = False
-        # SHOULDER NOTES, on the Editorial Preface's model: a positioned SPAN
-        # inside the paragraph, not a block pulled out of it.  In print the note
-        # stands in the margin beside the sentence it annotates; an absolutely
-        # positioned span sits exactly there and interrupts nothing, which is
-        # both more faithful and simpler than lifting it out.  (Emitting a <div>
-        # inside a <p> was the original bug — invalid, and it split sentences
-        # across three lines.)  Anchored by slug so the contents list can link
-        # to it, exactly as `build_preface` does.
-        if stripped.startswith(">> "):
-            label = re.sub(r"<[^>]+>", "", stripped[3:]).strip().rstrip(".")
-            sid = f"section-{section_slug(label)}"
-            toc.append((sid, label))
-            result.append(
-                f'<span class="shoulder-heading" id="{sid}">{stripped[3:]}</span>')
-            continue
-        result.append(stripped)
-    if in_abbrev_list:
-        result.append("</table>")
-
-    # Join and make paragraphs from consecutive non-tag lines
-    html = "\n".join(result)
-    # Split on blank lines for paragraphs
-    blocks = re.split(r"\n\n+", html)
-    output = []
-    for block in blocks:
-        block = block.strip()
-        if not block:
-            continue
-        if block.startswith("<table") or block.startswith("<tr") or block.startswith("<div"):
-            output.append(block)
-        elif block.startswith("<h"):
-            output.append(block)
-        else:
-            # The shoulder span stays IN the paragraph — the CSS lifts it into
-            # the margin, and it must be inside for `position: absolute` to
-            # anchor against `p { position: relative }`.  But it is hoisted to
-            # the FRONT of the paragraph, which is where the Editorial Preface
-            # always has it: that source marks the note at a paragraph boundary,
-            # while this OCR transcription records it wherever the eye met it in
-            # the margin — sometimes mid-sentence ("a title such as the /
-            # Concordance ideal avoided. / earldom of Derby").  Leading the
-            # paragraph puts the note beside the passage it labels, exactly as
-            # in print, AND leaves the prose unbroken for reading aloud, copying
-            # and search, which an interleaved span does not.
-            notes = re.findall(r'<span class="shoulder-heading".*?</span>', block, re.S)
-            for n in notes:
-                block = block.replace(n, " ", 1)
-            block = re.sub(r"\s+", " ", block).strip()
-            if block or notes:
-                output.append(f"<p>{''.join(notes)}{block}</p>")
-    return "\n".join(output), toc
-
-
-def _page_template(title: str, back_label: str, back_href: str,
-                   scan_href: str, body_html: str, toc_html: str = "") -> str:
+    meta_html = f"{byline} &middot; " if byline else ""
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -210,19 +70,27 @@ def _page_template(title: str, back_label: str, back_href: str,
     }}
     .page {{ max-width: 960px; margin: 0 auto; padding: 24px; }}
     .card {{ background: var(--panel); border: 1px solid var(--border);
-      border-radius: 2px; padding: 24px 32px; margin-bottom: 20px; }}
-    h1 {{ margin-top: 0; font-size: 1.6rem; font-variant: small-caps;
-      letter-spacing: 0.06em; text-align: center; }}
-    .nav-link {{ color: var(--link); text-decoration: none; font-size: 0.95rem; }}
-    .nav-link:hover {{ text-decoration: underline; }}
-    .nav-row {{ display: flex; justify-content: space-between; margin-bottom: 16px;
-      font-size: 0.9rem; }}
+      border-radius: 2px; padding: 20px 24px; margin-bottom: 20px; }}
+    h1 {{ margin-top: 0; font-size: 1.8rem; font-variant: small-caps;
+      letter-spacing: 0.06em; color: #2c2416; }}
+    /* The Editorial Preface's rules verbatim.  Links were underlined here for
+       one reason: that page sets `a {{ text-decoration: none }}` globally and
+       this template never did, so every contents entry got the browser default.
+       Matching the model page fixes the contents list and the nav together
+       instead of patching `.toc a` and leaving the next link to repeat it. */
+    a {{ color: var(--link); text-decoration: none; }}
+    a:hover {{ text-decoration: underline; background: rgba(139, 115, 85, 0.08);
+      border-radius: 2px; }}
+    .meta {{ color: var(--muted); font-size: 0.95rem; font-style: italic;
+      margin-bottom: 16px; }}
+    .header-divider {{ text-align: center; color: #8b7355; font-size: 1.6rem;
+      margin: -6px 0 14px; letter-spacing: 0.3em; user-select: none; }}
     /* Margin headings, on the Editorial Preface's model: the body is inset and
        the note is lifted into the gap, beside the sentence it annotates.  Both
        prefaces carry shoulder headings, so both should read the same way. */
-    .body {{ margin-right: 160px; position: relative; }}
-    .body p {{ margin: 0 0 12px; text-indent: 1.5em; position: relative; }}
-    .body p:first-child {{ text-indent: 0; }}
+    .body {{ margin-right: 160px; position: relative; font-size: 1.08rem; }}
+    .body p {{ text-indent: 1.5em; margin: 0 0 0.5em 0; position: relative; }}
+    .body p:first-of-type {{ text-indent: 0; }}
     .shoulder-heading {{
       position: absolute; right: -170px; width: 150px;
       font-family: Georgia, "Times New Roman", "Cambria Math", "Segoe UI Symbol", "Noto Sans Symbols 2", serif;
@@ -235,6 +103,15 @@ def _page_template(title: str, back_label: str, back_href: str,
         position: static; display: block; width: auto;
         margin: 0.5em 0 0.2em; font-weight: 600; color: var(--text);
       }}
+      /* The note is IN FLOW at this width, and on this page it leads the first
+         paragraph — so ::first-letter enlarges the NOTE's first letter, not the
+         prose's.  Measured as a 20.8px cap on "Need for an Index." where the
+         desktop view correctly showed 34.56px on "IT may".  There is nothing to
+         drop-cap onto once a heading leads the paragraph, so switch it off
+         rather than decorate the heading. */
+      .body p:first-of-type:has(.shoulder-heading)::first-letter {{
+        font-size: inherit; float: none; margin: 0; color: inherit;
+      }}
     }}
     .toc {{ background: var(--bg); border: 1px solid var(--border);
       border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; font-size: 0.9rem; }}
@@ -242,8 +119,11 @@ def _page_template(title: str, back_label: str, back_href: str,
     .toc ol {{ margin: 0; padding-left: 20px; columns: 2; column-gap: 24px; }}
     .toc li {{ margin-bottom: 3px; }}
     .toc a {{ color: var(--text); font-size: 0.88rem; }}
-    .body p:first-child::first-letter {{ font-size: 2em; float: left;
-      line-height: 0.9; padding: 3px 6px 0 0; font-weight: bold; }}
+    /* The print's drop initial, the Editorial Preface's rule verbatim. */
+    .body p:first-of-type::first-letter {{
+      font-size: 3.2em; float: left; line-height: 0.8;
+      margin: 0.05em 2px 0 0; color: #5c4a32;
+    }}
     .shoulder {{ color: var(--muted); font-style: italic; font-size: 0.85rem;
       text-align: right; margin: 4px 0; }}
     .centered {{ text-align: center; font-style: italic;
@@ -266,13 +146,26 @@ def _page_template(title: str, back_label: str, back_href: str,
 <body>
 <div class="page">
   <div class="card">
-    <div class="nav-row">
-      <a class="nav-link" href="{back_href}">&larr; {back_label}</a>
-      <a class="nav-link" href="{scan_href}">View source scans &rarr;</a>
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+      <h1 style="margin: 0; font-size: 1.15rem; color: #5c4a32;"><a href="/home.html" style="color: inherit; text-decoration: none;"><svg viewBox="0 0 32 32" width="28" height="28" style="vertical-align: middle; margin-right: 10px;" aria-hidden="true"><rect x="1" y="1" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1"/><rect x="3.5" y="3.5" width="25" height="25" fill="none" stroke="currentColor" stroke-width="0.6"/><text x="16" y="22" text-anchor="middle" font-family="Georgia, serif" font-size="16" fill="currentColor" style="letter-spacing:-0.3px">EB</text></svg><span style="font-variant: small-caps; letter-spacing: 0.04em;">{title}</span> <span style="font-variant: normal; font-style: italic; letter-spacing: 0.01em;">&mdash; 11th Edition</span></a></h1>
+      <div style="font-size: 0.9rem;">
+        <a href="/index.html">Articles</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/contributors.html">Contributors</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/topics.html">Topics</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/ancillary.html">Ancillary</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/download.html">Download</a>
+      </div>
     </div>
-    <h1>{title}</h1>
-{toc_html}
+    <div class="meta">{meta_html}<a href="{scan_href}" style="color: var(--muted);">View source scans &rarr;</a></div>
+  </div>
+  <div class="header-divider">&#x223C;&#x25C6;&#x223C;</div>
+  <div class="card">
     <div class="body">
+{toc_html}
 {body_html}
     </div>
   </div>
@@ -294,8 +187,6 @@ def build_prefatory_note():
     html = doc.body_html + footnotes_html(doc.footnotes)
     page = _page_template(
         title="Prefatory Note",
-        back_label="Ancillary",
-        back_href="ancillary.html",
         scan_href="scans.html?vol=1&start=7&end=10&prefix=page&label=Prefatory+Note&back=ancillary.html",
         body_html=html,
     )
@@ -306,12 +197,15 @@ def build_prefatory_note():
 
 def build_index_preface():
     data = json.loads(ANCILLARY_JSON.read_text(encoding="utf-8"))
-    html, toc = _vision_to_html(data["index_preface"])
+    html, toc = _vision_to_html(data["index_preface"],
+                                drop_leading_title=True)
     page = _page_template(
         toc_html=build_toc_html(toc),
         title="Preface to the Index",
-        back_label="Ancillary",
-        back_href="ancillary.html",
+        byline='By <a href="/contributors.html?q=Janet+Hogarth" '
+               'style="color: var(--muted);">Janet E. Hogarth</a> and '
+               '<a href="/contributors.html?q=Malcolm+Mitchell" '
+               'style="color: var(--muted);">J. Malcolm Mitchell</a>',
         scan_href="scans.html?vol=29&start=11&end=14&prefix=leaf&label=Preface+to+the+Index&back=ancillary.html",
         body_html=html,
     )
@@ -329,8 +223,6 @@ def build_abbreviations():
     page = _page_template(
         toc_html=build_toc_html(toc),
         title="Rules and Abbreviations",
-        back_label="Ancillary",
-        back_href="ancillary.html",
         scan_href="scans.html?vol=29&start=15&end=16&prefix=leaf&label=Rules+and+Abbreviations&back=ancillary.html",
         body_html=html,
     )

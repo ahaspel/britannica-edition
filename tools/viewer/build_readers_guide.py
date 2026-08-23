@@ -38,7 +38,22 @@ CONTRIBUTORS_JSON = Path("data/derived/articles/contributors.json")
 
 def _prose_context(html: str, pos: int) -> str:
     """The enclosing paragraph as the fisher's disambiguation context — the
-    Guide's prose around the reference (tags stripped)."""
+    Guide's prose around the reference (tags stripped).
+
+    THE SIBLING REFERENCES STAY.  Stripping them was tried and measured: the
+    Guide's paragraphs are a topical sentence followed by a long list of the
+    articles being recommended, and removing that list looked like removing
+    noise.  It is not noise — it is usually the strongest signal in the window.
+    Over the 682 ambiguous references the strip produced 0 gains, 0 losses and
+    93 flips, nearly all of them damage: Madrid moved from the capital to the
+    province, Antwerp likewise, `Luther` from the reformer to a youth
+    association, `H. H. Richardson` from the architect to Samuel Richardson the
+    novelist.  A paragraph listing architects is exactly what identifies
+    Garnier; a list of Spanish cities is what makes Madrid the city.  The one
+    case that motivated the strip (Rémusat, where the siblings were unhelpful
+    and the lead sentence decisive) is the exception, and it is pinned in
+    `data/reference_link_overrides.json` instead.
+    """
     s = html.rfind("<p", 0, pos)
     e = html.find("</p>", pos)
     seg = html[s if s >= 0 else max(0, pos - 600):e if e >= 0 else pos + 600]
@@ -482,11 +497,53 @@ def link_contributors(
     return html, linked
 
 
+_SAME_KIND_CHAPTER = ("HISTORY", "FAR EAST", "QUESTIONS")
+
+
+def _fisher_context(chapter_title: str, window: str) -> str:
+    """The paragraph, with the CHAPTER in front of it where the chapter helps.
+
+    The Guide knows what a reference is about — "MUSIC", "PAINTING", "FOR
+    LAWYERS" — and we were throwing that away: `resolve_reference` takes only
+    prose, so the chapter never reached the fisher.  Prefixing it is additive,
+    so the sibling names in the window (which are usually the strongest signal —
+    see `_prose_context`) all survive.
+
+    Measured over the 682 references that actually reach the fisher: 43 flips,
+    around 30 of them corrections — Wesley, Mackenzie, Dubois and Benoit to the
+    composers rather than a Marquess, a Baron and a trouvère; Heemskerk and
+    Moreau to the painters; `Numbers` in BIBLE STUDY to the book of the Bible
+    rather than number theory; `Mars` in ASTRONOMY to the planet rather than the
+    god.  0 gains and 0 losses: this only re-picks inside an existing bag.
+
+    NOT for history and place chapters.  The chapter discriminates ACROSS kinds
+    (musician vs statesman) and merely perturbs the embedding WITHIN one, and
+    same-kind ambiguity is exactly what a history chapter is full of: with them
+    included, `Charles V` in FRENCH HISTORY moved off the king of France onto
+    the Roman emperor, `Henry VII` off the king of England, `Jamestown` from
+    Virginia to North Dakota.  Excluding them dropped 28 flips, nearly all
+    damage.
+
+    Tried and REJECTED: also skipping references that carry initials, on the
+    theory that "Sir W. S. Gilbert" and "J. G. Fichte" supply their own
+    discriminator and were being overridden.  True for four of them, but it cost
+    fifteen corrections (`W. T. Thornton` to the economist, `J. W. Powell` to
+    the geologist, `H. G. Wells` to the novelist) to save them.  Bad trade.
+    """
+    if not chapter_title:
+        return window
+    up = chapter_title.upper()
+    if any(k in up for k in _SAME_KIND_CHAPTER):
+        return window
+    return f"{chapter_title}. {window}"
+
+
 def transform_content(
     html: str,
     resolver: LinkResolver,
     chapter_lists: dict[str, str] | None = None,
     contributor_resolver: ContributorResolver | None = None,
+    chapter_title: str = "",
 ) -> tuple[str, list[tuple[str, str]]]:
     """Clean Gutenberg markup and resolve article references to links.
 
@@ -554,7 +611,8 @@ def transform_content(
         plain = strip_html_tags(inner)
         plain = plain.replace("&amp;", "&").replace("&mdash;", "—")
         plain = re.sub(r"\s+", " ", plain).strip()
-        fn = resolve_ref(plain, resolver, _prose_context(m.string, m.start()))
+        fn = resolve_ref(plain, resolver, _fisher_context(
+            chapter_title, _prose_context(m.string, m.start())))
         if fn:
             url = _article_url(fn)
             if url:
@@ -1301,6 +1359,7 @@ def build_chapter(
 
     transformed, toc_entries = transform_content(
         inner, resolver, chapter_lists, contributor_resolver,
+        chapter_title=title_up,
     )
 
     # Pretty-case the chapter title (source is uppercase)

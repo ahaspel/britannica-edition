@@ -20,11 +20,46 @@ matching.  This is the SOLE writer of classified_toc.json.
 import bisect
 import json
 import re
+import sys
 
 from britannica.export.sections import section_key
 from pathlib import Path
 
 from britannica.link_resolver import build_resolver, _art_norm
+
+# `vision_text` reads the vision-OCR transcription language; it lives under
+# tools/viewer, which is not a package, so it is reached by path rather than
+# import name.  The alternative was a second copy of the converter here.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "viewer"))
+
+ANCILLARY_JSON = Path("data/derived/vol29_ancillary.json")
+
+
+def _intro_html() -> str:
+    """The editors' introduction to the Classified Table of Contents, as HTML.
+
+    pp. 879-880 of vol. 29, signed "THE EDITORS", dated London, May 31 1911 —
+    the editors explaining the classification that the Topics page IS.  It used
+    to sit in the ancillary list with a link across to Topics, which was the
+    tell: every other ancillary item links to its own transcription, and this
+    one pointed somewhere else because it belonged somewhere else.
+
+    This REPLACES a carry-forward that copied `intro_html` from the previous
+    output if it happened to be there.  Nothing ever wrote it, so the slot was
+    permanently empty and the preserve-whatever-was-there hid that.  Returns ""
+    when the transcription is absent, which is the honest answer — the Topics
+    page already hides the block unless `intro_html` is present.
+    """
+    try:
+        data = json.loads(ANCILLARY_JSON.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        return ""
+    text = data.get("classified_toc_intro")
+    if not text:
+        return ""
+    from vision_text import _vision_to_html
+    html, _toc = _vision_to_html(text, drop_leading_title=True)
+    return html
 
 
 # The 24 authoritative top-level category names, in printed order.
@@ -365,12 +400,9 @@ def main() -> None:
         out_cats.append(cat_obj)
 
     out_obj = {"categories": out_cats}
-    try:
-        prev = json.loads(OUT.read_text(encoding="utf-8"))
-        if prev.get("intro_html"):
-            out_obj["intro_html"] = prev["intro_html"]
-    except Exception:
-        pass
+    intro = _intro_html()
+    if intro:
+        out_obj["intro_html"] = intro
 
     CAT_TOC_DIR.mkdir(parents=True, exist_ok=True)
     for cat in out_cats:

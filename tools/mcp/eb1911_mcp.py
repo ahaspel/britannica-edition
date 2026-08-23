@@ -29,7 +29,9 @@ dishonest about latency.  This spike searches TITLES and topics, and says so.
 from __future__ import annotations
 
 import json
+import re
 import sys
+import collections
 from collections import defaultdict
 from pathlib import Path
 
@@ -110,6 +112,28 @@ def _no_article(stable_id: str) -> dict:
     return {"error": f"no article with id {stable_id!r}"}
 
 
+_MD_HEAD = re.compile(r"^(#{2,3})\s*(.+?)\s*$", re.M)
+
+
+def _outline(md: str) -> list[dict]:
+    """The article's own headings, with the extent of each.
+
+    Read off the MARKDOWN, not the record's `sections` list: the two differ (84
+    vs 80 in AFRICA, because an «ANCHOR» is a link target and emits no heading),
+    and the thing being sliced is the markdown, so the markdown is what must be
+    parsed.  Deriving the offsets from a different list is how a slice silently
+    starts in the wrong place.
+    """
+    heads = list(_MD_HEAD.finditer(md))
+    out = []
+    for i, m in enumerate(heads):
+        end = heads[i + 1].start() if i + 1 < len(heads) else len(md)
+        body = md[m.end():end]
+        out.append({"index": i, "level": len(m.group(1)) - 1,
+                    "title": m.group(2), "words": len(body.split()),
+                    "_start": m.start(), "_end": end})
+    return out
+
 def _cite(rec: dict) -> dict:
     """Every response carries its citation.  An agent that cannot say WHERE a
     claim came from is not usefully grounded, and the whole argument for this
@@ -164,7 +188,75 @@ def build_server(corpus: Corpus):
                 for _, _, title, aid in hits[:max(1, min(limit, 50))]]
 
     @server.tool()
-    def get_article(stable_id: str, include_text: bool = True) -> dict:
+    def search_full_text(query: str, limit: int = 15) -> dict:
+        """Find articles whose TEXT contains a phrase — not just their titles.
+
+        Use this for "which articles mention X". Results are ranked by how often
+        the phrase occurs, with the article's own title and citation.
+
+        A MISSING TOOL DOES NOT PRODUCE "I CANNOT" — it produces the worst
+        available workaround.  Without this, answering "which articles mention
+        Hannibal" meant enumerating 37,226 files on disk, which hangs; the tool
+        scans ONE file instead.
+        """
+        q = (query or "").strip()
+        if len(q) < 3:
+            return {"error": "query must be at least 3 characters"}
+        needle = q.lower().encode("utf-8")
+        # LEADING boundary only.  A trailing one looks tidy and is wrong: it
+        # silently dropped 19 of 166 articles for "Hannibal", every one of which
+        # mentions him as "the Hannibalic War" (32 occurrences), plus Hannibalis,
+        # Hannibalicum, Hannibals, Hannibalianus.  A reader asking which articles
+        # mention Hannibal wants those.  The cost is that a short query can catch
+        # an unrelated longer word, so the matched FORMS are reported back rather
+        # than left as an invisible judgement the caller cannot audit.
+        pat = re.compile(r"(?<!\w)" + re.escape(q) + r"\w*", re.I)
+        hits = []
+        forms: collections.Counter = collections.Counter()
+        # Byte pre-filter before parsing: most lines do not contain the phrase,
+        # and json.loads on all 37,225 of them is the whole cost.
+        with (corpus.bundle / "articles.jsonl").open("rb") as f:
+            for raw in f:
+                if needle not in raw.lower():
+                    continue
+                rec = json.loads(raw)
+                found = pat.findall(rec.get("markdown") or "")
+                if found:
+                    hits.append((len(found), rec))
+                    forms.update(found)
+        hits.sort(key=lambda h: (-h[0], h[1].get("title") or ""))
+        top = hits[:max(1, min(limit, 50))]
+        return {
+            "query": q,
+            "articles_matching": len(hits),
+            "total_mentions": sum(n for n, _ in hits),
+            "forms_matched": dict(forms.most_common(8)),
+            "results": [{"id": r.get("id"), "title": r.get("title"),
+                         "mentions": n, "words": r.get("word_count"),
+                         "url": r.get("url")} for n, r in top],
+        }
+
+    @server.tool()
+    def article_outline(stable_id: str) -> dict:
+        """The article's sections, with the size of each — read this BEFORE
+        fetching a long article.
+
+        Some articles are very large (AFRICA is 54,916 words), and pulling one
+        whole to answer a question about one part of it wastes most of what it
+        returns.  This is the cheap way to see what is in an article and choose.
+        """
+        rec = corpus.record(stable_id)
+        if not rec:
+            return _no_article(stable_id)
+        secs = _outline(rec.get("markdown") or "")
+        out = _cite(rec)
+        out["sections"] = [{k: v for k, v in s.items() if not k.startswith("_")}
+                           for s in secs]
+        return out
+
+    @server.tool()
+    def get_article(stable_id: str, include_text: bool = True,
+                    section: str | None = None) -> dict:
         """Retrieve one article by its stable id, with its citation.
 
         The stable id is the article's permanent address — the tail of
@@ -178,8 +270,33 @@ def build_server(corpus: Corpus):
         out["contributors"] = rec.get("contributors") or []
         out["sections"] = [s.get("title") for s in (rec.get("sections") or [])]
         out["topics"] = rec.get("categories") or []
+        md = rec.get("markdown") or ""
+        if section:
+            # By INDEX or by title.  Index is what `article_outline` just
+            # returned and is unambiguous; a title is what a person types.
+            # Deliberately NOT the section slug — slugs derive from heading text
+            # and move when a heading is corrected, so they are fine as a
+            # convenience and wrong as an interface.
+            secs = _outline(md)
+            hit = None
+            if section.isdigit():
+                hit = next((s for s in secs if s["index"] == int(section)), None)
+            if hit is None:
+                q = section.strip().lower()
+                hit = (next((s for s in secs if s["title"].lower() == q), None)
+                       or next((s for s in secs if q in s["title"].lower()), None))
+            if hit is None:
+                return {"error": f"no section {section!r} in {stable_id}",
+                        "sections": [s["title"] for s in secs]}
+            out["section"] = hit["title"]
+            out["text"] = md[hit["_start"]:hit["_end"]]
+            out["words"] = hit["words"]
+            return out
         if include_text:
-            out["text"] = rec.get("markdown") or ""
+            out["text"] = md
+            out["hint"] = (
+                "This article is long; call article_outline first and fetch one "
+                "section." if len(md.split()) > 8000 else None)
         return out
 
     @server.tool()
