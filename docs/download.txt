@@ -6,7 +6,7 @@ Beyond the website, this edition is published in several forms. The data, free; 
 
 * [Corpus bundle](/download/eb1911-corpus.tar.gz) :: tar.gz, 94 MB :: Each of the 36,691 articles as one record, its text in Markdown, with metadata, sections and cross-references.
 
-* [TEI-P5 edition](/download/eb1911-tei.tar.gz) :: tar.gz, 101 MB :: The scholarly encoding: 37,225 TEI documents, one per article, plus a corpus catalog. This is the only form that carries what the printed page did — small caps, centring, rules and floats, tables and figures as structure rather than prose, mathematics as TeX. Every document validates against the TEI Consortium's own schema, checked on every build. Transliterations added by the transcribers are attributed rather than merged silently into the text.
+* [TEI-P5 edition](/download/eb1911-tei.tar.gz) :: tar.gz, 105 MB :: The scholarly encoding: 37,225 TEI documents, one per article, plus a corpus catalog. This is the only form that carries what the printed page did — small caps, centring, rules and floats, tables and figures as structure rather than prose, mathematics as TeX. Every document validates against the TEI Consortium's own schema, checked on every build. Transliterations added by the transcribers are attributed rather than merged silently into the text. Archived at Zenodo with a citable DOI: [10.5281/zenodo.22072145](https://doi.org/10.5281/zenodo.22072145).
 
 * [Hugging Face dataset](https://huggingface.co/datasets/britannica11/eb1911) :: hosted :: The corpus bundle's records, for anyone who would rather load it than download it.
 

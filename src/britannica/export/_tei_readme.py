@@ -52,6 +52,21 @@ silently into the text, so a reader can tell the 1911 page from a later editor.
 Pages whose Wikisource transcription is unproofread carry a warning in
 `<editorialDecl>`; mathematics on those pages in particular may be corrupt.
 
+## Citing this edition
+
+Archived at Zenodo. Cite the CONCEPT DOI, which always resolves to the current
+version:
+
+    https://doi.org/10.5281/zenodo.22072145
+
+    Haspel, A. (2026). Encyclopædia Britannica, Eleventh Edition: a TEI-P5
+    edition. Zenodo. https://doi.org/10.5281/zenodo.22072145
+
+To pin one release instead, use its version DOI — 2026.1 is
+`10.5281/zenodo.22072146`. Every document also carries the concept DOI in its
+own `<publicationStmt>`, so a single article that has travelled away from this
+bundle still says where it came from.
+
 ## Licence
 
 CC BY-SA 4.0, following the Wikisource transcription this is encoded from.

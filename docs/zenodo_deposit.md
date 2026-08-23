@@ -1,7 +1,29 @@
 # Zenodo deposit — the TEI edition
 
-**Status: drafted, not deposited.** Fill this in at the web form for the first
-release; later versions can go through the API, which inherits this metadata.
+**Status: deposited 2026-08-23**, DOI `10.5281/zenodo.22072146`, against the
+tagged tree `tei-2026.1`. Later versions can go through the API, which inherits
+this metadata.
+
+The DOI above is the one Zenodo reserved before publishing, which is the VERSION
+DOI — fixed to this deposit. Publishing also mints a CONCEPT DOI that always
+resolves to the newest version; record it below when it appears, because that is
+the one the website should cite.
+
+| DOI | value |
+|---|---|
+| **concept** (all versions — cite this on the site) | `10.5281/zenodo.22072145` |
+| **version** (this deposit, 2026.1) | `10.5281/zenodo.22072146` |
+
+Published 2026-08-23 and verified against the live record: licence `cc-by-sa-4.0`,
+creator `Haspel, Aaron` with the ORCID attached, file `eb1911-tei.tar.gz`
+105,428,653 bytes, `md5:5aaf18d8b5b4eae2c3553b150646c5fb` — identical to the
+local bundle and to the copy the website serves.
+
+Citation:
+
+> Haspel, A. (2026). *Encyclopædia Britannica, Eleventh Edition: a TEI-P5
+> edition* (Version 2026.1) [Dataset]. Zenodo.
+> https://doi.org/10.5281/zenodo.22072146
 
 ## Do the first one by hand
 
@@ -20,12 +42,13 @@ added later — an over-broad first one cannot be narrowed.
 
 | field | value |
 |---|---|
+| **DOI** | `10.5281/zenodo.22072146` — reserved 2026-08-23 |
 | **Upload type** | Dataset |
 | **Title** | Encyclopædia Britannica, Eleventh Edition: a TEI-P5 edition |
 | **Version** | `2026.1` |
 | **Language** | English (eng) |
 | **License** | Creative Commons Attribution-ShareAlike 4.0 International |
-| **File** | `eb1911-tei.tar.gz` (~101 MB) |
+| **File** | `eb1911-tei.tar.gz` — `data/derived/eb1911-tei.tar.gz`, 105,428,653 bytes, sha256 `c629bb566d4bd607bd86960a40f1251dc3c1a1abbf802dc3b2e649ae1cfc4d6b` (verified identical to the copy at britannica11.org/download/, 2026-08-23) |
 
 ### Creators
 
@@ -33,8 +56,10 @@ The delicate field, because three parties are involved and only one of them is
 you. The Encyclopædia's 1,507 signed contributors wrote the text; the Wikisource
 contributors transcribed it; this edition encoded it.
 
-- **Creator** — you, ORCID **0009-0005-2497-5739**
-  (https://orcid.org/0009-0005-2497-5739). Check digit verified. It is a permanent
+- **Creator** — **Aaron Haspel**, ORCID **0009-0005-2497-5739**
+  (https://orcid.org/0009-0005-2497-5739). Enter it family-name-first —
+  `Haspel, Aaron` — which is the form Zenodo expects and what makes the
+  generated citation read "Haspel, A. (2026)". Check digit verified. It is a permanent
   identifier for the person — the same idea as this edition's own contributor
   signatures, a key that survives a name being spelled differently. It makes the
   DOI resolve to a person rather than a string, and the deposit will appear on the
@@ -103,8 +128,14 @@ These are how the record joins the rest of the world, and they are easy to skip:
 
 ### Keywords
 
-TEI, TEI P5, Encyclopædia Britannica, Eleventh Edition, 1911, digital edition,
+TEI, TEI P5, Encyclopædia Britannica, Encyclopaedia Britannica,
+Encyclopedia Britannica, Eleventh Edition, 1911, digital edition,
 reference works, history of knowledge, XML, public domain
+
+All three spellings on purpose. The TITLE keeps the ligature, because that is how
+the work prints its own name; keywords are a finding aid, not a claim about the
+work, and nobody types `æ` into a search box. The `ae` digraph is the common
+scholarly form and the bare `e` is what most people will actually search for.
 
 ## Cadence
 
