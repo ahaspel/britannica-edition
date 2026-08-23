@@ -459,7 +459,13 @@ def bind_contributors(session, payloads: dict) -> bool:
 
     for e in contrib_map.values():
         e["display_name"] = _display_name(e["full_name"])
-    _resolve_bio_articles(session, contrib_map)
+    # The stored descriptions, markers intact.  `_contributor_record` has already
+    # run `_description_text` over the copy on each record, which strips the
+    # `«LN»` pointer the bio resolver needs — pass the originals or it resolves
+    # nothing and silently falls back to matching on the name alone.
+    _resolve_bio_articles(
+        session, contrib_map,
+        {cid: (c.description or "") for cid, c in cred_of.items()})
     contrib_list = sorted(contrib_map.values(),
                           key=lambda e: _sort_key(e["full_name"]))
     (ART / "contributors.json").write_text(
