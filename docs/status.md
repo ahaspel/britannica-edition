@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-08-22.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-08-24.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,7 +46,168 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-08-22)
+## CURRENT STATE (2026-08-24)
+
+### Session 2026-08-23/24 — the TEI edition gets a DOI; the contributor biographies were binding the wrong men
+
+**SHIPPED** (four rebuilds, two deploys, both verified against PRODUCTION).
+
+**THE TEI EDITION IS DEPOSITED.**  Zenodo, against the tagged tree `tei-2026.1`:
+concept DOI `10.5281/zenodo.22072145` (cite this — it follows the newest
+deposit), version DOI `10.5281/zenodo.22072146` for release 2026.1.  Verified on
+the published record: licence `cc-by-sa-4.0` (Zenodo defaults to CC BY, the
+easiest field to leave wrong), creator `Haspel, Aaron` with the ORCID attached,
+file md5 matching both the local bundle and the copy the site serves.  The
+concept DOI now rides in every TEI `publicationStmt` as a second `idno`, on
+`teiCorpus.xml`, in the bundle README and on the download page.  Metadata and the
+reasoning behind each field: `docs/zenodo_deposit.md`.  The deposited 2026.1
+predates the `idno` and so does not carry its own DOI; 2026.2 will be the first
+that does.
+
+**CONTRIBUTOR BIOGRAPHIES: seven defects in one function, 202 -> 220 binds, 37
+corrected, 0 regressions.**  Reported by the user: Robert Louis Stevenson's
+biography pointed at Robert Stevenson the lighthouse engineer — his grandfather,
+and the article that also contains his father, which is why a word-matching
+cascade found it plausible.  Underneath: `_filler` was subtracted from the TITLE
+as well as the contributor's name, and Lord/King/Queen/Earl are surnames, so
+`KING, WILLIAM` collapsed to `{WILLIAM}` and twelve contributors shipped with a
+medieval king as their biography (Maitland, Rossetti, Yule).  The prefix scan
+took the first title sharing "SURNAME, FIRSTNAME" with no ambiguity check.  The
+source's own `LN` pointer was discarded whenever it missed a title verbatim — and
+it misses by one word, EB1911 filing him under the given name LEWIS while the
+front matter spells the adopted LOUIS.  Names were tokenized on whitespace,
+keeping the apostrophe inside the word, so the title's U+2018 and the front
+matter's U+0027 never matched — 269 titles carry a curly quote against 26
+straight.  Requiring two matching words rejected the pointers that are
+deliberately a bare surname, where the source says *Family* and means the family
+article (Goldsmid, Pollock).  Same-titled men could not be split until the
+pointer's parenthetical — `(poet)`, `(Scottish philosopher)` — was read against
+the article's opening line.  And a title can be poorer than the pointer as easily
+as richer: Paul Meyer is filed as bare `MEYER` with the forenames in the body.
+
+**THE POINTER PATH WAS DEAD IN PRODUCTION** and every test I wrote passed anyway.
+`_contributor_record` runs `_description_text` before building the map, so the
+marker was flattened before `_resolve_bio_articles` saw it — while my simulations
+fed descriptions straight from the database.  Four green runs, one wasted
+rebuild, and a shipped build that went BACKWARDS (194 binds, down from 202: the
+ambiguity guard removed wrong binds while the path meant to replace them never
+ran).  `_resolve_bio_articles` now raises if handed bio descriptions with not one
+marker among them.  [[feedback_verify_through_pipeline]] — a simulation has to be
+built the way the CALLER builds its input, not the way that is convenient.
+
+**READER'S GUIDE LINK RESOLUTION.**  `resolve_reference`'s single-word subset
+guard filtered a bag the `subset` rung had recalled with accents FOLDED, by RAW
+string comparison — re-imposing a sensitivity the rung had just dropped, in both
+directions.  `Clemenceau` with its accent was thrown away because the article is
+`CLEMENCEAU, GEORGES`; a bare `Merimee` equally lost the accented title.  8
+gains, 0 losses over 6,725 references.  It exposed one bind that had been correct
+BY ACCIDENT — two Remusats whose titles differ only by an accent — now pinned.
+Separately the Guide's CHAPTER now reaches the fisher (`resolve_reference` took
+only prose): 43 flips over the 682 ambiguous references, ~30 corrections — the
+composers rather than a Marquess and a trouvere, `Numbers` in BIBLE STUDY the
+book rather than number theory.  NOT for history/place chapters, where candidates
+are the same kind and the chapter only perturbs the embedding.
+
+**Two hypotheses measured and REJECTED**, recorded where they would be re-tried:
+stripping the sibling names from the prose window (93 flips, nearly all damage —
+the siblings are usually the strongest signal: a paragraph listing architects is
+what identifies Garnier), and skipping references that carry initials (saved
+four, cost fifteen).
+
+**TWO RECALL LADDERS, NOT ONE.**  `candidates()` and the inline walk inside
+`resolve()` implement the same rungs; they have already drifted, and today's bug
+is the proof — the accent guard exists in only one, so the same name resolved on
+the topics path and abstained on the Guide path.  Closing it means `resolve()`
+calling `candidates(superset=False)` with the kind gate and aggressive-fuzzy
+lifted into parameters.  Wants its own census; not started.
+
+**ANCILLARY.**  The Preface to the Index now reads on the Editorial Preface's
+model — header, byline, type, geometry, contents links no longer underlined (that
+page sets a global no-underline rule for links and this template never did).  The
+printed title block INDEX/VOLUME XXIX/PREFACE is dropped positionally.  Four
+shoulder notes stranded in empty paragraphs now lead the paragraph they annotate,
+and below 900px the drop initial no longer lands on the note.  The **Classified
+Table of Contents introduction** is newly transcribed (vol 29 pp. 879-880) and
+lives on the Topics page; it was the one ancillary item linking somewhere else
+instead of to its own transcription, which was the tell.  The `intro_html`
+carry-forward it lands in copied the value from the previous output if it
+happened to be there — nothing ever wrote it, so the slot was permanently empty
+and the carry-forward hid that.
+
+**IDENTIFIER SCOPE: corpus-wide uniqueness considered and DECLINED**, on
+measurement.  Of ~14 `xml:id` per document, 13 are the same 13 strings in every
+document (one `respStmt`, twelve renditions).  Prefixing them would mint 37,225
+distinct ids for one small-capitals rendition.  Only section anchors vary and
+they do collide (1,290 slugs reused, `section-history` in 191 articles) — but
+prefixing those alone buys nothing, because assembly still fails on the shared
+thirteen.  The duplication is the price of SELF-CONTAINMENT, which is the
+property worth having.  The reasoning now lives in `eb1911.odd.xml` itself.  An
+assembly script was proposed and withdrawn: the README already pre-empts the only
+concrete harm, and shipping one would invite the operation we argue against.
+
+**Also:** the essay's contributor counts corrected against the corpus (Phillips
+108, Ashby 291 — contributor handling changed under them); the MCP spike's
+`search_full_text` lost a trailing word boundary that silently dropped 20 of 166
+articles for "Hannibal", every one of which mentions him as "the Hannibalic War";
+`docs/tei_consortium_listing.md` drafts the "Projects Using the TEI" submission,
+which is moderated and waiting on authorisation.
+
+**THE REBUILD STAMP NOW COVERS WHAT A DEPLOY SHIPS**, not the articles alone.
+`corpus_stamp` hashed `data/derived/articles/` only, so a stray write to
+`classified_toc.json` — or to any bundle or client-side JSON — passed the check
+silently.  Demonstrated rather than theorised: running ONE pipeline stage by
+hand rewrote the TOC with a pre-disambiguation version (phase 5.2's cached
+disambiguations were missing, `GLASS` where the build produces `GLASS, STAINED`),
+and the guard whose whole purpose is "a tool ran after the build finished" said
+nothing.  It now covers 20 further files, taken from what `deploy.sh` actually
+uploads; NOT `scans/`, which are inputs no rebuild regenerates.  Verified by
+writing a stamp, touching the TOC's mtime without changing a byte, and watching
+it refuse with exit 1.  A stamp written before the widening degrades gracefully
+and self-heals on the next rebuild.  Also: stderr was never reconfigured to
+UTF-8, so every refusal message rendered as mojibake on a Windows console — a
+correct refusal reading like a broken tool at the one moment it must be trusted.
+
+**DEAD CODE: two abandoned approaches cleared out of the classified-TOC
+builder.**  `populate_classified_toc.py` carried three path constants naming
+inputs it no longer reads (one pointing at a file that no longer exists), four
+regexes and lookups from the hand-marked path, and a per-category writer whose
+output — `data/derived/cat_toc/`, 24 files, 4.2 MB every rebuild — is consumed
+by nothing.  Its docstring had described the SECOND of those two dead paths
+since May, and it cost real time this session: it told me the classified TOC was
+hand-marked, and I said so, and it is not — `complete_index` merges the printed
+index trunk with the whole-spread reads and audits to 24 categories, with nothing
+hand-marked at all.  Removal proven output-neutral by re-running the builder at
+HEAD and after: byte-identical.  Net -44/+21.  Separately, 3,166 orphaned `.pyc`
+files (41.6 MB, 39 of them bytecode for modules deleted long ago) were answering
+searches on behalf of code that does not exist; cleared.
+
+**A RATCHET FOR THE CLASS**, because "I usually remember" is the same shape as a
+comment saying *don't forget*.  `tools/diagnostics/unread_constants.py` +
+`tests/unit/test_unread_constants_ratchet.py`: a module-level name assigned and
+never read again fails the suite unless deliberately accepted, the same pattern
+as the duplicated-constant and title-index ratchets.  It would have caught seven
+of tonight's eight fossils the day each stopped being used.  A name counts as
+READ if it is loaded in its own module, imported by name elsewhere, or reached as
+an attribute — `EDITION_DOI` is defined in `tei.py`, never used there, imported
+by `download.py`, and correctly not flagged.
+
+Baseline: 19 entries in 14 files, a record and not an endorsement.  Two are worth
+someone's attention: `markdown.py` defines `_SC_OPEN` identically to `tei.py` and
+never uses it, and `markers.py` builds `RENDERED_MARKER_OPENS` that nothing reads
+while three separate comments reason about it as though it were live.  The second
+test makes the ratchet ratchet — a baselined entry that gets deleted or wired up
+must LEAVE the baseline, or the baseline slowly becomes permission.
+
+**Open / next:**
+- `resolve()` onto `candidates()` — the last recall fork.
+- The build's TEI gate validates the 37,225 members but NOT `teiCorpus.xml` or
+  the ODD; both are valid today, but they sit outside the net.
+- The Guide's alphabetical-list path passes only the bare name as fisher context
+  — unmeasured, deliberately untouched.
+- ~836 MB of July probe EPUBs in the repo root, indistinguishable at a glance
+  from the real artifact beside them.
+- The TEI gate still does not validate `teiCorpus.xml` or the ODD, and the
+  widened stamp checks that they have not MOVED, not that they are valid.
 
 ### Session 2026-08-22 — author links stop going through search; the TOC arc closes by MEASUREMENT, not by a rule
 

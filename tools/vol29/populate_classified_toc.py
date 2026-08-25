@@ -1,21 +1,24 @@
-"""Populate the classified TOC from the human-marked major boundaries.
+"""Populate the classified TOC: the printed structure, with every title resolved.
 
-An earlier generator (now removed) tried to *recover* the 24-category
-segmentation by walking the OCR and reconciling clipped banners against a
-skeleton -- the deep-trunk failures of that walk are why we hand-marked the
-boundaries instead.  This builder keeps the one genuinely good half of it --
-the article RESOLVER, lifted here -- and feeds it the marks:
+The STRUCTURE arrives already built, from `complete_index.index_tree()` -- the
+printed index supplies the authoritative trunk (levels 1-3) and the whole-spread
+reads supply the leaf sections, merged on band name and audited to 24 categories
+and no 25th.  This module supplies the other half: every article title in that
+tree resolved to its file, through the cascade below.
 
-    docs/vol29_major_markup.txt           (the hand-marked boundaries, git-tracked)
-  + data/derived/vol29_halves_debug.json  (the half-page OCR, in reading order)
-  -> buckets straight from the printed `###`/`##` section headers
-  -> each bucket sorted alphabetically (the source's own order)
-  -> every article title resolved to its file (the 10-step cascade below)
-  -> data/derived/classified_toc.json     (what topics.html renders)
+    complete_index.index_tree()        the structure, correct by construction
+  + data/derived/articles/index.json   the corpus to resolve against
+  -> data/derived/classified_toc.json  (what topics.html renders)
 
-The structure comes from the marks (correct by construction); the order from
-the alphabet; the links from the resolver.  No banner-guessing, no skeleton
-matching.  This is the SOLE writer of classified_toc.json.
+The order is the alphabet's -- the source's own.  This is the SOLE writer of
+classified_toc.json.
+
+TWO EARLIER PATHS ARE GONE and this docstring described the second of them until
+2026-08-24, three months after it stopped being true.  The first tried to RECOVER
+the segmentation by reconciling clipped banners against a skeleton; the second
+fed the builder hand-marked boundaries from a git-tracked `vol29_major_markup.txt`.
+Neither survives -- nothing is hand-marked now -- but the constants naming their
+inputs sat here unread, and a reader (correctly) believed them.
 """
 import bisect
 import json
@@ -75,11 +78,7 @@ CATEGORIES = [
 
 ARTICLES_INDEX = Path("data/derived/articles/index.json")
 ARTS_DIR = ARTICLES_INDEX.parent
-SECTION_INDEX = Path("data/derived/classified_section_index.json")
-MARKUP = Path("docs/vol29_major_markup.txt")
-HALVES = Path("data/derived/vol29_halves_debug.json")
 OUT = Path("data/derived/classified_toc.json")
-CAT_TOC_DIR = Path("data/derived/cat_toc")
 
 
 def _normalize(s: str) -> str:
@@ -141,23 +140,6 @@ def wanted_kinds(path_segments: list[str]) -> tuple[str, ...]:
 
 
 
-
-
-# ── Buckets straight from the marks ───────────────────────────────────────
-_CONT_KW = ["unitedkingdom", "britain", "asia", "africa", "australasia",
-            "america", "oceania", "ocean", "europe"]
-_MARK = re.compile(r"^<<<<\s*(.*?)\s*>>>>\s*$")
-_catnorm = {_normalize(c): c for c in CATEGORIES}
-
-
-# A section header the OCR demoted to a plain entry line (no ##/###) after a
-# clipped page-banner -- "Russia: *Biographies*", "Rumania: *Subjects and
-# Biographies*", "Argentina: *Divisions*", "Chile: *Towns, etc.*".  The
-# "Name: <section>" shape is unmistakable; an article entry never carries that
-# tail.  History uses Subjects/Biographies; Geography uses Divisions/Towns and
-# "Ancient Names" (the index spells it "Ancient geography").
-_DEMOTED_HDR = re.compile(
-    r"^[^:]{2,60}:\s*\*?(subjects|biographies|divisions|towns|ancient)\b", re.I)
 
 
 # ── Pour the buckets into the REVIEWED nested index ───────────────────────
@@ -404,11 +386,6 @@ def main() -> None:
     if intro:
         out_obj["intro_html"] = intro
 
-    CAT_TOC_DIR.mkdir(parents=True, exist_ok=True)
-    for cat in out_cats:
-        slug = re.sub(r"[^a-z0-9]+", "_", cat["name"].lower()).strip("_")
-        (CAT_TOC_DIR / f"{slug}.json").write_text(
-            json.dumps(cat, ensure_ascii=False), encoding="utf-8")
     OUT.write_text(json.dumps(out_obj, ensure_ascii=False), encoding="utf-8")
     pct = (100 * n_res // n_arts) if n_arts else 0
     print(f"Wrote {OUT}")

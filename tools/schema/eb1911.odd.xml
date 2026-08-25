@@ -120,6 +120,27 @@
         <p>Section identifiers take the form <val>section-slug</val>, and are the
         same anchors the website uses, so a TEI identifier and a URL fragment
         name the same place.</p>
+
+        <p>CORPUS-WIDE UNIQUENESS WAS CONSIDERED AND DECLINED, on the evidence of
+        what the identifiers actually are. Of roughly fourteen per document,
+        thirteen are the SAME thirteen strings in every document — one
+        <gi>respStmt</gi> and twelve renditions. Prefixing those with the
+        article's identifier would mint 37,225 distinct ids for what is one
+        small-capitals rendition, asserting that this article's small caps differ
+        from that article's; it is worse modelling, not better, across roughly
+        half a million attributes. Only the section anchors vary, and they
+        genuinely do collide — 1,290 slugs are used by more than one article, and
+        <val>section-history</val> by 191 of them — but prefixing those alone
+        buys nothing, because assembly still fails on the thirteen shared ones.</p>
+
+        <p>The duplication is a consequence of SELF-CONTAINMENT, which is the
+        property being bought: a member validates, reads and cites alone. The
+        alternative — declaring the shared renditions once in the
+        <gi>teiCorpus</gi> header and letting members inherit them — makes the
+        corpus assemble as one valid document and makes a single extracted
+        article incomplete, its <att>rendition</att> values pointing at nothing.
+        Every use this edition is put to is per-article, so self-containment
+        wins.</p>
       </div>
     </body>
   </text>

@@ -40,14 +40,48 @@ import argparse
 import hashlib
 import json
 import os
+import pathlib
 import sys
 from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")
+# STDERR TOO.  Every refusal message goes to stderr, and this is the one file
+# whose output is read at the worst possible moment — when a deploy has just
+# been stopped.  Un-reconfigured, the em-dashes in those messages arrive as
+# mojibake on a Windows console, which makes a correct refusal look like a
+# broken tool.
+sys.stderr.reconfigure(encoding="utf-8")
 
 ROOT = Path(__file__).resolve().parents[2]
 EXPORT_DIR = ROOT / "data" / "derived" / "articles"
-STAMP = ROOT / "data" / "derived" / "rebuild_stamp.json"
+DERIVED = ROOT / "data" / "derived"
+STAMP = DERIVED / "rebuild_stamp.json"
+
+# EVERYTHING ELSE A DEPLOY SHIPS out of data/derived, taken from what
+# `deploy.sh` actually uploads.  The articles were the only thing covered until
+# 2026-08-24, and the gap was demonstrated rather than theorised: running ONE
+# pipeline stage by hand rewrote `classified_toc.json` with a pre-disambiguation
+# version — the exact "a tool ran after the build finished" case this file
+# exists to catch — and the check passed, because the file sits outside the
+# scanned directory.  A deploy would have shipped it with every gate green.
+#
+# NOT `scans/`: those are inputs that no rebuild regenerates, so including them
+# would fail the check whenever a scan was added, which is not what this asks.
+SHIPPED_FILES = [
+    # regenerated every rebuild and read client-side to build links and pages
+    "classified_toc.json", "printed_pages.json", "printed_pages_leaf.json",
+    "scan_map.json", "fm_first_content.json", "volumes.json",
+    # the public bundles
+    "eb1911-corpus.tar.gz", "eb1911-corpus.tar.gz.sha256",
+    "eb1911-maps.tar.gz", "eb1911-maps.tar.gz.sha256",
+    "eb1911-tei.tar.gz", "eb1911-tei.tar.gz.sha256",
+]
+SHIPPED_DIRS = ["download"]
+
+
+def _stat_line(name: str, path: pathlib.Path) -> str:
+    st = path.stat()
+    return f"{name}:{st.st_size}:{st.st_mtime_ns}\n"
 
 
 def corpus_signature() -> tuple[str, int]:
@@ -60,6 +94,35 @@ def corpus_signature() -> tuple[str, int]:
         st = entry.stat()
         h.update(f"{entry.name}:{st.st_size}:{st.st_mtime_ns}\n".encode())
         n += 1
+    return h.hexdigest(), n
+
+
+def shipped_signature() -> tuple[str, int]:
+    """(hash, file count) over the OTHER derived files a deploy ships.
+
+    A missing file is recorded as missing rather than skipped: a bundle that
+    vanished between the build and the deploy is exactly as interesting as one
+    that changed.
+    """
+    h = hashlib.sha256()
+    n = 0
+    for name in SHIPPED_FILES:
+        f = DERIVED / name
+        if f.is_file():
+            h.update(_stat_line(name, f).encode())
+            n += 1
+        else:
+            h.update(f"{name}:MISSING\n".encode())
+    for d in SHIPPED_DIRS:
+        base = DERIVED / d
+        if not base.is_dir():
+            h.update(f"{d}/:MISSING\n".encode())
+            continue
+        for entry in sorted(os.scandir(base), key=lambda e: e.name):
+            if entry.is_file():
+                h.update(_stat_line(f"{d}/{entry.name}",
+                                    pathlib.Path(entry.path)).encode())
+                n += 1
     return h.hexdigest(), n
 
 
@@ -79,12 +142,16 @@ def main() -> int:
     sig, count = corpus_signature()
 
     if args.write:
+        ssig, scount = shipped_signature()
         STAMP.write_text(json.dumps({
             "signature": sig,
             "articles": count,
+            "shipped_signature": ssig,
+            "shipped_files": scount,
             "finished": __import__("datetime").datetime.now().isoformat(timespec="seconds"),
         }, indent=2) + "\n", encoding="utf-8")
         print(f"  corpus stamped: {count:,} articles, {sig[:16]}")
+        print(f"  shipped files stamped: {scount}, {ssig[:16]}")
         return 0
 
     if not STAMP.is_file():
@@ -109,6 +176,32 @@ def main() -> int:
         print("  partial deploy the project forbids: rebuild in full, then deploy.",
               file=sys.stderr)
         return 1
+
+    # The other derived files a deploy ships.  A stamp written before this check
+    # existed has no `shipped_signature`; say so rather than failing a build that
+    # is otherwise sound — the next rebuild records one and it self-heals.
+    if "shipped_signature" not in prev:
+        print("  (stamp predates the shipped-file check; articles verified only —"
+              " the next rebuild will widen it)")
+    else:
+        ssig, scount = shipped_signature()
+        if prev["shipped_signature"] != ssig:
+            print("  REFUSING TO DEPLOY: a derived file this deploy ships has "
+                  "changed since the", file=sys.stderr)
+            print("  last completed rebuild.", file=sys.stderr)
+            print(f"    stamped {prev.get('shipped_files')} files at "
+                  f"{prev.get('finished')}", file=sys.stderr)
+            print(f"    on disk {scount} now", file=sys.stderr)
+            print("  The ARTICLES are intact, so this is not a half-written "
+                  "export — something", file=sys.stderr)
+            print("  rewrote a bundle, a graph, or one of the client-side JSONs "
+                  "after the build:", file=sys.stderr)
+            print("  running a single pipeline stage by hand does exactly this, "
+                  "and produces a", file=sys.stderr)
+            print("  file that looks right and lacks whatever later phases add "
+                  "to it.  Rebuild in", file=sys.stderr)
+            print("  full, then deploy.", file=sys.stderr)
+            return 1
 
     print(f"  corpus matches the rebuild that finished {prev.get('finished')} "
           f"({count:,} articles)")
