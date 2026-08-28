@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-08-24.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-08-28.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,7 +46,56 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-08-24)
+## CURRENT STATE (2026-08-28)
+
+### Session 2026-08-28 — the section slug folds accents; the OLD address rides along
+
+**Built, verified, NOT deployed.**  `./tools/deploy.sh` ships it.
+
+`section_slug` dropped accented letters to hyphens, so POLAND's Kościuszko
+section answered to `#section-ko-ciuszko` — an address a reader can see and
+bookmark.  The fix is a SPLIT, not a repair:
+
+- **`section_slug` is FROZEN.**  Its output is sha1'd into `stable_id`, and the
+  URL forwarder recomputes it table-free.  "Fixing" it moves every article in
+  the corpus.  Its docstring now says so, and names its sibling.
+- **`anchor_slug`** folds accents first and owns the `#section-…` fragment.
+  Both share one strip rule; only the fold differs.
+
+379 fragments across 102 articles change, so **every** producer of a
+`section-…` id emits a back-compat «ANCHOR» carrying the OLD slug where the two
+disagree — «ANCHOR» was already "a link target, NOT a heading", which is exactly
+what this is.  Nothing is redirected, because nothing moved: both addresses
+exist.  `export.sections` filters the twin back out by recomputing
+`section_slug` from the anchor's own LABEL, so it never reaches the TOC or the
+download bundle (whose schema is `additionalProperties: false` over
+`{title, slug, level}` — it drops `kind`, so a consumer could not tell a target
+from a heading).
+
+**Two rebuilds, because the first build audited BADLY.**  Round one covered
+«SEC» and «SH» and left `_anchor()` — the `{{anchor}}` point targets — behind:
+365 of 379 fragments landed, 14 did not (FRANCE ×5, NAPOLEONIC CAMPAIGNS ×4,
+OLAF ×2, HUNGARY, FRENCH CONGO, HADRAMUT).  A `{{anchor}}` exists precisely to
+be linked at, so it is the last construct that should quietly change address.
+The lesson is the familiar one: the corpus scan found it, the unit tests did
+not, and the fix was the *class* (every id-minting site) rather than the
+instance.
+
+Round two also made internal links canonical: `render.article` was recomputing
+the xref fragment with `section_slug`, so our OWN links pointed at the
+compatibility shim.  Measured after: 0 legacy, 2 canonical.  Two sites were
+deliberately NOT changed — `build_readers_guide._chapter_filename` (a FILENAME;
+changing it breaks 65 chapter URLs) and `render.article:518` (a CONTRIBUTOR
+slug, a different namespace).
+
+**Verified on the built corpus (not on a re-render):** 379/379 changed
+fragments have a landing legacy twin, 0 back-compat anchors leaked into any
+sections list, 0 in the download bundle's 37,225 rows, TEI 0 invalid.
+
+The dup-constants ratchet caught me writing the `«ANCHOR:{}|{}»` grammar at two
+new sites instead of calling the one thing that mints it; `anchor_marker` is now
+that one thing.  It also caught the reverse of the usual complaint — the
+duplicate was mine, not the codebase's.
 
 ### Session 2026-08-23/24 — the TEI edition gets a DOI; the contributor biographies were binding the wrong men
 

@@ -1,6 +1,6 @@
 """The slug rule has ONE owner, and the viewer is not allowed to grow a second.
 
-Python's ``britannica.util.strings.section_slug`` bakes ``id="section-<slug>"``
+Python's ``britannica.util.strings.anchor_slug`` bakes ``id="section-<slug>"``
 into ``rendered_html`` — TOC links and anchors alike — and the viewer only ever
 JUMPS to ids that already exist (it reads ``window.location.hash``; it computes
 nothing).  There used to be a ``sectionSlug`` copy in viewer.html from the
