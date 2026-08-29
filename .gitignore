@@ -58,3 +58,16 @@ build/
 # verified from the repo and would go stale against the local corpus; deploy.sh
 # regenerates it immediately before upload.
 tools/viewer/build-stamp.js
+
+# EPUBCheck, the TEI Consortium-independent validator we gate the books on.
+# 32 MB of third-party jar — installed, not committed.  `tools/check_epub.sh`
+# IS committed, knows this path, and prints the download URL when the jar is
+# absent: the pair is what makes the tool findable from a fresh clone, which a
+# jar sitting in a session scratchpad was not.
+tools/epubcheck/
+
+# The built books, their published checksums, and the build logs.  `*.epub`
+# already ignored the files; this ignores the DIRECTORY, which is the thing
+# deploy.sh now mkdir -p's.  ~800 MB of dead July probe builds used to sit
+# loose in the repo root beside them; the two books we ship are all that is left.
+epub/

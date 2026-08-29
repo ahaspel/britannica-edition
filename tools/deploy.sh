@@ -45,7 +45,8 @@ echo "  Verifying the corpus against the last completed rebuild..."
 uv run python tools/diagnostics/corpus_stamp.py --check
 
 echo "  Building vol-1 sampler EPUB [$(elapsed)]..."
-uv run python -m britannica.epub.build --volume 1 --out eb1911-vol01.epub
+mkdir -p epub   # gitignored, so absent on a fresh clone
+uv run python -m britannica.epub.build --volume 1 --out epub/eb1911-vol01.epub
 
 echo "  Uploading articles to S3..."
 # Cache policy is load-bearing here: article JSONs are content-addressed ({hash}.json,
@@ -110,9 +111,9 @@ aws s3 cp data/derived/eb1911-maps.tar.gz.sha256 s3://britannica11.org/download/
 aws s3 cp data/derived/eb1911-tei.tar.gz s3://britannica11.org/download/eb1911-tei.tar.gz
 aws s3 cp data/derived/eb1911-tei.tar.gz.sha256 s3://britannica11.org/download/eb1911-tei.tar.gz.sha256
 echo "  Uploading vol-1 sampler EPUB (built above)..."
-sha256sum eb1911-vol01.epub | awk '{print $1}' > eb1911-vol01.epub.sha256
-aws s3 cp eb1911-vol01.epub s3://britannica11.org/download/eb1911-vol01.epub
-aws s3 cp eb1911-vol01.epub.sha256 s3://britannica11.org/download/eb1911-vol01.epub.sha256
+sha256sum epub/eb1911-vol01.epub | awk '{print $1}' > epub/eb1911-vol01.epub.sha256
+aws s3 cp epub/eb1911-vol01.epub s3://britannica11.org/download/eb1911-vol01.epub
+aws s3 cp epub/eb1911-vol01.epub.sha256 s3://britannica11.org/download/eb1911-vol01.epub.sha256
 aws s3 cp data/derived/download/manifest.json s3://britannica11.org/download/manifest.json
 aws s3 cp data/derived/download/README.md s3://britannica11.org/download/README.md
 

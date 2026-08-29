@@ -50,6 +50,38 @@ agent's memory directory and are not duplicated here.
 
 ### Session 2026-08-28 — the section slug folds accents; the OLD address rides along
 
+**The EPUBs, same day.**  Both books were rebuilt and both validate **0 fatals /
+0 errors / 0 warnings** under EPUBCheck 5.1.0.  They now carry
+`<dc:relation>https://doi.org/10.5281/zenodo.22072145</dc:relation>` — a RELATION,
+not an identifier: only the TEI is deposited (`docs/zenodo_deposit.md`), so the
+book is not the object that DOI names.  The package identifiers are untouched
+(`urn:britannica11:complete` / `:vol-01`); readers key library identity on
+(dc:identifier, dcterms:modified), and moving it turns every existing library
+copy into a different book.  The concept DOI, matching `tei.EDITION_DOI`, so a
+book pressed today still points somewhere true after 2026.2.
+
+The full book needed no rebuild on its merits — it was already current (built
+2026-08-23T20:06:12Z, after the contributor-bio fixes), and a section id is
+invisible inside a self-contained EPUB.  The rebuild bought the one metadata line.
+
+
+**And the books have a home.**  `epub/` (gitignored) holds the two we ship, their
+checksums, and the build logs; `deploy.sh` builds the sampler into it and
+`mkdir -p epub` first, since a fresh clone has no such directory.  ~800 MB of dead
+July probe builds (`full6probe`, `probe567`, `probeV5-7`, the four kindle
+variants, …) that had been sitting loose in the repo root are DELETED — the
+kindle arc closed 2026-08-16 and none of them was reachable from anything.
+The full book also got a `.sha256` for the first time: only the sampler's was
+ever generated, because only the sampler is published on the site.
+
+**EPUBCheck is now findable.**  It existed only in a session scratchpad, ten
+levels deep, with NO reference to it anywhere in the repo — so the validator for
+a book we sell was, in practice, lost.  The jar is installed at
+`tools/epubcheck/` (32 MB, gitignored) and **`tools/check_epub.sh` is committed**:
+it knows that path, prints the download URL when the jar is absent, and defaults
+to checking both shipped books.  The committed half is the point — an installed
+tool nothing in the repo mentions is indistinguishable from an absent one.
+
 **Built, verified, NOT deployed.**  `./tools/deploy.sh` ships it.
 
 `section_slug` dropped accented letters to hyphens, so POLAND's Kościuszko
