@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-08-28.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-08-29.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,8 +46,234 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-08-28)
+## CURRENT STATE (2026-08-29)
 
+### Session 2026-08-29 — the DNB probe: our pipeline reads a corpus it has never seen
+
+> **The plan lives in [`docs/dnb_project.md`](dnb_project.md)** — scope, the five
+> corpus-specific pieces, six phases, and the open decisions.  This entry is the
+> EVIDENCE behind it: the measurements, and the wrong turns taken to get them.
+
+**A PROBE, not an arc.**  Nothing in `src/` changed for this.  Everything below was
+measured by running the REAL `render_pages` over REAL Wikisource pages, with the
+one exception noted (a single regex literal swapped, in a scratch process).
+
+**Scale.**  63 volumes, **29,186 `Page:` entries, ~25M words** (EB1911: 28 volumes,
+37,225 articles, ~40M).  Title pattern `Page:Dictionary of National Biography volume
+{v:02d}.djvu/{p}` — STRUCTURALLY IDENTICAL to EB1911's, same zero-padding.  (Volume 1
+came back missing unpadded, which is what revealed the padding.)
+
+**Render fidelity.**  100 pages from volumes 1, 20, 45 and 63 — deliberately spanning
+the 15-year run, because the first probe was 81 contiguous pages of one sub-editor's
+Johnsons and proved only that slice.  87,000 words, unmodified code:
+
+| | count |
+|---|---|
+| crashes | **0** |
+| leaked `''`, `<section>`, `<noinclude>`, markers, `[[links]]` | **0** |
+| unhandled templates that are not `{{DNB XX}}` | **0** |
+| distinct templates handled correctly | 22 |
+
+The 22 include `{{hws}}`/`{{hwe}}` page-break hyphenation — the same Wikisource
+convention EB1911 uses, which is WHY this works: we did not generalise to the DNB, we
+implemented Wikisource and the DNB is written in it.
+
+**Contributors are very nearly free.**  `{{DNB AWW}}` expands to
+`{{DNB footer initials|Adolphus William Ward|A. W. W.}}` — the same idiom as
+`{{EB1911 footer initials|…}}`.  Swapping ONE literal in
+`extract_contributors._FOOTER_START` and running the real `_iter_footers` /
+`_parse_contributors` over all 1,164 DNB contributor templates:
+**1,162 names (99.8%)**, **1,153 initials (99.1%)**, **1,112 distinct people**.  The 2
+failures use a `name=` named-parameter form.  The brace-balancing that Pitcher's
+`C. {{sc|Wi}}.` forced on us is exactly what `{{sc|D. Ll. T.}}` needs.
+
+**Three things the DNB hands over that EB1911 made us earn:** article boundaries are
+EXPLICIT and NAMED (`<section begin="Johnson, Samuel (1691-1773)"/>`, 172 in 100
+pages — no `detect_boundaries`, no dropped articles); initials collisions are
+PRE-DISAMBIGUATED upstream (403 templates like `DNB AAM Macdonell` vs
+`DNB AAM Milne`); the roster is data, not front matter to parse.
+
+**A claim I got wrong and corrected by measuring.**  I first called `[q. v.]` "the one
+genuinely harder thing".  The DNB ALSO has `{{DNB lkpl|Benbow, John (1653-1702)|Vice-Admiral Benbow}}` — explicit target AND display text, 50 in 100 pages — and we
+already render it as `<a class="article-link" title="…">`, 46/46 display texts
+preserved (the one apparent loss was an apostrophe my comparison had not unescaped).
+It needs RESOLUTION, which is what `LinkResolver` does.  So the DNB has an explicit
+xref form that works today and a bare form that does not.
+
+**Cross-reference density grows through the alphabet** — lkpl/`[q. v.]`/`[see` per 25
+pages: vol 1 = 4/1/2, vol 20 = 13/36/4, vol 45 = 13/38/4, vol 63 = 20/92/11.  The DNB
+was published alphabetically over 15 years, so volume 1 had almost nothing prior to
+point at.  Four sample points, so this is inference — but it is monotonic in all three
+columns, and it means xref work scales with volume number and resolves BACKWARDS.
+
+**What is actually left**, largest first: (1) `[q. v.]` resolution — a bare marker
+after a name in running prose, needing the name extracted backwards; (2) corpus
+parameterisation — 109 EB1911 mentions on code lines across ~30 files (83 more are
+prose), chiefly `volumes.py`, output filenames, display strings, the footer prefix;
+(3) `{{DNB XX}}` → contributor binding, mostly plumbing once the roster parses.
+**`[q. v.]` RESOLUTION WORKS, on the engine we already have.**  `NameIndex` — the
+EB1911 FILL substrate — built UNMODIFIED over all 28,299 DNB article titles
+(enumerated from mainspace in 57 API requests; 27.9% carry a disambiguator).  The
+only new code is a ~40-line extractor for the name phrase left of the marker.
+
+| | |
+|---|---|
+| bare `[q. v.]` instances | 269 |
+| **resolved to a single title** | **193 (71.7%)** |
+| ambiguous | 50 |
+| no candidate | 25 |
+
+Word-set recall is WHY: `John Jones` and `Jones, John` collide on `{john, jones}`, so
+the surname inversion the DNB needs is free.  What the extractor adds is the DNB's own
+idiom, all ANCHORED at the marker: peerage and place put the person in FRONT
+(`Selina Hastings, countess of Huntingdon`; `Thomas Harris of Covent Garden`),
+honorifics stack (`General Sir John Thomas Jones, bart.`), and dates need normalising
+(prose `fl. 1771–1831` vs title `fl.1771-1831`).
+
+**Scored** against the 54 instances whose answer is written down in an adjacent
+`{{DNB lkpl}}`: **48 correct, 5 miss, 1 wrong** — and in TWO the resolver was right
+while the hand-written link was a redirect (`Wraxall, Nathaniel` does not exist;
+`Wraxall, Nathaniel William` does).  The single wrong answer is an artifact of the
+control: that link's display text is the bare forename `William` because the LINK
+carries the surname, so stripping it poses a harder question than a real bare
+`[q. v.]` ever asks.
+
+**CAVEAT, stated plainly: 71.7% is a RESOLUTION rate, not an accuracy rate.**  We know
+those 193 reach exactly one title; we have ground truth for correctness only on the
+54-instance control, which is small and drawn from a different distribution (an
+instance that already carries an explicit link is not a random instance).  The 181
+pages measured are 0.6% of the corpus.  Nothing here is a claim about the other 99.4%.
+
+**Process note worth keeping.**  My first pass at those extractor fixes REGRESSED the
+rate to 32% — the "of" cut ran over the whole 110-character prose window, so any
+" of " in the sentence severed the name.  The end-to-end number would have read as
+"some cases are hard".  Pulling the extractor out and scoring it against ten
+written-down cases found it immediately and named the bug exactly (`Covent Garden` is
+two words; the pattern allowed one).  Test the component, not the pipeline.
+**IT BUILDS.**  88 DNB articles taken end to end — source pages → detection → walk →
+article JSON — on a SCRATCH database (`dnb_probe`, created for this; the EB1911
+database was never opened, and every probe script asserts on `engine.url` before
+touching anything).  81 pages of volume 30 loaded as `SourcePage` rows.
+
+**One function had to be written, ~40 lines.**  EB1911 needs `super_walk` to
+RECOGNISE article openings from typography alone.  The DNB writes
+`<section begin="Name"/>`, and `volume_stream` ALREADY returns those as
+`section_keys` — so DNB detection is "each maximal run of one section name is an
+article" (an article that spans a page re-opens its section, and that is one
+article, not two).  Everything downstream is untouched EB1911 code: `SegmentInfo`,
+`DetectedArticle`, `persist_articles`, `walk_article`, `export_articles_to_json`.
+
+| stage | result |
+|---|---|
+| `volume_stream` on DNB pages | 140 section keys, 103 distinct |
+| articles detected + persisted | **88** (52 multi-page) |
+| `walk_article` | **88 OK, 0 failures** |
+| `export_articles_to_json` | **88 JSONs** |
+| content preservation | 432,588 chars out vs 428,923 in — **ratio 1.01** |
+
+Samuel Johnson: 83,738 raw → 84,152 walked across pages 37-53, with 144 italic pairs,
+88 small-caps, 42 paragraphs, 8 links and a «TITLE» node.  `source_quality` parsed the
+DNB's own `<pagequality>` (17 pages at level 3) with no help.
+
+**THREE GAPS — which is what the exercise was for.**  Page-level probes could not have
+found any of them.
+
+1. **Titles are 97% wrong**, truncated to the surname.  The DNB writes
+   `'''JOHNSON,''' SAMUEL` — bold surname, forename OUTSIDE the bold — so
+   `produce_title` takes the bold run and stops.  Cheap: `section_name` already holds
+   `Johnson, Samuel (1709-1784)`, and `produce_title` already has a path for using it
+   "when the bold run was a partial capture".  For the DNB that is the RULE, not the
+   exception.  Two headwords carry alternates (`JOHNSTON or JOHNSTONE`) — an editorial
+   convention, not an error, and one to carry rather than pick from.
+2. **`page_keys: 0` — DIAGNOSED AND FIXED (same day).**  Not a code failure: a missing
+   DATA dependency.  `printed_page_keys` reads
+   `_get_printed_pages().get(str(article.volume))`, `printed_pages.json` holds volumes
+   1-28, so for volume 30 the map is `{}` and the deliberate drop rule ("a ws page
+   with no printed number is a plate") discards every key.  The DNB types its printed
+   number into `{{RunningHeader|Johnson|31|Johnson}}`: 18 of 81 pages state one and
+   **all 18 agree on ws - printed = 6**.  Supplying that map at the one read site:
+   **88/88 articles get page_keys**; Samuel Johnson gets 17, printed pages 31-47, and
+   the signatures verify against the raw pages (ws 39 -> printed 33 ->
+   `gilbertwalmsleywhomhedes`, which is exactly how that page opens).
+   `build_printed_pages.py` is already the right SHAPE for this — PRIMARY from a
+   heading template plus a monotonic-anchor FALLBACK for pages that state nothing —
+   so the DNB needs its template name, not a new mechanism.
+3. **`contributors: []`** — expected; `{{DNB XX}}` is unparsed and binding is a
+   separate post-export phase.  Measured at 99.8% upstream.
+
+**And the page map is ARITHMETIC — the user's call, then measured.**  EB1911 needs a
+monotonic-anchor algorithm because the Britannica has PLATES: unnumbered pages that
+genuinely displace every printed number after them.  The DNB is a biographical
+dictionary with no plates — CORPUS-WIDE, not sampled: across the whole DNB `Page:`
+namespace `[[File:` appears on **exactly one page** (a frontispiece in the 1901
+Supplement, outside the 63 main volumes) and `[[Image:` on **none** — so
+nothing ever displaces, and `printed = ws - k` with ONE k per volume.  Probing 12
+pages in each of the 63 volumes (756 fetches, batched 50 per request):
+
+| | |
+|---|---|
+| volumes where every probe agrees with the modal offset | **54 of 60** |
+| volumes with any disagreement | 6 — each with **exactly one** stray |
+| outlier probes | **6 of 392 (1.5%)** |
+
+(Measured with REGEX `insource:/…/`.  The quoted form `insource:"File:"` reported
+77 pages and is worthless here: CirrusSearch tokenises it, so it matches the
+ordinary word "file" in prose — four of those hits contained no image syntax at
+all.  Only the regex form is literal.)
+
+The strays are TRANSCRIPTION TYPOS, not shifts.  Proven on volume 10, whose modal
+offset is 8: ws 276 types `265` (should be 268) and ws 279 types `371` (should be
+271 — a transposed digit), while 275, 277, 278, 280, 281, 282 and 283 all sit at
+exactly 8.  A MODE absorbs that for free, so the whole DNB page map is
+`printed = ws - mode(offsets)` per volume.  Volumes 27, 31 and 63 had no numeric
+anchor among their 12 probes — but the scatter sample found six in volume 63 at
+offset 24, so that is sampling, not absence.
+**RENDER + CONTRIBUTORS (same session).**  All 88 articles render: **88 rendered, 0
+failed, 0 marker leaks, 0 `''` leaks**; the only `{{` reaching output is the 87
+`{{DNB XX}}` signatures.  Page positions work end to end — Samuel Johnson carries 17
+page keys and 34 page markers in the HTML, and the byline reads
+`vol. 30, pp. 37-53 · 13,703 words`.
+
+**The title fix is HALF a fix, and I mis-described it first.**  I claimed
+`produce_title` "already has a path" for `section_name`.  It does not — that path was
+DELETED for EB1911 on purpose, because it manufactured ALGEBRAB from continuation
+sections and re-spelled TISIO.  For EB1911 the printed heading is the sole authority
+and the section id is scaffolding; for the DNB the relation INVERTS — the section id
+IS the canonical article name.  So it is a per-corpus POLICY, not a tweak.  Setting
+`article.title = section_name` fixes the FIELD, but the `<h1>` still reads `JOHNSON`
+with `SAMUEL` stranded at the head of the body, because the H1 renders from the
+in-stream «TITLE» node.  The real fix is RECOGNITION: the DNB headword is
+`'''JOHNSON,''' SAMUEL` — a bold run PLUS the caps run after it, inside an author
+link — so `_title_span` has to see the whole shape.  Recognise more, do not patch the
+field ([[feedback_recursion_is_recognition]]).
+
+**Contributors validate.**  87 of 88 articles carry a `{{DNB XX}}` signature (99%) and
+**exactly one each — zero articles with multiple signatures.**  That is the problem
+that killed section-level attribution for EB1911 this same session ("sometimes an
+author signs a chunk of text that is not marked as a section in any way"); the DNB
+simply does not have it.  80 of 87 resolved against the roster on the first pass; the
+7 failures were all `DNB GG`.  Full accounting of the 1,295 templates:
+
+| shape | n | meaning |
+|---|---|---|
+| simple `footer initials` | 1,164 | already in the roster |
+| `Ambiguous DNB initials` | 87 | WIKISOURCE itself marks these unresolved |
+| `#REDIRECT` alias | 39 | follow the redirect |
+| `#ifeq` conditional | 5 | two people, switched by supplement |
+
+`{{DNB GG}}` is `{{DNB footer initials|{{#ifeq:{{{sup}}}|3|Alfred George Greenhill|Gordon Goodwin}}|G. G.}}` — same initials, two men, disambiguated by whether the
+article sits in a supplement.  For the 63 main volumes it is Gordon Goodwin.  NOTE the
+mechanism differs from EB1911: EB1911 writes `{{EB1911 footer initials|Name|Initials}}`
+INLINE in the article, so the name is in the text; the DNB writes a BARE `{{DNB AWW}}`
+and the name lives in the TEMPLATE.  So DNB binding is template-name → roster lookup,
+not inline parsing — a fifth corpus-specific piece, and the reason the earlier 99.8%
+figure (measured on template CONTENT) did not translate into bound articles for free.
+**So the corpus-specific surface, after a real end-to-end run, is FIVE things:**
+boundary detection (written, works), the title rule (diagnosed, cheap), the
+contributor template prefix (one literal), and the printed-page heading template (one
+literal).  That is a far shorter list than the 109
+EB1911 code-line mentions implied — because most of those mentions are template NAMES
+and output FILENAMES, not logic.
 ### Session 2026-08-28 — the section slug folds accents; the OLD address rides along
 
 **The EPUBs, same day.**  Both books were rebuilt and both validate **0 fatals /

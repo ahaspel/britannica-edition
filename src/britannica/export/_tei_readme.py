@@ -62,6 +62,18 @@ version:
     Haspel, A. (2026). Encyclopædia Britannica, Eleventh Edition: a TEI-P5
     edition. Zenodo. https://doi.org/10.5281/zenodo.22072145
 
+BibTeX, since a dataset citation is nearly always pasted into a bibliography
+rather than retyped:
+
+    @dataset{haspel_eb1911_tei,
+      author    = {Haspel, Aaron},
+      title     = {Encyclopædia Britannica, Eleventh Edition: a {TEI}-{P5} edition},
+      year      = {2026},
+      publisher = {Zenodo},
+      doi       = {10.5281/zenodo.22072145},
+      url       = {https://doi.org/10.5281/zenodo.22072145}
+    }
+
 To pin one release instead, use its version DOI — 2026.1 is
 `10.5281/zenodo.22072146`. Every document also carries the concept DOI in its
 own `<publicationStmt>`, so a single article that has travelled away from this
