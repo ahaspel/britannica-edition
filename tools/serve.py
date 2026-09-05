@@ -25,8 +25,8 @@ Two jobs in one server:
      /data/scans/*            → data/derived/scans/*
      /data/{name}.json        → data/derived/{name}.json
      /data/images/*           → data/images/*  (same path; no rewrite)
-     /download/eb1911-corpus… → data/derived/eb1911-corpus…
-     /download/*              → data/derived/download/*
+     /download/{name}         → wherever the build writes it (_DOWNLOAD_HOME):
+                                exactly the set deploy.sh uploads, nothing more
      /search-api/*            → proxied to Meilisearch at 127.0.0.1:7700,
                                 Authorization REWRITTEN to the local dev key
                                 (clients always send the production key)
@@ -55,6 +55,21 @@ LOG = Path(os.environ.get("LOCALAPPDATA") or tempfile.gettempdir()) / \
     "britannica-webserver.log"
 
 _DATA_JSON_RE = re.compile(r"^/data/([^/]+\.json)$")
+
+# /download/ in production is exactly the set deploy.sh copies to
+# s3://britannica11.org/download/ — each bundle from where its builder writes
+# it, plus the corpus bundle's manifest and README.  Keyed by basename; a
+# `.sha256` sidecar lives beside its file.  Anything else under /download/ is
+# a 404 in production and so is a 404 here (the JSONL and graphs are inside the
+# corpus tarball, not beside it).
+_DOWNLOAD_HOME = {
+    "eb1911-corpus.tar.gz": "data/derived",
+    "eb1911-maps.tar.gz": "data/derived",
+    "eb1911-tei.tar.gz": "data/derived",
+    "eb1911-vol01.epub": "epub",
+    "manifest.json": "data/derived/download",
+    "README.md": "data/derived/download",
+}
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):
@@ -89,10 +104,11 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             # /data/{name}.json serves from data/derived/ — except maps.json,
             # which is hand-curated SOURCE living at data/maps.json itself.
             path = "/data/derived/" + path[len("/data/"):]
-        elif path.startswith("/download/eb1911-corpus"):
-            path = "/data/derived/" + path[len("/download/"):]
         elif path.startswith("/download/"):
-            path = "/data/derived/download/" + path[len("/download/"):]
+            name = path[len("/download/"):]
+            home = _DOWNLOAD_HOME.get(name.removesuffix(".sha256"))
+            if home:
+                path = f"/{home}/{name}"
 
         # A bucket-root file that lives in tools/viewer/ locally.
         candidate = path.lstrip("/")
