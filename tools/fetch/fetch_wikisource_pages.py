@@ -26,6 +26,7 @@ from pathlib import Path
 import requests
 
 from britannica.corpora import current_corpus
+from britannica.source_pages import page_filename, volume_dir
 
 API_URL = "https://en.wikisource.org/w/api.php"
 
@@ -112,7 +113,7 @@ def fetch_volume(volume: int, start: int, end: int, outdir: Path,
     outdir.mkdir(parents=True, exist_ok=True)
 
     def path_for(n: int) -> Path:
-        return outdir / f"vol{volume:02d}-page{n:04d}.json"
+        return outdir / page_filename(volume, n)
 
     wanted = [n for n in range(start, end + 1) if not path_for(n).exists()]
     if limit:
@@ -180,8 +181,9 @@ def main() -> None:
         end = args.end if args.end else corpus.pages[v]
         if end < args.start:
             raise SystemExit("--end must be >= --start")
-        outdir = (args.outdir if args.outdir
-                  else Path("data/raw") / corpus.key / f"vol_{v:02d}").resolve()
+        # source_pages owns the layout; a second copy here is how the
+        # dup-constants ratchet found this in the first place.
+        outdir = (args.outdir if args.outdir else volume_dir(v)).resolve()
         total += fetch_volume(v, args.start, end, outdir, args.limit)
     print(f"Done. {total:,} page(s) written.")
 

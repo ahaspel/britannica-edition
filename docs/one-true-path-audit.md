@@ -92,7 +92,7 @@ Entire packages scaffolded and never built (verified: every file 0 bytes, no imp
 Reachability ground-truth = `rebuild_all.sh`. The spine invokes only `britannica detect-boundaries`, `extract-contributors`, `corpus-export` (Phases 2 & 4); the rest of rebuild is the separate-necessary builders (contributor table, printed-pages, math width/annotate, vol29 TOC, site pages, readers-guide, quality report, deploy).
 
 **Spine-duplicate / one-off drivers · PURE-DELETE**
-`tools/pipeline/run_volume.sh` (duplicates Phase 2) · `tools/pipeline/fetch_all.sh` (old fetch wrapper) [med] · `tools/test_lighthouse_tables.py` (one-off mock builder)
+`tools/pipeline/run_volume.sh` (duplicates Phase 2) · ~~`tools/pipeline/fetch_all.sh`~~ **DELETED 2026-09-07** — its hardcoded page-count array moved into the corpus profile and `fetch_wikisource_pages.py --all` now walks either book · `tools/test_lighthouse_tables.py` (one-off mock builder)
 
 **Broken diagnostics — import already-deleted symbols, cannot run · PURE-DELETE**
 `tools/diagnostics/`: `check_routed_textloss.py`, `check_table_figure_textloss.py` (import `_process_html_table`) · `figure_span_audit.py` (imports `_figure`/`_IMAGE_FLOAT_RE`; pairs with `_figure.py`) · `compare_detect_boundaries.py` (imports moved `detect_boundaries`) · `measure_wrap_loss.py` (imports gone `article_json` helpers)
