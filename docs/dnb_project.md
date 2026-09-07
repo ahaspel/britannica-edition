@@ -1,6 +1,7 @@
 # The DNB — a sister project on the same code
 
-**Status: PHASE 0 DONE (2026-09-07).**  The seam is in and proven inert.
+**Status: PHASES 0 AND 1 DONE (2026-09-07).**  The seam is in and proven inert;
+the whole corpus is imported.
 Everything below marked MEASURED was run against real Wikisource pages through
 the real pipeline; everything marked UNKNOWN has not been tested.  The
 2026-08-29/30 session in [`status.md`](status.md) carries the raw numbers and
@@ -247,3 +248,56 @@ Wikisource has annotated 3,231 of the 3,413 by hand.  **Bind all 3,469 ourselves
 rather than inherit a merge that is still in progress: importing the partial
 state gives a corpus where coverage depends on the date we imported, and one
 mechanism beats half-trusting a second.
+
+
+# Phase 1 — done (2026-09-07)
+
+**33,824 pages, 71 volumes, 179,350,869 characters** in a `dnb` database of its
+own.  Zero volumes disagreed with the manifest, zero absent, 73 blank scans
+(0.2%), no rate-limits.  Roughly 40 minutes.
+
+The fetcher is now BATCHED — 50 titles per request, `maxlag=5` — because one
+page per request with a 3s delay is 28 hours for this corpus and 24 for the
+Britannica.  Verified byte-identical to the single-page method by fetching the
+same pages both ways.  The per-volume page counts moved from a bash array in
+`fetch_all.sh` into the corpus profile, EB1911's reproduced verbatim, so
+`--all` walks either book.  `tools/pipeline/fetch_all.sh` is now redundant.
+
+**The manifest is what would have caught a wrong scan name.**  All 71 volumes
+returned exactly the page count measured from their DjVu file — the check that
+matters most for the eight supplement volumes, whose five naming conventions
+were the likeliest thing to be silently wrong.
+
+# A finding about EB1911, from asking how stale it is
+
+Sampled 972 pages: **21.7% edited since our April 2026 fetch**; of a 576-page
+sample, **12.2% substantively** (~3,600 corpus-wide), 5.7% whitespace only,
+1.7% proofread-status only.
+
+The dominant substantive edit is a MARKUP MIGRATION with a visible-text
+consequence:
+
+    -the <span title="amended from 'lire'">life</span> exactly
+    +the {{SIC|lire|life}} exactly
+
+    before: the reader sees "life" (the emendation), hover shows the original
+    after:  the reader sees "lire" (as printed),      hover shows the emendation
+
+Wikisource is moving to show the page AS PRINTED and carry the correction as
+apparatus — the same principle we chose for the DNB errata.
+
+**We are currently inconsistent, and `sic` is miscategorised.**  Our corpus holds
+1,240 hand-rolled spans (we display the emendation, tooltip preserved by
+`_handle_title_spans`) and 111 `{{SIC}}` (we display the printed text and DROP
+the correction).  `_content.py` groups `sic` with `lang`/`dropinitial` as
+"metadata genuinely droppable" — but `{{SIC}}` expands to `{{tooltip|as-printed|
+[sic] 'correction'}}`, so its second argument is the editorial correction, not
+metadata.  It belongs with `tooltip`/`abbr`, which we already carry as
+`«SPAN[title:…]»`.
+
+**Order matters:** land the `sic` fix BEFORE any refetch.  In that order a
+refetch is a straight gain (1,351 corrections preserved); in the other there is
+a window where 1,240 preserved corrections become dropped ones.  A refetch is
+now ~10 minutes, but it changes visible text in ~1,240 places and 3,600 pages
+have unmeasured substantive edits, so it needs a tagged diff and sign-off, not a
+shrug.  [[feedback_no_wholesale_rebaseline]]
