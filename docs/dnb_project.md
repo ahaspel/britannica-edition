@@ -1,6 +1,6 @@
 # The DNB — a sister project on the same code
 
-**Status: PROBED, not started.**  Nothing in `src/` has been changed for it.
+**Status: PHASE 0 DONE (2026-09-07).**  The seam is in and proven inert.
 Everything below marked MEASURED was run against real Wikisource pages through
 the real pipeline; everything marked UNKNOWN has not been tested.  The
 2026-08-29/30 session in [`status.md`](status.md) carries the raw numbers and
@@ -164,9 +164,12 @@ separate Zenodo deposit and DOI if it should be citable.
 
 ## Open decisions
 
-1. **Scope** — the 63 main volumes only, or also the 1901/1912 supplements?  They
-   are separately named on Wikisource, they are where the `#ifeq` contributor
-   conditionals point, and they hold the corpus's only image.  Recommend 63 first.
+1. **Scope — DECIDED 2026-09-07: everything.**  63 volumes + all three
+   supplements + the Errata.  ~31,150 biographies over 71 scan volumes.  The
+   supplements are fully transcribed (1901: 1,037 articles; 1912: 1,641; 1927:
+   477), each carries its own **List of Writers** — a second, independent
+   contributor roster — and they are where the five `#ifeq` conditionals point,
+   so importing 63 alone leaves those unresolvable by construction.
 2. **Domain.**
 3. **Scans** — the DjVu page images exist at the Internet Archive.  EB1911 ships a
    scan viewer; the DNB could skip it.
@@ -178,3 +181,69 @@ The scratch database `dnb_probe` (Postgres, separate from `britannica`) holds
 the 81 loaded pages and 88 detected articles.  Every probe script asserts on
 `engine.url` before touching anything.  The probe scripts themselves live in the
 session scratchpad and are not part of the repository.
+
+
+---
+
+# What Phase 0 established (2026-09-07)
+
+`src/britannica/corpora.py` — a `Corpus` profile selected by `Settings.corpus`,
+beside the `database_url` that selects the same book's pages.  **No shared
+signature changed**, so EB1911's code path is byte-identical by construction and
+the gate proves it rather than hoping.
+
+**GATE PASSED.**  A full 58-minute rebuild, every artifact compared against what
+production is serving: `articles.jsonl` 270,006,037 bytes, plus contributors,
+xref edges, topics and schema — all IDENTICAL.  All build gates green (TEI: every
+one of 37,225 articles validates; link census 203 to 203, net +0).
+
+## Three things this plan had wrong
+
+**The page-title pattern is not "one string, same zero-padding".**  That fits the
+63 main volumes and silently mis-addresses every supplement.  There are FIVE
+naming conventions across 71 scan volumes: zero-padded for the main series,
+ROMAN numerals for 1901, unpadded arabic for 1912, no number at all for 1927,
+and the Errata.  The profile carries a FUNCTION, and the volume numbers are ours
+(1-63 main, 64-66 the 1901 supplement, 67-69 the 1912, 70 the 1927, 71 Errata),
+which keeps the pipeline's `volume: int` working untouched.
+
+**Two of the five "pieces" need no parameterising at all.**  `PAGE_HEAD_RE` is
+already the union `rh|running header|eb1911 page heading`; the DNB uses the first
+two and the third simply never occurs in its text, so a narrower copy would
+invent a difference and leave two patterns to drift.  And the contributor footer
+is not a pattern difference: EB1911 puts the name INSIDE the template, the DNB
+puts it in the template's NAME.  A regex swap would hand the DNB a reader hunting
+a field it does not have.  It arrives in Phase 3 with the roster lookup that
+reads it — a field arrives when its consumer does.
+
+**The gate needed a better baseline than a local snapshot.**  Article JSONs carry
+a database autoincrement `id`, reassigned on every rebuild, so hashing whole
+files reports total change no matter what code did.  Production IS the previous
+build's output; the corpus bundle gives complete coverage in one request; and the
+commits since the last deploy touch only serve tooling, the TEI README and the
+EPUB build.  Compare against the live artifact, not against a snapshot of your
+own making.
+
+# The 1904 Errata — a source in its own right
+
+There is no 1920s revised edition to import.  The DNB was reissued in **1908-09**
+in 22 volumes, incorporating the 1904 Errata, and **Wikisource has no separate
+transcription of it**.  The 1920s item is the 1927 supplement: new biographies,
+not a revision.
+
+The reissue's value reaches us through the Errata volume, which IS fully
+transcribed — **314 pages, 3,469 corrections keyed to 3,413 distinct articles**,
+each already bound to its article by a `<section begin="Name">` its transcribers
+wrote.  Binding is a dictionary lookup, not a matching problem.
+
+**Append, do not rewrite.**  That is Wikisource's own model and it is verifiable:
+in the rendered article for `Abbot, George (1562-1633)`, the phrase "Early in
+1614" appears TWICE — once in the body as 1885 printed it, once in the apparatus
+reading *for Early in 1614 read In March 1611-12*.  Rewriting the body would
+destroy the distinction between what the first edition said and what its editors
+later corrected.
+
+Wikisource has annotated 3,231 of the 3,413 by hand.  **Bind all 3,469 ourselves**
+rather than inherit a merge that is still in progress: importing the partial
+state gives a corpus where coverage depends on the date we imported, and one
+mechanism beats half-trusting a second.

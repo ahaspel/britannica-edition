@@ -2,16 +2,24 @@
 
 Its own module because it is prose, not code: keeping a 40-line document inside
 a function makes the function unreadable and the document unreviewable.
+
+SUBSTITUTION IS BY TOKEN, NOT BY ``str.format``.  This document quotes BibTeX,
+which is made of braces — ``author = {Haspel, Aaron}`` — and ``format`` reads
+those as field names and raises ``unexpected '{' in field name``.  Escaping them
+would work and would leave a trap: the next person to add a BibTeX, JSON or
+LaTeX snippet has to know to double every brace, and finds out they did not when
+a two-hour rebuild dies at the last phase.  A token no prose contains cannot
+collide, so the document can hold anything.
 """
 
 TEI_README = """# Encyclopaedia Britannica, 11th Edition — a TEI P5 edition
 
-{n:,} articles, one TEI document each, named by the article's stable id — the
+ARTICLE_COUNT articles, one TEI document each, named by the article's stable id — the
 same id as its URL: https://britannica11.org/article/<id>
 
 `teiCorpus.xml` is a CATALOG: a TEI corpus header plus an XInclude for every
 member. Every member validates on its own against the TEI Consortium's `tei_all`
-schema. That is checked for all {n:,} on every build, and the build fails if any
+schema. That is checked for all ARTICLE_COUNT on every build, and the build fails if any
 one of them does not.
 
 ## Ids are document-scoped

@@ -7,6 +7,8 @@ import time
 from pathlib import Path
 import requests
 
+from britannica.corpora import current_corpus
+
 API_URL = "https://en.wikisource.org/w/api.php"
 
 HEADERS = {
@@ -16,7 +18,10 @@ HEADERS = {
 
 
 def fetch_page_wikitext(volume: int, page_number: int) -> str:
-    title = f"Page:EB1911 - Volume {volume:02d}.djvu/{page_number}"
+    # The book, and therefore the scan file this page lives in, comes from the
+    # corpus profile — the DNB names its 71 volumes five different ways and a
+    # format string would have quietly mis-addressed every supplement.
+    title = current_corpus().page_title(volume, page_number)
     params = {
         "action": "query",
         "prop": "revisions",
@@ -119,7 +124,7 @@ def main() -> None:
             "volume": args.volume,
             "page_number": page_number,
             "source": "wikisource",
-            "title": f"Page:EB1911 - Volume {args.volume:02d}.djvu/{page_number}",
+            "title": current_corpus().page_title(args.volume, page_number),
             "raw_text": raw,
         }
 
