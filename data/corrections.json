@@ -906,5 +906,19 @@
    "from": "(1837–1900)",
    "to": "(1837–1909)"
   }
+ ],
+ "_28:939_note": "YELLOWSTONE: `{{sic|dryest}}` uses Template:Sic, which is INTENTIONALLY LEFT BLANK — a proofreader's mark rendering nothing whatever arguments it is given. The transcriber meant Template:SIC (a different template; MediaWiki names are case-sensitive after the first letter), which shows the page's reading and carries `[sic]` as a tooltip. As written the word 'dryest' is invisible on Wikisource too. Correcting the case keeps the word and marks it.",
+ "28:939": [
+  {
+   "from": "{{sic|dryest}}",
+   "to": "{{SIC|dryest}}"
+  }
+ ],
+ "_25:189_note": "SKELETON: the same transcription slip as 28:939, and here the two positional arguments make the intent unmistakable — that is the `{{SIC|as-printed|correction}}` shape typed against the blank lowercase template. Without this, 'girdle' vanishes from 'connexion with the shoulder girdle'.",
+ "25:189": [
+  {
+   "from": "{{sic|girdle|girdle.}}",
+   "to": "{{SIC|girdle|girdle.}}"
+  }
  ]
 }

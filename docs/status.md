@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-08-29.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-09-09.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,7 +46,137 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-08-29)
+## CURRENT STATE (2026-09-09)
+
+### Session 2026-09-06/09 — the DNB is imported; `{{SIC}}` and `{{sic}}` are different templates
+
+> **The plan lives in [`docs/dnb_project.md`](dnb_project.md).**  Phases 0 and 1 are
+> DONE.  This entry is the evidence, and the three things the plan had wrong.
+
+**PHASE 0 — the seam.  GATE PASSED.**  `src/britannica/corpora.py`: a `Corpus`
+profile selected by `Settings.corpus`, beside the `database_url` that picks the same
+book's pages.  **No shared signature changed.**  Threading a `Corpus` through
+`detect_boundaries` → `walk_article` → `process_elements` would have altered the
+signature of exactly the code that builds 37,225 live articles; selecting it where
+the database is already selected makes EB1911's path byte-identical *by
+construction*, and the gate then proves it rather than hoping.  A build run reads one
+database and therefore one book.
+
+Gate: a full rebuild whose artifacts were compared against **what production is
+serving** — `articles.jsonl` 270,006,037 bytes, plus contributors, xref edges, topics
+and schema, all IDENTICAL.
+
+**Three corrections to the plan, each from looking instead of assuming:**
+
+1. **The page-title pattern is NOT "one string, same zero-padding".**  That fits the
+   63 main volumes and silently mis-addresses every supplement.  There are FIVE
+   naming conventions across 71 scan volumes — zero-padded, ROMAN for 1901, unpadded
+   arabic for 1912, no number at all for 1927, and the Errata.  The profile carries a
+   FUNCTION; volume numbers are OURS (1-63 main, 64-66 1901, 67-69 1912, 70 1927, 71
+   Errata) so the pipeline's `volume: int` is untouched.
+2. **Two of the five "pieces" needed no parameterising.**  `PAGE_HEAD_RE` is already
+   the union `rh|running header|eb1911 page heading`; the DNB uses the first two and
+   the third never occurs in its text, so a narrower copy would invent a difference
+   and leave two patterns to drift.  Contributor binding is not a pattern difference
+   either — EB1911 puts the name INSIDE the template, the DNB in the template's NAME
+   — so a regex swap would hand the DNB a reader hunting a field it lacks.  It
+   arrives in Phase 3 with the roster lookup that reads it.  **A field arrives when
+   its consumer does.**
+3. **A gate needs the artifact that SHIPS, not a local intermediate.**  Article JSONs
+   carry a DB autoincrement `id`, reassigned every rebuild, so hashing whole files
+   reported 100% change whatever the code did — and keeping only hashes made the
+   baseline unrepairable once Phase 1 cleared the exports.  Production IS the previous
+   build's output; the corpus bundle gives complete coverage in ONE request; and
+   `git log` since the deploy proves whether it is a valid baseline.  (Repeated later
+   in the same session: excluding `id` was not enough, because `xrefs` embeds the
+   TARGET article's id — 11,624 articles "changed" on that alone.)
+
+**PHASE 1 — the whole corpus imported.**  **33,824 pages, 71 volumes, 179,350,869
+characters** into a `dnb` database of its own.  Zero volumes disagreed with the
+manifest, zero absent, 73 blank scans (0.2%), no rate-limits, ~40 minutes.
+
+The fetcher is **BATCHED** — 50 titles per request, `maxlag=5` — because one page per
+request with a 3s delay is 28 hours for this corpus and 24 for the Britannica.
+Verified byte-identical to the single-page method by fetching the same pages both
+ways.  Per-volume page counts moved from a bash array inside `fetch_all.sh` into the
+profile (EB1911's reproduced VERBATIM, not re-derived from `ARTICLE_WS_RANGE`, which
+looks like the same fact and disagrees on volumes 20 and 29).  `--all` now walks
+either book; `fetch_all.sh` is deleted.
+
+**The manifest is what would have caught a wrong scan name** — every one of the 71
+volumes returned exactly the page count measured from its DjVu file, which matters
+most for the eight supplement volumes and their five naming conventions.
+
+**Deleting `fetch_all.sh` made the dup-constants ratchet fail, correctly.**  The
+fetcher had grown its own `data/raw/<x>/vol_NN`, a second answer to a question
+`source_pages` already owned — and `test_corpus_read_ratchet` exists to enforce
+reading through `load_pages`.  The real gap: `source_pages` did not know which book it
+was reading (`RAW_DIR` hardcoded to `data/raw/wikisource`).  The profile now carries
+`raw_dir` and `source_pages` owns `raw_dir()`/`volume_dir()`/`page_filename()`.
+EB1911 keeps the legacy `wikisource` name — 29,688 files already sit there.  Fixing it
+also showed `load_pages` duplicating the layout inside its own module.
+
+### EB1911 IS NOT AS STATIC AS WE ASSUMED
+
+Asked how stale our April 2026 fetch was.  Sampled 972 pages: **21.7% edited since**.
+Of a 576-page sample: **12.2% SUBSTANTIVE** (~3,600 corpus-wide), 5.7% whitespace,
+1.7% proofread-status.  Not drift — a coordinated markup migration that **changes
+visible text**:
+
+    -the <span title="amended from 'lire'">life</span> exactly
+    +the {{SIC|lire|life}} exactly
+
+    before: the reader sees "life" (the emendation), hover shows the original
+    after:  the reader sees "lire" (as printed),     hover shows the emendation
+
+Wikisource is moving toward showing the page AS PRINTED and carrying the correction as
+apparatus — our own principle, and the one we chose for the DNB errata.
+
+### `{{SIC}}` AND `{{sic}}` ARE DIFFERENT TEMPLATES
+
+MediaWiki names are case-sensitive after the first letter.  `Template:SIC` expands to
+`{{tooltip|as-printed|[sic] 'correction'}}`.  `Template:Sic` is **"INTENTIONALLY LEFT
+BLANK"** — a proofreader's mark on the PRECEDING word, invisible to readers whatever
+arguments it is given.  `_content_parse` lowercased the name and collapsed them.
+
+That produced three defects, **two of them live on the site**:
+
+| source | Wikisource | britannica11.org before |
+|---|---|---|
+| `{{SIC\|youngest\|eldest}}` | "youngest" + tooltip | "youngest", correction DROPPED |
+| `{{sic\|hide=y}}` | nothing | **"maufacturedhide=y by fermenting"** |
+| `{{sic\|lowercase in original}}` | nothing | **"cephalopodenlowercase in original der"** |
+
+Corpus: **103 uppercase** (tooltips), **51 lowercase** (blank).  Every expectation was
+checked against **Wikisource's own renderer**, not inferred from the template source —
+which matters, because the source alone says `{{{1}}}` is the display, and for
+`Template:Sic` that is simply false.
+
+`sic` also sat with `lang`/`dropinitial` as "metadata genuinely droppable".  Its second
+argument is an editor's CORRECTION; dropping it is the same loss as dropping an
+erratum.  It is a tooltip and now carries one.
+
+**A latent title bug surfaced.**  Two headwords contain `{{SIC}}`, and the new marker
+leaked into their titles: `LAISANT, CHARLES «SPAN[title:[sic] 'ANGE']»ANNE`.  Cause was
+NOT the change: `decode_title` bounded its span patterns on `[^\]]*`, and a tooltip
+attribute may contain brackets.  The RENDERER already knew this and had documented the
+cases (`ANATOMY`'s "farm [tribute] of the county"), bounding on the marker delimiters.
+The title decoder had been wrong since it was written; `{{SIC}}` only made it
+reachable.  Fixed as the class, not as a dodge around the tooltip's wording.
+
+**Two words rescued by `corrections.json`, not by code.**  `{{sic|dryest}}` (28:939)
+and `{{sic|girdle|girdle.}}` (25:189) are transcription slips — the blank template
+typed where `{{SIC}}` was meant — so those words are invisible on Wikisource too.
+Matching Wikisource exactly would have been fidelity to a transcriber's slip rather
+than to the book.  The mechanism already existed and had 173 entries; its own `_doc`
+says "for transcription typos only", which is exactly what a wrong template case is.
+
+**Cost: four rebuilds.**  Fixing one layer at a time instead of characterising the
+whole shape first.  Rendering all four `{{sic}}` forms upstream BEFORE writing code
+would have shown the case distinction immediately.
+
+---
+
 
 ### Session 2026-08-29 — the DNB probe: our pipeline reads a corpus it has never seen
 
