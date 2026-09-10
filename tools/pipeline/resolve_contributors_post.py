@@ -54,6 +54,37 @@ ART = Path("data/derived/articles")
 # step-5 mode must vote on ONLY the name proper — the title is kept from the
 # authoritative front-matter form (footers casually drop it, so a mode would wrongly
 # delete `Sir`/`Rev.`) and dates are stripped entirely (none wanted in the index).
+def cap_footer_spellings(observations, name_proper):
+    """The footer's NAME voice: one vote per DISTINCT spelling, in first-seen order.
+
+    A contributor's footer is one editorial act replicated across every article
+    he signed.  Thomas Ashby's 254 footers are not 254 witnesses — they are one
+    witness repeated, carrying no more information than the first.  Counted raw
+    they outvoted the index 254-to-2 and decided every contested name outright,
+    which is replication masquerading as corroboration.  Capped, the tally
+    measures what a ballot over sources was always meant to measure: how many
+    INDEPENDENT sources attest a spelling.
+
+    The cap is self-correcting exactly where the risk lay.  Where the footer
+    would have erased a fuller name it disagrees with ITSELF and splits its own
+    vote: Kropotkin signs `Peter Kropotkin` 64 times and `Peter Alexeivitch
+    Kropotkin` 26 times, so capped they are 1-1 and the index breaks the tie
+    toward the fuller form.  Counted raw the short form won 64-26 and the middle
+    name was lost.
+
+    ``observations`` is ``[(raw_name, raw_initials), …]`` as ``harvest_author_links``
+    returns them; the initials are ignored here and still vote per occurrence.
+    """
+    seen: list[str] = []
+    for raw_name, _raw_initials in observations:
+        if not raw_name:
+            continue
+        proper = name_proper(raw_name)
+        if proper and proper not in seen:
+            seen.append(proper)
+    return seen
+
+
 _TITLE_RE = re.compile(
     r"^((?:(?:The\s+)?(?:Right\s+|Rt\.?\s+)?"
     r"(?:Hon|Rev|Revd|Sir|Dame|Dr|Prof|Professor|Mrs|Miss|Captain|Capt|"
@@ -198,12 +229,30 @@ def bind_contributors(session, payloads: dict) -> bool:
             if iv:
                 init_votes[cid][iv] += 1
 
+    # The footer votes its INITIALS once per occurrence, and its NAME once per
+    # DISTINCT SPELLING.
+    #
+    # A contributor's footer is one editorial act replicated across every article
+    # he signed: Thomas Ashby's 254 footers are not 254 witnesses, they are one
+    # witness repeated, and they carry no more information than the first.
+    # Counting them raw let the footer outvote the index 254-to-2 and decide every
+    # contested name outright — replication masquerading as corroboration.  Capped,
+    # the tally measures what it was always meant to: how many INDEPENDENT sources
+    # attest a spelling.
+    #
+    # The cap is self-correcting exactly where the risk was.  Where the footer
+    # would have erased a fuller name it disagrees with itself and splits its own
+    # vote — Kropotkin is `Peter Kropotkin` x64 AND `Peter Alexeivitch Kropotkin`
+    # x26, so capped they are 1-1 and the index breaks the tie toward the fuller
+    # form.  Raw, the short form won 64-26 and the middle name was lost.
     for _cid, _obs in footer_votes.items():
-        for _nm, _it in _obs:      # footers/author-links: SIGNATURE only, no name
+        for _nm, _it in _obs:
             if _it:
                 _iv = _normalize_initials(_it)
                 if _iv:
                     init_votes[_cid][_iv] += 1
+        for _np in cap_footer_spellings(_obs, _name_proper):
+            name_votes[_cid][_np] += 1
 
     # ── 2. FRONTMATTER (own session; appends, dedups) ───────────────────
     link_from_frontmatter(apply_mode=True, kind_of=kinds_of)

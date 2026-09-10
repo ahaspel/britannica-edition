@@ -920,5 +920,12 @@
    "from": "{{sic|girdle|girdle.}}",
    "to": "{{SIC|girdle|girdle.}}"
   }
+ ],
+ "_28:621_note": "WHITE, ROBERT: `{{SIC||Virtue|Vertue}}` has an extra pipe, so the first positional argument — the DISPLAY — is empty, and Template:SIC hangs its tooltip on nothing. The word vanishes on Wikisource too, leaving a sentence with no subject: 'prized by collectors for their artistic merit and their authenticity.  catalogued 275 portrait engravings by White'. It is George Vertue, the engraver's cataloguer, whose name the page misprints as 'Virtue'; the intended shape is the ordinary `{{SIC|as-printed|correction}}`.",
+ "28:621": [
+  {
+   "from": "{{SIC||Virtue|Vertue}}",
+   "to": "{{SIC|Virtue|Vertue}}"
+  }
  ]
 }

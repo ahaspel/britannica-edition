@@ -25,7 +25,7 @@ author, and the render (``_wrap_author_link``) treats it the same way.
 from __future__ import annotations
 
 import re
-from collections import defaultdict
+from collections import Counter, defaultdict
 
 from britannica.db.models import Article, Contributor, ContributorInitials
 from britannica.contributors.resolver import _fold, _name_core_tokens
@@ -109,6 +109,31 @@ def harvest_author_links(session, cidx, article_ids=None):
     return binds, unresolved, votes
 
 
+def _canonical_name(names: list[str]) -> str:
+    """The MODE of what the source actually wrote; longest breaks a tie.
+
+    Length is not evidence.  The source spells one person's name several ways —
+    a front-matter list, an article footer, the vol 29 index — and the spelling
+    the source uses MOST is the one to carry; picking the longest string only
+    happens to work when the variants differ in length.
+
+    Wentworth-Sheilds is the case that shows the difference.  The vol 6 front
+    matter reproduces the printed error ``Francis Edward``; the article's own
+    footer and the vol 29 index both write ``Francis Ernest``, and Wikisource
+    marks the printed EDWARD with ``{{SIC}}`` and an explicit transcriber's note.
+    Every variant is 32 characters, so ``max(key=len)`` was a coin flip decided
+    by dict order, and it landed on the misprint.  By mode, Ernest wins 2-1.
+
+    This is what ``harvest_author_links`` already documents its ``votes`` for —
+    "the MODE of what the source actually wrote, not a single index line"
+    ([[feedback_accrete_first_canonicalize_last]]).  The accrete path was simply
+    not doing it.
+    """
+    counts = Counter(names)
+    top = max(counts.values())
+    return max((n for n, c in counts.items() if c == top), key=len)
+
+
 def accrete_author_link_contributors(session, cidx) -> int:
     """Add a Contributor + ContributorInitials for every author-link SIGNER who
     resolves to nobody — the roster accreting from its authoritative source.
@@ -137,7 +162,7 @@ def accrete_author_link_contributors(session, cidx) -> int:
         clusters[key]["inits"].add(_normalize_initials(init))
     added = 0
     for c in clusters.values():
-        contrib = Contributor(full_name=max(c["names"], key=len))
+        contrib = Contributor(full_name=_canonical_name(c["names"]))
         session.add(contrib)
         session.flush()
         for ini in sorted(c["inits"]):
