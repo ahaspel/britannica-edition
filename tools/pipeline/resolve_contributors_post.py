@@ -54,35 +54,48 @@ ART = Path("data/derived/articles")
 # step-5 mode must vote on ONLY the name proper — the title is kept from the
 # authoritative front-matter form (footers casually drop it, so a mode would wrongly
 # delete `Sir`/`Rev.`) and dates are stripped entirely (none wanted in the index).
-def cap_footer_spellings(observations, name_proper):
-    """The footer's NAME voice: one vote per DISTINCT spelling, in first-seen order.
+def pick_winning_spelling(groups, frontmatter_folds=()):
+    """The winning folded spelling: most votes, then FULLEST, then FRONT MATTER.
 
-    A contributor's footer is one editorial act replicated across every article
-    he signed.  Thomas Ashby's 254 footers are not 254 witnesses — they are one
-    witness repeated, carrying no more information than the first.  Counted raw
-    they outvoted the index 254-to-2 and decided every contested name outright,
-    which is replication masquerading as corroboration.  Capped, the tally
-    measures what a ballot over sources was always meant to measure: how many
-    INDEPENDENT sources attest a spelling.
+    ``groups`` maps a folded key to a ``Counter`` of the raw variants that fold
+    to it, as ``_canon_name`` builds them.  ``frontmatter_folds`` is the set of
+    folded keys the per-volume front matter attests for this contributor.
 
-    The cap is self-correcting exactly where the risk lay.  Where the footer
-    would have erased a fuller name it disagrees with ITSELF and splits its own
-    vote: Kropotkin signs `Peter Kropotkin` 64 times and `Peter Alexeivitch
-    Kropotkin` 26 times, so capped they are 1-1 and the index breaks the tie
-    toward the fuller form.  Counted raw the short form won 64-26 and the middle
-    name was lost.
+    Two ORIGINAL sources print a contributor's name: the per-volume front-matter
+    tables and the vol 29 master index.  Neither outranks the other as evidence —
+    but they do not reach us the same way.  The front matter arrives as
+    Wikisource's proofread wikitext for every volume; vol 29 arrives proofread for
+    only about twelve of its twenty-seven index pages, and through our own vision
+    OCR for the rest.  On an untranscribed page we cannot tell a printed misprint
+    from an OCR misread, so vol 29 alone is the weaker reading — not the weaker
+    source.
 
-    ``observations`` is ``[(raw_name, raw_initials), …]`` as ``harvest_author_links``
-    returns them; the initials are ignored here and still vote per occurrence.
+    Hence the cascade:
+
+    1. VOTES — a real majority settles it, whatever the sources.
+    2. LENGTH — the fuller spelling is MONOTONIC: it contains the shorter one's
+       information, so choosing it cannot lose anything
+       ([[feedback_when_in_doubt_carry]]).  This is what recovers the names the
+       front matter abbreviates and vol 29 prints in full — `H. R. Haxton` ->
+       `Henry Raymond Haxton`.
+    3. FRONT MATTER — when even length cannot separate them, prefer the reading
+       we can actually trust.  This is what keeps the OCR's `G. E. Webber` (whose
+       own entry signs itself `C. E. W.`) from displacing the front matter's
+       `C. E. Webber`, and `Wentworth-Shields` from displacing `-Sheilds`.
+    4. The folded key, so equal rivals resolve identically on every run
+       ([[project_determinism_arc]]).
+
+    Step 3 replaces a tie-break toward the roster row's own build-time spelling.
+    That was the right instinct for the wrong reason: it preferred whichever
+    source SEEDED the row — usually the front matter, but vol 29 or a footer for
+    anyone they introduced — and, since that source also votes here, it amounted
+    to one vote plus a veto.  Naming the front matter explicitly keeps the
+    protection and drops the double-count.
     """
-    seen: list[str] = []
-    for raw_name, _raw_initials in observations:
-        if not raw_name:
-            continue
-        proper = name_proper(raw_name)
-        if proper and proper not in seen:
-            seen.append(proper)
-    return seen
+    fm = set(frontmatter_folds)
+    return max(groups, key=lambda k: (sum(groups[k].values()),
+                                      max(len(x) for x in groups[k]),
+                                      k in fm, k))
 
 
 _TITLE_RE = re.compile(
@@ -203,6 +216,12 @@ def bind_contributors(session, payloads: dict) -> bool:
     #    index citations, which agree with each other; the initials are EB's own
     #    byline mark.  ([[feedback_accrete_first_canonicalize_last]])
     name_votes: dict[int, Counter] = defaultdict(Counter)
+    # Folded spellings the per-volume FRONT MATTER attests, per contributor.  It
+    # is the only name source we hold as proofread wikitext for every volume, so
+    # it settles a contest that votes and length cannot — and, being wikitext, a
+    # transcription error in it is reachable by `data/corrections.json` under the
+    # usual `volume:page` key ([[feedback_corrections_json]]).
+    fm_folds: dict[int, set] = defaultdict(set)
     init_votes: dict[int, Counter] = defaultdict(Counter)
 
     def _strip_date(s: str) -> str:
@@ -245,14 +264,29 @@ def bind_contributors(session, payloads: dict) -> bool:
     # vote — Kropotkin is `Peter Kropotkin` x64 AND `Peter Alexeivitch Kropotkin`
     # x26, so capped they are 1-1 and the index breaks the tie toward the fuller
     # form.  Raw, the short form won 64-26 and the middle name was lost.
+    # Footers vote their INITIALS and never their name — because the initials are
+    # what the book prints and the name is not.
+    #
+    # An EB1911 article is signed with initials alone.  Volume 6 page 864 ends
+    # "(F. E. W.-S.)" and nothing more; the full name in
+    # `{{EB1911 footer initials|Francis Ernest Wentworth-Sheilds|F. E. W.-S.}}`
+    # is the transcriber's, rendered as the `[[Author:]]` link behind those
+    # initials.  It is therefore not a witness to the 1911 text at all — it is
+    # Wikisource's IDENTIFICATION of the person, the same editorial act as the
+    # `[[Author:]]` target in the vol 29 index, and it carries their corrections:
+    # they file this man under `Francis Ernest`, redirecting `Francis Edward`,
+    # because the printed index misprints him (and marks it with `{{SIC}}`).
+    #
+    # Letting that vote would put a modern editorial judgement on the same ballot
+    # as the book's own text and let it outrank it.  The roster's names are the
+    # book's; Wikisource's identification is apparatus, not evidence about what
+    # the page says.  ([[feedback_source_is_the_only_excuse]])
     for _cid, _obs in footer_votes.items():
         for _nm, _it in _obs:
             if _it:
                 _iv = _normalize_initials(_it)
                 if _iv:
                     init_votes[_cid][_iv] += 1
-        for _np in cap_footer_spellings(_obs, _name_proper):
-            name_votes[_cid][_np] += 1
 
     # ── 2. FRONTMATTER (own session; appends, dedups) ───────────────────
     link_from_frontmatter(apply_mode=True, kind_of=kinds_of)
@@ -328,6 +362,9 @@ def bind_contributors(session, payloads: dict) -> bool:
                            initials=_normalize_initials(_fi))
         if _fc is not None:
             _vote(_fc, _fn, _fi)
+            _fm_core = _name_proper(_fn)
+            if _fm_core:
+                fm_folds[_fc].add(_name_fold(_fm_core))
 
     def _canon_name(cid: int) -> str:
         """Display = the authoritative TITLE prefix (date dropped) + the winning
@@ -335,11 +372,18 @@ def bind_contributors(session, payloads: dict) -> bool:
 
         The winner is chosen by a CASE+DIACRITIC-FOLDED key (_name_fold), so an
         all-caps or de-accented index entry can't split the vote; a genuine tie
-        is broken toward the DB (front-matter) spelling.  For casing/accents we
-        emit the DB form when its spelling matches the winner (already correctly
-        cased — `M'Lennan`, `Léon`), else the best-cased raw variant in the
-        winning group.  Robertson still flips: his DB spelling folds to
-        `roberston`, not the winning `robertson`."""
+        goes to the FULLEST spelling.  For casing/accents we emit the DB form
+        when its spelling matches the winner (already correctly cased —
+        `M'Lennan`, `Léon`), else the best-cased raw variant in the winning
+        group.  Robertson still flips: his DB spelling folds to `roberston`, not
+        the winning `robertson`.
+
+        Ties used to go to the DB spelling instead.  That was a thumb on the
+        scale: the source that seeded the roster row — front matter, or vol 29 —
+        also votes in this ballot, so it held one vote AND a veto over the same
+        contest.  It vetoed in one direction only, keeping the initials the index
+        printed over a full given name attested elsewhere, in all eight contests
+        it decided."""
         title, _ = _split_title(_strip_date(cred_of[cid].full_name))
         db_core = _name_proper(cred_of[cid].full_name)
         v = name_votes.get(cid)
@@ -349,9 +393,7 @@ def bind_contributors(session, payloads: dict) -> bool:
         groups: dict[str, Counter] = defaultdict(Counter)
         for raw_core, n in v.items():
             groups[_name_fold(raw_core)][raw_core] += n
-        win = max(groups, key=lambda k: (sum(groups[k].values()),
-                                         k == db_fold,   # tie → trust the DB spelling
-                                         max(len(x) for x in groups[k]), k))
+        win = pick_winning_spelling(groups, fm_folds.get(cid, ()))
         if win == db_fold:
             core = db_core
         else:

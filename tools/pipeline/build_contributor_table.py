@@ -24,6 +24,35 @@ from britannica.pipeline.stages.preprocess import preprocess
 from britannica.util.strings import strip_html_tags
 
 
+_CRED_WORD_RE = re.compile(
+    r"^(?:bart|bt|kt|jun|jnr|jr|sen|snr|sr|esq|hon|"
+    r"ma|ba|bd|dd|md|mb|bl|llb|lld|dcl|phd|dsc|bsc|litt|lic|theol|"
+    r"mp|kc|qc|cb|cmg|cie|cvo|mvo|osb|sj|"
+    r"frs|fsa|fba|fgs|frgs|fls|frcs|mice|minstce)$",
+    re.IGNORECASE)
+
+
+def _looks_like_credentials(tail: str) -> bool:
+    """Is this comma-tail a post-nominal string, or more of the person's name?
+
+    The old test was ``re.search(r"[A-Z]\\.", tail)`` — an upper-case letter
+    IMMEDIATELY followed by a period.  ``M.A., LL.D`` passes it; ``Ph.D``,
+    ``Litt.D``, ``Lic. Theol``, ``Bart`` and ``Jr`` do not, because their capital
+    is followed by a lower-case letter or by nothing.  A tail that failed was
+    folded back into the name, so the roster shipped ``Adolf Gotthard Noreen,
+    Ph.D`` and ``Sir Henry Thompson, Bart`` as NAMES, with an empty credentials
+    field beside them — the source distinguishes the two and we merged them
+    ([[feedback_forks_are_dropped_attributes]]).
+
+    A period anywhere is enough to mark an abbreviation; the word list catches
+    the post-nominals that carry none.
+    """
+    if "." in tail:
+        return True
+    tokens = [t for t in re.split(r"[,\s]+", tail.strip(" .")) if t]
+    return bool(tokens) and all(_CRED_WORD_RE.match(t.strip(" .")) for t in tokens)
+
+
 def _clean_name(raw_name):
     """Extract clean name from wiki markup, separating credentials."""
     # Strip author links: [[Author:X|Display]] → Display
@@ -52,12 +81,13 @@ def _clean_name(raw_name):
     # Also handle unclosed variants: trailing "(d." or "(late" without closing paren
     name = re.sub(r"\s*\(d\.?\s*$", "", name)
     name = re.sub(r",?\s*\(late\s*$", "", name, flags=re.IGNORECASE)
-    # Split name from credentials at first comma
-    parts = name.split(",", 1)
+    # Split name from credentials at the first comma OR semicolon — the front
+    # matter uses both ("Edward Cuthbert Butler; O.S.B").
+    parts = re.split(r"\s*[,;]\s*", name, maxsplit=1)
     base_name = parts[0].strip().rstrip(".")
     credentials = parts[1].strip().rstrip(".") if len(parts) > 1 else ""
-    # Validate: credentials should look like abbreviations
-    if credentials and not re.search(r"[A-Z]\.", credentials):
+    # Validate: the tail must look like post-nominals, not more of the name.
+    if credentials and not _looks_like_credentials(credentials):
         base_name = name.strip().rstrip(".")
         credentials = ""
     # Canonicalize: applies Unicode normalization (curly→straight quotes,
