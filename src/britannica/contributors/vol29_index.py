@@ -134,7 +134,14 @@ def _split_name_creds(raw_name: str) -> tuple[str, str, str]:
     a person's first/middle names with a comma — only the
     SURNAME/given boundary and the credential boundary use commas.
     """
-    name = raw_name.strip().rstrip(".,")
+    # Strip the entry's terminal punctuation — but NOT the period of a trailing
+    # INITIAL, which is part of the name.  The vol 29 index ends most entries
+    # with a full stop ("MARSDEN, REGINALD GODFREY."), and stripping it is right;
+    # but "GODFREY, ERNEST H." ends with an initial, and stripping there yielded
+    # the roster name `Ernest H Godfrey`.  Two contributors came out that way.
+    name = raw_name.strip().rstrip(",")
+    if not re.search(r"\b[A-Z]\.$", name):
+        name = name.rstrip(".").rstrip(",")
     parts = [p.strip() for p in name.split(",") if p.strip()]
     if not parts:
         return "", "", ""

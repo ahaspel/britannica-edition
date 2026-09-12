@@ -85,7 +85,11 @@ def _clean_name(raw_name):
     # matter uses both ("Edward Cuthbert Butler; O.S.B").
     parts = re.split(r"\s*[,;]\s*", name, maxsplit=1)
     base_name = parts[0].strip().rstrip(".")
-    credentials = parts[1].strip().rstrip(".") if len(parts) > 1 else ""
+    # Strip trailing punctuation, commas included.  Stripping only "." left a
+    # tail like "M.A.," or "Ph.D," intact, because the last character was the
+    # comma — 14 contributors shipped that way, Hugh Chisholm's "M.A.," among
+    # them, visible wherever a byline shows credentials.
+    credentials = parts[1].strip().rstrip(" .,;") if len(parts) > 1 else ""
     # Validate: the tail must look like post-nominals, not more of the name.
     if credentials and not _looks_like_credentials(credentials):
         base_name = name.strip().rstrip(".")

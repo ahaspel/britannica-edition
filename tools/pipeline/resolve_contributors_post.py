@@ -63,12 +63,19 @@ def pick_winning_spelling(groups, frontmatter_folds=()):
 
     Two ORIGINAL sources print a contributor's name: the per-volume front-matter
     tables and the vol 29 master index.  Neither outranks the other as evidence —
-    but they do not reach us the same way.  The front matter arrives as
-    Wikisource's proofread wikitext for every volume; vol 29 arrives proofread for
-    only about twelve of its twenty-seven index pages, and through our own vision
-    OCR for the rest.  On an untranscribed page we cannot tell a printed misprint
-    from an OCR misread, so vol 29 alone is the weaker reading — not the weaker
-    source.
+    but they do not reach us the same way.  Measured over the corpus by
+    Wikisource's own `pagequality`:
+
+      front matter   234 contributor-table pages: 127 proofread, 107 validated,
+                     NONE unproofread.
+      vol 29 index    27 pages: 24 NOT proofread (level 1), 3 proofread.
+
+    So vol 29's text is largely Wikisource's own uncorrected OCR layer — `VILLARI,
+    LUIGL`, `Leopold 11. of Tuscany`, `flora tact` — which is why we run a vision
+    OCR over those scans at all: not to replace a transcription, but because there
+    mostly is not one.  Either way the vol 29 reading is machine-made, so a
+    disagreement with the front matter may be a printed misprint OR a misread, and
+    we cannot tell which.  Vol 29 is the weaker READING, not the weaker source.
 
     Hence the cascade:
 
