@@ -71,3 +71,6 @@ tools/epubcheck/
 # deploy.sh now mkdir -p's.  ~800 MB of dead July probe builds used to sit
 # loose in the repo root beside them; the two books we ship are all that is left.
 epub/
+
+# MDX dictionaries, staging files and isolated reader QA installation.
+/mdx/

@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-09-09.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-09-13.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,7 +46,162 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-09-09)
+## CURRENT STATE (2026-09-13)
+
+### Search scope reopened — canonical article results required
+
+The user rejects duplicate natural-order/surname-order suggestions as a search
+design. Follow the site's title-search behavior: article results under canonical
+titles, with query variants matched internally. Investigation and acceptance
+criteria: [`mdx_search.md`](mdx_search.md). Native GoldenDict's suggestion model
+displays headword strings, so further alias edits alone cannot meet this target.
+The user requires native search and rejects a separate Britannica search box.
+Investigate native alias-to-canonical suggestion handling; MDX redirects already
+share articles but GoldenDict currently displays their indexed headword strings.
+Earlier acceptance of native lookup is superseded on this point.
+
+Found a supported integration to investigate before any fork: Programs →
+Prefix match can feed a local helper's canonical result titles into GoldenDict's
+native suggestion list. A helper could match aliases internally while MDX holds
+canonical display keys. Native ranking/selection behavior still needs a small
+prototype; do not yet claim exact site parity or a completed integration.
+
+**Prototype now verified:** Programs/Prefix match returns a single canonical
+SWIFT, JONATHAN for either name order and a single DESCARTES, RENÉ for accented
+or natural-order queries. Mercury keeps three distinct articles. Selecting Swift
+opens the real article. A supported HTML-program resolver also handles Jonathan
+Swift + Enter, which Prefix match alone does not. Full title-index helper takes
+119–150 ms per process locally. GoldenDict still reorders results itself; exact
+site ranking is not achieved. This is an isolated eight-article proof, not a
+migration of the full edition. Details/remaining integration: `mdx_search.md`.
+
+### Session 2026-09-13 — complete MDX built; search labels and aliases cleaned up
+
+`python -m britannica.mdx.build --all --output mdx/complete` now builds the full
+edition. Details and validation: [`mdx_complete.md`](mdx_complete.md).
+37,225 nonempty records; 1,508 contributors; 519 topics; 28 volume lists;
+three front-matter pages and 72 Reader's Guide pages; 10,745 local resources.
+All 317,217 generated internal links validate. Exact compiled read-back passes.
+Thirteen focused tests pass; the sample uses the same exporter.
+
+The complete edition passed 36 GoldenDict-ng reader checks before the topic-layout change, including
+readable search keys and compacted aliases. Deep topic paths initially exceeded the reader's
+100-character headword limit; compact keys fixed their lookup. The full audit
+also found 18 pre-existing missing section destinations, explicitly inventoried
+and displayed as unavailable in the affected entries. No source text was edited.
+
+Native full-text indexing/search works. The latest build replaces ID-only
+results with readable content keys and stable-ID redirects (44,915 redirect
+keys, 40,633 HTML records, ~571 MB ZIP). Native full-text results were checked
+with `thucydides`; indexing is complete. The user has accepted native title lookup
+plus readable native full-text results as sufficient: **no separate search page
+and no modified GoldenDict.** Native ordering remains unchanged. Follow-up alias
+cleanup consolidates redundant accent and punctuation variants,
+preferring the book's spelling; distinct alternative names and all ambiguous
+destinations remain. Enable the reader's Ignore diacritics option for accent-free
+lookup. Native ABABDA → ABĀBDA lookup passes. Word-order consolidation was
+subsequently reversed: it broke natural full-name searches such as Jonathan
+Swift. Retain attested natural-name aliases, yielding two Descartes spellings
+instead of five. The latest build removes 15,089 redundant spellings and passes
+exact compiled read-back.
+
+Restored name-order aliases and rebuilt the full package. Native title-box
+`Jonathan Swift` + Enter now opens only `SWIFT, JONATHAN`, verified visually
+and through the reader DOM. The updated dictionary is loaded; full-text
+reindexing is reader-managed. Thirteen unit tests pass, including this regression.
+
+Follow-up: lookup later returned nothing because both local dictionaries were
+muted in the reader's toolbar (confirmed in saved `mutedDictionaries`).
+Re-enabled Britannica, leaving the QA control dictionary muted, and verified
+native DESCARTES → select `DESCARTES, RENÉ` → full article. The toolbar's B icon
+toggles Britannica on/off; it must remain selected. No package change needed.
+
+Topic layout follow-up: article topics now appear as visible links directly
+below the byline (below the citation for unsigned articles), replacing the
+collapsed block above the title. Both sample and full export use this layout.
+Full export rebuilt with all 317,213 links and exact read-back passing; 12 unit
+tests pass. Native Descartes placement and topic-link navigation verified.
+The rebuilt pair is loaded; GoldenDict rebuilds its full-text index automatically.
+
+Chrome integration: `tools/chrome-britannica/` contains a Manifest V3 extension
+adding **Search Britannica 11** for selected text. It sends an encoded
+`goldendict://...` URI to the main reader. Registered the portable full reader
+as the current user's Windows `goldendict` protocol handler and verified MERCURY
+opens through that handler. JavaScript syntax checked; the user installed the
+extension and confirmed the context-menu lookup works on ordinary web pages.
+Feedly intercepts the native selection menu. Extension 1.0.1 adds a Feedly-only
+capture listener that stops page context-menu handlers when text is selected,
+preserving Chrome's default menu. Syntax checked; user verification pending
+after reloading the extension and refreshing Feedly.
+
+### Session 2026-09-13 — MDX sample built and verified in GoldenDict-ng
+
+Plan: [`mdx_edition_plan.md`](mdx_edition_plan.md). Phase 1 result and reproduction:
+[`mdx_sample.md`](mdx_sample.md). **Sample only; no source changes, full corpus
+rebuild, product listing, or deployment.**
+
+An illustrated offline MDX/MDD export, with GoldenDict-ng as the first supported
+reader. Reuse the canonical renderer's existing link-policy interface, EPUB
+image/math machinery, and contributor/topic data. First prove a difficult sample,
+then build and validate the complete corpus, then prepare the release package.
+Keep stable article identities separate from headwords; preserve ambiguous alias
+choices rather than inheriting the xref alias builder's most-frequent-target rule.
+Scope is a modest export extension, not universal reader compatibility or a new
+source-processing project. Demand remains unproven; a market survey is not a
+prerequisite.
+
+`python -m britannica.mdx.build --sample --output mdx/sample` produces a **1.7 MB
+ZIP: 13 articles, 16 alias keys, one three-way MERCURY choice page, 11 contributor
+pages, 11 topic pages, help, and 47 resources**. Canonical loader/renderer,
+existing SVG math cache and image encoder; compiler `mdict-utils==1.3.14` is
+pinned in the new optional `mdx` dependency extra and lockfile. No shared render
+code changed. Exact MDX/MDD read-back, **261 internal links**, five unit tests,
+and **23 actual-reader checks pass** in portable GoldenDict-ng 26.8.0 / Qt 6.10.3.
+Reader screenshots verify equations, a wide table, plates and disambiguation.
+Native online sources disabled, WebEngine HTTP(S) blocked; second local dictionary
+confirms Britannica internal links stay on the intended article.
+
+Two concrete integration fixes: close compiler SQLite handles before Windows
+staging cleanup; include normalized headword aliases explicitly (ABABDA did not
+find ABĀBDA with the reader's default diacritic setting). First QA also exposed
+GoldenDict's default online sources; final run disabled them. Dark content was
+tested with emulated colors, not the native theme UI. The user subsequently
+confirmed math, images, glyphs and full-text search (`mercury`) interactively.
+
+### Session 2026-09-12 — inexpensive source trouble-spot report
+
+**READ-ONLY TRIAGE; no source corrections, OCR/model calls, rebuild, or deploy.**
+Plan: [`source_cleanup_plan.md`](source_cleanup_plan.md). Results:
+[`source-trouble-spots-2026-09-12/report.md`](reports/source-trouble-spots-2026-09-12/report.md),
+with CSV/JSONL passages, ranked pages, input fingerprints, and a 50-page review
+allocation (not yet scan-reviewed). Reusable runner:
+`tools/diagnostics/source_trouble_spots.py`.
+
+Canonical loaders + `markers_to_text` + the existing missing-period detector;
+corpus-frequency OCR-confusion checks and encoding/digit/repetition signals.
+**39,287,905 prose tokens; 28,305 covered source pages; 3,329 candidate occurrences.**
+1,841 occurrences located on **1,187 pages**; 324 ambiguous and 1,164 unmatched
+remain separate, not silently assigned a page. These are flags, not verified errors.
+Marked non-prose is excluded by the existing search converter; unmarked corrupted
+math can still surface. No assertion of complete text coverage or detector recall.
+
+**The user's proofreading-status observation holds independently:** status was
+not a ranking input, and all top 50 pages are unproofread. Stronger signals
+(excluding punctuation/repetition) occur on 183/1,828 unproofread pages (10.01%),
+97/17,174 proofread pages (0.56%), and 39/9,275 validated pages (0.42%).
+[`quality.md`](reports/source-trouble-spots-2026-09-12/quality.md) lists rates and
+leads on proofread/validated pages. Next action: scan-adjudicate candidates;
+do not auto-correct the proposed readings.
+
+**Count reconciliation:** the local export directory contains 37,226 records;
+the download has 37,225 nonempty records. Exact set comparison identifies one
+empty plate, `25-0483-dc502a.json` (`PLATE (VOL. 25, P. 483)`), which the download
+exporter deliberately skips. No missing IDs in the comparison.
+
+Five focused tests and report-integrity checks pass. Two triage defects caught
+during QA: the punctuation detector's match ends at the next word's first letter
+(complete that word before whole-word source lookup), and bare `Â` is a legitimate
+French letter (only damaged character sequences count as encoding flags).
 
 ### Session 2026-09-06/09 — the DNB is imported; `{{SIC}}` and `{{sic}}` are different templates
 

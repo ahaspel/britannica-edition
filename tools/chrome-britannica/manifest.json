@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Search Britannica 11",
+  "version": "1.0.1",
+  "description": "Look up selected text in your local Britannica 11 GoldenDict dictionary.",
+  "permissions": ["contextMenus"],
+  "background": {"service_worker": "background.js"},
+  "content_scripts": [{
+    "matches": ["https://feedly.com/*", "https://*.feedly.com/*"],
+    "js": ["feedly-selection.js"],
+    "run_at": "document_start",
+    "all_frames": true
+  }]
+}

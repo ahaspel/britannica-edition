@@ -232,7 +232,12 @@ def bind_contributors(session, payloads: dict) -> bool:
     init_votes: dict[int, Counter] = defaultdict(Counter)
 
     def _strip_date(s: str) -> str:
-        return _NAME_DATE_RE.sub("", s).strip()
+        # Removing the date can orphan the punctuation that introduced it.  Vol 6
+        # p13 writes "…Cates]], {{Font-variant normal|(1821–1895)}}" — `_clean_name`
+        # splits at that comma, finds `(1821–1895)` is not credentials, and
+        # correctly restores the whole string, comma included; stripping the date
+        # then leaves "William Liest Readwin Cates,".
+        return _NAME_DATE_RE.sub("", s).strip().rstrip(",;").strip()
 
     def _split_title(s: str) -> tuple[str, str]:
         m = _TITLE_RE.match(s)
