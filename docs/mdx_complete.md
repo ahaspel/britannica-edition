@@ -1,4 +1,17 @@
-# Complete MDX edition — 2026-09-13
+# Complete MDX edition — 2026-09-14
+
+**Release packaging:** the standard MDX is the main download; enhanced Windows
+search is an optional complete alternative. Both have matching samples. Use
+`mdx/releases/` for distribution; see [`mdx_packaging.md`](mdx_packaging.md).
+
+**Current installed package:** native canonical-title search across all 37,225
+articles, built with `--all --native-search`. Setup and behavior are documented
+in [`mdx_search.md`](mdx_search.md). It adds a local title index and compressed
+article store for GoldenDict's supported Programs interface. The current MDX
+is 117,316,215 bytes, MDD 450,022,368 bytes, ZIP 704,853,503 bytes; 39,360 internal
+redirect keys and 40,633 HTML records. The latest build took 352.8 seconds.
+The counts and sizes below describe the preceding conventional MDX package,
+which remains available by omitting `--native-search`.
 
 The same exporter now supports the complete corpus:
 

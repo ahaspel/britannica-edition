@@ -17,7 +17,10 @@ const config = readFileSync(`${readerHome}/portable/config`, 'utf8');
 const ignoreDiacritics = /<ignoreDiacritics>1<\/ignoreDiacritics>/.test(config);
 for (const section of ['mediawikis','websites','dictservers','programs']) {
   const body = config.match(new RegExp(`<${section}>([\\s\\S]*?)</${section}>`))?.[1] || '';
-  assert(!/enabled="1"/.test(body), 'Disable native network sources before QA: ' + section);
+  const checked = section === 'programs' && manifest.native_search
+    ? body.replace(/<program\b[^>]*>/g, tag => /id="eb1911-(?:title-search|name-lookup)"/.test(tag) ? '' : tag)
+    : body;
+  assert(!/enabled="1"/.test(checked), 'Disable native network sources before QA: ' + section);
 }
 const artifactHashes = {};
 for (const ext of ['mdx','mdd']) {
@@ -25,6 +28,13 @@ for (const ext of ['mdx','mdd']) {
   const shipped = readFileSync(`${output}/${name}`);
   assert(shipped.equals(readFileSync(`${readerHome}/content/${name}`)), 'Reader copy differs: ' + name);
   artifactHashes[name] = createHash('sha256').update(shipped).digest('hex');
+}
+if (manifest.native_search) {
+  for (const file of ['titles.json','articles.sqlite','lookup.cjs','search-api.js','install.py']) {
+    const shipped = readFileSync(`${output}/search/${file}`);
+    assert(shipped.equals(readFileSync(`${readerHome}/content/search/${file}`)), 'Reader helper differs: '+file);
+    artifactHashes['search/'+file] = createHash('sha256').update(shipped).digest('hex');
+  }
 }
 const endpoint = process.env.MDX_READER_CDP || 'http://127.0.0.1:9223';
 const targets = await (await fetch(endpoint + '/json')).json();
@@ -68,7 +78,7 @@ async function lookup(word, expected) {
   await waitFor(`location.href==='about:blank'`);
   // Match the URL produced by native title lookup, including its preference.
   await call('Page.navigate', {url:'gdlookup://localhost/?word=' + encodeURIComponent(word) + '&group=4294967294' + (ignoreDiacritics ? '&ignore_diacritics=1' : '')});
-  await waitFor(`document.readyState==='complete' && document.querySelector('.eb1911') && document.body.textContent.includes(${JSON.stringify(expected)})`);
+  await waitFor(`document.readyState==='complete' && document.querySelector('.eb1911') && document.body.textContent.toLowerCase().includes(${JSON.stringify(expected.toLowerCase())})`);
   // Load offscreen lazy images too: this tests every MDD resource, not only
   // the first viewport of a long article. Normal rendering retains laziness.
   await evaluate(`[...document.querySelectorAll('.eb1911 img')].forEach(i=>i.loading='eager')`);
@@ -142,8 +152,29 @@ try {
   report.checks.push({topic_navigation:true});
   if (complete) {
     await lookup('Jonathan Swift', 'SWIFT, JONATHAN');
-    assert.equal(await evaluate(`document.querySelector('.eb1911 h1').textContent`), 'SWIFT, JONATHAN');
+    assert.equal(await evaluate(`document.querySelector('.eb1911 h1').innerText`), 'SWIFT, JONATHAN');
     report.checks.push({natural_name_lookup:'Jonathan Swift', resolved:true});
+    if (manifest.native_search) {
+      const {DatabaseSync} = await import('node:sqlite');
+      const {inflateSync} = await import('node:zlib');
+      const db = new DatabaseSync(`${output}/search/articles.sqlite`, {readOnly:true});
+      for (const [query, stem, title] of [
+        ['Continued Fraction','07-0045-9b7a0f','CONTINUED FRACTIONS'],
+        ['Air Engines','01-0481-535ef5','AIR-ENGINE'],
+      ]) {
+        await lookup(query, title);
+        const body = inflateSync(db.prepare('SELECT body FROM articles WHERE id=?').get(stem).body).toString('utf8');
+        const data = await evaluate(`({images:[...document.querySelectorAll('.eb1911 img')].map(i=>({src:i.src,width:i.naturalWidth})),svg:document.querySelectorAll('.eb1911 svg').length,styled:getComputedStyle(document.querySelector('.eb1911')).fontFamily.includes('Georgia'),articles:document.querySelectorAll('.eb1911').length})`);
+        assert.equal(data.articles, 1, 'Alias duplicated the article');
+        assert.equal(data.svg, (body.match(/<svg\b/g)||[]).length);
+        assert.equal(data.images.length, (body.match(/<img\b/g)||[]).length);
+        assert(data.images.every(i=>i.width>0 && i.src.startsWith('bres:')));
+        assert(data.styled, 'HTML program lost the article stylesheet');
+        await snapshot('native-alias-'+stem);
+        report.checks.push({native_alias_resources:query, ...data});
+      }
+      db.close();
+    }
     await lookup('Britannica 11', 'Complete offline reference');
     const section = entries['EB1911:article:01-0639-46474b'].match(/id="(section-[^"]+)"/)[1];
     // An explicit QA link to a real anchor; no test text is shipped in the book.

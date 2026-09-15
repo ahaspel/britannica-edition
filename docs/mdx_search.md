@@ -1,5 +1,65 @@
 # Britannica search for the dictionary edition
 
+## Full edition integration — 2026-09-14
+
+For the installation package and shared Windows/macOS/Linux installer design,
+see [`mdx_installation.md`](mdx_installation.md). The Python setup command below
+is the earlier advanced installation path; the new Windows package bundles its
+runtime and provides a graphical installer.
+
+The full 37,225-article edition now builds with native canonical-title search:
+
+```
+python -m britannica.mdx.build --all --native-search --output mdx/complete
+```
+
+The MDX retains canonical display titles and stable internal links. Alternate
+names live in `search/titles.json`; the supported Prefix match program returns
+one title per article. The HTML program handles Enter and browser URI queries:
+an exact alternative name opens the existing article HTML; ambiguous names
+show linked canonical choices. Partial queries can also show a choice list.
+GoldenDict still controls the final ordering of native suggestions and full-text
+results. This does not reproduce the site's complete ranking or snippets.
+
+Article HTML is stored, compressed and indexed by stable identity, in a local
+SQLite database. Only the selected body is decompressed per lookup. Styles,
+images, math, footnotes and cross-references use the existing exported content.
+Cross-article section links use GoldenDict's `gdanchor` parameter. Website
+search code and indexes remain unchanged; the package contains a copy of the
+existing folding/title-rank functions.
+
+Ship `mdx/complete/Britannica11.zip`, including its `search` directory. This
+integration currently targets **portable GoldenDict-ng on Windows**, tested
+with version 26.8.0. It requires Node.js 22.13+ at runtime and Python 3 for setup.
+Close GoldenDict, extract the package, then run from the extracted directory:
+
+```
+python search/install.py --reader "PATH TO PORTABLE GOLDENDICT" --node "PATH TO node.exe"
+```
+
+The installer copies the MDX, MDD and search files into the reader's `content`
+directory, configures the two local Programs sources, enables Ignore diacritics,
+and backs up the existing configuration. Other settings are retained. Rerunning
+setup replaces these same sources without duplicating them. Program commands
+use absolute paths: rerun setup if the reader or Node installation moves.
+The program receives query text on stdin, never as shell command text.
+
+Validation: 16 focused tests pass; full compiled read-back is exact and all
+317,217 internal links validate. The installed edition passes 39 reader checks
+with zero remote requests, including math and images served through alternative
+names. Native UI checks confirm both Swift name orders, both Descartes queries,
+Thucydides and the three distinct Mercury articles. Native full-text indexing is
+complete; `thucydides` returns 198 readable results in GoldenDict's own order.
+The registered `goldendict://Jonathan%20Swift?target=main` browser handoff opens
+the author directly. Feedly's context-menu interception still needs the user's
+separate confirmation; this change does not alter the Chrome extension.
+
+Reader evidence: `mdx/complete/reader-qa/report.json` and screenshots in that
+directory; compiled package hashes: `mdx/complete/SHA256SUMS`.
+
+The prototype notes below describe the earlier investigation, not the current
+package's storage or installation mechanism.
+
 ## Native prototype result — 2026-09-13
 
 The supported Programs interface works in unmodified GoldenDict-ng 26.8.0:

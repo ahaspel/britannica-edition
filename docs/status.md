@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-09-13.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-09-14.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -47,6 +47,57 @@ agent's memory directory and are not duplicated here.
 ---
 
 ## CURRENT STATE (2026-09-13)
+
+### 2026-09-14 — standard and optional enhanced downloads
+
+Customer-facing packages are assembled in `mdx/releases/`: standard MDX as the
+main download, optional enhanced Windows search as a complete alternative, and
+a matching 13-article sample for each. GoldenDict is not bundled. The enhanced
+edition includes its own MDX; it is not a helper-only add-on to the standard
+dictionary. The release comparison explains installing one edition and switching.
+Builds and archive validation: [`mdx_packaging.md`](mdx_packaging.md).
+The standard edition was rebuilt with ordinary aliases and passes exact compiled
+read-back plus all 317,217 link checks. Both 13-article samples compile from the
+same exporter. Sixteen exporter tests and the shared installer suite pass,
+including sample-to-full upgrade and refusal to replace a full edition with a
+sample. Release archives carry individual checksums and a common download index.
+Earlier package paths below are internal/engineering artifacts.
+
+### 2026-09-14 — installation packaging
+
+Installation now has one shared JavaScript engine, with a small Windows GUI
+launcher. `python -m britannica.mdx.windows` packages the existing native edition
+with its own Node runtime, XML dependency and notices. Recipient machines need
+neither Python nor Node installed. The edition remains separate from GoldenDict.
+
+Fresh installation and updating passed in an isolated Unicode/space-containing
+reader folder with Python and Node absent from PATH. Shared regression tests
+also cover damaged packages, configuration preservation and rollback after a
+failed update. macOS/Linux profile layouts are implemented in the same engine;
+their runtime packages and real-reader verification are still outstanding.
+The Windows graphical Install action and the freshly installed reader also
+pass. Distribution: `mdx/Britannica11-Windows.zip` (about 738 MB).
+Details: [`mdx_installation.md`](mdx_installation.md).
+
+### 2026-09-14 — full-corpus native dictionary search installed
+
+The complete edition now builds with `--native-search` and is installed in the
+full portable GoldenDict reader. All 37,225 article identities have canonical
+MDX display titles, with aliases matched internally by supported local Programs
+sources. Native Swift/Descartes searches show single canonical results; selecting
+a suggestion or entering an exact alternative name opens the original article.
+Ambiguous names retain distinct destinations. The reader controls final ordering;
+website search code, indexes and behavior are unchanged.
+
+The package includes a title index, compressed SQLite article store, Node helper,
+copied ranking functions and standalone Python installer. Sixteen focused tests
+pass; compiled read-back is exact and all 317,217 internal links validate.
+Thirty-nine installed-reader checks pass, including images and SVG math through
+alias lookup, with zero remote requests. Native full-text indexing is complete;
+the browser URI opens Jonathan Swift correctly. The normal reader configuration
+is restored with the temporary QA dictionary muted.
+See [`mdx_search.md`](mdx_search.md) for installation and reader validation.
+The older prototype/investigation notes below are historical.
 
 ### Search scope reopened — canonical article results required
 
