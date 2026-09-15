@@ -33,6 +33,8 @@ ASCII_WORD = re.compile(r"[a-z]{4,24}\Z")
 ENCODING = re.compile(r"Â[\u0080-\u00bf]|Ã[\u0080-\u00bf]|â[€\u0080-\u009f][^\s]?|�")
 MIXED = re.compile(r"\b[A-Za-z01]{5,24}\b")
 REPEAT = re.compile(r"\b([A-Za-z]{4,})[ \t]+\1\b", re.I)
+# Wikisource's proofreading level, read the same way by both page scans below.
+PAGEQUALITY = re.compile(r'<pagequality\s+level="(\d)"')
 CONFUSIONS = (("rn", "m"), ("m", "rn"), ("cl", "d"), ("d", "cl"),
               ("li", "h"), ("h", "li"), ("vv", "w"), ("ii", "n"))
 WEIGHTS = {"encoding": 8, "mixed_digit": 7, "local_variant": 6,
@@ -161,7 +163,7 @@ def quality_breakdown(out, page_meta=None):
         for volume, wanted in sorted(covered.items()):
             pages, _ = load_pages(volume, pages=wanted)
             for page in pages:
-                quality = re.search(r'<pagequality\s+level="(\d)"', page.text)
+                quality = PAGEQUALITY.search(page.text)
                 page_meta[(volume, page.page)] = dict(volume=volume, ws_page=page.page,
                     quality=int(quality[1]) if quality else "unknown")
     with (out / "pages.csv").open(encoding="utf-8-sig", newline="") as f:
@@ -292,7 +294,7 @@ def main():
             source_digest.update(p.text.encode())
             if p.page not in covered:
                 continue
-            quality = re.search(r'<pagequality\s+level="(\d)"', p.text)
+            quality = PAGEQUALITY.search(p.text)
             page_meta[(volume, p.page)] = dict(volume=volume, ws_page=p.page,
                 quality=int(quality[1]) if quality else "unknown",
                 source_file=str(p.path), leaf=leaf_for_ws(volume, p.page))
