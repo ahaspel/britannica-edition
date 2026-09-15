@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-09-14.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-09-15.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,9 +46,102 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-09-13)
+## CURRENT STATE (2026-09-15)
+
+### 2026-09-15 — tables get their borders from the source, not our palette
+
+Two defects the user found in AGRICULTURE Table IX, both ours, both CSS; no
+parser defect and nothing dropped in the pipeline.
+
+**The frame.** Wikisource ships `_tablecolhdborder` as TemplateStyles with the
+page — `border:1px solid` on the table, `border-left:1px solid` on every `td`.
+We carried that class on 758 tables and styled it nowhere, so everything it draws
+was lost: the frame AND the full-height column rules.  That is why a transcriber
+marks only the header cells — the class draws the verticals down the body.  Both
+it and `_tablegridhdborder` are now ported verbatim into `viewer.html` and
+`epub.css`.  `.data-table`'s blanket frame is gone: it painted every bordered
+table in `#c4b49a`, the UI CHROME tone shared with modal edges and buttons, so our
+frame disagreed with the source's own rules.  The ~351 tables that get a frame
+from a `border="1"` attribute keep it (checked in a browser).  A frame is content.
+
+**The brace.**  `epub.css` had `td, th { … text-align: left }`, and a rule
+targeting the cell beats the value it would otherwise INHERIT — so it silently
+overrode `text-align:center` on every table in the MDX and EPUB.  The brace under
+"Hay." is an inline-block and sat at its cell's left edge.  It read as a broken
+transform; it was this.  `epub.css` also loses `.data-table td {border:1px solid
+#ccc}`, which drew a grey grid around every cell of all 11,814 tables — rules the
+printed page does not have.  That spelling was the original 2026-04 design, left
+behind when the viewer moved on.
+
+Verified against the scan by the user on RUM, PENNY, NORTH-WEST TERRITORIES and
+AGRICULTURE, and in the vol-1 sampler EPUB.  Site deployed; EPUB and both MDX
+editions rebuilt.  `_tablegridhdborder` (4 tables) is ported but unwitnessed.
+
+### 2026-09-15 — mojibake decoded, DNB citations unlinked, MDX shippable
+
+**Mojibake.**  Wikisource's unproofread OCR layer stores some characters as UTF-8
+read through cp1252 (`Â£12,500,000`, `childrenâ€”an`); confirmed upstream by
+codepoint against live `action=parse`, so we carried it faithfully to the reader.
+467 occurrences in 51 articles now decoded in `_source_clean`, beside
+`_decode_entities` and on the same J8 transport-decoding grounds.  The map is
+EXPLICIT and keyed on the lead character: a generic round-trip repair is unusable
+here because `«` is U+00AB, a valid UTF-8 continuation byte, so `JOSÉ«/B»`
+round-trips into a Greek letter — it would have corrupted 125 legitimate pairs,
+~90 of them accented names in bylines.  Checked exhaustively: of all 467 sites, 47
+are letter-preceded and every one is OCR garbage, not A-circumflex.  Excluded, all
+wrecked mathematics: the guillemets (170, user ruling), and `â€ž`/`â„¢`, which
+stand in for the subscript and superscript of Legendre Qₙ(m) and Pᵐ(cos θ).
+Repairs the ENCODING only — `Â£pr libertinism` becomes `£pr libertinism`, still
+their misreading of "for", which belongs in `corrections.json`.
+
+**`{{DNB lkpl}}` is another book's link.**  It sat in the TARGET_FIRST_LINK family,
+which is harvested `display -> target` into the EB1911 alias table — and a DNB
+citation is written the other way round, the target being the PERSON and the
+display a fixed phrase.  So the table learnt that the words "Dict. Nat. Biog."
+mean Peter Walsh, and linked that phrase to him in every article citing the DNB.
+Sixteen articles shipped that way, each also listing WALSH, PETER in its
+cross-reference panel; which stranger won was decided by an apostrophe filter.
+New `CROSS_WORK_LINK` shape: a classification fix, not a producer — `_link_wrap`
+already renders a targetless link as its recursed display.  83 instances, 79
+pages.  Rerouting to the DNB sister site later is one line in
+`_resolve_cross_work`.
+
+**Alias hygiene.**  `add_reference_aliases` now rejects harvested spellings
+containing `/` — a Wikisource PAGE PATH addresses another work
+(`BIBLE (KING JAMES)/NUMBERS: 17:8` was a headword under NUMBERS, BOOK OF).  No
+EB1911 title contains one.  86 spellings go; standard aliases 44,915 -> 44,829.
+
+**MDX packaging.**  `sha256sum -c` failed on EVERY line of the shipped
+`SHA256SUMS`: `Path.write_text` opens in text mode, so on Windows each filename
+carried a trailing `\r`.  It passed every check because `verify_archive` parses
+with `str.splitlines()`, which strips `\r\n` — our reader tolerated exactly the
+damage the customer's does not.  The same bug was live in three modules, each with
+its own copy of the format string; `britannica.mdx.checksums` now owns it and
+writes in BINARY.  Samples dropped from the release: a downloads page should not
+open with a four-way choice.  `build.py --sample` still builds one for QA.
+
+**Shipped:** site deployed and verified in production; full EPUB built (579.5 MB,
+888 chunks, gates passed) but NOT published; both MDX editions rebuilt and
+`mdx/releases/` assembled (2 downloads, LF checksums that verify as shipped).
+An enhanced archive is at an unlisted preview URL for outside review.
+
+**Still open.**  The MDX's one-download-or-two question is unresolved: the user's
+criterion (type "rene descartes", get one canonical result) is delivered only by
+the enhanced edition, which is Windows-only because it ships a Node runtime.  The
+installer engine already branches win32/darwin/linux; what is missing is the
+runtime package per platform and verification against a real reader, which needs
+hardware.  And **the xref resolver sends names to wrong articles** — BEAUREGARD,
+MARQUIS DE collects four unrelated marquises, HORACE collects HORACE SMITH, the
+same defect as PORSON, RICHARD -> WALSH, PETER.  `add_reference_aliases` records
+it faithfully; the fault is upstream of it.  That degrades the site's
+cross-reference panels as much as the dictionary's lookup list, and is read-only
+to investigate.
 
 ### 2026-09-14 — standard and optional enhanced downloads
+
+> **Superseded 2026-09-15 on two points:** the samples are no longer published
+> (two downloads, not four), and the `SHA256SUMS` this entry credits were
+> unreadable by `sha256sum -c`.  See the 2026-09-15 entries above.
 
 Customer-facing packages are assembled in `mdx/releases/`: standard MDX as the
 main download, optional enhanced Windows search as a complete alternative, and
