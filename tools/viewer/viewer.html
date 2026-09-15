@@ -421,12 +421,18 @@
       word-break: break-all;
     }
 
+    /* No blanket frame.  `border: 1px solid #c4b49a` boxed all 11,814 data
+       tables in the UI CHROME tone (the same #c4b49a as modal edges, buttons and
+       the wide-table scroll container) whether or not the printed table has a
+       frame — and where the source DID draw its own rules, in currentColor, the
+       two disagreed.  A frame is content: it comes from the source's own
+       `_tablecolhdborder` / `_tablegridhdborder` classes, or from the Ts border
+       codes it puts on individual cells. */
     .data-table {
       width: 100%;
       border-collapse: collapse;
       margin: 1em 0;
       font-size: 0.93rem;
-      border: 1px solid #c4b49a;
     }
 
     /* Chemistry-layout tables: spatial diagrams of 2-D reaction
@@ -688,6 +694,51 @@
     .data-table.wikitable td,
     .data-table.wikitable th {
       border: 1px solid #c4b49a;          /* full grid: the class MediaWiki renders */
+    }
+
+    /* `_tablecolhdborder` / `_tablegridhdborder` -- Wikisource's OWN bordered-table
+       classes, carried on 758 of our tables and until now styled nowhere, so the
+       rules they draw were simply lost.  Ported verbatim from the TemplateStyles
+       en.wikisource serves with the page (fetched from
+       Page:EB1911 - Volume 01.djvu/439):
+
+         ._tablecolhdborder{border-collapse:collapse;border:1px solid;...}
+         ._tablecolhdborder th{border-bottom:1px solid;border-left:1px solid}
+         ._tablecolhdborder td{border-left:1px solid;padding-left:5px}
+
+       This is where AGRICULTURE Table IX's full-height column rules come from:
+       the transcriber marks only the HEADER cells with `{{Ts|ba}}` because the
+       class draws a left rule on every body cell.  We drew neither, and framed
+       the table in the UI chrome tone instead.
+       `border:1px solid` with no colour is currentColor -- the same ink as the
+       text, which is what the scans show.  Do not substitute the chrome tone. */
+    .data-table._tablecolhdborder,
+    .data-table._tablegridhdborder {
+      border-collapse: collapse;
+      border: 1px solid;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .data-table._tablecolhdborder th {
+      border-bottom: 1px solid;
+      border-left: 1px solid;
+      text-align: center;
+    }
+    .data-table._tablecolhdborder td {
+      border-left: 1px solid;
+      padding-left: 5px;
+    }
+    .data-table._tablegridhdborder th {
+      border-left: 1px solid;
+      border-right: 1px solid;
+      border-bottom: 1px solid;
+      text-align: center;
+    }
+    .data-table._tablegridhdborder td {
+      border-left: 1px solid;
+      border-right: 1px solid;
+      border-bottom: 1px solid;
+      padding-left: 5px;
     }
 
     .small-caps {
