@@ -146,9 +146,90 @@
       }
     }
 
+    /* The scans indent a new paragraph about two characters, and that indent is
+       the ONLY signal the page gives — printed paragraphs carry no vertical gap.
+       We keep the gap (a web convention that earns its keep on screen) and add
+       the indent back, which is what this rule said until 2026-06-13: it was
+       deleted as collateral in c9115a8, a commit about making produce_title the
+       sole title decider, whose message never mentions the CSS.
+       The first paragraph stays flush, as the printed page runs it on from the
+       headword.
+       NOT TRUE of a paragraph broken by a block: the producer emits <p> as a
+       SEPARATOR, so a paragraph interrupted by display math resumes as its own
+       <p> and takes an indent it should not (MENSURATION §24 (ii)), while a new
+       item arriving straight after a table has no <p> at all and stays flush
+       when it should indent.  CSS cannot tell the two apart — the discriminator
+       is whether the text starts lowercase — and measurement rejects the one
+       rule that might have: a <p> after a centred block is a continuation only
+       21% of the time (1,482 of 7,028), so flushing them all would mis-set
+       5,546 genuine paragraphs to fix 1,482.  This wants a producer fix. */
     .body-text p {
+      text-indent: 1.5em;
       margin: 0 0 0.5em 0;
       position: relative;
+    }
+
+    /* `> p`, not `p`: `:first-of-type` is per PARENT, so the first paragraph of
+       every NESTED block matched it too and went flush.  That was 100 of 3,573
+       paragraphs in a 600-article sample, 98 of them the opening paragraph of a
+       small-type extract — and vol 1 p. 390 shows the scan indenting every
+       paragraph of such an extract, the first included. */
+    .body-text > p:first-of-type {
+      text-indent: 0;
+    }
+
+    /* An extract block opens with bare text rather than a <p>, so its first
+       paragraph is unreachable from a `p` rule and the indent has to come from
+       the block itself.  Safe: 293 of 293 such openings in the sample begin a
+       new sentence, never a continuation.  In `em` it scales with the 83% type,
+       which is what the scan's proportionally smaller indent does. */
+    .body-text div[style*="font-size:83%"] {
+      text-indent: 1.5em;
+    }
+
+    /* Where the SOURCE states its own indentation the indent is not ours to
+       impose.  FIBRES wraps a hanging `text-indent:-2em` list whose paragraphs
+       we were rendering at 0 and 1.5em — our value, twice, neither the
+       source's. */
+    .body-text [style*="text-indent"] p {
+      text-indent: inherit;
+    }
+
+    /* Centred display material takes no paragraph indent: an indent shifts the
+       centred line right.  The reset has to sit on the BLOCK, not just its <p> —
+       MENSURATION centres a formula inside a small-type extract, so a `p` rule
+       saying `inherit` would have picked up that extract's 1.5em. */
+    .body-text .centered,
+    .body-text .centered p {
+      text-indent: 0;
+    }
+
+    /* A float is not prose, and `text-indent` INHERITS.  A floated figure box
+       took the paragraph's indent and shifted its own image out of the box the
+       text wraps around — PRIMULACEAE Fig. 2 stood 26px into the prose, which is
+       exactly the 1.5em.  The legend inside it was pushed off centre by the same
+       amount.  `.math-system` / `.section-heading` / `.shoulder-heading` already
+       carry this reset for the same reason; the floats were never covered. */
+    .body-text [style*="float"],
+    .body-text .float-left,
+    .body-text .float-right {
+      text-indent: 0;
+    }
+
+    /* A carried `float:left` brings a width but no GUTTER, so the prose ran
+       straight up against the cut.  The scan leaves about 1em beside it
+       (vol 22 p. 341, Fig. 2), which is already what the class floats above use
+       — so this is the same gutter, extended to the floats that carry their
+       style inline.  A float that carries its OWN margin keeps it: an inline
+       `margin` beats this rule. */
+    .body-text [style*="float:left"],
+    .body-text [style*="float: left"] {
+      margin-right: 1em;
+    }
+
+    .body-text [style*="float:right"],
+    .body-text [style*="float: right"] {
+      margin-left: 1em;
     }
 
 
@@ -495,7 +576,12 @@
        a floated one takes half so prose wraps, the image scales -- plus the
        figure basics it owns: borders off, vertical breathing room, column gap. */
 .body-text table:not([class]) {
-      margin: 1.2em 0;
+      /* Top and bottom only.  `margin: 1.2em 0` also declared the SIDES as zero,
+         and this rule outranks the float gutter, so a floated figure-table had
+         the prose hard against its edge.  A table that carries its own
+         `margin:auto` still wins — that is an inline style. */
+      margin-top: 1.2em;
+      margin-bottom: 1.2em;
       border-collapse: collapse;
       border: none;
       max-width: 100%;
@@ -509,7 +595,12 @@
     }
 .body-text table:not([class])[style*="float"] {
       width: 50%;
-      margin: 0.4em 0;
+      /* Top and bottom only.  `margin: 0.4em 0` set the SIDES to zero too, and
+         this rule outranks the float gutter below it, so every figure-table
+         floated against the prose lost its 1em and the text ran up against the
+         cut — 21 of the 162 floats in a 600-article sample. */
+      margin-top: 0.4em;
+      margin-bottom: 0.4em;
     }
 .body-text table:not([class]) td,
 .body-text table:not([class]) th {

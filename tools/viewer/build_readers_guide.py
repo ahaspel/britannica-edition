@@ -889,7 +889,10 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
       margin: 0 0 0.5em 0;
       position: relative;
     }}
-    .body-text p:first-of-type {{ text-indent: 0; }}
+    /* `> p`: `:first-of-type` is per PARENT, so a paragraph nested in any block
+       matched it too.  The Guide has no such block today, but this is a COPY of
+       viewer.html's pattern and copies that drift are how the bug comes back. */
+    .body-text > p:first-of-type {{ text-indent: 0; }}
     .shoulder-heading {{
       position: absolute;
       right: -170px;
