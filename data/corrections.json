@@ -1,5 +1,6 @@
 {
  "_doc": "Targeted text corrections applied to raw wikisource text during transform. Keys are 'vol:page' (zero-padded vol, ws page number). Each entry is a list of {from, to} replacements applied literally to raw_text before any other processing. Use sparingly — for transcription typos only, not for rendering issues.",
+ "_img_float_align_note": "{{img float}} is {{{align|right}}} -- omitting `align` means RIGHT on Wikisource, while our producer defaults LEFT (elements/__init__.py). 227 instances state no align at all, so for every one of them the side is a DEFAULT rather than the source's instruction, and the two defaults disagree. Each was read against the scan (2026-09-16): 122 sit left, 105 sit right. These 105 entries make `align=right` explicit on the ones the book puts right; the 122 left ones need no entry, because left is already what we render -- this file carries only what changes OUR output. data/img_float_align.json holds the adjudication for all 227 and is the basis for any correction offered upstream, where the fix is the COMPLEMENT of this one: Wikisource defaults to right, so there it is the 122 LEFT ones that are wrong and need stating.",
  "_1:660_note": "Vol 1 ALGEBRAIC FORMS title is wrapped in {{mono}} — the ONLY {{mono}} occurrence in the entire corpus. EB1911 display titles are never monospace, so this is a Wikisource transcription artifact, not presentation. Strip the {{mono|…}} wrapper; keep the {{fs|108%}} title sizing.",
  "1:660": [
   {
@@ -542,6 +543,10 @@
   {
    "from": "{{img float |file=Bag-pipe music 5.png |width=130px}}\n|}the chaunter.",
    "to": "{{img float |file=Bag-pipe music 5.png |width=130px}}\nthe chaunter."
+  },
+  {
+   "from": "{{img float |width=150px |file=Bag-pipe music 12.png}}",
+   "to": "{{img float |align=right |width=150px |file=Bag-pipe music 12.png}}"
   }
  ],
  "_1:10_note": "Editorial Preface (vol 1 print p. xi / leaf 10) — the Wikisource transcription drops the opening clause of the first sentence. Per the print scan the paragraph reads 'In the Prefatory Note the history of the production of the successive editions of the Encyclopædia Britannica has been briefly told; and elsewhere in these volumes, under the heading of Encyclopædia…' but Wikisource starts at 'Elsewhere in these volumes…' with the drop-cap on E. Patch restores the missing clause and moves the drop-cap to 'I' of 'In'. Used by tools/viewer/build_preface.py via britannica.corrections.apply_corrections.",
@@ -681,12 +686,24 @@
   {
    "from": "{{left|<p {{Ts|sm|lh11|pl1}}>Redrawn from Braun, ''Liturgische Gewandung''.</p>{{center|{{EB1911 Fine Print|{{sc|Fig. 2}}.—Medieval Method of putting on the Amice.}}}}\n|}",
    "to": "{{left|<p {{Ts|sm|lh11|pl1}}>Redrawn from Braun, ''Liturgische Gewandung''.</p>{{center|{{EB1911 Fine Print|{{sc|Fig. 2}}.—Medieval Method of putting on the Amice.}}}}}}\n|}"
+  },
+  {
+   "from": "{{Img float |file=Amice 1.jpg |width=280px |cap={{fs|92%|From Braun, ''Liturgische Gewandung'', by permission<br>of the publisher, B. Herder.}}<br>{{sc|Fig. 1}}.—Amice of the Present Day.|style=font-size:92%; line-height:100%}}",
+   "to": "{{Img float |align=right |file=Amice 1.jpg |width=280px |cap={{fs|92%|From Braun, ''Liturgische Gewandung'', by permission<br>of the publisher, B. Herder.}}<br>{{sc|Fig. 1}}.—Amice of the Present Day.|style=font-size:92%; line-height:100%}}"
+  },
+  {
+   "from": "{{Img float\n|file=Amice 3.jpg |width=250px\n|cap={{Fs|92%|From Braun, ''Liturgische Gewandung''.}}{{gap}}<br>{{sc|Fig. 3}}.—The Papal Fanone. |style=font-size:92%}}",
+   "to": "{{Img float |align=right\n|file=Amice 3.jpg |width=250px\n|cap={{Fs|92%|From Braun, ''Liturgische Gewandung''.}}{{gap}}<br>{{sc|Fig. 3}}.—The Papal Fanone. |style=font-size:92%}}"
   }
  ],
  "5:289": [
   {
    "from": "{{EB1911 Fine Print|{{sc|Fig.}} 1.—Lotus<br />Capital from Karnak.\n|{",
    "to": "{{EB1911 Fine Print|{{sc|Fig.}} 1.—Lotus<br />Capital from Karnak.}}\n|{"
+  },
+  {
+   "from": "{{img float|file=EB1911 Capital Fig. 7.—Roman Capital from the Temple of Mars Ultor, Rome.jpg |width=275px |cap={{sc|Fig}}. 7.—Roman Capital from the Temple<br /> of Mars Ultor, Rome. |style=font-size:92%; line-height:130%;}}",
+   "to": "{{img float |align=right|file=EB1911 Capital Fig. 7.—Roman Capital from the Temple of Mars Ultor, Rome.jpg |width=275px |cap={{sc|Fig}}. 7.—Roman Capital from the Temple<br /> of Mars Ultor, Rome. |style=font-size:92%; line-height:130%;}}"
   }
  ],
  "22:662": [
@@ -926,6 +943,604 @@
   {
    "from": "{{SIC||Virtue|Vertue}}",
    "to": "{{SIC|Virtue|Vertue}}"
+  }
+ ],
+ "1:88": [
+  {
+   "from": "{{Img float |file=ABERR3rev.svg |width=220px|cap={{sc|Fig. 8.}}|style=font-size:92%}}",
+   "to": "{{Img float |align=right |file=ABERR3rev.svg |width=220px|cap={{sc|Fig. 8.}}|style=font-size:92%}}"
+  }
+ ],
+ "1:482": [
+  {
+   "from": "{{Img float\n |file=EB1911 Air-Engine - Fig 1. Striling's Air-Engine.jpg\n |cap={{sc|Fig.}} 1 —Stirling’s Air-Engine.\n |width=205px |style=font-size:92%\n}}",
+   "to": "{{Img float |align=right\n |file=EB1911 Air-Engine - Fig 1. Striling's Air-Engine.jpg\n |cap={{sc|Fig.}} 1 —Stirling’s Air-Engine.\n |width=205px |style=font-size:92%\n}}"
+  }
+ ],
+ "1:616": [
+  {
+   "from": "{{img float\n |file=EB1911 Alexandrite.PNG\n |width=128px\n}}",
+   "to": "{{img float |align=right\n |file=EB1911 Alexandrite.PNG\n |width=128px\n}}"
+  }
+ ],
+ "1:725": [
+  {
+   "from": "{{img float |file=EB1911 Alkali manufacture Fig. 10. Amonia - soda Carbonating Towers and Filters.jpg |width=275px |cap={{Fine block|From Thorpe’s ''Dictionary of Applied Chemistry'', by permission of Longmans, Green & Co.}}{{sc|Fig.}} 10.—Ammonia-soda Carbonating Towers and Filters. (Sectional Elevation.)<br>''AA'', Tower; ''B'', ammoniacal brine main; ''E'', gas-inlet; ''Z'', vacuum filter; ''V'', pipe to air-pump.{{dhr|30%}}|style=font-size:92%; line-height:120% |capalign=left}}",
+   "to": "{{img float |align=right |file=EB1911 Alkali manufacture Fig. 10. Amonia - soda Carbonating Towers and Filters.jpg |width=275px |cap={{Fine block|From Thorpe’s ''Dictionary of Applied Chemistry'', by permission of Longmans, Green & Co.}}{{sc|Fig.}} 10.—Ammonia-soda Carbonating Towers and Filters. (Sectional Elevation.)<br>''AA'', Tower; ''B'', ammoniacal brine main; ''E'', gas-inlet; ''Z'', vacuum filter; ''V'', pipe to air-pump.{{dhr|30%}}|style=font-size:92%; line-height:120% |capalign=left}}"
+  }
+ ],
+ "1:749": [
+  {
+   "from": "{{img float |file=Britannica Alloys Text Figure 7.jpg |cap={{small-caps|Fig.}} 7| style=font-size:92% |width=200px}}",
+   "to": "{{img float |align=right |file=Britannica Alloys Text Figure 7.jpg |cap={{small-caps|Fig.}} 7| style=font-size:92% |width=200px}}"
+  }
+ ],
+ "1:794": [
+  {
+   "from": "{{img float |file=EB1911 Alps Fig.1.png |cap={{sc|Fig.}} 1.—Looking down<br>on the table. |capalign=center |style=font-size:92%; line-height:120%}}",
+   "to": "{{img float |align=right |file=EB1911 Alps Fig.1.png |cap={{sc|Fig.}} 1.—Looking down<br>on the table. |capalign=center |style=font-size:92%; line-height:120%}}"
+  }
+ ],
+ "1:930": [
+  {
+   "from": "{{Img float |file=1911 Britannica - Hot-wire Ammeter.png |width=230px |cap={{sc|Fig. 1}}.—Diagram showing the arrange-<br />ments of Hartmann and Braun’s Hot-<br />wire Ammeter. |capalign=left |style=font-size:92%; line-height:120%}}",
+   "to": "{{Img float |align=right |file=1911 Britannica - Hot-wire Ammeter.png |width=230px |cap={{sc|Fig. 1}}.—Diagram showing the arrange-<br />ments of Hartmann and Braun’s Hot-<br />wire Ammeter. |capalign=left |style=font-size:92%; line-height:120%}}"
+  }
+ ],
+ "1:932": [
+  {
+   "from": "{{Img float\n|file=1911 Britannica - Connexions of Kelvin Ampere Balance.png|width=230px\n|cap={{sc|Fig. 6}}.—Connexions of Kelvin<br>Ampere Balance.|style=font-size:92%; line-height:120%}}",
+   "to": "{{Img float |align=right\n|file=1911 Britannica - Connexions of Kelvin Ampere Balance.png|width=230px\n|cap={{sc|Fig. 6}}.—Connexions of Kelvin<br>Ampere Balance.|style=font-size:92%; line-height:120%}}"
+  }
+ ],
+ "1:1002": [
+  {
+   "from": "{{img float\n|file=1911 Britannica - Anchor - Iron Buoy-Sinker.PNG|width=150px\n|cap={{sc|Fig. 10.}}—Iron Buoy-Sinker.|style=font-size:92%; line-height:120%}}",
+   "to": "{{img float |align=right\n|file=1911 Britannica - Anchor - Iron Buoy-Sinker.PNG|width=150px\n|cap={{sc|Fig. 10.}}—Iron Buoy-Sinker.|style=font-size:92%; line-height:120%}}"
+  }
+ ],
+ "1:1007": [
+  {
+   "from": "{{img float\n|file=1911 Britannica - Andalusite.png|width=90px\n|style=font-size:92%|cap={{sc|Fig. 1.}}}}",
+   "to": "{{img float |align=right\n|file=1911 Britannica - Andalusite.png|width=90px\n|style=font-size:92%|cap={{sc|Fig. 1.}}}}"
+  }
+ ],
+ "2:305": [
+  {
+   "from": "{{Img float|width=280px\n|file=1911 Britannica-Arachnida-Limulus polyphemus5.png\n|cap={{sc|Fig. 11}}.—Third leg of ''Limulus polyphemus'', showing the division of the fourth segment of the leg by a groove S into two, thus giving seven segments to the leg as in scorpion.<br>{{em|4}}{{Fs|92%|(From a drawing by Pocock.)}}|capalign=left}}",
+   "to": "{{Img float |align=right|width=280px\n|file=1911 Britannica-Arachnida-Limulus polyphemus5.png\n|cap={{sc|Fig. 11}}.—Third leg of ''Limulus polyphemus'', showing the division of the fourth segment of the leg by a groove S into two, thus giving seven segments to the leg as in scorpion.<br>{{em|4}}{{Fs|92%|(From a drawing by Pocock.)}}|capalign=left}}"
+  }
+ ],
+ "2:329": [
+  {
+   "from": "{{Img float |file=1911 Britannica-Arachnida-Aragonite.png |width=230px |cap={{sc|Fig. 1}}.{{em|7}}{{sc|Fig. 2}}. |style=font-size:92%}}",
+   "to": "{{Img float |align=right |file=1911 Britannica-Arachnida-Aragonite.png |width=230px |cap={{sc|Fig. 1}}.{{em|7}}{{sc|Fig. 2}}. |style=font-size:92%}}"
+  }
+ ],
+ "2:432": [
+  {
+   "from": "{{Img float |file=1911 Britannica-Architecture-Spires.png |width=165px |cap={{sc|Fig. 47}}.—Plan of Cathedral<br>at Spires.}}",
+   "to": "{{Img float |align=right |file=1911 Britannica-Architecture-Spires.png |width=165px |cap={{sc|Fig. 47}}.—Plan of Cathedral<br>at Spires.}}"
+  }
+ ],
+ "2:949": [
+  {
+   "from": "{{img float |file=1911 Britannica - Augite.png|width=270px|cap={{sc|Fig}}. 1. {{em|8}}{{sc|Fig}}. 2.|style=font-size:92%}}",
+   "to": "{{img float |align=right |file=1911 Britannica - Augite.png|width=270px|cap={{sc|Fig}}. 1. {{em|8}}{{sc|Fig}}. 2.|style=font-size:92%}}"
+  }
+ ],
+ "3:450": [
+  {
+   "from": "{{Img float\n|file=Barrel-organ 2.png|width=170px}}",
+   "to": "{{Img float |align=right\n|file=Barrel-organ 2.png|width=170px}}"
+  }
+ ],
+ "3:543": [
+  {
+   "from": "{{Img float|width=160px |file=1911 Britannica - Batrachia - Rana esculenta2.png |cap={{sc|Fig}}. 12.—Ventral view of the hyoid of ''Rana esculenta''. ''a'', Anterior; ''b'', lateral; ''c'', posterior processes; ''d'', thyrohyals. |capalign=left}}",
+   "to": "{{Img float |align=right|width=160px |file=1911 Britannica - Batrachia - Rana esculenta2.png |cap={{sc|Fig}}. 12.—Ventral view of the hyoid of ''Rana esculenta''. ''a'', Anterior; ''b'', lateral; ''c'', posterior processes; ''d'', thyrohyals. |capalign=left}}"
+  }
+ ],
+ "3:597": [
+  {
+   "from": "{{Img float |style=font-size:92% |width=290px |file=1911 Britannica - Bearings - small bearing.png}}",
+   "to": "{{Img float |align=right |style=font-size:92% |width=290px |file=1911 Britannica - Bearings - small bearing.png}}"
+  }
+ ],
+ "4:60": [
+  {
+   "from": "{{img float\n|width=46px\n|file=EB1911 Blasting Fig. 11 - Electrical Fuze.jpg\n|cap={{sc|Fig}} 11. Electrical Fuze.\n}}",
+   "to": "{{img float |align=right\n|width=46px\n|file=EB1911 Blasting Fig. 11 - Electrical Fuze.jpg\n|cap={{sc|Fig}} 11. Electrical Fuze.\n}}"
+  }
+ ],
+ "4:154": [
+  {
+   "from": "{{img float |file=Adamson Joint - Boiler - Britannica Fig. 1.jpg |width=160px |cap={{sc|Fig.}} 1.—Adamson Joint.}}",
+   "to": "{{img float |align=right |file=Adamson Joint - Boiler - Britannica Fig. 1.jpg |width=160px |cap={{sc|Fig.}} 1.—Adamson Joint.}}"
+  }
+ ],
+ "4:257": [
+  {
+   "from": "{{img float\n | file = EB1911 Boraginaceae Fig. 2 Inflorescence of Forget-me-not.jpg\n | width = 214px\n | cap = {{sc|Fig.}}2.—(1) Inflorescence of<br />Forget-me-not; (2) ripe fruits.\n | style = font-size:92%; line-height:125%;\n}}",
+   "to": "{{img float |align=right\n | file = EB1911 Boraginaceae Fig. 2 Inflorescence of Forget-me-not.jpg\n | width = 214px\n | cap = {{sc|Fig.}}2.—(1) Inflorescence of<br />Forget-me-not; (2) ripe fruits.\n | style = font-size:92%; line-height:125%;\n}}"
+  }
+ ],
+ "4:267": [
+  {
+   "from": "{{img float |width=226px |file=EB1911 Boring - Auger Fig 1 & 2.jpg |cap={{sc|Fig.}} 1.{{em|7}}{{sc|Fig.}} 2.<br />Pod Auger.}}",
+   "to": "{{img float |align=right |width=226px |file=EB1911 Boring - Auger Fig 1 & 2.jpg |cap={{sc|Fig.}} 1.{{em|7}}{{sc|Fig.}} 2.<br />Pod Auger.}}"
+  }
+ ],
+ "4:268": [
+  {
+   "from": "{{img float |width=130px |file=EB1911 Boring - Core Lifter and Barrel Fig 11.jpg |cap={{sc|Fig.}} 11.<br>Core Lifter and Barrel.}}",
+   "to": "{{img float |align=right |width=130px |file=EB1911 Boring - Core Lifter and Barrel Fig 11.jpg |cap={{sc|Fig.}} 11.<br>Core Lifter and Barrel.}}"
+  }
+ ],
+ "4:644": [
+  {
+   "from": "{{img float |file=brocade_3.png|width=202px |cap={{sc|Fig.}} 3.—Piece of stuff woven or brocaded with red silk and gold thread, with an ogival framing enclosing alternately, pairs of parrots, ''addorsed regardant'', and a well-known Persian (or Sassanian) leaf-shaped fruit device. Probably of Rhenish-Byzantine manufacture in the 12th or 13th century. 9 in. long. |capalign=left |style=font-size:92%; line-height:125%;}}",
+   "to": "{{img float |align=right |file=brocade_3.png|width=202px |cap={{sc|Fig.}} 3.—Piece of stuff woven or brocaded with red silk and gold thread, with an ogival framing enclosing alternately, pairs of parrots, ''addorsed regardant'', and a well-known Persian (or Sassanian) leaf-shaped fruit device. Probably of Rhenish-Byzantine manufacture in the 12th or 13th century. 9 in. long. |capalign=left |style=font-size:92%; line-height:125%;}}"
+  }
+ ],
+ "4:664": [
+  {
+   "from": "{{img float\n |file=brooch_1.png\n |width=202px\n |cap={{EB1911 Fine Print|{{sc|Fig.}} 1.—Early type from Peschiera.}}\n}}",
+   "to": "{{img float |align=right\n |file=brooch_1.png\n |width=202px\n |cap={{EB1911 Fine Print|{{sc|Fig.}} 1.—Early type from Peschiera.}}\n}}"
+  }
+ ],
+ "4:665": [
+  {
+   "from": "{{img float |file=brooch_8.png |width=135px |cap={{sc|Fig.}} 8.—Early La Tène period. Reflexed terminal ornament.|style=font-size:92%; line-height:125%;}}",
+   "to": "{{img float |align=right |file=brooch_8.png |width=135px |cap={{sc|Fig.}} 8.—Early La Tène period. Reflexed terminal ornament.|style=font-size:92%; line-height:125%;}}"
+  }
+ ],
+ "4:724": [
+  {
+   "from": "{{img float |file=bryophyta_2.png |width=240px |cap={{Fs|92%|From Cooke, ''Handbook of British Hepaticae''.}}<br>{{sc|Fig.}} 2.—''Pellia epiphylla''. Group of plants bearing mature sporogonia. |style=font-size:92%; line-height:125%;}}",
+   "to": "{{img float |align=right |file=bryophyta_2.png |width=240px |cap={{Fs|92%|From Cooke, ''Handbook of British Hepaticae''.}}<br>{{sc|Fig.}} 2.—''Pellia epiphylla''. Group of plants bearing mature sporogonia. |style=font-size:92%; line-height:125%;}}"
+  }
+ ],
+ "4:727": [
+  {
+   "from": "{{img float |file=bryophyta_9.png |width=225px |capalign=left |cap={{sc|Fig.}} 9.—''Cephalozia bicuspidata.'' Longitudinal section of the summit of a shoot bearing a nearly mature sporogonium, ''sg'', still enclosed in the calyptra; ''ar''′, archegonia which have remained unfertilized; ''st'', stem; ''b'', leaf; ''p'', perianth. (After Hofmeister.)}}",
+   "to": "{{img float |align=right |file=bryophyta_9.png |width=225px |capalign=left |cap={{sc|Fig.}} 9.—''Cephalozia bicuspidata.'' Longitudinal section of the summit of a shoot bearing a nearly mature sporogonium, ''sg'', still enclosed in the calyptra; ''ar''′, archegonia which have remained unfertilized; ''st'', stem; ''b'', leaf; ''p'', perianth. (After Hofmeister.)}}"
+  }
+ ],
+ "4:728": [
+  {
+   "from": "{{img float |file=bryophyta_11.png |width=255px |cap={{Fs|92%|(From Goebel’s ''Pflanzenmorphologie'', by permission of W. Engelmann)}}<br>\n {{sc|Fig.}} 11.—''Funaria hygrometrica.''<br>\nA, Leafy shoot (''g'') bearing a young sporogonium enclosed in the calyptra (''c'').<br>\nB, Similar plant with an almost mature sporogonium; ''s'', seta; ''f'', capsule; ''c'', calyptra.<br>\nC, Median longitudinal section of a capsule, with the seta gradually widening into the apophysis at its base; ''d'', operculum; ''p'', peristome; ''a'', annulus; ''c'', columella; ''s'', archesporium; ''h'', air-space between the spore-sac and the wall of the capsule. |style=font-size:92%; line-height:125%; |capalign=left}}",
+   "to": "{{img float |align=right |file=bryophyta_11.png |width=255px |cap={{Fs|92%|(From Goebel’s ''Pflanzenmorphologie'', by permission of W. Engelmann)}}<br>\n {{sc|Fig.}} 11.—''Funaria hygrometrica.''<br>\nA, Leafy shoot (''g'') bearing a young sporogonium enclosed in the calyptra (''c'').<br>\nB, Similar plant with an almost mature sporogonium; ''s'', seta; ''f'', capsule; ''c'', calyptra.<br>\nC, Median longitudinal section of a capsule, with the seta gradually widening into the apophysis at its base; ''d'', operculum; ''p'', peristome; ''a'', annulus; ''c'', columella; ''s'', archesporium; ''h'', air-space between the spore-sac and the wall of the capsule. |style=font-size:92%; line-height:125%; |capalign=left}}"
+  }
+ ],
+ "4:734": [
+  {
+   "from": "{{img float |file=buccina_1.png |width=225px |cap={{Fs|92%|From a photo by Brogi.}}{{em|6}}<br>{{sc|Fig.}} 1.—Buccina in the National Museum, Naples. |style=font-size:92%; line-height:125%;}}",
+   "to": "{{img float |align=right |file=buccina_1.png |width=225px |cap={{Fs|92%|From a photo by Brogi.}}{{em|6}}<br>{{sc|Fig.}} 1.—Buccina in the National Museum, Naples. |style=font-size:92%; line-height:125%;}}"
+  }
+ ],
+ "4:951": [
+  {
+   "from": "{{img float |file=cactus_2.png |width=187px |cap={{sc|Fig.}} 2.—''Echinocactus'' much reduced; the flowers are several inches in diameter. |capalign=left}}",
+   "to": "{{img float |align=right |file=cactus_2.png |width=187px |cap={{sc|Fig.}} 2.—''Echinocactus'' much reduced; the flowers are several inches in diameter. |capalign=left}}"
+  }
+ ],
+ "4:999": [
+  {
+   "from": "{{img float| file=calculating_machines_1.png |width=121px |cap={{sc|Fig.}} 1. |style=font-size:92%}}",
+   "to": "{{img float |align=right| file=calculating_machines_1.png |width=121px |cap={{sc|Fig.}} 1. |style=font-size:92%}}"
+  }
+ ],
+ "4:1003": [
+  {
+   "from": "{{img float |file=calculating_machines_11.png |width=225px |cap={{sc|Fig.}} 11.}}",
+   "to": "{{img float |align=right |file=calculating_machines_11.png |width=225px |cap={{sc|Fig.}} 11.}}"
+  }
+ ],
+ "4:1004": [
+  {
+   "from": "{{img float |file=calculating_machines_17.png |width=150px |cap={{sc|Fig.}} 17.}}",
+   "to": "{{img float |align=right |file=calculating_machines_17.png |width=150px |cap={{sc|Fig.}} 17.}}"
+  }
+ ],
+ "4:1006": [
+  {
+   "from": "{{img float |file=calculating_machines_21.png |width=225px|cap={{sc|Fig.}} 21.}}",
+   "to": "{{img float |align=right |file=calculating_machines_21.png |width=225px|cap={{sc|Fig.}} 21.}}"
+  }
+ ],
+ "5:137": [
+  {
+   "from": "{{Img float |file=EB1911 - Fig 2. Campanile of St. Mark's, Venice.jpg |width=236px\n|cap={{Fs|92%|From a photograph by Brogi.}}<br>{{sc|Fig.}} 2.—Campanile of St Mark’s, Venice. | capalign = left |style=font-size:92%; line-height:120%;}}",
+   "to": "{{Img float |align=right |file=EB1911 - Fig 2. Campanile of St. Mark's, Venice.jpg |width=236px\n|cap={{Fs|92%|From a photograph by Brogi.}}<br>{{sc|Fig.}} 2.—Campanile of St Mark’s, Venice. | capalign = left |style=font-size:92%; line-height:120%;}}"
+  }
+ ],
+ "5:138": [
+  {
+   "from": "{{Img float |file=EB1911 - Fig 4. Campanile of the Palazzo del Signore, Verona.jpg|width=236px\n|cap={{EB1911 Fine Print|From a photograph by Alinari.}}{{center|{{sc|Fig.}} 4.—Campanile of the Palazzo del Signore, Verona}} | capalign = left |style=font-size:92%; line-height:120%;}}",
+   "to": "{{Img float |align=right |file=EB1911 - Fig 4. Campanile of the Palazzo del Signore, Verona.jpg|width=236px\n|cap={{EB1911 Fine Print|From a photograph by Alinari.}}{{center|{{sc|Fig.}} 4.—Campanile of the Palazzo del Signore, Verona}} | capalign = left |style=font-size:92%; line-height:120%;}}"
+  }
+ ],
+ "5:494": [
+  {
+   "from": "{{img float\n|file=EB1911 p477 fig3.png\n|width=300px\n|cap={{smaller|From Oman’s ''History of the Art of War'', by permission of Methuen & Co.}}<br/>{{sc|Fig. 3.}}—Berkeley Castle, late Norman Shell-Keep.}}",
+   "to": "{{img float |align=right\n|file=EB1911 p477 fig3.png\n|width=300px\n|cap={{smaller|From Oman’s ''History of the Art of War'', by permission of Methuen & Co.}}<br/>{{sc|Fig. 3.}}—Berkeley Castle, late Norman Shell-Keep.}}"
+  },
+  {
+   "from": "{{img float\n|file=EB1911 p477 fig4.png\n|width=300px\n|cap={{smaller|From Oman’s ''History of the Art of War''.}}<br/>{{sc|Fig. 4.}}—Krak-des-Chevaliers: Plan}}",
+   "to": "{{img float |align=right\n|file=EB1911 p477 fig4.png\n|width=300px\n|cap={{smaller|From Oman’s ''History of the Art of War''.}}<br/>{{sc|Fig. 4.}}—Krak-des-Chevaliers: Plan}}"
+  }
+ ],
+ "5:859": [
+  {
+   "from": "{{img float |width=241px |file=EB1911 - Chamaeleon.jpg |style=font-size:92%; line-height:120%; |cap=Left Forefoot of ''Chamaeleon<br/>o’shaughenesii'', outer view.}}",
+   "to": "{{img float |align=right |width=241px |file=EB1911 - Chamaeleon.jpg |style=font-size:92%; line-height:120%; |cap=Left Forefoot of ''Chamaeleon<br/>o’shaughenesii'', outer view.}}"
+  }
+ ],
+ "6:411": [
+  {
+   "from": "{{img float |file=EB1911 Cithara Fig. 1.jpg |cap=&#8193;{{sc|Fig.}} 1.—Nero Citharoedus (''Mus.<br />&#8193;Pio-Clementino''), showing back of a <br />&#8193;Roman Cithara. |style=font-size:92%; line-height:125%; |width=240px |capalign=left}}",
+   "to": "{{img float |align=right |file=EB1911 Cithara Fig. 1.jpg |cap=&#8193;{{sc|Fig.}} 1.—Nero Citharoedus (''Mus.<br />&#8193;Pio-Clementino''), showing back of a <br />&#8193;Roman Cithara. |style=font-size:92%; line-height:125%; |width=240px |capalign=left}}"
+  }
+ ],
+ "6:778": [
+  {
+   "from": "{{img float |file=EB1911 Combinatorial Analysis, Sylvester's graph dissection.jpg |width=165px}}",
+   "to": "{{img float |align=right |file=EB1911 Combinatorial Analysis, Sylvester's graph dissection.jpg |width=165px}}"
+  }
+ ],
+ "6:985": [
+  {
+   "from": "{{img float |file=EB1911 Connective Tissues - Fig.7.png |width=221px |cap={{sc|Fig.}} 7.—Elastic fibro-cartilage of Epiglottis. Abundant cartilage cells in<br>a matrix containing many branching elastic fibres. |capalign=left |style=font-size:92%; line-height:120%}}",
+   "to": "{{img float |align=right |file=EB1911 Connective Tissues - Fig.7.png |width=221px |cap={{sc|Fig.}} 7.—Elastic fibro-cartilage of Epiglottis. Abundant cartilage cells in<br>a matrix containing many branching elastic fibres. |capalign=left |style=font-size:92%; line-height:120%}}"
+  }
+ ],
+ "8:791": [
+  {
+   "from": "{{Img float |width=145px |file=Britannica Dynamo 1.svg |cap={{sc|Fig. 1.}} |style=font-size:92%}}",
+   "to": "{{Img float |align=right |width=145px |file=Britannica Dynamo 1.svg |cap={{sc|Fig. 1.}} |style=font-size:92%}}"
+  }
+ ],
+ "8:802": [
+  {
+   "from": "{{Img float |width=170px |file=Britannica Dynamo 31.jpg |cap={{sc|Fig. 31.}}}}",
+   "to": "{{Img float |align=right |width=170px |file=Britannica Dynamo 31.jpg |cap={{sc|Fig. 31.}}}}"
+  }
+ ],
+ "8:903": [
+  {
+   "from": "{{Img float|file=Britannica Echinoderma 10.jpg|width=255px |cap={{sc|Fig. 10.}}—''Chirocrinus alter'', one of the Rhombifera, showing the reduced number and regular arrangement of the thecal plates, and the concentration of the brachioles. (Adapted from Jaekel.) |capalign=left}}",
+   "to": "{{Img float |align=right|file=Britannica Echinoderma 10.jpg|width=255px |cap={{sc|Fig. 10.}}—''Chirocrinus alter'', one of the Rhombifera, showing the reduced number and regular arrangement of the thecal plates, and the concentration of the brachioles. (Adapted from Jaekel.) |capalign=left}}"
+  }
+ ],
+ "11:99": [
+  {
+   "from": "{{img float |file=Organ_pipe.png |width=165px |cap={{small-caps|Fig.}} 2.—Organ pipe fitted with beating reed.<br>AL, Beating reed.<br>R,&ensp; Reed box.<br>F''f'',&ensp;Tuning wire.<br>TV, Feed pipe.<br>VV, Conical foot.<br>S, Hole through which<br>  compressed air is fed.|style=font-size:92%; line-height:125% |capalign=left}}",
+   "to": "{{img float |align=right |file=Organ_pipe.png |width=165px |cap={{small-caps|Fig.}} 2.—Organ pipe fitted with beating reed.<br>AL, Beating reed.<br>R,&ensp; Reed box.<br>F''f'',&ensp;Tuning wire.<br>TV, Feed pipe.<br>VV, Conical foot.<br>S, Hole through which<br>  compressed air is fed.|style=font-size:92%; line-height:125% |capalign=left}}"
+  }
+ ],
+ "12:164": [
+  {
+   "from": "{{img float |file=Glyptodon's tooth EB1911 vol.12 p.147.jpg|width=145px|cap=Two views of the tooth of a ''Glyptodon''; the upper figure showing one side, and the lower the crown.|style=font-size:92%; line-height:120% |capalign=left}}",
+   "to": "{{img float |align=right |file=Glyptodon's tooth EB1911 vol.12 p.147.jpg|width=145px|cap=Two views of the tooth of a ''Glyptodon''; the upper figure showing one side, and the lower the crown.|style=font-size:92%; line-height:120% |capalign=left}}"
+  }
+ ],
+ "12:251": [
+  {
+   "from": "{{img float |file=Britannica Goniometer Vertical-Circle.png|width=208px|cap={{small-caps|Fig.}} 2.—Vertical-Circle Goniometer.}}",
+   "to": "{{img float |align=right |file=Britannica Goniometer Vertical-Circle.png|width=208px|cap={{small-caps|Fig.}} 2.—Vertical-Circle Goniometer.}}"
+  }
+ ],
+ "12:855": [
+  {
+   "from": "{{img float|file=EB1911_Halberds_1_to_6.jpg|width=250px}}",
+   "to": "{{img float |align=right|file=EB1911_Halberds_1_to_6.jpg|width=250px}}"
+  },
+  {
+   "from": "{{img float|file=EB1911_Halberds_7_to_12.jpg|width=310px}}",
+   "to": "{{img float |align=right|file=EB1911_Halberds_7_to_12.jpg|width=310px}}"
+  }
+ ],
+ "13:719": [
+  {
+   "from": "{{img float |width=122px\n|file=Britannica Horn Spirally Coiled Horn.png\n|cap={{small-caps|Fig.}} 6.–Spirally Coiled Horn from Virgil’s Works (1502), folio cccviii. versa. |capalign=left}}",
+   "to": "{{img float |align=right |width=122px\n|file=Britannica Horn Spirally Coiled Horn.png\n|cap={{small-caps|Fig.}} 6.–Spirally Coiled Horn from Virgil’s Works (1502), folio cccviii. versa. |capalign=left}}"
+  }
+ ],
+ "14:574": [
+  {
+   "from": "{{img float |width=200px\n|file=Infinitesimal_Calculus_8.png\n|cap={{sc|Fig. 8.}}}}",
+   "to": "{{img float |align=right |width=200px\n|file=Infinitesimal_Calculus_8.png\n|cap={{sc|Fig. 8.}}}}"
+  }
+ ],
+ "15:907": [
+  {
+   "from": "{{img float|file=EB1911 - Knot - Fig. 36 - Short Splice.jpg|width=216px\n|cap={{sc|Fig. 36.}}}}",
+   "to": "{{img float |align=right|file=EB1911 - Knot - Fig. 36 - Short Splice.jpg|width=216px\n|cap={{sc|Fig. 36.}}}}"
+  }
+ ],
+ "16:706": [
+  {
+   "from": "{{img float |file=EB1911 - Liliaceae - Fig. 7.—Rhizome of Polygonatum multiflorum.jpg |width=320px |style=text-align: left; line-height:125%; |cap={{Fs|92%|&ensp;From Strasburger’s ''Lehrbuch der Botanik'', by permission of<br/>&ensp;Gustav Fischer.}}<br/>{{sc|Fig}} 7.—Rhizome of ''Polygonalum multiflorum''.<br/>&ensp;''a'',  Bud of next year’s aerial shoot.<br/>&ensp;''b'',  Scar of this year’s, and ''c'', ''d'', ''e'', scars of<br />{{em|3.3}}three preceding years’ aerial shoots.<br/>&ensp; ''w'',  Roots.}}",
+   "to": "{{img float |align=right |file=EB1911 - Liliaceae - Fig. 7.—Rhizome of Polygonatum multiflorum.jpg |width=320px |style=text-align: left; line-height:125%; |cap={{Fs|92%|&ensp;From Strasburger’s ''Lehrbuch der Botanik'', by permission of<br/>&ensp;Gustav Fischer.}}<br/>{{sc|Fig}} 7.—Rhizome of ''Polygonalum multiflorum''.<br/>&ensp;''a'',  Bud of next year’s aerial shoot.<br/>&ensp;''b'',  Scar of this year’s, and ''c'', ''d'', ''e'', scars of<br />{{em|3.3}}three preceding years’ aerial shoots.<br/>&ensp; ''w'',  Roots.}}"
+  }
+ ],
+ "16:774": [
+  {
+   "from": "{{img float |width=109px |file=EB1911 - Liquid Gases - Fig. 6.jpg |cap={{sc|Fig. 6.}}}}",
+   "to": "{{img float |align=right |width=109px |file=EB1911 - Liquid Gases - Fig. 6.jpg |cap={{sc|Fig. 6.}}}}"
+  }
+ ],
+ "16:863": [
+  {
+   "from": "{{img float |file=EB1911 - Lock - Fig. 1.jpg |cap={{sc|Fig}}. 1. |width=280px}}",
+   "to": "{{img float |align=right |file=EB1911 - Lock - Fig. 1.jpg |cap={{sc|Fig}}. 1. |width=280px}}"
+  }
+ ],
+ "16:887": [
+  {
+   "from": "{{img float |file=EB1911 - Log - Fig. 5.—Neptune Pattern for securing Rotator.jpg |width=252px |style=font-size:92%; line-height:125%; |cap={{sc|Fig.}} 5.—Neptune Pattern for securing Rotator.}}",
+   "to": "{{img float |align=right |file=EB1911 - Log - Fig. 5.—Neptune Pattern for securing Rotator.jpg |width=252px |style=font-size:92%; line-height:125%; |cap={{sc|Fig.}} 5.—Neptune Pattern for securing Rotator.}}"
+  }
+ ],
+ "17:113": [
+  {
+   "from": "{{img float |width=221px |file=EB1911 - Lucerne (Medicago sativa).jpg |cap=Lucerne (''Medicago sativa''), {{EB1911 tfrac|1|2}} nat. size.<br /> 1, Flower, enlarged.<br /> 2, Half-ripe fruit, {{EB1911 tfrac|3|4}} nat. size.<br /> 3, Fruit, enlarged. |style=font-size:92%; line-height:110%; text-align:left;}}",
+   "to": "{{img float |align=right |width=221px |file=EB1911 - Lucerne (Medicago sativa).jpg |cap=Lucerne (''Medicago sativa''), {{EB1911 tfrac|1|2}} nat. size.<br /> 1, Flower, enlarged.<br /> 2, Half-ripe fruit, {{EB1911 tfrac|3|4}} nat. size.<br /> 3, Fruit, enlarged. |style=font-size:92%; line-height:110%; text-align:left;}}"
+  }
+ ],
+ "17:327": [
+  {
+   "from": "{{img float |file=Magic_Square_25.png|width=307px|cap={{sc|Fig. 25}}—Nasik Cube.}}",
+   "to": "{{img float |align=right |file=Magic_Square_25.png|width=307px|cap={{sc|Fig. 25}}—Nasik Cube.}}"
+  }
+ ],
+ "17:337": [
+  {
+   "from": "{{img float |file=EB1911 - Magnetism - Fig. 1.jpg\n|cap={{sc|Fig}}. 1. |width=248px |style=\"font-size:92%;\"}}",
+   "to": "{{img float |align=right |file=EB1911 - Magnetism - Fig. 1.jpg\n|cap={{sc|Fig}}. 1. |width=248px |style=\"font-size:92%;\"}}"
+  }
+ ],
+ "17:340": [
+  {
+   "from": "{{img float |width=165px |file=EB1911 - Magnetism - Fig. 4.jpg |cap={{sc|Fig.}} 4.}}",
+   "to": "{{img float |align=right |width=165px |file=EB1911 - Magnetism - Fig. 4.jpg |cap={{sc|Fig.}} 4.}}"
+  }
+ ],
+ "17:353": [
+  {
+   "from": "{{img float |width=310px |file=EB1911 - Magnetism - Fig. 24.jpg |cap={{sc|Fig.}} 24. |style=\"font-size:92%;\"}}",
+   "to": "{{img float |align=right |width=310px |file=EB1911 - Magnetism - Fig. 24.jpg |cap={{sc|Fig.}} 24. |style=\"font-size:92%;\"}}"
+  }
+ ],
+ "17:357": [
+  {
+   "from": "{{img float |width=85px; |file=EB1911 - Magnetism - Fig. 26.jpg |cap={{sc|Fig. 26.}}}}",
+   "to": "{{img float |align=right |width=85px; |file=EB1911 - Magnetism - Fig. 26.jpg |cap={{sc|Fig. 26.}}}}"
+  }
+ ],
+ "18:228": [
+  {
+   "from": "{{img float|file=EB1911 - Metal-work - Fig. 5.png|width=235px |cap={{sc|Fig}}. 5.—Wrought-iron Candle Pricket;<br> late 15th-century. Florentine work.|style=line-height:125%;font-size:92%}}",
+   "to": "{{img float |align=right|file=EB1911 - Metal-work - Fig. 5.png|width=235px |cap={{sc|Fig}}. 5.—Wrought-iron Candle Pricket;<br> late 15th-century. Florentine work.|style=line-height:125%;font-size:92%}}"
+  }
+ ],
+ "18:407": [
+  {
+   "from": "{{img float|file=EB1911 - Micrometer - Fig 15.png|width=55px\n|cap={{sc|Fig.}} 15.}}",
+   "to": "{{img float |align=right|file=EB1911 - Micrometer - Fig 15.png|width=55px\n|cap={{sc|Fig.}} 15.}}"
+  }
+ ],
+ "18:415": [
+  {
+   "from": "{{img float|file=EB1911 - Microscope - Fig. 4.png|width=250px |cap={{sc|Fig}}. 4.}}",
+   "to": "{{img float |align=right|file=EB1911 - Microscope - Fig. 4.png|width=250px |cap={{sc|Fig}}. 4.}}"
+  }
+ ],
+ "18:426": [
+  {
+   "from": "{{img float |file=EB1911 - Microscope - Fig. 49.png|width=62px|cap={{sc|Fig}}. 49. Wenham’s Prism.}}",
+   "to": "{{img float |align=right |file=EB1911 - Microscope - Fig. 49.png|width=62px|cap={{sc|Fig}}. 49. Wenham’s Prism.}}"
+  }
+ ],
+ "18:589": [
+  {
+   "from": "{{img float|file=Mint coin press detail fig 9 v2.jpg|width=135px|cap=Fig. 9.}}",
+   "to": "{{img float |align=right|file=Mint coin press detail fig 9 v2.jpg|width=135px|cap=Fig. 9.}}"
+  }
+ ],
+ "19:305": [
+  {
+   "from": "{{img float |file=Pierre Bouguer 1729 proposed English quadrant.jpg |width=210px}}",
+   "to": "{{img float |align=right |file=Pierre Bouguer 1729 proposed English quadrant.jpg |width=210px}}"
+  }
+ ],
+ "19:457": [
+  {
+   "from": "{{img float |file=EB1911 Nueropathology Fig. 18.png |width=235px |cap= {{sc|Fig}}. 18.—Diagram drawn from photo{{shy}}micrograph to show different forms of neuroglia cells in a patch of sclerosis secondary to degeneration and disappearance of the neurones. Ob{{shy}}serve the large branched cells of Deiters. |capalign=left |style=font-size:92%; line-height:120%}}",
+   "to": "{{img float |align=right |file=EB1911 Nueropathology Fig. 18.png |width=235px |cap= {{sc|Fig}}. 18.—Diagram drawn from photo{{shy}}micrograph to show different forms of neuroglia cells in a patch of sclerosis secondary to degeneration and disappearance of the neurones. Ob{{shy}}serve the large branched cells of Deiters. |capalign=left |style=font-size:92%; line-height:120%}}"
+  }
+ ],
+ "19:946": [
+  {
+   "from": "{{img float |file=EB1911 Numismatics - Austria-Hungary florin.jpg |width=300px|cap={{sc|Fig.}} 8.—Florin (silver), Austria-Hungary.|style=font-size:92%;}}",
+   "to": "{{img float |align=right |file=EB1911 Numismatics - Austria-Hungary florin.jpg |width=300px|cap={{sc|Fig.}} 8.—Florin (silver), Austria-Hungary.|style=font-size:92%;}}"
+  }
+ ],
+ "20:56": [
+  {
+   "from": "{{img float|file=EB1911 - Ohmmeter - Fig 1.png |width=250px|cap={{sc|Fig}}. 1.}}",
+   "to": "{{img float |align=right|file=EB1911 - Ohmmeter - Fig 1.png |width=250px|cap={{sc|Fig}}. 1.}}"
+  }
+ ],
+ "20:63": [
+  {
+   "from": "{{img float |file=EB1911- Oil Engine - Fig. 11.png|width=225px|cap={{sc|Fig}}. 11.—Priestman Oil Engine<br>(section on a larger scale).}}",
+   "to": "{{img float |align=right |file=EB1911- Oil Engine - Fig. 11.png|width=225px|cap={{sc|Fig}}. 11.—Priestman Oil Engine<br>(section on a larger scale).}}"
+  }
+ ],
+ "20:99": [
+  {
+   "from": "{{img float |file=EB1911 - Oleander.png|width=210px|cap=Nerium Oleander.|''Nerium Oleander''.|style=font-size:92%}}",
+   "to": "{{img float |align=right |file=EB1911 - Oleander.png|width=210px|cap=Nerium Oleander.|''Nerium Oleander''.|style=font-size:92%}}"
+  }
+ ],
+ "20:217": [
+  {
+   "from": "{{img float |file=EB1911 - Ordnance - Fig. 5.png |width=300px |cap={{sc|Fig}}. 5.—Truck Carriage. |style=font-size:92%}}",
+   "to": "{{img float |align=right |file=EB1911 - Ordnance - Fig. 5.png |width=300px |cap={{sc|Fig}}. 5.—Truck Carriage. |style=font-size:92%}}"
+  },
+  {
+   "from": "{{img float |file=EB1911 - Ordnance - Fig. 6.png |width=250px |cap={{sc|Fig}}. 6.—Gunner’s Quadrant. |style=font-size:92%}}",
+   "to": "{{img float |align=right |file=EB1911 - Ordnance - Fig. 6.png |width=250px |cap={{sc|Fig}}. 6.—Gunner’s Quadrant. |style=font-size:92%}}"
+  }
+ ],
+ "20:818": [
+  {
+   "from": "{{img float |file=EB1911 - Watt's Parallel Motion.png|width=210px\n|cap=Watt’s Parallel Motion.|style=font-size:92%}}",
+   "to": "{{img float |align=right |file=EB1911 - Watt's Parallel Motion.png|width=210px\n|cap=Watt’s Parallel Motion.|style=font-size:92%}}"
+  }
+ ],
+ "21:529": [
+  {
+   "from": "{{img float |file=EB1911 - Photography - Fig. 1 - Premo Film-pack.png |width=230px |cap={{SC|Fig}}. 1.—Premo Film-pack.}}",
+   "to": "{{img float |align=right |file=EB1911 - Photography - Fig. 1 - Premo Film-pack.png |width=230px |cap={{SC|Fig}}. 1.—Premo Film-pack.}}"
+  }
+ ],
+ "21:533": [
+  {
+   "from": "{{img float|file=EB1911 - Photography - Fig. 14.png|width=96px |cap={{SC|Fig}}. 14.—Single Landscape Lens. |capalign=left |style=font-size:97%; line-height:110%}}",
+   "to": "{{img float |align=right|file=EB1911 - Photography - Fig. 14.png|width=96px |cap={{SC|Fig}}. 14.—Single Landscape Lens. |capalign=left |style=font-size:97%; line-height:110%}}"
+  }
+ ],
+ "21:550": [
+  {
+   "from": "{{img float|file=EB1911 - Photography, Celestial.png|width=180px}}",
+   "to": "{{img float |align=right|file=EB1911 - Photography, Celestial.png|width=180px}}"
+  }
+ ],
+ "21:573": [
+  {
+   "from": "{{img float |file=EB1911 - Phylloxera - Fig 2.png |width=180px|cap=  {{sc|Fig.}}—2. ''Phylloxera''.<br>Winged female which lives on leaves and buds and lays parthenogenetically eggs of two kinds, one developing into a wingless female, the other into a male. |capalign=left}}",
+   "to": "{{img float |align=right |file=EB1911 - Phylloxera - Fig 2.png |width=180px|cap=  {{sc|Fig.}}—2. ''Phylloxera''.<br>Winged female which lives on leaves and buds and lays parthenogenetically eggs of two kinds, one developing into a wingless female, the other into a male. |capalign=left}}"
+  }
+ ],
+ "21:585": [
+  {
+   "from": "{{img float|file=EB1911 - Pianoforte - Fig. 1.png |width=165px|cap={{sc|Fig.}} 1.—Earliest existing representation of a Keyed Stringed Instrument, from St&nbsp;Mary’s, Shrewsbury (primitive Clavichord). Before 1460. |capalign=left |style=font-size:92%; line-height:120%}}",
+   "to": "{{img float |align=right|file=EB1911 - Pianoforte - Fig. 1.png |width=165px|cap={{sc|Fig.}} 1.—Earliest existing representation of a Keyed Stringed Instrument, from St&nbsp;Mary’s, Shrewsbury (primitive Clavichord). Before 1460. |capalign=left |style=font-size:92%; line-height:120%}}"
+  }
+ ],
+ "21:615": [
+  {
+   "from": "{{img float|file=EB1911 Pier Fig 2.png |width=150px |cap={{sc|Fig}}. 2.—Cylindrical Piers for River Bridges. |style=font-size:92%; line-height:120%}}",
+   "to": "{{img float |align=right|file=EB1911 Pier Fig 2.png |width=150px |cap={{sc|Fig}}. 2.—Cylindrical Piers for River Bridges. |style=font-size:92%; line-height:120%}}"
+  }
+ ],
+ "21:749": [
+  {
+   "from": "{{img float|\n|file=EB1911 - Planets, Minor - Fig.1.png|width=170px|cap={{sc|Fig}}. 1.\n}}",
+   "to": "{{img float |align=right|\n|file=EB1911 - Planets, Minor - Fig.1.png|width=170px|cap={{sc|Fig}}. 1.\n}}"
+  }
+ ],
+ "22:355": [
+  {
+   "from": "{{img float |file=EB1911 - Primulaceae - Fig 2.png|width=102px|cap={{Fs|92%|{{sc|Fig}}. 2.}}<br> {{Fs|73%|Diagram of a typical flower of Primulaceae.}}|style=line-height:90%}}",
+   "to": "{{img float |align=right |file=EB1911 - Primulaceae - Fig 2.png|width=102px|cap={{Fs|92%|{{sc|Fig}}. 2.}}<br> {{Fs|73%|Diagram of a typical flower of Primulaceae.}}|style=line-height:90%}}"
+  }
+ ],
+ "22:659": [
+  {
+   "from": "{{img float|file=EB1911 - Pulley - Fig 8.png|width=175px|cap={{sc|Fig}}. 8.—Worm-gear Pulley Block with Automatic Brake.}}",
+   "to": "{{img float |align=right|file=EB1911 - Pulley - Fig 8.png|width=175px|cap={{sc|Fig}}. 8.—Worm-gear Pulley Block with Automatic Brake.}}"
+  }
+ ],
+ "23:46": [
+  {
+   "from": "{{img float |file=EB1911 - Refrigerating Fig. 4.png |width=235px |cap={{sc|Fig}}. 4.}}",
+   "to": "{{img float |align=right |file=EB1911 - Refrigerating Fig. 4.png |width=235px |cap={{sc|Fig}}. 4.}}"
+  }
+ ],
+ "24:595": [
+  {
+   "from": "{{img float\n | file = EB1911 Sea-Urchin - Fig. 3.jpg\n | cap = F{{sc|ig}}. 3.—An Irregular Sea-urchin,<br>''Spatangus purpureus''.\n | width = 260px\n}}",
+   "to": "{{img float |align=right\n | file = EB1911 Sea-Urchin - Fig. 3.jpg\n | cap = F{{sc|ig}}. 3.—An Irregular Sea-urchin,<br>''Spatangus purpureus''.\n | width = 260px\n}}"
+  }
+ ],
+ "25:850": [
+  {
+   "from": "{{img float |file=EB1911 Steam Engine Fig. 14.png|width=215px|cap={{sc|Fig}}. 14}}",
+   "to": "{{img float |align=right |file=EB1911 Steam Engine Fig. 14.png|width=215px|cap={{sc|Fig}}. 14}}"
+  }
+ ],
+ "25:856": [
+  {
+   "from": "{{img float|file=EB1911 Steam Engine Fig. 38.png|width=125px|cap={{sc|Fig}}. 38.}}",
+   "to": "{{img float |align=right|file=EB1911 Steam Engine Fig. 38.png|width=125px|cap={{sc|Fig}}. 38.}}"
+  }
+ ],
+ "25:859": [
+  {
+   "from": "{{img float |file=EB1911 Steam Engine Fig. 47.png |width=185px |cap={{sc|Fig}} 47.}}",
+   "to": "{{img float |align=right |file=EB1911 Steam Engine Fig. 47.png |width=185px |cap={{sc|Fig}} 47.}}"
+  }
+ ],
+ "25:863": [
+  {
+   "from": "{{img float |file=EB1911 Steam Engine Fig. 51.png|width=134px|cap= {{sc|Fig}}. 51.—American Outside-Cylinder Loco{{shy}}motive. |capalign=left|style=font-size:92%; line-height:120%}}",
+   "to": "{{img float |align=right |file=EB1911 Steam Engine Fig. 51.png|width=134px|cap= {{sc|Fig}}. 51.—American Outside-Cylinder Loco{{shy}}motive. |capalign=left|style=font-size:92%; line-height:120%}}"
+  }
+ ],
+ "25:864": [
+  {
+   "from": "{{img float |file=EB1911 Steam Engine Fig. 53.png |width=215px |cap={{sc|Fig}}. 53}}",
+   "to": "{{img float |align=right |file=EB1911 Steam Engine Fig. 53.png |width=215px |cap={{sc|Fig}}. 53}}"
+  }
+ ],
+ "25:865": [
+  {
+   "from": "{{img float |file=EB1911 Steam Engine Fig. 55.png |width=225px |cap={{sc|Fig}}. 55. |style=font-size:92%}}",
+   "to": "{{img float |align=right |file=EB1911 Steam Engine Fig. 55.png |width=225px |cap={{sc|Fig}}. 55. |style=font-size:92%}}"
+  },
+  {
+   "from": "{{img float |file=EB1911 Steam Engine Fig. 56.png |width=150px |cap={{sc|Fig}}. 56. |style=font-size:92%}}",
+   "to": "{{img float |align=right |file=EB1911 Steam Engine Fig. 56.png |width=150px |cap={{sc|Fig}}. 56. |style=font-size:92%}}"
+  }
+ ],
+ "25:870": [
+  {
+   "from": "{{img float |file=EB1911 Steam Engine Fig. 66.png |width=260px |cap={{sc|Fig}}. 66.}}",
+   "to": "{{img float |align=right |file=EB1911 Steam Engine Fig. 66.png |width=260px |cap={{sc|Fig}}. 66.}}"
+  }
+ ],
+ "26:678": [
+  {
+   "from": "{{img float|file=EB1911-Terpenes-1.png|right|width=200px}}",
+   "to": "{{img float |align=right|file=EB1911-Terpenes-1.png|right|width=200px}}"
+  }
+ ],
+ "26:680": [
+  {
+   "from": "{{img float|file=EB1911-Terpenes-7.png|width=250px}}",
+   "to": "{{img float |align=right|file=EB1911-Terpenes-7.png|width=250px}}"
+  }
+ ],
+ "26:999": [
+  {
+   "from": "{{img float |file=EB1911 Tide - Fig. 9.png|width=180px|cap={{sc|Fig}}. 9.}}",
+   "to": "{{img float |align=right |file=EB1911 Tide - Fig. 9.png|width=180px|cap={{sc|Fig}}. 9.}}"
+  }
+ ],
+ "27:117": [
+  {
+   "from": "{{img float |file=EB1911 - Tourmaline - Fig. 1.png|width=150px|cap={{sc|Fig}}. 1}}",
+   "to": "{{img float |align=right |file=EB1911 - Tourmaline - Fig. 1.png|width=150px|cap={{sc|Fig}}. 1}}"
+  }
+ ],
+ "27:562": [
+  {
+   "from": "{{img float|file=EB1911 Typography - Type with jet.jpg |width=x150px |cap={{sc|Fig.}} 5.—Type<br>with jet.}}",
+   "to": "{{img float |align=right|file=EB1911 Typography - Type with jet.jpg |width=x150px |cap={{sc|Fig.}} 5.—Type<br>with jet.}}"
   }
  ]
 }
