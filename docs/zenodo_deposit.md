@@ -149,6 +149,45 @@ Zenodo issues a *concept* DOI that always resolves to the latest version plus a
 version DOI for each release. Cite the concept DOI on the site; the version DOI
 is what a paper pins.
 
+### Is one warranted yet?
+
+"When a citer would care" is the right test and a hard one to apply months later
+with a long commit log in front of you. It comes down to a single question: **did
+anything in the TEI BUNDLE change?** Most work on this project does not touch it.
+
+Deposit when, since the last deposit tag, **any** of these is true:
+
+1. **Source corrections landed** — `data/corrections.json` gained entries. These
+   change the TEXT, which is what a citer quotes, and they are the clearest case
+   of the doc's "corrections campaign".
+2. **The encoding changed** — `src/britannica/export/tei.py`, or a producer whose
+   markers TEI carries. Note that TEI carries more than the declared
+   `RENDITIONS`: anything parametrised rides as a literal `@style`, so a producer
+   change can reach the bundle without touching `tei.py` at all.
+3. **The article inventory changed** — articles added, removed or re-bounded, so
+   a citation by filename could resolve to something else.
+
+Do NOT deposit for: viewer CSS, EPUB or MDX packaging, search ranking or speed,
+topic placement, download-page copy, reader tooling. None of it is in the bundle.
+A rebuild alone is not a reason either — the bundle is rebuilt every time.
+
+The evidence, all measurable, none of it requiring the old bundle on disk:
+
+```
+git rev-list --count <last-tag>..HEAD
+git diff --stat <last-tag>..HEAD -- src/britannica data/corrections.json
+git show <last-tag>:data/corrections.json      # entry count then, vs now
+ls -l data/derived/eb1911-tei.tar.gz           # size vs the deposited figure above
+```
+
+**Worked example — 2026-09-19, warranted (criteria 1 and 2).** 29 commits since
+`tei-2026.1`; `corrections.json` 150 → 258 entries (+72%); bundle 105,428,653 →
+105,504,389 bytes; 227 figure placements adjudicated against the scans and 58
+captionless figures that carried no placement at all now carrying one — which
+reaches the bundle as `@style`, not `@rendition` (checking only the declared
+renditions says "no float in the TEI", and that is wrong). Also the mojibake
+repairs, DNB citation unlinking, and table borders taken from the source.
+
 ## After depositing
 
 - Put the DOI on the download page and in the bundle README.

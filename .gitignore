@@ -66,11 +66,20 @@ tools/viewer/build-stamp.js
 # jar sitting in a session scratchpad was not.
 tools/epubcheck/
 
-# The built books, their published checksums, and the build logs.  `*.epub`
-# already ignored the files; this ignores the DIRECTORY, which is the thing
-# deploy.sh now mkdir -p's.  ~800 MB of dead July probe builds used to sit
-# loose in the repo root beside them; the two books we ship are all that is left.
-epub/
+# The built books, their published checksums, their provenance sidecars, and the
+# build logs.  `*.epub` already ignored the files; this ignores the DIRECTORY,
+# which is the thing deploy.sh now mkdir -p's.  ~800 MB of dead July probe builds
+# used to sit loose in the repo root beside them; the two books we ship are all
+# that is left.
+#
+# ANCHORED, and it has to be.  Written as `epub/` this matched a directory of
+# that name at ANY depth — including `src/britannica/epub/`, the SOURCE package.
+# Its nine files stayed in git only because they predate the rule, and git keeps
+# tracking what it already tracks; a NEW module added there vanished silently,
+# never appearing in `git status` at all.  `/mdx/` below was anchored from the
+# start.  (`git check-ignore` will not warn you: it does not report tracked files
+# as ignored unless you pass `--no-index`, so the rule reads as harmless.)
+/epub/
 
 # MDX dictionaries, staging files and isolated reader QA installation.
 /mdx/
