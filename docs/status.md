@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-09-15.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-09-20.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,7 +46,63 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-09-15)
+## CURRENT STATE (2026-09-20)
+
+### 2026-09-20 — paragraph boundaries around display blocks
+
+The book sets prose FLUSH where a display block cut a sentence in half and
+INDENTS it where a new paragraph starts.  We indented both, and the source
+cannot tell us which: **Wikisource renders EB1911 with no `text-indent` at all**,
+so a transcriber got no feedback that would make them encode the difference, and
+the blank line that might have carried it is noise — after `{{center|…}}` a blank
+line precedes a continuation 26% of the time and a single newline 41%, both
+buckets mixtures.  Its own reading version splits exactly where we do.  So
+whatever we do here is OUR inference; the question was only which inference and
+on what evidence.  We chose to indent at all because the printed page does and it
+reads better — that choice is what obliges us to get the boundaries roughly right.
+
+**Two rules, both in `_produce_body`, which already owned the `\n\n` → «P»
+decision.**  What it lacked was its left neighbour, now threaded sibling to
+sibling by `produce_tree` (`prev_label` / `prev_marker` / `prev_raw`) on an
+immutable `replace`, the same discipline as `parent_label`.  No look-ahead, no
+second pass, no sweeper, no `corrections.json` entries — and nothing downstream
+moves, because a suppressed «P» leaves bare body text the CSS already leaves
+un-indented.
+
+1. **A sentence a block interrupted resumes flush.**  Two witnesses must both
+   fire: the BLOCK's own last printed character is `,` `;` `:`, and the
+   resumption opens with a word that cannot begin a sentence.  The text BEFORE
+   the block is useless — a displayed formula is part of the sentence and
+   routinely ENDS it ("we must write [HCl+KOH=KCl+H₂O]."), which over-counts
+   sixfold.  46 random sites read against the scans, zero failures.  **999
+   firings.**
+2. **A note ends its paragraph.**  Small type is matter carrying less emphasis,
+   never set inside a running sentence, so prose after it starts a paragraph.
+   44 random sites read: 40 right, 4 wrong — all four after a displayed
+   QUOTATION, which is quoted matter inside a paragraph rather than a note
+   ending one.  Guarded by the same continuation test, which catches the one
+   conspicuous exception (a lowercase mid-clause resumption) and leaves three
+   that begin new sentences.  ~9% expected wrong, all in the milder class,
+   against ~14× as many put right.  **2,161 firings.**
+
+**Adjudicated corpus-wide, not on the 21 seeds** (`snapshot_corpus` before/after
+over all 36,691 articles): 1,051 articles changed, 999 «P» removed, 2,161 added,
+character delta exactly 2× each count, and the ONLY marker whose count moves
+anywhere is «P».  No body loses a word.  That corpus pass is what caught a defect
+46 scan reads could not: TeX SPACING commands end in punctuation characters, so
+`(2T)^2. \,` reads as ending on a comma when it ends on a full stop — and the
+same blindness ran the other way, `104s., \ ` rstripping to a backslash and
+hiding a real comma.
+
+**This category will never be completely right.**  The source does not record it.
+The sample sizes and the named counterexamples are in the code comments so a
+later reader knows what was asserted and on what evidence.
+
+Scope: `«/CTR»`, `«/TABLE»`, `«/DIV»`.  Tooling: `tools/diagnostics/para_sites.py`
+enumerates every resumption site with a prose anchor; `para_indent.py` measures
+one against the scan by leftmost INK (OCR drops leading characters and scatters
+flush lines across 15..88px on a page whose indent is 20px), validated 11/13
+against hand-read pages.
 
 ### 2026-09-15 — tables get their borders from the source, not our palette
 
