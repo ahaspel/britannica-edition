@@ -24,21 +24,28 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from img_float_side import collect                     # noqa: E402
+from britannica.source_pages import load_pages         # noqa: E402
 
-RAW = Path("data/raw/wikisource")
 _OPEN_RE = re.compile(r"(\{\{\s*[Ii]mg float)", re.I)
 
 
 def volume_text(vol: int) -> str:
-    """Every raw page of a volume, concatenated -- the haystack a correction hits."""
-    parts = []
-    for fn in sorted((RAW / f"vol_{vol:02d}").glob("*.json")):
-        try:
-            d = json.loads(fn.read_text(encoding="utf-8"))
-        except Exception:
-            continue
-        parts.append(d.get("raw_text") or "")
-    return "\n".join(parts)
+    """Every raw page of a volume, concatenated -- the haystack a correction hits.
+
+    Through `load_pages`, the ONE reader for raw pages.  Its text carries the
+    corrections already applied, which is exactly the haystack a NEW correction
+    has to be unique in: corrections are applied in sequence, so a `from` string
+    is matched against text earlier ones have already touched.  And it RAISES on
+    a page it cannot read -- the `except Exception: continue` this replaces made
+    an unreadable page into a page the uniqueness gate silently ignored, which
+    is how a `from` string that occurs twice could be counted once.
+    """
+    pages, failures = load_pages(volume=vol)
+    if failures:
+        raise SystemExit(
+            "unreadable source pages in vol %d: %d (first: %s -- %s)"
+            % (vol, len(failures), failures[0][0], failures[0][1]))
+    return "\n".join(p.text for p in pages)
 
 
 def insert_align(body: str, side: str) -> str:

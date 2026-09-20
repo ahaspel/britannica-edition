@@ -29,10 +29,11 @@ import pytesseract
 from PIL import Image
 
 from britannica.export.pages import leaf_for_ws
+from britannica.source_pages import load_pages
+from britannica.util.strings import strip_html_tags
 
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
-RAW = Path("data/raw/wikisource")
 SCANS = Path("data/derived/scans")
 
 _OPEN = re.compile(r"\{\{\s*img float\b", re.I)
@@ -89,7 +90,7 @@ def _caption_words(body: str) -> list[str]:
         if new == cap:
             break
         cap = new
-    cap = re.sub(r"<[^>]+>", " ", cap)
+    cap = strip_html_tags(cap, " ")
     cap = re.sub(r"&[a-z]+;", " ", cap)
     words = re.findall(r"[A-Za-z][A-Za-z'-]{4,}", cap)
     # "Fig"/"Plate" appear on every figure; they cannot single one out.
@@ -269,7 +270,7 @@ def bands_for_page(vol: int, ws_page: int):
     leaf = leaf_for_ws(vol, ws_page)
     img_path = SCANS / f"vol{vol:02d}_leaf{leaf:04d}.jpg"
     if not img_path.exists():
-        return None, f"no scan {img_path.name}"
+        return None, _no_scan(img_path)
     boxes, (width, _h) = _page_boxes(img_path)
     gutter = _columns(boxes, width)
     if gutter is None:
@@ -288,7 +289,7 @@ def side_for_page(vol: int, ws_page: int, specs: list[dict]):
     leaf = leaf_for_ws(vol, ws_page)
     img_path = SCANS / f"vol{vol:02d}_leaf{leaf:04d}.jpg"
     if not img_path.exists():
-        return [(s, None, f"no scan {img_path.name}") for s in specs]
+        return [(s, None, _no_scan(img_path)) for s in specs]
     boxes, (width, _height) = _page_boxes(img_path)
     gutter = _columns(boxes, width)
     results = []
@@ -329,16 +330,19 @@ def side_for_page(vol: int, ws_page: int, specs: list[dict]):
 def collect(only_alignless: bool = True):
     """Every {{img float}} in the raw corpus -> rows to survey."""
     rows = []
-    for fn in sorted(RAW.glob("vol_*/*.json")):
-        try:
-            d = json.loads(fn.read_text(encoding="utf-8"))
-        except Exception:
-            continue
-        txt = d.get("raw_text") or ""
-        if not txt:
-            continue
-        vol = int(fn.parent.name.split("_")[1])
-        ws = int(fn.stem.split("page")[1])
+    # Through `load_pages`, the ONE reader for raw pages: it applies the
+    # corrections the pipeline applies (so an `align=` we have already supplied
+    # is visible here, and `only_alignless` stops re-offering it), and it RAISES
+    # on a page it cannot read.  The `except Exception: continue` this replaces
+    # turned an unreadable page into a page the survey said nothing about, which
+    # for a survey of "every {{img float}}" is a false CLEAN.
+    pages, failures = load_pages()
+    if failures:
+        raise SystemExit(
+            "unreadable source pages: %d (first: %s — %s)"
+            % (len(failures), failures[0][0], failures[0][1]))
+    for page in pages:
+        txt, vol, ws = page.text, page.volume, page.page
         for body in _template_bodies(txt):
             am = _ALIGN.search(body)
             if only_alignless and am:
