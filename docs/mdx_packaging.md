@@ -29,11 +29,19 @@ protects a QA build rather than a published download.
 ## Reproduction
 
 ```
-python -m britannica.mdx.build --all --output mdx/standard
-python -m britannica.mdx.build --all --native-search --output mdx/complete
+python -m britannica.mdx.build --all --output mdx/complete
+python -m britannica.mdx.build --all --native-search --output mdx/complete-enhanced
 npm ci --prefix tools/mdx-installer --ignore-scripts
 python -m britannica.mdx.release
 ```
+
+`mdx/complete` is the STANDARD edition and `mdx/complete-enhanced` the native-search
+one — "complete" means the whole corpus, as against `--sample`. These steps and
+`release.py`'s defaults described an earlier scheme (`mdx/standard` plus an
+`mdx/complete` that held the enhanced build) for some time after the builds had
+moved, so a default-args release would have shipped the standard edition labelled
+"Enhanced". Each directory's `manifest.json` records `native_search`; that is the
+check when the names look ambiguous. `mdx/standard` is gone (2026-09-21).
 
 13-article samples are no longer published (2026-09-15): a downloads page should
 not open with a four-way choice. `build.py --sample` still builds one for QA.

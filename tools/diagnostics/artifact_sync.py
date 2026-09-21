@@ -40,8 +40,13 @@ ROOT = Path(__file__).resolve().parents[2]
 ARTIFACTS = [
     ("full EPUB",       ROOT / "epub/eb1911.epub",        "sidecar"),
     ("vol-1 sampler",   ROOT / "epub/eb1911-vol01.epub",  "sidecar"),
-    ("MDX standard",    ROOT / "mdx/standard",            "manifest"),
-    ("MDX complete",    ROOT / "mdx/complete",            "manifest"),
+    # "complete" = the whole corpus (as against `--sample`); the two editions are
+    # standard search and native search.  A third row named `mdx/standard` sat
+    # here until 2026-09-21 — the old scheme's standard directory, last built
+    # 2026-09-15, which nothing produced any more and which therefore reported a
+    # permanent false BEHIND.  A drift check nobody can ever make green stops
+    # being read.
+    ("MDX standard",    ROOT / "mdx/complete",            "manifest"),
     ("MDX enhanced",    ROOT / "mdx/complete-enhanced",   "manifest"),
 ]
 
