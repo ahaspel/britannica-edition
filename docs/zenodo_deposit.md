@@ -1,8 +1,11 @@
 # Zenodo deposit — the TEI edition
 
-**Status: deposited 2026-08-23**, DOI `10.5281/zenodo.22072146`, against the
-tagged tree `tei-2026.1`. Later versions can go through the API, which inherits
-this metadata.
+**Status: 2026.2 published 2026-09-21**, DOI `10.5281/zenodo.22876664`, against
+the tagged tree `tei-2026.2` (`651981c`). The first deposit, 2026.1, was
+published 2026-08-23 as `10.5281/zenodo.22072146` against `tei-2026.1`; both
+sit under one concept DOI. Later versions can go through the API, which inherits
+this metadata — or through the web form's "New version", which is how 2026.2 was
+made.
 
 The DOI above is the one Zenodo reserved before publishing, which is the VERSION
 DOI — fixed to this deposit. Publishing also mints a CONCEPT DOI that always
@@ -12,7 +15,22 @@ the one the website should cite.
 | DOI | value |
 |---|---|
 | **concept** (all versions — cite this on the site) | `10.5281/zenodo.22072145` |
-| **version** (this deposit, 2026.1) | `10.5281/zenodo.22072146` |
+| **version** — 2026.1 | `10.5281/zenodo.22072146` |
+| **version** — 2026.2 | `10.5281/zenodo.22876664` (published 2026-09-21) |
+
+Published 2026-09-21 and verified against the live record: version `2026.2`,
+licence `cc-by-sa-4.0`, creator `Haspel, Aaron` with the ORCID attached, and
+exactly ONE file — `eb1911-tei.tar.gz`, 105,497,636 bytes,
+`md5:3c1d7a71a3a892497f62316158dcdd80`, matching the local bundle byte for byte.
+(Zenodo reports MD5 where we record SHA-256, so the comparison has to be made in
+its terms; the SHA-256 is `0f9967a4…94ae7`. The single-file check matters because
+a new version INHERITS the previous version's files, and a second copy could not
+be removed after publishing.)
+
+The concept DOI never changes and is the only one the site should cite; each
+deposit mints its own version DOI, which is what a paper pins. Neither is ever
+typed into the form — Zenodo assigns them, and the reserved value IS the version
+DOI for the deposit being prepared.
 
 Published 2026-08-23 and verified against the live record: licence `cc-by-sa-4.0`,
 creator `Haspel, Aaron` with the ORCID attached, file `eb1911-tei.tar.gz`
@@ -187,6 +205,41 @@ captionless figures that carried no placement at all now carrying one — which
 reaches the bundle as `@style`, not `@rendition` (checking only the declared
 renditions says "no float in the TEI", and that is wrong). Also the mojibake
 repairs, DNB citation unlinking, and table borders taken from the source.
+
+## 2026.2 — ready to deposit (2026-09-21)
+
+The 2026-09-19 example above was written when a deposit became warranted; none
+was made, so its changes belong to THIS version along with everything since.
+Zenodo's "New version" on record `10.5281/zenodo.22072146` inherits the metadata
+— change the version string, the file, and the description of what moved.
+
+| field | value |
+|---|---|
+| **Version** | `2026.2` |
+| **DOI** | `10.5281/zenodo.22876664` — reserved 2026-09-21 |
+| **File** | `eb1911-tei.tar.gz` — 105,497,636 bytes, sha256 `0f9967a444ee94d880252592679dc985df868cd6707f65e584c20881cf194ae7` (verified byte-identical to the copy at britannica11.org/download/, 2026-09-21) |
+| **Tag** | `tei-2026.2`, on `651981c` — the tree the rebuild that produced this bundle ran from, NOT HEAD (the word-count and release-default commits landed after it and are not in the bundle) |
+
+Evidence, by the criteria above — **1 and 2 met, 3 not**:
+
+* **Source corrections** (criterion 1): `corrections.json` 135 → 235 entries
+  (+74%) since `tei-2026.1`. 105 of them make `align=right` explicit on figures
+  whose side was read off the scan.
+* **The encoding changed** (criterion 2): paragraph structure. The book sets
+  prose FLUSH where a display block cut a sentence in half and INDENTS it where
+  a new paragraph starts; we indented both, because the transcription does not
+  record the difference and Wikisource renders EB1911 with no `text-indent` at
+  all. 1,051 articles now carry different `<p>` structure — 999 paragraph opens
+  removed where a sentence ran on, 2,161 added after a note. Also `br_stack`,
+  which restored a line break dropped from 8 structural formulae.
+* **The inventory did NOT change** (criterion 3): 37,225 articles, the same as
+  2026.1, all valid against `tei_all`.
+
+38 commits since the tag; bundle 105,428,653 → 105,497,636 bytes (+68,983).
+
+A citer who quoted a paragraph boundary, or the text of a corrected page, would
+get a different answer from the two versions — which is the test the cadence
+section sets, and why this is a version rather than a silent replacement.
 
 ## After depositing
 
