@@ -20,7 +20,7 @@ import re
 import sys
 
 from britannica.export.corpus import NON_ARTICLE as SKIP
-from britannica.markers import strip_marker_tokens
+from britannica.markers import WORD_RE, strip_marker_tokens
 from concurrent.futures import ProcessPoolExecutor
 from britannica.util.strings import HTML_TAG_RE, content_digest
 
@@ -41,7 +41,7 @@ ART = "data/derived/articles"
 # a content change and shows up as words LOST.  Sequence, not a bag: a swallow
 # removes a run of words in place, and comparing order catches a reordering too.
 _TAG = HTML_TAG_RE
-_WORD = re.compile(r"[0-9A-Za-zÀ-ÖØ-öø-ÿ]+")
+_WORD = WORD_RE          # ONE spelling of "a word" (britannica.markers)
 
 
 def content_tokens(rendered_html):
