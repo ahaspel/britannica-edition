@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-09-25.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-09-26.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,7 +46,92 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-09-25)
+## CURRENT STATE (2026-09-26)
+
+### 2026-09-26 — ROADMAP: from one book to many (wikikit, the DNB, then scans)
+
+**The goal (the user's):** many old reference works as sites as good as
+britannica11.org.  Fully transcribed Wikisource works can get there on the code
+we have; works that exist only as scans on the Internet Archive (the Century
+Dictionary first) have to be brought into that condition before the same code
+can build them.
+
+**The principle that orders everything:** *the engine never asks which book it
+is building.*  The project began as EB1911-only, so book knowledge grew inside
+shared code — "if we're mixing these books in the code, then we're probably
+making a mistake."  The answer is a shared LIBRARY, not per-book forks, which
+would drift and double every fix.
+
+**1. Extract `wikikit`.**  The Wikisource engine moves to its own repo and
+package, `github.com/ahaspel/wikikit` — created 2026-09-26, private, empty, MIT
+(both repos are now MIT for code; the text stays CC BY-SA).  EB1911 becomes a
+book project that depends on it.  The book supplies VALUES — scan names,
+corrections, output root, roster, branding, boundary strategy, headword
+recogniser; the engine supplies mechanism.
+
+  * *Measured* (read-only inventory of `src/britannica`: imports + book-specific
+    names, split into live code vs comments): nearly every `EB1911` string in
+    the walker is a Wikisource TEMPLATE name (`{{EB1911 fine print}}`,
+    `{{EB1911 sfrac}}`) — platform vocabulary, engine-side.  The whole
+    walker/producer core (~8,500 lines) is held in the book layer by ONE line,
+    `elements/_image.py:169`, which hardcodes `EB1911 - Volume NN.djvu` instead
+    of asking `corpus.scan_name`.  The other seams are single values: the
+    default corpus in `settings.py`, the `corrections.json` path, the
+    `corpora.py` registry, `data/derived` in the math caches (330 code lines
+    name `data/derived` repo-wide), `printed_pages` in export, branding in the
+    artifact builders.
+  * *Estimated*: ~50,000 lines of code to wikikit, ~18–20,000 staying with the
+    book — and the book repo is then mostly CONTENT (67,652 lines of generated
+    Reader's Guide pages alone), which is what a book repo should be.  The
+    `src` split is measured; tests, diagnostics and viewer are estimates.
+  * *Not visible to that inventory*: assumptions that never name the book —
+    typographic boundary detection, `_split_out_plates`, "a page with no number
+    is a plate".  These are STRATEGIES for a kind of source, and go to the
+    engine as options a book selects; each must be READ before it moves.
+  * Order: cut the seams in place → move the modules with history
+    (`git filter-repo` on a throwaway clone) → ONE zero-byte full-rebuild gate
+    against production, the same bar Phase 0 of the DNB work met.
+
+**2. The DNB as the second site** — proof that the engine is book-neutral.
+Phases 0–1 are done ([`dnb_project.md`](dnb_project.md)); Phase 2 now builds
+on wikikit rather than on this repo.  One correction to that plan: the
+"section_name recovery" path it counted on for DNB titles no longer exists —
+it was DELETED from EB1911 for manufacturing ALGEBRAB, and `produce_title`'s
+`section_name` parameter is now unused.  The DNB headword (`'''JOHNSON,'''
+SAMUEL`) needs recognition in `_title_span`, not an override.
+
+**3. A scan front end: IA scans → Wikisource-shaped pages.**  The target is
+fixed: per-page wikitext in the vocabulary the walker already reads, explicit
+`<section begin>` per entry (the one thing that made the DNB cheap — as
+transcribers ourselves, we choose the explicit form), and an honest
+`pagequality` of *not proofread*.  Everything downstream then applies unchanged.
+
+  * *Calibrate where the answer is known.*  The DNB and EB1911 exist both as IA
+    scans and as proofread Wikisource, so every page the front end produces
+    from their scans can be diffed against the volunteers' text: diacritics,
+    small caps, column splits, entry boundaries, walker acceptance.  The DNB is
+    the easy target (two columns, plain type); EB1911 the hard one (math,
+    tables, plates, dense columns).
+  * *What they cannot calibrate*: a dictionary's ENTRY structure —
+    pronunciations, bracketed etymologies, numbered senses, three columns.  For
+    that: headwords must run in alphabetical order, cross-references must
+    resolve, two independent readings must agree.
+
+**4. The Century Dictionary** — pilot on deliberately hard pages, then the run.
+
+  * *Measured 2026-09-26*: Wikisource has ONE Century index (Volume 12, the
+    1909 supplement, 828 pages).  Its only proofread/validated pages are four
+    FRONT-MATTER pages (9–12, 117–2,648 bytes); its one full dictionary page,
+    310, is marked *not proofread*; the mainspace transcription is a single
+    entry lifted from it (*pragmatism*).  As an answer key it is about one
+    entry.  It IS useful as a style reference — how Wikisource transcribers
+    chose to mark up a Century page.
+  * So the answer key has to be made: proofread the pilot pages ourselves,
+    against the scan, in Wikisource's own format — and offer them upstream as
+    proofread pages, which seeds the transcription for its volunteers.  IA's
+    own EPUB and full-text versions are not a usable source: plain text in
+    reading order, with the typography that carries a dictionary's structure
+    thrown away.
 
 ### 2026-09-25 — the MDX headword list stops being mostly machine ids
 
