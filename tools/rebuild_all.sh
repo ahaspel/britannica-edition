@@ -400,13 +400,23 @@ echo
 echo "=== Phase 7.7: TEI validation gate [$(elapsed)] ==="
 uv run --with lxml python tools/diagnostics/tei_validate.py
 
-# --- Phase 7.7: Stamp the corpus ---
+# --- Phase 7.8: Word-count gate ---
+# The shipped `word_count` must be `countable_words(body)`, its one owner.  The
+# export set it right from 2026-09-21 and it still shipped wrong for a rebuild:
+# Phase 5.4 (resolve_xrefs_post.py) recomputed it as `len(body.split())` after
+# rewriting the body, overwriting the fix on 34,614 articles while every unit
+# test passed.  This checks the FIELD, not the function.  ~20s.
+echo
+echo "=== Phase 7.8: Word-count gate [$(elapsed)] ==="
+uv run python tools/diagnostics/check_word_counts.py
+
+# --- Phase 7.9: Stamp the corpus ---
 # Written LAST, after every gate above has passed, so the stamp means "a full
 # rebuild finished GREEN" rather than "a rebuild ran".  deploy.sh refuses to ship
 # a corpus whose files have been touched since — the check that makes
 # [[feedback_never_partial_rebuild]] mechanical instead of advisory.
 echo
-echo "=== Phase 7.8: Stamping the corpus [$(elapsed)] ==="
+echo "=== Phase 7.9: Stamping the corpus [$(elapsed)] ==="
 uv run python tools/diagnostics/corpus_stamp.py --write
 
 # --- Phase 8: Deploy (OPT-IN) ---
