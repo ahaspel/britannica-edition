@@ -1,6 +1,6 @@
 # Britannica Edition — Status
 
-**Last updated:** 2026-09-20.  Single source of truth for project state.  Snapshot
+**Last updated:** 2026-09-25.  Single source of truth for project state.  Snapshot
 audit reports live in `docs/reports/`; long-form per-topic notes live in the
 agent's memory directory and are not duplicated here.
 
@@ -46,7 +46,68 @@ agent's memory directory and are not duplicated here.
 
 ---
 
-## CURRENT STATE (2026-09-20)
+## CURRENT STATE (2026-09-25)
+
+### 2026-09-25 — the MDX headword list stops being mostly machine ids
+
+A reviewer installed the standard dictionary by hand, typed `ABABDA`, and got
+"No results for ABABDA, did you mean Abābda?".  Both halves of that report were
+real, and the second one was worse than the first.
+
+**What we had been assuming is false.**  In MDX every key is a headword, and a
+`@@@LINK=` redirect is indexed exactly like a page: there is no hidden lookup
+key.  There is also no per-dictionary or per-file override for the reader's
+*Ignore diacritics* / *Ignore punctuation* settings — GoldenDict-ng reads those
+from global Preferences only (checked against the reader's own source in
+`mdx/reader-source/`).  So our stable link addresses were not private plumbing;
+they were in the list.  Measured on the shipped 2026-09-18 artifact: **85,455
+headwords for 40,626 pages, and not one page had fewer than two** — 36,779 of
+them were an article plus its own `EB1911:article:…` id.
+
+Three rules now, all gated by `check_headwords` in the build:
+
+1. **A stable identifier is never a key.**  Links carry the DISPLAY key; the
+   40,626 id keys are gone and the gate refuses any key beginning `EB1911:`.
+2. **An alias that is a PREFIX of its own article's key goes** — `VOLTAIRE`
+   beside `VOLTAIRE, FRANÇOIS MARIE AROUET DE`, 383 corpus-wide.  Nothing can be
+   typed to reach the alias that does not also reach the key, so this costs no
+   lookup at all.
+3. **The accent-free spelling is a key in its own right** — 908, including the
+   reported `ABABDA`.  Compaction had been folding it away as a duplicate of
+   `ABĀBDA`, which it only is once diacritics are ignored.
+
+Rules 2 and 3 pull opposite ways on purpose, and one ruling decides both: **a
+redundant line is a lesser defect than a lookup that fails.**  That is why the
+converse of rule 2 is deliberately NOT applied — `DANTE ALIGHIERI` stays beside
+`DANTE` (467 such), because dropping the longer spelling would mean typing the
+poet's full name finds nothing, which is the reviewer's own bug re-inflicted.
+
+Homonyms lost the `(vol. N, p. M)` key and took the book's own disambiguation
+instead — the first eight words of `<div class="body-text">`, the renderer's own
+name for the prose.  It reads like an index entry and, unlike an ordinal, it is
+source-derived, so it cannot shift when an unrelated article is added:
+
+```
+MERCURY — in astronomy, the smallest major planet and the
+MERCURY — (Mercurius), in Roman mythology, the god of merchandise
+MERCURY — (symbol Hg, atomic weight＝200), in chemistry, a metallic
+```
+
+**Built and adjudicated against the SHIPPED 2026-09-18 artifact**, not against a
+fresh baseline: 85,455 → **46,688** headwords over the same 40,626 pages;
+**35,127 pages now carry exactly one**, where previously none carried fewer than
+two.  401,204 internal links validate.  Of the 43,906 keys removed, 40,626 are
+the ids and the remaining 3,280 are the previous scheme's own machine-made
+`(vol. N, p. M)` disambiguators.  **2,836 spellings stop resolving and every one
+of them is of that machine shape — no book spelling lost.**  Suite 791 green.
+
+NOT SHIPPABLE YET: the MDX renders `article["word_count"]` straight from the
+corpus, and the `countable_words` fix is banked but has not been through a
+corpus rebuild.  The order is corpus rebuild → both MDX editions → `mdx.release`
+→ deploy.  These two builds are verification, not the download.
+
+Rules and rationale: [`mdx_packaging.md`](mdx_packaging.md) § Headwords.
+
 
 ### 2026-09-20 — paragraph boundaries around display blocks
 

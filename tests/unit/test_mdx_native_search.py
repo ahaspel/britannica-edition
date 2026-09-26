@@ -2,7 +2,9 @@
 import json
 from pathlib import Path
 import shutil
+import re
 import subprocess
+from urllib.parse import quote, unquote
 
 import pytest
 
@@ -54,18 +56,25 @@ def test_native_names_are_unique_and_hidden(edition):
 
 
 def test_native_resolution_resources_fragments_and_duplicates(edition):
-    folder, _, _ = edition
+    folder, _, keys = edition
+    # The link carries the DISPLAY key now: the stable identifier is no longer a
+    # headword, so nothing could resolve it.  Read it from the map rather than
+    # pinning a literal, which would only restate what the code just computed.
+    metal = quote(keys[article_key('metal')], safe='')
     body = lookup(folder, 'Jonathan Swift', True)
     assert '<h1>SWIFT, JONATHAN</h1>' in body
     assert 'bres://test-id/images/test.png' in body
-    assert 'word=EB1911%3Aarticle%3Ametal&amp;group=4294967294&amp;gdanchor=section-history' in body
+    assert f'word={metal}&amp;group=4294967294&amp;gdanchor=section-history' in body
     assert 'href="#note-1"' in body
     assert lookup(folder, 'SWIFT, JONATHAN', True) == ''
     assert lookup(folder, 'EB1911:article:swift', True) == ''
     choices = lookup(folder, 'mercury', True)
     assert 'Choose an article' in choices
     assert choices.count('<li>') == 2
-    assert 'word=EB1911%3Aarticle%3Ametal' in choices
+    # encodeURIComponent leaves `()` literal where Python's quote escapes them;
+    # both decode to the same headword, which is the claim being made.
+    assert keys[article_key('metal')] in [
+        unquote(w) for w in re.findall(r'\?word=([^&"]+)', choices)]
     assert lookup(folder, 'nonexistentname', True) == ''
 
 

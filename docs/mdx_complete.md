@@ -157,10 +157,15 @@ does rebuild its lookup index; a separate full-text index is reader-managed.
 
 The user tested native full-text search with `thucydides`. The dialog reported
 197 matches and displayed internal IDs in alphabetical order. The current build
-now puts readable titles on content records and retains stable IDs as redirects.
-Unambiguous article titles are reused; homonyms receive printed volume/page
-qualifiers and, where needed, an ordinal. Navigation records receive readable
-labels too. `display_keys` in the manifest preserves the complete mapping.
+puts readable titles on content records. Stable IDs were kept as redirect keys
+for a time so that links held a fixed address; that was withdrawn on 2026-09-25,
+because an MDX redirect is indexed exactly like a page and those ~40,000 keys
+were ~40,000 machine ids in the reader's own headword list. Links now carry the
+display key, and `check_headwords` refuses any key beginning `EB1911:`.
+Unambiguous article titles are reused; homonyms take the book's own opening
+words, then printed volume/page, and an ordinal only as a last resort.
+Navigation records receive readable labels too. `display_keys` in the manifest
+preserves the complete mapping. See `mdx_packaging.md` for the headword rules.
 
 The initial request was the **site's exact hierarchy
 and result presentation**, with THUCYDIDES first for `thucydides`. The canonical

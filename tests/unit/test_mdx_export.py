@@ -5,7 +5,7 @@ from collections import defaultdict
 import pytest
 
 from britannica.mdx.build import (
-    Links, add_headwords, article_key, bundle_body, compile_package,
+    Links, add_headwords, article_key, bundle_body, check_headwords, compile_package,
     entry_url, lookup_fold, topic_key, label_content_entries, compact_aliases, validate, wrap,
 )
 
@@ -37,8 +37,14 @@ def test_descartes_aliases_collapse_to_book_title_but_distinct_names_remain():
     articles = {"one": article("DESCARTES, RENÉ", "Philosopher")}
     spellings = ["DESCARTES, RENÉ", "DESCARTES RENÉ", "DESCARTES RENE", "RENÉ DESCARTES", "RENE DESCARTES", "CARTESIUS"]
     aliases, removed = compact_aliases(articles, {s: {"one"} for s in spellings})
-    assert aliases == {"DESCARTES, RENÉ": {"one"}, "RENÉ DESCARTES": {"one"}, "CARTESIUS": {"one"}}
-    assert len(removed) == 3
+    # Word order and punctuation collapse; the accent does NOT.  A reader with
+    # Ignore diacritics off — the default, and all a hand-copied .mdx ever gets
+    # — can type RENE but has no way to type RENÉ, so the stripped spelling is
+    # a key in its own right even when nothing harvested it.
+    assert aliases == {"DESCARTES, RENÉ": {"one"}, "DESCARTES, RENE": {"one"},
+                       "RENÉ DESCARTES": {"one"}, "RENE DESCARTES": {"one"},
+                       "CARTESIUS": {"one"}}
+    assert [r["spelling"] for r in removed] == ["DESCARTES RENE", "DESCARTES RENÉ"]
 
 
 def test_natural_name_lookup_resolves_person_without_splitting_words():
@@ -72,13 +78,34 @@ def test_search_content_keys_are_readable_and_stable_links_still_resolve():
     entries = {article_key(s): wrap('<h1>' + a['title'] + '</h1><p id="history">' + a['body'] + '</p>')
                for s, a in articles.items()}
     add_headwords(entries, articles, {"THUCYDIDES": {"one"}, "MERCURY": {"two", "three"}})
+    entries["Jump"] = wrap('<h1>Jump</h1><a href="' + entry_url(article_key("one"), "history") + '">History</a>')
     transformed, names = label_content_entries(entries, articles)
     assert transformed["THUCYDIDES"] == entries[article_key("one")]
-    assert transformed[article_key("one")] == "@@@LINK=THUCYDIDES"
     assert names[article_key("two")] != names[article_key("three")]
-    assert all(not key.startswith("EB1911:") for key, value in transformed.items() if not value.startswith("@@@LINK="))
-    transformed["Jump"] = wrap('<a href="' + entry_url(article_key("one"), "history") + '">History</a>')
+    # Every key in an MDX file is a headword, a redirect exactly like a body, so
+    # the stable identifier cannot stay behind as one.  It survives only as the
+    # link the reader never sees.
+    assert article_key("one") not in transformed
+    assert all(not key.startswith("EB1911:") for key in transformed)
+    assert entry_url("THUCYDIDES", "history") in transformed["Jump"]
     validate(transformed, {"britannica.css": b""})
+
+
+def test_person_keeps_the_book_title_and_the_natural_name_reaches_it():
+    articles = {"author": article("SWIFT, JONATHAN", "Author"),
+                "bird": article("SWIFT", "Bird"), "name": article("JONATHAN", "Name")}
+    aliases, _ = compact_aliases(articles, {"SWIFT, JONATHAN": {"author"},
+        "SWIFT JONATHAN": {"author"}, "JONATHAN SWIFT": {"author"},
+        "SWIFT": {"bird"}, "JONATHAN": {"name"}})
+    entries = {article_key(s): wrap("<h1>" + a["title"] + "</h1><p>" + a["body"] + "</p>")
+               for s, a in articles.items()}
+    add_headwords(entries, articles, aliases)
+    transformed, names = label_content_entries(entries, articles)
+    # The book's own title, bare and unqualified: no page number, no ordinal,
+    # and no second entry for the same man.
+    assert names[article_key("author")] == "SWIFT, JONATHAN"
+    assert transformed["JONATHAN SWIFT"] == "@@@LINK=SWIFT, JONATHAN"
+    assert sorted(k for k, v in transformed.items() if v.startswith("@@@LINK=SWIFT, JONATHAN")) == ["JONATHAN SWIFT"]
 
 
 def test_validator_rejects_missing_fragments_alias_cycles_and_assets():
@@ -153,3 +180,32 @@ def test_mdx_mdd_roundtrip_unicode_alias_and_binary_resource(tmp_path: Path):
     # Compilation closes SQLite handles even on Windows; another build can
     # replace the staging file immediately, without waiting for process exit.
     (tmp_path / "stage.db").unlink()
+
+
+def test_a_free_prefix_alias_goes_but_the_longer_name_keeps_working():
+    articles = {"poet": article("DANTE", "Poet"),
+                "fr": article("VOLTAIRE, FRANÇOIS MARIE AROUET DE", "Writer")}
+    entries = {article_key(s): wrap("<h1>" + a["title"] + "</h1><p>" + a["body"] + "</p>")
+               for s, a in articles.items()}
+    add_headwords(entries, articles, {
+        "DANTE": {"poet"}, "DANTE ALIGHIERI": {"poet"},
+        "VOLTAIRE, FRANÇOIS MARIE AROUET DE": {"fr"}, "VOLTAIRE": {"fr"}})
+    transformed, names = label_content_entries(entries, articles)
+    # Nothing can be typed to reach VOLTAIRE that does not also reach the full
+    # name, so the bare alias is only a second line in the list.
+    assert "VOLTAIRE" not in transformed
+    assert names["EB1911:article:fr"] == "VOLTAIRE, FRANÇOIS MARIE AROUET DE"
+    # The opposite direction is a lookup, not a duplicate: dropping it would
+    # mean typing the poet's full name finds nothing.
+    assert transformed["DANTE ALIGHIERI"] == "@@@LINK=DANTE"
+    check_headwords(transformed)
+
+
+def test_headword_check_rejects_identifiers_and_shadowing_aliases():
+    with pytest.raises(ValueError, match="Machine identifier"):
+        check_headwords({article_key("one"): wrap("<p>text</p>")})
+    with pytest.raises(ValueError, match="shadow"):
+        check_headwords({"DANTE": "@@@LINK=DANTE ALIGHIERI",
+                         "DANTE ALIGHIERI": wrap("<p>text</p>")})
+    ok = {"DANTE ALIGHIERI": "@@@LINK=DANTE", "DANTE": wrap("<p>text</p>")}
+    assert check_headwords(ok) == {"headwords": 2, "redirects": 1}
