@@ -6,20 +6,26 @@
 # Services:
 #   1. PostgreSQL (Docker) — article database
 #   2. Meilisearch (Docker) — full-text search
-#   3. Python HTTP server — viewer on http://localhost:8000
+#   3. The site server — tools/serve.py on http://localhost:8000, owned by the
+#      scheduled task `britannica-webserver` (runs at logon, no console)
 #
 # To stop: ./tools/start_services.sh stop
+#
+# THE WEB SERVER HAS ONE OWNER: the task.  This script used to launch its own
+# `python -m http.server 8000` whenever `.webserver.pid` did not name a live
+# process — a second way to start a server, next to the task, with no check of
+# what was already on :8000.  Windows lets two processes bind 0.0.0.0:8000, so
+# which one answered was undefined: on 2026-09-26 two copies of serve.py were
+# found listening, one 17 days old.  Now: if :8000 answers, leave it alone; if
+# not, ask the task to start it.
+WEB_TASK="britannica-webserver"
 
 set -euo pipefail
 
 if [ "${1:-}" = "stop" ]; then
   echo "Stopping services..."
   docker compose down
-  # Kill the web server if running
-  if [ -f .webserver.pid ]; then
-    kill "$(cat .webserver.pid)" 2>/dev/null || true
-    rm -f .webserver.pid
-  fi
+  schtasks //end //tn "$WEB_TASK" > /dev/null 2>&1 || true
   echo "All services stopped."
   exit 0
 fi
@@ -61,12 +67,19 @@ done
 # --- Web server ---
 echo
 echo "=== Starting web server on http://localhost:8000 ==="
-if [ -f .webserver.pid ] && kill -0 "$(cat .webserver.pid)" 2>/dev/null; then
-  echo "  Web server already running (PID $(cat .webserver.pid))."
+if curl -s -o /dev/null --max-time 3 http://localhost:8000/; then
+  echo "  Web server already answering on :8000 — left alone."
 else
-  python -m http.server 8000 > /dev/null 2>&1 &
-  echo $! > .webserver.pid
-  echo "  Started (PID $!)."
+  schtasks //run //tn "$WEB_TASK" > /dev/null
+  for i in $(seq 1 15); do
+    curl -s -o /dev/null --max-time 2 http://localhost:8000/ && break
+    if [ "$i" -eq 15 ]; then
+      echo "  ERROR: task $WEB_TASK did not bring up :8000."
+      exit 1
+    fi
+    sleep 1
+  done
+  echo "  Started by task $WEB_TASK."
 fi
 
 echo
