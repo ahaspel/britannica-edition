@@ -89,7 +89,13 @@ def test_installer_preserves_config_and_binds_portable_resources(edition, monkey
     config.write_text('<config><preferences><ignoreDiacritics>0</ignoreDiacritics>'
                      '<custom>preserved</custom></preferences><programs>'
                      '<program id="unrelated" enabled="0"/></programs></config>')
-    (folder/'manifest.json').write_text(json.dumps({'native_search':True, 'edition':'complete', 'article_count':4}))
+    from britannica.mdx.build import book_identity
+    bookless = {'native_search':True, 'edition':'complete', 'article_count':4}
+    (folder/'manifest.json').write_text(json.dumps(bookless))
+    with pytest.raises(ValueError, match='which book'):
+        install(folder, reader, shutil.which('node'))
+    # The identity the build really writes — the installer's only source of names.
+    (folder/'manifest.json').write_text(json.dumps({**bookless, 'book': book_identity(False)}))
     for ext in ('mdx','mdd'):
         (folder/('Britannica11.'+ext)).write_bytes(b'fixture')
     actual_run = subprocess.run
