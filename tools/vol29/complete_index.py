@@ -28,8 +28,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import build_toc as B
 
 
-def whole_path(ws: int) -> Path:
-    return Path(f"data/derived/vol29_whole_{ws}.txt")
+whole_path = B.whole_path   # the one spelling, in build_toc
 
 
 def skeleton(text: str) -> list[tuple[str, str]]:

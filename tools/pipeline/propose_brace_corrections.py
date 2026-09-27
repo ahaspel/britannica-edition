@@ -41,6 +41,7 @@ Usage:
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import json
 import re
 import sys
@@ -54,7 +55,7 @@ from britannica.db.session import SessionLocal              # noqa: E402
 from britannica.source_pages import load_pages              # noqa: E402
 from britannica.wikitext import mask_non_template, unmatched_closes  # noqa: E402
 
-CORRECTIONS = "data/corrections.json"
+CORRECTIONS = current_corpus().data("corrections.json").as_posix()
 CONTEXT_MIN, CONTEXT_MAX = 40, 220
 
 # Articles whose SOURCE carries the defect, per triage_render_leaks.  The two

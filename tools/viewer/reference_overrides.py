@@ -8,10 +8,11 @@ filename pin.  Data, not code — accretes like corrections.json.
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import json
 from pathlib import Path
 
-_PATH = Path("data/reference_link_overrides.json")
+_PATH = current_corpus().data("reference_link_overrides.json")
 
 
 def load_reference_overrides() -> dict[str, str]:

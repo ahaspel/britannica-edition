@@ -27,8 +27,7 @@ from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from vision_ocr_vol29 import SCAN_DIR, LEAF_OFFSET, MODEL, WS_START, WS_END
-
-OUT_DIR = Path("data/derived")
+from build_toc import whole_path   # the one spelling of the file this writes
 
 WHOLE_PROMPT = """\
 You are looking at a COMPLETE two-page spread of the 'Classified List of \
@@ -70,7 +69,7 @@ fences. Unreadable token -> [?].
 
 
 def read_one(client: anthropic.Anthropic, ws: int, force: bool) -> str:
-    out = OUT_DIR / f"vol29_whole_{ws}.txt"
+    out = whole_path(ws)
     if out.exists() and not force:
         return "cached"
     leaf = ws + LEAF_OFFSET

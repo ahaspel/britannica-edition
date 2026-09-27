@@ -51,6 +51,7 @@ Examples:
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import argparse
 import io
 import subprocess
@@ -170,7 +171,7 @@ def _run_fast(volume: int, t0: float) -> None:
     print(f"[{time.time()-t0:5.1f}s]   Detected {len(detected)} articles")
 
     print(f"[{time.time()-t0:5.1f}s] Assembling + exporting (in-memory walk + resolve)…")
-    n = assemble_and_export("data/derived/articles", only_volume=volume)
+    n = assemble_and_export(current_corpus().derived("articles").as_posix(), only_volume=volume)
     print(f"[{time.time()-t0:5.1f}s]   Exported {n} articles")
 
 
@@ -215,7 +216,7 @@ CLOUDFRONT_DIST_ID = "E24BJKH0IB4I6"
 
 def _deploy_article(filename: str) -> None:
     """Upload one article JSON to S3 + invalidate CloudFront."""
-    local_path = Path("data/derived/articles") / filename
+    local_path = current_corpus().derived("articles") / filename
     if not local_path.exists() or local_path.stat().st_size == 0:
         print(f"  Warning: {local_path} missing or empty — skipping deploy")
         return
@@ -289,7 +290,7 @@ def main() -> int:
     finally:
         s.close()
 
-    out = Path("data/derived/articles") / filename
+    out = current_corpus().derived("articles") / filename
     if out.exists():
         size = out.stat().st_size
         print(f"\n[{time.time()-t0:5.1f}s] OK  {out}  ({size:,} bytes)")

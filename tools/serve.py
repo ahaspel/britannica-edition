@@ -35,6 +35,7 @@ Two jobs in one server:
 
 Run by hand the same way the task does:  uv run python tools/serve.py [port]
 """
+from britannica.corpora import current_corpus
 import http.server
 import os
 import re
@@ -62,13 +63,18 @@ _DATA_JSON_RE = re.compile(r"^/data/([^/]+\.json)$")
 # `.sha256` sidecar lives beside its file.  Anything else under /download/ is
 # a 404 in production and so is a 404 here (the JSONL and graphs are inside the
 # corpus tarball, not beside it).
+#
+# The archive NAMES come from the one naming rule (download._archive_name), the
+# sampler's from the book's slug; they were the Britannica's names spelled out.
+from britannica.corpora import brand
+from britannica.export.download import _archive_name
 _DOWNLOAD_HOME = {
-    "eb1911-corpus.tar.gz": "data/derived",
-    "eb1911-maps.tar.gz": "data/derived",
-    "eb1911-tei.tar.gz": "data/derived",
-    "eb1911-vol01.epub": "epub",
-    "manifest.json": "data/derived/download",
-    "README.md": "data/derived/download",
+    _archive_name("corpus"): current_corpus().derived().as_posix(),
+    _archive_name("maps"): current_corpus().derived().as_posix(),
+    _archive_name("tei"): current_corpus().derived().as_posix(),
+    f"{brand('slug')}-vol01.epub": "epub",
+    "manifest.json": current_corpus().derived("download").as_posix(),
+    "README.md": current_corpus().derived("download").as_posix(),
 }
 
 

@@ -24,14 +24,15 @@ Env: `ANTHROPIC_API_KEY` must be set.
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import base64
 import json
 from pathlib import Path
 
 import anthropic
 
-SCAN_DIR = Path("data/derived/scans")
-PER_PAGE_OCR = Path("data/derived/vol29_contributors_ocr.json")
+SCAN_DIR = current_corpus().derived("scans")
+PER_PAGE_OCR = current_corpus().derived("vol29_contributors_ocr.json")
 # Vol 29 contributor index runs ws 956 → leaf 963 through ws 982 →
 # leaf 989.  The offset here (+7) differs from vision_ocr_vol29.py's
 # +6 for the classified-TOC range — there's an extra unnumbered

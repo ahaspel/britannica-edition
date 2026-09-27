@@ -13,6 +13,7 @@ item K1).  The two vol-29 pages are VISION-OCR transcriptions — a different
 input language with no wikitext and no markers — read by `vision_text`, which
 the Topics page also uses for the Classified Table of Contents introduction.
 """
+from britannica.corpora import current_corpus
 import io
 import json
 import sys
@@ -33,7 +34,7 @@ from build_preface import build_toc_html
 from britannica.source_pages import load_pages
 
 VIEWER_DIR = Path("tools/viewer")
-ANCILLARY_JSON = Path("data/derived/vol29_ancillary.json")
+ANCILLARY_JSON = current_corpus().derived("vol29_ancillary.json")
 
 
 def _page_template(title: str, scan_href: str, body_html: str,

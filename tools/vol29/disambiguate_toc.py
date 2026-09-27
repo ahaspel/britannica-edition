@@ -15,6 +15,7 @@ discount + prompt caching on the shared system prompt).
 Usage:  uv run python tools/vol29/disambiguate_toc.py
 Dry-run: --dry-run to report ambiguities without calling the API
 """
+from britannica.corpora import current_corpus
 import json
 import re
 import sys
@@ -29,9 +30,9 @@ from anthropic.types.message_create_params import MessageCreateParamsNonStreamin
 from anthropic.types.messages.batch_create_params import Request
 
 
-CACHE_FILE = Path("data/derived/toc_disambiguation_cache.json")
-TOC_FILE = Path("data/derived/classified_toc.json")
-ARTICLES_DIR = Path("data/derived/articles")
+CACHE_FILE = current_corpus().derived("toc_disambiguation_cache.json")
+TOC_FILE = current_corpus().derived("classified_toc.json")
+ARTICLES_DIR = current_corpus().derived("articles")
 INDEX_FILE = ARTICLES_DIR / "index.json"
 MODEL = "claude-haiku-4-5"
 

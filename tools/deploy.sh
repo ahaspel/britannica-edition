@@ -16,7 +16,21 @@
 set -euo pipefail
 export PYTHONIOENCODING=utf-8
 
-EXPORT_DIR="data/derived/articles"
+# The book's roots and names, asked of the book — never spelled here.  They
+# decide both what is read locally and the names things are uploaded under.
+DERIVED=$(uv run python -m britannica.corpora derived)
+IMAGES=$(uv run python -m britannica.corpora images)
+SLUG=$(uv run python -m britannica.corpora brand slug)
+CORPUS_TGZ=$(uv run python -m britannica.export.download name corpus)
+MAPS_TGZ=$(uv run python -m britannica.export.download name maps)
+TEI_TGZ=$(uv run python -m britannica.export.download name tei)
+SAMPLER="${SLUG}-vol01.epub"     # the published sampler is volume 1
+MAPS_JSON=$(uv run python -m britannica.corpora data maps.json)
+# Every value ASSERTED non-empty before use: the article sync below runs with
+# --delete, and an empty root must stop the deploy, not point it elsewhere.
+: "${DERIVED:?no output root}" "${IMAGES:?no image root}" "${SLUG:?no slug}"
+: "${CORPUS_TGZ:?}" "${MAPS_TGZ:?}" "${TEI_TGZ:?}" "${MAPS_JSON:?}"
+EXPORT_DIR="$DERIVED/articles"
 START=$(date +%s)
 elapsed() { local s=$(( $(date +%s) - START )); printf "%d:%02d" $((s/60)) $((s%60)); }
 
@@ -46,7 +60,7 @@ uv run python tools/diagnostics/corpus_stamp.py --check
 
 echo "  Building vol-1 sampler EPUB [$(elapsed)]..."
 mkdir -p epub   # gitignored, so absent on a fresh clone
-uv run python -m britannica.epub.build --volume 1 --out epub/eb1911-vol01.epub
+uv run python -m britannica.epub.build --volume 1 --out "epub/$SAMPLER"
 
 echo "  Uploading articles to S3..."
 # Cache policy is load-bearing here: article JSONs are content-addressed ({hash}.json,
@@ -82,11 +96,11 @@ echo "  Uploading images to S3..."
 # Don't pass --content-type for the images dir — files are mixed
 # jpg/png/gif and the sync command would force one type for all.
 # aws s3 sync auto-detects content-type from extension by default.
-aws s3 sync data/images/ s3://britannica11.org/data/images/ \
+aws s3 sync "$IMAGES/" s3://britannica11.org/data/images/ \
   --size-only \
   --cache-control "public, max-age=300, must-revalidate"
 echo "  Uploading scans to S3..."
-aws s3 sync data/derived/scans/ s3://britannica11.org/data/scans/ \
+aws s3 sync "$DERIVED/scans/" s3://britannica11.org/data/scans/ \
   --size-only \
   --cache-control "public, max-age=300, must-revalidate" \
   --content-type "image/jpeg"
@@ -95,27 +109,27 @@ echo "  Uploading derived JSON (printed pages, scan map, classified TOC) — no-
 # Regenerated every deploy and read client-side to build links/pages, so they MUST
 # revalidate (no-cache) — a stale copy of these is how returning users broke on 2026-07-15.
 for j in printed_pages printed_pages_leaf scan_map classified_toc fm_first_content volumes; do
-  aws s3 cp "data/derived/$j.json" "s3://britannica11.org/data/$j.json" \
+  aws s3 cp "$DERIVED/$j.json" "s3://britannica11.org/data/$j.json" \
     --content-type "application/json" --cache-control "no-cache"
 done
 # maps.json is hand-curated source (lives at data/maps.json, not data/derived/)
-aws s3 cp data/maps.json s3://britannica11.org/data/maps.json \
+aws s3 cp "$MAPS_JSON" s3://britannica11.org/data/maps.json \
   --content-type "application/json" --cache-control "no-cache"
 
 echo "  Uploading download bundle (agent JSONL + graphs)..."
-aws s3 cp data/derived/eb1911-corpus.tar.gz s3://britannica11.org/download/eb1911-corpus.tar.gz
-aws s3 cp data/derived/eb1911-corpus.tar.gz.sha256 s3://britannica11.org/download/eb1911-corpus.tar.gz.sha256
-aws s3 cp data/derived/eb1911-maps.tar.gz s3://britannica11.org/download/eb1911-maps.tar.gz
-aws s3 cp data/derived/eb1911-maps.tar.gz.sha256 s3://britannica11.org/download/eb1911-maps.tar.gz.sha256
+aws s3 cp "$DERIVED/$CORPUS_TGZ" "s3://britannica11.org/download/$CORPUS_TGZ"
+aws s3 cp "$DERIVED/$CORPUS_TGZ.sha256" "s3://britannica11.org/download/$CORPUS_TGZ.sha256"
+aws s3 cp "$DERIVED/$MAPS_TGZ" "s3://britannica11.org/download/$MAPS_TGZ"
+aws s3 cp "$DERIVED/$MAPS_TGZ.sha256" "s3://britannica11.org/download/$MAPS_TGZ.sha256"
 # The TEI-P5 edition — its own bundle for its own audience (see export/download.py).
-aws s3 cp data/derived/eb1911-tei.tar.gz s3://britannica11.org/download/eb1911-tei.tar.gz
-aws s3 cp data/derived/eb1911-tei.tar.gz.sha256 s3://britannica11.org/download/eb1911-tei.tar.gz.sha256
+aws s3 cp "$DERIVED/$TEI_TGZ" "s3://britannica11.org/download/$TEI_TGZ"
+aws s3 cp "$DERIVED/$TEI_TGZ.sha256" "s3://britannica11.org/download/$TEI_TGZ.sha256"
 echo "  Uploading vol-1 sampler EPUB (built above)..."
-sha256sum epub/eb1911-vol01.epub | awk '{print $1}' > epub/eb1911-vol01.epub.sha256
-aws s3 cp epub/eb1911-vol01.epub s3://britannica11.org/download/eb1911-vol01.epub
-aws s3 cp epub/eb1911-vol01.epub.sha256 s3://britannica11.org/download/eb1911-vol01.epub.sha256
-aws s3 cp data/derived/download/manifest.json s3://britannica11.org/download/manifest.json
-aws s3 cp data/derived/download/README.md s3://britannica11.org/download/README.md
+sha256sum "epub/$SAMPLER" | awk '{print $1}' > "epub/$SAMPLER.sha256"
+aws s3 cp "epub/$SAMPLER" "s3://britannica11.org/download/$SAMPLER"
+aws s3 cp "epub/$SAMPLER.sha256" "s3://britannica11.org/download/$SAMPLER.sha256"
+aws s3 cp "$DERIVED/download/manifest.json" s3://britannica11.org/download/manifest.json
+aws s3 cp "$DERIVED/download/README.md" s3://britannica11.org/download/README.md
 
 # Regenerate the corpus fingerprint HERE, immediately before shipping it, so the
 # stamp provably describes the bytes this deploy uploaded.  Generating it only in

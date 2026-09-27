@@ -18,6 +18,7 @@ Usage::
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import io
 import shutil
 import sys
@@ -29,7 +30,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                                errors="replace")
 
 
-SRC = Path("data/derived/articles")
+SRC = current_corpus().derived("articles")
 BACKUP_PARENT = Path("data/baselines")
 
 

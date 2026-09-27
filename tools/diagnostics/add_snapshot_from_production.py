@@ -26,6 +26,7 @@ where STEM is a JSON filename stem under ``data/derived/articles/``
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import io
 import json
 import sys
@@ -40,7 +41,7 @@ from britannica.db.session import SessionLocal  # noqa: E402
 
 
 SNAPSHOT_DIR = Path("tests/snapshots/transform")
-EXPORT_DIR = Path("data/derived/articles")
+EXPORT_DIR = current_corpus().derived("articles")
 
 
 def add_one(session, stem: str) -> tuple[str, str]:

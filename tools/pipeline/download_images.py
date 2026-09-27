@@ -20,6 +20,7 @@ Usage:
     python tools/download_images.py [--delay SECONDS]
 """
 
+from britannica.corpora import current_corpus
 import argparse
 import io
 
@@ -37,8 +38,8 @@ if sys.stdout.encoding != "utf-8":
 if sys.stderr.encoding != "utf-8":
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
-IMAGE_DIR = Path("data/images")
-ARTICLES_DIR = Path("data/derived/articles")
+IMAGE_DIR = current_corpus().images()
+ARTICLES_DIR = current_corpus().derived("articles")
 DELAY = 3  # seconds between requests
 BATCH_SIZE = 350  # requests before cooldown
 COOLDOWN = 15 * 60  # 15 minutes

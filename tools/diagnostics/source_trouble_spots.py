@@ -383,7 +383,7 @@ def main():
         signals=dict(Counter(s for r in rows for s in r["signals"])),
         locations=dict(Counter(r["location"] for r in rows)),
         body_manifest_sha256=digest.hexdigest(), corrected_source_sha256=source_digest.hexdigest(),
-        corrections_sha256=hashlib.sha256(Path("data/corrections.json").read_bytes()).hexdigest(),
+        corrections_sha256=hashlib.sha256(current_corpus().data("corrections.json").read_bytes()).hexdigest(),
         script_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         seconds=round(time.monotonic()-started, 1), paid_calls=0,
         review_sample=dict(Counter(selected.values())))

@@ -57,6 +57,7 @@ means in running prose (GASTROPODA v11 ws544 is the specimen).
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import argparse
 import json
 import re
@@ -75,7 +76,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from para_sites import LIST_KINDS as OUT_OF_SCOPE, WORD as _WORD  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
-SCANS = ROOT / "data/derived/scans"
+SCANS = ROOT / current_corpus().derived("scans")
 TESSERACT = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 

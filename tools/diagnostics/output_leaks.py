@@ -21,6 +21,7 @@ Which converters exist, which are covered, and what is deliberately left out liv
 cannot drift from the standing signal.  The ``index.json`` previews are scanned here
 too: they are one file, not a per-article field.
 """
+from britannica.corpora import current_corpus
 import argparse
 import glob
 import json
@@ -36,9 +37,9 @@ from britannica.outputs import outputs_for                   # noqa: E402
 from britannica.markers import marker_names                  # noqa: E402
 from britannica.render.leaks import find_leaks                # noqa: E402
 
-ART = "data/derived/articles"
+ART = current_corpus().derived("articles").as_posix()
 
-OUT = Path("data/derived/quality_reports/output_leaks.tsv")
+OUT = current_corpus().derived("quality_reports/output_leaks.tsv")
 CONSUMERS = ("rendered_html", "markdown", "search_text", "title",
              "contributor_bio")
 

@@ -5,6 +5,7 @@ Output: data/derived/fm_first_content.json
 
 Uses PIL to check if a scan is nearly uniform (blank paper).
 """
+from britannica.corpora import current_corpus
 import io
 import json
 import sys
@@ -15,8 +16,8 @@ from PIL import Image
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                               errors="replace")
 
-SCAN_DIR = Path("data/derived/scans")
-OUT = Path("data/derived/fm_first_content.json")
+SCAN_DIR = current_corpus().derived("scans")
+OUT = current_corpus().derived("fm_first_content.json")
 
 
 def is_blank(path: Path) -> bool:

@@ -8,12 +8,13 @@ defeats the gate — fix the underlying issue instead.
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import glob
 import json
 import sys
 from pathlib import Path
 
-REPORTS = sorted(glob.glob("data/derived/quality_reports/report_*.json"))
+REPORTS = sorted(glob.glob(current_corpus().derived("quality_reports/report_*.json").as_posix()))
 if not REPORTS:
     print("FAIL: no quality report found", file=sys.stderr)
     sys.exit(2)

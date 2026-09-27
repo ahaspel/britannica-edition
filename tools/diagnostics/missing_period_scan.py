@@ -25,6 +25,7 @@ Usage:
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import argparse
 import json
 import os
@@ -188,7 +189,7 @@ def main() -> None:
 
     if args.article:
         path = (args.article if os.path.isabs(args.article)
-                else f"data/derived/articles/{args.article}")
+                else current_corpus().derived(f"articles/{args.article}").as_posix())
         d = json.load(open(path, encoding="utf-8"))
         body = d.get("body", "")
         title = d.get("title", "")

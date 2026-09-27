@@ -21,10 +21,10 @@ two such drops corrupted this tool's first draft.  [[feedback_never_read_flat]]
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
+from britannica.export.corpus import load_corpus
 import argparse
-import glob
 import json
-import os
 import random
 import re
 import sys
@@ -37,8 +37,8 @@ sys.stdout.reconfigure(encoding="utf-8")
 from britannica.markers import _LINK_RE  # the ONE link-node pattern  # noqa: E402
 from britannica.export.article_json import stable_id_from_filename   # noqa: E402
 
-ART = ROOT / "data" / "derived" / "articles"
-FRAME = ROOT / "data" / "derived" / "quality_reports" / "homonym_frame.json"
+ART = ROOT / current_corpus().derived("articles")
+FRAME = ROOT / current_corpus().derived("quality_reports", "homonym_frame.json")
 SURVEY = ROOT / "family_disagreements_survey.json"
 WINDOW = 300
 
@@ -58,12 +58,13 @@ def _link_fields(inner: str) -> tuple[str, str]:
 def build_frame() -> dict:
     index = {r["stable_id"]: r for r in
              json.loads((ART / "index.json").read_text(encoding="utf-8"))}
-    files = [f for f in glob.glob(str(ART / "*.json"))
-             if os.path.basename(f) not in ("index.json", "contributors.json")]
+    # Through the one reader (it raises on an unreadable payload), not a glob of
+    # its own; the directory was spelled in pieces the corpus-read ratchet could
+    # not see until wikikit step 3.
+    payloads, _ = load_corpus(ART)
     arts: dict[str, dict] = {}
     links: list[dict] = []
-    for f in files:
-        d = json.loads(Path(f).read_text(encoding="utf-8"))
+    for d in payloads.values():
         stem = d["stable_id"]
         idx = index.get(stem, {})
         arts[stem] = {

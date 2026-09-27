@@ -18,6 +18,7 @@ trusted until those agree.
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import argparse
 import json
 import re
@@ -34,7 +35,7 @@ from britannica.util.strings import strip_html_tags
 
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
-SCANS = Path("data/derived/scans")
+SCANS = current_corpus().derived("scans")
 
 _OPEN = re.compile(r"\{\{\s*img float\b", re.I)
 _TMPL = re.compile(r"\{\{[^{}]*\}\}")

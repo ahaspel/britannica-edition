@@ -18,6 +18,7 @@ PROTEUS (AMPHIBIAN) vs PROTEUS (mythology)).
 Usage:
   python tools/diagnostics/missing_articles_diff.py OLD.tsv NEW.tsv
 """
+from britannica.corpora import current_corpus
 import csv
 import re
 import sys
@@ -26,8 +27,8 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8") if hasattr(
     sys.stdout, "reconfigure") else None
 
-DEFAULT_OLD = "data/derived/article_index_OLD_detect.tsv"
-DEFAULT_NEW = "data/derived/article_index_full_new.tsv"
+DEFAULT_OLD = current_corpus().derived("article_index_OLD_detect.tsv").as_posix()
+DEFAULT_NEW = current_corpus().derived("article_index_full_new.tsv").as_posix()
 BASELINED = {3, 7, 8, 12, 13, 18, 19, 22, 23, 25, 26, 27, 28}
 
 QUOTE_RE = re.compile(r"«/?(?:B|I|SC)»|'{2,}")
@@ -98,8 +99,8 @@ def main():
     # printed pages live at indices 3,4 in the 7-col schema; absent in 5-col
     has_printed = "printed_page_start" in header
 
-    out_m = Path("data/derived/missing_articles.tsv")
-    out_s = Path("data/derived/spurious_articles.tsv")
+    out_m = current_corpus().derived("missing_articles.tsv")
+    out_s = current_corpus().derived("spurious_articles.tsv")
     for out_path, rows in [(out_m, missing), (out_s, spurious)]:
         with out_path.open("w", encoding="utf-8") as f:
             f.write("\t".join(header) + "\n")

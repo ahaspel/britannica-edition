@@ -20,6 +20,7 @@ fed the builder hand-marked boundaries from a git-tracked `vol29_major_markup.tx
 Neither survives -- nothing is hand-marked now -- but the constants naming their
 inputs sat here unread, and a reader (correctly) believed them.
 """
+from britannica.corpora import current_corpus
 import bisect
 import json
 import re
@@ -35,7 +36,7 @@ from britannica.link_resolver import build_resolver, _art_norm
 # import name.  The alternative was a second copy of the converter here.
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "viewer"))
 
-ANCILLARY_JSON = Path("data/derived/vol29_ancillary.json")
+ANCILLARY_JSON = current_corpus().derived("vol29_ancillary.json")
 
 
 def _intro_html() -> str:
@@ -76,9 +77,9 @@ CATEGORIES = [
     "Religion and Theology", "Sports and Pastimes", "Miscellaneous",
 ]
 
-ARTICLES_INDEX = Path("data/derived/articles/index.json")
+ARTICLES_INDEX = current_corpus().derived("articles/index.json")
 ARTS_DIR = ARTICLES_INDEX.parent
-OUT = Path("data/derived/classified_toc.json")
+OUT = current_corpus().derived("classified_toc.json")
 
 
 def _normalize(s: str) -> str:

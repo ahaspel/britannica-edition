@@ -28,11 +28,12 @@ the JSONs)::
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import hashlib
 import sys
 from pathlib import Path
 
-ARTICLES = Path("data/derived/articles")
+ARTICLES = current_corpus().derived("articles")
 OUT = Path("tools/viewer/build-stamp.js")
 
 

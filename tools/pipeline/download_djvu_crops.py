@@ -14,6 +14,7 @@ Usage:
     python tools/download_djvu_crops.py [--delay SECONDS]
 """
 
+from britannica.corpora import current_corpus
 import argparse
 import hashlib
 import io
@@ -38,8 +39,8 @@ if sys.stdout.encoding != "utf-8":
 if sys.stderr.encoding != "utf-8":
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
-IMAGE_DIR = Path("data/images")
-CACHE_DIR = Path("data/images/.djvu_cache")
+IMAGE_DIR = current_corpus().images()
+CACHE_DIR = current_corpus().images(".djvu_cache")
 DELAY = 3  # seconds between requests
 RATE_LIMIT_WAIT = 3600  # 1 hour on 429
 
@@ -102,7 +103,7 @@ def scan_full_page_refs() -> list[dict]:
     # don't appear in raw wikitext (e.g. TOOL p30's corrections replace
     # unproofed OCR garbage with {{raw image|…djvu/P}} or [[File:…
     # djvu/P|…]]).
-    corrections_path = Path("data/corrections.json")
+    corrections_path = current_corpus().data("corrections.json")
     if corrections_path.exists():
         try:
             corrections = json.loads(corrections_path.read_text(encoding="utf-8"))

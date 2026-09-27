@@ -28,6 +28,7 @@ dishonest about latency.  This spike searches TITLES and topics, and says so.
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import json
 import re
 import sys
@@ -41,7 +42,7 @@ sys.path.insert(0, str(ROOT / "src"))
 # the site renderer and the TEI writer.  A second spelling here is how an
 # en-dash drifts to a hyphen in one output and nobody notices.
 from britannica.util.strings import page_range  # noqa: E402
-BUNDLE = ROOT / "data" / "derived" / "download"
+BUNDLE = ROOT / current_corpus().derived("download")
 SITE = "https://britannica11.org"
 
 

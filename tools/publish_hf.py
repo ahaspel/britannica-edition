@@ -14,10 +14,11 @@ bundle exists and is current.  Re-running just uploads a new revision.
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import sys
 from pathlib import Path
 
-BUNDLE = Path("data/derived/download")
+BUNDLE = current_corpus().derived("download")
 
 
 def main(repo_id: str, private: bool = False) -> None:

@@ -22,6 +22,7 @@ recurses to the body producer as the same shape.
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import json
 import re
 from collections import Counter
@@ -39,7 +40,7 @@ _SOLID = re.compile(rf"{_L}{{2,}}")
 _HYPH = re.compile(rf"({_L}{{2,}})-({_L}{{2,}})")              # contiguous = genuine
 _WRAP = re.compile(rf"({_L}{{2,}})-\s*(?:<br[^>]*>|\n)\s*({_L}{{2,}})", re.I)
 
-OUT = Path("data/hyphen_map.json")
+OUT = current_corpus().data_path("hyphen_map.json")
 
 
 def build() -> dict[str, str]:

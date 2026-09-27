@@ -14,6 +14,7 @@ Output:
 Usage:
     python tools/build_printed_pages.py
 """
+from britannica.corpora import current_corpus
 import json
 import re
 from pathlib import Path
@@ -23,7 +24,7 @@ from britannica.db.session import SessionLocal
 from britannica.source_pages import load_pages
 from britannica.wikitext import TEMPLATE_CLOSE, split_top_pipes, template_end
 
-SCAN_DIR = Path("data/derived/scans")
+SCAN_DIR = current_corpus().derived("scans")
 
 
 def _max_extracted_leaf(vol: int) -> int:
@@ -55,11 +56,11 @@ def _fm01_leaf(vol: int) -> int | None:
     return None
 
 IA_DIR = Path("data/raw/ia_scans")
-OCR_FILE = Path("data/derived/ocr_page_numbers.json")
-FM_FIRST_CONTENT_FILE = Path("data/derived/fm_first_content.json")
-OUT_WS = Path("data/derived/printed_pages.json")
-OUT_LEAF = Path("data/derived/printed_pages_leaf.json")
-SCAN_MAP = Path("data/derived/scan_map.json")  # READ-ONLY input now.
+OCR_FILE = current_corpus().derived("ocr_page_numbers.json")
+FM_FIRST_CONTENT_FILE = current_corpus().derived("fm_first_content.json")
+OUT_WS = current_corpus().derived("printed_pages.json")
+OUT_LEAF = current_corpus().derived("printed_pages_leaf.json")
+SCAN_MAP = current_corpus().derived("scan_map.json")  # READ-ONLY input now.
 # scan_map.json used to be written back here -- "densified" by
 # cross-referencing two heuristic page-number sources.  The densification
 # was the source of the April 2026 corruption: writing a derived value

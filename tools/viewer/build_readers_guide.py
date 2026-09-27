@@ -15,6 +15,7 @@ Usage:
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import json
 import re
 import sys
@@ -31,9 +32,9 @@ from reference_overrides import REFERENCE_OVERRIDES
 from britannica.util.strings import strip_html_tags
 
 SOURCE_HTML = Path("data/raw/readers_guide/source.html")
-INDEX_JSON = Path("data/derived/articles/index.json")
-ARTICLES_DIR = Path("data/derived/articles")
-CONTRIBUTORS_JSON = Path("data/derived/articles/contributors.json")
+INDEX_JSON = current_corpus().derived("articles/index.json")
+ARTICLES_DIR = current_corpus().derived("articles")
+CONTRIBUTORS_JSON = current_corpus().derived("articles/contributors.json")
 
 
 def _prose_context(html: str, pos: int) -> str:

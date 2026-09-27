@@ -17,6 +17,7 @@ Env: `ANTHROPIC_API_KEY` must be set.
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import base64
 import io
 import json
@@ -30,8 +31,8 @@ from PIL import Image
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
 from britannica.export.sections import section_key  # noqa: E402
 
-SCAN_DIR = Path("data/derived/scans")
-PER_PAGE_OCR = Path("data/derived/vol29_ocr.json")
+SCAN_DIR = current_corpus().derived("scans")
+PER_PAGE_OCR = current_corpus().derived("vol29_ocr.json")
 LEAF_OFFSET = 6
 WS_START = 891
 WS_END = 955
@@ -293,7 +294,7 @@ def transcribe_page(client: anthropic.Anthropic, ws: int,
     w, h = im.size
     mid = w // 2  # the centre rule that separates the two pages
 
-    _dbg = Path("data/derived/vol29_halves_debug.json")
+    _dbg = current_corpus().derived("vol29_halves_debug.json")
     _d = (json.loads(_dbg.read_text(encoding="utf-8")) if _dbg.exists() else {})
     prior = {} if force else _d.get(str(ws), {})
 
@@ -345,7 +346,7 @@ def main() -> None:
         return
     ocr_data = json.loads(PER_PAGE_OCR.read_text(encoding="utf-8"))
     cats = _known_categories()
-    _dbg = Path("data/derived/vol29_halves_debug.json")
+    _dbg = current_corpus().derived("vol29_halves_debug.json")
     dbg = (json.loads(_dbg.read_text(encoding="utf-8")) if _dbg.exists() else {})
 
     # CLI: "--force" re-transcribes pages already done; bare integers or an

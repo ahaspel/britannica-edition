@@ -13,6 +13,7 @@ Format: {"vol": {"leaf": {"type": "text"|"plate"|"blank", "dark": N, "var": N, "
 Usage:
     python tools/classify_scans.py [--vol N]
 """
+from britannica.corpora import current_corpus
 import argparse
 import json
 import re
@@ -25,8 +26,8 @@ from PIL import Image
 
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
-SCAN_DIR = Path("data/derived/scans")
-OUT = Path("data/derived/scan_classification.json")
+SCAN_DIR = current_corpus().derived("scans")
+OUT = current_corpus().derived("scan_classification.json")
 
 # Thresholds from empirical testing
 PLATE_DARK_MIN = 0.25

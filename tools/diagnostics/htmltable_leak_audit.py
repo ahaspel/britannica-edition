@@ -22,6 +22,7 @@ Usage:
 from __future__ import annotations
 
 
+from britannica.corpora import current_corpus
 from britannica.export.corpus import load_corpus
 from britannica.util.strings import excerpt   # noqa: E402
 import re
@@ -30,7 +31,7 @@ from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")
 
-ARTICLES_DIR = Path("data/derived/articles")
+ARTICLES_DIR = current_corpus().derived("articles")
 
 _TABLE_BLOCK_RE = re.compile(
     r"«TABLE\[.*?«/TABLE»",

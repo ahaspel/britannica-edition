@@ -11,6 +11,7 @@ Flags captions that contain patterns indicating incomplete sanitization:
 Usage:
     python tools/caption_quality_check.py
 """
+from britannica.corpora import current_corpus
 import io
 import json
 
@@ -23,7 +24,7 @@ from britannica.util.strings import HTML_TAG_RE
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                               errors="replace")
 
-ART_DIR = "data/derived/articles"
+ART_DIR = current_corpus().derived("articles").as_posix()
 
 SUSPECT_PATTERNS = {
     "html_attr": re.compile(r'\b(?:align|width|style|colspan|rowspan|valign|class|scope)\s*='),

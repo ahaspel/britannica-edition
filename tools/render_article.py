@@ -28,6 +28,7 @@ Usage::
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import sys
 import time
 from pathlib import Path
@@ -68,7 +69,7 @@ def _find_article(session, title: str, volume: int | None) -> Article | None:
 
 
 def render(title: str, volume: int | None = None,
-           out_dir: str = "data/derived/articles") -> Path | None:
+           out_dir: str = current_corpus().derived("articles").as_posix()) -> Path | None:
     t0 = time.time()
     session = SessionLocal()
     try:

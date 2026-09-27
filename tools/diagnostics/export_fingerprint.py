@@ -12,6 +12,7 @@ plus their sizes.  Diffing two fingerprints then names every article whose outpu
 moved, which is what makes a rebuild a TAGGED DIFF rather than a wholesale
 rebaseline ([[feedback_no_wholesale_rebaseline]]).
 """
+from britannica.corpora import current_corpus
 import glob
 import html
 import json
@@ -25,7 +26,7 @@ from concurrent.futures import ProcessPoolExecutor
 from britannica.util.strings import HTML_TAG_RE, content_digest
 
 sys.stdout.reconfigure(encoding="utf-8")
-ART = "data/derived/articles"
+ART = current_corpus().derived("articles").as_posix()
 
 
 # The TEXT-content signature.  Reduce rendered HTML to its visible word sequence —

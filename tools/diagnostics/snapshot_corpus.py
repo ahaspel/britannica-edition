@@ -23,6 +23,7 @@ Usage::
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import io
 import sys
 from collections import defaultdict
@@ -57,7 +58,7 @@ class _id_view:
         self.page_start, self.section_name = page_start, section_name
 
 
-ROOT = Path("data/derived/_flip_snap")
+ROOT = current_corpus().derived("_flip_snap")
 
 
 def capture(tag: str, vol_filter: str) -> int:

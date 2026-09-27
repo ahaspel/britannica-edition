@@ -37,6 +37,7 @@ Usage:  uv run python tools/diagnostics/triage_render_leaks.py [--limit N]
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import argparse
 import html
 import re
@@ -269,11 +270,11 @@ def main():
     # SOURCE to PRODUCER and the tool blames us for what we just fixed.  That
     # happened the moment 29 corrections landed: 39 SOURCE became 10.  A net that
     # inverts its own answer without saying so is the failure this arc is about.
-    corr = Path("data/corrections.json")
+    corr = current_corpus().data("corrections.json")
     newest = max((p.stat().st_mtime for p in list(payloads)[:2000]), default=0)
     if corr.exists() and corr.stat().st_mtime > newest:
         print("*" * 78)
-        print("WARNING: data/corrections.json is NEWER than the rendered corpus.")
+        print(f"WARNING: {corr.as_posix()} is NEWER than the rendered corpus.")
         print("  SOURCE verdicts are unreliable until a full rebuild: a corrected")
         print("  source now balances while rendered_html still carries the leak,")
         print("  so already-fixed sites report as PRODUCER.  Rebuild, then re-run.")

@@ -56,7 +56,12 @@ fi
 uv run python tools/db/check_connection.py
 
 VOLUMES=$(seq 1 28)
-EXPORT_DIR="data/derived/articles"
+# The book's output root, asked of the book.  It is ASSERTED non-empty before
+# anything uses it: `rm -rf "$EXPORT_DIR"` below must never become
+# `rm -rf "/articles"` because a lookup printed nothing.
+DERIVED=$(uv run python -m britannica.corpora derived)
+: "${DERIVED:?the book did not name its output root}"
+EXPORT_DIR="$DERIVED/articles"
 BUILD_START=$(date +%s)
 DEPLOY=""
 SKIP_IMPORT="yes"        # reuse source_pages by default; --reimport to re-fetch the raw
@@ -369,7 +374,7 @@ uv run python tools/diagnostics/link_census.py 250 --gate
 echo
 echo "=== Phase 7.5: Contributor-dedup gate [$(elapsed)] ==="
 uv run python tools/db/dedup_contributors.py \
-  --report data/derived/quality_reports/dedup_candidates.json
+  --report "$DERIVED/quality_reports/dedup_candidates.json"
 uv run python tools/diagnostics/check_dedup_candidates.py
 
 # --- Phase 7.6: Image-coverage gate ---

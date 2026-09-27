@@ -6,12 +6,13 @@ Output: data/derived/abbreviations.json  {"Aby.": "Abyssinia", ...}
 The abbreviation list is tab-separated (one entry per line) after
 the "LIST OF ABBREVIATIONS" heading.
 """
+from britannica.corpora import current_corpus
 import json
 import re
 from pathlib import Path
 
-IN = Path("data/derived/vol29_ancillary.json")
-OUT = Path("data/derived/abbreviations.json")
+IN = current_corpus().derived("vol29_ancillary.json")
+OUT = current_corpus().derived("abbreviations.json")
 
 
 def main() -> None:

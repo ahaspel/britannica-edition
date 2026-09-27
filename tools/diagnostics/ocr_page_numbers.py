@@ -6,6 +6,7 @@ Writes results to data/derived/ocr_page_numbers.json.
 Usage:
     python tools/ocr_page_numbers.py [--vol N]
 """
+from britannica.corpora import current_corpus
 import argparse
 import json
 import re
@@ -16,8 +17,8 @@ from PIL import Image
 
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
-SCAN_DIR = Path("data/derived/scans")
-OUT = Path("data/derived/ocr_page_numbers.json")
+SCAN_DIR = current_corpus().derived("scans")
+OUT = current_corpus().derived("ocr_page_numbers.json")
 
 # Per-volume page-number location (top_frac, bottom_frac) of the page.
 # Default (IA chisrich scans): number sits in the top 6% of the page.

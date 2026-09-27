@@ -13,14 +13,15 @@ Env: ANTHROPIC_API_KEY must be set.
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import base64
 import json
 from pathlib import Path
 
 import anthropic
 
-SCAN_DIR = Path("data/derived/scans")
-OUT = Path("data/derived/vol29_ancillary.json")
+SCAN_DIR = current_corpus().derived("scans")
+OUT = current_corpus().derived("vol29_ancillary.json")
 
 MODEL = "claude-opus-4-6"
 

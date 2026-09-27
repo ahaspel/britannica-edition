@@ -36,6 +36,7 @@ means "a full rebuild finished green", not merely "a rebuild ran".
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import argparse
 import hashlib
 import json
@@ -53,8 +54,8 @@ sys.stdout.reconfigure(encoding="utf-8")
 sys.stderr.reconfigure(encoding="utf-8")
 
 ROOT = Path(__file__).resolve().parents[2]
-EXPORT_DIR = ROOT / "data" / "derived" / "articles"
-DERIVED = ROOT / "data" / "derived"
+EXPORT_DIR = ROOT / current_corpus().derived("articles")
+DERIVED = ROOT / current_corpus().derived()
 STAMP = DERIVED / "rebuild_stamp.json"
 
 # EVERYTHING ELSE A DEPLOY SHIPS out of data/derived, taken from what
@@ -169,7 +170,7 @@ def main() -> int:
         print(f"    stamped {prev.get('articles')} articles at {prev.get('finished')}",
               file=sys.stderr)
         print(f"    on disk {count:,} articles now", file=sys.stderr)
-        print("  Something wrote to data/derived/articles after the build — a "
+        print(f"  Something wrote to {EXPORT_DIR.relative_to(ROOT).as_posix()} after the build — a "
               "single-article", file=sys.stderr)
         print("  re-render, a per-volume rebuild, or an interrupted run.  Shipping "
               "this is the", file=sys.stderr)

@@ -21,6 +21,7 @@ collision-picker (step C).  Sole writer of ``kind_index.json``.
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import json
 import re
 import sys
@@ -30,9 +31,9 @@ from pathlib import Path
 sys.path.insert(0, "src")
 from britannica.xrefs.disambiguation import PERSON_KINDS, body_opening, lead_kind
 
-ART = Path("data/derived/articles")
-TOC = Path("data/derived/classified_toc.json")
-OUT = Path("data/derived/kind_index.json")
+ART = current_corpus().derived("articles")
+TOC = current_corpus().derived("classified_toc.json")
+OUT = current_corpus().derived("kind_index.json")
 
 # leaf-name -> place kind; category-word -> person field (matching the resolver's
 # wanted_kinds vocabulary).

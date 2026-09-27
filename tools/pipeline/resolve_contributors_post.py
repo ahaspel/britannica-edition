@@ -17,6 +17,7 @@ index (5.3) so the footprint can consult it:
 Replaces the pre-export harvest / link_frontmatter / link_vol29 in assemble (the
 export now writes empty `contributors`, filled here).  ([[project_resolver_consolidation]])
 """
+from britannica.corpora import current_corpus
 import json
 import os
 import re
@@ -44,7 +45,7 @@ from britannica.contributors.names import contributor_slug
 from britannica.pipeline.stages.extract_contributors import _normalize_initials
 from britannica.util.strings import fold_accents
 
-ART = Path("data/derived/articles")
+ART = current_corpus().derived("articles")
 # Deferred [[Author:]] render marker: the walk emits «AL:name|display» neutrally
 # and 5.4 resolves it against the FINISHED roster ([[project_roster_from_author_links]]).
 # Read through THE «AL» reader (`markers.iter_al_markers`) — one grammar, no fork.
@@ -531,7 +532,7 @@ def bind_contributors(session, payloads: dict) -> bool:
                       f"({arts_by_cid[cid]} articles)", file=sys.stderr)
         raise SystemExit(
             f"contributor slugs are not unique ({len(clashes)} collision(s)); "
-            "merge the duplicates in data/contributor_aliases.json")
+            f"merge the duplicates in {current_corpus().data('contributor_aliases.json').as_posix()}")
 
     if os.environ.get("STEP5_DRYRUN"):
         print("[step5] DRY RUN — no JSONs written")

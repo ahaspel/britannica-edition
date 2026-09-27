@@ -15,14 +15,15 @@ ids/filenames pass through untouched.
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import hashlib
 import json
 import re
 import shutil
 from pathlib import Path
 
-XREF_CACHE = Path("data/derived/xref_disambiguation_cache.json")
-TOC_CACHE = Path("data/derived/toc_disambiguation_cache.json")
+XREF_CACHE = current_corpus().derived("xref_disambiguation_cache.json")
+TOC_CACHE = current_corpus().derived("toc_disambiguation_cache.json")
 _OLD_ID = re.compile(r"^(\d{2})-(\d{4})-(.+)$")
 _HEX6 = re.compile(r"^\d{2}-\d{4}-[0-9a-f]{6}(-\d+)?$")
 _FNAME = re.compile(r"^(\d{2}-\d{4}-[a-z0-9][a-z0-9-]*?)-([^a-z0-9-].*)$")  # {stable_id}-{TITLE}

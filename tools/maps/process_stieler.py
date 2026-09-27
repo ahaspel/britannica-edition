@@ -22,6 +22,7 @@ A new zip without a CROPS entry emits full-frame + a preview to measure.
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import sys
 import zipfile
 from pathlib import Path
@@ -31,7 +32,7 @@ from PIL import Image, ImageDraw
 Image.MAX_IMAGE_PIXELS = None
 
 RAW = Path("data/raw/maps")
-OUT = Path("data/images/maps")
+OUT = current_corpus().images("maps")
 PREVIEWS = RAW / "_previews"          # review artifacts, outside deploy sync
 
 # zip-name fragment -> our slug (aligned with the encbr11_{slug} ids).

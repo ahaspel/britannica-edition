@@ -7,6 +7,7 @@ Usage:
     python tools/extract_scan.py <volume> <start_page> <end_page>
     python tools/extract_scan.py --article <TITLE> <volume>
 """
+from britannica.corpora import current_corpus
 import argparse
 import io
 import json
@@ -20,7 +21,7 @@ sys.path.insert(0, "src")
 from britannica.export.pages import leaf_for_ws   # noqa: E402
 
 SCAN_DIR = Path("data/raw/ia_scans")
-OUT_DIR = Path("data/derived/scans")
+OUT_DIR = current_corpus().derived("scans")
 
 def _ia_identifier(vol: int) -> str:
     if vol in (3, 5, 6, 7, 8, 9, 11, 12, 13):

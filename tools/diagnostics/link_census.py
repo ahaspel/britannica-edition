@@ -18,6 +18,7 @@ not "nothing may change".
 zero AND resolved links must not go down.  It needs production reachable; a
 sample where most fetches fail is a FAILED gate, not a passed one.
 """
+from britannica.corpora import current_corpus
 import io
 import json
 import re
@@ -26,7 +27,7 @@ import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-ART = Path("data/derived/articles")
+ART = current_corpus().derived("articles")
 LIVE = "https://britannica11.org/data/articles/{}.json"
 # RESOLVED links only — an `/article/…` href is a reference that bound to a
 # corpus article.  `class="article-link"` alone also matches the renderer's

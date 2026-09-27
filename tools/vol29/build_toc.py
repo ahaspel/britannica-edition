@@ -31,6 +31,7 @@ a bridge until every page's halves exist.  Output is the 24 chunks
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import json
 import re
 
@@ -38,11 +39,17 @@ from britannica.export.sections import section_key
 from britannica.source_pages import load_pages
 from pathlib import Path
 
-HALVES = Path("data/derived/vol29_halves_debug.json")
-OCR = Path("data/derived/vol29_ocr.json")
-OUT = Path("data/derived/toc_category_chunks.json")
-TREE = Path("data/derived/toc_tree.json")
+HALVES = current_corpus().derived("vol29_halves_debug.json")
+OCR = current_corpus().derived("vol29_ocr.json")
+OUT = current_corpus().derived("toc_category_chunks.json")
+TREE = current_corpus().derived("toc_tree.json")
 WS_START, WS_END = 891, 955
+
+
+def whole_path(ws: int) -> Path:
+    """One whole-page OCR of an index page — the ONE spelling of its name;
+    ocr_whole.py writes it, this module and complete_index.py read it."""
+    return current_corpus().derived(f"vol29_whole_{ws}.txt")
 
 # The printed Classified-TOC index (pp.881-2 = ws 889-890): a marker-tagged
 # wikitable that carries the AUTHORITATIVE upper structure of every category --
@@ -274,7 +281,7 @@ def whole_tracks(norms: list[str]) -> tuple[
     cur = -1
     for ws in range(WS_START, WS_END + 1):
         tracks[ws] = []
-        p = Path(f"data/derived/vol29_whole_{ws}.txt")
+        p = whole_path(ws)
         if not p.exists():
             continue
         for line in p.read_text(encoding="utf-8").split("\n"):

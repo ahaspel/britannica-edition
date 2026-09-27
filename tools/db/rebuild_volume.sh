@@ -24,9 +24,12 @@ echo "=== rebuild vol $VOLUME start $(date '+%H:%M:%S') ==="
 echo "Wiping DB rows for vol $VOLUME..."
 ./tools/db/wipe_volume.sh "$VOLUME"
 
-echo "Wiping data/derived/articles/${PADDED}-*.json..."
+# The book's output root, asserted non-empty before it reaches `rm`.
+DERIVED=$(uv run python -m britannica.corpora derived)
+: "${DERIVED:?the book did not name its output root}"
+echo "Wiping $DERIVED/articles/${PADDED}-*.json..."
 shopt -s nullglob
-rm -f data/derived/articles/${PADDED}-*.json
+rm -f "$DERIVED"/articles/${PADDED}-*.json
 shopt -u nullglob
 
 uv run python tools/fetch/import_wikisource_pages.py \

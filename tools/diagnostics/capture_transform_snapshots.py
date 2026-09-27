@@ -24,6 +24,7 @@ Usage::
 """
 from __future__ import annotations
 
+from britannica.corpora import current_corpus
 import io
 import sys
 from pathlib import Path
@@ -76,7 +77,7 @@ SEED_FILENAMES: tuple[str, ...] = (
 
 
 SNAPSHOT_DIR = Path("tests/snapshots/transform")
-EXPORT_DIR = Path("data/derived/articles")
+EXPORT_DIR = current_corpus().derived("articles")
 
 
 def _article_for_stem(session, filename_stem: str):
