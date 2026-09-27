@@ -33,9 +33,10 @@ import re
 import unicodedata
 from dataclasses import dataclass, field
 from pathlib import Path
+from britannica.corpora import current_corpus
 from britannica.util.strings import strip_html_tags
 
-OCR_FILE = Path("data/derived/vol29_contributors_ocr.json")
+OCR_FILE = current_corpus().derived("vol29_contributors_ocr.json")
 VISION_TAG = "<!-- vision-ocr -->"
 
 # Header line: SURNAME, FIRSTNAMES, CREDENTIALS (Initials)
