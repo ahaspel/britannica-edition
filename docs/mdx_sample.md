@@ -23,7 +23,8 @@ reader, previews, screenshots and reports are ignored by Git.
 | MDD resources (46 images plus CSS) | 47 |
 | Checked internal links | 261 |
 
-The fixed selection is in `src/britannica/mdx/sample.json`. It includes the three
+The fixed selection is the book's `data/mdx_sample.json` (it lived beside the
+code as `src/britannica/mdx/sample.json` until 2026-09-27). It includes the three
 MERCURY articles, AGRICULTURE, ALGEBRA, DYNAMICS, ALPHABET, ARTHUR, ABACUS,
 CONTINUED FRACTIONS, an AEGEAN CIVILIZATION plate, ABĀBDA and AARON’S ROD.
 Contributor/topic pages list only sample articles. A source-attested
