@@ -1,25 +1,11 @@
-"""The README that ships inside the TEI bundle.
+# Encyclopaedia Britannica, 11th Edition — a TEI P5 edition
 
-Its own module because it is prose, not code: keeping a 40-line document inside
-a function makes the function unreadable and the document unreviewable.
-
-SUBSTITUTION IS BY TOKEN, NOT BY ``str.format``.  This document quotes BibTeX,
-which is made of braces — ``author = {Haspel, Aaron}`` — and ``format`` reads
-those as field names and raises ``unexpected '{' in field name``.  Escaping them
-would work and would leave a trap: the next person to add a BibTeX, JSON or
-LaTeX snippet has to know to double every brace, and finds out they did not when
-a two-hour rebuild dies at the last phase.  A token no prose contains cannot
-collide, so the document can hold anything.
-"""
-
-TEI_README = """# Encyclopaedia Britannica, 11th Edition — a TEI P5 edition
-
-ARTICLE_COUNT articles, one TEI document each, named by the article's stable id — the
-same id as its URL: https://britannica11.org/article/<id>
+$article_count articles, one TEI document each, named by the article's stable id — the
+same id as its URL: $site/article/<id>
 
 `teiCorpus.xml` is a CATALOG: a TEI corpus header plus an XInclude for every
 member. Every member validates on its own against the TEI Consortium's `tei_all`
-schema. That is checked for all ARTICLE_COUNT on every build, and the build fails if any
+schema. That is checked for all $article_count on every build, and the build fails if any
 one of them does not.
 
 ## Ids are document-scoped
@@ -33,7 +19,7 @@ once per file, and `section-history` in every article that has such a section).
 This is ordinary for a file-per-member TEI corpus. Process members individually,
 or rewrite ids on assembly.
 
-`eb1911.odd.xml` is the TEI customisation: which part of TEI this edition uses,
+`${slug}.odd.xml` is the TEI customisation: which part of TEI this edition uses,
 what each rendition means, and how identifiers are scoped. It is derived from the
 emitted corpus rather than from intention, and is itself valid TEI.
 
@@ -65,10 +51,10 @@ Pages whose Wikisource transcription is unproofread carry a warning in
 Archived at Zenodo. Cite the CONCEPT DOI, which always resolves to the current
 version:
 
-    https://doi.org/10.5281/zenodo.22072145
+    https://doi.org/$concept_doi
 
     Haspel, A. (2026). Encyclopædia Britannica, Eleventh Edition: a TEI-P5
-    edition. Zenodo. https://doi.org/10.5281/zenodo.22072145
+    edition. Zenodo. https://doi.org/$concept_doi
 
 BibTeX, since a dataset citation is nearly always pasted into a bibliography
 rather than retyped:
@@ -78,8 +64,8 @@ rather than retyped:
       title     = {Encyclopædia Britannica, Eleventh Edition: a {TEI}-{P5} edition},
       year      = {2026},
       publisher = {Zenodo},
-      doi       = {10.5281/zenodo.22072145},
-      url       = {https://doi.org/10.5281/zenodo.22072145}
+      doi       = {$concept_doi},
+      url       = {https://doi.org/$concept_doi}
     }
 
 To pin one release instead, use its version DOI — 2026.1 is
@@ -91,4 +77,3 @@ bundle still says where it came from.
 
 CC BY-SA 4.0, following the Wikisource transcription this is encoded from.
 The underlying 1911 text is in the public domain.
-"""
