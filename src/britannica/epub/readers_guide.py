@@ -15,7 +15,7 @@ import re
 
 import html5lib
 
-from britannica.epub.front_matter import ROOT, SITE, _adapt, _find_div, _inner_html
+from britannica.epub.front_matter import ROOT, _adapt, _find_div, _inner_html
 
 _GUIDE_DIR = os.path.join(ROOT, "tools", "viewer")
 _CH_RE = re.compile(r"readers-guide-ch([ivxlc]+)-")
