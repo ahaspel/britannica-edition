@@ -133,6 +133,59 @@ transcribers ourselves, we choose the explicit form), and an honest
     reading order, with the typography that carries a dictionary's structure
     thrown away.
 
+### 2026-09-26 — the word-count fix never shipped; now it does, and a gate says so
+
+**SHIPPED AND VERIFIED IN PRODUCTION** (deploy 13:48, 25:42): MERCURY
+(astronomy) serves 1,665 words where it served 1,460; plate headers show no
+count; no `target_article_id` in any panel; 60/60 randomly sampled live
+articles byte-identical to the local export.  HuggingFace mirror updated.
+
+**What happened.**  `35b8444` (09-21) made `countable_words` the owner of
+`word_count` and the export used it.  A rebuild later, all 37,225 counts were
+IDENTICAL to the pre-fix ones.  Phase 5.4, `resolve_xrefs_post.py`, rewrites
+each body after export and recomputed the field as `len(body.split())` —
+overwriting the owner's answer on every article, while every unit test of
+`countable_words` passed.  It was found only because nothing moved: the pre-fix
+counts were recovered from the MDX built off the previous corpus (its headers
+render the old field) and compared article by article.  The fingerprint diff
+could not have seen it — it hashes rendered text, not this field.
+
+**Fixed at the writer, gated at the artifact.**  The recount stays (the body
+really is rewritten) but calls the owner.  `check_word_counts.py` recounts every
+exported article and fails on any disagreement; it runs as Phase 7.8, before
+the stamp, and failed on 34,614 articles against the broken rebuild's corpus
+before it passed.  ~20s.
+
+**Plates show no count** (user: "plate pages probably shouldn't have word counts
+displayed at all").  434 of 535 did, median 30, max 452 — a legend's words.
+The field still carries the number (download index, MCP tool); only the header
+omits it, in `render/article.py` beside the existing plate rule, so site, EPUB
+and MDX all follow.
+
+**`target_article_id` no longer ships.**  A database id, reassigned every
+rebuild, so each deploy rewrote 11,548 article files with no content change.  No
+reader used it — viewer, indexer and MCP tool read `target_filename`; the
+download schema already reduced cross-references to `{to, display}`.
+
+**Every rebuild was predicted before launch and adjudicated by SET, not count.**
+Second rebuild: `word_count` moved on exactly 34,614; body on 0.  Its two
+surprises were closed corpus-wide — the 100 masked-render changes are exactly
+the plates whose count fell to 0 (header vanishes), and the 11,548 other-field
+changes exactly the articles carrying a `target_article_id`.  Third rebuild:
+0 / 0 / 434 / 11,548 predicted, and each moved set equal to the predicted set.
+
+**Also found: two site servers on :8000.**  The scheduled task
+`britannica-webserver` (logon, since 09-09) plus a hand-launched "restart" from
+09-25 — Windows lets both bind, so which answered was undefined, and one ran
+17-day-old code.  `start_services.sh`, run by every rebuild, was a third
+launcher (a plain `http.server`, keyed on a `.webserver.pid` that held a uv
+wrapper's pid).  Now the task is the only launcher: the script leaves :8000
+alone if it answers and otherwise runs the task.  `.webserver.pid` is retired.
+
+**Still behind:** the full EPUB (rebuild + Payhip upload).  The reviewer has the
+new standard MDX via an unlisted preview; MDX releases are not on the public
+downloads page.
+
 ### 2026-09-25 — the MDX headword list stops being mostly machine ids
 
 A reviewer installed the standard dictionary by hand, typed `ABABDA`, and got

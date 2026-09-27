@@ -11,7 +11,15 @@ under `mdx/` are build inputs or earlier engineering packages.
 | `release.json`, `SHA256SUMS` | Archive identities, sizes and checksums. |
 
 GoldenDict is not bundled. The standard archive contains only the MDX, MDD,
-instructions, attribution, manifest, known source-link inventory and checksums.
+dictionary icon, instructions, attribution, manifest, known source-link
+inventory and checksums.
+
+The icon is `Britannica11.png`: GoldenDict-ng shows any image beside the `.mdx`
+with the same base name (PNG, not the site's SVG, because only -ng reads SVG).
+It is rendered at build time from `tools/viewer/favicon.svg` on the site's paper
+colour, so a dark-themed reader still shows it.  The "Dictionary info" pane is
+the MDX header's HTML description, written by `dictionary_description` from
+the build's own counts.  Both came from the outside reviewer, 2026-09-27.
 It uses ordinary aliases; see **Headwords** below for what those put in front of
 a reader.
 
