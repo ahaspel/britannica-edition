@@ -24,6 +24,15 @@ _EB1911_PAGES = {
 }
 
 
+def _article_starts(stream: str, page_keys: list, section_keys: list) -> list[int]:
+    """The boundaries hook — EB1911's typographic title-block scan
+    (``boundaries.py``).  Imported on call: the profile is read by every tool
+    that asks where the book's files live, and none of those should load the
+    heading classifier to find out."""
+    from britannica.books.eb1911.boundaries import article_starts
+    return article_starts(stream, page_keys, section_keys)
+
+
 # --- the Britannica -----------------------------------------------------------
 # Every value below is the constant that was already in the tree, moved here
 # unchanged.  Phase 0's gate is a full rebuild that diffs to ZERO bytes, and
@@ -33,9 +42,9 @@ EB1911 = Corpus(
     key="eb1911",
     title="Encyclopædia Britannica, Eleventh Edition",
     scan_name=lambda v: f"EB1911 - Volume {v:02d}.djvu",
-    boundary_style="typographic",
     pages=_EB1911_PAGES,
     raw_dir="wikisource",
+    article_starts=_article_starts,
     # Listed, not `KNOWN_DATA`: when the engine learns a new file, no book
     # should be found to "have" it by default.
     data_files=frozenset({

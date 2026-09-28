@@ -68,8 +68,8 @@ def _run_pipeline(monkeypatch, session_factory, pages_data, volume):
     # need their `SessionLocal` patched so the test DB is used.
     monkeypatch.setattr(detect_boundaries_stage, "SessionLocal", session_factory)
     monkeypatch.setattr(super_detect_stage, "SessionLocal", session_factory)
-    # Post-FLIP, `detect_boundaries` delegates the stream + heading walk to
-    # super_walker (`volume_stream` / `super_walk`), which holds its OWN
+    # Post-FLIP, `detect_boundaries` delegates the stream to super_walker
+    # (`volume_stream`), which holds its OWN
     # SessionLocal — patch it too or the walk reads the wrong DB (page numbers
     # then mismatch `pid` → KeyError).
     monkeypatch.setattr(super_walker_stage, "SessionLocal", session_factory)

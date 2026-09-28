@@ -5,7 +5,7 @@ boundary tests that ran through the per-page parser
 (``_parse_page_by_sections`` / ``_split_on_bold_headings``).  That parser
 was deleted when plate detection moved onto the walk's heading recognizer
 (``super_walker.has_article_heading``).  That title-*recognition* behavior
-now belongs to ``super_walker._is_title`` + ``elements/_title.produce_title``
+now belongs to ``books/eb1911/boundaries._is_title`` + ``elements/_title.produce_title``
 and its coverage should live in their tests — TODO: port the McCORMICK /
 O'BRIEN / MacCOLL cases there.
 """

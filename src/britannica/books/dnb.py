@@ -65,7 +65,6 @@ DNB = Corpus(
     key="dnb",
     title="Dictionary of National Biography",
     scan_name=_dnb_scan,
-    boundary_style="sections",
     pages=_DNB_PAGES,
     raw_dir="dnb",
     # Its own roots, so its outputs can never land on EB1911's.

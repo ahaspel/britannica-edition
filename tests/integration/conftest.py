@@ -1,7 +1,8 @@
 """Integration-test fixtures.
 
 Post-FLIP, ``detect_boundaries(volume)`` moved to ``super_detect`` and delegates
-the volume-stream + heading walk to ``super_walker``; both modules hold their
+the volume stream to ``super_walker`` (the heading scan is the book's,
+``books/eb1911/boundaries``, and reads no DB); both modules hold their
 OWN ``SessionLocal`` import.  Tests still patch ``detect_boundaries.SessionLocal``
 (its home for ``persist_articles`` / ``wipe_articles``), so without also patching
 the two walk modules the heading walk reads the real DB instead of the seeded
