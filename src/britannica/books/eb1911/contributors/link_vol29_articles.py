@@ -36,7 +36,7 @@ import sys
 from collections import defaultdict
 
 from britannica.contributors.resolver import ContributorIndex
-from britannica.contributors.vol29_index import Vol29Entry, parse_vol29_index
+from britannica.books.eb1911.contributors.vol29_index import Vol29Entry, parse_vol29_index
 from britannica.db.models import (
     Article, ArticleContributor, Contributor,
 )

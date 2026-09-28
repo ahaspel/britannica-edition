@@ -180,7 +180,7 @@ def candidate_ids(credit_title, title_map, comma_index, given_of):
     (preferring an EXACT forename match over a mere subsequence), plus the
     section-head fallback (kept, but the caller kind-gates it so a township can't
     win a person credit)."""
-    from britannica.contributors.link_vol29_articles import _normalize_vol29_title
+    from britannica.books.eb1911.contributors.link_vol29_articles import _normalize_vol29_title
     key = _normalize_vol29_title(credit_title)
     ids = list(title_map.get(key, []))
     surname, given = split_surname_given(credit_title)

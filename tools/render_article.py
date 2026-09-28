@@ -10,15 +10,13 @@ This is intentionally narrow:
   persisted.  A subsequent full rebuild will overwrite anyway.
 * No boundary / xref / contributor / image re-detection — those depend
   on volume-scope passes that don't change with transform-code edits.
-  If you change ``corrections.json``, image extraction, contributor
-  linking, etc., use ``tools/pipeline/rebuild_volume.py`` (which
-  rebuilds the volume properly).
 * No index rebuild — the viewer's article list already knows about
   this article; only its body changes.
 
-For changes that DO affect boundaries / xrefs / images / contributors,
-fall back to ``rebuild_volume.py`` (~2min per volume) or a full
-rebuild.
+For changes that DO affect boundaries / xrefs / images / contributors —
+``corrections.json``, image extraction, contributor linking — run a full
+rebuild.  There is no per-volume one: the corpus-wide phases are what
+make an article right.
 
 Usage::
 

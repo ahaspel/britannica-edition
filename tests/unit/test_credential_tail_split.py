@@ -25,12 +25,9 @@ needs no vote and no appeal to Wikisource: the book itself carries both parts.
 
 Every string below is taken from the roster as it shipped.
 """
-import sys
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools" / "pipeline"))
 
-from build_contributor_table import _clean_name  # noqa: E402
+from britannica.books.eb1911.contributors.build_contributor_table import _clean_name
 
 
 def test_the_tail_that_already_worked():

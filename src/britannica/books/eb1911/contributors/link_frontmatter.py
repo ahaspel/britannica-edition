@@ -15,7 +15,7 @@ import re
 from britannica.markers import strip_marker_tokens
 from collections import defaultdict
 
-from britannica.contributors.frontmatter import iter_entries, parse_field
+from britannica.books.eb1911.contributors.frontmatter import iter_entries, parse_field
 from britannica.contributors.resolver import ContributorIndex
 from britannica.db.models import Article, ArticleContributor, Contributor, ContributorInitials
 from britannica.db.session import SessionLocal

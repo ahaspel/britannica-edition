@@ -3,8 +3,8 @@
 Each volume's front matter carries a contributor table: one entry per person,
 holding their initials, name, description, and the subjects they wrote
 (`subject1`/`lnksubject1`…).  TWO passes read it and both run in rebuild phase
-5.4 — `tools/pipeline/build_contributor_table.py` builds the contributor rows,
-`britannica.contributors.link_frontmatter` binds their subjects to articles.
+5.4 — `build_contributor_table` builds the contributor rows,
+`britannica.books.eb1911.contributors.link_frontmatter` binds their subjects to articles.
 
 Each carried its own reader: the same `_parse_field` byte-for-byte, plus its own
 `_iter_entries` and its own spelling of the entry marker (one a literal, one a

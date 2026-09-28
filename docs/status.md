@@ -3706,10 +3706,6 @@ math measurement).  pytest (378 tests).
 
 - `tools/rebuild_all.sh` — full corpus rebuild + deploy (`--no-deploy` for
   local-only).  ~2 hours.
-- `tools/pipeline/rebuild_volume.py <vol> <TITLE>` — rebuild a volume
-  targeted at one article.  Fast (in-process) by default; `--full`
-  wipes source + re-imports + runs all stages; `--deploy` uploads
-  the article JSON to S3.
 - `tools/render_article.py <TITLE>` — re-render one article from existing DB
   state (~3 s).  Fastest iteration loop.
 - `tools/diagnostics/quality_report.py` — body-wide metrics (run before every
@@ -3718,8 +3714,8 @@ math measurement).  pytest (378 tests).
 - `tools/pipeline/post_export.py` — the post-export pass (Phase 6b4): ONE load
   of the corpus, math hints → contributors → xrefs + render, ONE write.  Each
   transform is also runnable alone via its own module's `main()`
-  (`annotate_math_markers.py`, `resolve_contributors_post.py`,
-  `resolve_xrefs_post.py`).
+  (`annotate_math_markers.py`, `resolve_xrefs_post.py`, and the book's
+  contributor binder, `books/eb1911/contributors/resolve_contributors_post.py`).
 - `tools/deploy_html.sh` — upload viewer HTML + invalidate CloudFront.
 - `tools/pipeline/start_services.sh` — start/stop local Postgres, Meilisearch,
   web server.

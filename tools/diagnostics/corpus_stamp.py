@@ -19,8 +19,8 @@ WHAT IT CATCHES, all real events from this project:
     output SKIPS xref resolution — it is not pipeline output).  Three such files
     silently entered a pre-rebuild fingerprint and made a clean rebuild read as a
     3-article regression until the baseline was re-derived.
-  * a per-volume rebuild (`rebuild_volume.py`) leaving the rest of the corpus at
-    the previous build.
+  * a per-volume rebuild (`rebuild_volume.py`, since deleted) leaving the rest
+    of the corpus at the previous build.
   * a rebuild that died mid-phase, leaving a half-written export directory.
   * deploying after editing `src/` without rebuilding.
 

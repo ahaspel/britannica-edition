@@ -62,6 +62,11 @@ EB1911 = Corpus(
         _hook("britannica.xrefs.alias_table", "build_section_alias_map"),
         _hook("britannica.books.eb1911.aliases", "build_vol29_index_aliases"),
     ),
+    # Who wrote what: initials-only signatures, bound through the front-matter
+    # tables and the vol-29 master index.
+    bind_contributors=_hook(
+        "britannica.books.eb1911.contributors.resolve_contributors_post",
+        "bind_contributors"),
     # Listed, not `KNOWN_DATA`: when the engine learns a new file, no book
     # should be found to "have" it by default.
     data_files=frozenset({

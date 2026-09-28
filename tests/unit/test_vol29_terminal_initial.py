@@ -16,7 +16,7 @@ Fothergill` — two contributors shipped with a malformed middle initial.  Neith
 existed in the previous build; both appeared when vol 29's fuller forms began
 winning the name vote, which is what made a latent bug reachable.
 """
-from britannica.contributors.vol29_index import _split_name_creds
+from britannica.books.eb1911.contributors.vol29_index import _split_name_creds
 
 
 def full_name(entry: str) -> str:

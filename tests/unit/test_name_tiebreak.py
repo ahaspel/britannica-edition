@@ -26,13 +26,10 @@ A transcription error in the front matter is reachable through
 have to be perfect — it has to fail into a mechanism we already trust
 ([[feedback_corrections_json]]).
 """
-import sys
 from collections import Counter
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools" / "pipeline"))
 
-from resolve_contributors_post import pick_winning_spelling  # noqa: E402
+from britannica.books.eb1911.contributors.resolve_contributors_post import pick_winning_spelling
 
 
 def fold(raw: str) -> str:

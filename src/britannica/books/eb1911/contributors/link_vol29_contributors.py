@@ -1,16 +1,16 @@
 """Run the vol 29 linker against the current DB state.
 
 Usage:
-  uv run python tools/pipeline/link_vol29_contributors.py            # dry-run
-  uv run python tools/pipeline/link_vol29_contributors.py --apply    # mutate DB
+  uv run python -m britannica.books.eb1911.contributors.link_vol29_contributors            # dry-run
+  uv run python -m britannica.books.eb1911.contributors.link_vol29_contributors --apply    # mutate DB
 
 Dry-run prints the classified action plan without touching the DB.
 `--apply` commits INSERT and ADD_INITIALS actions; NEEDS_REVIEW items
 are still printed but never auto-applied.
 
-Designed to slot into `tools/db/rebuild_contributors.py` between
-`build_contributor_table.py` and the per-volume `extract-contributors`
-calls.  Running on a stale (post-extract) DB is supported but the
+Run by `resolve_contributors_post.bind_contributors` (roster step 0), after
+`build_contributor_table` and before the bios backfill.  Running on a stale
+(post-bind) DB is supported but the
 NEEDS_REVIEW caveats apply more strongly — reviewer should confirm
 no `ArticleContributor` rows would be orphaned by an INSERT/ADD.
 """
@@ -18,10 +18,9 @@ from __future__ import annotations
 
 import sys
 
-sys.path.insert(0, "src")
 
-from britannica.contributors.vol29_index import parse_vol29_index
-from britannica.contributors.vol29_linker import (
+from britannica.books.eb1911.contributors.vol29_index import parse_vol29_index
+from britannica.books.eb1911.contributors.vol29_linker import (
     INSERT, ADD_INITIALS, RE_KEY_INITIALS, NEEDS_REVIEW,
     apply_action, bucket, build_plan, format_plan, snapshot_db,
 )

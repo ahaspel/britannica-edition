@@ -1,8 +1,8 @@
 """Reconcile the master DB contributor table with vol 29's master Index
 of Contributors.
 
-Designed to run as a step inside `tools/db/rebuild_contributors.py`,
-between `build_contributor_table.py` (which populates contributors
+Runs as a step of roster building in `resolve_contributors_post`,
+after `build_contributor_table` (which populates contributors
 from per-volume front matter) and `extract_contributors` (which binds
 body-footer signatures to ContributorInitials rows).  In that fresh-
 rebuild context, no `ArticleContributor` rows exist yet — so the
@@ -40,7 +40,7 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 
 from britannica.contributors.aliases import canonical_name
-from britannica.contributors.vol29_index import Vol29Entry
+from britannica.books.eb1911.contributors.vol29_index import Vol29Entry
 from britannica.db.models import ArticleContributor, Contributor, ContributorInitials
 from britannica.pipeline.stages.extract_contributors import _normalize_initials
 from britannica.util.strings import fold_accents

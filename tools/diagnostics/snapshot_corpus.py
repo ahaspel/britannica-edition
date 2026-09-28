@@ -41,7 +41,7 @@ from britannica.pipeline.stages.elements import (  # noqa: E402
 from britannica.export.article_json import (  # noqa: E402
     register_stable_id_dedup, stable_id)
 from britannica.util.strings import content_digest  # noqa: E402
-from britannica.contributors.author_links import raw_wikitext_by_article   # noqa: E402
+from britannica.books.eb1911.contributors.author_links import raw_wikitext_by_article   # noqa: E402
 
 
 class _id_view:

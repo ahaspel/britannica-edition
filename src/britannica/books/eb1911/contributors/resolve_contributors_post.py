@@ -25,13 +25,12 @@ import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
-sys.path.insert(0, "src")
 from britannica.export.sections import section_key
 from britannica.markers import sub_al_markers
-from britannica.contributors.link_frontmatter import link_from_frontmatter
+from britannica.books.eb1911.contributors.link_frontmatter import link_from_frontmatter
 from britannica.contributors.resolver import ContributorIndex
-from britannica.contributors.vol29_index import parse_vol29_index
-from britannica.contributors.vol29_kind_match import (
+from britannica.books.eb1911.contributors.vol29_index import parse_vol29_index
+from britannica.books.eb1911.contributors.vol29_kind_match import (
     candidate_ids, credit_expected_kinds, pick_article)
 from britannica.db.models import (
     Article, ArticleContributor, Contributor, ContributorInitials)
@@ -39,7 +38,7 @@ from britannica.db.session import SessionLocal
 from britannica.export.article_json import (
     _description_text, _resolve_bio_articles, _safe_filename,
     register_stable_id_dedup, stable_id)
-from britannica.contributors.author_links import (
+from britannica.books.eb1911.contributors.author_links import (
     accrete_author_link_contributors, harvest_author_links)
 from britannica.contributors.names import contributor_slug
 from britannica.pipeline.stages.extract_contributors import _normalize_initials
@@ -166,9 +165,9 @@ def bind_contributors(session, payloads: dict) -> bool:
     #    [[Author:]] links are resolved (for binding AND for the deferred
     #    render).  Truncate first so a standalone re-run rebuilds cleanly.
     #    ([[project_roster_from_author_links]])
-    from build_contributor_table import (
+    from britannica.books.eb1911.contributors.build_contributor_table import (
         _clean_name, backfill_bios, build_contributor_table)
-    import link_vol29_contributors
+    from britannica.books.eb1911.contributors import link_vol29_contributors
     session.query(ArticleContributor).delete()
     session.query(ContributorInitials).delete()
     session.query(Contributor).delete()
@@ -315,7 +314,7 @@ def bind_contributors(session, payloads: dict) -> bool:
     title_map: dict[str, list[int]] = defaultdict(list)
     comma_index: dict[str, list[int]] = defaultdict(list)
     given_of: dict[int, str] = {}
-    from britannica.contributors.link_vol29_articles import _normalize_vol29_title
+    from britannica.books.eb1911.contributors.link_vol29_articles import _normalize_vol29_title
     for a in arts:
         title_map[_normalize_vol29_title(a.title)].append(a.id)
         if "," in a.title:

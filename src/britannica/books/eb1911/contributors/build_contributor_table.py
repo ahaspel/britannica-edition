@@ -11,10 +11,9 @@ import re
 import sys
 from collections import defaultdict
 
-sys.path.insert(0, "src")
 
 from britannica.contributors.aliases import canonical_name
-from britannica.contributors.frontmatter import iter_entries, parse_field
+from britannica.books.eb1911.contributors.frontmatter import iter_entries, parse_field
 from britannica.db.models import Contributor, ContributorInitials
 from britannica.db.session import SessionLocal
 from britannica.source_pages import load_pages
