@@ -24,12 +24,14 @@ SLUG=$(uv run python -m britannica.corpora brand slug)
 CORPUS_TGZ=$(uv run python -m britannica.export.download name corpus)
 MAPS_TGZ=$(uv run python -m britannica.export.download name maps)
 TEI_TGZ=$(uv run python -m britannica.export.download name tei)
-SAMPLER="${SLUG}-vol01.epub"     # the published sampler is volume 1
+SAMPLER_VOL=$(uv run python -m britannica.corpora brand sampler_volume)
 MAPS_JSON=$(uv run python -m britannica.corpora data maps.json)
 # Every value ASSERTED non-empty before use: the article sync below runs with
 # --delete, and an empty root must stop the deploy, not point it elsewhere.
 : "${DERIVED:?no output root}" "${IMAGES:?no image root}" "${SLUG:?no slug}"
 : "${CORPUS_TGZ:?}" "${MAPS_TGZ:?}" "${TEI_TGZ:?}" "${MAPS_JSON:?}"
+: "${SAMPLER_VOL:?the book names no sampler volume}"
+SAMPLER="${SLUG}-vol$(printf '%02d' "$SAMPLER_VOL").epub"   # the published sampler
 EXPORT_DIR="$DERIVED/articles"
 START=$(date +%s)
 elapsed() { local s=$(( $(date +%s) - START )); printf "%d:%02d" $((s/60)) $((s%60)); }
@@ -58,9 +60,9 @@ echo "============================================"
 echo "  Verifying the corpus against the last completed rebuild..."
 uv run python tools/diagnostics/corpus_stamp.py --check
 
-echo "  Building vol-1 sampler EPUB [$(elapsed)]..."
+echo "  Building vol-$SAMPLER_VOL sampler EPUB [$(elapsed)]..."
 mkdir -p epub   # gitignored, so absent on a fresh clone
-uv run python -m britannica.epub.build --volume 1 --out "epub/$SAMPLER"
+uv run python -m britannica.epub.build --volume "$SAMPLER_VOL" --out "epub/$SAMPLER"
 
 echo "  Uploading articles to S3..."
 # Cache policy is load-bearing here: article JSONs are content-addressed ({hash}.json,
@@ -124,7 +126,7 @@ aws s3 cp "$DERIVED/$MAPS_TGZ.sha256" "s3://britannica11.org/download/$MAPS_TGZ.
 # The TEI-P5 edition — its own bundle for its own audience (see export/download.py).
 aws s3 cp "$DERIVED/$TEI_TGZ" "s3://britannica11.org/download/$TEI_TGZ"
 aws s3 cp "$DERIVED/$TEI_TGZ.sha256" "s3://britannica11.org/download/$TEI_TGZ.sha256"
-echo "  Uploading vol-1 sampler EPUB (built above)..."
+echo "  Uploading vol-$SAMPLER_VOL sampler EPUB (built above)..."
 sha256sum "epub/$SAMPLER" | awk '{print $1}' > "epub/$SAMPLER.sha256"
 aws s3 cp "epub/$SAMPLER" "s3://britannica11.org/download/$SAMPLER"
 aws s3 cp "epub/$SAMPLER.sha256" "s3://britannica11.org/download/$SAMPLER.sha256"
