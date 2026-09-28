@@ -1,4 +1,8 @@
-"""Reader's Guide pages for the EPUB (back matter, after Contributors).
+"""EB1911's Reader's Guide — the guide tree of its ``Corpus.ancillary`` pages
+(EPUB back matter after Contributors; the dictionary's guide pages).
+
+Moved out of the engine's epub/readers_guide.py (wikikit step 5): the guide is
+the 1913 Britannica's own apparatus.
 
 The site tree — hub → 6 parts → 71 chapters (``tools/viewer/readers-guide*.html``,
 built from the Gutenberg edition by ``build_readers_guide.py``) — maps 1:1 onto

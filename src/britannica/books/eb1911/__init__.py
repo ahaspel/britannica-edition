@@ -67,6 +67,9 @@ EB1911 = Corpus(
     bind_contributors=_hook(
         "britannica.books.eb1911.contributors.resolve_contributors_post",
         "bind_contributors"),
+    # Front matter: To This Edition · the 1910 Editorial Preface · the
+    # Historical Preface, then the Reader's Guide.
+    ancillary=_hook("britannica.books.eb1911.front_matter", "ancillary"),
     # Listed, not `KNOWN_DATA`: when the engine learns a new file, no book
     # should be found to "have" it by default.
     data_files=frozenset({
