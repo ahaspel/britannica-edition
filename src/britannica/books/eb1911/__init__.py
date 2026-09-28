@@ -121,7 +121,7 @@ EB1911 = Corpus(
     data_files=frozenset({
         "corrections.json", "hyphen_map.json", "contributor_aliases.json",
         "xref_adjudications.json", "maps.json", "link_exceptions.json",
-        "genealogy_images.json", "mdx_sample.json",
+        "genealogy_images.json", "mdx_sample.json", "tei_odd.xml",
         "templates/tei_readme.md", "templates/tei_source.xml",
         "templates/tei_corpus_source.xml", "epub_cover.jpg",
         "templates/mdx_description.html", "templates/mdx_description_sample.html",
