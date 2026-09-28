@@ -24,13 +24,26 @@ _EB1911_PAGES = {
 }
 
 
+# --- the hooks: the book's rules, imported on call ------------------------------
+# The profile is read by every tool that asks where the book's files live, and
+# none of those should load the heading classifier to find out.
+
 def _article_starts(stream: str, page_keys: list, section_keys: list) -> list[int]:
-    """The boundaries hook — EB1911's typographic title-block scan
-    (``boundaries.py``).  Imported on call: the profile is read by every tool
-    that asks where the book's files live, and none of those should load the
-    heading classifier to find out."""
+    """Where articles start — the typographic title-block scan (boundaries.py)."""
     from britannica.books.eb1911.boundaries import article_starts
     return article_starts(stream, page_keys, section_keys)
+
+
+def _is_plate(raw: str) -> bool:
+    """Is this leaf a plate insert (plates.py)."""
+    from britannica.books.eb1911.plates import is_plate
+    return is_plate(raw)
+
+
+def _plate_title(raw: str, volume: int, page_number: int) -> str:
+    """The plate's title, e.g. "AEGEAN CIVILIZATION, PLATE I" (plates.py)."""
+    from britannica.books.eb1911.plates import plate_title
+    return plate_title(raw, volume, page_number)
 
 
 # --- the Britannica -----------------------------------------------------------
@@ -45,6 +58,8 @@ EB1911 = Corpus(
     pages=_EB1911_PAGES,
     raw_dir="wikisource",
     article_starts=_article_starts,
+    is_plate=_is_plate,
+    plate_title=_plate_title,
     # Listed, not `KNOWN_DATA`: when the engine learns a new file, no book
     # should be found to "have" it by default.
     data_files=frozenset({

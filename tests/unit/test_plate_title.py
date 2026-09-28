@@ -1,4 +1,4 @@
-"""Tests for plate-title composition (``_compose_plate_title``).
+"""Tests for plate-title composition (``plate_title``).
 
 NOTE: this file previously also held Mc/Mac- and apostrophe-title
 boundary tests that ran through the per-page parser
@@ -12,13 +12,13 @@ O'BRIEN / MacCOLL cases there.
 import json
 from pathlib import Path
 
-from britannica.pipeline.stages.detect_boundaries import _compose_plate_title
+from britannica.books.eb1911.plates import plate_title
 
 RAW_DIR = Path("data/raw/wikisource")
 
 
 def _raw_page(vol: int, page: int) -> str:
-    """Raw wikitext of one source page — the input ``_compose_plate_title``
+    """Raw wikitext of one source page — the input ``plate_title``
     sees before any cleaning."""
     path = RAW_DIR / f"vol_{vol:02d}" / f"vol{vol:02d}-page{page:04d}.json"
     with open(path, encoding="utf-8") as f:
@@ -33,8 +33,8 @@ class TestPlateTitleComposition:
 
     def test_aegean_plate_i(self):
         raw = _raw_page(1, 278)
-        assert _compose_plate_title(raw, 1, 278) == "AEGEAN CIVILIZATION, PLATE I"
+        assert plate_title(raw, 1, 278) == "AEGEAN CIVILIZATION, PLATE I"
 
     def test_aegean_plate_iii(self):
         raw = _raw_page(1, 284)
-        assert _compose_plate_title(raw, 1, 284) == "AEGEAN CIVILIZATION, PLATE III"
+        assert plate_title(raw, 1, 284) == "AEGEAN CIVILIZATION, PLATE III"
