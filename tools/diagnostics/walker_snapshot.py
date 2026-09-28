@@ -46,7 +46,7 @@ def _work(item):
 
 def save(outfile):
     from multiprocessing import Pool, cpu_count
-    from _corpus_cache import iter_raw_articles
+    from wikikit.diagnostics._corpus_cache import iter_raw_articles
     res = {}
     with Pool(max(1, cpu_count() - 1)) as pool:
         for aid, h, out in pool.imap_unordered(_work, iter_raw_articles(), chunksize=64):

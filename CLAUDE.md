@@ -46,7 +46,7 @@ deploy.
   into the database the relaunch is about to truncate. If one must be abandoned,
   wait for the log's mtime to go quiet first.
 - **Pre-flight the gates that can stop it at minute 52:**
-  `uv run python tools/diagnostics/check_dedup_candidates.py` —
+  `uv run python -m wikikit.diagnostics.check_dedup_candidates` —
   `contributor_aliases.json` keys adjudications by exact name STRING, so any
   change to name shape silently invalidates one.
 - Launch with `nohup … > rebuild_NAME.log 2>&1 &`; never `tee`.

@@ -52,6 +52,7 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 "wikikit.mdx" = ["sample.json", "windows/*.cs"]
+"wikikit.diagnostics" = ["tei_all.rng"]
 
 [dependency-groups]
 dev = [

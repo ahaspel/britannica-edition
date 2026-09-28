@@ -46,7 +46,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="repla
 sys.path.insert(0, os.path.dirname(__file__))
 sys.path.insert(0, os.path.abspath(
     os.path.join(os.path.dirname(__file__), "..", "..", "src")))
-from _corpus_cache import iter_raw_articles  # noqa: E402
+from wikikit.diagnostics._corpus_cache import iter_raw_articles  # noqa: E402
 
 _PRODUCER_PREFIX = ("img:", "table", "verse:")
 _TEMPLATE_RE = re.compile(r"\{\{\s*([^|}\n]{1,40})")

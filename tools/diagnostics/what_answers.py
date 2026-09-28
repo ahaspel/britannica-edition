@@ -24,6 +24,9 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DIAG = ROOT / "tools" / "diagnostics"
+# The rebuild's gates and measurements live in the engine package since wikikit
+# 7b-1 (`python -m wikikit.diagnostics.<name>`); they are diagnostics all the same.
+ENGINE_DIAG = ROOT / "src" / "wikikit" / "diagnostics"
 SRC = ROOT / "src"
 
 
@@ -72,8 +75,8 @@ def main():
         return 1
 
     diags = []
-    for p in sorted(DIAG.glob("*.py")):
-        if p.name == pathlib.Path(__file__).name:
+    for p in sorted(DIAG.glob("*.py")) + sorted(ENGINE_DIAG.glob("*.py")):
+        if p.name in (pathlib.Path(__file__).name, "__init__.py"):
             continue
         doc = docstring_of(p)
         first = doc.strip().splitlines()[0] if doc.strip() else "(no docstring)"

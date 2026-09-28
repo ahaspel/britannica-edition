@@ -53,7 +53,7 @@ if ! docker ps --format '{{.Names}}' 2>/dev/null | grep -qi postgres; then
   echo "  PostgreSQL not running. Starting services..."
   ./tools/pipeline/start_services.sh
 fi
-uv run python tools/db/check_connection.py
+uv run python -m wikikit.db.check_connection
 
 VOLUMES=$(seq 1 28)
 # The book's output root, asked of the book.  It is ASSERTED non-empty before
@@ -101,14 +101,14 @@ echo "=== Phase 1: Cleaning everything [$(elapsed)] ==="
 
 if [ -n "$SKIP_IMPORT" ]; then
   echo "  Truncating database (keeping source_pages — reusing imported raw)..."
-  uv run python tools/db/truncate_all.py --keep-source-pages
+  uv run python -m wikikit.db.truncate_all --keep-source-pages
   # verify_empty is skipped on purpose: source_pages is intentionally non-empty.
 else
   echo "  Truncating database..."
-  uv run python tools/db/truncate_all.py
+  uv run python -m wikikit.db.truncate_all
 
   echo "  Verifying..."
-  uv run python tools/db/verify_empty.py
+  uv run python -m wikikit.db.verify_empty
 fi
 
 echo "  Clearing exports..."
@@ -149,7 +149,7 @@ walk_volume() {
   LOG="$P2_DIR/vol_${vol}.log"
   # subshell owns its own set -e: import (if any) must succeed before detect.
   if ( set -e
-       [ -n "$SKIP_IMPORT" ] || uv run python tools/fetch/import_wikisource_pages.py --indir "$RUN_DIR" --volume "$vol"
+       [ -n "$SKIP_IMPORT" ] || uv run python -m wikikit.pipeline.import_wikisource_pages --indir "$RUN_DIR" --volume "$vol"
        uv run wikikit detect-boundaries "$vol"
      ) > "$LOG" 2>&1
   then
@@ -201,7 +201,7 @@ uv run python tools/pipeline/build_printed_pages.py
 # where we had no way to identify which articles disappeared.
 echo
 echo "=== Phase 3.2: Snapshot article index [$(elapsed)] ==="
-uv run python tools/diagnostics/snapshot_article_index.py
+uv run python -m wikikit.diagnostics.snapshot_article_index
 
 # --- Phase 4.1: Assemble + export the whole corpus (in-memory resolution) ---
 echo
@@ -213,10 +213,10 @@ uv run wikikit corpus-export
 # corpus through KaTeX in a headless browser and records the smallest
 # font-size that fits the body-text column.  Cached at
 # data/derived/math_widths.json (hash-keyed) — only NEW LaTeX gets
-# re-measured.  See tools/diagnostics/measure_math_widths.py.
+# re-measured.  See src/wikikit/diagnostics/measure_math_widths.py.
 echo
 echo "=== Phase 4.2: Measuring math widths [$(elapsed)] ==="
-uv run python tools/diagnostics/measure_math_widths.py
+uv run python -m wikikit.diagnostics.measure_math_widths
 
 # (Math-marker annotation from the refreshed cache is no longer its own phase —
 # it is the first transform of the merged post-export pass, Phase 5.4 below, so
@@ -266,7 +266,7 @@ uv run python tools/vol29/build_kind_index.py
 # [[project_resolver_consolidation]]
 echo
 echo "=== Phase 5.4: Post-export pass (math · contributors · xrefs · render) [$(elapsed)] ==="
-uv run python tools/pipeline/post_export.py
+uv run python -m wikikit.pipeline.post_export
 
 # --- Phase 6.1: Detect first-content fm scan per volume ---
 echo
@@ -325,7 +325,7 @@ uv run python -m wikikit.export.download tei
 # each have their own gate below (7.3-7.5); everything here is judgment.
 echo
 echo "=== Phase 7.1: Quality report (no gate) [$(elapsed)] ==="
-uv run python tools/diagnostics/quality_report.py
+uv run python -m wikikit.diagnostics.quality_report
 
 # --- Phase 7.2: Overlap audit (visibility, no gate) ---
 # The quality report is the LEAK side: it reads `rendered_html` and asks what
@@ -341,7 +341,7 @@ uv run python tools/diagnostics/quality_report.py
 # definition on a fresh rebuild.  No gate: it is a standing number to watch move.
 echo
 echo "=== Phase 7.2: Overlap audit (no gate) [$(elapsed)] ==="
-uv run python tools/diagnostics/overlap_audit.py --refresh --examples 6
+uv run python -m wikikit.diagnostics.overlap_audit --refresh --examples 6
 
 # A guillemet is our marker delimiter, so one standing outside a well-formed
 # token is either a marker WE mangled or one the SOURCE already had.  The leak
@@ -353,7 +353,7 @@ uv run python tools/diagnostics/overlap_audit.py --refresh --examples 6
 # invent aborts the build.  A GATE, not a report — this class is never benign.
 echo
 echo "=== Phase 7.3: Mangled-marker gate [$(elapsed)] ==="
-uv run python tools/diagnostics/mangled_markers.py
+uv run python -m wikikit.diagnostics.mangled_markers
 
 # The census is 7.3's other half: 7.3 proves we invented no mangled markers,
 # the census proves resolved links did not go DOWN vs production.  A link that
@@ -375,7 +375,7 @@ echo
 echo "=== Phase 7.5: Contributor-dedup gate [$(elapsed)] ==="
 uv run python tools/db/dedup_contributors.py \
   --report "$DERIVED/quality_reports/dedup_candidates.json"
-uv run python tools/diagnostics/check_dedup_candidates.py
+uv run python -m wikikit.diagnostics.check_dedup_candidates
 
 # --- Phase 7.6: Image-coverage gate ---
 # Every `<img>` the corpus renders must resolve to a file in data/images/.
@@ -388,11 +388,11 @@ uv run python tools/diagnostics/check_dedup_candidates.py
 # ones are acknowledged in data/image_exceptions.json with a reason.
 echo
 echo "=== Phase 7.6: Image-coverage gate [$(elapsed)] ==="
-uv run python tools/diagnostics/check_image_coverage.py
+uv run python -m wikikit.diagnostics.check_image_coverage
 
 # --- Phase 7.7: TEI validation gate ---
 # Every article's TEI must validate against the TEI Consortium's OWN schema
-# (tools/schema/tei_all.rng, vendored so a build never depends on tei-c.org).
+# (src/wikikit/diagnostics/tei_all.rng, vendored so a build never depends on tei-c.org).
 # This is a genuinely INDEPENDENT net: a leak scan finds markers we failed to
 # convert, while validation finds structure we converted WRONGLY — a <cell>
 # outside a <row>, a <p> inside an inline element, a <formula> with element
@@ -403,7 +403,7 @@ uv run python tools/diagnostics/check_image_coverage.py
 # pattern the HuggingFace publish uses in deploy.sh.  ~105s over 37k articles.
 echo
 echo "=== Phase 7.7: TEI validation gate [$(elapsed)] ==="
-uv run --with lxml python tools/diagnostics/tei_validate.py
+uv run --with lxml python -m wikikit.diagnostics.tei_validate
 
 # --- Phase 7.8: Word-count gate ---
 # The shipped `word_count` must be `countable_words(body)`, its one owner.  The
@@ -413,7 +413,7 @@ uv run --with lxml python tools/diagnostics/tei_validate.py
 # test passed.  This checks the FIELD, not the function.  ~20s.
 echo
 echo "=== Phase 7.8: Word-count gate [$(elapsed)] ==="
-uv run python tools/diagnostics/check_word_counts.py
+uv run python -m wikikit.diagnostics.check_word_counts
 
 # --- Phase 7.9: Stamp the corpus ---
 # Written LAST, after every gate above has passed, so the stamp means "a full

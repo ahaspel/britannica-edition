@@ -18,7 +18,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="repla
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(ROOT / "src"))
-from _corpus_cache import iter_raw_articles
+from wikikit.diagnostics._corpus_cache import iter_raw_articles
 SCRATCH = ROOT / "tools" / "_scratch"
 
 
