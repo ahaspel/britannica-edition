@@ -21,7 +21,10 @@ import os
 from pathlib import Path
 
 from eb1911 import readers_guide
-from wikikit.epub.front_matter import ROOT, Ancillary, _extract, text_page_html
+from wikikit.corpora import book_root
+from wikikit.epub.front_matter import Ancillary, _extract, text_page_html
+
+ROOT = str(book_root())
 
 _VIEWER = os.path.join(ROOT, "tools", "viewer")
 _INTRODUCTION = os.path.join(ROOT, "docs", "introduction.txt")

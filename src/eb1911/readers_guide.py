@@ -19,7 +19,10 @@ import re
 
 import html5lib
 
-from wikikit.epub.front_matter import ROOT, _adapt, _find_div, _inner_html
+from wikikit.corpora import book_root
+from wikikit.epub.front_matter import _adapt, _find_div, _inner_html
+
+ROOT = str(book_root())
 
 _GUIDE_DIR = os.path.join(ROOT, "tools", "viewer")
 _CH_RE = re.compile(r"readers-guide-ch([ivxlc]+)-")
