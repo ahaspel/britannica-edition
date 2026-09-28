@@ -6,6 +6,8 @@ book IS; this module says what this book is.  Selected by the setting
 """
 from __future__ import annotations
 
+import importlib
+
 from britannica.corpora import Corpus
 
 # --- how many scanned pages each volume has ----------------------------------
@@ -26,24 +28,16 @@ _EB1911_PAGES = {
 
 # --- the hooks: the book's rules, imported on call ------------------------------
 # The profile is read by every tool that asks where the book's files live, and
-# none of those should load the heading classifier to find out.
+# none of those should load the heading classifier to find out.  Importing on
+# call also keeps the profile out of an import cycle: the engine modules a hook
+# lives in read `current_corpus()` at import, which is this module.
 
-def _article_starts(stream: str, page_keys: list, section_keys: list) -> list[int]:
-    """Where articles start — the typographic title-block scan (boundaries.py)."""
-    from britannica.books.eb1911.boundaries import article_starts
-    return article_starts(stream, page_keys, section_keys)
-
-
-def _is_plate(raw: str) -> bool:
-    """Is this leaf a plate insert (plates.py)."""
-    from britannica.books.eb1911.plates import is_plate
-    return is_plate(raw)
-
-
-def _plate_title(raw: str, volume: int, page_number: int) -> str:
-    """The plate's title, e.g. "AEGEAN CIVILIZATION, PLATE I" (plates.py)."""
-    from britannica.books.eb1911.plates import plate_title
-    return plate_title(raw, volume, page_number)
+def _hook(module: str, name: str):
+    """``module.name``, imported when first called."""
+    def call(*args):
+        return getattr(importlib.import_module(module), name)(*args)
+    call.__name__ = call.__qualname__ = name
+    return call
 
 
 # --- the Britannica -----------------------------------------------------------
@@ -57,9 +51,17 @@ EB1911 = Corpus(
     scan_name=lambda v: f"EB1911 - Volume {v:02d}.djvu",
     pages=_EB1911_PAGES,
     raw_dir="wikisource",
-    article_starts=_article_starts,
-    is_plate=_is_plate,
-    plate_title=_plate_title,
+    # Where articles start: a caps-set bold headword at a block start.
+    article_starts=_hook("britannica.books.eb1911.boundaries", "article_starts"),
+    # Plates: an unpaginated leaf carrying an image; "AEGEAN CIVILIZATION, PLATE I".
+    is_plate=_hook("britannica.books.eb1911.plates", "is_plate"),
+    plate_title=_hook("britannica.books.eb1911.plates", "plate_title"),
+    # Extra names for articles, merged in this order (a later source wins).
+    alias_sources=(
+        _hook("britannica.books.eb1911.aliases", "build_alias_map"),
+        _hook("britannica.xrefs.alias_table", "build_section_alias_map"),
+        _hook("britannica.books.eb1911.aliases", "build_vol29_index_aliases"),
+    ),
     # Listed, not `KNOWN_DATA`: when the engine learns a new file, no book
     # should be found to "have" it by default.
     data_files=frozenset({
