@@ -16,7 +16,8 @@ import re
 
 import pytest
 
-from britannica.corpora import EB1911, DNB
+from britannica.books.dnb import DNB
+from britannica.books.eb1911 import EB1911
 
 README = "templates/tei_readme.md"
 
