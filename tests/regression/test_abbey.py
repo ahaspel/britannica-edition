@@ -8,7 +8,7 @@ ABBEY is a long article spanning 12 pages with:
 - Contributor attribution (Rev. Edmund Venables)
 """
 
-from britannica.db.models import Article, ArticleSegment
+from wikikit.db.models import Article, ArticleSegment
 
 from .conftest import _run_pipeline
 

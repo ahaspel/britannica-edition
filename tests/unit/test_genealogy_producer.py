@@ -8,7 +8,7 @@ walker-ordering bug (the generic ``{{…}}`` recognizer claiming the bare
 These are the first tests; they exercise the producer end-to-end through
 ``process_elements``.
 """
-from britannica.pipeline.stages.elements import ElementContext, process_elements
+from wikikit.pipeline.stages.elements import ElementContext, process_elements
 
 
 def _walk(raw: str, volume: int) -> str:

@@ -15,10 +15,10 @@ import re
 import sys
 import time
 
-from britannica.db.session import SessionLocal
-from britannica.db.models import Article
-from britannica.pipeline.stages.transform_articles import produce_title
-import britannica.pipeline.stages.transform_articles.sections as S
+from wikikit.db.session import SessionLocal
+from wikikit.db.models import Article
+from wikikit.pipeline.stages.transform_articles import produce_title
+import wikikit.pipeline.stages.transform_articles.sections as S
 
 
 def _valid_lone_head(body):

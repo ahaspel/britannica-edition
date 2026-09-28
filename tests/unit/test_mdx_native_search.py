@@ -8,8 +8,8 @@ from urllib.parse import quote, unquote
 
 import pytest
 
-from britannica.mdx.build import article_key, label_content_entries, add_headwords, wrap
-from britannica.mdx.native import package_search
+from wikikit.mdx.build import article_key, label_content_entries, add_headwords, wrap
+from wikikit.mdx.native import package_search
 
 
 @pytest.fixture
@@ -79,7 +79,7 @@ def test_native_resolution_resources_fragments_and_duplicates(edition):
 
 
 def test_installer_preserves_config_and_binds_portable_resources(edition, monkeypatch):
-    from britannica.mdx.install_search import install
+    from wikikit.mdx.install_search import install
     from xml.etree import ElementTree as ET
     folder, _, _ = edition
     reader = folder/'reader'
@@ -89,7 +89,7 @@ def test_installer_preserves_config_and_binds_portable_resources(edition, monkey
     config.write_text('<config><preferences><ignoreDiacritics>0</ignoreDiacritics>'
                      '<custom>preserved</custom></preferences><programs>'
                      '<program id="unrelated" enabled="0"/></programs></config>')
-    from britannica.mdx.build import book_identity
+    from wikikit.mdx.build import book_identity
     bookless = {'native_search':True, 'edition':'complete', 'article_count':4}
     (folder/'manifest.json').write_text(json.dumps(bookless))
     with pytest.raises(ValueError, match='which book'):

@@ -25,7 +25,7 @@ Usage:
 """
 from __future__ import annotations
 
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import argparse
 import json
 import os
@@ -203,7 +203,7 @@ def main() -> None:
         return
 
     rows: list[tuple[int, int, str, int, int, int]] = []
-    from britannica.export.corpus import load_corpus
+    from wikikit.export.corpus import load_corpus
     for _p, _d in sorted(load_corpus()[0].items()):
         f = str(_p)
         r = scan_article(f, _d, min_words=args.min_words)

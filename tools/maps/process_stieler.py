@@ -22,7 +22,7 @@ A new zip without a CROPS entry emits full-frame + a preview to measure.
 """
 from __future__ import annotations
 
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import sys
 import zipfile
 from pathlib import Path

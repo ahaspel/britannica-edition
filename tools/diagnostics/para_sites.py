@@ -35,8 +35,8 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
-from britannica.export.corpus import load_corpus          # noqa: E402
-from britannica.util.strings import strip_html_tags       # noqa: E402
+from wikikit.export.corpus import load_corpus          # noqa: E402
+from wikikit.util.strings import strip_html_tags       # noqa: E402
 
 EV = re.compile(r"<(/?)(div|table)\b([^>]*)>", re.I)
 PAGE = re.compile(r'data-page="(\d+)" data-vol="(\d+)"')

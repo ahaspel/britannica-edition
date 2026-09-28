@@ -10,9 +10,9 @@ Usage:
 from __future__ import annotations
 
 
-from britannica.corpora import current_corpus
-from britannica.export.corpus import load_corpus
-from britannica.util.strings import excerpt   # noqa: E402
+from wikikit.corpora import current_corpus
+from wikikit.export.corpus import load_corpus
+from wikikit.util.strings import excerpt   # noqa: E402
 import re
 import sys
 from collections import defaultdict

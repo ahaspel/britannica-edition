@@ -2,7 +2,7 @@
 
 Post-FLIP, ``detect_boundaries(volume)`` moved to ``super_detect`` and delegates
 the volume stream to ``super_walker`` (the heading scan is the book's,
-``books/eb1911/boundaries``, and reads no DB); both modules hold their
+``eb1911/boundaries``, and reads no DB); both modules hold their
 OWN ``SessionLocal`` import.  Tests still patch ``detect_boundaries.SessionLocal``
 (its home for ``persist_articles`` / ``wipe_articles``), so without also patching
 the two walk modules the heading walk reads the real DB instead of the seeded
@@ -14,10 +14,10 @@ before and call ``super_detect.detect_boundaries``.
 """
 import pytest
 
-from britannica.db.models import Article
-from britannica.pipeline.stages import super_detect as super_detect_stage
-from britannica.pipeline.stages import super_walker as super_walker_stage
-from britannica.pipeline.stages import transform_articles as transform_articles_stage
+from wikikit.db.models import Article
+from wikikit.pipeline.stages import super_detect as super_detect_stage
+from wikikit.pipeline.stages import super_walker as super_walker_stage
+from wikikit.pipeline.stages import transform_articles as transform_articles_stage
 
 
 @pytest.fixture(autouse=True)

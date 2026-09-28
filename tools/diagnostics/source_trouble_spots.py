@@ -21,11 +21,11 @@ import time
 from urllib.parse import quote
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
-from britannica.export.corpus import load_corpus
-from britannica.markers import markers_to_text
-from britannica.source_pages import load_pages
-from britannica.corpora import current_corpus
-from britannica.export.pages import leaf_for_ws
+from wikikit.export.corpus import load_corpus
+from wikikit.markers import markers_to_text
+from wikikit.source_pages import load_pages
+from wikikit.corpora import current_corpus
+from wikikit.export.pages import leaf_for_ws
 from missing_period_scan import find_hits, PATTERN, RELIGIOUS_TITLE_RE
 
 WORD = re.compile(r"\b[^\W\d_]+\b", re.UNICODE)

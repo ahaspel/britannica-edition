@@ -36,7 +36,7 @@ means "a full rebuild finished green", not merely "a rebuild ran".
 """
 from __future__ import annotations
 
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import argparse
 import hashlib
 import json

@@ -19,8 +19,8 @@ def _load_page(vol, page):
 
 
 def _transform_v2(raw, volume=1, page_number=1):
-    from britannica.pipeline.stages.elements import ElementContext, process_elements
-    from britannica.pipeline.stages.preprocess import _source_clean
+    from wikikit.pipeline.stages.elements import ElementContext, process_elements
+    from wikikit.pipeline.stages.preprocess import _source_clean
     # Mirror production: the walk runs on preprocessed source, so apply the
     # re-appliable cleans (furniture strip / entity decode / noinclude) first.
     return process_elements(

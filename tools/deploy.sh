@@ -18,14 +18,14 @@ export PYTHONIOENCODING=utf-8
 
 # The book's roots and names, asked of the book — never spelled here.  They
 # decide both what is read locally and the names things are uploaded under.
-DERIVED=$(uv run python -m britannica.corpora derived)
-IMAGES=$(uv run python -m britannica.corpora images)
-SLUG=$(uv run python -m britannica.corpora brand slug)
-CORPUS_TGZ=$(uv run python -m britannica.export.download name corpus)
-MAPS_TGZ=$(uv run python -m britannica.export.download name maps)
-TEI_TGZ=$(uv run python -m britannica.export.download name tei)
-SAMPLER_VOL=$(uv run python -m britannica.corpora brand sampler_volume)
-MAPS_JSON=$(uv run python -m britannica.corpora data maps.json)
+DERIVED=$(uv run python -m wikikit.corpora derived)
+IMAGES=$(uv run python -m wikikit.corpora images)
+SLUG=$(uv run python -m wikikit.corpora brand slug)
+CORPUS_TGZ=$(uv run python -m wikikit.export.download name corpus)
+MAPS_TGZ=$(uv run python -m wikikit.export.download name maps)
+TEI_TGZ=$(uv run python -m wikikit.export.download name tei)
+SAMPLER_VOL=$(uv run python -m wikikit.corpora brand sampler_volume)
+MAPS_JSON=$(uv run python -m wikikit.corpora data maps.json)
 # Every value ASSERTED non-empty before use: the article sync below runs with
 # --delete, and an empty root must stop the deploy, not point it elsewhere.
 : "${DERIVED:?no output root}" "${IMAGES:?no image root}" "${SLUG:?no slug}"
@@ -62,7 +62,7 @@ uv run python tools/diagnostics/corpus_stamp.py --check
 
 echo "  Building vol-$SAMPLER_VOL sampler EPUB [$(elapsed)]..."
 mkdir -p epub   # gitignored, so absent on a fresh clone
-uv run python -m britannica.epub.build --volume "$SAMPLER_VOL" --out "epub/$SAMPLER"
+uv run python -m wikikit.epub.build --volume "$SAMPLER_VOL" --out "epub/$SAMPLER"
 
 echo "  Uploading articles to S3..."
 # Cache policy is load-bearing here: article JSONs are content-addressed ({hash}.json,
@@ -191,7 +191,7 @@ EC2_KEY="${EC2_KEY:-D:/work/web/cloudinstall/britannica11.pem}"
 # export uses — one definition, no drifting EC2 copy of the strip logic.
 scp -i "$EC2_KEY" \
   tools/pipeline/index_search_ec2.py \
-  src/britannica/markers.py \
+  src/wikikit/markers.py \
   ec2-user@"$EC2_HOST":~/
 ssh -i "$EC2_KEY" ec2-user@"$EC2_HOST" \
   "aws s3 sync s3://britannica11.org/data/articles/ ~/articles/ --delete --quiet && python3 ~/index_search_ec2.py"

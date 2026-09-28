@@ -34,18 +34,18 @@ from urllib.parse import quote
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
 
-from britannica.markers import markers_to_text, sub_al_markers, sub_ln_markers
-from britannica.pipeline.stages.elements import process_elements
-from britannica.pipeline.stages.elements._context import ElementContext
-from britannica.pipeline.stages.preprocess import stream_with_keys
-from britannica.render.article import RenderContext
-from britannica.render.inline import decode_inline, format_footnote_text
+from wikikit.markers import markers_to_text, sub_al_markers, sub_ln_markers
+from wikikit.pipeline.stages.elements import process_elements
+from wikikit.pipeline.stages.elements._context import ElementContext
+from wikikit.pipeline.stages.preprocess import stream_with_keys
+from wikikit.render.article import RenderContext
+from wikikit.render.inline import decode_inline, format_footnote_text
 
 # The producer's shoulder-heading wire form, read for the TOC — a
 # whole-document COLLECTION pass over the marker stream (the sections.py
 # model).  THE regex is the render's own `_SH_RE` (one owner), so the TOC
 # reads exactly the spans `_render_sh` will anchor as `id="section-{slug}"`.
-from britannica.render.article import _SH_RE as _SH_TOC_RE
+from wikikit.render.article import _SH_RE as _SH_TOC_RE
 
 # A document-title block the page header already shows: a leading «CTR»
 # whose text is set at xxx-larger (the print's own masthead line).

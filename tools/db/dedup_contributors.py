@@ -37,13 +37,13 @@ from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")
 
-from britannica.db.models import (  # noqa: E402
+from wikikit.db.models import (  # noqa: E402
     ArticleContributor,
     Contributor,
     ContributorInitials,
 )
-from britannica.db.session import SessionLocal  # noqa: E402
-from britannica.contributors.names import (      # noqa: E402
+from wikikit.db.session import SessionLocal  # noqa: E402
+from wikikit.contributors.names import (      # noqa: E402
     normalize_initials_token, normalize_name)
 
 

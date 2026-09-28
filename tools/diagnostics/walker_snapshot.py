@@ -34,7 +34,7 @@ _AFFECTED = re.compile(r"\{\{[^{}|]*?/s\s*\}\}", re.IGNORECASE)
 
 def _work(item):
     aid, vol, pg, raw = item
-    from britannica.pipeline.stages.elements import (
+    from wikikit.pipeline.stages.elements import (
         ElementContext, process_elements)
     try:
         out = process_elements(raw, ElementContext(volume=vol))

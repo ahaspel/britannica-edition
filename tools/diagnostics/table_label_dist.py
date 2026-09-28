@@ -15,9 +15,9 @@ from pathlib import Path
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 sys.path.insert(0, "src")
 
-from britannica.db.session import SessionLocal
-from britannica.db.models import Article
-from britannica.pipeline.stages.elements._classifier import classify_article
+from wikikit.db.session import SessionLocal
+from wikikit.db.models import Article
+from wikikit.pipeline.stages.elements._classifier import classify_article
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from _ast_shapes import walk_labels          # noqa: E402

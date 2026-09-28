@@ -18,7 +18,7 @@ PROTEUS (AMPHIBIAN) vs PROTEUS (mythology)).
 Usage:
   python tools/diagnostics/missing_articles_diff.py OLD.tsv NEW.tsv
 """
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import csv
 import re
 import sys

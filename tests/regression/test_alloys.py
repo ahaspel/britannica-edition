@@ -8,7 +8,7 @@ ALLOYS is a multi-page article with:
 - The plate page should NOT break the article boundary
 """
 
-from britannica.db.models import Article, ArticleSegment
+from wikikit.db.models import Article, ArticleSegment
 
 from .conftest import _run_pipeline
 

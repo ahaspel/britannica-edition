@@ -14,7 +14,7 @@ Usage:
     python tools/download_djvu_crops.py [--delay SECONDS]
 """
 
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import argparse
 import hashlib
 import io
@@ -29,9 +29,9 @@ import requests
 from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
-from britannica.pipeline.stages.elements._image import crop_filename
-from britannica.source_pages import load_pages
-from britannica.wikitext import template_param   # noqa: E402
+from wikikit.pipeline.stages.elements._image import crop_filename
+from wikikit.source_pages import load_pages
+from wikikit.wikitext import template_param   # noqa: E402
 
 # Force UTF-8 output on Windows
 if sys.stdout.encoding != "utf-8":

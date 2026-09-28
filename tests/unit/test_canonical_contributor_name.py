@@ -22,7 +22,7 @@ By mode, Ernest wins 2-1.  This is what `harvest_author_links` already documents
 its `votes` for: "the MODE of what the source actually wrote, not a single index
 line".
 """
-from britannica.books.eb1911.contributors.author_links import _canonical_name
+from eb1911.contributors.author_links import _canonical_name
 
 
 def test_the_mode_wins_not_the_longest():

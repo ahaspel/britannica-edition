@@ -5,7 +5,7 @@ Output: data/derived/fm_first_content.json
 
 Uses PIL to check if a scan is nearly uniform (blank paper).
 """
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import io
 import json
 import sys

@@ -25,8 +25,8 @@ from pathlib import Path
 
 import requests
 
-from britannica.corpora import current_corpus
-from britannica.source_pages import page_filename, volume_dir
+from wikikit.corpora import current_corpus
+from wikikit.source_pages import page_filename, volume_dir
 
 API_URL = "https://en.wikisource.org/w/api.php"
 

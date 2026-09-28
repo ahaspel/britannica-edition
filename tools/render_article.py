@@ -26,7 +26,7 @@ Usage::
 """
 from __future__ import annotations
 
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import sys
 import time
 from pathlib import Path
@@ -34,12 +34,12 @@ from pathlib import Path
 sys.stdout.reconfigure(encoding="utf-8") if hasattr(
     sys.stdout, "reconfigure") else None
 
-from britannica.db.models import Article
-from britannica.db.session import SessionLocal
-from britannica.export.article_json import (
+from wikikit.db.models import Article
+from wikikit.db.session import SessionLocal
+from wikikit.export.article_json import (
     _safe_filename, export_articles_to_json,
 )
-from britannica.pipeline.stages.transform_articles import walk_article
+from wikikit.pipeline.stages.transform_articles import walk_article
 
 
 def _find_article(session, title: str, volume: int | None) -> Article | None:

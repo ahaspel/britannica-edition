@@ -35,7 +35,7 @@ Two jobs in one server:
 
 Run by hand the same way the task does:  uv run python tools/serve.py [port]
 """
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import http.server
 import os
 import re
@@ -66,8 +66,8 @@ _DATA_JSON_RE = re.compile(r"^/data/([^/]+\.json)$")
 #
 # The archive NAMES come from the one naming rule (download._archive_name), the
 # sampler's from the book's slug; they were the Britannica's names spelled out.
-from britannica.corpora import brand
-from britannica.export.download import _archive_name
+from wikikit.corpora import brand
+from wikikit.export.download import _archive_name
 _DOWNLOAD_HOME = {
     _archive_name("corpus"): current_corpus().derived().as_posix(),
     _archive_name("maps"): current_corpus().derived().as_posix(),

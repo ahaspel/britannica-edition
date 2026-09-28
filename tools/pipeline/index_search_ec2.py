@@ -15,7 +15,7 @@ import urllib.request
 
 # markers.py is pure-stdlib and is shipped to ~ next to this script by the
 # rebuild deploy step, so search indexing uses the SAME marker->text converter
-# as the export (britannica.markers) -- no separate EC2 copy of the strip logic.
+# as the export (wikikit.markers) -- no separate EC2 copy of the strip logic.
 # Locally (running from the repo) there is no shipped copy, so fall back to the
 # real module on `src`.
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -24,7 +24,7 @@ try:
 except ModuleNotFoundError:
     sys.path.insert(0, os.path.join(
         os.path.dirname(os.path.abspath(__file__)), "..", "..", "src"))
-    from britannica.markers import markers_to_text
+    from wikikit.markers import markers_to_text
 
 # Env-overridable so ONE indexer serves both EC2 (defaults) and a local reindex:
 #   MEILI_MASTER_KEY=britannica-dev-key ARTICLES_DIR=data/derived/articles \
@@ -105,7 +105,7 @@ def main():
         if "id" not in article or "volume" not in article:
             continue
 
-        # ONE marker->text converter (britannica.markers.markers_to_text,
+        # ONE marker->text converter (wikikit.markers.markers_to_text,
         # shipped here as markers.py): strips the TITLE head (indexed directly
         # as the `title` field), drops non-prose block markers, keeps inline
         # prose, and collapses links to their display text.

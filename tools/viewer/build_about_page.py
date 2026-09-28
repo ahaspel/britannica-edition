@@ -15,10 +15,10 @@ from pathlib import Path
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                               errors="replace")
 sys.path.insert(0, "src")
-from britannica.util.strings import section_slug
+from wikikit.util.strings import section_slug
 
-from britannica.link_resolver import LinkResolver          # noqa: E402
-from britannica.render.inline import _article_url as article_url  # noqa: E402
+from wikikit.link_resolver import LinkResolver          # noqa: E402
+from wikikit.render.inline import _article_url as article_url  # noqa: E402
 from reference_overrides import REFERENCE_OVERRIDES as ARTICLE_OVERRIDES  # noqa: E402
 
 SRC = Path("docs/about.txt")

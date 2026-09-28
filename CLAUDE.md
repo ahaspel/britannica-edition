@@ -12,14 +12,14 @@ uv run python tools/diagnostics/what_answers.py <words describing the question>
 ```
 
 60 diagnostics, each docstring naming the question it answers, plus the public
-helpers in `src/britannica`. Two seconds. Reinventions here have produced: an
+helpers in `src/wikikit` and `src/eb1911`. Two seconds. Reinventions here have produced: an
 alias audit reporting pairs "broken" that the real gate accepts, leaf-offset
 arithmetic raising a production alarm with no instance behind it, and a wikitext
 stripper that ate 73% of a page and made a 97%-accurate OCR read as 42%.
 
 Specifically:
 
-- **Load the corpus with `britannica.export.corpus.load_corpus`**, never by
+- **Load the corpus with `wikikit.export.corpus.load_corpus`**, never by
   globbing `data/derived/articles/*.json`. It treats a payload missing
   `id`/`body` as a FAILURE rather than a silent skip.
 - **Never write wikitext→text.** Exported articles already carry `body` and

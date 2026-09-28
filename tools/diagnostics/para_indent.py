@@ -57,7 +57,7 @@ means in running prose (GASTROPODA v11 ws544 is the specimen).
 """
 from __future__ import annotations
 
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import argparse
 import json
 import re
@@ -68,7 +68,7 @@ import numpy as np
 from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
-from britannica.export.pages import leaf_for_ws            # noqa: E402
+from wikikit.export.pages import leaf_for_ws            # noqa: E402
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 # The kind vocabulary and the anchor word rule belong to `para_sites`, which
 # makes the kinds and writes the anchors; re-spelling either here made two

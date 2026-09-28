@@ -11,7 +11,7 @@ re-creates the children against the kept pages."""
 import argparse
 import sys
 sys.path.insert(0, "src")
-from britannica.db.session import SessionLocal
+from wikikit.db.session import SessionLocal
 from sqlalchemy import text
 
 ap = argparse.ArgumentParser()

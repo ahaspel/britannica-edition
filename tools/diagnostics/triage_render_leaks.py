@@ -37,7 +37,7 @@ Usage:  uv run python tools/diagnostics/triage_render_leaks.py [--limit N]
 """
 from __future__ import annotations
 
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import argparse
 import html
 import re
@@ -48,13 +48,13 @@ from pathlib import Path
 sys.path.insert(0, "src")
 sys.stdout.reconfigure(encoding="utf-8")
 
-from britannica.db.models import Article                    # noqa: E402
-from britannica.db.session import SessionLocal              # noqa: E402
-from britannica.export.corpus import load_corpus            # noqa: E402
-from britannica.render.leaks import find_leaks              # noqa: E402
-from britannica.source_pages import load_pages              # noqa: E402
-from britannica.util.strings import HTML_TAG_RE             # noqa: E402
-from britannica.wikitext import mask_non_template, template_end           # noqa: E402
+from wikikit.db.models import Article                    # noqa: E402
+from wikikit.db.session import SessionLocal              # noqa: E402
+from wikikit.export.corpus import load_corpus            # noqa: E402
+from wikikit.render.leaks import find_leaks              # noqa: E402
+from wikikit.source_pages import load_pages              # noqa: E402
+from wikikit.util.strings import HTML_TAG_RE             # noqa: E402
+from wikikit.wikitext import mask_non_template, template_end           # noqa: E402
 
 PRODUCER, SOURCE = "PRODUCER", "SOURCE"
 

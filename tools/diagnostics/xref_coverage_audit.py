@@ -24,9 +24,9 @@ import re
 import sys
 from collections import Counter, defaultdict
 
-from britannica.db.models import Article  # noqa: E402
-from britannica.db.session import SessionLocal  # noqa: E402
-from britannica.xrefs.normalizer import normalize_xref_target  # noqa: E402
+from wikikit.db.models import Article  # noqa: E402
+from wikikit.db.session import SessionLocal  # noqa: E402
+from wikikit.xrefs.normalizer import normalize_xref_target  # noqa: E402
 
 
 # Existing link markers in body text.  Candidates inside these spans

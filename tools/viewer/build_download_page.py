@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import re
 
-from britannica.util.strings import section_slug
+from wikikit.util.strings import section_slug
 from pathlib import Path
 
 SRC = Path("docs/download.txt")

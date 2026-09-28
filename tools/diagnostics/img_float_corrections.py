@@ -24,7 +24,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from img_float_side import collect                     # noqa: E402
-from britannica.source_pages import load_pages         # noqa: E402
+from wikikit.source_pages import load_pages         # noqa: E402
 
 _OPEN_RE = re.compile(r"(\{\{\s*[Ii]mg float)", re.I)
 

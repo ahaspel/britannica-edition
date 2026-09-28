@@ -15,7 +15,7 @@ and the code we have now — and that is the failure this project keeps having:
     the deploy built it.  `corpus_stamp.py` passes that case: the corpus really
     was current.  Only the code half catches it.
 
-So each artifact records both halves (britannica.provenance), and this reports
+So each artifact records both halves (wikikit.provenance), and this reports
 which ones no longer match the working tree.  It does NOT rebuild anything: the
 point is to make drift visible in seconds, because a check that is expensive to
 run stops being run.
@@ -31,7 +31,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
-from britannica import provenance as prov                      # noqa: E402
+from wikikit import provenance as prov                      # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[2]
 

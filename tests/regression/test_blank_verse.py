@@ -6,7 +6,7 @@ BLANK VERSE is a 2-page literary article with:
 - Contributor: Edmund Gosse
 """
 
-from britannica.db.models import Article, ArticleSegment
+from wikikit.db.models import Article, ArticleSegment
 
 from .conftest import _run_pipeline
 

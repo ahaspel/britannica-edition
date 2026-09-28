@@ -6,7 +6,7 @@ Writes results to data/derived/ocr_page_numbers.json.
 Usage:
     python tools/ocr_page_numbers.py [--vol N]
 """
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import argparse
 import json
 import re

@@ -29,8 +29,8 @@ import re
 import sys
 from collections import Counter, defaultdict
 
-from britannica.db.models import Article, ArticleSegment
-from britannica.db.session import SessionLocal
+from wikikit.db.models import Article, ArticleSegment
+from wikikit.db.session import SessionLocal
 
 
 def fingerprint(raw: str) -> dict:

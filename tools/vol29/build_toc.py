@@ -31,12 +31,12 @@ a bridge until every page's halves exist.  Output is the 24 chunks
 """
 from __future__ import annotations
 
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import json
 import re
 
-from britannica.export.sections import section_key
-from britannica.source_pages import load_pages
+from wikikit.export.sections import section_key
+from wikikit.source_pages import load_pages
 from pathlib import Path
 
 HALVES = current_corpus().derived("vol29_halves_debug.json")

@@ -5,7 +5,7 @@
 
 The article ``body`` is one marker stream with several converters over it.  Each
 produces a finished text that a reader or an agent actually sees, and each is
-scanned here by the SAME detector — ``britannica.render.leaks.find_leaks`` — under
+scanned here by the SAME detector — ``wikikit.render.leaks.find_leaks`` — under
 the one rule that detector exists to enforce: a marker in the output is a recursion
 failure, not an exemption.  There is no handled-marker manifest to strip against.
 
@@ -17,11 +17,11 @@ was written, and the raw ``«OUTLINE»`` it lets through has been shipping in th
 download bundle unseen.
 
 Which converters exist, which are covered, and what is deliberately left out live in
-``britannica.outputs`` — one list, shared with the quality report, so this tool
+``wikikit.outputs`` — one list, shared with the quality report, so this tool
 cannot drift from the standing signal.  The ``index.json`` previews are scanned here
 too: they are one file, not a per-article field.
 """
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import argparse
 import glob
 import json
@@ -32,10 +32,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
 sys.stdout.reconfigure(encoding="utf-8")
-from britannica.export.corpus import NON_ARTICLE             # noqa: E402
-from britannica.outputs import outputs_for                   # noqa: E402
-from britannica.markers import marker_names                  # noqa: E402
-from britannica.render.leaks import find_leaks                # noqa: E402
+from wikikit.export.corpus import NON_ARTICLE             # noqa: E402
+from wikikit.outputs import outputs_for                   # noqa: E402
+from wikikit.markers import marker_names                  # noqa: E402
+from wikikit.render.leaks import find_leaks                # noqa: E402
 
 ART = current_corpus().derived("articles").as_posix()
 

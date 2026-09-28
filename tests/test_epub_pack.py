@@ -6,7 +6,7 @@ ids collision-free, splits text-preserving, every token resolvable.
 """
 import re
 
-from britannica.epub import pack
+from wikikit.epub import pack
 
 
 def _article(stem, n_secs=6, sec_words=12, with_fn=True):
@@ -112,7 +112,7 @@ def test_xhtml5_sanitize_legacy_attrs_and_empty_decls():
 
 
 def test_fix_nested_lists_validates():
-    from britannica.epub.build import to_xhtml_body
+    from wikikit.epub.build import to_xhtml_body
     out = to_xhtml_body("<ul><li>a</li><ul><li>b</li></ul></ul>"
                         "<ul><ul><li>lead</li></ul></ul>")
     from xml.etree import ElementTree as ET
@@ -123,7 +123,7 @@ def test_fix_nested_lists_validates():
 
 
 def test_fix_phrasing_blocks():
-    from britannica.epub.build import to_xhtml_body
+    from wikikit.epub.build import to_xhtml_body
     out = to_xhtml_body('<span class="cell-verse">A. Gallery<p>B. Corridor</p>'
                         '<p><p>deep</p></p></span>')
     assert "<p" not in out
@@ -146,7 +146,7 @@ def test_xhtml5_sanitize_entity_safe_and_junk_decls():
 
 
 def test_fix_phrasing_blocks_structural_children():
-    from britannica.epub.build import to_xhtml_body
+    from wikikit.epub.build import to_xhtml_body
     out = to_xhtml_body('<span class="small-caps"><table><tbody><tr><td>x</td></tr></tbody></table></span>'
                         '<h3 class="section-head">head<p>swallowed</p></h3>')
     from xml.etree import ElementTree as ET
@@ -186,7 +186,7 @@ def test_resolve_encodes_quotes_in_external_urls():
 
 
 def test_round3_classes():
-    from britannica.epub.build import to_xhtml_body
+    from wikikit.epub.build import to_xhtml_body
     # junk attr name from a mangled tag → dropped at the ET boundary
     out = to_xhtml_body('<tr style="" -- ><td>x</td></tr>')
     assert '-=""' not in out
@@ -201,7 +201,7 @@ def test_round3_classes():
 def test_epub_title_is_one_searchable_text_node():
     # The site's drop-cap span splits the h1 text ("D" + "YNAMICS"); a reader's text
     # search — the book's only search — can't match across it.  EPUB h1 = plain text.
-    from britannica.render.article import _render_title_h1, RenderContext
+    from wikikit.render.article import _render_title_h1, RenderContext
     site = RenderContext("1", "scans.html", {}, target="site")
     epub = RenderContext("1", "scans.html", {}, target="epub")
     m = "«TITLE:DYNAMICS«/TITLE»"
@@ -215,7 +215,7 @@ def test_diet_preserves_alpha(tmp_path):
     import io as _io
     import random
     from PIL import Image
-    from britannica.epub import images as IMG
+    from wikikit.epub import images as IMG
     im = Image.new("RGBA", (1400, 500), (0, 0, 0, 0))
     px = im.load()
     rnd = random.Random(7)
@@ -252,7 +252,7 @@ def test_stamp_img_dims(tmp_path):
     # E00192: ET's rasterizer dies on an image node with no computed dimensions.
     import os
     from PIL import Image
-    from britannica.epub.build import stamp_img_dims
+    from wikikit.epub.build import stamp_img_dims
     os.makedirs(tmp_path / "images", exist_ok=True)
     Image.new("RGB", (300, 120), (200, 200, 200)).save(tmp_path / "images" / "fig.jpg")
     cache = {}
@@ -269,13 +269,13 @@ def test_kindle_css_carries_no_transforms():
     # .mirror-h's stylesheet transform sent ALPHABET's 18 mirrored letterforms to
     # Amazon's rasterizer, which dies on bare mirrored text (E00192) and takes the
     # whole book out of Enhanced Typesetting.
-    from britannica.epub.build import epub_css
+    from wikikit.epub.build import epub_css
     assert "transform" in epub_css("epub")          # site/epub readers mirror correctly
     assert "transform" not in epub_css("kindle")
 
 
 def test_kindle_table_fixes():
-    from britannica.epub.build import to_xhtml_body
+    from wikikit.epub.build import to_xhtml_body
     # overlapping colspan clamps to the free run (ET rejects the book otherwise)
     html = ('<table><tbody>'
             '<tr><td rowspan="2">a</td><td>b</td><td rowspan="2">c</td></tr>'
@@ -291,7 +291,7 @@ def test_kindle_table_fixes():
     tables = _re.findall(r"<table[^>]*>", out)
     assert len(tables) > 1
     assert all(len(seg) < 20000 for seg in out.split("</table>")[:-1])
-    from britannica.epub import pack as _p
+    from wikikit.epub import pack as _p
     single = to_xhtml_body(f'<table class="t"><tbody>{rows}</tbody></table>', "epub")
     assert _p.text_of(out) == _p.text_of(single)                   # nothing lost
 
@@ -299,7 +299,7 @@ def test_kindle_table_fixes():
 def test_split_respects_rowspans():
     # a split cutting through a rowspan leaves a dangling span pointing past its
     # table's end — a malformed table ET silently rejects
-    from britannica.epub.build import to_xhtml_body
+    from wikikit.epub.build import to_xhtml_body
     import re as _re
     from xml.etree import ElementTree as ET
     rows = []

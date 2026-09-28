@@ -21,7 +21,7 @@ collision-picker (step C).  Sole writer of ``kind_index.json``.
 """
 from __future__ import annotations
 
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import json
 import re
 import sys
@@ -29,7 +29,7 @@ from collections import defaultdict
 from pathlib import Path
 
 sys.path.insert(0, "src")
-from britannica.xrefs.disambiguation import PERSON_KINDS, body_opening, lead_kind
+from wikikit.xrefs.disambiguation import PERSON_KINDS, body_opening, lead_kind
 
 ART = current_corpus().derived("articles")
 TOC = current_corpus().derived("classified_toc.json")

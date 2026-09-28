@@ -15,7 +15,7 @@ spelling INSIDE the name: section `Alecsandri, Vasile` against title
 `BLANDRATA, or BIANDRATA, GIORGIO`.  Neither string contains the other, so every
 one of them read as MISSING.  All six I looked up were in the DB.
 
-`britannica.name_index.NameIndex` is the project's recall engine and already
+`wikikit.name_index.NameIndex` is the project's recall engine and already
 answers this exactly — word-set, diacritic fold, subset, superset, and an
 OCR-tolerant fuzzy rung — so the tool now asks it instead of keeping a private,
 worse copy ([[feedback_tune_dont_fork]]).  7,123 comma-form markers tested,
@@ -60,10 +60,10 @@ from collections import defaultdict
 sys.path.insert(0, "src")
 sys.stdout.reconfigure(encoding="utf-8")
 
-from britannica.db.models import Article          # noqa: E402
-from britannica.db.session import SessionLocal    # noqa: E402
-from britannica.name_index import NameIndex       # noqa: E402
-from britannica.source_pages import load_pages    # noqa: E402
+from wikikit.db.models import Article          # noqa: E402
+from wikikit.db.session import SessionLocal    # noqa: E402
+from wikikit.name_index import NameIndex       # noqa: E402
+from wikikit.source_pages import load_pages    # noqa: E402
 
 _SECTION = re.compile(r'<section\s+begin="([^"]+)"\s*/?>')
 # Wikisource's own structural section names, never article titles.

@@ -1,0 +1,333 @@
+"""Build the master contributor table from front matter entries.
+
+Parses all {{EB1911 contributor table/entry}} templates across all volumes,
+deduplicates by initials then by canonical name, and populates the
+contributors and contributor_initials tables.
+
+Run AFTER truncate (clean DB) and BEFORE extract-contributors (which
+links initials to articles via the contributor_initials table).
+"""
+import re
+import sys
+from collections import defaultdict
+
+
+from wikikit.contributors.aliases import canonical_name
+from eb1911.contributors.frontmatter import iter_entries, parse_field
+from wikikit.db.models import Contributor, ContributorInitials
+from wikikit.db.session import SessionLocal
+from wikikit.source_pages import load_pages
+from wikikit.pipeline.stages.elements import ElementContext, process_elements
+from wikikit.pipeline.stages.extract_contributors import _normalize_initials
+from wikikit.pipeline.stages.preprocess import preprocess
+from wikikit.util.strings import strip_html_tags
+
+
+_CRED_WORD_RE = re.compile(
+    r"^(?:bart|bt|kt|jun|jnr|jr|sen|snr|sr|esq|hon|"
+    r"ma|ba|bd|dd|md|mb|bl|llb|lld|dcl|phd|dsc|bsc|litt|lic|theol|"
+    r"mp|kc|qc|cb|cmg|cie|cvo|mvo|osb|sj|"
+    r"frs|fsa|fba|fgs|frgs|fls|frcs|mice|minstce)$",
+    re.IGNORECASE)
+
+
+def _looks_like_credentials(tail: str) -> bool:
+    """Is this comma-tail a post-nominal string, or more of the person's name?
+
+    The old test was ``re.search(r"[A-Z]\\.", tail)`` — an upper-case letter
+    IMMEDIATELY followed by a period.  ``M.A., LL.D`` passes it; ``Ph.D``,
+    ``Litt.D``, ``Lic. Theol``, ``Bart`` and ``Jr`` do not, because their capital
+    is followed by a lower-case letter or by nothing.  A tail that failed was
+    folded back into the name, so the roster shipped ``Adolf Gotthard Noreen,
+    Ph.D`` and ``Sir Henry Thompson, Bart`` as NAMES, with an empty credentials
+    field beside them — the source distinguishes the two and we merged them
+    ([[feedback_forks_are_dropped_attributes]]).
+
+    A period anywhere is enough to mark an abbreviation; the word list catches
+    the post-nominals that carry none.
+    """
+    if "." in tail:
+        return True
+    tokens = [t for t in re.split(r"[,\s]+", tail.strip(" .")) if t]
+    return bool(tokens) and all(_CRED_WORD_RE.match(t.strip(" .")) for t in tokens)
+
+
+def _clean_name(raw_name):
+    """Extract clean name from wiki markup, separating credentials."""
+    # Strip author links: [[Author:X|Display]] → Display
+    name = re.sub(r"\[\[Author:[^|]*\|([^\]]+)\]\]", r"\1", raw_name)
+    name = re.sub(r"\[\[([^\]]+)\]\]", r"\1", name)
+    # Strip bold/italic
+    name = name.replace("'''", "").replace("''", "")
+    # Unwrap templates (keep content), then strip remaining
+    prev = None
+    while name != prev:
+        prev = name
+        name = re.sub(r"\{\{[^{}|]*\|([^{}]*)\}\}", r"\1", name)
+    prev = None
+    while name != prev:
+        prev = name
+        name = re.sub(r"\{\{[^{}]*\}\}", "", name)
+    # Strip unclosed templates (keep their content after the last |)
+    name = re.sub(r"\{\{[^{}|]*\|", "", name)
+    # Strip HTML
+    name = strip_html_tags(name)
+    # Decode entities
+    name = name.replace("&thinsp;", "").replace("&nbsp;", " ")
+    # Strip death date and status annotations: (d. 1907), (d.), (late), (late R.A.)
+    name = re.sub(r"\s*\(d\.?\s*\d*\)\.?", "", name)
+    name = re.sub(r"\s*\(late[^)]*\)\.?", "", name, flags=re.IGNORECASE)
+    # Also handle unclosed variants: trailing "(d." or "(late" without closing paren
+    name = re.sub(r"\s*\(d\.?\s*$", "", name)
+    name = re.sub(r",?\s*\(late\s*$", "", name, flags=re.IGNORECASE)
+    # Split name from credentials at the first comma OR semicolon — the front
+    # matter uses both ("Edward Cuthbert Butler; O.S.B").
+    parts = re.split(r"\s*[,;]\s*", name, maxsplit=1)
+    base_name = parts[0].strip().rstrip(".")
+    # Strip trailing punctuation, commas included.  Stripping only "." left a
+    # tail like "M.A.," or "Ph.D," intact, because the last character was the
+    # comma — 14 contributors shipped that way, Hugh Chisholm's "M.A.," among
+    # them, visible wherever a byline shows credentials.
+    credentials = parts[1].strip().rstrip(" .,;") if len(parts) > 1 else ""
+    # Validate: the tail must look like post-nominals, not more of the name.
+    if credentials and not _looks_like_credentials(credentials):
+        base_name = name.strip().rstrip(".")
+        credentials = ""
+    # Canonicalize: applies Unicode normalization (curly→straight quotes,
+    # NFKC) AND data/contributor_aliases.json variant→canonical lookup.
+    # Without this, multi-source name variants (vol 29 Index vs per-volume
+    # front matter) become separate Contributor rows for the same person.
+    base_name = canonical_name(base_name)
+    return base_name, credentials
+
+
+def _clean_description(raw_desc, volume=0):
+    """Raw front-matter description → the MARKER STREAM the article body carries.
+
+    A description is wikitext like any other, so it takes the two steps the body
+    takes and nothing else: ``preprocess`` (corrections, quote runs, entity decode)
+    then the walk.  It returns MARKERS, not text — the description is canonicalized
+    at emit by ``export.article_json._description_text``, which is what lets
+    ``_resolve_bio_articles`` still read the link out of it
+    ([[feedback_accrete_first_canonicalize_last]]).
+
+    This replaces ~25 lines of private regex that were a SECOND recogniser for
+    wikilinks, formatting templates, raw HTML and entities — and for
+    ``{{EB1911 article link|…}}``, which it turned into a private ``«BIOLINK»``
+    purely so its own template-stripper wouldn't eat it.  That fork disagreed with
+    the real producer about which argument is the target, swallowed named params
+    (`nosc=yes`), and split on flat rather than top-level pipes.  A bio link is an
+    ORDINARY article link; `_link.py::_wrap_article_link` already owns the template
+    and emits «LN» ([[feedback_tune_dont_fork]]).
+
+    Measured over all 5172 front-matter descriptions: 4343 identical, 790 bio links
+    that used to ship a raw marker, 14 en-dashes RESTORED (`{{–}}` in a date range,
+    which the old stripper deleted outright — `1857{{–}}1881` became `18571881`),
+    18 junk template-param lines that are garbage under either, and 7 stray
+    apostrophes where the source's `'''` is unbalanced and the walk is faithful to
+    it rather than deleting every quote ([[feedback_viewer_not_source_errors]]).
+    Markers surviving into the output: 790 before, 0 after.
+    """
+    marked = process_elements(preprocess(raw_desc, volume),
+                              ElementContext(volume=volume))
+    return " ".join(marked.split()).strip()
+
+
+def build_contributor_table():
+    # Step 1: Parse all (initials, name, credentials, description) entries.
+    # The one raw reader applies corrections itself, which is what this pass had
+    # to remember to do by hand ([[feedback_dissolve_dont_fix]]).
+    entries = []  # (raw_initials, raw_name, description_text)
+    for page in load_pages()[0]:
+        volume, raw = page.volume, page.text
+        for content in iter_entries(raw):
+            # Normalize before the length filter — entries whose
+            # raw initials field uses HTML-entity spacing (e.g.
+            # vol 6's `J.&thinsp;D.&thinsp;v.&thinsp;d.&thinsp;W.`
+            # for Van Der Waals) blow well past 20 chars in raw
+            # form, but normalize cleanly to short canonical
+            # signatures.  The same normalizer used at lookup
+            # time is applied here so storage and lookup share
+            # one canonical form.
+            initials = _normalize_initials(parse_field(content, "initials"))
+            if not initials or len(initials) > 20:
+                continue
+            raw_name = parse_field(content, "name")
+            raw_desc = parse_field(content, "description")
+            # The VOLUME rides along: `_clean_description` walks the description
+            # through the same preprocess+walk the article body takes, and both
+            # are volume-keyed (corrections, and the element context).
+            entries.append((initials, raw_name, raw_desc, volume))
+
+    print(f"Parsed {len(entries)} front matter entries.")
+
+    # Step 2: Deduplicate to unique (initials, name) pairs
+    pairs = set()
+    for initials, raw_name, raw_desc, _vol in entries:
+        pairs.add((initials, raw_name))
+    print(f"Unique (initials, name) pairs: {len(pairs)}")
+
+    # Step 3: Group by initials → each group is one person with name variants
+    by_initials = defaultdict(list)  # initials -> [(raw_name, raw_desc, volume)]
+    for initials, raw_name, raw_desc, volume in entries:
+        by_initials[initials].append((raw_name, raw_desc, volume))
+
+    # For each initials group, pick canonical name (longest cleaned name)
+    # and best credentials/description
+    initials_groups = {}  # initials -> {name, credentials, description}
+    for initials, name_desc_list in by_initials.items():
+        names_and_creds = [_clean_name(nd[0]) for nd in name_desc_list]
+        descs = [_clean_description(nd[1], nd[2]) for nd in name_desc_list if nd[1]]
+
+        best_name = max((nc[0] for nc in names_and_creds), key=len)
+        best_creds = max((nc[1] for nc in names_and_creds), key=len) if any(nc[1] for nc in names_and_creds) else ""
+        best_desc = max(descs, key=len) if descs else ""
+
+        initials_groups[initials] = {
+            "name": best_name,
+            "credentials": best_creds,
+            "description": best_desc,
+        }
+
+    print(f"Initials groups: {len(initials_groups)}")
+
+    # Step 4: Merge across initials by canonical name
+    # Group initials that share the same canonical name → same person
+    by_name = defaultdict(list)  # canonical_name -> [initials]
+    for initials, data in initials_groups.items():
+        by_name[data["name"]].append(initials)
+
+    # Each name group is one contributor with potentially multiple initials
+    contributors = []  # {name, credentials, description, initials: [list]}
+    for name, initials_list in by_name.items():
+        # Merge credentials and descriptions across all initials variants
+        all_creds = [initials_groups[i]["credentials"] for i in initials_list]
+        all_descs = [initials_groups[i]["description"] for i in initials_list]
+
+        best_creds = max(all_creds, key=len) if any(all_creds) else ""
+        best_desc = max(all_descs, key=len) if any(all_descs) else ""
+
+        contributors.append({
+            "name": name,
+            "credentials": best_creds,
+            "description": best_desc,
+            "initials": initials_list,
+        })
+
+    merges = sum(1 for c in contributors if len(c["initials"]) > 1)
+    print(f"Final contributors: {len(contributors)} ({merges} merged from multiple initials)")
+
+    # Step 5: Write to DB
+    session = SessionLocal()
+    try:
+        for c in contributors:
+            contributor = Contributor(
+                full_name=c["name"],
+                credentials=c["credentials"] or None,
+                description=c["description"] or None,
+            )
+            session.add(contributor)
+            session.flush()
+
+            for initials in c["initials"]:
+                session.add(ContributorInitials(
+                    contributor_id=contributor.id,
+                    initials=initials,
+                ))
+
+        session.commit()
+
+        # Stats
+        total = session.query(Contributor).count()
+        total_initials = session.query(ContributorInitials).count()
+        with_creds = session.query(Contributor).filter(
+            Contributor.credentials != None, Contributor.credentials != ""
+        ).count()
+        with_desc = session.query(Contributor).filter(
+            Contributor.description != None, Contributor.description != ""
+        ).count()
+        print(f"\nCreated {total} contributors with {total_initials} initials entries.")
+        print(f"  With credentials: {with_creds}")
+        print(f"  With descriptions: {with_desc}")
+
+    finally:
+        session.close()
+
+    # The raw (initials, name, description) observations — one per front-matter
+    # occurrence, PRE-dedup — so the caller can fold each spelling into the
+    # step-5 canonical-name vote ([[feedback_accrete_first_canonicalize_last]]).
+    return entries
+
+
+def backfill_bios(apply_mode: bool = True):
+    """Attach per-volume contributor bios that build_contributor_table()'s
+    initials-grouping lost to a shared-initials collision — Muir's
+    'Demonstrator of Pathological…' got bucketed with Muther under `R. Mr.`,
+    so his separate `R. Mr.*` record shipped bio-less.
+
+    Runs AFTER the identities are final (post vol29_linker): re-resolves each
+    front-matter entry's (name, initials) through the shared ContributorIndex,
+    which splits Muir from Muther by SURNAME, and fills the description /
+    credentials of any contributor still missing them.  Only fills blanks —
+    never overwrites.  See [[project_contributor_resolver_consolidation]]."""
+    from wikikit.contributors.resolver import ContributorIndex
+
+    session = SessionLocal()
+    try:
+        inits = defaultdict(list)
+        for ci in session.query(ContributorInitials).all():
+            inits[ci.contributor_id].append(ci.initials)
+        contribs = {c.id: c for c in session.query(Contributor).all()}
+        idx = ContributorIndex(
+            (c.id, c.full_name, inits.get(c.id, [])) for c in contribs.values())
+
+        best: dict[int, tuple[str, str]] = {}  # cid -> (credentials, description)
+        for page in load_pages()[0]:
+            volume, raw = page.volume, page.text
+            for content in iter_entries(raw):
+                name, creds = _clean_name(parse_field(content, "name"))
+                # SAME producer as build_contributor_table's own pass — a second
+                # cleaner here is how the fork would grow back.
+                desc = _clean_description(
+                    parse_field(content, "description"), volume)
+                if not (desc or creds):
+                    continue
+                cid = idx.resolve(
+                    name=name,
+                    initials=_normalize_initials(parse_field(content, "initials")))
+                if cid is None:
+                    continue
+                cur_creds, cur_desc = best.get(cid, ("", ""))
+                best[cid] = (
+                    creds if len(creds) > len(cur_creds) else cur_creds,
+                    desc if len(desc) > len(cur_desc) else cur_desc,
+                )
+
+        filled = 0
+        for cid, (creds, desc) in best.items():
+            c = contribs[cid]
+            changed = False
+            if desc and not c.description:
+                c.description = desc
+                changed = True
+            if creds and not c.credentials:
+                c.credentials = creds
+                changed = True
+            if changed:
+                filled += 1
+        if apply_mode:
+            session.commit()
+        else:
+            session.rollback()
+        verb = "Backfilled" if apply_mode else "Would backfill"
+        print(f"{verb} bio for {filled} contributors that lost it to an "
+              f"initials collision." + ("" if apply_mode else "  (dry-run)"))
+    finally:
+        session.close()
+
+
+if __name__ == "__main__":
+    if "--backfill-bios" in sys.argv:
+        backfill_bios()
+    else:
+        build_contributor_table()

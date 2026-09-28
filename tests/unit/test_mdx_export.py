@@ -4,7 +4,7 @@ from collections import defaultdict
 
 import pytest
 
-from britannica.mdx.build import (
+from wikikit.mdx.build import (
     Links, add_headwords, article_key, bundle_body, check_headwords, compile_package,
     entry_url, lookup_fold, topic_key, label_content_entries, compact_aliases, validate, wrap,
 )
@@ -129,7 +129,7 @@ def test_remote_assets_fail_instead_of_shipping_online_dependency():
 
 
 def test_known_missing_source_link_is_visible_and_repaired_source_retires_exception():
-    from britannica.mdx.link_exceptions import mark_unavailable
+    from wikikit.mdx.link_exceptions import mark_unavailable
     key = article_key("20-0065-dd33a0")
     link = '<a href="' + entry_url(key, "section-oil-testing") + '">Oil Testing</a>'
     entries = {key: wrap(link)}
@@ -143,7 +143,7 @@ def test_known_missing_source_link_is_visible_and_repaired_source_retires_except
 
 
 def test_new_missing_source_link_still_fails():
-    from britannica.mdx.link_exceptions import mark_unavailable
+    from wikikit.mdx.link_exceptions import mark_unavailable
     key = article_key("20-0065-dd33a0")
     entries = {key: wrap('<a href="' + entry_url(key, "new-missing-section") + '">New problem</a>')}
     assert mark_unavailable(entries) == []
@@ -152,7 +152,7 @@ def test_new_missing_source_link_still_fails():
 
 
 def test_reference_aliases_preserve_ambiguity_and_exclude_display_and_sections():
-    from britannica.mdx.navigation import add_reference_aliases
+    from wikikit.mdx.navigation import add_reference_aliases
     articles = {"one": article("First", "text"), "two": article("Second", "text")}
     articles["one"]["xrefs"] = [
         {"status": "resolved", "target_filename": target + ".json",

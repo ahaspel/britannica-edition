@@ -5,7 +5,7 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools" / "diagnostics"))
 from source_trouble_spots import detect, locate
-from britannica.source_pages import SourcePage
+from wikikit.source_pages import SourcePage
 
 
 def test_period_candidate_includes_next_whole_word_and_locates():

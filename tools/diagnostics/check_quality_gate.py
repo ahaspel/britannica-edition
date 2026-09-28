@@ -8,7 +8,7 @@ defeats the gate — fix the underlying issue instead.
 """
 from __future__ import annotations
 
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import glob
 import json
 import sys

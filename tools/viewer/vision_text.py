@@ -14,7 +14,7 @@ render stack for three functions that only touch strings.
 """
 import re
 
-from britannica.util.strings import section_slug
+from wikikit.util.strings import section_slug
 
 
 _ALLCAPS_LINE = re.compile(r"[A-Z][A-Z .ÆŒ'’-]{2,40}")

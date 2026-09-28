@@ -18,7 +18,7 @@ trusted until those agree.
 """
 from __future__ import annotations
 
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import argparse
 import json
 import re
@@ -29,9 +29,9 @@ from pathlib import Path
 import pytesseract
 from PIL import Image
 
-from britannica.export.pages import leaf_for_ws
-from britannica.source_pages import load_pages
-from britannica.util.strings import strip_html_tags
+from wikikit.export.pages import leaf_for_ws
+from wikikit.source_pages import load_pages
+from wikikit.util.strings import strip_html_tags
 
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 

@@ -15,7 +15,7 @@ ids/filenames pass through untouched.
 """
 from __future__ import annotations
 
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import hashlib
 import json
 import re

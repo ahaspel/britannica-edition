@@ -37,7 +37,7 @@ if (sys.stdout.encoding or "").lower().replace("-", "") != "utf8":
                                   errors="replace")
 
 from ancillary_render import footnotes_html, render_pages  # noqa: E402
-from britannica.source_pages import load_pages
+from wikikit.source_pages import load_pages
 
 VOL = 1
 # Editorial Preface only; pp.6-9 are the Prefatory Note.  Per-page (`vol:page`)

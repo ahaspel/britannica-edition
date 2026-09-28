@@ -28,9 +28,9 @@ import re
 import sys
 import time
 
-from britannica.db.models import Article
-from britannica.db.session import SessionLocal
-from britannica.pipeline.stages.elements import ElementContext, process_elements
+from wikikit.db.models import Article
+from wikikit.db.session import SessionLocal
+from wikikit.pipeline.stages.elements import ElementContext, process_elements
 
 
 # Block markers whose viewer renderer matches ``^…$`` per paragraph.

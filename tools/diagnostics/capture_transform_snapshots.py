@@ -24,7 +24,7 @@ Usage::
 """
 from __future__ import annotations
 
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import io
 import sys
 from pathlib import Path
@@ -33,12 +33,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                               errors="replace")
 
-from britannica.db.models import Article  # noqa: E402
-from britannica.db.session import SessionLocal  # noqa: E402
-from britannica.pipeline.stages.elements import (  # noqa: E402
+from wikikit.db.models import Article  # noqa: E402
+from wikikit.db.session import SessionLocal  # noqa: E402
+from wikikit.pipeline.stages.elements import (  # noqa: E402
     ElementContext, process_elements)
-from britannica.pipeline.stages.preprocess import _source_clean  # noqa: E402
-from britannica.util.strings import section_slug  # noqa: E402
+from wikikit.pipeline.stages.preprocess import _source_clean  # noqa: E402
+from wikikit.util.strings import section_slug  # noqa: E402
 
 
 # Seed list — JSON filenames (without .json) under

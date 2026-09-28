@@ -30,8 +30,8 @@ sys.stdout.reconfigure(encoding="utf-8") if hasattr(
 sys.path.insert(0, "tools/diagnostics")
 from missing_articles_diff import normalize  # type: ignore
 
-from britannica.db.session import SessionLocal
-from britannica.db.models import Article
+from wikikit.db.session import SessionLocal
+from wikikit.db.models import Article
 
 
 def _load_fixture(path):

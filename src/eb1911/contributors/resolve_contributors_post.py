@@ -1,0 +1,597 @@
+"""Phase 5.4: resolve ALL contributor attributions post-export.
+
+One phase owns the whole contributor story, in confidence order, AFTER the kind
+index (5.3) so the footprint can consult it:
+
+  1. SIGNATURES  — the footer `(initials)` sign-offs harvested from each exported
+     body (the source's own attribution; the authoritative anchor).
+  2. FRONTMATTER — the per-volume contributor-table subject lists.
+  3. FOOTPRINT   — each contributor's kind profile, from ONLY the two authoritative
+     sources above (built here, before vol-29, so it is never circular).
+  4. VOL-29      — the master-index credits, resolved by the KIND-VALIDATED matcher
+     (vol29_kind_match): a credit's own disambiguator ∪ the contributor's footprint
+     pick the right article; a kind-mismatched homonym is ABSTAINED, never bound.
+  5. EMIT        — patch each article JSON's `contributors` + rebuild
+     contributors.json from the final DB state.
+
+Replaces the pre-export harvest / link_frontmatter / link_vol29 in assemble (the
+export now writes empty `contributors`, filled here).  ([[project_resolver_consolidation]])
+"""
+from wikikit.corpora import current_corpus
+import json
+import os
+import re
+import sys
+from collections import Counter, defaultdict
+from pathlib import Path
+
+from wikikit.export.sections import section_key
+from wikikit.markers import sub_al_markers
+from eb1911.contributors.link_frontmatter import link_from_frontmatter
+from wikikit.contributors.resolver import ContributorIndex
+from eb1911.contributors.vol29_index import parse_vol29_index
+from eb1911.contributors.vol29_kind_match import (
+    candidate_ids, credit_expected_kinds, pick_article)
+from wikikit.db.models import (
+    Article, ArticleContributor, Contributor, ContributorInitials)
+from wikikit.db.session import SessionLocal
+from wikikit.export.article_json import (
+    _description_text, _resolve_bio_articles, _safe_filename,
+    register_stable_id_dedup, stable_id)
+from eb1911.contributors.author_links import (
+    accrete_author_link_contributors, harvest_author_links)
+from wikikit.contributors.names import contributor_slug
+from wikikit.pipeline.stages.extract_contributors import _normalize_initials
+from wikikit.util.strings import fold_accents
+
+ART = current_corpus().derived("articles")
+# Deferred [[Author:]] render marker: the walk emits «AL:name|display» neutrally
+# and 5.4 resolves it against the FINISHED roster ([[project_roster_from_author_links]]).
+# Read through THE «AL» reader (`markers.iter_al_markers`) — one grammar, no fork.
+
+# A contributor's name string flattens THREE attributes (the user's decomposition):
+# the NAME PROPER, an honorific/TITLE prefix, and a (DATE) disambiguator.  The
+# step-5 mode must vote on ONLY the name proper — the title is kept from the
+# authoritative front-matter form (footers casually drop it, so a mode would wrongly
+# delete `Sir`/`Rev.`) and dates are stripped entirely (none wanted in the index).
+def pick_winning_spelling(groups, frontmatter_folds=()):
+    """The winning folded spelling: most votes, then FULLEST, then FRONT MATTER.
+
+    ``groups`` maps a folded key to a ``Counter`` of the raw variants that fold
+    to it, as ``_canon_name`` builds them.  ``frontmatter_folds`` is the set of
+    folded keys the per-volume front matter attests for this contributor.
+
+    Two ORIGINAL sources print a contributor's name: the per-volume front-matter
+    tables and the vol 29 master index.  Neither outranks the other as evidence —
+    but they do not reach us the same way.  Measured over the corpus by
+    Wikisource's own `pagequality`:
+
+      front matter   234 contributor-table pages: 127 proofread, 107 validated,
+                     NONE unproofread.
+      vol 29 index    27 pages: 24 NOT proofread (level 1), 3 proofread.
+
+    So vol 29's text is largely Wikisource's own uncorrected OCR layer — `VILLARI,
+    LUIGL`, `Leopold 11. of Tuscany`, `flora tact` — which is why we run a vision
+    OCR over those scans at all: not to replace a transcription, but because there
+    mostly is not one.  Either way the vol 29 reading is machine-made, so a
+    disagreement with the front matter may be a printed misprint OR a misread, and
+    we cannot tell which.  Vol 29 is the weaker READING, not the weaker source.
+
+    Hence the cascade:
+
+    1. VOTES — a real majority settles it, whatever the sources.
+    2. LENGTH — the fuller spelling is MONOTONIC: it contains the shorter one's
+       information, so choosing it cannot lose anything
+       ([[feedback_when_in_doubt_carry]]).  This is what recovers the names the
+       front matter abbreviates and vol 29 prints in full — `H. R. Haxton` ->
+       `Henry Raymond Haxton`.
+    3. FRONT MATTER — when even length cannot separate them, prefer the reading
+       we can actually trust.  This is what keeps the OCR's `G. E. Webber` (whose
+       own entry signs itself `C. E. W.`) from displacing the front matter's
+       `C. E. Webber`, and `Wentworth-Shields` from displacing `-Sheilds`.
+    4. The folded key, so equal rivals resolve identically on every run
+       ([[project_determinism_arc]]).
+
+    Step 3 replaces a tie-break toward the roster row's own build-time spelling.
+    That was the right instinct for the wrong reason: it preferred whichever
+    source SEEDED the row — usually the front matter, but vol 29 or a footer for
+    anyone they introduced — and, since that source also votes here, it amounted
+    to one vote plus a veto.  Naming the front matter explicitly keeps the
+    protection and drops the double-count.
+    """
+    fm = set(frontmatter_folds)
+    return max(groups, key=lambda k: (sum(groups[k].values()),
+                                      max(len(x) for x in groups[k]),
+                                      k in fm, k))
+
+
+_TITLE_RE = re.compile(
+    r"^((?:(?:The\s+)?(?:Right\s+|Rt\.?\s+)?"
+    r"(?:Hon|Rev|Revd|Sir|Dame|Dr|Prof|Professor|Mrs|Miss|Captain|Capt|"
+    r"Lieutenant-General|Lieut\.?-Gen(?:eral)?|Major-General|Major|"
+    r"Lieutenant-Colonel|Lieut\.?-Colonel|Lieutenant|Lieut|Colonel|Col|"
+    r"Brigadier|Brig|General|Surgeon-General|Surgeon-Major|Surgeon|"
+    r"Commander|Commodore|Rear-Admiral|Vice-Admiral|Admiral|"
+    r"Monseigneur|Monsignor|Mgr|Cardinal|Archbishop|Bishop|Archdeacon|Canon|"
+    r"Prince|Princess|Baron|Baroness|Countess|Count|Lord|Lady)\.?\s+)+)",
+    re.IGNORECASE)
+_NAME_DATE_RE = re.compile(r"\s*\(\s*(?:b\.\s*|d\.\s*|c\.\s*)?\d{3,4}[^)]*\)")
+
+
+def _name_fold(s: str) -> str:
+    """Case- and diacritic-insensitive key for a name-proper, so `M'Lennan` /
+    `M'lennan` / `M'LENNAN` and `Léon` / `Leon` count as ONE spelling.  The vote
+    picks the winning spelling by this key; the emit then restores real casing
+    and accents.  Punctuation and spacing are dropped so only letters vote."""
+    s = fold_accents(s)
+    return section_key(s)
+
+
+def _display_name(full_name: str) -> str:
+    name = re.sub(r"\s*\([^)]*\)", "", full_name).strip().rstrip(",").strip()
+    head, _, suffix = name.partition(",")
+    parts = head.strip().rsplit(None, 1)
+    rearranged = f"{parts[1]}, {parts[0]}" if len(parts) == 2 else head.strip()
+    return f"{rearranged}, {suffix.strip()}" if suffix.strip() else rearranged
+
+
+def _sort_key(full_name: str) -> str:
+    name = re.sub(r"\s*\([^)]*\)", "", full_name).strip().rstrip(",").strip()
+    head = name.partition(",")[0].strip()
+    return head.rsplit(None, 1)[-1].lower() if head else ""
+
+
+def bind_contributors(session, payloads: dict) -> bool:
+    """Bind every contributor and patch each payload's ``contributors`` — IN
+    MEMORY (the caller owns load/write), so the merged post-export pass applies
+    it without a corpus round-trip of its own.  Writes ``contributors.json``
+    (it is the sole writer of the roster).  Returns False when ``STEP5_DRYRUN``
+    short-circuited it, so the caller writes nothing.
+
+    NOTE the caller must have replayed ``register_stable_id_dedup`` first — every
+    ``_safe_filename`` below depends on it."""
+    from wikikit.export.article_json import article_sort_key
+    arts = sorted(
+        session.query(Article).filter(Article.article_type != "plate").all(),
+        key=article_sort_key)
+    sid_of = {a.id: stable_id(a) for a in arts}
+    title_of = {a.id: a.title for a in arts}
+    kind_index = json.loads(
+        (ART.parent / "kind_index.json").read_text(encoding="utf-8"))
+    kinds_of = lambda i: set(kind_index.get(sid_of.get(i, "") + ".json", []))
+
+    # ── 0. ROSTER (relocated from Phase 1b/1c) — build the roster from the
+    #    three UNAMBIGUOUS sources HERE, so it is COMPLETE before the ambiguous
+    #    [[Author:]] links are resolved (for binding AND for the deferred
+    #    render).  Truncate first so a standalone re-run rebuilds cleanly.
+    #    ([[project_roster_from_author_links]])
+    from eb1911.contributors.build_contributor_table import (
+        _clean_name, backfill_bios, build_contributor_table)
+    from eb1911.contributors import link_vol29_contributors
+    session.query(ArticleContributor).delete()
+    session.query(ContributorInitials).delete()
+    session.query(Contributor).delete()
+    session.commit()
+    fm_entries = build_contributor_table()         # per-volume front-matter tables
+    _saved_argv = sys.argv
+    sys.argv = ["link_vol29_contributors", "--apply"]
+    try:
+        link_vol29_contributors.main()             # vol-29 master index
+    finally:
+        sys.argv = _saved_argv
+    backfill_bios()                                # per-volume contributor bios
+    session.expire_all()
+    # Footer signers with no front-matter/vol-29 entry (Woolhouse) join here;
+    # [[Author:]] is AMBIGUOUS and NEVER mints a contributor — it only expands
+    # existing article lists.
+    seed_inits: dict[int, list] = defaultdict(list)
+    for ci in session.query(ContributorInitials).all():
+        seed_inits[ci.contributor_id].append(ci.initials)
+    seed_idx = ContributorIndex((c.id, c.full_name, seed_inits.get(c.id, []))
+                                for c in session.query(Contributor).all())
+    n_new = accrete_author_link_contributors(session, seed_idx)
+
+    # ── 1. AUTHOR LINKS ─────────────────────────────────────────────────
+    # Each article's own author-links, read from its segment_text: the footer
+    # template, the [[Author:Name|Init]] signature wikilink, and the bare
+    # {{EB1911 TAs}} shortcut.  The first two carry NAME + initials, so we
+    # resolve by the COMBINATION (name-first) and a transcription slip in the
+    # initials cannot misclassify (SCHUBERT's "W. H. H." NAMES Hadow, not
+    # Howell).  Authoritative for the great majority of binds and drops NO
+    # real author link; name-less bare parentheticals are NOT harvested here —
+    # they are reserved for step-4 disambiguation.
+    # ([[feedback_accrete_first_canonicalize_last]])
+    session.query(ArticleContributor).delete()
+    al_inits: dict[int, list] = defaultdict(list)
+    for ci in session.query(ContributorInitials).all():
+        al_inits[ci.contributor_id].append(ci.initials)
+    al_cidx = ContributorIndex((c.id, c.full_name, al_inits.get(c.id, []))
+                               for c in session.query(Contributor).all())
+    binds, _al_unresolved, footer_votes = harvest_author_links(session, al_cidx)
+    for aid, cid, seq in binds:
+        session.add(ArticleContributor(
+            article_id=aid, contributor_id=cid, sequence=seq))
+    n_sig = len(binds)
+    session.commit()
+
+    # ── STEP 5 vote banks.  The NAME is whatever EB carries in its INDICES —
+    #    the front-matter contributor tables (fed before emit) and the vol-29
+    #    master index (fed in step 4).  A footer's/author-link's NAME field is a
+    #    WIKISOURCE author-page link (`{{…footer…|Robert Crewe-Milnes|C.}}`), i.e.
+    #    how Wikipedia names them, NOT how EB cites them — so it votes on the
+    #    SIGNATURE (initials) only, never the name.  Canonical = the MODE of the
+    #    index citations, which agree with each other; the initials are EB's own
+    #    byline mark.  ([[feedback_accrete_first_canonicalize_last]])
+    name_votes: dict[int, Counter] = defaultdict(Counter)
+    # Folded spellings the per-volume FRONT MATTER attests, per contributor.  It
+    # is the only name source we hold as proofread wikitext for every volume, so
+    # it settles a contest that votes and length cannot — and, being wikitext, a
+    # transcription error in it is reachable by `data/corrections.json` under the
+    # usual `volume:page` key ([[feedback_corrections_json]]).
+    fm_folds: dict[int, set] = defaultdict(set)
+    init_votes: dict[int, Counter] = defaultdict(Counter)
+
+    def _strip_date(s: str) -> str:
+        # Removing the date can orphan the punctuation that introduced it.  Vol 6
+        # p13 writes "…Cates]], {{Font-variant normal|(1821–1895)}}" — `_clean_name`
+        # splits at that comma, finds `(1821–1895)` is not credentials, and
+        # correctly restores the whole string, comma included; stripping the date
+        # then leaves "William Liest Readwin Cates,".
+        return _NAME_DATE_RE.sub("", s).strip().rstrip(",;").strip()
+
+    def _split_title(s: str) -> tuple[str, str]:
+        m = _TITLE_RE.match(s)
+        return (m.group(1).strip(), s[m.end():].strip()) if m else ("", s)
+
+    def _name_proper(raw: str) -> str:
+        """The name-proper axis: trailing degrees off (already → credentials
+        via _clean_name), dates stripped, leading title removed — so the mode
+        votes on the name ITSELF, not its title/date decoration."""
+        core = _clean_name(raw)[0]
+        return _split_title(_strip_date(core))[1].strip()
+
+    def _vote(cid: int, raw_name: str | None, raw_init: str | None) -> None:
+        if raw_name:
+            nm = _name_proper(raw_name)
+            if nm:
+                name_votes[cid][nm] += 1
+        if raw_init:
+            iv = _normalize_initials(raw_init)
+            if iv:
+                init_votes[cid][iv] += 1
+
+    # The footer votes its INITIALS once per occurrence, and its NAME once per
+    # DISTINCT SPELLING.
+    #
+    # A contributor's footer is one editorial act replicated across every article
+    # he signed: Thomas Ashby's 254 footers are not 254 witnesses, they are one
+    # witness repeated, and they carry no more information than the first.
+    # Counting them raw let the footer outvote the index 254-to-2 and decide every
+    # contested name outright — replication masquerading as corroboration.  Capped,
+    # the tally measures what it was always meant to: how many INDEPENDENT sources
+    # attest a spelling.
+    #
+    # The cap is self-correcting exactly where the risk was.  Where the footer
+    # would have erased a fuller name it disagrees with itself and splits its own
+    # vote — Kropotkin is `Peter Kropotkin` x64 AND `Peter Alexeivitch Kropotkin`
+    # x26, so capped they are 1-1 and the index breaks the tie toward the fuller
+    # form.  Raw, the short form won 64-26 and the middle name was lost.
+    # Footers vote their INITIALS and never their name — because the initials are
+    # what the book prints and the name is not.
+    #
+    # An EB1911 article is signed with initials alone.  Volume 6 page 864 ends
+    # "(F. E. W.-S.)" and nothing more; the full name in
+    # `{{EB1911 footer initials|Francis Ernest Wentworth-Sheilds|F. E. W.-S.}}`
+    # is the transcriber's, rendered as the `[[Author:]]` link behind those
+    # initials.  It is therefore not a witness to the 1911 text at all — it is
+    # Wikisource's IDENTIFICATION of the person, the same editorial act as the
+    # `[[Author:]]` target in the vol 29 index, and it carries their corrections:
+    # they file this man under `Francis Ernest`, redirecting `Francis Edward`,
+    # because the printed index misprints him (and marks it with `{{SIC}}`).
+    #
+    # Letting that vote would put a modern editorial judgement on the same ballot
+    # as the book's own text and let it outrank it.  The roster's names are the
+    # book's; Wikisource's identification is apparatus, not evidence about what
+    # the page says.  ([[feedback_source_is_the_only_excuse]])
+    for _cid, _obs in footer_votes.items():
+        for _nm, _it in _obs:
+            if _it:
+                _iv = _normalize_initials(_it)
+                if _iv:
+                    init_votes[_cid][_iv] += 1
+
+    # ── 2. FRONTMATTER (own session; appends, dedups) ───────────────────
+    link_from_frontmatter(apply_mode=True, kind_of=kinds_of)
+
+    # ── 3. FOOTPRINTS — from the authoritative binds ONLY (all that exist
+    #       right now, since vol-29 has not run) ──────────────────────────
+    footprints: dict[int, Counter] = defaultdict(Counter)
+    for ac in session.query(ArticleContributor).all():
+        for k in kinds_of(ac.article_id):
+            footprints[ac.contributor_id][k] += 1
+
+    # ── 4. VOL-29 — kind-validated ──────────────────────────────────────
+    title_map: dict[str, list[int]] = defaultdict(list)
+    comma_index: dict[str, list[int]] = defaultdict(list)
+    given_of: dict[int, str] = {}
+    from eb1911.contributors.link_vol29_articles import _normalize_vol29_title
+    for a in arts:
+        title_map[_normalize_vol29_title(a.title)].append(a.id)
+        if "," in a.title:
+            head, _, tail = a.title.partition(",")
+            comma_index[head.strip().upper()].append(a.id)
+            given_of[a.id] = tail.strip()
+
+    inits = defaultdict(list)
+    for ci in session.query(ContributorInitials).all():
+        inits[ci.contributor_id].append(ci.initials)
+    cidx = ContributorIndex((c.id, c.full_name, inits.get(c.id, []))
+                            for c in session.query(Contributor).all())
+
+    n_v29 = n_abstain = 0
+    for entry in parse_vol29_index():
+        if not entry.articles:
+            continue
+        cid = cidx.resolve(name=entry.full_name, initials=entry.initials)
+        if cid is None:
+            continue
+        _vote(cid, entry.full_name, entry.initials)
+        fp = footprints.get(cid, Counter())
+        for credit in entry.articles:
+            cands = candidate_ids(credit, title_map, comma_index,
+                                  lambda i: given_of.get(i, ""))
+            # A credit whose contributor is ALREADY bound to any candidate
+            # (the authoritative footer/author-link harvest) is a
+            # CORROBORATION of that bind, never a mandate to bind a
+            # different homonym — the sorted candidate order otherwise
+            # flipped "David" from confirming the biblical DAVID (signed
+            # W. R. S.) to minting a credit on the unsigned Welsh princes.
+            if cands and (session.query(ArticleContributor)
+                          .filter(ArticleContributor.article_id.in_(cands),
+                                  ArticleContributor.contributor_id == cid)
+                          .first()):
+                continue
+            target = pick_article(cands, kinds_of,
+                                  credit_expected_kinds(credit), fp)
+            if target is None:
+                n_abstain += 1
+                continue
+            session.add(ArticleContributor(
+                article_id=target, contributor_id=cid, sequence=99))
+            n_v29 += 1
+    session.commit()
+
+    # ── 5. EMIT — patch JSONs + rebuild contributors.json ───────────────
+    cred_of = {c.id: c for c in session.query(Contributor).all()}
+    all_inits = defaultdict(list)
+    for ci in session.query(ContributorInitials).all():
+        all_inits[ci.contributor_id].append(ci.initials)
+
+    # Front-matter spellings vote too — one per occurrence, attributed to the
+    # final roster via the same index vol-29 used.
+    for _fi, _fn, _fd, _fv in fm_entries:
+        _fc = cidx.resolve(name=_clean_name(_fn)[0],
+                           initials=_normalize_initials(_fi))
+        if _fc is not None:
+            _vote(_fc, _fn, _fi)
+            _fm_core = _name_proper(_fn)
+            if _fm_core:
+                fm_folds[_fc].add(_name_fold(_fm_core))
+
+    def _canon_name(cid: int) -> str:
+        """Display = the authoritative TITLE prefix (date dropped) + the winning
+        name-proper spelling from EB's index votes.
+
+        The winner is chosen by a CASE+DIACRITIC-FOLDED key (_name_fold), so an
+        all-caps or de-accented index entry can't split the vote; a genuine tie
+        goes to the FULLEST spelling.  For casing/accents we emit the DB form
+        when its spelling matches the winner (already correctly cased —
+        `M'Lennan`, `Léon`), else the best-cased raw variant in the winning
+        group.  Robertson still flips: his DB spelling folds to `roberston`, not
+        the winning `robertson`.
+
+        Ties used to go to the DB spelling instead.  That was a thumb on the
+        scale: the source that seeded the roster row — front matter, or vol 29 —
+        also votes in this ballot, so it held one vote AND a veto over the same
+        contest.  It vetoed in one direction only, keeping the initials the index
+        printed over a full given name attested elsewhere, in all eight contests
+        it decided."""
+        title, _ = _split_title(_strip_date(cred_of[cid].full_name))
+        db_core = _name_proper(cred_of[cid].full_name)
+        v = name_votes.get(cid)
+        if not v:
+            return f"{title} {db_core}".strip() if title else db_core
+        db_fold = _name_fold(db_core)
+        groups: dict[str, Counter] = defaultdict(Counter)
+        for raw_core, n in v.items():
+            groups[_name_fold(raw_core)][raw_core] += n
+        win = pick_winning_spelling(groups, fm_folds.get(cid, ()))
+        if win == db_fold:
+            core = db_core
+        else:
+            core = max(groups[win].items(),
+                       key=lambda kv: (any(c.islower() for c in kv[0]),
+                                       sum(ord(c) > 127 for c in kv[0]),
+                                       kv[1], len(kv[0]), kv[0]))[0]
+        return f"{title} {core}".strip() if title else core
+
+    def _canon_init(cid: int) -> str:
+        """The primary signature: the MODE of the observed initials (tie →
+        shortest, then alphabetical); falls back to the first stored form."""
+        v = init_votes.get(cid)
+        if v:
+            return max(v.items(), key=lambda kv: (kv[1], -len(kv[0]), kv[0]))[0]
+        return (all_inits.get(cid) or [""])[0]
+
+    def _contributor_record(cid, c) -> dict:
+        """ONE contributor record, for BOTH outputs.
+
+        This phase writes contributors twice — into each article payload and into
+        `contributors.json` — which is legitimate fan-out to two files. Building the
+        record twice is not: the two expressions sat eleven lines apart and had
+        already drifted, one passing `credentials` through and the other coercing it
+        with `or ""`, so 334 of 1,290 per-article records shipped `null` where the
+        roster shipped `""`. The description conversion is applied here for the same
+        reason — a converter that has to be remembered at each write site eventually
+        isn't ([[feedback_tune_dont_fork]]).
+
+        Nested so it closes over `_canon_init`/`_canon_name`; the roster entry is this
+        record plus its `articles` list.
+        """
+        return {"initials": _canon_init(cid),
+                "slug": contributor_slug(_canon_init(cid)),
+                "full_name": _canon_name(cid),
+                "credentials": c.credentials or "",
+                "description": _description_text(c.description)}
+
+
+
+    # Resolve the deferred [[Author:]] render markers now that the roster is
+    # FINAL: «AL:name|disp» → the bare-initials signoff when `disp` is a known
+    # contributor's initials, else an «LN» xref for 5.4 to bake.  Consistent
+    # with the binding gate (a signature's display IS a known contributor's
+    # initials); no «AL» survives past here.  ([[project_roster_from_author_links]])
+    known_inits = {i for inits in all_inits.values() for i in inits}
+
+    def _resolve_author_markers(text: str) -> str:
+        def _repl(m):
+            disp = m.display
+            if _normalize_initials(disp.strip("() ")) in known_inits:
+                return disp
+            # NOT a signoff → a reference to a PERSON.  Leave the «AL» standing:
+            # rewriting it to «LN» here erased the one fact 5.4 needs, and the
+            # article ladder then matched these given-name-first citations
+            # against surname-first EB titles (JOHN VENN → McADAM, JOHN LOUDON).
+            # 5.4 resolves it on the person tier and bakes/strips it there, so
+            # no «AL» survives the pipeline — the invariant just moves one phase.
+            return text[m.start:m.end]
+        return sub_al_markers(text, _repl)
+
+    # Byline order: signature position where we have it (`sequence` from the
+    # author-link harvest), then a CONTENT tie-break — the vol-29 binds all
+    # carry sequence=99 and would otherwise order by DB heap (ASIA's byline
+    # reversed between identical-code rebuilds).
+    binds_by_article: dict[int, list[int]] = defaultdict(list)
+    def _bind_key(ac):
+        c = cred_of.get(ac.contributor_id)
+        return (ac.sequence, (c.full_name or "") if c else "",
+                _canon_init(ac.contributor_id) if c else "")
+    for ac in sorted(session.query(ArticleContributor).all(), key=_bind_key):
+        binds_by_article[ac.article_id].append(ac.contributor_id)
+
+    # STEP 5 diagnostic — what the mode changes vs. the build-time name, and
+    # the bound roster size.  STEP5_DRYRUN prints this and writes nothing.
+    bound_cids = {cid for cids in binds_by_article.values() for cid in cids}
+    _changed = [(cred_of[cid].full_name, _canon_name(cid))
+                for cid in bound_cids
+                if cid in cred_of and _canon_name(cid) != cred_of[cid].full_name]
+    print(f"[step5] roster(bound)={len(bound_cids)}  "
+          f"canonical-name changes={len(_changed)}")
+    for _old, _new in sorted(_changed):
+        print(f"   {_old!r}  ->  {_new!r}")
+    _watch = re.compile(
+        r"robertson|croom|webber|phillp|philp|crewe|crewe-milnes|cyres|northcote|"
+        r"wilhelm|pitcher|kendrick|car[oö]e|bhowna", re.I)
+    for _wc in bound_cids:
+        if _wc in cred_of and _watch.search(
+                f"{cred_of[_wc].full_name} {_canon_name(_wc)}"):
+            print(f"[step5:watch] db={cred_of[_wc].full_name!r} "
+                  f"canon={_canon_name(_wc)!r} "
+                  f"votes={dict(name_votes.get(_wc, {}))}")
+    # ONE SIGNATURE, ONE CONTRIBUTOR — an invariant, checked here on the BOUND
+    # roster, before anything is written and inside the dry run.
+    #
+    # An article is signed with one set of initials, so two roster rows carrying
+    # the same canonical signature are two spellings of one person, never two
+    # people: EB1911 kept signatures unique on purpose and starred the collisions
+    # itself (`L. D.` and `L. D.*` are different men).  The signature is also the
+    # contributor's URL now, so a duplicate quietly sends two entries to one
+    # address — the kind of thing that is free to fix here and invisible once
+    # shipped, which is why it fails the build instead of warning
+    # ([[feedback_honesty_surface_failures]]).
+    #
+    # The remedy is always an alias in `data/contributor_aliases.json`, the
+    # extract-time merge channel that makes the two variants ONE DB row. Never a
+    # suffix invented here: that would paper over the duplicate — the roster would
+    # still credit one man's articles to two people — and hand out an unstable URL
+    # besides, since which row got the suffix would depend on iteration order.
+    arts_by_cid: Counter = Counter(
+        cid for cids in binds_by_article.values() for cid in cids)
+    by_slug: dict[str, list[int]] = defaultdict(list)
+    for cid in bound_cids:
+        if cid in cred_of:
+            by_slug[contributor_slug(_canon_init(cid))].append(cid)
+    clashes = {s: cids for s, cids in by_slug.items() if len(cids) > 1}
+    if clashes:
+        for s, cids in sorted(clashes.items()):
+            print(f"[step5] SLUG COLLISION {s!r} — one signature, "
+                  f"{len(cids)} roster rows:", file=sys.stderr)
+            for cid in cids:
+                print(f"          {_canon_init(cid)!r:<14} {_canon_name(cid)} "
+                      f"({arts_by_cid[cid]} articles)", file=sys.stderr)
+        raise SystemExit(
+            f"contributor slugs are not unique ({len(clashes)} collision(s)); "
+            f"merge the duplicates in {current_corpus().data('contributor_aliases.json').as_posix()}")
+
+    if os.environ.get("STEP5_DRYRUN"):
+        print("[step5] DRY RUN — no JSONs written")
+        return False
+
+    contrib_map: dict[int, dict] = {}
+    n_patched = 0
+    for d in payloads.values():
+        aid = d.get("id")
+        d["body"] = _resolve_author_markers(d.get("body", ""))
+        cids = binds_by_article.get(aid, [])
+        d["contributors"] = [_contributor_record(cid, cred_of[cid])
+                             for cid in cids if cid in cred_of]
+        n_patched += 1
+        for cid in cids:
+            c = cred_of.get(cid)
+            if not c:
+                continue
+            e = contrib_map.setdefault(
+                cid, dict(_contributor_record(cid, c), articles=[]))
+            if aid is not None:
+                a = next((x for x in arts if x.id == aid), None)
+                if a:
+                    e["articles"].append({
+                        "id": aid, "stable_id": sid_of[aid],
+                        "title": a.title,
+                        "filename": _safe_filename(a, a.title)})
+
+    for e in contrib_map.values():
+        e["display_name"] = _display_name(e["full_name"])
+    # The stored descriptions, markers intact.  `_contributor_record` has already
+    # run `_description_text` over the copy on each record, which strips the
+    # `«LN»` pointer the bio resolver needs — pass the originals or it resolves
+    # nothing and silently falls back to matching on the name alone.
+    _resolve_bio_articles(
+        session, contrib_map,
+        {cid: (c.description or "") for cid, c in cred_of.items()})
+    contrib_list = sorted(contrib_map.values(),
+                          key=lambda e: _sort_key(e["full_name"]))
+    (ART / "contributors.json").write_text(
+        json.dumps(contrib_list, indent=2, ensure_ascii=False), encoding="utf-8")
+
+    print(f"contributors: signatures={n_sig}, vol29 bound={n_v29}, "
+          f"vol29 abstained={n_abstain}; patched {n_patched} JSONs; "
+          f"{len(contrib_list)} contributors in roster")
+    return True
+
+
+def main() -> None:
+    """Standalone: load the corpus, bind contributors, write back."""
+    from wikikit.export.corpus import load_corpus, write_corpus
+    session = SessionLocal()
+    try:
+        register_stable_id_dedup(session.query(Article).all())
+        payloads, _ = load_corpus(ART)
+        if bind_contributors(session, payloads):
+            write_corpus(payloads)
+    finally:
+        session.close()
+
+
+if __name__ == "__main__":
+    main()

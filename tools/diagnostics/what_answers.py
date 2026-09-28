@@ -13,7 +13,7 @@ it, a wikitext stripper that ate 73% of a page.
     uv run python tools/diagnostics/what_answers.py leaf scan page
     uv run python tools/diagnostics/what_answers.py --all
 
-Searches each module's docstring AND the public helpers in `src/britannica`, so
+Searches each module's docstring AND the public helpers in `src` (engine and book), so
 "who maps a page to a leaf" finds `extract_scan.py` and `leaf_for_ws` alike.
 """
 import argparse
@@ -24,7 +24,7 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DIAG = ROOT / "tools" / "diagnostics"
-SRC = ROOT / "src" / "britannica"
+SRC = ROOT / "src"
 
 
 def docstring_of(path):
@@ -94,7 +94,7 @@ def main():
     else:
         print("    (none — check src/ below, then write one)")
 
-    print(f"\n  PUBLIC FUNCTIONS in src/britannica matching {a.terms}:")
+    print(f"\n  PUBLIC FUNCTIONS in src matching {a.terms}:")
     fns = []
     for p in SRC.rglob("*.py"):
         for name, first, doc in public_functions(p):

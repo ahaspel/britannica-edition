@@ -26,7 +26,7 @@ where STEM is a JSON filename stem under ``data/derived/articles/``
 """
 from __future__ import annotations
 
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import io
 import json
 import sys
@@ -36,8 +36,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                                errors="replace")
 
-from britannica.db.models import Article  # noqa: E402
-from britannica.db.session import SessionLocal  # noqa: E402
+from wikikit.db.models import Article  # noqa: E402
+from wikikit.db.session import SessionLocal  # noqa: E402
 
 
 SNAPSHOT_DIR = Path("tests/snapshots/transform")

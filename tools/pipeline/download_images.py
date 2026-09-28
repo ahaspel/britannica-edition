@@ -20,11 +20,11 @@ Usage:
     python tools/download_images.py [--delay SECONDS]
 """
 
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import argparse
 import io
 
-from britannica.export.corpus import load_corpus
+from wikikit.export.corpus import load_corpus
 import sys
 import time
 from pathlib import Path
@@ -58,7 +58,7 @@ SESSION.headers["User-Agent"] = (
 # function the render calls to build the `<img src>`, handed the same name or
 # URL.  Getting the two out of step is what left 18 articles pointing at files
 # stored under another spelling.
-from britannica.image_assets import local_image_filename as _local_filename
+from wikikit.image_assets import local_image_filename as _local_filename
 
 
 def _cooldown_if_needed(request_count: int) -> int:
@@ -107,7 +107,7 @@ def _harvest_image_filenames() -> list[str]:
     """Every image filename the corpus references, read from the exported article
     bodies' ``{{IMG:filename|…}}`` markers — the corpus is its own record of which
     images it needs, so there's no separate table to keep in sync."""
-    from britannica.markers import IMG_PARTS_RE
+    from wikikit.markers import IMG_PARTS_RE
 
     names: set[str] = set()
     # Total read: an article this cannot parse RAISES rather than having its

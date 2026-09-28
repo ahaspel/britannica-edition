@@ -20,14 +20,14 @@ from pathlib import Path
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
-from britannica.db.session import SessionLocal
-from britannica.db.models import Article
-from britannica.pipeline.stages.elements import ElementContext, process_elements
+from wikikit.db.session import SessionLocal
+from wikikit.db.models import Article
+from wikikit.pipeline.stages.elements import ElementContext, process_elements
 
 # Viewer handler vocabulary: « markers and {{ markers it references in source.
 viewer_src = (ROOT / "tools/viewer/viewer.html").read_text(encoding="utf-8")
 export_src = "\n".join(p.read_text(encoding="utf-8", errors="replace")
-                       for p in (ROOT / "src/britannica/export").glob("*.py"))
+                       for p in (ROOT / "src/wikikit/export").glob("*.py"))
 _src = viewer_src + export_src
 # Handler refs appear BOTH as literal « (comments, title/cell handlers) AND as
 # JS «…» escapes (the main body renderer writes its regexes that way).

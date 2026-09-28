@@ -15,7 +15,7 @@ Usage:
 """
 from __future__ import annotations
 
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import json
 import re
 import sys
@@ -23,13 +23,13 @@ from pathlib import Path
 from urllib.parse import quote_plus
 
 sys.path.insert(0, "src")
-from britannica.util.strings import section_slug
-from britannica.contributors.resolver import ContributorResolver
-from britannica.export.sections import match_section
-from britannica.link_resolver import LinkResolver
-from britannica.render.inline import _article_url
+from wikikit.util.strings import section_slug
+from wikikit.contributors.resolver import ContributorResolver
+from wikikit.export.sections import match_section
+from wikikit.link_resolver import LinkResolver
+from wikikit.render.inline import _article_url
 from reference_overrides import REFERENCE_OVERRIDES
-from britannica.util.strings import strip_html_tags
+from wikikit.util.strings import strip_html_tags
 
 SOURCE_HTML = Path("data/raw/readers_guide/source.html")
 INDEX_JSON = current_corpus().derived("articles/index.json")

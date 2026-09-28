@@ -14,15 +14,15 @@ Output:
 Usage:
     python tools/build_printed_pages.py
 """
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import json
 import re
 from pathlib import Path
 
-from britannica.db.models import SourcePage
-from britannica.db.session import SessionLocal
-from britannica.source_pages import load_pages
-from britannica.wikitext import TEMPLATE_CLOSE, split_top_pipes, template_end
+from wikikit.db.models import SourcePage
+from wikikit.db.session import SessionLocal
+from wikikit.source_pages import load_pages
+from wikikit.wikitext import TEMPLATE_CLOSE, split_top_pipes, template_end
 
 SCAN_DIR = current_corpus().derived("scans")
 

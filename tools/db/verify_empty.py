@@ -1,8 +1,8 @@
 """Verify database is empty. Exits with code 1 if not."""
 import sys
 sys.path.insert(0, "src")
-from britannica.db.session import SessionLocal
-from britannica.db.models import Article
+from wikikit.db.session import SessionLocal
+from wikikit.db.models import Article
 
 session = SessionLocal()
 count = session.query(Article).count()

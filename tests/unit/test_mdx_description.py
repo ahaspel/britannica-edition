@@ -1,5 +1,5 @@
 """The reader's "Dictionary info" pane says what the dictionary is."""
-from britannica.mdx.build import dictionary_description
+from wikikit.mdx.build import dictionary_description
 
 
 def test_complete_edition_describes_itself_with_its_own_numbers():

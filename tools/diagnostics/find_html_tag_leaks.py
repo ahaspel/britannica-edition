@@ -1,5 +1,5 @@
 
-from britannica.export.corpus import load_corpus
+from wikikit.export.corpus import load_corpus
 import re
 import sys
 from collections import Counter

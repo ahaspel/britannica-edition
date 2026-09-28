@@ -19,11 +19,11 @@ import re
 import sys
 from collections import Counter
 
-from britannica.db.session import SessionLocal
-from britannica.db.models import SourcePage
-from britannica.pipeline.stages.preprocess import preprocess
-from britannica.pipeline.stages.elements._walker import walk
-from britannica.pipeline.stages.elements._classifier import classify
+from wikikit.db.session import SessionLocal
+from wikikit.db.models import SourcePage
+from wikikit.pipeline.stages.preprocess import preprocess
+from wikikit.pipeline.stages.elements._walker import walk
+from wikikit.pipeline.stages.elements._classifier import classify
 
 _OPENER_RE = re.compile(r"\{\{\s*([^|{}\n]+?)\s*(?=[|}])")
 

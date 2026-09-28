@@ -22,15 +22,15 @@ recurses to the body producer as the same shape.
 """
 from __future__ import annotations
 
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import json
 import re
 from collections import Counter
 from pathlib import Path
 
-from britannica.db.session import SessionLocal
-from britannica.db.models import SourcePage
-from britannica.util.strings import LETTER as _L
+from wikikit.db.session import SessionLocal
+from wikikit.db.models import SourcePage
+from wikikit.util.strings import LETTER as _L
 
 # `strings.LETTER` (any Unicode letter), the SAME alphabet the runtime
 # `_HYPHEN_RE` uses — an ASCII class here voted only ASCII fragments, and the

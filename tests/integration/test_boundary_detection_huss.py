@@ -9,10 +9,10 @@ Page 19: named section <section begin="Huss, John"> WITHOUT bold (continuation),
 This tests that named sections without bold headings are treated as
 continuations rather than creating duplicate articles.
 """
-from britannica.db.models import Article, SourcePage
-from britannica.pipeline.stages import detect_boundaries as detect_boundaries_stage
-from britannica.pipeline.stages import super_detect as super_detect_stage
-from britannica.pipeline.stages.quote_runs import _convert_quote_runs as _clean
+from wikikit.db.models import Article, SourcePage
+from wikikit.pipeline.stages import detect_boundaries as detect_boundaries_stage
+from wikikit.pipeline.stages import super_detect as super_detect_stage
+from wikikit.pipeline.stages.quote_runs import _convert_quote_runs as _clean
 
 
 def test_huss_continuation_across_pages(

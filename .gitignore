@@ -73,7 +73,7 @@ tools/epubcheck/
 # that is left.
 #
 # ANCHORED, and it has to be.  Written as `epub/` this matched a directory of
-# that name at ANY depth — including `src/britannica/epub/`, the SOURCE package.
+# that name at ANY depth — including `src/wikikit/epub/`, the SOURCE package.
 # Its nine files stayed in git only because they predate the rule, and git keeps
 # tracking what it already tracks; a NEW module added there vanished silently,
 # never appearing in `git status` at all.  `/mdx/` below was anchored from the

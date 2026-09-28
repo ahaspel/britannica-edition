@@ -59,7 +59,7 @@ VOLUMES=$(seq 1 28)
 # The book's output root, asked of the book.  It is ASSERTED non-empty before
 # anything uses it: `rm -rf "$EXPORT_DIR"` below must never become
 # `rm -rf "/articles"` because a lookup printed nothing.
-DERIVED=$(uv run python -m britannica.corpora derived)
+DERIVED=$(uv run python -m wikikit.corpora derived)
 : "${DERIVED:?the book did not name its output root}"
 EXPORT_DIR="$DERIVED/articles"
 BUILD_START=$(date +%s)
@@ -150,7 +150,7 @@ walk_volume() {
   # subshell owns its own set -e: import (if any) must succeed before detect.
   if ( set -e
        [ -n "$SKIP_IMPORT" ] || uv run python tools/fetch/import_wikisource_pages.py --indir "$RUN_DIR" --volume "$vol"
-       uv run britannica detect-boundaries "$vol"
+       uv run wikikit detect-boundaries "$vol"
      ) > "$LOG" 2>&1
   then
     echo ok > "$P2_DIR/vol_${vol}.status"
@@ -206,7 +206,7 @@ uv run python tools/diagnostics/snapshot_article_index.py
 # --- Phase 4.1: Assemble + export the whole corpus (in-memory resolution) ---
 echo
 echo "=== Phase 4.1: Assembling + exporting all volumes [$(elapsed)] ==="
-uv run britannica corpus-export
+uv run wikikit corpus-export
 
 # --- Phase 4.2: Measure math widths (refresh scale-hint cache) ---
 # Renders every unique display-mode `«MATH:` marker in the exported
@@ -308,16 +308,16 @@ uv run python tools/viewer/build_readers_guide.py all > /dev/null
 # DISAMBIGUATED classified_toc.json (ABEL→right Abel, Zürich town vs canton).
 echo
 echo "=== Phase 6.4: Building download bundles [$(elapsed)] ==="
-uv run python -m britannica.export.download
+uv run python -m wikikit.export.download
 # The maps bundle (colour plates + Stieler originals) rebuilds too so a registry
 # or image change never ships a stale archive; validates maps.json's file refs.
-uv run python -m britannica.export.download maps
+uv run python -m wikikit.export.download maps
 # The TEI-P5 edition ships as its OWN bundle (eb1911-tei.tar.gz, ~100MB): a
 # reader who wants articles.jsonl for text-mining does not want a 37,000-file XML
 # tree, and the TEI audience does not want the JSONL.  Separation also lets it
 # carry its own DOI if deposited (Zenodo / TAPAS / the Oxford Text Archive).
 # Validity is gated separately in 7.7, against the TEI Consortium's own schema.
-uv run python -m britannica.export.download tei
+uv run python -m wikikit.export.download tei
 
 # --- Phase 7.1: Quality report (visibility, no gate) ---
 # The standing numbers, printed to the log so a regression is visible in the

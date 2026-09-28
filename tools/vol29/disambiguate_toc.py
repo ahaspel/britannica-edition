@@ -15,7 +15,7 @@ discount + prompt caching on the shared system prompt).
 Usage:  uv run python tools/vol29/disambiguate_toc.py
 Dry-run: --dry-run to report ambiguities without calling the API
 """
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import json
 import re
 import sys

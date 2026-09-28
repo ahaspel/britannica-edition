@@ -43,7 +43,7 @@ except AttributeError:
     pass
 
 from render_article import Renderer, DEFAULT_ARTICLE_PATH  # type: ignore  # noqa: E402
-from britannica.util.strings import strip_html_tags
+from wikikit.util.strings import strip_html_tags
 
 
 # ---------------------------------------------------------------------------

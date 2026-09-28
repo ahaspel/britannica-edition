@@ -21,8 +21,8 @@ two such drops corrupted this tool's first draft.  [[feedback_never_read_flat]]
 """
 from __future__ import annotations
 
-from britannica.corpora import current_corpus
-from britannica.export.corpus import load_corpus
+from wikikit.corpora import current_corpus
+from wikikit.export.corpus import load_corpus
 import argparse
 import json
 import random
@@ -34,8 +34,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "src"))
 sys.stdout.reconfigure(encoding="utf-8")
-from britannica.markers import _LINK_RE  # the ONE link-node pattern  # noqa: E402
-from britannica.export.article_json import stable_id_from_filename   # noqa: E402
+from wikikit.markers import _LINK_RE  # the ONE link-node pattern  # noqa: E402
+from wikikit.export.article_json import stable_id_from_filename   # noqa: E402
 
 ART = ROOT / current_corpus().derived("articles")
 FRAME = ROOT / current_corpus().derived("quality_reports", "homonym_frame.json")

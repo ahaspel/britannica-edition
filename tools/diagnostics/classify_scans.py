@@ -13,7 +13,7 @@ Format: {"vol": {"leaf": {"type": "text"|"plate"|"blank", "dark": N, "var": N, "
 Usage:
     python tools/classify_scans.py [--vol N]
 """
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import argparse
 import json
 import re

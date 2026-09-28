@@ -13,7 +13,7 @@ Env: ANTHROPIC_API_KEY must be set.
 """
 from __future__ import annotations
 
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import base64
 import json
 from pathlib import Path

@@ -12,7 +12,7 @@ plus their sizes.  Diffing two fingerprints then names every article whose outpu
 moved, which is what makes a rebuild a TAGGED DIFF rather than a wholesale
 rebaseline ([[feedback_no_wholesale_rebaseline]]).
 """
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import glob
 import html
 import json
@@ -20,10 +20,10 @@ import os
 import re
 import sys
 
-from britannica.export.corpus import NON_ARTICLE as SKIP
-from britannica.markers import WORD_RE, strip_marker_tokens
+from wikikit.export.corpus import NON_ARTICLE as SKIP
+from wikikit.markers import WORD_RE, strip_marker_tokens
 from concurrent.futures import ProcessPoolExecutor
-from britannica.util.strings import HTML_TAG_RE, content_digest
+from wikikit.util.strings import HTML_TAG_RE, content_digest
 
 sys.stdout.reconfigure(encoding="utf-8")
 ART = current_corpus().derived("articles").as_posix()
@@ -42,7 +42,7 @@ ART = current_corpus().derived("articles").as_posix()
 # a content change and shows up as words LOST.  Sequence, not a bag: a swallow
 # removes a run of words in place, and comparing order catches a reordering too.
 _TAG = HTML_TAG_RE
-_WORD = WORD_RE          # ONE spelling of "a word" (britannica.markers)
+_WORD = WORD_RE          # ONE spelling of "a word" (wikikit.markers)
 
 
 def content_tokens(rendered_html):

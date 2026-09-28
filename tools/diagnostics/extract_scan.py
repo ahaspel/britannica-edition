@@ -7,7 +7,7 @@ Usage:
     python tools/extract_scan.py <volume> <start_page> <end_page>
     python tools/extract_scan.py --article <TITLE> <volume>
 """
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import argparse
 import io
 import json
@@ -18,7 +18,7 @@ from pathlib import Path
 from PIL import Image
 
 sys.path.insert(0, "src")
-from britannica.export.pages import leaf_for_ws   # noqa: E402
+from wikikit.export.pages import leaf_for_ws   # noqa: E402
 
 SCAN_DIR = Path("data/raw/ia_scans")
 OUT_DIR = current_corpus().derived("scans")
@@ -95,8 +95,8 @@ def main():
     if args.article:
         title = args.args[0]
         vol = int(args.args[1])
-        from britannica.db.session import SessionLocal
-        from britannica.db.models import Article
+        from wikikit.db.session import SessionLocal
+        from wikikit.db.models import Article
         s = SessionLocal()
         a = s.query(Article).filter(
             Article.title == title.upper(), Article.volume == vol

@@ -33,9 +33,9 @@ def _transform(raw, volume=1, page_number=1):
     BEFORE ``_transform_text_v2``; so the body the transform receives is already
     preprocessed.  Mirror that here (otherwise e.g. ``<noinclude>`` chrome that
     preprocess removes would wrongly appear to 'survive' the transform)."""
-    from britannica.pipeline.stages.quote_runs import _convert_quote_runs
-    from britannica.pipeline.stages.preprocess import preprocess
-    from britannica.pipeline.stages.elements import ElementContext, process_elements
+    from wikikit.pipeline.stages.quote_runs import _convert_quote_runs
+    from wikikit.pipeline.stages.preprocess import preprocess
+    from wikikit.pipeline.stages.elements import ElementContext, process_elements
     return process_elements(
         preprocess(_convert_quote_runs(raw)),
         ElementContext(volume=volume))
@@ -58,7 +58,7 @@ class TestRealImages:
         assert "align=inline" not in result, "align=inline is dead \u2014 no inline mark"
 
     def test_image_marker_has_filename_and_size(self):
-        from britannica.markers import IMG_PARTS_RE, parse_img_meta
+        from wikikit.markers import IMG_PARTS_RE, parse_img_meta
         raw = _load_page(1, 774)
         result = _transform(raw)
         imgs = [(m.group(1), parse_img_meta(m.group(2)))

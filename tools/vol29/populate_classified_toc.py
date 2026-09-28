@@ -20,16 +20,16 @@ fed the builder hand-marked boundaries from a git-tracked `vol29_major_markup.tx
 Neither survives -- nothing is hand-marked now -- but the constants naming their
 inputs sat here unread, and a reader (correctly) believed them.
 """
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import bisect
 import json
 import re
 import sys
 
-from britannica.export.sections import section_key
+from wikikit.export.sections import section_key
 from pathlib import Path
 
-from britannica.link_resolver import build_resolver, _art_norm
+from wikikit.link_resolver import build_resolver, _art_norm
 
 # `vision_text` reads the vision-OCR transcription language; it lives under
 # tools/viewer, which is not a package, so it is reached by path rather than

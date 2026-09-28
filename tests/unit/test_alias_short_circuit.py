@@ -23,7 +23,7 @@ from __future__ import annotations
 
 import pytest
 
-from britannica.link_resolver import LinkResolver
+from wikikit.link_resolver import LinkResolver
 
 
 ARTICLES = [
@@ -67,7 +67,7 @@ def resolver():
     r = LinkResolver(article_index=ARTICLES, embeddings=_Emb(),
                      section_index={}, openings=OPENINGS)
     r._emb = _Emb()
-    from britannica.topic_fisher import Fisher
+    from wikikit.topic_fisher import Fisher
     r.fisher = Fisher(r._emb, r._opening)
     r._openings = OPENINGS
     r._open_cache = dict(OPENINGS)

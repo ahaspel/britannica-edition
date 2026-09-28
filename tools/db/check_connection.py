@@ -2,7 +2,7 @@
 import sys
 sys.path.insert(0, "src")
 from sqlalchemy import text
-from britannica.db.session import SessionLocal
+from wikikit.db.session import SessionLocal
 
 try:
     session = SessionLocal()

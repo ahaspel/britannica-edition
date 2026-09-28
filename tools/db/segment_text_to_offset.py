@@ -23,7 +23,7 @@ import sys
 
 from sqlalchemy import inspect, text
 
-from britannica.db.session import engine
+from wikikit.db.session import engine
 
 
 def columns() -> set[str]:

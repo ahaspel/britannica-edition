@@ -17,7 +17,7 @@ Env: `ANTHROPIC_API_KEY` must be set.
 """
 from __future__ import annotations
 
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import base64
 import io
 import json
@@ -29,7 +29,7 @@ import anthropic
 from PIL import Image
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
-from britannica.export.sections import section_key  # noqa: E402
+from wikikit.export.sections import section_key  # noqa: E402
 
 SCAN_DIR = current_corpus().derived("scans")
 PER_PAGE_OCR = current_corpus().derived("vol29_ocr.json")

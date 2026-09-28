@@ -63,7 +63,7 @@ _WIKILINK_RE = re.compile(r"\[\[\s*([^\]|\n]{1,30})")
 # leak — deleting a producer must never blind the audit.  A static vocabulary of
 # HTML tag names is not that: it is what a tag is, and `util.strings` already
 # points at `render.leaks` as its owner.
-from britannica.render.leaks import KNOWN_TAG_NAMES   # noqa: E402
+from wikikit.render.leaks import KNOWN_TAG_NAMES   # noqa: E402
 
 _HTMLTAG_RE = re.compile(r"</?(" + KNOWN_TAG_NAMES + r")\b", re.IGNORECASE)
 _ENTITY_RE = re.compile(r"&([a-zA-Z]{2,}|#\d+);")
@@ -165,9 +165,9 @@ def find_leaks(text: str) -> Counter:
 
 def _work(item):
     aid, vol, pg, raw = item
-    from britannica.pipeline.stages.elements import (
+    from wikikit.pipeline.stages.elements import (
         ElementContext, process_elements)
-    from britannica.pipeline.stages.preprocess import preprocess
+    from wikikit.pipeline.stages.preprocess import preprocess
     try:
         # Run the stream-`preprocess()` the ingest applies before segments are
         # stored, so the audit reflects PRODUCTION (post-ingest), not the stale

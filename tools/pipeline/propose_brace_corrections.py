@@ -41,7 +41,7 @@ Usage:
 """
 from __future__ import annotations
 
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import json
 import re
 import sys
@@ -50,10 +50,10 @@ from collections import defaultdict
 sys.path.insert(0, "src")
 sys.stdout.reconfigure(encoding="utf-8")
 
-from britannica.db.models import Article                    # noqa: E402
-from britannica.db.session import SessionLocal              # noqa: E402
-from britannica.source_pages import load_pages              # noqa: E402
-from britannica.wikitext import mask_non_template, unmatched_closes  # noqa: E402
+from wikikit.db.models import Article                    # noqa: E402
+from wikikit.db.session import SessionLocal              # noqa: E402
+from wikikit.source_pages import load_pages              # noqa: E402
+from wikikit.wikitext import mask_non_template, unmatched_closes  # noqa: E402
 
 CORRECTIONS = current_corpus().data("corrections.json").as_posix()
 CONTEXT_MIN, CONTEXT_MAX = 40, 220

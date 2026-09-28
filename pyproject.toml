@@ -28,7 +28,7 @@ dependencies = [
 ]
 
 [project.scripts]
-britannica = "britannica.cli.main:run"
+wikikit = "wikikit.cli.main:run"
 
 [project.optional-dependencies]
 mdx = ["mdict-utils==1.3.14"]
@@ -51,7 +51,7 @@ package-dir = {"" = "src"}
 where = ["src"]
 
 [tool.setuptools.package-data]
-"britannica.mdx" = ["sample.json", "windows/*.cs"]
+"wikikit.mdx" = ["sample.json", "windows/*.cs"]
 
 [dependency-groups]
 dev = [

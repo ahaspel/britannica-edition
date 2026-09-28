@@ -14,7 +14,7 @@ import io
 import re
 import sys
 from collections import defaultdict
-from britannica.source_pages import load_pages
+from wikikit.source_pages import load_pages
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                               errors="replace")

@@ -8,7 +8,7 @@ filename pin.  Data, not code — accretes like corrections.json.
 """
 from __future__ import annotations
 
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import json
 from pathlib import Path
 

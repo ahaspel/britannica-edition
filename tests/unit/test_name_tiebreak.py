@@ -29,7 +29,7 @@ have to be perfect — it has to fail into a mechanism we already trust
 from collections import Counter
 
 
-from britannica.books.eb1911.contributors.resolve_contributors_post import pick_winning_spelling
+from eb1911.contributors.resolve_contributors_post import pick_winning_spelling
 
 
 def fold(raw: str) -> str:

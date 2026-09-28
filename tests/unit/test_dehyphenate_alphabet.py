@@ -16,7 +16,7 @@ Two rules, each pinned by the failure that forced it:
   not overwrite per-page print.  Break-agnostic application was rewriting
   10,540 printed hyphens (`table-land`, `small-pox`) across 4,971 articles.
 """
-from britannica.pipeline.stages.elements import _dehyphenate
+from wikikit.pipeline.stages.elements import _dehyphenate
 
 
 def test_accented_words_keep_their_hyphens():
@@ -46,7 +46,7 @@ def test_shoulder_headings_vote_contiguously():
     the site gives shoulders the full margin (user ruling): the SH producer
     votes with `contiguous=True`, and the slug is minted from the joined
     form ("differentiation-…", the stable anchor)."""
-    from britannica.pipeline.stages.elements import process_shoulder
+    from wikikit.pipeline.stages.elements import process_shoulder
     out = process_shoulder(None, "Differenti-ation of Roman from Greek alphabet",
                            None, None)
     assert out == ("«SH:differentiation-of-roman-from-greek-alphabet»"

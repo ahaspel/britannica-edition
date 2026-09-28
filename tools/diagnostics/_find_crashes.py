@@ -25,9 +25,9 @@ from _corpus_cache import iter_raw_articles  # noqa: E402
 
 def work(item):
     aid, vol, pg, raw = item
-    from britannica.pipeline.stages.elements import (
+    from wikikit.pipeline.stages.elements import (
         ElementContext, process_elements)
-    from britannica.pipeline.stages.preprocess import preprocess
+    from wikikit.pipeline.stages.preprocess import preprocess
     try:
         process_elements(preprocess(raw),
                          ElementContext(volume=vol))

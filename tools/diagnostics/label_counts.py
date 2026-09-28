@@ -34,7 +34,7 @@ def _walk(tree) -> Counter:
 
 def _work(item):
     aid, vol, pg0, raw = item
-    from britannica.pipeline.stages.elements._classifier import classify_article
+    from wikikit.pipeline.stages.elements._classifier import classify_article
     try:
         _ph, tree = classify_article(raw)
         return _walk(tree)

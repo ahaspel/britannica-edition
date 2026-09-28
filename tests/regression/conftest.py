@@ -7,12 +7,12 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from britannica.db.base import Base
-from britannica.db.models import Article, ArticleSegment, SourcePage  # noqa: F401
-from britannica.pipeline.stages import detect_boundaries as detect_boundaries_stage
-from britannica.pipeline.stages import super_detect as super_detect_stage
-from britannica.pipeline.stages import super_walker as super_walker_stage
-from britannica.pipeline.stages import transform_articles as transform_articles_stage
+from wikikit.db.base import Base
+from wikikit.db.models import Article, ArticleSegment, SourcePage  # noqa: F401
+from wikikit.pipeline.stages import detect_boundaries as detect_boundaries_stage
+from wikikit.pipeline.stages import super_detect as super_detect_stage
+from wikikit.pipeline.stages import super_walker as super_walker_stage
+from wikikit.pipeline.stages import transform_articles as transform_articles_stage
 
 FIXTURE_DIR = Path(__file__).parent.parent / "fixtures" / "regression"
 

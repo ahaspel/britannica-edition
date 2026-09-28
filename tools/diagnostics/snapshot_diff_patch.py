@@ -48,7 +48,7 @@ sys.path.insert(0, str(REPO / "src"))
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                                errors="replace")
 
-from britannica.pipeline.stages.elements import (  # noqa: E402
+from wikikit.pipeline.stages.elements import (  # noqa: E402
     ElementContext, process_elements)
 
 SNAPSHOT_DIR = REPO / "tests" / "snapshots" / "transform"

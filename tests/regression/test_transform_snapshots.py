@@ -36,8 +36,8 @@ from pathlib import Path
 
 import pytest
 
-from britannica.pipeline.stages.elements import ElementContext, process_elements
-from britannica.pipeline.stages.preprocess import _source_clean
+from wikikit.pipeline.stages.elements import ElementContext, process_elements
+from wikikit.pipeline.stages.preprocess import _source_clean
 
 
 SNAPSHOT_DIR = Path("tests/snapshots/transform")

@@ -11,15 +11,15 @@ Flags captions that contain patterns indicating incomplete sanitization:
 Usage:
     python tools/caption_quality_check.py
 """
-from britannica.corpora import current_corpus
+from wikikit.corpora import current_corpus
 import io
 import json
 
-from britannica.export.corpus import load_corpus
+from wikikit.export.corpus import load_corpus
 import os
 import re
 import sys
-from britannica.util.strings import HTML_TAG_RE
+from wikikit.util.strings import HTML_TAG_RE
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                               errors="replace")

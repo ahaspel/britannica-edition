@@ -1,6 +1,6 @@
 """List articles flagged by the unhandled_marker_in_htmltable check."""
 
-from britannica.export.corpus import load_corpus
+from wikikit.export.corpus import load_corpus
 import re
 import sys
 

@@ -33,9 +33,9 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8",
                                errors="replace")
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "src"))
 
-from britannica.db.session import SessionLocal  # noqa: E402
-from britannica.db.models import Article  # noqa: E402
-from britannica.pipeline.stages.elements._classifier import (  # noqa: E402
+from wikikit.db.session import SessionLocal  # noqa: E402
+from wikikit.db.models import Article  # noqa: E402
+from wikikit.pipeline.stages.elements._classifier import (  # noqa: E402
     classify_article,
 )
 

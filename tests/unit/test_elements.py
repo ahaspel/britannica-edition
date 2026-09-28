@@ -1,18 +1,18 @@
 """Tests for the walk-classify-produce element pipeline."""
 import re
 
-from britannica.pipeline.stages.elements import (
+from wikikit.pipeline.stages.elements import (
     ElementContext,
     process_elements,
 )
-from britannica.pipeline.stages.preprocess import _source_clean
-from britannica.pipeline.stages.elements._shapes import (
+from wikikit.pipeline.stages.preprocess import _source_clean
+from wikikit.pipeline.stages.elements._shapes import (
     SHAPE_BODY,
     SHAPE_BRACE_PIPE,
     SHAPE_DOUBLE_BRACKET,
     SHAPE_HTML_TAG,
 )
-from britannica.pipeline.stages.elements._walker import walk
+from wikikit.pipeline.stages.elements._walker import walk
 
 
 def _non_body(extracts):
