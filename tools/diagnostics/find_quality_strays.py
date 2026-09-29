@@ -10,7 +10,6 @@ Usage:
 from __future__ import annotations
 
 
-from wikikit.corpora import current_corpus
 from wikikit.export.corpus import load_corpus
 from wikikit.util.strings import excerpt   # noqa: E402
 import re
@@ -20,7 +19,6 @@ from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")
 
-ARTICLES_DIR = current_corpus().derived("articles")
 
 
 def main() -> int:

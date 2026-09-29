@@ -44,7 +44,7 @@ def test_no_constant_has_become_unread():
         + "\n  Delete them, or use them.  An unread constant is not harmless: it "
           "answers\n  searches and anchors comments on behalf of code that no "
           "longer runs.\n  If it is deliberate, run "
-          "src/wikikit/audits/unread_constants.py --accept"
+          "python -m wikikit.audits.unread_constants --accept"
     )
 
 
@@ -62,5 +62,5 @@ def test_the_baseline_does_not_name_things_that_are_now_used():
     assert not stale, (
         f"{len(stale)} baseline entr(y/ies) no longer unread — fixed, good:\n    "
         + "\n    ".join(stale)
-        + "\n  Run src/wikikit/audits/unread_constants.py --accept to bank the win."
+        + "\n  Run python -m wikikit.audits.unread_constants --accept to bank the win."
     )

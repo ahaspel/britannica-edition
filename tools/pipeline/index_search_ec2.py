@@ -17,13 +17,11 @@ import urllib.request
 # rebuild deploy step, so search indexing uses the SAME marker->text converter
 # as the export (wikikit.markers) -- no separate EC2 copy of the strip logic.
 # Locally (running from the repo) there is no shipped copy, so fall back to the
-# real module on `src`.
+# installed engine.
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 try:
     from markers import markers_to_text
 except ModuleNotFoundError:
-    sys.path.insert(0, os.path.join(
-        os.path.dirname(os.path.abspath(__file__)), "..", "..", "src"))
     from wikikit.markers import markers_to_text
 
 # Env-overridable so ONE indexer serves both EC2 (defaults) and a local reindex:

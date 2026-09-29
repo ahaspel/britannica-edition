@@ -24,10 +24,13 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 DIAG = ROOT / "tools" / "diagnostics"
-AUDITS = ROOT / "src" / "wikikit" / "audits"
-# The rebuild's gates and measurements live in the engine package since wikikit
-# 7b-1 (`python -m wikikit.diagnostics.<name>`); they are diagnostics all the same.
-ENGINE_DIAG = ROOT / "src" / "wikikit" / "diagnostics"
+# The engine is its own package now (a separate checkout): its gates,
+# measurements and audits are diagnostics all the same, and its public
+# functions are answers too.  Found through the INSTALLED package.
+import wikikit  # noqa: E402
+ENGINE = pathlib.Path(wikikit.__file__).resolve().parent
+ENGINE_DIAG = ENGINE / "diagnostics"
+AUDITS = ENGINE / "audits"
 SRC = ROOT / "src"
 
 
@@ -67,6 +70,8 @@ def row(hits, left, right, width=38):
 
 
 def main():
+    # Engine docstrings carry arrows and dashes; a cp1252 console cannot print them.
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("terms", nargs="*", help="words describing your question")
     ap.add_argument("--all", action="store_true", help="list every diagnostic")
@@ -100,11 +105,12 @@ def main():
 
     print(f"\n  PUBLIC FUNCTIONS in src matching {a.terms}:")
     fns = []
-    for p in SRC.rglob("*.py"):
+    for p in list(SRC.rglob("*.py")) + list(ENGINE.rglob("*.py")):
         for name, first, doc in public_functions(p):
             s = score(name + " " + doc, a.terms)
             if s:
-                rel = p.relative_to(ROOT).as_posix()
+                rel = (p.relative_to(ROOT) if p.is_relative_to(ROOT)
+                       else "wikikit" / p.relative_to(ENGINE)).as_posix()
                 fns.append((s, f"{rel}:{name}", first))
     for s, where, first in sorted(fns, reverse=True)[:8]:
         print(row(s, where, first[:60], width=56))

@@ -39,7 +39,7 @@ def test_no_symbol_has_become_a_second_implementation():
         f"{len(new)} function name(s) now defined in more than one library "
         f"module:\n{detail}\nIf it is the same job, give it one owner and import "
         "it. If the collision is genuinely coincidental, run "
-        "src/wikikit/audits/dup_constants.py --accept.")
+        "python -m wikikit.audits.dup_constants --accept.")
 
 
 def test_no_literal_has_joined_the_duplicated_set():
@@ -51,7 +51,7 @@ def test_no_literal_has_joined_the_duplicated_set():
     assert not new, (
         f"{len(new)} literal(s) became a second implementation:\n{detail}\n"
         "Give it ONE owner and import it. If the duplication is genuinely "
-        "intended, run src/wikikit/audits/dup_constants.py --accept.")
+        "intended, run python -m wikikit.audits.dup_constants --accept.")
 
 
 def test_the_baseline_is_not_vacuous():
@@ -59,5 +59,8 @@ def test_the_baseline_is_not_vacuous():
     assert BASELINE.exists(), "baseline file missing"
     base = _baseline()
     assert len(base.get("literals", [])) > 50, "literal baseline implausibly small"
-    assert len(base.get("symbols", [])) > 5, "symbol baseline implausibly small"
+    # The SYMBOL baseline is only checked for existence: how many duplicate names
+    # a repository has acknowledged depends on its size (the book on its own has
+    # one), and the collector checks below catch a broken scan either way.
+    assert isinstance(base.get("symbols"), list), "symbol baseline missing"
     assert len(collect()) > 50, "collector found almost nothing — check its filters"

@@ -12,7 +12,7 @@ uv run python tools/diagnostics/what_answers.py <words describing the question>
 ```
 
 60 diagnostics, each docstring naming the question it answers, plus the public
-helpers in `src/wikikit` and `src/eb1911`. Two seconds. Reinventions here have produced: an
+helpers in the engine (wikikit, checked out at `../wikikit`) and `src/eb1911`. Two seconds. Reinventions here have produced: an
 alias audit reporting pairs "broken" that the real gate accepts, leaf-offset
 arithmetic raising a production alarm with no instance behind it, and a wikitext
 stripper that ate 73% of a page and made a 97%-accurate OCR read as 42%.
