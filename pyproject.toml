@@ -25,6 +25,7 @@ dependencies = [
   # deterministic; pulls numpy + onnxruntime.  See docs/topic_resolver_redesign.md.
   "fastembed>=0.3",
   "numpy>=1.26",
+  "anthropic>=1.9.0",
 ]
 
 [project.scripts]
