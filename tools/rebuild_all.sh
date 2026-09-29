@@ -290,7 +290,7 @@ uv run python tools/viewer/build_preface.py
 # Corpus fingerprint for the viewer's `?v=` article-cache bust.  MUST run after
 # Phase 5.4, which patches every article JSON — stamping before that would
 # fingerprint bytes we are not shipping.
-uv run python tools/viewer/build_stamp.py
+uv run python -m wikikit.site.stamp
 
 # --- Phase 6.3: Build Reader's Guide (65 chapters + 6 part pages + TOC) ---
 # Depends on data/derived/articles/index.json (Phase 4) and

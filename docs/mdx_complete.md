@@ -169,7 +169,7 @@ preserves the complete mapping. See `mdx_packaging.md` for the headword rules.
 
 The initial request was the **site's exact hierarchy
 and result presentation**, with THUCYDIDES first for `thucydides`. The canonical
-ranking is `tools/viewer/search-api.js:rankHits`: exact title → first title word
+ranking is `search-api.js:rankHits` (wikikit.site pages): exact title → first title word
 → any title word → title prefix → title substring → body-only; within a tier,
 body occurrence count descending, then alphabetically. The site's full-results
 view shows title and printed location for title matches; body-only results add

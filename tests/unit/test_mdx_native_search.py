@@ -1,6 +1,5 @@
 """Exercise packaged native search using the real JS helper and SQLite store."""
 import json
-from pathlib import Path
 import shutil
 import re
 import subprocess
@@ -14,7 +13,6 @@ from wikikit.mdx.native import package_search
 
 @pytest.fixture
 def edition(tmp_path):
-    root = Path(__file__).resolve().parents[2]
     articles = {
         'swift': {'title':'SWIFT, JONATHAN', 'volume':1, 'page_start':1},
         'metal': {'title':'MERCURY', 'volume':1, 'page_start':2},
@@ -30,7 +28,7 @@ def edition(tmp_path):
                '<a href="#note-1">note</a>') for s,a in articles.items()}
     add_headwords(entries, articles, aliases)
     entries, keys = label_content_entries(entries, articles)
-    clean, files = package_search(tmp_path, entries, keys, articles, aliases, '.eb1911{color:black}', root)
+    clean, files = package_search(tmp_path, entries, keys, articles, aliases, '.eb1911{color:black}')
     (tmp_path/'search/binding.json').write_text(json.dumps({'dictionaryId':'test-id'}))
     return tmp_path, clean, keys
 

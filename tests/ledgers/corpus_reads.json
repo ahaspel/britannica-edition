@@ -5,7 +5,6 @@
   "tools/diagnostics/link_census.py": "samples N stems and compares against production; prints '(fetch failures N)' so a dropped pair is visible",
   "tools/pipeline/index_search_ec2.py": "streams files to Meilisearch; prints 'Found N' and 'Indexed N'",
   "tools/diagnostics/baseline_article_bodies.py": "copies the directory as a backup; counts what it wrote",
-  "tools/viewer/build_stamp.py": "hashes files for a build stamp — never reads a payload",
   "tools/diagnostics/corpus_stamp.py": "STATS files (name/size/mtime) to answer 'has anything written here since the rebuild finished' — never opens a payload, and must not: reading through load_corpus would parse 37k JSONs (~90s) and turn a 40ms deploy gate into one worth skipping.  Reports its own count in both the stamp and the refusal message"
  },
  "raw source pages": {}

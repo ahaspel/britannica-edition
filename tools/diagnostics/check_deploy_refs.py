@@ -1,6 +1,7 @@
 """Verify the deployed PAGES, and every static asset they reference, are reachable.
 
-Scans tools/viewer/*.html for asset references — `<script src=...>`,
+Scans the assembled site's pages (data/derived/site/*.html, what deploy.sh
+uploads) for asset references — `<script src=...>`,
 `<link href=...>`, `<img src=...>`, `/data/...` fetch literals, and
 `${BASE}/file.json` template literals — then HEAD-checks each one against
 the live site. Catches the "shipped HTML that references a file we forgot
@@ -37,7 +38,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-VIEWER_DIR = ROOT / "tools" / "viewer"
+SITE_DIR = ROOT / "data" / "derived" / "site"    # deploy.sh's $SITE
 SITE = "https://britannica11.org"
 TIMEOUT_SECS = 15
 MAX_WORKERS = 16
@@ -130,13 +131,13 @@ def collect_refs(html_path: Path) -> tuple[set[str], set[str]]:
 
 DEPLOY_SH = ROOT / "tools" / "deploy.sh"
 _VIEWER_LOOP_RE = re.compile(
-    r"for f in ((?:[^;]|\n)*?); do\s*\n\s*aws s3 cp \"tools/viewer/\$f\.html\"")
+    r"for f in ((?:[^;]|\n)*?); do\s*\n\s*aws s3 cp \"\$SITE/\$f\.html\"")
 
 
 def deployed_pages() -> set[str]:
     """The pages the deploy actually ships, read from `deploy.sh` itself.
 
-    NOT a glob of tools/viewer/*.html — that directory also holds pages the
+    NOT a glob of the site's *.html — that folder also holds pages the
     deploy does not upload (the 72 Reader's Guide chapters go by another path,
     and `leaf_check.html` is a dev page), so a glob would fail on files that were
     never meant to be live.  And NOT a hand-kept list here, which would be a
@@ -177,9 +178,10 @@ def report(label: str, refs: set[str], failures: dict[str, int | str],
 
 
 def main() -> int:
-    html_files = sorted(VIEWER_DIR.glob("*.html"))
+    html_files = sorted(SITE_DIR.glob("*.html"))
     if not html_files:
-        print(f"No HTML files found under {VIEWER_DIR}", file=sys.stderr)
+        print(f"No HTML files found under {SITE_DIR} — assemble the site first "
+              "(uv run python -m wikikit.site.build)", file=sys.stderr)
         return 2
 
     hard_all: set[str] = set()

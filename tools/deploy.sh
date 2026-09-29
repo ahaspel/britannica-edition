@@ -3,7 +3,8 @@
 #
 # This is Phase 7 + Phase 9 of rebuild_all.sh, extracted so a local `--no-deploy`
 # build can be reviewed and THEN shipped with one fast command — without rebuilding.
-# It pushes whatever is currently in data/derived/ and tools/viewer/, so run it ONLY
+# It pushes whatever is currently in data/derived/ — the site included, assembled into
+# data/derived/site/ from the engine's pages and tools/viewer/ — so run it ONLY
 # right after a clean FULL rebuild you have reviewed: a partial or stale tree here is
 # exactly the "partial deploy" the project forbids ([[feedback_never_partial_rebuild]]).
 # `rebuild_all.sh --deploy` calls this at the end; it is also safe to run standalone.
@@ -141,8 +142,17 @@ aws s3 cp "$DERIVED/download/README.md" s3://britannica11.org/download/README.md
 # build's `?v=` and restoring the exact immutable-cache staleness the stamp
 # exists to defeat.  It costs ~5s and is deterministic, so running it twice
 # (rebuild + here) yields the same value.
+# The site: the engine's pages filled with this book's names, beside the book's
+# own pages, in the ONE folder every upload below reads from.
+SITE=data/derived/site
+echo "  Assembling the site..."
+uv run python -m wikikit.site.build || {
+  echo "FATAL: could not assemble the site — refusing to deploy." >&2
+  exit 1
+}
+
 echo "  Stamping corpus fingerprint..."
-uv run python tools/viewer/build_stamp.py || {
+uv run python -m wikikit.site.stamp || {
   echo "FATAL: could not stamp the corpus fingerprint — refusing to deploy," >&2
   echo "       because shipping the previous stamp silently serves stale articles." >&2
   exit 1
@@ -156,7 +166,7 @@ echo "  Uploading viewer (HTML + JS = no-cache; content isn't hashed yet, so rev
 for f in viewer index search scans maps contributors home preface topics \
          ancillary ancillary-prefatory-note ancillary-index-preface ancillary-abbreviations \
          about download; do
-  aws s3 cp "tools/viewer/$f.html" "s3://britannica11.org/$f.html" \
+  aws s3 cp "$SITE/$f.html" "s3://britannica11.org/$f.html" \
     --content-type "text/html; charset=utf-8" --cache-control "no-cache"
 done
 # build-stamp.js carries the corpus fingerprint the viewer appends to article
@@ -164,21 +174,21 @@ done
 # the previous build's URL, which is precisely the immutable-cache staleness the
 # stamp exists to defeat.
 for f in search-api article-urls typeahead gc-gate build-stamp; do
-  aws s3 cp "tools/viewer/$f.js" "s3://britannica11.org/$f.js" \
+  aws s3 cp "$SITE/$f.js" "s3://britannica11.org/$f.js" \
     --content-type "application/javascript" --cache-control "no-cache"
 done
-aws s3 cp tools/viewer/favicon.svg s3://britannica11.org/favicon.svg \
+aws s3 cp "$SITE/favicon.svg" s3://britannica11.org/favicon.svg \
   --content-type "image/svg+xml" --cache-control "public, max-age=86400"
 
 echo "  Uploading Reader's Guide (72 pages + 1 image)..."
-for f in tools/viewer/readers-guide.html \
-         tools/viewer/readers-guide-part-*.html \
-         tools/viewer/readers-guide-ch*.html; do
+for f in "$SITE"/readers-guide.html \
+         "$SITE"/readers-guide-part-*.html \
+         "$SITE"/readers-guide-ch*.html; do
   aws s3 cp "$f" "s3://britannica11.org/$(basename "$f")" \
     --content-type "text/html; charset=utf-8" \
     --cache-control "no-cache"
 done
-aws s3 cp tools/viewer/readers-guide-i_008.jpg s3://britannica11.org/readers-guide-i_008.jpg
+aws s3 cp "$SITE/readers-guide-i_008.jpg" s3://britannica11.org/readers-guide-i_008.jpg
 
 echo "  Invalidating CloudFront..."
 aws cloudfront create-invalidation --distribution-id E24BJKH0IB4I6 --paths "/*" > /dev/null

@@ -9,7 +9,7 @@ reviewed: a partial or stale tree here is exactly the partial deploy the project
 forbids".  That was an instruction to a human, and instructions get judged in the
 moment by whoever wants to ship — which is the moment least able to judge them.
 
-`build_stamp.py` does NOT cover this: it fingerprints the bytes on disk for
+`wikikit.site.stamp` does NOT cover this: it fingerprints the bytes on disk for
 cache-busting, so it describes a contaminated corpus just as faithfully as a
 clean one.
 

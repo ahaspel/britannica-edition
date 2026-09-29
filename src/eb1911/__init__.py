@@ -143,6 +143,17 @@ EB1911 = Corpus(
     subtitle="A Dictionary of Arts, Sciences, Literature and General Information",
     years="1910–1911",
     article_volumes=28,
+    # The site's pages (wikikit.site).  The search key is the PUBLIC
+    # search-only key, scoped to `articles`; it changes when the server's
+    # master key is rotated.
+    work_name="Encyclopædia Britannica",
+    edition_label="11th Edition",
+    monogram="EB",
+    search_key="14120ac7623ce72750bf668e79a0992cdf310ac38cbf0bd7bce51840bfbf9ed2",
+    analytics_code="britannica11",
+    volume_scans_url="https://archive.org/details/encyclopaediabri{vol}chisrich",
+    contributor_example="Chisholm",
+    site_dir="tools/viewer",
     article_pages=_ARTICLE_PAGES,
     # The source leaves this plate empty; the dictionary excludes it.
     empty_records={"25-0483-dc502a":

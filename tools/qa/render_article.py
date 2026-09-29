@@ -49,7 +49,7 @@ except AttributeError:
     pass
 
 BASE_URL = "http://localhost:8000"
-VIEWER_PATH = "/tools/viewer/viewer.html"
+VIEWER_PATH = "/viewer.html"
 DEFAULT_ARTICLE_PATH = "/data/derived/articles"
 
 

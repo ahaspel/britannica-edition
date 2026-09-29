@@ -53,12 +53,6 @@ build/
 *.tsv
 *.epub.sha256
 
-# Corpus fingerprint for the viewer article-cache bust — build output, a hash of
-# data/derived/articles (which is itself untracked).  A committed copy could not be
-# verified from the repo and would go stale against the local corpus; deploy.sh
-# regenerates it immediately before upload.
-tools/viewer/build-stamp.js
-
 # EPUBCheck, the TEI Consortium-independent validator we gate the books on.
 # 32 MB of third-party jar — installed, not committed.  `tools/check_epub.sh`
 # IS committed, knows this path, and prints the download URL when the jar is

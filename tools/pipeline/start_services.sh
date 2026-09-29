@@ -86,6 +86,6 @@ echo
 echo "============================================"
 echo "  All services running."
 echo
-echo "  Viewer:  http://localhost:8000/tools/viewer/index.html"
-echo "  Search:  http://localhost:8000/tools/viewer/search.html"
+echo "  Viewer:  http://localhost:8000/index.html"
+echo "  Search:  http://localhost:8000/search.html"
 echo "============================================"

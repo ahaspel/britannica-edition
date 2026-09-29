@@ -16,9 +16,12 @@ Two jobs in one server:
    ZERO local/production switches — every href and fetch is written in the
    production form and works in both worlds:
 
-     /                        → tools/viewer/home.html
-     /{page}.html, /{asset}   → tools/viewer/{...} when it exists there
-     /article/{sid}[/{slug}]  → tools/viewer/viewer.html  (the CloudFront
+     /                        → the site's home.html
+     /{page}.html, /{asset}   → the site's file of that name, when it has one:
+                                produced per request by `wikikit.site.page`,
+                                the function deploy assembles the site with,
+                                so an edit shows without a build step
+     /article/{sid}[/{slug}]  → the site's viewer.html  (the CloudFront
                                 article-rewrite: 200-serve the SPA shell;
                                 the client routes on location.pathname)
      /data/articles/*         → data/derived/articles/*
@@ -31,11 +34,12 @@ Two jobs in one server:
                                 Authorization REWRITTEN to the local dev key
                                 (clients always send the production key)
      everything else          → repo-root relative (dev conveniences like
-                                /tools/viewer/… and /data/derived/… still work)
+                                /data/derived/… still work)
 
 Run by hand the same way the task does:  uv run python tools/serve.py [port]
 """
 from wikikit.corpora import current_corpus
+from wikikit.site.build import page
 import http.server
 import os
 import re
@@ -48,7 +52,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-VIEWER = ROOT / "tools" / "viewer"
 MEILI = "http://127.0.0.1:7700"
 MEILI_LOCAL_KEY = "britannica-dev-key"
 PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8000
@@ -92,17 +95,33 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             pass
 
     # ── production-shaped routing ────────────────────────────────────────
-    def _rewrite_path(self) -> None:
-        """Map the production URL space onto the working tree (in place)."""
-        path, sep, query = self.path.partition("?")
-
+    def _serve_site(self, head: bool) -> bool:
+        """Answer with a bucket-root file of the site, if the path names one."""
+        path = self.path.partition("?")[0]
         if path == "/":
-            path = "/home.html"
+            name = "home.html"
         elif path.startswith("/article/"):
             # The CloudFront article-rewrite: serve the SPA shell; the client
             # routes on the id in location.pathname.
-            path = "/tools/viewer/viewer.html"
-        elif path.startswith("/data/articles/"):
+            name = "viewer.html"
+        else:
+            name = path.lstrip("/")
+        body = page(name) if name and "/" not in name else None
+        if body is None:
+            return False
+        self.send_response(200)
+        self.send_header("Content-Type", self.guess_type(name))
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        if not head:
+            self.wfile.write(body)
+        return True
+
+    def _rewrite_path(self) -> None:
+        """Map the rest of the production URL space onto the working tree (in place)."""
+        path, sep, query = self.path.partition("?")
+
+        if path.startswith("/data/articles/"):
             path = "/data/derived/articles/" + path[len("/data/articles/"):]
         elif path.startswith("/data/scans/"):
             path = "/data/derived/scans/" + path[len("/data/scans/"):]
@@ -115,11 +134,6 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             home = _DOWNLOAD_HOME.get(name.removesuffix(".sha256"))
             if home:
                 path = f"/{home}/{name}"
-
-        # A bucket-root file that lives in tools/viewer/ locally.
-        candidate = path.lstrip("/")
-        if "/" not in candidate and (VIEWER / candidate).is_file():
-            path = f"/tools/viewer/{candidate}"
         self.path = path + (sep + query if query else "")
 
     # ── meilisearch proxy ────────────────────────────────────────────────
@@ -165,6 +179,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         if path.startswith("/search-api/"):
             self._proxy_meili(path[len("/search-api"):], query)
             return
+        if self._serve_site(head=False):
+            return
         self._rewrite_path()
         super().do_GET()
 
@@ -172,6 +188,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         path, _, query = self.path.partition("?")
         if path.startswith("/search-api/"):
             self._proxy_meili(path[len("/search-api"):], query)
+            return
+        if self._serve_site(head=True):
             return
         self._rewrite_path()
         super().do_HEAD()

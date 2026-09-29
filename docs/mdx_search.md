@@ -112,9 +112,9 @@ alternative names are matching data, never duplicate displayed results.
 
 ## Existing implementation to reuse
 
-- `tools/viewer/typeahead.js` calls `searchClient.rankedSearch(q, {limit: 50})`
+- `typeahead.js` (wikikit.site pages) calls `searchClient.rankedSearch(q, {limit: 50})`
   and displays the first 16 article records with their canonical titles.
-- `tools/viewer/search-api.js` owns accent folding, title ranking and occurrence
+- `search-api.js` (wikikit.site pages) owns accent folding, title ranking and occurrence
   counting. Both site displays use this one ranking implementation.
 - The site's candidates come from Meilisearch, with all query terms required,
   then a folded title/body substring gate. This is not a simple title-only
