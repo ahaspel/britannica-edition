@@ -40,7 +40,7 @@ from wikikit.pipeline.stages.elements._classifier import (  # noqa: E402
 )
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from _ast_shapes import walk_labels          # noqa: E402
+from wikikit.audits._ast_shapes import walk_labels          # noqa: E402
 
 
 def main() -> int:

@@ -20,7 +20,7 @@ from wikikit.db.models import Article
 from wikikit.pipeline.stages.elements._classifier import classify_article
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from _ast_shapes import walk_labels          # noqa: E402
+from wikikit.audits._ast_shapes import walk_labels          # noqa: E402
 
 
 def main():

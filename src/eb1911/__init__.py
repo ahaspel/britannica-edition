@@ -126,7 +126,7 @@ EB1911 = Corpus(
         "templates/tei_corpus_source.xml", "epub_cover.jpg",
         "templates/mdx_description.html", "templates/mdx_description_sample.html",
         "templates/mdx_about.html", "templates/mdx_help_sample.html",
-        "mdx_phrases.json", "fake_recursion_exceptions.json", "reference_link_overrides.json",
+        "mdx_phrases.json", "reference_link_overrides.json",
     }),
     site="https://britannica11.org",
     short_name="Britannica 11",
