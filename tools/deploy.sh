@@ -197,7 +197,7 @@ scp -i "$EC2_KEY" \
   "$MARKERS_PY" \
   ec2-user@"$EC2_HOST":~/
 ssh -i "$EC2_KEY" ec2-user@"$EC2_HOST" \
-  "aws s3 sync s3://britannica11.org/data/articles/ ~/articles/ --delete --quiet && python3 ~/index_search_ec2.py"
+  "aws s3 sync s3://britannica11.org/data/articles/ ~/articles/ --delete --quiet && MEILI_MASTER_KEY=\"\$(cat ~/.meili_master_key)\" python3 ~/index_search_ec2.py"
 
 echo "  Deploy complete. [$(elapsed)]"
 

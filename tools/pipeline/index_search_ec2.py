@@ -24,11 +24,16 @@ try:
 except ModuleNotFoundError:
     from wikikit.markers import markers_to_text
 
-# Env-overridable so ONE indexer serves both EC2 (defaults) and a local reindex:
+# Env-overridable so ONE indexer serves both EC2 and a local reindex:
 #   MEILI_MASTER_KEY=britannica-dev-key ARTICLES_DIR=data/derived/articles \
 #     uv run python tools/pipeline/index_search_ec2.py
+# The key has NO default.  One used to sit here, and it was the production
+# master key, published in this public repository (rotated 2026-09-29).  On
+# EC2 the deploy passes it from ~/.meili_master_key; nothing else carries it.
 MEILI_URL = os.environ.get("MEILI_URL", "http://localhost:7700")
-MEILI_KEY = os.environ.get("MEILI_MASTER_KEY", "gibbon-winters-lewis")
+MEILI_KEY = os.environ.get("MEILI_MASTER_KEY")
+if not MEILI_KEY:
+    sys.exit("MEILI_MASTER_KEY is not set — on EC2 it is in ~/.meili_master_key")
 INDEX_NAME = "articles"
 ARTICLES_DIR = os.environ.get("ARTICLES_DIR", os.path.expanduser("~/articles"))
 BATCH_SIZE = 500
