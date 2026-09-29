@@ -52,7 +52,9 @@ package-dir = {"" = "src"}
 where = ["src"]
 
 [tool.setuptools.package-data]
-"wikikit.mdx" = ["sample.json", "windows/*.cs"]
+"wikikit.mdx" = ["sample.json", "windows/*.cs", "mdx-title-search.cjs",
+                 "installer/*.cjs", "installer/*.json", "installer/Install.command",
+                 "installer/.gitignore"]
 "wikikit.diagnostics" = ["tei_all.rng"]
 
 [dependency-groups]
