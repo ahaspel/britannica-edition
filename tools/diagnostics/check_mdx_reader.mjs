@@ -73,23 +73,36 @@ async function waitFor(expression) {
   }
   throw new Error('Reader wait failed: ' + expression);
 }
+// A stable identifier is never a key (2026-09-25): the dictionary knows each
+// entry by its display headword, and the manifest records which is which.
+const headword = key => manifest.display_keys[key] ?? key;
+// Links carry the headword too, so a link's KIND is found through its id.
+const headwordsOf = idPattern => Object.entries(manifest.display_keys)
+  .filter(([key]) => idPattern.test(key)).map(([, word]) => word);
+const linkWords = `[...document.querySelectorAll('.eb1911 a')].map(a=>decodeURIComponent(a.getAttribute('href')||'').split('gdlookup://localhost/').pop())`;
+const linkTo = idPattern => `[...document.querySelectorAll('.eb1911 a')].find(a=>${JSON.stringify(headwordsOf(idPattern))}.includes(decodeURIComponent(a.getAttribute('href')||'').split('gdlookup://localhost/').pop()))`;
 async function lookup(word, expected) {
   await call('Page.navigate', {url:'about:blank'});
   await waitFor(`location.href==='about:blank'`);
   // Match the URL produced by native title lookup, including its preference.
-  await call('Page.navigate', {url:'gdlookup://localhost/?word=' + encodeURIComponent(word) + '&group=4294967294' + (ignoreDiacritics ? '&ignore_diacritics=1' : '')});
+  await call('Page.navigate', {url:'gdlookup://localhost/?word=' + encodeURIComponent(headword(word)) + '&group=4294967294' + (ignoreDiacritics ? '&ignore_diacritics=1' : '')});
   await waitFor(`document.readyState==='complete' && document.querySelector('.eb1911') && document.body.textContent.toLowerCase().includes(${JSON.stringify(expected.toLowerCase())})`);
   // Load offscreen lazy images too: this tests every MDD resource, not only
   // the first viewport of a long article. Normal rendering retains laziness.
   await evaluate(`[...document.querySelectorAll('.eb1911 img')].forEach(i=>i.loading='eager')`);
   await waitFor(`[...document.querySelectorAll('.eb1911 img')].every(i=>i.complete)`);
 }
+// A reader on a virtual display without a window manager paints no frame to
+// capture; MDX_READER_NO_SNAPSHOTS=1 skips the pictures (every check is a DOM
+// assertion) and the report records that it did.
+const snapshots = !process.env.MDX_READER_NO_SNAPSHOTS;
 async function snapshot(name) {
+  if (!snapshots) return;
   const r = await call('Page.captureScreenshot', {format:'png'});
   writeFileSync(`${output}/reader-qa/${name}.png`, Buffer.from(r.data, 'base64'));
 }
 const report = {checked_utc:new Date().toISOString(), reader_dir:readerHome, artifact_sha256:artifactHashes,
-  native_network_sources:'disabled in portable config', endpoint,
+  native_network_sources:'disabled in portable config', endpoint, snapshots,
   engine:await (await fetch(endpoint + '/json/version')).json(), checks:[]};
 mkdirSync(`${output}/reader-qa`, {recursive:true});
 try {
@@ -97,7 +110,7 @@ try {
   await call('Network.setBlockedURLs', {urls:['http://*', 'https://*']});
   await call('Emulation.setDeviceMetricsOverride', {width:1050, height:800, deviceScaleFactor:1, mobile:false});
   const entries = JSON.parse(readFileSync(`${output}/entries.json`, 'utf8'));
-  for (const stem of Object.keys(manifest.sample)) {
+  for (const stem of Object.keys(manifest.sample.articles)) {
     const key = 'EB1911:article:' + stem;
     const title = entries[key].match(/<h1[^>]*>(.*?)<\/h1>/s)?.[1].replace(/<[^>]*>/g, '');
     assert(title, 'No article heading: ' + key);
@@ -124,8 +137,19 @@ try {
   await call('Page.navigateToHistoryEntry', {entryId:history.entries[history.currentIndex-1].id});
   await waitFor(`document.querySelector('.eb1911')?.textContent.includes('Choose an article')`);
   report.checks.push({back_navigation:true});
-  await lookup('Continued Fraction', 'CONTINUED FRACTIONS');
-  report.checks.push({alias:'Continued Fraction', resolved:true});
+  for (const [alias, stem] of Object.entries(manifest.sample.aliases)) {
+    const target = headword('EB1911:article:' + stem);
+    if (!manifest.native_search && target.toUpperCase().startsWith(alias.toUpperCase())) {
+      // A prefix of its own article's headword is not a key (2026-09-25): the
+      // reader finds no exact match and offers the article as a close word.
+      await call('Page.navigate', {url:'gdlookup://localhost/?word=' + encodeURIComponent(alias) + '&group=4294967294' + (ignoreDiacritics ? '&ignore_diacritics=1' : '')});
+      await waitFor(`document.readyState==='complete' && document.body.innerText.includes('Close words') && document.body.innerText.includes(${JSON.stringify(target)})`);
+      report.checks.push({alias, prefix_of_headword:true, offered_as_close_word:target});
+    } else {
+      await lookup(alias, target);
+      report.checks.push({alias, resolved:target});
+    }
+  }
   await lookup('ABABDA', 'ABĀBDA');
   report.checks.push({folded_lookup:'ABABDA', resolved:true});
   await lookup('AARON’S ROD', 'AARON’S ROD');
@@ -141,14 +165,14 @@ try {
   await waitFor(`location.hash==='#fnref-1'`);
   report.checks.push({footnote_and_return:true});
   await lookup('ALGEBRA', 'ALGEBRA');
-  await evaluate(`document.querySelector('.eb1911 a[href*="contributor"]').click()`);
+  await evaluate(`document.querySelector('.eb1911 a[href*="contributor" i]').click()`);
   await waitFor(`document.querySelector('.eb1911 h2')?.textContent.includes('Articles')`);
   assert(await evaluate(`document.querySelector('.eb1911 h1').textContent.includes('Sheppard')`));
   report.checks.push({contributor_navigation:true});
   await lookup('ALGEBRA', 'ALGEBRA');
-  assert(await evaluate(`(()=>{const topics=document.querySelector('.eb1911 .article-topics');const byline=document.querySelector('.eb1911 .contributors');return !!topics && byline?.nextElementSibling===topics && !topics.closest('details') && topics.getBoundingClientRect().height>0})()`), 'Topics must be visible directly below the byline');
-  await evaluate(`document.querySelector('.eb1911 a[href*="topic"]').click()`);
-  await waitFor(`location.href.includes('topic') && document.querySelector('.eb1911 h1') && !document.querySelector('.eb1911 .body-text')`);
+  assert(await evaluate(`(()=>{const topics=document.querySelector('.eb1911 .topic-refs');const byline=document.querySelector('.eb1911 .contributors');return !!topics && byline?.nextElementSibling===topics && !topics.closest('details') && topics.getBoundingClientRect().height>0})()`), 'Topics must be visible directly below the byline');
+  await evaluate(`document.querySelector('.eb1911 a[href*="topic" i]').click()`);
+  await waitFor(`location.href.toLowerCase().includes('topic') && document.querySelector('.eb1911 h1') && !document.querySelector('.eb1911 .body-text')`);
   report.checks.push({topic_navigation:true});
   if (complete) {
     await lookup('Jonathan Swift', 'SWIFT, JONATHAN');
@@ -178,7 +202,7 @@ try {
     await lookup('Britannica 11', 'Complete offline reference');
     const section = entries['EB1911:article:01-0639-46474b'].match(/id="(section-[^"]+)"/)[1];
     // An explicit QA link to a real anchor; no test text is shipped in the book.
-    await evaluate(`(()=>{const a=document.createElement('a');a.textContent='Open a section within Algebra';a.href='gdlookup://localhost/?word='+encodeURIComponent('EB1911:article:01-0639-46474b')+'&group=4294967294&gdanchor='+${JSON.stringify(section)};document.querySelector('.eb1911').append(a)})()`);
+    await evaluate(`(()=>{const a=document.createElement('a');a.textContent='Open a section within Algebra';a.href='gdlookup://localhost/?word='+encodeURIComponent(${JSON.stringify(headword('EB1911:article:01-0639-46474b'))})+'&group=4294967294&gdanchor='+${JSON.stringify(section)};document.querySelector('.eb1911').append(a)})()`);
   } else {
     await lookup('Britannica 11 sample', 'Section-link test');
   }
@@ -222,10 +246,12 @@ try {
       report.checks.push({navigation:key, rendered:true});
     }
     await snapshot('readers-guide');
-    await evaluate(`document.querySelector('.eb1911 a[href*="guide-part"]').click()`);
-    await waitFor(`document.querySelector('.eb1911 a[href*="guide-ch-"]')`);
-    await evaluate(`document.querySelector('.eb1911 a[href*="guide-ch-"]').click()`);
-    await waitFor(`!!document.querySelector('.eb1911 a[href*="article"]')`);
+    await evaluate(`${linkTo(/^EB1911:page:guide-part-/)}.click()`);
+    await waitFor(`!!${linkTo(/^EB1911:page:guide-ch-/)}`);
+    const chapter = await evaluate(`(()=>{const a=${linkTo(/^EB1911:page:guide-ch-/)};a.click();return decodeURIComponent(a.getAttribute('href')).split('gdlookup://localhost/').pop()})()`);
+    await waitFor(`document.querySelector('.eb1911 h1')?.innerText.replace(/\\s+/g,' ').includes(${JSON.stringify(chapter.split(' ').slice(0, 2).join(' '))})`);
+    const articles = new Set(headwordsOf(/^EB1911:article:/));
+    assert((await evaluate(linkWords)).some(word => articles.has(word)), 'The guide chapter links to no article');
     await snapshot('guide-chapter');
     report.checks.push({guide_hierarchy:true});
   }
