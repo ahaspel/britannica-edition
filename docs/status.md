@@ -93,7 +93,8 @@ recogniser; the engine supplies mechanism.
     against production, the same bar Phase 0 of the DNB work met.
 
 **2. The DNB as the second site** — proof that the engine is book-neutral.
-Phases 0–1 are done ([`dnb_project.md`](dnb_project.md)); Phase 2 now builds
+Phases 0–1 are done; the DNB is now its own book repository, **dnb-edition**
+(`../dnb-edition`, plan in its [`docs/dnb_project.md`](https://github.com/ahaspel/dnb-edition/blob/master/docs/dnb_project.md)).  Phase 2 builds
 on wikikit rather than on this repo.  One correction to that plan: the
 "section_name recovery" path it counted on for DNB titles no longer exists —
 it was DELETED from EB1911 for manufacturing ALGEBRAB, and `produce_title`'s
@@ -604,7 +605,7 @@ French letter (only damaged character sequences count as encoding flags).
 
 ### Session 2026-09-06/09 — the DNB is imported; `{{SIC}}` and `{{sic}}` are different templates
 
-> **The plan lives in [`docs/dnb_project.md`](dnb_project.md).**  Phases 0 and 1 are
+> **The plan lives in [`docs/dnb_project.md`](https://github.com/ahaspel/dnb-edition/blob/master/docs/dnb_project.md) (now in dnb-edition).**  Phases 0 and 1 are
 > DONE.  This entry is the evidence, and the three things the plan had wrong.
 
 **PHASE 0 — the seam.  GATE PASSED.**  `src/britannica/corpora.py`: a `Corpus`
@@ -734,7 +735,7 @@ would have shown the case distinction immediately.
 
 ### Session 2026-08-29 — the DNB probe: our pipeline reads a corpus it has never seen
 
-> **The plan lives in [`docs/dnb_project.md`](dnb_project.md)** — scope, the five
+> **The plan lives in [`docs/dnb_project.md`](https://github.com/ahaspel/dnb-edition/blob/master/docs/dnb_project.md) (now in dnb-edition)** — scope, the five
 > corpus-specific pieces, six phases, and the open decisions.  This entry is the
 > EVIDENCE behind it: the measurements, and the wrong turns taken to get them.
 
