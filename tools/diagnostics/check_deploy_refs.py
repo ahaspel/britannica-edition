@@ -7,7 +7,7 @@ uploads) for asset references — `<script src=...>`,
 the live site. Catches the "shipped HTML that references a file we forgot
 to upload" bug class (the article-urls.js near-miss on 2026-04-22).
 
-The pages carry NO local/production switches (tools/serve.py speaks the
+The pages carry NO local/production switches (wikikit.site.serve speaks the
 production URL space locally), so every reference is checked verbatim —
 including any `/data/derived/` path, which would be a dev path leaking
 into shipped HTML and rightly 404s here.

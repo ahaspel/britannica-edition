@@ -6,7 +6,7 @@
 # Services:
 #   1. PostgreSQL (Docker) — article database
 #   2. Meilisearch (Docker) — full-text search
-#   3. The site server — tools/serve.py on http://localhost:8000, owned by the
+#   3. The site server — wikikit.site.serve on http://localhost:8000, owned by the
 #      scheduled task `britannica-webserver` (runs at logon, no console)
 #
 # To stop: ./tools/start_services.sh stop
@@ -15,7 +15,7 @@
 # `python -m http.server 8000` whenever `.webserver.pid` did not name a live
 # process — a second way to start a server, next to the task, with no check of
 # what was already on :8000.  Windows lets two processes bind 0.0.0.0:8000, so
-# which one answered was undefined: on 2026-09-26 two copies of serve.py were
+# which one answered was undefined: on 2026-09-26 two copies of tools/serve.py were
 # found listening, one 17 days old.  Now: if :8000 answers, leave it alone; if
 # not, ask the task to start it.
 WEB_TASK="britannica-webserver"

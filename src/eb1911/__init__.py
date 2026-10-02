@@ -150,6 +150,7 @@ EB1911 = Corpus(
     edition_label="11th Edition",
     monogram="EB",
     search_key="14120ac7623ce72750bf668e79a0992cdf310ac38cbf0bd7bce51840bfbf9ed2",
+    search_index="articles",
     analytics_code="britannica11",
     volume_scans_url="https://archive.org/details/encyclopaediabri{vol}chisrich",
     contributor_example="Chisholm",
