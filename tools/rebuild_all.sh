@@ -143,13 +143,11 @@ echo "=== Phase 2: Walking the volumes (parallel x$PHASE2_PAR) ==="
 P2_DIR=$(mktemp -d)
 
 walk_volume() {
-  local vol="$1" PADDED RUN_DIR LOG
-  PADDED=$(printf "%02d" "$vol")
-  RUN_DIR="data/raw/wikisource/vol_${PADDED}"
+  local vol="$1" LOG
   LOG="$P2_DIR/vol_${vol}.log"
   # subshell owns its own set -e: import (if any) must succeed before detect.
   if ( set -e
-       [ -n "$SKIP_IMPORT" ] || uv run python -m wikikit.pipeline.import_wikisource_pages --indir "$RUN_DIR" --volume "$vol"
+       [ -n "$SKIP_IMPORT" ] || uv run python -m wikikit.pipeline.import_wikisource_pages --volume "$vol"
        uv run wikikit detect-boundaries "$vol"
      ) > "$LOG" 2>&1
   then

@@ -1423,6 +1423,7 @@ mdx = [
 
 [package.metadata]
 requires-dist = [
+    { name = "anthropic", marker = "extra == 'scan'", specifier = ">=0.40" },
     { name = "fastembed", specifier = ">=0.3" },
     { name = "html5lib", specifier = ">=1.1" },
     { name = "mdict-utils", marker = "extra == 'mdx'", specifier = "==1.3.14" },
@@ -1435,7 +1436,7 @@ requires-dist = [
     { name = "sqlalchemy", specifier = ">=2.0" },
     { name = "typer", specifier = ">=0.12" },
 ]
-provides-extras = ["mdx"]
+provides-extras = ["mdx", "scan"]
 
 [package.metadata.requires-dev]
 dev = [
